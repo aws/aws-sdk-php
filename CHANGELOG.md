@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 3.17.3 - 2016-03-29
+
+* `Aws\CloudFormation` - Added support for change sets.
+* `Aws\Inspector` - Updated model to latest preview version.
+* `Aws\Redshift` - Added support for cluster IAM roles.
+* `Aws\Waf` - Added support for XSS protection.
+
 ## 3.17.2 - 2016-03-24
 
 * `Aws\ElastiCache` - Added support for vertical scaling.

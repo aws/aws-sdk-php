@@ -3,10 +3,10 @@
   "metadata":{
     "apiVersion":"2012-06-01",
     "endpointPrefix":"elasticloadbalancing",
-    "protocol":"query",
     "serviceFullName":"Elastic Load Balancing",
     "signatureVersion":"v4",
-    "xmlNamespace":"http://elasticloadbalancing.amazonaws.com/doc/2012-06-01/"
+    "xmlNamespace":"http://elasticloadbalancing.amazonaws.com/doc/2012-06-01/",
+    "protocol":"query"
   },
   "operations":{
     "AddTags":{
@@ -1575,24 +1575,24 @@
     },
     "HealthCheckInterval":{
       "type":"integer",
-      "max":300,
-      "min":1
+      "min":1,
+      "max":300
     },
     "HealthCheckTarget":{"type":"string"},
     "HealthCheckTimeout":{
       "type":"integer",
-      "max":300,
-      "min":1
+      "min":1,
+      "max":300
     },
     "HealthyThreshold":{
       "type":"integer",
-      "max":10,
-      "min":2
+      "min":2,
+      "max":10
     },
     "IdleTimeout":{
       "type":"integer",
-      "max":3600,
-      "min":1
+      "min":1,
+      "max":3600
     },
     "Instance":{
       "type":"structure",
@@ -1603,8 +1603,8 @@
     "InstanceId":{"type":"string"},
     "InstancePort":{
       "type":"integer",
-      "max":65535,
-      "min":1
+      "min":1,
+      "max":65535
     },
     "InstanceState":{
       "type":"structure",
@@ -1783,8 +1783,8 @@
     "LoadBalancerNamesMax20":{
       "type":"list",
       "member":{"shape":"AccessPointName"},
-      "max":20,
-      "min":1
+      "min":1,
+      "max":20
     },
     "LoadBalancerScheme":{"type":"string"},
     "Marker":{"type":"string"},
@@ -1808,8 +1808,8 @@
     },
     "PageSize":{
       "type":"integer",
-      "max":400,
-      "min":1
+      "min":1,
+      "max":400
     },
     "Policies":{
       "type":"structure",
@@ -2076,8 +2076,8 @@
     },
     "TagKey":{
       "type":"string",
-      "max":128,
       "min":1,
+      "max":128,
       "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
     },
     "TagKeyList":{
@@ -2098,8 +2098,8 @@
     },
     "TagValue":{
       "type":"string",
-      "max":256,
       "min":0,
+      "max":256,
       "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
     },
     "TooManyAccessPointsException":{
@@ -2137,8 +2137,8 @@
     },
     "UnhealthyThreshold":{
       "type":"integer",
-      "max":10,
-      "min":2
+      "min":2,
+      "max":10
     },
     "VPCId":{"type":"string"}
   }

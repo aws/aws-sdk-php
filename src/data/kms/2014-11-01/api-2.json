@@ -4,11 +4,11 @@
     "apiVersion":"2014-11-01",
     "endpointPrefix":"kms",
     "jsonVersion":"1.1",
-    "protocol":"json",
     "serviceAbbreviation":"KMS",
     "serviceFullName":"AWS Key Management Service",
     "signatureVersion":"v4",
-    "targetPrefix":"TrentService"
+    "targetPrefix":"TrentService",
+    "protocol":"json"
   },
   "operations":{
     "CancelKeyDeletion":{
@@ -1801,8 +1801,8 @@
     },
     "AliasNameType":{
       "type":"string",
-      "max":256,
       "min":1,
+      "max":256,
       "pattern":"^[a-zA-Z0-9:/_-]+$"
     },
     "AlreadyExistsException":{
@@ -1819,8 +1819,8 @@
     },
     "ArnType":{
       "type":"string",
-      "max":2048,
-      "min":20
+      "min":20,
+      "max":2048
     },
     "BooleanType":{"type":"boolean"},
     "CancelKeyDeletionRequest":{
@@ -1838,8 +1838,8 @@
     },
     "CiphertextType":{
       "type":"blob",
-      "max":6144,
-      "min":1
+      "min":1,
+      "max":6144
     },
     "CreateAliasRequest":{
       "type":"structure",
@@ -1948,8 +1948,8 @@
     },
     "DescriptionType":{
       "type":"string",
-      "max":8192,
-      "min":0
+      "min":0,
+      "max":8192
     },
     "DisableKeyRequest":{
       "type":"structure",
@@ -2107,8 +2107,8 @@
     },
     "GrantIdType":{
       "type":"string",
-      "max":128,
-      "min":1
+      "min":1,
+      "max":128
     },
     "GrantList":{
       "type":"list",
@@ -2130,8 +2130,8 @@
     },
     "GrantNameType":{
       "type":"string",
-      "max":256,
       "min":1,
+      "max":256,
       "pattern":"^[a-zA-Z0-9:/_-]+$"
     },
     "GrantOperation":{
@@ -2155,13 +2155,13 @@
     "GrantTokenList":{
       "type":"list",
       "member":{"shape":"GrantTokenType"},
-      "max":10,
-      "min":0
+      "min":0,
+      "max":10
     },
     "GrantTokenType":{
       "type":"string",
-      "max":8192,
-      "min":1
+      "min":1,
+      "max":8192
     },
     "InvalidAliasNameException":{
       "type":"structure",
@@ -2272,8 +2272,8 @@
     },
     "KeyIdType":{
       "type":"string",
-      "max":256,
-      "min":1
+      "min":1,
+      "max":256
     },
     "KeyList":{
       "type":"list",
@@ -2339,8 +2339,8 @@
     },
     "LimitType":{
       "type":"integer",
-      "max":1000,
-      "min":1
+      "min":1,
+      "max":1000
     },
     "ListAliasesRequest":{
       "type":"structure",
@@ -2429,8 +2429,8 @@
     },
     "MarkerType":{
       "type":"string",
-      "max":320,
       "min":1,
+      "max":320,
       "pattern":"[\\u0020-\\u00FF]*"
     },
     "NotFoundException":{
@@ -2447,18 +2447,18 @@
     },
     "NumberOfBytesType":{
       "type":"integer",
-      "max":1024,
-      "min":1
+      "min":1,
+      "max":1024
     },
     "PendingWindowInDaysType":{
       "type":"integer",
-      "max":365,
-      "min":1
+      "min":1,
+      "max":365
     },
     "PlaintextType":{
       "type":"blob",
-      "max":4096,
       "min":1,
+      "max":4096,
       "sensitive":true
     },
     "PolicyNameList":{
@@ -2467,20 +2467,20 @@
     },
     "PolicyNameType":{
       "type":"string",
-      "max":128,
       "min":1,
+      "max":128,
       "pattern":"[\\w]+"
     },
     "PolicyType":{
       "type":"string",
-      "max":131072,
       "min":1,
+      "max":131072,
       "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
     },
     "PrincipalIdType":{
       "type":"string",
-      "max":256,
-      "min":1
+      "min":1,
+      "max":256
     },
     "PutKeyPolicyRequest":{
       "type":"structure",

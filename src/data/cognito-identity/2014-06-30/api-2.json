@@ -4,10 +4,10 @@
     "apiVersion":"2014-06-30",
     "endpointPrefix":"cognito-identity",
     "jsonVersion":"1.1",
-    "protocol":"json",
     "serviceFullName":"Amazon Cognito Identity",
     "signatureVersion":"v4",
-    "targetPrefix":"AWSCognitoIdentityService"
+    "targetPrefix":"AWSCognitoIdentityService",
+    "protocol":"json"
   },
   "operations":{
     "CreateIdentityPool":{
@@ -748,14 +748,14 @@
   "shapes":{
     "ARNString":{
       "type":"string",
-      "max":2048,
-      "min":20
+      "min":20,
+      "max":2048
     },
     "AccessKeyString":{"type":"string"},
     "AccountId":{
       "type":"string",
-      "max":15,
       "min":1,
+      "max":15,
       "pattern":"\\d+"
     },
     "ConcurrentModificationException":{
@@ -826,8 +826,8 @@
     },
     "DeveloperProviderName":{
       "type":"string",
-      "max":128,
       "min":1,
+      "max":128,
       "pattern":"[\\w._-]+"
     },
     "DeveloperUserAlreadyRegisteredException":{
@@ -840,8 +840,8 @@
     },
     "DeveloperUserIdentifier":{
       "type":"string",
-      "max":1024,
       "min":1,
+      "max":1024,
       "pattern":"[\\w.@_-]+"
     },
     "DeveloperUserIdentifierList":{
@@ -958,15 +958,15 @@
     },
     "IdentityId":{
       "type":"string",
-      "max":55,
       "min":1,
+      "max":55,
       "pattern":"[\\w-]+:[0-9a-f-]+"
     },
     "IdentityIdList":{
       "type":"list",
       "member":{"shape":"IdentityId"},
-      "max":60,
-      "min":1
+      "min":1,
+      "max":60
     },
     "IdentityPool":{
       "type":"structure",
@@ -986,14 +986,14 @@
     },
     "IdentityPoolId":{
       "type":"string",
-      "max":55,
       "min":1,
+      "max":55,
       "pattern":"[\\w-]+:[0-9a-f-]+"
     },
     "IdentityPoolName":{
       "type":"string",
-      "max":128,
       "min":1,
+      "max":128,
       "pattern":"[\\w ]+"
     },
     "IdentityPoolShortDescription":{
@@ -1010,20 +1010,20 @@
     },
     "IdentityProviderId":{
       "type":"string",
-      "max":128,
       "min":1,
+      "max":128,
       "pattern":"[\\w.;_-]+"
     },
     "IdentityProviderName":{
       "type":"string",
-      "max":128,
       "min":1,
+      "max":128,
       "pattern":"[\\w._/-]+"
     },
     "IdentityProviderToken":{
       "type":"string",
-      "max":2048,
       "min":1,
+      "max":2048,
       "pattern":"[\\S]+"
     },
     "IdentityProviders":{
@@ -1170,8 +1170,8 @@
     },
     "QueryLimit":{
       "type":"integer",
-      "max":60,
-      "min":1
+      "min":1,
+      "max":60
     },
     "ResourceConflictException":{
       "type":"structure",
@@ -1215,8 +1215,8 @@
     "String":{"type":"string"},
     "TokenDuration":{
       "type":"long",
-      "max":86400,
-      "min":1
+      "min":1,
+      "max":86400
     },
     "TooManyRequestsException":{
       "type":"structure",

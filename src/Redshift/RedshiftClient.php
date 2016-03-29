@@ -104,6 +104,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise enableSnapshotCopyAsync(array $args = [])
  * @method \Aws\Result modifyCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyClusterAsync(array $args = [])
+ * @method \Aws\Result modifyClusterIamRoles(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise modifyClusterIamRolesAsync(array $args = [])
  * @method \Aws\Result modifyClusterParameterGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyClusterParameterGroupAsync(array $args = [])
  * @method \Aws\Result modifyClusterSubnetGroup(array $args = [])

@@ -1,31 +1,49 @@
 {
-  "version":2,
-  "waiters":{
-    "AnyInstanceInService":{
-      "acceptors":[
+  "version": 2,
+  "waiters": {
+    "InstanceInService": {
+      "delay": 15,
+      "operation": "DescribeInstanceHealth",
+      "maxAttempts": 40,
+      "acceptors": [
         {
-          "argument":"InstanceStates[].State",
-          "expected":"InService",
-          "matcher":"pathAny",
-          "state":"success"
+          "expected": "InService",
+          "matcher": "pathAll",
+          "state": "success",
+          "argument": "InstanceStates[].State"
         }
-      ],
-      "delay":15,
-      "maxAttempts":40,
-      "operation":"DescribeInstanceHealth"
+      ]
     },
-    "InstanceInService":{
-      "acceptors":[
+    "InstanceDeregistered": {
+      "delay": 15,
+      "operation": "DescribeInstanceHealth",
+      "maxAttempts": 40,
+      "acceptors": [
         {
-          "argument":"InstanceStates[].State",
-          "expected":"InService",
-          "matcher":"pathAll",
-          "state":"success"
+          "expected": "OutOfService",
+          "matcher": "pathAll",
+          "state": "success",
+          "argument": "InstanceStates[].State"
+        },
+        {
+          "matcher": "error",
+          "expected": "InvalidInstance",
+          "state": "success"
         }
-      ],
-      "delay":15,
-      "maxAttempts":40,
-      "operation":"DescribeInstanceHealth"
+      ]
+    },
+    "AnyInstanceInService": {
+      "delay": 15,
+      "operation": "DescribeInstanceHealth",
+      "maxAttempts": 40,
+      "acceptors": [
+        {
+          "expected": "InService",
+          "matcher": "pathAny",
+          "state": "success",
+          "argument": "InstanceStates[].State"
+        }
+      ]
     }
   }
 }

@@ -31,6 +31,11 @@ $compatibleApiVersions = [
             '2014-02-03',
         ],
     ],
+    'inspector' => [
+        'latest' => [
+            '2015-08-18',
+        ]
+    ],
 ];
 
 // Create a list of possible namespaces so that we can include it in the

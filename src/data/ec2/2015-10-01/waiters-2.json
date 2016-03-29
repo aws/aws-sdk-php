@@ -140,6 +140,24 @@
         }
       ]
     },
+    "ImageExists": {
+      "operation": "DescribeImages",
+      "maxAttempts": 40,
+      "delay": 15,
+      "acceptors": [
+        {
+          "matcher": "path",
+          "expected": true,
+          "argument": "length(Images[]) > `0`",
+          "state": "success"
+        },
+        {
+          "matcher": "error",
+          "expected": "InvalidAMIIDNotFound",
+          "state": "retry"
+        }
+      ]
+    },
     "ImageAvailable": {
       "operation": "DescribeImages",
       "maxAttempts": 40,

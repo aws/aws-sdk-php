@@ -1,18 +1,18 @@
 {
-  "version":2,
-  "waiters":{
-    "StreamExists":{
-      "acceptors":[
+  "version": 2,
+  "waiters": {
+    "StreamExists": {
+      "delay": 10,
+      "operation": "DescribeStream",
+      "maxAttempts": 18,
+      "acceptors": [
         {
-          "argument":"StreamDescription.StreamStatus",
-          "expected":"ACTIVE",
-          "matcher":"path",
-          "state":"success"
+          "expected": "ACTIVE",
+          "matcher": "path",
+          "state": "success",
+          "argument": "StreamDescription.StreamStatus"
         }
-      ],
-      "delay":10,
-      "maxAttempts":18,
-      "operation":"DescribeStream"
+      ]
     }
   }
 }
