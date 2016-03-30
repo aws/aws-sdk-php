@@ -686,10 +686,18 @@ EOT;
                 $html->close();
                 $html->elem('p', null, $example['description']);
                 $comments = $example['comments'];
-                $html->elem('pre', null, $generator($name, $example['input'], $comments['input']));
+                $html->elem('pre', null, $generator->generateInput(
+                    $name, 
+                    isset($example['input']) ? $example['input'] : [], 
+                    isset($comments['input']) ? $comments['input'] : []
+                ));
                 if (isset($example['output'])) {
                     $html->elem('p', null, 'Result syntax:');
-                    $html->elem('pre', null, $generator($name, $example['output'], $comments['output'], false));
+                    $html->elem('pre', null, $generator->generateOutput(
+                        $name, 
+                        $example['output'], 
+                        $comments['output']
+                    ));
                 }
             }
         }

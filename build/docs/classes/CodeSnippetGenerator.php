@@ -20,16 +20,25 @@ class CodeSnippetGenerator
         $this->service = $service;
     }
 
-    public function __invoke($operation, $params, $comments, $isInput = true)
+    public function generateInput($operation, $params, $comments)
     {
-        $messageShape = $isInput
-            ? $this->service->getOperation($operation)->getInput()
-            : $this->service->getOperation($operation)->getOutput();
+        $messageShape = $this->service->getOperation($operation)->getInput();
         $code = $this->visit($messageShape, $params, '', [], $comments);
 
+        return "\$result = \$client->" . lcfirst($operation) . "($code);";
+    }
+
+    public function generateOutput($operation, $params, $comments)
+    {
+        $messageShape = $this->service->getOperation($operation)->getOutput();
+        return $this->visit($messageShape, $params, '', [], $comments);
+    }
+
+    public function __invoke($operation, $params, $comments, $isInput = true)
+    {
         return $isInput
-            ? "\$result = \$client->" . lcfirst($operation) . "($code);"
-            : $code;
+            ? $this->generateInput($operation, $params, $comments)
+            : $this->generateOutput($operation, $params, $comments);
     }
 
     private function visit(Shape $shape, $value, $indent, $path, $comments)
