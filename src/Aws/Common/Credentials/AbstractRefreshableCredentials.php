@@ -22,6 +22,25 @@ namespace Aws\Common\Credentials;
 abstract class AbstractRefreshableCredentials extends AbstractCredentialsDecorator
 {
     /**
+     * Get the underlying credentials, refreshing if necessary.
+     *
+     * @return Credentials
+     */
+    public function getCredentials()
+    {
+        if ($this->credentials->isExpired()) {
+            $this->refresh();
+        }
+
+        return new Credentials(
+            $this->credentials->getAccessKeyId(),
+            $this->credentials->getSecretKey(),
+            $this->credentials->getSecurityToken(),
+            $this->credentials->getExpiration()
+        );
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getAccessKeyId()
