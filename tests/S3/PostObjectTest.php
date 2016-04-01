@@ -6,6 +6,8 @@ use Aws\S3\PostObject;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 
+require_once __DIR__ . '/../Signature/sig_hack.php';
+
 /**
  * @covers Aws\S3\PostObject
  */
@@ -31,6 +33,7 @@ class PostObjectTest extends \PHPUnit_Framework_TestCase
 
     public function testSignsPostPolicy()
     {
+        $_SERVER['aws_time'] = '20160401T223358Z';
         $policy = [
             'expiration' => '2007-12-01T12:00:00.000Z',
             'conditions' => [
@@ -43,7 +46,9 @@ class PostObjectTest extends \PHPUnit_Framework_TestCase
             'eyJleHBpcmF0aW9uIjoiMjAwNy0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6eyJhY2wiOiJwdWJsaWMtcmVhZCJ9fQ==',
             $a['policy']
         );
-        $this->assertEquals('ffajJbr1afVRb3qoFwdn9RK+qfM=', $a['signature']);
+
+        $this->assertEquals('c696290c3307114fe95dce7ea99a5b2cc0efe427f2c603a1b862b903723fbb9d', $a['signature']);
+
         $this->assertEquals(
             '{"expiration":"2007-12-01T12:00:00.000Z","conditions":{"acl":"public-read"}}',
             $p->getJsonPolicy()

@@ -11,6 +11,8 @@ use GuzzleHttp\Psr7\Uri;
  */
 class PostObject
 {
+    const ISO8601_BASIC = 'Ymd\THis\Z';
+
     private $client;
     private $bucket;
     private $formAttributes;
@@ -147,15 +149,35 @@ class PostObject
     {
         $jsonPolicy64 = base64_encode($this->jsonPolicy);
 
+        $ldt = gmdate(self::ISO8601_BASIC);
+        $sdt = substr($ldt, 0, 8);
+        $region = $this->client->getRegion();
+        $service = 's3';
+
+        $signature = hash_hmac(
+            'sha256',
+            $jsonPolicy64,
+            $this->getSigningKey(
+                $sdt,
+                $region,
+                $service,
+                $creds->getSecretKey()
+            )
+        );
+
         return [
             'AWSAccessKeyId' => $creds->getAccessKeyId(),
             'policy'    => $jsonPolicy64,
-            'signature' => base64_encode(hash_hmac(
-                'sha1',
-                $jsonPolicy64,
-                $creds->getSecretKey(),
-                true
-            ))
+            'signature' => $signature
         ];
+    }
+
+    private function getSigningKey($shortDate, $region, $service, $secretKey)
+    {
+        $dateKey = hash_hmac('sha256', $shortDate, "AWS4{$secretKey}", true);
+        $regionKey = hash_hmac('sha256', $region, $dateKey, true);
+        $serviceKey = hash_hmac('sha256', $service, $regionKey, true);
+
+        return hash_hmac('sha256', 'aws4_request', $serviceKey, true);
     }
 }
