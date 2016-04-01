@@ -3,8 +3,10 @@ namespace Aws\Test;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
+use Aws\AwsClientInterface;
 use Aws\Command;
 use Aws\CommandInterface;
+use Aws\Endpoint\Partition;
 use Aws\HandlerList;
 use Aws\MultiRegionClient;
 use Aws\Result;

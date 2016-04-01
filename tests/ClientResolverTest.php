@@ -6,6 +6,7 @@ use Aws\CommandInterface;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
+use Aws\Endpoint\Partition;
 use Aws\LruArrayCache;
 use Aws\S3\S3Client;
 use Aws\HandlerList;
@@ -534,6 +535,69 @@ EOT;
                 true,
                 ['http' => true, 'retries' => true, 'timer' => true],
             ],
+        ];
+    }
+
+    /**
+     * @dataProvider endpointProviderReturnProvider
+     *
+     * @param array $args
+     * @param string $argName
+     * @param string $expected
+     * @param string $override
+     */
+    public function testResolvesValuesReturnedByEndpointProvider(
+        array $args,
+        $argName,
+        $expected,
+        $override
+    ) {
+        $resolverArgs = array_intersect_key(
+            ClientResolver::getDefaultArguments(),
+            array_flip(['endpoint_provider', 'service', 'region', 'scheme', $argName])
+        );
+        $resolver = new ClientResolver($resolverArgs);
+        
+        $resolved = $resolver->resolve($args, new HandlerList);
+        $this->assertSame($expected, $resolved[$argName]);
+        
+        $resolved = $resolver->resolve([$argName => $override] + $args, new HandlerList);
+        $this->assertSame($override, $resolved[$argName]);
+    }
+
+    public function endpointProviderReturnProvider()
+    {
+        $partition = new Partition([
+            'partition' => 'aws-test',
+            'dnsSuffix' => 'amazonaws.com',
+            'regions' => [],
+            'services' => [
+                'foo' => [
+                    'endpoints' => [
+                        'bar' => [
+                            'credentialScope' => [
+                                'service' => 'baz',
+                                'region' => 'quux',
+                            ],
+                            'signatureVersions' => ['anonymous'],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+        $invocationArgs = [
+            'endpoint_provider' => $partition,
+            'service' => 'foo',
+            'region' => 'bar',
+        ];
+
+        return [
+            // signatureVersion
+            [$invocationArgs, 'signature_version', 'anonymous', 'v4'],
+            // signingName
+            [$invocationArgs, 'signing_name', 'baz', 'fizz'],
+            // signingRegion
+            [$invocationArgs, 'signing_region', 'quux', 'buzz'],
         ];
     }
 }

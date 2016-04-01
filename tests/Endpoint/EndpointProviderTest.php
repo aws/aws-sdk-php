@@ -2,6 +2,7 @@
 namespace Aws\Test;
 
 use Aws\Endpoint\EndpointProvider;
+use Aws\Endpoint\PartitionEndpointProvider;
 
 /**
  * @covers Aws\Endpoint\EndpointProvider
@@ -27,7 +28,7 @@ class EndpointProviderTest extends \PHPUnit_Framework_TestCase
     public function testCreatesDefaultProvider()
     {
         $p = EndpointProvider::defaultProvider();
-        $this->assertInstanceOf('Aws\Endpoint\PatternEndpointProvider', $p);
+        $this->assertInstanceOf(PartitionEndpointProvider::class, $p);
     }
 
     public function testCreatesProviderFromPatterns()

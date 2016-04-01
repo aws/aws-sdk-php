@@ -6,6 +6,9 @@ use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
+use Aws\Endpoint\Partition;
+use Aws\Endpoint\PartitionEndpointProvider;
+use Aws\Endpoint\PartitionProviderInterface;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
 use Aws\Credentials\CredentialProvider;
@@ -96,6 +99,18 @@ class ClientResolver
             'valid'   => ['string'],
             'doc'     => 'A string representing a custom signature version to use with a service (e.g., v4). Note that per/operation signature version MAY override this requested signature version.',
             'default' => [__CLASS__, '_default_signature_version'],
+        ],
+        'signing_name' => [
+            'type'    => 'config',
+            'valid'   => ['string'],
+            'doc'     => 'A string representing a custom service name to be used when calculating a request signature.',
+            'default' => [__CLASS__, '_default_signing_name'],
+        ],
+        'signing_region' => [
+            'type'    => 'config',
+            'valid'   => ['string'],
+            'doc'     => 'A string representing a custom region name to be used when calculating a request signature.',
+            'default' => [__CLASS__, '_default_signing_region'],
         ],
         'profile' => [
             'type'  => 'config',
@@ -412,6 +427,12 @@ class ClientResolver
             if (isset($result['signatureVersion'])) {
                 $args['config']['signature_version'] = $result['signatureVersion'];
             }
+            if (isset($result['signingRegion'])) {
+                $args['config']['signing_region'] = $result['signingRegion'];
+            }
+            if (isset($result['signingName'])) {
+                $args['config']['signing_name'] = $result['signingName'];
+            }
         }
     }
 
@@ -526,9 +547,10 @@ class ClientResolver
         $args['endpoint'] = $value;
     }
 
-    public static function _default_endpoint_provider()
+    public static function _default_endpoint_provider(array $args)
     {
-        return EndpointProvider::defaultProvider();
+        return PartitionEndpointProvider::defaultProvider()
+            ->getPartitionFromRegion($args['region']);
     }
 
     public static function _default_signature_provider()
@@ -541,6 +563,26 @@ class ClientResolver
         return isset($args['config']['signature_version'])
             ? $args['config']['signature_version']
             : $args['api']->getSignatureVersion();
+    }
+
+    public static function _default_signing_name(array &$args)
+    {
+        if (isset($args['config']['signing_name'])) {
+            return $args['config']['signing_name'];
+        }
+
+        if ($signingName = $args['api']->getSigningName()) {
+            return $signingName;
+        }
+
+        return $args['service'];
+    }
+
+    public static function _default_signing_region(array &$args)
+    {
+        return isset($args['config']['signing_region'])
+            ? $args['config']['signing_region']
+            : $args['region'];
     }
 
     public static function _missing_version(array $args)

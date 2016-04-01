@@ -72,13 +72,13 @@ class EndpointProvider
     /**
      * Creates and returns the default SDK endpoint provider.
      *
+     * @deprecated Use an instance of \Aws\Endpoint\Partition instead.
+     *
      * @return callable
      */
     public static function defaultProvider()
     {
-        $data = \Aws\load_compiled_json(__DIR__ . '/../data/endpoints.json');
-
-        return new PatternEndpointProvider($data['endpoints']);
+        return PartitionEndpointProvider::defaultProvider();
     }
 
     /**
