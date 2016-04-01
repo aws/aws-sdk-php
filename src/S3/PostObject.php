@@ -180,4 +180,11 @@ class PostObject
 
         return hash_hmac('sha256', 'aws4_request', $serviceKey, true);
     }
+
+    private function gmdate($format, $ts = null)
+    {
+        return isset($_SERVER['aws_time'])
+            ? $_SERVER['aws_time']
+            : \gmdate($format, $ts ?: time());
+    }
 }
