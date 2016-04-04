@@ -142,6 +142,23 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $signature->presign($request, $credentials, 'December 31, 2013 00:00:00 UTC');
     }
 
+    public function testPresignerDowncasesSignedHeaderNames()
+    {
+        $_SERVER['override_v4_time'] = true;
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $credentials = new Credentials('foo', 'bar', '123');
+        $query = Psr7\parse_query(
+            $signature->presign($request, $credentials, 1386720000)
+                ->getUri()
+                ->getQuery()
+        );
+        $this->assertArrayHasKey('X-Amz-SignedHeaders', $query);
+        $this->assertSame(
+            strtolower($query['X-Amz-SignedHeaders']),
+            $query['X-Amz-SignedHeaders']
+        );
+    }
+
     public function testConvertsPostToGet()
     {
         $request = new Request(

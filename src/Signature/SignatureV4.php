@@ -83,7 +83,7 @@ class SignatureV4 implements SignatureInterface
         $parsed['query']['X-Amz-Algorithm'] = 'AWS4-HMAC-SHA256';
         $parsed['query']['X-Amz-Credential'] = $credential;
         $parsed['query']['X-Amz-Date'] = gmdate('Ymd\THis\Z', time());
-        $parsed['query']['X-Amz-SignedHeaders'] = 'Host';
+        $parsed['query']['X-Amz-SignedHeaders'] = 'host';
         $parsed['query']['X-Amz-Expires'] = $this->convertExpires($expires);
         $context = $this->createContext($parsed, $payload);
         $stringToSign = $this->createStringToSign($httpDate, $scope, $context['creq']);
