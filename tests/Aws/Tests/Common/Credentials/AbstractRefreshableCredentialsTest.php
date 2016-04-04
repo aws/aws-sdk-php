@@ -41,4 +41,24 @@ class AbstractRefreshableCredentialsTest extends \Guzzle\Tests\GuzzleTestCase
         $mock->getSecurityToken();
         $mock->serialize();
     }
+
+    public function testCanReturnRefreshedCredentialsInSingleTransaction()
+    {
+        $c = new Credentials('a', 'b', 'c', 10);
+
+        $mock = $this->getMockBuilder('Aws\\Common\\Credentials\\AbstractRefreshableCredentials')
+            ->setConstructorArgs(array($c))
+            ->setMethods(array('refresh'))
+            ->getMock();
+
+        $mock->expects($this->once())
+            ->method('refresh');
+
+        /** @var $mock \Aws\Common\Credentials\AbstractRefreshableCredentials */
+        $newCreds = $mock->getCredentials();
+        $this->assertInstanceOf('\Aws\Common\Credentials\CredentialsInterface', $newCreds);
+        $this->assertSame($c->getAccessKeyId(), $newCreds->getAccessKeyId());
+        $this->assertSame($c->getSecretKey(), $newCreds->getSecretKey());
+        $this->assertSame($c->getSecurityToken(), $newCreds->getSecurityToken());
+    }
 }

@@ -40,7 +40,7 @@ class RefreshableInstanceProfileCredentials extends AbstractRefreshableCredentia
      */
     public function __construct(CredentialsInterface $credentials, InstanceMetadataClient $client = null)
     {
-        $this->credentials = $credentials;
+        parent::__construct($credentials);
         $this->setClient($client);
     }
 
@@ -82,10 +82,10 @@ class RefreshableInstanceProfileCredentials extends AbstractRefreshableCredentia
     protected function refresh()
     {
         $credentials = $this->client->getInstanceProfileCredentials();
-        // Expire the token 30 minutes early to pre-fetch before expiring.
+        // Expire the token 5 minutes early to pre-fetch before expiring.
         $this->credentials->setAccessKeyId($credentials->getAccessKeyId())
             ->setSecretKey($credentials->getSecretKey())
             ->setSecurityToken($credentials->getSecurityToken())
-            ->setExpiration($credentials->getExpiration() - 1800);
+            ->setExpiration($credentials->getExpiration() - 300);
     }
 }
