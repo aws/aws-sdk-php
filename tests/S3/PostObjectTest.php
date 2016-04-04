@@ -6,7 +6,7 @@ use Aws\S3\PostObject;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 
-require_once __DIR__ . '/../Signature/sig_hack.php';
+require_once __DIR__ . '/sig_hack.php';
 
 /**
  * @covers Aws\S3\PostObject

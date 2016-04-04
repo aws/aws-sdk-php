@@ -11,6 +11,7 @@ use GuzzleHttp\Psr7\Uri;
  */
 class PostObject
 {
+    use SignatureTraitS3;
     const ISO8601_BASIC = 'Ymd\THis\Z';
 
     private $client;
@@ -151,18 +152,13 @@ class PostObject
 
         $ldt = gmdate(self::ISO8601_BASIC);
         $sdt = substr($ldt, 0, 8);
-        $region = $this->client->getRegion();
-        $service = 's3';
 
-        $signature = hash_hmac(
-            'sha256',
+        $signature = $this->getSignatureV4(
             $jsonPolicy64,
-            $this->getSigningKey(
-                $sdt,
-                $region,
-                $service,
-                $creds->getSecretKey()
-            )
+            $sdt,
+            $this->client->getRegion(),
+            's3',
+            $creds->getSecretKey()
         );
 
         return [
@@ -170,21 +166,5 @@ class PostObject
             'policy'    => $jsonPolicy64,
             'signature' => $signature
         ];
-    }
-
-    private function getSigningKey($shortDate, $region, $service, $secretKey)
-    {
-        $dateKey = hash_hmac('sha256', $shortDate, "AWS4{$secretKey}", true);
-        $regionKey = hash_hmac('sha256', $region, $dateKey, true);
-        $serviceKey = hash_hmac('sha256', $service, $regionKey, true);
-
-        return hash_hmac('sha256', 'aws4_request', $serviceKey, true);
-    }
-
-    private function gmdate($format, $ts = null)
-    {
-        return isset($_SERVER['aws_time'])
-            ? $_SERVER['aws_time']
-            : \gmdate($format, $ts ?: time());
     }
 }

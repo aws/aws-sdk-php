@@ -12,6 +12,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class SignatureV4 implements SignatureInterface
 {
+    use SignatureTrait;
     const ISO8601_BASIC = 'Ymd\THis\Z';
 
     /** @var string */
@@ -257,10 +258,7 @@ class SignatureV4 implements SignatureInterface
                 $this->cache = [];
                 $this->cacheSize = 0;
             }
-            $dateKey = hash_hmac('sha256', $shortDate, "AWS4{$secretKey}", true);
-            $regionKey = hash_hmac('sha256', $region, $dateKey, true);
-            $serviceKey = hash_hmac('sha256', $service, $regionKey, true);
-            $this->cache[$k] = hash_hmac('sha256', 'aws4_request', $serviceKey, true);
+            $this->cache[$k] = $this->getSigningKeyV4($shortDate, $region, $service, $secretKey);
         }
 
         return $this->cache[$k];
