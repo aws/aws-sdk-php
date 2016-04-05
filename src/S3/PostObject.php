@@ -3,6 +3,7 @@ namespace Aws\S3;
 
 use Aws\Credentials\CredentialsInterface;
 use GuzzleHttp\Psr7\Uri;
+use Aws\Signature\SignatureTrait;
 
 /**
  * Encapsulates the logic for getting the data for an S3 object POST upload form
@@ -11,7 +12,7 @@ use GuzzleHttp\Psr7\Uri;
  */
 class PostObject
 {
-    use SignatureTraitS3;
+    use SignatureTrait;
     const ISO8601_BASIC = 'Ymd\THis\Z';
 
     private $client;
