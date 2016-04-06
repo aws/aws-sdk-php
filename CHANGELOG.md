@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.17.4 - 2016-04-05
 
 * `Aws\ApiGateway` - Added support for importing REST APIs.
 * `Aws\Glacier` - Fixed tree hash bug caused when content was a single zero.
