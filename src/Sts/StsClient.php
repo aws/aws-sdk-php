@@ -16,6 +16,8 @@ use Aws\Credentials\Credentials;
  * @method \GuzzleHttp\Promise\Promise assumeRoleWithWebIdentityAsync(array $args = [])
  * @method \Aws\Result decodeAuthorizationMessage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise decodeAuthorizationMessageAsync(array $args = [])
+ * @method \Aws\Result getCallerIdentity(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCallerIdentityAsync(array $args = [])
  * @method \Aws\Result getFederationToken(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getFederationTokenAsync(array $args = [])
  * @method \Aws\Result getSessionToken(array $args = [])

@@ -5,6 +5,7 @@
 * `Aws\Glacier` - Fixed tree hash bug caused when content was a single zero.
 * `Aws\Signature` - Fixed presigning bug where the signed headers query
   parameter value was not lowercased.
+* `Aws\Sts` - Added support for getting the caller identity.
 
 ## 3.17.3 - 2016-03-29
 
