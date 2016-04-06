@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glacier` - Fixed tree hash bug caused when content was a single zero.
+* `Aws\Signature` - Fixed presigning bug where the signed headers query
+  parameter value was not lowercased.
+
 ## 3.17.3 - 2016-03-29
 
 * `Aws\CloudFormation` - Added support for change sets.
@@ -147,7 +153,7 @@ Migration Service**.
   against your native, hybrid and browser-based apps on AWS Device Farm.
 * `Aws\IotDataPlane` - Fixed handling of invalid JSON returned by the `Publish`
   command.
-* `Aws\Sts` - Added support for the `RegionDisabledException` (now returned 
+* `Aws\Sts` - Added support for the `RegionDisabledException` (now returned
   instead of an AccessDenied when an admin hasn't turned on an STS region).
 
 ## 3.13.0 - 2016-01-14
@@ -227,7 +233,7 @@ Migration Service**.
 ## 3.11.0 - 2015-11-19
 
 * `Aws\CognitoIdentity` - Added a CognitoIdentity credentials provider.
-* `Aws\DeviceFarm` - Marked app ARN as optional on `ScheduleRun` and 
+* `Aws\DeviceFarm` - Marked app ARN as optional on `ScheduleRun` and
   `GetDevicePoolCompatibility` operations.
 * `Aws\DynamoDb` - Fixed bug where calling `session_regenerate_id` without
   changing session data would prevent data from being carried over from the
@@ -281,7 +287,7 @@ Migration Service**.
 * `Aws\ApiGateway` - Added support for the **AWS API Gateway** service.
 * `Aws\Ssm` - Added support for EC2 Run Command, a new EC2 feature that enables
   you to securely and remotely manage the configuration of your Amazon EC2
-  Windows instances. 
+  Windows instances.
 
 ## 3.8.2 - 2015-10-22
 
@@ -396,12 +402,12 @@ Migration Service**.
 
 ## 3.3.3 - 2015-08-31
 
-* `Aws\Ec2` - Added support for using instance weights with the 
+* `Aws\Ec2` - Added support for using instance weights with the
   `RequestSpotFleet` API.
 
 ## 3.3.2 - 2015-08-27
 
-* `Aws\ConfigService` - Added support for the `ListDiscoveredResources` 
+* `Aws\ConfigService` - Added support for the `ListDiscoveredResources`
   operation and new resource types.
 
 ## 3.3.1 - 2015-08-25
@@ -434,8 +440,8 @@ Migration Service**.
 
 ## 3.2.5 - 2015-08-06
 
-* `Aws\Swf` - Added support for invoking AWS Lambda tasks from an Amazon SWF 
-  workflow. 
+* `Aws\Swf` - Added support for invoking AWS Lambda tasks from an Amazon SWF
+  workflow.
 
 ## 3.2.4 - 2015-08-04
 
@@ -458,8 +464,8 @@ Migration Service**.
 
 ## 3.2.1 - 2015-07-23
 
-* **SECURITY FIX**: This release addresses a security issue associated with 
-  CVE-2015-5723, specifically, fixes improper default directory umask behavior 
+* **SECURITY FIX**: This release addresses a security issue associated with
+  CVE-2015-5723, specifically, fixes improper default directory umask behavior
   that could potentially allow unauthorized modifications of PHP code.
 * `Aws\Ec2` - Added support for SpotFleetLaunchSpecification.
 * `Aws\Emr` - Added support for Amazon EMR release 4.0.0, which includes a new
@@ -476,22 +482,22 @@ Migration Service**.
 
 ## 3.2.0 - 2015-07-14
 
-* `Aws\DeviceFarm` - Added support for AWS DeviceFarm, an app testing service 
-  that enables you to test your Android and Fire OS apps on real, physical 
+* `Aws\DeviceFarm` - Added support for AWS DeviceFarm, an app testing service
+  that enables you to test your Android and Fire OS apps on real, physical
   phones and tablets that are hosted by AWS.
 * `Aws\DynamoDb` - Added support for consistent scans and update streams.
 * `Aws\DynamoDbStreams` - Added support for Amazon DynamoDB Streams, giving you
   the ability to subscribe to the transactional log of all changes transpiring
   in your DynamoDB table.
-* `Aws\S3` - Fixed checksum encoding on multipart upload of non-seekable 
+* `Aws\S3` - Fixed checksum encoding on multipart upload of non-seekable
   streams.
 * `Aws\S3\StreamWrapper` - Added guard on rename functionality to ensure wrapper
   initialized.
-  
+
 
 ## 3.1.0 - 2015-07-09
 
-* `Aws\CodeCommit` - Added support for AWS CodeCommit, a secure, highly 
+* `Aws\CodeCommit` - Added support for AWS CodeCommit, a secure, highly
   scalable, managed source control service that hosts private Git repositories.
 * `Aws\CodePipeline` - Added support for AWS CodePipeline, a continuous delivery
   service that enables you to model, visualize, and automate the steps required
@@ -517,15 +523,15 @@ Migration Service**.
 ## 3.0.6 - 2015-06-24
 
 * `Aws\CloudFront` - Added support for configurable `MaxTTL` and `DefaultTTL`.
-* `Aws\ConfigService` - Added support for recording changes for specific 
+* `Aws\ConfigService` - Added support for recording changes for specific
   resource types.
-* `Aws\Ecs` - Added support for sorting, deregistering, and overriding 
+* `Aws\Ecs` - Added support for sorting, deregistering, and overriding
   environment variables for task definitions.
-* `Aws\Glacier` - Added support for the `AddTagsToVault`, `ListTagsForVault`, 
+* `Aws\Glacier` - Added support for the `AddTagsToVault`, `ListTagsForVault`,
   and `RemoveTagsFromVault` API operations.
-* `Aws\OpwWorks` - Added support for specifying agent versions to be used on 
+* `Aws\OpwWorks` - Added support for specifying agent versions to be used on
   instances.
-* `Aws\Redshift` - Added support for the `CreateSnapshotCopyGrant`, 
+* `Aws\Redshift` - Added support for the `CreateSnapshotCopyGrant`,
   `DescribeSnapshotCopyGrants`, and `DeleteSnapshotCopyGrant` API operations.
 * Fixed XML attribute serialization.
 
@@ -663,11 +669,11 @@ for details about any changes you may need to make to your code for this upgrade
 * `Aws\WorkSpaces` - Added support for the Amazon WorkSpaces service.
 * `Aws\Ecs` - Added support for the ECS service scheduler operations.
 * `Aws\S3` - Added support for the `getBucketNotificationConfiguration` and
-  `putBucketNotificationConfiguration` operations to the `S3Client` to replace 
+  `putBucketNotificationConfiguration` operations to the `S3Client` to replace
   the, now deprecated, `getBucketNotification` and `putBucketNotification`
   operations.
 * [BC] `Aws\Lambda` - Added support for the new AWS Lambda API, which has been
-  changed based on customer feedback during Lambda's preview period. 
+  changed based on customer feedback during Lambda's preview period.
 * `Aws\Common` - Deprecated "facades". They will not be present in Version 3 of
   the SDK.
 * `Aws\Common` - Added `getAwsErrorCode`, `getAwsErrorType` and `getAwsRequestId`
