@@ -4,6 +4,7 @@
 
 * `Aws\ApiGateway` - Added support for importing REST APIs.
 * `Aws\Glacier` - Fixed tree hash bug caused when content was a single zero.
+* `Aws\Route53` - Added support for metric-based and regional health checks.
 * `Aws\Signature` - Fixed presigning bug where the signed headers query
   parameter value was not lowercased.
 * `Aws\Sts` - Added support for getting the caller identity.
