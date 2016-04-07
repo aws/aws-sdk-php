@@ -3,6 +3,7 @@
 ## next release
 
 * `Aws\DirectoryService` - Added support for conditional forwarders.
+* `Aws\ElasticBeanstalk` - Update client to latest version.
 * `Aws\Lambda` - Added support for setting the function runtime as Node.js 4.3,
   as well as updating function configuration to set the runtime.
 
