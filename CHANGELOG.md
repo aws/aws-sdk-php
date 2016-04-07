@@ -3,6 +3,8 @@
 ## next release
 
 * `Aws\DirectoryService` - Added support for conditional forwarders.
+* `Aws\Lambda` - Added support for setting the function runtime as Node.js 4.3,
+  as well as updating function configuration to set the runtime.
 
 ## 3.17.4 - 2016-04-05
 
