@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.17.5 - 2016-04-07
 
 * `Aws\DirectoryService` - Added support for conditional forwarders.
 * `Aws\ElasticBeanstalk` - Update client to latest version.
