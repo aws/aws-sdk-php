@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectoryService` - Added support for conditional forwarders.
+
 ## 3.17.4 - 2016-04-05
 
 * `Aws\ApiGateway` - Added support for importing REST APIs.
