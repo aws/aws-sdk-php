@@ -219,6 +219,8 @@ class S3Client extends AwsClient implements S3ClientInterface
 
     public function createPresignedRequest(CommandInterface $command, $expires)
     {
+        $command->getHandlerList()->remove('signer');
+
         /** @var \Aws\Signature\SignatureInterface $signer */
         $signer = call_user_func(
             $this->getSignatureProvider(),
