@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.17.6 - 2016-04-11
 
 * `Aws\Ec2` - Fixed error codes in EC2 waiters.
 * `Aws\Iot` - Added support for registering your own signing CA certificates and
