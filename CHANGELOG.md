@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.8.29 - 2016-04-11
+
+* `Aws\Lambda` - Fixed bug in `UpdateFunctionCode`.
+
 ## 2.8.28 - 2016-04-05
 
 * `Aws\Common` - Fixed a race condition caused by credentials expiring and being
