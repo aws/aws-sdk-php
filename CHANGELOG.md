@@ -3,6 +3,8 @@
 ## next release
 
 * `Aws\Ec2` - Fixed error codes in EC2 waiters.
+* `Aws\Iot` - Added support for registering your own signing CA certificates and
+  the X.509 certificates signed by your signing CA certificate.
 
 ## 3.17.5 - 2016-04-07
 
