@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Fixed error codes in EC2 waiters.
+
 ## 3.17.5 - 2016-04-07
 
 * `Aws\DirectoryService` - Added support for conditional forwarders.
