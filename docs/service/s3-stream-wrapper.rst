@@ -194,16 +194,17 @@ rename()        Rename an object by copying the object then deleting the
                 ``CopyObject`` and ``DeleteObject`` operations to the stream
                 context parameters to modify how the object is copied and
                 deleted.
-copy()          Copy an object from one location to another. You can pass
-                options available to the ``CopyObject`` operation into the
-                stream context options to modify how the object is copied.
-
-                .. code-block:: php
-
-                    // Copy a file on Amazon S3 to another bucket
-                    copy('s3://bucket/key', 's3://other_bucket/key');
 
 =============== ================================================================
+
+
+.. note::
+
+    While ``copy`` will generally work with the S3 stream wrapper, some errors
+    may not be properly reported due to the internals of the ``copy`` function
+    in PHP. It is recommended that you use an instance of `Aws\S3\ObjectCopier
+    <http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.S3.ObjectCopier.html>`_
+    instead.
 
 
 Working with buckets
@@ -219,8 +220,8 @@ Here's an example of creating a bucket:
     mkdir('s3://bucket');
 
 You can pass in stream context options to the ``mkdir()`` method to modify how
-the bucket is created using the parameters available to the
-`CreateBucket <http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html#_createBucket>`_
+the bucket is created using the parameters available to the `CreateBucket
+<http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.S3.S3Client.html#_createBucket>`_
 operation.
 
 .. code-block:: php
