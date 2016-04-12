@@ -45,6 +45,7 @@ class PostObjectTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('VTBQ9SK5j7Ca9kOc0rNSvESirKs=', $a['signature']);
 
+
         $this->assertEquals(
             '{"expiration":"2007-12-01T12:00:00.000Z","conditions":[{"acl":"public-read"}]}',
             $p->getJsonPolicy()
