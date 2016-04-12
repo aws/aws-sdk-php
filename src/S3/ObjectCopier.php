@@ -1,7 +1,11 @@
 <?php
 namespace Aws\S3;
 
+use Aws\Exception\MultipartUploadException;
+use Aws\Result;
+use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Promise\PromisorInterface;
+use InvalidArgumentException;
 
 /**
  * Copies objects from one S3 location to another, utilizing a multipart copy
@@ -42,6 +46,8 @@ class ObjectCopier implements PromisorInterface
      *                                          (default: private).
      * @param array             $options        Options used to configure the
      *                                          copy process.
+     *
+     * @throws InvalidArgumentException
      */
     public function __construct(
         S3ClientInterface $client,
@@ -60,6 +66,13 @@ class ObjectCopier implements PromisorInterface
         $this->options = $options + self::$defaults;
     }
 
+    /**
+     * Perform the configured copy asynchronously. Returns a promise that is
+     * fulfilled with the result of the CompleteMultipartUpload or CopyObject
+     * operation or rejected with an exception.
+     *
+     * @return \GuzzleHttp\Promise\Promise
+     */
     public function promise()
     {
         return \GuzzleHttp\Promise\coroutine(function () {
@@ -94,6 +107,15 @@ class ObjectCopier implements PromisorInterface
         });
     }
 
+    /**
+     * Perform the configured copy synchronously. Returns the result of the
+     * CompleteMultipartUpload or CopyObject operation.
+     *
+     * @return Result
+     *
+     * @throws S3Exception
+     * @throws MultipartUploadException
+     */
     public function copy()
     {
         return $this->promise()->wait();
