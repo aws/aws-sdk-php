@@ -154,13 +154,13 @@ class PostObject
         $ldt = gmdate(self::ISO8601_BASIC);
         $sdt = substr($ldt, 0, 8);
 
-        $signature = $this->getSignatureV4(
+        $signature =  base64_encode($this->getSignatureV4(
             $jsonPolicy64,
             $sdt,
             $this->client->getRegion(),
             's3',
             $creds->getSecretKey()
-        );
+        ));
 
         return [
             'AWSAccessKeyId' => $creds->getAccessKeyId(),

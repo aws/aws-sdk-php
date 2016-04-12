@@ -47,7 +47,7 @@ class PostObjectTest extends \PHPUnit_Framework_TestCase
             $a['policy']
         );
 
-        $this->assertEquals('c696290c3307114fe95dce7ea99a5b2cc0efe427f2c603a1b862b903723fbb9d', $a['signature']);
+        $this->assertEquals('xpYpDDMHEU/pXc5+qZpbLMDv5CfyxgOhuGK5A3I/u50=', $a['signature']);
 
         $this->assertEquals(
             '{"expiration":"2007-12-01T12:00:00.000Z","conditions":{"acl":"public-read"}}',

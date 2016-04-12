@@ -21,7 +21,8 @@ trait SignatureTrait
                 $region,
                 $service,
                 $secretKey
-            )
+            ),
+            true
         );
     }
 
