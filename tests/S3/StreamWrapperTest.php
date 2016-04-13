@@ -510,6 +510,18 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0040777, $stat['mode']);
     }
 
+    public function testStatDataIsClearedOnWrite()
+    {
+        $this->cache->set('s3://foo/bar', ['size' => 123, 7 => 123]);
+        $this->assertEquals(123, filesize('s3://foo/bar'));
+        $this->addMockResults($this->client, [
+            new Result,
+            new Result(['ContentLength' => 124])
+        ]);
+        file_put_contents('s3://foo/bar', 'baz!');
+        $this->assertEquals(124, filesize('s3://foo/bar'));
+    }
+
     public function testCanPullStatDataFromCache()
     {
         $this->cache->set('s3://foo/bar', ['size' => 123, 7 => 123]);
