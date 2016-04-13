@@ -16,6 +16,7 @@ use Aws\CommandInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Client used to interact with **Amazon Simple Storage Service (Amazon S3)**.
@@ -219,6 +220,7 @@ class S3Client extends AwsClient implements S3ClientInterface
 
     public function createPresignedRequest(CommandInterface $command, $expires)
     {
+        $command = clone $command;
         $command->getHandlerList()->remove('signer');
 
         /** @var \Aws\Signature\SignatureInterface $signer */
