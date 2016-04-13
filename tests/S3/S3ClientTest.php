@@ -81,9 +81,30 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('X-Amz-Signature=', $url);
     }
 
+    public function testCreatingPresignedUrlDoesNotPermanentlyRemoveSigner()
+    {
+        $sent = false;
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret'  => 'bar'],
+            'http_handler' => function (RequestInterface $request) use (&$sent) {
+                $sent = true;
+                foreach (['X-Amz-Date', 'Authorization'] as $signatureHeader) {
+                    $this->assertTrue($request->hasHeader($signatureHeader));
+                }
+                return Promise\promise_for(new Response);
+            },
+        ]);
+        $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
+        $client->createPresignedRequest($command, 1342138769)->getUri();
+        $client->execute($command);
+        $this->assertTrue($sent);
+    }
+
     public function testCreatesPresignedUrlsWithSpecialCharacters()
     {
-        $client = S3Client::factory([
+        $client = new S3Client([
             'region'      => 'us-east-1',
             'version'     => 'latest',
             'credentials' => ['key' => 'foo', 'secret'  => 'bar']

@@ -34,6 +34,11 @@ class Command implements CommandInterface
         }
     }
 
+    public function __clone()
+    {
+        $this->handlerList = clone $this->handlerList;
+    }
+
     public function getName()
     {
         return $this->name;
