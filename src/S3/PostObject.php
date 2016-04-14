@@ -3,6 +3,7 @@ namespace Aws\S3;
 
 use Aws\Credentials\CredentialsInterface;
 use GuzzleHttp\Psr7\Uri;
+use Aws\Signature\SignatureTrait;
 
 /**
  * Encapsulates the logic for getting the data for an S3 object POST upload form
@@ -11,10 +12,15 @@ use GuzzleHttp\Psr7\Uri;
  */
 class PostObject
 {
+    use SignatureTrait;
+
+    const ISO8601_BASIC = 'Ymd\THis\Z';
+
     private $client;
     private $bucket;
     private $formAttributes;
     private $formInputs;
+    /** @var string */
     private $jsonPolicy;
 
     /**
@@ -38,7 +44,7 @@ class PostObject
         $this->client = $client;
         $this->bucket = $bucket;
 
-        if (is_array($jsonPolicy)) {
+        if (!is_string($jsonPolicy)) {
             $jsonPolicy = json_encode($jsonPolicy);
         }
 
@@ -49,8 +55,8 @@ class PostObject
             'enctype' => 'multipart/form-data'
         ];
 
-        $this->formInputs = $formInputs + ['key' => '${filename}'];
         $credentials = $client->getCredentials()->wait();
+        $this->formInputs = $formInputs + ['key' => '${filename}'];
         $this->formInputs += $this->getPolicyAndSignature($credentials);
     }
 
@@ -145,17 +151,29 @@ class PostObject
 
     protected function getPolicyAndSignature(CredentialsInterface $creds)
     {
-        $jsonPolicy64 = base64_encode($this->jsonPolicy);
+        $ldt = gmdate(self::ISO8601_BASIC);
+        $sdt = substr($ldt, 0, 8);
+        $region = $this->client->getRegion();
+
+        $scope = $this->createScope($sdt, $region, 's3');
+        $credential = "{$creds->getAccessKeyId()}/$scope";
+        $jsonPolicy64 = base64_encode($this->getJsonPolicy());
+
+        $key = $this->getSigningKey(
+            $sdt,
+            $region,
+            's3',
+            $creds->getSecretKey()
+        );
 
         return [
-            'AWSAccessKeyId' => $creds->getAccessKeyId(),
-            'policy'    => $jsonPolicy64,
-            'signature' => base64_encode(hash_hmac(
-                'sha1',
-                $jsonPolicy64,
-                $creds->getSecretKey(),
-                true
-            ))
+            'X-Amz-Credential' => $credential,
+            'X-Amz-Algorithm'  => 'AWS4-HMAC-SHA256',
+            'X-Amz-Date'       => $ldt,
+            'Policy'           => $jsonPolicy64,
+            'X-Amz-Signature'  => bin2hex(
+                hash_hmac('sha256', $jsonPolicy64, $key, true)
+            ),
         ];
     }
 }
