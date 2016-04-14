@@ -6,32 +6,44 @@ namespace Aws\Signature;
  */
 trait SignatureTrait
 {
-    public function getSignatureV4(
-        $stringToSign,
-        $shortDate,
-        $region,
-        $service,
-        $secretKey
-    ) {
-        return hash_hmac(
-            'sha256',
-            $stringToSign,
-            $this->getSigningKeyV4(
-                $shortDate,
-                $region,
-                $service,
-                $secretKey
-            ),
-            true
-        );
+    /** @var array Cache of previously signed values */
+    private $cache = [];
+
+    /** @var int Size of the hash cache */
+    private $cacheSize = 0;
+
+    private function createScope($shortDate, $region, $service)
+    {
+        return "$shortDate/$region/$service/aws4_request";
     }
 
-    private function getSigningKeyV4($shortDate, $region, $service, $secretKey)
+    public function getSigningKey($shortDate, $region, $service, $secretKey)
     {
-        $dateKey = hash_hmac('sha256', $shortDate, "AWS4{$secretKey}", true);
-        $regionKey = hash_hmac('sha256', $region, $dateKey, true);
-        $serviceKey = hash_hmac('sha256', $service, $regionKey, true);
+        $k = $shortDate . '_' . $region . '_' . $service . '_' . $secretKey;
 
-        return hash_hmac('sha256', 'aws4_request', $serviceKey, true);
+        if (!isset($this->cache[$k])) {
+            // Clear the cache when it reaches 50 entries
+            if (++$this->cacheSize > 50) {
+                $this->cache = [];
+                $this->cacheSize = 0;
+            }
+
+            $dateKey = hash_hmac(
+                'sha256',
+                $shortDate,
+                "AWS4{$secretKey}",
+                true
+            );
+            $regionKey = hash_hmac('sha256', $region, $dateKey, true);
+            $serviceKey = hash_hmac('sha256', $service, $regionKey, true);
+            $this->cache[$k] = hash_hmac(
+                'sha256',
+                'aws4_request',
+                $serviceKey,
+                true
+            );
+        }
+
+        return $this->cache[$k];
     }
 }

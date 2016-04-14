@@ -2,6 +2,7 @@
 
 namespace Aws\Test\Integ;
 
+use Aws\S3\S3Client;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
@@ -10,9 +11,10 @@ use Behat\Gherkin\Node\TableNode;
 use Aws\S3\PostObject;
 use Aws\S3\BatchDelete;
 use Aws\ResultInterface;
-// use Aws\Credentials\Credentials;
+use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use PHPUnit_Framework_Assert as Assert;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Defines application features from the specific context.
@@ -25,7 +27,7 @@ class S3Context implements Context, SnippetAcceptingContext
     const RESOURCE_POSTFIX = 'php-integration-s3-post-object-test';
 
     /** @var S3Client */
-    private $S3Client;
+    private $s3Client;
     /** @var StreamInterface */
     private $stream;
     /** @var ResultInterface */
@@ -38,7 +40,7 @@ class S3Context implements Context, SnippetAcceptingContext
      */
     public function iHaveAnClient()
     {
-        $this->S3Client = self::getSdk()->createS3();
+        $this->s3Client = self::getSdk()->createS3();
         $this->stream = Psr7\stream_for(Psr7\try_fopen(self::$tempFile, 'r'));
     }
 
@@ -47,49 +49,57 @@ class S3Context implements Context, SnippetAcceptingContext
      */
     public function iDoAPostUpload()
     {
+        date_default_timezone_set('UTC');
+        $ldt = gmdate(PostObject::ISO8601_BASIC);
+        $sdt = substr($ldt, 0, 8);
+
+        $scope = "$sdt/{$this->s3Client->getRegion()}/s3/aws4_request";
+        $credentails = "{$this->s3Client->getCredentials()->wait()->getAccessKeyId()}/$scope";
+
         $policy = [
-            'expiration' => '2016-12-01T12:00:00.000Z',
+            'expiration' => gmdate('Y-m-d\TH:i:s\Z', strtotime('+1 hour')),
             'conditions' => [
-                ['acl' => 'public-read'],
-            ]
+                ["bucket" => self::getResourceName()],
+                ["starts-with", '$key', ""],
+                ["acl" => "public-read"],
+                ["x-amz-credential" => $credentails],
+                ["x-amz-algorithm" => "AWS4-HMAC-SHA256"],
+                ["x-amz-date" => $ldt],
+            ],
         ];
 
-        $client = new \GuzzleHttp\Client();
-
         $postObject = new PostObject(
-            $this->S3Client,
+            $this->s3Client,
             self::getResourceName(),
-            [],
+            [
+                'acl' => 'public-read',
+            ],
             $policy
         );
 
+        $attributes = $postObject->getFormAttributes();
+        $inputs = []; // format formInputs to multiparts
+        foreach ($postObject->getFormInputs() as $name => $contents) {
+            $inputs []= [
+                'name' => $name,
+                'contents' => $contents,
+            ];
+        }
+
+        $inputs []= [
+            'name' => 'file',
+            'contents' => $this->stream,
+            'filename' => 'file.ext',
+        ];
+
         try {
-                $reponse = $client->request(
-                $postObject->getFormAttributes()['method'],
-                $postObject->getFormAttributes()['action'], [
-                'multipart' => [
-                    [
-                        'name'     => 'key',
-                        'contents' => $postObject->getFormInputs()['key']
-                    ],
-                    [
-                        'name'     => 'policy',
-                        'contents' => $postObject->getFormInputs()['policy']
-                    ],
-                    [
-                        'name'     => 'signature',
-                        'contents' => $postObject->getFormInputs()['signature']
-                    ],
-                    [
-                        'name'     => 'AWSAccessKeyId',
-                        'contents' => $postObject->getFormInputs()['AWSAccessKeyId']
-                    ],
-                    [
-                        'name'     => 'file',
-                        'contents' => self::$tempFile
-                    ],
+            (new Client)->request(
+                $attributes['method'],
+                $attributes['action'],
+                [
+                    'multipart' => $inputs,
                 ]
-            ]);
+            );
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             echo $e->getResponse()->getBody();
         }
@@ -100,16 +110,10 @@ class S3Context implements Context, SnippetAcceptingContext
      */
     public function anObjectIsUploaded()
     {
-        // $S3Client = self::getSdk()->createS3();
-        // Assert::assertTrue($S3Client->doesObjectExist(
-        //     self::getResourceName(),
-        //     '' // key
-        // ));
-
-        // $result = $S3Client->listObjects([
-        //     'Bucket' => self::getResourceName()
-        // ]);
-        // print_r($result);
+        Assert::assertTrue($this->s3Client->doesObjectExist(
+            self::getResourceName(),
+            'file.ext'
+        ));
     }
 
     /**

@@ -21,12 +21,6 @@ class SignatureV4 implements SignatureInterface
     /** @var string */
     private $region;
 
-    /** @var array Cache of previously signed values */
-    private $cache = [];
-
-    /** @var int Size of the hash cache */
-    private $cacheSize = 0;
-
     /**
      * @param string $service Service name to use when signing
      * @param string $region  Region name to use when signing
@@ -248,22 +242,6 @@ class SignatureV4 implements SignatureInterface
         return ['creq' => $canon, 'headers' => $signedHeadersString];
     }
 
-    private function getSigningKey($shortDate, $region, $service, $secretKey)
-    {
-        $k = $shortDate . '_' . $region . '_' . $service . '_' . $secretKey;
-
-        if (!isset($this->cache[$k])) {
-            // Clear the cache when it reaches 50 entries
-            if (++$this->cacheSize > 50) {
-                $this->cache = [];
-                $this->cacheSize = 0;
-            }
-            $this->cache[$k] = $this->getSigningKeyV4($shortDate, $region, $service, $secretKey);
-        }
-
-        return $this->cache[$k];
-    }
-
     private function getCanonicalizedQuery(array $query)
     {
         unset($query['X-Amz-Signature']);
@@ -306,11 +284,6 @@ class SignatureV4 implements SignatureInterface
         }
 
         return $duration;
-    }
-
-    private function createScope($shortDate, $region, $service)
-    {
-        return "$shortDate/$region/$service/aws4_request";
     }
 
     private function moveHeadersToQuery(array $parsedRequest)
