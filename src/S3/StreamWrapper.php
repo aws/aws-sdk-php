@@ -174,6 +174,7 @@ class StreamWrapper
             $params['ContentType'] = $type;
         }
 
+        $this->clearCacheKey("s3://{$params['Bucket']}/{$params['Key']}");
         return $this->boolCall(function () use ($params) {
             return (bool) $this->getClient()->putObject($params);
         });
