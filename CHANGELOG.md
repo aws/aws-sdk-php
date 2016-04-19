@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.0 - 2016-04-19
 
 * `Aws\CognitoIdentityProvider` - Added support for the **Amazon Cognito
   Identity Provider** service.
