@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElasticBeanstalk` - Added support for automatic platform version upgrades
+  with managed updates.
+* `Aws\S3` - Fixed bug where stat cache was not being updated following writes.
+* `Aws\Signature` - Fixed inefficiency in S3 presigner.
+
 ## 3.17.6 - 2016-04-11
 
 * `Aws\Ec2` - Fixed error codes in EC2 waiters.
