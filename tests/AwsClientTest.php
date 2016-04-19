@@ -3,6 +3,7 @@ namespace Aws\Test;
 
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\AwsClient;
+use Aws\CommandInterface;
 use Aws\Credentials\Credentials;
 use Aws\Ec2\Ec2Client;
 use Aws\Ses\SesClient;
@@ -13,6 +14,7 @@ use Aws\Signature\SignatureV4;
 use Aws\Sts\StsClient;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\AwsClient
@@ -289,6 +291,55 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_callable($provider));
     }
 
+    /**
+     * @expectedException \RuntimeException
+     * @expectedExceptionMessage Instances of Aws\AwsClient cannot be serialized
+     */
+    public function testDoesNotPermitSerialization()
+    {
+        $client = $this->createClient();
+        \serialize($client);
+    }
+
+    public function testDoesNotSignOperationsWithAnAuthTypeOfNone()
+    {
+        $client = $this->createClient(
+            [
+                'metadata' => [
+                    'signatureVersion' => 'v4',
+                ],
+                'operations' => [
+                    'Foo' => [
+                        'http' => ['method' => 'POST'],
+                    ],
+                    'Bar' => [
+                        'http' => ['method' => 'POST'],
+                        'authtype' => 'none',
+                    ],
+                ],
+            ],
+            [
+                'handler' => function (
+                    CommandInterface $command,
+                    RequestInterface $request
+                ) {
+                    foreach (['Authorization', 'X-Amz-Date'] as $signatureHeader) {
+                        if ('Bar' === $command->getName()) {
+                            $this->assertFalse($request->hasHeader($signatureHeader));
+                        } else {
+                            $this->assertTrue($request->hasHeader($signatureHeader));
+                        }
+                    }
+
+                    return new Result;
+                }
+            ]
+        );
+
+        $client->foo();
+        $client->bar();
+    }
+
     private function createClient(array $service = [], array $config = [])
     {
         $apiProvider = function ($type) use ($service, $config) {
@@ -321,15 +372,5 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'error_parser' => function () {},
             'version'      => 'latest'
         ]);
-    }
-
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Instances of Aws\AwsClient cannot be serialized
-     */
-    public function testDoesNotPermitSerialization()
-    {
-        $client = $this->createClient();
-        \serialize($client);
     }
 }
