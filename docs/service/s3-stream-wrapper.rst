@@ -23,6 +23,15 @@ This allows you to access buckets and objects stored in Amazon S3 using the
 bucket name followed by a forward slash and an optional object key or prefix:
 ``s3://<bucket>[/<key-or-prefix>]``.
 
+.. note::
+
+    The stream wrapper is designed for working with objects and buckets on which
+    you have at least read permission. This means that your user should have
+    permission to execute ``ListBucket`` on any buckets and ``GetObject`` on any
+    object with which you need to interact. For use cases where you do not have
+    this permission level, it is recommended that you use S3 client operations
+    directly.
+
 
 Downloading data
 ----------------
