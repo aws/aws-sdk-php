@@ -4,6 +4,7 @@
 
 * `Aws\ElasticBeanstalk` - Added support for automatic platform version upgrades
   with managed updates.
+* `Aws\Firehose` - Added support for delivery to AWS Elasticsearch Service.
 * `Aws\Kinesis` - Added support for enhanced monitoring.
 * `Aws\S3` - Fixed bug where stat cache was not being updated following writes.
 * `Aws\Signature` - Fixed inefficiency in S3 presigner.
