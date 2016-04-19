@@ -233,7 +233,9 @@ class PerformanceContext implements Context, SnippetAcceptingContext
         static $memoryFudge;
         static $handlesFudge;
         if (empty($memoryFudge)) {
-            $memoryFudge = !empty(opcache_get_status(false)['opcache_enabled'])
+            $opcacheEnabled = function_exists('opcache_get_status')
+                && !empty(opcache_get_status(false)['opcache_enabled']);
+            $memoryFudge = $opcacheEnabled
                 ? 256 * 1024 // 256KB if OPCache is enabled
                 : 5 * 1024 * 1024; // 5MB otherwise
             $handlesFudge = 5;

@@ -165,11 +165,11 @@ class BatchingContext extends \PHPUnit_Framework_Assert implements
     }
 
     /**
-     * @Then /^the batch should have been flushed (\d+) times$/
+     * @Then /^the batch should have been flushed at least (\d+) times$/
      */
     public function theBatchShouldHaveBeenFlushedTimes($flushCount)
     {
-        $this->assertSame((int) $flushCount, $this->flushCount);
+        $this->assertGreaterThanOrEqual((int) $flushCount, $this->flushCount);
     }
 
     /**

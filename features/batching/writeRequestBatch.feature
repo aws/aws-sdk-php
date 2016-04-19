@@ -6,4 +6,4 @@ Feature: DynamoDB Write Request Batch
     And I put 20 items in the batch
     And I flush the batch
     Then 20 items should have been written
-    And the batch should have been flushed 7 times
+    And the batch should have been flushed at least 7 times
