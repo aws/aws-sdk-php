@@ -6,6 +6,7 @@
   with managed updates.
 * `Aws\Firehose` - Added support for delivery to AWS Elasticsearch Service.
 * `Aws\Kinesis` - Added support for enhanced monitoring.
+* `Aws\S3` - Added support for S3 Accelerate.
 * `Aws\S3` - Fixed bug where stat cache was not being updated following writes.
 * `Aws\Signature` - Fixed inefficiency in S3 presigner.
 
