@@ -2,6 +2,8 @@
 
 ## next release
 
+* `Aws\CognitoIdentityProvider` - Added support for the **Amazon Cognito
+  Identity Provider** service.
 * `Aws\ElasticBeanstalk` - Added support for automatic platform version upgrades
   with managed updates.
 * `Aws\Firehose` - Added support for delivery to AWS Elasticsearch Service.
