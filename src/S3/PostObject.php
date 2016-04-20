@@ -151,29 +151,17 @@ class PostObject
 
     protected function getPolicyAndSignature(CredentialsInterface $creds)
     {
-        $ldt = gmdate(self::ISO8601_BASIC);
-        $sdt = substr($ldt, 0, 8);
-        $region = $this->client->getRegion();
-
-        $scope = $this->createScope($sdt, $region, 's3');
-        $credential = "{$creds->getAccessKeyId()}/$scope";
         $jsonPolicy64 = base64_encode($this->getJsonPolicy());
 
-        $key = $this->getSigningKey(
-            $sdt,
-            $region,
-            's3',
-            $creds->getSecretKey()
-        );
-
         return [
-            'X-Amz-Credential' => $credential,
-            'X-Amz-Algorithm'  => 'AWS4-HMAC-SHA256',
-            'X-Amz-Date'       => $ldt,
-            'Policy'           => $jsonPolicy64,
-            'X-Amz-Signature'  => bin2hex(
-                hash_hmac('sha256', $jsonPolicy64, $key, true)
-            ),
+            'AWSAccessKeyId' => $creds->getAccessKeyId(),
+            'policy'    => $jsonPolicy64,
+            'signature' => base64_encode(hash_hmac(
+                'sha1',
+                $jsonPolicy64,
+                $creds->getSecretKey(),
+                true
+            ))
         ];
     }
 }
