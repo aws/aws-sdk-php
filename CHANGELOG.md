@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.1 - 2016-04-21
 
 * `Aws\Acm` - Added support for tagging.
 * `Aws\CognitoIdentity` - Minor update to support some new features of
