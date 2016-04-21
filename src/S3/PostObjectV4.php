@@ -3,12 +3,21 @@ namespace Aws\S3;
 
 use Aws\Credentials\CredentialsInterface;
 use GuzzleHttp\Psr7\Uri;
+use Aws\Signature\SignatureTrait;
+use Aws\Common\Enum\DateFormat;
+use Aws\Signature\SignatureV4 as SignatureV4;
+use Aws\Api\TimestampShape as TimestampShape;
 
 /**
- * @deprecated
+ * Encapsulates the logic for getting the data for an S3 object POST upload form
+ *
+ * @link http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPOST.html
+ * @link http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-post-example.html
  */
-class PostObject
+class PostObjectV4
 {
+    use SignatureTrait;
+
     private $client;
     private $bucket;
     private $formAttributes;
@@ -18,38 +27,49 @@ class PostObject
     /**
      * Constructs the PostObject.
      *
+     * The options array accepts the following keys:
+     * @link http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html
+     *
      * @param S3ClientInterface $client     Client used with the POST object
      * @param string            $bucket     Bucket to use
      * @param array             $formInputs Associative array of form input
      *                                      fields.
-     * @param string|array      $jsonPolicy JSON encoded POST policy document.
-     *                                      The policy will be base64 encoded
-     *                                      and applied to the form on your
-     *                                      behalf.
+     * @param array             $options    Policy condition options
+     * @param mixed             $expiration Upload expiration time value. By
+     *                                      default: 1 hour vaild peroid.
      */
     public function __construct(
         S3ClientInterface $client,
         $bucket,
         array $formInputs,
-        $jsonPolicy
+        array $options = [],
+        $expiration = '+1 hours'
     ) {
         $this->client = $client;
         $this->bucket = $bucket;
 
-        if (is_array($jsonPolicy)) {
-            $jsonPolicy = json_encode($jsonPolicy);
-        }
-
-        $this->jsonPolicy = $jsonPolicy;
+        // setup form attributes
         $this->formAttributes = [
             'action'  => $this->generateUri(),
             'method'  => 'POST',
             'enctype' => 'multipart/form-data'
         ];
 
+        // setup basic policy
+        $policy = [
+            'expiration' => TimestampShape::format($expiration, 'iso8601'),
+            'conditions' => $options,
+        ];
+
+        // setup basic formInputs
         $this->formInputs = $formInputs + ['key' => '${filename}'];
-        $credentials = $client->getCredentials()->wait();
-        $this->formInputs += $this->getPolicyAndSignature($credentials);
+
+        // finalize policy and signature
+        $credentials = $this->client->getCredentials()->wait();
+        $this->formInputs += $this->getPolicyAndSignature(
+            $credentials,
+            $policy
+        );
     }
 
     /**
@@ -114,16 +134,6 @@ class PostObject
         $this->formInputs[$field] = $value;
     }
 
-    /**
-     * Gets the raw JSON policy.
-     *
-     * @return string
-     */
-    public function getJsonPolicy()
-    {
-        return $this->jsonPolicy;
-    }
-
     private function generateUri()
     {
         $uri = new Uri($this->client->getEndpoint());
@@ -141,19 +151,37 @@ class PostObject
         return (string) $uri;
     }
 
-    protected function getPolicyAndSignature(CredentialsInterface $creds)
-    {
-        $jsonPolicy64 = base64_encode($this->jsonPolicy);
+    protected function getPolicyAndSignature(
+        CredentialsInterface $credentials,
+        array $policy
+    ){
+        $ldt = gmdate(SignatureV4::ISO8601_BASIC);
+        $sdt = substr($ldt, 0, 8);
+        $policy['conditions'][] = ['X-Amz-Date' => $ldt];
+
+        $region = $this->client->getRegion();
+        $scope = $this->createScope($sdt, $region, 's3');
+        $creds = "{$credentials->getAccessKeyId()}/$scope";
+        $policy['conditions'][] = ['X-Amz-Credential' => $creds];
+
+        $policy['conditions'][] = ['X-Amz-Algorithm' => "AWS4-HMAC-SHA256"];
+
+        $jsonPolicy64 = base64_encode(json_encode($policy));
+        $key = $this->getSigningKey(
+            $sdt,
+            $region,
+            's3',
+            $credentials->getSecretKey()
+        );
 
         return [
-            'AWSAccessKeyId' => $creds->getAccessKeyId(),
-            'policy'    => $jsonPolicy64,
-            'signature' => base64_encode(hash_hmac(
-                'sha1',
-                $jsonPolicy64,
-                $creds->getSecretKey(),
-                true
-            ))
+            'X-Amz-Credential' => $creds,
+            'X-Amz-Algorithm' => "AWS4-HMAC-SHA256",
+            'X-Amz-Date' => $ldt,
+            'Policy'           => $jsonPolicy64,
+            'X-Amz-Signature'  => bin2hex(
+                hash_hmac('sha256', $jsonPolicy64, $key, true)
+            ),
         ];
     }
 }
