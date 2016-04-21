@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Acm` - Added support for tagging.
+* `Aws\CognitoIdentity` - Minor update to support some new features of
+  `Aws\CognitoIdentityProvider`.
+* `Aws\Emr` - Added support for smart targeted resizing.
+* `Aws\Iot` - Added support for specifying the SQL rules engine to be used.
+
 ## 3.18.0 - 2016-04-19
 
 * `Aws\CognitoIdentityProvider` - Added support for the **Amazon Cognito
