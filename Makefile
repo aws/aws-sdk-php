@@ -44,6 +44,22 @@ coverage:
 coverage-show:
 	open build/artifacts/coverage/index.html
 
+# Ensures that the MODELSDIR variable was passed to the make command
+check-models-dir:
+	$(if $(MODELSDIR),,$(error MODELSDIR is not defined. Pass via "make tag MODELSDIR=../models"))
+
+sync-models: check-models-dir
+	rsync -chavPL $(MODELSDIR) src/data --exclude="*/*/service-2.json" \
+	--exclude="*/*/resources-1.json" --exclude=".idea/" --exclude="*.iml" \
+	--exclude="sdb/" --exclude="importexport/" --exclude=".git/" \
+	--exclude="README.md" --exclude="lambda/2014-11-11/"
+
+	rsync -chavPL src/data/iot-data/ src/data/data.iot/
+	rm -rf src/data/iot-data
+
+	rsync -chavPL src/data/meteringmarketplace/ src/data/metering.marketplace/
+	rm -rf src/data/meteringmarketplace
+
 integ:
 	vendor/bin/behat --format=progress --tags=integ
 
@@ -139,4 +155,6 @@ full_release: tag release
 
 .PHONY: help clean test coverage coverage-show integ package compile-json \
 guide guide-show api-get-apigen api api-show api-package api-manifest \
-check-tag tag release full-release clear-cache
+check-tag tag release full-release clear-cache test-phar integ smoke \
+api-models compile-json annotate-clients annotate-client-locator \
+build-manifest check-models-dir sync-models
