@@ -349,6 +349,8 @@ use Aws\Api\ApiProvider;
  * @method \GuzzleHttp\Promise\Promise modifyVpcAttributeAsync(array $args = [])
  * @method \Aws\Result modifyVpcEndpoint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyVpcEndpointAsync(array $args = [])
+ * @method \Aws\Result modifyVpcPeeringConnectionOptions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise modifyVpcPeeringConnectionOptionsAsync(array $args = [])
  * @method \Aws\Result monitorInstances(array $args = [])
  * @method \GuzzleHttp\Promise\Promise monitorInstancesAsync(array $args = [])
  * @method \Aws\Result moveAddressToVpc(array $args = [])

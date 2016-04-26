@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Fixed parsing empty responses
+* `Aws\CognitoIdentityProvider` - Remove non-JSON operations.
+* `Aws\Ec2` - Added support for ClassicLink over VPC peering
+* `Aws\Ecr` - This update makes it easier to find repository URIs,
+  which are now appended to the `#describe_repositories`, `#create_repository`,
+  and `#delete_repository` responses.
+* `Aws\S3` - Added support for Post Object Signature V4
+* `Aws\S3` - Fixed Content-MD5 header for PutBucketReplication
+
 ## 3.18.1 - 2016-04-21
 
 * `Aws\Acm` - Added support for tagging.
