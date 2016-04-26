@@ -12,6 +12,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class SignatureV4 implements SignatureInterface
 {
+    use SignatureTrait;
     const ISO8601_BASIC = 'Ymd\THis\Z';
 
     /** @var string */
@@ -19,12 +20,6 @@ class SignatureV4 implements SignatureInterface
 
     /** @var string */
     private $region;
-
-    /** @var array Cache of previously signed values */
-    private $cache = [];
-
-    /** @var int Size of the hash cache */
-    private $cacheSize = 0;
 
     /**
      * @param string $service Service name to use when signing
@@ -247,25 +242,6 @@ class SignatureV4 implements SignatureInterface
         return ['creq' => $canon, 'headers' => $signedHeadersString];
     }
 
-    private function getSigningKey($shortDate, $region, $service, $secretKey)
-    {
-        $k = $shortDate . '_' . $region . '_' . $service . '_' . $secretKey;
-
-        if (!isset($this->cache[$k])) {
-            // Clear the cache when it reaches 50 entries
-            if (++$this->cacheSize > 50) {
-                $this->cache = [];
-                $this->cacheSize = 0;
-            }
-            $dateKey = hash_hmac('sha256', $shortDate, "AWS4{$secretKey}", true);
-            $regionKey = hash_hmac('sha256', $region, $dateKey, true);
-            $serviceKey = hash_hmac('sha256', $service, $regionKey, true);
-            $this->cache[$k] = hash_hmac('sha256', 'aws4_request', $serviceKey, true);
-        }
-
-        return $this->cache[$k];
-    }
-
     private function getCanonicalizedQuery(array $query)
     {
         unset($query['X-Amz-Signature']);
@@ -308,11 +284,6 @@ class SignatureV4 implements SignatureInterface
         }
 
         return $duration;
-    }
-
-    private function createScope($shortDate, $region, $service)
-    {
-        return "$shortDate/$region/$service/aws4_request";
     }
 
     private function moveHeadersToQuery(array $parsedRequest)

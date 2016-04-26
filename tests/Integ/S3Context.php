@@ -6,11 +6,15 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use Aws\S3\S3Client;
+use Aws\S3\PostObject;
+use Aws\S3\PostObjectV4;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 class S3Context implements Context, SnippetAcceptingContext
 {
@@ -18,6 +22,48 @@ class S3Context implements Context, SnippetAcceptingContext
 
     /** @var RequestInterface */
     private $presignedRequest;
+
+    /** @var S3Client */
+    private $s3Client;
+    /** @var StreamInterface */
+    private $stream;
+    private static $tempFile;
+    private $inputs;
+    private $attributes;
+    // for post object
+    private $formInputs = [];
+    private $jsonPolicy;
+    private $options;
+    private $expires;
+
+    private static function getResourceName()
+    {
+        static $bucketName;
+
+        if (empty($bucketName)) {
+            $bucketName =
+                self::getResourcePrefix() . 'aws-test-integ-s3-context';
+        }
+
+        return $bucketName;
+    }
+
+    /**
+     * @BeforeSuite
+     */
+    public static function createTempFile()
+    {
+        self::$tempFile = tempnam(sys_get_temp_dir(), self::getResourceName());
+        file_put_contents(self::$tempFile, str_repeat('x', 128 * 1024));
+    }
+
+    /**
+     * @AfterSuite
+     */
+    public static function deleteTempFile()
+    {
+        unlink(self::$tempFile);
+    }
 
     /**
      * @BeforeSuite
@@ -44,18 +90,6 @@ class S3Context implements Context, SnippetAcceptingContext
         $client->waitUntil('BucketNotExists', [
             'Bucket' => self::getResourceName(),
         ]);
-    }
-
-    private static function getResourceName()
-    {
-        static $bucketName;
-
-        if (empty($bucketName)) {
-            $bucketName = self::getResourcePrefix() . '-'
-                . preg_replace('/\W/', '-', self::class);
-        }
-
-        return $bucketName;
     }
 
     /**
@@ -115,5 +149,145 @@ class S3Context implements Context, SnippetAcceptingContext
     {
         $this->presignedRequest = $this->presignedRequest
             ->withBody(Psr7\stream_for($body));
+    }
+
+    /**
+     * @Given I have an s3 client and I have a file
+     */
+    public function iHaveAnClientAndIHaveAFile()
+    {
+        $this->s3Client = self::getSdk()->createS3();
+        $this->stream = Psr7\stream_for(Psr7\try_fopen(self::$tempFile, 'r'));
+    }
+
+    /**
+     * @Given I have an array of form inputs as following:
+     */
+    public function iHaveAnArrayOfFormInputsAsFollowing(TableNode $table)
+    {
+        foreach ($table as $row) {
+            $this->formInputs += [$row['key'] => $row['value']];
+        }
+    }
+
+    /**
+     * @Given I provide a json string policy as following:
+     */
+    public function iProvideAJsonStringPolicyAsFollowing(PyStringNode $string)
+    {
+        $policy = json_decode($string->getRaw(),true);
+        $policy['conditions'][] = ["bucket" => self::getResourceName()];
+        $policy['conditions'][] = ["starts-with", '$key', ""];
+
+        $this->jsonPolicy = json_encode($policy);
+    }
+
+    /**
+     * @When I create a POST object SigV2 with inputs and policy
+     */
+    public function iCreateAPostObjectSigvWithInputsAndPolicy()
+    {
+        $postObject = new PostObject(
+            $this->s3Client,
+            self::getResourceName(),
+            $this->formInputs,
+            $this->jsonPolicy
+        );
+        $this->preparePostData($postObject);
+    }
+
+    /**
+     * @Given I provide an array of policy conditions as following:
+     */
+    public function iProvideAnArrayOfPolicyConditionsAsFollowing(TableNode $table)
+    {
+        $this->options = [
+            ["bucket" => self::getResourceName()],
+            ["starts-with", '$key', ""],
+        ];
+        foreach ($table as $row) {
+            $this->options[] = [$row['key'] => $row['value']];
+        }
+    }
+
+    /**
+     * @Given I want the policy expires after :expires
+     */
+    public function iWantThePolicyExpiresAfter($expires)
+    {
+        $this->expires = $expires;
+    }
+
+    /**
+     * @When I create a POST object SigV4 with inputs and policy
+     */
+    public function iCreateAPostObjectSigvWithInputsAndPolicy2()
+    {
+        $postObject = new PostObjectV4(
+            $this->s3Client,
+            self::getResourceName(),
+            $this->formInputs,
+            $this->options,
+            $this->expires
+        );
+
+        $this->preparePostData($postObject);
+    }
+
+    /**
+     * @When I make a HTTP POST request
+     */
+    public function iMakeAHttpPostRequest()
+    {
+        try {
+            (new Client)->request(
+                $this->attributes['method'],
+                $this->attributes['action'],
+                [
+                    'multipart' => $this->inputs,
+                ]
+            );
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            echo $e->getResponse()->getBody();
+        }
+    }
+
+    /**
+     * @Then the file called :filename is uploaded
+     */
+    public function theFileCalledIsUploaded($filename)
+    {
+        Assert::assertTrue($this->s3Client->doesObjectExist(
+            self::getResourceName(),
+            $filename
+        ));
+
+        $fileContents = str_repeat('x', 128 * 1024);
+        Assert::assertEquals(
+            $fileContents,
+            $this->s3Client->getObject([
+                'Bucket' => self::getResourceName(),
+                'Key' => $filename,
+            ])['Body']->getContents()
+        );
+    }
+
+    /**
+     * Prepare form inputs and attribute for POST
+     */
+    private function preparePostData($postObject)
+    {
+        $this->attributes = $postObject->getFormAttributes();
+        foreach ($postObject->getFormInputs() as $name => $contents) {
+            $this->inputs[] = [
+                'name' => $name,
+                'contents' => $contents,
+            ];
+        }
+        $this->inputs[] = [
+            'name' => 'file',
+            'contents' => $this->stream,
+            'filename' => 'file.ext',
+        ];
     }
 }
