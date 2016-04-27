@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 3.18.2 - 2016-04-26
+## 3.18.3 - 2016-04-27
 
 * `Aws\Api` - Fixed parsing empty responses
 * `Aws\CognitoIdentityProvider` - Remove non-JSON operations.
