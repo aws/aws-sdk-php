@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OpsWorks` - Added support for default tenancy selection.
+* `Aws\Route53Domains` - Added support for getting contact reachability status
+  and resending contact reachability emails.
+
 ## 3.18.3 - 2016-04-27
 
 * `Aws\Api` - Fixed parsing empty responses
