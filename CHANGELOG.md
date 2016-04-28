@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.4 - 2016-04-28
 
 * `Aws\OpsWorks` - Added support for default tenancy selection.
 * `Aws\Route53Domains` - Added support for getting contact reachability status
