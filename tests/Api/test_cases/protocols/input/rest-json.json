@@ -287,6 +287,70 @@
     ]
   },
   {
+    "description": "Boolean in querystring",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "BoolQuery": {
+            "shape": "BoolType",
+            "location": "querystring",
+            "locationName": "bool-query"
+          }
+        }
+      },
+      "BoolType": {
+        "type": "boolean"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "GET",
+            "requestUri": "/path"
+          },
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "BoolQuery": true
+        },
+        "serialized": {
+          "body": "",
+          "uri": "/path?bool-query=true",
+          "headers": {}
+        }
+      },
+      {
+        "given": {
+          "http": {
+            "method": "GET",
+            "requestUri": "/path"
+          },
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "BoolQuery": false
+        },
+        "serialized": {
+          "body": "",
+          "uri": "/path?bool-query=false",
+          "headers": {}
+        }
+      }
+    ]
+  },
+  {
     "description": "URI parameter and querystring params",
     "metadata": {
       "protocol": "rest-json",
