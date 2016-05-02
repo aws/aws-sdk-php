@@ -146,6 +146,10 @@ abstract class RestSerializer
                 ? $opts['query'] + $value
                 : $value;
         } elseif ($value !== null) {
+            if ($member->getType() === 'boolean') {
+                $value = $value ? 'true' : 'false';
+            }
+            
             $opts['query'][$member['locationName'] ?: $name] = $value;
         }
     }
