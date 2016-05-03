@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release  
+
+* `Aws\Api` - Fixed serialization of booleans in querystrings
+ * `Aws\OpsWorks` - Added support for default tenancy selection
+
 ## 3.18.4 - 2016-04-28
 
 * `Aws\OpsWorks` - Added support for default tenancy selection.
