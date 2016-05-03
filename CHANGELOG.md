@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.8.30 - 2016-05-03
+
+* `Aws\Lambda` - Fixed bug in `UpdateFunctionCode`.
+
 ## 2.8.29 - 2016-04-11
 
 * `Aws\Lambda` - Fixed bug in `UpdateFunctionCode`.
