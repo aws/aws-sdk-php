@@ -15,7 +15,9 @@ class RetryMiddleware
 {
     private static $retryStatusCodes = [
         500 => true,
-        503 => true
+        502 => true,
+        503 => true,
+        504 => true
     ];
 
     private static $retryCodes = [

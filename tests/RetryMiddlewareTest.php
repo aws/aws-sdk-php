@@ -103,7 +103,11 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
         $request = new Request('GET', 'http://www.example.com');
         $err = new AwsException('e', $command, ['response' => new Response(500)]);
         $this->assertTrue($decider(0, $command, $request, null, $err));
+        $err = new AwsException('e', $command, ['response' => new Response(502)]);
+        $this->assertTrue($decider(0, $command, $request, null, $err));
         $err = new AwsException('e', $command, ['response' => new Response(503)]);
+        $this->assertTrue($decider(0, $command, $request, null, $err));
+        $err = new AwsException('e', $command, ['response' => new Response(504)]);
         $this->assertTrue($decider(0, $command, $request, null, $err));
         $err = new AwsException('e', $command, ['response' => new Response(403)]);
         $this->assertFalse($decider(0, $command, $request, null, $err));
