@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.6 - 2016-05-05
 
 * `Aws\ApiGateway` - Added support for additional field on Integration to
   control passthrough behavior
