@@ -87,6 +87,8 @@ use GuzzleHttp\Promise;
  * @method \GuzzleHttp\Promise\Promise listObjectVersionsAsync(array $args = [])
  * @method \Aws\Result listObjects(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listObjectsAsync(array $args = [])
+ * @method \Aws\Result listObjectsV2(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listObjectsV2Async(array $args = [])
  * @method \Aws\Result listParts(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPartsAsync(array $args = [])
  * @method \Aws\Result putBucketAccelerateConfiguration(array $args = [])

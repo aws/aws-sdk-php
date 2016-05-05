@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGateway` - Added support for additional field on Integration to
+  control passthrough behavior
+* `Aws\CloudTrail` - Deprecates the `SnsTopicName` field in favor of `SnsTopicArn`
+* `Aws\Ecs` - Added support for non-comprehensive logDriver enum
+* `Aws\Kms` - Added support for "pro-lockout" flag
+* `Aws\S3` - Amazon S3 Added a new list type to list objects in buckets
+  with a large number of delete markers
+
 ## 3.18.5 - 2016-05-03
 
 * `Aws\Api` - Fixed serialization of booleans in querystrings
