@@ -253,8 +253,8 @@ class S3Client extends AwsClient implements S3ClientInterface
         $signer = call_user_func(
             $this->getSignatureProvider(),
             $this->getConfig('signature_version'),
-            $this->getApi()->getSigningName(),
-            $this->getRegion()
+            $this->getConfig('signing_name'),
+            $this->getConfig('signing_region')
         );
 
         return $signer->presign(

@@ -260,27 +260,18 @@ class AwsClient implements AwsClientInterface
     {
         $api = $this->getApi();
         $provider = $this->signatureProvider;
-        $signatureVersion = $this->config['signature_version'];
-        $signingName = $api->getSigningName();
-        $signingRegion = $this->region;
+        $version = $this->config['signature_version'];
+        $name = $this->config['signing_name'];
+        $region = $this->config['signing_region'];
 
-        $resolver = static function (CommandInterface $c) use (
-            $api,
-            $provider,
-            $signingName,
-            $signingRegion,
-            $signatureVersion
-        ) {
+        $resolver = static function (
+            CommandInterface $c
+        ) use ($api, $provider, $name, $region, $version) {
             if ('none' === $api->getOperation($c->getName())['authtype']) {
-                $signatureVersion = 'anonymous';
+                $version = 'anonymous';
             }
 
-            return SignatureProvider::resolve(
-                $provider,
-                $signatureVersion,
-                $signingName,
-                $signingRegion
-            );
+            return SignatureProvider::resolve($provider, $version, $name, $region);
         };
 
         $this->handlerList->appendSign(

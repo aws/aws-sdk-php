@@ -1,6 +1,10 @@
 <?php
 namespace Aws;
 
+use Aws\Endpoint\PartitionEndpointProvider;
+use Aws\Endpoint\PartitionInterface;
+use GuzzleHttp\Promise\FulfilledPromise;
+
 class MultiRegionClient implements AwsClientInterface
 {
     use AwsClientTrait;
@@ -9,6 +13,8 @@ class MultiRegionClient implements AwsClientInterface
     private $clientPool = [];
     /** @var callable */
     private $factory;
+    /** @var PartitionInterface */
+    private $partition;
     /** @var array */
     private $args;
     /** @var array */
@@ -45,13 +51,51 @@ class MultiRegionClient implements AwsClientInterface
                     };
                 },
             ],
+            'partition' => [
+                'type'    => 'config',
+                'valid'   => ['string', PartitionInterface::class],
+                'doc'     => 'AWS partition to connect to. Valid partitions'
+                    . ' include "aws," "aws-cn," and "aws-us-gov." Used to'
+                    . ' restrict the scope of the mapRegions method.',
+                'default' => function (array $args) {
+                    $region = isset($args['region']) ? $args['region'] : '';
+                    return PartitionEndpointProvider::defaultProvider()
+                        ->getPartition($region, $args['service']);
+                },
+                'fn'      => function ($value, array &$args) {
+                    if (is_string($value)) {
+                        $value = PartitionEndpointProvider::defaultProvider()
+                            ->getPartitionByName($value);
+                    }
+
+                    if (!$value instanceof PartitionInterface) {
+                        throw new \InvalidArgumentException('No valid partition'
+                            . ' was provided. Provide a concrete partition or'
+                            . ' the name of a partition (e.g., "aws," "aws-cn,"'
+                            . ' or "aws-us-gov").'
+                        );
+                    }
+
+                    $args['partition'] = $value;
+                    $args['endpoint_provider'] = $value;
+                }
+            ],
         ];
     }
 
     /**
-     * MultiRegionClient constructor.
+     * The multi-region client constructor accepts the following options:
      *
-     * @param array $args
+     * - client_factory: (callable) An optional callable that takes an array of
+     *   client configuration arguments and returns a regionalized client.
+     * - partition: (Aws\Endpoint\Partition|string) AWS partition to connect to.
+     *   Valid partitions include "aws," "aws-cn," and "aws-us-gov." Used to
+     *   restrict the scope of the mapRegions method.
+     * - region: (string) Region to connect to when no override is provided.
+     *   Used to create the default client factory and determine the appropriate
+     *   AWS partition when present.
+     *
+     * @param array $args Client configuration arguments.
      */
     public function __construct(array $args = [])
     {
@@ -64,14 +108,39 @@ class MultiRegionClient implements AwsClientInterface
         $args = $resolver->resolve($args, new HandlerList);
         $this->config = $args['config'];
         $this->factory = $args['client_factory'];
+        $this->partition = $args['partition'];
         $this->args = array_diff_key($args, $args['config']);
     }
 
+    /**
+     * Get the region to which the client is configured to send requests by
+     * default.
+     *
+     * @return string
+     */
     public function getRegion()
     {
         return $this->getClientFromPool()->getRegion();
     }
 
+    /**
+     * Create a command for an operation name.
+     *
+     * Special keys may be set on the command to control how it behaves,
+     * including:
+     *
+     * - @http: Associative array of transfer specific options to apply to the
+     *   request that is serialized for this command. Available keys include
+     *   "proxy", "verify", "timeout", "connect_timeout", "debug", "delay", and
+     *   "headers".
+     * - @region: The region to which the command should be sent.
+     *
+     * @param string $name Name of the operation to use in the command
+     * @param array  $args Arguments to pass to the command
+     *
+     * @return CommandInterface
+     * @throws \InvalidArgumentException if no command can be found by name
+     */
     public function getCommand($name, array $args = [])
     {
         list($region, $args) = $this->getRegionFromArgs($args);

@@ -126,4 +126,24 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             ['getEndpoint', []],
         ];
     }
+
+    public function testDefaultsToAwsPartition()
+    {
+        $mrc = new MultiRegionClient([
+            'service' => 'ec2',
+        ]);
+
+        $this->assertSame('aws', $mrc->getConfig('partition')->getName());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testRejectsUnrecognizedPartitions()
+    {
+        new MultiRegionClient([
+            'service' => 'ec2',
+            'partition' => 'foo',
+        ]);
+    }
 }
