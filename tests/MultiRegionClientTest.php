@@ -3,10 +3,8 @@ namespace Aws\Test;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
-use Aws\AwsClientInterface;
 use Aws\Command;
 use Aws\CommandInterface;
-use Aws\Endpoint\Partition;
 use Aws\HandlerList;
 use Aws\MultiRegionClient;
 use Aws\Result;
@@ -127,5 +125,25 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             ['getApi', []],
             ['getEndpoint', []],
         ];
+    }
+
+    public function testDefaultsToAwsPartition()
+    {
+        $mrc = new MultiRegionClient([
+            'service' => 'ec2',
+        ]);
+
+        $this->assertSame('aws', $mrc->getConfig('partition')->getName());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testRejectsUnrecognizedPartitions()
+    {
+        new MultiRegionClient([
+            'service' => 'ec2',
+            'partition' => 'foo',
+        ]);
     }
 }

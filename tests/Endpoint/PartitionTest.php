@@ -2,6 +2,7 @@
 namespace Aws\Test;
 
 use Aws\Endpoint\Partition;
+use Aws\Endpoint\PartitionInterface;
 
 /**
  * @covers \Aws\Endpoint\Partition
@@ -15,7 +16,10 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
      */
     public function testAcceptsValidDefinitions(array $definition)
     {
-        $this->assertInstanceOf(Partition::class, new Partition($definition));
+        $this->assertInstanceOf(
+            PartitionInterface::class, 
+            new Partition($definition)
+        );
     }
 
     /**
@@ -31,11 +35,24 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
         new Partition($invalidDefinition);
     }
 
+    /**
+     * @dataProvider partitionDefinitionProvider
+     *
+     * @param array $definition
+     */
+    public function testReportsName(array $definition)
+    {
+        $this->assertSame(
+            $definition['partition'],
+            (new Partition($definition))->getName()
+        );
+    }
+
     public function partitionDefinitionProvider()
     {
         return [
             [[
-                'partition' => 'aws',
+                'partition' => 'aws_test',
                 'dnsSuffix' => 'amazonaws.com',
                 'regions' => [
                     'region' => [
@@ -78,8 +95,8 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
     {
         $partition = new Partition($definition);
 
-        $this->assertTrue($partition->matchesRegion('region'));
-        $this->assertFalse($partition->matchesRegion('foo'));
+        $this->assertTrue($partition->isRegionMatch('region', 'service'));
+        $this->assertFalse($partition->isRegionMatch('foo', 'bar'));
     }
 
     /**
@@ -92,9 +109,9 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
         $definition['regionRegex'] = '^fo[\w]{1}';
         $partition = new Partition($definition);
 
-        $this->assertTrue($partition->matchesRegion('foo'));
-        $this->assertTrue($partition->matchesRegion('fou'));
-        $this->assertFalse($partition->matchesRegion('bar'));
+        $this->assertTrue($partition->isRegionMatch('foo', 's3'));
+        $this->assertTrue($partition->isRegionMatch('fou', 's3'));
+        $this->assertFalse($partition->isRegionMatch('bar', 's3'));
     }
 
     /**
@@ -103,13 +120,18 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
      * @param Partition $partition
      * @param string $service
      * @param array $regions
+     * @param bool $allowNonRegionalEndpoints
      */
     public function testEnumeratesRegionsForGivenService(
         Partition $partition,
         $service,
-        array $regions
+        array $regions,
+        $allowNonRegionalEndpoints
     ) {
-        $this->assertSame($regions, $partition->getRegionsForService($service));
+        $this->assertSame($regions, $partition->getAvailableEndpoints(
+            $service,
+            $allowNonRegionalEndpoints
+        ));
     }
 
     public function serviceRegionsProvider()
@@ -143,9 +165,10 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
         ]);
 
         return [
-            [$partition, 'baz', ['foo-global']],
-            [$partition, 'fizz', ['buzz', 'pop']],
-            [$partition, 'quux', []],
+            [$partition, 'baz', ['foo-global'], false],
+            [$partition, 'fizz', ['buzz', 'pop'], false],
+            [$partition, 'fizz', ['buzz', 'pop', 'pop-external-1-fips'], true],
+            [$partition, 'quux', [], true],
         ];
     }
 
@@ -260,22 +283,6 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
             [$partition, 'pop', 'fizz', 'https://pop.fizz.bar'],
             [$partition, 'us-east-1', 'iot', 'https://iot.us-east-1.bar'],
         ];
-    }
-
-    /**
-     * @dataProvider partitionDefinitionProvider
-     *
-     * @param array $definition
-     */
-    public function testSupportsArrayAccess(array $definition)
-    {
-        $partition = new Partition($definition);
-        $this->assertSame($definition, $partition->toArray());
-        $partition['foo'] = 'bar';
-        $this->assertTrue(isset($partition['foo']));
-        $this->assertSame('bar', $partition['foo']);
-        unset($partition['foo']);
-        $this->assertFalse(isset($partition['foo']));
     }
 
     /**

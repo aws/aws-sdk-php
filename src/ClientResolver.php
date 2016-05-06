@@ -550,7 +550,7 @@ class ClientResolver
     public static function _default_endpoint_provider(array $args)
     {
         return PartitionEndpointProvider::defaultProvider()
-            ->getPartitionFromRegion($args['region']);
+            ->getPartition($args['region'], $args['service']);
     }
 
     public static function _default_signature_provider()

@@ -4,12 +4,36 @@ namespace Aws\Endpoint;
 use InvalidArgumentException as Iae;
 
 /**
- * @internal
+ * Default implementation of an AWS partition.
  */
-final class Partition implements \ArrayAccess
+final class Partition implements PartitionInterface
 {
-    private $definition;
+    private $data;
 
+    /**
+     * The partition constructor accepts the following options:
+     *
+     * - `partition`: (string, required) The partition name as specified in an
+     *   ARN (e.g., `aws`)
+     * - `partitionName`: (string) The human readable name of the partition
+     *   (e.g., "AWS Standard")
+     * - `dnsSuffix`: (string, required) The DNS suffix of the partition. This
+     *   value is used to determine how endpoints in the partition are resolved.
+     * - `regionRegex`: (string) A PCRE regular expression that specifies the
+     *   pattern that region names in the endpoint adhere to.
+     * - `regions`: (array, required) A map of the regions in the partition.
+     *   Each key is the region as present in a hostname (e.g., `us-east-1`),
+     *   and each value is a structure containing region information.
+     * - `defaults`: (array) A map of default key value pairs to apply to each
+     *   endpoint of the partition. Any value in an `endpoint` definition will
+     *   supersede any values specified in `defaults`.
+     * - `services`: (array, required) A map of service endpoint prefix name
+     *   (the value found in a hostname) to information about the service.
+     *
+     * @param array $definition
+     *
+     * @throws Iae if any required options are missing
+     */
     public function __construct(array $definition)
     {
         foreach (['partition', 'regions', 'services', 'dnsSuffix'] as $key) {
@@ -18,51 +42,25 @@ final class Partition implements \ArrayAccess
             }
         }
 
-        $this->definition = $definition;
+        $this->data = $definition;
     }
 
-    public function toArray()
+    public function getName()
     {
-        return $this->definition;
+        return $this->data['partition'];
     }
 
-    public function offsetGet($offset)
+    public function isRegionMatch($region, $service)
     {
-        return isset($this->definition[$offset])
-            ? $this->definition[$offset] : null;
-    }
-
-    public function offsetSet($offset, $value)
-    {
-        $this->definition[$offset] = $value;
-    }
-
-    public function offsetExists($offset)
-    {
-        return isset($this->definition[$offset]);
-    }
-
-    public function offsetUnset($offset)
-    {
-        unset($this->definition[$offset]);
-    }
-
-    /**
-     * Determine if this partition contains the provided region.
-     *
-     * @param string $region
-     *
-     * @return bool
-     */
-    public function matchesRegion($region)
-    {
-        if (isset($this->definition['regions'][$region])) {
+        if (isset($this->data['regions'][$region])
+            || isset($this->data['services'][$service]['endpoints'][$region])
+        ) {
             return true;
         }
 
-        if (isset($this->definition['regionRegex'])) {
+        if (isset($this->data['regionRegex'])) {
             return (bool) preg_match(
-                "@{$this->definition['regionRegex']}@",
+                "@{$this->data['regionRegex']}@",
                 $region
             );
         }
@@ -70,20 +68,24 @@ final class Partition implements \ArrayAccess
         return false;
     }
 
-    public function getRegionsForService($service)
-    {
+    public function getAvailableEndpoints(
+        $service,
+        $allowNonRegionalEndpoints = false
+    ) {
         if ($this->isServicePartitionGlobal($service)) {
             return [$this->getPartitionEndpoint($service)];
         }
 
-        if (isset($this->definition['services'][$service]['endpoints'])) {
+        if (isset($this->data['services'][$service]['endpoints'])) {
             $serviceRegions = array_keys(
-                $this->definition['services'][$service]['endpoints']
+                $this->data['services'][$service]['endpoints']
             );
 
-            return array_intersect($serviceRegions, array_keys(
-                $this->definition['regions']
-            ));
+            return $allowNonRegionalEndpoints
+                ? $serviceRegions
+                : array_intersect($serviceRegions, array_keys(
+                    $this->data['regions']
+                ));
         }
 
         return [];
@@ -115,15 +117,15 @@ final class Partition implements \ArrayAccess
     private function getEndpointData($service, $region)
     {
 
-        $resolvedRegion = $this->resolveRegion($service, $region);
-        $data = isset($this->definition['services'][$service]['endpoints'][$resolvedRegion])
-            ? $this->definition['services'][$service]['endpoints'][$resolvedRegion]
+        $resolved = $this->resolveRegion($service, $region);
+        $data = isset($this->data['services'][$service]['endpoints'][$resolved])
+            ? $this->data['services'][$service]['endpoints'][$resolved]
             : [];
-        $data += isset($this->definition['services'][$service]['defaults'])
-            ? $this->definition['services'][$service]['defaults']
+        $data += isset($this->data['services'][$service]['defaults'])
+            ? $this->data['services'][$service]['defaults']
             : [];
-        $data += isset($this->definition['defaults'])
-            ? $this->definition['defaults']
+        $data += isset($this->data['defaults'])
+            ? $this->data['defaults']
             : [];
 
         return $data;
@@ -158,13 +160,13 @@ final class Partition implements \ArrayAccess
 
     private function isServicePartitionGlobal($service)
     {
-        return isset($this->definition['services'][$service]['isRegionalized'])
-            && false === $this->definition['services'][$service]['isRegionalized'];
+        return isset($this->data['services'][$service]['isRegionalized'])
+            && false === $this->data['services'][$service]['isRegionalized'];
     }
 
     private function getPartitionEndpoint($service)
     {
-        return $this->definition['services'][$service]['partitionEndpoint'];
+        return $this->data['services'][$service]['partitionEndpoint'];
     }
 
     private function formatEndpoint($template, $service, $region)
@@ -172,7 +174,7 @@ final class Partition implements \ArrayAccess
         return strtr($template, [
             '{service}' => $service,
             '{region}' => $region,
-            '{dnsSuffix}' => $this->definition['dnsSuffix'],
+            '{dnsSuffix}' => $this->data['dnsSuffix'],
         ]);
     }
 }

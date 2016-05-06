@@ -1,8 +1,8 @@
 <?php
 namespace Aws;
 
-use Aws\Endpoint\Partition;
 use Aws\Endpoint\PartitionEndpointProvider;
+use Aws\Endpoint\PartitionInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
 
 class MultiRegionClient implements AwsClientInterface
@@ -13,7 +13,7 @@ class MultiRegionClient implements AwsClientInterface
     private $clientPool = [];
     /** @var callable */
     private $factory;
-    /** @var Partition */
+    /** @var PartitionInterface */
     private $partition;
     /** @var array */
     private $args;
@@ -53,19 +53,27 @@ class MultiRegionClient implements AwsClientInterface
             ],
             'partition' => [
                 'type'    => 'config',
-                'valid'   => ['string', Partition::class],
+                'valid'   => ['string', PartitionInterface::class],
                 'doc'     => 'AWS partition to connect to. Valid partitions'
                     . ' include "aws," "aws-cn," and "aws-us-gov." Used to'
                     . ' restrict the scope of the mapRegions method.',
                 'default' => function (array $args) {
                     $region = isset($args['region']) ? $args['region'] : '';
                     return PartitionEndpointProvider::defaultProvider()
-                        ->getPartitionFromRegion($region);
+                        ->getPartition($region, $args['service']);
                 },
                 'fn'      => function ($value, array &$args) {
                     if (is_string($value)) {
                         $value = PartitionEndpointProvider::defaultProvider()
                             ->getPartitionByName($value);
+                    }
+
+                    if (!$value instanceof PartitionInterface) {
+                        throw new \InvalidArgumentException('No valid partition'
+                            . ' was provided. Provide a concrete partition or'
+                            . ' the name of a partition (e.g., "aws," "aws-cn,"'
+                            . ' or "aws-us-gov").'
+                        );
                     }
 
                     $args['partition'] = $value;
