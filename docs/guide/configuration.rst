@@ -426,6 +426,44 @@ information provided by different HTTP handlers will vary.
   specific PHP stream resource.
 
 
+.. _http_decode_content:
+
+decode_content
+^^^^^^^^^^^^^^
+
+:Type: ``bool``
+
+Instructs the underlying HTTP handler to inflate the body of compressed
+responses. When not enabled, compressed response bodies may be inflated with a
+``GuzzleHttp\Psr7\InflateStream``.
+
+.. note::
+
+    Content decoding is enabled by default in the SDK's default HTTP handler,
+    and for backwards compatibility reasons this default cannot be changed. If
+    you store compressed files in S3, it is recommended that you disable content
+    decoding at the S3 client level.
+
+    .. code-block:: php
+
+        use Aws\S3\S3Client;
+        use GuzzleHttp\Psr7\InflateStream;
+
+        $client = new S3Client([
+            'region'  => 'us-west-2',
+            'version' => 'latest',
+            'http'    => ['decode_content' => false],
+        ]);
+
+        $result = $client->getObject([
+            'Bucket' => 'my-bucket',
+            'Key'    => 'massize_gzipped_file.tgz'
+        ]);
+
+        $compressedBody = $result['Body']; // This content is still gzipped.
+        $inflatedBody = new InflateStream($result['Body']); // This is now readable.
+
+
 .. _http_delay:
 
 delay

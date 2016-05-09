@@ -199,3 +199,16 @@ was written for a different version of PHP.
 
 If you encounter a parsing error, please check your system and make sure it
 fulfills the SDK's :doc:`/getting-started/requirements`.
+
+
+Why is the S3 client decompressing gzipped files?
+-------------------------------------------------
+
+Some HTTP handlers -- including the default Guzzle 6 HTTP handler -- will
+inflate compressed response bodies by default. This behavior can be overridden
+by setting the :ref:`http_decode_content` HTTP option to ``false``. For
+backwards compatibility reasons, this default cannot be changed, but it is
+recommended that you disable content decoding at the S3 client level.
+
+See :ref:`http_decode_content` for an example of how to disable automatic
+content decoding.

@@ -468,6 +468,7 @@ to use the following options:
 
 - :ref:`http_connect_timeout`
 - :ref:`http_debug`
+- :ref:`http_decode_content` (optional)
 - :ref:`http_delay`
 - :ref:`http_progress` (optional)
 - :ref:`http_proxy`
