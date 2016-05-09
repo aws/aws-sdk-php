@@ -737,6 +737,43 @@ EOXML;
         $client->headObject(['Bucket' => 'bucket', 'Key' => 'key']);
     }
 
+    public function testContentDecodingCanBeDisabled()
+    {
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http' => ['decode_content' => false],
+            'http_handler' => function (RequestInterface $r, array $opts = []) {
+                $this->assertArrayHasKey('decode_content', $opts);
+                $this->assertSame(false, $opts['decode_content']);
+
+                return Promise\promise_for(new Response);
+            }
+        ]);
+
+        $client->getObject(['Bucket' => 'bucket', 'Key' => 'key']);
+    }
+
+    public function testContentDecodingCanBeDisabledOnCommands()
+    {
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => function (RequestInterface $r, array $opts = []) {
+                $this->assertArrayHasKey('decode_content', $opts);
+                $this->assertSame(false, $opts['decode_content']);
+
+                return Promise\promise_for(new Response);
+            }
+        ]);
+
+        $client->getObject([
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+            '@http' => ['decode_content' => false],
+        ]);
+    }
+
     public function testCanDetermineRegionOfBucket()
     {
         $client = new S3Client([
