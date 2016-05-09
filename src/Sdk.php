@@ -84,6 +84,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionGlacier(array $args = [])
  * @method \Aws\Iam\IamClient createIam(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIam(array $args = [])
+ * @method \Aws\ImportExport\ImportExportClient createImportExport(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionImportExport(array $args = [])
  * @method \Aws\Inspector\InspectorClient createInspector(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionInspector(array $args = [])
  * @method \Aws\Iot\IotClient createIot(array $args = [])
