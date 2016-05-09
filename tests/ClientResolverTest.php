@@ -600,4 +600,53 @@ EOT;
             [$invocationArgs, 'signing_region', 'quux', 'buzz'],
         ];
     }
+
+
+    /**
+     * @dataProvider partitionReturnProvider
+     *
+     * @param array $args
+     * @param string $argName
+     * @param string $expected
+     */
+    public function testSigningValuesAreFetchedFromPartition(
+        array $args,
+        $argName,
+        $expected
+    ) {
+        $resolverArgs = array_intersect_key(
+            ClientResolver::getDefaultArguments(),
+            array_flip(['endpoint_provider', 'endpoint', 'service', 'region', $argName])
+        );
+        $resolver = new ClientResolver($resolverArgs);
+
+        $resolved = $resolver->resolve($args, new HandlerList);
+        $this->assertSame($expected, $resolved[$argName]);
+    }
+
+    public function partitionReturnProvider()
+    {
+        $invocationArgs = ['endpoint' => 'https://foo.bar.amazonaws.com'];
+
+        return [
+            // signatureVersion
+            [
+                ['service' => 's3', 'region' => 'us-west-2'] + $invocationArgs,
+                'signature_version',
+                's3v4',
+            ],
+            // signingName
+            [
+                ['service' => 'iot', 'region' => 'us-west-2'] + $invocationArgs,
+                'signing_name',
+                'execute-api',
+            ],
+            // signingRegion
+            [
+                ['service' => 'dynamodb', 'region' => 'local'] + $invocationArgs,
+                'signing_region',
+                'us-east-1',
+            ],
+        ];
+    }
 }

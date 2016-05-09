@@ -560,8 +560,19 @@ class ClientResolver
 
     public static function _default_signature_version(array &$args)
     {
-        return isset($args['config']['signature_version'])
-            ? $args['config']['signature_version']
+        if (isset($args['config']['signature_version'])) {
+            return $args['config']['signature_version'];
+        }
+
+        $args['__partition_result'] = isset($args['__partition_result'])
+            ? isset($args['__partition_result'])
+            : call_user_func(PartitionEndpointProvider::defaultProvider(), [
+                'service' => $args['service'],
+                'region' => $args['region'],
+            ]);
+
+        return isset($args['__partition_result']['signatureVersion'])
+            ? $args['__partition_result']['signatureVersion']
             : $args['api']->getSignatureVersion();
     }
 
@@ -569,6 +580,17 @@ class ClientResolver
     {
         if (isset($args['config']['signing_name'])) {
             return $args['config']['signing_name'];
+        }
+
+        $args['__partition_result'] = isset($args['__partition_result'])
+            ? isset($args['__partition_result'])
+            : call_user_func(PartitionEndpointProvider::defaultProvider(), [
+                'service' => $args['service'],
+                'region' => $args['region'],
+            ]);
+
+        if (isset($args['__partition_result']['signingName'])) {
+            return $args['__partition_result']['signingName'];
         }
 
         if ($signingName = $args['api']->getSigningName()) {
@@ -580,8 +602,19 @@ class ClientResolver
 
     public static function _default_signing_region(array &$args)
     {
-        return isset($args['config']['signing_region'])
-            ? $args['config']['signing_region']
+        if (isset($args['config']['signing_region'])) {
+            return $args['config']['signing_region'];
+        }
+
+        $args['__partition_result'] = isset($args['__partition_result'])
+            ? isset($args['__partition_result'])
+            : call_user_func(PartitionEndpointProvider::defaultProvider(), [
+                'service' => $args['service'],
+                'region' => $args['region'],
+            ]);
+
+        return isset($args['__partition_result']['signingRegion'])
+            ? $args['__partition_result']['signingRegion']
             : $args['region'];
     }
 
