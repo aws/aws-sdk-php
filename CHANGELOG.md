@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.7 - 2016-05-10
 
 * `Aws\` - Added support for new region and endpoints
 * `Aws\Emr` - Added support for ListInstances API having filter on instance state
