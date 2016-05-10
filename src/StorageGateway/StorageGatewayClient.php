@@ -82,6 +82,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listLocalDisksAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result listTapes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTapesAsync(array $args = [])
  * @method \Aws\Result listVolumeInitiators(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listVolumeInitiatorsAsync(array $args = [])
  * @method \Aws\Result listVolumeRecoveryPoints(array $args = [])

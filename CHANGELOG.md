@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Added support for new region and endpoints
+* `Aws\Emr` - Added support for ListInstances API having filter on instance state
+* `Aws\ImportExport` - Added support for `Aws\ImportExport` service
+
 ## 3.18.6 - 2016-05-05
 
 * `Aws\ApiGateway` - Added support for additional field on Integration to
