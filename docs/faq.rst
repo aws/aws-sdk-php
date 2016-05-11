@@ -212,3 +212,31 @@ recommended that you disable content decoding at the S3 client level.
 
 See :ref:`http_decode_content` for an example of how to disable automatic
 content decoding.
+
+
+How do I disable body signing in S3?
+-------------------------------------------------
+
+You can disable body signing by setting the ``ContentSHA256`` parameter in
+command object to ``Aws\Signature\S3SignatureV4::UNSIGNED_PAYLOAD``. Then PHP SDK will use it as
+the 'x-amz-content-sha-256' header and the body checksum in the canonical request.
+
+.. code-block:: php
+
+    $s3Client = new Aws\S3\S3Client([
+        'version' => '2006-03-01',
+        'region'  => 'us-standard'
+    ]);
+
+    $params = [
+        'Bucket' => 'foo',
+        'Key'    => 'baz',
+        'ContentSha256' => Aws\Signature\S3SignatureV4::UNSIGNED_PAYLOAD
+    ];
+
+    // Using operation methods creates command implicitly.
+    $result = $s3Client->putObject($params);
+
+    // Using commands explicitly.
+    $command = $s3Client->getCommand('PutObject', $params);
+    $result = $s3Client->execute($command);
