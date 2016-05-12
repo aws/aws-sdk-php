@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationDiscoveryService` - Added support for `Aws Discovery` service
+* `Aws\CloudFormation` - Added support for `ExecutionStatus` in `ChangeSets`
+* `Aws\Ec2` - Added support for identifying stale security groups in VPC
+* `Aws\Ssm` - Added support for document sharing feature
+
 ## 3.18.7 - 2016-05-10
 
 * `Aws\` - Added support for new region and endpoints
