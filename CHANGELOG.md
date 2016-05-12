@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.8 - 2016-05-12
 
 * `Aws\ApplicationDiscoveryService` - Added support for `Aws Discovery` service
 * `Aws\CloudFormation` - Added support for `ExecutionStatus` in `ChangeSets`
