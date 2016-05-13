@@ -328,6 +328,7 @@ class Transfer implements PromisorInterface
 
     private function createS3Key($filename)
     {
+        $filename = $this->normalizePath($filename);
         $relative_file_path = ltrim(
             preg_replace('#^' . preg_quote($this->sourceMetadata['path']) . '#', '', $filename),
             '/\\'
