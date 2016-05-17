@@ -6,8 +6,14 @@ use Aws\AwsClient;
 /**
  * Amazon WorkSpaces client.
  *
+ * @method \Aws\Result createTags(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createTagsAsync(array $args = [])
  * @method \Aws\Result createWorkspaces(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createWorkspacesAsync(array $args = [])
+ * @method \Aws\Result deleteTags(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteTagsAsync(array $args = [])
+ * @method \Aws\Result describeTags(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTagsAsync(array $args = [])
  * @method \Aws\Result describeWorkspaceBundles(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeWorkspaceBundlesAsync(array $args = [])
  * @method \Aws\Result describeWorkspaceDirectories(array $args = [])

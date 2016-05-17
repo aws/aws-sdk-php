@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationDiscoveryService` - Fixed an incorrect model from the previous
+  release. To use `AWS Discovery` service, please upgrade to this version
+* `Aws\WorkSpaces` - Added support for tagging to categorize `Amazon WorkSpaces`,
+  which also allows allocating usage to cost centers from AWS account bill
+
 ## 3.18.8 - 2016-05-12
 
 * `Aws\ApplicationDiscoveryService` - Added support for `Aws Discovery` service
