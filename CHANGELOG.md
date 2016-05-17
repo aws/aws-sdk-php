@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.9 - 2016-05-17
 
 * `Aws\ApplicationDiscoveryService` - Fixed an incorrect model from the previous
   release. To use `AWS Discovery` service, please upgrade to this version
