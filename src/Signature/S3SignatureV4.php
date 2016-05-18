@@ -41,6 +41,11 @@ class S3SignatureV4 extends SignatureV4
                 'X-Amz-Content-Sha256',
                 $this->getPresignedPayload($request)
             );
+        } else {
+            $request = $request->withHeader(
+                'X-Amz-Content-Sha256',
+                $request->getHeaderLine('x-amz-content-sha256')
+            );
         }
 
         return parent::presign($request, $credentials, $expires);
