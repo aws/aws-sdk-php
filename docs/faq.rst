@@ -231,7 +231,7 @@ the 'x-amz-content-sha-256' header and the body checksum in the canonical reques
     $params = [
         'Bucket' => 'foo',
         'Key'    => 'baz',
-        'ContentSha256' => Aws\Signature\S3SignatureV4::UNSIGNED_PAYLOAD
+        'ContentSHA256' => Aws\Signature\S3SignatureV4::UNSIGNED_PAYLOAD
     ];
 
     // Using operation methods creates command implicitly.
