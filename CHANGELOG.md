@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Fixed signature with S3 presign request
+
 ## 3.18.9 - 2016-05-17
 
 * `Aws\ApplicationDiscoveryService` - Fixed an incorrect model from the previous
