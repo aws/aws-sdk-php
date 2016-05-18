@@ -24,7 +24,7 @@ Feature: Pre-signed URLs
       | key           | value            |
       | Key           | foo.bar          |
       | Body          | xxx_yyy_zzz      |
-      | ContentSha256 | UNSIGNED PAYLOAD |
+      | ContentSHA256 | UNSIGNED-PAYLOAD |
     And I change the body of the pre-signed request to be "zzz_yyy_xxx"
     And I send the pre-signed request
     When I create a pre-signed request for a "GetObject" command with:
