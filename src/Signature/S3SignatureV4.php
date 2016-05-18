@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class S3SignatureV4 extends SignatureV4
 {
-    const UNSIGNED_PAYLOAD = 'UNSIGNED PAYLOAD';
+    const UNSIGNED_PAYLOAD = 'UNSIGNED-PAYLOAD';
     
     /**
      * Always add a x-amz-content-sha-256 for data integrity.
