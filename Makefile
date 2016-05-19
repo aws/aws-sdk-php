@@ -52,7 +52,7 @@ sync-models: check-models-dir
 	rsync -chavPL $(MODELSDIR) src/data --exclude="*/*/service-2.json" \
 	--exclude="*/*/resources-1.json" --exclude=".idea/" --exclude="*.iml" \
 	--exclude="sdb/" --exclude="lambda/2014-11-11/" --exclude=".git/" \
-	--exclude="README.md"
+	--exclude="*.md"
 
 	rsync -chavPL src/data/iot-data/ src/data/data.iot/
 	rm -rf src/data/iot-data
