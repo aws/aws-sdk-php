@@ -51,8 +51,10 @@ foreach (scandir(__DIR__ . '/../src') as $dir) {
 $manifest = [];
 foreach (glob(__DIR__ . '/../src/data/**/**/api-2.json') as $file) {
     $model = json_decode(file_get_contents($file), true);
+    preg_match('@src/data/([^/]+)/[0-9]{4}-[0-9]{2}-[0-9]{2}/api-2.json$@', $file, $matches);
+    $identifier = $matches[1];
     $metadata = $model['metadata'] + ['compatibleApiVersions' => []];
-    if (empty($manifest[$metadata['endpointPrefix']])) {
+    if (empty($manifest[$identifier])) {
         // Calculate a namespace for the service.
         $ns = isset($metadata['serviceAbbreviation'])
             ? $metadata['serviceAbbreviation']
@@ -65,13 +67,13 @@ foreach (glob(__DIR__ . '/../src/data/**/**/api-2.json') as $file) {
 
         $ns = $possibleNamespaces[strtolower($ns)];
 
-        $manifest[$metadata['endpointPrefix']] = [
+        $manifest[$identifier] = [
             'namespace' => $ns,
             'versions' => [],
         ];
     }
 
-    $manifest[$metadata['endpointPrefix']]['versions'][$metadata['apiVersion']]
+    $manifest[$identifier]['versions'][$metadata['apiVersion']]
         = $metadata['apiVersion'];
 }
 
