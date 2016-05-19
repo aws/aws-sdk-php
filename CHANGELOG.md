@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Firehose` - Added support for configurable retry window for
+  loading data into Amazon Redshift
+* `Aws\Ecs` - Added support for status of ListTaskDefinitionFamilies
+
 ## 3.18.10 - 2016-05-18
 
 * `Aws\S3` - Fixed signature with S3 presign request
