@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.11 - 2016-05-19
 
 * `Aws\Firehose` - Added support for configurable retry window for
   loading data into Amazon Redshift
