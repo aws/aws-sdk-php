@@ -54,7 +54,13 @@ class Service extends AbstractModel
         $this->definition = $definition;
         $this->apiProvider = $provider;
         parent::__construct($definition, new ShapeMap($definition['shapes']));
-        $this->serviceName = $this->getEndpointPrefix();
+
+        if (isset($definition['metadata']['serviceIdentifier'])) {
+            $this->serviceName = $this->getServiceName();
+        } else {
+            $this->serviceName = $this->getEndpointPrefix();
+        }
+
         $this->apiVersion = $this->getApiVersion();
     }
 
@@ -181,6 +187,16 @@ class Service extends AbstractModel
     {
         return $this->definition['metadata']['signingName']
             ?: $this->definition['metadata']['endpointPrefix'];
+    }
+
+    /**
+     * Get the service name.
+     *
+     * @return string
+     */
+    public function getServiceName()
+    {
+        return $this->definition['metadata']['serviceIdentifier'];
     }
 
     /**

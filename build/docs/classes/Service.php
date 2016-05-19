@@ -60,7 +60,7 @@ class Service
 
     public function __construct(Api $api, DocModel $docs)
     {
-        $this->name = $api->getEndpointPrefix();
+        $this->name = $api->getServiceName();
         $this->api = $api;
         $this->namespace = $this->getServiceNamespace($this->name);
         $this->version = $api->getApiVersion();
