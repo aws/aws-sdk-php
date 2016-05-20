@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - Added support for `Aws\ApplicationAutoScaling`
+  service
+
 ## 3.18.11 - 2016-05-19
 
 * `Aws\Firehose` - Added support for configurable retry window for
