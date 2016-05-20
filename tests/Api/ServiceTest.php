@@ -33,7 +33,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $s = new Service(
             [
                 'metadata' => [
-                    'serviceFullName' => 'foo',
+                    'serviceFullName' => 'Foo',
+                    'serviceIdentifier' => 'foo',
                     'endpointPrefix'  => 'bar',
                     'apiVersion'      => 'baz',
                     'signingName'     => 'qux',
@@ -42,7 +43,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             ],
             function () { return []; }
         );
-        $this->assertEquals('foo', $s->getServiceFullName());
+        $this->assertEquals('Foo', $s->getServiceFullName());
+        $this->assertEquals('foo', $s->getServiceName());
         $this->assertEquals('bar', $s->getEndpointPrefix());
         $this->assertEquals('baz', $s->getApiVersion());
         $this->assertEquals('qux', $s->getSigningName());

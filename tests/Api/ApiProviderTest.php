@@ -25,7 +25,8 @@ class ApiProviderTest extends \PHPUnit_Framework_TestCase
     public function testCanResolveProvider()
     {
         $p = function ($a, $b, $c) {return [];};
-        $this->assertEquals([], ApiProvider::resolve($p, 't', 's', 'v'));
+        $result = ['metadata'=> ['serviceIdentifier' => 's']];
+        $this->assertEquals($result, ApiProvider::resolve($p, 't', 's', 'v'));
 
         $p = function ($a, $b, $c) {return null;};
         $this->setExpectedException(UnresolvedApiException::class);
