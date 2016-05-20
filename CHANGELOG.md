@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.12 - 2016-05-19
 
 * `Aws\ApplicationAutoScaling` - Added support for `Aws\ApplicationAutoScaling`
   service
