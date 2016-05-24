@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.13 - 2016-05-24
 
 * `Aws\Ec2` - Added support for accessing instance console screenshot
 * `Aws\Rds` - Added support for cross-account snapshot sharing
