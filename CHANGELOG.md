@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Added support for accessing instance console screenshot
+* `Aws\Rds` - Added support for cross-account snapshot sharing
+
 ## 3.18.12 - 2016-05-19
 
 * `Aws\ApplicationAutoScaling` - Added support for `Aws\ApplicationAutoScaling`

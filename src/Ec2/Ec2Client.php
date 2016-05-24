@@ -315,6 +315,8 @@ use Aws\Api\ApiProvider;
  * @method \GuzzleHttp\Promise\Promise enableVpcClassicLinkDnsSupportAsync(array $args = [])
  * @method \Aws\Result getConsoleOutput(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getConsoleOutputAsync(array $args = [])
+ * @method \Aws\Result getConsoleScreenshot(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getConsoleScreenshotAsync(array $args = [])
  * @method \Aws\Result getPasswordData(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getPasswordDataAsync(array $args = [])
  * @method \Aws\Result importImage(array $args = [])
