@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElastiCache` - Added support for exporting a Redis snapshot
+  to an Amazon S3 bucket
+
 ## 3.18.13 - 2016-05-24
 
 * `Aws\Ec2` - Added support for accessing instance console screenshot
