@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.14 - 2016-05-26
 
 * `Aws\ElastiCache` - Added support for exporting a Redis snapshot
   to an Amazon S3 bucket
