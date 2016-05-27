@@ -100,7 +100,7 @@ try {
 }
 ```
 
-### Related Projects
+### Related AWS Projects
 
 * [AWS Service Provider for Laravel][mod-laravel]
 * [AWS SDK ZF2 Module][mod-zf2]
