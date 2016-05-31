@@ -982,7 +982,7 @@ for details about any changes you may need to make to your code for this upgrade
 
 * New requirements on Guzzle 5 and PHP 5.5.
 * Event system now uses Guzzle 5 events and no longer utilizes Symfony2.
-* `version` and `region` are noww required parameter for each client
+* `version` and `region` are now required parameter for each client
   constructor. You can op-into using the latest version of a service by
   setting `version` to `latest`.
 * Removed `Aws\S3\ResumableDownload`.
