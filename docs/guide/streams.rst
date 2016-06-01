@@ -29,7 +29,7 @@ can be satisfied with a string, a PHP stream resource, or an instance of
 Stream Decorators
 -----------------
 
-Guzzle provides serveral stream decorators that can be used to control how the
+Guzzle provides several stream decorators that can be used to control how the
 SDK and Guzzle interact with the streaming resource provided as an input
 parameter to a command. These decorators can modify how handlers will be able
 to read and seek on a given stream. The following is a partial list; more can be
