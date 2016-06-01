@@ -341,7 +341,7 @@ EOT
      * @param string|bool|null $stub The path to the phar stub file. Pass or
      *      leave null to automatically have one created for you. Pass false
      *      to no use a stub in the generated phar.
-     * @param string $autoloaderFilename Name of the autolaoder filename.
+     * @param string $autoloaderFilename Name of the autoloader filename.
      */
     public function createPhar(
         $dest,

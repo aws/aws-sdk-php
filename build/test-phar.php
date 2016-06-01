@@ -15,7 +15,7 @@ $s3->getPaginator('ListObjects');
 // Legacy factory instantiation.
 Aws\DynamoDb\DynamoDbClient::factory($conf);
 
-// JMESPath autolaoder
+// JMESPath autoloader
 \JmesPath\search('foo', ['foo' => 'bar']);
 
 // React autoloader
