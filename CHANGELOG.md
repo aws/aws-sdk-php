@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.15 - 2016-06-02
 
 * `Aws\Ec2` - Added support for `type` parameter in RequestSpotFleet API
  and `fulfilledCapacity` in DescribeSpotFleetRequests API response
