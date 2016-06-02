@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Added support for `type` parameter in RequestSpotFleet API
+ and `fulfilledCapacity` in DescribeSpotFleetRequests API response
+
 ## 3.18.14 - 2016-05-26
 
 * `Aws\ElastiCache` - Added support for exporting a Redis snapshot
