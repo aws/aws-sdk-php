@@ -77,10 +77,11 @@ class DynamoDbClient extends AbstractClient
         // Configure the custom exponential backoff plugin for DynamoDB throttling
         $exceptionParser = new JsonQueryExceptionParser();
         if (!isset($config[Options::BACKOFF])) {
+            $retries = isset($config[Options::BACKOFF_RETRIES]) ? $config[Options::BACKOFF_RETRIES] : 11;
             $config[Options::BACKOFF] = new BackoffPlugin(
-            // Retry requests if the CRC32 header does not match the CRC32 of the response.
+                // Retry requests if the CRC32 header does not match the CRC32 of the response.
                 new Crc32ErrorChecker(
-                    self::createDynamoDbBackoffStrategy($exceptionParser)
+                    self::createDynamoDbBackoffStrategy($exceptionParser, $retries)
                 )
             );
         }
@@ -108,11 +109,8 @@ class DynamoDbClient extends AbstractClient
      * @return TruncatedBackoffStrategy
      * @internal
      */
-    public static function createDynamoDbBackoffStrategy(JsonQueryExceptionParser $exceptionParser)
+    public static function createDynamoDbBackoffStrategy(JsonQueryExceptionParser $exceptionParser, $retries = 11)
     {
-
-        $retries = isset($config[Options::BACKOFF_RETRIES]) ? $config[Options::BACKOFF_RETRIES] : 11;
-
         // Retry failed requests up to 11 times instead of the normal 3
         return new TruncatedBackoffStrategy($retries,
             // Retry failed requests with 400-level responses due to throttling
