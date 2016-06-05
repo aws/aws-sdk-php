@@ -245,8 +245,10 @@ class S3Client extends AbstractClient
      */
     private static function createBackoffPlugin(S3ExceptionParser $exceptionParser)
     {
+        $retries = isset($config[Options::BACKOFF_RETRIES]) ? $config[Options::BACKOFF_RETRIES] : 3;
+
         return new BackoffPlugin(
-            new TruncatedBackoffStrategy(3,
+            new TruncatedBackoffStrategy($retries,
                 new IncompleteMultipartUploadChecker(
                     new CurlBackoffStrategy(null,
                         new HttpBackoffStrategy(null,

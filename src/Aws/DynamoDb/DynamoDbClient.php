@@ -110,8 +110,11 @@ class DynamoDbClient extends AbstractClient
      */
     public static function createDynamoDbBackoffStrategy(JsonQueryExceptionParser $exceptionParser)
     {
+
+        $retries = isset($config[Options::BACKOFF_RETRIES]) ? $config[Options::BACKOFF_RETRIES] : 11;
+
         // Retry failed requests up to 11 times instead of the normal 3
-        return new TruncatedBackoffStrategy(11,
+        return new TruncatedBackoffStrategy($retries,
             // Retry failed requests with 400-level responses due to throttling
             new ThrottlingErrorChecker($exceptionParser,
                 // Retry failed requests with 500-level responses

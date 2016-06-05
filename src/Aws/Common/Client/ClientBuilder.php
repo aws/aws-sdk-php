@@ -491,9 +491,11 @@ class ClientBuilder
 
     private function createDefaultBackoff()
     {
+        $retries = isset($config[Options::BACKOFF_RETRIES]) ? $config[Options::BACKOFF_RETRIES] : 3;
+
         return new BackoffPlugin(
             // Retry failed requests up to 3 times if it is determined that the request can be retried
-            new TruncatedBackoffStrategy(3,
+            new TruncatedBackoffStrategy($retries,
                 // Retry failed requests with 400-level responses due to throttling
                 new ThrottlingErrorChecker($this->exceptionParser,
                     // Retry failed requests due to transient network or cURL problems
