@@ -9,6 +9,8 @@ use Psr\Http\Message\RequestInterface;
 /**
  * Amazon Machine Learning client.
  *
+ * @method \Aws\Result addTags(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise addTagsAsync(array $args = [])
  * @method \Aws\Result createBatchPrediction(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createBatchPredictionAsync(array $args = [])
  * @method \Aws\Result createDataSourceFromRDS(array $args = [])
@@ -33,6 +35,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise deleteMLModelAsync(array $args = [])
  * @method \Aws\Result deleteRealtimeEndpoint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteRealtimeEndpointAsync(array $args = [])
+ * @method \Aws\Result deleteTags(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteTagsAsync(array $args = [])
  * @method \Aws\Result describeBatchPredictions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBatchPredictionsAsync(array $args = [])
  * @method \Aws\Result describeDataSources(array $args = [])
@@ -41,6 +45,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise describeEvaluationsAsync(array $args = [])
  * @method \Aws\Result describeMLModels(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeMLModelsAsync(array $args = [])
+ * @method \Aws\Result describeTags(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTagsAsync(array $args = [])
  * @method \Aws\Result getBatchPrediction(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBatchPredictionAsync(array $args = [])
  * @method \Aws\Result getDataSource(array $args = [])

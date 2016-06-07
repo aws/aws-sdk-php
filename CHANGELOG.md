@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Iot` - Added support for string and numeric values in `hashKey`
+  and `rangeKey`, update `ListPolicyPrincipals`
+* `Aws\MachineLearning` - Added support for tagging operations
+* `Aws\Ec2` - Added support for `DescribeSpotFleetRequests` paginator
+* `Aws\DynamoDbStreams` - Added support for `ApproximationCreationDateTime`
+* `Aws\CloudWatch` - Added support for Alarm waiter
+
+
 ## 3.18.15 - 2016-06-02
 
 * `Aws\Ec2` - Added support for `type` parameter in RequestSpotFleet API

@@ -74,6 +74,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listCertificatesByCAAsync(array $args = [])
  * @method \Aws\Result listPolicies(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPoliciesAsync(array $args = [])
+ * @method \Aws\Result listPolicyPrincipals(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listPolicyPrincipalsAsync(array $args = [])
  * @method \Aws\Result listPolicyVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPolicyVersionsAsync(array $args = [])
  * @method \Aws\Result listPrincipalPolicies(array $args = [])
