@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` -  Fixed StartAfter option in ListObjectsV2 operation
+
 ## 3.18.16 - 2016-06-07
 
 * `Aws\Iot` - Added support for string and numeric values in `hashKey`
