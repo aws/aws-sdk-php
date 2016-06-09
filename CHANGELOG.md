@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.17 - 2016-06-09
 
 * `Aws\S3` -  Fixed StartAfter option in ListObjectsV2 operation
 
