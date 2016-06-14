@@ -88,7 +88,7 @@ of a bucket), you could do the following.
     ]);
 
     $expression = '[CommonPrefixes[].Prefix, Contents[].Key][]';
-    foreach ($paginator->search($expression) as $item) {
+    foreach ($results->search($expression) as $item) {
         echo $item . "\n";
     }
 
