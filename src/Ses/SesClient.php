@@ -72,6 +72,8 @@ use Aws\Credentials\CredentialsInterface;
  * @method \GuzzleHttp\Promise\Promise setIdentityDkimEnabledAsync(array $args = [])
  * @method \Aws\Result setIdentityFeedbackForwardingEnabled(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setIdentityFeedbackForwardingEnabledAsync(array $args = [])
+ * @method \Aws\Result setIdentityHeadersInNotificationsEnabled(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise setIdentityHeadersInNotificationsEnabledAsync(array $args = [])
  * @method \Aws\Result setIdentityMailFromDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setIdentityMailFromDomainAsync(array $args = [])
  * @method \Aws\Result setIdentityNotificationTopic(array $args = [])

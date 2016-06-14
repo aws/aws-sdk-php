@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Rds` - Added support for RDS Cross-region managed binlog replication
+* `Aws\CloudTrail` - Added support for new exception to handle
+  `KMS InvalidStateException`
+* `Aws\Ses` - Added support for enhanced customer notifications
+
 ## 3.18.17 - 2016-06-09
 
 * `Aws\S3` -  Fixed StartAfter option in ListObjectsV2 operation

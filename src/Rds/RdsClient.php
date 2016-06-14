@@ -144,6 +144,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise modifyOptionGroupAsync(array $args = [])
  * @method \Aws\Result promoteReadReplica(array $args = [])
  * @method \GuzzleHttp\Promise\Promise promoteReadReplicaAsync(array $args = [])
+ * @method \Aws\Result promoteReadReplicaDBCluster(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise promoteReadReplicaDBClusterAsync(array $args = [])
  * @method \Aws\Result purchaseReservedDBInstancesOffering(array $args = [])
  * @method \GuzzleHttp\Promise\Promise purchaseReservedDBInstancesOfferingAsync(array $args = [])
  * @method \Aws\Result rebootDBInstance(array $args = [])
