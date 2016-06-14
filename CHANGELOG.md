@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.18 - 2016-06-14
 
 * `Aws\Rds` - Added support for RDS Cross-region managed binlog replication
 * `Aws\CloudTrail` - Added support for new exception to handle
