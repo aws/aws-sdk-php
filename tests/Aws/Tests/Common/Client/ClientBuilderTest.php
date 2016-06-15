@@ -410,7 +410,7 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         );
 
         $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
-        $this->assertEquals(6, $client->getConfig('client.backoff.retries'));
+        $this->assertEquals(6, $client->getConfig(Options::BACKOFF_RETRIES));
         $plugin = $client->getConfig(Options::BACKOFF);
         $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffPlugin', $plugin);
         $strategy = $this->readAttribute($plugin, 'strategy');
