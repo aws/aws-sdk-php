@@ -171,7 +171,8 @@ class S3Client extends AbstractClient
 
         // Configure the custom exponential backoff plugin for retrying S3 specific errors
         if (!isset($config[Options::BACKOFF])) {
-            $config[Options::BACKOFF] = static::createBackoffPlugin($exceptionParser);
+            $retries = isset($config[Options::BACKOFF_RETRIES]) ? $config[Options::BACKOFF_RETRIES] : 3;
+            $config[Options::BACKOFF] = static::createBackoffPlugin($exceptionParser, $retries);
         }
 
         $config[Options::SIGNATURE] = $signature = static::createSignature($config);
@@ -243,10 +244,10 @@ class S3Client extends AbstractClient
      *
      * @return BackoffPlugin
      */
-    private static function createBackoffPlugin(S3ExceptionParser $exceptionParser)
+    private static function createBackoffPlugin(S3ExceptionParser $exceptionParser, $retries = 3)
     {
         return new BackoffPlugin(
-            new TruncatedBackoffStrategy(3,
+            new TruncatedBackoffStrategy($retries,
                 new IncompleteMultipartUploadChecker(
                     new CurlBackoffStrategy(null,
                         new HttpBackoffStrategy(null,

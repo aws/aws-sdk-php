@@ -121,6 +121,11 @@ class ClientOptions extends Enum
     const BACKOFF = 'client.backoff';
 
     /**
+     * @var string Option key holding the exponential backoff retries
+     */
+    const BACKOFF_RETRIES = 'client.backoff.retries';
+
+    /**
      * @var string `Guzzle\Log\LogAdapterInterface` object used to log backoff retries. Use 'debug' to emit PHP
      *             warnings when a retry is issued.
      */

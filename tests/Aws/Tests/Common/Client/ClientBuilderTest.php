@@ -24,6 +24,7 @@ use Aws\Common\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
 use Guzzle\Common\Collection;
 use Guzzle\Plugin\Backoff\BackoffPlugin;
+use Guzzle\Plugin\Backoff\TruncatedBackoffStrategy;
 
 /**
  * Note: The tests for the build method do not mock anything
@@ -394,6 +395,49 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
 
         $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
         $this->assertFalse($client->getConfig('client.backoff'));
+    }
+
+    public function testDefaultBackoffMaxRetries()
+    {
+        $config = array(
+            'service' => 'dynamodb',
+            'region'  => 'us-east-1',
+            'service.description' => array(
+                'signatureVersion' => 'v2',
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            ),
+        );
+
+        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertNull($client->getConfig(Options::BACKOFF_RETRIES));
+        $plugin = $client->getConfig(Options::BACKOFF);
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffPlugin', $plugin);
+        $strategy = $this->readAttribute($plugin, 'strategy');
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\TruncatedBackoffStrategy', $strategy);
+        $retries = $this->readAttribute($strategy, 'max');
+        $this->assertEquals(3, $retries);
+    }
+
+    public function testAllowsBackoffMaxRetries()
+    {
+        $config = array(
+            'service' => 'dynamodb',
+            'region'  => 'us-east-1',
+            'service.description' => array(
+                'signatureVersion' => 'v2',
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            ),
+            'client.backoff.retries' => 6
+        );
+
+        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertEquals(6, $client->getConfig(Options::BACKOFF_RETRIES));
+        $plugin = $client->getConfig(Options::BACKOFF);
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffPlugin', $plugin);
+        $strategy = $this->readAttribute($plugin, 'strategy');
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\TruncatedBackoffStrategy', $strategy);
+        $retries = $this->readAttribute($strategy, 'max');
+        $this->assertEquals(6, $retries);
     }
 
     public function testInjectsVersionIntoServiceDescriptionFileName()

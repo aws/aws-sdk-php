@@ -242,6 +242,8 @@ Options                            Description
 
 ``command.params``                 An associative array of default options to set on each command created by the client.
 
+``client.backoff.retries``         The amount or retries that the backoff plugin will attempt.
+
 ``client.backoff.logger``          A ``Guzzle\Log\LogAdapterInterface`` object used to log backoff retries. Use
                                    ``'debug'`` to emit PHP warnings when a retry is issued.
 

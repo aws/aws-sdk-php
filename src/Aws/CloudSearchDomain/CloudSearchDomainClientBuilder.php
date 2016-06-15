@@ -69,9 +69,11 @@ class CloudSearchDomainClientBuilder extends ClientBuilder
         // Resolve backoff strategy
         $backoff = $config->get(Options::BACKOFF);
         if ($backoff === null) {
+            $retries = isset($config[Options::BACKOFF_RETRIES]) ? $config[Options::BACKOFF_RETRIES] : 3;
+
             $backoff = new BackoffPlugin(
-                // Retry failed requests up to 3 times if it is determined that the request can be retried
-                new TruncatedBackoffStrategy(3,
+                // Retry failed requests up to 3 (or configured) times if it is determined that the request can be retried
+                new TruncatedBackoffStrategy($retries,
                     // Retry failed requests with 400-level responses due to throttling
                     new ThrottlingErrorChecker($exceptionParser,
                         // Retry failed requests due to transient network or cURL problems

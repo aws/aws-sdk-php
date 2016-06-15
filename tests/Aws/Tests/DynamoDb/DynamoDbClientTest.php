@@ -18,6 +18,7 @@ namespace Aws\Tests\DynamoDb;
 
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Enum\Type;
+use Aws\Common\Enum\ClientOptions as Options;
 
 class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
 {
@@ -132,5 +133,42 @@ class DynamoDbClientTest extends \Guzzle\Tests\GuzzleTestCase
         ));
 
         $this->assertInstanceOf('Aws\DynamoDb\Session\SessionHandler', $client->registerSessionHandler());
+    }
+
+    public function testDefaultBackoffMaxRetries()
+    {
+        $client = DynamoDbClient::factory(array(
+            'key'    => 'foo',
+            'secret' => 'bar',
+            'region' => 'us-west-1'
+        ));
+        $this->assertNull($client->getConfig(Options::BACKOFF_RETRIES));
+        $plugin = $client->getConfig(Options::BACKOFF);
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffPlugin', $plugin);
+        $strategy = $this->readAttribute($plugin, 'strategy');
+        $this->assertInstanceOf('Aws\DynamoDb\Crc32ErrorChecker', $strategy);
+        $strategy = $strategy->getNext();
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\TruncatedBackoffStrategy', $strategy);
+        $retries = $this->readAttribute($strategy, 'max');
+        $this->assertEquals(11, $retries);
+    }
+
+    public function testAllowsBackoffMaxRetries()
+    {
+        $client = DynamoDbClient::factory(array(
+            'key'    => 'foo',
+            'secret' => 'bar',
+            'region' => 'us-west-1',
+            'client.backoff.retries' => 6
+        ));
+        $this->assertEquals(6, $client->getConfig(Options::BACKOFF_RETRIES));
+        $plugin = $client->getConfig(Options::BACKOFF);
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffPlugin', $plugin);
+        $strategy = $this->readAttribute($plugin, 'strategy');
+        $this->assertInstanceOf('Aws\DynamoDb\Crc32ErrorChecker', $strategy);
+        $strategy = $strategy->getNext();
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\TruncatedBackoffStrategy', $strategy);
+        $retries = $this->readAttribute($strategy, 'max');
+        $this->assertEquals(6, $retries);
     }
 }
