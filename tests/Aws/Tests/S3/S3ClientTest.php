@@ -513,4 +513,17 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         ));
         $this->assertTrue(isset($result['Location']));
     }
+
+    public function testDefaultBackoffMaxRetries()
+    {
+        $client = S3Client::factory(array(Options::REGION => 'cn-north-1'));
+        $this->assertNull($client->getConfig(Options::BACKOFF_RETRIES));
+        $plugin = $client->getConfig(Options::BACKOFF);
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffPlugin', $plugin);
+        $strategy = $this->readAttribute($plugin, 'strategy');
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\TruncatedBackoffStrategy', $strategy);
+        $retries = $this->readAttribute($strategy, 'max');
+        $this->assertEquals(3, $retries);
+    }
+
 }

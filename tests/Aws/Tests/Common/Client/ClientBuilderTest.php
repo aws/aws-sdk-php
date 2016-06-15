@@ -397,6 +397,27 @@ class ClientBuilderTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertFalse($client->getConfig('client.backoff'));
     }
 
+    public function testDefaultBackoffMaxRetries()
+    {
+        $config = array(
+            'service' => 'dynamodb',
+            'region'  => 'us-east-1',
+            'service.description' => array(
+                'signatureVersion' => 'v2',
+                'regions' => array('us-east-1' => array('https' => true, 'hostname' => 'foo.com'))
+            ),
+        );
+
+        $client = ClientBuilder::factory('Aws\\DynamoDb')->setConfig($config)->build();
+        $this->assertNull($client->getConfig(Options::BACKOFF_RETRIES));
+        $plugin = $client->getConfig(Options::BACKOFF);
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffPlugin', $plugin);
+        $strategy = $this->readAttribute($plugin, 'strategy');
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\TruncatedBackoffStrategy', $strategy);
+        $retries = $this->readAttribute($strategy, 'max');
+        $this->assertEquals(3, $retries);
+    }
+
     public function testAllowsBackoffMaxRetries()
     {
         $config = array(
