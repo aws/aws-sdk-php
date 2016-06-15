@@ -526,4 +526,19 @@ class S3ClientTest extends \Guzzle\Tests\GuzzleTestCase
         $this->assertEquals(3, $retries);
     }
 
+    public function testAllowsBackoffMaxRetries()
+    {
+        $client = S3Client::factory(array(
+            Options::REGION => 'cn-north-1',
+            'client.backoff.retries' => 6
+        ));
+        $this->assertEquals(6, $client->getConfig(Options::BACKOFF_RETRIES));
+        $plugin = $client->getConfig(Options::BACKOFF);
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\BackoffPlugin', $plugin);
+        $strategy = $this->readAttribute($plugin, 'strategy');
+        $this->assertInstanceOf('Guzzle\Plugin\Backoff\TruncatedBackoffStrategy', $strategy);
+        $retries = $this->readAttribute($strategy, 'max');
+        $this->assertEquals(6, $retries);
+    }
+
 }
