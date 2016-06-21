@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodePipeline` - Added support for Retry Failed Actions
+* `Aws\Ec2` - Added support for new VPC resource waiters
+
 ## 3.18.18 - 2016-06-14
 
 * `Aws\Rds` - Added support for RDS Cross-region managed binlog replication

@@ -48,6 +48,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putThirdPartyJobFailureResultAsync(array $args = [])
  * @method \Aws\Result putThirdPartyJobSuccessResult(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putThirdPartyJobSuccessResultAsync(array $args = [])
+ * @method \Aws\Result retryStageExecution(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise retryStageExecutionAsync(array $args = [])
  * @method \Aws\Result startPipelineExecution(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startPipelineExecutionAsync(array $args = [])
  * @method \Aws\Result updatePipeline(array $args = [])
