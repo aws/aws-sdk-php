@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.19 - 2016-06-21
 
 * `Aws\CodePipeline` - Added support for Retry Failed Actions
 * `Aws\Ec2` - Added support for new VPC resource waiters
