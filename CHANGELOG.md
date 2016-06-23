@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentity` - Added support for
+  Security Assertion Markup Language (SAML) 2.0.
+* `Aws\DirectConnect` - Added support for downloading the Letter of Authorization:
+   Connecting Facility Assignment (LOA-CFA) for Connections and Interconnects
+* `Aws\Ec2` - Added support for new operations DescribeIdentityIdFormat
+  & ModifyIdentityIdFormat
+
 ## 3.18.19 - 2016-06-21
 
 * `Aws\CodePipeline` - Added support for Retry Failed Actions
