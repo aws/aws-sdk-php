@@ -2,6 +2,8 @@
 namespace Aws\S3;
 
 use Aws;
+use Aws\Exception\AwsException;
+use Aws\Exception\TransferException;
 use Aws\CommandInterface;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
@@ -26,6 +28,9 @@ class Transfer implements PromisorInterface
     private $mupThreshold;
     private $before;
     private $s3Args = [];
+    
+    /** @var array tracking file source information */
+    private $inProgress = [];
 
     /**
      * When providing the $source argument, you may provide a string referencing
@@ -115,7 +120,7 @@ class Transfer implements PromisorInterface
         if ($this->mupThreshold < MultipartUploader::PART_MIN_SIZE) {
             throw new \InvalidArgumentException('mup_threshold must be >= 5MB');
         }
-
+        
         // Handle "before" callback option.
         if (isset($options['before'])) {
             $this->before = $options['before'];
@@ -144,6 +149,17 @@ class Transfer implements PromisorInterface
             $this->promise = $this->sourceMetadata['scheme'] === 'file'
                 ? $this->createUploadPromise()
                 : $this->createDownloadPromise();
+            
+            $this->promise = $this->promise->otherwise(function ($errors) {
+                if ($errors instanceof AwsException) {
+                    $errors = new TransferException(
+                        $this->inProgress['FileSource'],
+                        $errors
+                    );
+                }
+                throw $errors;
+            });
+            $this->inProgress = [];
         }
 
         return $this->promise;
@@ -231,11 +247,14 @@ class Transfer implements PromisorInterface
             if (!is_dir($dir) && !mkdir($dir, 0777, true)) {
                 throw new \RuntimeException("Could not create dir: {$dir}");
             }
-
+            
+            $args = $this->getS3Args($object);
+            $this->inProgress['FileSource'] = $args['Bucket'] . "/" . $args['Key'];
+            
             // Create the command.
             $commands []= $this->client->getCommand(
                 'GetObject',
-                $this->getS3Args($object) + ['@http'  => ['sink'  => $sink]]
+                $args + ['@http'  => ['sink'  => $sink]]
             );
         }
 
@@ -305,6 +324,8 @@ class Transfer implements PromisorInterface
         $args = $this->s3Args;
         $args['SourceFile'] = $filename;
         $args['Key'] = $this->createS3Key($filename);
+        $this->inProgress['FileSource'] = $args['Bucket'] . "/" . $args['Key'];
+        
         $command = $this->client->getCommand('PutObject', $args);
         $this->before and call_user_func($this->before, $command);
 
@@ -315,7 +336,8 @@ class Transfer implements PromisorInterface
     {
         $args = $this->s3Args;
         $args['Key'] = $this->createS3Key($filename);
-
+        $this->inProgress['FileSource'] = $args['Bucket'] . "/" . $args['Key'];
+        
         return (new MultipartUploader($this->client, $filename, [
             'bucket'          => $args['Bucket'],
             'key'             => $args['Key'],

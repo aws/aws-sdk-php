@@ -214,3 +214,23 @@ a callback passed to its constructor.
             }
         },
     ]);
+
+File scope troubleshooting S3 Transfer Failure
+----------------------------------------------
+When a rejected promise is returned for transfer manager, ``Aws\Exception\TransferException``
+is expected to be thrown. ``Aws\Exception\TransferException`` also provides source file information
+that assists troubleshooting.
+
+.. code-block:: php
+
+    try {
+        $manager->promise();
+    } catch (\Aws\Exception\TransferException $e) {
+        // error message contains the path of the source file causing failure
+        echo $e->getMessage();
+
+        // you could also get the file path directly
+        echo $e->getFileSource();
+    }
+
+With the path information, you can perform targeted troubleshooting with particular files.
