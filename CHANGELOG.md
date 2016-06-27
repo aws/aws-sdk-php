@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## next release
+
 ## 3.18.20 - 2016-06-23
 
 * `Aws\CognitoIdentity` - Added support for
