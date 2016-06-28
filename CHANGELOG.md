@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 3.18.22 - 2016-06-28
+
+* `Aws\Ec2` - Added support for ENA supported instances
+* `Aws\Efs` - Added support for "PerformanceMode" parameter for
+  CreateFileSystem and DescribeFileSystems
+* `Aws\GameLift` - Added support for  declaring and inspecting game server
+  runtime configurations on fleets, including server process launch path,
+  parameters, and number of concurrent executions
+* `Aws\Iot` - Added support for "update" and "delete" an item
+  through Dynamo DB rule
+* `Aws\Sns` - Added Worldwide SMS support
+* `Aws\Route53` - Added support for BOM region
+
 ## 3.18.21 - 2016-06-27
 
 ## 3.18.20 - 2016-06-23
