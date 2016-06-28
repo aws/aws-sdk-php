@@ -10,23 +10,34 @@ use Aws\Exception\TransferException;
  */
 class TransferExceptionTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @dataProvider getTestCases
+     */
 
-    public function testCanCreateMultipartException()
+    public function testCanCreateMultipartException($source, $idx, $uncompleted)
     {
         $msg = "some error message";
-        $files = [
-            'foo/bar',
-            'foo/bar/a.txt'
+        $inProgress = [
+            'FileSource' => $source,
+            'Index' => $idx,
+            'Uncompleted' => $uncompleted,
         ];
         $prev = new AwsException($msg, new Command("cmd"));
         
-        foreach ($files as $source) {
-            $exception = new TransferException($source, $prev);
-            $expectedMsg = "An error occurs in a S3 Transfer when transferring file: ";
+        $exception = new TransferException($inProgress, $prev);
+        $expectedMsg = "An error occurs in a S3 Transfer when transferring file: ";
             
-            $this->assertEquals($expectedMsg . $source, $exception->getMessage());
-            $this->assertSame($prev, $exception->getPrevious());
-            $this->assertSame($source, $exception->getFileSource());
-        }
+        $this->assertEquals($expectedMsg . $inProgress['FileSource'], $exception->getMessage());
+        $this->assertSame($prev, $exception->getPrevious());
+        $this->assertSame($inProgress['FileSource'], $exception->getFileSource());
+        $this->assertSame($inProgress['Uncompleted'], $exception->getUncompletedFiles());
+    }
+    
+    public function getTestCases()
+    {
+        return [
+            [ 'foo/bar/a.txt', 1, [] ],
+            [ 'foo/bar/a.txt', 0, [ 'foo/bar/b.txt'] ]
+        ];
     }
 }

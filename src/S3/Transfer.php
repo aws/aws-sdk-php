@@ -31,6 +31,8 @@ class Transfer implements PromisorInterface
     
     /** @var array tracking file source information */
     private $inProgress = [];
+    private $idx;
+    private $iterator;
 
     /**
      * When providing the $source argument, you may provide a string referencing
@@ -152,14 +154,15 @@ class Transfer implements PromisorInterface
             
             $this->promise = $this->promise->otherwise(function ($errors) {
                 if ($errors instanceof AwsException) {
+                    $this->trackUncompleted();
                     $errors = new TransferException(
-                        $this->inProgress['FileSource'],
+                        $this->inProgress,
                         $errors
                     );
                 }
                 throw $errors;
             });
-            $this->inProgress = [];
+            $this->clearInProgress();
         }
 
         return $this->promise;
@@ -237,7 +240,9 @@ class Transfer implements PromisorInterface
 
 
         $commands = [];
-        foreach ($this->getDownloadsIterator() as $object) {
+        $iterator = $this->getDownloadsIterator();
+        $this->iterator = $iterator;
+        foreach ($iterator as $idx => $object) {
             // Prepare the sink.
             $sink = $this->destination['path'] . '/'
                 . preg_replace('/^' . preg_quote($prefix, '/') . '/', '', $object);
@@ -249,7 +254,8 @@ class Transfer implements PromisorInterface
             }
             
             $args = $this->getS3Args($object);
-            $this->inProgress['FileSource'] = $args['Bucket'] . "/" . $args['Key'];
+            $this->idx = $idx;
+            $this->trackInProgress($args);
             
             // Create the command.
             $commands []= $this->client->getCommand(
@@ -270,8 +276,11 @@ class Transfer implements PromisorInterface
 
     private function createUploadPromise()
     {
+        $iterator = $this->getUploadsIterator();
+        $this->iterator = $iterator;
         // Map each file into a promise that performs the actual transfer.
-        $files = \Aws\map($this->getUploadsIterator(), function ($file) {
+        $files = \Aws\map($iterator, function ($file) use ($iterator) {
+            $this->idx = $iterator->key();
             return (filesize($file) >= $this->mupThreshold)
                 ? $this->uploadMultipart($file)
                 : $this->upload($file);
@@ -324,8 +333,8 @@ class Transfer implements PromisorInterface
         $args = $this->s3Args;
         $args['SourceFile'] = $filename;
         $args['Key'] = $this->createS3Key($filename);
-        $this->inProgress['FileSource'] = $args['Bucket'] . "/" . $args['Key'];
-        
+        $this->trackInProgress($args);
+
         $command = $this->client->getCommand('PutObject', $args);
         $this->before and call_user_func($this->before, $command);
 
@@ -336,8 +345,8 @@ class Transfer implements PromisorInterface
     {
         $args = $this->s3Args;
         $args['Key'] = $this->createS3Key($filename);
-        $this->inProgress['FileSource'] = $args['Bucket'] . "/" . $args['Key'];
-        
+        $this->trackInProgress($args);
+
         return (new MultipartUploader($this->client, $filename, [
             'bucket'          => $args['Bucket'],
             'key'             => $args['Key'],
@@ -409,5 +418,26 @@ class Transfer implements PromisorInterface
             }
             fwrite($debug, "Transferring {$context}\n");
         };
+    }
+
+    private function trackInProgress($args)
+    {
+        $this->inProgress['FileSource'] = $args['Bucket'] . "/" . $args['Key'];
+        $this->inProgress['Index'] = $this->idx;
+    }
+
+    private function trackUncompleted()
+    {
+        $this->inProgress['Uncompleted'] = [];
+        foreach ($this->iterator as $key => $file) {
+            if ($key > $this->idx) {
+                $this->inProgress['Uncompleted'][] = $file;
+            }
+        }
+    }
+    
+    private function clearInProgress()
+    {
+        $this->inProgress = [];
     }
 }

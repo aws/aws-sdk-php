@@ -6,18 +6,22 @@ class TransferException extends \RuntimeException
 {
     /** @var string file source path */
     private $source;
-
+    /** @var array files haven't been transferred yet */
+    private $uncompleted = [];
+    
     /**
      * TransferException constructor.
      * 
-     * @param string $source file source that generates exception
+     * @param array $inProgress 
      * @param \Exception|array $prev Exception being thrown
      */
-    public function __construct($source, $prev = null)
+    public function __construct(array $inProgress, $prev = null)
     {
         $msg = "An error occurs in a S3 Transfer when transferring file: ";
         
-        $this->source = $source;
+        $this->source = $inProgress['FileSource'];
+        $this->uncompleted = $inProgress['Uncompleted'];
+        
         $msg .= $this->source;
         
         parent::__construct($msg, 0, $prev);
@@ -31,5 +35,15 @@ class TransferException extends \RuntimeException
     public function getFileSource()
     {
         return $this->source;
+    }
+
+    /**
+     * Get remaining file names that haven't been transferred
+     * 
+     * @return array
+     */
+    public function getUncompletedFiles()
+    {
+        return $this->uncompleted;
     }
 }
