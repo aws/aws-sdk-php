@@ -48,6 +48,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeGameSessionsAsync(array $args = [])
  * @method \Aws\Result describePlayerSessions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describePlayerSessionsAsync(array $args = [])
+ * @method \Aws\Result describeRuntimeConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeRuntimeConfigurationAsync(array $args = [])
  * @method \Aws\Result describeScalingPolicies(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeScalingPoliciesAsync(array $args = [])
  * @method \Aws\Result getGameSessionLogUrl(array $args = [])
@@ -76,5 +78,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateFleetPortSettingsAsync(array $args = [])
  * @method \Aws\Result updateGameSession(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateGameSessionAsync(array $args = [])
+ * @method \Aws\Result updateRuntimeConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateRuntimeConfigurationAsync(array $args = [])
  */
 class GameLiftClient extends AwsClient {}
