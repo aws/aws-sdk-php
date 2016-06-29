@@ -295,4 +295,51 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals($creq, $ctx['creq']);
         $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));
     }
+
+    /**
+     * @dataProvider testProvider
+     */
+    public function testValidate($req)
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = Psr7\parse_request($req);
+
+        $signed = $sig->signRequest($req, $creds);
+
+        $valid = $sig->validate($signed, $creds);
+
+        $this->assertTrue($valid);
+    }
+
+
+    public function testValidateFailsWithDifferentKey()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('PUT', 'http://foo.com', [
+            'host' => 'foo.com'
+        ]);
+
+        $signed = $sig->signRequest($req, $creds);
+
+        $valid = $sig->validate($signed, new Credentials('b', 'b'));
+
+        $this->assertFalse($valid);
+    }
+
+    public function testValidateFailsWithDifferentSecret()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('PUT', 'http://foo.com', [
+            'host' => 'foo.com'
+        ]);
+
+        $signed = $sig->signRequest($req, $creds);
+
+        $valid = $sig->validate($signed, new Credentials('a', 'd'));
+
+        $this->assertFalse($valid);
+    }
 }

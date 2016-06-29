@@ -23,4 +23,11 @@ class AnonymousSignature implements SignatureInterface
     ) {
         return $request;
     }
+
+    public function validate(
+        RequestInterface $request,
+        CredentialsInterface $credentials
+    ){
+        return true;
+    }
 }
