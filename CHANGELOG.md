@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DatabaseMigrationService` - Added support for specify `VpcSecurityGroupId`
+  for the replication instance
+* `Aws\Ssm` - Added support for registering customer servers to enable command function
+
 ## 3.18.22 - 2016-06-28
 
 * `Aws\Ec2` - Added support for ENA supported instances
