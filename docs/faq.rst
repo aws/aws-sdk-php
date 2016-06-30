@@ -215,7 +215,7 @@ content decoding.
 
 
 How do I disable body signing in S3?
--------------------------------------------------
+------------------------------------
 
 You can disable body signing by setting the ``ContentSHA256`` parameter in
 command object to ``Aws\Signature\S3SignatureV4::UNSIGNED_PAYLOAD``. Then PHP SDK will use it as
@@ -240,3 +240,17 @@ the 'x-amz-content-sha-256' header and the body checksum in the canonical reques
     // Using commands explicitly.
     $command = $s3Client->getCommand('PutObject', $params);
     $result = $s3Client->execute($command);
+
+How is retry scheme handled in PHP SDK?
+---------------------------------------
+
+PHP SDK has a ``RetryMiddleware`` that handles retry behavior. In terms of 5xx HTTP
+status codes for server errors, SDK retries on 500, 502, 503 and 504.
+
+Throttling exceptions including ``RequestLimitExceeded``, ``Throttling``,
+``ProvisionedThroughputExceededException``, ``ThrottlingException``, ``RequestThrottled``
+and ``BandwidthLimitExceeded`` are handled with retries as well.
+
+SDK also integrates exponential delay with backoff and jitter algorithm in retry scheme. Furthermore,
+default retry behavior is configured as ``3`` for all services except dynamoDB, which is ``10``.
+
