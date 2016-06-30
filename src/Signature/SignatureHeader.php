@@ -70,13 +70,45 @@ class SignatureHeader
      * @param $name
      * @return string
      */
-    public function getCredential($name)
+    public function getCredential()
     {
-        if (isset($this->data['Credential'][$name])) {
+        if (isset($this->data['Credential'])) {
             return $this->data['Credential'];
         }
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
+    public function getService()
+    {
+        if (isset($this->data['Credential']['Service'])) {
+            return $this->data['Credential']['Service'];
+        }
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    public function getRegion()
+    {
+        if (isset($this->data['Credential']['Region'])) {
+            return $this->data['Credential']['Region'];
+        }
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    public function getAccessId()
+    {
+        if (isset($this->data['Credential']['AccessId'])) {
+            return $this->data['Credential']['AccessId'];
+        }
+    }
     /**
      * @return array
      */

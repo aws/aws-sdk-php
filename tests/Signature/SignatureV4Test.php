@@ -301,7 +301,7 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
      */
     public function testValidate($req)
     {
-        $sig = new SignatureV4('foo', 'bar');
+        $sig = new SignatureV4('Service', 'eu-west-1');
         $creds = new Credentials('a', 'b');
         $req = Psr7\parse_request($req);
 
@@ -312,10 +312,26 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $this->assertTrue($valid);
     }
 
+    /**
+     * @dataProvider testProvider
+     */
+    public function testValidateSuceedsWithDifferentRegion($req)
+    {
+        $sig = new SignatureV4('Service', 'eu-west-1');
+        $creds = new Credentials('a', 'b');
+        $req = Psr7\parse_request($req);
+
+        $signed = $sig->signRequest($req, $creds);
+
+        $sig2 = new SignatureV4('Service', 'us-west-1');
+        $valid = $sig2->validate($signed, $creds);
+
+        $this->assertTrue($valid);
+    }
 
     public function testValidateFailsWithDifferentKey()
     {
-        $sig = new SignatureV4('foo', 'bar');
+        $sig = new SignatureV4('Service', 'eu-west-1');
         $creds = new Credentials('a', 'b');
         $req = new Request('PUT', 'http://foo.com', [
             'host' => 'foo.com'
@@ -330,7 +346,7 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
 
     public function testValidateFailsWithDifferentSecret()
     {
-        $sig = new SignatureV4('foo', 'bar');
+        $sig = new SignatureV4('Service', 'eu-west-1');
         $creds = new Credentials('a', 'b');
         $req = new Request('PUT', 'http://foo.com', [
             'host' => 'foo.com'

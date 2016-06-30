@@ -79,24 +79,23 @@ class SignatureV4 implements SignatureInterface
 
         // extract service and region from Authorization header
         // set region and service properties
-        $orig_region = $this->region;
-        $this->region = $sigHeader->getCredential('Region');
-        $orig_service = $this->service;
-        $this->service = $sigHeader->getCredential('Service');
+        $origRegion = $this->region;
+        $this->region = $sigHeader->getRegion();
+        $origService = $this->service;
+        $this->service = $sigHeader->getService();
 
         $date = $request->getHeaderLine('X-Amz-Date');
-        // remove Authorization header
         $request = $request->withoutHeader('Authorization');
 
         // sign the request with credentials using the date of the original signature
         $request = $this->signRequestAtDate($request, $credentials, $date);
+
+        // reset service and region to their original values
+        $this->region = $origRegion;
+        $this->service = $origService;
+
         // test that new signature matches original one
-        $valid = ((string)$sigHeader === $request->getHeaderLine('Authorization'));
-
-        $this->region = $orig_region;
-        $this->service = $orig_service;
-
-        return $valid;
+        return ((string)$sigHeader === $request->getHeaderLine('Authorization'));;
     }
 
     protected function signRequestAtDate(
