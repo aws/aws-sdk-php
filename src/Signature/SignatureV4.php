@@ -14,6 +14,7 @@ use Psr\Http\Message\RequestInterface;
 class SignatureV4 implements SignatureInterface
 {
     use SignatureTrait;
+
     const ISO8601_BASIC = 'Ymd\THis\Z';
 
     /** @var string */
@@ -74,18 +75,28 @@ class SignatureV4 implements SignatureInterface
         CredentialsInterface $credentials
     ){
 
-        // get signature from request
-        $authHeader = $request->getHeaderLine('Authorization');
-        $date = $request->getHeaderLine('X-Amz-Date');
+        $sigHeader = new SignatureHeader($request->getHeaderLine('Authorization'));
 
+        // extract service and region from Authorization header
+        // set region and service properties
+        $orig_region = $this->region;
+        $this->region = $sigHeader->getCredential('Region');
+        $orig_service = $this->service;
+        $this->service = $sigHeader->getCredential('Service');
+
+        $date = $request->getHeaderLine('X-Amz-Date');
         // remove Authorization header
         $request = $request->withoutHeader('Authorization');
 
-        // sign the request with credentials with the date of the original signature
+        // sign the request with credentials using the date of the original signature
         $request = $this->signRequestAtDate($request, $credentials, $date);
-
         // test that new signature matches original one
-        return ($authHeader === $request->getHeaderLine('Authorization'));
+        $valid = ((string)$sigHeader === $request->getHeaderLine('Authorization'));
+
+        $this->region = $orig_region;
+        $this->service = $orig_service;
+
+        return $valid;
     }
 
     protected function signRequestAtDate(
