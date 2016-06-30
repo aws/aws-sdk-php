@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.23 - 2016-06-30
 
 * `Aws\DatabaseMigrationService` - Added support for specify `VpcSecurityGroupId`
   for the replication instance
