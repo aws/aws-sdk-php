@@ -3,7 +3,6 @@ namespace Aws;
 
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Endpoint\PartitionInterface;
-use GuzzleHttp\Promise\FulfilledPromise;
 
 class MultiRegionClient implements AwsClientInterface
 {
