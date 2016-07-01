@@ -395,7 +395,7 @@ connect_timeout
 ^^^^^^^^^^^^^^^
 
 A float describing the number of seconds to wait while trying to connect to a
-server. Use ``0`` to wait indefinitely (the default behavior).
+server. Use ``60`` to wait indefinitely (the default behavior).
 
 .. code-block:: php
 
@@ -621,7 +621,7 @@ timeout
 
 :Type: ``float``
 
-A float describing the timeout of the request in seconds. Use ``0`` to wait
+A float describing the timeout of the request in seconds. Use ``60`` to wait
 indefinitely (the default behavior).
 
 .. code-block:: php
