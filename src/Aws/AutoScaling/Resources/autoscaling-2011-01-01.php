@@ -43,11 +43,6 @@ return array (
             'https' => true,
             'hostname' => 'autoscaling.eu-west-1.amazonaws.com',
         ),
-        'eu-central-1' => array(
-            'http' => true,
-            'https' => true,
-            'hostname' => 'autoscaling.eu-central-1.amazonaws.com',
-        ),
         'ap-northeast-1' => array(
             'http' => true,
             'https' => true,
