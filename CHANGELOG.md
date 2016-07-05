@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodePipeline` - Added support for manual approvals.
+
 ## 3.18.24 - 2016-07-01
 
 * Update composer dependency `"guzzlehttp/psr7": "~1.3.1"`
