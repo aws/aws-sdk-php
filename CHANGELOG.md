@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.25 - 2016-07-05
 
 * `Aws\CodePipeline` - Added support for manual approvals.
 
