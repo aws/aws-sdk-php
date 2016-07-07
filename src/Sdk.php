@@ -120,6 +120,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionRoute53Domains(array $args = [])
  * @method \Aws\S3\S3Client createS3(array $args = [])
  * @method \Aws\S3\S3MultiRegionClient createMultiRegionS3(array $args = [])
+ * @method \Aws\ServiceCatalog\ServiceCatalogClient createServiceCatalog(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionServiceCatalog(array $args = [])
  * @method \Aws\Ses\SesClient createSes(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSes(array $args = [])
  * @method \Aws\Sns\SnsClient createSns(array $args = [])

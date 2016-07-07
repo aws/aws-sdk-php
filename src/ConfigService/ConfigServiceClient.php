@@ -8,6 +8,8 @@ use Aws\AwsClient;
  *
  * @method \Aws\Result deleteConfigRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteConfigRuleAsync(array $args = [])
+ * @method \Aws\Result deleteConfigurationRecorder(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteConfigurationRecorderAsync(array $args = [])
  * @method \Aws\Result deleteDeliveryChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDeliveryChannelAsync(array $args = [])
  * @method \Aws\Result deliverConfigSnapshot(array $args = [])
