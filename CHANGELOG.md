@@ -6,7 +6,7 @@
 * `Aws\DirectoryService` - Added support for tagging APIs
 * `Aws\ServiceCatalog` - Added support for `Aws\ServiceCatalog`
 
-## 3.18.25 - 2016-07-05
+## 3.18.26 - 2016-07-07
 
 * `Aws\CodePipeline` - Added support for manual approvals.
 
