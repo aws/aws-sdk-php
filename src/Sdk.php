@@ -196,7 +196,6 @@ class Sdk
         // Get information about the service from the manifest file.
         $service = manifest($name);
         $namespace = $service['namespace'];
-        $args = $this->mergeArgs($namespace, $service, $args);
 
         // Instantiate the client class.
         $client = "Aws\\{$namespace}\\{$namespace}Client";
