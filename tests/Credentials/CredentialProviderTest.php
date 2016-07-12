@@ -5,6 +5,7 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\LruArrayCache;
 use GuzzleHttp\Promise;
+use Aws\Credentials\EcsCredentialProvider;
 
 /**
  * @covers \Aws\Credentials\CredentialProvider
@@ -249,6 +250,12 @@ EOT;
     {
         $p = CredentialProvider::instanceProfile();
         $this->assertInstanceOf('Aws\Credentials\InstanceProfileProvider', $p);
+    }
+
+    public function testCreatesFromEcsCredentialProvider()
+    {
+        $p = CredentialProvider::ecsCredentials();
+        $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $p);
     }
 
     public function testGetsHomeDirectoryForWindowsUsers()
