@@ -1,10 +1,17 @@
 # CHANGELOG
 
-# next release
+## next release
+
+* `Aws\DatabaseMigrationService` - Added support for SSL Endpoint and Replication
+* `Aws\Ecs` - Added support for IAM roles for ECS Tasks
+* `Aws\Rds` - Adds new method `CopyDBClusterParameterGroup` and
+  new parameter `TargetDBInstanceIdentifier` to `FailoverDBCluster` API
+
+## 3.18.27 - 2016-07-07
 
 * `Aws\ServiceCatalog` - Added support for `Aws\ServiceCatalog`
 
-## 3.18.27 - 2016-07-07
+## 3.18.26 - 2016-07-07
 
 * `Aws\Config` - Added support for `DeleteConfigurationRecorder` API
 * `Aws\DirectoryService` - Added support for tagging APIs

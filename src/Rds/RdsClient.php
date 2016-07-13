@@ -14,6 +14,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise applyPendingMaintenanceActionAsync(array $args = [])
  * @method \Aws\Result authorizeDBSecurityGroupIngress(array $args = [])
  * @method \GuzzleHttp\Promise\Promise authorizeDBSecurityGroupIngressAsync(array $args = [])
+ * @method \Aws\Result copyDBClusterParameterGroup(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise copyDBClusterParameterGroupAsync(array $args = [])
  * @method \Aws\Result copyDBClusterSnapshot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise copyDBClusterSnapshotAsync(array $args = [])
  * @method \Aws\Result copyDBParameterGroup(array $args = [])
