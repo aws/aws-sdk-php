@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.28 - 2016-07-13
 
 * `Aws\DatabaseMigrationService` - Added support for SSL Endpoint and Replication
 * `Aws\Ecs` - Added support for IAM roles for ECS Tasks
