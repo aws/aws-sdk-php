@@ -85,7 +85,7 @@ class MultipartCopyTest extends \PHPUnit_Framework_TestCase
     public function testCanUseCaseInsensitiveConfigKeys()
     {
         $client = $this->getTestClient('s3');
-        $sourceMetadata = $this->getMock(ResultInterface::class);
+        $sourceMetadata = $this->getMockBuilder(ResultInterface::class)->getMock();
         $putObjectMup = new MultipartCopy($client, '/bucket/key', [
             'Bucket' => 'newBucket',
             'Key' => 'newKey',

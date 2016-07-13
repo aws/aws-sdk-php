@@ -47,7 +47,7 @@ class JsonRpcParserTest extends \PHPUnit_Framework_TestCase
 
         $instance = new JsonRpcParser($service, $parser);
         $result = $instance(
-            $this->getMock(CommandInterface::class),
+            $this->getMockBuilder(CommandInterface::class)->getMock(),
             new Response(200, [], json_encode(null))
         );
     }
@@ -81,7 +81,7 @@ class JsonRpcParserTest extends \PHPUnit_Framework_TestCase
 
         $instance = new JsonRpcParser($service, $parser);
         $result = $instance(
-            $this->getMock(CommandInterface::class),
+            $this->getMockBuilder(CommandInterface::class)->getMock(),
             new Response(200, [])
         );
     }

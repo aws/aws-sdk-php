@@ -34,11 +34,11 @@ class AmbiguousSuccessParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testConvertsAmbiguousSuccessesToExceptions($operation)
     {
-        $command = $this->getMock(CommandInterface::class);
+        $command = $this->getMockBuilder(CommandInterface::class)->getMock();
         $command->expects($this->any())
             ->method('getName')
             ->willReturn($operation);
-        $response = $this->getMock(ResponseInterface::class);
+        $response = $this->getMockBuilder(ResponseInterface::class)->getMock();
         $response->expects($this->any())
             ->method('getStatusCode')
             ->willReturn(200);
@@ -53,11 +53,11 @@ class AmbiguousSuccessParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testIgnoresAmbiguousSuccessesOnUnaffectedOperations($operation)
     {
-        $command = $this->getMock(CommandInterface::class);
+        $command = $this->getMockBuilder(CommandInterface::class)->getMock();
         $command->expects($this->any())
             ->method('getName')
             ->willReturn($operation);
-        $response = $this->getMock(ResponseInterface::class);
+        $response = $this->getMockBuilder(ResponseInterface::class)->getMock();
         $response->expects($this->any())
             ->method('getStatusCode')
             ->willReturn(200);

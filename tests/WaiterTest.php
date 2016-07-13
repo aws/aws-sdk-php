@@ -389,10 +389,13 @@ class WaiterTest extends \PHPUnit_Framework_TestCase
     private function getMockResult($data = [])
     {
         if (is_string($data)) {
-            return new AwsException('ERROR', $this->getMock('Aws\CommandInterface'), [
-                'code'   => $data,
-                'result' => new Result(['@metadata' => ['statusCode' => 200]])
-            ]);
+            return new AwsException('ERROR',
+                $this->getMockBuilder('Aws\CommandInterface')->getMock(),
+                [
+                    'code'   => $data,
+                    'result' => new Result(['@metadata' => ['statusCode' => 200]])
+                ]
+            );
         } else {
             return new Result($data + ['@metadata' => ['statusCode' => 200]]);
         }
