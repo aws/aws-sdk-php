@@ -67,7 +67,7 @@ class EcsCredentialProvider
     private function request($url)
     {
         $client = $this->client;
-        $request = new Request('GET', new Uri(self::ENV_URI . $url));
+        $request = new Request('GET', new Uri(self::SERVER_URI . $url));
         return $client($request)->then(function (ResponseInterface $response) {
             $result = $this->decodeResult((string) $response->getBody());
             return new Credentials(
@@ -87,9 +87,9 @@ class EcsCredentialProvider
     private function decodeResult($response)
     {
         $result = json_decode($response, true);
-        if ($result['Code'] !== 'Success') {
-            throw new CredentialsException('Unexpected ECS credential value '
-                .  'response code: ' . $result['Code']);
+
+        if (!isset($result['AccessKeyId'])) {
+            throw new CredentialsException('Unexpected ECS credential value');
         }
         return $result;
     }
