@@ -204,7 +204,7 @@ a callback passed to its constructor.
         'before' => function (\Aws\Command $command) {
             // Commands can vary for multipart uploads, so check which command
             // is being processed
-            if (in_array($command->getName(), ['PutObject', 'CreateMultipartUpload']) {
+            if (in_array($command->getName(), ['PutObject', 'CreateMultipartUpload'])) {
                 // Set custom cache-control metadata
                 $command['CacheControl'] = 'max-age=3600';
                 // Apply a canned ACL

@@ -70,6 +70,10 @@ been configured with an IAM role.
     service. Please check if the service you are using supports temporary
     credentials by reading `AWS Services that Support AWS STS <http://docs.aws.amazon.com/STS/latest/UsingSTS/UsingTokens.html>`_.
 
+    To Avoid hitting metadata service every time, an instance of ``Aws\CacheInterface``
+    can be passed in as the ``'credentials'`` option to a client constructor. This lets SDK
+    use cached instance profile credentials instead. For more information, see ``'credentials'`` `option <http://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/configuration.html#credentials>`_.
+
 For more information, see `IAM Roles for Amazon EC2 <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html>`_.
 
 

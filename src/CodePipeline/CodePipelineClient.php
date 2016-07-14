@@ -40,6 +40,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise pollForThirdPartyJobsAsync(array $args = [])
  * @method \Aws\Result putActionRevision(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putActionRevisionAsync(array $args = [])
+ * @method \Aws\Result putApprovalResult(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putApprovalResultAsync(array $args = [])
  * @method \Aws\Result putJobFailureResult(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putJobFailureResultAsync(array $args = [])
  * @method \Aws\Result putJobSuccessResult(array $args = [])

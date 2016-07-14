@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## 3.18.28 - 2016-07-13
+
+* `Aws\DatabaseMigrationService` - Added support for SSL Endpoint and Replication
+* `Aws\Ecs` - Added support for IAM roles for ECS Tasks
+* `Aws\Rds` - Adds new method `CopyDBClusterParameterGroup` and
+  new parameter `TargetDBInstanceIdentifier` to `FailoverDBCluster` API
+
+## 3.18.27 - 2016-07-07
+
+* `Aws\ServiceCatalog` - Added support for `Aws\ServiceCatalog`
+
+## 3.18.26 - 2016-07-07
+
+* `Aws\Config` - Added support for `DeleteConfigurationRecorder` API
+* `Aws\DirectoryService` - Added support for tagging APIs
+
+## 3.18.25 - 2016-07-05
+
+* `Aws\CodePipeline` - Added support for manual approvals.
+
+## 3.18.24 - 2016-07-01
+
+* Update composer dependency `"guzzlehttp/psr7": "~1.3.1"`
+
+## 3.18.23 - 2016-06-30
+
+* `Aws\DatabaseMigrationService` - Added support for specify `VpcSecurityGroupId`
+  for the replication instance
+* `Aws\Ssm` - Added support for registering customer servers to enable command function
+
 ## 3.18.22 - 2016-06-28
 
 * `Aws\Ec2` - Added support for ENA supported instances

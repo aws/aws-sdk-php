@@ -120,6 +120,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionRoute53Domains(array $args = [])
  * @method \Aws\S3\S3Client createS3(array $args = [])
  * @method \Aws\S3\S3MultiRegionClient createMultiRegionS3(array $args = [])
+ * @method \Aws\ServiceCatalog\ServiceCatalogClient createServiceCatalog(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionServiceCatalog(array $args = [])
  * @method \Aws\Ses\SesClient createSes(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSes(array $args = [])
  * @method \Aws\Sns\SnsClient createSns(array $args = [])
@@ -143,7 +145,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.18.22';
+    const VERSION = '3.18.28';
 
     /** @var array Arguments for creating clients */
     private $args;
@@ -194,7 +196,6 @@ class Sdk
         // Get information about the service from the manifest file.
         $service = manifest($name);
         $namespace = $service['namespace'];
-        $args = $this->mergeArgs($namespace, $service, $args);
 
         // Instantiate the client class.
         $client = "Aws\\{$namespace}\\{$namespace}Client";

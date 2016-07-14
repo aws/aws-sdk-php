@@ -223,17 +223,17 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
     public function testProvider()
     {
         return [
-            // Duplicate headers should be signed.
+            // POST headers should be signed.
             [
-                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\nzoo:foobar\r\nzoo:zoobar\r\n\r\n",
-                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nzoo: foobar, zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=06c496812e2db2f19ca1e4b71b929a6e9d55b460bab5a4e1bbaacb1d3eed9820\r\n\r\n",
-                "POST\n/\n\nhost:host.foo.com\nzoo:foobar,zoobar,zoobar\n\nhost;zoo\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\n\r\n",
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=b28a4d452e58edf8ff150a9518b6f4135c9960e4724dc3daab4d7ccc26e90b9b\r\n\r\n",
+                "POST\n/\n\nhost:host.foo.com\nzoo:zoobar\n\nhost;zoo\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             ],
             // Changing the method should change the signature.
             [
-                "GET / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\nzoo:foobar\r\nzoo:zoobar\r\n\r\n",
-                "GET / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nzoo: foobar, zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=dbf3cbdd8c38d776f847f9fcc9d81ea59ed27f4c06b3aa57e8fdd97afaa76f7a\r\n\r\n",
-                "GET\n/\n\nhost:host.foo.com\nzoo:foobar,zoobar,zoobar\n\nhost;zoo\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+                "GET / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\n\r\n",
+                "GET / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=287deb2c1249c9c415cb4b3ef74404629fcab56a8e9ec568bff88cf093196e8e\r\n\r\n",
+                "GET\n/\n\nhost:host.foo.com\nzoo:zoobar\n\nhost;zoo\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
             ],
             // Duplicate header values must be sorted.
             [
