@@ -7,6 +7,9 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Promise\PromisorInterface;
 use Iterator;
+use Aws\Exception\TransferException;
+use Aws\Exception\AwsException;
+use Aws\Exception\MultipartUploadException;
 
 /**
  * Transfers files from the local filesystem to S3 or from S3 to the local
@@ -26,6 +29,9 @@ class Transfer implements PromisorInterface
     private $mupThreshold;
     private $before;
     private $s3Args = [];
+
+    /** @var array tracking SourceFile in progress */
+    private $inProgress = [];
 
     /**
      * When providing the $source argument, you may provide a string referencing
@@ -215,10 +221,10 @@ class Transfer implements PromisorInterface
 
     private function createDownloadPromise()
     {
-        $parts = $this->getS3Args($this->sourceMetadata['path']);
-        $prefix = "s3://{$parts['Bucket']}/"
-            . (isset($parts['Key']) ? $parts['Key'] . '/' : '');
-
+        $args = $this->getS3Args($this->sourceMetadata['path']);
+        $prefix = "s3://{$args['Bucket']}/"
+            . (isset($args['Key']) ? $args['Key'] . '/' : '');
+        $this->trackUncompletedTask($args);
 
         $commands = [];
         foreach ($this->getDownloadsIterator() as $object) {
@@ -240,13 +246,15 @@ class Transfer implements PromisorInterface
         }
 
         // Create a GetObject command pool and return the promise.
-        return (new Aws\CommandPool($this->client, $commands, [
+        $promise = (new Aws\CommandPool($this->client, $commands, [
             'concurrency' => $this->concurrency,
             'before'      => $this->before,
             'rejected'    => function ($reason, $idx, Promise\PromiseInterface $p) {
                 $p->reject($reason);
             }
         ]))->promise();
+
+        return $this->handleTransferPromise($promise, $args);
     }
 
     private function createUploadPromise()
@@ -307,16 +315,21 @@ class Transfer implements PromisorInterface
         $args['Key'] = $this->createS3Key($filename);
         $command = $this->client->getCommand('PutObject', $args);
         $this->before and call_user_func($this->before, $command);
+        $this->trackUncompletedTask($args);
 
-        return $this->client->executeAsync($command);
+        return $this->handleTransferPromise(
+            Promise\all($this->client->executeAsync($command)),
+            $args
+        );
     }
 
     private function uploadMultipart($filename)
     {
         $args = $this->s3Args;
         $args['Key'] = $this->createS3Key($filename);
+        $this->trackUncompletedTask($args);
 
-        return (new MultipartUploader($this->client, $filename, [
+        $promise = (new MultipartUploader($this->client, $filename, [
             'bucket'          => $args['Bucket'],
             'key'             => $args['Key'],
             'before_initiate' => $this->before,
@@ -324,6 +337,8 @@ class Transfer implements PromisorInterface
             'before_complete' => $this->before,
             'concurrency'     => $this->concurrency,
         ]))->promise();
+
+        return $this->handleTransferPromise($promise, $args);
     }
 
     private function createS3Key($filename)
@@ -387,5 +402,43 @@ class Transfer implements PromisorInterface
             }
             fwrite($debug, "Transferring {$context}\n");
         };
+    }
+
+    private function handleTransferPromise(Promise\PromiseInterface $promise, $args)
+    {
+        return $promise->then(function($value) use ($args) {
+            $this->clearTaskDone($args['Key']);
+        })->otherwise(function($error) use ($args) {
+            $this->handleTransferException($error, $args);
+        });
+    }
+
+    private function handleTransferException($error, $args)
+    {
+        $this->trackFailedTask($args);
+
+        if (
+            $error instanceof MultipartUploadException ||
+            $error instanceof AwsException
+        ){
+            $error = new TransferException($this->inProgress, $error);
+        }
+        throw $error;
+    }
+
+    private function trackUncompletedTask($args)
+    {
+        $this->inProgress['Uncompleted'][$args['Key']] =
+            $args['Bucket'] . "/" . $args['Key'];
+    }
+
+    private function clearTaskDone($key)
+    {
+        unset($this->inProgress['Uncompleted'][$key]);
+    }
+
+    private function trackFailedTask($args)
+    {
+        $this->inProgress['Failed'] = $args['Bucket'] . "/" . $args['Key'];
     }
 }
