@@ -264,12 +264,12 @@ class TransferTest extends \PHPUnit_Framework_TestCase
             'base_dir' => 's3://bucket/path',
         ]);
 
-        $downloader->transfer();
+        $downloader->promise();
     }
 
     /**
      * @expectedException \Aws\Exception\TransferException
-     * @expectedExceptionMessage An error occurs in a S3 Transfer when transferring file: foo/bar/small.txt
+     * @expectedExceptionMessage An error occurs in a S3 Transfer when transferring file: /foo/bar/small.txt
      */
     public function testEnsureTrackingFailedFileWhenUpload()
     {
@@ -296,7 +296,7 @@ class TransferTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Aws\Exception\TransferException
-     * @expectedExceptionMessage An error occurs in a S3 Transfer when transferring file: foo/bar/large.txt
+     * @expectedExceptionMessage An error occurs in a S3 Transfer when transferring file: /foo/bar/large.txt
      */
     public function testEnsureTrackingFailedFileWhenMultipartUpload()
     {
@@ -328,7 +328,7 @@ class TransferTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Aws\Exception\TransferException
-     * @expectedExceptionMessage An error occurs in a S3 Transfer when transferring file: foo/bar
+     * @expectedExceptionMessage An error occurs in a S3 Transfer when transferring file: /foo/bar/a
      */
     public function testEnsureTrackingFailedFileWhenDownload()
     {
@@ -341,7 +341,10 @@ class TransferTest extends \PHPUnit_Framework_TestCase
         ];
         $this->addMockResults($s3, [
             new Result($lso),
-            new AwsException('Failed', new Command('GetObject')),
+            new AwsException('Failed', new Command('GetObject', [
+                'Bucket' => 'foo/bar',
+                'Key' => 'a'
+            ])),
         ]);
 
         $dir = sys_get_temp_dir() . '/unittest';

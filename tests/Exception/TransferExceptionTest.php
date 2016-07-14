@@ -35,8 +35,8 @@ class TransferExceptionTest extends \PHPUnit_Framework_TestCase
     public function getTestCases()
     {
         return [
-            [ 'foo/bar/a.txt', [] ],
-            [ 'foo/bar/a.txt', ['foo/bar/b.txt', 'foo/bar/c.txt'] ]
+            [ '/foo/bar/a.txt', [] ],
+            [ '/foo/bar/a.txt', ['/foo/bar/b.txt', '/foo/bar/c.txt'] ]
         ];
     }
 }
