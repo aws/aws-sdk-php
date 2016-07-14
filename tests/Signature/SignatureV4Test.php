@@ -301,60 +301,81 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
      */
     public function testValidate($req)
     {
-        $sig = new SignatureV4('Service', 'eu-west-1');
-        $creds = new Credentials('a', 'b');
-        $req = Psr7\parse_request($req);
+        $service = 'Service';
+        $region = 'eu-west-1';
+        $id = 'be6f2a7f05db7';
+        $secret = '9808aa133c0eb44ff5e21abd976c01bc';
 
-        $signed = $sig->signRequest($req, $creds);
+        $signed = $this->signRequest($service, $region, $id, $secret, Psr7\parse_request($req));
 
-        $valid = $sig->validate($signed, $creds);
-
-        $this->assertTrue($valid);
+        $this->assertIsValid($service, $region, $id, $secret, $signed);
     }
 
     /**
      * @dataProvider testProvider
      */
-    public function testValidateSuceedsWithDifferentRegion($req)
+    public function testValidateSucceedsWithDifferentRegion($req)
     {
-        $sig = new SignatureV4('Service', 'eu-west-1');
-        $creds = new Credentials('a', 'b');
-        $req = Psr7\parse_request($req);
 
-        $signed = $sig->signRequest($req, $creds);
+        $service = 'Service';
+        $region = 'eu-west-1';
+        $id = 'be6f2a7f05db7';
+        $secret = '9808aa133c0eb44ff5e21abd976c01bc';
 
-        $sig2 = new SignatureV4('Service', 'us-west-1');
-        $valid = $sig2->validate($signed, $creds);
+        $signed = $this->signRequest($service, $region, $id, $secret, Psr7\parse_request($req));
 
-        $this->assertTrue($valid);
+        $this->assertIsValid($service, 'us-east-1', $id, $secret, $signed);
     }
 
     public function testValidateFailsWithDifferentKey()
     {
-        $sig = new SignatureV4('Service', 'eu-west-1');
-        $creds = new Credentials('a', 'b');
-        $req = new Request('PUT', 'http://foo.com', [
+        $service = 'Service';
+        $region = 'eu-west-1';
+        $id = 'be6f2a7f05db7';
+        $secret = '9808aa133c0eb44ff5e21abd976c01bc';
+
+        $signed = $this->signRequest($service, $region, $id, $secret, new Request('PUT', 'http://foo.com', [
             'host' => 'foo.com'
-        ]);
+        ]));
 
-        $signed = $sig->signRequest($req, $creds);
-
-        $valid = $sig->validate($signed, new Credentials('b', 'b'));
-
-        $this->assertFalse($valid);
+        $this->assertIsNotValid($service, $region, 'eb860874c4b785a', $secret, $signed);
     }
 
     public function testValidateFailsWithDifferentSecret()
     {
-        $sig = new SignatureV4('Service', 'eu-west-1');
-        $creds = new Credentials('a', 'b');
-        $req = new Request('PUT', 'http://foo.com', [
+        $service = 'Service';
+        $region = 'eu-west-1';
+        $id = 'be6f2a7f05db7';
+        $secret = '9808aa133c0eb44ff5e21abd976c01bc';
+
+        $signed = $this->signRequest($service, $region, $id, $secret, new Request('PUT', 'http://foo.com', [
             'host' => 'foo.com'
-        ]);
+        ]));
 
-        $signed = $sig->signRequest($req, $creds);
+        $this->assertIsNotValid($service, $region, $id, 'be6f2a7f05db75880eb860874c4b785a', $signed);
+    }
 
-        $valid = $sig->validate($signed, new Credentials('a', 'd'));
+    protected function signRequest($service, $region, $id, $secret, $request)
+    {
+        $sig = new SignatureV4($service, $region);
+        $creds = new Credentials($id, $secret);
+        return $sig->signRequest($request, $creds);
+    }
+
+    protected function assertIsValid($service, $region, $id, $secret, $signed)
+    {
+        $validator = new SignatureV4($service, $region);
+
+        $valid = $validator->validate($signed, new Credentials($id, $secret));
+
+        $this->assertTrue($valid);
+    }
+
+    protected function assertIsNotValid($service, $region, $id, $secret, $signed)
+    {
+        $validator = new SignatureV4($service, $region);
+
+        $valid = $validator->validate($signed, new Credentials($id, $secret));
 
         $this->assertFalse($valid);
     }
