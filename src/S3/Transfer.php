@@ -252,8 +252,10 @@ class Transfer implements PromisorInterface
             'concurrency' => $this->concurrency,
             'before'      => $this->before,
             'fulfilled'   => function ($value, $idx, Promise\PromiseInterface $p) {
-                $uri = $value->get('@metadata')['effectiveUri'];
-                $this->clearTaskDone((new Uri($uri))->getPath());
+                if ($value !== null && $value instanceof Aws\ResultInterface) {
+                    $uri = $value->get('@metadata')['effectiveUri'];
+                    $this->clearTaskDone((new Uri($uri))->getPath());
+                }
             },
             'rejected'    => function ($reason, $idx, Promise\PromiseInterface $p) {
                 $cmd = $reason->getCommand();
