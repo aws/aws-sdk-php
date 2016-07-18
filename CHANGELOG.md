@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.18.30 - 2016-07-18
+
+Fix composer version constraints.
+
 ## 3.18.29 - 2016-07-18
 
 Updating dependency to a version of Guzzle that addresses CVE-2016-5385.
