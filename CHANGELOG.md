@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 3.18.29 - 2016-07-18
+
+Updating dependency to a version of Guzzle that addresses CVE-2016-5385.
+Please upgrade your version of the SDK or Guzzle if you are using the AWS SDK for PHP
+in a CGI process that connects to an `http` endpoint.
+
+See https://httpoxy.org for more details on the vulnerability.
+
 ## 3.18.28 - 2016-07-13
 
 * `Aws\DatabaseMigrationService` - Added support for SSL Endpoint and Replication
