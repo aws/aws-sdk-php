@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+`Aws\Ssm` - Added support for notification
+`Aws\DeviceFarm` - Added support for session based APIs
+
 ## 3.18.30 - 2016-07-18
 
 Fix composer version constraints.
