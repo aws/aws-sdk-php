@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.31 - 2016-07-19
 
 `Aws\Ssm` - Added support for notification
 `Aws\DeviceFarm` - Added support for session based APIs
