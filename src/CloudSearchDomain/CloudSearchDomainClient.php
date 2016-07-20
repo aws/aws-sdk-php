@@ -72,10 +72,10 @@ class CloudSearchDomainClient extends AwsClient
         if ($r->getMethod() === 'POST') {
             return $r;
         }
-        $body = (string) $r->getBody();
+        $query = $r->getUri()->getQuery();
         $req = $r->withMethod('POST')
-            ->withBody(Psr7\stream_for($body))
-            ->withHeader('Content-Length', strlen($body))
+            ->withBody(Psr7\stream_for($query))
+            ->withHeader('Content-Length', strlen($query))
             ->withHeader('Content-Type', 'application/x-www-form-urlencoded');
         return $req;
     }

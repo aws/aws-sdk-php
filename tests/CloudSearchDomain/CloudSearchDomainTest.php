@@ -36,9 +36,9 @@ class CloudSearchDomainTest extends \PHPUnit_Framework_TestCase
     {
         $request = new Request(
             'GET',
-            'http://foo.com',
+            'http://foo.com?foo=bar',
             [],
-            'foo=bar'
+            ''
         );
         $request = CloudSearchDomainClient::convertGetToPost($request);
         $this->assertEquals('POST', $request->getMethod());
