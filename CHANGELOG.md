@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+`Aws\Acm` - Added support for additional field to return for `Describe Certificate `
+`Aws\Config` - Added support for `ACM`, `RDS` resource types, introducing
+  Hybrid Rules & Forced Evaluation feature
+`Aws\CloudSearchDomain` - Convert long query request to `POST`
+`Aws\CloudFormation` - Added support for enum value for API parameter :`Capabilities`
+`Aws\ElasticTranscoder` - Added support for WAV file output format
+`Aws\Ssm` - Fixing missing paginator for SSM `DescribeInstanceInformation`
+
 ## 3.18.31 - 2016-07-19
 
 `Aws\Ssm` - Added support for notification
