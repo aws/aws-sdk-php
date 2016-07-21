@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.32 - 2016-07-21
 
 `Aws\Acm` - Added support for additional field to return for `Describe Certificate `
 `Aws\Config` - Added support for `ACM`, `RDS` resource types, introducing
