@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.8.31 - 2016-07-25
+
+* `Add configurable backoff retries`
+
 ## 2.8.30 - 2016-05-03
 
 * `Aws\Lambda` - Fixed bug in `UpdateFunctionCode`.
