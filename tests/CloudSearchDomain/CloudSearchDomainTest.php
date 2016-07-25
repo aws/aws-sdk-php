@@ -45,6 +45,6 @@ class CloudSearchDomainTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('application/x-www-form-urlencoded', $request->getHeaderLine('Content-Type'));
         $this->assertEquals(7, $request->getHeaderLine('Content-Length'));
         $this->assertEquals('foo=bar', $request->getBody());
-        $this->assertEquals('', $request->getUri()->getQuery());
+        $this->assertSame('', $request->getUri()->getQuery());
     }
 }
