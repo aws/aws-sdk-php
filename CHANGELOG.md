@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+`Aws\Iot` - Added support for Thing Types, ":" in Thing Name, and
+  `separator` in `Firehose` action
+`Aws\CloudSearchDomain` - Fix query value in `POST` request
+
 ## 3.18.32 - 2016-07-21
 
 `Aws\Acm` - Added support for additional field to return for `Describe Certificate `
