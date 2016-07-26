@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.33 - 2016-07-26
 
 `Aws\Iot` - Added support for Thing Types, ":" in Thing Name, and
   `separator` in `Firehose` action
