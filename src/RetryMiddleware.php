@@ -130,7 +130,7 @@ class RetryMiddleware
         ) {
             $this->updateHttpStats($value, $requestStats);
 
-            if ($value instanceof \Exception) {
+            if ($value instanceof \Exception || $value instanceof \Error) {
                 if (!$decider($retries, $command, $request, null, $value)) {
                     return \GuzzleHttp\Promise\rejection_for(
                         $this->bindStatsToReturn($value, $requestStats)
