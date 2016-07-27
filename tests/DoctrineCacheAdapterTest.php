@@ -9,7 +9,7 @@ class DoctrineCacheAdapterTest extends \PHPUnit_Framework_TestCase
 {
     public function testProxiesCallsToDoctrine()
     {
-        $wrappedCache = $this->getMock(Cache::class);
+        $wrappedCache = $this->getMockBuilder(Cache::class)->getMock();
 
         $wrappedCache->expects($this->once())
             ->method('fetch')
@@ -32,7 +32,7 @@ class DoctrineCacheAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testAdaptsCacheToAwsAndDoctrine()
     {
-        $wrappedCache = $this->getMock(Cache::class);
+        $wrappedCache = $this->getMockBuilder(Cache::class)->getMock();
         $cache = new DoctrineCacheAdapter($wrappedCache);
 
         $this->assertInstanceOf(Cache::class, $cache);

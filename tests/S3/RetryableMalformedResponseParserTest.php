@@ -24,8 +24,8 @@ class RetryableMalformedResponseParserTest extends \PHPUnit_Framework_TestCase
         );
 
         $instance(
-            $this->getMock(CommandInterface::class),
-            $this->getMock(ResponseInterface::class)
+            $this->getMockBuilder(CommandInterface::class)->getMock(),
+            $this->getMockBuilder(ResponseInterface::class)->getMock()
         );
     }
 }

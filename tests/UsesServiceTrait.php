@@ -122,7 +122,7 @@ trait UsesServiceTrait
 
         return new $type(
             $message ?: 'Test error',
-            $this->getMock('Aws\CommandInterface'),
+            $this->getMockBuilder('Aws\CommandInterface')->getMock(),
             [
                 'message' => $message ?: 'Test error',
                 'code'    => $code

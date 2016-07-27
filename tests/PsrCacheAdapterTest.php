@@ -14,7 +14,7 @@ class PsrCacheAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->wrapped = $this->getMock(CacheItemPoolInterface::class);
+        $this->wrapped = $this->getMockBuilder(CacheItemPoolInterface::class)->getMock();
         $this->instance = new PsrCacheAdapter($this->wrapped);
     }
 
@@ -26,7 +26,7 @@ class PsrCacheAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testProxiesGetCallsToPsrCache($key, $value)
     {
-        $item = $this->getMock(CacheItemInterface::class);
+        $item = $this->getMockBuilder(CacheItemInterface::class)->getMock();
         $item->expects($this->once())
             ->method('isHit')
             ->willReturn(true);
@@ -51,7 +51,7 @@ class PsrCacheAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function testProxiesSetCallsToPsrCache($key, $value, $ttl)
     {
-        $item = $this->getMock(CacheItemInterface::class);
+        $item = $this->getMockBuilder(CacheItemInterface::class)->getMock();
         $item->expects($this->once())
             ->method('set')
             ->with($value)

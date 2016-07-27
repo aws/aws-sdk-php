@@ -102,7 +102,7 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
     public function testReadsBucketLocationFromCache()
     {
-        $cache = $this->getMock(CacheInterface::class);
+        $cache = $this->getMockBuilder(CacheInterface::class)->getMock();
         $cache->expects($this->once())
             ->method('get')
             ->with('aws:s3:foo:location')

@@ -72,7 +72,7 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
                 return $service->toArray();
             },
             'credentials'  => false,
-            'signature'    => $this->getMock('Aws\Signature\SignatureInterface'),
+            'signature'    => $this->getMockBuilder('Aws\Signature\SignatureInterface')->getMock(),
             'region'       => 'us-west-2',
             'endpoint'     => $ep,
             'error_parser' => Service::createErrorParser($service->getProtocol()),
