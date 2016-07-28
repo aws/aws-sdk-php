@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.34 - 2016-07-28
 
 * `Aws\CodeDeploy` - Added support for  `DeploymentSuccessful ` waiter
 * `Aws\ApiGateway` - Added support for `Cognito`User Pools Auth Support
