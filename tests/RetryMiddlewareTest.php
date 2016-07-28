@@ -72,7 +72,7 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
 
     public function testDeciderIgnoresPHPError()
     {
-        if (class_exists(\Error::class)) {
+        if (class_exists(\Throwable::class)) {
             $decider = RetryMiddleware::createDefaultDecider();
             $command = new Command('foo');
             $request = new Request('GET', 'http://www.example.com');
