@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * AWS Directory Service client
  *
+ * @method \Aws\Result addIpRoutes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise addIpRoutesAsync(array $args = [])
  * @method \Aws\Result addTagsToResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addTagsToResourceAsync(array $args = [])
  * @method \Aws\Result connectDirectory(array $args = [])
@@ -56,10 +58,14 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDirectoryLimitsAsync(array $args = [])
  * @method \Aws\Result getSnapshotLimits(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSnapshotLimitsAsync(array $args = [])
+ * @method \Aws\Result listIpRoutes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listIpRoutesAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result registerEventTopic(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerEventTopicAsync(array $args = [])
+ * @method \Aws\Result removeIpRoutes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise removeIpRoutesAsync(array $args = [])
  * @method \Aws\Result removeTagsFromResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeTagsFromResourceAsync(array $args = [])
  * @method \Aws\Result restoreFromSnapshot(array $args = [])

@@ -12,4 +12,4 @@ Feature: Amazon Cognito Identity Provider
   Scenario: Handling errors
     When I attempt to call the "DescribeUserPool" API with:
       | UserPoolId | us-east-1:aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee |
-    Then I expect the response error code to be "ResourceNotFoundException"
+    Then I expect the response error code to be "InternalErrorException"

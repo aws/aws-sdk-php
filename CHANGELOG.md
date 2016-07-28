@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeDeploy` - Added support for  `DeploymentSuccessful ` waiter
+* `Aws\ApiGateway` - Added support for `Cognito`User Pools Auth Support
+* `Aws\Ec2` - Added support for DNS for VPC Peering
+* `Aws\DirectoryService` - Added support for new API for Microsoft AD to manage routing
+* `Aws\Route53Domains` - Added support for `getDomainSuggestions` capability
+* `Aws\CognitoIdentity` - Added support for `User Pools`
+* `Aws\ElasticsearchService` - Added support for pipeline aggregations to perform advanced
+  analytics like moving averages and derivatives, and enhancements to geospatial queries
+
 ## 3.18.33 - 2016-07-26
 
 `Aws\Iot` - Added support for Thing Types, ":" in Thing Name, and

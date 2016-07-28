@@ -22,6 +22,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getContactReachabilityStatusAsync(array $args = [])
  * @method \Aws\Result getDomainDetail(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDomainDetailAsync(array $args = [])
+ * @method \Aws\Result getDomainSuggestions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDomainSuggestionsAsync(array $args = [])
  * @method \Aws\Result getOperationDetail(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getOperationDetailAsync(array $args = [])
  * @method \Aws\Result listDomains(array $args = [])
@@ -32,6 +34,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForDomainAsync(array $args = [])
  * @method \Aws\Result registerDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerDomainAsync(array $args = [])
+ * @method \Aws\Result renewDomain(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise renewDomainAsync(array $args = [])
  * @method \Aws\Result resendContactReachabilityEmail(array $args = [])
  * @method \GuzzleHttp\Promise\Promise resendContactReachabilityEmailAsync(array $args = [])
  * @method \Aws\Result retrieveDomainAuthCode(array $args = [])
@@ -46,5 +50,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateDomainNameserversAsync(array $args = [])
  * @method \Aws\Result updateTagsForDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTagsForDomainAsync(array $args = [])
+ * @method \Aws\Result viewBilling(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise viewBillingAsync(array $args = [])
  */
 class Route53DomainsClient extends AwsClient {}
