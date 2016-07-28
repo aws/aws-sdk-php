@@ -72,11 +72,13 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
 
     public function testDeciderIgnoresPHPError()
     {
-        $decider = RetryMiddleware::createDefaultDecider();
-        $command = new Command('foo');
-        $request = new Request('GET', 'http://www.example.com');
-        $err = new \Error('e');
-        $this->assertFalse($decider(0, $command, $request, null, $err));
+        if (class_exists(\Error::class)) {
+            $decider = RetryMiddleware::createDefaultDecider();
+            $command = new Command('foo');
+            $request = new Request('GET', 'http://www.example.com');
+            $err = new \Error('e');
+            $this->assertFalse($decider(0, $command, $request, null, $err));
+        }
     }
 
     public function awsErrorCodeProvider()

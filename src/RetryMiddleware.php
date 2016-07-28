@@ -130,7 +130,7 @@ class RetryMiddleware
         ) {
             $this->updateHttpStats($value, $requestStats);
 
-            if ($value instanceof \Exception || $value instanceof \Error) {
+            if ($value instanceof \Exception || $this->isErrorObject($value)) {
                 if (!$decider($retries, $command, $request, null, $value)) {
                     return \GuzzleHttp\Promise\rejection_for(
                         $this->bindStatsToReturn($value, $requestStats)
@@ -205,5 +205,12 @@ class RetryMiddleware
         }
 
         return $return;
+    }
+
+    private function isErrorObject($value)
+    {
+        return class_exists(\Error::class)
+            ? $value instanceof \Error
+            : false;
     }
 }
