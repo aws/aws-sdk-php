@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Route53Domains` - API Updates
+
 ## 3.18.34 - 2016-07-28
 
 * `Aws\CodeDeploy` - Added support for  `DeploymentSuccessful ` waiter
