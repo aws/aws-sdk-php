@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.35 - 2016-07-28
 
 * `Aws\Route53Domains` - API Updates
 
