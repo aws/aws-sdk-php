@@ -130,7 +130,7 @@ class RetryMiddleware
         ) {
             $this->updateHttpStats($value, $requestStats);
 
-            if ($this->isThrowable($value)) {
+            if ($value instanceof \Exception || $value instanceof \Throwable) {
                 if (!$decider($retries, $command, $request, null, $value)) {
                     return \GuzzleHttp\Promise\rejection_for(
                         $this->bindStatsToReturn($value, $requestStats)
@@ -205,12 +205,5 @@ class RetryMiddleware
         }
 
         return $return;
-    }
-
-    private function isThrowable($value)
-    {
-        return interface_exists('Throwable', false)
-            ? $value instanceof \Throwable
-            : $value instanceof \Exception ;
     }
 }
