@@ -209,7 +209,7 @@ class RetryMiddleware
 
     private function isThrowable($value)
     {
-        return class_exists(\Throwable::class)
+        return interface_exists('Throwable', false)
             ? $value instanceof \Throwable
             : $value instanceof \Exception ;
     }
