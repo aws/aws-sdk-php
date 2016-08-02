@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.36 - 2016-08-02
 
 * `Aws\CloudWatchLogs` - Added support for Optional Parameter to PutMetricFilterRequest
 * `Aws\Emr` - Added support for Enhanced Debugging
