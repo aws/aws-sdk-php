@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchLogs` - Added support for Optional Parameter to PutMetricFilterRequest
+* `Aws\Emr` - Added support for Enhanced Debugging
+* `Aws\Iot` - Added support for `ListOutgoingCertificates` & `AutoRegistration` flag
+* `Aws\MachineLearning` - Added support for computing time and entity timestamp
+* `Aws\MarketplaceMetering` - API Constraint Update
+* `Aws\Rds` - Added support for license migration between BYOL and LI API Update for `AWS-RDS`,
+  Enable `version` with RDS Options
+
 ## 3.18.35 - 2016-07-28
 
 * `Aws\Route53Domains` - API Updates

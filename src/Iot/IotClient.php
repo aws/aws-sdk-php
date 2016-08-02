@@ -80,6 +80,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listCertificatesAsync(array $args = [])
  * @method \Aws\Result listCertificatesByCA(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listCertificatesByCAAsync(array $args = [])
+ * @method \Aws\Result listOutgoingCertificates(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listOutgoingCertificatesAsync(array $args = [])
  * @method \Aws\Result listPolicies(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPoliciesAsync(array $args = [])
  * @method \Aws\Result listPolicyPrincipals(array $args = [])
