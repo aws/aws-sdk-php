@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.37 - 2016-08-04
 
 * `Aws\GameLift` - Added support for `GameSession` Search
 * `Aws\Lambda` - Added support for throttling reasons, new exception for bad zip file,
