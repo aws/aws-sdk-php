@@ -66,6 +66,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise requestUploadCredentialsAsync(array $args = [])
  * @method \Aws\Result resolveAlias(array $args = [])
  * @method \GuzzleHttp\Promise\Promise resolveAliasAsync(array $args = [])
+ * @method \Aws\Result searchGameSessions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchGameSessionsAsync(array $args = [])
  * @method \Aws\Result updateAlias(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAliasAsync(array $args = [])
  * @method \Aws\Result updateBuild(array $args = [])

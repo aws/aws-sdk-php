@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GameLift` - Added support for `GameSession` Search
+* `Aws\Lambda` - Added support for throttling reasons, new exception for bad zip file,
+  and Event Source Token field for add permission request
+* `Aws\Rds` - Added support for `MoveToVpc` feature and S3 Snapshot Ingestion
+
 ## 3.18.36 - 2016-08-02
 
 * `Aws\CloudWatchLogs` - Added support for Optional Parameter to PutMetricFilterRequest

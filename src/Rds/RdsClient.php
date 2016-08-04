@@ -160,6 +160,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise resetDBClusterParameterGroupAsync(array $args = [])
  * @method \Aws\Result resetDBParameterGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise resetDBParameterGroupAsync(array $args = [])
+ * @method \Aws\Result restoreDBClusterFromS3(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise restoreDBClusterFromS3Async(array $args = [])
  * @method \Aws\Result restoreDBClusterFromSnapshot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreDBClusterFromSnapshotAsync(array $args = [])
  * @method \Aws\Result restoreDBClusterToPointInTime(array $args = [])
