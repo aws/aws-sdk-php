@@ -106,6 +106,7 @@ try {
 * [AWS SDK ZF2 Module][mod-zf2]
 * [AWS Service Provider for Silex][mod-silex]
 * [AWS SDK Bundle for Symfony][mod-symfony]
+* [Amazon SNS Message Validator for PHP][sns-validator]
 * [Guzzle Version 6][guzzle-docs] – PHP HTTP client and framework
 * Other [AWS SDKs & Tools][aws-tools] (e.g., js, cli, ruby, python, java, etc.)
 
@@ -156,3 +157,4 @@ try {
 [mod-zf2]: https://github.com/aws/aws-sdk-php-zf2
 [mod-silex]: https://github.com/aws/aws-sdk-php-silex
 [mod-symfony]: https://github.com/aws/aws-sdk-php-symfony
+[sns-validator]: https://github.com/aws/aws-php-sns-message-validator

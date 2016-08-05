@@ -253,3 +253,34 @@ and ``BandwidthLimitExceeded`` are handled with retries as well.
 
 SDK also integrates exponential delay with backoff and jitter algorithm in retry scheme. Furthermore,
 default retry behavior is configured as ``3`` for all services except dynamoDB, which is ``10``.
+
+How to handle exception with Error code?
+----------------------------------------
+
+Besides Exception class customized in SDK, Each Aws Service Client has its own exception class which is
+inherited from `Aws\Exception\AwsException <http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.Exception.AwsException.html>`_.
+With Api specific Errors listed under ``Errors`` section of each method, you can determine more specific error type to
+catch. Error Code information is available with `getAwsErrorCode() <http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.Exception.AwsException.html#_getAwsErrorCode>`_
+from ``Aws\Exception\AwsException``.
+
+.. code-block:: php
+
+    $sns = new \Aws\Sns\SnsClient([
+        'region' => 'us-west-2',
+        'version' => 'latest',
+    ]);
+
+    try {
+        $sns->publish([
+            // parameters
+            ...
+        ]);
+        // do something
+    } catch (SnsException $e) {
+        switch ($e->getAwsErrorCode()) {
+            case 'EndpointDisabled':
+            case 'NotFound':
+                // do something
+                break;
+        }
+    }
