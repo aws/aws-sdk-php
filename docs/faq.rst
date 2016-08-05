@@ -257,10 +257,12 @@ default retry behavior is configured as ``3`` for all services except dynamoDB, 
 How to handle exception with Error code?
 ----------------------------------------
 
-Besides Exception class customized in SDK, Each Aws Service Client has its own exception class which is
-inherited from `Aws\Exception\AwsException <http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.Exception.AwsException.html>`_.
-With Api specific Errors listed under ``Errors`` section of each method, you can determine more specific error type to
-catch. Error Code information is available with `getAwsErrorCode() <http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.Exception.AwsException.html#_getAwsErrorCode>`_
+Besides SDK customized Exception classes, each Aws Service Client has its own exception class that
+inherits from `Aws\Exception\AwsException <http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.Exception.AwsException.html>`_.
+You can determine more specific error types to catch with the API specific errors listed under the
+``Errors`` section of each method.
+
+Error Code information is available with `getAwsErrorCode() <http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.Exception.AwsException.html#_getAwsErrorCode>`_
 from ``Aws\Exception\AwsException``.
 
 .. code-block:: php
