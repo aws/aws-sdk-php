@@ -8,5 +8,7 @@ use Aws\AwsClient;
  *
  * @method \Aws\Result generateDataSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise generateDataSetAsync(array $args = [])
+ * @method \Aws\Result startSupportDataExport(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startSupportDataExportAsync(array $args = [])
  */
 class MarketplaceCommerceAnalyticsClient extends AwsClient {}

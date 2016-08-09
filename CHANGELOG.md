@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Added support for tagging API
+* `Aws\Ecr` - Added support for `ListImages` filtering
+* `Aws\MarketplaceCommerceAnalytics` - Added support for `StartSupportDataExport`
+* `Aws\Rds` - Fixing duplicate acceptors in waiters
+
 ## 3.18.37 - 2016-08-04
 
 * `Aws\GameLift` - Added support for `GameSession` Search
