@@ -36,26 +36,6 @@ class DualStackMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware($command, $this->getRequest($command));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testEnsureApplyDualStackWithoutAccelerationEndpoint()
-    {
-        $command = new Command(
-            'DeleteBucket',
-            [
-                'Bucket' => 'bucket',
-                '@use_accelerate_endpoint' => true,
-                '@use_dual_stack_endpoint' => true,
-            ]
-        );
-        $middleware = new DualStackMiddleware(
-            $this->noDualStackAssertingHandler($command),
-            'my-test-region'
-        );
-        $middleware($command, $this->getRequest($command));
-    }
-
     public function testDoesNothingWithoutOptIn()
     {
         $command = new Command('DeleteBucket', [ 'Bucket' => 'bucket']);
@@ -81,7 +61,10 @@ class DualStackMiddlewareTest extends \PHPUnit_Framework_TestCase
 
     private function getRequest(CommandInterface $command)
     {
-        return new Request('GET', "https://s3.amazonaws.com/{$command['Bucket']}");
+        return new Request(
+            'GET',
+            "https://s3.amazonaws.com/{$command['Bucket']}?key=query"
+        );
     }
 
     private function dualStackAssertingHandler(CommandInterface $command)
@@ -95,6 +78,7 @@ class DualStackMiddlewareTest extends \PHPUnit_Framework_TestCase
                 $req->getUri()->getHost()
             );
             $this->assertNotContains($command['Bucket'], $req->getUri()->getPath());
+            $this->assertContains('key=query', $req->getUri()->getQuery());
         };
     }
 

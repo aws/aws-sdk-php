@@ -60,22 +60,8 @@ class DualStackMiddleware
     private function shouldApplyDualStack(CommandInterface $command)
     {
         return isset($command['@use_dual_stack_endpoint'])
-            ? ($command['@use_dual_stack_endpoint'] && $this->canApplyDualStack($command))
+            ? ($command['@use_dual_stack_endpoint'] && S3Client::isBucketDnsCompatible($command['Bucket']))
             : $this->dualStackByDefault;
-    }
-
-    private function canApplyDualStack(CommandInterface $command)
-    {
-        if (
-            isset($command['@use_accelerate_endpoint']) &&
-            $command['@use_accelerate_endpoint']
-        ) {
-            $msg = 'Invalid combination of arguments,'
-                . ' dual stack is not supported at accelerate endpoints for now.';
-            throw new \InvalidArgumentException($msg);
-        } else {
-            return S3Client::isBucketDnsCompatible($command['Bucket']);
-        }
     }
 
     private function getDualStackHost(CommandInterface $command)

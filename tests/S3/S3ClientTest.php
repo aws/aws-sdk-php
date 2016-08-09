@@ -822,7 +822,10 @@ EOXML;
     public function testAppliesDualStackMiddleware()
     {
         $handler = function (RequestInterface $req) {
-            $this->assertContains('dualstack', $req->getUri()->getHost());
+            $this->assertSame(
+                'bucket.s3.dualstack.us-west-2.amazonaws.com',
+                $req->getUri()->getHost()
+            );
             return Promise\promise_for(new Response);
         };
 
