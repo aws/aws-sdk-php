@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.18.38 - 2016-08-09
 
 * `Aws\CloudFront` - Added support for tagging API
 * `Aws\Ecr` - Added support for `ListImages` filtering
