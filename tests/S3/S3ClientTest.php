@@ -823,8 +823,12 @@ EOXML;
     {
         $handler = function (RequestInterface $req) {
             $this->assertSame(
-                'bucket.s3.dualstack.us-west-2.amazonaws.com',
+                's3.dualstack.us-west-2.amazonaws.com',
                 $req->getUri()->getHost()
+            );
+            $this->assertContains(
+                'bucket',
+                $req->getUri()->getPath()
             );
             return Promise\promise_for(new Response);
         };

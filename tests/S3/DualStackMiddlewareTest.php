@@ -74,10 +74,10 @@ class DualStackMiddlewareTest extends \PHPUnit_Framework_TestCase
             RequestInterface $req
         ) use ($command) {
             $this->assertSame(
-                "{$command['Bucket']}.s3.dualstack.my-test-region.amazonaws.com",
+                "s3.dualstack.my-test-region.amazonaws.com",
                 $req->getUri()->getHost()
             );
-            $this->assertNotContains($command['Bucket'], $req->getUri()->getPath());
+            $this->assertContains($command['Bucket'], $req->getUri()->getPath());
             $this->assertContains('key=query', $req->getUri()->getQuery());
         };
     }
@@ -90,6 +90,7 @@ class DualStackMiddlewareTest extends \PHPUnit_Framework_TestCase
         ) use ($command) {
             $this->assertNotContains('dualstack', (string) $req->getUri());
             $this->assertContains($command['Bucket'], $req->getUri()->getPath());
+            $this->assertContains('key=query', $req->getUri()->getQuery());
         };
     }
 }

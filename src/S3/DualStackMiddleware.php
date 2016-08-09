@@ -45,11 +45,7 @@ class DualStackMiddleware
         if ($this->shouldApplyDualStack($command)) {
             $request = $request->withUri(
                 $request->getUri()
-                    ->withHost($this->getDualStackHost($command))
-                    ->withPath($this->getBucketlessPath(
-                        $request->getUri()->getPath(),
-                        $command
-                    ))
+                    ->withHost($this->getDualStackHost())
             );
         }
 
@@ -60,18 +56,12 @@ class DualStackMiddleware
     private function shouldApplyDualStack(CommandInterface $command)
     {
         return isset($command['@use_dual_stack_endpoint'])
-            ? ($command['@use_dual_stack_endpoint'] && S3Client::isBucketDnsCompatible($command['Bucket']))
+            ? $command['@use_dual_stack_endpoint']
             : $this->dualStackByDefault;
     }
 
-    private function getDualStackHost(CommandInterface $command)
+    private function getDualStackHost()
     {
-        return "{$command['Bucket']}.s3.dualstack.{$this->region}.amazonaws.com";
-    }
-
-    private function getBucketlessPath($path, CommandInterface $command)
-    {
-        $pattern = '/^\\/' . preg_quote($command['Bucket'], '/') . '/';
-        return preg_replace($pattern, '', $path) ?: '/';
+        return "s3.dualstack.{$this->region}.amazonaws.com";
     }
 }
