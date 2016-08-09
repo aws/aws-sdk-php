@@ -237,12 +237,13 @@ class Marshaler
      * returned instead.
      *
      * @param array $data Item from a DynamoDB result.
+     * @param bool  $mapAsObject Whether maps should be represented as stdClass.
      *
      * @return array|\stdClass
      */
-    public function unmarshalItem(array $data)
+    public function unmarshalItem(array $data, $mapAsObject = false)
     {
-        return $this->unmarshalValue(['M' => $data]);
+        return $this->unmarshalValue(['M' => $data], $mapAsObject);
     }
 
     /**
