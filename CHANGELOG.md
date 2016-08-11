@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Added support for `ELB` L7 integration
+* `Aws\ElasticLoadBalancing` - Added support for `ELBv2` support
+* `Aws\KinesisAnalytics` - Added support for new service that allows customers to perform SQL queries against streaming data
+* `Aws\Kms` - Added support for importing customer-supplied cryptographic keys
+* `Aws\S3` - Added support for IPv6
+* `Aws\SnowBall` - Added support for new service `SnowBall`: snowball job management
+
 ## 3.18.38 - 2016-08-09
 
 * `Aws\CloudFront` - Added support for tagging API
