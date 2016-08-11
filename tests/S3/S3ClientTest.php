@@ -818,4 +818,39 @@ EOXML;
             '@use_accelerate_endpoint' => true,
         ]);
     }
+
+    public function testAppliesDualStackMiddleware()
+    {
+        $handler = function (RequestInterface $req) {
+            $this->assertSame(
+                's3.dualstack.us-west-2.amazonaws.com',
+                $req->getUri()->getHost()
+            );
+            $this->assertContains(
+                'bucket',
+                $req->getUri()->getPath()
+            );
+            return Promise\promise_for(new Response);
+        };
+
+        $dualStackClient = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'use_dual_stack_endpoint' => true,
+            'http_handler' => $handler,
+        ]);
+        $dualStackClient->createBucket([
+            'Bucket' => 'bucket',
+        ]);
+
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => $handler,
+        ]);
+        $client->createBucket([
+            'Bucket' => 'bucket',
+            '@use_dual_stack_endpoint' => true,
+        ]);
+    }
 }
