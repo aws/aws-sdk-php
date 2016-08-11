@@ -1,10 +1,10 @@
 # CHANGELOG
 
-## next release
+## 3.18.39 - 2016-08-11
 
 * `Aws\AutoScaling` - Added support for `ELB` L7 integration
 * `Aws\ElasticLoadBalancing` - Added support for `ELBv2` support
-* `Aws\KinesisAnalytics` - Added support for new service that allows customers to perform SQL queries against streaming data
+* `Aws\KinesisAnalytics` - Added support for new service that 9allows customers to perform SQL queries against streaming data
 * `Aws\Kms` - Added support for importing customer-supplied cryptographic keys
 * `Aws\S3` - Added support for IPv6
 * `Aws\SnowBall` - Added support for new service `SnowBall`: snowball job management
