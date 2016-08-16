@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.0 - 2016-08-16
 
 * `Aws\Acm` - Added support for increased tagging limit
 * `Aws\ApiGateway` - Added support for API usage plans
