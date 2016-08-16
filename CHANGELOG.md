@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Acm` - Added support for increased tagging limit
+* `Aws\ApiGateway` - Added support for API usage plans
+* `Aws\Ecs` - Added support for memory reservation and `networkMode` on task definitions
+
 ## 3.18.39 - 2016-08-11
 
 * `Aws\AutoScaling` - Added support for `ELB` L7 integration
