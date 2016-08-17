@@ -74,31 +74,12 @@ class ElasticLoadBalancingV2Client extends AwsClient {
         if (!isset($args['signing_name'])) {
             $args['signing_name'] = 'elasticloadbalancing';
         }
+        if (!isset($args['endpoint'])) {
+            $scheme = isset($args['scheme'])? $args['scheme'] : 'https';
+            $args['endpoint'] =
+                "{$scheme}://elasticloadbalancing.{$args['region']}.amazonaws.com";
+        }
 
         parent::__construct($args);
-        $stack = $this->getHandlerList();
-        $stack->appendBuild($this->getEndpointMiddleware(), 'elbv2.elb_endpoint');
-    }
-
-    /**
-     * Provide a middleware that resolves ElbV2 endpoints with Elb endpoints
-     *
-     * @return \Closure
-     */
-    private function getEndpointMiddleware()
-    {
-        $region = $this->getRegion();
-        return static function (callable $handler) use ($region) {
-            return function (
-                CommandInterface $command,
-                RequestInterface $request = null
-            ) use ($handler, $region) {
-                $request = $request->withUri(
-                    $request->getUri()
-                        ->withHost("elasticloadbalancing.{$region}.amazonaws.com")
-                );
-                return $handler($command, $request);
-            };
-        };
     }
 }

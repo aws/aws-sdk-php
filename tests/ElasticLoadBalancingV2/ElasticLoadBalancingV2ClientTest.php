@@ -18,26 +18,16 @@ class ElasticLoadBalancingV2ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testSignningServiceNameIsElb()
     {
-        $elbV2 = $this->getTestClient('ElasticLoadBalancingV2', ['region' => 'us-east-1']);
+        $elbV2 = $this->getTestClient('ElasticLoadBalancingV2', [ 'region' => 'us-east-1' ]);
         $this->assertSame('elasticloadbalancing', $elbV2->getConfig('signing_name'));
     }
 
     public function testEndpointSetToElb()
     {
-        $mock = new MockHandler([
-            function ($command, $request) {
-                $this->assertSame(
-                    'elasticloadbalancing.us-east-1.amazonaws.com',
-                    $request->getUri()->getHost()
-                );
-                return new Result();
-            }
-        ]);
-        $elbV2 = new ElasticLoadBalancingV2Client([
-            'version' => 'latest',
-            'region' => 'us-east-1',
-            'handler' => $mock,
-        ]);
-        $elbV2->describeLoadBalancers();
+        $elbV2 = $this->getTestClient('ElasticLoadBalancingV2', [ 'region' => 'us-east-1' ]);
+        $this->assertSame(
+            'elasticloadbalancing.us-east-1.amazonaws.com',
+            $elbV2->getEndpoint()->getHost()
+        );
     }
 }
