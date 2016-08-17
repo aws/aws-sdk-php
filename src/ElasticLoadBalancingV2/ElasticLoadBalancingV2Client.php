@@ -2,6 +2,9 @@
 namespace Aws\ElasticLoadBalancingV2;
 
 use Aws\AwsClient;
+use Aws\Command;
+use Aws\CommandInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * This client is used to interact with the **Elastic Load Balancing** service.
@@ -64,4 +67,38 @@ use Aws\AwsClient;
  * @method \Aws\Result setSubnets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setSubnetsAsync(array $args = [])
  */
-class ElasticLoadBalancingV2Client extends AwsClient {}
+class ElasticLoadBalancingV2Client extends AwsClient {
+
+    public function __construct(array $args)
+    {
+        if (!isset($args['signing_name'])) {
+            $args['signing_name'] = 'elasticloadbalancing';
+        }
+
+        parent::__construct($args);
+        $stack = $this->getHandlerList();
+        $stack->appendBuild($this->getEndpointMiddleware(), 'elbv2.elb_endpoint');
+    }
+
+    /**
+     * Provide a middleware that resolves ElbV2 endpoints with Elb endpoints
+     *
+     * @return \Closure
+     */
+    private function getEndpointMiddleware()
+    {
+        $region = $this->getRegion();
+        return static function (callable $handler) use ($region) {
+            return function (
+                CommandInterface $command,
+                RequestInterface $request = null
+            ) use ($handler, $region) {
+                $request = $request->withUri(
+                    $request->getUri()
+                        ->withHost("elasticloadbalancing.{$region}.amazonaws.com")
+                );
+                return $handler($command, $request);
+            };
+        };
+    }
+}
