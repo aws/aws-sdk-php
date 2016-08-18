@@ -2,6 +2,9 @@
 namespace Aws\ElasticLoadBalancingV2;
 
 use Aws\AwsClient;
+use Aws\Command;
+use Aws\CommandInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * This client is used to interact with the **Elastic Load Balancing** service.
@@ -64,4 +67,19 @@ use Aws\AwsClient;
  * @method \Aws\Result setSubnets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setSubnetsAsync(array $args = [])
  */
-class ElasticLoadBalancingV2Client extends AwsClient {}
+class ElasticLoadBalancingV2Client extends AwsClient {
+
+    public function __construct(array $args)
+    {
+        if (!isset($args['signing_name'])) {
+            $args['signing_name'] = 'elasticloadbalancing';
+        }
+        if (!isset($args['endpoint'])) {
+            $scheme = isset($args['scheme'])? $args['scheme'] : 'https';
+            $args['endpoint'] =
+                "{$scheme}://elasticloadbalancing.{$args['region']}.amazonaws.com";
+        }
+
+        parent::__construct($args);
+    }
+}

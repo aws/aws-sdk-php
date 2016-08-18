@@ -78,16 +78,20 @@ class DocsBuilder
                     ApiProvider::resolve($this->apiProvider, 'docs', $name, $version)
                 );
                 $service = new Service($api, $docModel);
-                if (isset($services[$service->title][$version])) {
-                    if (empty($aliases[$service->title][$version])) {
-                        $aliases[$service->title][$version] = [];
+                $title = isset($services[$service->title]) && $service->shortTitle !== ''
+                        ? $service->shortTitle
+                        : $service->title;
+
+                if (isset($services[$title][$version])) {
+                    if (empty($aliases[$title][$version])) {
+                        $aliases[$title][$version] = [];
                     }
-                    $aliases[$service->title][$version] []= $alias;
+                    $aliases[$title][$version] []= $alias;
                     continue;
                 }
                 $examples = $this->loadExamples($name, $version);
                 $this->renderService($service, $examples);
-                $services[$service->title][$version] = $service;
+                $services[$title][$version] = $service;
             }
         }
 
