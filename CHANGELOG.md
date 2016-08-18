@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Added support for for Dedicated Host Reservations and
+  API Update for `EC2-SpotFleet`
+* `Aws\ElasticLoadBalancingV2` - Fix `ElasticLoadBalancingV2` endpoints
+* `Aws\WorkSpaces` - Added support for Hourly WorkSpaces APIs
+
 ## 3.19.0 - 2016-08-16
 
 * `Aws\Acm` - Added support for increased tagging limit

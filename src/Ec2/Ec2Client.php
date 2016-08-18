@@ -417,10 +417,18 @@ use Aws\Api\ApiProvider;
  * @method \GuzzleHttp\Promise\Promise unassignPrivateIpAddressesAsync(array $args = [])
  * @method \Aws\Result unmonitorInstances(array $args = [])
  * @method \GuzzleHttp\Promise\Promise unmonitorInstancesAsync(array $args = [])
+ * @method \Aws\Result describeHostReservationOfferings(array $args = []) (supported in versions 2016-04-01)
+ * @method \GuzzleHttp\Promise\Promise describeHostReservationOfferingsAsync(array $args = []) (supported in versions 2016-04-01)
+ * @method \Aws\Result describeHostReservations(array $args = []) (supported in versions 2016-04-01)
+ * @method \GuzzleHttp\Promise\Promise describeHostReservationsAsync(array $args = []) (supported in versions 2016-04-01)
  * @method \Aws\Result describeIdentityIdFormat(array $args = []) (supported in versions 2016-04-01)
  * @method \GuzzleHttp\Promise\Promise describeIdentityIdFormatAsync(array $args = []) (supported in versions 2016-04-01)
+ * @method \Aws\Result getHostReservationPurchasePreview(array $args = []) (supported in versions 2016-04-01)
+ * @method \GuzzleHttp\Promise\Promise getHostReservationPurchasePreviewAsync(array $args = []) (supported in versions 2016-04-01)
  * @method \Aws\Result modifyIdentityIdFormat(array $args = []) (supported in versions 2016-04-01)
  * @method \GuzzleHttp\Promise\Promise modifyIdentityIdFormatAsync(array $args = []) (supported in versions 2016-04-01)
+ * @method \Aws\Result purchaseHostReservation(array $args = []) (supported in versions 2016-04-01)
+ * @method \GuzzleHttp\Promise\Promise purchaseHostReservationAsync(array $args = []) (supported in versions 2016-04-01)
  */
 class Ec2Client extends AwsClient
 {
