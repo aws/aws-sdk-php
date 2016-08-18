@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.1 - 2016-08-18
 
 * `Aws\Ec2` - Added support for for Dedicated Host Reservations and
   API Update for `EC2-SpotFleet`
