@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.2 - 2016-08-23
 
 * `Aws\Rds` - Added support for addition of resource ARNs to `Describe` APIs
 
