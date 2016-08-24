@@ -2,6 +2,7 @@
 namespace Aws\Test\S3;
 
 use Aws\Command;
+use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
@@ -787,6 +788,27 @@ EOXML;
         ]);
 
         $this->assertSame('alderaan-north-1', $client->determineBucketRegion('bucket'));
+    }
+
+    /**
+     * @expectedException \Aws\Exception\AwsException
+     */
+    public function testDetermineBucketRegionExposeException()
+    {
+        $client = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function() {
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $this->getMockBuilder(AwsException::class)
+                        ->disableOriginalConstructor()
+                        ->getMock(),
+                    'response' => null,
+                ]);
+            },
+        ]);
+        $client->determineBucketRegion('bucket');
     }
     
     public function testAppliesAccelerateMiddleware()
