@@ -786,8 +786,24 @@ EOXML;
                 ]));
             },
         ]);
-
         $this->assertSame('alderaan-north-1', $client->determineBucketRegion('bucket'));
+
+        $client = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function() {
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $this->getMockBuilder(AwsException::class)
+                        ->disableOriginalConstructor()
+                        ->getMock(),
+                    'response' => new Response(400, [
+                        'X-Amz-Bucket-Region' => 'us-west-2',
+                    ]),
+                ]);
+            },
+        ]);
+        $this->assertSame('us-west-2', $client->determineBucketRegion('bucket'));
     }
 
     /**
