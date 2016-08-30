@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.3 - 2016-08-30
 
 * `Aws\CloudFront` - Added support for QueryString Whitelisting
 * `Aws\CodePipeline` - Added support for return pipeline execution details
