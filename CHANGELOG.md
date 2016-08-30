@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Added support for QueryString Whitelisting
+* `Aws\CodePipeline` - Added support for return pipeline execution details
+* `Aws\Ecs` - Added support for simplified waiter
+* `Aws\Route53` - Added support for `NAPTR` and new operation `TestDNSAnswer`
+
 ## 3.19.2 - 2016-08-23
 
 * `Aws\Rds` - Added support for addition of resource ARNs to `Describe` APIs
