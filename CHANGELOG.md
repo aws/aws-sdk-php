@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - Added support for automatically scaling an
+  Amazon EC2 Spot fleet in order to manage application availability and
+  costs during changes in demand based on conditions you define
+* `Aws\CognitoIdentity` - Added support for bulk import of users
+* `Aws\Rds` - Added support for the information about option conflicts
+  to the describe-option-group-options api response
+* `Aws\ConfigService` - Added support for a application loadbalancer type
+* `Aws\GameLift` - Added support for Linux instance
+
 ## 3.19.3 - 2016-08-30
 
 * `Aws\CloudFront` - Added support for QueryString Whitelisting
