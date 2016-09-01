@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.4 - 2016-09-01
 
 * `Aws\ApplicationAutoScaling` - Added support for automatically scaling an
   Amazon EC2 Spot fleet in order to manage application availability and
