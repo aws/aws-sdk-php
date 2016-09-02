@@ -17,8 +17,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 class AssumeRoleCredentialProvider
 {
-    const ERROR_MSG = "Missing required 'AssumeRoleCredentialProvider'"
-        . " configuration option: ";
+    const ERROR_MSG = "Missing required 'AssumeRoleCredentialProvider' configuration option: ";
 
     /** @var callable */
     private $client;
