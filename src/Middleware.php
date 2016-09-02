@@ -3,6 +3,7 @@ namespace Aws;
 
 use Aws\Api\Service;
 use Aws\Api\Validator;
+use Aws\Credentials\AssumeRoleCredentialProvider;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\AwsException;
 use GuzzleHttp\Promise;

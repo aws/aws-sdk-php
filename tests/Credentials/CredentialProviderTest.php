@@ -142,6 +142,7 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreatesFromIniFile($iniFile, Credentials $expectedCreds)
     {
+        //Shared credential file
         $dir = $this->clearEnv();
         file_put_contents($dir . '/credentials', $iniFile);
         putenv('HOME=' . dirname($dir));
@@ -149,6 +150,15 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
             ->wait();
         $this->assertEquals($expectedCreds->toArray(), $creds->toArray());
         unlink($dir . '/credentials');
+
+        //Shared config file
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/config', $iniFile);
+        putenv('HOME=' . dirname($dir));
+        $creds = call_user_func(CredentialProvider::ini('default', null, true))
+            ->wait();
+        $this->assertEquals($expectedCreds->toArray(), $creds->toArray());
+        unlink($dir . '/config');
     }
 
     public function iniFileProvider()
@@ -230,7 +240,7 @@ EOT;
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage 'foo' not found in credentials file
+     * @expectedExceptionMessage 'foo' not found in
      */
     public function testEnsuresFileIsNotEmpty()
     {
@@ -244,6 +254,158 @@ EOT;
             unlink($dir . '/credentials');
             throw $e;
         }
+    }
+
+    /**
+     * @dataProvider assumeRoleProfileProvider
+     *
+     * @param $profile_file
+     * @param $source_creds
+     * @param $region
+     */
+    public function testLoadConfigurationOptionForAssumeRoleCredentials(
+        $profile_file,
+        $source_creds,
+        $region
+    ){
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/credentials', $profile_file);
+        putenv('HOME=' . dirname($dir));
+        $data = parse_ini_file($dir . '/credentials', true);
+        $creds = CredentialProvider::loadConfigurationForAssumeRoleCredential(
+            $data,
+            'assumes_role',
+            $dir . '/credentials',
+            false
+        );
+        $this->assertEquals(
+            $source_creds,
+            call_user_func($creds['credentials'])->wait()
+        );
+        $this->assertEquals($region, $creds['region']);
+        unlink($dir . '/credentials');
+    }
+
+    public function assumeRoleProfileProvider()
+    {
+        $credentials = new Credentials('foo', 'bar', 'baz');
+        $same_with_assume_role_profile = <<<EOT
+[default]
+aws_access_key_id=foo
+aws_secret_access_key=bar
+aws_session_token=baz
+region=us-east-1
+
+[assumes_role]
+role_arn=arn:aws:iam::123456789:role/foo
+role_session_name=test
+source_profile=assumes_role
+region=us-west-2
+EOT;
+        $differ_from_assume_role_profile = <<<EOT
+[default]
+aws_access_key_id=foo
+aws_secret_access_key=bar
+aws_session_token=baz
+region=us-east-1
+
+[assumes_role]
+role_arn=arn:aws:iam::123456789:role/foo
+role_session_name=test
+source_profile=default
+EOT;
+
+        return [
+            [
+                $same_with_assume_role_profile,
+                $credentials,
+                'us-west-2',
+            ],
+            [
+                $differ_from_assume_role_profile,
+                $credentials,
+                'us-east-1',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider insufficientParamsProvider
+     *
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage
+     */
+    public function testThrowsExceptionWithInsufficientDataForAssumeRole($profile_file)
+    {
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/credentials', $profile_file);
+        putenv('HOME=' . dirname($dir));
+        call_user_func(CredentialProvider::assumeRole('default'))->wait();
+    }
+
+    public function insufficientParamsProvider()
+    {
+        $no_assume_role = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = bar
+aws_session_token = baz
+EOT;
+        $no_region = <<<EOT
+[default]
+aws_access_key_id=foo
+aws_secret_access_key=bar
+aws_session_token=baz
+
+[assumes_role]
+role_arn=arn:aws:iam::123456789:role/foo
+role_session_name=test
+EOT;
+
+        return [
+            [ $no_assume_role ],
+            [ $no_region ],
+        ];
+    }
+    public function testCreatesAssumeRoleAcrossFiles()
+    {
+        $cred_file = <<<EOT
+[default]
+aws_access_key_id=foo
+aws_secret_access_key=bar
+aws_session_token=baz
+region=us-east-1
+
+[assumes_role]
+role_arn=arn:aws:iam::123456789:role/foo
+role_session_name=test
+source_profile=profile default
+region=us-west-2
+EOT;
+        $config_file = <<<EOT
+[profile default]
+aws_access_key_id=baz
+aws_secret_access_key=foo
+aws_session_token=bar
+region=us-east-1
+EOT;
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/credentials', $cred_file);
+        file_put_contents($dir . '/config', $config_file);
+        putenv('HOME=' . dirname($dir));
+
+        $data = parse_ini_file($dir . '/credentials', true);
+        $creds = CredentialProvider::loadConfigurationForAssumeRoleCredential(
+            $data,
+            'assumes_role',
+            $dir . '/credentials',
+            false
+        );
+        $this->assertEquals(
+            new Credentials('baz', 'foo', 'bar'),
+            call_user_func($creds['credentials'])->wait()
+        );
+        unlink($dir . '/credentials');
     }
 
     public function testCreatesFromInstanceProfileProvider()

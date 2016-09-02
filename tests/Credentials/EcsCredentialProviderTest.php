@@ -32,7 +32,7 @@ class EcsCredentialProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Unable to find an ECS environment variable value
+     * @expectedExceptionMessage Error retrieving credential from ECS
      */
     public function testRejectsIfUriPathIsNotAvailable()
     {

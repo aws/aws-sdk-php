@@ -21,10 +21,14 @@ class EcsCredentialProvider
     private $client;
 
     /**
+     * The constructor accepts following options:
+     *  - timeout: Connection timeout, in seconds.
+     *
      * @param array $config Configuration options
      */
     public function __construct(array $config = [])
     {
+        $this->timeout = isset($config['timeout']) ? $config['timeout'] : 1.0;
         $this->client = isset($config['client'])
             ? $config['client'] // internal use only
             : \Aws\default_http_handler();
@@ -44,19 +48,11 @@ class EcsCredentialProvider
      * Fetch credential URI from ECS environment variable
      *
      * @return string Returns ECS URI
-     * @throws CredentialsException If the credential URI path cannot be found
      */
     private function getEcsUri()
     {
         $creds_uri = getenv(self::ENV_URI);
-
-        if (!$creds_uri) {
-            throw new CredentialsException(
-                "Unable to find an ECS environment variable value for "
-                . self::ENV_URI
-            );
-        }
-        return $creds_uri;
+        return $creds_uri? $creds_uri: '';
     }
 
     /**
@@ -68,7 +64,10 @@ class EcsCredentialProvider
     {
         $client = $this->client;
         $request = new Request('GET', new Uri(self::SERVER_URI . $url));
-        return $client($request)->then(function (ResponseInterface $response) {
+        return $client(
+            $request,
+            [ 'timeout' => $this->timeout ]
+        )->then(function (ResponseInterface $response) {
             $result = $this->decodeResult((string) $response->getBody());
             return new Credentials(
                 $result['AccessKeyId'],
@@ -77,6 +76,7 @@ class EcsCredentialProvider
                 strtotime($result['Expiration'])
             );
         })->otherwise(function ($reason) {
+            $reason = is_array($reason) ? $reason['exception'] : $reason;
             $msg = $reason->getMessage();
             throw new CredentialsException(
                 "Error retrieving credential from ECS ($msg)"
