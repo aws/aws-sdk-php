@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.19.5 - 2016-09-06
+
+* `Aws\Codepipeline` - Added support for pipeline execution details
+* `Aws\Rds` - Added support for `DescribeSourceRegions` API
+* `Aws\Sns` - Added new exceptions
+
 ## 3.19.4 - 2016-09-01
 
 * `Aws\ApplicationAutoScaling` - Added support for automatically scaling an
