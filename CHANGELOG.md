@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Added support for HTTP2
+
 ## 3.19.5 - 2016-09-06
 
 * `Aws\Codepipeline` - Added support for pipeline execution details
