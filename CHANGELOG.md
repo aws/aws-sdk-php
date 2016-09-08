@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.6 - 2016-09-08
 
 * `Aws\CloudFront` - Added support for HTTP2
 
