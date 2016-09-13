@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.7 - 2016-09-13
 
 * `Aws\ServiceCatalog` - Added support for API Update for AWS Service Catalog
 
