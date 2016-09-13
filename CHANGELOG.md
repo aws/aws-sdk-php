@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ServiceCatalog` - Added support for API Update for AWS Service Catalog
+
 ## 3.19.6 - 2016-09-08
 
 * `Aws\CloudFront` - Added support for HTTP2
