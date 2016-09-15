@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.19.8 - 2016-09-15
+
+* `Aws\Iot` - Added support for changes in `RegisterCertificate` API &
+  Adding a new field "cannedAcl" in S3 action
+* `Aws\Rds` - Added support for Aurora cluster reader endpoint
+
 ## 3.19.7 - 2016-09-13
 
 * `Aws\ServiceCatalog` - Added support for API Update for AWS Service Catalog
