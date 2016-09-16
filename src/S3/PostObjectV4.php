@@ -4,7 +4,6 @@ namespace Aws\S3;
 use Aws\Credentials\CredentialsInterface;
 use GuzzleHttp\Psr7\Uri;
 use Aws\Signature\SignatureTrait;
-use Aws\Common\Enum\DateFormat;
 use Aws\Signature\SignatureV4 as SignatureV4;
 use Aws\Api\TimestampShape as TimestampShape;
 
