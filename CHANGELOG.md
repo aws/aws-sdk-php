@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.9 - 2016-09-20
 
 * `Aws\CodeDeploy` - Added support for Rollback deployment
 * `Aws\Emr` - Added support for the new end-to-end encryption
