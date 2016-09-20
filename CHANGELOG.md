@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeDeploy` - Added support for Rollback deployment
+* `Aws\Emr` - Added support for the new end-to-end encryption
+* `Aws\Rds` - Added support for local time zone
+* `Aws\Redshift` - Added support for `EnhancedVpcRouting` feature
+
 ## 3.19.8 - 2016-09-15
 
 * `Aws\Iot` - Added support for changes in `RegisterCertificate` API &
