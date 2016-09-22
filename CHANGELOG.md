@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGateway` - Added new enum values to the service
+
 ## 3.19.9 - 2016-09-20
 
 * `Aws\CodeDeploy` - Added support for Rollback deployment
