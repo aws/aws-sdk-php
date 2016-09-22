@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.10 - 2016-09-22
 
 * `Aws\ApiGateway` - Added new enum values to the service
 
