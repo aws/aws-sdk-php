@@ -88,6 +88,86 @@ class PostObjectV4Test extends \PHPUnit_Framework_TestCase
             '683963a1575bb197c642490ac60f3f08cda08233cd3a163ad31b554e9327a3ff',
             $a['X-Amz-Signature']
         );
+
+        $this->assertArrayNotHasKey('X-Amz-Signature-Token', $a);
+    }
+
+    /**
+     * Executes the SigV4 POST example from the S3 documentation.
+     *
+     * @link http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-post-example.html
+     */
+    public function testSignsPostPolicyWithSecurityToken()
+    {
+        $_SERVER['aws_time'] = '20151229T0000Z';
+        $options = [
+            ["bucket" => 'sigv4examplebucket'],
+            ["starts-with", '$key', "user/user1/"],
+            ["acl" => "public-read"],
+            ["success_action_redirect" =>
+                "http://sigv4examplebucket.s3.amazonaws.com/successful_upload.html"],
+            ["starts-with", '$Content-Type', "image/"],
+            ["x-amz-meta-uuid" => "14365123651274"],
+            ["x-amz-server-side-encryption" => "AES256"],
+            ["starts-with", '$x-amz-meta-tag', ""],
+        ];
+        $inputs = [
+            "bucket" => 'sigv4examplebucket',
+            "key" => "user/user1/",
+            "acl" => "public-read",
+            "success_action_redirect" =>
+                "http://sigv4examplebucket.s3.amazonaws.com/successful_upload.html",
+            "Content-Type" => "image/",
+            "x-amz-meta-uuid" => "14365123651274",
+            "x-amz-server-side-encryption" => "AES256",
+            "x-amz-meta-tag" => "",
+        ];
+
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => [
+                'key'    => 'AKIAIOSFODNN7EXAMPLE',
+                'secret' => 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+                'token'  => 'abJe44dFgDEXAMPLE'
+            ],
+        ]);
+
+        $p = new PostObjectV4(
+            $client,
+            'sigv4examplebucket',
+            $inputs,
+            $options,
+            "2015-12-29T01:00:00Z"
+        );
+        $a = $p->getFormInputs();
+
+        $policy = 'eyJleHBpcmF0aW9uIjoiMjAxNS0xMi0yOVQwMTowMDowMFoiLCJ'
+            . 'jb25kaXRpb25zIjpbeyJidWNrZXQiOiJzaWd2NGV4YW1wbGVidWNrZXQifSx'
+            . 'bInN0YXJ0cy13aXRoIiwiJGtleSIsInVzZXJcL3VzZXIxXC8iXSx7ImFjbCI6'
+            . 'InB1YmxpYy1yZWFkIn0seyJzdWNjZXNzX2FjdGlvbl9yZWRpcmVjdCI6Imh0d'
+            . 'HA6XC9cL3NpZ3Y0ZXhhbXBsZWJ1Y2tldC5zMy5hbWF6b25hd3MuY29tXC9zdW'
+            . 'NjZXNzZnVsX3VwbG9hZC5odG1sIn0sWyJzdGFydHMtd2l0aCIsIiRDb250ZW5'
+            . '0LVR5cGUiLCJpbWFnZVwvIl0seyJ4LWFtei1tZXRhLXV1aWQiOiIxNDM2NTEy'
+            . 'MzY1MTI3NCJ9LHsieC1hbXotc2VydmVyLXNpZGUtZW5jcnlwdGlvbiI6IkFFU'
+            . 'zI1NiJ9LFsic3RhcnRzLXdpdGgiLCIkeC1hbXotbWV0YS10YWciLCIiXSx7In'
+            . 'gtYW16LXNlY3VyaXR5LXRva2VuIjoiYWJKZTQ0ZEZnREVYQU1QTEUifSx7Ilg'
+            . 'tQW16LURhdGUiOiIyMDE1MTIyOVQwMDAwWiJ9LHsiWC1BbXotQ3JlZGVudGlh'
+            . 'bCI6IkFLSUFJT1NGT0ROTjdFWEFNUExFXC8yMDE1MTIyOVwvdXMtZWFzdC0xX'
+            . 'C9zM1wvYXdzNF9yZXF1ZXN0In0seyJYLUFtei1BbGdvcml0aG0iOiJBV1M0LU'
+            . 'hNQUMtU0hBMjU2In1dfQ==';
+
+        $this->assertSame($policy, $a['Policy']);
+
+        $this->assertEquals(
+            'ca86530c5c799e8fd3bf2013aaccc581bc34646d676c4b195d996b6723e2bb91',
+            $a['X-Amz-Signature']
+        );
+
+        $this->assertEquals(
+            'abJe44dFgDEXAMPLE',
+            $a['X-Amz-Security-Token']
+        );
     }
 
     public function testClientAndBucketGetters()

@@ -54,6 +54,14 @@ class PostObjectV4
             'enctype' => 'multipart/form-data'
         ];
 
+        $credentials   = $this->client->getCredentials()->wait();
+        $securityToken = $credentials->getSecurityToken();
+
+        if (null !== $securityToken) {
+            array_push($options, ['x-amz-security-token' => $securityToken]);
+            $formInputs['X-Amz-Security-Token'] = $securityToken;
+        }
+
         // setup basic policy
         $policy = [
             'expiration' => TimestampShape::format($expiration, 'iso8601'),
@@ -64,7 +72,7 @@ class PostObjectV4
         $this->formInputs = $formInputs + ['key' => '${filename}'];
 
         // finalize policy and signature
-        $credentials = $this->client->getCredentials()->wait();
+
         $this->formInputs += $this->getPolicyAndSignature(
             $credentials,
             $policy
