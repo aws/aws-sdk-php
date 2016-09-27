@@ -2,6 +2,7 @@
 namespace Aws\S3;
 
 use Aws\CommandInterface;
+use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\ResultInterface;
 use Aws\S3\Exception\S3Exception;
@@ -174,6 +175,12 @@ trait S3ClientTrait
         return $handler($command)
             ->then(static function (ResultInterface $result) {
                 return $result['@metadata']['headers']['x-amz-bucket-region'];
+            }, static function (AwsException $exception) {
+                $response = $exception->getResponse();
+                if ($response === null) {
+                    throw $exception;
+                }
+                return $response->getHeaderLine('x-amz-bucket-region');
             });
     }
 
