@@ -1,5 +1,63 @@
 # CHANGELOG
 
+## 3.19.11 - 2016-09-27
+
+* `Aws\CloudFormation` - Added support for `roleArn`
+* `Aws\S3` - Fixed `PostObjectV4` with security token option
+
+## 3.19.10 - 2016-09-22
+
+* `Aws\ApiGateway` - Added new enum values to the service
+
+## 3.19.9 - 2016-09-20
+
+* `Aws\CodeDeploy` - Added support for Rollback deployment
+* `Aws\Emr` - Added support for the new end-to-end encryption
+* `Aws\Rds` - Added support for local time zone
+* `Aws\Redshift` - Added support for `EnhancedVpcRouting` feature
+
+## 3.19.8 - 2016-09-15
+
+* `Aws\Iot` - Added support for changes in `RegisterCertificate` API &
+  Adding a new field "cannedAcl" in S3 action
+* `Aws\Rds` - Added support for Aurora cluster reader endpoint
+
+## 3.19.7 - 2016-09-13
+
+* `Aws\ServiceCatalog` - Added support for API Update for AWS Service Catalog
+
+## 3.19.6 - 2016-09-08
+
+* `Aws\CloudFront` - Added support for HTTP2
+
+## 3.19.5 - 2016-09-06
+
+* `Aws\Codepipeline` - Added support for pipeline execution details
+* `Aws\Rds` - Added support for `DescribeSourceRegions` API
+* `Aws\Sns` - Added new exceptions
+
+## 3.19.4 - 2016-09-01
+
+* `Aws\ApplicationAutoScaling` - Added support for automatically scaling an
+  Amazon EC2 Spot fleet in order to manage application availability and
+  costs during changes in demand based on conditions you define
+* `Aws\CognitoIdentity` - Added support for bulk import of users
+* `Aws\Rds` - Added support for the information about option conflicts
+  to the describe-option-group-options api response
+* `Aws\ConfigService` - Added support for a application loadbalancer type
+* `Aws\GameLift` - Added support for Linux instance
+
+## 3.19.3 - 2016-08-30
+
+* `Aws\CloudFront` - Added support for QueryString Whitelisting
+* `Aws\CodePipeline` - Added support for return pipeline execution details
+* `Aws\Ecs` - Added support for simplified waiter
+* `Aws\Route53` - Added support for `NAPTR` and new operation `TestDNSAnswer`
+
+## 3.19.2 - 2016-08-23
+
+* `Aws\Rds` - Added support for addition of resource ARNs to `Describe` APIs
+
 ## 3.19.1 - 2016-08-18
 
 * `Aws\Ec2` - Added support for for Dedicated Host Reservations and

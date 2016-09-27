@@ -120,6 +120,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeReservedDBInstancesAsync(array $args = [])
  * @method \Aws\Result describeReservedDBInstancesOfferings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeReservedDBInstancesOfferingsAsync(array $args = [])
+ * @method \Aws\Result describeSourceRegions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeSourceRegionsAsync(array $args = [])
  * @method \Aws\Result downloadDBLogFilePortion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise downloadDBLogFilePortionAsync(array $args = [])
  * @method \Aws\Result failoverDBCluster(array $args = [])

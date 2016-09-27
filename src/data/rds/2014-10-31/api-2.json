@@ -102,7 +102,8 @@
       "errors":[
         {"shape":"DBClusterSnapshotAlreadyExistsFault"},
         {"shape":"DBClusterSnapshotNotFoundFault"},
-        {"shape":"InvalidDBClusterStateFault"}
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"InvalidDBClusterSnapshotStateFault"}
       ]
     },
     "CopyDBParameterGroup":{
@@ -918,6 +919,18 @@
         {"shape":"ReservedDBInstancesOfferingNotFoundFault"}
       ]
     },
+    "DescribeSourceRegions":{
+      "name":"DescribeSourceRegions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSourceRegionsMessage"},
+      "output":{
+        "shape":"SourceRegionMessage",
+        "resultWrapper":"DescribeSourceRegionsResult"
+      }
+    },
     "DownloadDBLogFilePortion":{
       "name":"DownloadDBLogFilePortion",
       "http":{
@@ -1291,7 +1304,8 @@
         {"shape":"InvalidS3BucketFault"},
         {"shape":"DBClusterParameterGroupNotFoundFault"},
         {"shape":"KMSKeyNotAccessibleFault"},
-        {"shape":"DBClusterNotFoundFault"}
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"InsufficientStorageClusterCapacityFault"}
       ]
     },
     "RestoreDBClusterFromSnapshot":{
@@ -1344,6 +1358,7 @@
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"DBClusterSnapshotNotFoundFault"},
         {"shape":"InsufficientDBClusterCapacityFault"},
+        {"shape":"InsufficientStorageClusterCapacityFault"},
         {"shape":"InvalidDBSnapshotStateFault"},
         {"shape":"InvalidDBClusterSnapshotStateFault"},
         {"shape":"StorageQuotaExceededFault"},
@@ -1602,7 +1617,8 @@
         "CertificateType":{"shape":"String"},
         "Thumbprint":{"shape":"String"},
         "ValidFrom":{"shape":"TStamp"},
-        "ValidTill":{"shape":"TStamp"}
+        "ValidTill":{"shape":"TStamp"},
+        "CertificateArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -1853,7 +1869,8 @@
         "MonitoringInterval":{"shape":"IntegerOptional"},
         "MonitoringRoleArn":{"shape":"String"},
         "DomainIAMRoleName":{"shape":"String"},
-        "PromotionTier":{"shape":"IntegerOptional"}
+        "PromotionTier":{"shape":"IntegerOptional"},
+        "Timezone":{"shape":"String"}
       }
     },
     "CreateDBInstanceReadReplicaMessage":{
@@ -2027,6 +2044,7 @@
         "PercentProgress":{"shape":"String"},
         "EarliestRestorableTime":{"shape":"TStamp"},
         "Endpoint":{"shape":"String"},
+        "ReaderEndpoint":{"shape":"String"},
         "Engine":{"shape":"String"},
         "EngineVersion":{"shape":"String"},
         "LatestRestorableTime":{"shape":"TStamp"},
@@ -2042,7 +2060,8 @@
         "HostedZoneId":{"shape":"String"},
         "StorageEncrypted":{"shape":"Boolean"},
         "KmsKeyId":{"shape":"String"},
-        "DbClusterResourceId":{"shape":"String"}
+        "DbClusterResourceId":{"shape":"String"},
+        "DBClusterArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2118,7 +2137,8 @@
       "members":{
         "DBClusterParameterGroupName":{"shape":"String"},
         "DBParameterGroupFamily":{"shape":"String"},
-        "Description":{"shape":"String"}
+        "Description":{"shape":"String"},
+        "DBClusterParameterGroupArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2190,7 +2210,8 @@
         "SnapshotType":{"shape":"String"},
         "PercentProgress":{"shape":"Integer"},
         "StorageEncrypted":{"shape":"Boolean"},
-        "KmsKeyId":{"shape":"String"}
+        "KmsKeyId":{"shape":"String"},
+        "DBClusterSnapshotArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2262,7 +2283,8 @@
         "DBEngineVersionDescription":{"shape":"String"},
         "DefaultCharacterSet":{"shape":"CharacterSet"},
         "SupportedCharacterSets":{"shape":"SupportedCharacterSetsList"},
-        "ValidUpgradeTarget":{"shape":"ValidUpgradeTargetList"}
+        "ValidUpgradeTarget":{"shape":"ValidUpgradeTargetList"},
+        "SupportedTimezones":{"shape":"SupportedTimezonesList"}
       }
     },
     "DBEngineVersionList":{
@@ -2326,7 +2348,9 @@
         "MonitoringInterval":{"shape":"IntegerOptional"},
         "EnhancedMonitoringResourceArn":{"shape":"String"},
         "MonitoringRoleArn":{"shape":"String"},
-        "PromotionTier":{"shape":"IntegerOptional"}
+        "PromotionTier":{"shape":"IntegerOptional"},
+        "DBInstanceArn":{"shape":"String"},
+        "Timezone":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2398,7 +2422,8 @@
       "members":{
         "DBParameterGroupName":{"shape":"String"},
         "DBParameterGroupFamily":{"shape":"String"},
-        "Description":{"shape":"String"}
+        "Description":{"shape":"String"},
+        "DBParameterGroupArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2484,7 +2509,8 @@
         "DBSecurityGroupDescription":{"shape":"String"},
         "VpcId":{"shape":"String"},
         "EC2SecurityGroups":{"shape":"EC2SecurityGroupList"},
-        "IPRanges":{"shape":"IPRangeList"}
+        "IPRanges":{"shape":"IPRangeList"},
+        "DBSecurityGroupArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2592,7 +2618,9 @@
         "StorageType":{"shape":"String"},
         "TdeCredentialArn":{"shape":"String"},
         "Encrypted":{"shape":"Boolean"},
-        "KmsKeyId":{"shape":"String"}
+        "KmsKeyId":{"shape":"String"},
+        "DBSnapshotArn":{"shape":"String"},
+        "Timezone":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2662,7 +2690,8 @@
         "DBSubnetGroupDescription":{"shape":"String"},
         "VpcId":{"shape":"String"},
         "SubnetGroupStatus":{"shape":"String"},
-        "Subnets":{"shape":"SubnetList"}
+        "Subnets":{"shape":"SubnetList"},
+        "DBSubnetGroupArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -2940,7 +2969,8 @@
         "MaxRecords":{"shape":"IntegerOptional"},
         "Marker":{"shape":"String"},
         "DefaultOnly":{"shape":"Boolean"},
-        "ListSupportedCharacterSets":{"shape":"BooleanOptional"}
+        "ListSupportedCharacterSets":{"shape":"BooleanOptional"},
+        "ListSupportedTimezones":{"shape":"BooleanOptional"}
       }
     },
     "DescribeDBInstancesMessage":{
@@ -3187,6 +3217,15 @@
         "Marker":{"shape":"String"}
       }
     },
+    "DescribeSourceRegionsMessage":{
+      "type":"structure",
+      "members":{
+        "RegionName":{"shape":"String"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"},
+        "Filters":{"shape":"FilterList"}
+      }
+    },
     "DomainMembership":{
       "type":"structure",
       "members":{
@@ -3276,7 +3315,8 @@
         "SourceType":{"shape":"SourceType"},
         "Message":{"shape":"String"},
         "EventCategories":{"shape":"EventCategoriesList"},
-        "Date":{"shape":"TStamp"}
+        "Date":{"shape":"TStamp"},
+        "SourceArn":{"shape":"String"}
       }
     },
     "EventCategoriesList":{
@@ -3325,7 +3365,8 @@
         "SourceType":{"shape":"String"},
         "SourceIdsList":{"shape":"SourceIdsList"},
         "EventCategoriesList":{"shape":"EventCategoriesList"},
-        "Enabled":{"shape":"Boolean"}
+        "Enabled":{"shape":"Boolean"},
+        "EventSubscriptionArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -3868,7 +3909,8 @@
         "MajorEngineVersion":{"shape":"String"},
         "Options":{"shape":"OptionsList"},
         "AllowsVpcAndNonVpcInstanceMemberships":{"shape":"Boolean"},
-        "VpcId":{"shape":"String"}
+        "VpcId":{"shape":"String"},
+        "OptionGroupArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -3919,6 +3961,7 @@
         "PortRequired":{"shape":"Boolean"},
         "DefaultPort":{"shape":"IntegerOptional"},
         "OptionsDependedOn":{"shape":"OptionsDependedOn"},
+        "OptionsConflictsWith":{"shape":"OptionsConflictsWith"},
         "Persistent":{"shape":"Boolean"},
         "Permanent":{"shape":"Boolean"},
         "OptionGroupOptionSettings":{"shape":"OptionGroupOptionSettingsList"},
@@ -4026,6 +4069,13 @@
       "members":{
         "Version":{"shape":"String"},
         "IsDefault":{"shape":"Boolean"}
+      }
+    },
+    "OptionsConflictsWith":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"OptionConflictName"
       }
     },
     "OptionsDependedOn":{
@@ -4299,7 +4349,8 @@
         "OfferingType":{"shape":"String"},
         "MultiAZ":{"shape":"Boolean"},
         "State":{"shape":"String"},
-        "RecurringCharges":{"shape":"RecurringChargeList"}
+        "RecurringCharges":{"shape":"RecurringChargeList"},
+        "ReservedDBInstanceArn":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -4690,6 +4741,28 @@
       },
       "exception":true
     },
+    "SourceRegion":{
+      "type":"structure",
+      "members":{
+        "RegionName":{"shape":"String"},
+        "Endpoint":{"shape":"String"},
+        "Status":{"shape":"String"}
+      }
+    },
+    "SourceRegionList":{
+      "type":"list",
+      "member":{
+        "shape":"SourceRegion",
+        "locationName":"SourceRegion"
+      }
+    },
+    "SourceRegionMessage":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"String"},
+        "SourceRegions":{"shape":"SourceRegionList"}
+      }
+    },
     "SourceType":{
       "type":"string",
       "enum":[
@@ -4797,6 +4870,13 @@
         "locationName":"CharacterSet"
       }
     },
+    "SupportedTimezonesList":{
+      "type":"list",
+      "member":{
+        "shape":"Timezone",
+        "locationName":"Timezone"
+      }
+    },
     "TStamp":{"type":"timestamp"},
     "Tag":{
       "type":"structure",
@@ -4816,6 +4896,12 @@
       "type":"structure",
       "members":{
         "TagList":{"shape":"TagList"}
+      }
+    },
+    "Timezone":{
+      "type":"structure",
+      "members":{
+        "TimezoneName":{"shape":"String"}
       }
     },
     "UpgradeTarget":{
