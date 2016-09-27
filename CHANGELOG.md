@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Added support for `roleArn`
+* `Aws\S3` - Fixed `PostObjectV4` with security token option
+
 ## 3.19.10 - 2016-09-22
 
 * `Aws\ApiGateway` - Added new enum values to the service
