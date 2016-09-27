@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.11 - 2016-09-27
 
 * `Aws\CloudFormation` - Added support for `roleArn`
 * `Aws\S3` - Fixed `PostObjectV4` with security token option
