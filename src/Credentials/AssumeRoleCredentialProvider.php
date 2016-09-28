@@ -27,8 +27,12 @@ class AssumeRoleCredentialProvider
 
     /**
      * The constructor requires following configure parameters:
-     *  - region: the StsClient region for assume role
-     *  - credentials: a CredentialProvider used to retrieve assume role
+     *  - client: a customized Sts Client
+     *
+     *  paramters used to construct a default StsClient(which will use the latest version):
+     *    - region: the StsClient region for assume role
+     *    - credentials: a CredentialProvider used to retrieve assume role
+     *
      *  - assume_role_params: Parameters used to make assumeRole call
      *
      * @param array $config Configuration options
@@ -46,14 +50,14 @@ class AssumeRoleCredentialProvider
             throw new \InvalidArgumentException(self::ERROR_MSG . "'assume_role_params'.");
         }
 
-        $args = [
+        $defaultClientArgs = [
             'region' => $config['region'],
             'version' => 'latest',
             'credentials' => $config['credentials'],
         ];
         $this->client = isset($config['client'])
-            ? $config['client'] // internal test use only
-            : new StsClient($args);
+            ? $config['client']
+            : new StsClient($defaultClientArgs);
         $this->assumeRoleParams = $config['assume_role_params'];
     }
 
@@ -65,13 +69,13 @@ class AssumeRoleCredentialProvider
     public function __invoke()
     {
         $client = $this->client;
-        return Promise\promise_for($client->assumeRole($this->assumeRoleParams))
+        return Promise\promise_for($client->assumeRoleAsync($this->assumeRoleParams))
             ->then(function (Result $result) {
                 return $this->client->createCredentials($result);
             })->otherwise(function (AwsException $exception) {
                 $reason = $exception->getMessage();
                 throw new CredentialsException(
-                    "Error in retrieving assume role credentials ($reason)."
+                    "Error in retrieving assume role credentials: $reason."
                 );
             });
     }

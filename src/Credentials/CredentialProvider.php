@@ -274,41 +274,44 @@ class CredentialProvider
      * Credential provider that creates credentials using assume role
      * credentials from ini profile
      *
-     * @param string|null $assume_role_profile assume_role_profile name to be used
-     *                                         By default: assumes_role for credentials file
-     *                                         profile assumes_role for config file.
-     * @param string|null $filename            If provided, uses a custom filename rather
-     *                                         than looking in the home directory.
-     * @param bool|false  $config_file         the type of file the assume_role_profile 
-     *                                         lives in. Use credentials file by default.
+     * @param string|null $assumeRoleProfile   Assume role profile name to be used.
+     *                                         Default:
+     *                                         [assumes_role] in credentials file
+     *                                         [profile assumes_role] in config file
+     *
+     * @param string|null $fileName            A custom file to fetch credential from.
+     *                                         Default: credential/config file in home directory
+     *
+     * @param bool|false  $configFile          The type of file where the profile lives in.
+     *                                         Default: false (taken as credential file)
      *
      * @return callable
      */
     public static function assumeRole(
-        $assume_role_profile = null,
-        $filename = null,
-        $config_file = false
-    ){
-        $filename = self::getFileName($filename, $config_file);
-        $assume_role_profile = $assume_role_profile ?: (
-            $config_file ? 'profile assumes_role' : 'assumes_role'
+        $assumeRoleProfile = null,
+        $fileName = null,
+        $configFile = false
+    ) {
+        $fileName = self::getFileName($fileName, $configFile);
+        $assumeRoleProfile = $assumeRoleProfile ?: (
+            $configFile ? 'profile assumes_role' : 'assumes_role'
         );
 
-        return function () use ($assume_role_profile, $filename, $config_file) {
-            $data = self::checkProfileAvailability($assume_role_profile, $filename);
+        return function () use ($assumeRoleProfile, $fileName, $configFile) {
+            $data = self::checkProfileAvailability($assumeRoleProfile, $fileName);
             if (is_string($data)) {
                 return self::reject($data);
             }
             
-            if (!isset($data[$assume_role_profile]['role_arn'])) {
+            if (!isset($data[$assumeRoleProfile]['role_arn'])) {
                 return self::reject("Profile specified is not an assume role profile.");
             }
 
             $args = self::loadConfigurationForAssumeRoleCredential(
                 $data,
-                $assume_role_profile,
-                $filename,
-                $config_file
+                $assumeRoleProfile,
+                $fileName,
+                $configFile
             );
 
             if (!is_array($args)) {
@@ -322,56 +325,55 @@ class CredentialProvider
 
     public static function loadConfigurationForAssumeRoleCredential(
         $data,
-        $assume_role_profile, 
-        $filename, 
-        $config_file
-    ){
+        $assumeRoleProfile,
+        $fileName,
+        $configFile
+    ) {
         $args = [];
-        if (!isset($data[$assume_role_profile]['source_profile'])) {
+        if (!isset($data[$assumeRoleProfile]['source_profile'])) {
             // No source_profile specified, jump to next in chain after ini
             $args['credentials'] = self::chain(
                 self::ecsCredentials(),
                 self::instanceProfile()
             );
         } else {
-            $source_profile = $data[$assume_role_profile]['source_profile'];
-            if ($source_profile === $assume_role_profile) {
+            $sourceProfile = $data[$assumeRoleProfile]['source_profile'];
+            if ($sourceProfile === $assumeRoleProfile) {
                 $args['credentials'] = self::chain(
-                    self::ini(null, $filename),
+                    self::ini(null, $fileName),
                     self::ini(),
                     self::ini(null, null, true)
                 );
             } else {
                 $args['credentials'] = self::chain(
-                    self::assumeRole($source_profile, $filename),
-                    self::assumeRole($source_profile),
-                    self::assumeRole($source_profile, null, true),
-                    self::ini($source_profile, $filename),
-                    self::ini($source_profile),
-                    self::ini($source_profile, null, true)
+                    self::assumeRole($sourceProfile, $fileName),
+                    self::assumeRole($sourceProfile),
+                    self::assumeRole($sourceProfile, null, true),
+                    self::ini($sourceProfile, $fileName),
+                    self::ini($sourceProfile),
+                    self::ini($sourceProfile, null, true)
                 );
             }
         }
-        unset($data[$assume_role_profile]['source_profile']);
+        unset($data[$assumeRoleProfile]['source_profile']);
 
-        if (isset($data[$assume_role_profile]['region'])
-        ) {
-            $args['region'] = $data[$assume_role_profile]['region'];
+        if (isset($data[$assumeRoleProfile]['region'])) {
+            $args['region'] = $data[$assumeRoleProfile]['region'];
         } else {
             // If no region provided under same assume role profile
             // check static profile for region in the same file
             $profile = getenv(self::ENV_PROFILE) ?: (
-            $config_file ? 'profile default' : 'default'
+                $configFile ? 'profile default' : 'default'
             );
-            $data = self::checkProfileAvailability($profile, $filename);
+            $data = self::checkProfileAvailability($profile, $fileName);
             if (!isset($data[$profile]['region'])) {
                 return self::reject("'region' must be provided to retrieve assume role.");
             }
             $args['region'] = $data[$profile]['region'];
         }
-        unset($data[$assume_role_profile]['region']);
+        unset($data[$assumeRoleProfile]['region']);
 
-        $args['assume_role_params'] = self::paramsParser($data[$assume_role_profile]);
+        $args['assume_role_params'] = self::paramsParser($data[$assumeRoleProfile]);
         return $args;
     }
 
@@ -379,24 +381,28 @@ class CredentialProvider
      * Credentials provider that creates credentials using an ini file stored
      * in the current user's home directory.
      *
-     * @param string|null $profile  Profile to use. If not specified will use
-     *                              the "default" profile.
-     * @param string|null $filename If provided, uses a custom filename rather
-     *                              than looking in the home directory.
-     *
+     * @param string|null $profile      Profile to use. If not specified will use
+     *                                  the "default" profile.
+     * @param string|null $fileName     If provided, uses a custom filename rather
+     *                                  than looking in the home directory.
+     *                                  Default:
+     *                                  - 'default' in credential file
+     *                                  - 'profile default' in config file
+     * @param bool|false  $configFile   The type of file where the profile lives in.
+     *                                  Default: false (taken as credential file)
      * @return callable
      */
-    public static function ini($profile = null, $filename = null, $config_file = false)
+    public static function ini($profile = null, $fileName = null, $configFile = false)
     {
-        $filename = self::getFileName($filename, $config_file);
+        $fileName = self::getFileName($fileName, $configFile);
         $profile = $profile ?: (
             getenv(self::ENV_PROFILE) ?: (
-                $config_file ? 'profile default' : 'default'
+                $configFile ? 'profile default' : 'default'
             )
         );
 
-        return function () use ($profile, $filename) {
-            $data = self::checkProfileAvailability($profile, $filename);
+        return function () use ($profile, $fileName) {
+            $data = self::checkProfileAvailability($profile, $fileName);
             if (is_string($data)) {
                 return self::reject($data);
             }
@@ -405,7 +411,7 @@ class CredentialProvider
                 || !isset($data[$profile]['aws_secret_access_key'])
             ) {
                 return self::reject("No credentials present in INI profile "
-                    . "'$profile' ($filename)");
+                    . "'$profile' ($fileName)");
             }
 
             if (empty($data[$profile]['aws_session_token'])) {
@@ -425,10 +431,10 @@ class CredentialProvider
         };
     }
 
-    private static function getFileName($filename, $config_file)
+    private static function getFileName($fileName, $configFile)
     {
-        return $filename ?: (
-            self::getHomeDir() . '/.aws' . ($config_file ? '/config' : '/credentials')
+        return $fileName ?: (
+            self::getHomeDir() . '/.aws' . ($configFile ? '/config' : '/credentials')
         );
     }
 
@@ -438,17 +444,17 @@ class CredentialProvider
      *
      * @return array|string
      */
-    private static function checkProfileAvailability($profile, $filename)
+    private static function checkProfileAvailability($profile, $fileName)
     {
-        if (!is_readable($filename)) {
-            return "Cannot read credentials from $filename";
+        if (!is_readable($fileName)) {
+            return "Cannot read credentials from $fileName";
         }
-        $data = parse_ini_file($filename, true);
+        $data = parse_ini_file($fileName, true);
         if ($data === false) {
-            return "Invalid credentials file: $filename";
+            return "Invalid credentials file: $fileName";
         }
         if (!isset($data[$profile])) {
-            return "'$profile' not found in $filename";
+            return "'$profile' not found in $fileName";
         }
         return $data;
     }

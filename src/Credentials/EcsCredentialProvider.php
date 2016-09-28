@@ -14,7 +14,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 class EcsCredentialProvider
 {
-    const SERVER_URI = 'http://169.254.170.2/';
+    const SERVER_URI = 'http://169.254.170.2';
     const ENV_URI = "AWS_CONTAINER_CREDENTIALS_RELATIVE_URI";
 
     /** @var callable */
@@ -41,29 +41,17 @@ class EcsCredentialProvider
      */
     public function __invoke()
     {
-        return $this->request($this->getEcsUri());
+        return $this->request();
     }
 
     /**
-     * Fetch credential URI from ECS environment variable
-     *
-     * @return string Returns ECS URI
-     */
-    private function getEcsUri()
-    {
-        $creds_uri = getenv(self::ENV_URI);
-        return $creds_uri? $creds_uri: '';
-    }
-
-    /**
-     * @param string $url
      * @return PromiseInterface Returns a promise that is fulfilled with the
      *                          body of the response as a string.
      */
-    private function request($url)
+    private function request()
     {
         $client = $this->client;
-        $request = new Request('GET', new Uri(self::SERVER_URI . $url));
+        $request = new Request('GET', new Uri(self::getEcsUri()));
         return $client(
             $request,
             [ 'timeout' => $this->timeout ]
@@ -82,6 +70,17 @@ class EcsCredentialProvider
                 "Error retrieving credential from ECS ($msg)"
             );
         });
+    }
+
+    /**
+     * Fetch credential URI from ECS environment variable
+     *
+     * @return string Returns a complete ECS URI
+     */
+    private function getEcsUri()
+    {
+        $creds_uri = getenv(self::ENV_URI);
+        return self::SERVER_URI . ($creds_uri ? $creds_uri : '');
     }
 
     private function decodeResult($response)
