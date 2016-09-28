@@ -148,6 +148,17 @@ class DocsBuilder
             return array_shift($versions);
         }, $services);
 
+        $serviceMap = [];
+        foreach ($services as $service) {
+            $isOlderVersion = isset($serviceMap[$service->name]) &&
+                $service->version < $serviceMap[$service->name]->version;
+            if ($isOlderVersion) {
+                continue;
+            }
+            $serviceMap[$service->name] = $service;
+        }
+        $services = array_values($serviceMap);
+
         // Sort the services in the order provided in the config
         usort($services, function (Service $a, Service $b) {
             return array_search($a->name, $this->quickLinks)
