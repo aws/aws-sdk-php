@@ -18,6 +18,9 @@ return array(
         'us-gov-west-1/s3' => array(
             'endpoint' => 's3-{region}.amazonaws.com'
         ),
+        'eu-central-1/autoscaling' => array(
+            'endpoint' => 'autoscaling.eu-central-1.amazonaws.com'
+        ),
         '*/cloudfront' => array(
             'endpoint' => 'cloudfront.amazonaws.com',
             'credentialScope' => array(
