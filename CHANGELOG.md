@@ -4,7 +4,7 @@
   EC2 Convertible RIs and the EC2 RI regional benefit
 * `Aws\S3` - Added support for `partNumber` extension
 
-## 3.19.11 - 2016-09-27
+## 3.19.12 - 2016-09-29
 
 * `Aws\CloudFormation` - Added support for `roleArn`
 * `Aws\S3` - Fixed `PostObjectV4` with security token option
