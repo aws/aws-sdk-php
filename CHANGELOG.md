@@ -1,5 +1,9 @@
 # CHANGELOG
 
+* `Aws\Ec2` - Added support for new Ec2 instance types and
+  EC2 Convertible RIs and the EC2 RI regional benefit
+* `Aws\S3` - Added support for `partNumber` extension
+
 ## 3.19.11 - 2016-09-27
 
 * `Aws\CloudFormation` - Added support for `roleArn`
