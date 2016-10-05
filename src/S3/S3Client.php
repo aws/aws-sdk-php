@@ -167,7 +167,8 @@ class S3Client extends AwsClient implements S3ClientInterface
                     . ' individual operations by setting'
                     . ' \'@use_accelerate_endpoint\' to true or false. Note:'
                     . ' you must enable S3 Accelerate on a bucket before it can'
-                    . ' be accessed via an Accelerate endpoint.',
+                    . ' be accessed via an Accelerate endpoint. Note: you can '
+                    . ' use it together with \'@use_dual_stack_endpoint\'',
                 'default' => false,
             ],
             'use_dual_stack_endpoint' => [
@@ -176,8 +177,7 @@ class S3Client extends AwsClient implements S3ClientInterface
                 'doc' => 'Set to true to send requests to an S3 Dual Stack'
                     . ' endpoint by default, which enables IPv6 Protocol.'
                     . ' Can be enabled or disabled on individual operations by setting'
-                    . ' \'@use_dual_stack_endpoint\' to true or false. Note:'
-                    . ' you cannot use it together with an accelerate endpoint.',
+                    . ' \'@use_dual_stack_endpoint\' to true or false.',
                 'default' => false,
             ],
         ];
@@ -219,14 +219,19 @@ class S3Client extends AwsClient implements S3ClientInterface
             Middleware::contentType(['PutObject', 'UploadPart']),
             's3.content_type'
         );
+
         $stack->appendBuild(
-            AccelerateMiddleware::wrap($this->getConfig('use_accelerate_endpoint')),
+            AccelerateMiddleware::wrap(
+                $this->getConfig('use_accelerate_endpoint'),
+                $this->getConfig('use_dual_stack_endpoint')
+            ),
             's3.use_accelerate_endpoint'
         );
         $stack->appendBuild(
             DualStackMiddleware::wrap(
                 $this->getRegion(),
-                $this->getConfig('use_dual_stack_endpoint')
+                $this->getConfig('use_dual_stack_endpoint'),
+                $this->getConfig('use_accelerate_endpoint')
             ),
             's3.use_dual_stack_endpoint'
         );

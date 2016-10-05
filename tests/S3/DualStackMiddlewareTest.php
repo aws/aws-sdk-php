@@ -23,6 +23,30 @@ class DualStackMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware($command, $this->getRequest($command));
     }
 
+    public function testAppliesDualStackToCommandWhenAccelerateDualStackFails()
+    {
+        $command = new Command('CreateBucket', ['Bucket' => 'bucket']);
+        $middleware = new DualStackMiddleware(
+            $this->dualStackAssertingHandler($command),
+            'my-test-region',
+            $dualStackByDefault = true,
+            $accelerateByDefault = true
+        );
+        $middleware($command, $this->getRequest($command));
+    }
+
+    public function testDoesNotApplyDualStackSoloToCommandWhenAccelerateDualStack()
+    {
+        $command = new Command('GetObject', ['Bucket' => 'bucket', 'Key' => 'key']);
+        $middleware = new DualStackMiddleware(
+            $this->noDualStackAssertingHandler($command),
+            'my-test-region',
+            $dualStackByDefault = true,
+            $accelerateByDefault = true
+        );
+        $middleware($command, $this->getRequest($command));
+    }
+
     public function testAppliesDualStackWithOperationLevelOptIn()
     {
         $command = new Command('CreateBucket', ['Bucket' => 'bucket']);
@@ -32,6 +56,35 @@ class DualStackMiddlewareTest extends \PHPUnit_Framework_TestCase
             $dualStackByDefault = false
         );
 
+        $command['@use_dual_stack_endpoint'] = true;
+        $middleware($command, $this->getRequest($command));
+    }
+
+    public function testAppliesDualStackWhenAccelerateDualStackFailsOperationLevelOptIn()
+    {
+        $command = new Command('CreateBucket', ['Bucket' => 'bucket']);
+        $middleware = new DualStackMiddleware(
+            $this->dualStackAssertingHandler($command),
+            'my-test-region',
+            $dualStackByDefault = false
+        );
+
+        $command['@use_accelerate_endpoint'] = true;
+        $command['@use_dual_stack_endpoint'] = true;
+        $middleware($command, $this->getRequest($command));
+    }
+
+    public function testDoesNotApplyDualStackSoloWithAccelerateDualStackOperationLevelOptIn()
+    {
+        $command = new Command('GetObject', ['Bucket' => 'bucket', 'Key' => 'test']);
+        $middleware = new DualStackMiddleware(
+            $this->noDualStackAssertingHandler($command),
+            'my-test-region',
+            $dualStackByDefault = false
+        );
+
+        // AccelerateMiddleware takes care of this
+        $command['@use_accelerate_endpoint'] = true;
         $command['@use_dual_stack_endpoint'] = true;
         $middleware($command, $this->getRequest($command));
     }
@@ -88,7 +141,7 @@ class DualStackMiddlewareTest extends \PHPUnit_Framework_TestCase
             CommandInterface $cmd,
             RequestInterface $req
         ) use ($command) {
-            $this->assertNotContains('dualstack', (string) $req->getUri());
+            $this->assertNotContains('s3.dualstack', (string) $req->getUri());
             $this->assertContains($command['Bucket'], $req->getUri()->getPath());
             $this->assertContains('key=query', $req->getUri()->getQuery());
         };

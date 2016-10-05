@@ -20,6 +20,8 @@ class AccelerateMiddleware
     ];
     /** @var bool */
     private $accelerateByDefault;
+    /** @var bool */
+    private $dualStackByDefault;
     /** @var callable */
     private $nextHandler;
 
@@ -27,19 +29,24 @@ class AccelerateMiddleware
      * Create a middleware wrapper function.
      *
      * @param bool $accelerateByDefault
+     * @param bool $dualStackByDefault
      *
      * @return callable
      */
-    public static function wrap($accelerateByDefault = false)
+    public static function wrap($accelerateByDefault = false, $dualStackByDefault = false)
     {
-        return function (callable $handler) use ($accelerateByDefault) {
-            return new self($handler, $accelerateByDefault);
+        return function (callable $handler) use ($accelerateByDefault, $dualStackByDefault) {
+            return new self($handler, $accelerateByDefault, $dualStackByDefault);
         };
     }
 
-    public function __construct(callable $nextHandler, $accelerateByDefault = false)
-    {
+    public function __construct(
+        callable $nextHandler,
+        $accelerateByDefault = false,
+        $dualStackByDefault = false
+    ) {
         $this->accelerateByDefault = (bool) $accelerateByDefault;
+        $this->dualStackByDefault = (bool) $dualStackByDefault;
         $this->nextHandler = $nextHandler;
     }
 
@@ -79,7 +86,12 @@ class AccelerateMiddleware
 
     private function getAccelerateHost(CommandInterface $command)
     {
-        return "{$command['Bucket']}.s3-accelerate.amazonaws.com";
+        $shouldApplyDualStack = isset($command['@use_dual_stack_endpoint'])
+            ? $command['@use_dual_stack_endpoint']
+            : $this->dualStackByDefault;
+        $pattern = $shouldApplyDualStack ? "s3-accelerate.dualstack" : "s3-accelerate";
+
+        return "{$command['Bucket']}.{$pattern}.amazonaws.com";
     }
 
     private function getBucketlessPath($path, CommandInterface $command)

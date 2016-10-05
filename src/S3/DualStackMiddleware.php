@@ -11,8 +11,15 @@ use Psr\Http\Message\RequestInterface;
  */
 class DualStackMiddleware
 {
+    private static $exclusions = [
+        'CreateBucket' => true,
+        'DeleteBucket' => true,
+        'ListBuckets' => true,
+    ];
     /** @var bool */
     private $dualStackByDefault;
+    /** @var bool */
+    private $accelerateByDefault;
     /** @var string */
     private $region;
     /** @var callable */
@@ -23,19 +30,25 @@ class DualStackMiddleware
      *
      * @param string $region
      * @param bool $dualStackByDefault
+     * @param bool $accelerateByDefault
      *
      * @return callable
      */
-    public static function wrap($region, $dualStackByDefault = false)
+    public static function wrap($region, $dualStackByDefault = false, $accelerateByDefault = false)
     {
-        return function (callable $handler) use ($dualStackByDefault, $region) {
-          return new self($handler, $region, $dualStackByDefault);
+        return function (callable $handler) use ($dualStackByDefault, $region, $accelerateByDefault) {
+          return new self($handler, $region, $dualStackByDefault, $accelerateByDefault);
         };
     }
 
-    public function __construct(callable $nextHandler, $region, $dualStackByDefault = false)
-    {
+    public function __construct(
+        callable $nextHandler,
+        $region,
+        $dualStackByDefault = false,
+        $accelerateByDefault = false
+    ) {
         $this->dualStackByDefault = (bool) $dualStackByDefault;
+        $this->accelerateByDefault = (bool) $accelerateByDefault;
         $this->region = (string) $region;
         $this->nextHandler = $nextHandler;
     }
@@ -55,6 +68,17 @@ class DualStackMiddleware
 
     private function shouldApplyDualStack(CommandInterface $command)
     {
+        $accelerateEnabled = isset($command['@use_accelerate_endpoint'])
+                            ? $command['@use_accelerate_endpoint']
+                            : $this->accelerateByDefault;
+        $accelerateSucceed = $accelerateEnabled
+                            && empty(self::$exclusions[$command->getName()])
+                            && S3Client::isBucketDnsCompatible($command['Bucket']);
+        if ($accelerateSucceed) {
+            // If accelerate succeeds, enabled dual_stack at same time is already taken of
+            return false;
+        }
+
         return isset($command['@use_dual_stack_endpoint'])
             ? $command['@use_dual_stack_endpoint']
             : $this->dualStackByDefault;

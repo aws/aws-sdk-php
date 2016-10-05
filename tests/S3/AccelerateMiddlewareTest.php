@@ -35,8 +35,24 @@ class AccelerateMiddlewareTest extends \PHPUnit_Framework_TestCase
     public function testAppliesAccelerateEndpointToCommands(CommandInterface $command)
     {
         $middleware = new AccelerateMiddleware(
-            $this->accelerationAssertingHandler($command),
+            $this->patternAssertingHandler($command, 's3-accelerate'),
             $applyAccelerationByDefault = true
+        );
+
+        $middleware($command, $this->getRequest($command));
+    }
+
+    /**
+     * @dataProvider includedCommandProvider
+     *
+     * @param CommandInterface $command
+     */
+    public function testAppliesAccelerateAndDualStackEndpointToCommands(CommandInterface $command)
+    {
+        $middleware = new AccelerateMiddleware(
+            $this->patternAssertingHandler($command, 's3-accelerate.dualstack'),
+            $applyAccelerationByDefault = true,
+            $applyDualStackEndpointByDefault = true
         );
 
         $middleware($command, $this->getRequest($command));
@@ -65,11 +81,29 @@ class AccelerateMiddlewareTest extends \PHPUnit_Framework_TestCase
     public function testAppliesAccelerationWithOperationLevelOptIn(CommandInterface $command)
     {
         $middleware = new AccelerateMiddleware(
-            $this->accelerationAssertingHandler($command),
+            $this->patternAssertingHandler($command, 's3-accelerate'),
             $applyAccelerationByDefault = false
         );
 
         $command['@use_accelerate_endpoint'] = true;
+        $middleware($command, $this->getRequest($command));
+    }
+
+    /**
+     * @dataProvider includedCommandProvider
+     *
+     * @param CommandInterface $command
+     */
+    public function testAppliesAccelerationAndDualStackWithOperationLevelOptIn(CommandInterface $command)
+    {
+        $middleware = new AccelerateMiddleware(
+            $this->patternAssertingHandler($command, 's3-accelerate.dualstack'),
+            $applyAccelerationByDefault = false,
+            $applyDualStackEndpointByDefault = false
+        );
+
+        $command['@use_accelerate_endpoint'] = true;
+        $command['@use_dual_stack_endpoint'] = true;
         $middleware($command, $this->getRequest($command));
     }
 
@@ -86,6 +120,24 @@ class AccelerateMiddlewareTest extends \PHPUnit_Framework_TestCase
         );
 
         $command['@use_accelerate_endpoint'] = false;
+        $middleware($command, $this->getRequest($command));
+    }
+
+    /**
+     * @dataProvider includedCommandProvider
+     *
+     * @param CommandInterface $command
+     */
+    public function testDoesNothingWhenAccelerationDualStackDisabledOnOperationLevel(CommandInterface $command)
+    {
+        $middleware = new AccelerateMiddleware(
+            $this->handlerAssertingNoAcceleration($command),
+            $applyAccelerationByDefault = true,
+            $applyDualStackEndpointByDefault = true
+        );
+
+        $command['@use_accelerate_endpoint'] = false;
+        $command['@use_dual_stack_endpoint'] = false;
         $middleware($command, $this->getRequest($command));
     }
 
@@ -127,14 +179,14 @@ class AccelerateMiddlewareTest extends \PHPUnit_Framework_TestCase
         };
     }
 
-    private function accelerationAssertingHandler(CommandInterface $command)
+    private function patternAssertingHandler(CommandInterface $command, $pattern)
     {
         return function (
             CommandInterface $toHandle,
             RequestInterface $req
-        ) use ($command) {
+        ) use ($command, $pattern) {
             $this->assertSame(
-                "{$command['Bucket']}.s3-accelerate.amazonaws.com",
+                "{$command['Bucket']}.{$pattern}.amazonaws.com",
                 $req->getUri()->getHost()
             );
             $this->assertNotContains($command['Bucket'], $req->getUri()->getPath());
