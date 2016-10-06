@@ -826,40 +826,15 @@ EOXML;
         ]);
         $client->determineBucketRegion('bucket');
     }
-    
-    public function testAppliesAccelerateMiddleware()
+
+    public function testAppliesS3EndpointMiddleware()
     {
+        // test applies s3-accelerate.dualstack for valid operations
         $handler = function (RequestInterface $req) {
-            $this->assertContains('s3-accelerate', $req->getUri()->getHost());
-            $this->assertNotContains('dualstack', $req->getUri()->getHost());
-            return Promise\promise_for(new Response);
-        };
-
-        $accelerateClient = new S3Client([
-            'version' => 'latest',
-            'region' => 'us-west-2',
-            'use_accelerate_endpoint' => true,
-            'http_handler' => $handler,
-        ]);
-        $accelerateClient->getObject([
-            'Bucket' => 'bucket',
-            'Key' => 'key'
-        ]);
-
-        $client = new S3Client([
-            'version' => 'latest',
-            'region' => 'us-west-2',
-            'http_handler' => $handler,
-        ]);
-        $client->getObject([
-            'Bucket' => 'bucket',
-            'Key' => 'key',
-            '@use_accelerate_endpoint' => true,
-        ]);
-
-        // test enable accelerate and dualstack together
-        $handler = function (RequestInterface $req) {
-            $this->assertContains('s3-accelerate.dualstack', $req->getUri()->getHost());
+            $this->assertSame(
+                'bucket.s3-accelerate.dualstack.amazonaws.com',
+                $req->getUri()->getHost()
+            );
             return Promise\promise_for(new Response);
         };
 
@@ -886,10 +861,71 @@ EOXML;
             '@use_accelerate_endpoint' => true,
             '@use_dual_stack_endpoint' => true,
         ]);
-    }
 
-    public function testAppliesDualStackMiddleware()
-    {
+        // test applies dualstack solo for invalid accelerate operations
+        // when both endpoint is enabled
+        $handler = function (RequestInterface $req) {
+            $this->assertSame(
+                's3.dualstack.us-west-2.amazonaws.com',
+                $req->getUri()->getHost()
+            );
+            return Promise\promise_for(new Response);
+        };
+
+        $accelerateClient = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'use_accelerate_endpoint' => true,
+            'use_dual_stack_endpoint' => true,
+            'http_handler' => $handler,
+        ]);
+        $accelerateClient->createBucket([
+            'Bucket' => 'bucket',
+        ]);
+
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => $handler,
+        ]);
+        $client->createBucket([
+            'Bucket' => 'bucket',
+            '@use_accelerate_endpoint' => true,
+            '@use_dual_stack_endpoint' => true,
+        ]);
+
+        // test applies s3-accelerate for valid operations
+        $handler = function (RequestInterface $req) {
+            $this->assertSame(
+                'bucket.s3-accelerate.amazonaws.com',
+                $req->getUri()->getHost()
+            );
+            return Promise\promise_for(new Response);
+        };
+
+        $accelerateClient = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'use_accelerate_endpoint' => true,
+            'http_handler' => $handler,
+        ]);
+        $accelerateClient->getObject([
+            'Bucket' => 'bucket',
+            'Key' => 'key'
+        ]);
+
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => $handler,
+        ]);
+        $client->getObject([
+            'Bucket' => 'bucket',
+            'Key' => 'key',
+            '@use_accelerate_endpoint' => true,
+        ]);
+
+        // test applies dualstack
         $handler = function (RequestInterface $req) {
             $this->assertSame(
                 's3.dualstack.us-west-2.amazonaws.com',

@@ -167,8 +167,7 @@ class S3Client extends AwsClient implements S3ClientInterface
                     . ' individual operations by setting'
                     . ' \'@use_accelerate_endpoint\' to true or false. Note:'
                     . ' you must enable S3 Accelerate on a bucket before it can'
-                    . ' be accessed via an Accelerate endpoint. Note: you can '
-                    . ' use it together with \'@use_dual_stack_endpoint\'',
+                    . ' be accessed via an Accelerate endpoint.',
                 'default' => false,
             ],
             'use_dual_stack_endpoint' => [
@@ -221,20 +220,14 @@ class S3Client extends AwsClient implements S3ClientInterface
         );
 
         $stack->appendBuild(
-            AccelerateMiddleware::wrap(
-                $this->getConfig('use_accelerate_endpoint'),
-                $this->getConfig('use_dual_stack_endpoint')
-            ),
-            's3.use_accelerate_endpoint'
-        );
-        $stack->appendBuild(
-            DualStackMiddleware::wrap(
+            S3EndpointMiddleware::wrap(
                 $this->getRegion(),
                 $this->getConfig('use_dual_stack_endpoint'),
                 $this->getConfig('use_accelerate_endpoint')
             ),
-            's3.use_dual_stack_endpoint'
+            's3.use_pattern_endpoint'
         );
+
         // Use the bucket style middleware when using a "bucket_endpoint" (for cnames)
         if ($this->getConfig('bucket_endpoint')) {
             $stack->appendBuild(BucketEndpointMiddleware::wrap(), 's3.bucket_endpoint');
