@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.13 - 2016-10-06
 
 * `Aws\Kms` -  Add `InvalidMarkerException` as modeled exception in `ListKeys`
 * `Aws\CognitoIdentityProvider` - Added new operation `AdminCreateUser`
