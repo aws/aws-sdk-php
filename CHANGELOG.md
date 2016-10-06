@@ -1,10 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kms` -  Add `InvalidMarkerException` as modeled exception in `ListKeys`
+* `Aws\CognitoIdentityProvider` - Added new operation `AdminCreateUser`
+* `Aws\Waf` - Added support for IPV6 in `IPSetDescriptorType`
+
+## 3.19.12 - 2016-09-29
+
 * `Aws\Ec2` - Added support for new Ec2 instance types and
   EC2 Convertible RIs and the EC2 RI regional benefit
 * `Aws\S3` - Added support for `partNumber` extension
 
-## 3.19.12 - 2016-09-29
+## 3.19.11 - 2016-09-27
 
 * `Aws\CloudFormation` - Added support for `roleArn`
 * `Aws\S3` - Fixed `PostObjectV4` with security token option
