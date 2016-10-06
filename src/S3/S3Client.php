@@ -222,10 +222,12 @@ class S3Client extends AwsClient implements S3ClientInterface
         $stack->appendBuild(
             S3EndpointMiddleware::wrap(
                 $this->getRegion(),
-                $this->getConfig('use_dual_stack_endpoint'),
-                $this->getConfig('use_accelerate_endpoint')
+                [
+                    'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
+                    'accelerate' => $this->getConfig('use_accelerate_endpoint')
+                ]
             ),
-            's3.use_pattern_endpoint'
+            's3.endpoint_middleware'
         );
 
         // Use the bucket style middleware when using a "bucket_endpoint" (for cnames)

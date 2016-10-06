@@ -19,6 +19,12 @@ class S3EndpointMiddleware
         'DeleteBucket' => true,
         'ListBuckets' => true,
     ];
+
+    const NO_PATTERN = 0;
+    const DUALSTACK = 1;
+    const ACCELERATE = 2;
+    const ACCELERATE_DUALSTACK = 3;
+
     /** @var bool */
     private $accelerateByDefault;
     /** @var bool */
@@ -32,26 +38,28 @@ class S3EndpointMiddleware
      * Create a middleware wrapper function
      *
      * @param string $region
-     * @param bool $dualStackByDefault
-     * @param bool $accelerateByDefault
+     * @param array  $options
      *
      * @return callable
      */
-    public static function wrap($region, $dualStackByDefault = false, $accelerateByDefault = false)
+    public static function wrap($region, array $options)
     {
-        return function (callable $handler) use ($dualStackByDefault, $region, $accelerateByDefault) {
-            return new self($handler, $region, $dualStackByDefault, $accelerateByDefault);
+        return function (callable $handler) use ($region, $options) {
+            return new self($handler, $region, $options);
         };
     }
 
     public function __construct(
         callable $nextHandler,
         $region,
-        $dualStackByDefault = false,
-        $accelerateByDefault = false
+        array $options
     ) {
-        $this->dualStackByDefault = (bool) $dualStackByDefault;
-        $this->accelerateByDefault = (bool) $accelerateByDefault;
+        $this->dualStackByDefault = isset($options['dual_stack'])
+                                    ? (bool) $options['dual_stack']
+                                    : false;
+        $this->accelerateByDefault = isset($options['accelerate'])
+                                    ? (bool) $options['accelerate']
+                                    : false;
         $this->region = (string) $region;
         $this->nextHandler = $nextHandler;
     }
@@ -59,26 +67,26 @@ class S3EndpointMiddleware
     public function __invoke(CommandInterface $command, RequestInterface $request)
     {
         $endpointPattern = $this->endpointPatternDecider($command);
-        if (is_string($endpointPattern)) {
-            switch ($endpointPattern) {
-                case 'dualstack':
-                    $request = $this->applyDualStackEndpoint($request);
-                    break;
-                case 'accelerate':
-                    $request = $this->applyAccelerateEndpoint(
-                        $command,
-                        $request,
-                        's3-accelerate'
-                    );
-                    break;
-                case 'accelerate.dualstack':
-                    $request = $this->applyAccelerateEndpoint(
-                        $command,
-                        $request,
-                        's3-accelerate.dualstack'
-                    );
-                    break;
-            }
+        switch ($endpointPattern) {
+            case self::NO_PATTERN:
+                break;
+            case self::DUALSTACK:
+                $request = $this->applyDualStackEndpoint($request);
+                break;
+            case self::ACCELERATE:
+                $request = $this->applyAccelerateEndpoint(
+                    $command,
+                    $request,
+                    's3-accelerate'
+                );
+                break;
+            case self::ACCELERATE_DUALSTACK:
+                $request = $this->applyAccelerateEndpoint(
+                    $command,
+                    $request,
+                    's3-accelerate.dualstack'
+                );
+                break;
         }
 
         $nextHandler = $this->nextHandler;
@@ -95,13 +103,15 @@ class S3EndpointMiddleware
         if ($accelerate && $dualStack) {
             // When try to enable both for operations excluded from s3-accelerate,
             // only dualstack endpoints will be enabled.
-            return $this->canAccelerate($command) ? 'accelerate.dualstack' : 'dualstack';
+            return $this->canAccelerate($command)
+                ? self::ACCELERATE_DUALSTACK
+                : self::DUALSTACK;
         } elseif ($accelerate && $this->canAccelerate($command)) {
-            return 'accelerate';
+            return self::ACCELERATE;
         } elseif ($dualStack) {
-            return 'dualstack';
+            return self::DUALSTACK;
         }
-        return false;
+        return self::NO_PATTERN;
     }
 
     private function canAccelerate(CommandInterface $command)

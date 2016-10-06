@@ -22,8 +22,10 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->acceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
             'us-west-2',
-            $applyDualStackEndpointByDefault = true,
-            $applyAccelerationByDefault = true
+            [
+                'dual_stack' => true,
+                'accelerate' => true,
+            ]
         );
 
         $middleware($command, $this->getRequest($command));
@@ -39,8 +41,10 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->dualStackAssertingHandler($command),
             'us-west-2',
-            $applyDualStackEndpointByDefault = true,
-            $applyAccelerationByDefault = true
+            [
+                'dual_stack' => true,
+                'accelerate' => true,
+            ]
         );
 
         $middleware($command, $this->getRequest($command));
@@ -56,8 +60,7 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->noAcceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
             'us-west-2',
-            $applyDualStackEndpointByDefault = false,
-            $applyAccelerationByDefault = false
+            []
         );
 
         $middleware($command, $this->getRequest($command));
@@ -65,8 +68,7 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->noDualStackAssertingHandler($command),
             'us-west-2',
-            $applyDualStackEndpointByDefault = false,
-            $applyAccelerationByDefault = false
+            []
         );
 
         $middleware($command, $this->getRequest($command));
@@ -82,8 +84,10 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->acceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
             'us-west-2',
-            $applyDualStackEndpointByDefault = false,
-            $applyAccelerationByDefault = false
+            [
+                'dual_stack' => false,
+                'accelerate' => false,
+            ]
         );
 
         $command['@use_accelerate_endpoint'] = true;
@@ -101,8 +105,7 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->dualStackAssertingHandler($command),
             'us-west-2',
-            $applyDualStackEndpointByDefault = false,
-            $applyAccelerationByDefault = false
+            []
         );
 
         $command['@use_accelerate_endpoint'] = true;
@@ -120,8 +123,10 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->noAcceleratePatternAssertingHandler($command, 's3-accelerate.dualstack'),
             'us-west-2',
-            $applyDualStackEndpointByDefault = true,
-            $applyAccelerationByDefault = true
+            [
+                'dual_stack' => true,
+                'accelerate' => true,
+            ]
         );
         $command['@use_accelerate_endpoint'] = false;
         $command['@use_dual_stack_endpoint'] = false;
@@ -130,8 +135,10 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->noDualStackAssertingHandler($command),
             'us-west-2',
-            $applyDualStackEndpointByDefault = true,
-            $applyAccelerationByDefault = true
+            [
+                'dual_stack' => true,
+                'accelerate' => true,
+            ]
         );
         $command['@use_accelerate_endpoint'] = false;
         $command['@use_dual_stack_endpoint'] = false;
@@ -148,8 +155,7 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->noAcceleratePatternAssertingHandler($command, 's3-accelerate'),
             'us-west-2',
-            $applyDualStackEndpointByDefault = false,
-            $applyAccelerationByDefault = true
+            [ 'accelerate' => true, ]
         );
 
         $middleware($command, $this->getRequest($command));
@@ -165,8 +171,7 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->acceleratePatternAssertingHandler($command, 's3-accelerate'),
             'us-west-2',
-            $applyDualStackEndpointByDefault = false,
-            $applyAccelerationByDefault = true
+            [ 'accelerate' => true, ]
         );
 
         $middleware($command, $this->getRequest($command));
@@ -182,8 +187,7 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->noAcceleratePatternAssertingHandler($command, 's3-accelerate'),
             'us-west-2',
-            $applyDualStackEndpointByDefault = false,
-            $applyAccelerationByDefault = true
+            [ 'accelerate' => true, ]
         );
 
         $command['@use_accelerate_endpoint'] = false;
@@ -196,7 +200,7 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->dualStackAssertingHandler($command),
             'us-west-2',
-            $dualStackByDefault = true
+            [ 'dual_stack' => true, ]
         );
         $middleware($command, $this->getRequest($command));
     }
@@ -207,7 +211,7 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->dualStackAssertingHandler($command),
             'us-west-2',
-            $dualStackByDefault = false
+            [ 'dual_stack' => false, ]
         );
 
         $command['@use_dual_stack_endpoint'] = true;
@@ -219,7 +223,8 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $command = new Command('DeleteBucket', [ 'Bucket' => 'bucket']);
         $middleware = new S3EndpointMiddleware(
             $this->noDualStackAssertingHandler($command),
-            'us-west-2'
+            'us-west-2',
+            []
         );
         $middleware($command, $this->getRequest($command));
     }
@@ -230,7 +235,7 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware = new S3EndpointMiddleware(
             $this->noDualStackAssertingHandler($command),
             'us-west-2',
-            $dualStackByDefault = true
+            [ 'dual_stack' => true, ]
         );
 
         $command['@use_dual_stack_endpoint'] = false;
