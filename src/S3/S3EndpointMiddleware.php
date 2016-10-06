@@ -55,11 +55,9 @@ class S3EndpointMiddleware
         array $options
     ) {
         $this->dualStackByDefault = isset($options['dual_stack'])
-                                    ? (bool) $options['dual_stack']
-                                    : false;
+            ? (bool) $options['dual_stack'] : false;
         $this->accelerateByDefault = isset($options['accelerate'])
-                                    ? (bool) $options['accelerate']
-                                    : false;
+            ? (bool) $options['accelerate'] : false;
         $this->region = (string) $region;
         $this->nextHandler = $nextHandler;
     }
