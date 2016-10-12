@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.13 - 2016-10-12
 
 * `Aws\Elasticache` - Added support for Redis Cluster
 * `Aws\Ecr` - Added support for new API `DescribeImages`
