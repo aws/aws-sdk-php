@@ -20,6 +20,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteRepositoryAsync(array $args = [])
  * @method \Aws\Result deleteRepositoryPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteRepositoryPolicyAsync(array $args = [])
+ * @method \Aws\Result describeImages(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeImagesAsync(array $args = [])
  * @method \Aws\Result describeRepositories(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeRepositoriesAsync(array $args = [])
  * @method \Aws\Result getAuthorizationToken(array $args = [])

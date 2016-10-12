@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Elasticache` - Added support for Redis Cluster
+* `Aws\Ecr` - Added support for new API `DescribeImages`
+
 ## 3.19.13 - 2016-10-06
 
 * `Aws\Kms` -  Add `InvalidMarkerException` as modeled exception in `ListKeys`
