@@ -1,9 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Acm` - Added support for third-party `SSL/TLS` certificates
+* `Aws\ElasticBeanstalk` - Added support for `Pagination` for `DescribeApplicationVersions`
+* `Aws\Gamelift` - Added support for resource protection
+
 ## 3.19.14 - 2016-10-12
 
 * `Aws\Elasticache` - Added support for Redis Cluster
 * `Aws\Ecr` - Added support for new API `DescribeImages`
+* `Aws\S3` - Added support for `s3-accelerate.dualstack` endpoint
 
 ## 3.19.13 - 2016-10-06
 
