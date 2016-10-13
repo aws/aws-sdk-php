@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.15 - 2016-10-13
 
 * `Aws\Acm` - Added support for third-party `SSL/TLS` certificates
 * `Aws\ElasticBeanstalk` - Added support for `Pagination` for `DescribeApplicationVersions`
