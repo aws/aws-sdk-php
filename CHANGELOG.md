@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.16 - 2016-10-17
 
 * `Aws\Route53` - Added support for API updates
 
