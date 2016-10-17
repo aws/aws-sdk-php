@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Route53` - Added support for API updates
+
 ## 3.19.15 - 2016-10-13
 
 * `Aws\Acm` - Added support for third-party `SSL/TLS` certificates
