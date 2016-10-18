@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.17 - 2016-10-18
 
 * `Aws\Config` -  Added support for S3 Bucket resource type
 * `Aws\CloudFront` - Added support for `isIPV6Enabled` property for http distributions
