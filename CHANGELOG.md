@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Config` -  Added support for S3 Bucket resource type
+* `Aws\CloudFront` - Added support for `isIPV6Enabled` property for http distributions
+* `Aws\Iot` - Added DynamoActionV2 action to IoT Rules Engine
+* `Aws\Rds` - Added support for AWS roles integration with `Aurora Cluster`
+
 ## 3.19.16 - 2016-10-17
 
 * `Aws\Route53` - Added support for API updates

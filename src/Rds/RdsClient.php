@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **Amazon Relational Database Service (Amazon RDS)**.
  *
+ * @method \Aws\Result addRoleToDBCluster(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise addRoleToDBClusterAsync(array $args = [])
  * @method \Aws\Result addSourceIdentifierToSubscription(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addSourceIdentifierToSubscriptionAsync(array $args = [])
  * @method \Aws\Result addTagsToResource(array $args = [])
@@ -154,6 +156,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise purchaseReservedDBInstancesOfferingAsync(array $args = [])
  * @method \Aws\Result rebootDBInstance(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rebootDBInstanceAsync(array $args = [])
+ * @method \Aws\Result removeRoleFromDBCluster(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise removeRoleFromDBClusterAsync(array $args = [])
  * @method \Aws\Result removeSourceIdentifierFromSubscription(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeSourceIdentifierFromSubscriptionAsync(array $args = [])
  * @method \Aws\Result removeTagsFromResource(array $args = [])
