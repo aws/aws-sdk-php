@@ -179,7 +179,7 @@ class CredentialProvider
      * Defaults to using a simple file-based cache when none provided.
      *
      * @param callable $provider Credentials provider function to wrap
-     * @param CacheInterface $cache (optional) Cache to store credentials
+     * @param CacheInterface $cache Cache to store credentials
      * @param string|null $cacheKey (optional) Cache key to use
      *
      * @return callable
