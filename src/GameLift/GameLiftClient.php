@@ -46,6 +46,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeGameSessionDetailsAsync(array $args = [])
  * @method \Aws\Result describeGameSessions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeGameSessionsAsync(array $args = [])
+ * @method \Aws\Result describeInstances(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeInstancesAsync(array $args = [])
  * @method \Aws\Result describePlayerSessions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describePlayerSessionsAsync(array $args = [])
  * @method \Aws\Result describeRuntimeConfiguration(array $args = [])

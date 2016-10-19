@@ -14,6 +14,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeCertificateAsync(array $args = [])
  * @method \Aws\Result getCertificate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCertificateAsync(array $args = [])
+ * @method \Aws\Result importCertificate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise importCertificateAsync(array $args = [])
  * @method \Aws\Result listCertificates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listCertificatesAsync(array $args = [])
  * @method \Aws\Result listTagsForCertificate(array $args = [])

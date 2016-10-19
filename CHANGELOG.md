@@ -1,5 +1,40 @@
 # CHANGELOG
 
+## 3.19.17 - 2016-10-18
+
+* `Aws\Config` -  Added support for S3 Bucket resource type
+* `Aws\CloudFront` - Added support for `isIPV6Enabled` property for http distributions
+* `Aws\Iot` - Added DynamoActionV2 action to IoT Rules Engine
+* `Aws\Rds` - Added support for AWS roles integration with `Aurora Cluster`
+
+## 3.19.16 - 2016-10-17
+
+* `Aws\Route53` - Added support for API updates
+
+## 3.19.15 - 2016-10-13
+
+* `Aws\Acm` - Added support for third-party `SSL/TLS` certificates
+* `Aws\ElasticBeanstalk` - Added support for `Pagination` for `DescribeApplicationVersions`
+* `Aws\Gamelift` - Added support for resource protection
+
+## 3.19.14 - 2016-10-12
+
+* `Aws\Elasticache` - Added support for Redis Cluster
+* `Aws\Ecr` - Added support for new API `DescribeImages`
+* `Aws\S3` - Added support for `s3-accelerate.dualstack` endpoint
+
+## 3.19.13 - 2016-10-06
+
+* `Aws\Kms` -  Add `InvalidMarkerException` as modeled exception in `ListKeys`
+* `Aws\CognitoIdentityProvider` - Added new operation `AdminCreateUser`
+* `Aws\Waf` - Added support for IPV6 in `IPSetDescriptorType`
+
+## 3.19.12 - 2016-09-29
+
+* `Aws\Ec2` - Added support for new Ec2 instance types and
+  EC2 Convertible RIs and the EC2 RI regional benefit
+* `Aws\S3` - Added support for `partNumber` extension
+
 ## 3.19.11 - 2016-09-27
 
 * `Aws\CloudFormation` - Added support for `roleArn`
