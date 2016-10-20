@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.18 - 2016-10-20
 
 * `Aws\Budgets` - Added support for new service `AWSBudgetService`
 
