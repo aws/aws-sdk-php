@@ -150,6 +150,16 @@
             "eu-central-1": {}
           }
         },
+        "budgets": {
+          "endpoints": {
+            "aws-global": {
+              "hostname": "budgets.amazonaws.com",
+              "credentialScope": {
+                "region": "us-east-1"
+              }
+            }
+          }
+        },
         "cloudfront": {
           "partitionEndpoint": "aws-global",
           "isRegionalized": false,
@@ -937,6 +947,9 @@
             "protocols": [
               "http",
               "https"
+            ],
+            "signatureVersions": [
+              "v2"
             ]
           },
           "endpoints": {

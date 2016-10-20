@@ -14,6 +14,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionApplicationDiscoveryService(array $args = [])
  * @method \Aws\AutoScaling\AutoScalingClient createAutoScaling(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAutoScaling(array $args = [])
+ * @method \Aws\Budgets\BudgetsClient createBudgets(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionBudgets(array $args = [])
  * @method \Aws\CloudFormation\CloudFormationClient createCloudFormation(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudFormation(array $args = [])
  * @method \Aws\CloudFront\CloudFrontClient createCloudFront(array $args = [])

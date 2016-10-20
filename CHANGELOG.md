@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Budgets` - Added support for new service `AWSBudgetService`
+
 ## 3.19.17 - 2016-10-18
 
 * `Aws\Config` -  Added support for S3 Bucket resource type
