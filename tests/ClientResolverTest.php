@@ -259,36 +259,6 @@ EOT;
         putenv("HOME=$home");
     }
 
-    public function testCanSpecificConfigFileInSourcingProfileCredentials()
-    {
-        $dir = sys_get_temp_dir() . '/.aws';
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-        $ini = <<<EOT
-[foo]
-aws_access_key_id = foo
-aws_secret_access_key = baz
-aws_session_token = tok
-EOT;
-        file_put_contents($dir . '/config', $ini);
-        $home = getenv('HOME');
-        putenv('HOME=' . dirname($dir));
-        $r = new ClientResolver(ClientResolver::getDefaultArguments());
-        $conf = $r->resolve([
-            'service' => 'sqs',
-            'region'  => 'x',
-            'config_profile' => 'foo',
-            'version' => 'latest'
-        ], new HandlerList());
-        $creds = call_user_func($conf['credentials'])->wait();
-        $this->assertEquals('foo', $creds->getAccessKeyId());
-        $this->assertEquals('baz', $creds->getSecretKey());
-        $this->assertEquals('tok', $creds->getSecurityToken());
-        unlink($dir . '/config');
-        putenv("HOME=$home");
-    }
-
     public function testCanUseCredentialsObject()
     {
         $c = new Credentials('foo', 'bar');

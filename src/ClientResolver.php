@@ -118,12 +118,6 @@ class ClientResolver
             'doc'   => 'Allows you to specify which profile to use when credentials are created from the AWS credentials file in your HOME directory. This setting overrides the AWS_PROFILE environment variable. Note: Specifying "profile" will cause the "credentials" key to be ignored.',
             'fn'    => [__CLASS__, '_apply_profile'],
         ],
-        'config_profile' => [
-            'type'  => 'config',
-            'valid' => ['string'],
-            'doc'   => 'Allows you to specify which profile to use when credentials are created from the AWS config file in your HOME directory. This setting overrides the AWS_PROFILE environment variable. Note: Specifying "profile" will cause the "credentials" key to be ignored.',
-            'fn'    => [__CLASS__, '_apply_config_profile'],
-        ],
         'credentials' => [
             'type'    => 'value',
             'valid'   => [CredentialsInterface::class, CacheInterface::class, 'array', 'bool', 'callable'],
@@ -470,11 +464,6 @@ class ClientResolver
     public static function _apply_profile($_, array &$args)
     {
         $args['credentials'] = CredentialProvider::ini($args['profile']);
-    }
-
-    public static function _apply_config_profile($_, array &$args)
-    {
-        $args['credentials'] = CredentialProvider::ini($args['config_profile'], null, true);
     }
 
     public static function _apply_validate($value, array &$args, HandlerList $list)
