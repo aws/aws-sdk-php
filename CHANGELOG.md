@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.19 - 2016-10-24
 
 * `Aws\Sms` - Added support for new service `AWS Server Migration Service`
 
