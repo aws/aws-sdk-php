@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Sms` - Added support for new service `AWS Server Migration Service`
+
 ## 3.19.18 - 2016-10-20
 
 * `Aws\Budgets` - Added support for new service `AWSBudgetService`

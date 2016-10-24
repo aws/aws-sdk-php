@@ -130,6 +130,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionServiceCatalog(array $args = [])
  * @method \Aws\Ses\SesClient createSes(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSes(array $args = [])
+ * @method \Aws\Sms\SmsClient createSms(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSms(array $args = [])
  * @method \Aws\SnowBall\SnowBallClient createSnowBall(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSnowBall(array $args = [])
  * @method \Aws\Sns\SnsClient createSns(array $args = [])
