@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.20 - 2016-10-25
 
 * Documentation update for `Autoscaling` and `ElasticloadbalancingV2`
 
