@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.21 - 2016-11-01
 
 * `Aws\CloudFormation` - Adding ResourcesToSkip parameter to `ContinueUpdateRollback` API,
   adding support for `ListExports`, new `ChangeSet` types and `Transforms`
