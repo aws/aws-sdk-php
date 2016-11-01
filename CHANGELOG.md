@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Adding ResourcesToSkip parameter to `ContinueUpdateRollback` API,
+  adding support for `ListExports`, new `ChangeSet` types and `Transforms`
+* `Aws\Ecr` - Added support for updated paginators
+
 ## 3.19.20 - 2016-10-25
 
 * Documentation update for `Autoscaling` and `ElasticloadbalancingV2`
