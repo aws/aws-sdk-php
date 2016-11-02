@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ses` - Adding support for `SES` Metrics
+
 ## 3.19.21 - 2016-11-01
 
 * `Aws\CloudFormation` - Adding ResourcesToSkip parameter to `ContinueUpdateRollback` API,
