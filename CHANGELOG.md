@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.23 - 2016-11-03
 
 * `Aws\DirectConnect` - Added support for tagging on `DirectConnect` resources.
 
