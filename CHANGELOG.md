@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectConnect` - Added support for tagging on `DirectConnect` resources.
+
 ## 3.19.22 - 2016-11-02
 
 * `Aws\Ses` - Adding support for `SES` Metrics

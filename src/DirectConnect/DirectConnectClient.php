@@ -44,9 +44,15 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeInterconnectsAsync(array $args = [])
  * @method \Aws\Result describeLocations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeLocationsAsync(array $args = [])
+ * @method \Aws\Result describeTags(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeTagsAsync(array $args = [])
  * @method \Aws\Result describeVirtualGateways(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeVirtualGatewaysAsync(array $args = [])
  * @method \Aws\Result describeVirtualInterfaces(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeVirtualInterfacesAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class DirectConnectClient extends AwsClient {}
