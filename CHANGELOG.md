@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## 3.19.23 - 2016-11-03
+
+* `Aws\DirectConnect` - Added support for tagging on `DirectConnect` resources.
+
+## 3.19.22 - 2016-11-02
+
+* `Aws\Ses` - Adding support for `SES` Metrics
+
+## 3.19.21 - 2016-11-01
+
+* `Aws\CloudFormation` - Adding ResourcesToSkip parameter to `ContinueUpdateRollback` API,
+  adding support for `ListExports`, new `ChangeSet` types and `Transforms`
+* `Aws\Ecr` - Added support for updated paginators
+
+## 3.19.20 - 2016-10-25
+
+* Documentation update for `Autoscaling` and `ElasticloadbalancingV2`
+
+## 3.19.19 - 2016-10-24
+
+* `Aws\Sms` - Added support for new service `AWS Server Migration Service`
+
+## 3.19.18 - 2016-10-20
+
+* `Aws\Budgets` - Added support for new service `AWSBudgetService`
+
 ## 3.19.17 - 2016-10-18
 
 * `Aws\Config` -  Added support for S3 Bucket resource type
