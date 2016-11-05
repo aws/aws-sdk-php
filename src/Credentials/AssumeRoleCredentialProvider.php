@@ -40,21 +40,26 @@ class AssumeRoleCredentialProvider
      */
     public function __construct(array $config = [])
     {
-        if (!isset($config['region'])) {
-            throw new \InvalidArgumentException(self::ERROR_MSG . "'region'.");
-        }
-        if (!isset($config['credentials'])) {
-            throw new \InvalidArgumentException(self::ERROR_MSG . "'credentials'.");
-        }
         if (!isset($config['assume_role_params'])) {
             throw new \InvalidArgumentException(self::ERROR_MSG . "'assume_role_params'.");
         }
 
-        $defaultClientArgs = [
-            'region' => $config['region'],
-            'version' => 'latest',
-            'credentials' => $config['credentials'],
-        ];
+        $defaultClientArgs = [];
+        if (!isset($config['client'])) {
+            if (!isset($config['region'])) {
+                throw new \InvalidArgumentException(self::ERROR_MSG . "'region'.");
+            }
+            if (!isset($config['credentials'])) {
+                throw new \InvalidArgumentException(self::ERROR_MSG . "'credentials'.");
+            }
+
+            $defaultClientArgs = [
+                'region' => $config['region'],
+                'version' => 'latest',
+                'credentials' => $config['credentials'],
+            ];
+        }
+
         $this->client = isset($config['client'])
             ? $config['client']
             : new StsClient($defaultClientArgs);
@@ -69,7 +74,7 @@ class AssumeRoleCredentialProvider
     public function __invoke()
     {
         $client = $this->client;
-        return Promise\promise_for($client->assumeRoleAsync($this->assumeRoleParams))
+        return $client->assumeRoleAsync($this->assumeRoleParams)
             ->then(function (Result $result) {
                 return $this->client->createCredentials($result);
             })->otherwise(function (AwsException $exception) {

@@ -4,7 +4,6 @@ namespace Aws\Credentials;
 use Aws\Exception\CredentialsException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -22,7 +21,8 @@ class EcsCredentialProvider
 
     /**
      * The constructor accepts following options:
-     *  - timeout: Connection timeout, in seconds.
+     *  - timeout: (optional) Connection timeout, in seconds, default 1.0
+     *  - client: An EcsClient to make request from
      *
      * @param array $config Configuration options
      */
@@ -30,7 +30,7 @@ class EcsCredentialProvider
     {
         $this->timeout = isset($config['timeout']) ? $config['timeout'] : 1.0;
         $this->client = isset($config['client'])
-            ? $config['client'] // internal use only
+            ? $config['client']
             : \Aws\default_http_handler();
     }
 
@@ -41,20 +41,11 @@ class EcsCredentialProvider
      */
     public function __invoke()
     {
-        return $this->request();
-    }
-
-    /**
-     * @return PromiseInterface Returns a promise that is fulfilled with the
-     *                          body of the response as a string.
-     */
-    private function request()
-    {
         $client = $this->client;
-        $request = new Request('GET', new Uri(self::getEcsUri()));
+        $request = new Request('GET', self::getEcsUri());
         return $client(
             $request,
-            [ 'timeout' => $this->timeout ]
+            ['timeout' => $this->timeout]
         )->then(function (ResponseInterface $response) {
             $result = $this->decodeResult((string) $response->getBody());
             return new Credentials(
@@ -80,7 +71,7 @@ class EcsCredentialProvider
     private function getEcsUri()
     {
         $creds_uri = getenv(self::ENV_URI);
-        return self::SERVER_URI . ($creds_uri ? $creds_uri : '');
+        return self::SERVER_URI . $creds_uri;
     }
 
     private function decodeResult($response)

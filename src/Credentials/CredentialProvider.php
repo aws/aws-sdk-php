@@ -51,11 +51,11 @@ class CredentialProvider
 
     /**
      * Create a default credential provider that first checks for environment
-     * variables, check for assume role profile secondly, then checks for
-     * the "default" profile in ~/.aws/credentials, then checks for
-     * "profile default" profile in ~/.aws/config, then tries to make
-     * GET Request to fetch credentials if Ecs environment variable is presented,
-     * and finally checks for EC2 instance profile credentials.
+     * variables, then checks for the "default" profile in ~/.aws/credentials,
+     * then checks for "profile default" profile in ~/.aws/config,
+     * then tries to make a GET Request to fetch credentials if
+     * Ecs environment variable is presented, and finally
+     * checks for EC2 instance profile credentials.
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided credentials.
@@ -82,11 +82,6 @@ class CredentialProvider
         return self::memoize(
             self::chain(
                 self::env(),
-                self::assumeRole(),
-                self::assumeRole(
-                    'profile assumes_role',
-                    $defaultConfigFileName
-                ),
                 self::ini(),
                 self::ini(
                     'profile default',
@@ -287,18 +282,18 @@ class CredentialProvider
      *                                         Default:
      *                                         [assumes_role] in credentials file
      *
-     * @param string|null $fileName            A custom file to fetch credential from.
+     * @param string|null $filename            A custom file to fetch credential from.
      *                                         Default: credential file in home directory
      * @return callable
      */
-    public static function assumeRole($assumeRoleProfile = null, $fileName = null)
+    public static function assumeRole($assumeRoleProfile = null, $filename = null)
     {
-        $fileName = $fileName ?: (self::getHomeDir() . '/.aws/credentials');
+        $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
         $profile = $assumeRoleProfile ?: 'assumes_role';
 
         return new AssumeRoleCredentialResolver([
             'assume_role_profile' => $profile,
-            'file_name' => $fileName
+            'file_name' => $filename
         ]);
     }
 
@@ -308,36 +303,36 @@ class CredentialProvider
      *
      * @param string|null $profile      Profile to use. If not specified will use
      *                                  the "default" profile.
-     * @param string|null $fileName     If provided, uses a custom filename rather
+     * @param string|null $filename     If provided, uses a custom filename rather
      *                                  than looking in the home directory.
      *                                  Default:
      *                                  - 'default' in credential file
      * @return callable
      */
-    public static function ini($profile = null, $fileName = null)
+    public static function ini($profile = null, $filename = null)
     {
-        $fileName = $fileName ?: (self::getHomeDir() . '/.aws/credentials');
+        $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
-        return function () use ($profile, $fileName) {
-            $msg = self::checkProfile($profile, $fileName);
-            if (!empty($msg)) {
+        return function () use ($profile, $filename) {
+            $msg = self::checkProfile($profile, $filename);
+            if ($msg) {
                 return self::reject($msg);
             }
 
-            $data = self::getProfileData($profile, $fileName);
+            $data = self::getProfileData($profile, $filename);
             if (!isset($data['aws_access_key_id'])
                 || !isset($data['aws_secret_access_key'])
             ) {
                 return self::reject("No credentials present in INI profile "
-                    . "'$profile' ($fileName)");
+                    . "'$profile' ($filename)");
             }
 
             if (empty($data['aws_session_token'])) {
                 $data['aws_session_token']
-                    = isset($data['aws_security_token']) ? 
-                    $data['aws_security_token'] :
-                    null;
+                    = isset($data['aws_security_token'])
+                        ? $data['aws_security_token']
+                        : null;
             }
 
             return Promise\promise_for(

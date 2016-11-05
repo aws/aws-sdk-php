@@ -3,35 +3,42 @@ namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
 use GuzzleHttp\Promise;
+
 /**
- * Sourcing credential profile data from file helpers.
+ * @internal Sourcing credential profile data from file helpers.
  */
 trait CredentialTrait
 {
     /**
      * Check profile availability in a given file.
-     * Return empty string or error message string
+     * Returns a string describing any error that could occur.
      *
-     * @return string
+     * @param string $profile
+     * @param string $filename
+     *
+     * @return null|string
      */
-    private static function checkProfile($profile, $fileName)
+    private static function checkProfile($profile, $filename)
     {
-        if (!is_readable($fileName)) {
-            return "Cannot read credentials from $fileName";
+        if (!is_readable($filename)) {
+            return "Cannot read credentials from $filename";
         }
-        $data = parse_ini_file($fileName, true);
+        $data = parse_ini_file($filename, true);
         if ($data === false) {
-            return "Invalid credentials file: $fileName";
+            return "Invalid credentials file: $filename";
         }
         if (!isset($data[$profile])) {
-            return "'$profile' not found in $fileName";
+            return "'$profile' not found in $filename";
         }
-        return '';
     }
 
-    private static function getProfileData($profile, $fileName)
+    private static function getProfileData($profile, $filename)
     {
-        $data = parse_ini_file($fileName, true);
+        $msg = self::checkProfile($profile, $filename);
+        if ($msg){
+            return self::reject($msg);
+        }
+        $data = parse_ini_file($filename, true);
         return $data[$profile];
     }
 
