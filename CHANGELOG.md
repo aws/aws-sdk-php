@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.19.24 - 2016-11-10
+
+* `Aws\CloudWatchLogs` - Added support for capability that helps pivot from
+ your logs-extracted metrics
+
 ## 3.19.23 - 2016-11-03
 
 * `Aws\DirectConnect` - Added support for tagging on `DirectConnect` resources.
