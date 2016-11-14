@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentityProvider` - Added support for schema attributes in `CreateUserPool`
+
 ## 3.19.24 - 2016-11-10
 
 * `Aws\CloudWatchLogs` - Added support for capability that helps pivot from
