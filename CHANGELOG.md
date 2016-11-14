@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.25 - 2016-11-14
 
 * `Aws\CognitoIdentityProvider` - Added support for schema attributes in `CreateUserPool`
 
