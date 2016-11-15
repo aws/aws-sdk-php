@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectoryService` - Added support for `SchemaExtensions`
+* `Aws\Elasticache` - Added support for `AuthToken`
+* `Aws\Kinesis` - Added support for Describe shard limit, open shard count
+ and stream creation timestamp
+
 ## 3.19.25 - 2016-11-14
 
 * `Aws\CognitoIdentityProvider` - Added support for schema attributes in `CreateUserPool`
