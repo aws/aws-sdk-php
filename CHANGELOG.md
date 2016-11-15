@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.26 - 2016-11-15
 
 * `Aws\DirectoryService` - Added support for `SchemaExtensions`
 * `Aws\Elasticache` - Added support for `AuthToken`
