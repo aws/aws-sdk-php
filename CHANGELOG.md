@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.27 - 2016-11-16
 
 * `Aws\ServiceCatalog` - Added support for new operations
 * `Aws\Route53` Added support for cross account VPC Association
