@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ServiceCatalog` - Added support for new operations
+* `Aws\Route53` Added support for cross account VPC Association
+
 ## 3.19.26 - 2016-11-15
 
 * `Aws\DirectoryService` - Added support for `SchemaExtensions`
