@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGateway` - Added support for custom encoding feature
+* `Aws\CloudWatch` - Added support for percentile statistic (pN) to metrics and alarms
+* `Aws\MarketplaceAnalytics` - Added support for third party metrics
+* `Aws\Sqs` - Added support for creating FIFO (first-in-first-out) queues
+
 ## 3.19.27 - 2016-11-16
 
 * `Aws\ServiceCatalog` - Added support for new operations
