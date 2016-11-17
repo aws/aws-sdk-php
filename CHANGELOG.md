@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.28 - 2016-11-17
 
 * `Aws\ApiGateway` - Added support for custom encoding feature
 * `Aws\CloudWatch` - Added support for percentile statistic (pN) to metrics and alarms
