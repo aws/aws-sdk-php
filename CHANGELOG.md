@@ -1,5 +1,13 @@
 # CHANGELOG
 
+* `Aws\ApplicationAutoscaling` - Added  support for a new target resource
+  (EMR Instance Groups) as a scalable target
+* `Aws\ElasticTranscoder` - Added support for multiple media input files
+  that can be stitched together
+* `Aws\Emr` - Added support for Automatic Scaling of EMR clusters based on metrics
+* `Aws\Lambda` -  Added support for Environment variables
+* `Aws\GameLift` - Added support for remote access into GameLift managed servers.
+
 ## 3.19.28 - 2016-11-17
 
 * `Aws\ApiGateway` - Added support for custom encoding feature
