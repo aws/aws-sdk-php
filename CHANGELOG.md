@@ -8,7 +8,7 @@
 * `Aws\Lambda` -  Added support for Environment variables
 * `Aws\GameLift` - Added support for remote access into GameLift managed servers.
 
-## 3.19.28 - 2016-11-17
+## 3.19.29 - 2016-11-18
 
 * `Aws\ApiGateway` - Added support for custom encoding feature
 * `Aws\CloudWatch` - Added support for percentile statistic (pN) to metrics and alarms
