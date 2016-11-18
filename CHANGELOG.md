@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.30 - 2016-11-18
 
 * `Aws\ApplicationAutoscaling` - Added  support for a new target resource
   (EMR Instance Groups) as a scalable target
