@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudTrail` - Added support for S3 data plane operations
+* `Aws\Ecs` - Added support for new "version" field for tasks and container instances
+
 ## 3.19.30 - 2016-11-18
 
 * `Aws\ApplicationAutoscaling` - Added  support for a new target resource
