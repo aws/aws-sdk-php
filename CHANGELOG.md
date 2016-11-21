@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.31 - 2016-11-21
 
 * `Aws\CloudTrail` - Added support for S3 data plane operations
 * `Aws\Ecs` - Added support for new "version" field for tasks and container instances
