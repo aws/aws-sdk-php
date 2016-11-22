@@ -44,6 +44,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listChangeSetsAsync(array $args = [])
  * @method \Aws\Result listExports(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listExportsAsync(array $args = [])
+ * @method \Aws\Result listImports(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listImportsAsync(array $args = [])
  * @method \Aws\Result listStackResources(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listStackResourcesAsync(array $args = [])
  * @method \Aws\Result listStacks(array $args = [])

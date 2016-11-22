@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Cloudformation` - Added support for List-imports API
+* `Aws\Glacier` - Added support for retrieving data with different tiers
+* `Aws\Route53` - Added support for expanding current IPAddress
+  field to accept IPv6 address
+* `Aws\S3` - Added support for Glacier retrieval tier information
+
 ## 3.19.31 - 2016-11-21
 
 * `Aws\CloudTrail` - Added support for S3 data plane operations
