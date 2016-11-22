@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.32 - 2016-11-22
 
 * `Aws\Cloudformation` - Added support for List-imports API
 * `Aws\Glacier` - Added support for retrieving data with different tiers
