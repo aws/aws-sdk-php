@@ -49,7 +49,7 @@ class LockingSessionConnection extends StandardSessionConnection
                 if ($e->getAwsErrorCode() === 'ConditionalCheckFailedException'
                     && time() < $timeout
                 ) {
-                    usleep(pow(10, -6) * rand(
+                    usleep(rand(
                         $this->config['min_lock_retry_microtime'],
                         $this->config['max_lock_retry_microtime']
                     ));
