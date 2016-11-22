@@ -364,7 +364,6 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
                     'connection_error' => true,
                     'exception' => $this->getMockBuilder(ConnectException::class)
                         ->disableOriginalConstructor()
-                        ->disableOriginalClone()
                         ->getMock(),
                     'response' => null,
                 ]);
