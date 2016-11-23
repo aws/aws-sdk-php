@@ -2,11 +2,9 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\EcsCredentialProvider;
-use Aws\Ecs\EcsClient;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\Credentials\EcsCredentialProvider
@@ -32,7 +30,7 @@ class EcsCredentialProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Unable to find an ECS environment variable value
+     * @expectedExceptionMessage Error retrieving credential from ECS
      */
     public function testRejectsIfUriPathIsNotAvailable()
     {
