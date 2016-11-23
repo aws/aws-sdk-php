@@ -4,6 +4,7 @@ namespace Aws\Test\S3;
 use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\Result;
+use Aws\S3\Exception\S3Exception;
 use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
@@ -145,18 +146,11 @@ class S3ClientTest extends \PHPUnit_Framework_TestCase
 
     private function getS3ErrorMock($errCode, $statusCode)
     {
-        $e = $this->getMockBuilder('Aws\S3\Exception\S3Exception')
-            ->disableOriginalConstructor()
-            ->setMethods(['getAwsErrorCode', 'getStatusCode'])
-            ->getMock();
-        $e->expects($this->any())
-            ->method('getAwsErrorCode')
-            ->will($this->returnValue($errCode));
-        $e->expects($this->any())
-            ->method('getStatusCode')
-            ->will($this->returnValue($statusCode));
-
-        return $e;
+        $context = [
+            'code' => $errCode,
+            'response' => new Response($statusCode),
+        ];
+        return new S3Exception('', new Command('mockCommand'), $context);
     }
 
     /**

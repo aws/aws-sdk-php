@@ -1,5 +1,59 @@
 # CHANGELOG
 
+## 3.19.32 - 2016-11-22
+
+* `Aws\Cloudformation` - Added support for List-imports API
+* `Aws\Glacier` - Added support for retrieving data with different tiers
+* `Aws\Route53` - Added support for expanding current IPAddress
+  field to accept IPv6 address
+* `Aws\S3` - Added support for Glacier retrieval tier information
+
+## 3.19.31 - 2016-11-21
+
+* `Aws\CloudTrail` - Added support for S3 data plane operations
+* `Aws\Ecs` - Added support for new "version" field for tasks and container instances
+
+## 3.19.30 - 2016-11-18
+
+* `Aws\ApplicationAutoscaling` - Added  support for a new target resource
+  (EMR Instance Groups) as a scalable target
+
+## 3.19.29 - 2016-11-18
+
+* `Aws\ElasticTranscoder` - Added support for multiple media input files
+  that can be stitched together
+* `Aws\Emr` - Added support for Automatic Scaling of EMR clusters based on metrics
+* `Aws\Lambda` -  Added support for Environment variables
+* `Aws\GameLift` - Added support for remote access into GameLift managed servers.
+
+## 3.19.28 - 2016-11-17
+
+* `Aws\ApiGateway` - Added support for custom encoding feature
+* `Aws\CloudWatch` - Added support for percentile statistic (pN) to metrics and alarms
+* `Aws\MarketplaceAnalytics` - Added support for third party metrics
+* `Aws\Sqs` - Added support for creating FIFO (first-in-first-out) queues
+
+## 3.19.27 - 2016-11-16
+
+* `Aws\ServiceCatalog` - Added support for new operations
+* `Aws\Route53` Added support for cross account VPC Association
+
+## 3.19.26 - 2016-11-15
+
+* `Aws\DirectoryService` - Added support for `SchemaExtensions`
+* `Aws\Elasticache` - Added support for `AuthToken`
+* `Aws\Kinesis` - Added support for Describe shard limit, open shard count
+ and stream creation timestamp
+
+## 3.19.25 - 2016-11-14
+
+* `Aws\CognitoIdentityProvider` - Added support for schema attributes in `CreateUserPool`
+
+## 3.19.24 - 2016-11-10
+
+* `Aws\CloudWatchLogs` - Added support for capability that helps pivot from
+ your logs-extracted metrics
+
 ## 3.19.23 - 2016-11-03
 
 * `Aws\DirectConnect` - Added support for tagging on `DirectConnect` resources.

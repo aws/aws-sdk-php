@@ -2,11 +2,9 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\EcsCredentialProvider;
-use Aws\Ecs\EcsClient;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\Credentials\EcsCredentialProvider
