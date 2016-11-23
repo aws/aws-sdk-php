@@ -20,7 +20,7 @@ class EcsCredentialProvider
     private $client;
 
     /**
-     * The constructor accepts following options:
+     *  * The constructor accepts following options:
      *  - timeout: (optional) Connection timeout, in seconds, default 1.0
      *  - client: An EcsClient to make request from
      *
@@ -66,7 +66,7 @@ class EcsCredentialProvider
     /**
      * Fetch credential URI from ECS environment variable
      *
-     * @return string Returns a complete ECS URI
+     * @return string Returns ECS URI
      */
     private function getEcsUri()
     {
