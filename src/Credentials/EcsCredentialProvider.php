@@ -20,7 +20,7 @@ class EcsCredentialProvider
     private $client;
 
     /**
-     *  * The constructor accepts following options:
+     *  The constructor accepts following options:
      *  - timeout: (optional) Connection timeout, in seconds, default 1.0
      *  - client: An EcsClient to make request from
      *
