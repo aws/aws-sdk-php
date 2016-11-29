@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Added support for Storage Insights, Object Tagging, Lifecycle Filtering
+
 ## 3.19.32 - 2016-11-22
 
 * `Aws\Cloudformation` - Added support for List-imports API
