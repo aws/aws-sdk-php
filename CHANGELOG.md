@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.19.33 - 2016-11-29
 
 * `Aws\S3` - Added support for Storage Insights, Object Tagging, Lifecycle Filtering
 
