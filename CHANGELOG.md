@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lightsail` - Added support for new service `AWS Lightsail`
+* `Aws\Polly` - Added support for new service `AWS Polly Service`
+* `Aws\Rekognition` - Added support for new service `AWS Rekognition Service`
+* `Aws\Snowball` - Added support for a new job type, new APIs, and
+  the new `AWS Snowball` Edge device to support local compute and storage use cases
+
 ## 3.19.33 - 2016-11-29
 
 * `Aws\S3` - Added support for Storage Insights, Object Tagging, Lifecycle Filtering
