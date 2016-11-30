@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.20.0 - 2016-11-30
 
 * `Aws\Lightsail` - Added support for new service `AWS Lightsail`
 * `Aws\Polly` - Added support for new service `AWS Polly Service`
