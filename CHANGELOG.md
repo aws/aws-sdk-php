@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGateway` - Added support for publishing your APIs on `Amazon API Gateway`
+  as products on the `AWS Marketplace`
+* `Aws\AppStream` - Added support for new service `AWS AppStream`
+* `Aws\CodeBuild` - Added support for new service `AWS CodeBuild`
+* `Aws\DirectConnect` - Added support for `Ipv6` support
+* `Aws\Ec2` - Added support for native `IPv6` support for VPCs
+* `Aws\ElasticBeanstalk` - Added support for `CodeBuild` Integration
+* `Aws\Lambda` - Added support for new API `GetAccountSettings`
+* `Aws\Health` - Added support for new service `AWS Health`
+* `Aws\OpsWorksCM` - Added support for new service `AWS OpsWorks Managed Chef`
+* `Aws\Pinpoint` - Added support for new service `AWS Pinpoint`
+* `Aws\Sfn` - Added support for `AWS Step Functions`
+* `Aws\Shield` - Added support for new service `AWS Shield`
+* `Aws\SSm` - Added support for 6 new sets of APIs
+* `Aws\XRay` - Added support for new service `AWS X-Ray`
+
+
 ## 3.20.0 - 2016-11-30
 
 * `Aws\Lightsail` - Added support for new service `AWS Lightsail`

@@ -59,7 +59,7 @@ foreach (glob(__DIR__ . '/../src/data/**/**/api-2.json') as $file) {
         $ns = isset($metadata['serviceAbbreviation'])
             ? $metadata['serviceAbbreviation']
             : $metadata['serviceFullName'];
-        $ns = str_replace(['Amazon', 'AWS', 'Beta', '(', ')', ' ', '/'], '', $ns);
+        $ns = str_replace(['Amazon', 'AWS', 'Beta', '(', ')', ' ', '/', '-'], '', $ns);
 
         if (!isset($possibleNamespaces[strtolower($ns)])) {
             throw new \Exception('NS not found: ' . $ns);
