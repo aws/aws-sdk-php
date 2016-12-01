@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.20.1 - 2016-12-01
 
 * `Aws\ApiGateway` - Added support for publishing your APIs on `Amazon API Gateway`
   as products on the `AWS Marketplace`
