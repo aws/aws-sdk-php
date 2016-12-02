@@ -109,7 +109,7 @@ class SignatureProvider
     {
         return function ($version, $service, $region) {
             switch ($version) {
-                case 's2' :
+                case 'v2' :
                     return $service === 's3'
                         ? new S3SignatureV2($service, $region)
                         : new SignatureV2($service, $region);
