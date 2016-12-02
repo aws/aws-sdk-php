@@ -6,6 +6,14 @@
 [![Apache 2 License](https://img.shields.io/packagist/l/aws/aws-sdk-php.svg?style=flat)](http://aws.amazon.com/apache-2-0/)
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/aws/aws-sdk-php?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+
+##Diff
+for some endpoint not supported Signature-v4 yet.
+Signature-v2.[method](http://docs.aws.amazon.com/general/latest/gr/signature-version-2.html)
+
+
+
+##title
 The **AWS SDK for PHP** makes it easy for developers to access [Amazon Web
 Services][aws] in their PHP code, and build robust applications and software
 using services like Amazon S3, Amazon DynamoDB, Amazon Glacier, etc. You can
