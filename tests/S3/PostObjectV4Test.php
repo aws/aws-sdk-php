@@ -209,5 +209,22 @@ class PostObjectV4Test extends \PHPUnit_Framework_TestCase
             'http://foo.s3.amazonaws.com',
             $formAttrs['action']
         );
+
+        $s3 = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => [
+                'key' => 'akid',
+                'secret' => 'secret',
+            ],
+            'endpoint' => 'http://s3.amazonaws.com',
+            'bucket_endpoint' => true,
+        ]);
+        $postObject = new PostObjectV4($s3, 'amazonaws', []);
+        $formAttrs = $postObject->getFormAttributes();
+        $this->assertEquals(
+            'http://amazonaws.s3.amazonaws.com',
+            $formAttrs['action']
+        );
     }
 }
