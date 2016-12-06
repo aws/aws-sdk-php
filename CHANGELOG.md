@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Adding T2.xlarge, T2.2xlarge, and R4 instance type
+* `Aws\Config` - Adding support for `DescribeConfigRuleEvaulationStatus`
+* `Aws\Pinpoint` - Adding support for fixed type
+
 ## 3.20.1 - 2016-12-01
 
 * `Aws\ApiGateway` - Added support for publishing your APIs on `Amazon API Gateway`
