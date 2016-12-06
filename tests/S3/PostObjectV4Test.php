@@ -189,6 +189,23 @@ class PostObjectV4Test extends \PHPUnit_Framework_TestCase
             'https://s3.amazonaws.com/foo.bar',
             $formAttrs['action']
         );
+
+        $s3 = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => [
+                'key' => 'akid',
+                'secret' => 'secret',
+            ],
+            'endpoint' => 'http://foo.bar.s3.amazonaws.com',
+            'bucket_endpoint' => true,
+        ]);
+        $postObject = new PostObjectV4($s3, 'foo.bar', []);
+        $formAttrs = $postObject->getFormAttributes();
+        $this->assertEquals(
+            'http://foo.bar.s3.amazonaws.com',
+            $formAttrs['action']
+        );
     }
 
     public function testCanHandleVirtualStyleEndpoint()
