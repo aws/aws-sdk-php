@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.20.2 - 2016-12-06
 
 * `Aws\Ec2` - Adding T2.xlarge, T2.2xlarge, and R4 instance type
 * `Aws\Config` - Adding support for `DescribeConfigRuleEvaulationStatus`
