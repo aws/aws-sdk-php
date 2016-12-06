@@ -63,14 +63,13 @@ class CredentialProvider
      */
     public static function defaultProvider(array $config = [])
     {
-        $instanceProfileProvider = self::instanceProfile($config);
-        $ecsCredentialProvider = self::ecsCredentials($config);
+        $remoteCredentialsProvider = self::remoteCredentialsProvider($config);
 
         if (isset($config['credentials'])
             && $config['credentials'] instanceof CacheInterface
         ) {
-            $instanceProfileProvider = self::cache(
-                $instanceProfileProvider,
+            $remoteCredentialsProvider = self::cache(
+                $remoteCredentialsProvider,
                 $config['credentials']
             );
         }
@@ -79,8 +78,7 @@ class CredentialProvider
             self::chain(
                 self::env(),
                 self::ini(),
-                $ecsCredentialProvider,
-                $instanceProfileProvider
+                $remoteCredentialsProvider
             )
         );
     }
@@ -264,6 +262,27 @@ class CredentialProvider
     public static function ecsCredentials(array $config = [])
     {
         return new EcsCredentialProvider($config);
+    }
+
+    /**
+     * Remote credentials provider returns a credentials provider for the
+     * default remote endpoints such as EC2 or ECS Roles.
+     *
+     * @param array $config Array of configuration data.
+     *
+     * @return InstanceProfileProvider|EcsCredentialProvider
+     * @see Aws\Credentials\InstanceProfileProvider for $config details.
+     * @see Aws\Credentials\EcsCredentialProvider for $config details.
+     */
+    public static function remoteCredentialsProvider(array $config = [])
+    {
+        $ecsCredentialsUri = getenv(EcsCredentialProvider::ENV_URI);
+
+        if (!$ecsCredentialsUri) {
+            return self::instanceProfile($config);
+        }
+
+        return self::ecsCredentials($config);
     }
 
     /**

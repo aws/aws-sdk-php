@@ -258,6 +258,20 @@ EOT;
         $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $p);
     }
 
+    public function testCreatesFromRemoteCredentialsProvider()
+    {
+        $p = CredentialProvider::remoteCredentialsProvider();
+        $this->assertInstanceOf('Aws\Credentials\InstanceProfileProvider', $p);
+
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=');
+        $p = CredentialProvider::remoteCredentialsProvider();
+        $this->assertInstanceOf('Aws\Credentials\InstanceProfileProvider', $p);
+
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
+        $p = CredentialProvider::remoteCredentialsProvider();
+        $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $p);
+    }
+
     public function testGetsHomeDirectoryForWindowsUsers()
     {
         putenv('HOME=');
