@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Config` - Adding support for Redshift resource types
+* `Aws\S3` - Adding Version ID to Get/Put ObjectTagging
+
 ## 3.20.2 - 2016-12-06
 
 * `Aws\Ec2` - Adding T2.xlarge, T2.2xlarge, and R4 instance type
