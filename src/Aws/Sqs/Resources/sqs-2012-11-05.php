@@ -98,6 +98,11 @@ return array (
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
+                'MessageGroupId' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
                 'Label' => array(
                     'required' => true,
                     'type' => 'string',
