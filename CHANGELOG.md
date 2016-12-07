@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.20.3 - 2016-12-07
 
 * `Aws\Config` - Adding support for Redshift resource types
 * `Aws\S3` - Adding Version ID to Get/Put ObjectTagging
