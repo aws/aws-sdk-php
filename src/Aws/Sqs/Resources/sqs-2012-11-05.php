@@ -99,7 +99,6 @@ return array (
                     'location' => 'aws.query',
                 ),
                 'MessageGroupId' => array(
-                    'required' => true,
                     'type' => 'string',
                     'location' => 'aws.query',
                 ),
