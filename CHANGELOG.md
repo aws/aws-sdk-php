@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Cloudfront` - Adding lambda function associations to cache behaviors
+* `Aws\Rds` - Add cluster create time to DBCluster
+* `Aws\WafRegional` - Adding support for new service `AWS WAF Regional`
+
 ## 3.20.3 - 2016-12-07
 
 * `Aws\Config` - Adding support for Redshift resource types
