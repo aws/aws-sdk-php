@@ -5,8 +5,6 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\LruArrayCache;
 use GuzzleHttp\Promise;
-use Aws\Credentials\EcsCredentialProvider;
-
 /**
  * @covers \Aws\Credentials\CredentialProvider
  */
@@ -230,7 +228,7 @@ EOT;
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage 'foo' not found in credentials file
+     * @expectedExceptionMessage 'foo' not found in
      */
     public function testEnsuresFileIsNotEmpty()
     {
@@ -256,6 +254,12 @@ EOT;
     {
         $p = CredentialProvider::ecsCredentials();
         $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $p);
+    }
+
+    public function testCreatesFromAssumeRoleCredentialProvider()
+    {
+        $p = CredentialProvider::assumeRole();
+        $this->assertInstanceOf('Aws\Credentials\AssumeRoleCredentialResolver', $p);
     }
 
     public function testGetsHomeDirectoryForWindowsUsers()

@@ -47,12 +47,15 @@ class CredentialProvider
     const ENV_SESSION = 'AWS_SESSION_TOKEN';
     const ENV_PROFILE = 'AWS_PROFILE';
 
+    use CredentialTrait;
+
     /**
      * Create a default credential provider that first checks for environment
      * variables, then checks for the "default" profile in ~/.aws/credentials,
-     * then tries to make GET Request to fetch credentials if Ecs environment
-     * variable is presented, and finally checks for EC2 instance profile
-     * credentials.
+     * then checks for "profile default" profile in ~/.aws/config,
+     * then tries to make a GET Request to fetch credentials if
+     * Ecs environment variable is presented, and finally
+     * checks for EC2 instance profile credentials.
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided credentials.
@@ -75,10 +78,15 @@ class CredentialProvider
             );
         }
 
+        $defaultConfigFileName = self::getHomeDir() . '/.aws/config';
         return self::memoize(
             self::chain(
                 self::env(),
                 self::ini(),
+                self::ini(
+                    'profile default',
+                    $defaultConfigFileName
+                ),
                 $ecsCredentialProvider,
                 $instanceProfileProvider
             )
@@ -267,14 +275,38 @@ class CredentialProvider
     }
 
     /**
+     * Credential provider that creates credentials using assume role
+     * credentials from ini profile
+     *
+     * @param string|null $assumeRoleProfile   Assume role profile name to be used.
+     *                                         Default:
+     *                                         [assumes_role] in credentials file
+     *
+     * @param string|null $filename            A custom file to fetch credential from.
+     *                                         Default: credential file in home directory
+     * @return callable
+     */
+    public static function assumeRole($assumeRoleProfile = null, $filename = null)
+    {
+        $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
+        $profile = $assumeRoleProfile ?: 'assumes_role';
+
+        return new AssumeRoleCredentialResolver([
+            'assume_role_profile' => $profile,
+            'file_name' => $filename
+        ]);
+    }
+
+    /**
      * Credentials provider that creates credentials using an ini file stored
      * in the current user's home directory.
      *
-     * @param string|null $profile  Profile to use. If not specified will use
-     *                              the "default" profile.
-     * @param string|null $filename If provided, uses a custom filename rather
-     *                              than looking in the home directory for the
-     *
+     * @param string|null $profile      Profile to use. If not specified will use
+     *                                  the "default" profile.
+     * @param string|null $filename     If provided, uses a custom filename rather
+     *                                  than looking in the home directory.
+     *                                  Default:
+     *                                  - 'default' in credential file
      * @return callable
      */
     public static function ini($profile = null, $filename = null)
@@ -283,61 +315,33 @@ class CredentialProvider
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename) {
-            if (!is_readable($filename)) {
-                return self::reject("Cannot read credentials from $filename");
+            $msg = self::checkProfile($profile, $filename);
+            if ($msg) {
+                return self::reject($msg);
             }
-            $data = parse_ini_file($filename, true);
-            if ($data === false) {
-                return self::reject("Invalid credentials file: $filename");
-            }
-            if (!isset($data[$profile])) {
-                return self::reject("'$profile' not found in credentials file");
-            }
-            if (!isset($data[$profile]['aws_access_key_id'])
-                || !isset($data[$profile]['aws_secret_access_key'])
+
+            $data = self::getProfileData($profile, $filename);
+            if (!isset($data['aws_access_key_id'])
+                || !isset($data['aws_secret_access_key'])
             ) {
                 return self::reject("No credentials present in INI profile "
                     . "'$profile' ($filename)");
             }
 
-            if (empty($data[$profile]['aws_session_token'])) {
-                $data[$profile]['aws_session_token']
-                    = isset($data[$profile]['aws_security_token'])
-                        ? $data[$profile]['aws_security_token']
+            if (empty($data['aws_session_token'])) {
+                $data['aws_session_token']
+                    = isset($data['aws_security_token'])
+                        ? $data['aws_security_token']
                         : null;
             }
 
             return Promise\promise_for(
                 new Credentials(
-                    $data[$profile]['aws_access_key_id'],
-                    $data[$profile]['aws_secret_access_key'],
-                    $data[$profile]['aws_session_token']
+                    $data['aws_access_key_id'],
+                    $data['aws_secret_access_key'],
+                    $data['aws_session_token']
                 )
             );
         };
-    }
-
-    /**
-     * Gets the environment's HOME directory if available.
-     *
-     * @return null|string
-     */
-    private static function getHomeDir()
-    {
-        // On Linux/Unix-like systems, use the HOME environment variable
-        if ($homeDir = getenv('HOME')) {
-            return $homeDir;
-        }
-
-        // Get the HOMEDRIVE and HOMEPATH values for Windows hosts
-        $homeDrive = getenv('HOMEDRIVE');
-        $homePath = getenv('HOMEPATH');
-
-        return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
-    }
-
-    private static function reject($msg)
-    {
-        return new Promise\RejectedPromise(new CredentialsException($msg));
     }
 }
