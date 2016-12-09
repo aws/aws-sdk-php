@@ -276,7 +276,6 @@ class CredentialProvider
 
     /**
      * Credential provider that creates credentials using assume role
-     * credentials from ini profile
      *
      * @param array $config Array of configuration data
      * @return callable

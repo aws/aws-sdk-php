@@ -388,8 +388,7 @@ assumeRole provider
 ~~~~~~~~~~~~~~~~~~~
 
 ``Aws\Credentials\CredentialProvider::assumeRole`` is a credential provider
-that creates credentials using assume role parameters from ini profile. Optionally,
-assume role profile name and file name could be provided.
+that creates credentials using assume role parameters and ``StsClient`` information.
 
 .. code-block:: php
 
