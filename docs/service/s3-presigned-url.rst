@@ -25,7 +25,7 @@ The most common scenario is creating a pre-signed URL to GET an object:
 .. code-block:: php
 
     $s3Client = new Aws\S3\S3Client([
-        'region'  => 'us-standard',
+        'region'  => 'us-east-1',
         'version' => '2006-03-01',
     ]);
 

@@ -151,8 +151,10 @@ class PostObjectV4
             // Use path-style URLs
             $uri = $uri->withPath($this->bucket);
         } else {
-            // Use virtual-style URLs
-            $uri = $uri->withHost($this->bucket . '.' . $uri->getHost());
+            // Use virtual-style URLs if haven't been set up already
+            if (strpos($uri->getHost(), $this->bucket . '.') !== 0) {
+                $uri = $uri->withHost($this->bucket . '.' . $uri->getHost());
+            }
         }
 
         return (string) $uri;

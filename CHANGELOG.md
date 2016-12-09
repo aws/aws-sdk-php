@@ -1,5 +1,53 @@
 # CHANGELOG
 
+## 3.20.4 - 2016-12-08
+
+* `Aws\Cloudfront` - Adding lambda function associations to cache behaviors
+* `Aws\Rds` - Add cluster create time to DBCluster
+* `Aws\WafRegional` - Adding support for new service `AWS WAF Regional`
+
+## 3.20.3 - 2016-12-07
+
+* `Aws\Config` - Adding support for Redshift resource types
+* `Aws\S3` - Adding Version ID to Get/Put ObjectTagging
+
+## 3.20.2 - 2016-12-06
+
+* `Aws\Ec2` - Adding T2.xlarge, T2.2xlarge, and R4 instance type
+* `Aws\Config` - Adding support for `DescribeConfigRuleEvaulationStatus`
+* `Aws\Pinpoint` - Adding support for fixed type
+
+## 3.20.1 - 2016-12-01
+
+* `Aws\ApiGateway` - Added support for publishing your APIs on `Amazon API Gateway`
+  as products on the `AWS Marketplace`
+* `Aws\AppStream` - Added support for new service `AWS AppStream`
+* `Aws\CodeBuild` - Added support for new service `AWS CodeBuild`
+* `Aws\DirectConnect` - Added support for `Ipv6` support
+* `Aws\Ec2` - Added support for native `IPv6` support for VPCs
+* `Aws\ElasticBeanstalk` - Added support for `CodeBuild` Integration
+* `Aws\Lambda` - Added support for new API `GetAccountSettings`
+* `Aws\Health` - Added support for new service `AWS Health`
+* `Aws\OpsWorksCM` - Added support for new service `AWS OpsWorks Managed Chef`
+* `Aws\Pinpoint` - Added support for new service `AWS Pinpoint`
+* `Aws\Sfn` - Added support for `AWS Step Functions`
+* `Aws\Shield` - Added support for new service `AWS Shield`
+* `Aws\SSm` - Added support for 6 new sets of APIs
+* `Aws\XRay` - Added support for new service `AWS X-Ray`
+
+
+## 3.20.0 - 2016-11-30
+
+* `Aws\Lightsail` - Added support for new service `AWS Lightsail`
+* `Aws\Polly` - Added support for new service `AWS Polly Service`
+* `Aws\Rekognition` - Added support for new service `AWS Rekognition Service`
+* `Aws\Snowball` - Added support for a new job type, new APIs, and
+  the new `AWS Snowball` Edge device to support local compute and storage use cases
+
+## 3.19.33 - 2016-11-29
+
+* `Aws\S3` - Added support for Storage Insights, Object Tagging, Lifecycle Filtering
+
 ## 3.19.32 - 2016-11-22
 
 * `Aws\Cloudformation` - Added support for List-imports API

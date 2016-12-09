@@ -190,4 +190,39 @@ class PostObjectV4Test extends \PHPUnit_Framework_TestCase
             $formAttrs['action']
         );
     }
+
+    /**
+     * @dataProvider virtualStyleProvider
+     *
+     * @param string $endpoint
+     * @param string $bucket
+     * @param string $expected
+     */
+    public function testCanHandleVirtualStyleEndpoint($endpoint, $bucket, $expected)
+    {
+        $s3 = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => [
+                'key' => 'akid',
+                'secret' => 'secret',
+            ],
+            'endpoint' => $endpoint,
+            'bucket_endpoint' => true,
+        ]);
+        $postObject = new PostObjectV4($s3, $bucket, []);
+        $formAttrs = $postObject->getFormAttributes();
+        $this->assertEquals($expected, $formAttrs['action']);
+    }
+
+    public function virtualStyleProvider()
+    {
+        return [
+            ['http://foo.s3.amazonaws.com', 'foo', 'http://foo.s3.amazonaws.com'],
+            ['http://foo.s3.amazonaws.com', 'bar', 'http://bar.foo.s3.amazonaws.com'],
+            ['http://s3.amazonaws.com', 'amazonaws', 'http://amazonaws.s3.amazonaws.com'],
+            ['http://foo.bar.s3.amazonaws.com', 'foo.bar', 'http://foo.bar.s3.amazonaws.com'],
+            ['http://foo.com', 'foo.com', 'http://foo.com.foo.com'],
+        ];
+    }
 }

@@ -20,6 +20,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteEventSourceMappingAsync(array $args = [])
  * @method \Aws\Result deleteFunction(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteFunctionAsync(array $args = [])
+ * @method \Aws\Result getAccountSettings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAccountSettingsAsync(array $args = [])
  * @method \Aws\Result getAlias(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAliasAsync(array $args = [])
  * @method \Aws\Result getEventSourceMapping(array $args = [])

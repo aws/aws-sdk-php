@@ -32,4 +32,57 @@ class Ec2ClientTest extends \PHPUnit_Framework_TestCase
             'SourceSnapshotId' => 'foo'
         ]);
     }
+
+    public function testCanDisableAutoFillPerClient()
+    {
+        $ec2 = new Ec2Client([
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'idempotency_auto_fill' => false,
+        ]);
+
+        $mock = new MockHandler([
+            function ($command, $request) {
+                $this->assertNull($command['ClientToken']);
+                return new Result();
+            }
+        ]);
+
+        $ec2->getHandlerList()->setHandler($mock);
+
+        $ec2->runScheduledInstances([
+            'LaunchSpecification' => [
+                'ImageId' => 'test-image',
+            ],
+            'ScheduledInstanceId' => 'test-instance-id',
+            'InstanceCount' => 1,
+        ]);
+    }
+
+    public function testCanOverwriteAutoFillToken()
+    {
+        $ec2 = new Ec2Client([
+            'region'  => 'us-east-1',
+            'version' => 'latest',
+            'idempotency_auto_fill' => true,
+        ]);
+
+        $mock = new MockHandler([
+            function ($command, $request) {
+                $this->assertEquals('foo', $command['ClientToken']);
+                return new Result();
+            }
+        ]);
+
+        $ec2->getHandlerList()->setHandler($mock);
+
+        $ec2->runScheduledInstances([
+            'LaunchSpecification' => [
+                'ImageId' => 'test-image',
+            ],
+            'ScheduledInstanceId' => 'test-instance-id',
+            'InstanceCount' => 1,
+            'ClientToken' => 'foo',
+        ]);
+    }
 }
