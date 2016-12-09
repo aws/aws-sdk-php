@@ -278,23 +278,13 @@ class CredentialProvider
      * Credential provider that creates credentials using assume role
      * credentials from ini profile
      *
-     * @param string|null $assumeRoleProfile   Assume role profile name to be used.
-     *                                         Default:
-     *                                         [assumes_role] in credentials file
-     *
-     * @param string|null $filename            A custom file to fetch credential from.
-     *                                         Default: credential file in home directory
+     * @param array $config Array of configuration data
      * @return callable
+     * @see Aws\Credentials\AssumeRoleCredentialProvider for $config details.
      */
-    public static function assumeRole($assumeRoleProfile = null, $filename = null)
+    public static function assumeRole(array $config=[])
     {
-        $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
-        $profile = $assumeRoleProfile ?: 'assumes_role';
-
-        return new AssumeRoleCredentialResolver([
-            'assume_role_profile' => $profile,
-            'file_name' => $filename
-        ]);
+        return new AssumeRoleCredentialProvider($config);
     }
 
     /**

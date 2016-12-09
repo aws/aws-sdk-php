@@ -139,21 +139,6 @@ For more information regarding ``'assume_role_params'``, see `AssumeRole <http:/
         ]
     ]);
 
-If you would like to sourcing assume role credentials from profile directly,
-try ``Aws\Credentials\AssumeRoleCredentialResolver`` instead. By providing ``'assume_role_profile'``
-and ``'file_name'``, assume role credentials could be sourced from profile easily.
-
-.. code-block:: php
-
-    $s3Client = new S3Client([
-        'region' => 'us-west-2',
-        'version' => 'latest',
-        'credentials' => new AssumeRoleCredentialResolver([
-            'assume_role_profile' => 'my_assume_role_profile',
-            'file_name' => '/Users/username/.aws/credentials'
-        ])
-    ]);
-
 .. _credential_profiles:
 
 Using the AWS credentials file and credential profiles
@@ -403,16 +388,23 @@ assumeRole provider
 ~~~~~~~~~~~~~~~~~~~
 
 ``Aws\Credentials\CredentialProvider::assumeRole`` is a credential provider
-that creates credentials using assume role credentials from ini profile. Optionally,
+that creates credentials using assume role parameters from ini profile. Optionally,
 assume role profile name and file name could be provided.
 
 .. code-block:: php
 
     use Aws\Credentials\CredentialProvider;
     use Aws\S3\S3Client;
+    use Aws\Sts\StsClient;
 
-    // [assumes_role] profile in '~/.aws/credentials' will be used
-    $provider = CredentialProvider::assumeRole();
+    // Passing Aws\Credentials\AssumeRoleCredentialProvider options directly
+    $provider = CredentialProvider::assumeRole([
+        'client' => new StsClient(['region' => 'us-west-2', 'version' => 'latest']),
+        'assume_role_params' => [
+            'RoleArn' => 'arn:aws:iam::012345678910:role/role_name',
+            'RoleSessionName' => 'test_session',
+        ]
+    ]);
 
     // Cache the results in a memoize function to avoid loading and parsing
     // the ini file on every API operation.

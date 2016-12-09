@@ -4,6 +4,7 @@ namespace Aws\Test\Credentials;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\LruArrayCache;
+use Aws\Sts\StsClient;
 use GuzzleHttp\Promise;
 /**
  * @covers \Aws\Credentials\CredentialProvider
@@ -258,8 +259,12 @@ EOT;
 
     public function testCreatesFromAssumeRoleCredentialProvider()
     {
-        $p = CredentialProvider::assumeRole();
-        $this->assertInstanceOf('Aws\Credentials\AssumeRoleCredentialResolver', $p);
+        $config = [
+            'client' => new StsClient(['region' => 'foo', 'version' => 'latest']),
+            'assume_role_params' => [ 'foo' => 'bar' ]
+        ];
+        $p = CredentialProvider::assumeRole($config);
+        $this->assertInstanceOf('Aws\Credentials\AssumeRoleCredentialProvider', $p);
     }
 
     public function testGetsHomeDirectoryForWindowsUsers()
