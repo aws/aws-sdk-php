@@ -289,7 +289,7 @@ EOT;
 
         $c = new Credentials('foo', 'bar');
         $cache = new LruArrayCache;
-        $cache->set('aws_cached_credentials', $c);
+        $cache->set('aws_cached_instance_credentials', $c);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $conf = $r->resolve([
             'service'     => 'sqs',

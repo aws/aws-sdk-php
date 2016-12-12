@@ -5,7 +5,6 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\LruArrayCache;
 use GuzzleHttp\Promise;
-use Aws\Credentials\EcsCredentialProvider;
 
 /**
  * @covers \Aws\Credentials\CredentialProvider
@@ -300,20 +299,29 @@ EOT;
 
     public function testCachesAsPartOfDefaultChain()
     {
+        $instanceCredential = new Credentials('instance_foo', 'instance_bar', 'instance_baz', PHP_INT_MAX);
+        $ecsCredential = new Credentials('ecs_foo', 'ecs_bar', 'ecs_baz', PHP_INT_MAX);
+
         $cache = new LruArrayCache;
-        $cache->set('aws_cached_credentials', new Credentials(
-            'foo',
-            'bar'
-        ));
+        $cache->set('aws_cached_instance_credentials', $instanceCredential);
+        $cache->set('aws_cached_ecs_credentials', $ecsCredential);
+
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
         $credentials = call_user_func(CredentialProvider::defaultProvider([
             'credentials' => $cache,
         ]))
             ->wait();
+        $this->assertEquals($instanceCredential->getAccessKeyId(), $credentials->getAccessKeyId());
+        $this->assertEquals($instanceCredential->getSecretKey(), $credentials->getSecretKey());
 
-        $this->assertEquals('foo', $credentials->getAccessKeyId());
-        $this->assertEquals('bar', $credentials->getSecretKey());
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
+        $credentials = call_user_func(CredentialProvider::defaultProvider([
+            'credentials' => $cache,
+        ]))
+            ->wait();
+        $this->assertEquals($ecsCredential->getAccessKeyId(), $credentials->getAccessKeyId());
+        $this->assertEquals($ecsCredential->getSecretKey(), $credentials->getSecretKey());
     }
 
     public function testChainsCredentials()

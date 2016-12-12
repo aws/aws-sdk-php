@@ -57,30 +57,20 @@ class CredentialProvider
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided credentials.
      *
-     * @param array $config Optional array of instance profile credentials
+     * @param array $config Optional array of ecs/instance profile credentials
      *                      provider options.
+     *
      * @return callable
      */
     public static function defaultProvider(array $config = [])
     {
-        $instanceProfileProvider = self::instanceProfile($config);
-        $ecsCredentialProvider = self::ecsCredentials($config);
-
-        if (isset($config['credentials'])
-            && $config['credentials'] instanceof CacheInterface
-        ) {
-            $instanceProfileProvider = self::cache(
-                $instanceProfileProvider,
-                $config['credentials']
-            );
-        }
+        $localCredentialProviders = [self::env(), self::ini()];
+        $remoteCredentialProviders = self::remoteCredentialProviders($config);
 
         return self::memoize(
-            self::chain(
-                self::env(),
-                self::ini(),
-                $ecsCredentialProvider,
-                $instanceProfileProvider
+            call_user_func_array(
+                'self::chain',
+                array_merge($localCredentialProviders, $remoteCredentialProviders)
             )
         );
     }
@@ -315,6 +305,38 @@ class CredentialProvider
                 )
             );
         };
+    }
+
+    /**
+     * Remote credential providers returns a list of credentials providers
+     * for the remote endpoints such as EC2 or ECS Roles.
+     *
+     * @param array $config Array of configuration data.
+     *
+     * @return array
+     * @see Aws\Credentials\InstanceProfileProvider for $config details.
+     * @see Aws\Credentials\EcsCredentialProvider for $config details.
+     */
+    private static function remoteCredentialProviders(array $config = [])
+    {
+        if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
+            $providers['ecs'] = self::ecsCredentials($config);
+        }
+        $providers['instance'] = self::instanceProfile($config);
+
+        if (isset($config['credentials'])
+            && $config['credentials'] instanceof CacheInterface
+        ) {
+            foreach ($providers as $key => $provider) {
+                $providers[$key] = self::cache(
+                    $provider,
+                    $config['credentials'],
+                    'aws_cached_' . $key . '_credentials'
+                );
+            }
+        }
+
+        return $providers;
     }
 
     /**
