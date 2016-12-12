@@ -39,6 +39,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
                     'apiVersion'      => 'baz',
                     'signingName'     => 'qux',
                     'protocol'        => 'yak',
+                    'uid'             => 'foo-2016-12-09'
                 ]
             ],
             function () { return []; }
@@ -49,6 +50,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('baz', $s->getApiVersion());
         $this->assertEquals('qux', $s->getSigningName());
         $this->assertEquals('yak', $s->getProtocol());
+        $this->assertEquals('foo-2016-12-09', $s->getUid());
     }
 
     public function testReturnsMetadata()

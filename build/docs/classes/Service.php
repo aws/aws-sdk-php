@@ -66,6 +66,7 @@ class Service
         $this->version = $api->getApiVersion();
         $this->docs = $docs;
         $this->slug = $this->name . '-' . $this->version;
+        $this->uid = $api->getUid();
         $this->clientName = $this->namespace . 'Client';
         $this->client = 'Aws\\' . $this->namespace . '\\' . $this->clientName;
         $this->clientLink = 'class-Aws.' . $this->namespace . '.' . $this->namespace . 'Client.html';
