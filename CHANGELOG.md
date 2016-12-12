@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.20.5 - 2016-12-12
 
 * `Aws\Credentials` - Fix `EcsCredential` latency issue
 
