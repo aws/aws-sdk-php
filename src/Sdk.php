@@ -170,6 +170,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSwf(array $args = [])
  * @method \Aws\Waf\WafClient createWaf(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionWaf(array $args = [])
+ * @method \Aws\WafRegional\WafRegionalClient createWafRegional(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionWafRegional(array $args = [])
  * @method \Aws\WorkSpaces\WorkSpacesClient createWorkSpaces(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionWorkSpaces(array $args = [])
  * @method \Aws\XRay\XRayClient createXRay(array $args = [])
@@ -177,7 +179,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.20.1';
+    const VERSION = '3.20.4';
 
     /** @var array Arguments for creating clients */
     private $args;

@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 3.20.4 - 2016-12-08
+
+* `Aws\Cloudfront` - Adding lambda function associations to cache behaviors
+* `Aws\Rds` - Add cluster create time to DBCluster
+* `Aws\WafRegional` - Adding support for new service `AWS WAF Regional`
+
+## 3.20.3 - 2016-12-07
+
+* `Aws\Config` - Adding support for Redshift resource types
+* `Aws\S3` - Adding Version ID to Get/Put ObjectTagging
+
+## 3.20.2 - 2016-12-06
+
+* `Aws\Ec2` - Adding T2.xlarge, T2.2xlarge, and R4 instance type
+* `Aws\Config` - Adding support for `DescribeConfigRuleEvaulationStatus`
+* `Aws\Pinpoint` - Adding support for fixed type
+
 ## 3.20.1 - 2016-12-01
 
 * `Aws\ApiGateway` - Added support for publishing your APIs on `Amazon API Gateway`
