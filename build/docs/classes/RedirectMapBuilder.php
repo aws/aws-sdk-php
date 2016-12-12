@@ -43,7 +43,7 @@ class RedirectMapBuilder
             foreach ($service->api->getOperations() as $key => $definition) {
                 // Skip rewrite rule if service doesn't has a uid in metadata
                 if ($service->uid) {
-                    $entry = $reWriteRulePrefix . $service->uid . '/' . $key;
+                    $entry = $reWriteRulePrefix . $service->uid . '/' . $key . '$';
                     $entry .= $docPathPrefix . 'api-' . $service->slug . ".html#" . strtolower($key);
 
                     $redirectEntry []= $entry . $flags;
