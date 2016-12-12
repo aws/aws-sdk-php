@@ -258,20 +258,6 @@ EOT;
         $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $p);
     }
 
-    public function testCreatesFromRemoteCredentialsProvider()
-    {
-        $p = CredentialProvider::remoteCredentialsProvider();
-        $this->assertInstanceOf('Aws\Credentials\InstanceProfileProvider', $p);
-
-        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=');
-        $p = CredentialProvider::remoteCredentialsProvider();
-        $this->assertInstanceOf('Aws\Credentials\InstanceProfileProvider', $p);
-
-        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
-        $p = CredentialProvider::remoteCredentialsProvider();
-        $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $p);
-    }
-
     public function testGetsHomeDirectoryForWindowsUsers()
     {
         putenv('HOME=');
@@ -315,19 +301,31 @@ EOT;
     public function testCachesAsPartOfDefaultChain()
     {
         $cache = new LruArrayCache;
-        $cache->set('aws_cached_credentials', new Credentials(
-            'foo',
-            'bar'
+        $cache->set('aws_cached_instance_credentials', new Credentials(
+            'instance_foo',
+            'instance_bar'
         ));
+        $cache->set('aws_cached_ecs_credentials', new Credentials(
+            'ecs_foo',
+            'ecs_bar'
+        ));
+
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
         $credentials = call_user_func(CredentialProvider::defaultProvider([
             'credentials' => $cache,
         ]))
             ->wait();
+        $this->assertEquals('instance_foo', $credentials->getAccessKeyId());
+        $this->assertEquals('instance_bar', $credentials->getSecretKey());
 
-        $this->assertEquals('foo', $credentials->getAccessKeyId());
-        $this->assertEquals('bar', $credentials->getSecretKey());
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
+        $credentials = call_user_func(CredentialProvider::defaultProvider([
+            'credentials' => $cache,
+        ]))
+            ->wait();
+        $this->assertEquals('ecs_foo', $credentials->getAccessKeyId());
+        $this->assertEquals('ecs_bar', $credentials->getSecretKey());
     }
 
     public function testChainsCredentials()
