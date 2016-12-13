@@ -67,10 +67,11 @@ class CredentialProvider
      */
     public static function defaultProvider(array $config = [])
     {
-        $localCredentialProviders = [self::env(), self::ini(), self::ini(
-            'profile default',
-            self::getHomeDir() . '/.aws/config'
-        )];
+        $localCredentialProviders = [
+            self::env(),
+            self::ini(),
+            self::ini('profile default', self::getHomeDir() . '/.aws/config')
+        ];
         $remoteCredentialProviders = self::remoteCredentialProviders($config);
 
         return self::memoize(
