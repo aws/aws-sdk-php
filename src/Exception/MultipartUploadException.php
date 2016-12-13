@@ -1,12 +1,15 @@
 <?php
 namespace Aws\Exception;
 
+use Aws\CommandInterface;
 use Aws\Multipart\UploadState;
 
 class MultipartUploadException extends \RuntimeException
 {
     /** @var UploadState State of the erroneous transfer */
     private $state;
+    /** @var string File path of transfer object */
+    private $filePath;
 
     /**
      * @param UploadState      $state Upload state at time of the exception.
@@ -21,8 +24,10 @@ class MultipartUploadException extends \RuntimeException
             /** @var $error AwsException */
             foreach ($prev as $part => $error) {
                 $msg .= "- Part {$part}: " . $error->getMessage(). "\n";
+                $this->collectPathInfo($error->getCommand());
             }
         } elseif ($prev instanceof AwsException) {
+            $this->collectPathInfo($prev->getCommand());
             switch ($prev->getCommand()->getName()) {
                 case 'CreateMultipartUpload':
                 case 'InitiateMultipartUpload':
@@ -54,5 +59,27 @@ class MultipartUploadException extends \RuntimeException
     public function getState()
     {
         return $this->state;
+    }
+
+    /**
+     * Get file path of the transfer
+     *
+     * @return array
+     */
+    public function getFilePaths()
+    {
+        return $this->filePath;
+    }
+
+    /**
+     * Construct file path
+     *
+     * @param CommandInterface $cmd
+     */
+    private function collectPathInfo(CommandInterface $cmd)
+    {
+        if (empty($this->filePath) && isset($cmd['Bucket']) && isset($cmd['Key'])) {
+            $this->filePath = $cmd['Bucket'] . '/' . $cmd['Key'];
+        }
     }
 }
