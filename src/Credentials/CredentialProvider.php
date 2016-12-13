@@ -60,35 +60,23 @@ class CredentialProvider
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided credentials.
      *
-     * @param array $config Optional array of instance profile credentials
+     * @param array $config Optional array of ecs/instance profile credentials
      *                      provider options.
+     *
      * @return callable
      */
     public static function defaultProvider(array $config = [])
     {
-        $instanceProfileProvider = self::instanceProfile($config);
-        $ecsCredentialProvider = self::ecsCredentials($config);
+        $localCredentialProviders = [self::env(), self::ini(), self::ini(
+            'profile default',
+            self::getHomeDir() . '/.aws/config'
+        )];
+        $remoteCredentialProviders = self::remoteCredentialProviders($config);
 
-        if (isset($config['credentials'])
-            && $config['credentials'] instanceof CacheInterface
-        ) {
-            $instanceProfileProvider = self::cache(
-                $instanceProfileProvider,
-                $config['credentials']
-            );
-        }
-
-        $defaultConfigFileName = self::getHomeDir() . '/.aws/config';
         return self::memoize(
-            self::chain(
-                self::env(),
-                self::ini(),
-                self::ini(
-                    'profile default',
-                    $defaultConfigFileName
-                ),
-                $ecsCredentialProvider,
-                $instanceProfileProvider
+            call_user_func_array(
+                'self::chain',
+                array_merge($localCredentialProviders, $remoteCredentialProviders)
             )
         );
     }
@@ -332,5 +320,61 @@ class CredentialProvider
                 )
             );
         };
+    }
+
+    /**
+     * Remote credential providers returns a list of credentials providers
+     * for the remote endpoints such as EC2 or ECS Roles.
+     *
+     * @param array $config Array of configuration data.
+     *
+     * @return array
+     * @see Aws\Credentials\InstanceProfileProvider for $config details.
+     * @see Aws\Credentials\EcsCredentialProvider for $config details.
+     */
+    private static function remoteCredentialProviders(array $config = [])
+    {
+        if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
+            $providers['ecs'] = self::ecsCredentials($config);
+        }
+        $providers['instance'] = self::instanceProfile($config);
+
+        if (isset($config['credentials'])
+            && $config['credentials'] instanceof CacheInterface
+        ) {
+            foreach ($providers as $key => $provider) {
+                $providers[$key] = self::cache(
+                    $provider,
+                    $config['credentials'],
+                    'aws_cached_' . $key . '_credentials'
+                );
+            }
+        }
+
+        return $providers;
+    }
+
+    /**
+     * Gets the environment's HOME directory if available.
+     *
+     * @return null|string
+     */
+    private static function getHomeDir()
+    {
+        // On Linux/Unix-like systems, use the HOME environment variable
+        if ($homeDir = getenv('HOME')) {
+            return $homeDir;
+        }
+
+        // Get the HOMEDRIVE and HOMEPATH values for Windows hosts
+        $homeDrive = getenv('HOMEDRIVE');
+        $homePath = getenv('HOMEPATH');
+
+        return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
+    }
+
+    private static function reject($msg)
+    {
+        return new Promise\RejectedPromise(new CredentialsException($msg));
     }
 }

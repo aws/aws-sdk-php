@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.20.5 - 2016-12-12
+
+* `Aws\Credentials` - Fix `EcsCredential` latency issue
+
 ## 3.20.4 - 2016-12-08
 
 * `Aws\Cloudfront` - Adding lambda function associations to cache behaviors
