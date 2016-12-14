@@ -206,7 +206,8 @@ class SignatureV4 implements SignatureInterface
             'proxy-authorization' => true,
             'from'                => true,
             'referer'             => true,
-            'user-agent'          => true
+            'user-agent'          => true,
+            'x-amzn-trace-id'     => true
         ];
 
         // Normalize the path as required by SigV4
