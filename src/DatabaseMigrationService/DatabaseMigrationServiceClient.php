@@ -59,6 +59,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise modifyReplicationInstanceAsync(array $args = [])
  * @method \Aws\Result modifyReplicationSubnetGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyReplicationSubnetGroupAsync(array $args = [])
+ * @method \Aws\Result modifyReplicationTask(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise modifyReplicationTaskAsync(array $args = [])
  * @method \Aws\Result refreshSchemas(array $args = [])
  * @method \GuzzleHttp\Promise\Promise refreshSchemasAsync(array $args = [])
  * @method \Aws\Result removeTagsFromResource(array $args = [])

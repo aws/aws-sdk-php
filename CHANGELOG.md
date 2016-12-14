@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - Added support for new service `AWS Batch`
+* `Aws\CloudWatchLogs` - Added support for associating LogGroups with `AWSTagris` tags
+* `Aws\Dms` - Added support for SSL enabled Oracle endpoints
+* `Aws\MarketplaceCommerceAnalytics` -  Add new enum to `DataSetType`
+
 ## 3.20.5 - 2016-12-12
 
 * `Aws\Credentials` - Fix `EcsCredential` latency issue
