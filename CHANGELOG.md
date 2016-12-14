@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.20.6 - 2016-12-14
 
 * `Aws\Batch` - Added support for new service `AWS Batch`
 * `Aws\CloudWatchLogs` - Added support for associating LogGroups with `AWSTagris` tags
