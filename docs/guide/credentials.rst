@@ -383,7 +383,7 @@ defaultProvider provider
 credential provider. This provider is used if you omit a ``credentials`` option
 when creating a client. It first attempts to load credentials from environment
 variables, then from an ini file (``.aws/credentials`` file first, followed by ``.aws/config`` file),
-then from an instance profile(``EcsCredentials`` first then ``Ec2`` metadata).
+then from an instance profile (``EcsCredentials`` first, followed by ``Ec2`` metadata).
 
 .. note::
 
