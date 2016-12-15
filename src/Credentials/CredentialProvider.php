@@ -47,14 +47,12 @@ class CredentialProvider
     const ENV_SESSION = 'AWS_SESSION_TOKEN';
     const ENV_PROFILE = 'AWS_PROFILE';
 
-    use CredentialTrait;
-
     /**
      * Create a default credential provider that first checks for environment
      * variables, then checks for the "default" profile in ~/.aws/credentials,
-     * then checks for "profile default" profile in ~/.aws/config,
-     * then tries to make a GET Request to fetch credentials if
-     * Ecs environment variable is presented, and finally
+     * then checks for "profile default" profile in ~/.aws/config (which is
+     * the default profile of AWS CLI), then tries to make a GET Request to
+     * fetch credentials if Ecs environment variable is presented, and finally
      * checks for EC2 instance profile credentials.
      *
      * This provider is automatically wrapped in a memoize function that caches
@@ -279,12 +277,11 @@ class CredentialProvider
      * Credentials provider that creates credentials using an ini file stored
      * in the current user's home directory.
      *
-     * @param string|null $profile      Profile to use. If not specified will use
-     *                                  the "default" profile.
-     * @param string|null $filename     If provided, uses a custom filename rather
-     *                                  than looking in the home directory.
-     *                                  Default:
-     *                                  - 'default' in credential file
+     * @param string|null $profile  Profile to use. If not specified will use
+     *                              the "default" profile in "~/.aws/credentials".
+     * @param string|null $filename If provided, uses a custom filename rather
+     *                              than looking in the home directory.
+     *
      * @return callable
      */
     public static function ini($profile = null, $filename = null)
@@ -293,31 +290,35 @@ class CredentialProvider
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename) {
-            $msg = self::checkProfile($profile, $filename);
-            if ($msg) {
-                return self::reject($msg);
+            if (!is_readable($filename)) {
+                return self::reject("Cannot read credentials from $filename");
             }
-
-            $data = self::getProfileData($profile, $filename);
-            if (!isset($data['aws_access_key_id'])
-                || !isset($data['aws_secret_access_key'])
+            $data = parse_ini_file($filename, true);
+            if ($data === false) {
+                return self::reject("Invalid credentials file: $filename");
+            }
+            if (!isset($data[$profile])) {
+                return self::reject("'$profile' not found in credentials file");
+            }
+            if (!isset($data[$profile]['aws_access_key_id'])
+                || !isset($data[$profile]['aws_secret_access_key'])
             ) {
                 return self::reject("No credentials present in INI profile "
                     . "'$profile' ($filename)");
             }
 
-            if (empty($data['aws_session_token'])) {
-                $data['aws_session_token']
-                    = isset($data['aws_security_token'])
-                        ? $data['aws_security_token']
-                        : null;
+            if (empty($data[$profile]['aws_session_token'])) {
+                $data[$profile]['aws_session_token']
+                    = isset($data[$profile]['aws_security_token'])
+                    ? $data[$profile]['aws_security_token']
+                    : null;
             }
 
             return Promise\promise_for(
                 new Credentials(
-                    $data['aws_access_key_id'],
-                    $data['aws_secret_access_key'],
-                    $data['aws_session_token']
+                    $data[$profile]['aws_access_key_id'],
+                    $data[$profile]['aws_secret_access_key'],
+                    $data[$profile]['aws_session_token']
                 )
             );
         };

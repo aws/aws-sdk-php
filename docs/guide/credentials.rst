@@ -91,7 +91,7 @@ provide credentials to EC2 instances.
 
 Instead of creating and distributing your AWS credentials to the containers or
 using the EC2 instance’s role, you can associate an IAM role with an ECS task definition or
-``RunTask`` API operation.
+``RunTask`` `API <http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-ecs-2014-11-13.html#runtask>`_ operation.
 
 .. note::
 
@@ -109,8 +109,8 @@ Using Assume Role Credentials
 -----------------------------
 
 Using ``Aws\Credentials\AssumeRoleCredentialProvider`` to create credentials by assuming a role,
-you would need to provide ``'region'`` information, ``'credentials'`` for a ``STSClient`` and
-``'assume_role_params'`` information. Or you could simply pass in ``'client'`` parameter with a ``STSClient``.
+you would need to provide ``'region'`` information, ``'credentials'`` for a ``StsClient`` and
+``'assume_role_params'`` information. Or you could simply pass in ``'client'`` parameter with a ``StsClient``.
 
 For more information regarding ``'assume_role_params'``, see `AssumeRole <http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-sts-2011-06-15.html#assumerole>`_.
 
@@ -353,6 +353,10 @@ credentials from Amazon EC2 instance profiles.
         'credentials' => $memoizedProvider
     ]);
 
+
+ecsCredential provider
+~~~~~~~~~~~~~~~~~~~~~~
+
 ``Aws\Credentials\CredentialProvider::ecsCredentials`` attempts to load
 credentials by a ``GET`` request, whose uri is specified by environment variable
 ``AWS_CONTAINER_CREDENTIALS_RELATIVE_URI`` in the container.
@@ -390,6 +394,12 @@ assumeRole provider
 ``Aws\Credentials\CredentialProvider::assumeRole`` is a credential provider
 that creates credentials using assume role parameters and ``StsClient`` information.
 
+.. note::
+
+To avoid unnecessarily fetching STS credentials on every API operation, you can use
+ ``memoize`` function that handles automatically refreshing the credentials when they expire.
+See details with following example code.
+
 .. code-block:: php
 
     use Aws\Credentials\CredentialProvider;
@@ -405,8 +415,8 @@ that creates credentials using assume role parameters and ``StsClient`` informat
         ]
     ]);
 
-    // Cache the results in a memoize function to avoid loading and parsing
-    // the ini file on every API operation.
+    // To avoid unnecessarily fetching STS credentials on every API operation,
+    // memoize function will handle automatically refreshing the credentials when they expire
     $provider = CredentialProvider::memoize($provider);
 
     $client = new S3Client([
