@@ -63,10 +63,13 @@ class MultipartUploadException extends \RuntimeException
 
     /**
      * Get file path of the transfer
+     * Note:
+     * - returns null when the bucket and key could not be
+     *   ascertained from the exception
      *
-     * @return array
+     * @return string|null
      */
-    public function getFilePaths()
+    public function getFilePath()
     {
         return $this->filePath;
     }
