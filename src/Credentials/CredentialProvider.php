@@ -310,8 +310,8 @@ class CredentialProvider
             if (empty($data[$profile]['aws_session_token'])) {
                 $data[$profile]['aws_session_token']
                     = isset($data[$profile]['aws_security_token'])
-                    ? $data[$profile]['aws_security_token']
-                    : null;
+                        ? $data[$profile]['aws_security_token']
+                        : null;
             }
 
             return Promise\promise_for(
