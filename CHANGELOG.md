@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.20.7 - 2016-12-15
 
 * `Aws\CognitoIdentityProvider` - Adding support for fine-grained role-based access control (RBAC)
 * `Aws\Ssm` - Adding support for access to the Patch Baseline and Patch Compliance APIs
