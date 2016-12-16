@@ -109,28 +109,17 @@ Using Assume Role Credentials
 -----------------------------
 
 Using ``Aws\Credentials\AssumeRoleCredentialProvider`` to create credentials by assuming a role,
-you would need to provide ``'region'`` information, ``'credentials'`` for a ``StsClient`` and
-``'assume_role_params'`` information. Or you could simply pass in ``'client'`` parameter with a ``StsClient``.
+you would need to provide ``'client'`` information with a ``StsClient`` object and
+``'assume_role_params'`` details.
 
 For more information regarding ``'assume_role_params'``, see `AssumeRole <http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-sts-2011-06-15.html#assumerole>`_.
 
 .. code-block:: php
 
     $assumeRoleCredentials = new AssumeRoleCredentialProvider([
-        'region' => 'us-west-2',
-        'credentials' => CredentialProvider::ini(),
-        'assume_role_param' => [
-            'RoleArn' => '<string>', // REQUIRED
-            'RoleSessionName' => '<string>', // REQUIRED
-            ...
-        ]
-    ]);
-
-    // Or using the 'client' parameter instead
-    $assumeRoleCredentials = new AssumeRoleCredentialProvider([
         'client' => new StsClient([
             'region' => 'us-west-2',
-            'version' => 'latest'
+            'version' => '2011-06-15'
         ]),
         'assume_role_param' => [
             'RoleArn' => '<string>', // REQUIRED
