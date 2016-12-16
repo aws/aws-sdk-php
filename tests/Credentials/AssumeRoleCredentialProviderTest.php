@@ -3,6 +3,7 @@ namespace Aws\Test\Credentials;
 
 use Aws\Credentials\AssumeRoleCredentialProvider;
 use Aws\Credentials\CredentialProvider;
+use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
 use Aws\Exception\CredentialsException;
 use Aws\Result;
@@ -42,9 +43,12 @@ class AssumeRoleCredentialProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function insufficientArguments()
     {
-        $region = ['region' => 'us-west-2'];
-        $source_profile = [
-            'credentials' => CredentialProvider::ini('test')
+        $client = [
+            'client' => new StsClient([
+                'region' => 'us-west-2',
+                'version' => 'latest',
+                'credentials' => new Credentials('foo', 'bar')
+            ])
         ];
         $params = [
             'assume_role_params' => [
@@ -54,9 +58,8 @@ class AssumeRoleCredentialProviderTest extends \PHPUnit_Framework_TestCase
         ];
 
         return [
-            [ $region + $params ],
-            [ $source_profile + $params ],
-            [ $region + $source_profile ],
+            [ $client ],
+            [ $params ],
         ];
     }
 
@@ -74,8 +77,6 @@ class AssumeRoleCredentialProviderTest extends \PHPUnit_Framework_TestCase
                 'Arn' => self::SAMPLE_ROLE_ARN . "/test_session"
             ]
         ];
-        $args['region'] = 'us-west-2';
-        $args['credentials'] = CredentialProvider::ini('default');
 
         $sts = $this->getTestClient('Sts');
         $sts->getHandlerList()->setHandler(
@@ -104,12 +105,10 @@ class AssumeRoleCredentialProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testThrowsExceptionWhenRetrievingAssumeRoleCredentialFails()
     {
-        $args['region'] = 'us-west-2';
-        $args['credentials'] = CredentialProvider::ini('default');
-
         $sts = new StsClient([
             'region' => 'us-west-2',
             'version' => 'latest',
+            'credentials' => new Credentials('foo', 'bar'),
             'http_handler' => function () {
                 return new RejectedPromise([
                     'connection_error' => false,

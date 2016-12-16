@@ -27,12 +27,7 @@ class AssumeRoleCredentialProvider
 
     /**
      * The constructor requires following configure parameters:
-     *  - client: a customized Sts Client
-     *
-     *  paramters used to construct a default StsClient(which will use the latest version):
-     *    - region: the StsClient region for assume role
-     *    - credentials: a CredentialProvider used to retrieve assume role
-     *
+     *  - client: a StsClient
      *  - assume_role_params: Parameters used to make assumeRole call
      *
      * @param array $config Configuration options
@@ -44,25 +39,11 @@ class AssumeRoleCredentialProvider
             throw new \InvalidArgumentException(self::ERROR_MSG . "'assume_role_params'.");
         }
 
-        $defaultClientArgs = [];
         if (!isset($config['client'])) {
-            if (!isset($config['region'])) {
-                throw new \InvalidArgumentException(self::ERROR_MSG . "'region'.");
-            }
-            if (!isset($config['credentials'])) {
-                throw new \InvalidArgumentException(self::ERROR_MSG . "'credentials'.");
-            }
-
-            $defaultClientArgs = [
-                'region' => $config['region'],
-                'version' => 'latest',
-                'credentials' => $config['credentials'],
-            ];
+            throw new \InvalidArgumentException(self::ERROR_MSG . "'client'.");
         }
 
-        $this->client = isset($config['client'])
-            ? $config['client']
-            : new StsClient($defaultClientArgs);
+        $this->client = $config['client'];
         $this->assumeRoleParams = $config['assume_role_params'];
     }
 

@@ -65,11 +65,7 @@ class CredentialProvider
      */
     public static function defaultProvider(array $config = [])
     {
-        $localCredentialProviders = [
-            self::env(),
-            self::ini(),
-            self::ini('profile default', self::getHomeDir() . '/.aws/config')
-        ];
+        $localCredentialProviders = self::localCredentialProviders();
         $remoteCredentialProviders = self::remoteCredentialProviders($config);
 
         return self::memoize(
@@ -322,6 +318,24 @@ class CredentialProvider
                 )
             );
         };
+    }
+
+    /**
+     * Local credential providers returns a list of local credential providers
+     * in following order:
+     *  - credentials from environment variables
+     *  - 'default' profile in '.aws/credentials' file
+     *  - 'profile default' profile in '.aws/config' file
+     *
+     * @return array
+     */
+    private static function localCredentialProviders()
+    {
+        return [
+            self::env(),
+            self::ini(),
+            self::ini('profile default', self::getHomeDir() . '/.aws/config')
+        ];
     }
 
     /**

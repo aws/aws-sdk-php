@@ -354,7 +354,7 @@ credentials from Amazon EC2 instance profiles.
     ]);
 
 
-ecsCredential provider
+ecsCredentials provider
 ~~~~~~~~~~~~~~~~~~~~~~
 
 ``Aws\Credentials\CredentialProvider::ecsCredentials`` attempts to load
