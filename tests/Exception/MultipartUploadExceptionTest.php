@@ -78,6 +78,6 @@ MSG;
 
         $exception = new MultipartUploadException($state, $failed);
         $expected = 'foo/bar';
-        $this->assertEquals($expected, $exception->getFilePaths());
+        $this->assertEquals($expected, $exception->getFilePath());
     }
 }
