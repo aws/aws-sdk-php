@@ -81,7 +81,7 @@ class MultipartUploadException extends \RuntimeException
      */
     private function collectPathInfo(CommandInterface $cmd)
     {
-        if (empty($this->filePath) && isset($cmd['Bucket']) && isset($cmd['Key'])) {
+        if ($this->filePath === null && isset($cmd['Bucket']) && isset($cmd['Key'])) {
             $this->filePath = $cmd['Bucket'] . '/' . $cmd['Key'];
         }
     }
