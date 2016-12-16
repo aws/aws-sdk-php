@@ -65,7 +65,7 @@ class MultipartUploadException extends \RuntimeException
      * Get file path of the transfer
      * Note:
      * - returns null when the bucket and key could not be
-     *   ascertained from the exception
+     *   ascertained from the exception. (e.g., Glacier)
      *
      * @return string|null
      */
