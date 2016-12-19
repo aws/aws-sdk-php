@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.20.8 - 2016-12-19
 
 * `Aws\CognitoIdentity` - Added Groups to Cognito user pools. 
 * `Aws\DiscoveryService` - Added new APIs to group discovered servers into Applications with get summary and neighbors. 
