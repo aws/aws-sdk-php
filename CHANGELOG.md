@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentity` - Added Groups to Cognito user pools. 
+* `Aws\DiscoveryService` - Added new APIs to group discovered servers into Applications with get summary and neighbors. 
+  Includes additional filters for `ListConfigurations` and `DescribeAgents` API.
+
 ## 3.20.7 - 2016-12-15
 
 * `Aws\CognitoIdentityProvider` - Adding support for fine-grained role-based access control (RBAC)
