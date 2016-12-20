@@ -66,10 +66,15 @@ class S3SignatureV2 extends SignatureV2
     ) {
         $parsed = $this->createPresignedRequest($request, $credentials);
         //$params = Psr7\parse_query($request->getBody());
-
-        //case for gcs
+        //Support Google Cloud Storage
         if($parsed['uri']->getHost() === 'storage.googleapis.com'){
             $parsed['query']['GoogleAccessId'] = $credentials->getAccessKeyId();
+            unset($parsed['query']['AWSAccessKeyId']);
+            if (!empty($parsed['query']['x-amz-copy-source'][0])){
+                $parsed['query']['x-goog-copy-source'][0]
+                = $parsed['query']['x-amz-copy-source'][0];
+                unset($parsed['query']['x-amz-copy-source']);
+            }
         }else{
             $parsed['query']['AWSAccessKeyId'] = $credentials->getAccessKeyId();
         }
