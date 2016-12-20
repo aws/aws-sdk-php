@@ -65,8 +65,14 @@ class S3SignatureV2 extends SignatureV2
         $expires
     ) {
         $parsed = $this->createPresignedRequest($request, $credentials);
-        $params = Psr7\parse_query($request->getBody());
+        //$params = Psr7\parse_query($request->getBody());
 
+        //case for gcs
+        if($parsed['uri']->getHost() === 'storage.googleapis.com'){
+            $parsed['query']['GoogleAccessId'] = $credentials->getAccessKeyId();
+        }else{
+            $parsed['query']['AWSAccessKeyId'] = $credentials->getAccessKeyId();
+        }
         $parsed['query']['AWSAccessKeyId'] = $credentials->getAccessKeyId();
         $parsed['query']['SignatureMethod'] = 'HmacSHA1';
         $parsed['query']['SignatureVersion'] = '2';
