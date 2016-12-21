@@ -2,7 +2,6 @@
 
 ## 3.20.9 - 2016-12-20
 
-* `Aws\Ecr` - Added implementation for Docker Image Manifest V2, Schema 2
 * `Aws\Firehose` - Added Support for Processing Feature
 * `Aws\Route53` - Enum updates for eu-west-2 and ca-central-1
 * `Aws\StorageGateway` - Added new storage type for files to complement block and tape
