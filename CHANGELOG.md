@@ -1,9 +1,14 @@
 # CHANGELOG
 
+## 3.20.11 - 2016-12-22
+* `Aws\ApiGateway` - Added support for generating SDKs in more languages.
+* `Aws\ElasticBeanstalk` - Added Support for Resource Lifecycle Feature
+* `Aws\Iam`- Added service-specific credentials to IAM service to make it easier to onboard CodeCommit customers
+
 ## 3.20.10 - 2016-12-21
 
-* `Aws\Rds` - Added support for Cross Region Encrypted Snapshot Copying (CopyDBSnapshot) 
 * `Aws\Ecr` - Added implementation for Docker Image Manifest V2, Schema 2
+* `Aws\Rds` - Added support for Cross Region Encrypted Snapshot Copying (CopyDBSnapshot) 
 
 ## 3.20.9 - 2016-12-20
 

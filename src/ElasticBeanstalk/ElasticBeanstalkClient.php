@@ -70,6 +70,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise terminateEnvironmentAsync(array $args = [])
  * @method \Aws\Result updateApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateApplicationAsync(array $args = [])
+ * @method \Aws\Result updateApplicationResourceLifecycle(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateApplicationResourceLifecycleAsync(array $args = [])
  * @method \Aws\Result updateApplicationVersion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateApplicationVersionAsync(array $args = [])
  * @method \Aws\Result updateConfigurationTemplate(array $args = [])
