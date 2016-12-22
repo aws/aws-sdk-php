@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.20.10 - 2016-12-21
+
+* `Aws\Rds` - Added support for Cross Region Encrypted Snapshot Copying (CopyDBSnapshot) 
+* `Aws\Ecr` - Added implementation for Docker Image Manifest V2, Schema 2
+
 ## 3.20.9 - 2016-12-20
 
 * `Aws\Firehose` - Added Support for Processing Feature

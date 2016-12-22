@@ -6,7 +6,7 @@ use Aws\Api\Service;
 use Aws\Api\DocModel;
 use Aws\Api\ApiProvider;
 use Aws\IdempotencyTokenMiddleware;
-
+use Aws\PresignUrlMiddleware;
 /**
  * Client used to interact with Amazon EC2.
  *
@@ -492,9 +492,16 @@ class Ec2Client extends AwsClient
     {
         $args['with_resolved'] = function (array $args) {
             $this->getHandlerList()->appendInit(
-                CopySnapshotMiddleware::wrap(
+                PresignUrlMiddleware::wrap(
                     $this,
-                    $args['endpoint_provider']
+                    $args['endpoint_provider'],
+                    [
+                        'operations' => [
+                            'CopySnapshot',
+                        ],
+                        'service' => 'ec2',
+                        'presign_param' => 'PresignedUrl',
+                    ]
                 ),
                 'ec2.copy_snapshot'
             );

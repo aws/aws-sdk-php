@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Ec2;
+namespace Aws;
 
 use Aws\AwsClientInterface;
 use Aws\Signature\SignatureV4;
@@ -9,23 +9,22 @@ use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * @internal Adds computed values to the CopySnapshot operation.
+ * @internal Adds computed values to service operations that need presigned url.
  */
-class CopySnapshotMiddleware
+class PresignUrlMiddleware
 {
     private $client;
     private $endpointProvider;
     private $nextHandler;
-
-    public static function wrap(AwsClientInterface $client, callable $endpointProvider)
-    {
-        return function (callable $handler) use ($endpointProvider, $client) {
-            $f = new CopySnapshotMiddleware($endpointProvider, $client, $handler);
-            return $f;
-        };
-    }
+    /** @var array names of operations that require presign url */
+    private $commandPool;
+    /** @var string */
+    private $serviceName;
+    /** @var string */
+    private $presignParam;
 
     public function __construct(
+        array $options,
         callable $endpointProvider,
         AwsClientInterface $client,
         callable $nextHandler
@@ -33,14 +32,28 @@ class CopySnapshotMiddleware
         $this->endpointProvider = $endpointProvider;
         $this->client = $client;
         $this->nextHandler = $nextHandler;
+        $this->commandPool = $options['operations'];
+        $this->serviceName = $options['service'];
+        $this->presignParam = $options['presign_param'];
+    }
+
+    public static function wrap(
+        AwsClientInterface $client,
+        callable $endpointProvider,
+        array $options = []
+    ) {
+        return function (callable $handler) use ($endpointProvider, $client, $options) {
+            $f = new PreSignUrlMiddleware($options, $endpointProvider, $client, $handler);
+            return $f;
+        };
     }
 
     public function __invoke(CommandInterface $cmd, RequestInterface $request = null)
     {
-        if ($cmd->getName() == 'CopySnapshot'
-            && (!isset($cmd->__skipCopySnapshot))
+        if (in_array($cmd->getName(), $this->commandPool)
+            && (!isset($cmd->{'__skip' . $cmd->getName()}))
         ) {
-            $cmd['PresignedUrl'] = $this->createPresignedUrl($this->client, $cmd);
+            $cmd[$this->presignParam] = $this->createPresignedUrl($this->client, $cmd);
             $cmd['DestinationRegion'] = $this->client->getRegion();
         }
 
@@ -52,22 +65,24 @@ class CopySnapshotMiddleware
         AwsClientInterface $client,
         CommandInterface $cmd
     ) {
-        $newCmd = $client->getCommand('CopySnapshot', $cmd->toArray());
+        $cmdName = $cmd->getName();
+        $newCmd = $client->getCommand($cmdName, $cmd->toArray());
         // Avoid infinite recursion by flagging the new command.
-        $newCmd->__skipCopySnapshot = true;
-        // Serialize a request for the CopySnapshot operation.
+        $newCmd->{'__skip' . $cmdName} = true;
+
+        // Serialize a request for the operation.
         $request = \Aws\serialize($newCmd);
         // Create the new endpoint for the target endpoint.
         $endpoint = EndpointProvider::resolve($this->endpointProvider, [
             'region'  => $cmd['SourceRegion'],
-            'service' => 'ec2'
+            'service' => $this->serviceName,
         ])['endpoint'];
 
         // Set the request to hit the target endpoint.
         $uri = $request->getUri()->withHost((new Uri($endpoint))->getHost());
         $request = $request->withUri($uri);
         // Create a presigned URL for our generated request.
-        $signer = new SignatureV4('ec2', $cmd['SourceRegion']);
+        $signer = new SignatureV4($this->serviceName, $cmd['SourceRegion']);
 
         return (string) $signer->presign(
             SignatureV4::convertPostToGet($request),
