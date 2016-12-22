@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## 3.20.11 - 2016-12-22
+
 * `Aws\ApiGateway` - Added support for generating SDKs in more languages.
 * `Aws\ElasticBeanstalk` - Added Support for Resource Lifecycle Feature
 * `Aws\Iam`- Added service-specific credentials to IAM service to make it easier to onboard CodeCommit customers
