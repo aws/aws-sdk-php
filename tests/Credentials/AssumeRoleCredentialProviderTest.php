@@ -101,7 +101,7 @@ class AssumeRoleCredentialProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error in retrieving assume role credentials:
+     * @expectedExceptionMessage Error in retrieving assume role credentials.
      */
     public function testThrowsExceptionWhenRetrievingAssumeRoleCredentialFails()
     {

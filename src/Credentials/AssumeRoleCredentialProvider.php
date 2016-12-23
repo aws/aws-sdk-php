@@ -58,10 +58,11 @@ class AssumeRoleCredentialProvider
         return $client->assumeRoleAsync($this->assumeRoleParams)
             ->then(function (Result $result) {
                 return $this->client->createCredentials($result);
-            })->otherwise(function (AwsException $exception) {
-                $reason = $exception->getMessage();
+            })->otherwise(function (\RuntimeException $exception) {
                 throw new CredentialsException(
-                    "Error in retrieving assume role credentials: $reason."
+                    "Error in retrieving assume role credentials.",
+                    0,
+                    $exception
                 );
             });
     }
