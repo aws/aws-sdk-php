@@ -78,7 +78,6 @@ class S3SignatureV2 extends SignatureV2
         }else{
             $parsed['query']['AWSAccessKeyId'] = $credentials->getAccessKeyId();
         }
-        $parsed['query']['AWSAccessKeyId'] = $credentials->getAccessKeyId();
         $parsed['query']['SignatureMethod'] = 'HmacSHA1';
         $parsed['query']['SignatureVersion'] = '2';
         $parsed['query']['Timestamp'] = gmdate('c');
