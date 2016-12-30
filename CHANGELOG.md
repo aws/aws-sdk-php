@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.20.12 - 2016-12-29
+
+* `Aws\CodeDeploy` - Added support for IAM Session Arns in addition to IAM User Arns for on premise host authentication.
+* `Aws\Ecs` - Added the ability to customize the placement of tasks on container instances.
+
 ## 3.20.11 - 2016-12-22
 
 * `Aws\ApiGateway` - Added support for generating SDKs in more languages.
