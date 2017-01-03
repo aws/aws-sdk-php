@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Exception;
 
-use Aws\CommandInterface;
 use Aws\Multipart\UploadState;
 
 class MultipartUploadException extends \RuntimeException
