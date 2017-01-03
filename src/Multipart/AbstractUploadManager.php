@@ -13,6 +13,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\RequestInterface;
+use Aws\S3\Exception\S3MultipartUploadException;
 
 /**
  * Encapsulates the execution of a multipart upload to S3 or Glacier.
@@ -92,8 +93,11 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
         if ($this->promise) {
             return $this->promise;
         }
+        $exception = $this->client->getApi()->getServiceName() === 's3'
+            ? 'Aws\S3\Exception\S3MultipartUploadException'
+            : 'Aws\Exception\MultipartUploadException';
 
-        return $this->promise = Promise\coroutine(function () {
+        return $this->promise = Promise\coroutine(function () use ($exception) {
             // Initiate the upload.
             if ($this->state->isCompleted()) {
                 throw new \LogicException('This multipart upload has already '
@@ -123,16 +127,16 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
             // Execute the pool of commands concurrently, and process errors.
             yield $commands->promise();
             if ($errors) {
-                throw new MultipartUploadException($this->state, $errors);
+                throw new $exception($this->state, $errors);
             }
 
             // Complete the multipart upload.
             yield $this->execCommand('complete', $this->getCompleteParams());
             $this->state->setStatus(UploadState::COMPLETED);
-        })->otherwise(function (\Exception $e) {
+        })->otherwise(function (\Exception $e) use ($exception) {
             // Throw errors from the operations as a specific Multipart error.
             if ($e instanceof AwsException) {
-                $e = new MultipartUploadException($this->state, $e);
+                $e = new $exception($this->state, $e);
             }
             throw $e;
         });

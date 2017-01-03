@@ -44,7 +44,7 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Aws\Exception\MultipartUploadException
+     * @expectedException \Aws\S3\Exception\S3MultipartUploadException
      */
     public function testThrowsExceptionOnBadInitiateRequest()
     {
@@ -78,7 +78,7 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Aws\Exception\MultipartUploadException
+     * @expectedException \Aws\S3\Exception\S3MultipartUploadException
      */
     public function testThrowsExceptionOnBadCompleteRequest()
     {

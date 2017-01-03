@@ -60,24 +60,4 @@ MSG;
 
         $this->assertEquals($expected, $exception->getMessage());
     }
-
-    public function testCanProviderFailedTransferFilePathInfo()
-    {
-        $state = new UploadState([]);
-        $failed = [
-            1 => new AwsException('Bad digest.', new Command('UploadPart', [
-                'Bucket' => 'foo',
-                'Key' => 'bar'
-            ])),
-            5 => new AwsException('Missing header.', new Command('UploadPart', [
-                'Bucket' => 'foo',
-                'Key' => 'bar'
-            ])),
-            8 => new AwsException('Needs more love.', new Command('UploadPart')),
-        ];
-
-        $exception = new MultipartUploadException($state, $failed);
-        $expected = 'foo/bar';
-        $this->assertEquals($expected, $exception->getFilePath());
-    }
 }
