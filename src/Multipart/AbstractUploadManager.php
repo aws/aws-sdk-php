@@ -13,7 +13,6 @@ use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\RequestInterface;
-use Aws\S3\Exception\S3MultipartUploadException;
 
 /**
  * Encapsulates the execution of a multipart upload to S3 or Glacier.
@@ -49,16 +48,21 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
     /** @var UploadState State used to manage the upload. */
     protected $state;
 
+    /** @var string Exception type thrown for the upload */
+    protected $exception;
+
     /**
      * @param Client $client
+     * @param string $exception
      * @param array  $config
      */
-    public function __construct(Client $client, array $config = [])
+    public function __construct(Client $client, array $config = [], $exception = null)
     {
         $this->client = $client;
         $this->info = $this->loadUploadWorkflowInfo();
         $this->config = $config + self::$defaultConfig;
         $this->state = $this->determineState();
+        $this->exception = $exception ?: 'Aws\Exception\MultipartUploadException';
     }
 
     /**
@@ -93,11 +97,8 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
         if ($this->promise) {
             return $this->promise;
         }
-        $exception = $this->client->getApi()->getServiceName() === 's3'
-            ? 'Aws\S3\Exception\S3MultipartUploadException'
-            : 'Aws\Exception\MultipartUploadException';
 
-        return $this->promise = Promise\coroutine(function () use ($exception) {
+        return $this->promise = Promise\coroutine(function () {
             // Initiate the upload.
             if ($this->state->isCompleted()) {
                 throw new \LogicException('This multipart upload has already '
@@ -127,16 +128,16 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
             // Execute the pool of commands concurrently, and process errors.
             yield $commands->promise();
             if ($errors) {
-                throw new $exception($this->state, $errors);
+                throw new $this->exception($this->state, $errors);
             }
 
             // Complete the multipart upload.
             yield $this->execCommand('complete', $this->getCompleteParams());
             $this->state->setStatus(UploadState::COMPLETED);
-        })->otherwise(function (\Exception $e) use ($exception) {
+        })->otherwise(function (\Exception $e) {
             // Throw errors from the operations as a specific Multipart error.
             if ($e instanceof AwsException) {
-                $e = new $exception($this->state, $e);
+                $e = new $this->exception($this->state, $e);
             }
             throw $e;
         });

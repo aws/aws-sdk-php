@@ -56,10 +56,15 @@ class MultipartUploader extends AbstractUploader
         $source,
         array $config = []
     ) {
-        parent::__construct($client, $source, array_change_key_case($config) + [
-            'bucket' => null,
-            'key'    => null,
-        ]);
+        parent::__construct(
+            $client,
+            $source,
+            array_change_key_case($config) + [
+                'bucket' => null,
+                'key'    => null,
+            ],
+            'Aws\S3\Exception\S3MultipartUploadException'
+        );
     }
 
     protected function loadUploadWorkflowInfo()

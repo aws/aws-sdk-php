@@ -40,7 +40,12 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
         ]);
         $this->addMockResults($client, $results);
 
-        return new TestUploader($client, $source ?: Psr7\stream_for(), $config);
+        return new TestUploader(
+            $client,
+            $source ?: Psr7\stream_for(),
+            $config,
+            'Aws\S3\Exception\S3MultipartUploadException'
+        );
     }
 
     /**

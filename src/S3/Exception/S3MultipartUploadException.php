@@ -12,7 +12,11 @@ class S3MultipartUploadException extends \Aws\Exception\MultipartUploadException
 
     /**
      * @param UploadState      $state Upload state at time of the exception.
-     * @param \Exception|array $prev  Exception being thrown.
+     * @param \Exception|array $prev  Exception being thrown. Could be an array of
+     *                                AwsExceptions being thrown when uploading parts
+     *                                for one object, or an instance of AwsException
+     *                                for a specific Multipart error being thrown in
+     *                                the MultipartUpload process.
      */
     public function __construct(UploadState $state, $prev = null) {
         if (is_array($prev)) {
@@ -23,13 +27,13 @@ class S3MultipartUploadException extends \Aws\Exception\MultipartUploadException
             $this->collectPathInfo($prev->getCommand());
         }
         parent::__construct($state, $prev);
-
     }
 
     /**
      * Get file path of S3 transfer
      *
-     * @return string|null
+     * @return string|null Returns null when 'Bucket' or 'Key' information
+     *                     are unavailable.
      */
     public function getFilePath()
     {

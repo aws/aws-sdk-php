@@ -14,12 +14,13 @@ abstract class AbstractUploader extends AbstractUploadManager
     /**
      * @param Client $client
      * @param mixed  $source
+     * @param string $exception
      * @param array  $config
      */
-    public function __construct(Client $client, $source, array $config = [])
+    public function __construct(Client $client, $source, array $config = [], $exception = null)
     {
         $this->source = $this->determineSource($source);
-        parent::__construct($client, $config);
+        parent::__construct($client, $config, $exception);
     }
 
     /**
