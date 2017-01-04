@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.20.13 - 2017-01-04
+
+* `Aws\Config` - Added support for customers to use/write rules based on OversizedConfigurationItemChangeNotification mesage type.
+* `Aws\MarketplaceAnalytics` - Added support for data set disbursed_amount_by_instance_hours, with historical data available starting 2012-09-04
+
 ## 3.20.12 - 2016-12-29
 
 * `Aws\CodeDeploy` - Added support for IAM Session Arns in addition to IAM User Arns for on premise host authentication.
