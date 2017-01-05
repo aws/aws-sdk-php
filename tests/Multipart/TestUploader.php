@@ -19,7 +19,7 @@ class TestUploader extends AbstractUploader
             'bucket' => null,
             'key'    => null,
             'exception_class' => 'Aws\S3\Exception\S3MultipartUploadException'
-         ]);
+        ]);
     }
     protected function loadUploadWorkflowInfo()
     {
