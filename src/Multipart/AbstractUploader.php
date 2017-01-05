@@ -14,7 +14,6 @@ abstract class AbstractUploader extends AbstractUploadManager
     /**
      * @param Client $client
      * @param mixed  $source
-     * @param string $exception
      * @param array  $config
      */
     public function __construct(Client $client, $source, array $config = [])

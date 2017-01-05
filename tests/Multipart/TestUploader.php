@@ -13,7 +13,7 @@ use GuzzleHttp\Psr7;
  */
 class TestUploader extends AbstractUploader
 {
-    public function __construct($client, $source, array $config = [], $exception)
+    public function __construct($client, $source, array $config = [])
     {
         parent::__construct($client, $source, $config + [
             'bucket' => null,
