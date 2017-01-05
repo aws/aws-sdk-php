@@ -17,10 +17,10 @@ abstract class AbstractUploader extends AbstractUploadManager
      * @param string $exception
      * @param array  $config
      */
-    public function __construct(Client $client, $source, array $config = [], $exception = null)
+    public function __construct(Client $client, $source, array $config = [])
     {
         $this->source = $this->determineSource($source);
-        parent::__construct($client, $config, $exception);
+        parent::__construct($client, $config);
     }
 
     /**

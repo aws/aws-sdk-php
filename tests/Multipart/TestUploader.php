@@ -15,15 +15,11 @@ class TestUploader extends AbstractUploader
 {
     public function __construct($client, $source, array $config = [], $exception)
     {
-        parent::__construct(
-            $client,
-            $source,
-            $config + [
-                'bucket' => null,
-                'key'    => null,
-            ],
-            $exception
-        );
+        parent::__construct($client, $source, $config + [
+            'bucket' => null,
+            'key'    => null,
+            'exception_class' => 'Aws\S3\Exception\S3MultipartUploadException'
+         ]);
     }
     protected function loadUploadWorkflowInfo()
     {

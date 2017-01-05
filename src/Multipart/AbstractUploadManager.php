@@ -31,6 +31,7 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
         'before_initiate' => null,
         'before_upload'   => null,
         'before_complete' => null,
+        'exception_class' => 'Aws\Exception\MultipartUploadException',
     ];
 
     /** @var Client Client used for the upload. */
@@ -48,21 +49,16 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
     /** @var UploadState State used to manage the upload. */
     protected $state;
 
-    /** @var string Exception type thrown for the upload */
-    protected $exception;
-
     /**
      * @param Client $client
-     * @param string $exception
      * @param array  $config
      */
-    public function __construct(Client $client, array $config = [], $exception = null)
+    public function __construct(Client $client, array $config = [])
     {
         $this->client = $client;
         $this->info = $this->loadUploadWorkflowInfo();
         $this->config = $config + self::$defaultConfig;
         $this->state = $this->determineState();
-        $this->exception = $exception ?: 'Aws\Exception\MultipartUploadException';
     }
 
     /**
@@ -128,7 +124,7 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
             // Execute the pool of commands concurrently, and process errors.
             yield $commands->promise();
             if ($errors) {
-                throw new $this->exception($this->state, $errors);
+                throw new $this->config['exception_class']($this->state, $errors);
             }
 
             // Complete the multipart upload.
@@ -137,7 +133,7 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
         })->otherwise(function (\Exception $e) {
             // Throw errors from the operations as a specific Multipart error.
             if ($e instanceof AwsException) {
-                $e = new $this->exception($this->state, $e);
+                $e = new $this->config['exception_class']($this->state, $e);
             }
             throw $e;
         });
