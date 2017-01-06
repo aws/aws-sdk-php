@@ -56,7 +56,7 @@ class S3MultipartUploadException extends \Aws\Exception\MultipartUploadException
     }
 
     /**
-     * Get the filename of the transfer object
+     * Get the source file name of the transfer object
      *
      * @return string|null Returns null when metadata of the stream
      *                     wrapped in 'Body' parameter is unavailable.
