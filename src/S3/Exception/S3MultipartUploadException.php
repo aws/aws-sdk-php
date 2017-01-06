@@ -7,8 +7,10 @@ use Aws\Multipart\UploadState;
 
 class S3MultipartUploadException extends \Aws\Exception\MultipartUploadException
 {
-    /** @var string File path of transfer object */
-    private $filePath;
+    /** @var string Bucket of the transfer object */
+    private $bucket;
+    /** @var string Key of the transfer object */
+    private $key;
 
     /**
      * @param UploadState      $state Upload state at time of the exception.
@@ -30,25 +32,39 @@ class S3MultipartUploadException extends \Aws\Exception\MultipartUploadException
     }
 
     /**
-     * Get file path of S3 transfer
+     * Get the Bucket information of the transfer object
      *
-     * @return string|null Returns null when 'Bucket' or 'Key' information
-     *                     are unavailable.
+     * @return string|null Returns null when 'Bucket' information
+     *                     is unavailable.
      */
-    public function getFilePath()
+    public function getBucket()
     {
-        return $this->filePath;
+        return $this->bucket;
     }
 
     /**
-     * Construct file path
+     * Get the Key information of the transfer object
+     *
+     * @return string|null Returns null when 'Key' information
+     *                     is unavailable.
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * Collect file path information when accessible. (Bucket, Key)
      *
      * @param CommandInterface $cmd
      */
     private function collectPathInfo(CommandInterface $cmd)
     {
-        if (empty($this->filePath) && isset($cmd['Bucket']) && isset($cmd['Key'])) {
-            $this->filePath = $cmd['Bucket'] . '/' . $cmd['Key'];
+        if (empty($this->bucket) && isset($cmd['Bucket'])) {
+            $this->bucket = $cmd['Bucket'];
+        }
+        if (empty($this->key) && isset($cmd['Key'])) {
+            $this->key = $cmd['Key'];
         }
     }
 }

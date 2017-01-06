@@ -27,7 +27,9 @@ class S3MultipartUploadExceptionTest extends \PHPUnit_Framework_TestCase
         ];
 
         $exception = new S3MultipartUploadException($state, $failed);
-        $expected = 'foo/bar';
-        $this->assertEquals($expected, $exception->getFilePath());
+        $bucket = 'foo';
+        $key = 'bar';
+        $this->assertEquals($bucket, $exception->getBucket());
+        $this->assertEquals($key, $exception->getKey());
     }
 }
