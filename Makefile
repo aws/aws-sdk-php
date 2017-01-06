@@ -136,7 +136,7 @@ check-tag:
 tag: check-tag
 	@echo Tagging $(TAG)
 	chag update $(TAG)
-	sed -i '' -e "s/VERSION = '.*'/VERSION = '$(TAG)'/" src/Sdk.php
+	sed -i'' -e "s/VERSION = '.*'/VERSION = '$(TAG)'/" src/Sdk.php
 	php -l src/Sdk.php
 	git commit -a -m '$(TAG) release'
 	chag tag
