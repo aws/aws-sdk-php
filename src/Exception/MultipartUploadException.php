@@ -11,9 +11,8 @@ class MultipartUploadException extends \RuntimeException
     /**
      * @param UploadState      $state    Upload state at time of the exception.
      * @param \Exception|array $prev     Exception being thrown.
-     * @param array            $params   Configuration option array for MultipartUploadException
      */
-    public function __construct(UploadState $state, $prev = null, array $params = []) {
+    public function __construct(UploadState $state, $prev = null) {
         $msg = 'An exception occurred while performing a multipart upload';
 
         if (is_array($prev)) {

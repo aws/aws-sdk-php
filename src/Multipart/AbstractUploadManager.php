@@ -32,7 +32,6 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
         'before_upload'   => null,
         'before_complete' => null,
         'exception_class' => 'Aws\Exception\MultipartUploadException',
-        'exception_params'=> [],
     ];
 
     /** @var Client Client used for the upload. */
@@ -125,11 +124,7 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
             // Execute the pool of commands concurrently, and process errors.
             yield $commands->promise();
             if ($errors) {
-                throw new $this->config['exception_class'](
-                    $this->state,
-                    $errors,
-                    $this->config['exception_params']
-                );
+                throw new $this->config['exception_class']($this->state, $errors);
             }
 
             // Complete the multipart upload.
@@ -138,11 +133,7 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
         })->otherwise(function (\Exception $e) {
             // Throw errors from the operations as a specific Multipart error.
             if ($e instanceof AwsException) {
-                $e = new $this->config['exception_class'](
-                    $this->state,
-                    $e,
-                    $this->config['exception_params']
-                );
+                $e = new $this->config['exception_class']($this->state, $e);
             }
             throw $e;
         });
