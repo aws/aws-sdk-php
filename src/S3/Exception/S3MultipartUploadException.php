@@ -11,6 +11,8 @@ class S3MultipartUploadException extends \Aws\Exception\MultipartUploadException
     private $bucket;
     /** @var string Key of the transfer object */
     private $key;
+    /** @var string File name of the transfer object */
+    private $filename;
 
     /**
      * @param UploadState      $state Upload state at time of the exception.
@@ -19,8 +21,11 @@ class S3MultipartUploadException extends \Aws\Exception\MultipartUploadException
      *                                for one object, or an instance of AwsException
      *                                for a specific Multipart error being thrown in
      *                                the MultipartUpload process.
+     * @param array           $params Array of configuration for S3MultipartUploadException
+     *                                - file_name : The file name of the transfer object
+     *                                              before upload
      */
-    public function __construct(UploadState $state, $prev = null) {
+    public function __construct(UploadState $state, $prev = null, array $params = []) {
         if (is_array($prev)) {
             foreach ($prev as $part => $error) {
                 $this->collectPathInfo($error->getCommand());
@@ -28,6 +33,7 @@ class S3MultipartUploadException extends \Aws\Exception\MultipartUploadException
         } elseif ($prev instanceof AwsException) {
             $this->collectPathInfo($prev->getCommand());
         }
+        $this->filename = isset($params['file_name']) ? $params['file_name'] : null;
         parent::__construct($state, $prev);
     }
 
@@ -51,6 +57,17 @@ class S3MultipartUploadException extends \Aws\Exception\MultipartUploadException
     public function getKey()
     {
         return $this->key;
+    }
+
+    /**
+     * Get the filename of the transfer object
+     *
+     * @return string|null Returns null when stream metadata
+     *                     is unavailable.
+     */
+    public function getFileName()
+    {
+        return $this->filename;
     }
 
     /**

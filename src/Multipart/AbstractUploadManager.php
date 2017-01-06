@@ -32,6 +32,7 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
         'before_upload'   => null,
         'before_complete' => null,
         'exception_class' => 'Aws\Exception\MultipartUploadException',
+        'exception_params'=> [],
     ];
 
     /** @var Client Client used for the upload. */

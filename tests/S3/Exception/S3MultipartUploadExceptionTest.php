@@ -26,10 +26,12 @@ class S3MultipartUploadExceptionTest extends \PHPUnit_Framework_TestCase
             8 => new AwsException('Needs more love.', new Command('UploadPart')),
         ];
 
-        $exception = new S3MultipartUploadException($state, $failed);
-        $bucket = 'foo';
-        $key = 'bar';
-        $this->assertEquals($bucket, $exception->getBucket());
-        $this->assertEquals($key, $exception->getKey());
+        $path = '/path/to/the/large/file/test.zip';
+        $exception = new S3MultipartUploadException($state, $failed, [
+            'file_name' => $path
+        ]);
+        $this->assertEquals('foo', $exception->getBucket());
+        $this->assertEquals('bar', $exception->getKey());
+        $this->assertEquals($path, $exception->getFileName());
     }
 }

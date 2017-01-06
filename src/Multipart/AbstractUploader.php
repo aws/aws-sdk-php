@@ -19,6 +19,8 @@ abstract class AbstractUploader extends AbstractUploadManager
     public function __construct(Client $client, $source, array $config = [])
     {
         $this->source = $this->determineSource($source);
+        $config['exception_params']['file_name'] = $this->source->getMetadata('uri');
+
         parent::__construct($client, $config);
     }
 
