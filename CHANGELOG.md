@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* Fix manifest
+
 ## 3.20.15 - 2017-01-16
 
 * `Aws\Cur` - Added Support for new service `AWS CostAndUsageReport`
