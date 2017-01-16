@@ -21,6 +21,8 @@ use Aws\RetryMiddleware;
  * @method \GuzzleHttp\Promise\Promise deleteItemAsync(array $args = [])
  * @method \Aws\Result deleteTable(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteTableAsync(array $args = [])
+ * @method \Aws\Result describeLimits(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeLimitsAsync(array $args = [])
  * @method \Aws\Result describeTable(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeTableAsync(array $args = [])
  * @method \Aws\Result getItem(array $args = [])
@@ -37,8 +39,6 @@ use Aws\RetryMiddleware;
  * @method \GuzzleHttp\Promise\Promise updateItemAsync(array $args = [])
  * @method \Aws\Result updateTable(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTableAsync(array $args = [])
- * @method \Aws\Result describeLimits(array $args = []) (supported in versions 2012-08-10)
- * @method \GuzzleHttp\Promise\Promise describeLimitsAsync(array $args = []) (supported in versions 2012-08-10)
  */
 class DynamoDbClient extends AwsClient
 {
