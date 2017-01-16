@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## 3.20.14 - 2017-01-16
+
 * `Aws\Config` - Updated the models to include InvalidNextTokenException in API response
 * `Aws\Cur` - Added Support for new service `AWS CostAndUsageReport`
 
