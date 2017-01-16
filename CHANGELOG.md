@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.20.16 - 2017-01-16
 
 * Fix manifest
 
