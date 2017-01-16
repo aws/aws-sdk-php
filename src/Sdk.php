@@ -54,6 +54,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCognitoSync(array $args = [])
  * @method \Aws\ConfigService\ConfigServiceClient createConfigService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionConfigService(array $args = [])
+ * @method \Aws\CostandUsageReportService\CostandUsageReportServiceClient createCostandUsageReportService(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCostandUsageReportService(array $args = [])
  * @method \Aws\DataPipeline\DataPipelineClient createDataPipeline(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDataPipeline(array $args = [])
  * @method \Aws\DatabaseMigrationService\DatabaseMigrationServiceClient createDatabaseMigrationService(array $args = [])
@@ -181,7 +183,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.20.13';
+    const VERSION = '3.20.14';
 
     /** @var array Arguments for creating clients */
     private $args;

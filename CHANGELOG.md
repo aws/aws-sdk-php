@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.20.14 - 2017-01-16
+* `Aws\Config` - Updated the models to include InvalidNextTokenException in API response
+* `Aws\Cur` - Added Support for new service `AWS CostAndUsageReport`
+
 ## 3.20.13 - 2017-01-04
 
 * `Aws\Config` - Added support for customers to use/write rules based on OversizedConfigurationItemChangeNotification mesage type.
