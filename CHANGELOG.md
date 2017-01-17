@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Added support for AssumeRoleCredentialProvider and support for source ini credentials from ./aws/config file in defaultProvider
+* `Aws\DynamoDb` - Added tagging Support for Amazon DynamoDB Tables and Indexes
+* `Aws\Route53` - Added support for ca-central-1 and eu-west-2 enum values in CloudWatchRegion enum
+
 ## 3.20.16 - 2017-01-16
 
 * Fix manifest
