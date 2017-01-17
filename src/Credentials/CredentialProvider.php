@@ -50,9 +50,10 @@ class CredentialProvider
     /**
      * Create a default credential provider that first checks for environment
      * variables, then checks for the "default" profile in ~/.aws/credentials,
-     * then tries to make GET Request to fetch credentials if Ecs environment
-     * variable is presented, and finally checks for EC2 instance profile
-     * credentials.
+     * then checks for "profile default" profile in ~/.aws/config (which is
+     * the default profile of AWS CLI), then tries to make a GET Request to
+     * fetch credentials if Ecs environment variable is presented, and finally
+     * checks for EC2 instance profile credentials.
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided credentials.
@@ -64,7 +65,7 @@ class CredentialProvider
      */
     public static function defaultProvider(array $config = [])
     {
-        $localCredentialProviders = [self::env(), self::ini()];
+        $localCredentialProviders = self::localCredentialProviders();
         $remoteCredentialProviders = self::remoteCredentialProviders($config);
 
         return self::memoize(
@@ -257,13 +258,25 @@ class CredentialProvider
     }
 
     /**
+     * Credential provider that creates credentials using assume role
+     *
+     * @param array $config Array of configuration data
+     * @return callable
+     * @see Aws\Credentials\AssumeRoleCredentialProvider for $config details.
+     */
+    public static function assumeRole(array $config=[])
+    {
+        return new AssumeRoleCredentialProvider($config);
+    }
+
+    /**
      * Credentials provider that creates credentials using an ini file stored
      * in the current user's home directory.
      *
      * @param string|null $profile  Profile to use. If not specified will use
-     *                              the "default" profile.
+     *                              the "default" profile in "~/.aws/credentials".
      * @param string|null $filename If provided, uses a custom filename rather
-     *                              than looking in the home directory for the
+     *                              than looking in the home directory.
      *
      * @return callable
      */
@@ -305,6 +318,24 @@ class CredentialProvider
                 )
             );
         };
+    }
+
+    /**
+     * Local credential providers returns a list of local credential providers
+     * in following order:
+     *  - credentials from environment variables
+     *  - 'default' profile in '.aws/credentials' file
+     *  - 'profile default' profile in '.aws/config' file
+     *
+     * @return array
+     */
+    private static function localCredentialProviders()
+    {
+        return [
+            self::env(),
+            self::ini(),
+            self::ini('profile default', self::getHomeDir() . '/.aws/config')
+        ];
     }
 
     /**
