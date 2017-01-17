@@ -64,16 +64,25 @@ class CodeSnippetGenerator
     private function structure(StructureShape $shape, $value, $indent, $path, $comments)
     {
         $lines = ['['];
+        $discrepancy = false;
         foreach ($value as $key => $val) {
             $path[] = ".{$key}";
             $comment = $this->getCommentFor($path, $comments);
-            $shapeVal = $this->visit($shape->getMember($key), $val, "{$indent}    ", $path, $comments);
-            $lines[] = rtrim("{$indent}    '{$key}' => {$shapeVal}, {$comment}");
+            try {
+                $shapeVal = $this->visit($shape->getMember($key), $val, "{$indent}    ", $path, $comments);
+                $lines[] = rtrim("{$indent}    '{$key}' => {$shapeVal}, {$comment}");
+            } catch (\InvalidArgumentException $e) {
+                $discrepancy = true;
+                break;
+            }
             array_pop($path);
         }
         $lines[] = "{$indent}]";
-
-        return implode("\n", $lines);
+        if ($discrepancy) {
+            echo "Skipping examples due to discrepancy in shape: {$shape->getName()}. \n";
+        } else {
+            return implode("\n", $lines);
+        }
     }
 
     private function arr(ListShape $shape, $value, $indent, $path, $comments)
