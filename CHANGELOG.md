@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.21.0 - 2017-01-17
 
 * `Aws\Credentials` - Added support for AssumeRoleCredentialProvider and support for source ini credentials from ./aws/config file in defaultProvider
 * `Aws\DynamoDb` - Added tagging Support for Amazon DynamoDB Tables and Indexes
