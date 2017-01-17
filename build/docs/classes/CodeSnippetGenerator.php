@@ -70,11 +70,11 @@ class CodeSnippetGenerator
             $comment = $this->getCommentFor($path, $comments);
             try {
                 $shapeVal = $this->visit($shape->getMember($key), $val, "{$indent}    ", $path, $comments);
-                $lines[] = rtrim("{$indent}    '{$key}' => {$shapeVal}, {$comment}");
             } catch (\InvalidArgumentException $e) {
                 $discrepancy = true;
                 break;
             }
+            $lines[] = rtrim("{$indent}    '{$key}' => {$shapeVal}, {$comment}");
             array_pop($path);
         }
         $lines[] = "{$indent}]";
