@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.21.1 - 2017-01-18
 
 * `Aws\Rds` - Added support for `Mysql` to `Aurora` Replication
 
