@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Rds` - Added support for `Mysql` to `Aurora` Replication
+
 ## 3.21.0 - 2017-01-17
 
 * `Aws\Credentials` - Added support for AssumeRoleCredentialProvider and support for source ini credentials from ./aws/config file in defaultProvider
