@@ -65,7 +65,8 @@
           "TargetSnapshotName": "my-snapshot-copy"
         },
         "output": {
-          "AutoMinorVersionUpgrade": true,
+          "Snapshot" :{
+            "AutoMinorVersionUpgrade": true,
           "CacheClusterCreateTime": "2016-12-21T22:24:04.955Z",
           "CacheClusterId": "my-redis4",
           "CacheNodeType": "cache.m3.large",
@@ -91,6 +92,7 @@
           "SnapshotStatus": "creating",
           "SnapshotWindow": "07:00-08:00",
           "VpcId": "vpc-3820329f3"
+          }
         },
         "comments": {
           "input": {
@@ -116,29 +118,31 @@
           "Port": 11211
         },
         "output": {
-          "AutoMinorVersionUpgrade": true,
-          "CacheClusterId": "my-memcached-cluster",
-          "CacheClusterStatus": "creating",
-          "CacheNodeType": "cache.r3.large",
-          "CacheParameterGroup": {
-            "CacheNodeIdsToReboot": [
+          "CacheCluster": {
+            "AutoMinorVersionUpgrade": true,
+            "CacheClusterId": "my-memcached-cluster",
+            "CacheClusterStatus": "creating",
+            "CacheNodeType": "cache.r3.large",
+            "CacheParameterGroup": {
+              "CacheNodeIdsToReboot": [
+
+              ],
+              "CacheParameterGroupName": "default.memcached1.4",
+              "ParameterApplyStatus": "in-sync"
+            },
+            "CacheSecurityGroups": [
 
             ],
-            "CacheParameterGroupName": "default.memcached1.4",
-            "ParameterApplyStatus": "in-sync"
-          },
-          "CacheSecurityGroups": [
-
-          ],
-          "CacheSubnetGroupName": "default",
-          "ClientDownloadLandingPage": "https://console.aws.amazon.com/elasticache/home#client-download:",
-          "Engine": "memcached",
-          "EngineVersion": "1.4.24",
-          "NumCacheNodes": 2,
-          "PendingModifiedValues": {
-          },
-          "PreferredAvailabilityZone": "Multiple",
-          "PreferredMaintenanceWindow": "wed:09:00-wed:10:00"
+            "CacheSubnetGroupName": "default",
+            "ClientDownloadLandingPage": "https://console.aws.amazon.com/elasticache/home#client-download:",
+            "Engine": "memcached",
+            "EngineVersion": "1.4.24",
+            "NumCacheNodes": 2,
+            "PendingModifiedValues": {
+            },
+            "PreferredAvailabilityZone": "Multiple",
+            "PreferredMaintenanceWindow": "wed:09:00-wed:10:00"
+          }
         },
         "comments": {
           "input": {
@@ -164,31 +168,33 @@
           "SnapshotRetentionLimit": 7
         },
         "output": {
-          "AutoMinorVersionUpgrade": true,
-          "CacheClusterId": "my-redis",
-          "CacheClusterStatus": "creating",
-          "CacheNodeType": "cache.m3.large",
-          "CacheParameterGroup": {
-            "CacheNodeIdsToReboot": [
+          "CacheCluster": {
+            "AutoMinorVersionUpgrade": true,
+            "CacheClusterId": "my-redis",
+            "CacheClusterStatus": "creating",
+            "CacheNodeType": "cache.m3.large",
+            "CacheParameterGroup": {
+              "CacheNodeIdsToReboot": [
+
+              ],
+              "CacheParameterGroupName": "default.redis3.2",
+              "ParameterApplyStatus": "in-sync"
+            },
+            "CacheSecurityGroups": [
 
             ],
-            "CacheParameterGroupName": "default.redis3.2",
-            "ParameterApplyStatus": "in-sync"
-          },
-          "CacheSecurityGroups": [
-
-          ],
-          "CacheSubnetGroupName": "default",
-          "ClientDownloadLandingPage": "https: //console.aws.amazon.com/elasticache/home#client-download: ",
-          "Engine": "redis",
-          "EngineVersion": "3.2.4",
-          "NumCacheNodes": 1,
-          "PendingModifiedValues": {
-          },
-          "PreferredAvailabilityZone": "us-east-1c",
-          "PreferredMaintenanceWindow": "fri: 05: 30-fri: 06: 30",
-          "SnapshotRetentionLimit": 7,
-          "SnapshotWindow": "10: 00-11: 00"
+            "CacheSubnetGroupName": "default",
+            "ClientDownloadLandingPage": "https: //console.aws.amazon.com/elasticache/home#client-download: ",
+            "Engine": "redis",
+            "EngineVersion": "3.2.4",
+            "NumCacheNodes": 1,
+            "PendingModifiedValues": {
+            },
+            "PreferredAvailabilityZone": "us-east-1c",
+            "PreferredMaintenanceWindow": "fri: 05: 30-fri: 06: 30",
+            "SnapshotRetentionLimit": 7,
+            "SnapshotWindow": "10: 00-11: 00"
+          }
         },
         "comments": {
           "input": {
@@ -209,9 +215,11 @@
           "Description": "Redis 2.8 parameter group that limits maxmemory to half of available memory."
         },
         "output": {
-          "CacheParameterGroupFamily": "redis2.8",
-          "CacheParameterGroupName": "custom-redis2-8",
-          "Description": "Redis 2.8 parame3ter group that limits maxmemory to half of available memory."
+          "CacheParameterGroup":{
+            "CacheParameterGroupFamily": "redis2.8",
+            "CacheParameterGroupName": "custom-redis2-8",
+            "Description": "Redis 2.8 parame3ter group that limits maxmemory to half of available memory."
+          }
         },
         "comments": {
           "input": {
@@ -253,29 +261,32 @@
           ]
         },
         "output": {
-          "CacheSubnetGroupDescription": "My subnet group.",
-          "CacheSubnetGroupName": "my-sn-grp",
-          "Subnets": [
-            {
-              "SubnetAvailabilityZone": {
-                "Name": "us-east-1a"
+          "CacheSubnetGroup" : {
+            "CacheSubnetGroupDescription": "My subnet group.",
+            "CacheSubnetGroupName": "my-sn-grp",
+            "Subnets": [
+              {
+                "SubnetAvailabilityZone": {
+                  "Name": "us-east-1a"
+                },
+                "SubnetIdentifier": "subnet-6f28c982"
               },
-              "SubnetIdentifier": "subnet-6f28c982"
-            },
-            {
-              "SubnetAvailabilityZone": {
-                "Name": "us-east-1c"
+              {
+                "SubnetAvailabilityZone": {
+                  "Name": "us-east-1c"
+                },
+                "SubnetIdentifier": "subnet-bcd382f3"
               },
-              "SubnetIdentifier": "subnet-bcd382f3"
-            },
-            {
-              "SubnetAvailabilityZone": {
-                "Name": "us-east-1b"
-              },
-              "SubnetIdentifier": "subnet-845b3e7c0"
-            }
-          ],
-          "VpcId": "vpc-91280df6"
+              {
+                "SubnetAvailabilityZone": {
+                  "Name": "us-east-1b"
+                },
+                "SubnetIdentifier": "subnet-845b3e7c0"
+              }
+            ],
+            "VpcId": "vpc-91280df6"
+          }
+          
         },
         "comments": {
           "input": {
@@ -301,18 +312,20 @@
           "SnapshotRetentionLimit": 30
         },
         "output": {
-          "AutomaticFailover": "enabling",
-          "Description": "A Redis replication group.",
-          "MemberClusters": [
-            "my-redis-rg-001",
-            "my-redis-rg-002",
-            "my-redis-rg-003"
-          ],
-          "PendingModifiedValues": {
-          },
-          "ReplicationGroupId": "my-redis-rg",
-          "SnapshottingClusterId": "my-redis-rg-002",
-          "Status": "creating"
+          "ReplicationGroup" :{
+            "AutomaticFailover": "enabling",
+            "Description": "A Redis replication group.",
+            "MemberClusters": [
+              "my-redis-rg-001",
+              "my-redis-rg-002",
+              "my-redis-rg-003"
+            ],
+            "PendingModifiedValues": {
+            },
+            "ReplicationGroupId": "my-redis-rg",
+            "SnapshottingClusterId": "my-redis-rg-002",
+            "Status": "creating"
+          }
         },
         "comments": {
           "input": {
@@ -332,31 +345,33 @@
           "SnapshotName": "snapshot-20161221"
         },
         "output": {
-          "AutoMinorVersionUpgrade": true,
-          "CacheClusterCreateTime": "2016-12-21T22:27:12.543Z",
-          "CacheClusterId": "my-redis",
-          "CacheNodeType": "cache.m3.large",
-          "CacheParameterGroupName": "default.redis3.2",
-          "CacheSubnetGroupName": "default",
-          "Engine": "redis",
-          "EngineVersion": "3.2.4",
-          "NodeSnapshots": [
-            {
-              "CacheNodeCreateTime": "2016-12-21T22:27:12.543Z",
-              "CacheNodeId": "0001",
-              "CacheSize": ""
-            }
-          ],
-          "NumCacheNodes": 1,
-          "Port": 6379,
-          "PreferredAvailabilityZone": "us-east-1c",
-          "PreferredMaintenanceWindow": "fri:05:30-fri:06:30",
-          "SnapshotName": "snapshot-20161221",
-          "SnapshotRetentionLimit": 7,
-          "SnapshotSource": "manual",
-          "SnapshotStatus": "creating",
-          "SnapshotWindow": "10:00-11:00",
-          "VpcId": "vpc-91280df6"
+          "Snapshot": {
+            "AutoMinorVersionUpgrade": true,
+            "CacheClusterCreateTime": "2016-12-21T22:27:12.543Z",
+            "CacheClusterId": "my-redis",
+            "CacheNodeType": "cache.m3.large",
+            "CacheParameterGroupName": "default.redis3.2",
+            "CacheSubnetGroupName": "default",
+            "Engine": "redis",
+            "EngineVersion": "3.2.4",
+            "NodeSnapshots": [
+              {
+                "CacheNodeCreateTime": "2016-12-21T22:27:12.543Z",
+                "CacheNodeId": "0001",
+                "CacheSize": ""
+              }
+            ],
+            "NumCacheNodes": 1,
+            "Port": 6379,
+            "PreferredAvailabilityZone": "us-east-1c",
+            "PreferredMaintenanceWindow": "fri:05:30-fri:06:30",
+            "SnapshotName": "snapshot-20161221",
+            "SnapshotRetentionLimit": 7,
+            "SnapshotSource": "manual",
+            "SnapshotStatus": "creating",
+            "SnapshotWindow": "10:00-11:00",
+            "VpcId": "vpc-91280df6"  
+          }
         },
         "comments": {
           "input": {
@@ -375,34 +390,36 @@
           "CacheClusterId": "my-memcached"
         },
         "output": {
-          "AutoMinorVersionUpgrade": true,
-          "CacheClusterCreateTime": "2016-12-22T16:05:17.314Z",
-          "CacheClusterId": "my-memcached",
-          "CacheClusterStatus": "deleting",
-          "CacheNodeType": "cache.r3.large",
-          "CacheParameterGroup": {
-            "CacheNodeIdsToReboot": [
+          "CacheCluster": {
+            "AutoMinorVersionUpgrade": true,
+            "CacheClusterCreateTime": "2016-12-22T16:05:17.314Z",
+            "CacheClusterId": "my-memcached",
+            "CacheClusterStatus": "deleting",
+            "CacheNodeType": "cache.r3.large",
+            "CacheParameterGroup": {
+              "CacheNodeIdsToReboot": [
+
+              ],
+              "CacheParameterGroupName": "default.memcached1.4",
+              "ParameterApplyStatus": "in-sync"
+            },
+            "CacheSecurityGroups": [
 
             ],
-            "CacheParameterGroupName": "default.memcached1.4",
-            "ParameterApplyStatus": "in-sync"
-          },
-          "CacheSecurityGroups": [
-
-          ],
-          "CacheSubnetGroupName": "default",
-          "ClientDownloadLandingPage": "https://console.aws.amazon.com/elasticache/home#client-download:",
-          "ConfigurationEndpoint": {
-            "Address": "my-memcached2.ameaqx.cfg.use1.cache.amazonaws.com",
-            "Port": 11211
-          },
-          "Engine": "memcached",
-          "EngineVersion": "1.4.24",
-          "NumCacheNodes": 2,
-          "PendingModifiedValues": {
-          },
-          "PreferredAvailabilityZone": "Multiple",
-          "PreferredMaintenanceWindow": "tue:07:30-tue:08:30"
+            "CacheSubnetGroupName": "default",
+            "ClientDownloadLandingPage": "https://console.aws.amazon.com/elasticache/home#client-download:",
+            "ConfigurationEndpoint": {
+              "Address": "my-memcached2.ameaqx.cfg.use1.cache.amazonaws.com",
+              "Port": 11211
+            },
+            "Engine": "memcached",
+            "EngineVersion": "1.4.24",
+            "NumCacheNodes": 2,
+            "PendingModifiedValues": {
+            },
+            "PreferredAvailabilityZone": "Multiple",
+            "PreferredMaintenanceWindow": "tue:07:30-tue:08:30"
+          }
         },
         "comments": {
           "input": {
@@ -470,12 +487,14 @@
           "RetainPrimaryCluster": false
         },
         "output": {
-          "AutomaticFailover": "disabled",
-          "Description": "simple redis cluster",
-          "PendingModifiedValues": {
-          },
-          "ReplicationGroupId": "my-redis-rg",
-          "Status": "deleting"
+          "ReplicationGroup": {
+            "AutomaticFailover": "disabled",
+            "Description": "simple redis cluster",
+            "PendingModifiedValues": {
+            },
+            "ReplicationGroupId": "my-redis-rg",
+            "Status": "deleting"  
+          }
         },
         "comments": {
           "input": {
@@ -494,32 +513,34 @@
           "SnapshotName": "snapshot-20161212"
         },
         "output": {
-          "AutoMinorVersionUpgrade": true,
-          "CacheClusterCreateTime": "2016-12-21T22:27:12.543Z",
-          "CacheClusterId": "my-redis5",
-          "CacheNodeType": "cache.m3.large",
-          "CacheParameterGroupName": "default.redis3.2",
-          "CacheSubnetGroupName": "default",
-          "Engine": "redis",
-          "EngineVersion": "3.2.4",
-          "NodeSnapshots": [
-            {
-              "CacheNodeCreateTime": "2016-12-21T22:27:12.543Z",
-              "CacheNodeId": "0001",
-              "CacheSize": "3 MB",
-              "SnapshotCreateTime": "2016-12-21T22:30:26Z"
-            }
-          ],
-          "NumCacheNodes": 1,
-          "Port": 6379,
-          "PreferredAvailabilityZone": "us-east-1c",
-          "PreferredMaintenanceWindow": "fri:05:30-fri:06:30",
-          "SnapshotName": "snapshot-20161212",
-          "SnapshotRetentionLimit": 7,
-          "SnapshotSource": "manual",
-          "SnapshotStatus": "deleting",
-          "SnapshotWindow": "10:00-11:00",
-          "VpcId": "vpc-91280df6"
+          "Snapshot": {
+            "AutoMinorVersionUpgrade": true,
+            "CacheClusterCreateTime": "2016-12-21T22:27:12.543Z",
+            "CacheClusterId": "my-redis5",
+            "CacheNodeType": "cache.m3.large",
+            "CacheParameterGroupName": "default.redis3.2",
+            "CacheSubnetGroupName": "default",
+            "Engine": "redis",
+            "EngineVersion": "3.2.4",
+            "NodeSnapshots": [
+              {
+                "CacheNodeCreateTime": "2016-12-21T22:27:12.543Z",
+                "CacheNodeId": "0001",
+                "CacheSize": "3 MB",
+                "SnapshotCreateTime": "2016-12-21T22:30:26Z"
+              }
+            ],
+            "NumCacheNodes": 1,
+            "Port": 6379,
+            "PreferredAvailabilityZone": "us-east-1c",
+            "PreferredMaintenanceWindow": "fri:05:30-fri:06:30",
+            "SnapshotName": "snapshot-20161212",
+            "SnapshotRetentionLimit": 7,
+            "SnapshotSource": "manual",
+            "SnapshotStatus": "deleting",
+            "SnapshotWindow": "10:00-11:00",
+            "VpcId": "vpc-91280df6"
+          }
         },
         "comments": {
           "input": {
@@ -1341,7 +1362,8 @@
           "MaxRecords": 25
         },
         "output": {
-          "CacheNodeTypeSpecificParameters": [
+         "EngineDefaults": {
+           "CacheNodeTypeSpecificParameters": [
             {
               "AllowedValues": "0-",
               "CacheNodeTypeSpecificValues": [
@@ -1937,6 +1959,7 @@
               "Source": "system"
             }
           ]
+         }
         },
         "comments": {
           "input": {
@@ -2616,32 +2639,34 @@
           "SnapshotRetentionLimit": 14
         },
         "output": {
-          "AutoMinorVersionUpgrade": true,
-          "CacheClusterCreateTime": "2016-12-22T16:27:56.078Z",
-          "CacheClusterId": "redis-cluster",
-          "CacheClusterStatus": "available",
-          "CacheNodeType": "cache.r3.large",
-          "CacheParameterGroup": {
-            "CacheNodeIdsToReboot": [
+          "CacheCluster": {
+            "AutoMinorVersionUpgrade": true,
+            "CacheClusterCreateTime": "2016-12-22T16:27:56.078Z",
+            "CacheClusterId": "redis-cluster",
+            "CacheClusterStatus": "available",
+            "CacheNodeType": "cache.r3.large",
+            "CacheParameterGroup": {
+              "CacheNodeIdsToReboot": [
+
+              ],
+              "CacheParameterGroupName": "default.redis3.2",
+              "ParameterApplyStatus": "in-sync"
+            },
+            "CacheSecurityGroups": [
 
             ],
-            "CacheParameterGroupName": "default.redis3.2",
-            "ParameterApplyStatus": "in-sync"
-          },
-          "CacheSecurityGroups": [
-
-          ],
-          "CacheSubnetGroupName": "default",
-          "ClientDownloadLandingPage": "https://console.aws.amazon.com/elasticache/home#client-download:",
-          "Engine": "redis",
-          "EngineVersion": "3.2.4",
-          "NumCacheNodes": 1,
-          "PendingModifiedValues": {
-          },
-          "PreferredAvailabilityZone": "us-east-1e",
-          "PreferredMaintenanceWindow": "fri:09:00-fri:10:00",
-          "SnapshotRetentionLimit": 14,
-          "SnapshotWindow": "07:00-08:00"
+            "CacheSubnetGroupName": "default",
+            "ClientDownloadLandingPage": "https://console.aws.amazon.com/elasticache/home#client-download:",
+            "Engine": "redis",
+            "EngineVersion": "3.2.4",
+            "NumCacheNodes": 1,
+            "PendingModifiedValues": {
+            },
+            "PreferredAvailabilityZone": "us-east-1e",
+            "PreferredMaintenanceWindow": "fri:09:00-fri:10:00",
+            "SnapshotRetentionLimit": 14,
+            "SnapshotWindow": "07:00-08:00"
+          }
         },
         "comments": {
           "input": {
@@ -2692,41 +2717,43 @@
           ]
         },
         "output": {
-          "CacheSubnetGroupDescription": "My subnet group.",
-          "CacheSubnetGroupName": "my-sn-grp",
-          "Subnets": [
-            {
-              "SubnetAvailabilityZone": {
-                "Name": "us-east-1c"
+          "CacheSubnetGroup": {
+            "CacheSubnetGroupDescription": "My subnet group.",
+            "CacheSubnetGroupName": "my-sn-grp",
+            "Subnets": [
+              {
+                "SubnetAvailabilityZone": {
+                  "Name": "us-east-1c"
+                },
+                "SubnetIdentifier": "subnet-a1b2c3d4"
               },
-              "SubnetIdentifier": "subnet-a1b2c3d4"
-            },
-            {
-              "SubnetAvailabilityZone": {
-                "Name": "us-east-1e"
+              {
+                "SubnetAvailabilityZone": {
+                  "Name": "us-east-1e"
+                },
+                "SubnetIdentifier": "subnet-1a2b3c4d"
               },
-              "SubnetIdentifier": "subnet-1a2b3c4d"
-            },
-            {
-              "SubnetAvailabilityZone": {
-                "Name": "us-east-1e"
+              {
+                "SubnetAvailabilityZone": {
+                  "Name": "us-east-1e"
+                },
+                "SubnetIdentifier": "subnet-bcde2345"
               },
-              "SubnetIdentifier": "subnet-bcde2345"
-            },
-            {
-              "SubnetAvailabilityZone": {
-                "Name": "us-east-1c"
+              {
+                "SubnetAvailabilityZone": {
+                  "Name": "us-east-1c"
+                },
+                "SubnetIdentifier": "subnet-1234abcd"
               },
-              "SubnetIdentifier": "subnet-1234abcd"
-            },
-            {
-              "SubnetAvailabilityZone": {
-                "Name": "us-east-1b"
-              },
-              "SubnetIdentifier": "subnet-abcd1234"
-            }
-          ],
-          "VpcId": "vpc-91280df6"
+              {
+                "SubnetAvailabilityZone": {
+                  "Name": "us-east-1b"
+                },
+                "SubnetIdentifier": "subnet-abcd1234"
+              }
+            ],
+            "VpcId": "vpc-91280df6"
+          }
         },
         "comments": {
           "input": {
@@ -2749,60 +2776,62 @@
           "SnapshottingClusterId": "my-redis-rg-001"
         },
         "output": {
-          "AutomaticFailover": "enabled",
-          "Description": "Modified replication group",
-          "MemberClusters": [
-            "my-redis-rg-001",
-            "my-redis-rg-002",
-            "my-redis-rg-003"
-          ],
-          "NodeGroups": [
-            {
-              "NodeGroupId": "0001",
-              "NodeGroupMembers": [
-                {
-                  "CacheClusterId": "my-redis-rg-001",
-                  "CacheNodeId": "0001",
-                  "CurrentRole": "primary",
-                  "PreferredAvailabilityZone": "us-east-1b",
-                  "ReadEndpoint": {
-                    "Address": "my-redis-rg-001.abcdef.0001.use1.cache.amazonaws.com",
-                    "Port": 6379
+          "ReplicationGroup": {
+            "AutomaticFailover": "enabled",
+            "Description": "Modified replication group",
+            "MemberClusters": [
+              "my-redis-rg-001",
+              "my-redis-rg-002",
+              "my-redis-rg-003"
+            ],
+            "NodeGroups": [
+              {
+                "NodeGroupId": "0001",
+                "NodeGroupMembers": [
+                  {
+                    "CacheClusterId": "my-redis-rg-001",
+                    "CacheNodeId": "0001",
+                    "CurrentRole": "primary",
+                    "PreferredAvailabilityZone": "us-east-1b",
+                    "ReadEndpoint": {
+                      "Address": "my-redis-rg-001.abcdef.0001.use1.cache.amazonaws.com",
+                      "Port": 6379
+                    }
+                  },
+                  {
+                    "CacheClusterId": "my-redis-rg-002",
+                    "CacheNodeId": "0001",
+                    "CurrentRole": "replica",
+                    "PreferredAvailabilityZone": "us-east-1a",
+                    "ReadEndpoint": {
+                      "Address": "my-redis-rg-002.abcdef.0001.use1.cache.amazonaws.com",
+                      "Port": 6379
+                    }
+                  },
+                  {
+                    "CacheClusterId": "my-redis-rg-003",
+                    "CacheNodeId": "0001",
+                    "CurrentRole": "replica",
+                    "PreferredAvailabilityZone": "us-east-1c",
+                    "ReadEndpoint": {
+                      "Address": "my-redis-rg-003.abcdef.0001.use1.cache.amazonaws.com",
+                      "Port": 6379
+                    }
                   }
+                ],
+                "PrimaryEndpoint": {
+                  "Address": "my-redis-rg.abcdef.ng.0001.use1.cache.amazonaws.com",
+                  "Port": 6379
                 },
-                {
-                  "CacheClusterId": "my-redis-rg-002",
-                  "CacheNodeId": "0001",
-                  "CurrentRole": "replica",
-                  "PreferredAvailabilityZone": "us-east-1a",
-                  "ReadEndpoint": {
-                    "Address": "my-redis-rg-002.abcdef.0001.use1.cache.amazonaws.com",
-                    "Port": 6379
-                  }
-                },
-                {
-                  "CacheClusterId": "my-redis-rg-003",
-                  "CacheNodeId": "0001",
-                  "CurrentRole": "replica",
-                  "PreferredAvailabilityZone": "us-east-1c",
-                  "ReadEndpoint": {
-                    "Address": "my-redis-rg-003.abcdef.0001.use1.cache.amazonaws.com",
-                    "Port": 6379
-                  }
-                }
-              ],
-              "PrimaryEndpoint": {
-                "Address": "my-redis-rg.abcdef.ng.0001.use1.cache.amazonaws.com",
-                "Port": 6379
-              },
-              "Status": "available"
-            }
-          ],
-          "PendingModifiedValues": {
-          },
-          "ReplicationGroupId": "my-redis-rg",
-          "SnapshottingClusterId": "my-redis-rg-002",
-          "Status": "available"
+                "Status": "available"
+              }
+            ],
+            "PendingModifiedValues": {
+            },
+            "ReplicationGroupId": "my-redis-rg",
+            "SnapshottingClusterId": "my-redis-rg-002",
+            "Status": "available"  
+          }
         },
         "comments": {
           "input": {
@@ -2834,41 +2863,43 @@
     "RebootCacheCluster": [
       {
         "input": {
-          "CacheClusterId": "custom-mem1-4  ",
+          "CacheClusterId": "custom-mem1-4 ",
           "CacheNodeIdsToReboot": [
             "0001",
             "0002"
           ]
         },
         "output": {
-          "AutoMinorVersionUpgrade": true,
-          "CacheClusterCreateTime": "2016-12-21T21:59:43.794Z",
-          "CacheClusterId": "my-mem-cluster",
-          "CacheClusterStatus": "rebooting cache cluster nodes",
-          "CacheNodeType": "cache.t2.medium",
-          "CacheParameterGroup": {
-            "CacheNodeIdsToReboot": [
+          "CacheCluster": {
+            "AutoMinorVersionUpgrade": true,
+            "CacheClusterCreateTime": "2016-12-21T21:59:43.794Z",
+            "CacheClusterId": "my-mem-cluster",
+            "CacheClusterStatus": "rebooting cache cluster nodes",
+            "CacheNodeType": "cache.t2.medium",
+            "CacheParameterGroup": {
+              "CacheNodeIdsToReboot": [
+
+              ],
+              "CacheParameterGroupName": "default.memcached1.4",
+              "ParameterApplyStatus": "in-sync"
+            },
+            "CacheSecurityGroups": [
 
             ],
-            "CacheParameterGroupName": "default.memcached1.4",
-            "ParameterApplyStatus": "in-sync"
-          },
-          "CacheSecurityGroups": [
-
-          ],
-          "CacheSubnetGroupName": "default",
-          "ClientDownloadLandingPage": "https://console.aws.amazon.com/elasticache/home#client-download:",
-          "ConfigurationEndpoint": {
-            "Address": "my-mem-cluster.abcdef.cfg.use1.cache.amazonaws.com",
-            "Port": 11211
-          },
-          "Engine": "memcached",
-          "EngineVersion": "1.4.24",
-          "NumCacheNodes": 2,
-          "PendingModifiedValues": {
-          },
-          "PreferredAvailabilityZone": "Multiple",
-          "PreferredMaintenanceWindow": "wed:06:00-wed:07:00"
+            "CacheSubnetGroupName": "default",
+            "ClientDownloadLandingPage": "https://console.aws.amazon.com/elasticache/home#client-download:",
+            "ConfigurationEndpoint": {
+              "Address": "my-mem-cluster.abcdef.cfg.use1.cache.amazonaws.com",
+              "Port": 11211
+            },
+            "Engine": "memcached",
+            "EngineVersion": "1.4.24",
+            "NumCacheNodes": 2,
+            "PendingModifiedValues": {
+            },
+            "PreferredAvailabilityZone": "Multiple",
+            "PreferredMaintenanceWindow": "wed:06:00-wed:07:00"
+          }
         },
         "comments": {
           "input": {
