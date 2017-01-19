@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - Added support for new parameters to SpotPlacement in RequestSpotInstances API
+
 ## 3.21.1 - 2017-01-18
 
 * `Aws\Rds` - Added support for `Mysql` to `Aurora` Replication
