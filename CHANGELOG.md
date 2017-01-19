@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.21.2 - 2017-01-19
 
 * `Aws\Ec2` - Added support for new parameters to SpotPlacement in RequestSpotInstances API
 
