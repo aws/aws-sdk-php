@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.21.3 - 2017-01-20
 
 * `Aws\Acm` - Updated response elements for DescribeCertificate API in support of managed renewal.
 
