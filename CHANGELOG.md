@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.21.4 - 2017-01-25
 
 * `Aws\CodeCommit` - Added a new API to list the different files between 2 commits 
 * `Aws\Ecs` - Added support for Container instance draining
