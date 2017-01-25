@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release 
+
+* `Aws\CodeCommit` - Added a new API to list the different files between 2 commits 
+* `Aws\Ecs` - Added support for Container instance draining
+
 ## 3.21.3 - 2017-01-20
 
 * `Aws\Acm` - Updated response elements for DescribeCertificate API in support of managed renewal.

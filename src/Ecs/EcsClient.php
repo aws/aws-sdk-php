@@ -64,6 +64,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise submitTaskStateChangeAsync(array $args = [])
  * @method \Aws\Result updateContainerAgent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateContainerAgentAsync(array $args = [])
+ * @method \Aws\Result updateContainerInstancesState(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateContainerInstancesStateAsync(array $args = [])
  * @method \Aws\Result updateService(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateServiceAsync(array $args = [])
  */
