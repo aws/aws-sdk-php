@@ -217,12 +217,22 @@ class RdsClient extends AwsClient
             . 'the region that the DB snapshot will be copied from.';
         $api['shapes']['SourceRegion'] = ['type' => 'string'];
         $api['shapes']['CopyDBSnapshotMessage']['members']['SourceRegion'] = ['shape' => 'SourceRegion'];
+        $api['shapes']['CreateDBInstanceReadReplicaMessage']['members']['SourceRegion'] = ['shape' => 'SourceRegion'];
 
         // Several parameters in presign APIs are optional.
         $docs['shapes']['String']['refs']['CopyDBSnapshotMessage$PreSignedUrl']
             = '<div class="alert alert-info">The SDK will compute this value '
             . 'for you on your behalf.</div>';
         $docs['shapes']['String']['refs']['CopyDBSnapshotMessage$DestinationRegion']
+            = '<div class="alert alert-info">The SDK will populate this '
+            . 'parameter on your behalf using the configured region value of '
+            . 'the client.</div>';
+
+        // Several parameters in presign APIs are optional.
+        $docs['shapes']['String']['refs']['CreateDBInstanceReadReplicaMessage$PreSignedUrl']
+            = '<div class="alert alert-info">The SDK will compute this value '
+            . 'for you on your behalf.</div>';
+        $docs['shapes']['String']['refs']['CreateDBInstanceReadReplicaMessage$DestinationRegion']
             = '<div class="alert alert-info">The SDK will populate this '
             . 'parameter on your behalf using the configured region value of '
             . 'the client.</div>';

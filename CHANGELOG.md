@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release 
+
+* `Aws\ElasticLoadBalancing` - Added support for New load balancer type
+* `Aws\Rds` - Added support for Cross Region Read Replica Copying
+
 ## 3.21.4 - 2017-01-25
 
 * `Aws\CodeCommit` - Added a new API to list the different files between 2 commits 
