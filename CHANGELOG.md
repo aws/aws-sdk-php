@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.21.5 - 2017-01-25
 
 * `Aws\ElasticLoadBalancing` - Added support for New load balancer type
 * `Aws\Rds` - Added support for Cross Region Read Replica Copying
