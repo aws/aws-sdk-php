@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.21.6 - 2017-01-27
 
 * `Aws\CloudDirectory` - Added support for new service `AWS Cloud Directory`
 * `Aws\CodeDeploy` - Added support for blue/green deployments
