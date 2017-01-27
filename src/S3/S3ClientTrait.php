@@ -15,7 +15,7 @@ use GuzzleHttp\Promise\RejectedPromise;
  */
 trait S3ClientTrait
 {
-        /**
+    /**
      * Upload a file, stream, or string to a bucket.
      *
      * If the upload size exceeds the specified threshold, the upload will be
@@ -45,6 +45,7 @@ trait S3ClientTrait
      * @param array  $options Options used to configure the upload process.
      *
      * @see Aws\S3\MultipartUploader for more info about multipart uploads.
+     * @see S3ClientInterface::upload()
      * @return ResultInterface Returns the result of the upload.
      */
     public function upload(
@@ -71,6 +72,7 @@ trait S3ClientTrait
      * @param array  $options Options used to configure the upload process.
      *
      * @see self::upload
+     * @see S3ClientInterface::uploadAsync()
      * @return PromiseInterface     Returns a promise that will be fulfilled
      *                              with the result of the upload.
      */
@@ -110,8 +112,9 @@ trait S3ClientTrait
      * @param string $destKey       Key to which to copy the object.
      * @param string $acl           ACL to apply to the copy (default: private).
      * @param array  $options       Options used to configure the upload process.
-     *
+     * 
      * @see Aws\S3\MultipartCopy for more info about multipart uploads.
+     * @see S3ClientInterface::copy()
      * @return ResultInterface Returns the result of the copy.
      */
     public function copy(
@@ -136,7 +139,8 @@ trait S3ClientTrait
      * @param string $acl           ACL to apply to the copy (default: private).
      * @param array  $options       Options used to configure the upload process.
      *
-     * @see self::copy for more info about the parameters above.
+     * @see self::copy
+     * @see S3ClientInterface::copyAsync()
      * @return PromiseInterface     Returns a promise that will be fulfilled
      *                              with the result of the copy.
      */
@@ -166,6 +170,7 @@ trait S3ClientTrait
 
     /**
      * Register the Amazon S3 stream wrapper with this client instance.
+     * @see S3ClientInterface::registerStreamWrapper()
      */
     public function registerStreamWrapper()
     {
@@ -183,6 +188,7 @@ trait S3ClientTrait
      * @param array  $options Aws\S3\BatchDelete options array.
      *
      * @see Aws\S3\S3Client::listObjects
+     * @see S3ClientInterface::deleteMatchingObjects()
      * @throws \RuntimeException if no prefix and no regex is given
      */
     public function deleteMatchingObjects(
@@ -206,6 +212,7 @@ trait S3ClientTrait
      * @param array  $options Aws\S3\BatchDelete options array.
      *
      * @see Aws\S3\S3Client::listObjects
+     * @see S3ClientInterface::deleteMatchingObjectsAsync()
      *
      * @return PromiseInterface     A promise that is settled when matching
      *                              objects are deleted.
@@ -244,6 +251,7 @@ trait S3ClientTrait
      * @param array  $options   Options available in Aws\S3\Transfer::__construct
      *
      * @see Aws\S3\Transfer for more options and customization
+     * @see S3ClientInterface::uploadDirectory()        
      */
     public function uploadDirectory(
         $directory,
@@ -264,6 +272,7 @@ trait S3ClientTrait
      * @param array  $options   Options available in Aws\S3\Transfer::__construct
      *
      * @see Aws\S3\Transfer for more options and customization
+     * @see S3ClientInterface::uploadDirectoryAsync()
      *
      * @return PromiseInterface A promise that is settled when the upload is
      *                          complete.
@@ -285,6 +294,8 @@ trait S3ClientTrait
      * @param string $bucket    Bucket to download from
      * @param string $keyPrefix Only download objects that use this key prefix
      * @param array  $options   Options available in Aws\S3\Transfer::__construct
+     *
+     * @see S3ClientInterface::downloadBucket()
      */
     public function downloadBucket(
         $directory,
@@ -306,6 +317,7 @@ trait S3ClientTrait
      *
      * @return PromiseInterface A promise that is settled when the download is
      *                          complete.
+     * @see S3ClientInterface::downloadBucketAsync()
      */
     public function downloadBucketAsync(
         $directory,
@@ -323,6 +335,8 @@ trait S3ClientTrait
      * @param string $bucketName
      *
      * @return string
+     *
+     * @see S3ClientInterface::determineBucketRegion()
      */
     public function determineBucketRegion($bucketName)
     {
@@ -336,6 +350,8 @@ trait S3ClientTrait
      * @param string $bucketName
      *
      * @return PromiseInterface
+     *
+     * @see S3ClientInterface::determineBucketRegionAsync()
      */
     public function determineBucketRegionAsync($bucketName)
     {
@@ -363,6 +379,8 @@ trait S3ClientTrait
      * @param string $bucket  The name of the bucket
      *
      * @return bool
+     *
+     * @see S3ClientInterface::doesBucketExist()
      */
     public function doesBucketExist($bucket)
     {
@@ -380,6 +398,8 @@ trait S3ClientTrait
      *                        operation (e.g., VersionId).
      *
      * @return bool
+     *
+     * @see S3ClientInterface::doesObjectExist()
      */
     public function doesObjectExist($bucket, $key, array $options = [])
     {
@@ -415,17 +435,27 @@ trait S3ClientTrait
         }
     }
 
+    /**     
+     * @see S3ClientInterface::execute()      
+     */
     abstract public function execute(CommandInterface $command);
 
+    /**     
+     * @see S3ClientInterface::getCommand()       
+     */
     abstract public function getCommand($name, array $args = []);
 
     /**
      * @return HandlerList
+     *
+     * @see S3ClientInterface::getHandlerList()
      */
     abstract public function getHandlerList();
 
     /**
      * @return \Iterator
+     *
+     * @see S3ClientInterface::getIterator()
      */
     abstract public function getIterator($name, array $args = []);
 }
