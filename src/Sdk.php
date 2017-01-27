@@ -20,6 +20,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBatch(array $args = [])
  * @method \Aws\Budgets\BudgetsClient createBudgets(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBudgets(array $args = [])
+ * @method \Aws\CloudDirectory\CloudDirectoryClient createCloudDirectory(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCloudDirectory(array $args = [])
  * @method \Aws\CloudFormation\CloudFormationClient createCloudFormation(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudFormation(array $args = [])
  * @method \Aws\CloudFront\CloudFrontClient createCloudFront(array $args = [])
@@ -183,7 +185,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.21.5';
+    const VERSION = '3.21.6';
 
     /** @var array Arguments for creating clients */
     private $args;
