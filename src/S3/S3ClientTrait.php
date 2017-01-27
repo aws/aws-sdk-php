@@ -15,7 +15,7 @@ use GuzzleHttp\Promise\RejectedPromise;
  */
 trait S3ClientTrait
 {
-        /**
+    /**
      * Upload a file, stream, or string to a bucket.
      *
      * If the upload size exceeds the specified threshold, the upload will be
