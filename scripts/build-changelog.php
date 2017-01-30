@@ -2,6 +2,7 @@
 
 /*
 * This script generates changelog based on the json files in "../.changes/nextrelease/"
+* and generates a new TAG for the build.
 */
 
 $dir = "../.changes/";
@@ -94,7 +95,7 @@ function generateChangelogString($CHANGELOG){
 }
 
 function buildChangelog(){
-	
+
 	$newChangelog=readChangelog($GLOBALS['dir']);
 	$TAG=createTAG($GLOBALS['newServiceFlag']);
 
