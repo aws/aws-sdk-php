@@ -26,6 +26,21 @@ or by downloading a single zip or phar file from our [latest release][latest-rel
   * [User Guide][docs-guide-v2]
   * [API Docs][docs-api-v2]
 
+## Getting Help
+
+Please use these community resources for getting help. We use the GitHub issues for tracking bugs and feature requests and have limited bandwidth to address them.
+
+* Ask a question on [StackOverflow](https://stackoverflow.com/) and tag it with [`aws-php-sdk`](http://stackoverflow.com/questions/tagged/aws-php-sdk)
+* Come join the AWS SDK for PHP [gitter](https://gitter.im/aws/aws-sdk-php)
+* Open a support ticket with [AWS Support](https://console.aws.amazon.com/support/home/)
+* If it turns out that you may have found a bug, please [open an issue](https://github.com/aws/aws-sdk-php/issues/new)
+
+## Opening Issues
+
+If you encounter a bug with `aws-sdk-php` we would like to hear about it. Search the existing issues and try to make sure your problem doesn’t already exist before opening a new issue. It’s helpful if you include the version of `aws-sdk-php`, PHP version and OS you’re using. Please include a stack trace and reduced repro case when appropriate, too.
+
+The GitHub issues are intended for bug reports and feature requests. For help and questions with using `aws-sdk-php` please make use of the resources listed in the Getting Help section. There are limited resources available for handling issues and by keeping the list of open issues lean we can respond in a timely manner.
+
 ## Features
 
 * Provides easy-to-use HTTP clients for all supported AWS
