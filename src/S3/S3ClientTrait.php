@@ -18,35 +18,8 @@ trait S3ClientTrait
     /**
      * Upload a file, stream, or string to a bucket.
      *
-     * If the upload size exceeds the specified threshold, the upload will be
-     * performed using concurrent multipart uploads.
-     *
-     * The options array accepts the following options:
-     *
-     * - before_upload: (callable) Callback to invoke before any upload
-     *   operations during the upload process. The callback should have a
-     *   function signature like `function (Aws\Command $command) {...}`.
-     * - concurrency: (int, default=int(3)) Maximum number of concurrent
-     *   `UploadPart` operations allowed during a multipart upload.
-     * - mup_threshold: (int, default=int(16777216)) The size, in bytes, allowed
-     *   before the upload must be sent via a multipart upload. Default: 16 MB.
-     * - params: (array, default=array([])) Custom parameters to use with the
-     *   upload. For single uploads, they must correspond to those used for the
-     *   `PutObject` operation. For multipart uploads, they correspond to the
-     *   parameters of the `CreateMultipartUpload` operation.
-     * - part_size: (int) Part size to use when doing a multipart upload.
-     *
-     * @param string $bucket  Bucket to upload the object.
-     * @param string $key     Key of the object.
-     * @param mixed  $body    Object data to upload. Can be a
-     *                        StreamInterface, PHP stream resource, or a
-     *                        string of data to upload.
-     * @param string $acl     ACL to apply to the object (default: private).
-     * @param array  $options Options used to configure the upload process.
-     *
      * @see Aws\S3\MultipartUploader for more info about multipart uploads.
      * @see S3ClientInterface::upload()
-     * @return ResultInterface Returns the result of the upload.
      */
     public function upload(
         $bucket,
@@ -61,20 +34,9 @@ trait S3ClientTrait
     }
 
     /**
-     * Upload a file, stream, or string to a bucket asynchronously.
-     *
-     * @param string $bucket  Bucket to upload the object.
-     * @param string $key     Key of the object.
-     * @param mixed  $body    Object data to upload. Can be a
-     *                        StreamInterface, PHP stream resource, or a
-     *                        string of data to upload.
-     * @param string $acl     ACL to apply to the object (default: private).
-     * @param array  $options Options used to configure the upload process.
      *
      * @see self::upload
      * @see S3ClientInterface::uploadAsync()
-     * @return PromiseInterface     Returns a promise that will be fulfilled
-     *                              with the result of the upload.
      */
     public function uploadAsync(
         $bucket,
@@ -90,32 +52,8 @@ trait S3ClientTrait
     /**
      * Copy an object of any size to a different location.
      *
-     * If the upload size exceeds the maximum allowable size for direct S3
-     * copying, a multipart copy will be used.
-     *
-     * The options array accepts the following options:
-     *
-     * - before_upload: (callable) Callback to invoke before any upload
-     *   operations during the upload process. The callback should have a
-     *   function signature like `function (Aws\Command $command) {...}`.
-     * - concurrency: (int, default=int(5)) Maximum number of concurrent
-     *   `UploadPart` operations allowed during a multipart upload.
-     * - params: (array, default=array([])) Custom parameters to use with the
-     *   upload. For single uploads, they must correspond to those used for the
-     *   `CopyObject` operation. For multipart uploads, they correspond to the
-     *   parameters of the `CreateMultipartUpload` operation.
-     * - part_size: (int) Part size to use when doing a multipart upload.
-     *
-     * @param string $fromBucket    Bucket where the copy source resides.
-     * @param string $fromKey       Key of the copy source.
-     * @param string $destBucket    Bucket to which to copy the object.
-     * @param string $destKey       Key to which to copy the object.
-     * @param string $acl           ACL to apply to the copy (default: private).
-     * @param array  $options       Options used to configure the upload process.
-     * 
      * @see Aws\S3\MultipartCopy for more info about multipart uploads.
      * @see S3ClientInterface::copy()
-     * @return ResultInterface Returns the result of the copy.
      */
     public function copy(
         $fromBucket,
@@ -132,17 +70,8 @@ trait S3ClientTrait
     /**
      * Copy an object of any size to a different location asynchronously.
      *
-     * @param string $fromBucket    Bucket where the copy source resides.
-     * @param string $fromKey       Key of the copy source.
-     * @param string $destBucket    Bucket to which to copy the object.
-     * @param string $destKey       Key to which to copy the object.
-     * @param string $acl           ACL to apply to the copy (default: private).
-     * @param array  $options       Options used to configure the upload process.
-     *
      * @see self::copy
      * @see S3ClientInterface::copyAsync()
-     * @return PromiseInterface     Returns a promise that will be fulfilled
-     *                              with the result of the copy.
      */
     public function copyAsync(
         $fromBucket,
@@ -182,14 +111,8 @@ trait S3ClientTrait
      * operation. For example, this allows you to do things like delete all
      * objects that match a specific key prefix.
      *
-     * @param string $bucket  Bucket that contains the object keys
-     * @param string $prefix  Optionally delete only objects under this key prefix
-     * @param string $regex   Delete only objects that match this regex
-     * @param array  $options Aws\S3\BatchDelete options array.
-     *
      * @see Aws\S3\S3Client::listObjects
      * @see S3ClientInterface::deleteMatchingObjects()
-     * @throws \RuntimeException if no prefix and no regex is given
      */
     public function deleteMatchingObjects(
         $bucket,
@@ -205,17 +128,9 @@ trait S3ClientTrait
      * Deletes objects from Amazon S3 that match the result of a ListObjects
      * operation. For example, this allows you to do things like delete all
      * objects that match a specific key prefix.
-     *
-     * @param string $bucket  Bucket that contains the object keys
-     * @param string $prefix  Optionally delete only objects under this key prefix
-     * @param string $regex   Delete only objects that match this regex
-     * @param array  $options Aws\S3\BatchDelete options array.
-     *
      * @see Aws\S3\S3Client::listObjects
      * @see S3ClientInterface::deleteMatchingObjectsAsync()
      *
-     * @return PromiseInterface     A promise that is settled when matching
-     *                              objects are deleted.
      */
     public function deleteMatchingObjectsAsync(
         $bucket,
@@ -245,11 +160,6 @@ trait S3ClientTrait
     /**
      * Recursively uploads all files in a given directory to a given bucket.
      *
-     * @param string $directory Full path to a directory to upload
-     * @param string $bucket    Name of the bucket
-     * @param string $keyPrefix Virtual directory key prefix to add to each upload
-     * @param array  $options   Options available in Aws\S3\Transfer::__construct
-     *
      * @see Aws\S3\Transfer for more options and customization
      * @see S3ClientInterface::uploadDirectory()        
      */
@@ -266,16 +176,8 @@ trait S3ClientTrait
     /**
      * Recursively uploads all files in a given directory to a given bucket.
      *
-     * @param string $directory Full path to a directory to upload
-     * @param string $bucket    Name of the bucket
-     * @param string $keyPrefix Virtual directory key prefix to add to each upload
-     * @param array  $options   Options available in Aws\S3\Transfer::__construct
-     *
      * @see Aws\S3\Transfer for more options and customization
      * @see S3ClientInterface::uploadDirectoryAsync()
-     *
-     * @return PromiseInterface A promise that is settled when the upload is
-     *                          complete.
      */
     public function uploadDirectoryAsync(
         $directory,
@@ -289,11 +191,6 @@ trait S3ClientTrait
 
     /**
      * Downloads a bucket to the local filesystem
-     *
-     * @param string $directory Directory to download to
-     * @param string $bucket    Bucket to download from
-     * @param string $keyPrefix Only download objects that use this key prefix
-     * @param array  $options   Options available in Aws\S3\Transfer::__construct
      *
      * @see S3ClientInterface::downloadBucket()
      */
@@ -310,13 +207,6 @@ trait S3ClientTrait
     /**
      * Downloads a bucket to the local filesystem
      *
-     * @param string $directory Directory to download to
-     * @param string $bucket    Bucket to download from
-     * @param string $keyPrefix Only download objects that use this key prefix
-     * @param array  $options   Options available in Aws\S3\Transfer::__construct
-     *
-     * @return PromiseInterface A promise that is settled when the download is
-     *                          complete.
      * @see S3ClientInterface::downloadBucketAsync()
      */
     public function downloadBucketAsync(
@@ -331,11 +221,6 @@ trait S3ClientTrait
 
     /**
      * Returns the region in which a given bucket is located.
-     *
-     * @param string $bucketName
-     *
-     * @return string
-     *
      * @see S3ClientInterface::determineBucketRegion()
      */
     public function determineBucketRegion($bucketName)
@@ -346,10 +231,6 @@ trait S3ClientTrait
     /**
      * Returns a promise fulfilled with the region in which a given bucket is
      * located.
-     *
-     * @param string $bucketName
-     *
-     * @return PromiseInterface
      *
      * @see S3ClientInterface::determineBucketRegionAsync()
      */
@@ -376,10 +257,6 @@ trait S3ClientTrait
     /**
      * Determines whether or not a bucket exists by name.
      *
-     * @param string $bucket  The name of the bucket
-     *
-     * @return bool
-     *
      * @see S3ClientInterface::doesBucketExist()
      */
     public function doesBucketExist($bucket)
@@ -391,13 +268,6 @@ trait S3ClientTrait
 
     /**
      * Determines whether or not an object exists by name.
-     *
-     * @param string $bucket  The name of the bucket
-     * @param string $key     The key of the object
-     * @param array  $options Additional options available in the HeadObject
-     *                        operation (e.g., VersionId).
-     *
-     * @return bool
      *
      * @see S3ClientInterface::doesObjectExist()
      */
