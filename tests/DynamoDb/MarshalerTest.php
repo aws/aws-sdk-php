@@ -377,4 +377,14 @@ JSON;
         $this->assertEquals(3, count($set));
         $this->assertEquals(3, iterator_count($set));
     }
+
+    public function testCanUnmarshalSetsToArray()
+    {
+        $m = new Marshaler(['wrap_sets' => false]);
+        $result = $m->unmarshalItem([
+            'foo' => ['SS' => ['a', 'b']],
+        ]);
+
+        $this->assertEquals(['foo' => ['a', 'b']], $result);
+    }
 }
