@@ -64,28 +64,28 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($result[1]->type,"NEW_SERVICE");
 	}
 
-	public function testcreateTAGNoFile()
+	public function testcreateTagNoFile()
 	{
 		$this->setExpectedException(\Exception::class);
 		$obj = $this->getChangelogBuilder();
-		$obj->createTAG(False,"test");
+		$obj->createTag(False,"test");
 	}
 
-	public function testcreateTAGInvalidChangelog()
+	public function testcreateTagInvalidChangelog()
 	{
 		$this->setExpectedException(\Exception::class);
 		$obj = $this->getChangelogBuilder();
-		$obj->createTAG(False,$this->RESOURCE_DIR . "/CHANGELOG-invalid.md");
+		$obj->createTag(False,$this->RESOURCE_DIR . "/CHANGELOG-invalid.md");
 	}
 
-	public function testcreateTAGValid()
+	public function testcreateTagValid()
 	{
 		$obj = $this->getChangelogBuilder();
-		$result = $obj->createTAG(False,$this->RESOURCE_DIR . "/CHANGELOG-valid.md");
+		$result = $obj->createTag(False,$this->RESOURCE_DIR . "/CHANGELOG-valid.md");
 		$this->assertEquals("3.21.7",$result);
 	}
 
-	public function testcreateTAGValidServiceVersionBump()
+	public function testcreateTagValidServiceVersionBump()
 	{
 		$obj = $this->getChangelogBuilder();
 		$result = $obj->createTAG(True,$this->RESOURCE_DIR . "/CHANGELOG-valid.md");
@@ -100,7 +100,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
 		$obj = $this->getChangelogBuilder();
 		$obj->dir = $this->RESOURCE_DIR;
 		$CHANGELOG=$obj->readChangelog($this->RESOURCE_DIR . "/.changes/");
-		$TAG = $obj->createTAG(False,$this->RESOURCE_DIR . "/CHANGELOG-valid.md");
+		$TAG = $obj->createTag(False,$this->RESOURCE_DIR . "/CHANGELOG-valid.md");
 		$obj->createChangelogJson($this->RESOURCE_DIR, $CHANGELOG,$TAG);
 		$this->assertEquals(True, file_exists($this->RESOURCE_DIR . "/3.21.7"));
 		$result = json_decode(file_get_contents($this->RESOURCE_DIR . "/3.21.7"));

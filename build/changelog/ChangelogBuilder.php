@@ -50,7 +50,7 @@ class ChangelogBuilder
     }
   }
 
-  public function createTAG($newServiceFlag,$changelogFile)
+  public function createTag($newServiceFlag,$changelogFile)
   {
     if ( !file_exists($changelogFile) ) {
       throw new \Exception("Changelog File Not Found", 2);
@@ -113,7 +113,7 @@ class ChangelogBuilder
     $dir = ".changes/";
     $changelogFile = "CHANGELOG.md";
     $newChangelog = $this->readChangelog($dir);
-    $TAG = $this->createTAG($this->newServiceFlag,$changelogFile);
+    $TAG = $this->createTag($this->newServiceFlag,$changelogFile);
     putenv("TAG=$TAG");
     echo "Tag for next release ".$TAG. "\n";
     $this->createChangelogJson($dir,$newChangelog,$TAG);
