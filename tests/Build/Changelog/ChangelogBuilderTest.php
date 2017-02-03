@@ -110,10 +110,19 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
 
 	public function testwriteToChangelogValid()
 	{
+		file_put_contents($this->RESOURCE_DIR . "/CHANGELOG-tmp.md", "# CHANGELOG \n\n\n\n ");
 		$obj = $this->getChangelogBuilder();
-		$CHANGELOG_ARR=$obj->readChangelog($this->RESOURCE_DIR . "/.changes/");
-		$CHANGELOG = $obj->generateChangelogString($CHANGELOG_ARR);;
-		$obj->writeToChangelog($CHANGELOG,$this->RESOURCE_DIR . "/CHANGELOG-tmp.md");
+		$changelogEntries_arr=$obj->readChangelog($this->RESOURCE_DIR . "/.changes/");
+		$changelogEntries = $obj->generateChangelogString($changelogEntries_arr);
+		$obj->writeToChangelog($changelogEntries,$this->RESOURCE_DIR . "/CHANGELOG-tmp.md");
+		$lines = file($this->RESOURCE_DIR . "/CHANGELOG-tmp.md");
+		$this->assertEquals("## next release\n",$lines[2]);
+		$i=4;
+		
+		foreach ( explode( "\n" , $changelogEntries ) as $actualLine ) {
+			$this->assertEquals($actualLine."\n",$lines[$i]);
+			++$i;
+		}
 		unlink($this->RESOURCE_DIR . "/CHANGELOG-tmp.md");
 	}
 

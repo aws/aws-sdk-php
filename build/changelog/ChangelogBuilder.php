@@ -1,15 +1,14 @@
 <?php
 namespace Aws\Build\Changelog;
 
-
 /**
  * @internal
  */
+
 class ChangelogBuilder 
 {
   
   public $newServiceFlag = False;
-
 
   public function readChangelog($dir)
   {
@@ -80,7 +79,7 @@ class ChangelogBuilder
 
   public function writeToChangelog($CHANGELOG,$changelogFile)
   {
-    $NEWCHANGELOG = "## next release \n\n".$CHANGELOG."\n";
+    $NEWCHANGELOG = "## next release\n\n".$CHANGELOG."\n";
     $lines = file($changelogFile);
     $lines[2] = $NEWCHANGELOG.$lines[2];
     file_put_contents($changelogFile, $lines);
