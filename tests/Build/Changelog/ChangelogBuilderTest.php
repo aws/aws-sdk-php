@@ -89,7 +89,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
     public function testCreateTagInvalidChangelog()
     {
         $obj = $this->getChangelogBuilder();
-        $obj->createTag( $this->RESOURCE_DIR . "CHANGELOG-invalid.md");
+        $obj->createTag($this->RESOURCE_DIR . "CHANGELOG-invalid.md");
     }
 
     public function testCreateTagValid()

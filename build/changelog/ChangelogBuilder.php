@@ -80,18 +80,18 @@ class ChangelogBuilder
             throw new \Exception("Changelog File Not Found", 2);
         }
         $lines = file($changelogFile);
-        $TAG = explode(".", explode(" ", $lines[2])[1]);
-        if ($TAG[0] == "next") {
+        $tag = explode(".", explode(" ", $lines[2])[1]);
+        if ($tag[0] == "next") {
             throw new \Exception("Untagged changes exits in CHANGELOG.md", 1);
         }
         if ($this->newServiceFlag) {
             //Minor Version Bump if a newservice is being released
-            ++$TAG[1];
-            $TAG[2] = 0;
-            return implode(".", $TAG);
+            ++$tag[1];
+            $tag[2] = 0;
+            return implode(".", $tag);
         } else {
-            ++$TAG[2];
-            return implode(".", $TAG);
+            ++$tag[2];
+            return implode(".", $tag);
         }
     }
 
@@ -139,13 +139,12 @@ class ChangelogBuilder
 
     public function buildChangelog()
     {
-        $dir = ".changes/";
         $changelogFile = "CHANGELOG.md";
         $newChangelog = $this->readChangelog();
-        $TAG = $this->createTag($changelogFile);
-        putenv("TAG=$TAG");
-        echo "Tag for next release " . $TAG . "\n";
-        $this->createChangelogJson($newChangelog, $TAG, "");
+        $tag = $this->createTag($changelogFile);
+        putenv("TAG=$tag");
+        echo "Tag for next release " . $tag . "\n";
+        $this->createChangelogJson($newChangelog, $tag, "");
         $ChangelogUpdate = $this->generateChangelogString($newChangelog);
         echo "$ChangelogUpdate";
         $this->writeToChangelog($ChangelogUpdate, $changelogFile);
