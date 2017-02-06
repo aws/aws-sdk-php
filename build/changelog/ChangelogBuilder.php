@@ -4,7 +4,6 @@ namespace Aws\Build\Changelog;
 /**
  * @internal
  */
-
 class ChangelogBuilder
 {
 
