@@ -12,18 +12,12 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
 
     private $RESOURCE_DIR = "tests/Build/Changelog/resources/";
 
-    private function getChangelogBuilder()
-    {
-        return new ChangelogBuilder($this->RESOURCE_DIR);
-    }
-
     /**
      * @expectedException \Exception
      */
     public function testReadChangelogNoDirectory()
     {
-        $obj = $this->getChangelogBuilder();
-        $obj->putDir('wrong-folder');
+        $obj = new ChangelogBuilder('wrong-folder');
         $obj->readChangelog();
     }
 
@@ -32,14 +26,13 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testReadChangelogNoReleaseNotes()
     {
-        $obj = $this->getChangelogBuilder();
-        $obj->putDir($this->RESOURCE_DIR . '/.changes/');
+        $obj = new ChangelogBuilder($this->RESOURCE_DIR . '/.changes/');
         $obj->readChangelog();
     }
 
     public function testReadChangelogValid()
     {
-        $obj = $this->getChangelogBuilder();
+        $obj = new ChangelogBuilder($this->RESOURCE_DIR);
         $result = $obj->readChangelog();
         $this->assertEquals($result[0]->type, 'NEW_FEATURE');
         $this->assertEquals($result[0]->description, 'Parse ini files containing comments using #');
@@ -51,7 +44,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateTagNoFile()
     {
-        $obj = $this->getChangelogBuilder();
+        $obj = new ChangelogBuilder($this->RESOURCE_DIR);
         $obj->createTag(false, 'test');
     }
 
@@ -60,20 +53,20 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateTagInvalidChangelog()
     {
-        $obj = $this->getChangelogBuilder();
+        $obj = new ChangelogBuilder($this->RESOURCE_DIR);
         $obj->createTag($this->RESOURCE_DIR . 'CHANGELOG-invalid.md');
     }
 
     public function testCreateTagValid()
     {
-        $obj = $this->getChangelogBuilder();
+        $obj = new ChangelogBuilder($this->RESOURCE_DIR);
         $result = $obj->createTag($this->RESOURCE_DIR . '/CHANGELOG-valid.md');
         $this->assertEquals("3.21.7", $result);
     }
 
     public function testCreateTagValidServiceVersionBump()
     {
-        $obj = $this->getChangelogBuilder();
+        $obj = new ChangelogBuilder($this->RESOURCE_DIR);
         $obj->putNewServiceFlag(true);
         $result = $obj->createTAG($this->RESOURCE_DIR . 'CHANGELOG-valid.md');
         $this->assertEquals("3.22.0", $result);
@@ -85,7 +78,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
             unlink($this->RESOURCE_DIR . '/3.21.7');
         }
         $tempDir = sys_get_temp_dir();
-        $obj = $this->getChangelogBuilder();
+        $obj = new ChangelogBuilder($this->RESOURCE_DIR);
         $CHANGELOG = $obj->readChangelog();
         $obj->putNewServiceFlag(false);
         $TAG = $obj->createTag($this->RESOURCE_DIR . '/CHANGELOG-valid.md');
@@ -100,7 +93,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $tempDir = sys_get_temp_dir();
         file_put_contents($tempDir . "/CHANGELOG-tmp.md", "# CHANGELOG \n\n\n\n ");
-        $obj = $this->getChangelogBuilder();
+        $obj = new ChangelogBuilder($this->RESOURCE_DIR);
         $changelogEntries_arr = $obj->readChangelog();
         $changelogEntries = $obj->generateChangelogString($changelogEntries_arr);
         $obj->writeToChangelog($changelogEntries, $tempDir . '/CHANGELOG-tmp.md');
@@ -117,7 +110,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testGenerateChangelogStringValid()
     {
-        $obj = $this->getChangelogBuilder();
+        $obj = new ChangelogBuilder($this->RESOURCE_DIR);
         $CHANGELOG = $obj->readChangelog();
         $result = $obj->generateChangelogString($CHANGELOG);
         $expectedOutput =
