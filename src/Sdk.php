@@ -20,6 +20,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBatch(array $args = [])
  * @method \Aws\Budgets\BudgetsClient createBudgets(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBudgets(array $args = [])
+ * @method \Aws\CloudDirectory\CloudDirectoryClient createCloudDirectory(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCloudDirectory(array $args = [])
  * @method \Aws\CloudFormation\CloudFormationClient createCloudFormation(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudFormation(array $args = [])
  * @method \Aws\CloudFront\CloudFrontClient createCloudFront(array $args = [])
@@ -54,6 +56,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCognitoSync(array $args = [])
  * @method \Aws\ConfigService\ConfigServiceClient createConfigService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionConfigService(array $args = [])
+ * @method \Aws\CostandUsageReportService\CostandUsageReportServiceClient createCostandUsageReportService(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCostandUsageReportService(array $args = [])
  * @method \Aws\DataPipeline\DataPipelineClient createDataPipeline(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDataPipeline(array $args = [])
  * @method \Aws\DatabaseMigrationService\DatabaseMigrationServiceClient createDatabaseMigrationService(array $args = [])
@@ -181,7 +185,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.20.12';
+    const VERSION = '3.21.6';
 
     /** @var array Arguments for creating clients */
     private $args;

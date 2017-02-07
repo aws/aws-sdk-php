@@ -60,6 +60,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise registerTargetsAsync(array $args = [])
  * @method \Aws\Result removeTags(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeTagsAsync(array $args = [])
+ * @method \Aws\Result setIpAddressType(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise setIpAddressTypeAsync(array $args = [])
  * @method \Aws\Result setRulePriorities(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setRulePrioritiesAsync(array $args = [])
  * @method \Aws\Result setSecurityGroups(array $args = [])

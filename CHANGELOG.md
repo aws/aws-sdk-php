@@ -1,5 +1,57 @@
 # CHANGELOG
 
+## 3.21.6 - 2017-01-27
+
+* `Aws\CloudDirectory` - Added support for new service `AWS Cloud Directory`
+* `Aws\CodeDeploy` - Added support for blue/green deployments
+* `Aws\Ec2` - Added support to Add instance health check functionality to replace unhealthy EC2 Spot fleet instances with fresh ones.
+* `Aws\Rds` -  Upgraded Snapshot Engine Version
+
+## 3.21.5 - 2017-01-25
+
+* `Aws\ElasticLoadBalancing` - Added support for New load balancer type
+* `Aws\Rds` - Added support for Cross Region Read Replica Copying
+
+## 3.21.4 - 2017-01-25
+
+* `Aws\CodeCommit` - Added a new API to list the different files between 2 commits 
+* `Aws\Ecs` - Added support for Container instance draining
+
+## 3.21.3 - 2017-01-20
+
+* `Aws\Acm` - Updated response elements for DescribeCertificate API in support of managed renewal.
+
+## 3.21.2 - 2017-01-19
+
+* `Aws\Ec2` - Added support for new parameters to SpotPlacement in RequestSpotInstances API
+
+## 3.21.1 - 2017-01-18
+
+* `Aws\Rds` - Added support for `Mysql` to `Aurora` Replication
+
+## 3.21.0 - 2017-01-17
+
+* `Aws\Credentials` - Added support for AssumeRoleCredentialProvider and support for source ini credentials from ./aws/config file in defaultProvider
+* `Aws\DynamoDb` - Added tagging Support for Amazon DynamoDB Tables and Indexes
+* `Aws\Route53` - Added support for ca-central-1 and eu-west-2 enum values in CloudWatchRegion enum
+
+## 3.20.16 - 2017-01-16
+
+* Fix manifest
+
+## 3.20.15 - 2017-01-16
+
+* `Aws\Cur` - Added Support for new service `AWS CostAndUsageReport`
+
+## 3.20.14 - 2017-01-16
+
+* `Aws\Config` - Updated the models to include InvalidNextTokenException in API response
+
+## 3.20.13 - 2017-01-04
+
+* `Aws\Config` - Added support for customers to use/write rules based on OversizedConfigurationItemChangeNotification mesage type.
+* `Aws\MarketplaceAnalytics` - Added support for data set disbursed_amount_by_instance_hours, with historical data available starting 2012-09-04
+
 ## 3.20.12 - 2016-12-29
 
 * `Aws\CodeDeploy` - Added support for IAM Session Arns in addition to IAM User Arns for on premise host authentication.
