@@ -23,7 +23,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
     public function testReadChangelogNoDirectory()
     {
         $obj = $this->getChangelogBuilder();
-        $obj->putDir("wrong-folder");
+        $obj->putDir('wrong-folder');
         $obj->readChangelog();
     }
 
@@ -33,7 +33,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
     public function testReadChangelogNoReleaseNotes()
     {
         $obj = $this->getChangelogBuilder();
-        $obj->putDir($this->RESOURCE_DIR . "/.changes/");
+        $obj->putDir($this->RESOURCE_DIR . '/.changes/');
         $obj->readChangelog();
     }
 
@@ -41,37 +41,9 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $obj = $this->getChangelogBuilder();
         $result = $obj->readChangelog();
-        $this->assertEquals($result[0]->type, "NEW_FEATURE");
-        $this->assertEquals($result[0]->description, "Parse ini files containing comments using #");
-        $this->assertEquals($result[1]->type, "NEW_SERVICE");
-    }
-
-    /**
-     * @expectedException \Exception
-     */
-    public function testCleanJSONEmptyInput()
-    {
-        $obj = $this->getChangelogBuilder();
-        $obj->cleanJSON("");
-    }
-
-    /**
-     * @expectedException \Exception
-     */
-    public function testCleanJSONInvalidJSON()
-    {
-        $obj = $this->getChangelogBuilder();
-        $obj->cleanJSON("test");
-    }
-
-    public function testCleanJSONValidJSON()
-    {
-        $str = file_get_contents($this->RESOURCE_DIR . "/.changes/nextrelease/test.json");
-        $obj = $this->getChangelogBuilder();
-        $obj->putNewServiceFlag(false);
-        $result = $obj->cleanJSON(json_decode($str));
-        $this->assertEquals($result[0]->description, "Parse ini files containing comments using #");
-        $this->assertEquals($result[1]->type, "NEW_SERVICE");
+        $this->assertEquals($result[0]->type, 'NEW_FEATURE');
+        $this->assertEquals($result[0]->description, 'Parse ini files containing comments using #');
+        $this->assertEquals($result[1]->type, 'NEW_SERVICE');
     }
 
     /**
@@ -80,7 +52,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
     public function testCreateTagNoFile()
     {
         $obj = $this->getChangelogBuilder();
-        $obj->createTag(false, "test");
+        $obj->createTag(false, 'test');
     }
 
     /**
@@ -89,13 +61,13 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
     public function testCreateTagInvalidChangelog()
     {
         $obj = $this->getChangelogBuilder();
-        $obj->createTag($this->RESOURCE_DIR . "CHANGELOG-invalid.md");
+        $obj->createTag($this->RESOURCE_DIR . 'CHANGELOG-invalid.md');
     }
 
     public function testCreateTagValid()
     {
         $obj = $this->getChangelogBuilder();
-        $result = $obj->createTag($this->RESOURCE_DIR . "/CHANGELOG-valid.md");
+        $result = $obj->createTag($this->RESOURCE_DIR . '/CHANGELOG-valid.md');
         $this->assertEquals("3.21.7", $result);
     }
 
@@ -103,23 +75,23 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $obj = $this->getChangelogBuilder();
         $obj->putNewServiceFlag(true);
-        $result = $obj->createTAG($this->RESOURCE_DIR . "CHANGELOG-valid.md");
+        $result = $obj->createTAG($this->RESOURCE_DIR . 'CHANGELOG-valid.md');
         $this->assertEquals("3.22.0", $result);
     }
 
     public function testCreateChangelogJsonValid()
     {
-        if (file_exists($this->RESOURCE_DIR . "/3.21.7")) {
-            unlink($this->RESOURCE_DIR . "/3.21.7");
+        if (file_exists($this->RESOURCE_DIR . '/3.21.7')) {
+            unlink($this->RESOURCE_DIR . '/3.21.7');
         }
         $tempDir = sys_get_temp_dir();
         $obj = $this->getChangelogBuilder();
         $CHANGELOG = $obj->readChangelog();
         $obj->putNewServiceFlag(false);
-        $TAG = $obj->createTag($this->RESOURCE_DIR . "/CHANGELOG-valid.md");
+        $TAG = $obj->createTag($this->RESOURCE_DIR . '/CHANGELOG-valid.md');
         $obj->createChangelogJson($CHANGELOG, $TAG, $tempDir);
-        $this->assertEquals(true, file_exists($tempDir . "/3.21.7"));
-        $result = json_decode(file_get_contents($tempDir . "/3.21.7"));
+        $this->assertEquals(true, file_exists($tempDir . '/3.21.7'));
+        $result = json_decode(file_get_contents($tempDir . '/3.21.7'));
         $this->assertEquals(3, count($result));
         unlink($tempDir . "/3.21.7");
     }
@@ -131,8 +103,8 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
         $obj = $this->getChangelogBuilder();
         $changelogEntries_arr = $obj->readChangelog();
         $changelogEntries = $obj->generateChangelogString($changelogEntries_arr);
-        $obj->writeToChangelog($changelogEntries, $tempDir . "/CHANGELOG-tmp.md");
-        $lines = file($tempDir . "/CHANGELOG-tmp.md");
+        $obj->writeToChangelog($changelogEntries, $tempDir . '/CHANGELOG-tmp.md');
+        $lines = file($tempDir . '/CHANGELOG-tmp.md');
         $this->assertEquals("## next release\n", $lines[2]);
         $i = 4;
 
@@ -140,7 +112,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($actualLine . "\n", $lines[$i]);
             ++$i;
         }
-        unlink($tempDir . "/CHANGELOG-tmp.md");
+        unlink($tempDir . '/CHANGELOG-tmp.md');
     }
 
     public function testGenerateChangelogStringValid()
@@ -149,10 +121,10 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
         $CHANGELOG = $obj->readChangelog();
         $result = $obj->generateChangelogString($CHANGELOG);
         $expectedOutput =
-            "* `Aws\Ec2` - Added Support to Tag Instance
+            '* `Aws\Ec2` - Added Support to Tag Instance
 * `Aws\s3` - Test string placeholder for new service
 * `Aws\util` - Parse ini files containing comments using #
-";
+';
         $this->assertEquals($expectedOutput, $result);
     }
 }

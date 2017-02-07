@@ -37,7 +37,7 @@ class ChangelogBuilder
 
     public function readChangelog()
     {
-        $releaseDir = $this->dir . ".changes/nextrelease/";
+        $releaseDir = $this->dir . '.changes/nextrelease/';
         $changelogEntries = [];
         if (!is_dir($releaseDir) || !$dh = opendir($releaseDir)) {
             throw new \Exception("nextrelease directory doesn't exists or is not readable at location $releaseDir");
@@ -56,17 +56,17 @@ class ChangelogBuilder
         return $changelogEntries;
     }
 
-    public function cleanJSON($arr)
+    private function cleanJSON($arr)
     {
         if (empty($arr) || !is_array($arr)) {
-            throw new \Exception("Invalid Input", 2);
+            throw new \Exception('Invalid Input', 2);
         } else {
             $cleanedJSON = [];
             foreach ($arr as $x) {
-                if ($x->type == "NEW_SERVICE") {
+                if ($x->type == 'NEW_SERVICE') {
                     $this->newServiceFlag = true;
                 }
-                if ($x->type != "DOC_UPDATE") {
+                if ($x->type != 'DOC_UPDATE') {
                     array_push($cleanedJSON, $x);
                 }
             }
@@ -77,12 +77,12 @@ class ChangelogBuilder
     public function createTag($changelogFile)
     {
         if (!file_exists($changelogFile)) {
-            throw new \Exception("Changelog File Not Found", 2);
+            throw new \Exception('Changelog File Not Found', 2);
         }
         $lines = file($changelogFile);
         $tag = explode(".", explode(" ", $lines[2])[1]);
-        if ($tag[0] == "next") {
-            throw new \Exception("Untagged changes exits in CHANGELOG.md", 1);
+        if ($tag[0] == 'next') {
+            throw new \Exception('Untagged changes exits in CHANGELOG.md', 1);
         }
         if ($this->newServiceFlag) {
             //Minor Version Bump if a newservice is being released
@@ -100,7 +100,7 @@ class ChangelogBuilder
         if ($changesFolder == "") {
             $changesFolder = $this->dir;
         }
-        $fp = fopen($changesFolder . "/" . $tag, 'w');
+        $fp = fopen($changesFolder . '/' . $tag, 'w');
         fwrite($fp, json_encode($changelog, JSON_PRETTY_PRINT));
         fclose($fp);
     }
@@ -115,7 +115,7 @@ class ChangelogBuilder
 
     public function cleanNextReleaseFolder()
     {
-        $nextReleaseDir = ".changes/nextrelease/";
+        $nextReleaseDir = '.changes/nextrelease/';
         $files = preg_grep('/^([^.])/', scandir($nextReleaseDir));
         foreach ($files as $file) {
             if (is_file($nextReleaseDir . $file)) {
@@ -139,12 +139,12 @@ class ChangelogBuilder
 
     public function buildChangelog()
     {
-        $changelogFile = "CHANGELOG.md";
+        $changelogFile = 'CHANGELOG.md';
         $newChangelog = $this->readChangelog();
         $tag = $this->createTag($changelogFile);
-        putenv("TAG=$tag");
-        echo "Tag for next release " . $tag . "\n";
-        $this->createChangelogJson($newChangelog, $tag, "");
+        putenv('TAG=$tag');
+        echo 'Tag for next release ' . $tag . "\n";
+        $this->createChangelogJson($newChangelog, $tag, '');
         $ChangelogUpdate = $this->generateChangelogString($newChangelog);
         echo "$ChangelogUpdate";
         $this->writeToChangelog($ChangelogUpdate, $changelogFile);
