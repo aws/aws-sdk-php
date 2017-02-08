@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release 
+
+* `Aws\LexRuntimeService` - Added support for new service `Amazon Lex Runtime Service`
+
 ## 3.21.6 - 2017-01-27
 
 * `Aws\CloudDirectory` - Added support for new service `AWS Cloud Directory`
