@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.22.0 - 2017-02-08
 
 * `Aws\LexRuntimeService` - Added support for new service `Amazon Lex Runtime Service`
 
