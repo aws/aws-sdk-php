@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.22.1 - 2017-02-09
 
 * `Aws\Ec2` - Added support to associate `IAM profiles` to running instances API
 * `Aws\Rekognition` - Added support for `age` to the face description from `DetectFaces` and `IndexFaces`
