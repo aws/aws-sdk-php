@@ -283,8 +283,8 @@ class Marshaler
                 }
                 // NOBREAK: Unmarshal M the same way as L, for arrays.
             case 'L':
-                foreach ($value as &$v) {
-                    $v = $this->unmarshalValue($v, $mapAsObject);
+                foreach ($value as $k => $v) {
+                    $value[$k] = $this->unmarshalValue($v, $mapAsObject);
                 }
                 return $value;
             case 'B':
@@ -292,8 +292,8 @@ class Marshaler
             case 'SS':
             case 'NS':
             case 'BS':
-                foreach ($value as &$v) {
-                    $v = $this->unmarshalValue([$type[0] => $v]);
+                foreach ($value as $k => $v) {
+                    $value[$k] = $this->unmarshalValue([$type[0] => $v]);
                 }
                 return new SetValue($value);
         }

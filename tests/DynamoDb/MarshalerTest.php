@@ -377,4 +377,16 @@ JSON;
         $this->assertEquals(3, count($set));
         $this->assertEquals(3, iterator_count($set));
     }
+
+    public function testUnmarshalItemDoesNotCreateReferences()
+    {
+        $m = new Marshaler();
+        $result = $m->unmarshalItem([
+            'foo' => ['S' => 'bar'],
+        ]);
+        $resultCopy = $result;
+        $resultCopy['foo_copy'] = $resultCopy['foo'];
+        $resultCopy['foo'] = 'baz';
+        $this->assertEquals('bar', $result['foo']);
+    }
 }
