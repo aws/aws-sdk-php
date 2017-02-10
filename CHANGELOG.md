@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.22.3 - 2017-02-10
 
 * Update endpoints.json with valid endpoints
 
