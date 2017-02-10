@@ -35,7 +35,7 @@ class PostObjectV4
      *                                      fields.
      * @param array             $options    Policy condition options
      * @param mixed             $expiration Upload expiration time value. By
-     *                                      default: 1 hour vaild peroid.
+     *                                      default: 1 hour valid period.
      */
     public function __construct(
         S3ClientInterface $client,
