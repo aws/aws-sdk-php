@@ -120,6 +120,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionKms(array $args = [])
  * @method \Aws\Lambda\LambdaClient createLambda(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLambda(array $args = [])
+ * @method \Aws\LexRuntimeService\LexRuntimeServiceClient createLexRuntimeService(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionLexRuntimeService(array $args = [])
  * @method \Aws\Lightsail\LightsailClient createLightsail(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLightsail(array $args = [])
  * @method \Aws\MachineLearning\MachineLearningClient createMachineLearning(array $args = [])
@@ -185,7 +187,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.21.6';
+    const VERSION = '3.22.1';
 
     /** @var array Arguments for creating clients */
     private $args;

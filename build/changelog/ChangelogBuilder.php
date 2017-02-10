@@ -8,47 +8,31 @@ class ChangelogBuilder
 {
 
     private $newServiceFlag = false;
-    private $dir;
+    private $baseDir;
+    private $releaseNotesOutputDir;
+    private $verboseFlag;
 
-    public function __construct($dir)
+    public function __construct($baseDir, $releaseNotesOutputDir, $verboseFlag)
     {
-        $this->dir = $dir;
+        $this->baseDir = $baseDir;
+        $this->releaseNotesOutputDir = $releaseNotesOutputDir;
+        $this->verboseFlag = $verboseFlag;
     }
 
-    public function getDir()
+    private function readChangelog()
     {
-        return $this->dir;
-    }
-
-    public function putDir($dir)
-    {
-        $this->dir = $dir;
-    }
-
-    public function getNewServiceFlag()
-    {
-        return $this->newServiceFlag;
-    }
-
-    public function putNewServiceFlag($flag)
-    {
-        $this->newServiceFlag = $flag;
-    }
-
-    public function readChangelog()
-    {
-        $releaseDir = $this->dir . '.changes/nextrelease/';
+        $releaseDir = $this->baseDir . '.changes/nextrelease/';
         $changelogEntries = [];
         if (!is_dir($releaseDir) || !$dh = opendir($releaseDir)) {
-            throw new \Exception("nextrelease directory doesn't exists or is not readable at location $releaseDir");
+            throw new \InvalidArgumentException("nextrelease directory doesn't exists or is not readable at location $releaseDir");
         } else {
             //Ignore any files starting with a (.) dot
             $files = preg_grep('/^([^.])/', scandir($releaseDir));
             if (empty($files)) {
-                throw new \Exception("No release notes files found in $releaseDir folder");
+                throw new \InvalidArgumentException("No release notes files found in $releaseDir folder");
             }
             foreach ($files as $file) {
-                $str = file_get_contents($releaseDir . "/" . $file);
+                $str = file_get_contents($releaseDir . $file);
                 $changelogEntries = array_merge($changelogEntries, $this->cleanJSON(json_decode($str)));
             }
             closedir($dh);
@@ -74,7 +58,7 @@ class ChangelogBuilder
         }
     }
 
-    public function createTag($changelogFile)
+    private function createTag($changelogFile)
     {
         if (!file_exists($changelogFile)) {
             throw new \Exception('Changelog File Not Found', 2);
@@ -82,7 +66,7 @@ class ChangelogBuilder
         $lines = file($changelogFile);
         $tag = explode(".", explode(" ", $lines[2])[1]);
         if ($tag[0] == 'next') {
-            throw new \Exception('Untagged changes exits in CHANGELOG.md', 1);
+            throw new \InvalidArgumentException('Untagged changes exits in CHANGELOG.md', 1);
         }
         if ($this->newServiceFlag) {
             //Minor Version Bump if a newservice is being released
@@ -95,18 +79,18 @@ class ChangelogBuilder
         }
     }
 
-    public function createChangelogJson($changelog, $tag, $changesFolder)
+    private function createChangelogJson($changelog, $tag)
     {
-        if ($changesFolder == "") {
-            $changesFolder = $this->dir;
-        }
-        $fp = fopen($changesFolder . '/' . $tag, 'w');
+        $fp = fopen($this->releaseNotesOutputDir . $tag, 'w');
         fwrite($fp, json_encode($changelog, JSON_PRETTY_PRINT));
         fclose($fp);
     }
 
-    public function writeToChangelog($changelog, $changelogFile)
+    private function writeToChangelog($changelog, $changelogFile)
     {
+        if (!file_exists($changelogFile)) {
+            throw new \InvalidArgumentException('Changelog File Not Found', 2);
+        }
         $newChangeLog = "## next release\n\n" . $changelog . "\n";
         $lines = file($changelogFile);
         $lines[2] = $newChangeLog . $lines[2];
@@ -115,17 +99,16 @@ class ChangelogBuilder
 
     public function cleanNextReleaseFolder()
     {
-        $nextReleaseDir = '.changes/nextrelease/';
+        $nextReleaseDir = $this->baseDir . '.changes/nextrelease/';
         $files = preg_grep('/^([^.])/', scandir($nextReleaseDir));
         foreach ($files as $file) {
             if (is_file($nextReleaseDir . $file)) {
                 unlink($nextReleaseDir . $file);
             }
-
         }
     }
 
-    public function generateChangelogString($changelog)
+    private function generateChangelogString($changelog)
     {
         usort($changelog, function ($a, $b) {
             return strcmp($a->category, $b->category);
@@ -139,15 +122,19 @@ class ChangelogBuilder
 
     public function buildChangelog()
     {
-        $changelogFile = 'CHANGELOG.md';
+        $changelogFile = $this->baseDir . 'CHANGELOG.md';
         $newChangelog = $this->readChangelog();
         $tag = $this->createTag($changelogFile);
         putenv('TAG=$tag');
-        echo 'Tag for next release ' . $tag . "\n";
-        $this->createChangelogJson($newChangelog, $tag, '');
+        if ($this->verboseFlag) {
+            echo 'Tag for next release ' . $tag . "\n";
+        }
+        $this->createChangelogJson($newChangelog, $tag);
         $ChangelogUpdate = $this->generateChangelogString($newChangelog);
-        echo "$ChangelogUpdate";
-        $this->writeToChangelog($ChangelogUpdate, $changelogFile);
+        if ($this->verboseFlag) {
+            echo "$ChangelogUpdate";
+        }
+        $this->writeToChangelog($ChangelogUpdate, $this->releaseNotesOutputDir . 'CHANGELOG.md');
     }
 
     public function fixEndpointFile()

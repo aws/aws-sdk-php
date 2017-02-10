@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 3.22.1 - 2017-02-09
+
+* `Aws\Ec2` - Added support to associate `IAM profiles` to running instances API
+* `Aws\Rekognition` - Added support for `age` to the face description from `DetectFaces` and `IndexFaces`
+
+## 3.22.0 - 2017-02-08
+
+* `Aws\LexRuntimeService` - Added support for new service `Amazon Lex Runtime Service`
+
 ## 3.21.6 - 2017-01-27
 
 * `Aws\CloudDirectory` - Added support for new service `AWS Cloud Directory`
