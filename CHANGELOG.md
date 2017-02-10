@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release 
+
+* `Aws\StorageGateway` - Added support for addition of clientList parameter to existing File share APIs
+
 ## 3.22.1 - 2017-02-09
 
 * `Aws\Ec2` - Added support to associate `IAM profiles` to running instances API
