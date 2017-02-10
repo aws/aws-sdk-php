@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.22.2 - 2017-02-10
 
 * `Aws\StorageGateway` - Added support for addition of clientList parameter to existing File share APIs
 
