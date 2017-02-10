@@ -81,7 +81,7 @@ class ChangelogBuilder
 
     private function createChangelogJson($changelog, $tag)
     {
-        $fp = fopen($this->releaseNotesOutputDir . $tag, 'w');
+        $fp = fopen($this->releaseNotesOutputDir . ".changes/" . $tag, 'w');
         fwrite($fp, json_encode($changelog, JSON_PRETTY_PRINT));
         fclose($fp);
     }

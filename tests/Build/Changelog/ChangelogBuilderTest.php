@@ -41,7 +41,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildChangelogCreateTagInvalidChangelog()
     {
-        $obj = new ChangelogBuilder($this->RESOURCE_DIR, sys_get_temp_dir(), false);
+        $obj = new ChangelogBuilder($this->RESOURCE_DIR, sys_get_temp_dir() . "/", false);
         $obj->buildChangelog();
     }
 
@@ -60,9 +60,9 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             json_decode(file_get_contents($this->RESOURCE_DIR . "/release-json-valid"), true),
-            json_decode(file_get_contents($tempDir . "3.22.0"), true)
+            json_decode(file_get_contents($tempDir . "/.changes/3.22.0"), true)
         );
-        unlink($tempDir . "3.22.0");
+        unlink($tempDir . "/.changes/3.22.0");
     }
 
     public function testCleanNextReleaseFolderValid()
