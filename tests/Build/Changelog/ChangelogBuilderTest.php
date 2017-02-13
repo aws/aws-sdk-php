@@ -12,13 +12,14 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
 
     private $RESOURCE_DIR = "tests/Build/Changelog/resources/";
 
-
     /**
      * @expectedException \InvalidArgumentException
      */
     public function testBuildChangelogNoDirectory()
     {
-        $obj = new ChangelogBuilder('wrong-folder', "", false);
+        $params = [];
+        $params['base_dir'] = 'wrong-folder';
+        $obj = new ChangelogBuilder($params);
         $obj->buildChangelog();
     }
 
@@ -31,7 +32,10 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
         if (!file_exists($tempDir . "/.changes/nextrelease/")) {
             mkdir($tempDir . "/.changes/nextrelease/", 0777, true);
         }
-        $obj = new ChangelogBuilder($tempDir, "", false);
+        $params = [];
+        $params['base_dir'] = $tempDir;
+        $params['release_notes_output_dir'] = '';
+        $obj = new ChangelogBuilder($params);
         $obj->buildChangelog();
         unlink($tempDir . "/.changes/nextrelease/");
     }
@@ -39,9 +43,12 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testBuildChangelogCreateTagInvalidChangelog()
+    public function testBuildChangelogInvalidChangelog()
     {
-        $obj = new ChangelogBuilder($this->RESOURCE_DIR, sys_get_temp_dir() . "/", false);
+        $params = [];
+        $params['base_dir'] = $this->RESOURCE_DIR;
+        $params['release_notes_output_dir'] = sys_get_temp_dir() . "/";
+        $obj = new ChangelogBuilder($params);
         $obj->buildChangelog();
     }
 
@@ -49,7 +56,10 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $tempDir = sys_get_temp_dir() . "/";
         file_put_contents($tempDir . "CHANGELOG.md", "# CHANGELOG \n\n\n\n ");
-        $obj = new ChangelogBuilder($this->RESOURCE_DIR, $tempDir, false);
+        $params = [];
+        $params['base_dir'] = $this->RESOURCE_DIR;
+        $params['release_notes_output_dir'] = $tempDir;
+        $obj = new ChangelogBuilder($params);
         $obj->buildChangelog();
         $lines = file($tempDir . 'CHANGELOG.md');
         $this->assertEquals("## next release\n", $lines[2]);
@@ -71,14 +81,12 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
         if (!file_exists($tempDir . ".changes/nextrelease/")) {
             mkdir($tempDir . ".changes/nextrelease/", 0777, true);
         }
-        $obj = new ChangelogBuilder($tempDir, '', false);
+        $params = [];
+        $params['base_dir'] = $tempDir;
+        $obj = new ChangelogBuilder($params);
         touch($tempDir . ".changes/nextrelease/temp.json");
         $this->assertEquals(1, count(preg_grep('/^([^.])/', scandir($tempDir . ".changes/nextrelease/"))));
         $obj->cleanNextReleaseFolder();
         $this->assertEquals(0, count(preg_grep('/^([^.])/', scandir($tempDir . ".changes/nextrelease/"))));
     }
 }
-
-
-
-

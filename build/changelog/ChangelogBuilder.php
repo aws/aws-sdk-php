@@ -6,62 +6,73 @@ namespace Aws\Build\Changelog;
  */
 class ChangelogBuilder
 {
+    /** @var array */
+    private $params = [];
 
+    /** @var boolean */
     private $newServiceFlag = false;
-    private $baseDir;
-    private $releaseNotesOutputDir;
-    private $verboseFlag;
 
-    public function __construct($baseDir, $releaseNotesOutputDir, $verboseFlag)
+    /**
+     *  The constructor requires following configure parameters:
+     * - base_dir: (String) Path to the base directory where the `.changes` folder is located. Default is empty string.
+     * - release_notes_output_dir: (String) Path to `.changes` folder where new release json will be put and content of
+     *                              `nextrelease` folder will be deleted
+     * - verbose_flag: (Boolean) Flag to enable(true)/disable(false) verbose mode
+     *
+     */
+    public function __construct($params)
     {
-        $this->baseDir = $baseDir;
-        $this->releaseNotesOutputDir = $releaseNotesOutputDir;
-        $this->verboseFlag = $verboseFlag;
+        $this->params['base_dir'] = isset($params['base_dir']) ? $params['base_dir'] : '';
+        $this->params['release_notes_output_dir'] = isset($params['release_notes_output_dir'])
+            ? $params['release_notes_output_dir']
+            : '';
+        $this->params['verbose_flag'] = isset($params['verbose_flag']) ? $params['verbose_flag'] : false;
     }
 
     private function readChangelog()
     {
-        $releaseDir = $this->baseDir . '.changes/nextrelease/';
+        $releaseDir = $this->params['base_dir'] . '.changes/nextrelease/';
         $changelogEntries = [];
         if (!is_dir($releaseDir) || !$dh = opendir($releaseDir)) {
-            throw new \InvalidArgumentException("nextrelease directory doesn't exists or is not readable at location $releaseDir");
-        } else {
-            //Ignore any files starting with a (.) dot
-            $files = preg_grep('/^([^.])/', scandir($releaseDir));
-            if (empty($files)) {
-                throw new \InvalidArgumentException("No release notes files found in $releaseDir folder");
-            }
-            foreach ($files as $file) {
-                $str = file_get_contents($releaseDir . $file);
-                $changelogEntries = array_merge($changelogEntries, $this->cleanJSON(json_decode($str)));
-            }
-            closedir($dh);
+            throw new \InvalidArgumentException(
+                "nextrelease directory doesn't exists or is not readable at location $releaseDir"
+            );
         }
+        //Ignore any files starting with a (.) dot
+        $files = preg_grep('/^([^.])/', scandir($releaseDir));
+        if (empty($files)) {
+            throw new \InvalidArgumentException("No release notes files found in $releaseDir folder");
+        }
+        foreach ($files as $file) {
+            $str = file_get_contents($releaseDir . $file);
+            $changelogEntries = array_merge($changelogEntries, $this->cleanJSON(json_decode($str)));
+        }
+        closedir($dh);
+
         return $changelogEntries;
     }
 
     private function cleanJSON($arr)
     {
         if (empty($arr) || !is_array($arr)) {
-            throw new \Exception('Invalid Input', 2);
-        } else {
-            $cleanedJSON = [];
-            foreach ($arr as $x) {
-                if ($x->type == 'NEW_SERVICE') {
-                    $this->newServiceFlag = true;
-                }
-                if ($x->type != 'DOC_UPDATE') {
-                    array_push($cleanedJSON, $x);
-                }
-            }
-            return $cleanedJSON;
+            throw new \RuntimeException('Invalid Input', 2);
         }
+        $cleanedJSON = [];
+        foreach ($arr as $x) {
+            if ($x->type == 'NEW_SERVICE') {
+                $this->newServiceFlag = true;
+            }
+            if ($x->type != 'DOC_UPDATE') {
+                array_push($cleanedJSON, $x);
+            }
+        }
+        return $cleanedJSON;
     }
 
     private function createTag($changelogFile)
     {
         if (!file_exists($changelogFile)) {
-            throw new \Exception('Changelog File Not Found', 2);
+            throw new \RuntimeException('Changelog File Not Found', 2);
         }
         $lines = file($changelogFile);
         $tag = explode(".", explode(" ", $lines[2])[1]);
@@ -81,7 +92,7 @@ class ChangelogBuilder
 
     private function createChangelogJson($changelog, $tag)
     {
-        $fp = fopen($this->releaseNotesOutputDir . ".changes/" . $tag, 'w');
+        $fp = fopen($this->params['release_notes_output_dir'] . ".changes/" . $tag, 'w');
         fwrite($fp, json_encode($changelog, JSON_PRETTY_PRINT));
         fclose($fp);
     }
@@ -99,7 +110,7 @@ class ChangelogBuilder
 
     public function cleanNextReleaseFolder()
     {
-        $nextReleaseDir = $this->baseDir . '.changes/nextrelease/';
+        $nextReleaseDir = $this->params['base_dir'] . '.changes/nextrelease/';
         $files = preg_grep('/^([^.])/', scandir($nextReleaseDir));
         foreach ($files as $file) {
             if (is_file($nextReleaseDir . $file)) {
@@ -122,19 +133,19 @@ class ChangelogBuilder
 
     public function buildChangelog()
     {
-        $changelogFile = $this->baseDir . 'CHANGELOG.md';
+        $changelogFile = $this->params['base_dir'] . 'CHANGELOG.md';
         $newChangelog = $this->readChangelog();
         $tag = $this->createTag($changelogFile);
         putenv('TAG=$tag');
-        if ($this->verboseFlag) {
+        if ($this->params['verbose_flag']) {
             echo 'Tag for next release ' . $tag . "\n";
         }
         $this->createChangelogJson($newChangelog, $tag);
         $ChangelogUpdate = $this->generateChangelogString($newChangelog);
-        if ($this->verboseFlag) {
+        if ($this->params['verbose_flag']) {
             echo "$ChangelogUpdate";
         }
-        $this->writeToChangelog($ChangelogUpdate, $this->releaseNotesOutputDir . 'CHANGELOG.md');
+        $this->writeToChangelog($ChangelogUpdate, $this->params['release_notes_output_dir'] . 'CHANGELOG.md');
     }
 
     public function fixEndpointFile()
