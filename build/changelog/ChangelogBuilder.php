@@ -18,9 +18,8 @@ class ChangelogBuilder
      * - release_notes_output_dir: (String) Path to `.changes` folder where new release json will be put and content of
      *                              `nextrelease` folder will be deleted
      * - verbose_flag: (Boolean) Flag to enable(true)/disable(false) verbose mode
-     *
      */
-    public function __construct($params)
+    public function __construct(array $params)
     {
         $this->params['base_dir'] = isset($params['base_dir']) ? $params['base_dir'] : '';
         $this->params['release_notes_output_dir'] = isset($params['release_notes_output_dir'])

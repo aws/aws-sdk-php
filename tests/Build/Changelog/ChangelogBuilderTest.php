@@ -5,7 +5,6 @@ use Aws\Build\Changelog\ChangelogBuilder;
 
 /**
  * @covers ChangelogBuilder
- *
  */
 class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
 {
