@@ -5,7 +5,7 @@ require __DIR__ . '/ChangelogBuilder.php';
 use Aws\Build\Changelog\ChangelogBuilder;
 
 $params = [
-    'verbose_flag' => true
+    'verbose' => true
 ];
 
 $changelogBuilder = new ChangelogBuilder($params);

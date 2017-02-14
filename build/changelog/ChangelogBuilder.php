@@ -17,7 +17,7 @@ class ChangelogBuilder
      * - base_dir: (String) Path to the base directory where the `.changes` folder is located. Default is empty string.
      * - release_notes_output_dir: (String) Path to `.changes` folder where new release json will be put and content of
      *                              `nextrelease` folder will be deleted
-     * - verbose_flag: (Boolean) Flag to enable(true)/disable(false) verbose mode
+     * - verbose: (Boolean) Flag to enable(true)/disable(false) verbose mode
      */
     public function __construct(array $params)
     {
@@ -25,7 +25,7 @@ class ChangelogBuilder
         $this->params['release_notes_output_dir'] = isset($params['release_notes_output_dir'])
             ? $params['release_notes_output_dir']
             : '';
-        $this->params['verbose_flag'] = isset($params['verbose_flag']) ? $params['verbose_flag'] : false;
+        $this->params['verbose'] = isset($params['verbose']) ? $params['verbose'] : false;
     }
 
     private function readChangelog()
@@ -136,12 +136,12 @@ class ChangelogBuilder
         $newChangelog = $this->readChangelog();
         $tag = $this->createTag($changelogFile);
         putenv('TAG=$tag');
-        if ($this->params['verbose_flag']) {
+        if ($this->params['verbose']) {
             echo 'Tag for next release ' . $tag . "\n";
         }
         $this->createChangelogJson($newChangelog, $tag);
         $ChangelogUpdate = $this->generateChangelogString($newChangelog);
-        if ($this->params['verbose_flag']) {
+        if ($this->params['verbose']) {
             echo "$ChangelogUpdate";
         }
         $this->writeToChangelog($ChangelogUpdate, $this->params['release_notes_output_dir'] . 'CHANGELOG.md');
