@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release 
+
+* `Aws\Ec2` - Added support for new `ModifyVolume` API
+
 ## 3.22.3 - 2017-02-10
 
 * Update endpoints.json with valid endpoints
