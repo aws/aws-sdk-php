@@ -15,8 +15,6 @@ class ChangelogBuilder
     /** @var string */
     private $base_dir;
 
-    private $params = [];
-
     /** @var boolean */
     private $newServiceFlag = false;
 
