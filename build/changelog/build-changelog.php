@@ -8,11 +8,7 @@ $params = array();
 
 $options = getopt('v:');
 
-if (isset($option['v'])) {
-    $params['verbose'] = $option['v'];
-} else {
-    $params['verbose'] = true;
-}
+$params['verbose'] = isset($option['v']) ? $option['v'] : true;
 
 $changelogBuilder = new ChangelogBuilder($params);
 
