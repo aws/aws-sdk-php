@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.22.5 - 2017-02-15
 
 * `Aws\Kms` - Added support for tagging
 
