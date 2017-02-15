@@ -4,9 +4,9 @@ require __DIR__ . '/ChangelogBuilder.php';
 
 use Aws\Build\Changelog\ChangelogBuilder;
 
-$params = array();
+$params = [];
 
-$options = getopt('v:');
+$options = getopt('v');
 
 $params['verbose'] = isset($option['v']) ? $option['v'] : true;
 
