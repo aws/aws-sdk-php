@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release 
+
+* `Aws\Kms` - Added support for tagging
+
 ## 3.22.4 - 2017-02-14
 
 * `Aws\Ec2` - Added support for new `ModifyVolume` API
