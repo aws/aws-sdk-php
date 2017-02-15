@@ -6,7 +6,15 @@ namespace Aws\Build\Changelog;
  */
 class ChangelogBuilder
 {
-    /** @var array */
+    /** @var boolean */
+    private $verbose;
+
+    /** @var string */
+    private $release_notes_output_dir;
+
+    /** @var string */
+    private $base_dir;
+
     private $params = [];
 
     /** @var boolean */
@@ -21,16 +29,16 @@ class ChangelogBuilder
      */
     public function __construct(array $params)
     {
-        $this->params['base_dir'] = isset($params['base_dir']) ? $params['base_dir'] : '';
-        $this->params['release_notes_output_dir'] = isset($params['release_notes_output_dir'])
+        $this->base_dir = isset($params['base_dir']) ? $params['base_dir'] : '';
+        $this->release_notes_output_dir = isset($params['release_notes_output_dir'])
             ? $params['release_notes_output_dir']
             : '';
-        $this->params['verbose'] = isset($params['verbose']) ? $params['verbose'] : false;
+        $this->verbose = isset($params['verbose']) ? $params['verbose'] : false;
     }
 
     private function readChangelog()
     {
-        $releaseDir = $this->params['base_dir'] . '.changes/nextrelease/';
+        $releaseDir = $this->base_dir . '.changes/nextrelease/';
         $changelogEntries = [];
         if (!is_dir($releaseDir) || !$dh = opendir($releaseDir)) {
             throw new \InvalidArgumentException(
@@ -91,7 +99,7 @@ class ChangelogBuilder
 
     private function createChangelogJson($changelog, $tag)
     {
-        $fp = fopen($this->params['release_notes_output_dir'] . ".changes/" . $tag, 'w');
+        $fp = fopen($this->release_notes_output_dir . ".changes/" . $tag, 'w');
         fwrite($fp, json_encode($changelog, JSON_PRETTY_PRINT));
         fclose($fp);
     }
@@ -109,7 +117,7 @@ class ChangelogBuilder
 
     public function cleanNextReleaseFolder()
     {
-        $nextReleaseDir = $this->params['base_dir'] . '.changes/nextrelease/';
+        $nextReleaseDir = $this->base_dir . '.changes/nextrelease/';
         $files = preg_grep('/^([^.])/', scandir($nextReleaseDir));
         foreach ($files as $file) {
             if (is_file($nextReleaseDir . $file)) {
@@ -132,19 +140,19 @@ class ChangelogBuilder
 
     public function buildChangelog()
     {
-        $changelogFile = $this->params['base_dir'] . 'CHANGELOG.md';
+        $changelogFile = $this->base_dir . 'CHANGELOG.md';
         $newChangelog = $this->readChangelog();
         $tag = $this->createTag($changelogFile);
         putenv('TAG=$tag');
-        if ($this->params['verbose']) {
+        if ($this->verbose) {
             echo 'Tag for next release ' . $tag . "\n";
         }
         $this->createChangelogJson($newChangelog, $tag);
         $ChangelogUpdate = $this->generateChangelogString($newChangelog);
-        if ($this->params['verbose']) {
+        if ($this->verbose) {
             echo "$ChangelogUpdate";
         }
-        $this->writeToChangelog($ChangelogUpdate, $this->params['release_notes_output_dir'] . 'CHANGELOG.md');
+        $this->writeToChangelog($ChangelogUpdate, $this->release_notes_output_dir . 'CHANGELOG.md');
     }
 
     public function fixEndpointFile()
