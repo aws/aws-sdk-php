@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 3.22.5 - 2017-02-15
+
+* `Aws\Kms` - Added support for tagging
+
+## 3.22.4 - 2017-02-14
+
+* `Aws\Ec2` - Added support for new `ModifyVolume` API
+
+## 3.22.3 - 2017-02-10
+
+* Update endpoints.json with valid endpoints
+
+## 3.22.2 - 2017-02-10
+
+* `Aws\StorageGateway` - Added support for addition of clientList parameter to existing File share APIs
+
 ## 3.22.1 - 2017-02-09
 
 * `Aws\Ec2` - Added support to associate `IAM profiles` to running instances API
