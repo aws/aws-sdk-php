@@ -141,7 +141,7 @@ class ChangelogBuilder
         $changelogFile = $this->baseDir . 'CHANGELOG.md';
         $newChangelog = $this->readChangelog();
         $tag = $this->createTag($changelogFile);
-        putenv('TAG=$tag');
+        putenv("TAG=$tag");
         if ($this->verbose) {
             echo 'Tag for next release ' . $tag . "\n";
         }
