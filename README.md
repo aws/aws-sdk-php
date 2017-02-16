@@ -110,7 +110,7 @@ try {
         'Body'   => fopen('/path/to/file', 'r'),
         'ACL'    => 'public-read',
     ]);
-} catch (Aws\Exception\S3Exception $e) {
+} catch (Aws\S3\Exception\S3Exception $e) {
     echo "There was an error uploading the file.\n";
 }
 ```
