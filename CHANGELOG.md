@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.22.6 - 2017-02-17
 
 * `Aws\CognitoIdentity` - Allow createIdentityPool and updateIdentityPool API to set server side token check value on identity pool
 * `Aws\Config` - Enable customers to use dryrun mode for PutEvaluations
