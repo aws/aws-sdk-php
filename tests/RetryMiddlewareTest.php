@@ -136,17 +136,16 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
 
     public function testDelaysExponentially()
     {
-        $this->assertEquals(0, RetryMiddleware::exponentialDelay(0));
-        $this->assertLessThanOrEqual(100, RetryMiddleware::exponentialDelay(1));
-        $this->assertLessThanOrEqual(200, RetryMiddleware::exponentialDelay(2));
-        $this->assertLessThanOrEqual(400, RetryMiddleware::exponentialDelay(3));
-        $this->assertLessThanOrEqual(800, RetryMiddleware::exponentialDelay(4));
-        $this->assertLessThanOrEqual(20000, RetryMiddleware::exponentialDelay(9));
+        $this->assertLessThanOrEqual(100, RetryMiddleware::exponentialDelay(0));
+        $this->assertLessThanOrEqual(200, RetryMiddleware::exponentialDelay(1));
+        $this->assertLessThanOrEqual(400, RetryMiddleware::exponentialDelay(2));
+        $this->assertLessThanOrEqual(800, RetryMiddleware::exponentialDelay(3));
+        $this->assertLessThanOrEqual(20000, RetryMiddleware::exponentialDelay(10));
     }
 
     public function testDelaysWithSomeRandomness()
     {
-        $maxDelay = 100 * pow(2, 4);
+        $maxDelay = 100 * pow(2, 5);
         $values = array_map(function () {
             return RetryMiddleware::exponentialDelay(5);
         }, range(1, 200));
@@ -171,7 +170,7 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
                     return $res1;
                 },
                 function ($command, $request) use ($res2) {
-                    $this->assertSame(0, $command['@http']['delay']);
+                    $this->assertLessThanOrEqual(100, $command['@http']['delay']);
                     return $res2;
                 },
             ],
@@ -204,7 +203,7 @@ class RetryMiddlewareTest extends \PHPUnit_Framework_TestCase
                     ]);
                 },
                 function ($command, $request) {
-                    $this->assertSame(0, $command['@http']['delay']);
+                    $this->assertLessThanOrEqual(100, $command['@http']['delay']);
                     return new Result();
                 },
             ],

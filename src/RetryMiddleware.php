@@ -91,13 +91,13 @@ class RetryMiddleware
      *
      * Exponential backoff with jitter, 100ms base, 20 sec ceiling
      *
-     * @param $retries
+     * @param $retries - The number of retries that have already been attempted
      *
      * @return int
      */
     public static function exponentialDelay($retries)
     {
-        return mt_rand(0, (int) min(20000, (int) pow(2, $retries - 1) * 100));
+        return mt_rand(0, (int) min(20000, (int) pow(2, $retries) * 100));
     }
 
     /**
