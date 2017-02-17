@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.22.7 - 2017-02-17
 
 * `Aws\DirectConnect` - Adding operations to support new LAG feature
 
