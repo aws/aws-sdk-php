@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release 
+
+* `Aws\CognitoIdentity` - Allow createIdentityPool and updateIdentityPool API to set server side token check value on identity pool
+* `Aws\Config` - Enable customers to use dryrun mode for PutEvaluations
+
 ## 3.22.5 - 2017-02-15
 
 * `Aws\Kms` - Added support for tagging
