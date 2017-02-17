@@ -23,10 +23,8 @@ class S3MultipartUploadException extends \Aws\Exception\MultipartUploadException
      *                                the MultipartUpload process.
      */
     public function __construct(UploadState $state, $prev = null) {
-        if (is_array($prev)) {
-            foreach ($prev as $part => $error) {
-                $this->collectPathInfo($error->getCommand());
-            }
+        if (is_array($prev) && $error = each($prev)[1]) {
+            $this->collectPathInfo($error->getCommand());
         } elseif ($prev instanceof AwsException) {
             $this->collectPathInfo($prev->getCommand());
         }
