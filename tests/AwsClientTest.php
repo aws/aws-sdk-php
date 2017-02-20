@@ -368,7 +368,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'region'       => 'foo',
             'service'      => 'foo',
             'api_provider' => $apiProvider,
-            'serializer'   => function () {},
             'error_parser' => function () {},
             'version'      => 'latest'
         ]);

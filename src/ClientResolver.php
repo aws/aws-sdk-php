@@ -80,6 +80,13 @@ class ClientResolver
             'doc'     => 'A callable that accepts a signature version name (e.g., "v4"), a service name, and region, and  returns a SignatureInterface object or null. This provider is used to create signers utilized by the client. See Aws\\Signature\\SignatureProvider for a list of built-in providers',
             'default' => [__CLASS__, '_default_signature_provider'],
         ],
+        'api_provider' => [
+            'type'     => 'value',
+            'valid'    => ['callable'],
+            'doc'      => 'An optional PHP callable that accepts a type, service, and version argument, and returns an array of corresponding configuration data. The type value can be one of api, waiter, or paginator.',
+            'fn'       => [__CLASS__, '_apply_api_provider'],
+            'default'  => [ApiProvider::class, 'defaultProvider'],
+        ],
         'endpoint_provider' => [
             'type'     => 'value',
             'valid'    => ['callable'],
@@ -87,12 +94,12 @@ class ClientResolver
             'doc'      => 'An optional PHP callable that accepts a hash of options including a "service" and "region" key and returns NULL or a hash of endpoint data, of which the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider for a list of built-in providers.',
             'default' => [__CLASS__, '_default_endpoint_provider'],
         ],
-        'api_provider' => [
-            'type'     => 'value',
-            'valid'    => ['callable'],
-            'doc'      => 'An optional PHP callable that accepts a type, service, and version argument, and returns an array of corresponding configuration data. The type value can be one of api, waiter, or paginator.',
-            'fn'       => [__CLASS__, '_apply_api_provider'],
-            'default'  => [ApiProvider::class, 'defaultProvider'],
+        'serializer' => [
+            'default'   => [__CLASS__, '_default_serializer'],
+            'fn'        => [__CLASS__, '_apply_serializer'],
+            'internal'  => true,
+            'type'      => 'value',
+            'valid'     => ['callable'],
         ],
         'signature_version' => [
             'type'    => 'config',
@@ -394,7 +401,7 @@ class ClientResolver
         }
     }
 
-    public static function _apply_api_provider(callable $value, array &$args, HandlerList $list)
+    public static function _apply_api_provider(callable $value, array &$args)
     {
         $api = new Service(
             ApiProvider::resolve(
@@ -406,18 +413,20 @@ class ClientResolver
             $value
         );
         $args['api'] = $api;
-        $args['serializer'] = Service::createSerializer($api, $args['endpoint']);
         $args['parser'] = Service::createParser($api);
         $args['error_parser'] = Service::createErrorParser($api->getProtocol());
-        $list->prependBuild(Middleware::requestBuilder($args['serializer']), 'builder');
     }
 
     public static function _apply_endpoint_provider(callable $value, array &$args)
     {
         if (!isset($args['endpoint'])) {
+            $endpointPrefix = isset($args['api']['metadata']['endpointPrefix'])
+                ? $args['api']['metadata']['endpointPrefix']
+                : $args['service'];
+
             // Invoke the endpoint provider and throw if it does not resolve.
             $result = EndpointProvider::resolve($value, [
-                'service' => $args['service'],
+                'service' => $endpointPrefix,
                 'region'  => $args['region'],
                 'scheme'  => $args['scheme']
             ]);
@@ -434,6 +443,11 @@ class ClientResolver
                 $args['config']['signing_name'] = $result['signingName'];
             }
         }
+    }
+
+    public static function _apply_serializer($value, array &$args, HandlerList $list)
+    {
+        $list->prependBuild(Middleware::requestBuilder($value), 'builder');
     }
 
     public static function _apply_debug($value, array &$args, HandlerList $list)
@@ -551,6 +565,14 @@ class ClientResolver
     {
         return PartitionEndpointProvider::defaultProvider()
             ->getPartition($args['region'], $args['service']);
+    }
+
+    public static function _default_serializer(array $args)
+    {
+        return Service::createSerializer(
+            $args['api'],
+            $args['endpoint']
+        );
     }
 
     public static function _default_signature_provider()
