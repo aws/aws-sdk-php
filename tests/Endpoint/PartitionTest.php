@@ -365,6 +365,12 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
                         'puff' => [],
                     ],
                 ],
+                'sdb' => [
+                    'defaults' => ['signatureVersions' => ['v2']],
+                    'endpoints' => [
+                        'us-east-1' => [],
+                    ]
+                ]
             ],
         ]);
 
@@ -381,6 +387,8 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
             [$partition, 'us-east-1', 'quux', 'v4'],
             // unknown service
             [$partition, 'us-east-1', 'iot', 'v4'],
+            // sdb
+            [$partition, 'us-east-1', 'sdb', null]
         ];
     }
 

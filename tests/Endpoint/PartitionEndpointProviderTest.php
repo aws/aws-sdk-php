@@ -45,7 +45,7 @@ class PartitionEndpointProviderTest extends \PHPUnit_Framework_TestCase
                 ['region' => 'us-east-1', 'service' => 'sdb'],
                 [
                     'endpoint' => 'https://sdb.amazonaws.com',
-                    'signatureVersion' => 'v4',
+                    'signatureVersion' => null,
                     'signingRegion' => 'us-east-1',
                     'signingName' => 'sdb',
                 ],
