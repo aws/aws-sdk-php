@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## 3.22.7 - 2017-02-17
+
+* `Aws\DirectConnect` - Adding operations to support new LAG feature
+
+## 3.22.6 - 2017-02-17
+
+* `Aws\CognitoIdentity` - Allow createIdentityPool and updateIdentityPool API to set server side token check value on identity pool
+* `Aws\Config` - Enable customers to use dryrun mode for PutEvaluations
+
+## 3.22.5 - 2017-02-15
+
+* `Aws\Kms` - Added support for tagging
+
+## 3.22.4 - 2017-02-14
+
+* `Aws\Ec2` - Added support for new `ModifyVolume` API
+
+## 3.22.3 - 2017-02-10
+
+* Update endpoints.json with valid endpoints
+
+## 3.22.2 - 2017-02-10
+
+* `Aws\StorageGateway` - Added support for addition of clientList parameter to existing File share APIs
+
+## 3.22.1 - 2017-02-09
+
+* `Aws\Ec2` - Added support to associate `IAM profiles` to running instances API
+* `Aws\Rekognition` - Added support for `age` to the face description from `DetectFaces` and `IndexFaces`
+
+## 3.22.0 - 2017-02-08
+
+* `Aws\LexRuntimeService` - Added support for new service `Amazon Lex Runtime Service`
+
 ## 3.21.6 - 2017-01-27
 
 * `Aws\CloudDirectory` - Added support for new service `AWS Cloud Directory`
