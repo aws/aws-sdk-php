@@ -285,6 +285,33 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testIgnoresIsRegionalizedFlagIfPartitionEndpointAbsent()
+    {
+        $partition = new Partition([
+            'partition' => 'foo',
+            'dnsSuffix' => 'bar',
+            'defaults' => ['hostname' => '{service}.{region}.{dnsSuffix}'],
+            'regions' => [],
+            'services' => [
+                'baz' => [
+                    'isRegionalized' => false,
+                    'endpoints' => [
+                        'foo-global' => ['hostname' => 'quux'],
+                    ],
+                ],
+            ],
+        ]);
+
+        $resolved = $partition([
+            'service' => 'baz',
+            'region' => 'us-east-1',
+            'scheme' => 'https',
+        ]);
+
+        $this->assertArrayHasKey('endpoint', $resolved);
+        $this->assertSame('https://baz.us-east-1.bar', $resolved['endpoint']);
+    }
+
     /**
      * @dataProvider signatureVersionProvider
      *
