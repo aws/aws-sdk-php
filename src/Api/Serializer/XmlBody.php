@@ -38,7 +38,7 @@ class XmlBody
         $xml = new XMLWriter();
         $xml->openMemory();
         $xml->startDocument('1.0', 'UTF-8');
-        $this->format($shape, $shape['locationName'], $args, $xml);
+        $this->format($shape, $shape['locationName'] ?: $shape['name'], $args, $xml);
         $xml->endDocument();
 
         return $xml->outputMemory();
