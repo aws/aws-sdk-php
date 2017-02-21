@@ -7,6 +7,7 @@ use Aws\PhpHash;
 use Aws\ResultInterface;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface as Stream;
+use Aws\S3\Exception\S3MultipartUploadException;
 
 /**
  * Encapsulates the execution of a multipart upload to S3 or Glacier.
@@ -59,6 +60,7 @@ class MultipartUploader extends AbstractUploader
         parent::__construct($client, $source, array_change_key_case($config) + [
             'bucket' => null,
             'key'    => null,
+            'exception_class' => S3MultipartUploadException::class,
         ]);
     }
 
