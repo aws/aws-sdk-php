@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Api\Service;
 use Aws\ClientResolver;
 use Aws\CommandInterface;
 use Aws\Credentials\CredentialProvider;
@@ -647,6 +648,37 @@ EOT;
                 'signing_region',
                 'us-east-1',
             ],
+        ];
+    }
+
+    /**
+     * @dataProvider idempotencyAutoFillProvider
+     *
+     * @param mixed $value
+     * @param bool $shouldAddIdempotencyMiddleware
+     */
+    public function testIdempotencyTokenMiddlewareAddedAsAppropriate(
+        $value,
+        $shouldAddIdempotencyMiddleware
+    ){
+        $args = [
+            'api' => new Service([], function () { return []; }),
+        ];
+        $list = new HandlerList;
+
+        $this->assertSame(0, count($list));
+        ClientResolver::_apply_idempotency_auto_fill($value, $args, $list);
+        $this->assertSame($shouldAddIdempotencyMiddleware ? 1 : 0, count($list));
+    }
+
+    public function idempotencyAutoFillProvider()
+    {
+        return [
+            [true, true],
+            [false, false],
+            ['truthy', false],
+            ['openssl_random_pseudo_bytes', true],
+            [function ($length) { return 'foo'; }, true],
         ];
     }
 }
