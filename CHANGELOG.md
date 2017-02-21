@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release 
+
+* `Aws\Ec2` - Added the billingProduct parameter to the RegisterImage API
+
 ## 3.22.7 - 2017-02-17
 
 * `Aws\DirectConnect` - Adding operations to support new LAG feature
