@@ -285,6 +285,33 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    public function testIgnoresIsRegionalizedFlagIfPartitionEndpointAbsent()
+    {
+        $partition = new Partition([
+            'partition' => 'foo',
+            'dnsSuffix' => 'bar',
+            'defaults' => ['hostname' => '{service}.{region}.{dnsSuffix}'],
+            'regions' => [],
+            'services' => [
+                'baz' => [
+                    'isRegionalized' => false,
+                    'endpoints' => [
+                        'foo-global' => ['hostname' => 'quux'],
+                    ],
+                ],
+            ],
+        ]);
+
+        $resolved = $partition([
+            'service' => 'baz',
+            'region' => 'us-east-1',
+            'scheme' => 'https',
+        ]);
+
+        $this->assertArrayHasKey('endpoint', $resolved);
+        $this->assertSame('https://baz.us-east-1.bar', $resolved['endpoint']);
+    }
+
     /**
      * @dataProvider signatureVersionProvider
      *
@@ -338,6 +365,12 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
                         'puff' => [],
                     ],
                 ],
+                'sdb' => [
+                    'defaults' => ['signatureVersions' => ['v2']],
+                    'endpoints' => [
+                        'us-east-1' => [],
+                    ]
+                ]
             ],
         ]);
 
@@ -354,6 +387,8 @@ class PartitionTest extends \PHPUnit_Framework_TestCase
             [$partition, 'us-east-1', 'quux', 'v4'],
             // unknown service
             [$partition, 'us-east-1', 'iot', 'v4'],
+            // sdb
+            [$partition, 'us-east-1', 'sdb', null]
         ];
     }
 
