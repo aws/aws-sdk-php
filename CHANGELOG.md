@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.22.8 - 2017-02-21
 
 * `Aws\Ec2` - Added the billingProduct parameter to the RegisterImage API
 
