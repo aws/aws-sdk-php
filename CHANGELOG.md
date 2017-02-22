@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudDirectory` - ListObjectAttributes documentation updated based on forum feedback
+* `Aws\ElasticBeanstalk` - Elastic Beanstalk adds support for creating and managing custom platform.
+* `Aws\GameLift` - Allow developers to configure global queues for creating GameSessions. Allow PlayerData on PlayerSessions to store player-specific data.
+* `Aws\Route53` - Added support for operations CreateVPCAssociationAuthorization and DeleteVPCAssociationAuthorization to throw a ConcurrentModification error when a conflicting modification occurs in parallel to the authorizations in place for a given hosted zone.
+
 ## 3.22.8 - 2017-02-21
 
 * `Aws\Ec2` - Added the billingProduct parameter to the RegisterImage API
