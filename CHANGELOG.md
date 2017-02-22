@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.22.9 - 2017-02-22
 
 * `Aws\CloudDirectory` - ListObjectAttributes documentation updated based on forum feedback
 * `Aws\ElasticBeanstalk` - Elastic Beanstalk adds support for creating and managing custom platform.
