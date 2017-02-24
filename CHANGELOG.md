@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.22.10 - 2017-02-24
 
 * `Aws\Ec2` - New EC2 I3 instance type
 
