@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElasticsearchService` - Added three new API calls to existing Amazon Elasticsearch service to expose Amazon Elasticsearch imposed limits to customers.
+
 ## 3.22.10 - 2017-02-24
 
 * `Aws\Ec2` - New EC2 I3 instance type
