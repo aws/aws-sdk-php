@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.22.11 - 2017-02-24
 
 * `Aws\ElasticsearchService` - Added three new API calls to existing Amazon Elasticsearch service to expose Amazon Elasticsearch imposed limits to customers.
 
