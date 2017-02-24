@@ -412,6 +412,14 @@ class ClientResolver
             ),
             $value
         );
+
+        if (
+            empty($args['config']['signing_name'])
+            && isset($api['metadata']['signingName'])
+        ) {
+            $args['config']['signing_name'] = $api['metadata']['signingName'];
+        }
+
         $args['api'] = $api;
         $args['parser'] = Service::createParser($api);
         $args['error_parser'] = Service::createErrorParser($api->getProtocol());
@@ -433,13 +441,25 @@ class ClientResolver
 
             $args['endpoint'] = $result['endpoint'];
 
-            if (isset($result['signatureVersion'])) {
-                $args['config']['signature_version'] = $result['signatureVersion'];
+            if (
+                empty($args['config']['signature_version'])
+                && isset($result['signatureVersion'])
+            ) {
+                $args['config']['signature_version']
+                    = $result['signatureVersion'];
             }
-            if (isset($result['signingRegion'])) {
+
+            if (
+                empty($args['config']['signing_region'])
+                && isset($result['signingRegion'])
+            ) {
                 $args['config']['signing_region'] = $result['signingRegion'];
             }
-            if (isset($result['signingName'])) {
+
+            if (
+                empty($args['config']['signing_name'])
+                && isset($result['signingName'])
+            ) {
                 $args['config']['signing_name'] = $result['signingName'];
             }
         }
