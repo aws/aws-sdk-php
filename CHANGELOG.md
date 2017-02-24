@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Ec2` - New EC2 I3 instance type
+
 ## 3.22.9 - 2017-02-22
 
 * `Aws\CloudDirectory` - ListObjectAttributes documentation updated based on forum feedback
