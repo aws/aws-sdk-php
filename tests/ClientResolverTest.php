@@ -95,6 +95,48 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('serializer', $conf);
     }
 
+    public function testAppliesApiProviderSigningNameToConfig()
+    {
+        $signingName = 'foo';
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service'      => 'dynamodb',
+            'region'       => 'x',
+            'api_provider' => function () use ($signingName) {
+                return ['metadata' => [
+                    'protocol' => 'query',
+                    'signingName' => $signingName,
+                ]];
+            },
+            'version'      => 'latest'
+        ], new HandlerList());
+        $this->assertSame($conf['config']['signing_name'], $signingName);
+    }
+
+    public function testPrefersApiProviderNameToPartitionName()
+    {
+        $signingName = 'foo';
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service'      => 'dynamodb',
+            'region'       => 'x',
+            'api_provider' => function () use ($signingName) {
+                return ['metadata' => [
+                    'protocol' => 'query',
+                    'signingName' => $signingName,
+                ]];
+            },
+            'endpoint_provider' => function () use ($signingName) {
+                return [
+                    'endpoint' => 'https://www.amazon.com',
+                    'signingName' => "not_$signingName",
+                ];
+            },
+            'version'      => 'latest'
+        ], new HandlerList());
+        $this->assertSame($conf['config']['signing_name'], $signingName);
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Invalid configuration value provided for "foo". Expected string, but got int(-1)
