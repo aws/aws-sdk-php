@@ -658,7 +658,7 @@
       {
         "given": {
           "http": {
-            "method": "GET",
+            "method": "POST",
             "requestUri": "/2014-01-01/{Foo}"
           },
           "input": {
@@ -673,6 +673,142 @@
         "serialized": {
           "body": "{\"Bar\": \"QmxvYiBwYXJhbQ==\"}",
           "uri": "/2014-01-01/foo_name"
+        }
+      }
+    ]
+  },
+    {
+    "description": "Blob payload",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "foo": {
+            "shape": "FooShape"
+          }
+        }
+      },
+      "FooShape": {
+        "type": "blob"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/"
+          },
+          "input": {
+            "shape": "InputShape",
+            "payload": "foo"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "foo": "bar"
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "bar",
+          "uri": "/"
+        }
+      },
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/"
+          },
+          "input": {
+            "shape": "InputShape",
+            "payload": "foo"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "",
+          "uri": "/"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Structure payload",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "foo": {
+            "shape": "FooShape"
+          }
+        }
+      },
+      "FooShape": {
+        "locationName": "foo",
+        "type": "structure",
+        "members": {
+          "baz": {
+            "shape": "BazShape"
+          }
+        }
+      },
+      "BazShape": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/"
+          },
+          "input": {
+            "shape": "InputShape",
+            "payload": "foo"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "foo": {
+            "baz": "bar"
+          }
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "{\"baz\": \"bar\"}",
+          "uri": "/"
+        }
+      },
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/"
+          },
+          "input": {
+            "shape": "InputShape",
+            "payload": "foo"
+          },
+          "name": "OperationName"
+        },
+        "params": {},
+        "serialized": {
+          "method": "POST",
+          "body": "",
+          "uri": "/"
         }
       }
     ]
@@ -1056,6 +1192,111 @@
           "uri": "/path",
           "headers": {},
           "body": "{\"timestamp_location\": 1422172800}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "String payload",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "foo": {
+            "shape": "FooShape"
+          }
+        }
+      },
+      "FooShape": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/"
+          },
+          "input": {
+            "shape": "InputShape",
+            "payload": "foo"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "foo": "bar"
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "bar",
+          "uri": "/"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Idempotency token auto fill",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "Token": {
+            "shape": "StringType",
+              "idempotencyToken": true
+          }
+        }
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "input": {
+            "shape": "InputShape"
+          },
+          "http": {
+            "method": "POST",
+            "requestUri": "/path"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "Token": "abc123"
+        },
+        "serialized": {
+          "uri": "/path",
+          "headers": {},
+          "body": "{\"Token\": \"abc123\"}"
+        }
+      },
+      {
+        "given": {
+          "input": {
+            "shape": "InputShape"
+          },
+          "http": {
+            "method": "POST",
+            "requestUri": "/path"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+        },
+        "serialized": {
+          "uri": "/path",
+          "headers": {},
+          "body": "{\"Token\": \"00000000-0000-4000-8000-000000000000\"}"
         }
       }
     ]

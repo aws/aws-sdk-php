@@ -41,4 +41,38 @@ class IdempotencyTokenMiddlewareTest extends \PHPUnit_Framework_TestCase
         ]), new Request('POST', 'http://foo.com'))->wait();
         $this->assertTrue($called);
     }
+
+    public function testAllowsCustomRandomSourceToBeProvided()
+    {
+        $fakeRandomSource = function ($byteLength) {
+            return str_repeat(chr(0x00), $byteLength);
+        };
+        $list = new HandlerList();
+        $list->setHandler(function ($command, $request) use (&$called) {
+            $called = true;
+            $this->assertNotNull($command['ClientToken']);
+            $this->assertSame(
+                '00000000-0000-4000-8000-000000000000',
+                $command['ClientToken']
+            );
+            return \GuzzleHttp\Promise\promise_for(new Result([]));
+        });
+
+        $provider = ApiProvider::defaultProvider();
+        $data = $provider('api', 'ec2', 'latest');
+        $service = new Service($data, $provider);
+        $list->appendInit(
+            IdempotencyTokenMiddleware::wrap($service, $fakeRandomSource)
+        );
+        $handler = $list->resolve();
+
+        $handler(new Command('RunScheduledInstances', [
+            'LaunchSpecification' => [
+                'ImageId' => 'test-image',
+            ],
+            'ScheduledInstanceId' => 'test-instance-id',
+            'InstanceCount' => 1,
+        ]), new Request('POST', 'http://foo.com'))->wait();
+        $this->assertTrue($called);
+    }
 }
