@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` - Time to Live (TTL) is a feature that allows you to define when items in a table expire and can be purged from the database, so that you don't have to track expired data and delete it manually. With TTL enabled on a DynamoDB table, you can set a timestamp for deletion on a per-item basis, allowing you to limit storage usage to only those records that are relevant.
+* `Aws\DynamoDBStreams` - Added support for TTL on a DynamoDB tables
+* `Aws\IAM` - Added support for AWS Organizations service control policies (SCPs) to SimulatePrincipalPolicy operation. If there are SCPs associated with the simulated user's account, their effect on the result is captured in the OrganizationDecisionDetail element in the EvaluationResult.
+* `Aws\MechanicalTurkRequesterService` - Amazon Mechanical Turk is a web service that provides an on-demand, scalable, human workforce to complete jobs that humans can do better than computers, for example, recognizing objects in photos.
+* `Aws\Organizations` - AWS Organizations is a web service that enables you to consolidate your multiple AWS accounts into an organization and centrally manage your accounts and their resources.
+
 ## 3.22.11 - 2017-02-24
 
 * `Aws\ElasticsearchService` - Added three new API calls to existing Amazon Elasticsearch service to expose Amazon Elasticsearch imposed limits to customers.
