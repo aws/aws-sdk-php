@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.23.1 - 2017-02-28
 
 * `Aws\MTurk` - Update namespace for `Amazon Mechanical Turk`
 
