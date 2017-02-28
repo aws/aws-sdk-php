@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release 
+
+* `Aws\MTurk` - Update namespace for `Amazon Mechanical Turk`
+
 ## 3.23.0 - 2017-02-28
 
 * `Aws\DynamoDB` - Time to Live (TTL) is a feature that allows you to define when items in a table expire and can be purged from the database, so that you don't have to track expired data and delete it manually. With TTL enabled on a DynamoDB table, you can set a timestamp for deletion on a per-item basis, allowing you to limit storage usage to only those records that are relevant.

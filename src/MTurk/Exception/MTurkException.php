@@ -1,9 +1,9 @@
 <?php
-namespace Aws\MechanicalTurkRequesterService\Exception;
+namespace Aws\MTurk\Exception;
 
 use Aws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon Mechanical Turk Requester Service** service.
  */
-class MechanicalTurkRequesterServiceException extends AwsException {}
+class MTurkException extends AwsException {}
