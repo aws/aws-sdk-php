@@ -132,7 +132,7 @@ class PostObject
             && strpos($this->bucket, '.') !== false
         ) {
             // Use path-style URLs
-            $uri = $uri->withPath($this->bucket);
+            $uri = $uri->withPath("/{$this->bucket}");
         } else {
             // Use virtual-style URLs
             $uri = $uri->withHost($this->bucket . '.' . $uri->getHost());
