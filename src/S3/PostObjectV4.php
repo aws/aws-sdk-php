@@ -21,7 +21,6 @@ class PostObjectV4
     private $bucket;
     private $formAttributes;
     private $formInputs;
-    private $jsonPolicy;
 
     /**
      * Constructs the PostObject.
@@ -149,7 +148,7 @@ class PostObjectV4
             && strpos($this->bucket, '.') !== false
         ) {
             // Use path-style URLs
-            $uri = $uri->withPath($this->bucket);
+            $uri = $uri->withPath("/{$this->bucket}");
         } else {
             // Use virtual-style URLs if haven't been set up already
             if (strpos($uri->getHost(), $this->bucket . '.') !== 0) {
