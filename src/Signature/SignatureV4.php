@@ -14,6 +14,7 @@ class SignatureV4 implements SignatureInterface
 {
     use SignatureTrait;
     const ISO8601_BASIC = 'Ymd\THis\Z';
+    const UNSIGNED_PAYLOAD = 'UNSIGNED-PAYLOAD';
 
     /** @var string */
     private $service;
@@ -21,14 +22,19 @@ class SignatureV4 implements SignatureInterface
     /** @var string */
     private $region;
 
+    /** @var bool */
+    private $unsigned;
+
     /**
      * @param string $service Service name to use when signing
      * @param string $region  Region name to use when signing
+     * @param bool $unsigned  Flag used to set unsigned or signed payload
      */
-    public function __construct($service, $region)
+    public function __construct($service, $region, $unsigned = false)
     {
         $this->service = $service;
         $this->region = $region;
+        $this->unsigned = $unsigned;
     }
 
     public function signRequest(
@@ -146,6 +152,9 @@ class SignatureV4 implements SignatureInterface
 
     protected function getPresignedPayload(RequestInterface $request)
     {
+        if ($this->unsigned){
+            return self::UNSIGNED_PAYLOAD;
+        }
         return $this->getPayload($request);
     }
 
