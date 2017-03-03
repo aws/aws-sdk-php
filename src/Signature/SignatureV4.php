@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Signature;
 
+use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Psr7;
@@ -13,6 +14,7 @@ use Psr\Http\Message\RequestInterface;
 class SignatureV4 implements SignatureInterface
 {
     use SignatureTrait;
+
     const ISO8601_BASIC = 'Ymd\THis\Z';
 
     /** @var string */
@@ -36,32 +38,7 @@ class SignatureV4 implements SignatureInterface
         CredentialsInterface $credentials
     ) {
         $ldt = gmdate(self::ISO8601_BASIC);
-        $sdt = substr($ldt, 0, 8);
-        $parsed = $this->parseRequest($request);
-        $parsed['headers']['X-Amz-Date'] = [$ldt];
-
-        if ($token = $credentials->getSecurityToken()) {
-            $parsed['headers']['X-Amz-Security-Token'] = [$token];
-        }
-
-        $cs = $this->createScope($sdt, $this->region, $this->service);
-        $payload = $this->getPayload($request);
-        $context = $this->createContext($parsed, $payload);
-        $toSign = $this->createStringToSign($ldt, $cs, $context['creq']);
-        $signingKey = $this->getSigningKey(
-            $sdt,
-            $this->region,
-            $this->service,
-            $credentials->getSecretKey()
-        );
-        $signature = hash_hmac('sha256', $toSign, $signingKey);
-        $parsed['headers']['Authorization'] = [
-            "AWS4-HMAC-SHA256 "
-            . "Credential={$credentials->getAccessKeyId()}/{$cs}, "
-            . "SignedHeaders={$context['headers']}, Signature={$signature}"
-        ];
-
-        return $this->buildRequest($parsed);
+        return $this->signRequestAtDate($request, $credentials, $ldt);
     }
 
     public function presign(
@@ -89,6 +66,67 @@ class SignatureV4 implements SignatureInterface
             $credentials->getSecretKey()
         );
         $parsed['query']['X-Amz-Signature'] = hash_hmac('sha256', $stringToSign, $key);
+
+        return $this->buildRequest($parsed);
+    }
+
+    public function validate(
+        RequestInterface $request,
+        CredentialsInterface $credentials
+    ){
+
+        $sigHeader = new SignatureHeader($request->getHeaderLine('Authorization'));
+
+        // extract service and region from Authorization header
+        // set region and service properties
+        $origRegion = $this->region;
+        $this->region = $sigHeader->getRegion();
+        $origService = $this->service;
+        $this->service = $sigHeader->getService();
+
+        $date = $request->getHeaderLine('X-Amz-Date');
+        $request = $request->withoutHeader('Authorization');
+
+        // sign the request with credentials using the date of the original signature
+        $request = $this->signRequestAtDate($request, $credentials, $date);
+
+        // reset service and region to their original values
+        $this->region = $origRegion;
+        $this->service = $origService;
+
+        // test that new signature matches original one
+        return ((string)$sigHeader === $request->getHeaderLine('Authorization'));;
+    }
+
+    protected function signRequestAtDate(
+        RequestInterface $request,
+        CredentialsInterface $credentials,
+        $ldt
+    ){
+        $sdt = substr($ldt, 0, 8);
+        $parsed = $this->parseRequest($request);
+        $parsed['headers']['X-Amz-Date'] = [$ldt];
+
+        if ($token = $credentials->getSecurityToken()) {
+            $parsed['headers']['X-Amz-Security-Token'] = [$token];
+        }
+
+        $cs = $this->createScope($sdt, $this->region, $this->service);
+        $payload = $this->getPayload($request);
+        $context = $this->createContext($parsed, $payload);
+        $toSign = $this->createStringToSign($ldt, $cs, $context['creq']);
+        $signingKey = $this->getSigningKey(
+            $sdt,
+            $this->region,
+            $this->service,
+            $credentials->getSecretKey()
+        );
+        $signature = hash_hmac('sha256', $toSign, $signingKey);
+        $parsed['headers']['Authorization'] = [
+            "AWS4-HMAC-SHA256 "
+            . "Credential={$credentials->getAccessKeyId()}/{$cs}, "
+            . "SignedHeaders={$context['headers']}, Signature={$signature}"
+        ];
 
         return $this->buildRequest($parsed);
     }

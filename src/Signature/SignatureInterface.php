@@ -41,4 +41,16 @@ interface SignatureInterface
         CredentialsInterface $credentials,
         $expires
     );
+
+    /**
+     * Validate that the request was signed using the credentials
+     *
+     * @param RequestInterface $request
+     * @param CredentialsInterface $credentials
+     * @return boolean
+     */
+    public function validate(
+        RequestInterface $request,
+        CredentialsInterface $credentials
+    );
 }

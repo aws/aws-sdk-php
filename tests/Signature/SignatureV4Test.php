@@ -295,4 +295,88 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals($creq, $ctx['creq']);
         $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));
     }
+
+    /**
+     * @dataProvider testProvider
+     */
+    public function testValidate($req)
+    {
+        $service = 'Service';
+        $region = 'eu-west-1';
+        $id = 'be6f2a7f05db7';
+        $secret = '9808aa133c0eb44ff5e21abd976c01bc';
+
+        $signed = $this->signRequest($service, $region, $id, $secret, Psr7\parse_request($req));
+
+        $this->assertIsValid($service, $region, $id, $secret, $signed);
+    }
+
+    /**
+     * @dataProvider testProvider
+     */
+    public function testValidateSucceedsWithDifferentRegion($req)
+    {
+
+        $service = 'Service';
+        $region = 'eu-west-1';
+        $id = 'be6f2a7f05db7';
+        $secret = '9808aa133c0eb44ff5e21abd976c01bc';
+
+        $signed = $this->signRequest($service, $region, $id, $secret, Psr7\parse_request($req));
+
+        $this->assertIsValid($service, 'us-east-1', $id, $secret, $signed);
+    }
+
+    public function testValidateFailsWithDifferentKey()
+    {
+        $service = 'Service';
+        $region = 'eu-west-1';
+        $id = 'be6f2a7f05db7';
+        $secret = '9808aa133c0eb44ff5e21abd976c01bc';
+
+        $signed = $this->signRequest($service, $region, $id, $secret, new Request('PUT', 'http://foo.com', [
+            'host' => 'foo.com'
+        ]));
+
+        $this->assertIsNotValid($service, $region, 'eb860874c4b785a', $secret, $signed);
+    }
+
+    public function testValidateFailsWithDifferentSecret()
+    {
+        $service = 'Service';
+        $region = 'eu-west-1';
+        $id = 'be6f2a7f05db7';
+        $secret = '9808aa133c0eb44ff5e21abd976c01bc';
+
+        $signed = $this->signRequest($service, $region, $id, $secret, new Request('PUT', 'http://foo.com', [
+            'host' => 'foo.com'
+        ]));
+
+        $this->assertIsNotValid($service, $region, $id, 'be6f2a7f05db75880eb860874c4b785a', $signed);
+    }
+
+    protected function signRequest($service, $region, $id, $secret, $request)
+    {
+        $sig = new SignatureV4($service, $region);
+        $creds = new Credentials($id, $secret);
+        return $sig->signRequest($request, $creds);
+    }
+
+    protected function assertIsValid($service, $region, $id, $secret, $signed)
+    {
+        $validator = new SignatureV4($service, $region);
+
+        $valid = $validator->validate($signed, new Credentials($id, $secret));
+
+        $this->assertTrue($valid);
+    }
+
+    protected function assertIsNotValid($service, $region, $id, $secret, $signed)
+    {
+        $validator = new SignatureV4($service, $region);
+
+        $valid = $validator->validate($signed, new Credentials($id, $secret));
+
+        $this->assertFalse($valid);
+    }
 }
