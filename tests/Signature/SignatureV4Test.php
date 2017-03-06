@@ -277,6 +277,32 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider testProvider
      */
+    public function testSignRequestUnsignedPayload($req, $sreq, $creq)
+    {
+        $_SERVER['aws_time'] = '20110909T233600Z';
+        $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
+        $signature = new SignatureV4('host', 'us-east-1', $unsigned = true);
+        $request = Psr7\parse_request($req);
+        $contextFn = new \ReflectionMethod($signature, 'createContext');
+        $contextFn->setAccessible(true);
+        $parseFn = new \ReflectionMethod($signature, 'parseRequest');
+        $parseFn->setAccessible(true);
+        $parsed = $parseFn->invoke($signature, $request);
+        $payloadFn = new \ReflectionMethod($signature, 'getPayload');
+        $payloadFn->setAccessible(true);
+        $payload = $payloadFn->invoke($signature, $request);
+        $presignedPayloadFn = new \ReflectionMethod($signature, 'getPresignedPayload');
+        $presignedPayloadFn->setAccessible(true);
+        $presignedPayload = $presignedPayloadFn->invoke($signature, $request);
+        $this->assertEquals('UNSIGNED-PAYLOAD',$presignedPayload);
+        $ctx = $contextFn->invoke($signature, $parsed, $payload);
+        $this->assertEquals($creq, $ctx['creq']);
+        $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));
+    }
+
+    /**
+     * @dataProvider testProvider
+     */
     public function testSignsRequests($req, $sreq, $creq)
     {
         $_SERVER['aws_time'] = '20110909T233600Z';
@@ -291,6 +317,10 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $payloadFn = new \ReflectionMethod($signature, 'getPayload');
         $payloadFn->setAccessible(true);
         $payload = $payloadFn->invoke($signature, $request);
+        $presignedPayloadFn = new \ReflectionMethod($signature, 'getPresignedPayload');
+        $presignedPayloadFn->setAccessible(true);
+        $presignedPayload = $presignedPayloadFn->invoke($signature, $request);
+        $this->assertNotEquals('UNSIGNED-PAYLOAD',$presignedPayload);
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
         $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));
