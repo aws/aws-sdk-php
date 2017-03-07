@@ -116,8 +116,6 @@ class SignatureProvider
                         : new SignatureV4($service, $region);
                 case 'v4-unsigned-body':
                     return new SignatureV4($service, $region, $options = ['unsigned' => 'true']);
-                case 's3v4-unsigned-body':
-                    return new S3SignatureV4($service, $region, $options = ['unsigned' => 'true']);
                 case 'anonymous':
                     return new AnonymousSignature();
                 default:
