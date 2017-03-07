@@ -45,6 +45,15 @@ class S3SignatureV4 extends SignatureV4
     }
 
     /**
+     * Override used to allow pre-signed URLs to be created for an
+     * in-determinate request payload.
+     */
+    protected function getPresignedPayload(RequestInterface $request)
+    {
+        return parent::UNSIGNED_PAYLOAD;
+    }
+
+    /**
      * Amazon S3 does not double-encode the path component in the canonical request
      */
     protected function createCanonicalizedPath($path)
