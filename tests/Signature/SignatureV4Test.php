@@ -220,6 +220,83 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $signature->signRequest($request, $credentials);
     }
 
+    public function testUnsignedPayloadProvider()
+    {
+        return [
+            // POST headers should be signed.
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\n\r\n",
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=4a52331276d5e50273fe04c2888c8c5db40024ac126e44aa5a0d543692c32816\r\n\r\n",
+                "POST\n/\n\nhost:host.foo.com\nzoo:zoobar\n\nhost;zoo\nUNSIGNED-PAYLOAD"
+            ],
+            // Changing the method should change the signature.
+            [
+                "GET / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\n\r\n",
+                "GET / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=d007489def07bd28518a57550803eed591d9a763b1e179ee0da1019d58992f40\r\n\r\n",
+                "GET\n/\n\nhost:host.foo.com\nzoo:zoobar\n\nhost;zoo\nUNSIGNED-PAYLOAD"
+            ],
+            // Duplicate header values must be sorted.
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\np: z\r\np: a\r\np: p\r\np: a\r\n\r\n",
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\np: z, a, p, a\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;p;x-amz-date, Signature=2ce6ca64f393f68dbac08ca1982152d0eacd835fd32d7b4945982793e7664420\r\n\r\n",
+                "POST\n/\n\nhost:host.foo.com\np:a,a,p,z\n\nhost;p\nUNSIGNED-PAYLOAD"
+            ],
+            // Request with space.
+            [
+                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
+                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=050a588bc979afe7724102fd0bc6d59f471eaad2d6ca67e703229f367efab071\r\n\r\n",
+                "GET\n/%2520/foo\n\nhost:host.foo.com\n\nhost\nUNSIGNED-PAYLOAD"
+            ],
+            // Query order key case.
+            [
+                "GET /?foo=Zoo&foo=aha HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
+                "GET /?foo=Zoo&foo=aha HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=05b95d914491d85fdea716996c7e7d1d3e0226b1680bc1ca6acacc877ee640e5\r\n\r\n",
+                "GET\n/\nfoo=Zoo&foo=aha\nhost:host.foo.com\n\nhost\nUNSIGNED-PAYLOAD"
+            ],
+            // Query order key
+            [
+                "GET /?a=foo&b=foo HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
+                "GET /?a=foo&b=foo HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=62c8d4ae1c5e15efc5b657a2d26732cb8f424990324330b49053fa0a4039a97b\r\n\r\n",
+                "GET\n/\na=foo&b=foo\nhost:host.foo.com\n\nhost\nUNSIGNED-PAYLOAD"
+            ],
+            // Query order value
+            [
+                "GET /?foo=b&foo=a HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
+                "GET /?foo=b&foo=a HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=f4023e4150194febf82f579fc33332e6bcf07c94420be0bd6137b9841aa696a3\r\n\r\n",
+                "GET\n/\nfoo=a&foo=b\nhost:host.foo.com\n\nhost\nUNSIGNED-PAYLOAD"
+            ],
+            // POST with body
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nContent-Length: 4\r\n\r\nTest",
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nContent-Length: 4\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=4eff731c85aaa3d4a5a5197c6f7124e875b64bcb1ab449772d25b859eeb6f354\r\n\r\nTest",
+                "POST\n/\n\nhost:host.foo.com\n\nhost\nUNSIGNED-PAYLOAD"
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider testUnsignedPayloadProvider
+     */
+    public function testSignRequestUnsignedPayload($req, $sreq, $creq)
+    {
+        $_SERVER['aws_time'] = '20110909T233600Z';
+        $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
+        $signature = new SignatureV4('host', 'us-east-1', ['unsigned' => 'true']);
+        $request = Psr7\parse_request($req);
+        $contextFn = new \ReflectionMethod($signature, 'createContext');
+        $contextFn->setAccessible(true);
+        $parseFn = new \ReflectionMethod($signature, 'parseRequest');
+        $parseFn->setAccessible(true);
+        $parsed = $parseFn->invoke($signature, $request);
+        $payloadFn = new \ReflectionMethod($signature, 'getPayload');
+        $payloadFn->setAccessible(true);
+        $payload = $payloadFn->invoke($signature, $request);
+        $this->assertEquals('UNSIGNED-PAYLOAD',$payload);
+        $ctx = $contextFn->invoke($signature, $parsed, $payload);
+        $this->assertEquals($creq, $ctx['creq']);
+        $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));
+    }
+
     public function testProvider()
     {
         return [
@@ -277,32 +354,6 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider testProvider
      */
-    public function testSignRequestUnsignedPayload($req, $sreq, $creq)
-    {
-        $_SERVER['aws_time'] = '20110909T233600Z';
-        $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
-        $signature = new SignatureV4('host', 'us-east-1', $unsigned = true);
-        $request = Psr7\parse_request($req);
-        $contextFn = new \ReflectionMethod($signature, 'createContext');
-        $contextFn->setAccessible(true);
-        $parseFn = new \ReflectionMethod($signature, 'parseRequest');
-        $parseFn->setAccessible(true);
-        $parsed = $parseFn->invoke($signature, $request);
-        $payloadFn = new \ReflectionMethod($signature, 'getPayload');
-        $payloadFn->setAccessible(true);
-        $payload = $payloadFn->invoke($signature, $request);
-        $presignedPayloadFn = new \ReflectionMethod($signature, 'getPresignedPayload');
-        $presignedPayloadFn->setAccessible(true);
-        $presignedPayload = $presignedPayloadFn->invoke($signature, $request);
-        $this->assertEquals('UNSIGNED-PAYLOAD',$presignedPayload);
-        $ctx = $contextFn->invoke($signature, $parsed, $payload);
-        $this->assertEquals($creq, $ctx['creq']);
-        $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));
-    }
-
-    /**
-     * @dataProvider testProvider
-     */
     public function testSignsRequests($req, $sreq, $creq)
     {
         $_SERVER['aws_time'] = '20110909T233600Z';
@@ -317,10 +368,6 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $payloadFn = new \ReflectionMethod($signature, 'getPayload');
         $payloadFn->setAccessible(true);
         $payload = $payloadFn->invoke($signature, $request);
-        $presignedPayloadFn = new \ReflectionMethod($signature, 'getPresignedPayload');
-        $presignedPayloadFn->setAccessible(true);
-        $presignedPayload = $presignedPayloadFn->invoke($signature, $request);
-        $this->assertNotEquals('UNSIGNED-PAYLOAD',$presignedPayload);
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
         $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));

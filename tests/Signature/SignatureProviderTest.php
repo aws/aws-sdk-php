@@ -13,6 +13,7 @@ class SignatureProviderTest extends \PHPUnit_Framework_TestCase
         return [
             ['v4', 'Aws\Signature\SignatureV4', 'foo'],
             ['v4', 'Aws\Signature\S3SignatureV4', 's3'],
+            ['v4-unsigned-body', 'Aws\Signature\SignatureV4', 'foo'],
             ['anonymous', 'Aws\Signature\AnonymousSignature', 's3'],
         ];
     }

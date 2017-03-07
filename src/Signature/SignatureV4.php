@@ -28,13 +28,13 @@ class SignatureV4 implements SignatureInterface
     /**
      * @param string $service Service name to use when signing
      * @param string $region  Region name to use when signing
-     * @param bool $unsigned  Flag used to set unsigned or signed payload
+     * @param array $options  Array of configuration options used when signing
      */
-    public function __construct($service, $region, $unsigned = false)
+    public function __construct($service, $region, array $options = [])
     {
         $this->service = $service;
         $this->region = $region;
-        $this->unsigned = $unsigned;
+        $this->unsigned = isset($options['unsigned']) ? $options['unsigned'] : false;
     }
 
     public function signRequest(
@@ -116,7 +116,6 @@ class SignatureV4 implements SignatureInterface
             throw new \InvalidArgumentException('Expected a POST request but '
                 . 'received a ' . $request->getMethod() . ' request.');
         }
-
         $sr = $request->withMethod('GET')
             ->withBody(Psr7\stream_for(''))
             ->withoutHeader('Content-Type')
@@ -133,6 +132,9 @@ class SignatureV4 implements SignatureInterface
 
     protected function getPayload(RequestInterface $request)
     {
+        if ($this->unsigned){
+            return self::UNSIGNED_PAYLOAD;
+        }
         // Calculate the request signature payload
         if ($request->hasHeader('X-Amz-Content-Sha256')) {
             // Handle streaming operations (e.g. Glacier.UploadArchive)
@@ -152,9 +154,6 @@ class SignatureV4 implements SignatureInterface
 
     protected function getPresignedPayload(RequestInterface $request)
     {
-        if ($this->unsigned){
-            return self::UNSIGNED_PAYLOAD;
-        }
         return $this->getPayload($request);
     }
 
