@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.23.3 - 2017-03-08
 
 * `Aws\RDS` - Add support to using encrypted clusters as cross-region replication masters. Update CopyDBClusterSnapshot API to support encrypted cross region copy of Aurora cluster snapshots.
 
