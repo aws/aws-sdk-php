@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.24.0 - 2017-03-08
 
 * `Aws\WorkDocs` - The Administrative SDKs for Amazon WorkDocs provides full administrator level access to WorkDocs site resources, allowing developers to integrate their applications to manage WorkDocs users, content and permissions programmatically
 
