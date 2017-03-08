@@ -87,7 +87,7 @@ class SqsClient extends AwsClient
                 RequestInterface $r = null
             ) use ($handler) {
                 if ($c->hasParam('QueueUrl')) {
-                    $uri = Uri::resolve($r->getUri(), $c['QueueUrl']);
+                    $uri = UriResolver::resolve($r->getUri(), $c['QueueUrl']);
                     $r = $r->withUri($uri);
                 }
                 return $handler($c, $r);
