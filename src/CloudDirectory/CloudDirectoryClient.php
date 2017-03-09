@@ -73,6 +73,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listObjectAttributesAsync(array $args = [])
  * @method \Aws\Result listObjectChildren(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listObjectChildrenAsync(array $args = [])
+ * @method \Aws\Result listObjectParentPaths(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listObjectParentPathsAsync(array $args = [])
  * @method \Aws\Result listObjectParents(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listObjectParentsAsync(array $args = [])
  * @method \Aws\Result listObjectPolicies(array $args = [])
