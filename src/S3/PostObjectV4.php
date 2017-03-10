@@ -56,7 +56,7 @@ class PostObjectV4
         $credentials   = $this->client->getCredentials()->wait();
         $securityToken = $credentials->getSecurityToken();
 
-        if (null !== $securityToken) {
+        if (!empty($securityToken)) {
             array_push($options, ['x-amz-security-token' => $securityToken]);
             $formInputs['X-Amz-Security-Token'] = $securityToken;
         }
