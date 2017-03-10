@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeDeploy` - Add paginators for Codedeploy
+* `Aws\EMR` - This release includes support for instance fleets in Amazon EMR.
+
 ## 3.24.1 - 2017-03-09
 
 * `Aws\APIGateway` - API Gateway has added support for ACM certificates on custom domain names. Both Amazon-issued certificates and uploaded third-part certificates are supported.

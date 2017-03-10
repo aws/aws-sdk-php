@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **Amazon Elastic MapReduce (Amazon EMR)** service.
  *
+ * @method \Aws\Result addInstanceFleet(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise addInstanceFleetAsync(array $args = [])
  * @method \Aws\Result addInstanceGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addInstanceGroupsAsync(array $args = [])
  * @method \Aws\Result addJobFlowSteps(array $args = [])
@@ -30,6 +32,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listBootstrapActionsAsync(array $args = [])
  * @method \Aws\Result listClusters(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listClustersAsync(array $args = [])
+ * @method \Aws\Result listInstanceFleets(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listInstanceFleetsAsync(array $args = [])
  * @method \Aws\Result listInstanceGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listInstanceGroupsAsync(array $args = [])
  * @method \Aws\Result listInstances(array $args = [])
@@ -38,6 +42,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listSecurityConfigurationsAsync(array $args = [])
  * @method \Aws\Result listSteps(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listStepsAsync(array $args = [])
+ * @method \Aws\Result modifyInstanceFleet(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise modifyInstanceFleetAsync(array $args = [])
  * @method \Aws\Result modifyInstanceGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyInstanceGroupsAsync(array $args = [])
  * @method \Aws\Result putAutoScalingPolicy(array $args = [])
