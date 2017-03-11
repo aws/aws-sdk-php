@@ -68,9 +68,9 @@ class SignatureV4 implements SignatureInterface
         RequestInterface $request,
         CredentialsInterface $credentials,
         $expires,
-        $startsAt = null
+        array $options = []
     ) {
-        $startTimestamp = $startsAt ? $this->convertToTimestamp($startsAt) : time();
+        $startTimestamp = isset($options['start_time']) ? $options['start_time'] : time();
 
         $parsed = $this->createPresignedRequest($request, $credentials);
         $payload = $this->getPresignedPayload($request);

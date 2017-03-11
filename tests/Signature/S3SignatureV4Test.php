@@ -117,12 +117,12 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
 
     public function testUsesStartDateIfSpecified()
     {
-        $startsAt = $_SERVER['aws_time'];
+        $options = ['start_time' => $_SERVER['aws_time']];
         unset($_SERVER['aws_time']);
 
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
-        $url = (string) $signature->presign($request, $credentials, 1386720000, $startsAt)->getUri();
+        $url = (string) $signature->presign($request, $credentials, 1386720000, $options)->getUri();
         $this->assertContains('X-Amz-Date=20131205T000000Z', $url);
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
