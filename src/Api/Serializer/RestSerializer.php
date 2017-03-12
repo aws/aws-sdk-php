@@ -9,6 +9,8 @@ use Aws\Api\StructureShape;
 use Aws\Api\TimestampShape;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\Psr7\UriResolver;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -192,6 +194,6 @@ abstract class RestSerializer
 
         // Expand path place holders using Amazon's slightly different URI
         // template syntax.
-        return Psr7\Uri::resolve($this->endpoint, $relative);
+        return UriResolver::resolve($this->endpoint, new Uri($relative));
     }
 }
