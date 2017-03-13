@@ -87,8 +87,8 @@ class SqsClient extends AwsClient
                 RequestInterface $r = null
             ) use ($handler) {
                 if ($c->hasParam('QueueUrl')) {
-                    if(class_exists('GuzzleHttp\Psr7\UriResolver') && method_exists('GuzzleHttp\Psr7\UriResolver', 'resolve')){
-                        $uri = GuzzleHttp\Psr7\UriResolver::resolve($r->getUri(),  GuzzleHttp\Psr7\uri_for($c['QueueUrl']));
+                    if(class_exists('\GuzzleHttp\Psr7\UriResolver') && method_exists('\GuzzleHttp\Psr7\UriResolver', 'resolve')){
+                        $uri = \GuzzleHttp\Psr7\UriResolver::resolve($r->getUri(),  \GuzzleHttp\Psr7\uri_for($c['QueueUrl']));
                     }
                     else{
                         $uri = Uri::resolve($r->getUri(), $c['QueueUrl']);
