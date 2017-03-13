@@ -1,86 +1,98 @@
 {
   "version": "2.0",
   "operations": {
-    "DeleteRule": "<p>Deletes a rule. You must remove all targets from a rule using <a>RemoveTargets</a> before you can delete the rule.</p> <p> <b>Note:</b> When you delete a rule, incoming events might still continue to match to the deleted rule. Please allow a short period of time for changes to take effect. </p>",
-    "DescribeRule": "<p>Describes the details of the specified rule.</p>",
-    "DisableRule": "<p>Disables a rule. A disabled rule won't match any events, and won't self-trigger if it has a schedule expression.</p> <p> <b>Note:</b> When you disable a rule, incoming events might still continue to match to the disabled rule. Please allow a short period of time for changes to take effect. </p>",
-    "EnableRule": "<p>Enables a rule. If the rule does not exist, the operation fails.</p> <p> <b>Note:</b> When you enable a rule, incoming events might not immediately start matching to a newly enabled rule. Please allow a short period of time for changes to take effect. </p>",
-    "ListRuleNamesByTarget": "<p>Lists the names of the rules that the given target is put to. You can see which of the rules in Amazon CloudWatch Events can invoke a specific target in your account. If you have more rules in your account than the given limit, the results will be paginated. In that case, use the next token returned in the response and repeat ListRulesByTarget until the NextToken in the response is returned as null.</p>",
-    "ListRules": "<p>Lists the Amazon CloudWatch Events rules in your account. You can either list all the rules or you can provide a prefix to match to the rule names. If you have more rules in your account than the given limit, the results will be paginated. In that case, use the next token returned in the response and repeat ListRules until the NextToken in the response is returned as null.</p>",
-    "ListTargetsByRule": "<p>Lists of targets assigned to the rule.</p>",
-    "PutEvents": "<p>Sends custom events to Amazon CloudWatch Events so that they can be matched to rules.</p>",
-    "PutRule": "<p>Creates or updates a rule. Rules are enabled by default, or based on value of the State parameter. You can disable a rule using <a>DisableRule</a>.</p> <p> <b>Note:</b> When you create or update a rule, incoming events might not immediately start matching to new or updated rules. Please allow a short period of time for changes to take effect.</p> <p>A rule must contain at least an EventPattern or ScheduleExpression. Rules with EventPatterns are triggered when a matching event is observed. Rules with ScheduleExpressions self-trigger based on the given schedule. A rule can have both an EventPattern and a ScheduleExpression, in which case the rule will trigger on matching events as well as on a schedule.</p> <p> <b>Note:</b> Most services in AWS treat : or / as the same character in Amazon Resource Names (ARNs). However, CloudWatch Events uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match. </p>",
-    "PutTargets": "<p>Adds target(s) to a rule. Targets are the resources that can be invoked when a rule is triggered. For example, AWS Lambda functions, Amazon Kinesis streams, and built-in targets. Updates the target(s) if they are already associated with the role. In other words, if there is already a target with the given target ID, then the target associated with that ID is updated.</p> <p>In order to be able to make API calls against the resources you own, Amazon CloudWatch Events needs the appropriate permissions. For AWS Lambda and Amazon SNS resources, CloudWatch Events relies on resource-based policies. For Amazon Kinesis streams, CloudWatch Events relies on IAM roles. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/EventsTargetPermissions.html\">Permissions for Sending Events to Targets</a> in the <b><i>Amazon CloudWatch Developer Guide</i></b>.</p> <p><b>Input</b> and <b>InputPath</b> are mutually-exclusive and optional parameters of a target. When a rule is triggered due to a matched event, if for a target:</p> <ul> <li>Neither <b>Input</b> nor <b>InputPath</b> is specified, then the entire event is passed to the target in JSON form.</li> <li> <b>InputPath</b> is specified in the form of JSONPath (e.g. <b>$.detail</b>), then only the part of the event specified in the path is passed to the target (e.g. only the detail part of the event is passed). </li> <li> <b>Input</b> is specified in the form of a valid JSON, then the matched event is overridden with this constant.</li> </ul> <p> <b>Note:</b> When you add targets to a rule, when the associated rule triggers, new or updated targets might not be immediately invoked. Please allow a short period of time for changes to take effect. </p>",
-    "RemoveTargets": "<p>Removes target(s) from a rule so that when the rule is triggered, those targets will no longer be invoked.</p> <p> <b>Note:</b> When you remove a target, when the associated rule triggers, removed targets might still continue to be invoked. Please allow a short period of time for changes to take effect. </p>",
-    "TestEventPattern": "<p>Tests whether an event pattern matches the provided event.</p> <p> <b>Note:</b> Most services in AWS treat : or / as the same character in Amazon Resource Names (ARNs). However, CloudWatch Events uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match. </p>"
+    "DeleteRule": "<zonbook> <simpara>Deletes the specified rule.</simpara> <simpara>You must remove all targets from a rule using <xref linkend=\"RemoveTargets\"></xref> before you can delete the rule.</simpara> <simpara>When you delete a rule, incoming events might continue to match to the deleted rule. Please allow a short period of time for changes to take effect.</simpara> </zonbook> <xhtml> <p>Deletes the specified rule.</p> <p>You must remove all targets from a rule using <a>RemoveTargets</a> before you can delete the rule.</p> <p>When you delete a rule, incoming events might continue to match to the deleted rule. Please allow a short period of time for changes to take effect.</p> </xhtml>",
+    "DescribeRule": "<zonbook> <simpara>Describes the specified rule.</simpara> </zonbook> <xhtml> <p>Describes the specified rule.</p> </xhtml>",
+    "DisableRule": "<zonbook> <simpara>Disables the specified rule. A disabled rule won't match any events, and won't self-trigger if it has a schedule expression.</simpara> <simpara>When you disable a rule, incoming events might continue to match to the disabled rule. Please allow a short period of time for changes to take effect.</simpara> </zonbook> <xhtml> <p>Disables the specified rule. A disabled rule won't match any events, and won't self-trigger if it has a schedule expression.</p> <p>When you disable a rule, incoming events might continue to match to the disabled rule. Please allow a short period of time for changes to take effect.</p> </xhtml>",
+    "EnableRule": "<zonbook> <simpara>Enables the specified rule. If the rule does not exist, the operation fails.</simpara> <simpara>When you enable a rule, incoming events might not immediately start matching to a newly enabled rule. Please allow a short period of time for changes to take effect.</simpara> </zonbook> <xhtml> <p>Enables the specified rule. If the rule does not exist, the operation fails.</p> <p>When you enable a rule, incoming events might not immediately start matching to a newly enabled rule. Please allow a short period of time for changes to take effect.</p> </xhtml>",
+    "ListRuleNamesByTarget": "<zonbook> <simpara>Lists the rules for the specified target. You can see which of the rules in Amazon CloudWatch Events can invoke a specific target in your account.</simpara> </zonbook> <xhtml> <p>Lists the rules for the specified target. You can see which of the rules in Amazon CloudWatch Events can invoke a specific target in your account.</p> </xhtml>",
+    "ListRules": "<zonbook> <simpara>Lists your Amazon CloudWatch Events rules. You can either list all the rules or you can provide a prefix to match to the rule names.</simpara> </zonbook> <xhtml> <p>Lists your Amazon CloudWatch Events rules. You can either list all the rules or you can provide a prefix to match to the rule names.</p> </xhtml>",
+    "ListTargetsByRule": "<zonbook> <simpara>Lists the targets assigned to the specified rule.</simpara> </zonbook> <xhtml> <p>Lists the targets assigned to the specified rule.</p> </xhtml>",
+    "PutEvents": "<zonbook> <simpara>Sends custom events to Amazon CloudWatch Events so that they can be matched to rules.</simpara> </zonbook> <xhtml> <p>Sends custom events to Amazon CloudWatch Events so that they can be matched to rules.</p> </xhtml>",
+    "PutRule": "<zonbook> <simpara>Creates or updates the specified rule. Rules are enabled by default, or based on value of the state. You can disable a rule using <xref linkend=\"DisableRule\"></xref>.</simpara> <simpara>When you create or update a rule, incoming events might not immediately start matching to new or updated rules. Please allow a short period of time for changes to take effect.</simpara> <simpara>A rule must contain at least an EventPattern or ScheduleExpression. Rules with EventPatterns are triggered when a matching event is observed. Rules with ScheduleExpressions self-trigger based on the given schedule. A rule can have both an EventPattern and a ScheduleExpression, in which case the rule triggers on matching events as well as on a schedule.</simpara> <simpara>Most services in AWS treat : or / as the same character in Amazon Resource Names (ARNs). However, CloudWatch Events uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.</simpara> </zonbook> <xhtml> <p>Creates or updates the specified rule. Rules are enabled by default, or based on value of the state. You can disable a rule using <a>DisableRule</a>.</p> <p>When you create or update a rule, incoming events might not immediately start matching to new or updated rules. Please allow a short period of time for changes to take effect.</p> <p>A rule must contain at least an EventPattern or ScheduleExpression. Rules with EventPatterns are triggered when a matching event is observed. Rules with ScheduleExpressions self-trigger based on the given schedule. A rule can have both an EventPattern and a ScheduleExpression, in which case the rule triggers on matching events as well as on a schedule.</p> <p>Most services in AWS treat : or / as the same character in Amazon Resource Names (ARNs). However, CloudWatch Events uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.</p> </xhtml>",
+    "PutTargets": "<zonbook> <simpara>Adds the specified targets to the specified rule, or updates the targets if they are already associated with the rule.</simpara> <simpara>Targets are the resources that are invoked when a rule is triggered. Example targets include EC2 instances, AWS Lambda functions, Amazon Kinesis streams, Amazon ECS tasks, AWS Step Functions state machines, and built-in targets. Note that creating rules with built-in targets is supported only in the AWS Management Console.</simpara> <simpara>For some target types, <code>PutTargets</code> provides target-specific parameters. If the target is an Amazon Kinesis stream, you can optionally specify which shard the event goes to by using the <code>KinesisParameters</code> argument. To invoke a command on multiple EC2 instances with one rule, you can use the <code>RunCommandParameters</code> field.</simpara> <simpara>To be able to make API calls against the resources that you own, Amazon CloudWatch Events needs the appropriate permissions. For AWS Lambda and Amazon SNS resources, CloudWatch Events relies on resource-based policies. For EC2 instances, Amazon Kinesis streams, and AWS Step Functions state machines, CloudWatch Events relies on IAM roles that you specify in the <code>RoleARN</code> argument in <code>PutTarget</code>. For more information, see <ulink type=\"documentation\" url=\"AmazonCloudWatch/latest/events/auth-and-access-control-cwe.html\">Authentication and Access Control</ulink> in the <emphasis>Amazon CloudWatch Events User Guide</emphasis>.</simpara> <simpara> <emphasis role=\"bold\">Input</emphasis>, <emphasis role=\"bold\">InputPath</emphasis> and <emphasis role=\"bold\">InputTransformer</emphasis> are mutually exclusive and optional parameters of a target. When a rule is triggered due to a matched event:</simpara> <itemizedlist> <listitem> <simpara>If none of the following arguments are specified for a target, then the entire event is passed to the target in JSON form (unless the target is Amazon EC2 Run Command or Amazon ECS task, in which case nothing from the event is passed to the target).</simpara> </listitem> <listitem> <simpara>If <emphasis role=\"bold\">Input</emphasis> is specified in the form of valid JSON, then the matched event is overridden with this constant.</simpara> </listitem> <listitem> <simpara>If <emphasis role=\"bold\">InputPath</emphasis> is specified in the form of JSONPath (for example, <code>$.detail</code>), then only the part of the event specified in the path is passed to the target (for example, only the detail part of the event is passed). </simpara> </listitem> <listitem> <simpara>If <emphasis role=\"bold\">InputTransformer</emphasis> is specified, then one or more specified JSONPaths are extracted from the event and used as values in a template that you specify as the input to the target.</simpara> </listitem> </itemizedlist> <simpara>When you add targets to a rule and the associated rule triggers soon after, new or updated targets might not be immediately invoked. Please allow a short period of time for changes to take effect.</simpara> </zonbook> <xhtml> <p>Adds the specified targets to the specified rule, or updates the targets if they are already associated with the rule.</p> <p>Targets are the resources that are invoked when a rule is triggered. Example targets include EC2 instances, AWS Lambda functions, Amazon Kinesis streams, Amazon ECS tasks, AWS Step Functions state machines, and built-in targets. Note that creating rules with built-in targets is supported only in the AWS Management Console.</p> <p>For some target types, <code>PutTargets</code> provides target-specific parameters. If the target is an Amazon Kinesis stream, you can optionally specify which shard the event goes to by using the <code>KinesisParameters</code> argument. To invoke a command on multiple EC2 instances with one rule, you can use the <code>RunCommandParameters</code> field.</p> <p>To be able to make API calls against the resources that you own, Amazon CloudWatch Events needs the appropriate permissions. For AWS Lambda and Amazon SNS resources, CloudWatch Events relies on resource-based policies. For EC2 instances, Amazon Kinesis streams, and AWS Step Functions state machines, CloudWatch Events relies on IAM roles that you specify in the <code>RoleARN</code> argument in <code>PutTarget</code>. For more information, see <a href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/auth-and-access-control-cwe.html\">Authentication and Access Control</a> in the <i>Amazon CloudWatch Events User Guide</i>.</p> <p> <b>Input</b>, <b>InputPath</b> and <b>InputTransformer</b> are mutually exclusive and optional parameters of a target. When a rule is triggered due to a matched event:</p> <ul> <li> <p>If none of the following arguments are specified for a target, then the entire event is passed to the target in JSON form (unless the target is Amazon EC2 Run Command or Amazon ECS task, in which case nothing from the event is passed to the target).</p> </li> <li> <p>If <b>Input</b> is specified in the form of valid JSON, then the matched event is overridden with this constant.</p> </li> <li> <p>If <b>InputPath</b> is specified in the form of JSONPath (for example, <code>$.detail</code>), then only the part of the event specified in the path is passed to the target (for example, only the detail part of the event is passed). </p> </li> <li> <p>If <b>InputTransformer</b> is specified, then one or more specified JSONPaths are extracted from the event and used as values in a template that you specify as the input to the target.</p> </li> </ul> <p>When you add targets to a rule and the associated rule triggers soon after, new or updated targets might not be immediately invoked. Please allow a short period of time for changes to take effect.</p> </xhtml>",
+    "RemoveTargets": "<zonbook> <simpara>Removes the specified targets from the specified rule. When the rule is triggered, those targets are no longer be invoked.</simpara> <simpara>When you remove a target, when the associated rule triggers, removed targets might continue to be invoked. Please allow a short period of time for changes to take effect.</simpara> </zonbook> <xhtml> <p>Removes the specified targets from the specified rule. When the rule is triggered, those targets are no longer be invoked.</p> <p>When you remove a target, when the associated rule triggers, removed targets might continue to be invoked. Please allow a short period of time for changes to take effect.</p> </xhtml>",
+    "TestEventPattern": "<zonbook> <simpara>Tests whether the specified event pattern matches the provided event.</simpara> <simpara>Most services in AWS treat : or / as the same character in Amazon Resource Names (ARNs). However, CloudWatch Events uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.</simpara> </zonbook> <xhtml> <p>Tests whether the specified event pattern matches the provided event.</p> <p>Most services in AWS treat : or / as the same character in Amazon Resource Names (ARNs). However, CloudWatch Events uses an exact match in event patterns and rules. Be sure to use the correct ARN characters when creating event patterns so that they match the ARN syntax in the event you want to match.</p> </xhtml>"
   },
-  "service": "<p>Amazon CloudWatch Events helps you to respond to state changes in your AWS resources. When your resources change state they automatically send events into an event stream. You can create rules that match selected events in the stream and route them to targets to take action. You can also use rules to take action on a pre-determined schedule. For example, you can configure rules to: </p> <ul> <li>Automatically invoke an AWS Lambda function to update DNS entries when an event notifies you that Amazon EC2 instance enters the running state.</li> <li>Direct specific API records from CloudTrail to an Amazon Kinesis stream for detailed analysis of potential security or availability risks.</li> <li>Periodically invoke a built-in target to create a snapshot of an Amazon EBS volume.</li> </ul> <p> For more information about Amazon CloudWatch Events features, see the <a href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide\">Amazon CloudWatch Developer Guide</a>. </p>",
+  "service": "<zonbook> <simpara>Amazon CloudWatch Events helps you to respond to state changes in your AWS resources. When your resources change state, they automatically send events into an event stream. You can create rules that match selected events in the stream and route them to targets to take action. You can also use rules to take action on a pre-determined schedule. For example, you can configure rules to:</simpara> <itemizedlist> <listitem> <simpara>Automatically invoke an AWS Lambda function to update DNS entries when an event notifies you that Amazon EC2 instance enters the running state.</simpara> </listitem> <listitem> <simpara>Direct specific API records from CloudTrail to an Amazon Kinesis stream for detailed analysis of potential security or availability risks.</simpara> </listitem> <listitem> <simpara>Periodically invoke a built-in target to create a snapshot of an Amazon EBS volume.</simpara> </listitem> </itemizedlist> <simpara>For more information about the features of Amazon CloudWatch Events, see the <ulink type=\"documentation\" url=\"AmazonCloudWatch/latest/events\">Amazon CloudWatch Events User Guide</ulink>.</simpara> </zonbook> <xhtml> <p>Amazon CloudWatch Events helps you to respond to state changes in your AWS resources. When your resources change state, they automatically send events into an event stream. You can create rules that match selected events in the stream and route them to targets to take action. You can also use rules to take action on a pre-determined schedule. For example, you can configure rules to:</p> <ul> <li> <p>Automatically invoke an AWS Lambda function to update DNS entries when an event notifies you that Amazon EC2 instance enters the running state.</p> </li> <li> <p>Direct specific API records from CloudTrail to an Amazon Kinesis stream for detailed analysis of potential security or availability risks.</p> </li> <li> <p>Periodically invoke a built-in target to create a snapshot of an Amazon EBS volume.</p> </li> </ul> <p>For more information about the features of Amazon CloudWatch Events, see the <a href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/events\">Amazon CloudWatch Events User Guide</a>.</p> </xhtml>",
   "shapes": {
+    "Arn": {
+      "base": null,
+      "refs": {
+        "EcsParameters$TaskDefinitionArn": "<zonbook> <simpara>The ARN of the task definition to use if the event target is an Amazon ECS cluster. </simpara> </zonbook> <xhtml> <p>The ARN of the task definition to use if the event target is an Amazon ECS cluster. </p> </xhtml>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
-        "TestEventPatternResponse$Result": "<p>Indicates whether the event matches the event pattern.</p>"
+        "TestEventPatternResponse$Result": "<zonbook> <simpara>Indicates whether the event matches the event pattern.</simpara> </zonbook> <xhtml> <p>Indicates whether the event matches the event pattern.</p> </xhtml>"
       }
     },
     "ConcurrentModificationException": {
-      "base": "<p>This exception occurs if there is concurrent modification on rule or target.</p>",
+      "base": "<zonbook> <simpara>There is concurrent modification on a rule or target.</simpara> </zonbook> <xhtml> <p>There is concurrent modification on a rule or target.</p> </xhtml>",
       "refs": {
       }
     },
     "DeleteRuleRequest": {
-      "base": "<p>Container for the parameters to the <a>DeleteRule</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "DescribeRuleRequest": {
-      "base": "<p>Container for the parameters to the <a>DescribeRule</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "DescribeRuleResponse": {
-      "base": "<p>The result of the <a>DescribeRule</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "DisableRuleRequest": {
-      "base": "<p>Container for the parameters to the <a>DisableRule</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
+    "EcsParameters": {
+      "base": "<zonbook> <simpara>The custom parameters to be used when the target is an Amazon ECS cluster.</simpara> </zonbook> <xhtml> <p>The custom parameters to be used when the target is an Amazon ECS cluster.</p> </xhtml>",
+      "refs": {
+        "Target$EcsParameters": "<zonbook> <simpara>Contains the Amazon ECS task definition and task count to be used, if the event target is an Amazon ECS task. For more information about Amazon ECS tasks, see <ulink type=\"documentation\" url=\"AmazonECS/latest/developerguide/task_defintions.html\">Task Definitions </ulink> in the <emphasis>Amazon EC2 Container Service Developer Guide</emphasis>.</simpara> </zonbook> <xhtml> <p>Contains the Amazon ECS task definition and task count to be used, if the event target is an Amazon ECS task. For more information about Amazon ECS tasks, see <a href=\"http://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_defintions.html\">Task Definitions </a> in the <i>Amazon EC2 Container Service Developer Guide</i>.</p> </xhtml>"
+      }
+    },
     "EnableRuleRequest": {
-      "base": "<p>Container for the parameters to the <a>EnableRule</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "ErrorCode": {
       "base": null,
       "refs": {
-        "PutEventsResultEntry$ErrorCode": "<p>The error code representing why the event submission failed on this entry.</p>",
-        "PutTargetsResultEntry$ErrorCode": "<p>The error code representing why the target submission failed on this entry.</p>",
-        "RemoveTargetsResultEntry$ErrorCode": "<p>The error code representing why the target removal failed on this entry.</p>"
+        "PutEventsResultEntry$ErrorCode": "<zonbook> <simpara>The error code that indicates why the event submission failed.</simpara> </zonbook> <xhtml> <p>The error code that indicates why the event submission failed.</p> </xhtml>",
+        "PutTargetsResultEntry$ErrorCode": "<zonbook> <simpara>The error code that indicates why the target addition failed.</simpara> </zonbook> <xhtml> <p>The error code that indicates why the target addition failed.</p> </xhtml>",
+        "RemoveTargetsResultEntry$ErrorCode": "<zonbook> <simpara>The error code that indicates why the target removal failed.</simpara> </zonbook> <xhtml> <p>The error code that indicates why the target removal failed.</p> </xhtml>"
       }
     },
     "ErrorMessage": {
       "base": null,
       "refs": {
-        "PutEventsResultEntry$ErrorMessage": "<p>The error message explaining why the event submission failed on this entry.</p>",
-        "PutTargetsResultEntry$ErrorMessage": "<p>The error message explaining why the target submission failed on this entry.</p>",
-        "RemoveTargetsResultEntry$ErrorMessage": "<p>The error message explaining why the target removal failed on this entry.</p>"
+        "PutEventsResultEntry$ErrorMessage": "<zonbook> <simpara>The error message that explains why the event submission failed.</simpara> </zonbook> <xhtml> <p>The error message that explains why the event submission failed.</p> </xhtml>",
+        "PutTargetsResultEntry$ErrorMessage": "<zonbook> <simpara>The error message that explains why the target addition failed.</simpara> </zonbook> <xhtml> <p>The error message that explains why the target addition failed.</p> </xhtml>",
+        "RemoveTargetsResultEntry$ErrorMessage": "<zonbook> <simpara>The error message that explains why the target removal failed.</simpara> </zonbook> <xhtml> <p>The error message that explains why the target removal failed.</p> </xhtml>"
       }
     },
     "EventId": {
       "base": null,
       "refs": {
-        "PutEventsResultEntry$EventId": "<p>The ID of the event submitted to Amazon CloudWatch Events.</p>"
+        "PutEventsResultEntry$EventId": "<zonbook> <simpara>The ID of the event.</simpara> </zonbook> <xhtml> <p>The ID of the event.</p> </xhtml>"
       }
     },
     "EventPattern": {
       "base": null,
       "refs": {
-        "DescribeRuleResponse$EventPattern": "<p>The event pattern.</p>",
-        "PutRuleRequest$EventPattern": "<p>The event pattern.</p>",
-        "Rule$EventPattern": "<p>The event pattern of the rule.</p>",
-        "TestEventPatternRequest$EventPattern": "<p>The event pattern you want to test.</p>"
+        "DescribeRuleResponse$EventPattern": "<zonbook> <simpara>The event pattern.</simpara> </zonbook> <xhtml> <p>The event pattern.</p> </xhtml>",
+        "PutRuleRequest$EventPattern": "<zonbook> <simpara>The event pattern.</simpara> </zonbook> <xhtml> <p>The event pattern.</p> </xhtml>",
+        "Rule$EventPattern": "<zonbook> <simpara>The event pattern of the rule.</simpara> </zonbook> <xhtml> <p>The event pattern of the rule.</p> </xhtml>",
+        "TestEventPatternRequest$EventPattern": "<zonbook> <simpara>The event pattern.</simpara> </zonbook> <xhtml> <p>The event pattern.</p> </xhtml>"
       }
     },
     "EventResource": {
@@ -92,94 +104,118 @@
     "EventResourceList": {
       "base": null,
       "refs": {
-        "PutEventsRequestEntry$Resources": "<p>AWS resources, identified by Amazon Resource Name (ARN), which the event primarily concerns. Any number, including zero, may be present.</p>"
+        "PutEventsRequestEntry$Resources": "<zonbook> <simpara>AWS resources, identified by Amazon Resource Name (ARN), which the event primarily concerns. Any number, including zero, may be present.</simpara> </zonbook> <xhtml> <p>AWS resources, identified by Amazon Resource Name (ARN), which the event primarily concerns. Any number, including zero, may be present.</p> </xhtml>"
       }
     },
     "EventTime": {
       "base": null,
       "refs": {
-        "PutEventsRequestEntry$Time": "<p>Timestamp of event, per <a href=\"https://www.rfc-editor.org/rfc/rfc3339.txt\">RFC3339</a>. If no timestamp is provided, the timestamp of the <a>PutEvents</a> call will be used.</p>"
+        "PutEventsRequestEntry$Time": "<zonbook> <simpara>The timestamp of the event, per <ulink url=\"https://www.rfc-editor.org/rfc/rfc3339.txt\">RFC3339</ulink>. If no timestamp is provided, the timestamp of the <xref linkend=\"PutEvents\"></xref> call is used.</simpara> </zonbook> <xhtml> <p>The timestamp of the event, per <a href=\"https://www.rfc-editor.org/rfc/rfc3339.txt\">RFC3339</a>. If no timestamp is provided, the timestamp of the <a>PutEvents</a> call is used.</p> </xhtml>"
+      }
+    },
+    "InputTransformer": {
+      "base": "<zonbook> <simpara>Contains the parameters needed for you to provide custom input to a target based on one or more pieces of data extracted from the event.</simpara> </zonbook> <xhtml> <p>Contains the parameters needed for you to provide custom input to a target based on one or more pieces of data extracted from the event.</p> </xhtml>",
+      "refs": {
+        "Target$InputTransformer": "<zonbook> <simpara>Settings to enable you to provide custom input to a target based on certain event data. You can extract one or more key-value pairs from the event and then use that data to send customized input to the target.</simpara> </zonbook> <xhtml> <p>Settings to enable you to provide custom input to a target based on certain event data. You can extract one or more key-value pairs from the event and then use that data to send customized input to the target.</p> </xhtml>"
+      }
+    },
+    "InputTransformerPathKey": {
+      "base": null,
+      "refs": {
+        "TransformerPaths$key": null
       }
     },
     "Integer": {
       "base": null,
       "refs": {
-        "PutEventsResponse$FailedEntryCount": "<p>The number of failed entries.</p>",
-        "PutTargetsResponse$FailedEntryCount": "<p>The number of failed entries.</p>",
-        "RemoveTargetsResponse$FailedEntryCount": "<p>The number of failed entries.</p>"
+        "PutEventsResponse$FailedEntryCount": "<zonbook> <simpara>The number of failed entries.</simpara> </zonbook> <xhtml> <p>The number of failed entries.</p> </xhtml>",
+        "PutTargetsResponse$FailedEntryCount": "<zonbook> <simpara>The number of failed entries.</simpara> </zonbook> <xhtml> <p>The number of failed entries.</p> </xhtml>",
+        "RemoveTargetsResponse$FailedEntryCount": "<zonbook> <simpara>The number of failed entries.</simpara> </zonbook> <xhtml> <p>The number of failed entries.</p> </xhtml>"
       }
     },
     "InternalException": {
-      "base": "<p>This exception occurs due to unexpected causes.</p>",
+      "base": "<zonbook> <simpara>This exception occurs due to unexpected causes.</simpara> </zonbook> <xhtml> <p>This exception occurs due to unexpected causes.</p> </xhtml>",
       "refs": {
       }
     },
     "InvalidEventPatternException": {
-      "base": "<p>The event pattern is invalid.</p>",
+      "base": "<zonbook> <simpara>The event pattern is not valid.</simpara> </zonbook> <xhtml> <p>The event pattern is not valid.</p> </xhtml>",
       "refs": {
       }
     },
+    "KinesisParameters": {
+      "base": "<zonbook> <simpara>This object enables you to specify a JSON path to extract from the event and use as the partition key for the Amazon Kinesis stream, so that you can control the shard to which the event goes. If you do not include this parameter, the default is to use the <code>eventId</code> as the partition key.</simpara> </zonbook> <xhtml> <p>This object enables you to specify a JSON path to extract from the event and use as the partition key for the Amazon Kinesis stream, so that you can control the shard to which the event goes. If you do not include this parameter, the default is to use the <code>eventId</code> as the partition key.</p> </xhtml>",
+      "refs": {
+        "Target$KinesisParameters": "<zonbook> <simpara>The custom parameter you can use to control shard assignment, when the target is an Amazon Kinesis stream. If you do not include this parameter, the default is to use the <code>eventId</code> as the partition key.</simpara> </zonbook> <xhtml> <p>The custom parameter you can use to control shard assignment, when the target is an Amazon Kinesis stream. If you do not include this parameter, the default is to use the <code>eventId</code> as the partition key.</p> </xhtml>"
+      }
+    },
     "LimitExceededException": {
-      "base": "<p>This exception occurs if you try to create more rules or add more targets to a rule than allowed by default.</p>",
+      "base": "<zonbook> <simpara>You tried to create more rules or add more targets to a rule than is allowed.</simpara> </zonbook> <xhtml> <p>You tried to create more rules or add more targets to a rule than is allowed.</p> </xhtml>",
       "refs": {
       }
     },
     "LimitMax100": {
       "base": null,
       "refs": {
-        "ListRuleNamesByTargetRequest$Limit": "<p>The maximum number of results to return.</p>",
-        "ListRulesRequest$Limit": "<p>The maximum number of results to return.</p>",
-        "ListTargetsByRuleRequest$Limit": "<p>The maximum number of results to return.</p>"
+        "ListRuleNamesByTargetRequest$Limit": "<zonbook> <simpara>The maximum number of results to return.</simpara> </zonbook> <xhtml> <p>The maximum number of results to return.</p> </xhtml>",
+        "ListRulesRequest$Limit": "<zonbook> <simpara>The maximum number of results to return.</simpara> </zonbook> <xhtml> <p>The maximum number of results to return.</p> </xhtml>",
+        "ListTargetsByRuleRequest$Limit": "<zonbook> <simpara>The maximum number of results to return.</simpara> </zonbook> <xhtml> <p>The maximum number of results to return.</p> </xhtml>"
+      }
+    },
+    "LimitMin1": {
+      "base": null,
+      "refs": {
+        "EcsParameters$TaskCount": "<zonbook> <simpara>The number of tasks to create based on the <code>TaskDefinition</code>. The default is one.</simpara> </zonbook> <xhtml> <p>The number of tasks to create based on the <code>TaskDefinition</code>. The default is one.</p> </xhtml>"
       }
     },
     "ListRuleNamesByTargetRequest": {
-      "base": "<p>Container for the parameters to the <a>ListRuleNamesByTarget</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "ListRuleNamesByTargetResponse": {
-      "base": "<p>The result of the <a>ListRuleNamesByTarget</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "ListRulesRequest": {
-      "base": "<p>Container for the parameters to the <a>ListRules</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "ListRulesResponse": {
-      "base": "<p>The result of the <a>ListRules</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "ListTargetsByRuleRequest": {
-      "base": "<p>Container for the parameters to the <a>ListTargetsByRule</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "ListTargetsByRuleResponse": {
-      "base": "<p>The result of the <a>ListTargetsByRule</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "NextToken": {
       "base": null,
       "refs": {
-        "ListRuleNamesByTargetRequest$NextToken": "<p>The token returned by a previous call to indicate that there is more data available.</p>",
-        "ListRuleNamesByTargetResponse$NextToken": "<p>Indicates that there are additional results to retrieve.</p>",
-        "ListRulesRequest$NextToken": "<p>The token returned by a previous call to indicate that there is more data available.</p>",
-        "ListRulesResponse$NextToken": "<p>Indicates that there are additional results to retrieve.</p>",
-        "ListTargetsByRuleRequest$NextToken": "<p>The token returned by a previous call to indicate that there is more data available.</p>",
-        "ListTargetsByRuleResponse$NextToken": "<p>Indicates that there are additional results to retrieve.</p>"
+        "ListRuleNamesByTargetRequest$NextToken": "<zonbook> <simpara>The token returned by a previous call to retrieve the next set of results.</simpara> </zonbook> <xhtml> <p>The token returned by a previous call to retrieve the next set of results.</p> </xhtml>",
+        "ListRuleNamesByTargetResponse$NextToken": "<zonbook> <simpara>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</simpara> </zonbook> <xhtml> <p>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</p> </xhtml>",
+        "ListRulesRequest$NextToken": "<zonbook> <simpara>The token returned by a previous call to retrieve the next set of results.</simpara> </zonbook> <xhtml> <p>The token returned by a previous call to retrieve the next set of results.</p> </xhtml>",
+        "ListRulesResponse$NextToken": "<zonbook> <simpara>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</simpara> </zonbook> <xhtml> <p>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</p> </xhtml>",
+        "ListTargetsByRuleRequest$NextToken": "<zonbook> <simpara>The token returned by a previous call to retrieve the next set of results.</simpara> </zonbook> <xhtml> <p>The token returned by a previous call to retrieve the next set of results.</p> </xhtml>",
+        "ListTargetsByRuleResponse$NextToken": "<zonbook> <simpara>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</simpara> </zonbook> <xhtml> <p>Indicates whether there are additional results to retrieve. If there are no more results, the value is null.</p> </xhtml>"
       }
     },
     "PutEventsRequest": {
-      "base": "<p>Container for the parameters to the <a>PutEvents</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "PutEventsRequestEntry": {
-      "base": "<p>Contains information about the event to be used in PutEvents.</p>",
+      "base": "<zonbook> <simpara>Represents an event to be submitted.</simpara> </zonbook> <xhtml> <p>Represents an event to be submitted.</p> </xhtml>",
       "refs": {
         "PutEventsRequestEntryList$member": null
       }
@@ -187,16 +223,16 @@
     "PutEventsRequestEntryList": {
       "base": null,
       "refs": {
-        "PutEventsRequest$Entries": "<p>The entry that defines an event in your system. You can specify several parameters for the entry such as the source and type of the event, resources associated with the event, and so on.</p>"
+        "PutEventsRequest$Entries": "<zonbook> <simpara>The entry that defines an event in your system. You can specify several parameters for the entry such as the source and type of the event, resources associated with the event, and so on.</simpara> </zonbook> <xhtml> <p>The entry that defines an event in your system. You can specify several parameters for the entry such as the source and type of the event, resources associated with the event, and so on.</p> </xhtml>"
       }
     },
     "PutEventsResponse": {
-      "base": "<p>The result of the <a>PutEvents</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "PutEventsResultEntry": {
-      "base": "<p>A PutEventsResult contains a list of PutEventsResultEntry.</p>",
+      "base": "<zonbook> <simpara>Represents an event that failed to be submitted.</simpara> </zonbook> <xhtml> <p>Represents an event that failed to be submitted.</p> </xhtml>",
       "refs": {
         "PutEventsResultEntryList$member": null
       }
@@ -204,31 +240,31 @@
     "PutEventsResultEntryList": {
       "base": null,
       "refs": {
-        "PutEventsResponse$Entries": "<p>A list of successfully and unsuccessfully ingested events results. If the ingestion was successful, the entry will have the event ID in it. If not, then the ErrorCode and ErrorMessage can be used to identify the problem with the entry.</p>"
+        "PutEventsResponse$Entries": "<zonbook> <simpara>The successfully and unsuccessfully ingested events results. If the ingestion was successful, the entry has the event ID in it. Otherwise, you can use the error code and error message to identify the problem with the entry.</simpara> </zonbook> <xhtml> <p>The successfully and unsuccessfully ingested events results. If the ingestion was successful, the entry has the event ID in it. Otherwise, you can use the error code and error message to identify the problem with the entry.</p> </xhtml>"
       }
     },
     "PutRuleRequest": {
-      "base": "<p>Container for the parameters to the <a>PutRule</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "PutRuleResponse": {
-      "base": "<p>The result of the <a>PutRule</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "PutTargetsRequest": {
-      "base": "<p>Container for the parameters to the <a>PutTargets</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "PutTargetsResponse": {
-      "base": "<p>The result of the <a>PutTargets</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "PutTargetsResultEntry": {
-      "base": "<p>A PutTargetsResult contains a list of PutTargetsResultEntry.</p>",
+      "base": "<zonbook> <simpara>Represents a target that failed to be added to a rule.</simpara> </zonbook> <xhtml> <p>Represents a target that failed to be added to a rule.</p> </xhtml>",
       "refs": {
         "PutTargetsResultEntryList$member": null
       }
@@ -236,21 +272,21 @@
     "PutTargetsResultEntryList": {
       "base": null,
       "refs": {
-        "PutTargetsResponse$FailedEntries": "<p>An array of failed target entries.</p>"
+        "PutTargetsResponse$FailedEntries": "<zonbook> <simpara>The failed target entries.</simpara> </zonbook> <xhtml> <p>The failed target entries.</p> </xhtml>"
       }
     },
     "RemoveTargetsRequest": {
-      "base": "<p>Container for the parameters to the <a>RemoveTargets</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "RemoveTargetsResponse": {
-      "base": "<p>The result of the <a>RemoveTargets</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "RemoveTargetsResultEntry": {
-      "base": "<p>The ID of the target requested to be removed from the rule by Amazon CloudWatch Events.</p>",
+      "base": "<zonbook> <simpara>Represents a target that failed to be removed from a rule.</simpara> </zonbook> <xhtml> <p>Represents a target that failed to be removed from a rule.</p> </xhtml>",
       "refs": {
         "RemoveTargetsResultEntryList$member": null
       }
@@ -258,24 +294,25 @@
     "RemoveTargetsResultEntryList": {
       "base": null,
       "refs": {
-        "RemoveTargetsResponse$FailedEntries": "<p>An array of failed target entries.</p>"
+        "RemoveTargetsResponse$FailedEntries": "<zonbook> <simpara>The failed target entries.</simpara> </zonbook> <xhtml> <p>The failed target entries.</p> </xhtml>"
       }
     },
     "ResourceNotFoundException": {
-      "base": "<p>The rule does not exist.</p>",
+      "base": "<zonbook> <simpara>The rule does not exist.</simpara> </zonbook> <xhtml> <p>The rule does not exist.</p> </xhtml>",
       "refs": {
       }
     },
     "RoleArn": {
       "base": null,
       "refs": {
-        "DescribeRuleResponse$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the rule.</p>",
-        "PutRuleRequest$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role associated with the rule.</p>",
-        "Rule$RoleArn": "<p>The Amazon Resource Name (ARN) associated with the role that is used for target invocation.</p>"
+        "DescribeRuleResponse$RoleArn": "<zonbook> <simpara>The Amazon Resource Name (ARN) of the IAM role associated with the rule.</simpara> </zonbook> <xhtml> <p>The Amazon Resource Name (ARN) of the IAM role associated with the rule.</p> </xhtml>",
+        "PutRuleRequest$RoleArn": "<zonbook> <simpara>The Amazon Resource Name (ARN) of the IAM role associated with the rule.</simpara> </zonbook> <xhtml> <p>The Amazon Resource Name (ARN) of the IAM role associated with the rule.</p> </xhtml>",
+        "Rule$RoleArn": "<zonbook> <simpara>The Amazon Resource Name (ARN) of the role that is used for target invocation.</simpara> </zonbook> <xhtml> <p>The Amazon Resource Name (ARN) of the role that is used for target invocation.</p> </xhtml>",
+        "Target$RoleArn": "<zonbook> <simpara>The Amazon Resource Name (ARN) of the IAM role to be used for this target when the rule is triggered. If one rule triggers multiple targets, you can use a different IAM role for each target.</simpara> </zonbook> <xhtml> <p>The Amazon Resource Name (ARN) of the IAM role to be used for this target when the rule is triggered. If one rule triggers multiple targets, you can use a different IAM role for each target.</p> </xhtml>"
       }
     },
     "Rule": {
-      "base": "<p>Contains information about a rule in Amazon CloudWatch Events. A ListRulesResult contains a list of Rules.</p>",
+      "base": "<zonbook> <simpara>Contains information about a rule in Amazon CloudWatch Events.</simpara> </zonbook> <xhtml> <p>Contains information about a rule in Amazon CloudWatch Events.</p> </xhtml>",
       "refs": {
         "RuleResponseList$member": null
       }
@@ -283,75 +320,111 @@
     "RuleArn": {
       "base": null,
       "refs": {
-        "DescribeRuleResponse$Arn": "<p>The Amazon Resource Name (ARN) associated with the rule.</p>",
-        "PutRuleResponse$RuleArn": "<p>The Amazon Resource Name (ARN) that identifies the rule.</p>",
-        "Rule$Arn": "<p>The Amazon Resource Name (ARN) of the rule.</p>"
+        "DescribeRuleResponse$Arn": "<zonbook> <simpara>The Amazon Resource Name (ARN) of the rule.</simpara> </zonbook> <xhtml> <p>The Amazon Resource Name (ARN) of the rule.</p> </xhtml>",
+        "PutRuleResponse$RuleArn": "<zonbook> <simpara>The Amazon Resource Name (ARN) of the rule.</simpara> </zonbook> <xhtml> <p>The Amazon Resource Name (ARN) of the rule.</p> </xhtml>",
+        "Rule$Arn": "<zonbook> <simpara>The Amazon Resource Name (ARN) of the rule.</simpara> </zonbook> <xhtml> <p>The Amazon Resource Name (ARN) of the rule.</p> </xhtml>"
       }
     },
     "RuleDescription": {
       "base": null,
       "refs": {
-        "DescribeRuleResponse$Description": "<p>The rule's description.</p>",
-        "PutRuleRequest$Description": "<p>A description of the rule.</p>",
-        "Rule$Description": "<p>The description of the rule.</p>"
+        "DescribeRuleResponse$Description": "<zonbook> <simpara>The description of the rule.</simpara> </zonbook> <xhtml> <p>The description of the rule.</p> </xhtml>",
+        "PutRuleRequest$Description": "<zonbook> <simpara>A description of the rule.</simpara> </zonbook> <xhtml> <p>A description of the rule.</p> </xhtml>",
+        "Rule$Description": "<zonbook> <simpara>The description of the rule.</simpara> </zonbook> <xhtml> <p>The description of the rule.</p> </xhtml>"
       }
     },
     "RuleName": {
       "base": null,
       "refs": {
-        "DeleteRuleRequest$Name": "<p>The name of the rule to be deleted.</p>",
-        "DescribeRuleRequest$Name": "<p>The name of the rule you want to describe details for.</p>",
-        "DescribeRuleResponse$Name": "<p>The rule's name.</p>",
-        "DisableRuleRequest$Name": "<p>The name of the rule you want to disable.</p>",
-        "EnableRuleRequest$Name": "<p>The name of the rule that you want to enable.</p>",
-        "ListRulesRequest$NamePrefix": "<p>The prefix matching the rule name.</p>",
-        "ListTargetsByRuleRequest$Rule": "<p>The name of the rule whose targets you want to list.</p>",
-        "PutRuleRequest$Name": "<p>The name of the rule that you are creating or updating.</p>",
-        "PutTargetsRequest$Rule": "<p>The name of the rule you want to add targets to.</p>",
-        "RemoveTargetsRequest$Rule": "<p>The name of the rule you want to remove targets from.</p>",
-        "Rule$Name": "<p>The rule's name.</p>",
+        "DeleteRuleRequest$Name": "<zonbook> <simpara>The name of the rule.</simpara> </zonbook> <xhtml> <p>The name of the rule.</p> </xhtml>",
+        "DescribeRuleRequest$Name": "<zonbook> <simpara>The name of the rule.</simpara> </zonbook> <xhtml> <p>The name of the rule.</p> </xhtml>",
+        "DescribeRuleResponse$Name": "<zonbook> <simpara>The name of the rule.</simpara> </zonbook> <xhtml> <p>The name of the rule.</p> </xhtml>",
+        "DisableRuleRequest$Name": "<zonbook> <simpara>The name of the rule.</simpara> </zonbook> <xhtml> <p>The name of the rule.</p> </xhtml>",
+        "EnableRuleRequest$Name": "<zonbook> <simpara>The name of the rule.</simpara> </zonbook> <xhtml> <p>The name of the rule.</p> </xhtml>",
+        "ListRulesRequest$NamePrefix": "<zonbook> <simpara>The prefix matching the rule name.</simpara> </zonbook> <xhtml> <p>The prefix matching the rule name.</p> </xhtml>",
+        "ListTargetsByRuleRequest$Rule": "<zonbook> <simpara>The name of the rule.</simpara> </zonbook> <xhtml> <p>The name of the rule.</p> </xhtml>",
+        "PutRuleRequest$Name": "<zonbook> <simpara>The name of the rule that you are creating or updating.</simpara> </zonbook> <xhtml> <p>The name of the rule that you are creating or updating.</p> </xhtml>",
+        "PutTargetsRequest$Rule": "<zonbook> <simpara>The name of the rule.</simpara> </zonbook> <xhtml> <p>The name of the rule.</p> </xhtml>",
+        "RemoveTargetsRequest$Rule": "<zonbook> <simpara>The name of the rule.</simpara> </zonbook> <xhtml> <p>The name of the rule.</p> </xhtml>",
+        "Rule$Name": "<zonbook> <simpara>The name of the rule.</simpara> </zonbook> <xhtml> <p>The name of the rule.</p> </xhtml>",
         "RuleNameList$member": null
       }
     },
     "RuleNameList": {
       "base": null,
       "refs": {
-        "ListRuleNamesByTargetResponse$RuleNames": "<p>List of rules names that can invoke the given target.</p>"
+        "ListRuleNamesByTargetResponse$RuleNames": "<zonbook> <simpara>The names of the rules that can invoke the given target.</simpara> </zonbook> <xhtml> <p>The names of the rules that can invoke the given target.</p> </xhtml>"
       }
     },
     "RuleResponseList": {
       "base": null,
       "refs": {
-        "ListRulesResponse$Rules": "<p>List of rules matching the specified criteria.</p>"
+        "ListRulesResponse$Rules": "<zonbook> <simpara>The rules that match the specified criteria.</simpara> </zonbook> <xhtml> <p>The rules that match the specified criteria.</p> </xhtml>"
       }
     },
     "RuleState": {
       "base": null,
       "refs": {
-        "DescribeRuleResponse$State": "<p>Specifies whether the rule is enabled or disabled.</p>",
-        "PutRuleRequest$State": "<p>Indicates whether the rule is enabled or disabled.</p>",
-        "Rule$State": "<p>The rule's state.</p>"
+        "DescribeRuleResponse$State": "<zonbook> <simpara>Specifies whether the rule is enabled or disabled.</simpara> </zonbook> <xhtml> <p>Specifies whether the rule is enabled or disabled.</p> </xhtml>",
+        "PutRuleRequest$State": "<zonbook> <simpara>Indicates whether the rule is enabled or disabled.</simpara> </zonbook> <xhtml> <p>Indicates whether the rule is enabled or disabled.</p> </xhtml>",
+        "Rule$State": "<zonbook> <simpara>The state of the rule.</simpara> </zonbook> <xhtml> <p>The state of the rule.</p> </xhtml>"
+      }
+    },
+    "RunCommandParameters": {
+      "base": "<zonbook> <simpara>This parameter contains the criteria (either InstanceIds or a tag) used to specify which EC2 instances are to be sent the command. </simpara> </zonbook> <xhtml> <p>This parameter contains the criteria (either InstanceIds or a tag) used to specify which EC2 instances are to be sent the command. </p> </xhtml>",
+      "refs": {
+        "Target$RunCommandParameters": "<zonbook> <simpara>Parameters used when you are using the rule to invoke Amazon EC2 Run Command.</simpara> </zonbook> <xhtml> <p>Parameters used when you are using the rule to invoke Amazon EC2 Run Command.</p> </xhtml>"
+      }
+    },
+    "RunCommandTarget": {
+      "base": "<zonbook> <simpara>Information about the EC2 instances that are to be sent the command, specified as key-value pairs. Each <code>RunCommandTarget</code> block can include only one key, but this key may specify multiple values.</simpara> </zonbook> <xhtml> <p>Information about the EC2 instances that are to be sent the command, specified as key-value pairs. Each <code>RunCommandTarget</code> block can include only one key, but this key may specify multiple values.</p> </xhtml>",
+      "refs": {
+        "RunCommandTargets$member": null
+      }
+    },
+    "RunCommandTargetKey": {
+      "base": null,
+      "refs": {
+        "RunCommandTarget$Key": "<zonbook> <simpara>Can be either <code>tag:</code> <emphasis>tag-key</emphasis> or <code>InstanceIds</code>.</simpara> </zonbook> <xhtml> <p>Can be either <code>tag:</code> <i>tag-key</i> or <code>InstanceIds</code>.</p> </xhtml>"
+      }
+    },
+    "RunCommandTargetValue": {
+      "base": null,
+      "refs": {
+        "RunCommandTargetValues$member": null
+      }
+    },
+    "RunCommandTargetValues": {
+      "base": null,
+      "refs": {
+        "RunCommandTarget$Values": "<zonbook> <simpara>If <code>Key</code> is <code>tag:</code> <emphasis>tag-key</emphasis>, <code>Values</code> is a list of tag values. If <code>Key</code> is <code>InstanceIds</code>, <code>Values</code> is a list of Amazon EC2 instance IDs.</simpara> </zonbook> <xhtml> <p>If <code>Key</code> is <code>tag:</code> <i>tag-key</i>, <code>Values</code> is a list of tag values. If <code>Key</code> is <code>InstanceIds</code>, <code>Values</code> is a list of Amazon EC2 instance IDs.</p> </xhtml>"
+      }
+    },
+    "RunCommandTargets": {
+      "base": null,
+      "refs": {
+        "RunCommandParameters$RunCommandTargets": "<zonbook> <simpara>Currently, we support including only one RunCommandTarget block, which specifies either an array of InstanceIds or a tag.</simpara> </zonbook> <xhtml> <p>Currently, we support including only one RunCommandTarget block, which specifies either an array of InstanceIds or a tag.</p> </xhtml>"
       }
     },
     "ScheduleExpression": {
       "base": null,
       "refs": {
-        "DescribeRuleResponse$ScheduleExpression": "<p>The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\".</p>",
-        "PutRuleRequest$ScheduleExpression": "<p>The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\".</p>",
-        "Rule$ScheduleExpression": "<p>The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\".</p>"
+        "DescribeRuleResponse$ScheduleExpression": "<zonbook> <simpara>The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\".</simpara> </zonbook> <xhtml> <p>The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\".</p> </xhtml>",
+        "PutRuleRequest$ScheduleExpression": "<zonbook> <simpara>The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\".</simpara> </zonbook> <xhtml> <p>The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\".</p> </xhtml>",
+        "Rule$ScheduleExpression": "<zonbook> <simpara>The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\".</simpara> </zonbook> <xhtml> <p>The scheduling expression. For example, \"cron(0 20 * * ? *)\", \"rate(5 minutes)\".</p> </xhtml>"
       }
     },
     "String": {
       "base": null,
       "refs": {
-        "PutEventsRequestEntry$Source": "<p>The source of the event.</p>",
-        "PutEventsRequestEntry$DetailType": "<p>Free-form string used to decide what fields to expect in the event detail.</p>",
-        "PutEventsRequestEntry$Detail": "<p>In the JSON sense, an object containing fields, which may also contain nested sub-objects. No constraints are imposed on its contents.</p>",
-        "TestEventPatternRequest$Event": "<p>The event in the JSON format to test against the event pattern.</p>"
+        "PutEventsRequestEntry$Source": "<zonbook> <simpara>The source of the event.</simpara> </zonbook> <xhtml> <p>The source of the event.</p> </xhtml>",
+        "PutEventsRequestEntry$DetailType": "<zonbook> <simpara>Free-form string used to decide what fields to expect in the event detail.</simpara> </zonbook> <xhtml> <p>Free-form string used to decide what fields to expect in the event detail.</p> </xhtml>",
+        "PutEventsRequestEntry$Detail": "<zonbook> <simpara>In the JSON sense, an object containing fields, which may also contain nested subobjects. No constraints are imposed on its contents.</simpara> </zonbook> <xhtml> <p>In the JSON sense, an object containing fields, which may also contain nested subobjects. No constraints are imposed on its contents.</p> </xhtml>",
+        "TestEventPatternRequest$Event": "<zonbook> <simpara>The event, in JSON format, to test against the event pattern.</simpara> </zonbook> <xhtml> <p>The event, in JSON format, to test against the event pattern.</p> </xhtml>"
       }
     },
     "Target": {
-      "base": "<p>Targets are the resources that can be invoked when a rule is triggered. For example, AWS Lambda functions, Amazon Kinesis streams, and built-in targets.</p> <p><b>Input</b> and <b>InputPath</b> are mutually-exclusive and optional parameters of a target. When a rule is triggered due to a matched event, if for a target:</p> <ul> <li>Neither <b>Input</b> nor <b>InputPath</b> is specified, then the entire event is passed to the target in JSON form.</li> <li> <b>InputPath</b> is specified in the form of JSONPath (e.g. <b>$.detail</b>), then only the part of the event specified in the path is passed to the target (e.g. only the detail part of the event is passed). </li> <li> <b>Input</b> is specified in the form of a valid JSON, then the matched event is overridden with this constant.</li> </ul>",
+      "base": "<zonbook> <simpara>Targets are the resources to be invoked when a rule is triggered. Target types include EC2 instances, AWS Lambda functions, Amazon Kinesis streams, Amazon ECS tasks, AWS Step Functions state machines, Run Command, and built-in targets.</simpara> </zonbook> <xhtml> <p>Targets are the resources to be invoked when a rule is triggered. Target types include EC2 instances, AWS Lambda functions, Amazon Kinesis streams, Amazon ECS tasks, AWS Step Functions state machines, Run Command, and built-in targets.</p> </xhtml>",
       "refs": {
         "TargetList$member": null
       }
@@ -359,52 +432,71 @@
     "TargetArn": {
       "base": null,
       "refs": {
-        "ListRuleNamesByTargetRequest$TargetArn": "<p>The Amazon Resource Name (ARN) of the target resource that you want to list the rules for.</p>",
-        "Target$Arn": "<p>The Amazon Resource Name (ARN) associated of the target.</p>"
+        "ListRuleNamesByTargetRequest$TargetArn": "<zonbook> <simpara>The Amazon Resource Name (ARN) of the target resource.</simpara> </zonbook> <xhtml> <p>The Amazon Resource Name (ARN) of the target resource.</p> </xhtml>",
+        "Target$Arn": "<zonbook> <simpara>The Amazon Resource Name (ARN) of the target.</simpara> </zonbook> <xhtml> <p>The Amazon Resource Name (ARN) of the target.</p> </xhtml>"
       }
     },
     "TargetId": {
       "base": null,
       "refs": {
-        "PutTargetsResultEntry$TargetId": "<p>The ID of the target submitted to Amazon CloudWatch Events.</p>",
-        "RemoveTargetsResultEntry$TargetId": "<p>The ID of the target requested to be removed by Amazon CloudWatch Events.</p>",
-        "Target$Id": "<p>The unique target assignment ID.</p>",
+        "PutTargetsResultEntry$TargetId": "<zonbook> <simpara>The ID of the target.</simpara> </zonbook> <xhtml> <p>The ID of the target.</p> </xhtml>",
+        "RemoveTargetsResultEntry$TargetId": "<zonbook> <simpara>The ID of the target.</simpara> </zonbook> <xhtml> <p>The ID of the target.</p> </xhtml>",
+        "Target$Id": "<zonbook> <simpara>The ID of the target.</simpara> </zonbook> <xhtml> <p>The ID of the target.</p> </xhtml>",
         "TargetIdList$member": null
       }
     },
     "TargetIdList": {
       "base": null,
       "refs": {
-        "RemoveTargetsRequest$Ids": "<p>The list of target IDs to remove from the rule.</p>"
+        "RemoveTargetsRequest$Ids": "<zonbook> <simpara>The IDs of the targets to remove from the rule.</simpara> </zonbook> <xhtml> <p>The IDs of the targets to remove from the rule.</p> </xhtml>"
       }
     },
     "TargetInput": {
       "base": null,
       "refs": {
-        "Target$Input": "<p>Valid JSON text passed to the target. For more information about JSON text, see <a href=\"http://www.rfc-editor.org/rfc/rfc7159.txt\">The JavaScript Object Notation (JSON) Data Interchange Format</a>.</p>"
+        "Target$Input": "<zonbook> <simpara>Valid JSON text passed to the target. In this case, nothing from the event itself is passed to the target. For more information, see <ulink url=\"http://www.rfc-editor.org/rfc/rfc7159.txt\">The JavaScript Object Notation (JSON) Data Interchange Format</ulink>.</simpara> </zonbook> <xhtml> <p>Valid JSON text passed to the target. In this case, nothing from the event itself is passed to the target. For more information, see <a href=\"http://www.rfc-editor.org/rfc/rfc7159.txt\">The JavaScript Object Notation (JSON) Data Interchange Format</a>.</p> </xhtml>"
       }
     },
     "TargetInputPath": {
       "base": null,
       "refs": {
-        "Target$InputPath": "<p>The value of the JSONPath that is used for extracting part of the matched event when passing it to the target. For more information about JSON paths, see <a href=\"http://goessner.net/articles/JsonPath/\">JSONPath</a>.</p>"
+        "Target$InputPath": "<zonbook> <simpara>The value of the JSONPath that is used for extracting part of the matched event when passing it to the target. For more information about JSON paths, see <ulink url=\"http://goessner.net/articles/JsonPath/\">JSONPath</ulink>.</simpara> </zonbook> <xhtml> <p>The value of the JSONPath that is used for extracting part of the matched event when passing it to the target. For more information about JSON paths, see <a href=\"http://goessner.net/articles/JsonPath/\">JSONPath</a>.</p> </xhtml>",
+        "TransformerPaths$value": null
       }
     },
     "TargetList": {
       "base": null,
       "refs": {
-        "ListTargetsByRuleResponse$Targets": "<p>Lists the targets assigned to the rule.</p>",
-        "PutTargetsRequest$Targets": "<p>List of targets you want to update or add to the rule.</p>"
+        "ListTargetsByRuleResponse$Targets": "<zonbook> <simpara>The targets assigned to the rule.</simpara> </zonbook> <xhtml> <p>The targets assigned to the rule.</p> </xhtml>",
+        "PutTargetsRequest$Targets": "<zonbook> <simpara>The targets to update or add to the rule.</simpara> </zonbook> <xhtml> <p>The targets to update or add to the rule.</p> </xhtml>"
+      }
+    },
+    "TargetPartitionKeyPath": {
+      "base": null,
+      "refs": {
+        "KinesisParameters$PartitionKeyPath": "<zonbook> <simpara>The JSON path to be extracted from the event and used as the partition key. For more information, see <ulink type=\"documentation\" url=\"streams/latest/dev/key-concepts.html#partition-key\">Amazon Kinesis Streams Key Concepts</ulink> in the <emphasis>Amazon Kinesis Streams Developer Guide</emphasis>.</simpara> </zonbook> <xhtml> <p>The JSON path to be extracted from the event and used as the partition key. For more information, see <a href=\"http://docs.aws.amazon.com/streams/latest/dev/key-concepts.html#partition-key\">Amazon Kinesis Streams Key Concepts</a> in the <i>Amazon Kinesis Streams Developer Guide</i>.</p> </xhtml>"
       }
     },
     "TestEventPatternRequest": {
-      "base": "<p>Container for the parameters to the <a>TestEventPattern</a> operation.</p>",
+      "base": null,
       "refs": {
       }
     },
     "TestEventPatternResponse": {
-      "base": "<p>The result of the <a>TestEventPattern</a> operation.</p>",
+      "base": null,
       "refs": {
+      }
+    },
+    "TransformerInput": {
+      "base": null,
+      "refs": {
+        "InputTransformer$InputTemplate": "<zonbook> <simpara>Input template where you can use the values of the keys from <code>InputPathsMap</code> to customize the data sent to the target.</simpara> </zonbook> <xhtml> <p>Input template where you can use the values of the keys from <code>InputPathsMap</code> to customize the data sent to the target.</p> </xhtml>"
+      }
+    },
+    "TransformerPaths": {
+      "base": null,
+      "refs": {
+        "InputTransformer$InputPathsMap": "<zonbook> <simpara>Map of JSON paths to be extracted from the event. These are key-value pairs, where each value is a JSON path.</simpara> </zonbook> <xhtml> <p>Map of JSON paths to be extracted from the event. These are key-value pairs, where each value is a JSON path.</p> </xhtml>"
       }
     }
   }

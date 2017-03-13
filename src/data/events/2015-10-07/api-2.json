@@ -1,13 +1,14 @@
 {
   "version":"2.0",
   "metadata":{
-    "uid":"events-2015-10-07",
     "apiVersion":"2015-10-07",
     "endpointPrefix":"events",
     "jsonVersion":"1.1",
     "serviceFullName":"Amazon CloudWatch Events",
     "signatureVersion":"v4",
+    "signingName":"events",
     "targetPrefix":"AWSEvents",
+    "timestampFormat":"unixTimestamp",
     "protocol":"json"
   },
   "operations":{
@@ -266,6 +267,11 @@
     }
   },
   "shapes":{
+    "Arn":{
+      "type":"string",
+      "min":1,
+      "max":1600
+    },
     "Boolean":{"type":"boolean"},
     "ConcurrentModificationException":{
       "type":"structure",
@@ -306,6 +312,14 @@
         "Name":{"shape":"RuleName"}
       }
     },
+    "EcsParameters":{
+      "type":"structure",
+      "required":["TaskDefinitionArn"],
+      "members":{
+        "TaskDefinitionArn":{"shape":"Arn"},
+        "TaskCount":{"shape":"LimitMin1"}
+      }
+    },
     "EnableRuleRequest":{
       "type":"structure",
       "required":["Name"],
@@ -326,6 +340,20 @@
       "member":{"shape":"EventResource"}
     },
     "EventTime":{"type":"timestamp"},
+    "InputTransformer":{
+      "type":"structure",
+      "required":["InputTemplate"],
+      "members":{
+        "InputPathsMap":{"shape":"TransformerPaths"},
+        "InputTemplate":{"shape":"TransformerInput"}
+      }
+    },
+    "InputTransformerPathKey":{
+      "type":"string",
+      "min":1,
+      "max":256,
+      "pattern":"[A-Za-z0-9\\_\\-]+"
+    },
     "Integer":{"type":"integer"},
     "InternalException":{
       "type":"structure",
@@ -340,6 +368,13 @@
       },
       "exception":true
     },
+    "KinesisParameters":{
+      "type":"structure",
+      "required":["PartitionKeyPath"],
+      "members":{
+        "PartitionKeyPath":{"shape":"TargetPartitionKeyPath"}
+      }
+    },
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -350,6 +385,10 @@
       "type":"integer",
       "min":1,
       "max":100
+    },
+    "LimitMin1":{
+      "type":"integer",
+      "min":1
     },
     "ListRuleNamesByTargetRequest":{
       "type":"structure",
@@ -576,6 +615,47 @@
         "DISABLED"
       ]
     },
+    "RunCommandParameters":{
+      "type":"structure",
+      "required":["RunCommandTargets"],
+      "members":{
+        "RunCommandTargets":{"shape":"RunCommandTargets"}
+      }
+    },
+    "RunCommandTarget":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Values"
+      ],
+      "members":{
+        "Key":{"shape":"RunCommandTargetKey"},
+        "Values":{"shape":"RunCommandTargetValues"}
+      }
+    },
+    "RunCommandTargetKey":{
+      "type":"string",
+      "min":1,
+      "max":128,
+      "pattern":"^[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*$"
+    },
+    "RunCommandTargetValue":{
+      "type":"string",
+      "min":1,
+      "max":256
+    },
+    "RunCommandTargetValues":{
+      "type":"list",
+      "member":{"shape":"RunCommandTargetValue"},
+      "min":1,
+      "max":50
+    },
+    "RunCommandTargets":{
+      "type":"list",
+      "member":{"shape":"RunCommandTarget"},
+      "min":1,
+      "max":5
+    },
     "ScheduleExpression":{
       "type":"string",
       "max":256
@@ -590,8 +670,13 @@
       "members":{
         "Id":{"shape":"TargetId"},
         "Arn":{"shape":"TargetArn"},
+        "RoleArn":{"shape":"RoleArn"},
         "Input":{"shape":"TargetInput"},
-        "InputPath":{"shape":"TargetInputPath"}
+        "InputPath":{"shape":"TargetInputPath"},
+        "InputTransformer":{"shape":"InputTransformer"},
+        "KinesisParameters":{"shape":"KinesisParameters"},
+        "RunCommandParameters":{"shape":"RunCommandParameters"},
+        "EcsParameters":{"shape":"EcsParameters"}
       }
     },
     "TargetArn":{
@@ -621,7 +706,13 @@
     },
     "TargetList":{
       "type":"list",
-      "member":{"shape":"Target"}
+      "member":{"shape":"Target"},
+      "min":1,
+      "max":100
+    },
+    "TargetPartitionKeyPath":{
+      "type":"string",
+      "max":256
     },
     "TestEventPatternRequest":{
       "type":"structure",
@@ -639,6 +730,17 @@
       "members":{
         "Result":{"shape":"Boolean"}
       }
+    },
+    "TransformerInput":{
+      "type":"string",
+      "min":1,
+      "max":8192
+    },
+    "TransformerPaths":{
+      "type":"map",
+      "key":{"shape":"InputTransformerPathKey"},
+      "value":{"shape":"TargetInputPath"},
+      "max":10
     }
   }
 }

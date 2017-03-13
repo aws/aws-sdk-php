@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchEvents` - This update extends Target Data Type for configuring Target behavior during invocation.
+* `Aws\DeviceFarm` - Network shaping allows users to simulate network connections and conditions while testing their Android, iOS, and web apps with AWS Device Farm.
+
 ## 3.24.2 - 2017-03-10
 
 * `Aws\CodeDeploy` - Add paginators for Codedeploy
