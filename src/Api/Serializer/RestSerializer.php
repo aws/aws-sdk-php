@@ -192,6 +192,9 @@ abstract class RestSerializer
 
         // Expand path place holders using Amazon's slightly different URI
         // template syntax.
+        if(class_exists('GuzzleHttp\Psr7\UriResolver')){
+            return Psr7\UriResolver::resolve($this->endpoint, $relative);
+        }
         return Psr7\Uri::resolve($this->endpoint, $relative);
     }
 }
