@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release 
+## 3.24.4 - 2017-03-14
 * `Aws\CloudWatchEvents` - Update documentation
 
 ## 3.24.3 - 2017-03-13
