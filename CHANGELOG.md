@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## next release 
+* `Aws\CloudWatchEvents` - Update documentation
+
 ## 3.24.3 - 2017-03-13
 
 * `Aws\CloudWatchEvents` - This update extends Target Data Type for configuring Target behavior during invocation.
