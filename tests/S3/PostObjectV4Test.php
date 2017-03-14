@@ -106,8 +106,8 @@ class PostObjectV4Test extends \PHPUnit_Framework_TestCase
         $p = new PostObjectV4(
             $client,
             'sigv4examplebucket',
-            array(),
-            array(),
+            [],
+            [],
             "2015-12-29T01:00:00Z"
         );
         $a = $p->getFormInputs();
@@ -128,8 +128,8 @@ class PostObjectV4Test extends \PHPUnit_Framework_TestCase
         $p = new PostObjectV4(
             $client,
             'sigv4examplebucket',
-            array(),
-            array(),
+            [],
+            [],
             "2015-12-29T01:00:00Z"
         );
         $a = $p->getFormInputs();
