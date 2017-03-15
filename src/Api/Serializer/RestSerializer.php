@@ -192,6 +192,6 @@ abstract class RestSerializer
 
         // Expand path place holders using Amazon's slightly different URI
         // template syntax.
-        return Psr7\Uri::resolve($this->endpoint, $relative);
+        return Psr7\UriResolver::resolve($this->endpoint, $relative);
     }
 }
