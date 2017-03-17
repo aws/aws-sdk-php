@@ -226,49 +226,49 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
             // POST headers should be signed.
             [
                 "POST / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\n\r\n",
-                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=4a52331276d5e50273fe04c2888c8c5db40024ac126e44aa5a0d543692c32816\r\n\r\n",
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;zoo, Signature=4bae79bd67ead68f52c4a67c0a4c6769b00caa32e20bb59e94ffd09ed20aaffc\r\n\r\n",
                 "POST\n/\n\nhost:host.foo.com\nzoo:zoobar\n\nhost;zoo\nUNSIGNED-PAYLOAD"
             ],
             // Changing the method should change the signature.
             [
                 "GET / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\n\r\n",
-                "GET / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=d007489def07bd28518a57550803eed591d9a763b1e179ee0da1019d58992f40\r\n\r\n",
+                "GET / HTTP/1.1\r\nHost: host.foo.com\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;zoo, Signature=36aaaae4e6e5c2dea84534cbd35a465a4c6194d6cb5d5c165c91802544351918\r\n\r\n",
                 "GET\n/\n\nhost:host.foo.com\nzoo:zoobar\n\nhost;zoo\nUNSIGNED-PAYLOAD"
             ],
             // Duplicate header values must be sorted.
             [
                 "POST / HTTP/1.1\r\nHost: host.foo.com\r\nx-AMZ-date: 20110909T233600Z\r\np: z\r\np: a\r\np: p\r\np: a\r\n\r\n",
-                "POST / HTTP/1.1\r\nHost: host.foo.com\r\np: z, a, p, a\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;p;x-amz-date, Signature=2ce6ca64f393f68dbac08ca1982152d0eacd835fd32d7b4945982793e7664420\r\n\r\n",
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\np: z, a, p, a\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;p;x-amz-content-sha256;x-amz-date, Signature=5cc576dc44276040edb2b2056c864c4ada208ac0c58135adbb58ac29d13cb373\r\n\r\n",
                 "POST\n/\n\nhost:host.foo.com\np:a,a,p,z\n\nhost;p\nUNSIGNED-PAYLOAD"
             ],
             // Request with space.
             [
                 "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
-                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=050a588bc979afe7724102fd0bc6d59f471eaad2d6ca67e703229f367efab071\r\n\r\n",
+                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=135db7d11beb50fe86092564fda9cee220a0c3c92dcae818fb62532c71f28e8a\r\n\r\n",
                 "GET\n/%2520/foo\n\nhost:host.foo.com\n\nhost\nUNSIGNED-PAYLOAD"
             ],
             // Query order key case.
             [
                 "GET /?foo=Zoo&foo=aha HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
-                "GET /?foo=Zoo&foo=aha HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=05b95d914491d85fdea716996c7e7d1d3e0226b1680bc1ca6acacc877ee640e5\r\n\r\n",
+                "GET /?foo=Zoo&foo=aha HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=c14ff2ea20da67cca7271782f0c63a49858870e65733baac3558d0aeeafb563a\r\n\r\n",
                 "GET\n/\nfoo=Zoo&foo=aha\nhost:host.foo.com\n\nhost\nUNSIGNED-PAYLOAD"
             ],
             // Query order key
             [
                 "GET /?a=foo&b=foo HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
-                "GET /?a=foo&b=foo HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=62c8d4ae1c5e15efc5b657a2d26732cb8f424990324330b49053fa0a4039a97b\r\n\r\n",
+                "GET /?a=foo&b=foo HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a3c6bdc290cf1d3eb0f2562755181bee7faca9f58868e0370f7dc1686899c826\r\n\r\n",
                 "GET\n/\na=foo&b=foo\nhost:host.foo.com\n\nhost\nUNSIGNED-PAYLOAD"
             ],
             // Query order value
             [
                 "GET /?foo=b&foo=a HTTP/1.1\r\nHost: host.foo.com\r\n\r\n",
-                "GET /?foo=b&foo=a HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=f4023e4150194febf82f579fc33332e6bcf07c94420be0bd6137b9841aa696a3\r\n\r\n",
+                "GET /?foo=b&foo=a HTTP/1.1\r\nHost: host.foo.com\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=b1ae632589c633b89567445ace7b4f9b6dfbb1af49c587b03bc4375452358cc0\r\n\r\n",
                 "GET\n/\nfoo=a&foo=b\nhost:host.foo.com\n\nhost\nUNSIGNED-PAYLOAD"
             ],
             // POST with body
             [
                 "POST / HTTP/1.1\r\nHost: host.foo.com\r\nContent-Length: 4\r\n\r\nTest",
-                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nContent-Length: 4\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=4eff731c85aaa3d4a5a5197c6f7124e875b64bcb1ab449772d25b859eeb6f354\r\n\r\nTest",
+                "POST / HTTP/1.1\r\nHost: host.foo.com\r\nContent-Length: 4\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=f9aaefff084dde5198a8445738d0e2f34247859252fc2f143ebf308074aab5a3\r\n\r\nTest",
                 "POST\n/\n\nhost:host.foo.com\n\nhost\nUNSIGNED-PAYLOAD"
             ],
         ];

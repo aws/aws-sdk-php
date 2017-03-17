@@ -340,6 +340,35 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $client->bar();
     }
 
+    public function testSignOperationsWithAnAuthType()
+    {
+        $client = $this->createClient(
+            [
+                'metadata' => [
+                    'signatureVersion' => 'v4',
+                ],
+                'operations' => [
+                    'Bar' => [
+                        'http' => ['method' => 'POST'],
+                        'authtype' => 'v4-unsigned-body',
+                    ],
+                ],
+            ],
+            [
+                'handler' => function (
+                    CommandInterface $command,
+                    RequestInterface $request
+                ) {
+                    foreach (['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'] as $signatureHeader) {
+                        $this->assertTrue($request->hasHeader($signatureHeader));
+                    }
+                    return new Result;
+                }
+            ]
+        );
+        $client->bar();
+    }
+
     private function createClient(array $service = [], array $config = [])
     {
         $apiProvider = function ($type) use ($service, $config) {
