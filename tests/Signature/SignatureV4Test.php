@@ -281,7 +281,7 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
     {
         $_SERVER['aws_time'] = '20110909T233600Z';
         $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
-        $signature = new SignatureV4('host', 'us-east-1', ['unsigned' => 'true']);
+        $signature = new SignatureV4('host', 'us-east-1', ['unsigned-body' => 'true']);
         $request = Psr7\parse_request($req);
         $contextFn = new \ReflectionMethod($signature, 'createContext');
         $contextFn->setAccessible(true);

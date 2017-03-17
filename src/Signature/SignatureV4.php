@@ -29,12 +29,13 @@ class SignatureV4 implements SignatureInterface
      * @param string $service Service name to use when signing
      * @param string $region  Region name to use when signing
      * @param array $options Array of configuration options used when signing
+     *      - unsigned-body: Flag to make request have unsigned payload
      */
-    public function __construct($service, $region,array $options = [])
+    public function __construct($service, $region, array $options = [])
     {
         $this->service = $service;
         $this->region = $region;
-        $this->unsigned = isset($options['unsigned']) ? $options['unsigned'] : false;
+        $this->unsigned = isset($options['unsigned-body']) ? $options['unsigned-body'] : false;
     }
 
     public function signRequest(
@@ -127,7 +128,7 @@ class SignatureV4 implements SignatureInterface
 
         // Move POST fields to the query if they are present
         if ($request->getHeaderLine('Content-Type') === 'application/x-www-form-urlencoded') {
-            $body = (string)$request->getBody();
+            $body = (string) $request->getBody();
             $sr = $sr->withUri($sr->getUri()->withQuery($body));
         }
 
