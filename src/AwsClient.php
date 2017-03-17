@@ -276,10 +276,10 @@ class AwsClient implements AwsClientInterface
         ) use ($api, $provider, $name, $region, $version) {
             $authType = $api->getOperation($c->getName())['authtype'];
             switch ($authType){
-                case "none":
+                case 'none':
                     $version = 'anonymous';
                     break;
-                case "v4-unsigned-body":
+                case 'v4-unsigned-body':
                     $version = 'v4-unsigned-body';
                     break;
             }

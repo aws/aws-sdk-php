@@ -50,12 +50,13 @@ class SignatureV4 implements SignatureInterface
         if ($token = $credentials->getSecurityToken()) {
             $parsed['headers']['X-Amz-Security-Token'] = [$token];
         }
-
         $cs = $this->createScope($sdt, $this->region, $this->service);
         $payload = $this->getPayload($request);
+
         if ($this->unsigned) {
             $parsed['headers']['X-Amz-Content-Sha256'] = [$payload];
         }
+
         $context = $this->createContext($parsed, $payload);
         $toSign = $this->createStringToSign($ldt, $cs, $context['creq']);
         $signingKey = $this->getSigningKey(
@@ -137,7 +138,7 @@ class SignatureV4 implements SignatureInterface
 
     protected function getPayload(RequestInterface $request)
     {
-        if ($this->unsigned) {
+        if ($this->unsigned && $request->getUri()->getScheme() == 'https') {
             return self::UNSIGNED_PAYLOAD;
         }
         // Calculate the request signature payload
