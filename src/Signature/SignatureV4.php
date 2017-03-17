@@ -27,10 +27,10 @@ class SignatureV4 implements SignatureInterface
 
     /**
      * @param string $service Service name to use when signing
-     * @param string $region Region name to use when signing
+     * @param string $region  Region name to use when signing
      * @param array $options Array of configuration options used when signing
      */
-    public function __construct($service, $region, array $options = [])
+    public function __construct($service, $region,array $options = [])
     {
         $this->service = $service;
         $this->region = $region;
@@ -40,8 +40,7 @@ class SignatureV4 implements SignatureInterface
     public function signRequest(
         RequestInterface $request,
         CredentialsInterface $credentials
-    )
-    {
+    ) {
         $ldt = gmdate(self::ISO8601_BASIC);
         $sdt = substr($ldt, 0, 8);
         $parsed = $this->parseRequest($request);
@@ -78,8 +77,7 @@ class SignatureV4 implements SignatureInterface
         RequestInterface $request,
         CredentialsInterface $credentials,
         $expires
-    )
-    {
+    ) {
         $parsed = $this->createPresignedRequest($request, $credentials);
         $payload = $this->getPresignedPayload($request);
         $httpDate = gmdate(self::ISO8601_BASIC, time());
@@ -121,6 +119,7 @@ class SignatureV4 implements SignatureInterface
             throw new \InvalidArgumentException('Expected a POST request but '
                 . 'received a ' . $request->getMethod() . ' request.');
         }
+
         $sr = $request->withMethod('GET')
             ->withBody(Psr7\stream_for(''))
             ->withoutHeader('Content-Type')
@@ -179,8 +178,7 @@ class SignatureV4 implements SignatureInterface
     private function createPresignedRequest(
         RequestInterface $request,
         CredentialsInterface $credentials
-    )
-    {
+    ) {
         $parsedRequest = $this->parseRequest($request);
 
         // Make sure to handle temporary credentials
@@ -192,7 +190,7 @@ class SignatureV4 implements SignatureInterface
     }
 
     /**
-     * @param array $parsedRequest
+     * @param array  $parsedRequest
      * @param string $payload Hash of the request payload
      * @return array Returns an array of context information
      */
@@ -202,26 +200,26 @@ class SignatureV4 implements SignatureInterface
         // would potentially cause a signature mismatch when sending a request
         // through a proxy or if modified at the HTTP client level.
         static $blacklist = [
-            'cache-control' => true,
-            'content-type' => true,
-            'content-length' => true,
-            'expect' => true,
-            'max-forwards' => true,
-            'pragma' => true,
-            'range' => true,
-            'te' => true,
-            'if-match' => true,
-            'if-none-match' => true,
-            'if-modified-since' => true,
+            'cache-control'       => true,
+            'content-type'        => true,
+            'content-length'      => true,
+            'expect'              => true,
+            'max-forwards'        => true,
+            'pragma'              => true,
+            'range'               => true,
+            'te'                  => true,
+            'if-match'            => true,
+            'if-none-match'       => true,
+            'if-modified-since'   => true,
             'if-unmodified-since' => true,
-            'if-range' => true,
-            'accept' => true,
-            'authorization' => true,
+            'if-range'            => true,
+            'accept'              => true,
+            'authorization'       => true,
             'proxy-authorization' => true,
-            'from' => true,
-            'referer' => true,
-            'user-agent' => true,
-            'x-amzn-trace-id' => true
+            'from'                => true,
+            'referer'             => true,
+            'user-agent'          => true,
+            'x-amzn-trace-id'     => true
         ];
 
         // Normalize the path as required by SigV4
@@ -327,12 +325,12 @@ class SignatureV4 implements SignatureInterface
         $uri = $request->getUri();
 
         return [
-            'method' => $request->getMethod(),
-            'path' => $uri->getPath(),
-            'query' => Psr7\parse_query($uri->getQuery()),
-            'uri' => $uri,
+            'method'  => $request->getMethod(),
+            'path'    => $uri->getPath(),
+            'query'   => Psr7\parse_query($uri->getQuery()),
+            'uri'     => $uri,
             'headers' => $request->getHeaders(),
-            'body' => $request->getBody(),
+            'body'    => $request->getBody(),
             'version' => $request->getProtocolVersion()
         ];
     }
