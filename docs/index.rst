@@ -8,6 +8,7 @@ AWS SDK for PHP
     getting-started/index
     guide/index
     service/index
+    examples/index
     faq
     glossary
 
@@ -70,6 +71,9 @@ Service-Specific Features
 * :doc:`service/s3-stream-wrapper`
 * :doc:`service/s3-transfer`
 
+Examples
+--------
+* :doc:`examples/cw-examples`
 
 Reference
 ---------
