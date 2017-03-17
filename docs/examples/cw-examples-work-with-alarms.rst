@@ -1,6 +1,6 @@
-=============
-Create Alarms
-=============
+=====================================
+Working with Amazon CloudWatch Alarms
+=====================================
 
 An Amazon CloudWatch alarm watches a single metric over a time period you specify, and performs one or more actions based on the value of the metric relative to a given threshold over a number of time periods.
 

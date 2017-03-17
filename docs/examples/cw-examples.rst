@@ -7,4 +7,4 @@ Amazon CloudWatch (CloudWatch) is a web service that monitors your Amazon Web Se
 .. toctree::
     :maxdepth: 1
 
-    cw-examples-create-alarms.rst
+    cw-examples-work-with-alarms.rst
