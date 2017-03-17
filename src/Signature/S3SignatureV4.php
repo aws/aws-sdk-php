@@ -50,7 +50,7 @@ class S3SignatureV4 extends SignatureV4
      */
     protected function getPresignedPayload(RequestInterface $request)
     {
-        return parent::UNSIGNED_PAYLOAD;
+        return SignatureV4::UNSIGNED_PAYLOAD;
     }
 
     /**
