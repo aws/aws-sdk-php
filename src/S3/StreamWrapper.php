@@ -493,9 +493,11 @@ class StreamWrapper
         $this->objectIterator->next();
 
         // Remove the prefix from the result to emulate other stream wrappers.
-        return $this->openedBucketPrefix
+        $dir = $this->openedBucketPrefix
             ? substr($result, strlen($this->openedBucketPrefix))
             : $result;
+        // Do not return empty string, but a dot for the current directory
+        return $dir === '' ? '.' : $dir;
     }
 
     private function formatKey($key)
