@@ -117,7 +117,7 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
 
     public function testUsesStartDateIfSpecified()
     {
-        $options = ['start_time' => $_SERVER['aws_time']];
+        $options = ['start_time' => strtotime('December 5, 2013 00:00:00 UTC')];
         unset($_SERVER['aws_time']);
 
         list($request, $credentials, $signature) = $this->getFixtures();
