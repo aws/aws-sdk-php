@@ -70,11 +70,7 @@ class SignatureV4 implements SignatureInterface
         $expires,
         array $options = []
     ) {
-        if (isset($options['start_time'])) {
-            $startTimestamp =  $this->convertToTimestamp($options['start_time']);
-        } else {
-            $startTimestamp = time();
-        }
+        $startTimestamp = isset($options['start_time']) ? $this->convertToTimestamp($options['start_time']) : time();
 
         $parsed = $this->createPresignedRequest($request, $credentials);
         $payload = $this->getPresignedPayload($request);
