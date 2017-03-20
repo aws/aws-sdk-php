@@ -29,7 +29,8 @@ class SignatureV4 implements SignatureInterface
      * @param string $service Service name to use when signing
      * @param string $region  Region name to use when signing
      * @param array $options Array of configuration options used when signing
-     *      - unsigned-body: Flag to make request have unsigned payload
+     *      - unsigned-body: Flag to make request have unsigned payload.
+     *        Unsigned body is used primarily for streaming requests.
      */
     public function __construct($service, $region, array $options = [])
     {
@@ -53,7 +54,7 @@ class SignatureV4 implements SignatureInterface
         $cs = $this->createScope($sdt, $this->region, $this->service);
         $payload = $this->getPayload($request);
 
-        if ($this->unsigned) {
+        if ($payload == self::UNSIGNED_PAYLOAD) {
             $parsed['headers']['X-Amz-Content-Sha256'] = [$payload];
         }
 
