@@ -74,6 +74,8 @@ Service-Specific Features
 Examples
 --------
 * :doc:`examples/cw-examples`
+* :doc:`examples/ec2-examples`
+* :doc:`examples/iam-examples`
 
 Reference
 ---------
