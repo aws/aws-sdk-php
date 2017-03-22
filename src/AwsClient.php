@@ -274,13 +274,17 @@ class AwsClient implements AwsClientInterface
         $resolver = static function (
             CommandInterface $c
         ) use ($api, $provider, $name, $region, $version) {
-            if ('none' === $api->getOperation($c->getName())['authtype']) {
-                $version = 'anonymous';
+            $authType = $api->getOperation($c->getName())['authtype'];
+            switch ($authType){
+                case 'none':
+                    $version = 'anonymous';
+                    break;
+                case 'v4-unsigned-body':
+                    $version = 'v4-unsigned-body';
+                    break;
             }
-
             return SignatureProvider::resolve($provider, $version, $name, $region);
         };
-
         $this->handlerList->appendSign(
             Middleware::signer($this->credentialProvider, $resolver),
             'signer'

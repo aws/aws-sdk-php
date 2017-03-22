@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.24.5 - 2017-03-21
+
+* `Aws\DirectConnect` - Deprecated DescribeConnectionLoa, DescribeInterconnectLoa, AllocateConnectionOnInterconnect and DescribeConnectionsOnInterconnect operations in favor of DescribeLoa, DescribeLoa, AllocateHostedConnection and DescribeHostedConnections respectively.
+* `Aws\MarketplaceCommerceAnalytics` - This update adds a new data set, us_sales_and_use_tax_records, which enables AWS Marketplace sellers to programmatically access to their U.S. Sales and Use Tax report data.
+* `Aws\Pinpoint` - Added support for segment endpoints by user attributes in addition to endpoint attributes, publishing raw app analytics and campaign events as events streams to Kinesis and Kinesis Firehose
+
 ## 3.24.4 - 2017-03-14
 * `Aws\CloudWatchEvents` - Update documentation
 

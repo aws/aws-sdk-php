@@ -14,6 +14,7 @@ class SignatureV4 implements SignatureInterface
 {
     use SignatureTrait;
     const ISO8601_BASIC = 'Ymd\THis\Z';
+    const UNSIGNED_PAYLOAD = 'UNSIGNED-PAYLOAD';
 
     /** @var string */
     private $service;
@@ -21,14 +22,21 @@ class SignatureV4 implements SignatureInterface
     /** @var string */
     private $region;
 
+    /** @var bool */
+    private $unsigned;
+
     /**
      * @param string $service Service name to use when signing
      * @param string $region  Region name to use when signing
+     * @param array $options Array of configuration options used when signing
+     *      - unsigned-body: Flag to make request have unsigned payload.
+     *        Unsigned body is used primarily for streaming requests.
      */
-    public function __construct($service, $region)
+    public function __construct($service, $region, array $options = [])
     {
         $this->service = $service;
         $this->region = $region;
+        $this->unsigned = isset($options['unsigned-body']) ? $options['unsigned-body'] : false;
     }
 
     public function signRequest(
@@ -43,9 +51,13 @@ class SignatureV4 implements SignatureInterface
         if ($token = $credentials->getSecurityToken()) {
             $parsed['headers']['X-Amz-Security-Token'] = [$token];
         }
-
         $cs = $this->createScope($sdt, $this->region, $this->service);
         $payload = $this->getPayload($request);
+
+        if ($payload == self::UNSIGNED_PAYLOAD) {
+            $parsed['headers']['X-Amz-Content-Sha256'] = [$payload];
+        }
+
         $context = $this->createContext($parsed, $payload);
         $toSign = $this->createStringToSign($ldt, $cs, $context['creq']);
         $signingKey = $this->getSigningKey(
@@ -127,6 +139,9 @@ class SignatureV4 implements SignatureInterface
 
     protected function getPayload(RequestInterface $request)
     {
+        if ($this->unsigned && $request->getUri()->getScheme() == 'https') {
+            return self::UNSIGNED_PAYLOAD;
+        }
         // Calculate the request signature payload
         if ($request->hasHeader('X-Amz-Content-Sha256')) {
             // Handle streaming operations (e.g. Glacier.UploadArchive)
