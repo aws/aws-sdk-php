@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationDiscoveryService` - Adds export configuration options to the AWS Discovery Service API.
+* `Aws\ElasticLoadBalancingv2` - Adding waiters for Elastic Load Balancing V2
+* `Aws\Lambda` - Adds support for new runtime Node.js v6.10 for AWS Lambda service
+
 ## 3.24.5 - 2017-03-21
 
 * `Aws\DirectConnect` - Deprecated DescribeConnectionLoa, DescribeInterconnectLoa, AllocateConnectionOnInterconnect and DescribeConnectionsOnInterconnect operations in favor of DescribeLoa, DescribeLoa, AllocateHostedConnection and DescribeHostedConnections respectively.
