@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.24.6 - 2017-03-22
 
 * `Aws\ApplicationDiscoveryService` - Adds export configuration options to the AWS Discovery Service API.
 * `Aws\ElasticLoadBalancingv2` - Adding waiters for Elastic Load Balancing V2
