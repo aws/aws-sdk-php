@@ -132,7 +132,7 @@ abstract class RestSerializer
         ) {
             $value = base64_encode(json_encode(json_decode($value)));
         }
-        
+
         $opts['headers'][$member['locationName'] ?: $name] = $value;
     }
 
