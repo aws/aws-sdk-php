@@ -127,6 +127,11 @@ abstract class RestSerializer
             $value = TimestampShape::format($value, 'rfc822');
         }
 
+        if (!empty($member->offsetGet('jsonvalue'))
+            && $member->offsetGet('jsonvalue')
+        ) {
+            $value = base64_encode(json_encode(json_decode($value)));
+        }
         $opts['headers'][$member['locationName'] ?: $name] = $value;
     }
 
@@ -151,7 +156,7 @@ abstract class RestSerializer
             if ($member->getType() === 'boolean') {
                 $value = $value ? 'true' : 'false';
             }
-            
+
             $opts['query'][$member['locationName'] ?: $name] = $value;
         }
     }

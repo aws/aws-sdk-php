@@ -93,6 +93,12 @@ abstract class AbstractRestParser extends AbstractParser
     ) {
         $value = $response->getHeaderLine($shape['locationName'] ?: $name);
 
+        if (!empty($shape->offsetGet('jsonvalue'))
+            && $shape->offsetGet('jsonvalue')
+        ) {
+            $value = json_decode(base64_decode($value), true);
+        }
+
         switch ($shape->getType()) {
             case 'float':
             case 'double':

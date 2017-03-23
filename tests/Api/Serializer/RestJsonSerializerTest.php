@@ -33,6 +33,10 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
                     'baz' => [
                         'http' => ['httpMethod' => 'POST'],
                         'input' => ['shape' => 'BazInput']
+                    ],
+                    'foobar' => [
+                        'http' => ['httpMethod' => 'POST'],
+                        'input' => ['shape' => 'BarInput']
                     ]
                 ],
                 'shapes' => [
@@ -42,10 +46,22 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
                             'baz' => ['shape' => 'BazShape']
                         ]
                     ],
+                    'FooRequest' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'baz' => ['shape' => 'String']
+                        ],
+                        'payload' => 'baz'
+                    ],
                     'BarInput' => [
                         'type' => 'structure',
                         'members' => [
-                            'baz' => ['shape' => 'BlobShape']
+                            'baz' => [
+                                'shape' => 'BazShape',
+                                'location' => 'header',
+                                'locationname' => 'Bar',
+                                'jsonvalue' => true
+                            ]
                         ],
                         'payload' => 'baz'
                     ],
@@ -88,6 +104,18 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('POST', $request->getMethod());
         $this->assertEquals('http://foo.com/', (string) $request->getUri());
         $this->assertEquals('bar', (string) $request->getBody());
+        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
+    }
+
+    public function testPreparesRequestsWithJsonValueTrait()
+    {
+        $jsonValue = '{
+            "a":"b"
+        }';
+        $request = $this->getRequest('foobar', ['baz' => $jsonValue]);
+        $this->assertEquals('eyJhIjoiYiJ9', $request->getHeaderLine('baz'));
+        $this->assertEquals('POST', $request->getMethod());
+        $this->assertEquals('http://foo.com/', (string) $request->getUri());
         $this->assertEquals('', $request->getHeaderLine('Content-Type'));
     }
 
