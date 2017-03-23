@@ -108,10 +108,10 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
 
     public function testPreparesRequestsWithJsonValueTrait()
     {
-        $jsonValue = '{
+        $jsonValueArgs = '{
             "a":"b"
         }';
-        $request = $this->getRequest('foobar', ['baz' => $jsonValue]);
+        $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
         $this->assertEquals('eyJhIjoiYiJ9', $request->getHeaderLine('baz'));
         $this->assertEquals('POST', $request->getMethod());
         $this->assertEquals('http://foo.com/', (string) $request->getUri());
