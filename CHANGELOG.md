@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - Application AutoScaling is launching support for a new target resource (AppStream 2.0 Fleets) as a scalable target.
+
 ## 3.24.6 - 2017-03-22
 
 * `Aws\ApplicationDiscoveryService` - Adds export configuration options to the AWS Discovery Service API.
