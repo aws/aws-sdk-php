@@ -36,7 +36,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
                     ],
                     'foobar' => [
                         'http' => ['httpMethod' => 'POST'],
-                        'input' => ['shape' => 'BarInput']
+                        'input' => ['shape' => 'FooBarInput']
                     ]
                 ],
                 'shapes' => [
@@ -46,14 +46,19 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
                             'baz' => ['shape' => 'BazShape']
                         ]
                     ],
-                    'FooRequest' => [
+                    'BarInput' => [
                         'type' => 'structure',
                         'members' => [
-                            'baz' => ['shape' => 'String']
+                            'baz' => ['shape' => 'BlobShape']
                         ],
                         'payload' => 'baz'
                     ],
-                    'BarInput' => [
+                    'BazInput' => [
+                        'type' => 'structure',
+                        'members' => ['baz' => ['shape' => 'FooInput']],
+                        'payload' => 'baz'
+                    ],
+                    'FooBarInput' => [
                         'type' => 'structure',
                         'members' => [
                             'baz' => [
@@ -62,13 +67,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
                                 'locationname' => 'Bar',
                                 'jsonvalue' => true
                             ]
-                        ],
-                        'payload' => 'baz'
-                    ],
-                    'BazInput' => [
-                        'type' => 'structure',
-                        'members' => ['baz' => ['shape' => 'FooInput']],
-                        'payload' => 'baz'
+                        ]
                     ],
                     'BlobShape' => ['type' => 'blob'],
                     'BazShape'  => ['type' => 'string']
