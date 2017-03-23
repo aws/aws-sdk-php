@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.24.7 - 2017-03-23
 
 * `Aws\ApplicationAutoScaling` - Application AutoScaling is launching support for a new target resource (AppStream 2.0 Fleets) as a scalable target.
 
