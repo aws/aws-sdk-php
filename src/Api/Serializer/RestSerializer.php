@@ -127,10 +127,14 @@ abstract class RestSerializer
             $value = TimestampShape::format($value, 'rfc822');
         }
 
-        if (!empty($member->offsetGet('jsonvalue'))
-            && $member->offsetGet('jsonvalue')
-        ) {
-            $value = base64_encode(json_encode(json_decode($value)));
+        if ($member['jsonvalue']) {
+            $value = json_encode(json_decode($value));
+            if ($value === null
+                && json_last_error() !== JSON_ERROR_NONE
+            ) {
+                throw new \InvalidArgumentException('Unable to encode the provided JSON string');
+            }
+            $value = base64_encode($value);
         }
 
         $opts['headers'][$member['locationName'] ?: $name] = $value;

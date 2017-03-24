@@ -4,6 +4,7 @@ namespace Aws\Api\Parser;
 use Aws\Api\DateTimeResult;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
+use Aws\LexRuntimeService\Exception\LexRuntimeServiceException;
 use Aws\Result;
 use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -13,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 abstract class AbstractRestParser extends AbstractParser
 {
+    use PayloadParserTrait;
     /**
      * Parses a payload from a response.
      *
@@ -93,10 +95,8 @@ abstract class AbstractRestParser extends AbstractParser
     ) {
         $value = $response->getHeaderLine($shape['locationName'] ?: $name);
 
-        if (!empty($shape->offsetGet('jsonvalue'))
-            && $shape->offsetGet('jsonvalue')
-        ) {
-            $value = json_decode(base64_decode($value), true);
+        if ($shape['jsonvalue']) {
+            $value = $this->parseJson(base64_decode($value));
         }
 
         switch ($shape->getType()) {
