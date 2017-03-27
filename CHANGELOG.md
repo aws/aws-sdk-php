@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.24.8 - 2017-03-27
 
 * `Aws\SSM` - Updated validation rules for SendCommand and RegisterTaskWithMaintenanceWindow APIs
 
