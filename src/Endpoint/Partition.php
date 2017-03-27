@@ -1,14 +1,16 @@
 <?php
 namespace Aws\Endpoint;
 
+use ArrayAccess;
+use Aws\HasDataTrait;
 use InvalidArgumentException as Iae;
 
 /**
  * Default implementation of an AWS partition.
  */
-final class Partition implements PartitionInterface
+final class Partition implements ArrayAccess, PartitionInterface
 {
-    private $data;
+    use HasDataTrait;
 
     /**
      * The partition constructor accepts the following options:
