@@ -10,3 +10,5 @@ This chapter includes code examples that demonstrate common Amazon Web Services 
     cw-examples.rst
     ec2-examples.rst
     iam-examples.rst
+    s3-examples.rst
+    sqs-examples.rst

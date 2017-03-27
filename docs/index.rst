@@ -76,6 +76,8 @@ Examples
 * :doc:`examples/cw-examples`
 * :doc:`examples/ec2-examples`
 * :doc:`examples/iam-examples`
+* :doc:`examples/s3-examples`
+* :doc:`examples/sqs-examples`
 
 Reference
 ---------
