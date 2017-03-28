@@ -115,6 +115,18 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
 
+    public function testUsesStartDateIfSpecified()
+    {
+        $options = ['start_time' => strtotime('December 5, 2013 00:00:00 UTC')];
+        unset($_SERVER['aws_time']);
+
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $credentials = new Credentials('foo', 'bar', '123');
+        $url = (string) $signature->presign($request, $credentials, 1386720000, $options)->getUri();
+        $this->assertContains('X-Amz-Date=20131205T000000Z', $url);
+        $this->assertContains('X-Amz-Expires=518400', $url);
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */

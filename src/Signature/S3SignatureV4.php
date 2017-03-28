@@ -32,7 +32,8 @@ class S3SignatureV4 extends SignatureV4
     public function presign(
         RequestInterface $request,
         CredentialsInterface $credentials,
-        $expires
+        $expires,
+        array $options = []
     ) {
         if (!$request->hasHeader('x-amz-content-sha256')) {
             $request = $request->withHeader(
@@ -41,7 +42,7 @@ class S3SignatureV4 extends SignatureV4
             );
         }
 
-        return parent::presign($request, $credentials, $expires);
+        return parent::presign($request, $credentials, $expires, $options);
     }
 
     /**
