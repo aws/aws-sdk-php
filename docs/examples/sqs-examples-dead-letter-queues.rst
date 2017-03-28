@@ -6,11 +6,9 @@ A dead letter queue is one that other (source) queues can target for messages th
 
 To learn more, see `Using Amazon SQS Dead Letter Queues <http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html>`_.
 
-The examples below show how to:
+The example below shows how to:
 
-* <DO SOMETHING> using `OperationName <>`_.
-* <DO SOMETHING> using `OperationName <>`_.
-* <DO SOMETHING> using `OperationName <>`_.
+* Enable a dead letter queue using `SetQueueAttributes <http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-sqs-2012-11-05.html#setqueueattributes>`_.
 
 All the example code for the AWS SDK for PHP is available `here on GitHub <https://github.com/awsdocs/aws-doc-sdk-examples/tree/master/php/example_code>`_.
 
@@ -19,23 +17,30 @@ Credentials
 
 Before running the example code, configure your AWS credentials, as described in :doc:`/guide/credentials`.
 
-DO SOMETHING
-------------
+Enable a Dead Letter Queue
+--------------------------
 
 .. code-block:: php
 
-    <CODE HERE>
+    require 'vendor/autoload.php';
+    use Aws\Sqs\SqsClient;
+    use Aws\Exception\AwsException;
 
-DO SOMETHING
-------------
-
-.. code-block:: php
-
-    <CODE HERE>
-
-DO SOMETHING
-------------
-
-.. code-block:: php
-
-    <CODE HERE>
+    $queueUrl = "QUEUE_URL";
+    $client = new SqsClient([
+        'profile' => 'default',
+        'region' => 'us-west-2',
+        'version' => '2012-11-05'
+    ]);
+    try {
+        $result = $client->setQueueAttributes([
+            'Attributes' => [
+                'RedrivePolicy' => "{\"deadLetterTargetArn\":\"DEAD_LETTER_QUEUE_ARN\",\"maxReceiveCount\":\"10\"}"
+            ],
+            'QueueUrl' => $queueUrl // REQUIRED
+        ]);
+        var_dump($result);
+    } catch (AwsException $e) {
+        // output error message if fails
+        error_log($e->getMessage());
+    }
