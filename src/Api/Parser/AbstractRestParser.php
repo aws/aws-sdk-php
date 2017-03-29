@@ -94,10 +94,6 @@ abstract class AbstractRestParser extends AbstractParser
     ) {
         $value = $response->getHeaderLine($shape['locationName'] ?: $name);
 
-        if ($shape['jsonvalue']) {
-            $value = $this->parseJson(base64_decode($value));
-        }
-
         switch ($shape->getType()) {
             case 'float':
             case 'double':
@@ -121,6 +117,11 @@ abstract class AbstractRestParser extends AbstractParser
                     // output structure.
                     return;
                 }
+            case 'string':
+                if ($shape['jsonvalue']) {
+                    $value = $this->parseJson(base64_decode($value));
+                }
+                break;
         }
 
         $result[$name] = $value;
