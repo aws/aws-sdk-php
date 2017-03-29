@@ -128,9 +128,11 @@ abstract class RestSerializer
         }
         if ($member['jsonvalue']) {
             $value = json_encode($value);
-            if ($value === null && json_last_error() !== JSON_ERROR_NONE) {
-                throw new \InvalidArgumentException('Unable to encode the provided value as JSON');
+            if ($value === null && JSON_ERROR_NONE !== json_last_error()) {
+                throw new \ParserException('Unable to encode the provided value'
+                    . ' with \'json_encode\'. ' . json_last_error_msg());
             }
+
             $value = base64_encode($value);
         }
 
