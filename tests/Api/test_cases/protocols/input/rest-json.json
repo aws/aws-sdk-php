@@ -1154,53 +1154,6 @@
     ]
   },
   {
-    "description": "JSON Value Trait On Headers",
-    "metadata": {
-      "protocol": "rest-json",
-      "apiVersion": "2014-01-01"
-    },
-    "shapes": {
-      "InputShape": {
-        "type": "structure",
-        "members": {
-          "Foo": {
-            "shape": "StringType",
-            "location":"header",
-            "locationName": "Bar",
-            "jsonvalue": true
-          }
-        }
-      },
-      "StringType": {
-        "type": "string"
-      }
-    },
-    "cases": [
-      {
-        "given": {
-          "input": {
-            "shape": "InputShape"
-          },
-          "http": {
-            "method": "POST",
-            "requestUri": "/path"
-          },
-          "name": "OperationName"
-        },
-        "params": {
-          "Foo": "{\"a\":\"b\",\"c\":{\"d\":\"e\"}}"
-        },
-        "serialized": {
-          "uri": "/path",
-          "headers": {
-            "Bar": "eyJhIjoiYiIsImMiOnsiZCI6ImUifX0="
-          },
-          "body": ""
-        }
-      }
-    ]
-  },
-  {
     "description": "Named locations in JSON body",
     "metadata": {
       "protocol": "rest-json",
@@ -1344,6 +1297,68 @@
           "uri": "/path",
           "headers": {},
           "body": "{\"Token\": \"00000000-0000-4000-8000-000000000000\"}"
+        }
+      }
+    ]
+  },
+  {
+    "description": "JSON value trait",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "Attr": {
+            "shape": "StringType",
+              "jsonvalue": true,
+              "location": "header",
+              "locationName": "X-Amz-Foo"
+          }
+        }
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "input": {
+            "shape": "InputShape"
+          },
+          "http": {
+            "method": "POST"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "Attr": {"Foo":"Bar"}
+        },
+        "serialized": {
+          "uri": "/",
+          "headers": {"X-Amz-Foo": "eyJGb28iOiJCYXIifQ=="},
+          "body": ""
+        }
+      },
+      {
+        "given": {
+          "input": {
+            "shape": "InputShape"
+          },
+          "http": {
+            "method": "POST"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+        },
+        "serialized": {
+          "uri": "/",
+          "headers": {},
+          "body": ""
         }
       }
     ]

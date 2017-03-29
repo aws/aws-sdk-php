@@ -189,6 +189,13 @@ class Validator
 
     private function check_string(Shape $shape, $value)
     {
+        if ($shape['jsonvalue']
+            && !is_resource($value)
+            && (is_object($value) || is_array($value))
+        ) {
+            return;
+        }
+
         if (!$this->checkCanString($value)) {
             $this->addError('must be a string or an object that implements '
                 . '__toString(). Found ' . Aws\describe_type($value));

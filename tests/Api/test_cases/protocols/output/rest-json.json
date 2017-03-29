@@ -588,53 +588,6 @@
     ]
   },
   {
-    "description": "JSON Value Trait On Headers",
-    "metadata": {
-      "protocol": "rest-json"
-    },
-    "shapes": {
-      "OutputShape": {
-        "type": "structure",
-        "members": {
-          "Foo": {
-            "shape": "StringType",
-            "location": "header",
-            "locationName": "Bar",
-            "jsonvalue": true
-          }
-        }
-      },
-      "StringType": {
-        "type": "string"
-      }
-    },
-    "cases": [
-      {
-        "given": {
-          "output": {
-            "shape": "OutputShape"
-          },
-          "name": "OperationName"
-        },
-        "result": {
-          "Foo": {
-            "a":"b",
-            "c": {
-              "d":"e"
-            }
-          }
-        },
-        "response": {
-          "status_code": 200,
-          "headers": {
-            "Bar": "eyJhIjoiYiIsImMiOnsiZCI6ImUifX0="
-          },
-          "body": ""
-        }
-      }
-    ]
-  },
-  {
     "description": "Streaming payload",
     "metadata": {
       "protocol": "rest-json"
@@ -668,6 +621,46 @@
           "status_code": 200,
           "headers": {},
           "body": "abc"
+        }
+      }
+    ]
+  },
+  {
+    "description": "JSON value trait",
+    "metadata": {
+      "protocol": "rest-json"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "Attr": {
+            "shape": "StringType",
+              "jsonvalue": true,
+              "location": "header",
+              "locationName": "X-Amz-Foo"
+          }
+        }
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "Attr": {"Foo":"Bar"}
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {"X-Amz-Foo": "eyJGb28iOiJCYXIifQ=="},
+          "body": ""
         }
       }
     ]

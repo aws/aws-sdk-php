@@ -126,12 +126,9 @@ abstract class RestSerializer
         if ($member->getType() == 'timestamp') {
             $value = TimestampShape::format($value, 'rfc822');
         }
-
         if ($member['jsonvalue']) {
-            $value = json_encode(json_decode($value));
-            if ($value === null
-                && json_last_error() !== JSON_ERROR_NONE
-            ) {
+            $value = json_encode($value);
+            if ($value === null && json_last_error() !== JSON_ERROR_NONE) {
                 throw new \InvalidArgumentException('Unable to encode the provided JSON string');
             }
             $value = base64_encode($value);

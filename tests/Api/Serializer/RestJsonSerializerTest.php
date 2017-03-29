@@ -106,11 +106,21 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('', $request->getHeaderLine('Content-Type'));
     }
 
-    public function testPreparesRequestsWithJsonValueTrait()
+    public function testPreparesRequestsWithJsonValueTraitString()
     {
-        $jsonValueArgs = '{
-            "a":"b"
-        }';
+        $jsonValueArgs = '{"a":"b"}';
+        $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
+        $this->assertEquals('IntcImFcIjpcImJcIn0i', $request->getHeaderLine('baz'));
+        $this->assertEquals('POST', $request->getMethod());
+        $this->assertEquals('http://foo.com/', (string) $request->getUri());
+        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
+    }
+
+    public function testPreparesRequestsWithJsonValueTraitArray()
+    {
+        $jsonValueArgs = [
+            "a" => "b"
+        ];
         $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
         $this->assertEquals('eyJhIjoiYiJ9', $request->getHeaderLine('baz'));
         $this->assertEquals('POST', $request->getMethod());

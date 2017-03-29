@@ -775,7 +775,7 @@ EOT;
                 . $member->getKey()->getName() . ') to '
                 . $this->getMemberText($member->getValue()) . 's';
         } else {
-            $typeDesc = $this->getPrimitivePhpType($member['type']);
+            $typeDesc = $this->getPrimitivePhpType($member);
         }
 
         $html->open('div', 'param-attributes')->open('ul');
@@ -811,18 +811,22 @@ EOT;
             }
         }
 
-        return $this->getPrimitivePhpType($member['type']);
+        return $this->getPrimitivePhpType($member);
     }
 
-    private function getPrimitivePhpType($type)
+    private function getPrimitivePhpType($member)
     {
-        switch ($type) {
+        switch ($member['type']) {
             case 'long': return 'long (int|float)';
             case 'integer': return 'int';
             case 'blob': return 'blob (string|resource|Psr\Http\Message\StreamInterface)';
             case 'char': return 'char (string)';
             case 'timestamp': return 'timesamp (string|DateTime or anything parsable by strtotime)';
-            default: return $type;
+            case 'string':
+                if ($member['jsonvalue']){
+                    return 'string (string|number|array|map or anything parsable by json_encode)';
+                }
+            default: return $member['type'];
         }
     }
 
