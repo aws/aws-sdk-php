@@ -5,8 +5,6 @@ use Aws\Api\Service;
 use Aws\Command;
 use Aws\Api\Serializer\RestJsonSerializer;
 use Aws\Test\UsesServiceTrait;
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
-use Nette\Neon\Exception;
 
 /**
  * @covers Aws\Api\Serializer\RestJsonSerializer
@@ -141,7 +139,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testPreparesRequestsWithJsonValueTraitThrowsException()
     {
