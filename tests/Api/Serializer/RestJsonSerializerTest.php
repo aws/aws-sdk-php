@@ -147,11 +147,7 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
     {
         $obj = new \stdClass();
         $obj->obj = $obj;
-        $request = $this->getRequest('foobar', ['baz' => $obj]);
-        $this->assertEquals('IntcImFcIjpcImJcIn0i', $request->getHeaderLine('baz'));
-        $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com/', (string) $request->getUri());
-        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
+        $this->getRequest('foobar', ['baz' => $obj]);
     }
 
     public function testPreparesRequestsWithStructPayload()
