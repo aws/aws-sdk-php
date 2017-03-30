@@ -190,7 +190,7 @@ class Validator
     private function check_string(Shape $shape, $value)
     {
         if ($shape['jsonvalue']) {
-            if (!self::json_encode_type_check($value)) {
+            if (!self::canJsonEncode($value)) {
                 $this->addError('must be a value encodable with \'json_encode\'.'
                     . ' Found ' . Aws\describe_type($value));
             }
@@ -266,18 +266,8 @@ class Validator
             . $message;
     }
 
-    private function json_encode_type_check($data)
+    private function canJsonEncode($data)
     {
-        static $validTypes = [
-            'string' => true,
-            'integer' => true,
-            'double' => true,
-            'boolean' => true,
-            'array' => true,
-            'null' => true,
-        ];
-        $type = gettype($data);
-        return isset($validTypes[$type])
-            || $type == 'object' && $data instanceof JsonSerializable;
+        return !is_resource($data);
     }
 }
