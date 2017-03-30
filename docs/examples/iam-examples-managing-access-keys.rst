@@ -65,8 +65,8 @@ List Access Keys
         error_log($e->getMessage());
     }
 
-Get Info about Access Key Usage
--------------------------------
+Get Info about Access Key's Last Usage
+--------------------------------------
 
 .. code-block:: php
 

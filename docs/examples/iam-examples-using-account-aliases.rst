@@ -42,8 +42,8 @@ Create an Alias
         error_log($e->getMessage());
     }
 
-List an Alias
--------------
+List Account Aliases
+--------------------
 
 .. code-block:: php
 

@@ -7,7 +7,7 @@ Using alarm actions, you can create alarms that automatically stop, terminate, r
 The examples below show how to:
 
 * Enable actions for specified alarms using `EnableAlarmActions <http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-monitoring-2010-08-01.html#enablealarmactions>`_.
-*  Disable actions for specified alarms using `DisableAlarmActions <http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-monitoring-2010-08-01.html#disablealarmactions>`_.
+* Disable actions for specified alarms using `DisableAlarmActions <http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-monitoring-2010-08-01.html#disablealarmactions>`_.
 
 All the example code for the AWS SDK for PHP is available `here on GitHub <https://github.com/awsdocs/aws-doc-sdk-examples/tree/master/php/example_code>`_.
 
