@@ -70,8 +70,6 @@ class ObjectCopier implements PromisorInterface
      * Perform the configured copy asynchronously. Returns a promise that is
      * fulfilled with the result of the CompleteMultipartUpload or CopyObject
      * operation or rejected with an exception.
-     *
-     * @return \GuzzleHttp\Promise\Promise
      */
     public function promise()
     {

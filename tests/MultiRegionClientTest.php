@@ -95,7 +95,7 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             });
         $this->mockRegionalClient->expects($this->once())
             ->method('getCommand')
-            ->with('baz', ['foo' => 'bar'])
+            ->with('baz', ['foo' => 'bar', '@http' => []])
             ->willReturn(new Command('Baz', [], $mockHandler));
 
         $this->instance->baz(['foo' => 'bar']);
@@ -121,7 +121,6 @@ class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
         return [
             ['getConfig', ['someOption']],
             ['getCredentials', []],
-            ['getHandlerList', []],
             ['getApi', []],
             ['getEndpoint', []],
         ];
