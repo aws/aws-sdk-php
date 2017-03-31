@@ -136,6 +136,20 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 ['foo' => false],
                 "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. Found bool(false)"
             ],
+            // Pasing array with jsonvalue trait
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'foo' => [
+                            'type' => 'string',
+                            'jsonvalue' => true
+                        ]
+                    ]
+                ],
+                ['foo' => ['a' => 'b']],
+                true
+            ],
             // Ensures the array is associative
             [
                 [

@@ -126,6 +126,15 @@ abstract class RestSerializer
         if ($member->getType() == 'timestamp') {
             $value = TimestampShape::format($value, 'rfc822');
         }
+        if ($member['jsonvalue']) {
+            $value = json_encode($value);
+            if (empty($value) && JSON_ERROR_NONE !== json_last_error()) {
+                throw new \InvalidArgumentException('Unable to encode the provided value'
+                    . ' with \'json_encode\'. ' . json_last_error_msg());
+            }
+
+            $value = base64_encode($value);
+        }
 
         $opts['headers'][$member['locationName'] ?: $name] = $value;
     }
@@ -151,7 +160,7 @@ abstract class RestSerializer
             if ($member->getType() === 'boolean') {
                 $value = $value ? 'true' : 'false';
             }
-            
+
             $opts['query'][$member['locationName'] ?: $name] = $value;
         }
     }
