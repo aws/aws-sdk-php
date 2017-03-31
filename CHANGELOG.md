@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Adding paginators for ListExports and ListImports
+* `Aws\CloudFront` - Amazon CloudFront now supports user configurable HTTP Read and Keep-Alive Idle Timeouts for your Custom Origin Servers
+* `Aws\ResourceGroupsTaggingAPI` - Resource Groups Tagging APIs can help you organize your resources and enable you to simplify resource management, access management, and cost allocation.
+* `Aws\StorageGateway` - File gateway mode in AWS Storage gateway provides access to objects in S3 as files on a Network File System (NFS) mount point. Once a file share is created, any changes made externally to the S3 bucket will not be reflected by the gateway. Using the cache refresh feature in this update, the customer can trigger an on-demand scan of the keys in their S3 bucket and refresh the file namespace cached on the gateway. It takes as an input the fileShare ARN and refreshes the cache for only that file share. Additionally there is new functionality on file gateway that allows you configure what squash options they would like on their file share, this allows a customer to configure their gateway to not squash root permissions. This can be done by setting options in NfsOptions for CreateNfsFileShare and UpdateNfsFileShare APIs.
+
 ## 3.24.9 - 2017-03-28
 
 * `Aws\Batch` - Customers can now provide a retryStrategy as part of the RegisterJobDefinition and SubmitJob API calls. The retryStrategy object has a number value for attempts. This is the number of non successful executions before a job is considered FAILED. In addition, the JobDetail object now has an attempts field and shows all execution attempts.
