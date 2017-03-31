@@ -104,10 +104,14 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
             'CopySource' => '/bucket/key?versionId=V+ID',
         ];
 
+        $defaultOptions = (new \ReflectionClass(ObjectCopier::class))
+            ->getProperty('defaults');
+        $defaultOptions->setAccessible(true);
+
         $client->expects($this->exactly(2))
             ->method('getCommand')
             ->will($this->returnValueMap([
-                ['HeadObject', $headCommandParams, $headObjectCommand],
+                ['HeadObject', $headCommandParams + $defaultOptions->getValue(), $headObjectCommand],
                 ['CopyObject', $copyCommandParams, $copyObjectCommand],
             ]));
 
