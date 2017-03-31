@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.25.1 - 2017-03-31
 
 * `Aws\CloudDirectory` - ListObjectAttributes now supports filtering by facet.
 
