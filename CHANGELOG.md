@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.25.0 - 2017-03-31
 
 * `Aws\CloudFormation` - Adding paginators for ListExports and ListImports
 * `Aws\CloudFront` - Amazon CloudFront now supports user configurable HTTP Read and Keep-Alive Idle Timeouts for your Custom Origin Servers
