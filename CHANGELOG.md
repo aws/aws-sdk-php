@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudDirectory` - ListObjectAttributes now supports filtering by facet.
+
 ## 3.25.0 - 2017-03-31
 
 * `Aws\CloudFormation` - Adding paginators for ListExports and ListImports
