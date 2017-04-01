@@ -174,8 +174,8 @@ class ChangelogBuilder
               "https"
             ]
           },';
-        $str = file_get_contents('src/data/endpoints.json');
+        $str = file_get_contents($this->baseDir . 'src/data/endpoints.json');
         $str = str_replace("$oldMessage", "$deletedFormat", $str);
-        file_put_contents('src/data/endpoints.json', $str);
+        file_put_contents($this->baseDir . 'src/data/endpoints.json', $str);
     }
 }
