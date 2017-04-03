@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\LexRuntimeService` - Adds support to PostContent for speech input
+
 ## 3.25.1 - 2017-03-31
 
 * `Aws\CloudDirectory` - ListObjectAttributes now supports filtering by facet.
