@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.25.2 - 2017-04-03
 
 * `Aws\LexRuntimeService` - Adds support to PostContent for speech input
 
