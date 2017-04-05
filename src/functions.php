@@ -349,3 +349,33 @@ function manifest($service = null)
         );
     }
 }
+
+
+/**
+ * Build the environment variable name from a formatted string using UPPER_CAMEL_CASE
+ * Note: parameters will be prepared using the prepare_env_name() function
+ * @see http://php.net/manual/function.sprintf.php
+ *
+ * @param string $format The formatted string used as the template
+ * @param string ...$values Values to be used
+ * @return string Returns the formatted environment variable name
+ */
+function build_env_name()
+{
+    $values = func_get_args();
+    $format = array_shift($values);
+
+    $prepared = array_map('\Aws\prepare_env_name', $values);
+    return call_user_func_array('sprintf', array_merge([$format], $prepared));
+}
+
+/**
+ * Converts a string to all caps and replaces hyphens (-) with underscores (_) to produce UPPER_CAMEL_CASE
+ *
+ * @param string $source
+ * @return string
+ */
+function prepare_env_name($source)
+{
+    return str_replace('-', '_', strtoupper($source));
+}
