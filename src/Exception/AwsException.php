@@ -87,7 +87,7 @@ class AwsException extends \RuntimeException
     /**
      * Get the concise error message if any.
      *
-     * @return string
+     * @return string|null
      */
     public function getErrorMessage()
     {
