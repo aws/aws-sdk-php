@@ -58,7 +58,7 @@ class CommandPool implements PromisorInterface
                 if ($before) {
                     $before($command, $key);
                 }
-                yield $client->executeAsync($command);
+                yield $key => $client->executeAsync($command);
             }
         };
 
