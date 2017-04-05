@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.25.4 - 2017-04-05
 
 * `Aws\ElastiCache` - ElastiCache added support for testing the Elasticache Multi-AZ feature with Automatic Failover.
 
