@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Build\Changelog;
 
 use Aws\Build\Changelog\ChangelogBuilder;
