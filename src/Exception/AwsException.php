@@ -89,7 +89,7 @@ class AwsException extends \RuntimeException
      *
      * @return string|null
      */
-    public function getErrorMessage()
+    public function getAwsErrorMessage()
     {
         return $this->errorMessage;
     }
