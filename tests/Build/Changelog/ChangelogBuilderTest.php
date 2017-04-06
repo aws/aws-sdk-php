@@ -60,13 +60,14 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
         $params['release_notes_output_dir'] = $tempDir;
         $obj = new ChangelogBuilder($params);
         $obj->buildChangelog();
+        $this->assertTrue($obj->isNewService());
         $lines = file($tempDir . 'CHANGELOG.md');
         $this->assertEquals("## next release\n", $lines[2]);
         $this->assertEquals("* `Aws\Ec2` - Added Support to Tag Instance\n", $lines[4]);
-        $this->assertEquals("* `Aws\s3` - Test string placeholder for new service\n", $lines[5]);
-        $this->assertEquals("* `Aws\util` - Parse ini files containing comments using #\n", $lines[6]);
+        $this->assertEquals("* `Aws\Ecs` - Test string placeholder for new docs\n", $lines[5]);
+        $this->assertEquals("* `Aws\s3` - Test string placeholder for new service\n", $lines[6]);
+        $this->assertEquals("* `Aws\util` - Parse ini files containing comments using #\n", $lines[7]);
         unlink($tempDir . '/CHANGELOG.md');
-
         $this->assertEquals(
             json_decode(file_get_contents($this->RESOURCE_DIR . "/release-json-valid"), true),
             json_decode(file_get_contents($tempDir . "/.changes/3.22.0"), true)
