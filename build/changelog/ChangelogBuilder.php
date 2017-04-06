@@ -67,9 +67,7 @@ class ChangelogBuilder
             if ($x->type == 'NEW_SERVICE') {
                 $this->newServiceFlag = true;
             }
-            if ($x->type != 'DOC_UPDATE') {
-                array_push($cleanedJSON, $x);
-            }
+            array_push($cleanedJSON, $x);
         }
         return $cleanedJSON;
     }
@@ -151,31 +149,5 @@ class ChangelogBuilder
             echo "$ChangelogUpdate";
         }
         $this->writeToChangelog($ChangelogUpdate, $this->releaseNotesOutputDir . 'CHANGELOG.md');
-    }
-
-    public function fixEndpointFile()
-    {
-        //Replace string in sdb as PHP doesnt support v2
-        $oldMessage = '"sdb": {
-          "defaults": {
-            "protocols": [
-              "http",
-              "https"
-            ],
-            "signatureVersions": [
-              "v2"
-            ]
-          },';
-
-        $deletedFormat = '"sdb": {
-          "defaults": {
-            "protocols": [
-              "http",
-              "https"
-            ]
-          },';
-        $str = file_get_contents('src/data/endpoints.json');
-        $str = str_replace("$oldMessage", "$deletedFormat", $str);
-        file_put_contents('src/data/endpoints.json', $str);
     }
 }
