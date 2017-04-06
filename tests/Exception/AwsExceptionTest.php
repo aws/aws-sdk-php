@@ -55,6 +55,13 @@ class AwsExceptionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($response, $e->getResponse());
     }
 
+    public function testProvidesErrorMessage()
+    {
+        $command = new Command('foo');
+        $e = new AwsException('Foo', $command, ['message' => "test error message"]);
+        $this->assertSame("test error message", $e->getAwsErrorMessage());
+    }
+
     public function testProvidesFalseConnectionErrorFlag()
     {
         $command = new Command('foo');
