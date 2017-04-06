@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.25.5 - 2017-04-06
 
 * `Aws\ElasticLoadBalancingv2` - Adds supports a new condition for host-header conditions to CreateRule and ModifyRule
 
