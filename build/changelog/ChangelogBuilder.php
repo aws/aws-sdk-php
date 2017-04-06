@@ -34,6 +34,11 @@ class ChangelogBuilder
         $this->verbose = isset($params['verbose']) ? $params['verbose'] : false;
     }
 
+    public function isNewService()
+    {
+        return $this->newServiceFlag;
+    }
+
     private function readChangelog()
     {
         $releaseDir = $this->baseDir . '.changes/nextrelease/';
@@ -54,6 +59,10 @@ class ChangelogBuilder
         }
         closedir($dh);
 
+        $this->newServiceFlag = count(array_filter($changelogEntries, function ($change) {
+                return $change->type === 'NEW_SERVICE';
+            })) > 0;
+
         return $changelogEntries;
     }
 
@@ -62,14 +71,8 @@ class ChangelogBuilder
         if (empty($arr) || !is_array($arr)) {
             throw new \RuntimeException('Invalid Input', 2);
         }
-        $cleanedJSON = [];
-        foreach ($arr as $x) {
-            if ($x->type == 'NEW_SERVICE') {
-                $this->newServiceFlag = true;
-            }
-            array_push($cleanedJSON, $x);
-        }
-        return $cleanedJSON;
+
+        return $arr;
     }
 
     private function createTag($changelogFile)

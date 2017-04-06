@@ -60,6 +60,7 @@ class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
         $params['release_notes_output_dir'] = $tempDir;
         $obj = new ChangelogBuilder($params);
         $obj->buildChangelog();
+        $this->assertTrue($obj->isNewService());
         $lines = file($tempDir . 'CHANGELOG.md');
         $this->assertEquals("## next release\n", $lines[2]);
         $this->assertEquals("* `Aws\Ec2` - Added Support to Tag Instance\n", $lines[4]);
