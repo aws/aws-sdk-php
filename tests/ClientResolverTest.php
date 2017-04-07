@@ -673,7 +673,6 @@ EOT;
                 ->disableOriginalConstructor()
                 ->disableOriginalClone()
                 ->disableArgumentCloning()
-                ->disallowMockingUnknownTypes()
                 ->getMock(),
             'service' => $service,
             'region' => $region,
