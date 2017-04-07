@@ -2,7 +2,6 @@
 namespace Aws\Test;
 
 use Aws\Api\Service;
-use function Aws\build_env_name;
 use Aws\ClientResolver;
 use Aws\CommandInterface;
 use Aws\Credentials\CredentialProvider;
@@ -661,8 +660,8 @@ EOT;
         $envValue
     ) {
         // reset the environment variables
-        putenv(build_env_name(ClientResolver::ENV_FORMAT_REGION_SERVICE, $region, $service) . '=');
-        putenv(build_env_name(ClientResolver::ENV_FORMAT_SERVICE, $service) . '=');
+        putenv(\Aws\build_env_name(ClientResolver::ENV_FORMAT_REGION_SERVICE, $region, $service) . '=');
+        putenv(\Aws\build_env_name(ClientResolver::ENV_FORMAT_SERVICE, $service) . '=');
         // apply given environment
         putenv($envName . '=' . $envValue);
 
