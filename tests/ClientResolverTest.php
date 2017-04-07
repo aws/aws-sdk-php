@@ -666,7 +666,15 @@ EOT;
         putenv($envName . '=' . $envValue);
 
         $testValues = [
-            'endpoint_provider' => $this->createMock('\Aws\Endpoint\PartitionInterface'),
+            /**
+             * This line duplicates the behavior of createMock available in PHPUnit 5.6
+             */
+            'endpoint_provider' => $this->getMockBuilder('\Aws\Endpoint\PartitionInterface')
+                ->disableOriginalConstructor()
+                ->disableOriginalClone()
+                ->disableArgumentCloning()
+                ->disallowMockingUnknownTypes()
+                ->getMock(),
             'service' => $service,
             'region' => $region,
             'scheme' => 'http'
