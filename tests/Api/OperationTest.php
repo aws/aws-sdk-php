@@ -65,4 +65,19 @@ class OperationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('structure', $e[0]->getType());
         $this->assertEquals('list', $e[1]->getType());
     }
+
+    public function testErrorsDoesNotCreateReferences()
+    {
+        $o = new Operation([
+            'errors' =>[['shape' => 'a'], ['shape' => 'b']]
+        ], new ShapeMap([
+            'a' => ['type' => 'structure'],
+            'b' => ['type' => 'list'],
+        ]));
+        $errors = $o->getErrors();
+        $errorsCopy = $errors;
+        $errorsCopy[0]['a_copy'] = $errorsCopy[0]['a'];
+        $errorsCopy[0]['a'] = 'test';
+        $this->assertEquals('structure', $errors[0]->getType());
+    }
 }
