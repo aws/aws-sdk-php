@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.25.7 - 2017-04-11
 
 * `Aws\APIGateway` - API Gateway request validators
 * `Aws\Batch` - API Update for AWS Batch: Customer provided AMI for MANAGED Compute Environment 
