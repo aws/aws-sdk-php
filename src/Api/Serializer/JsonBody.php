@@ -62,7 +62,7 @@ class JsonBody
 
             case 'list':
                 $items = $shape->getMember();
-                foreach ($value as $k=>$v) {
+                foreach ($value as $k => $v) {
                     $value[$k] = $this->format($items, $v);
                 }
                 return $value;
@@ -72,7 +72,7 @@ class JsonBody
                     return new \stdClass;
                 }
                 $values = $shape->getValue();
-                foreach ($value as $k=>$v) {
+                foreach ($value as $k => $v) {
                     $value[$k] = $this->format($values, $v);
                 }
                 return $value;

@@ -83,8 +83,8 @@ class Operation extends AbstractModel
     {
         if ($this->errors === null) {
             if ($errors = $this['errors']) {
-                foreach ($errors as $k=>$error) {
-                    $errors[$k] = $this->shapeFor($error);
+                foreach ($errors as $key => $error) {
+                    $errors[$key] = $this->shapeFor($error);
                 }
                 $this->errors = $errors;
             } else {
