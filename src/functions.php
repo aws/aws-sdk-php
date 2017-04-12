@@ -24,7 +24,7 @@ function constantly($value)
 /**
  * Filters values that do not satisfy the predicate function $pred.
  *
- * @param mixed    $iterable Iterable sequence of data.
+ * @param iterable $iterable Iterable sequence of data.
  * @param callable $pred Function that accepts a value and returns true/false
  *
  * @return \Generator
@@ -41,7 +41,7 @@ function filter($iterable, callable $pred)
 /**
  * Applies a map function $f to each value in a collection.
  *
- * @param mixed    $iterable Iterable sequence of data.
+ * @param iterable $iterable Iterable sequence of data.
  * @param callable $f        Map function to apply.
  *
  * @return \Generator
@@ -58,7 +58,7 @@ function map($iterable, callable $f)
  * value in the sequence and yields the application of the map function to each
  * value.
  *
- * @param mixed    $iterable Iterable sequence of data.
+ * @param iterable $iterable Iterable sequence of data.
  * @param callable $f        Map function to apply.
  *
  * @return \Generator
@@ -75,8 +75,8 @@ function flatmap($iterable, callable $f)
 /**
  * Partitions the input sequence into partitions of the specified size.
  *
- * @param mixed    $iterable Iterable sequence of data.
- * @param int $size Size to make each partition (except possibly the last chunk)
+ * @param iterable $iterable Iterable sequence of data.
+ * @param int      $size     Size to make each partition (except possibly the last chunk)
  *
  * @return \Generator
  */
@@ -106,6 +106,8 @@ function partition($iterable, $size)
  *     $b = function ($x, $y) { return $x + $y; };
  *     $fn = \Aws\or_chain($a, $b);
  *     echo $fn(1, 2); // 3
+ *
+ * @param ...callable
  *
  * @return callable
  */
