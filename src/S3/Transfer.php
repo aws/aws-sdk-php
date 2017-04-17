@@ -25,6 +25,7 @@ class Transfer implements PromisorInterface
     private $concurrency;
     private $mupThreshold;
     private $before;
+    private $acl = 'private';
     private $s3Args = [];
 
     /**
@@ -130,6 +131,11 @@ class Transfer implements PromisorInterface
                 $options['debug'] = fopen('php://output', 'w');
             }
             $this->addDebugToBefore($options['debug']);
+        }
+
+        // set acl
+        if (isset($options['acl'])) {
+            $this->acl = $options['acl'];
         }
     }
 
@@ -323,6 +329,7 @@ class Transfer implements PromisorInterface
             'before_upload'   => $this->before,
             'before_complete' => $this->before,
             'concurrency'     => $this->concurrency,
+            'acl'             => $this->acl,
         ]))->promise();
     }
 
@@ -333,7 +340,7 @@ class Transfer implements PromisorInterface
             preg_replace('#^' . preg_quote($this->sourceMetadata['path']) . '#', '', $filename),
             '/\\'
         );
-        
+
         if (isset($this->s3Args['Key'])) {
             return rtrim($this->s3Args['Key'], '/').'/'.$relative_file_path;
         }
