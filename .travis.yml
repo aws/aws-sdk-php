@@ -27,3 +27,6 @@ install:
 script:
   - make test
   - if [ -z "$COMPOSER_OPTS" ]; then make package; fi
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
