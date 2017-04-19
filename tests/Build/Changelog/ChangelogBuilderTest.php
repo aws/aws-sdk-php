@@ -4,7 +4,7 @@ namespace Aws\Test\Build\Changelog;
 use Aws\Build\Changelog\ChangelogBuilder;
 
 /**
- * @covers ChangelogBuilder
+ * @covers Aws\Build\Changelog\ChangelogBuilder
  */
 class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
 {
