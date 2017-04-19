@@ -17,6 +17,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise detectFacesAsync(array $args = [])
  * @method \Aws\Result detectLabels(array $args = [])
  * @method \GuzzleHttp\Promise\Promise detectLabelsAsync(array $args = [])
+ * @method \Aws\Result detectModerationLabels(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise detectModerationLabelsAsync(array $args = [])
  * @method \Aws\Result indexFaces(array $args = [])
  * @method \GuzzleHttp\Promise\Promise indexFacesAsync(array $args = [])
  * @method \Aws\Result listCollections(array $args = [])
