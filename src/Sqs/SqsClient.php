@@ -66,13 +66,19 @@ class SqsClient extends AwsClient
      */
     public function getQueueArn($queueUrl)
     {
-        return strtr($queueUrl, array(
+        $arn = strtr($queueUrl, array(
             'http://'        => 'arn:aws:',
             'https://'       => 'arn:aws:',
             '.amazonaws.com' => '',
             '/'              => ':',
             '.'              => ':',
         ));
+
+        // Cope with SQS' .fifo / :fifo arn inconsistency
+        if (substr($arn, -5) === ':fifo') {
+            $arn = substr_replace($arn, '.fifo', -5);
+        }
+        return $arn;
     }
 
     /**
