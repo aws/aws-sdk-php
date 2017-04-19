@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.26.0 - 2017-04-19
 
 * `Aws\APIGateway` - Add support for "embed" property.
 * `Aws\CodeStar` - AWS CodeStar is a cloud-based service for creating, managing, and working with software development projects on AWS. An AWS CodeStar project creates and integrates AWS services for your project development toolchain. AWS CodeStar also manages the permissions required for project users.
