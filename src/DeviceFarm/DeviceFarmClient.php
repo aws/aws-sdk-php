@@ -66,6 +66,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listJobsAsync(array $args = [])
  * @method \Aws\Result listNetworkProfiles(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listNetworkProfilesAsync(array $args = [])
+ * @method \Aws\Result listOfferingPromotions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listOfferingPromotionsAsync(array $args = [])
  * @method \Aws\Result listOfferingTransactions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listOfferingTransactionsAsync(array $args = [])
  * @method \Aws\Result listOfferings(array $args = [])

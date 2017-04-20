@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DeviceFarm` - API Update for AWS Device Farm: Support for Deals and Promotions 
+* `Aws\DirectConnect` - Documentation updates for AWS Direct Connect.
+* `Aws\ElasticLoadBalancingv2` - Adding LoadBalancersDeleted waiter for Elasticloadbalancingv2
+* `Aws\KMS` - Doc-only update for Key Management Service (KMS): Update docs for GrantConstraints and GenerateRandom
+* `Aws\Route53` - Release notes: SDK documentation now includes examples for ChangeResourceRecordSets for all types of resource record set, such as weighted, alias, and failover.
+* `Aws\Route53Domains` - Adding examples and other documentation updates.
+
 ## 3.26.0 - 2017-04-19
 
 * `Aws\APIGateway` - Add support for "embed" property.
