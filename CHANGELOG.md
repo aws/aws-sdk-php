@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.26.1 - 2017-04-20
 
 * `Aws\DeviceFarm` - API Update for AWS Device Farm: Support for Deals and Promotions 
 * `Aws\DirectConnect` - Documentation updates for AWS Direct Connect.
