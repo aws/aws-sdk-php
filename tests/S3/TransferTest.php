@@ -1,9 +1,14 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Command;
 use Aws\CommandInterface;
+use Aws\Exception\AwsException;
+use Aws\Exception\TransferException;
+use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
+use Aws\S3\S3ClientInterface;
 use Aws\S3\Transfer;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
@@ -259,7 +264,96 @@ class TransferTest extends \PHPUnit_Framework_TestCase
             'base_dir' => 's3://bucket/path',
         ]);
 
-        $downloader->transfer();
+        $downloader->promise();
+    }
+
+    /**
+     * @expectedException \Aws\Exception\TransferException
+     * @expectedExceptionMessage An error occurs in a S3 Transfer when transferring file: /foo/bar/small.txt
+     */
+    public function testEnsureTrackingFailedFileWhenUpload()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [
+            new AwsException('Failed', new Command('PutObject')),
+        ]);
+
+        $dir = sys_get_temp_dir() . '/unittest';
+        `rm -rf $dir`;
+        mkdir($dir);
+        $filename = $dir . '/small.txt';
+        $f = fopen($filename, 'w+');
+        $line = str_repeat('.', 1024);
+        for ($i = 0; $i < 6; $i++) {
+            fwrite($f, $line);
+        }
+        fclose($f);
+
+        $t = new Transfer($s3, $dir, 's3://foo/bar');
+        $t->transfer();
+        `rm -rf $dir`;
+    }
+
+    /**
+     * @expectedException \Aws\Exception\TransferException
+     * @expectedExceptionMessage An error occurs in a S3 Transfer when transferring file: /foo/bar/large.txt
+     */
+    public function testEnsureTrackingFailedFileWhenMultipartUpload()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [
+            new Result(['UploadId' => '123']),
+            new Result(['ETag' => 'a']),
+            new Result(['ETag' => 'b']),
+            new AwsException('Failed', new Command('CreateMultipartUpload')),
+        ]);
+
+        $dir = sys_get_temp_dir() . '/unittest';
+        `rm -rf $dir`;
+        mkdir($dir);
+        $filename = $dir . '/large.txt';
+        $f = fopen($filename, 'w+');
+        $line = str_repeat('.', 1024);
+        for ($i = 0; $i < 6000; $i++) {
+            fwrite($f, $line);
+        }
+        fclose($f);
+
+        $t = new Transfer($s3, $dir, 's3://foo/bar', [
+            'mup_threshold' => 5248000
+        ]);
+        $t->transfer();
+        `rm -rf $dir`;
+    }
+
+    /**
+     * @expectedException \Aws\Exception\TransferException
+     * @expectedExceptionMessage An error occurs in a S3 Transfer when transferring file: /foo/bar/a
+     */
+    public function testEnsureTrackingFailedFileWhenDownload()
+    {
+        $s3 = $this->getTestClient('s3');
+        $lso = [
+            'IsTruncated' => false,
+            'Contents' => [
+                ['Key' => 'bar/a/b'],
+            ]
+        ];
+        $this->addMockResults($s3, [
+            new Result($lso),
+            new AwsException('Failed', new Command('GetObject', [
+                'Bucket' => 'foo/bar',
+                'Key' => 'a'
+            ])),
+        ]);
+
+        $dir = sys_get_temp_dir() . '/unittest';
+        `rm -rf $dir`;
+        mkdir($dir);
+
+        $t = new Transfer($s3, 's3://foo/bar', $dir);
+        $t->transfer();
+        `rm -rf $dir`;
     }
 
     private function mockResult(callable $fn)
