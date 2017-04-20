@@ -317,6 +317,7 @@ EOT;
 
     public function testCanUseCredentialsCache()
     {
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI');
         $credentialsEnvironment = [
             'home' => 'HOME',
             'key' => CredentialProvider::ENV_KEY,
