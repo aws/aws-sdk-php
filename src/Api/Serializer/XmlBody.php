@@ -142,7 +142,7 @@ class XmlBody
             $elementName = $items['locationName'] ?: 'member';
         }
 
-        foreach ($value as &$v) {
+        foreach ($value as $v) {
             $this->format($items, $elementName, $v, $xml);
         }
 
