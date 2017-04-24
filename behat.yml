@@ -3,6 +3,8 @@ default:
         smoke:
             paths: [ %paths.base%/features/smoke ]
             contexts: [ Aws\Test\Integ\SmokeContext ]
+            filters:
+                tags: '~@sts&&~@importexport'
         performance:
             paths: [ %paths.base%/features/performance ]
             contexts: [ Aws\Test\PerformanceContext ]
