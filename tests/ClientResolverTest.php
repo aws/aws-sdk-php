@@ -167,6 +167,44 @@ class ClientResolverTest extends \PHPUnit_Framework_TestCase
         $r->resolve(['foo' => 'c'], new HandlerList());
     }
 
+    public function testValidatesCallableClosure()
+    {
+        $r = new ClientResolver([
+            'foo' => [
+                'type' => 'value',
+                'valid' => ['string'],
+                'default' => function () {
+                    return 'callable_test';
+                }
+            ]
+        ]);
+        $res = $r->resolve([], new HandlerList());
+        $this->assertEquals('callable_test', $res['foo']);
+    }
+
+    public function checkCallable()
+    {
+        return "testcall";
+    }
+
+    public function testValidatesNotInvokeStringCallable()
+    {
+        $callableFunction = '\Aws\test\ClientResolverTest::checkCallable';
+        $r = new ClientResolver([
+            'foo' => [
+                'type'    => 'value',
+                'valid'   => ['string'],
+                'default' => $callableFunction
+            ]
+        ]);
+        $res = $r->resolve([], new HandlerList());
+        $this->assertTrue(is_callable($callableFunction));
+        $this->assertEquals(
+            '\Aws\test\ClientResolverTest::checkCallable',
+            $res['foo']
+        );
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Credentials must be an
@@ -601,10 +639,10 @@ EOT;
             array_flip(['endpoint_provider', 'service', 'region', 'scheme', $argName])
         );
         $resolver = new ClientResolver($resolverArgs);
-        
+
         $resolved = $resolver->resolve($args, new HandlerList);
         $this->assertSame($expected, $resolved[$argName]);
-        
+
         $resolved = $resolver->resolve([$argName => $override] + $args, new HandlerList);
         $this->assertSame($override, $resolved[$argName]);
     }
