@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.26.3 - 2017-04-26
 
 * `Aws\RDS` - With Amazon Relational Database Service (Amazon RDS) running MySQL or Amazon Aurora, you can now authenticate to your DB instance using IAM database authentication.
 
