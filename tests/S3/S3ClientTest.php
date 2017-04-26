@@ -673,6 +673,36 @@ EOXML;
         $this->assertSame('test/yearmonth=201601/', $response['CommonPrefixes'][0]['Prefix']);
     }
 
+    public function testListObjectsDefaultEncodingDoesNotCreateReferences()
+    {
+        $listObjects = $this->getUrlEncodedListObjectsResponse();
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => function () use ($listObjects) {
+                return new FulfilledPromise(new Response(200, [], $listObjects));
+            },
+        ]);
+
+        $response = $client->listObjects(['Bucket' => 'bucket']);
+        $this->assertSame('test/yearmonth=201601/file1', $response['Contents'][0]['Key']);
+        $this->assertSame('test/yearmonth=201601/', $response['CommonPrefixes'][0]['Prefix']);
+
+        $listObjectsCopy = $listObjects;
+        $listObjectsCopy = str_replace('file1', 'thisisatest', $listObjectsCopy);
+
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            'http_handler' => function () use ($listObjects) {
+                return new FulfilledPromise(new Response(200, [], $listObjects));
+            },
+        ]);
+        $response = $client->listObjects(['Bucket' => 'bucket']);
+        $this->assertSame('test/yearmonth=201601/file1', $response['Contents'][0]['Key']);
+        $this->assertSame('test/yearmonth=201601/', $response['CommonPrefixes'][0]['Prefix']);
+    }
+
     public function testListObjectsDoesNotUrlDecodeEncodedKeysWhenEncodingSupplied()
     {
         $client = new S3Client([

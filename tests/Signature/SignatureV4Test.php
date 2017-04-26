@@ -105,21 +105,33 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
     {
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature, $ref) = $this->getFixtures();
-        $this->assertEquals(518400, $ref->invoke($signature, new \DateTime('December 11, 2013 00:00:00 UTC')));
+        $this->assertEquals(518400,
+            $ref->invoke(
+                $signature,
+                new \DateTime('December 11, 2013 00:00:00 UTC'),
+                $_SERVER['aws_time']
+            )
+        );
     }
 
     public function testCreatesPresignedDatesFromUnixTimestamp()
     {
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature, $ref) = $this->getFixtures();
-        $this->assertEquals(518400, $ref->invoke($signature, 1386720000));
+        $this->assertEquals(
+            518400,
+            $ref->invoke($signature, 1386720000, $_SERVER['aws_time'])
+        );
     }
 
     public function testCreatesPresignedDateFromStrtotime()
     {
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature, $ref) = $this->getFixtures();
-        $this->assertEquals(518400, $ref->invoke($signature, 'December 11, 2013 00:00:00 UTC'));
+        $this->assertEquals(
+            518400,
+            $ref->invoke($signature, 'December 11, 2013 00:00:00 UTC', $_SERVER['aws_time'])
+        );
     }
 
     public function testAddsSecurityTokenIfPresentInPresigned()
@@ -129,6 +141,42 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $credentials = new Credentials('foo', 'bar', '123');
         $url = (string) $signature->presign($request, $credentials, 1386720000)->getUri();
         $this->assertContains('X-Amz-Security-Token=123', $url);
+        $this->assertContains('X-Amz-Expires=518400', $url);
+    }
+
+    public function testUsesStartDateFromDateTimeIfPresent()
+    {
+        $options = ['start_time' => new \DateTime('December 5, 2013 00:00:00 UTC')];
+        unset($_SERVER['aws_time']);
+
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $credentials = new Credentials('foo', 'bar', '123');
+        $url = (string) $signature->presign($request, $credentials, 1386720000, $options)->getUri();
+        $this->assertContains('X-Amz-Date=20131205T000000Z', $url);
+        $this->assertContains('X-Amz-Expires=518400', $url);
+    }
+
+    public function testUsesStartDateFromUnixTimestampIfPresent()
+    {
+        $options = ['start_time' => strtotime('December 5, 2013 00:00:00 UTC')];
+        unset($_SERVER['aws_time']);
+
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $credentials = new Credentials('foo', 'bar', '123');
+        $url = (string) $signature->presign($request, $credentials, 1386720000, $options)->getUri();
+        $this->assertContains('X-Amz-Date=20131205T000000Z', $url);
+        $this->assertContains('X-Amz-Expires=518400', $url);
+    }
+
+    public function testUsesStartDateFromStrtotimeIfPresent()
+    {
+        $options = ['start_time' => 'December 5, 2013 00:00:00 UTC'];
+        unset($_SERVER['aws_time']);
+
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $credentials = new Credentials('foo', 'bar', '123');
+        $url = (string) $signature->presign($request, $credentials, 1386720000, $options)->getUri();
+        $this->assertContains('X-Amz-Date=20131205T000000Z', $url);
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
 
@@ -220,6 +268,83 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $signature->signRequest($request, $credentials);
     }
 
+    public function testUnsignedPayloadProvider()
+    {
+        return [
+            // POST headers should be signed.
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\n\r\n",
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;zoo, Signature=f5f8f9ffcc24625e0f508aa60328a1531729e015438ef86cc43642520716f733\r\n\r\n",
+                "POST\n/\n\nhost:host.foo.com:443\nzoo:zoobar\n\nhost;zoo\nUNSIGNED-PAYLOAD"
+            ],
+            // Changing the method should change the signature.
+            [
+                "GET / HTTP/1.1\r\nHost: host.foo.com:443\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\n\r\n",
+                "GET / HTTP/1.1\r\nHost: host.foo.com:443\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date;zoo, Signature=da900f49d8d0ea83c7ff694efa09f2f4ed5cae26099f3a543d8e983cf98ec572\r\n\r\n",
+                "GET\n/\n\nhost:host.foo.com:443\nzoo:zoobar\n\nhost;zoo\nUNSIGNED-PAYLOAD"
+            ],
+            // Duplicate header values must be sorted.
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\nx-AMZ-date: 20110909T233600Z\r\np: z\r\np: a\r\np: p\r\np: a\r\n\r\n",
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\np: z, a, p, a\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;p;x-amz-content-sha256;x-amz-date, Signature=d01baaefcb6a096a6e2fff11b91b39d75d5a76476c9267a8fd829e4a9935e561\r\n\r\n",
+                "POST\n/\n\nhost:host.foo.com:443\np:a,a,p,z\n\nhost;p\nUNSIGNED-PAYLOAD"
+            ],
+            // Request with space.
+            [
+                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com:443\r\n\r\n",
+                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com:443\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e43eacc9e320d1abd651bed28bc397f3db9f5484b0efbc9ff114dc633a4459cc\r\n\r\n",
+                "GET\n/%2520/foo\n\nhost:host.foo.com:443\n\nhost\nUNSIGNED-PAYLOAD"
+            ],
+            // Query order key case.
+            [
+                "GET /?foo=Zoo&foo=aha HTTP/1.1\r\nHost: host.foo.com:443\r\n\r\n",
+                "GET /?foo=Zoo&foo=aha HTTP/1.1\r\nHost: host.foo.com:443\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=d43e7b70856e56888b9efa86b626063d3fc32e30b10ce2ca499124fbce3730f8\r\n\r\n",
+                "GET\n/\nfoo=Zoo&foo=aha\nhost:host.foo.com:443\n\nhost\nUNSIGNED-PAYLOAD"
+            ],
+            // Query order key
+            [
+                "GET /?a=foo&b=foo HTTP/1.1\r\nHost: host.foo.com:443\r\n\r\n",
+                "GET /?a=foo&b=foo HTTP/1.1\r\nHost: host.foo.com:443\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=109f9094e4153c3ec9a69419ca2091ab83036c764cc44f8b8c55c6aec8e51fe7\r\n\r\n",
+                "GET\n/\na=foo&b=foo\nhost:host.foo.com:443\n\nhost\nUNSIGNED-PAYLOAD"
+            ],
+            // Query order value
+            [
+                "GET /?foo=b&foo=a HTTP/1.1\r\nHost: host.foo.com:443\r\n\r\n",
+                "GET /?foo=b&foo=a HTTP/1.1\r\nHost: host.foo.com:443\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=a336a0eabd4123e8533df68aec97437b1d81ae10a58fab899da3faa39fb7601a\r\n\r\n",
+                "GET\n/\nfoo=a&foo=b\nhost:host.foo.com:443\n\nhost\nUNSIGNED-PAYLOAD"
+            ],
+            // POST with body
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\nContent-Length: 4\r\n\r\nTest",
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\nContent-Length: 4\r\nX-Amz-Date: 20110909T233600Z\r\nX-Amz-Content-Sha256: UNSIGNED-PAYLOAD\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=3d70e028ea9971127d18727e392e5f1eab6c71ec293eff0b512aa3a1e52ee940\r\n\r\nTest",
+                "POST\n/\n\nhost:host.foo.com:443\n\nhost\nUNSIGNED-PAYLOAD"
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider testUnsignedPayloadProvider
+     */
+    public function testSignRequestUnsignedPayload($req, $sreq, $creq)
+    {
+        $_SERVER['aws_time'] = '20110909T233600Z';
+        $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
+        $signature = new SignatureV4('host', 'us-east-1', ['unsigned-body' => 'true']);
+        $request = Psr7\parse_request($req);
+        $contextFn = new \ReflectionMethod($signature, 'createContext');
+        $contextFn->setAccessible(true);
+        $parseFn = new \ReflectionMethod($signature, 'parseRequest');
+        $parseFn->setAccessible(true);
+        $parsed = $parseFn->invoke($signature, $request);
+        $payloadFn = new \ReflectionMethod($signature, 'getPayload');
+        $payloadFn->setAccessible(true);
+        $payload = $payloadFn->invoke($signature, $request);
+        $this->assertEquals('UNSIGNED-PAYLOAD',$payload);
+        $ctx = $contextFn->invoke($signature, $parsed, $payload);
+        $this->assertEquals($creq, $ctx['creq']);
+        $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));
+    }
+
     public function testProvider()
     {
         return [
@@ -270,6 +395,54 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
                 "POST / HTTP/1.1\r\nHost: host.foo.com\r\nContent-Length: 4\r\n\r\nTest",
                 "POST / HTTP/1.1\r\nHost: host.foo.com\r\nContent-Length: 4\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=277a7dcbb942ea6290173548feee1df1a7550354dc83e22daf5ffea86a44e0db\r\n\r\nTest",
                 "POST\n/\n\nhost:host.foo.com\n\nhost\n532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25"
+            ],
+            // HTTPS POST headers should be signed.
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\n\r\n",
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=d02686375a2514d5bcdc0c4609fdeb80a149f559f7bde45c790c23f3bed62c15\r\n\r\n",
+                "POST\n/\n\nhost:host.foo.com:443\nzoo:zoobar\n\nhost;zoo\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // HTTPS Changing the method should change the signature.
+            [
+                "GET / HTTP/1.1\r\nHost: host.foo.com:443\r\nx-AMZ-date: 20110909T233600Z\r\nZOO:zoobar\r\n\r\n",
+                "GET / HTTP/1.1\r\nHost: host.foo.com:443\r\nZOO: zoobar\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date;zoo, Signature=69c57723eee136a804b6d4b1fd1b4d45ba059e1f758900a6b1301111e1e8c77e\r\n\r\n",
+                "GET\n/\n\nhost:host.foo.com:443\nzoo:zoobar\n\nhost;zoo\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // HTTPS Duplicate header values must be sorted.
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\nx-AMZ-date: 20110909T233600Z\r\np: z\r\np: a\r\np: p\r\np: a\r\n\r\n",
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\np: z, a, p, a\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;p;x-amz-date, Signature=cec423fa9e930519918d3c05982c14ae60b7c5aedd296f2a1322b5831bbaf4ea\r\n\r\n",
+                "POST\n/\n\nhost:host.foo.com:443\np:a,a,p,z\n\nhost;p\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // HTTPS Request with space.
+            [
+                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com:443\r\n\r\n",
+                "GET /%20/foo HTTP/1.1\r\nHost: host.foo.com:443\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=5a55c5e2f146b167c3026dd5586bb1d85d530b1dd4a9dfe7cf7966eee3e92d2c\r\n\r\n",
+                "GET\n/%2520/foo\n\nhost:host.foo.com:443\n\nhost\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // HTTPS Query order key case.
+            [
+                "GET /?foo=Zoo&foo=aha HTTP/1.1\r\nHost: host.foo.com:443\r\n\r\n",
+                "GET /?foo=Zoo&foo=aha HTTP/1.1\r\nHost: host.foo.com:443\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=595fc623e7282a19d4fce8abe4b02c3dc7f98d8b98eac1cb3a8b5b1acbd26169\r\n\r\n",
+                "GET\n/\nfoo=Zoo&foo=aha\nhost:host.foo.com:443\n\nhost\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // HTTPS Query order key
+            [
+                "GET /?a=foo&b=foo HTTP/1.1\r\nHost: host.foo.com:443\r\n\r\n",
+                "GET /?a=foo&b=foo HTTP/1.1\r\nHost: host.foo.com:443\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=1c3274381ae12d8817336268d7da17672bd57e7348e39b7b9c567280f73742af\r\n\r\n",
+                "GET\n/\na=foo&b=foo\nhost:host.foo.com:443\n\nhost\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // HTTPS Query order value
+            [
+                "GET /?foo=b&foo=a HTTP/1.1\r\nHost: host.foo.com:443\r\n\r\n",
+                "GET /?foo=b&foo=a HTTP/1.1\r\nHost: host.foo.com:443\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=bad10ce675779d934f5e4fcc96c6197bdb6b4e218dafa8672c68f47d784da26d\r\n\r\n",
+                "GET\n/\nfoo=a&foo=b\nhost:host.foo.com:443\n\nhost\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            ],
+            // HTTPS POST with body
+            [
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\nContent-Length: 4\r\n\r\nTest",
+                "POST / HTTP/1.1\r\nHost: host.foo.com:443\r\nContent-Length: 4\r\nX-Amz-Date: 20110909T233600Z\r\nAuthorization: AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20110909/us-east-1/host/aws4_request, SignedHeaders=host;x-amz-date, Signature=e971be49c79358595ef6214f683ac9c0489d397a5d5d13b361291e751deeca03\r\n\r\nTest",
+                "POST\n/\n\nhost:host.foo.com:443\n\nhost\n532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25"
             ],
         ];
     }

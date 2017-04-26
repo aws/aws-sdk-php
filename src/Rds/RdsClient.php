@@ -6,6 +6,7 @@ use Aws\Api\Service;
 use Aws\Api\DocModel;
 use Aws\Api\ApiProvider;
 use Aws\PresignUrlMiddleware;
+
 /**
  * This client is used to interact with the **Amazon Relational Database Service (Amazon RDS)**.
  *
@@ -196,6 +197,9 @@ class RdsClient extends AwsClient
                     [
                         'operations' => [
                             'CopyDBSnapshot',
+                            'CreateDBInstanceReadReplica',
+                            'CopyDBClusterSnapshot',
+                            'CreateDBCluster'
                         ],
                         'service' => 'rds',
                         'presign_param' => 'PreSignedUrl',
@@ -238,6 +242,29 @@ class RdsClient extends AwsClient
             = '<div class="alert alert-info">The SDK will populate this '
             . 'parameter on your behalf using the configured region value of '
             . 'the client.</div>';
+
+        if ($api['metadata']['apiVersion'] != '2014-09-01') {
+            $api['shapes']['CopyDBClusterSnapshotMessage']['members']['SourceRegion'] = ['shape' => 'SourceRegion'];
+            $api['shapes']['CreateDBClusterMessage']['members']['SourceRegion'] = ['shape' => 'SourceRegion'];
+
+            // Several parameters in presign APIs are optional.
+            $docs['shapes']['String']['refs']['CopyDBClusterSnapshotMessage$PreSignedUrl']
+                = '<div class="alert alert-info">The SDK will compute this value '
+                . 'for you on your behalf.</div>';
+            $docs['shapes']['String']['refs']['CopyDBClusterSnapshotMessage$DestinationRegion']
+                = '<div class="alert alert-info">The SDK will populate this '
+                . 'parameter on your behalf using the configured region value of '
+                . 'the client.</div>';
+
+            // Several parameters in presign APIs are optional.
+            $docs['shapes']['String']['refs']['CreateDBClusterMessage$PreSignedUrl']
+                = '<div class="alert alert-info">The SDK will compute this value '
+                . 'for you on your behalf.</div>';
+            $docs['shapes']['String']['refs']['CreateDBClusterMessage$DestinationRegion']
+                = '<div class="alert alert-info">The SDK will populate this '
+                . 'parameter on your behalf using the configured region value of '
+                . 'the client.</div>';
+        }
 
         return [
             new Service($api, ApiProvider::defaultProvider()),

@@ -446,9 +446,9 @@ class S3Client extends AwsClient implements S3ClientInterface
                             }
                             foreach ($nested as $steps) {
                                 if (isset($result[$steps[0]])) {
-                                    foreach ($result[$steps[0]] as &$part) {
+                                    foreach ($result[$steps[0]] as $key => $part) {
                                         if (isset($part[$steps[1]])) {
-                                            $part[$steps[1]]
+                                            $result[$steps[0]][$key][$steps[1]]
                                                 = urldecode($part[$steps[1]]);
                                         }
                                     }

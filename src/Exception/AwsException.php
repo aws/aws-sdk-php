@@ -21,6 +21,7 @@ class AwsException extends \RuntimeException
     private $errorCode;
     private $connectionError;
     private $transferInfo;
+    private $errorMessage;
 
     /**
      * @param string           $message Exception message
@@ -47,6 +48,9 @@ class AwsException extends \RuntimeException
         $this->transferInfo = isset($context['transfer_stats'])
             ? $context['transfer_stats']
             : [];
+        $this->errorMessage = isset($context['message'])
+            ? $context['message']
+            : null;
         parent::__construct($message, 0, $previous);
     }
 
@@ -78,6 +82,16 @@ class AwsException extends \RuntimeException
     public function getCommand()
     {
         return $this->command;
+    }
+
+    /**
+     * Get the concise error message if any.
+     *
+     * @return string|null
+     */
+    public function getAwsErrorMessage()
+    {
+        return $this->errorMessage;
     }
 
     /**

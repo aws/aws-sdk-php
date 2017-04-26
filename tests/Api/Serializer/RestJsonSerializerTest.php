@@ -33,6 +33,10 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
                     'baz' => [
                         'http' => ['httpMethod' => 'POST'],
                         'input' => ['shape' => 'BazInput']
+                    ],
+                    'foobar' => [
+                        'http' => ['httpMethod' => 'POST'],
+                        'input' => ['shape' => 'FooBarInput']
                     ]
                 ],
                 'shapes' => [
@@ -53,6 +57,17 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
                         'type' => 'structure',
                         'members' => ['baz' => ['shape' => 'FooInput']],
                         'payload' => 'baz'
+                    ],
+                    'FooBarInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'baz' => [
+                                'shape' => 'BazShape',
+                                'location' => 'header',
+                                'locationname' => 'Bar',
+                                'jsonvalue' => true
+                            ]
+                        ]
                     ],
                     'BlobShape' => ['type' => 'blob'],
                     'BazShape'  => ['type' => 'string']
@@ -89,6 +104,48 @@ class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('http://foo.com/', (string) $request->getUri());
         $this->assertEquals('bar', (string) $request->getBody());
         $this->assertEquals('', $request->getHeaderLine('Content-Type'));
+    }
+
+    public function testPreparesRequestsWithJsonValueTraitString()
+    {
+        $jsonValueArgs = '{"a":"b"}';
+        $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
+        $this->assertEquals('IntcImFcIjpcImJcIn0i', $request->getHeaderLine('baz'));
+        $this->assertEquals('POST', $request->getMethod());
+        $this->assertEquals('http://foo.com/', (string) $request->getUri());
+        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
+    }
+
+    public function testPreparesRequestsWithJsonValueTraitArray()
+    {
+        $jsonValueArgs = [
+            "a" => "b"
+        ];
+        $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
+        $this->assertEquals('eyJhIjoiYiJ9', $request->getHeaderLine('baz'));
+        $this->assertEquals('POST', $request->getMethod());
+        $this->assertEquals('http://foo.com/', (string) $request->getUri());
+        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
+    }
+
+    public function testPreparesRequestsWithJsonValueTraitEmptyString()
+    {
+        $jsonValueArgs = '';
+        $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
+        $this->assertEquals('IiI=', $request->getHeaderLine('baz'));
+        $this->assertEquals('POST', $request->getMethod());
+        $this->assertEquals('http://foo.com/', (string) $request->getUri());
+        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testPreparesRequestsWithJsonValueTraitThrowsException()
+    {
+        $obj = new \stdClass();
+        $obj->obj = $obj;
+        $this->getRequest('foobar', ['baz' => $obj]);
     }
 
     public function testPreparesRequestsWithStructPayload()

@@ -92,6 +92,50 @@ class PostObjectV4Test extends \PHPUnit_Framework_TestCase
         $this->assertArrayNotHasKey('X-Amz-Signature-Token', $a);
     }
 
+    public function testSignsPostPolicyWithFalseSecurityToken()
+    {
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => [
+                'key' => 'AKIAIOSFODNN7EXAMPLE',
+                'secret' => 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+                'token' => false
+            ],
+        ]);
+        $p = new PostObjectV4(
+            $client,
+            'sigv4examplebucket',
+            [],
+            [],
+            "2015-12-29T01:00:00Z"
+        );
+        $a = $p->getFormInputs();
+        $this->assertArrayNotHasKey('X-Amz-Security-Token', $a);
+    }
+
+    public function testSignsPostPolicyWithNullSecurityToken()
+    {
+        $client = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => [
+                'key' => 'AKIAIOSFODNN7EXAMPLE',
+                'secret' => 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY',
+                'token' => NULL
+            ],
+        ]);
+        $p = new PostObjectV4(
+            $client,
+            'sigv4examplebucket',
+            [],
+            [],
+            "2015-12-29T01:00:00Z"
+        );
+        $a = $p->getFormInputs();
+        $this->assertArrayNotHasKey('X-Amz-Security-Token', $a);
+    }
+
     /**
      * Executes the SigV4 POST example from the S3 documentation.
      *

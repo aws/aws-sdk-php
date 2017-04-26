@@ -128,4 +128,57 @@ class JsonBodyTest extends \PHPUnit_Framework_TestCase
         $shape = Shape::create($def, new ShapeMap([]));
         $this->assertEquals($result, $j->build($shape, $args));
     }
+
+    public function formatNoReferencesProvider()
+    {
+        return [
+            // Formats nested maps and structures
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'foo' => [
+                            'type' => 'map',
+                            'value' => [
+                                'type' => 'structure',
+                                'members' => ['a' => ['type' => 'blob']]
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    'foo' => [
+                        'baz' => ['a' => 'a'],
+                        'bar' => ['a' => 'b']
+                    ]
+                ],
+                sprintf('{"foo":{"baz":{"a":"%s"},"bar":{"a":"%s"}}}',
+                    base64_encode('a'), base64_encode('b'))
+            ],
+            // Formats lists
+            [
+                [
+                    'type' => 'list',
+                    'member' => ['type' => 'string']
+                ],
+                ['foo' => ['a', 'b']],
+                '{"foo":["a","b"]}'
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider formatNoReferencesProvider
+     */
+    public function testFormatsJsonDoesNotCreateReferences($def, $args, $result)
+    {
+        $j = new JsonBody(new Service([], function() { return []; }));
+        $shape = Shape::create($def, new ShapeMap([]));
+        $builtShape = $j->build($shape, $args);
+        $this->assertEquals($result, $builtShape);
+        $argsCopy = $args;
+        $argsCopy['foo'] = 'test';
+        $builtShape = $j->build($shape, $args);
+        $this->assertEquals($result, $builtShape);
+    }
 }

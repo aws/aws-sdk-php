@@ -189,6 +189,14 @@ class Validator
 
     private function check_string(Shape $shape, $value)
     {
+        if ($shape['jsonvalue']) {
+            if (!self::canJsonEncode($value)) {
+                $this->addError('must be a value encodable with \'json_encode\'.'
+                    . ' Found ' . Aws\describe_type($value));
+            }
+            return;
+        }
+
         if (!$this->checkCanString($value)) {
             $this->addError('must be a string or an object that implements '
                 . '__toString(). Found ' . Aws\describe_type($value));
@@ -256,5 +264,10 @@ class Validator
             implode('', array_map(function ($s) { return "[{$s}]"; }, $this->path))
             . ' '
             . $message;
+    }
+
+    private function canJsonEncode($data)
+    {
+        return !is_resource($data);
     }
 }

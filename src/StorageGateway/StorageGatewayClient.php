@@ -98,6 +98,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listVolumeRecoveryPointsAsync(array $args = [])
  * @method \Aws\Result listVolumes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listVolumesAsync(array $args = [])
+ * @method \Aws\Result refreshCache(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise refreshCacheAsync(array $args = [])
  * @method \Aws\Result removeTagsFromResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeTagsFromResourceAsync(array $args = [])
  * @method \Aws\Result resetCache(array $args = [])

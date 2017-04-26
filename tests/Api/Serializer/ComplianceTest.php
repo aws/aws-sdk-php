@@ -6,15 +6,15 @@ use Aws\AwsClient;
 use Aws\Test\UsesServiceTrait;
 
 /**
- * @covers Aws\Api\Serializer\QuerySerializer
- * @covers Aws\Api\Serializer\JsonRpcSerializer
- * @covers Aws\Api\Serializer\RestSerializer
- * @covers Aws\Api\Serializer\RestJsonSerializer
- * @covers Aws\Api\Serializer\RestXmlSerializer
- * @covers Aws\Api\Serializer\JsonBody
- * @covers Aws\Api\Serializer\XmlBody
- * @covers Aws\Api\Serializer\Ec2ParamBuilder
- * @covers Aws\Api\Serializer\QueryParamBuilder
+ * @covers \Aws\Api\Serializer\QuerySerializer
+ * @covers \Aws\Api\Serializer\JsonRpcSerializer
+ * @covers \Aws\Api\Serializer\RestSerializer
+ * @covers \Aws\Api\Serializer\RestJsonSerializer
+ * @covers \Aws\Api\Serializer\RestXmlSerializer
+ * @covers \Aws\Api\Serializer\JsonBody
+ * @covers \Aws\Api\Serializer\XmlBody
+ * @covers \Aws\Api\Serializer\Ec2ParamBuilder
+ * @covers \Aws\Api\Serializer\QueryParamBuilder
  */
 class ComplianceTest extends \PHPUnit_Framework_TestCase
 {
@@ -79,6 +79,9 @@ class ComplianceTest extends \PHPUnit_Framework_TestCase
             'serializer'   => Service::createSerializer($service, $ep),
             'version'      => 'latest',
             'validate'     => false,
+            'idempotency_auto_fill' => function ($length) {
+                return str_repeat(chr(0x00), $length);
+            }
         ]);
 
         $command = $client->getCommand($name, $args);

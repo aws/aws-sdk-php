@@ -13,6 +13,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 abstract class AbstractRestParser extends AbstractParser
 {
+    use PayloadParserTrait;
     /**
      * Parses a payload from a response.
      *
@@ -116,6 +117,11 @@ abstract class AbstractRestParser extends AbstractParser
                     // output structure.
                     return;
                 }
+            case 'string':
+                if ($shape['jsonvalue']) {
+                    $value = $this->parseJson(base64_decode($value));
+                }
+                break;
         }
 
         $result[$name] = $value;

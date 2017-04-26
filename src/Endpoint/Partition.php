@@ -1,14 +1,16 @@
 <?php
 namespace Aws\Endpoint;
 
+use ArrayAccess;
+use Aws\HasDataTrait;
 use InvalidArgumentException as Iae;
 
 /**
  * Default implementation of an AWS partition.
  */
-final class Partition implements PartitionInterface
+final class Partition implements ArrayAccess, PartitionInterface
 {
-    private $data;
+    use HasDataTrait;
 
     /**
      * The partition constructor accepts the following options:
@@ -161,7 +163,8 @@ final class Partition implements PartitionInterface
     private function isServicePartitionGlobal($service)
     {
         return isset($this->data['services'][$service]['isRegionalized'])
-            && false === $this->data['services'][$service]['isRegionalized'];
+            && false === $this->data['services'][$service]['isRegionalized']
+            && isset($this->data['services'][$service]['partitionEndpoint']);
     }
 
     private function getPartitionEndpoint($service)

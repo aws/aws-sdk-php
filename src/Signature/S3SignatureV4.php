@@ -9,8 +9,6 @@ use Psr\Http\Message\RequestInterface;
  */
 class S3SignatureV4 extends SignatureV4
 {
-    const UNSIGNED_PAYLOAD = 'UNSIGNED-PAYLOAD';
-    
     /**
      * Always add a x-amz-content-sha-256 for data integrity.
      */
@@ -34,7 +32,8 @@ class S3SignatureV4 extends SignatureV4
     public function presign(
         RequestInterface $request,
         CredentialsInterface $credentials,
-        $expires
+        $expires,
+        array $options = []
     ) {
         if (!$request->hasHeader('x-amz-content-sha256')) {
             $request = $request->withHeader(
@@ -43,7 +42,7 @@ class S3SignatureV4 extends SignatureV4
             );
         }
 
-        return parent::presign($request, $credentials, $expires);
+        return parent::presign($request, $credentials, $expires, $options);
     }
 
     /**
@@ -52,7 +51,7 @@ class S3SignatureV4 extends SignatureV4
      */
     protected function getPresignedPayload(RequestInterface $request)
     {
-        return self::UNSIGNED_PAYLOAD;
+        return SignatureV4::UNSIGNED_PAYLOAD;
     }
 
     /**

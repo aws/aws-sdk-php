@@ -2,7 +2,6 @@
 namespace Aws\Ssm;
 
 use Aws\AwsClient;
-use Aws\IdempotencyTokenMiddleware;
 
 /**
  * Amazon EC2 Simple Systems Manager client.
@@ -168,50 +167,4 @@ use Aws\IdempotencyTokenMiddleware;
  * @method \Aws\Result updatePatchBaseline(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePatchBaselineAsync(array $args = [])
  */
-class SsmClient extends AwsClient
-{
-    public static function getArguments()
-    {
-        $args = parent::getArguments();
-        return $args + [
-            'idempotency_auto_fill' => [
-                'type'    => 'config',
-                'valid'   => ['bool'],
-                'doc'     => 'Set to false to disable SDK to populate parameters that'
-                    . ' enabled \'idempotencyToken\' trait with a random UUID v4'
-                    . ' value on your behalf. Using default value \'true\' still allows'
-                    . ' parameter value to be overwritten when provided. Note:'
-                    . ' auto-fill only works when cryptographically secure random'
-                    . ' bytes generator functions(random_bytes, openssl_random_pseudo_bytes'
-                    . ' or mcrypt_create_iv) can be found.',
-                'default' => true,
-            ],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * In addition to the options available to
-     * {@see Aws\AwsClient::__construct}, SsmClient accepts the following
-     * options:
-     *
-     * - idempotency_auto_fill: (bool) Set to false to disable SDK to populate
-     *   parameters that enabled 'idempotencyToken' trait with a default UUID v4
-     *   value on your behalf. Using default value 'true' still allows parameter
-     *   value to be overwritten when provided.
-     *
-     * @param array $args
-     */
-    public function __construct(array $args)
-    {
-        parent::__construct($args);
-        if ($this->getConfig('idempotency_auto_fill')) {
-            $stack = $this->getHandlerList();
-            $stack->prependInit(
-                IdempotencyTokenMiddleware::wrap($this->getApi()),
-                'ssm.idempotency_auto_fill'
-            );
-        }
-    }
-}
+class SsmClient extends AwsClient {}

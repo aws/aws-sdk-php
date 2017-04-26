@@ -340,6 +340,56 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
         $client->bar();
     }
 
+    public function testSignOperationsWithAnAuthType()
+    {
+        $client = $this->createHttpsEndpointClient(
+            [
+                'metadata' => [
+                    'signatureVersion' => 'v4',
+                ],
+                'operations' => [
+                    'Bar' => [
+                        'http' => ['method' => 'POST'],
+                        'authtype' => 'v4-unsigned-body',
+                    ],
+                ],
+            ],
+            [
+                'handler' => function (
+                    CommandInterface $command,
+                    RequestInterface $request
+                ) {
+                    foreach (['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'] as $signatureHeader) {
+                        $this->assertTrue($request->hasHeader($signatureHeader));
+                    }
+                    $this->assertEquals('UNSIGNED-PAYLOAD', $request->getHeader('X-Amz-Content-Sha256')[0]);
+                    return new Result;
+                }
+            ]
+        );
+        $client->bar();
+    }
+
+    private function createHttpsEndpointClient(array $service = [], array $config = [])
+    {
+        $apiProvider = function () use ($service) {
+            $service['metadata']['protocol'] = 'query';
+            return $service;
+        };
+
+        return new AwsClient($config + [
+            'handler'      => new MockHandler(),
+            'credentials'  => new Credentials('foo', 'bar'),
+            'signature'    => new SignatureV4('foo', 'bar'),
+            'endpoint'     => 'https://us-east-1.foo.amazonaws.com',
+            'region'       => 'foo',
+            'service'      => 'foo',
+            'api_provider' => $apiProvider,
+            'error_parser' => function () {},
+            'version'      => 'latest'
+        ]);
+    }
+
     private function createClient(array $service = [], array $config = [])
     {
         $apiProvider = function ($type) use ($service, $config) {
@@ -368,7 +418,6 @@ class AwsClientTest extends \PHPUnit_Framework_TestCase
             'region'       => 'foo',
             'service'      => 'foo',
             'api_provider' => $apiProvider,
-            'serializer'   => function () {},
             'error_parser' => function () {},
             'version'      => 'latest'
         ]);

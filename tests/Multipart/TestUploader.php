@@ -7,6 +7,7 @@ use Aws\Multipart\AbstractUploader;
 use Aws\ResultInterface;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
+use Aws\S3\Exception\S3MultipartUploadException;
 
 /**
  * Concrete UploadBuilder for the purposes of the following test.
@@ -18,6 +19,7 @@ class TestUploader extends AbstractUploader
         parent::__construct($client, $source, $config + [
             'bucket' => null,
             'key'    => null,
+            'exception_class' => S3MultipartUploadException::class,
         ]);
     }
     protected function loadUploadWorkflowInfo()
