@@ -228,6 +228,14 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Aws\manifest()
      */
+    public function testLoadsManifest()
+    {
+        $this->assertNotNull(Aws\manifest());
+    }
+
+    /**
+     * @covers Aws\manifest()
+     */
     public function testServiceManifest()
     {
         $manifest = Aws\manifest('s3');
@@ -257,5 +265,14 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
             'endpoint'  => 'data.iot'
         ];
         $this->assertEquals($data, $manifest);
+    }
+
+    /**
+     * @covers Aws\manifest()
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidManifest()
+    {
+        Aws\manifest('notarealservicename');
     }
 }
