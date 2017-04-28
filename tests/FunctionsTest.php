@@ -215,7 +215,7 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
                 'secret' => 'bar'
             ],
             'handler' => $mock,
-            'signature_version' => 'v4'
+            'signature_version' => 'v4',
         ];
 
         $client = new S3Client($conf);
@@ -225,12 +225,9 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
             'Body'   => '123'
         ]);
         $request = \Aws\serialize($command);
-        $this->assertEquals('/foo/bar', $request->getRequestTarget());
+        $this->assertEquals('/bar', $request->getRequestTarget());
         $this->assertEquals('PUT', $request->getMethod());
-        $this->assertEquals(
-            's3.amazonaws.com',
-            $request->getHeaderLine('Host')
-        );
+        $this->assertEquals('foo.s3.amazonaws.com', $request->getHeaderLine('Host'));
         $this->assertTrue($request->hasHeader('Authorization'));
         $this->assertTrue($request->hasHeader('X-Amz-Content-Sha256'));
         $this->assertTrue($request->hasHeader('X-Amz-Date'));

@@ -48,12 +48,36 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             'version' => 'latest',
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
+                if ($request->getUri()->getHost() === 'foo.s3.amazonaws.com') {
+                    return Promise\promise_for(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
+                }
+
+                return Promise\promise_for(new Response);
+            },
+        ]);
+
+        $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
+        $url = (string)$client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringStartsWith('https://foo.s3-us-west-2.amazonaws.com/bar?', $url);
+        $this->assertContains('X-Amz-Expires=', $url);
+        $this->assertContains('X-Amz-Credential=', $url);
+        $this->assertContains('X-Amz-Signature=', $url);
+    }
+
+    public function testCreatesPresignedRequestsForCorrectRegionWithPathStyle()
+    {
+        $client = new S3MultiRegionClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 's3.amazonaws.com') {
                     return Promise\promise_for(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
                 }
 
                 return Promise\promise_for(new Response);
             },
+            'use_path_style_endpoint' => true
         ]);
 
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
@@ -71,7 +95,7 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             'version' => 'latest',
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
-                if ($request->getUri()->getHost() === 's3.amazonaws.com') {
+                if ($request->getUri()->getHost() === 'foo.s3.amazonaws.com') {
                     return Promise\promise_for(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
                 }
 
@@ -80,10 +104,51 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $url = $client->getObjectUrl('foo', 'bar');
+        $this->assertSame('https://foo.s3-us-west-2.amazonaws.com/bar', $url);
+    }
+
+    public function testCreatesObjectUrlsForCorrectRegionWithPathStyle()
+    {
+        $client = new S3MultiRegionClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'http_handler' => function (RequestInterface $request) {
+                if ($request->getUri()->getHost() === 's3.amazonaws.com') {
+                    return Promise\promise_for(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
+                }
+
+                return Promise\promise_for(new Response);
+            },
+            'use_path_style_endpoint' => true
+        ]);
+
+        $url = $client->getObjectUrl('foo', 'bar');
         $this->assertSame('https://s3-us-west-2.amazonaws.com/foo/bar', $url);
     }
 
     public function testCachesBucketLocation()
+    {
+        $client = new S3MultiRegionClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'http_handler' => function (RequestInterface $request) {
+                if ($request->getUri()->getHost() === 'foo.s3.amazonaws.com') {
+                    return Promise\promise_for(new Response(301, [
+                        'X-Amz-Bucket-Region' => 'us-west-2',
+                    ]));
+                }
+
+                return Promise\promise_for(new Response(200, [], 'object!'));
+            },
+        ]);
+
+        $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
+        $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:s3:foo:location'));
+    }
+
+    public function testCachesBucketLocationWithPathStyle()
     {
         $client = new S3MultiRegionClient([
             'region' => 'us-east-1',
@@ -98,6 +163,7 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
                 return Promise\promise_for(new Response(200, [], 'object!'));
             },
+            'use_path_style_endpoint' => true
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
@@ -118,7 +184,7 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
-                if ($request->getUri()->getHost() === 's3.amazonaws.com') {
+                if ($request->getUri()->getHost() === 'foo.s3.amazonaws.com') {
                     $this->fail('The us-east-1 endpoint should never have been called.');
                 }
 
@@ -129,7 +195,60 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
     }
 
+    public function testReadsBucketLocationFromCacheWithPathStyle()
+    {
+        $cache = $this->getMockBuilder(CacheInterface::class)->getMock();
+        $cache->expects($this->once())
+            ->method('get')
+            ->with('aws:s3:foo:location')
+            ->willReturn('us-west-2');
+
+        $client = new S3MultiRegionClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'bucket_region_cache' => $cache,
+            'http_handler' => function (RequestInterface $request) {
+                if ($request->getUri()->getHost() === 's3.amazonaws.com') {
+                    $this->fail('The us-east-1 endpoint should never have been called.');
+                }
+
+                return Promise\promise_for(new Response(200, [], 'object!'));
+            },
+            'use_path_style_endpoint' => true
+        ]);
+
+        $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
+    }
+
     public function testCorrectsErroneousEntriesInCache()
+    {
+        $cache = new LruArrayCache;
+        $cache->set('aws:s3:foo:location', 'us-east-1');
+
+        $client = new S3MultiRegionClient([
+            'region' => 'eu-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'bucket_region_cache' => $cache,
+            'http_handler' => function (RequestInterface $request) {
+                if ($request->getMethod() === 'HEAD' && $request->getUri()->getPath() === '/') {
+                    return Promise\promise_for(new Response(301, [
+                        'X-Amz-Bucket-Region' => 'us-west-2',
+                    ]));
+                } elseif ($request->getUri()->getHost() === 'foo.s3-us-west-2.amazonaws.com') {
+                    return Promise\promise_for(new Response(200, [], 'object!'));
+                }
+
+                return Promise\promise_for(new Response(301));
+            },
+        ]);
+
+        $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
+        $this->assertSame('us-west-2', $cache->get('aws:s3:foo:location'));
+    }
+
+    public function testCorrectsErroneousEntriesInCacheWithPathStyle()
     {
         $cache = new LruArrayCache;
         $cache->set('aws:s3:foo:location', 'us-east-1');
@@ -150,6 +269,7 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
 
                 return Promise\promise_for(new Response(301));
             },
+            'use_path_style_endpoint' => true
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
@@ -184,9 +304,46 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             ]),
             'http_handler' => function (RequestInterface $request) {
                 $this->assertSame('https', $request->getUri()->getScheme());
+                $this->assertSame('foo.s3.foo-region.amazonaws.test', $request->getUri()->getHost());
+                return Promise\promise_for(new Response(200, [], 'object!'));
+            },
+        ]);
+
+        $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
+    }
+
+    public function testWillDefaultToRegionInPartitionWithPathStyle()
+    {
+        $client = new S3MultiRegionClient([
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'partition' => new Partition([
+                'defaults' => [
+                    'hostname' => '{service}.{region}.{dnsSuffix}',
+                    'protocols' => ['https'],
+                    'signatureVersions' => ['v4'],
+                ],
+                'partition' => 'aws_test',
+                'dnsSuffix' => 'amazonaws.test',
+                'regions' => [
+                    'foo-region' => [
+                        'description' => 'A description',
+                    ],
+                ],
+                'services' => [
+                    'service' => [
+                        'endpoints' => [
+                            'foo-region' => [],
+                        ],
+                    ],
+                ],
+            ]),
+            'http_handler' => function (RequestInterface $request) {
+                $this->assertSame('https', $request->getUri()->getScheme());
                 $this->assertSame('s3.foo-region.amazonaws.test', $request->getUri()->getHost());
                 return Promise\promise_for(new Response(200, [], 'object!'));
             },
+            'use_path_style_endpoint' => true
         ]);
 
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
