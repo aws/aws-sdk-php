@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Adding back the removed waiters and paginators.
+
 ## 3.26.4 - 2017-04-28
 
 * `Aws\CloudFormation` - API update for CloudFormation: New optional parameter ClientRequestToken which can be used as an idempotency token to safely retry certain operations as well as tagging StackEvents.
