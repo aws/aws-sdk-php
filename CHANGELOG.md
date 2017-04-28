@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.26.5 - 2017-04-28
 
 * `Aws\CloudFormation` - Adding back the removed waiters and paginators.
 
