@@ -351,15 +351,16 @@ them in FIFO order.
     use Aws\DynamoDb\DynamoDbClient;
     use Aws\CommandInterface;
     use Psr\Http\Message\RequestInterface;
+    use Aws\Exception\AwsException;
 
     $mock = new MockHandler();
 
     // Return a mocked result.
-    $mock->append(new Result(['foo' => 'bar']);
+    $mock->append(new Result(['foo' => 'bar']));
 
     // You can provide a function to invoke. Here we throw a mock exception.
     $mock->append(function (CommandInterface $cmd, RequestInterface $req) {
-        return new AwsException('Mock exception', $command);
+        return new AwsException('Mock exception', $cmd);
     });
 
     // Create a client with the mock handler.
