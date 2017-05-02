@@ -21,6 +21,9 @@ use Psr\Http\Message\RequestInterface;
  */
 class ClientResolver
 {
+    const ENV_FORMAT_REGION_SERVICE = 'AWS_%s_%s_ENDPOINT';
+    const ENV_FORMAT_SERVICE = 'AWS_%s_ENDPOINT';
+
     /** @var array */
     private $argDefinitions;
 
@@ -435,6 +438,25 @@ class ClientResolver
     public static function _apply_endpoint_provider(callable $value, array &$args)
     {
         if (!isset($args['endpoint'])) {
+            $regionEnvName = build_env_name(self::ENV_FORMAT_REGION_SERVICE, $args['region'], $args['service']);
+            $serviceEnvName = build_env_name(self::ENV_FORMAT_SERVICE, $args['service']);
+
+            /**
+             * Search for an environment variable endpoint configuration with this priority:
+             *  - AWS_<region>_<service>_ENDPOINT
+             *  - AWS_<service>_ENDPOINT
+             *
+             * Future development consideration should be made with getenv's $local_only optional to ensure
+             * environment variables are configurable using putenv in FastCGI environments
+             * @see http://php.net/manual/function.getenv.php#refsect1-function.getenv-notes getenv FastCGI Note
+             */
+            $envValue = getenv($regionEnvName)
+                ?: getenv($serviceEnvName);
+            if ($envValue) {
+                $args['endpoint'] = $envValue;
+                return;
+            }
+
             $endpointPrefix = isset($args['api']['metadata']['endpointPrefix'])
                 ? $args['api']['metadata']['endpointPrefix']
                 : $args['service'];

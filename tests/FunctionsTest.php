@@ -130,4 +130,15 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($request->hasHeader('X-Amz-Date'));
         $this->assertEquals('123', (string) $request->getBody());
     }
+
+    /**
+     * @covers \Aws\build_env_name
+     * @covers \Aws\prepare_env_name
+     */
+    public function testBuildEnvName()
+    {
+        $this->assertSame('FOO_BAR_BAZ', Aws\build_env_name('FOO_%s_%s', 'bar', 'bAz'));
+        $this->assertSame('FOO_BAR_BAZ', Aws\build_env_name('FOO_%s', 'Bar-bAZ'));
+        $this->assertSame('THIS_DOG_SWAM_TO_MY_FISH', Aws\build_env_name('%s_SWAM_TO_%s', 'this-dog', 'my-fish'));
+    }
 }
