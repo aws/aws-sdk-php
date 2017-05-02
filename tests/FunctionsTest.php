@@ -121,7 +121,10 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         $data = ['Hello', 'World'];
         $xf = function ($value) { return str_split($value); };
         $result = \Aws\flatmap($data, $xf);
-        $this->assertEquals(['H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd'], iterator_to_array($result));
+        $this->assertEquals(
+            ['H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd'],
+            iterator_to_array($result)
+        );
     }
 
     /**
@@ -178,7 +181,10 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         if (!class_exists('GuzzleHttp\Ring\Core')) {
             $this->markTestSkipped();
         }
-        $this->assertInstanceOf(Aws\Handler\GuzzleV5\GuzzleHandler::class, Aws\default_http_handler());
+        $this->assertInstanceOf(
+            Aws\Handler\GuzzleV5\GuzzleHandler::class,
+            Aws\default_http_handler()
+        );
     }
 
     /**
@@ -189,7 +195,10 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         if (!class_exists('GuzzleHttp\Handler\StreamHandler')) {
             $this->markTestSkipped();
         }
-        $this->assertInstanceOf(Aws\Handler\GuzzleV6\GuzzleHandler::class, Aws\default_http_handler());
+        $this->assertInstanceOf(
+            Aws\Handler\GuzzleV6\GuzzleHandler::class,
+            Aws\default_http_handler()
+        );
     }
 
     /**
@@ -218,7 +227,10 @@ class FunctionsTest extends \PHPUnit_Framework_TestCase
         $request = \Aws\serialize($command);
         $this->assertEquals('/foo/bar', $request->getRequestTarget());
         $this->assertEquals('PUT', $request->getMethod());
-        $this->assertEquals('s3.amazonaws.com', $request->getHeaderLine('Host'));
+        $this->assertEquals(
+            's3.amazonaws.com',
+            $request->getHeaderLine('Host')
+        );
         $this->assertTrue($request->hasHeader('Authorization'));
         $this->assertTrue($request->hasHeader('X-Amz-Content-Sha256'));
         $this->assertTrue($request->hasHeader('X-Amz-Date'));
