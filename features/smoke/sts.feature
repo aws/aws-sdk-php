@@ -1,5 +1,5 @@
 # language: en
-@smoke @sts
+@smoke @sts @noassumerole
 Feature: AWS STS
 
   Scenario: Making a request
