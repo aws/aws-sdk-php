@@ -164,24 +164,6 @@ class NativeStreamContext extends \PHPUnit_Framework_Assert implements
     }
 
     /**
-     * @Given I have cleared the last error
-     */
-    public function iHaveClearedTheLastError()
-    {
-        while (error_get_last()) {
-            error_clear_last();
-        }
-    }
-
-    /**
-     * @Then no errors should have been raised
-     */
-    public function errorsShouldHaveBeenRaised()
-    {
-        $this->assertNull(error_get_last());
-    }
-
-    /**
      * @Then scanning the directory at :dir should return a list with one member named :file
      */
     public function scanningTheDirectoryAtShouldReturnAListWithOneMemberNamed($dir, $file)
