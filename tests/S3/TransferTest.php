@@ -165,8 +165,44 @@ class TransferTest extends \PHPUnit_Framework_TestCase
             'IsTruncated' => false,
             'Contents' => [
                 ['Key' => 'bar/f/'],
-                ['Key' => 'bar/a/b'],
-                ['Key' => 'bar/c/d'],
+                ['Key' => 'bar/../bar/a/b'],
+                ['Key' => 'bar/c//d'],
+                ['Key' => '../bar//c/../a/b/..'],
+            ]
+        ];
+        $this->addMockResults($s3, [
+            new Result($lso),
+            new Result(['Body' => 'test']),
+            new Result(['Body' => '123']),
+            new Result(['Body' => 'abc']),
+        ]);
+
+        $dir = sys_get_temp_dir() . '/unittest';
+        `rm -rf $dir`;
+        mkdir($dir);
+        $res = fopen('php://temp', 'r+');
+        $t = new Transfer($s3, 's3://foo/bar', $dir, ['debug' => $res]);
+        $t->transfer();
+        rewind($res);
+        $output = stream_get_contents($res);
+        $this->assertContains('s3://foo/bar/../bar/a/b -> ', $output);
+        $this->assertContains('s3://foo/bar/c//d -> ', $output);
+        $this->assertContains('s3://foo/../bar//c/../a/b/.. -> ', $output);
+        `rm -rf $dir`;
+    }
+
+    /**
+     * @dataProvider providedPathsOutsideTarget
+     *
+     * @expectedException \Aws\Exception\AwsException
+     */
+    public function testCannotDownloadObjectsOutsideTarget($key)
+    {
+        $s3 = $this->getTestClient('s3');
+        $lso = [
+            'IsTruncated' => false,
+            'Contents' => [
+                ['Key' => $key]
             ]
         ];
         $this->addMockResults($s3, [
@@ -179,13 +215,21 @@ class TransferTest extends \PHPUnit_Framework_TestCase
         `rm -rf $dir`;
         mkdir($dir);
         $res = fopen('php://temp', 'r+');
-        $t = new Transfer($s3, 's3://foo/bar', $dir, ['debug' => $res]);
+        $t = new Transfer($s3, 's3://foo/bar/', $dir, ['debug' => $res]);
         $t->transfer();
         rewind($res);
         $output = stream_get_contents($res);
-        $this->assertContains('s3://foo/bar/a/b -> ', $output);
-        $this->assertContains('s3://foo/bar/c/d -> ', $output);
+        $this->assertContains('s3://foo/bar/' . $key . ' -> ', $output);
         `rm -rf $dir`;
+    }
+
+    public function providedPathsOutsideTarget() {
+        return [
+            ['bar/../../a/b'],
+            ['bar/../c/../../d'],
+            ['bar///../../a/b/c'],
+            ['bar//../../a/b/./c'],
+        ];
     }
 
     public function testCanUploadToBareBucket()

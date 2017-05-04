@@ -3,6 +3,7 @@ namespace Aws\S3;
 
 use Aws;
 use Aws\CommandInterface;
+use Aws\Exception\AwsException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Promise\PromisorInterface;
@@ -213,6 +214,25 @@ class Transfer implements PromisorInterface
         return rtrim(str_replace('\\', '/', $path), '/');
     }
 
+    private function resolveUri($uri)
+    {
+        $resolved = [];
+        $sections = explode('/', $uri);
+        foreach ($sections as $section) {
+            if ($section === '.' || $section === '') {
+                continue;
+            }
+            if ($section === '..') {
+                array_pop($resolved);
+            } else {
+                $resolved []= $section;
+            }
+        }
+
+        return ($uri[0] === '/' ? '/' : '')
+            . implode('/', $resolved);
+    }
+
     private function createDownloadPromise()
     {
         $parts = $this->getS3Args($this->sourceMetadata['path']);
@@ -223,8 +243,25 @@ class Transfer implements PromisorInterface
         $commands = [];
         foreach ($this->getDownloadsIterator() as $object) {
             // Prepare the sink.
-            $sink = $this->destination['path'] . '/'
-                . preg_replace('/^' . preg_quote($prefix, '/') . '/', '', $object);
+            $objectKey = preg_replace('/^' . preg_quote($prefix, '/') . '/', '', $object);
+
+            $sink = $this->destination['path'] . '/';
+            if (isset($parts['Key']) && strpos($objectKey, $parts['Key']) !== 0) {
+                $sink .= $parts['Key'] . '/';
+            }
+            $sink .= $objectKey;
+
+            $command = $this->client->getCommand(
+                'GetObject',
+                $this->getS3Args($object) + ['@http'  => ['sink'  => $sink]]
+            );
+
+            if (strpos($this->resolveUri($sink), $this->destination['path']) !== 0) {
+                throw new AwsException(
+                    'Cannot download key ' . $objectKey
+                    . ', its relative path resolves outside the'
+                    . ' parent directory', $command);
+            }
 
             // Create the directory if needed.
             $dir = dirname($sink);
@@ -233,10 +270,7 @@ class Transfer implements PromisorInterface
             }
 
             // Create the command.
-            $commands []= $this->client->getCommand(
-                'GetObject',
-                $this->getS3Args($object) + ['@http'  => ['sink'  => $sink]]
-            );
+            $commands []= $command;
         }
 
         // Create a GetObject command pool and return the promise.
@@ -333,7 +367,7 @@ class Transfer implements PromisorInterface
             preg_replace('#^' . preg_quote($this->sourceMetadata['path']) . '#', '', $filename),
             '/\\'
         );
-        
+
         if (isset($this->s3Args['Key'])) {
             return rtrim($this->s3Args['Key'], '/').'/'.$relative_file_path;
         }
