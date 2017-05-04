@@ -45,11 +45,9 @@ Feature: S3 Stream Wrapper
       | key1 | testing!      | 8    | te     | sting!      |
       | key2 | foo, bar, baz | 13   | fo     | o, bar, baz |
 
-  Scenario: No errors raised for missing files
-    Given I have cleared the last error
+  Scenario: No File Exists
     When I call file_exists on the jkfdsalhjkgdfhsurew path
     Then the call should return false
-    And no errors should have been raised
 
   Scenario: Traversing empty directories
     Given I have a file at "/empty/" with no content
