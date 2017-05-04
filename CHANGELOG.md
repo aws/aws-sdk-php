@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.27.0 - 2017-05-04
 
 * `Aws\ECS` - Exposes container instance registration time in ECS:DescribeContainerInstances.
 * `Aws\Lambda` - Support for UpdateFunctionCode DryRun option
