@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - Exposes container instance registration time in ECS:DescribeContainerInstances.
+* `Aws\Lambda` - Support for UpdateFunctionCode DryRun option
+* `Aws\MarketplaceEntitlementService` - AWS Marketplace Entitlement Service enables AWS Marketplace sellers to determine the capacity purchased by their customers.
+* `Aws\S3` - Fixed possible security issue in `Transfer`s download `transfer` operation where files could be downloaded to a directory outside the destination directory if the key contained relative paths. Ignoring files to continue with your transfer can be done through passing an iterator of files to download to `Transfer`s parameter: `$source`. These can be generated on `s3://` paths if you have registered the SDK's `StreamWrapper` via `\Aws\recursive_dir_iterator`.
+
 ## 3.26.5 - 2017-04-28
 
 * `Aws\CloudFormation` - Adding back the removed waiters and paginators.
