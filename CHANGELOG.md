@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.27.1 - 2017-05-09
 
 * `Aws\CodeStar` - Updated documentation for AWS CodeStar.
 * `Aws\WorkSpaces` - Doc-only Update for WorkSpaces
