@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeStar` - Updated documentation for AWS CodeStar.
+* `Aws\WorkSpaces` - Doc-only Update for WorkSpaces
+
 ## 3.27.0 - 2017-05-04
 
 * `Aws\ECS` - Exposes container instance registration time in ECS:DescribeContainerInstances.
