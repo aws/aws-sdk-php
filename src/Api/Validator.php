@@ -249,7 +249,11 @@ class Validator
 
     private function checkAssociativeArray($value)
     {
-        if (!is_array($value) || isset($value[0])) {
+        // String array-keys containing valid integers will be cast to the integer type. E.g. the key "8" will actually
+        // be stored under 8. On the other hand "08" will not be cast, as it isn't a valid decimal integer.
+        // @see http://php.net/manual/en/language.types.array.php#example-97
+        // Here we can not simply check `isset($value[0])` to distinguish between associative or sequential arrays.
+        if (!is_array($value) || isset($value[NULL])) {
             $this->addError('must be an associative array. Found '
                 . Aws\describe_type($value));
             return false;
