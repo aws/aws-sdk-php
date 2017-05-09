@@ -22,7 +22,7 @@ class Result implements ResultInterface
 
     public function get($key)
     {
-        return $this[$key];
+        return $this->data[$key];
     }
 
     public function search($expression)
