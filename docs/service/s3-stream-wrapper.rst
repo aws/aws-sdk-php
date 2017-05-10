@@ -61,6 +61,9 @@ from Amazon S3.
         fclose($stream);
     }
 
+.. note::
+
+    File write errors are only returned when a call to ``fflush`` is made. These errors are not returned when an un-flushed ``fclose`` is called. The return value for ``fclose`` will be true if it closes the stream, regardless of any errors in response to its internal ``fflush``. These errors are also not returned when calling ``file_put_contents`` due to how it is implemented by PHP.
 
 Opening Seekable streams
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -124,6 +127,9 @@ HTTP protocol does not allow simultaneous reading and writing.
     operation is internally buffered using a PHP temp stream until the stream
     is flushed or closed.
 
+.. note::
+
+    File write errors are only returned when a call to ``fflush`` is made. These errors are not returned when an un-flushed ``fclose`` is called. The return value for ``fclose`` will be true if it closes the stream, regardless of any errors in response to its internal ``fflush``. These errors are also not returned when calling ``file_put_contents`` due to how it is implemented by PHP.
 
 fopen modes
 -----------
