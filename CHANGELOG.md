@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.27.2 - 2017-05-11
 
 * `Aws\ElasticLoadBalancing` - Add a new API to allow customers to describe their account limits, such as load balancer limit, target group limit etc.
 * `Aws\ElasticLoadBalancingv2` - Add a new API to allow customers to describe their account limits, such as load balancer limit, target group limit etc.
