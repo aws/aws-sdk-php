@@ -112,7 +112,9 @@ class SqsClient extends AwsClient
      *                       Retrieved when using MessageAttributeNames on
      *                       ReceiveMessage.
      *
-     * @return string The md5 hash of the message attributes according to the encoding scheme.
+     * @return string|null The md5 hash of the message attributes according to
+     *                     the encoding scheme. Returns null when there are no
+     *                     attributes.
      * @link http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation
      */
     public static function getExpectedMessageAttributesMd5($message)
