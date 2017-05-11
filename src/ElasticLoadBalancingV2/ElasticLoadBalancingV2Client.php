@@ -28,6 +28,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise deleteTargetGroupAsync(array $args = [])
  * @method \Aws\Result deregisterTargets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deregisterTargetsAsync(array $args = [])
+ * @method \Aws\Result describeAccountLimits(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeAccountLimitsAsync(array $args = [])
  * @method \Aws\Result describeListeners(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeListenersAsync(array $args = [])
  * @method \Aws\Result describeLoadBalancerAttributes(array $args = [])

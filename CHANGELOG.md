@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElasticLoadBalancing` - Add a new API to allow customers to describe their account limits, such as load balancer limit, target group limit etc.
+* `Aws\ElasticLoadBalancingv2` - Add a new API to allow customers to describe their account limits, such as load balancer limit, target group limit etc.
+* `Aws\LexModelBuildingService` - Releasing new DeleteBotVersion, DeleteIntentVersion and DeleteSlotTypeVersion APIs.
+* `Aws\Organizations` - AWS Organizations APIs that return an Account object now include the email address associated with the account’s root user.
+
 ## 3.27.1 - 2017-05-09
 
 * `Aws\CodeStar` - Updated documentation for AWS CodeStar.
