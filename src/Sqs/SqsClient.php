@@ -105,7 +105,66 @@ class SqsClient extends AwsClient
     }
 
     /**
-     * Validates ReceiveMessage body MD5s
+     * Constructs the expected md5 hash of message attributes according to the encoding
+     * scheme detailed in SQS documentation.
+     *
+     * @param array $message Message containing attributes for validation.
+     *                       Retrieved when using MessageAttributeNames on
+     *                       ReceiveMessage.
+     *
+     * @return string The md5 hash of the message attributes according to the encoding scheme.
+     * @link http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#message-attributes-items-validation
+     */
+    public static function getExpectedMessageAttributesMd5($message)
+    {
+        if (empty($message['MessageAttributes'])
+            || !is_array($message['MessageAttributes'])) {
+            return null;
+        }
+
+        ksort($message['MessageAttributes']);
+        $attributeValues = "";
+        foreach ($message['MessageAttributes'] as $name => $details) {
+            $attributeValues .= SqsClient::getEncodedStringPiece($name);
+            $attributeValues .= SqsClient::getEncodedStringPiece($details['DataType']);
+            if (substr($details['DataType'], 0, 6) === 'Binary') {
+                $attributeValues .= pack('c', 0x02);
+                $attributeValues .= SqsClient::getEncodedBinaryPiece(
+                    $details['BinaryValue']
+                );
+            } else {
+                $attributeValues .= pack('c', 0x01);
+                $attributeValues .= SqsClient::getEncodedStringPiece(
+                    $details['StringValue']
+                );
+            }
+        }
+
+        return md5($attributeValues);
+    }
+
+    private static function getEncodedStringPiece($piece)
+    {
+        $utf8Piece = iconv(
+            mb_detect_encoding($piece, mb_detect_order(), true),
+            "UTF-8",
+            $piece
+        );
+        return self::getFourBytePieceLength($utf8Piece) . $utf8Piece;
+    }
+
+    private static function getEncodedBinaryPiece($piece)
+    {
+        return self::getFourBytePieceLength($piece) . $piece;
+    }
+
+    private static function getFourBytePieceLength($piece)
+    {
+        return pack('N', (int)strlen($piece));
+    }
+
+    /**
+     * Validates ReceiveMessage body and message attribute MD5s.
      *
      * @return callable
      */
@@ -132,6 +191,36 @@ class SqsClient extends AwsClient
                                             'MD5 mismatch. Expected %s, found %s',
                                             $msg['MD5OfBody'],
                                             md5($msg['Body'])
+                                        ),
+                                        $c,
+                                        [
+                                            'code' => 'ClientChecksumMismatch',
+                                            'request' => $r
+                                        ]
+                                    );
+                                }
+
+                                if (isset($msg['MD5OfMessageAttributes'])) {
+                                    $messageMd5 = SqsClient::getExpectedMessageAttributesMd5($msg);
+                                    if ($messageMd5 !== $msg['MD5OfMessageAttributes']) {
+                                        throw new SqsException(
+                                            sprintf(
+                                                'Attribute MD5 mismatch. Expected %s, found %s',
+                                                $msg['MD5OfMessageAttributes'],
+                                                $messageMd5 ? $messageMd5 : 'No Attributes'
+                                            ),
+                                            $c,
+                                            [
+                                                'code' => 'ClientChecksumMismatch',
+                                                'request' => $r
+                                            ]
+                                        );
+                                    }
+                                } else if (isset($msg['MessageAttributes'])) {
+                                    throw new SqsException(
+                                        sprintf(
+                                            'No Attribute MD5 found. Expected %s',
+                                            SqsClient::getExpectedMessageAttributesMd5($msg)
                                         ),
                                         $c,
                                         [
