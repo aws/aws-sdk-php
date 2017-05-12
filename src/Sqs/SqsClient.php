@@ -147,7 +147,7 @@ class SqsClient extends AwsClient
 
     private static function calculateBodyMd5($message)
     {
-        return md5($message['body']);
+        return md5($message['Body']);
     }
 
     private static function getEncodedStringPiece($piece)
