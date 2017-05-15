@@ -257,7 +257,11 @@ class Transfer implements PromisorInterface
                 $this->getS3Args($object) + ['@http'  => ['sink'  => $sink]]
             );
 
-            if (strpos($this->resolveUri($resolveSink), $this->destination['path']) !== 0) {
+            if (strpos(
+                $this->resolveUri($resolveSink),
+                $this->destination['path']
+                ) !== 0
+            ) {
                 throw new AwsException(
                     'Cannot download key ' . $objectKey
                     . ', its relative path resolves outside the'
