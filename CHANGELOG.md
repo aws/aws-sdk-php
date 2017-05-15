@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.27.3 - 2017-05-15
 
 * `Aws\SSM` - UpdateAssociation API now supports updating document name and targets of an association. GetAutomationExecution API can return FailureDetails as an optional field to the StepExecution Object, which contains failure type, failure stage as well as other failure related information for a failed step.
 
