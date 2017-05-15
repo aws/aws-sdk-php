@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SSM` - UpdateAssociation API now supports updating document name and targets of an association. GetAutomationExecution API can return FailureDetails as an optional field to the StepExecution Object, which contains failure type, failure stage as well as other failure related information for a failed step.
+
 ## 3.27.2 - 2017-05-11
 
 * `Aws\ElasticLoadBalancing` - Add a new API to allow customers to describe their account limits, such as load balancer limit, target group limit etc.
