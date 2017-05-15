@@ -258,8 +258,8 @@ class Transfer implements PromisorInterface
             );
 
             if (strpos(
-                $this->resolveUri($resolveSink),
-                $this->destination['path']
+                    $this->resolveUri($resolveSink),
+                    $this->destination['path']
                 ) !== 0
             ) {
                 throw new AwsException(
