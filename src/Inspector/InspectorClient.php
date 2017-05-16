@@ -34,6 +34,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeResourceGroupsAsync(array $args = [])
  * @method \Aws\Result describeRulesPackages(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeRulesPackagesAsync(array $args = [])
+ * @method \Aws\Result getAssessmentReport(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAssessmentReportAsync(array $args = [])
  * @method \Aws\Result getTelemetryMetadata(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getTelemetryMetadataAsync(array $args = [])
  * @method \Aws\Result listAssessmentRunAgents(array $args = [])
