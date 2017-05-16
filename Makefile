@@ -66,6 +66,9 @@ integ:
 smoke:
 	vendor/bin/behat --format=progress --tags=smoke
 
+smoke-noassumerole:
+	vendor/bin/behat --format=progress --tags='~@noassumerole&&@smoke'
+
 # Packages the phar and zip
 package:
 	php build/packager.php $(SERVICE)

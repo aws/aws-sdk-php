@@ -1,5 +1,5 @@
 # language: en
-@smoke @importexport
+@smoke @importexport @noassumerole
 Feature: AWS Import Export
 
   Scenario: Making a request
