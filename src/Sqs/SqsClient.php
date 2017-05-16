@@ -120,7 +120,8 @@ class SqsClient extends AwsClient
     private static function calculateMessageAttributesMd5($message)
     {
         if (empty($message['MessageAttributes'])
-            || !is_array($message['MessageAttributes'])) {
+            || !is_array($message['MessageAttributes'])
+        ) {
             return null;
         }
 
