@@ -78,9 +78,9 @@ class DocsBuilder
                     ApiProvider::resolve($this->apiProvider, 'docs', $name, $version)
                 );
                 $service = new Service($api, $docModel);
-                $title = isset($services[$service->title]) && $service->shortTitle !== ''
-                        ? $service->shortTitle
-                        : $service->title;
+                $title = isset($service->shortTitle) && $service->shortTitle !== ''
+                    ? $service->shortTitle
+                    : $service->title;
 
                 if (isset($services[$title][$version])) {
                     if (empty($aliases[$title][$version])) {
