@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.27.5 - 2017-05-17
 
 * `Aws\AutoScaling` - Various Auto Scaling documentation updates
 * `Aws\CloudWatchEvents` - Various CloudWatch Events documentation updates.
