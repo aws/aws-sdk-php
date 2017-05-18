@@ -87,6 +87,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise openInstancePublicPortsAsync(array $args = [])
  * @method \Aws\Result peerVpc(array $args = [])
  * @method \GuzzleHttp\Promise\Promise peerVpcAsync(array $args = [])
+ * @method \Aws\Result putInstancePublicPorts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putInstancePublicPortsAsync(array $args = [])
  * @method \Aws\Result rebootInstance(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rebootInstanceAsync(array $args = [])
  * @method \Aws\Result releaseStaticIp(array $args = [])

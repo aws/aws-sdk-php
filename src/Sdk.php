@@ -14,6 +14,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionApplicationDiscoveryService(array $args = [])
  * @method \Aws\Appstream\AppstreamClient createAppstream(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppstream(array $args = [])
+ * @method \Aws\Athena\AthenaClient createAthena(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAthena(array $args = [])
  * @method \Aws\AutoScaling\AutoScalingClient createAutoScaling(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAutoScaling(array $args = [])
  * @method \Aws\Batch\BatchClient createBatch(array $args = [])
