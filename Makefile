@@ -127,6 +127,10 @@ build-manifest:
 
 build: | build-manifest compile-json annotate-clients annotate-client-locator
 
+# Prepare release notes before tagging a release based on model changes.
+changelog:
+	php build/build-changelog.php
+
 # Ensures that the TAG variable was passed to the make command
 check-tag:
 	$(if $(TAG),,$(error TAG is not defined. Pass via "make tag TAG=4.2.1"))
