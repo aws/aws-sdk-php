@@ -313,6 +313,38 @@ class StreamWrapper
         return $this->triggerError("File or directory not found: $path", $flags);
     }
 
+    /** 
+     * Support for chmod()
+     *
+     * @param string $path    Directory which should be created.
+     * @param int    $option  Currently only STREAM_META_ACCESS has been
+     *                        implemented, which is used for chmod.
+     *                        For other permissions altering functions
+     *                        other values are used
+     * @param int    $mode    unix-style filesystem permissions in octal mode
+     *                        last digit maps to public-read or public-read-write
+     *                        all other modes map to private
+     */
+    public function stream_metadata( $path , $option, $mode ) {
+        $this->initProtocol($path);
+        $params = $this->withPath($path);
+        $this->clearCacheKey($path);
+
+        if( $option == STREAM_META_ACCESS ) {
+            if (!isset($params['ACL'])) {
+                $params['ACL'] = $this->unixMode2Acl($mode);
+            }
+            return $this->boolCall(function () use ($params, $path) {
+                $this->getClient()->putObjectAcl($params);
+                $this->clearCacheKey($path);
+                return true;
+            });
+        }
+        // from PHP manual: If option is not implemented, FALSE should be returned.
+        return false; 
+    }
+    
+
     /**
      * Support for mkdir().
      *
@@ -868,6 +900,29 @@ class StreamWrapper
             case '7': return 'public-read';
             case '6': return 'authenticated-read';
             default: return 'private';
+        }
+    }
+
+    /**
+     * method to map unix filesystem permissions to ACL.
+     *
+     * @param int $mode     unix-style filesystem permissions in octal mode
+     *                      last digit determines if it is public-read or 
+     *                      public-read-write; all other modes are mapped to
+     *                      private
+     *
+     * @return string
+     */
+    private function unixMode2Acl($mode)
+    {
+        switch (substr(decoct($mode), 2, 1)) {
+        case '7': 
+        case '6':
+            return 'public-read-write';
+        case '5': 
+        case '4': 
+            return 'public-read';
+        default: return 'private';
         }
     }
 
