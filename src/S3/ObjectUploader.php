@@ -75,7 +75,7 @@ class ObjectUploader implements PromisorInterface
                     'bucket' => $this->bucket,
                     'key'    => $this->key,
                     'acl'    => $this->acl
-                ] + $this->options))->promise();
+                ] + $this->options['params']))->promise();
         } else {
             // Perform a regular PutObject operation.
             $command = $this->client->getCommand('PutObject', [
