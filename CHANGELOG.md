@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ResourceGroupsTaggingAPI` - You can now specify the number of resources returned per page in GetResources operation, as an optional parameter, to easily manage the list of resources returned by your queries.
+* `Aws\SQS` - MD5 Validation of `MessageAttributes` is now being performed on `ReceiveMessage` calls. SQS uses a custom encoding for generating the hash input, [details on that scheme are available here.](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#sqs-attrib-md5)
+
 ## 3.28.0 - 2017-05-18
 
 * `Aws\Athena` - This release adds support for Amazon Athena. Amazon Athena is an interactive query service that makes it easy to analyze data in Amazon S3 using standard SQL. Athena is serverless, so there is no infrastructure to manage, and you pay only for the queries that you run.
