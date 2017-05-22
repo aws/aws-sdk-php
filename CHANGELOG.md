@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.28.1 - 2017-05-22
 
 * `Aws\ResourceGroupsTaggingAPI` - You can now specify the number of resources returned per page in GetResources operation, as an optional parameter, to easily manage the list of resources returned by your queries.
 * `Aws\SQS` - MD5 Validation of `MessageAttributes` is now being performed on `ReceiveMessage` calls. SQS uses a custom encoding for generating the hash input, [details on that scheme are available here.](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-attributes.html#sqs-attrib-md5)
