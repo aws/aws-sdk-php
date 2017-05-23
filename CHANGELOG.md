@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.28.2 - 2017-05-23
 
 * `Aws\DatabaseMigrationService` - This release adds support for using Amazon S3 and Amazon DynamoDB as targets for database migration, and using MongoDB as a source for database migration. For more information, see the AWS Database Migration Service documentation.
 
