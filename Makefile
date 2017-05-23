@@ -91,7 +91,7 @@ api: api-get-apigen
 
 api-models:
 	# Build custom docs
-	php build/docs.php
+	php build/docs.php $(if $(ISSUE-LOGGING-ENABLED),--issue-logging-enabled,)
 
 redirect-map:
 	# Build redirect map

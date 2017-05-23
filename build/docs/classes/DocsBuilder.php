@@ -43,13 +43,20 @@ class DocsBuilder
     /** @var string[] */
     private $sources;
 
+    /** @var bool[][][] */
+    private $issues = [];
+
+    /** @var bool Enables writing of issues.txt file when set. */
+    private $issueLoggingEnabled;
+
     public function __construct(
         ApiProvider $provider,
         $outputDir,
         $template,
         $baseUrl,
         array $quickLinks,
-        array $sources
+        array $sources,
+        $issueLoggingEnabled = false
     ) {
         $this->apiProvider = $provider;
         $this->outputDir = $outputDir;
@@ -57,6 +64,7 @@ class DocsBuilder
         $this->baseUrl = $baseUrl;
         $this->quickLinks = $quickLinks;
         $this->sources = $sources;
+        $this->issueLoggingEnabled = $issueLoggingEnabled;
     }
 
     public function build()
@@ -101,6 +109,9 @@ class DocsBuilder
         $this->updateAliases($services, $aliases);
         $this->updateSitemap();
         $this->updateSearch($services);
+        if ($this->issueLoggingEnabled) {
+            $this->updateIssues();
+        }
     }
 
     private function updateHomepage(array $services)
@@ -180,6 +191,24 @@ EOT;
         }
 
         $this->replaceInner('index', $quickLinks, ':quickLinks:');
+    }
+
+    private function updateIssues()
+    {
+        $text = '';
+        foreach ($this->issues as $serviceName => $versions) {
+            foreach ($versions as $serviceVersion => $messages) {
+                foreach (array_keys($messages) as $message) {
+                    if (!empty($text)) {
+                        $text .= PHP_EOL;
+                    }
+                    $text .= $serviceName . '-' . $serviceVersion
+                        . ': ' . $message;
+                }
+            }
+        }
+
+        return (bool) file_put_contents("{$this->outputDir}/issues.txt", $text);
     }
 
     private function renderService(Service $service, $examples)
@@ -711,15 +740,45 @@ EOT;
                     $html->elem('pre', null, $generator->generateOutput(
                         $name, 
                         $example['output'], 
-                        $comments['output']
+                        isset($comments['output'])
+                            ? $comments['output']
+                            : []
                     ));
                 }
             }
+
+            $generatorIssues = $generator->getIssues();
+            foreach ($generatorIssues as $shapeName => $messages) {
+                foreach (array_keys($messages) as $message) {
+                    $generatorIssues[$shapeName][$message] = $name;
+                }
+            }
+            $this->logIssues(
+                $service->api->getServiceName(),
+                $service->api->getApiVersion(),
+                $generatorIssues
+            );
         }
 
         $html->close(); // operation-container
 
         return $html;
+    }
+
+    private function logIssues($serviceName, $serviceVersion, $issuesToLog)
+    {
+        if (!isset($this->issues[$serviceName][$serviceVersion])) {
+            $this->issues[$serviceName][$serviceVersion] = [];
+        }
+
+        foreach ($issuesToLog as $shapeName => $messages) {
+            foreach ($messages as $message => $exampleName) {
+                $this->issues[$serviceName][$serviceVersion][
+                    $exampleName . ' has an issue - '
+                    . $message . ' on ' . $shapeName
+                ] = true;
+            }
+        }
     }
 
     private function renderShape(
