@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IAM` - The unique ID and access key lengths were extended from 32 to 128
+* `Aws\STS` - The unique ID and access key lengths were extended from 32 to 128.
+* `Aws\StorageGateway` - Two Storage Gateway data types, Tape and TapeArchive, each have a new response element, TapeUsedInBytes. This element helps you manage your virtual tapes. By using TapeUsedInBytes, you can see the amount of data written to each virtual tape.
+
 ## 3.28.2 - 2017-05-23
 
 * `Aws\DatabaseMigrationService` - This release adds support for using Amazon S3 and Amazon DynamoDB as targets for database migration, and using MongoDB as a source for database migration. For more information, see the AWS Database Migration Service documentation.
