@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.28.3 - 2017-05-24
 
 * `Aws\IAM` - The unique ID and access key lengths were extended from 32 to 128
 * `Aws\STS` - The unique ID and access key lengths were extended from 32 to 128.
