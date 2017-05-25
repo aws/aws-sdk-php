@@ -23,14 +23,14 @@ class CodeSnippetGenerator
         $this->service = $service;
     }
 
-    private function logIssue($shapeName, $message)
+    private function logIssue($shapeName, $message, $level=E_WARNING)
     {
         if (!isset($this->issues[$shapeName])) {
             $this->issues[$shapeName] = [];
         }
 
         if (!isset($this->issues[$shapeName][$message])) {
-            $this->issues[$shapeName][$message] = true;
+            $this->issues[$shapeName][$level][$message] = true;
         }
     }
 

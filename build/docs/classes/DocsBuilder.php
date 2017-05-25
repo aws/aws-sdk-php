@@ -46,8 +46,25 @@ class DocsBuilder
     /** @var bool[][][] */
     private $issues = [];
 
-    /** @var bool Enables writing of issues.txt file when set. */
+    /** @var bool Enables writing of build-issues.log file when set. */
     private $issueLoggingEnabled;
+
+    /** @var array Printable error names for build-issues.log file */
+    private static $ERROR_PRINT_NAMES =[
+        E_ERROR              => 'Error',
+        E_WARNING            => 'Warning',
+        E_PARSE              => 'Parse Error',
+        E_NOTICE             => 'Notice',
+        E_CORE_ERROR         => 'Core Error',
+        E_CORE_WARNING       => 'Core Warning',
+        E_COMPILE_ERROR      => 'Compile Error',
+        E_COMPILE_WARNING    => 'Compile Warning',
+        E_USER_ERROR         => 'User Error',
+        E_USER_WARNING       => 'User Warning',
+        E_USER_NOTICE        => 'User Notice',
+        E_STRICT             => 'Strict Notice',
+        E_RECOVERABLE_ERROR  => 'Recoverable Error'
+    ];
 
     public function __construct(
         ApiProvider $provider,
@@ -196,19 +213,27 @@ EOT;
     private function updateIssues()
     {
         $text = '';
-        foreach ($this->issues as $serviceName => $versions) {
-            foreach ($versions as $serviceVersion => $messages) {
-                foreach (array_keys($messages) as $message) {
-                    if (!empty($text)) {
-                        $text .= PHP_EOL;
+        foreach ($this->issues as $level=>$levelIssues) {
+            foreach ($levelIssues as $serviceName => $versions) {
+                foreach ($versions as $serviceVersion => $messages) {
+                    foreach (array_keys($messages) as $message) {
+                        if (!empty($text)) {
+                            $text .= PHP_EOL;
+                        }
+                        $levelName = isset(DocsBuilder::$ERROR_PRINT_NAMES[$level])
+                            ? DocsBuilder::$ERROR_PRINT_NAMES[$level]
+                            : 'Unknown';
+
+                        $text .= '[' . date("Y-m-d H:i:s (T)") . '] '
+                            . '[' . $levelName . '] '
+                            . $serviceName . '-' . $serviceVersion
+                            . ': ' . $message;
                     }
-                    $text .= $serviceName . '-' . $serviceVersion
-                        . ': ' . $message;
                 }
             }
         }
 
-        return (bool) file_put_contents("{$this->outputDir}/issues.txt", $text);
+        return (bool) file_put_contents("{$this->outputDir}/build-issues.log", $text);
     }
 
     private function renderService(Service $service, $examples)
@@ -748,9 +773,11 @@ EOT;
             }
 
             $generatorIssues = $generator->getIssues();
-            foreach ($generatorIssues as $shapeName => $messages) {
-                foreach (array_keys($messages) as $message) {
-                    $generatorIssues[$shapeName][$message] = $name;
+            foreach ($generatorIssues as $shapeName => $levelIssues) {
+                foreach ($levelIssues as $level => $messages) {
+                    foreach (array_keys($messages) as $message) {
+                        $generatorIssues[$shapeName][$level][$message] = $name;
+                    }
                 }
             }
             $this->logIssues(
@@ -771,12 +798,14 @@ EOT;
             $this->issues[$serviceName][$serviceVersion] = [];
         }
 
-        foreach ($issuesToLog as $shapeName => $messages) {
-            foreach ($messages as $message => $exampleName) {
-                $this->issues[$serviceName][$serviceVersion][
-                    $exampleName . ' has an issue - '
-                    . $message . ' on ' . $shapeName
-                ] = true;
+        foreach ($issuesToLog as $shapeName=>$shapeIssues) {
+            foreach ($shapeIssues as $level => $messages) {
+                foreach ($messages as $message => $exampleName) {
+                    $this->issues[$level][$serviceName][$serviceVersion][
+                        $exampleName . ' has an issue - '
+                        . $message . ' on ' . $shapeName
+                    ] = true;
+                }
             }
         }
     }
