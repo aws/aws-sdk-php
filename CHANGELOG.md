@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.28.4 - 2017-05-25
 
 * `Aws\AppStream` - Support added for persistent user storage, backed by S3.
 * `Aws\Rekognition` - Updated the CompareFaces API response to include orientation information, unmatched faces, landmarks, pose, and quality of the compared faces.
