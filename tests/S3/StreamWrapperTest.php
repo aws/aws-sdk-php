@@ -139,6 +139,91 @@ class StreamWrapperTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(fclose($s));
     }
 
+    public function testOpensCustomSeekableReadStream()
+    {
+        $stream = fopen('php://temp', 'r+');
+        fwrite($stream, 'testing 123');
+        fseek($stream, 0);
+
+        $this->addMockResults($this->client, [
+            new Result([
+                'Body' => new Psr7\Stream($stream)
+            ])
+        ]);
+
+        $s = fopen('s3://bucket/ket', 'r', false, stream_context_create([
+            's3' => [
+                'seekable' => true,
+                'seekable_handler' => function($body){
+                    return new CustomCachingStream($body);
+                }
+            ]
+        ]));
+
+        $this->assertEquals(0, ftell($s));
+        $this->assertFalse(feof($s));
+        $this->assertEquals('test', fread($s, 4));
+        $this->assertEquals(4, ftell($s));
+        $this->assertEquals(0, fseek($s, 0));
+        $this->assertEquals('testing 123', stream_get_contents($s));
+        $this->assertTrue(feof($s));
+        $this->assertTrue(fclose($s));
+    }
+
+    public function testOpensSeekableReadStreamHandlerNotCallable()
+    {
+        $stream = fopen('php://temp', 'r+');
+        fwrite($stream, 'testing 123');
+        fseek($stream, 0);
+
+        $this->addMockResults($this->client, [
+          new Result([
+            'Body' => new Psr7\Stream($stream)
+          ])
+        ]);
+
+        $s = fopen('s3://bucket/ket', 'r', false, stream_context_create([
+          's3' => [
+            'seekable' => true,
+            'seekable_handler' => 'not a callable'
+          ]
+        ]));
+
+        $this->assertEquals(0, ftell($s));
+        $this->assertFalse(feof($s));
+        $this->assertEquals('test', fread($s, 4));
+        $this->assertEquals(4, ftell($s));
+        $this->assertEquals(0, fseek($s, 0));
+        $this->assertEquals('testing 123', stream_get_contents($s));
+        $this->assertTrue(feof($s));
+        $this->assertTrue(fclose($s));
+    }
+
+    /**
+     * @expectedException
+     */
+    public function testOpensSeekableReadStreamHandlerReturnInvalidStream()
+    {
+        $stream = fopen('php://temp', 'r+');
+        fwrite($stream, 'testing 123');
+        fseek($stream, 0);
+
+        $this->addMockResults($this->client, [
+          new Result([
+            'Body' => new Psr7\Stream($stream)
+          ])
+        ]);
+
+        $s = fopen('s3://bucket/ket', 'r', false, stream_context_create([
+          's3' => [
+            'seekable' => true,
+            'seekable_handler' => function($body){
+                return 'not a stream';
+            }
+          ]
+        ]));
+    }
+
     public function testAttemptsToGuessTheContentType()
     {
         $h = [];

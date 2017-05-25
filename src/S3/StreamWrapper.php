@@ -6,8 +6,8 @@ use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7;
-use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\CachingStream;
+use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\StreamInterface;
 
 /**
@@ -22,7 +22,9 @@ use Psr\Http\Message\StreamInterface;
  * the "seekable" stream context option true. This will allow true streaming of
  * data from Amazon S3, but will maintain a buffer of previously read bytes in
  * a 'php://temp' stream to allow seeking to previously read bytes from the
- * stream.
+ * stream. You can set the seekable stream class with a callable with the option
+ * "seekable_handler". The callable must return an instance of
+ * \Psr\Http\Message\StreamInterface.
  *
  * You may pass any GetObject parameters as 's3' stream context options. These
  * options will affect how the data is downloaded from Amazon S3.
@@ -688,7 +690,14 @@ class StreamWrapper
 
         // Wrap the body in a caching entity body if seeking is allowed
         if ($this->getOption('seekable') && !$this->body->isSeekable()) {
-            $this->body = new CachingStream($this->body);
+            if(($callable = $this->getOption('seekable_handler')) && is_callable($callable)){
+                $body = $callable($this->body);
+                if(!$body instanceof StreamInterface){
+                    $this->triggerError('Option \'seekable_handler\' must return instance of Psr\Http\Message\StreamInterface');
+                }
+            } else {
+                $this->body = new CachingStream($this->body);
+            }
         }
 
         return true;
