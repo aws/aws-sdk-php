@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Support added for persistent user storage, backed by S3.
+* `Aws\Rekognition` - Updated the CompareFaces API response to include orientation information, unmatched faces, landmarks, pose, and quality of the compared faces.
+
 ## 3.28.3 - 2017-05-24
 
 * `Aws\IAM` - The unique ID and access key lengths were extended from 32 to 128
