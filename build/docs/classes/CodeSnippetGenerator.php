@@ -15,9 +15,28 @@ class CodeSnippetGenerator
     /** @var SdkService */
     private $service;
 
+    /** @var bool[][] */
+    private $issues = [];
+
     public function __construct(SdkService $service)
     {
         $this->service = $service;
+    }
+
+    private function logIssue($shapeName, $message, $level=E_WARNING)
+    {
+        if (!isset($this->issues[$shapeName])) {
+            $this->issues[$shapeName] = [];
+        }
+
+        if (!isset($this->issues[$shapeName][$message])) {
+            $this->issues[$shapeName][$level][$message] = true;
+        }
+    }
+
+    public function getIssues()
+    {
+        return $this->issues;
     }
 
     public function generateInput($operation, $params, $comments)
@@ -41,6 +60,10 @@ class CodeSnippetGenerator
             : $this->generateOutput($operation, $params, $comments);
     }
 
+    private static function isTraversableShapeValue($value) {
+        return is_array($value) || $value instanceof \Traversable;
+    }
+
     private function visit(Shape $shape, $value, $indent, $path, $comments)
     {
         switch ($shape['type']) {
@@ -51,6 +74,9 @@ class CodeSnippetGenerator
             case 'map':
                 return $this->map($shape, $value, $indent, $path, $comments);
             case 'string':
+                if (self::isTraversableShapeValue($value)) {
+                    $this->logIssue($shape->getName(), 'Invalid Conversion To String');
+                }
                 return "'{$value}'";
             case 'timestamp':
                 return "<DateTimeInterface>";
@@ -63,30 +89,33 @@ class CodeSnippetGenerator
 
     private function structure(StructureShape $shape, $value, $indent, $path, $comments)
     {
+        if (!self::isTraversableShapeValue($value)) {
+            $this->logIssue($shape->getName(), 'Invalid Conversion to Structure');
+        }
+
         $lines = ['['];
-        $discrepancy = false;
         foreach ($value as $key => $val) {
             $path[] = ".{$key}";
             $comment = $this->getCommentFor($path, $comments);
             try {
                 $shapeVal = $this->visit($shape->getMember($key), $val, "{$indent}    ", $path, $comments);
             } catch (\InvalidArgumentException $e) {
-                $discrepancy = true;
+                $this->logIssue($shape->getName(), 'Example Shape Discrepancy');
                 break;
             }
             $lines[] = rtrim("{$indent}    '{$key}' => {$shapeVal}, {$comment}");
             array_pop($path);
         }
         $lines[] = "{$indent}]";
-        if ($discrepancy) {
-            echo "Skipping examples due to discrepancy in shape: {$shape->getName()}. \n";
-        } else {
-            return implode("\n", $lines);
-        }
+        return implode("\n", $lines);
     }
 
     private function arr(ListShape $shape, $value, $indent, $path, $comments)
     {
+        if (!self::isTraversableShapeValue($value)) {
+            $this->logIssue($shape->getName(), 'Invalid Conversion to Array');
+        }
+
         $lines = ['['];
         foreach ($value as $ind => $val) {
             $path[] = "[{ind}]";
@@ -102,6 +131,10 @@ class CodeSnippetGenerator
 
     private function map(MapShape $shape, $value, $indent, $path, $comments)
     {
+        if (!self::isTraversableShapeValue($value)) {
+            $this->logIssue($shape->getName(), 'Invalid Conversion to Map');
+        }
+
         $lines = ['['];
         foreach ($value as $key => $val) {
             $path[] = ".{$key}";

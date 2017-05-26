@@ -34,6 +34,11 @@ foreach ($sourceDirs as $dir) {
     );
 }
 
+$issueLoggingEnabled = isset(getopt(
+    '',
+    array('issue-logging-enabled::')
+)['issue-logging-enabled']);
+
 // Generate API docs
 $builder = new DocsBuilder(
     $apiProvider,
@@ -41,6 +46,7 @@ $builder = new DocsBuilder(
     $template,
     $config['baseUrl'],
     $quickLinkServices,
-    $sourceFiles
+    $sourceFiles,
+    $issueLoggingEnabled
 );
 $builder->build();
