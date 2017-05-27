@@ -12,6 +12,7 @@ use GuzzleHttp\Psr7\Stream;
 
 /**
  * @covers \Aws\DynamoDb\DynamoDbClient
+ * @runTestsInSeparateProcesses
  */
 class DynamoDbClientTest extends \PHPUnit_Framework_TestCase
 {
