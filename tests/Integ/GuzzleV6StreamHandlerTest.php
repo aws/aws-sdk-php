@@ -18,7 +18,10 @@ class GuzzleV6StreamHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $handler = new StreamHandler();
 
-        $s3 = $this->getSdk()->createS3(['http_handler' => $handler]);
+        $s3 = $this->getSdk()->createS3([
+            'http_handler' => $handler,
+            'use_path_style_endpoint' => true
+        ]);
         $result = $s3->listBuckets();
         $this->assertNotEmpty($result->search('Owner.ID'));
 

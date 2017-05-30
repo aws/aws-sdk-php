@@ -209,6 +209,15 @@ class S3Client extends AwsClient implements S3ClientInterface
                     . ' \'@use_dual_stack_endpoint\' to true or false.',
                 'default' => false,
             ],
+            'use_path_style_endpoint' => [
+                'type' => 'config',
+                'valid' => ['bool'],
+                'doc' => 'Set to true to send requests to an S3 path style'
+                    . ' endpoint by default.'
+                    . ' Can be enabled or disabled on individual operations by setting'
+                    . ' \'@use_path_style_endpoint\' to true or false.',
+                'default' => false,
+            ],
         ];
     }
 
@@ -235,6 +244,11 @@ class S3Client extends AwsClient implements S3ClientInterface
      *   Can be enabled or disabled on individual operations by setting
      *   '@use_dual_stack_endpoint\' to true or false. Note:
      *   you cannot use it together with an accelerate endpoint.
+     * - use_path_style_endpoint: (bool) Set to true to send requests to an S3
+     *   path style endpoint by default.
+     *   Can be enabled or disabled on individual operations by setting
+     *   '@use_path_style_endpoint\' to true or false. Note:
+     *   you cannot use it together with an accelerate endpoint.
      *
      * @param array $args
      */
@@ -249,20 +263,22 @@ class S3Client extends AwsClient implements S3ClientInterface
             's3.content_type'
         );
 
-        $stack->appendBuild(
-            S3EndpointMiddleware::wrap(
-                $this->getRegion(),
-                [
-                    'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
-                    'accelerate' => $this->getConfig('use_accelerate_endpoint')
-                ]
-            ),
-            's3.endpoint_middleware'
-        );
 
         // Use the bucket style middleware when using a "bucket_endpoint" (for cnames)
         if ($this->getConfig('bucket_endpoint')) {
             $stack->appendBuild(BucketEndpointMiddleware::wrap(), 's3.bucket_endpoint');
+        } else {
+            $stack->appendBuild(
+                S3EndpointMiddleware::wrap(
+                    $this->getRegion(),
+                    [
+                        'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
+                        'accelerate' => $this->getConfig('use_accelerate_endpoint'),
+                        'path_style' => $this->getConfig('use_path_style_endpoint')
+                    ]
+                ),
+                's3.endpoint_middleware'
+            );
         }
 
         $stack->appendSign(PutObjectUrlMiddleware::wrap(), 's3.put_object_url');
