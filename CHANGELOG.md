@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.28.5 - 2017-05-30
 
 * `Aws\CloudDirectory` - Cloud Directory has launched support for Typed Links, enabling customers to create object-to-object relationships that are not hierarchical in nature. Typed Links enable customers to quickly query for data along these relationships. Customers can also enforce referential integrity using Typed Links, ensuring data in use is not inadvertently deleted.
 * `Aws\S3` - New example snippets for Amazon S3.
