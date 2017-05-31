@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.28.6 - 2017-05-31
 
 * `Aws\RDS` - Amazon RDS customers can now easily and quickly stop and start their DB instances.
 
