@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.28.8 - 2017-06-02
 
 * `Aws\KinesisAnalytics` - Kinesis Analytics publishes error messages CloudWatch logs in case of application misconfigurations
 * `Aws\WorkDocs` - This release includes new APIs to manage tags and custom metadata on resources and also new APIs to add and retrieve comments at the document level.
