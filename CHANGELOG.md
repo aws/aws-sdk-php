@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - AppStream 2.0 Custom Security Groups allows you to easily control what network resources your streaming instances and images have access to. You can assign up to 5 security groups per Fleet to control the inbound and outbound network access to your streaming instances to specific IP ranges, network protocols, or ports.
+* `Aws\AutoScaling` - Autoscaling resource model update.
+* `Aws\IoT` -  Added Salesforce action to IoT Rules Engine.
+
 ## 3.28.8 - 2017-06-02
 
 * `Aws\KinesisAnalytics` - Kinesis Analytics publishes error messages CloudWatch logs in case of application misconfigurations
