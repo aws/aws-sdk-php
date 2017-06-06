@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.28.10 - 2017-06-06
 
 * `Aws\ACM` - Documentation update for AWS Certificate Manager.
 * `Aws\CloudFront` - Doc update to fix incorrect prefix in S3OriginConfig
