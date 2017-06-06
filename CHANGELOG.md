@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - Documentation update for AWS Certificate Manager.
+* `Aws\CloudFront` - Doc update to fix incorrect prefix in S3OriginConfig
+* `Aws\IoT` - Update client side validation for SalesForce action.
+
 ## 3.28.9 - 2017-06-05
 
 * `Aws\AppStream` - AppStream 2.0 Custom Security Groups allows you to easily control what network resources your streaming instances and images have access to. You can assign up to 5 security groups per Fleet to control the inbound and outbound network access to your streaming instances to specific IP ranges, network protocols, or ports.
