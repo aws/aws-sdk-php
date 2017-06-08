@@ -42,4 +42,16 @@ use Aws\AwsClient;
  * @method \Aws\Result updateStack(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStackAsync(array $args = [])
  */
-class AppstreamClient extends AwsClient {}
+class AppstreamClient extends AwsClient {
+
+    public function __construct(array $args)
+    {
+        if (!isset($args['endpoint'])) {
+            $scheme = isset($args['scheme'])? $args['scheme'] : 'https';
+            $args['endpoint'] =
+                "{$scheme}://appstream2.{$args['region']}.amazonaws.com";
+        }
+
+        parent::__construct($args);
+    }
+}
