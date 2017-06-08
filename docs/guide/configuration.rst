@@ -3,7 +3,11 @@ Configuration
 =============
 
 This guide describes client constructor options. These options can be provided
-in a client constructor or to the ``Aws\Sdk`` class.
+in a client constructor or to the ``Aws\Sdk`` class. The array of options
+provided to a specific type of client may vary based on which client you are
+creating. These custom client configuration options are described in the
+`API documentation <http://docs.aws.amazon.com/aws-sdk-php/latest/>`_ of each
+client.
 
 
 .. contents:: Configuration Options
