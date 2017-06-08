@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoT` - In addition to using certificate ID, AWS IoT customers can now obtain the description of a certificate with the certificate PEM.
+* `Aws\Pinpoint` - Starting today Amazon Pinpoint adds SMS Text and Email Messaging support in addition to Mobile Push Notifications, providing developers, product managers and marketers with multi-channel messaging capabilities to drive user engagement in their applications. Pinpoint also enables backend services and applications to message users directly and provides advanced user and app analytics to understand user behavior and messaging performance.
+* `Aws\Rekognition` - API Update for AmazonRekognition: Adding RecognizeCelebrities API
+
 ## 3.29.0 - 2017-06-07
 
 * `Aws\CodeBuild` - Add support to APIs for privileged containers. This change would allow performing privileged operations like starting the Docker daemon inside builds possible in custom docker images.
