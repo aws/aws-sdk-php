@@ -25,6 +25,7 @@ class RetryMiddleware
         'RequestLimitExceeded'                   => true,
         'Throttling'                             => true,
         'ThrottlingException'                    => true,
+        'ThrottledException'                     => true,
         'ProvisionedThroughputExceededException' => true,
         'RequestThrottled'                       => true,
         'BandwidthLimitExceeded'                 => true,

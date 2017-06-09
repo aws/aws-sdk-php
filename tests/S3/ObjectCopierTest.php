@@ -25,6 +25,29 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, $mockedResults);
         $result = (new ObjectCopier(
             $client,
+            ['Bucket' => 'source-bucket', 'Key' => 'sourceKey'],
+            ['Bucket' => 'bucket', 'Key' => 'key'],
+            'private',
+            $options
+        ))->copy();
+        $this->assertEquals('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
+        $this->assertTrue($this->mockQueueEmpty());
+    }
+
+    /**
+     * @dataProvider getCopyTestCasesWithPathStyle
+     */
+    public function testDoesCorrectOperationWithPathStyle(
+        array $mockedResults,
+        array $options
+    ) {
+        /** @var \Aws\S3\S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'use_path_style_endpoint' => true
+        ]);
+        $this->addMockResults($client, $mockedResults);
+        $result = (new ObjectCopier(
+            $client,
             ['Bucket' => 'sourceBucket', 'Key' => 'sourceKey'],
             ['Bucket' => 'bucket', 'Key' => 'key'],
             'private',
@@ -46,6 +69,31 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
         $this->addMockResults($client, $mockedResults);
         $promise = (new ObjectCopier(
             $client,
+            ['Bucket' => 'source-bucket', 'Key' => 'sourceKey'],
+            ['Bucket' => 'bucket', 'Key' => 'key'],
+            'private',
+            $options
+        ))->promise();
+        $this->assertFalse($this->mockQueueEmpty());
+        $result = $promise->wait();
+        $this->assertEquals('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
+        $this->assertTrue($this->mockQueueEmpty());
+    }
+
+    /**
+     * @dataProvider getCopyTestCasesWithPathStyle
+     */
+    public function testDoesCorrectOperationAsynchronouslyWithPathStyle(
+        array $mockedResults,
+        array $options
+    ) {
+        /** @var \Aws\S3\S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'use_path_style_endpoint' => true
+        ]);
+        $this->addMockResults($client, $mockedResults);
+        $promise = (new ObjectCopier(
+            $client,
             ['Bucket' => 'sourceBucket', 'Key' => 'sourceKey'],
             ['Bucket' => 'bucket', 'Key' => 'key'],
             'private',
@@ -58,6 +106,31 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
     }
 
     public function getCopyTestCases()
+    {
+        $smallHeadObject = new Result(['ContentLength' => 1024 * 1024 * 6]);
+        $putObject = new Result();
+        $partCount = ceil($smallHeadObject['ContentLength'] / MultipartUploader::PART_MIN_SIZE);
+        $initiate = new Result(['UploadId' => 'foo']);
+        $putPart = new Result(['ETag' => 'bar']);
+        $complete = new Result(['Location' => 'https://bucket.s3.amazonaws.com/key']);
+
+        return [
+            [
+                [$smallHeadObject, $putObject],
+                []
+            ],
+            [
+                array_merge(
+                    [$smallHeadObject, $initiate],
+                    array_fill(0, $partCount, $putPart),
+                    [$complete]
+                ),
+                ['mup_threshold' => MultipartUploader::PART_MIN_SIZE]
+            ],
+        ];
+    }
+
+    public function getCopyTestCasesWithPathStyle()
     {
         $smallHeadObject = new Result(['ContentLength' => 1024 * 1024 * 6]);
         $putObject = new Result();

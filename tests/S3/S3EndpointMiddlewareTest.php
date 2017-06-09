@@ -51,6 +51,26 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider excludedCommandProvider
+     *
+     * @param CommandInterface $command
+     */
+    public function testAppliesDualStackWithPathStyleToCommandForInvalidOperationsWhenEnableBoth(CommandInterface $command)
+    {
+        $middleware = new S3EndpointMiddleware(
+            $this->dualStackWithPathStyleAssertingHandler($command),
+            'us-west-2',
+            [
+                'dual_stack' => true,
+                'accelerate' => true,
+                'path_style' => true,
+            ]
+        );
+
+        $middleware($command, $this->getPathStyleRequest($command));
+    }
+
+    /**
      * @dataProvider includedCommandProvider
      *
      * @param CommandInterface $command
@@ -111,6 +131,25 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $command['@use_accelerate_endpoint'] = true;
         $command['@use_dual_stack_endpoint'] = true;
         $middleware($command, $this->getRequest($command));
+    }
+
+    /**
+     * @dataProvider excludedCommandProvider
+     *
+     * @param CommandInterface $command
+     */
+    public function testAppliesDualStackForInvalidOperationsWhenEnableBothWithPathStyleAtOperationalLevel(CommandInterface $command)
+    {
+        $middleware = new S3EndpointMiddleware(
+            $this->dualStackWithPathStyleAssertingHandler($command),
+            'us-west-2',
+            []
+        );
+
+        $command['@use_accelerate_endpoint'] = true;
+        $command['@use_dual_stack_endpoint'] = true;
+        $command['@use_path_style_endpoint'] = true;
+        $middleware($command, $this->getPathStyleRequest($command));
     }
 
     /**
@@ -205,6 +244,20 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware($command, $this->getRequest($command));
     }
 
+    public function testAppliesDualStackWithPathStyleEndpointToCommand()
+    {
+        $command = new Command('CreateBucket', ['Bucket' => 'bucket']);
+        $middleware = new S3EndpointMiddleware(
+            $this->dualStackWithPathStyleAssertingHandler($command),
+            'us-west-2',
+            [
+                'dual_stack' => true,
+                'path_style' => true
+            ]
+        );
+        $middleware($command, $this->getPathStyleRequest($command));
+    }
+
     public function testAppliesDualStackWithOperationLevelOptIn()
     {
         $command = new Command('CreateBucket', ['Bucket' => 'bucket']);
@@ -216,6 +269,20 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
 
         $command['@use_dual_stack_endpoint'] = true;
         $middleware($command, $this->getRequest($command));
+    }
+
+    public function testAppliesDualStackWithPathStyleWithOperationLevelOptIn()
+    {
+        $command = new Command('CreateBucket', ['Bucket' => 'bucket']);
+        $middleware = new S3EndpointMiddleware(
+            $this->dualStackAssertingHandler($command),
+            'us-west-2',
+            [ 'dual_stack' => false, ]
+        );
+
+        $command['@use_dual_stack_endpoint'] = true;
+        $command['@use_path_style_endpoing'] = true;
+        $middleware($command, $this->getPathStyleRequest($command));
     }
 
     public function testDoesNothingForDualStackWithoutOptIn()
@@ -242,6 +309,17 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
         $middleware($command, $this->getRequest($command));
     }
 
+    public function testIncompatibleHostStyleBucketNameFallback()
+    {
+        $command = new Command('CreateBucket', ['Bucket' => 'a.']);
+        $middleware = new S3EndpointMiddleware(
+            $this->dualStackPathStyleFallbackAssertingHandler($command),
+            'us-west-2',
+            [ 'dual_stack' => true, ]
+        );
+        $middleware($command, $this->getPathStyleRequest($command));
+    }
+
     public function excludedCommandProvider()
     {
         return array_map(function ($commandName) {
@@ -266,6 +344,11 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
 
     private function getRequest(CommandInterface $command)
     {
+        return new Request('GET', "https://{$command['Bucket']}.s3.amazonaws.com/?key=query");
+    }
+
+    private function getPathStyleRequest(CommandInterface $command)
+    {
         return new Request('GET', "https://s3.amazonaws.com/{$command['Bucket']}?key=query");
     }
 
@@ -276,7 +359,7 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
             RequestInterface $req
         ) use ($command, $pattern) {
             $this->assertNotContains($pattern, (string) $req->getUri());
-            $this->assertContains($command['Bucket'], $req->getUri()->getPath());
+            $this->assertContains($command['Bucket'], $req->getUri()->getHost());
         };
     }
 
@@ -301,6 +384,36 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
             RequestInterface $req
         ) use ($command) {
             $this->assertSame(
+                "bucket.s3.dualstack.us-west-2.amazonaws.com",
+                $req->getUri()->getHost()
+            );
+            $this->assertNotContains($command['Bucket'], $req->getUri()->getPath());
+            $this->assertContains('key=query', $req->getUri()->getQuery());
+        };
+    }
+
+    private function dualStackPathStyleFallbackAssertingHandler(CommandInterface $command)
+    {
+        return function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use ($command) {
+            $this->assertSame(
+                "s3.dualstack.us-west-2.amazonaws.com",
+                $req->getUri()->getHost()
+            );
+            $this->assertContains($command['Bucket'], $req->getUri()->getPath());
+            $this->assertContains('key=query', $req->getUri()->getQuery());
+        };
+    }
+
+    private function dualStackWithPathStyleAssertingHandler(CommandInterface $command)
+    {
+        return function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use ($command) {
+            $this->assertSame(
                 "s3.dualstack.us-west-2.amazonaws.com",
                 $req->getUri()->getHost()
             );
@@ -316,7 +429,7 @@ class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
             RequestInterface $req
         ) use ($command) {
             $this->assertNotContains('s3.dualstack', (string) $req->getUri());
-            $this->assertContains($command['Bucket'], $req->getUri()->getPath());
+            $this->assertContains($command['Bucket'], $req->getUri()->getHost());
             $this->assertContains('key=query', $req->getUri()->getQuery());
         };
     }

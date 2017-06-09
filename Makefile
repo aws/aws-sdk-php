@@ -8,7 +8,7 @@ help:
 	@echo "  integ          to run integration tests. Provide TEST to perform a specific test."
 	@echo "  guide          to build the user guide documentation"
 	@echo "  guide-show     to view the user guide"
-	@echo "  api            to build the API documentation"
+	@echo "  api            to build the API documentation. Provide ISSUE_LOGGING_ENABLED to save build issues to file."
 	@echo "  api-show       to view the API documentation"
 	@echo "  api-package    to build the API documentation as a ZIP"
 	@echo "  api-manifest   to build an API manifest JSON file for the SDK"
@@ -66,6 +66,9 @@ integ:
 smoke:
 	vendor/bin/behat --format=progress --tags=smoke
 
+smoke-noassumerole:
+	vendor/bin/behat --format=progress --tags='~@noassumerole&&@smoke'
+
 # Packages the phar and zip
 package:
 	php build/packager.php $(SERVICE)
@@ -91,7 +94,7 @@ api: api-get-apigen
 
 api-models:
 	# Build custom docs
-	php build/docs.php
+	php build/docs.php $(if $(ISSUE_LOGGING_ENABLED),--issue-logging-enabled,)
 
 redirect-map:
 	# Build redirect map

@@ -14,6 +14,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionApplicationDiscoveryService(array $args = [])
  * @method \Aws\Appstream\AppstreamClient createAppstream(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppstream(array $args = [])
+ * @method \Aws\Athena\AthenaClient createAthena(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAthena(array $args = [])
  * @method \Aws\AutoScaling\AutoScalingClient createAutoScaling(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAutoScaling(array $args = [])
  * @method \Aws\Batch\BatchClient createBatch(array $args = [])
@@ -102,6 +104,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionGameLift(array $args = [])
  * @method \Aws\Glacier\GlacierClient createGlacier(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGlacier(array $args = [])
+ * @method \Aws\Greengrass\GreengrassClient createGreengrass(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionGreengrass(array $args = [])
  * @method \Aws\Health\HealthClient createHealth(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionHealth(array $args = [])
  * @method \Aws\Iam\IamClient createIam(array $args = [])
@@ -201,7 +205,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.27.1';
+    const VERSION = '3.29.2';
 
     /** @var array Arguments for creating clients */
     private $args;

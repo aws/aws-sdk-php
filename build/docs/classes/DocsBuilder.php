@@ -43,13 +43,37 @@ class DocsBuilder
     /** @var string[] */
     private $sources;
 
+    /** @var bool[][][] */
+    private $issues = [];
+
+    /** @var bool Enables writing of build-issues.log file when set. */
+    private $issueLoggingEnabled;
+
+    /** @var array Printable error names for build-issues.log file */
+    private static $ERROR_PRINT_NAMES =[
+        E_ERROR              => 'Error',
+        E_WARNING            => 'Warning',
+        E_PARSE              => 'Parse Error',
+        E_NOTICE             => 'Notice',
+        E_CORE_ERROR         => 'Core Error',
+        E_CORE_WARNING       => 'Core Warning',
+        E_COMPILE_ERROR      => 'Compile Error',
+        E_COMPILE_WARNING    => 'Compile Warning',
+        E_USER_ERROR         => 'User Error',
+        E_USER_WARNING       => 'User Warning',
+        E_USER_NOTICE        => 'User Notice',
+        E_STRICT             => 'Strict Notice',
+        E_RECOVERABLE_ERROR  => 'Recoverable Error'
+    ];
+
     public function __construct(
         ApiProvider $provider,
         $outputDir,
         $template,
         $baseUrl,
         array $quickLinks,
-        array $sources
+        array $sources,
+        $issueLoggingEnabled = false
     ) {
         $this->apiProvider = $provider;
         $this->outputDir = $outputDir;
@@ -57,6 +81,7 @@ class DocsBuilder
         $this->baseUrl = $baseUrl;
         $this->quickLinks = $quickLinks;
         $this->sources = $sources;
+        $this->issueLoggingEnabled = $issueLoggingEnabled;
     }
 
     public function build()
@@ -78,9 +103,9 @@ class DocsBuilder
                     ApiProvider::resolve($this->apiProvider, 'docs', $name, $version)
                 );
                 $service = new Service($api, $docModel);
-                $title = isset($services[$service->title]) && $service->shortTitle !== ''
-                        ? $service->shortTitle
-                        : $service->title;
+                $title = isset($service->shortTitle) && $service->shortTitle !== ''
+                    ? $service->shortTitle
+                    : $service->title;
 
                 if (isset($services[$title][$version])) {
                     if (empty($aliases[$title][$version])) {
@@ -101,6 +126,9 @@ class DocsBuilder
         $this->updateAliases($services, $aliases);
         $this->updateSitemap();
         $this->updateSearch($services);
+        if ($this->issueLoggingEnabled) {
+            $this->updateIssues();
+        }
     }
 
     private function updateHomepage(array $services)
@@ -180,6 +208,32 @@ EOT;
         }
 
         $this->replaceInner('index', $quickLinks, ':quickLinks:');
+    }
+
+    private function updateIssues()
+    {
+        $text = '';
+        foreach ($this->issues as $level=>$levelIssues) {
+            foreach ($levelIssues as $serviceName => $versions) {
+                foreach ($versions as $serviceVersion => $messages) {
+                    foreach (array_keys($messages) as $message) {
+                        if (!empty($text)) {
+                            $text .= PHP_EOL;
+                        }
+                        $levelName = isset(DocsBuilder::$ERROR_PRINT_NAMES[$level])
+                            ? DocsBuilder::$ERROR_PRINT_NAMES[$level]
+                            : 'Unknown';
+
+                        $text .= '[' . date("Y-m-d H:i:s (T)") . '] '
+                            . '[' . $levelName . '] '
+                            . $serviceName . '-' . $serviceVersion
+                            . ': ' . $message;
+                    }
+                }
+            }
+        }
+
+        return (bool) file_put_contents("{$this->outputDir}/build-issues.log", $text);
     }
 
     private function renderService(Service $service, $examples)
@@ -711,15 +765,49 @@ EOT;
                     $html->elem('pre', null, $generator->generateOutput(
                         $name, 
                         $example['output'], 
-                        $comments['output']
+                        isset($comments['output'])
+                            ? $comments['output']
+                            : []
                     ));
                 }
             }
+
+            $generatorIssues = $generator->getIssues();
+            foreach ($generatorIssues as $shapeName => $levelIssues) {
+                foreach ($levelIssues as $level => $messages) {
+                    foreach (array_keys($messages) as $message) {
+                        $generatorIssues[$shapeName][$level][$message] = $name;
+                    }
+                }
+            }
+            $this->logIssues(
+                $service->api->getServiceName(),
+                $service->api->getApiVersion(),
+                $generatorIssues
+            );
         }
 
         $html->close(); // operation-container
 
         return $html;
+    }
+
+    private function logIssues($serviceName, $serviceVersion, $issuesToLog)
+    {
+        if (!isset($this->issues[$serviceName][$serviceVersion])) {
+            $this->issues[$serviceName][$serviceVersion] = [];
+        }
+
+        foreach ($issuesToLog as $shapeName=>$shapeIssues) {
+            foreach ($shapeIssues as $level => $messages) {
+                foreach ($messages as $message => $exampleName) {
+                    $this->issues[$level][$serviceName][$serviceVersion][
+                        $exampleName . ' has an issue - '
+                        . $message . ' on ' . $shapeName
+                    ] = true;
+                }
+            }
+        }
     }
 
     private function renderShape(
