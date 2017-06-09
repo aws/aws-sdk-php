@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OpsWorks` - Tagging Support for AWS OpsWorks Stacks
+
 ## 3.29.1 - 2017-06-08
 
 * `Aws\IoT` - In addition to using certificate ID, AWS IoT customers can now obtain the description of a certificate with the certificate PEM.
