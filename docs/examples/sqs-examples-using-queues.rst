@@ -1,6 +1,20 @@
+.. Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+   This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+   International License (the "License"). You may not use this file except in compliance with the
+   License. A copy of the License is located at http://creativecommons.org/licenses/by-nc-sa/4.0/.
+
+   This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+   either express or implied. See the License for the specific language governing permissions and
+   limitations under the License.
+
 ==========================
 Using Queues in Amazon SQS
 ==========================
+
+.. meta::
+   :description: Create or delete Amazon SQS queues, and return lists and URLs for queues.
+   :keywords: Amazon SQS, AWS SDK for PHP examples
 
 To learn about Amazon SQS queues, see `How Amazon SQS Queues Work <http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-how-it-works.html>`_.
 
@@ -104,7 +118,7 @@ Delete a Queue
     require 'vendor/autoload.php';
     use Aws\Sqs\SqsClient;
     use Aws\Exception\AwsException;
-    
+
     $queueUrl = "SQS_QUEUE_URL";
     $client = new SqsClient([
         'profile' => 'default',
