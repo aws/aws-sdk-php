@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.29.2 - 2017-06-09
 
 * `Aws\OpsWorks` - Tagging Support for AWS OpsWorks Stacks
 
