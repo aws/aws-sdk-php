@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.29.3 - 2017-06-12
 
 * `Aws\RDS` - API Update for RDS: this update enables copy-on-write, a new Aurora MySQL Compatible Edition feature that allows users to restore their database, and support copy of TDE enabled snapshot cross region.
 
