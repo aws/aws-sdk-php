@@ -1,6 +1,20 @@
+.. Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+   This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+   International License (the "License"). You may not use this file except in compliance with the
+   License. A copy of the License is located at http://creativecommons.org/licenses/by-nc-sa/4.0/.
+
+   This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+   either express or implied. See the License for the specific language governing permissions and
+   limitations under the License.
+
 ===================================
 Enabling Long Polling in Amazon SQS
 ===================================
+
+.. meta::
+   :description:
+   :keywords: Amazon SQS, AWS SDK for PHP examples
 
 Long polling reduces the number of empty responses by allowing Amazon SQS to wait a specified time for a message to become available in the queue before sending a response. Also, long polling eliminates false empty responses by querying all of the servers instead of a sampling of servers. To enable long polling, you must specify a non-zero wait time for received messages. To learn more, see `Amazon SQS Long Polling <http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-long-polling.html>`_.
 
@@ -82,7 +96,7 @@ Create a Queue with Long Polling
     require 'vendor/autoload.php';
     use Aws\Sqs\SqsClient;
     use Aws\Exception\AwsException;
-    
+
     $queueName = "QUEUE_NAME";
     $client = new SqsClient([
         'profile' => 'default',

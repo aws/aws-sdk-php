@@ -1,6 +1,20 @@
-===================================
-Sending Events to CloudWatch Events
-===================================
+.. Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+   This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+   International License (the "License"). You may not use this file except in compliance with the
+   License. A copy of the License is located at http://creativecommons.org/licenses/by-nc-sa/4.0/.
+
+   This file is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+   either express or implied. See the License for the specific language governing permissions and
+   limitations under the License.
+
+==========================================
+Sending Events to Amazon CloudWatch Events
+==========================================
+
+.. meta::
+   :description: Create rules and add targets to them, and send custom events to CloudWatch Events.
+   :keywords: Amazon Cloudwatch, AWS SDK for PHP examples
 
 CloudWatch Events delivers a near real-time stream of system events that describe changes in Amazon Web Services (AWS) resources to any of various targets. Using simple rules, you can match events and route them to one or more target functions or streams.
 
@@ -52,7 +66,7 @@ Add Targets to a Rule
     require 'vendor/autoload.php';
     use Aws\CloudWatchEvents\CloudWatchEventsClient;
     use Aws\Exception\AwsException;
-    
+
     $client = new CloudWatchEventsClient([
         'profile' => 'default',
         'region' => 'us-west-2',
