@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RDS` - API Update for RDS: this update enables copy-on-write, a new Aurora MySQL Compatible Edition feature that allows users to restore their database, and support copy of TDE enabled snapshot cross region.
+
 ## 3.29.2 - 2017-06-09
 
 * `Aws\OpsWorks` - Tagging Support for AWS OpsWorks Stacks
