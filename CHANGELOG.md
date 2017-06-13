@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.29.4 - 2017-06-13
 
 * `Aws\ConfigService` - With this release AWS Config supports the Amazon CloudWatch alarm resource type.
 
