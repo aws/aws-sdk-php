@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.29.5 - 2017-06-14
 
 * `Aws\ApplicationAutoScaling` - Application Auto Scaling now supports automatic scaling of read and write throughput capacity for DynamoDB tables and global secondary indexes.
 * `Aws\CloudDirectory` - Documentation update for Cloud Directory
