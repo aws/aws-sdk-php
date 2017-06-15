@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.29.6 - 2017-06-15
 
 * `Aws\EC2` - Adds API to describe Amazon FPGA Images (AFIs) available to customers, which includes public AFIs, private AFIs that you own, and AFIs owned by other AWS accounts for which you have load permissions.
 * `Aws\ECS` - Added support for cpu, memory, and memory reservation container overrides on the RunTask and StartTask APIs.
