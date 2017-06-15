@@ -41,6 +41,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeProductAsAdminAsync(array $args = [])
  * @method \Aws\Result describeProductView(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeProductViewAsync(array $args = [])
+ * @method \Aws\Result describeProvisionedProduct(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeProvisionedProductAsync(array $args = [])
  * @method \Aws\Result describeProvisioningArtifact(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeProvisioningArtifactAsync(array $args = [])
  * @method \Aws\Result describeProvisioningParameters(array $args = [])
