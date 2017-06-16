@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.29.7 - 2017-06-16
 
 * `Aws\Batch` - AWS Batch is now available in the ap-northeast-1 region.
 * `Aws\XRay` - Add a response time histogram to the services in response of GetServiceGraph API.
