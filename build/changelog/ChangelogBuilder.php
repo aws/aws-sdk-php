@@ -18,6 +18,11 @@ class ChangelogBuilder
     /** @var boolean */
     private $newServiceFlag = false;
 
+    const CHANGELOG_FEATURE = 'feature';
+    const CHANGELOG_API_CHANGE = 'api-change';
+    const CHANGELOG_ENHANCEMENT = 'enhancement';
+    const CHANGELOG_BUGFIX = 'bugfix';
+
     /**
      *  The constructor requires following configure parameters:
      * - base_dir: (String) Path to the base directory where the `.changes` folder is located. Default is empty string.
@@ -60,7 +65,7 @@ class ChangelogBuilder
         closedir($dh);
 
         $this->newServiceFlag = count(array_filter($changelogEntries, function ($change) {
-                return $change->type === 'NEW_SERVICE';
+                return $change->type === self::CHANGELOG_FEATURE;
             })) > 0;
 
         return $changelogEntries;
