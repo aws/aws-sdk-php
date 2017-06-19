@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.29.8 - 2017-06-19
 
 * `Aws\Organizations` - Improvements to Exception Modeling
 
