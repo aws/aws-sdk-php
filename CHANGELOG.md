@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Organizations` - Improvements to Exception Modeling
+
 ## 3.29.7 - 2017-06-16
 
 * `Aws\Batch` - AWS Batch is now available in the ap-northeast-1 region.
