@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkDocs` - This release provides a new API to retrieve the activities performed by WorkDocs users.
+
 ## 3.29.8 - 2017-06-19
 
 * `Aws\Organizations` - Improvements to Exception Modeling
