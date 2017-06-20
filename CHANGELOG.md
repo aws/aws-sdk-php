@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.29.9 - 2017-06-20
 
 * `Aws\WorkDocs` - This release provides a new API to retrieve the activities performed by WorkDocs users.
 
