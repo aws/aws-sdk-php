@@ -13,6 +13,8 @@ class MultipartCopy extends AbstractUploadManager
     private $source;
     /** @var ResultInterface */
     private $sourceMetadata;
+    /** @var array */
+    private $options;
 
     /**
      * Creates a multipart upload for copying an S3 object.
@@ -55,6 +57,7 @@ class MultipartCopy extends AbstractUploadManager
         array $config = []
     ) {
         $this->source = '/' . ltrim($source, '/');
+        $this->options = $config;
         parent::__construct($client, array_change_key_case($config) + [
             'source_metadata' => null
         ]);
@@ -98,6 +101,7 @@ class MultipartCopy extends AbstractUploadManager
                     $this->info['command']['upload'],
                     $this->createPart($partNumber, $parts)
                         + $this->getState()->getId()
+                        + $this->options
                 );
                 $command->getHandlerList()->appendSign($resultHandler, 'mup');
                 yield $command;

@@ -75,7 +75,7 @@ class ObjectCopier implements PromisorInterface
     {
         return \GuzzleHttp\Promise\coroutine(function () {
             $objectStats = (yield $this->client->executeAsync(
-                $this->client->getCommand('HeadObject', $this->source)
+                $this->client->getCommand('HeadObject', $this->source + $this->options)
             ));
 
             if ($objectStats['ContentLength'] > $this->options['mup_threshold']) {
