@@ -99,7 +99,7 @@ trait MultipartUploadingTrait
         $params = isset($config['params']) ? $config['params'] : [];
 
         if (isset($config['acl'])) {
-            $params['ACL'] = $this->getConfig()['acl'];
+            $params['ACL'] = $config['acl'];
         }
 
         // Set the content type
