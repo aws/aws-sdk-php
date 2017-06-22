@@ -127,4 +127,41 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($configProp->getValue($classicMup), $configProp->getValue($putObjectMup));
     }
+
+    public function testS3MultipartUploadParams()
+    {
+        /** @var \Aws\S3\S3Client $client */
+        $client = $this->getTestClient('s3');
+        $uploadOptions = [
+            'bucket'          => 'foo',
+            'key'             => 'bar',
+            'params'          => ['RequestPayer' => 'test'],
+            'before_initiate' => function($command) {
+                $this->assertEquals('test', $command['RequestPayer']);
+            },
+            'before_upload'   => function($command) {
+                $this->assertEquals('test', $command['RequestPayer']);
+            },
+            'before_complete' => function($command) {
+                $this->assertEquals('test', $command['RequestPayer']);
+            }
+        ];
+        $url = 'http://foo.s3.amazonaws.com/bar';
+        $data = str_repeat('.', 12 * self::MB);
+        $source = Psr7\stream_for($data);
+
+        $this->addMockResults($client, [
+            new Result(['UploadId' => 'baz']),
+            new Result(['ETag' => 'A']),
+            new Result(['ETag' => 'B']),
+            new Result(['ETag' => 'C']),
+            new Result(['Location' => $url])
+        ]);
+
+        $uploader = new MultipartUploader($client, $source, $uploadOptions);
+        $result = $uploader->upload();
+
+        $this->assertTrue($uploader->getState()->isCompleted());
+        $this->assertEquals($url, $result['ObjectURL']);
+    }
 }
