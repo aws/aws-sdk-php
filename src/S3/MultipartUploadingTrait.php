@@ -61,9 +61,14 @@ trait MultipartUploadingTrait
 
     protected function getCompleteParams()
     {
-        return ['MultipartUpload' => [
+        $config = $this->getConfig();
+        $params = isset($config['params']) ? $config['params'] : [];
+
+        $params['MultipartUpload'] = [
             'Parts' => $this->getState()->getUploadedParts()
-        ]];
+        ];
+
+        return $params;
     }
 
     protected function determinePartSize()
@@ -90,9 +95,10 @@ trait MultipartUploadingTrait
 
     protected function getInitiateParams()
     {
-        $params = [];
+        $config = $this->getConfig();
+        $params = isset($config['params']) ? $config['params'] : [];
 
-        if (isset($this->getConfig()['acl'])) {
+        if (isset($config['acl'])) {
             $params['ACL'] = $this->getConfig()['acl'];
         }
 

@@ -22,6 +22,7 @@ class ObjectCopier implements PromisorInterface
     private $options;
 
     private static $defaults = [
+        'before_lookup' => null,
         'before_upload' => null,
         'concurrency'   => 5,
         'mup_threshold' => self::DEFAULT_MULTIPART_THRESHOLD,
@@ -45,7 +46,9 @@ class ObjectCopier implements PromisorInterface
      * @param string            $acl            ACL to apply to the copy
      *                                          (default: private).
      * @param array             $options        Options used to configure the
-     *                                          copy process.
+     *                                          copy process. Options passed in
+     *                                          through 'params' are added to
+     *                                          the sub commands.
      *
      * @throws InvalidArgumentException
      */
@@ -74,8 +77,15 @@ class ObjectCopier implements PromisorInterface
     public function promise()
     {
         return \GuzzleHttp\Promise\coroutine(function () {
+            $headObjectCommand = $this->client->getCommand(
+                'HeadObject',
+                $this->options['params'] + $this->source
+            );
+            if (is_callable($this->options['before_lookup'])) {
+                $this->options['before_lookup']($headObjectCommand);
+            }
             $objectStats = (yield $this->client->executeAsync(
-                $this->client->getCommand('HeadObject', $this->source)
+                $headObjectCommand
             ));
 
             if ($objectStats['ContentLength'] > $this->options['mup_threshold']) {

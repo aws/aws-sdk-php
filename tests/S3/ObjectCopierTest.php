@@ -221,6 +221,9 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
         $client = $this->getTestClient('s3');
         $copyOptions = [
             'params'          => ['RequestPayer' => 'test'],
+            'before_lookup'   => function($command) {
+                $this->assertEquals('test', $command['RequestPayer']);
+            },
             'before_upload'   => function($command) {
                 $this->assertEquals('test', $command['RequestPayer']);
             },
@@ -252,6 +255,9 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
         $copyOptions = [
             'mup_threshold'   => MultipartUploader::PART_MIN_SIZE,
             'params'          => ['RequestPayer' => 'test'],
+            'before_lookup'   => function($command) {
+                $this->assertEquals('test', $command['RequestPayer']);
+            },
             'before_initiate' => function($command) {
                 $this->assertEquals('test', $command['RequestPayer']);
             },
