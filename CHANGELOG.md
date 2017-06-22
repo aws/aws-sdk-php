@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodePipeline` - A new API, ListPipelineExecutions, enables you to retrieve summary information about the most recent executions in a pipeline, including pipeline execution ID, status, start time, and last updated time. You can request information for a maximum of 100 executions. Pipeline execution data is available for the most recent 12 months of activity.
+* `Aws\DatabaseMigrationService` - Added tagging for DMS certificates.
+* `Aws\ElasticLoadBalancing` - Add retry error state to InstanceInService waiter for ElasticLoadBalancer
+* `Aws\Lambda` - Lambda is now available in the Canada (Central) region.
+* `Aws\Lightsail` - This release adds a new nextPageToken property to the result of the GetOperationsForResource API. Developers can now get the next set of items in a list by making subsequent calls to GetOperationsForResource API with the token from the previous call. This release also deprecates the nextPageCount property, which previously returned null (use the nextPageToken property instead). This release also deprecates the customImageName property on the CreateInstancesRequest class, which was previously ignored by the API.
+* `Aws\Route53` - This release reintroduces the HealthCheckInUse exception.
+
 ## 3.30.0 - 2017-06-21
 
 * `Aws\DAX` - Amazon DynamoDB Accelerator (DAX) is a fully managed, highly available, in-memory cache for DynamoDB that delivers up to a 10x performance improvement - from milliseconds to microseconds - even at millions of requests per second. DAX does all the heavy lifting required to add in-memory acceleration to your DynamoDB tables, without requiring developers to manage cache invalidation, data population, or cluster management.

@@ -34,6 +34,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getThirdPartyJobDetailsAsync(array $args = [])
  * @method \Aws\Result listActionTypes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listActionTypesAsync(array $args = [])
+ * @method \Aws\Result listPipelineExecutions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listPipelineExecutionsAsync(array $args = [])
  * @method \Aws\Result listPipelines(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPipelinesAsync(array $args = [])
  * @method \Aws\Result pollForJobs(array $args = [])
