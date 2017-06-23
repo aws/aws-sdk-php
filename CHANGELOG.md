@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.30.2 - 2017-06-23
 
 * `Aws\Lambda` - The Lambda Invoke API will now throw new exception InvalidRuntimeException (status code 502) for invokes with deprecated runtimes.
 
