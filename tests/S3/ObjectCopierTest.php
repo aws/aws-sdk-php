@@ -112,6 +112,7 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
 
         return [$smallHeadObject, $putObject];
     }
+
     private function getMultipartMockResults()
     {
         $smallHeadObject = new Result(['ContentLength' => 1024 * 1024 * 6]);
@@ -126,6 +127,7 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
             [$complete]
         );
     }
+
     public function getCopyTestCases()
     {
         return [
@@ -154,6 +156,7 @@ class ObjectCopierTest extends \PHPUnit_Framework_TestCase
             [$complete]
         );
     }
+
     public function getCopyTestCasesWithPathStyle()
     {
         return [
