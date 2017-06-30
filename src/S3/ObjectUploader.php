@@ -56,10 +56,7 @@ class ObjectUploader implements PromisorInterface
         $this->key = $key;
         $this->body = Psr7\stream_for($body);
         $this->acl = $acl;
-        $this->options = array_intersect_key(
-            $options + self::$defaults,
-            self::$defaults
-        );
+        $this->options = $options + self::$defaults;
     }
 
     public function promise()
