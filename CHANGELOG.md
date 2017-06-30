@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.31.0 - 2017-06-30
 
 * `Aws\MarketplaceCommerceAnalytics` - Documentation updates for AWS Marketplace Commerce Analytics.
 * `Aws\S3` - API Update for S3: Adding Object Tagging Header to MultipartUpload Initialization
