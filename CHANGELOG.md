@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MarketplaceCommerceAnalytics` - Documentation updates for AWS Marketplace Commerce Analytics.
+* `Aws\S3` - API Update for S3: Adding Object Tagging Header to MultipartUpload Initialization
+* `Aws\S3` - A new `params` option is available in the `MultipartUploader` and `MultipartCopy` classes for parameters that should be applied to all sub-commands of their upload functionality. This also improves functionality around passing `params` directly to `ObjectUploader` and `ObjectCopier`. A new `before_lookup` callback has been added to `ObjectCopier` for operating on the `HeadObject` command directly; `params` will be passed to HeadObject as well. Since these are changes to existing options, they may alter current functionality.
+
 ## 3.30.4 - 2017-06-29
 
 * `Aws\CloudWatchEvents` - CloudWatch Events now allows different AWS accounts to share events with each other through a new resource called event bus. Event buses accept events from AWS services, other AWS accounts and PutEvents API calls. Currently all AWS accounts have one default event bus. To send events to another account, customers simply write rules to match the events of interest and attach an event bus in the receiving account as the target to the rule. The PutTargets API has been updated to allow adding cross account event buses as targets. In addition, we have released two new APIs - PutPermission and RemovePermission - that enables customers to add/remove permissions to their default event bus.
