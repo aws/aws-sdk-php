@@ -12,6 +12,8 @@ class ObjectUploaderTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait;
 
+    const MB = 1048576;
+
     /**
      * @dataProvider getUploadTestCases
      */
@@ -190,5 +192,80 @@ class ObjectUploaderTest extends \PHPUnit_Framework_TestCase
                 return (bool) $seekable;
             }
         ]);
+    }
+
+    public function testS3ObjectUploaderPutObjectParams()
+    {
+        /** @var \Aws\S3\S3Client $client */
+        $client = $this->getTestClient('s3');
+        $uploadOptions = [
+            'params'          => ['RequestPayer' => 'test'],
+            'before_upload'   => function($command) {
+                $this->assertEquals('test', $command['RequestPayer']);
+            },
+        ];
+        $url = 'https://foo.s3.amazonaws.com/bar';
+        $data = str_repeat('.', 1 * self::MB);
+        $source = Psr7\stream_for($data);
+
+        $this->addMockResults($client, [
+            new Result(['UploadId' => 'baz']),
+            new Result(['ETag' => 'A']),
+            new Result(['ETag' => 'B']),
+            new Result(['ETag' => 'C']),
+            new Result(['Location' => $url])
+        ]);
+
+        $uploader = new ObjectUploader(
+            $client,
+            'foo',
+            'bar',
+            $source,
+            'private',
+            $uploadOptions);
+        $result = $uploader->upload();
+
+        $this->assertEquals($url, $result['ObjectURL']);
+    }
+
+    public function testS3ObjectUploaderMultipartParams()
+    {
+        /** @var \Aws\S3\S3Client $client */
+        $client = $this->getTestClient('s3');
+        $uploadOptions = [
+            'mup_threshold'   => self::MB * 4,
+            'params'          => ['RequestPayer' => 'test'],
+            'before_initiate' => function($command) {
+                $this->assertEquals('test', $command['RequestPayer']);
+            },
+            'before_upload'   => function($command) {
+                $this->assertEquals('test', $command['RequestPayer']);
+            },
+            'before_complete' => function($command) {
+                $this->assertEquals('test', $command['RequestPayer']);
+            }
+        ];
+        $url = 'https://foo.s3.amazonaws.com/bar';
+        $data = str_repeat('.', 12 * self::MB);
+        $source = Psr7\stream_for($data);
+
+        $this->addMockResults($client, [
+            new Result(['UploadId' => 'baz']),
+            new Result(['ETag' => 'A']),
+            new Result(['ETag' => 'B']),
+            new Result(['ETag' => 'C']),
+            new Result(['Location' => $url])
+        ]);
+
+        $uploader = new ObjectUploader(
+            $client,
+            'foo',
+            'bar',
+            $source,
+            'private',
+            $uploadOptions);
+        $result = $uploader->upload();
+
+        $this->assertEquals($url, $result['ObjectURL']);
     }
 }

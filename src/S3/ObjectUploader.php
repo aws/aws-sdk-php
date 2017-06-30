@@ -39,7 +39,9 @@ class ObjectUploader implements PromisorInterface
      * @param string            $acl            ACL to apply to the copy
      *                                          (default: private).
      * @param array             $options        Options used to configure the
-     *                                          copy process.
+     *                                          copy process. Options passed in
+     *                                          through 'params' are added to
+     *                                          the sub command(s).
      */
     public function __construct(
         S3ClientInterface $client,
@@ -54,10 +56,7 @@ class ObjectUploader implements PromisorInterface
         $this->key = $key;
         $this->body = Psr7\stream_for($body);
         $this->acl = $acl;
-        $this->options = array_intersect_key(
-            $options + self::$defaults,
-            self::$defaults
-        );
+        $this->options = $options + self::$defaults;
     }
 
     public function promise()
@@ -66,11 +65,6 @@ class ObjectUploader implements PromisorInterface
         $mup_threshold = $this->options['mup_threshold'];
         if ($this->requiresMultipart($this->body, $mup_threshold)) {
             // Perform a multipart upload.
-            $this->options['before_initiate'] = function ($command) {
-                foreach ($this->options['params'] as $k => $v) {
-                    $command[$k] = $v;
-                }
-            };
             return (new MultipartUploader($this->client, $this->body, [
                     'bucket' => $this->bucket,
                     'key'    => $this->key,

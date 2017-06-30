@@ -35,6 +35,11 @@ class MultipartCopy extends AbstractUploadManager
      * - concurrency: (int, default=int(5)) Maximum number of concurrent
      *   `UploadPart` operations allowed during the multipart upload.
      * - key: (string, required) Key to use for the object being uploaded.
+     * - params: (array) An array of key/value parameters that will be applied
+     *   to each of the sub-commands run by the uploader as a base.
+     *   Auto-calculated options will override these parameters. If you need
+     *   more granularity over parameters to each sub-command, use the before_*
+     *   options detailed above to update the commands directly.
      * - part_size: (int, default=int(5242880)) Part size, in bytes, to use when
      *   doing a multipart upload. This must between 5 MB and 5 GB, inclusive.
      * - state: (Aws\Multipart\UploadState) An object that represents the state
@@ -107,19 +112,27 @@ class MultipartCopy extends AbstractUploadManager
 
     private function createPart($partNumber, $partsCount)
     {
+        $data = [];
+
+        // Apply custom params to UploadPartCopy data
+        $config = $this->getConfig();
+        $params = isset($config['params']) ? $config['params'] : [];
+        foreach ($params as $k => $v) {
+            $data[$k] = $v;
+        }
+
+        $data['CopySource'] = $this->source;
+        $data['PartNumber'] = $partNumber;
+
         $defaultPartSize = $this->determinePartSize();
         $startByte = $defaultPartSize * ($partNumber - 1);
-        $partSize = $partNumber < $partsCount
+        $data['ContentLength'] = $partNumber < $partsCount
             ? $defaultPartSize
             : $this->getSourceSize() - ($defaultPartSize * ($partsCount - 1));
-        $endByte = $startByte + $partSize - 1;
+        $endByte = $startByte + $data['ContentLength'] - 1;
+        $data['CopySourceRange'] = "bytes=$startByte-$endByte";
 
-        return [
-            'ContentLength' => $partSize,
-            'CopySource' => $this->source,
-            'CopySourceRange' => "bytes=$startByte-$endByte",
-            'PartNumber' => $partNumber,
-        ];
+        return $data;
     }
 
     protected function extractETag(ResultInterface $result)
