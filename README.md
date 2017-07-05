@@ -15,15 +15,15 @@ or by downloading a single zip or phar file from our [latest release][latest-rel
 
 ## Resources
 
-* [User Guide][docs-guide] – For both getting started and in-depth SDK usage information
-* [API Docs][docs-api] – For details about operations, parameters, and responses
+* [User Guide][docs-guide] – For both getting started and in-depth **current** SDK usage information
+* [API Docs][docs-api] – For details about operations, parameters, and responses on **current** SDK version
 * [Blog][sdk-blog] – Tips & tricks, articles, and announcements
 * [Sample Project][sdk-sample] - A quick, sample project to help get you started
 * [Forum][sdk-forum] – Ask questions, get help, and give feedback
 * [Issues][sdk-issues] – Report issues, submit pull requests, and get involved
   (see [Apache 2.0 License][sdk-license])
 * [@awsforphp][sdk-twitter] – Follow us on Twitter
-* For Version 2 of the SDK:
+* For **the previous** version 2 of the SDK:
   * [User Guide][docs-guide-v2]
   * [API Docs][docs-api-v2]
 
