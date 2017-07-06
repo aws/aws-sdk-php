@@ -42,6 +42,10 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise removeTagsFromStreamAsync(array $args = [])
  * @method \Aws\Result splitShard(array $args = [])
  * @method \GuzzleHttp\Promise\Promise splitShardAsync(array $args = [])
+ * @method \Aws\Result startStreamEncryption(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startStreamEncryptionAsync(array $args = [])
+ * @method \Aws\Result stopStreamEncryption(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopStreamEncryptionAsync(array $args = [])
  * @method \Aws\Result updateShardCount(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateShardCountAsync(array $args = [])
  */
