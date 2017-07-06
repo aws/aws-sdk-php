@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.31.2 - 2017-07-06
 
 * `Aws\DirectoryService` - You can now improve the resilience and performance of your Microsoft AD directory by deploying additional domain controllers. Added UpdateNumberofDomainControllers API that allows you to update the number of domain controllers you want for your directory, and DescribeDomainControllers API that allows you to describe the detailed information of each domain controller of your directory. Also added the 'DesiredNumberOfDomainControllers' field to the DescribeDirectories API output for Microsoft AD.
 * `Aws\Ecs` - ECS/ECR now available in BJS
