@@ -82,6 +82,7 @@ class SignatureV4 implements SignatureInterface
         $expires,
         array $options = []
     ) {
+        $expiresTimestamp = $this->convertToTimestamp($expires);
         $startTimestamp = isset($options['start_time']) ? $this->convertToTimestamp($options['start_time']) : time();
 
         $parsed = $this->createPresignedRequest($request, $credentials);
@@ -94,7 +95,7 @@ class SignatureV4 implements SignatureInterface
         $parsed['query']['X-Amz-Credential'] = $credential;
         $parsed['query']['X-Amz-Date'] = gmdate('Ymd\THis\Z', $startTimestamp);
         $parsed['query']['X-Amz-SignedHeaders'] = 'host';
-        $parsed['query']['X-Amz-Expires'] = $this->convertExpires($expires, $startTimestamp);
+        $parsed['query']['X-Amz-Expires'] = $this->convertExpires($expiresTimestamp, $startTimestamp);
         $context = $this->createContext($parsed, $payload);
         $stringToSign = $this->createStringToSign($httpDate, $scope, $context['creq']);
         $key = $this->getSigningKey(
@@ -298,9 +299,9 @@ class SignatureV4 implements SignatureInterface
         return $timestamp;
     }
 
-    private function convertExpires($expires, $startTimestamp)
+    private function convertExpires($expiresTimestamp, $startTimestamp)
     {
-        $duration = $this->convertToTimestamp($expires) - $startTimestamp;
+        $duration = $expiresTimestamp - $startTimestamp;
 
         // Ensure that the duration of the signature is not longer than a week
         if ($duration > 604800) {
