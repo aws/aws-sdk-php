@@ -63,7 +63,12 @@ class SSECMiddleware
     {
         // Base64 encode the provided key
         $key = $command[$prefix . 'SSECustomerKey'];
-        $command[$prefix . 'SSECustomerKey'] = base64_encode($key);
+        if(base64_encode(base64_decode($key, true)) === $key) {
+            $command[$prefix . 'SSECustomerKey'] = $key;
+            $key = base64_decode($key, true);
+        } else {
+            $command[$prefix . 'SSECustomerKey'] = base64_encode($key);
+        }
 
         // Base64 the provided MD5 or, generate an MD5 if not provided
         if ($md5 = $command[$prefix . 'SSECustomerKeyMD5']) {
