@@ -95,43 +95,36 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $request = new Request('GET', 'http://foo.com');
         $credentials = new Credentials('foo', 'bar');
         $signature = new SignatureV4('service', 'region');
-        $ref = new \ReflectionMethod($signature, 'convertExpires');
-        $ref->setAccessible(true);
 
-        return array($request, $credentials, $signature, $ref);
+        return array($request, $credentials, $signature);
     }
 
     public function testCreatesPresignedDatesFromDateTime()
     {
         $_SERVER['override_v4_time'] = true;
-        list($request, $credentials, $signature, $ref) = $this->getFixtures();
-        $this->assertEquals(518400,
-            $ref->invoke(
-                $signature,
-                new \DateTime('December 11, 2013 00:00:00 UTC'),
-                $_SERVER['aws_time']
-            )
-        );
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $credentials = new Credentials('foo', 'bar', '123');
+        $url = (string) $signature->presign($request,$credentials,new \DateTime('December 11, 2013 00:00:00 UTC'))->getUri();
+        $this->assertContains('X-Amz-Expires=518400',$url);
+
     }
 
     public function testCreatesPresignedDatesFromUnixTimestamp()
     {
         $_SERVER['override_v4_time'] = true;
-        list($request, $credentials, $signature, $ref) = $this->getFixtures();
-        $this->assertEquals(
-            518400,
-            $ref->invoke($signature, 1386720000, $_SERVER['aws_time'])
-        );
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $credentials = new Credentials('foo', 'bar', '123');
+        $url = (string) $signature->presign($request,$credentials,1386720000)->getUri();
+        $this->assertContains('X-Amz-Expires=518400',$url);
     }
 
     public function testCreatesPresignedDateFromStrtotime()
     {
         $_SERVER['override_v4_time'] = true;
-        list($request, $credentials, $signature, $ref) = $this->getFixtures();
-        $this->assertEquals(
-            518400,
-            $ref->invoke($signature, 'December 11, 2013 00:00:00 UTC', $_SERVER['aws_time'])
-        );
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $credentials = new Credentials('foo', 'bar', '123');
+        $url = (string) $signature->presign($request,$credentials,'December 11, 2013 00:00:00 UTC')->getUri();
+        $this->assertContains('X-Amz-Expires=518400',$url);
     }
 
     public function testAddsSecurityTokenIfPresentInPresigned()
