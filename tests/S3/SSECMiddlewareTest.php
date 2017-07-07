@@ -71,6 +71,19 @@ class SseCpkListenerTest extends \PHPUnit_Framework_TestCase
                     'SSECustomerKeyMD5' => null,
                 ]
             ],
+            [
+                'PutObject',
+                [
+                    'Bucket' => 'a',
+                    'Key' => 'b',
+                    'SSECustomerKey' => 'OUI3RDJDMzRBMzY2QkY4OTBDNzMwNjQxRTZDRUNGNkY=',
+                    'SSECustomerKeyMD5' => 'bar',
+                ],
+                [
+                    'SSECustomerKey' => 'OUI3RDJDMzRBMzY2QkY4OTBDNzMwNjQxRTZDRUNGNkY=',
+                    'SSECustomerKeyMD5' => base64_encode('bar'),
+                ]
+            ],
         ];
     }
 
