@@ -128,11 +128,32 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($configProp->getValue($classicMup), $configProp->getValue($putObjectMup));
     }
 
-    public function testS3MultipartUploadParams()
+    public function testMultipartSuccessStreams()
+    {
+        $size = 12 * self::MB;
+        $data = str_repeat('.', $size);
+        $filename = sys_get_temp_dir() . '/' . self::FILENAME;
+        file_put_contents($filename, $data);
+
+        return [
+            [ // Seekable stream, regular config
+                Psr7\stream_for(fopen($filename, 'r')),
+                $size,
+            ],
+            [ // Non-seekable stream
+                Psr7\stream_for($data),
+                $size,
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider testMultipartSuccessStreams
+     */
+    public function testS3MultipartUploadParams($stream, $size)
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
-        $size = 12 * self::MB;
         $uploadOptions = [
             'bucket'          => 'foo',
             'key'             => 'bar',
@@ -152,8 +173,6 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
             }
         ];
         $url = 'http://foo.s3.amazonaws.com/bar';
-        $data = str_repeat('.', $size);
-        $source = Psr7\stream_for($data);
 
         $this->addMockResults($client, [
             new Result(['UploadId' => 'baz']),
@@ -163,7 +182,7 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
             new Result(['Location' => $url])
         ]);
 
-        $uploader = new MultipartUploader($client, $source, $uploadOptions);
+        $uploader = new MultipartUploader($client, $stream, $uploadOptions);
         $result = $uploader->upload();
 
         $this->assertTrue($uploader->getState()->isCompleted());
