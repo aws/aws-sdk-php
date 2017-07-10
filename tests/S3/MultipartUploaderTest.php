@@ -132,14 +132,19 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
+        $size = 12 * self::MB;
         $uploadOptions = [
             'bucket'          => 'foo',
             'key'             => 'bar',
-            'params'          => ['RequestPayer' => 'test'],
+            'params'          => [
+                'RequestPayer'  => 'test',
+                'ContentLength' => $size
+            ],
             'before_initiate' => function($command) {
                 $this->assertEquals('test', $command['RequestPayer']);
             },
-            'before_upload'   => function($command) {
+            'before_upload'   => function($command) use ($size) {
+                $this->assertLessThan($size, $command['ContentLength']);
                 $this->assertEquals('test', $command['RequestPayer']);
             },
             'before_complete' => function($command) {
@@ -147,7 +152,7 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
             }
         ];
         $url = 'http://foo.s3.amazonaws.com/bar';
-        $data = str_repeat('.', 12 * self::MB);
+        $data = str_repeat('.', $size);
         $source = Psr7\stream_for($data);
 
         $this->addMockResults($client, [
