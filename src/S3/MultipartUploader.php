@@ -114,14 +114,16 @@ class MultipartUploader extends AbstractUploader
             Psr7\copy_to_stream($source, $body);
         }
 
+        $contentLength = $body->getSize();
+
         // Do not create a part if the body size is zero.
-        if ($body->getSize() === 0) {
+        if ($contentLength === 0) {
             return false;
         }
 
         $body->seek(0);
         $data['Body'] = $body;
-        $data['ContentLength'] = $body->getSize();
+        $data['ContentLength'] = $contentLength;
 
         return $data;
     }
