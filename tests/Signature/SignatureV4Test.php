@@ -104,7 +104,11 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
-        $url = (string) $signature->presign($request,$credentials,new \DateTime('December 11, 2013 00:00:00 UTC'))->getUri();
+        $url = (string) $signature->presign(
+            $request,
+            $credentials,
+            new \DateTime('December 11, 2013 00:00:00 UTC')
+        )->getUri();
         $this->assertContains('X-Amz-Expires=518400',$url);
 
     }
@@ -123,7 +127,11 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
-        $url = (string) $signature->presign($request,$credentials,'December 11, 2013 00:00:00 UTC')->getUri();
+        $url = (string) $signature->presign(
+            $request,
+            $credentials,
+            'December 11, 2013 00:00:00 UTC'
+        )->getUri();
         $this->assertContains('X-Amz-Expires=518400',$url);
     }
 
