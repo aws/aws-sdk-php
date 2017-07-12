@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Auto Scaling now supports a new type of scaling policy called target tracking scaling policies that you can use to set up dynamic scaling for your application.
+* `Aws\S3` - Fixes an issue introduced in 3.31.0 that was not setting the ContentLength for all MultipartUploader::createPart streams, therefore potentially using an incorrect, $options['params'] value.
+* `Aws\SWF` - Added support for attaching control data to Lambda tasks. Control data lets you attach arbitrary strings to your decisions and history events.
+
 ## 3.31.2 - 2017-07-06
 
 * `Aws\DirectoryService` - You can now improve the resilience and performance of your Microsoft AD directory by deploying additional domain controllers. Added UpdateNumberofDomainControllers API that allows you to update the number of domain controllers you want for your directory, and DescribeDomainControllers API that allows you to describe the detailed information of each domain controller of your directory. Also added the 'DesiredNumberOfDomainControllers' field to the DescribeDirectories API output for Microsoft AD.
