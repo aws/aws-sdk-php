@@ -112,16 +112,18 @@ class MultipartUploader extends AbstractUploader
             $source = $this->decorateWithHashes($source, $data);
             $body = Psr7\stream_for();
             Psr7\copy_to_stream($source, $body);
-            $data['ContentLength'] = $body->getSize();
         }
 
+        $contentLength = $body->getSize();
+
         // Do not create a part if the body size is zero.
-        if ($body->getSize() === 0) {
+        if ($contentLength === 0) {
             return false;
         }
 
         $body->seek(0);
         $data['Body'] = $body;
+        $data['ContentLength'] = $contentLength;
 
         return $data;
     }

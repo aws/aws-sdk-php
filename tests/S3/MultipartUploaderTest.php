@@ -128,18 +128,44 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($configProp->getValue($classicMup), $configProp->getValue($putObjectMup));
     }
 
-    public function testS3MultipartUploadParams()
+    public function testMultipartSuccessStreams()
+    {
+        $size = 12 * self::MB;
+        $data = str_repeat('.', $size);
+        $filename = sys_get_temp_dir() . '/' . self::FILENAME;
+        file_put_contents($filename, $data);
+
+        return [
+            [ // Seekable stream, regular config
+                Psr7\stream_for(fopen($filename, 'r')),
+                $size,
+            ],
+            [ // Non-seekable stream
+                Psr7\stream_for($data),
+                $size,
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider testMultipartSuccessStreams
+     */
+    public function testS3MultipartUploadParams($stream, $size)
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
         $uploadOptions = [
             'bucket'          => 'foo',
             'key'             => 'bar',
-            'params'          => ['RequestPayer' => 'test'],
+            'params'          => [
+                'RequestPayer'  => 'test',
+                'ContentLength' => $size
+            ],
             'before_initiate' => function($command) {
                 $this->assertEquals('test', $command['RequestPayer']);
             },
-            'before_upload'   => function($command) {
+            'before_upload'   => function($command) use ($size) {
+                $this->assertLessThan($size, $command['ContentLength']);
                 $this->assertEquals('test', $command['RequestPayer']);
             },
             'before_complete' => function($command) {
@@ -147,8 +173,6 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
             }
         ];
         $url = 'http://foo.s3.amazonaws.com/bar';
-        $data = str_repeat('.', 12 * self::MB);
-        $source = Psr7\stream_for($data);
 
         $this->addMockResults($client, [
             new Result(['UploadId' => 'baz']),
@@ -158,7 +182,7 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
             new Result(['Location' => $url])
         ]);
 
-        $uploader = new MultipartUploader($client, $source, $uploadOptions);
+        $uploader = new MultipartUploader($client, $stream, $uploadOptions);
         $result = $uploader->upload();
 
         $this->assertTrue($uploader->getState()->isCompleted());
