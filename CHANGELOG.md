@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.31.4 - 2017-07-13
 
 * `Aws\APIGateway` - Adds support for management of gateway responses.
 * `Aws\EC2` - X-ENI (or Cross-Account ENI) is a new feature that allows the attachment or association of Elastic Network Interfaces (ENI) between VPCs in different AWS accounts located in the same availability zone. With this new capability, service providers and partners can deliver managed solutions in a variety of new architectural patterns where the provider and consumer of the service are in different AWS accounts.
