@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Adds support for management of gateway responses.
+* `Aws\EC2` - X-ENI (or Cross-Account ENI) is a new feature that allows the attachment or association of Elastic Network Interfaces (ENI) between VPCs in different AWS accounts located in the same availability zone. With this new capability, service providers and partners can deliver managed solutions in a variety of new architectural patterns where the provider and consumer of the service are in different AWS accounts.
+* `Aws\LexModelBuildingService` - Fixed broken links to reference and conceptual content.
+
 ## 3.31.3 - 2017-07-12
 
 * `Aws\AutoScaling` - Auto Scaling now supports a new type of scaling policy called target tracking scaling policies that you can use to set up dynamic scaling for your application.
