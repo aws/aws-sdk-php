@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationDiscoveryService` - Adding feature to the Export API for Discovery Service to allow filters for the export task to allow export based on per agent id.
+* `Aws\EC2` - New EC2 GPU Graphics instance
+* `Aws\MarketplaceCommerceAnalytics` - Update to Documentation Model For New Report Cadence / Reformat of Docs
+
 ## 3.31.4 - 2017-07-13
 
 * `Aws\APIGateway` - Adds support for management of gateway responses.
