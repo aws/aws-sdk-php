@@ -9,9 +9,11 @@ use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;
 use Aws\S3\S3MultiRegionClient;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
 
 class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
@@ -41,6 +43,20 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($triedDefaultRegion);
     }
 
+    private function getAuthHeaderMalformedXml()
+    {
+        return <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+    <Code>AuthorizationHeaderMalformed</Code>
+    <Message>The authorization header is malformed; the region 'us-east-1' is wrong; expecting 'us-west-2'</Message>
+    <Region>us-west-2</Region>
+    <RequestId>656c76696e6727732072657175657374</RequestId>
+    <HostId>Uuag1LuByRx9e6j5Onimru9pO4ZVKnJ2Qz7/C1NPcfTWAtRPfTaOFg==</HostId>
+</Error>
+EOXML;
+    }
+
     public function testCreatesPresignedRequestsForCorrectRegion()
     {
         $client = new S3MultiRegionClient([
@@ -49,7 +65,12 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 'foo.s3.amazonaws.com') {
-                    return Promise\promise_for(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
+                    return new RejectedPromise([
+                        'exception' => $this->getMockBuilder(RequestException::class)
+                            ->disableOriginalConstructor()
+                            ->getMock(),
+                        'response' => new Response(400, [], $this->getAuthHeaderMalformedXml()),
+                    ]);
                 }
 
                 return Promise\promise_for(new Response);
@@ -96,7 +117,12 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 'foo.s3.amazonaws.com') {
-                    return Promise\promise_for(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
+                    return new RejectedPromise([
+                        'exception' => $this->getMockBuilder(RequestException::class)
+                            ->disableOriginalConstructor()
+                            ->getMock(),
+                        'response' => new Response(400, [], $this->getAuthHeaderMalformedXml()),
+                    ]);
                 }
 
                 return Promise\promise_for(new Response);
@@ -135,9 +161,12 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 'foo.s3.amazonaws.com') {
-                    return Promise\promise_for(new Response(301, [
-                        'X-Amz-Bucket-Region' => 'us-west-2',
-                    ]));
+                    return new RejectedPromise([
+                        'exception' => $this->getMockBuilder(RequestException::class)
+                            ->disableOriginalConstructor()
+                            ->getMock(),
+                        'response' => new Response(400, [], $this->getAuthHeaderMalformedXml()),
+                    ]);
                 }
 
                 return Promise\promise_for(new Response(200, [], 'object!'));
@@ -232,15 +261,16 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
-                if ($request->getMethod() === 'HEAD' && $request->getUri()->getPath() === '/') {
-                    return Promise\promise_for(new Response(301, [
-                        'X-Amz-Bucket-Region' => 'us-west-2',
-                    ]));
-                } elseif ($request->getUri()->getHost() === 'foo.s3-us-west-2.amazonaws.com') {
+                if ($request->getUri()->getHost() === 'foo.s3-us-west-2.amazonaws.com') {
                     return Promise\promise_for(new Response(200, [], 'object!'));
                 }
 
-                return Promise\promise_for(new Response(301));
+                return new RejectedPromise([
+                    'exception' => $this->getMockBuilder(RequestException::class)
+                        ->disableOriginalConstructor()
+                        ->getMock(),
+                    'response' => new Response(400, [], $this->getAuthHeaderMalformedXml()),
+                ]);
             },
         ]);
 
@@ -259,15 +289,13 @@ class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
-                if ($request->getMethod() === 'HEAD' && $request->getUri()->getPath() === '/foo') {
-                    return Promise\promise_for(new Response(301, [
-                        'X-Amz-Bucket-Region' => 'us-west-2',
-                    ]));
-                } elseif ($request->getUri()->getHost() === 's3-us-west-2.amazonaws.com') {
+                if ($request->getUri()->getHost() === 's3-us-west-2.amazonaws.com') {
                     return Promise\promise_for(new Response(200, [], 'object!'));
                 }
 
-                return Promise\promise_for(new Response(301));
+                return Promise\promise_for(new Response(301, [
+                    'X-Amz-Bucket-Region' => 'us-west-2',
+                ]));
             },
             'use_path_style_endpoint' => true
         ]);
