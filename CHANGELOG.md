@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.31.5 - 2017-07-14
 
 * `Aws\ApplicationDiscoveryService` - Adding feature to the Export API for Discovery Service to allow filters for the export task to allow export based on per agent id.
 * `Aws\EC2` - New EC2 GPU Graphics instance
