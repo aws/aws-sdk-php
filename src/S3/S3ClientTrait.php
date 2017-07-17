@@ -229,6 +229,7 @@ trait S3ClientTrait
                     if (!empty($region)) {
                         return $region;
                     }
+                    throw $e;
                 }
 
                 return $response->getHeaderLine('x-amz-bucket-region');
@@ -243,9 +244,9 @@ trait S3ClientTrait
                 return (string)$element->Region;
             }
         } catch (\Exception $e) {
-            return null;
+            return false;
         }
-        return null;
+        return false;
     }
 
     /**
