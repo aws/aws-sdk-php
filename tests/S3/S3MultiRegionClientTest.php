@@ -308,6 +308,26 @@ EOXML;
         $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:s3:foo:location'));
     }
 
+    public function testCachesBucketLocationWithPathStyleViaDetermine()
+    {
+        $client = new S3MultiRegionClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'http_handler' => function (RequestInterface $request) {
+                if ($request->getUri()->getHost() === 's3.amazonaws.com') {
+                    return Promise\promise_for(new Response(301));
+                }
+
+                return Promise\promise_for(new Response(200, [], 'object!'));
+            },
+            'use_path_style_endpoint' => true
+        ]);
+
+        $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
+        $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:s3:foo:location'));
+    }
+
     public function testReadsBucketLocationFromCache()
     {
         $cache = $this->getMockBuilder(CacheInterface::class)->getMock();

@@ -229,9 +229,9 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
                             $region = $result['@metadata']['headers']['x-amz-bucket-region'];
                             $this->cache->set($cacheKey, $region);
                         } else {
-                            $region = $this->getDetermineBucketRegionGenerator(
+                            $region = (yield $this->determineBucketRegionAsync(
                                 $command['Bucket']
-                            );
+                            ));
                         }
 
                         $command['@region'] = $region;
@@ -284,11 +284,6 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
         );
 
         return $regionalClient->getObjectUrl($bucket, $key);
-    }
-
-    public function getDetermineBucketRegionGenerator($bucketName)
-    {
-        yield $this->determineBucketRegionAsync($bucketName);
     }
 
     public function determineBucketRegionAsync($bucketName)
