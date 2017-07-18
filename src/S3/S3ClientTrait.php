@@ -244,7 +244,7 @@ trait S3ClientTrait
                 return (string)$element->Region;
             }
         } catch (\Exception $e) {
-            return false;
+            // Fallthrough on exceptions from parsing
         }
         return false;
     }
