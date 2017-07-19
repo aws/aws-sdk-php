@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Budgets` - Update budget Management API's to list/create/update RI_UTILIZATION type budget. Update budget Management API's to support DAILY timeUnit for RI_UTILIZATION type budget.
+* `Aws\S3` - Properly handle reading mismatched regions from S3's AuthorizationHeaderMalformed exception for S3MultiRegionClient.
+
 ## 3.31.6 - 2017-07-17
 
 * `Aws\CognitoIdentityProvider` - Allows developers to configure user pools for email/phone based signup and sign-in.
