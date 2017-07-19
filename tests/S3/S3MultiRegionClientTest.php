@@ -345,6 +345,33 @@ EOXML;
         $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
     }
 
+    public function testCachesBucketLocationAfterLookupWithPathStyle()
+    {
+        $redirected = false;
+        $client = new S3MultiRegionClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'http_handler' => function (RequestInterface $request) use (&$redirected) {
+                if ($request->getUri()->getHost() === 's3.amazonaws.com') {
+                    if (!$redirected) {
+                        $redirected = true;
+                        return Promise\promise_for(new Response(301));
+                    }
+                    return Promise\promise_for(new Response(301, [
+                        'X-Amz-Bucket-Region' => 'us-west-2',
+                    ]));
+                }
+
+                return Promise\promise_for(new Response(200, [], 'object!'));
+            },
+            'use_path_style_endpoint' => true
+        ]);
+
+        $client->getObject(['Bucket' => 'foo', 'Key' => 'bar']);
+        $this->assertSame('us-west-2', $this->readAttribute($client, 'cache')->get('aws:s3:foo:location'));
+    }
+
     public function testCachesBucketLocationWithPathStyle()
     {
         $client = new S3MultiRegionClient([
