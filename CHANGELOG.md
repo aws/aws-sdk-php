@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.31.7 - 2017-07-19
 
 * `Aws\Budgets` - Update budget Management API's to list/create/update RI_UTILIZATION type budget. Update budget Management API's to support DAILY timeUnit for RI_UTILIZATION type budget.
 * `Aws\S3` - Properly handle reading mismatched regions from S3's AuthorizationHeaderMalformed exception for S3MultiRegionClient.
