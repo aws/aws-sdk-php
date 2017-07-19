@@ -114,6 +114,33 @@ EOXML;
 
     /**
      * @expectedException \Aws\Exception\AwsException
+     * @expectedExceptionMessageRegExp /AWS HTTP error/
+     */
+    public function testRethrowsOnNoResponseException()
+    {
+        $client = new S3MultiRegionClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'http_handler' => function (RequestInterface $request) {
+                if ($request->getUri()->getHost() === 'foo.s3.amazonaws.com') {
+                    return new RejectedPromise([
+                        'exception' => $this->getMockBuilder(RequestException::class)
+                            ->disableOriginalConstructor()
+                            ->getMock(),
+                    ]);
+                }
+
+                return Promise\promise_for(new Response);
+            },
+        ]);
+
+        $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
+        $client->createPresignedRequest($command, 1342138769)->getUri();
+    }
+
+    /**
+     * @expectedException \Aws\Exception\AwsException
      * @expectedExceptionMessageRegExp /The authorization header is malformed/
      */
     public function testRethrowsOnAuthHeaderMalformedWithoutRegion()
@@ -138,6 +165,38 @@ EOXML;
 
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $client->createPresignedRequest($command, 1342138769)->getUri();
+    }
+
+    public function testRedirectsOnNonRedirectExceptionWithHeader()
+    {
+        $client = new S3MultiRegionClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar'],
+            'http_handler' => function (RequestInterface $request) {
+                if ($request->getUri()->getHost() === 'foo.s3.amazonaws.com') {
+                    return new RejectedPromise([
+                        'exception' => $this->getMockBuilder(RequestException::class)
+                            ->disableOriginalConstructor()
+                            ->getMock(),
+                        'response' => new Response(
+                            400,
+                            ['X-Amz-Bucket-Region' => 'us-west-2'],
+                            $this->getSocketTimeoutResponse()
+                        )
+                    ]);
+                }
+
+                return Promise\promise_for(new Response);
+            }
+        ]);
+
+        $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
+        $url = (string)$client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringStartsWith('https://foo.s3-us-west-2.amazonaws.com/bar?', $url);
+        $this->assertContains('X-Amz-Expires=', $url);
+        $this->assertContains('X-Amz-Credential=', $url);
+        $this->assertContains('X-Amz-Signature=', $url);
     }
 
     public function testCreatesPresignedRequestsForCorrectRegionWithPathStyle()
