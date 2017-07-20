@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.31.8 - 2017-07-20
 
 * `Aws\EMR` - Amazon EMR now includes the ability to use a custom Amazon Linux AMI and adjustable root volume size when launching a cluster.
 
