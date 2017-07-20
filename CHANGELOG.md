@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EMR` - Amazon EMR now includes the ability to use a custom Amazon Linux AMI and adjustable root volume size when launching a cluster.
+
 ## 3.31.7 - 2017-07-19
 
 * `Aws\Budgets` - Update budget Management API's to list/create/update RI_UTILIZATION type budget. Update budget Management API's to support DAILY timeUnit for RI_UTILIZATION type budget.
