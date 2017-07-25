@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.31.10 - 2017-07-25
 
 * `Aws\CloudDirectory` - Cloud Directory adds support for additional batch operations.
 * `Aws\CloudFormation` - AWS CloudFormation StackSets enables you to manage stacks across multiple accounts and regions.
