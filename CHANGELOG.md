@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.32.0 - 2017-07-26
 
 * `Aws\` - Support for changes regarding PHP 7.2 releases.
 * `Aws\CloudWatch` - This release adds high resolution features to CloudWatch, with support for Custom Metrics down to 1 second and Alarms down to 10 seconds.
