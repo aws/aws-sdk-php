@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Support for changes regarding PHP 7.2 releases.
+* `Aws\CloudWatch` - This release adds high resolution features to CloudWatch, with support for Custom Metrics down to 1 second and Alarms down to 10 seconds.
+* `Aws\DynamoDB` - Corrected a typo.
+* `Aws\EC2` - Amazon EC2 Elastic GPUs allow you to easily attach low-cost graphics acceleration to current generation EC2 instances. With Amazon EC2 Elastic GPUs, you can configure the right amount of graphics acceleration to your particular workload without being constrained by fixed hardware configurations and limited GPU selection.
+
 ## 3.31.10 - 2017-07-25
 
 * `Aws\CloudDirectory` - Cloud Directory adds support for additional batch operations.
