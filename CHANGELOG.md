@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.32.1 - 2017-07-27
 
 * `Aws\EC2` - The CreateDefaultVPC API enables you to create a new default VPC . You no longer need to contact AWS support, if your default VPC has been deleted.
 * `Aws\KinesisAnalytics` - Added additional exception types and clarified documentation.
