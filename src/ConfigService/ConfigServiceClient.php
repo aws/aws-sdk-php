@@ -40,6 +40,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getComplianceSummaryByConfigRuleAsync(array $args = [])
  * @method \Aws\Result getComplianceSummaryByResourceType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getComplianceSummaryByResourceTypeAsync(array $args = [])
+ * @method \Aws\Result getDiscoveredResourceCounts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDiscoveredResourceCountsAsync(array $args = [])
  * @method \Aws\Result getResourceConfigHistory(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getResourceConfigHistoryAsync(array $args = [])
  * @method \Aws\Result listDiscoveredResources(array $args = [])
