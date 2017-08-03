@@ -283,6 +283,15 @@
       "input":{"shape":"CreateCustomerGatewayRequest"},
       "output":{"shape":"CreateCustomerGatewayResult"}
     },
+    "CreateDefaultVpc":{
+      "name":"CreateDefaultVpc",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDefaultVpcRequest"},
+      "output":{"shape":"CreateDefaultVpcResult"}
+    },
     "CreateDhcpOptions":{
       "name":"CreateDhcpOptions",
       "http":{
@@ -389,6 +398,15 @@
       },
       "input":{"shape":"CreateNetworkInterfaceRequest"},
       "output":{"shape":"CreateNetworkInterfaceResult"}
+    },
+    "CreateNetworkInterfacePermission":{
+      "name":"CreateNetworkInterfacePermission",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateNetworkInterfacePermissionRequest"},
+      "output":{"shape":"CreateNetworkInterfacePermissionResult"}
     },
     "CreatePlacementGroup":{
       "name":"CreatePlacementGroup",
@@ -614,6 +632,15 @@
       },
       "input":{"shape":"DeleteNetworkInterfaceRequest"}
     },
+    "DeleteNetworkInterfacePermission":{
+      "name":"DeleteNetworkInterfacePermission",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteNetworkInterfacePermissionRequest"},
+      "output":{"shape":"DeleteNetworkInterfacePermissionResult"}
+    },
     "DeletePlacementGroup":{
       "name":"DeletePlacementGroup",
       "http":{
@@ -825,6 +852,15 @@
       "input":{"shape":"DescribeEgressOnlyInternetGatewaysRequest"},
       "output":{"shape":"DescribeEgressOnlyInternetGatewaysResult"}
     },
+    "DescribeElasticGpus":{
+      "name":"DescribeElasticGpus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeElasticGpusRequest"},
+      "output":{"shape":"DescribeElasticGpusResult"}
+    },
     "DescribeExportTasks":{
       "name":"DescribeExportTasks",
       "http":{
@@ -1022,6 +1058,15 @@
       },
       "input":{"shape":"DescribeNetworkInterfaceAttributeRequest"},
       "output":{"shape":"DescribeNetworkInterfaceAttributeResult"}
+    },
+    "DescribeNetworkInterfacePermissions":{
+      "name":"DescribeNetworkInterfacePermissions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeNetworkInterfacePermissionsRequest"},
+      "output":{"shape":"DescribeNetworkInterfacePermissionsResult"}
     },
     "DescribeNetworkInterfaces":{
       "name":"DescribeNetworkInterfaces",
@@ -3479,6 +3524,21 @@
         }
       }
     },
+    "CreateDefaultVpcRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateDefaultVpcResult":{
+      "type":"structure",
+      "members":{
+        "Vpc":{
+          "shape":"Vpc",
+          "locationName":"vpc"
+        }
+      }
+    },
     "CreateDhcpOptionsRequest":{
       "type":"structure",
       "required":["DhcpConfigurations"],
@@ -3786,6 +3846,29 @@
         "NetworkAcl":{
           "shape":"NetworkAcl",
           "locationName":"networkAcl"
+        }
+      }
+    },
+    "CreateNetworkInterfacePermissionRequest":{
+      "type":"structure",
+      "required":[
+        "NetworkInterfaceId",
+        "Permission"
+      ],
+      "members":{
+        "NetworkInterfaceId":{"shape":"String"},
+        "AwsAccountId":{"shape":"String"},
+        "AwsService":{"shape":"String"},
+        "Permission":{"shape":"InterfacePermissionType"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateNetworkInterfacePermissionResult":{
+      "type":"structure",
+      "members":{
+        "InterfacePermission":{
+          "shape":"NetworkInterfacePermission",
+          "locationName":"interfacePermission"
         }
       }
     },
@@ -4485,6 +4568,24 @@
         }
       }
     },
+    "DeleteNetworkInterfacePermissionRequest":{
+      "type":"structure",
+      "required":["NetworkInterfacePermissionId"],
+      "members":{
+        "NetworkInterfacePermissionId":{"shape":"String"},
+        "Force":{"shape":"Boolean"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteNetworkInterfacePermissionResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        }
+      }
+    },
     "DeleteNetworkInterfaceRequest":{
       "type":"structure",
       "required":["NetworkInterfaceId"],
@@ -4959,6 +5060,39 @@
         "EgressOnlyInternetGateways":{
           "shape":"EgressOnlyInternetGatewayList",
           "locationName":"egressOnlyInternetGatewaySet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeElasticGpusRequest":{
+      "type":"structure",
+      "members":{
+        "ElasticGpuIds":{
+          "shape":"ElasticGpuIdSet",
+          "locationName":"ElasticGpuId"
+        },
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"Integer"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "DescribeElasticGpusResult":{
+      "type":"structure",
+      "members":{
+        "ElasticGpuSet":{
+          "shape":"ElasticGpuSet",
+          "locationName":"elasticGpuSet"
+        },
+        "MaxResults":{
+          "shape":"Integer",
+          "locationName":"maxResults"
         },
         "NextToken":{
           "shape":"String",
@@ -5565,6 +5699,34 @@
         "SourceDestCheck":{
           "shape":"AttributeBooleanValue",
           "locationName":"sourceDestCheck"
+        }
+      }
+    },
+    "DescribeNetworkInterfacePermissionsRequest":{
+      "type":"structure",
+      "members":{
+        "NetworkInterfacePermissionIds":{
+          "shape":"NetworkInterfacePermissionIdList",
+          "locationName":"NetworkInterfacePermissionId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"Integer"}
+      }
+    },
+    "DescribeNetworkInterfacePermissionsResult":{
+      "type":"structure",
+      "members":{
+        "NetworkInterfacePermissions":{
+          "shape":"NetworkInterfacePermissionList",
+          "locationName":"networkInterfacePermissions"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -7192,6 +7354,108 @@
       "member":{
         "shape":"EgressOnlyInternetGateway",
         "locationName":"item"
+      }
+    },
+    "ElasticGpuAssociation":{
+      "type":"structure",
+      "members":{
+        "ElasticGpuId":{
+          "shape":"String",
+          "locationName":"elasticGpuId"
+        },
+        "ElasticGpuAssociationId":{
+          "shape":"String",
+          "locationName":"elasticGpuAssociationId"
+        },
+        "ElasticGpuAssociationState":{
+          "shape":"String",
+          "locationName":"elasticGpuAssociationState"
+        },
+        "ElasticGpuAssociationTime":{
+          "shape":"String",
+          "locationName":"elasticGpuAssociationTime"
+        }
+      }
+    },
+    "ElasticGpuAssociationList":{
+      "type":"list",
+      "member":{
+        "shape":"ElasticGpuAssociation",
+        "locationName":"item"
+      }
+    },
+    "ElasticGpuHealth":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"ElasticGpuStatus",
+          "locationName":"status"
+        }
+      }
+    },
+    "ElasticGpuIdSet":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"item"
+      }
+    },
+    "ElasticGpuSet":{
+      "type":"list",
+      "member":{"shape":"ElasticGpus"}
+    },
+    "ElasticGpuSpecification":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"String"}
+      }
+    },
+    "ElasticGpuSpecifications":{
+      "type":"list",
+      "member":{
+        "shape":"ElasticGpuSpecification",
+        "locationName":"item"
+      }
+    },
+    "ElasticGpuState":{
+      "type":"string",
+      "enum":["ATTACHED"]
+    },
+    "ElasticGpuStatus":{
+      "type":"string",
+      "enum":[
+        "OK",
+        "IMPAIRED"
+      ]
+    },
+    "ElasticGpus":{
+      "type":"structure",
+      "members":{
+        "ElasticGpuId":{
+          "shape":"String",
+          "locationName":"elasticGpuId"
+        },
+        "AvailabilityZone":{
+          "shape":"String",
+          "locationName":"availabilityZone"
+        },
+        "ElasticGpuType":{
+          "shape":"String",
+          "locationName":"elasticGpuType"
+        },
+        "ElasticGpuHealth":{
+          "shape":"ElasticGpuHealth",
+          "locationName":"elasticGpuHealth"
+        },
+        "ElasticGpuState":{
+          "shape":"ElasticGpuState",
+          "locationName":"elasticGpuState"
+        },
+        "InstanceId":{
+          "shape":"String",
+          "locationName":"instanceId"
+        }
       }
     },
     "EnableVgwRoutePropagationRequest":{
@@ -8890,6 +9154,10 @@
           "shape":"InstanceLifecycleType",
           "locationName":"instanceLifecycle"
         },
+        "ElasticGpuAssociations":{
+          "shape":"ElasticGpuAssociationList",
+          "locationName":"elasticGpuAssociationSet"
+        },
         "NetworkInterfaces":{
           "shape":"InstanceNetworkInterfaceList",
           "locationName":"networkInterfaceSet"
@@ -9608,6 +9876,9 @@
         "cc2.8xlarge",
         "g2.2xlarge",
         "g2.8xlarge",
+        "g3.4xlarge",
+        "g3.8xlarge",
+        "g3.16xlarge",
         "cg1.4xlarge",
         "p2.xlarge",
         "p2.8xlarge",
@@ -9625,6 +9896,13 @@
       "member":{"shape":"InstanceType"}
     },
     "Integer":{"type":"integer"},
+    "InterfacePermissionType":{
+      "type":"string",
+      "enum":[
+        "INSTANCE-ATTACH",
+        "EIP-ASSOCIATE"
+      ]
+    },
     "InternetGateway":{
       "type":"structure",
       "members":{
@@ -10827,6 +11105,68 @@
         "shape":"NetworkInterface",
         "locationName":"item"
       }
+    },
+    "NetworkInterfacePermission":{
+      "type":"structure",
+      "members":{
+        "NetworkInterfacePermissionId":{
+          "shape":"String",
+          "locationName":"networkInterfacePermissionId"
+        },
+        "NetworkInterfaceId":{
+          "shape":"String",
+          "locationName":"networkInterfaceId"
+        },
+        "AwsAccountId":{
+          "shape":"String",
+          "locationName":"awsAccountId"
+        },
+        "AwsService":{
+          "shape":"String",
+          "locationName":"awsService"
+        },
+        "Permission":{
+          "shape":"InterfacePermissionType",
+          "locationName":"permission"
+        },
+        "PermissionState":{
+          "shape":"NetworkInterfacePermissionState",
+          "locationName":"permissionState"
+        }
+      }
+    },
+    "NetworkInterfacePermissionIdList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "NetworkInterfacePermissionList":{
+      "type":"list",
+      "member":{
+        "shape":"NetworkInterfacePermission",
+        "locationName":"item"
+      }
+    },
+    "NetworkInterfacePermissionState":{
+      "type":"structure",
+      "members":{
+        "State":{
+          "shape":"NetworkInterfacePermissionStateCode",
+          "locationName":"state"
+        },
+        "StatusMessage":{
+          "shape":"String",
+          "locationName":"statusMessage"
+        }
+      }
+    },
+    "NetworkInterfacePermissionStateCode":{
+      "type":"string",
+      "enum":[
+        "pending",
+        "granted",
+        "revoking",
+        "revoked"
+      ]
     },
     "NetworkInterfacePrivateIpAddress":{
       "type":"structure",
@@ -12957,6 +13297,7 @@
           "shape":"String",
           "locationName":"privateIpAddress"
         },
+        "ElasticGpuSpecification":{"shape":"ElasticGpuSpecifications"},
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
@@ -13726,6 +14067,10 @@
         "WeightedCapacity":{
           "shape":"Double",
           "locationName":"weightedCapacity"
+        },
+        "TagSpecifications":{
+          "shape":"SpotFleetTagSpecificationList",
+          "locationName":"tagSpecificationSet"
         }
       }
     },
@@ -13836,6 +14181,26 @@
       "type":"list",
       "member":{
         "shape":"SpotFleetRequestConfig",
+        "locationName":"item"
+      }
+    },
+    "SpotFleetTagSpecification":{
+      "type":"structure",
+      "members":{
+        "ResourceType":{
+          "shape":"ResourceType",
+          "locationName":"resourceType"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tag"
+        }
+      }
+    },
+    "SpotFleetTagSpecificationList":{
+      "type":"list",
+      "member":{
+        "shape":"SpotFleetTagSpecification",
         "locationName":"item"
       }
     },

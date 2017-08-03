@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Pinpoint** service.
+ * @method \Aws\Result createApp(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createAppAsync(array $args = [])
  * @method \Aws\Result createCampaign(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createCampaignAsync(array $args = [])
  * @method \Aws\Result createImportJob(array $args = [])
@@ -15,6 +17,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteApnsChannelAsync(array $args = [])
  * @method \Aws\Result deleteApnsSandboxChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteApnsSandboxChannelAsync(array $args = [])
+ * @method \Aws\Result deleteApp(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteAppAsync(array $args = [])
  * @method \Aws\Result deleteCampaign(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteCampaignAsync(array $args = [])
  * @method \Aws\Result deleteEmailChannel(array $args = [])
@@ -31,8 +35,12 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getApnsChannelAsync(array $args = [])
  * @method \Aws\Result getApnsSandboxChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getApnsSandboxChannelAsync(array $args = [])
+ * @method \Aws\Result getApp(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAppAsync(array $args = [])
  * @method \Aws\Result getApplicationSettings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getApplicationSettingsAsync(array $args = [])
+ * @method \Aws\Result getApps(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAppsAsync(array $args = [])
  * @method \Aws\Result getCampaign(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCampaignAsync(array $args = [])
  * @method \Aws\Result getCampaignActivities(array $args = [])

@@ -221,7 +221,13 @@ class BatchingContext extends \PHPUnit_Framework_Assert implements
      */
     public function messagesShouldHaveBeenDeletedFromTheQueue($messageCount)
     {
-        $this->assertSame((int) $messageCount, count($this->response['Failed'])
-            + count($this->response['Successful']));
+        $failedCount = !empty($this->response['Failed'])
+            ? count($this->response['Failed'])
+            : 0;
+        $successfulCount = !empty($this->response['Successful'])
+            ? count($this->response['Successful'])
+            : 0;
+
+        $this->assertSame((int) $messageCount, $failedCount + $successfulCount);
     }
 }

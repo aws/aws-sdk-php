@@ -1,5 +1,74 @@
 # CHANGELOG
 
+## 3.32.3 - 2017-08-01
+
+* `Aws\CodeDeploy` - AWS CodeDeploy now supports the use of multiple tag groups in a single deployment group (an intersection of tags) to identify the instances for a deployment. When you create or update a deployment group, use the new ec2TagSet and onPremisesTagSet structures to specify up to three groups of tags. Only instances that are identified by at least one tag in each of the tag groups are included in the deployment group.
+* `Aws\ConfigService` - Added new API, GetDiscoveredResourceCounts, which returns the resource types, the number of each resource type, and the total number of resources that AWS Config is recording in the given region for your AWS account.
+* `Aws\EC2` - Ec2 SpotInstanceRequestFulfilled waiter update
+* `Aws\ElasticLoadBalancingv2` - Add TargetInService and TargetDeregistered waiters 
+* `Aws\Pinpoint` - This release of the Pinpoint SDK enables App management - create, delete, update operations, Raw Content delivery for APNs and GCM campaign messages and From Address override.
+* `Aws\SES` - This update adds information about publishing email open and click events. This update also adds information about publishing email events to Amazon Simple Notification Service (Amazon SNS).
+
+## 3.32.2 - 2017-07-31
+
+* `Aws\CodeStar` -  AWS CodeStar is now available in the following regions: Asia Pacific (Singapore), Asia Pacific (Sydney), EU (Frankfurt)
+* `Aws\Inspector` - Inspector's StopAssessmentRun API has been updated with a new input option - stopAction. This request parameter can be set to either START_EVALUATION or SKIP_EVALUATION. START_EVALUATION (the default value, and the previous behavior) stops the AWS agent data collection and begins the results evaluation for findings generation based on the data collected so far. SKIP_EVALUATION cancels the assessment run immediately, after which no findings are generated.
+* `Aws\SSM` - Adds a SendAutomationSignal API to SSM Service. This API is used to send a signal to an automation execution to change the current behavior or status of the execution.
+
+## 3.32.1 - 2017-07-27
+
+* `Aws\EC2` - The CreateDefaultVPC API enables you to create a new default VPC . You no longer need to contact AWS support, if your default VPC has been deleted.
+* `Aws\KinesisAnalytics` - Added additional exception types and clarified documentation.
+
+## 3.32.0 - 2017-07-26
+
+* `Aws\` - Support for changes regarding PHP 7.2 releases.
+* `Aws\CloudWatch` - This release adds high resolution features to CloudWatch, with support for Custom Metrics down to 1 second and Alarms down to 10 seconds.
+* `Aws\DynamoDB` - Corrected a typo.
+* `Aws\EC2` - Amazon EC2 Elastic GPUs allow you to easily attach low-cost graphics acceleration to current generation EC2 instances. With Amazon EC2 Elastic GPUs, you can configure the right amount of graphics acceleration to your particular workload without being constrained by fixed hardware configurations and limited GPU selection.
+
+## 3.31.10 - 2017-07-25
+
+* `Aws\CloudDirectory` - Cloud Directory adds support for additional batch operations.
+* `Aws\CloudFormation` - AWS CloudFormation StackSets enables you to manage stacks across multiple accounts and regions.
+
+## 3.31.9 - 2017-07-24
+
+* `Aws\AppStream` - Amazon AppStream 2.0 image builders and fleets can now access applications and network resources that rely on Microsoft Active Directory (AD) for authentication and permissions. This new feature allows you to join your streaming instances to your AD, so you can use your existing AD user management tools. 
+* `Aws\EC2` - Spot Fleet tagging capability allows customers to automatically tag instances launched by Spot Fleet. You can use this feature to label or distinguish instances created by distinct Spot Fleets. Tagging your EC2 instances also enables you to see instance cost allocation by tag in your AWS bill.
+
+## 3.31.8 - 2017-07-20
+
+* `Aws\EMR` - Amazon EMR now includes the ability to use a custom Amazon Linux AMI and adjustable root volume size when launching a cluster.
+
+## 3.31.7 - 2017-07-19
+
+* `Aws\Budgets` - Update budget Management API's to list/create/update RI_UTILIZATION type budget. Update budget Management API's to support DAILY timeUnit for RI_UTILIZATION type budget.
+* `Aws\S3` - Properly handle reading mismatched regions from S3's AuthorizationHeaderMalformed exception for S3MultiRegionClient.
+
+## 3.31.6 - 2017-07-17
+
+* `Aws\CognitoIdentityProvider` - Allows developers to configure user pools for email/phone based signup and sign-in.
+* `Aws\Lambda` - Lambda@Edge lets you run code closer to your end users without provisioning or managing servers. With Lambda@Edge, your code runs in AWS edge locations, allowing you to respond to your end users at the lowest latency. Your code is triggered by Amazon CloudFront events, such as requests to and from origin servers and viewers, and it is ready to execute at every AWS edge location whenever a request for content is received. You just upload your Node.js code to AWS Lambda and Lambda takes care of everything required to run and scale your code with high availability. You only pay for the compute time you consume - there is no charge when your code is not running.
+
+## 3.31.5 - 2017-07-14
+
+* `Aws\ApplicationDiscoveryService` - Adding feature to the Export API for Discovery Service to allow filters for the export task to allow export based on per agent id.
+* `Aws\EC2` - New EC2 GPU Graphics instance
+* `Aws\MarketplaceCommerceAnalytics` - Update to Documentation Model For New Report Cadence / Reformat of Docs
+
+## 3.31.4 - 2017-07-13
+
+* `Aws\APIGateway` - Adds support for management of gateway responses.
+* `Aws\EC2` - X-ENI (or Cross-Account ENI) is a new feature that allows the attachment or association of Elastic Network Interfaces (ENI) between VPCs in different AWS accounts located in the same availability zone. With this new capability, service providers and partners can deliver managed solutions in a variety of new architectural patterns where the provider and consumer of the service are in different AWS accounts.
+* `Aws\LexModelBuildingService` - Fixed broken links to reference and conceptual content.
+
+## 3.31.3 - 2017-07-12
+
+* `Aws\AutoScaling` - Auto Scaling now supports a new type of scaling policy called target tracking scaling policies that you can use to set up dynamic scaling for your application.
+* `Aws\S3` - Fixes an issue introduced in 3.31.0 that was not setting the ContentLength for all MultipartUploader::createPart streams, therefore potentially using an incorrect, $options['params'] value.
+* `Aws\SWF` - Added support for attaching control data to Lambda tasks. Control data lets you attach arbitrary strings to your decisions and history events.
+
 ## 3.31.2 - 2017-07-06
 
 * `Aws\DirectoryService` - You can now improve the resilience and performance of your Microsoft AD directory by deploying additional domain controllers. Added UpdateNumberofDomainControllers API that allows you to update the number of domain controllers you want for your directory, and DescribeDomainControllers API that allows you to describe the detailed information of each domain controller of your directory. Also added the 'DesiredNumberOfDomainControllers' field to the DescribeDirectories API output for Microsoft AD.

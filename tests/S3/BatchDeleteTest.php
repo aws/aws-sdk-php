@@ -206,7 +206,7 @@ class BatchDeleteTest extends \PHPUnit_Framework_TestCase
         $batch->delete();
         $last = $mock->getLastCommand();
         $this->assertEquals('ListObjects', $last->getName());
-        $this->assertEquals(0, count($last['Delete']['Objects']));
+        $this->assertFalse(isset($last['Delete']['Objects']));
         $this->assertEquals('foo', $last['Bucket']);
     }
 }

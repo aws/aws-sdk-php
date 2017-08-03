@@ -158,6 +158,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise registerTaskWithMaintenanceWindowAsync(array $args = [])
  * @method \Aws\Result removeTagsFromResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeTagsFromResourceAsync(array $args = [])
+ * @method \Aws\Result sendAutomationSignal(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise sendAutomationSignalAsync(array $args = [])
  * @method \Aws\Result sendCommand(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendCommandAsync(array $args = [])
  * @method \Aws\Result startAutomationExecution(array $args = [])
