@@ -82,9 +82,9 @@ class SignatureV4 implements SignatureInterface
         $expires,
         array $options = []
     ) {
-        $relativeTimeBase = isset($options['relativeTimeBase']) ? $options['relativeTimeBase'] : time();
-        $expiresTimestamp = $this->convertToTimestamp($expires,$relativeTimeBase);
-        $startTimestamp = isset($options['start_time']) ? $this->convertToTimestamp($options['start_time'],$relativeTimeBase) : time();
+
+        $startTimestamp = isset($options['start_time']) ? $this->convertToTimestamp($options['start_time'], null) : time();
+        $expiresTimestamp = $this->convertToTimestamp($expires, $startTimestamp);
 
         $parsed = $this->createPresignedRequest($request, $credentials);
         $payload = $this->getPresignedPayload($request);
@@ -287,12 +287,12 @@ class SignatureV4 implements SignatureInterface
         return substr($qs, 0, -1);
     }
 
-    private function convertToTimestamp($dateValue, $relativeTimeBase)
+    private function convertToTimestamp($dateValue, $relativeTimeBase = null)
     {
         if ($dateValue instanceof \DateTime) {
             $timestamp = $dateValue->getTimestamp();
         } elseif (!is_numeric($dateValue)) {
-            $timestamp = strtotime($dateValue, $relativeTimeBase);
+            $timestamp = strtotime($dateValue, $relativeTimeBase === null ? time() : $relativeTimeBase );
         } else {
             $timestamp = $dateValue;
         }

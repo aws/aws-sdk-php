@@ -105,7 +105,7 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
             $request,
             $credentials,
             '+6 days',
-            ['relativeTimeBase' => $_SERVER['aws_time']]
+            ['start_time' => $_SERVER['aws_time']]
         )->getUri();
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
