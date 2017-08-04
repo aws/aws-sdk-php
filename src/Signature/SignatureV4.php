@@ -83,7 +83,10 @@ class SignatureV4 implements SignatureInterface
         array $options = []
     ) {
 
-        $startTimestamp = isset($options['start_time']) ? $this->convertToTimestamp($options['start_time'], null) : time();
+        $startTimestamp = isset($options['start_time'])
+                            ? $this->convertToTimestamp($options['start_time'], null)
+                            : time();
+        
         $expiresTimestamp = $this->convertToTimestamp($expires, $startTimestamp);
 
         $parsed = $this->createPresignedRequest($request, $credentials);
@@ -292,7 +295,9 @@ class SignatureV4 implements SignatureInterface
         if ($dateValue instanceof \DateTime) {
             $timestamp = $dateValue->getTimestamp();
         } elseif (!is_numeric($dateValue)) {
-            $timestamp = strtotime($dateValue, $relativeTimeBase === null ? time() : $relativeTimeBase );
+            $timestamp = strtotime($dateValue,
+                                   $relativeTimeBase === null ? time() : $relativeTimeBase
+            );
         } else {
             $timestamp = $dateValue;
         }
