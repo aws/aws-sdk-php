@@ -98,6 +98,18 @@ class S3SignatureV4Test extends \PHPUnit_Framework_TestCase
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
 
+    public function testCreatesPresignedDateFromStrtotimeRelativeTimeBase()
+    {
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $url = (string) $signature->presign(
+            $request,
+            $credentials,
+            '+6 days',
+            ['start_time' => $_SERVER['aws_time']]
+        )->getUri();
+        $this->assertContains('X-Amz-Expires=518400', $url);
+    }
+
     public function testAddsSecurityTokenIfPresent()
     {
         list($request, $credentials, $signature) = $this->getFixtures();
