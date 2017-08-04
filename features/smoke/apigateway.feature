@@ -7,10 +7,8 @@ Feature: API Gateway
     Then the value at "items" should be a list
 
   Scenario: Handing errors
-    When I attempt to call the "CreateDomainName" API with:
-      | domainName            | example |
-      | certificateName       | foo     |
-      | certificateBody       | bar     |
-      | certificatePrivateKey | fizz    |
-      | certificateChain      | buzz    |
+    When I attempt to call the "CreateUsagePlanKey" API with:
+      | usagePlanId             | foo |
+      | keyId                   | bar |
+      | keyType                 | fixx |
     Then I expect the response error code to be "BadRequestException"
