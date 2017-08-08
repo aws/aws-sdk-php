@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElasticBeanstalk` - Add support for paginating the result of DescribeEnvironments. Include the ARN of described environments in DescribeEnvironments output.
+* `Aws\Signature` - Fixed edgecase in expiration duration check on signature when seconds roll between implicit startime and relative end time.
+
 ## 3.32.3 - 2017-08-01
 
 * `Aws\CodeDeploy` - AWS CodeDeploy now supports the use of multiple tag groups in a single deployment group (an intersection of tags) to identify the instances for a deployment. When you create or update a deployment group, use the new ec2TagSet and onPremisesTagSet structures to specify up to three groups of tags. Only instances that are identified by at least one tag in each of the tag groups are included in the deployment group.
