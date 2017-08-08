@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.32.4 - 2017-08-08
 
 * `Aws\ElasticBeanstalk` - Add support for paginating the result of DescribeEnvironments. Include the ARN of described environments in DescribeEnvironments output.
 * `Aws\Signature` - Fixed edgecase in expiration duration check on signature when seconds roll between implicit startime and relative end time.
