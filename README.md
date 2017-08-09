@@ -15,17 +15,14 @@ or by downloading a single zip or phar file from our [latest release][latest-rel
 
 ## Resources
 
-* [User Guide][docs-guide] – For both getting started and in-depth **current** SDK usage information
-* [API Docs][docs-api] – For details about operations, parameters, and responses on **current** SDK version
+* [User Guide][docs-guide] – For both getting started and in-depth SDK usage information
+* [API Docs][docs-api] – For details about operations, parameters, and responses
 * [Blog][sdk-blog] – Tips & tricks, articles, and announcements
 * [Sample Project][sdk-sample] - A quick, sample project to help get you started
 * [Forum][sdk-forum] – Ask questions, get help, and give feedback
 * [Issues][sdk-issues] – Report issues, submit pull requests, and get involved
   (see [Apache 2.0 License][sdk-license])
 * [@awsforphp][sdk-twitter] – Follow us on Twitter
-* For **the previous** version 2 of the SDK:
-  * [User Guide][docs-guide-v2]
-  * [API Docs][docs-api-v2]
 
 ## Getting Help
 
@@ -124,6 +121,9 @@ try {
 * [AWS SDK Bundle for Symfony][mod-symfony]
 * [Amazon SNS Message Validator for PHP][sns-validator] - SNS validator without requiring SDK
 * [Guzzle Version 6][guzzle-docs] – PHP HTTP client and framework
+* For **the previous** version 2 of the SDK:
+  * [User Guide][docs-guide-v2]
+  * [API Docs][docs-api-v2]
 * Other [AWS SDKs & Tools][aws-tools] (e.g., js, cli, ruby, python, java, etc.)
 
 [sdk-website]: http://aws.amazon.com/sdkforphp
