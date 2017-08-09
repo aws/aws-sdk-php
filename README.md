@@ -121,7 +121,7 @@ try {
 * [AWS SDK Bundle for Symfony][mod-symfony]
 * [Amazon SNS Message Validator for PHP][sns-validator] - SNS validator without requiring SDK
 * [Guzzle Version 6][guzzle-docs] – PHP HTTP client and framework
-* For **the previous** version 2 of the SDK:
+* For Version 2 of the SDK:
   * [User Guide][docs-guide-v2]
   * [API Docs][docs-api-v2]
 * Other [AWS SDKs & Tools][aws-tools] (e.g., js, cli, ruby, python, java, etc.)
