@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RDS` - Documentation updates for RDS.
+
 ## 3.32.4 - 2017-08-08
 
 * `Aws\ElasticBeanstalk` - Add support for paginating the result of DescribeEnvironments. Include the ARN of described environments in DescribeEnvironments output.
