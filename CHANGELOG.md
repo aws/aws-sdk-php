@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudDirectory` - Enable BatchDetachPolicy
+* `Aws\CodeBuild` - Supporting Bitbucket as source type in AWS CodeBuild.
+
 ## 3.32.5 - 2017-08-09
 
 * `Aws\RDS` - Documentation updates for RDS.
