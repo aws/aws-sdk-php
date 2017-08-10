@@ -123,7 +123,7 @@ if (extension_loaded('suhosin')) {
     );
 }
 
-foreach (array('pcre', 'spl', 'json', 'dom', 'simplexml', 'curl') as $ext) {
+foreach (array('pcre', 'spl', 'json', 'simplexml') as $ext) {
     $c->extCheck($ext, true);
 }
 
@@ -155,6 +155,8 @@ if (extension_loaded('xdebug')) {
     $c->iniCheck('Ensuring that Xdebug\'s infinite recursion detection does not erroneously cause a fatal error', 'xdebug.max_nesting_level', 0, false);
 }
 
+$c->extCheck('dom',false);
+$c->extCheck('curl',false);
 $c->extCheck('openssl', false);
 $c->extCheck('zlib', false);
 $c->iniCheck('Checking if OPCache is enabled', 'opcache.enable', 1, false);
