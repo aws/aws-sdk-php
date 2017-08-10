@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.32.6 - 2017-08-10
 
 * `Aws\CloudDirectory` - Enable BatchDetachPolicy
 * `Aws\CodeBuild` - Supporting Bitbucket as source type in AWS CodeBuild.
