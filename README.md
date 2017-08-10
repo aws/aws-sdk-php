@@ -153,6 +153,7 @@ try {
 [docs-exceptions]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/quick-start.html#error-handling
 [docs-wire-logging]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/faq.html#how-can-i-see-what-data-is-sent-over-the-wire
 [docs-ddbsh]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/service/dynamodb-session-handler.html
+[docs-services]: https://aws.amazon.com/products/
 [docs-rande]: http://docs.aws.amazon.com/general/latest/gr/rande.html
 [docs-streamwrapper]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/service/s3-stream-wrapper.html
 [docs-s3-transfer]: http://docs.aws.amazon.com/aws-sdk-php/v3/guide/service/s3-transfer.html
