@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeDeploy` - Adds support for specifying Application Load Balancers in deployment groups, for both in-place and blue/green deployments.
+* `Aws\CognitoIdentityProvider` - We have added support for features for Amazon Cognito User Pools that enable application developers to easily add and customize a sign-up and sign-in user experience, use OAuth 2.0, and integrate with Facebook, Google, Login with Amazon, and SAML-based identity providers.
+* `Aws\EC2` - Provides customers an opportunity to recover an EIP that was released
+
 ## 3.32.6 - 2017-08-10
 
 * `Aws\CloudDirectory` - Enable BatchDetachPolicy
