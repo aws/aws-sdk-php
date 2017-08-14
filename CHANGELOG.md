@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.33.0 - 2017-08-14
 
 * `Aws\Batch` - This release enhances the DescribeJobs API to include the CloudWatch logStreamName attribute in ContainerDetail and ContainerDetailAttempt
 * `Aws\CloudHSMV2` - CloudHSM provides hardware security modules for protecting sensitive data and cryptographic keys within an EC2 VPC, and enable the customer to maintain control over key access and use. This is a second-generation of the service that will improve security, lower cost and provide better customer usability.
