@@ -363,7 +363,7 @@ class ClientResolver
         foreach ($this->argDefinitions as $k => $a) {
             if (empty($a['required'])
                 || isset($a['default'])
-                || array_key_exists($k, $args)
+                || isset($args[$k])
             ) {
                 continue;
             }
