@@ -909,7 +909,7 @@ EOT;
             case 'integer': return 'int';
             case 'blob': return 'blob (string|resource|Psr\Http\Message\StreamInterface)';
             case 'char': return 'char (string)';
-            case 'timestamp': return 'timesamp (string|DateTime or anything parsable by strtotime)';
+            case 'timestamp': return 'timestamp (string|DateTime or anything parsable by strtotime)';
             case 'string':
                 if ($member['jsonvalue']){
                     return 'string (string|number|array|map or anything parsable by json_encode)';
