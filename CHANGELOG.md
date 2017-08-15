@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.33.1 - 2017-08-15
 
 * `Aws\EC2` - Fixed bug in EC2 clients preventing HostReservation from being set
 
