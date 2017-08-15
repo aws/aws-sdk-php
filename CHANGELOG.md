@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Fixed bug in EC2 clients preventing HostReservation from being set
+
 ## 3.33.0 - 2017-08-14
 
 * `Aws\Batch` - This release enhances the DescribeJobs API to include the CloudWatch logStreamName attribute in ContainerDetail and ContainerDetailAttempt
