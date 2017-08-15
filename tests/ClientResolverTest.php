@@ -491,6 +491,22 @@ EOT;
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage A "version" configuration value is required
+     */
+    public function testHasSpecificMessageForNullRequiredVersion()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $r->resolve([
+            'service'     => 'foo',
+            'region'      => 'x',
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version'     => null,
+        ], $list);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage A "region" configuration value is required for the "foo" service
      */
     public function testHasSpecificMessageForMissingRegion()
@@ -498,6 +514,22 @@ EOT;
         $args = ClientResolver::getDefaultArguments()['region'];
         $r = new ClientResolver(['region' => $args]);
         $r->resolve(['service' => 'foo'], new HandlerList());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage A "region" configuration value is required for the "foo" service
+     */
+    public function testHasSpecificMessageForNullRequiredRegion()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $list = new HandlerList();
+        $r->resolve([
+            'service'     => 'foo',
+            'region'      => null,
+            'credentials' => ['key' => 'a', 'secret' => 'b'],
+            'version'     => 'latest',
+        ], $list);
     }
 
     public function testAddsTraceMiddleware()
