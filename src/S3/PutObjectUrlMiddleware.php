@@ -1,8 +1,8 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\CommandInterface;
-use Aws\ResultInterface;
+use RamseyAws\CommandInterface;
+use RamseyAws\ResultInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**

@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Api;
+namespace RamseyAws\Api;
 
 /**
  * Encapsulates the documentation strings for a given service-version and

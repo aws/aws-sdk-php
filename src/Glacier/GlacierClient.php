@@ -1,15 +1,15 @@
 <?php
-namespace Aws\Glacier;
+namespace RamseyAws\Glacier;
 
-use Aws\Api\ApiProvider;
-use Aws\Api\DocModel;
-use Aws\Api\Service;
-use Aws\AwsClient;
-use Aws\CommandInterface;
-use Aws\Exception\CouldNotCreateChecksumException;
-use Aws\HashingStream;
-use Aws\Middleware;
-use Aws\PhpHash;
+use RamseyAws\Api\ApiProvider;
+use RamseyAws\Api\DocModel;
+use RamseyAws\Api\Service;
+use RamseyAws\AwsClient;
+use RamseyAws\CommandInterface;
+use RamseyAws\Exception\CouldNotCreateChecksumException;
+use RamseyAws\HashingStream;
+use RamseyAws\Middleware;
+use RamseyAws\PhpHash;
 use Psr\Http\Message\RequestInterface;
 
 /**

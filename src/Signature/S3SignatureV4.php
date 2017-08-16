@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Signature;
+namespace RamseyAws\Signature;
 
-use Aws\Credentials\CredentialsInterface;
+use RamseyAws\Credentials\CredentialsInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**

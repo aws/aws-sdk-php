@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudHSMV2\Exception;
+namespace RamseyAws\CloudHSMV2\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS CloudHSM V2** service.

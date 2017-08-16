@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Health;
+namespace RamseyAws\Health;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Health APIs and Notifications** service.

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Ses;
+namespace RamseyAws\Ses;
 
-use Aws\Credentials\CredentialsInterface;
+use RamseyAws\Credentials\CredentialsInterface;
 
 /**
  * This client is used to interact with the **Amazon Simple Email Service (Amazon SES)**.

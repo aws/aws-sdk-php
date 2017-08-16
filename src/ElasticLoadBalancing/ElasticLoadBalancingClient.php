@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ElasticLoadBalancing;
+namespace RamseyAws\ElasticLoadBalancing;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Elastic Load Balancing** service.

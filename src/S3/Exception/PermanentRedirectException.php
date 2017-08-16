@@ -1,4 +1,4 @@
 <?php
-namespace Aws\S3\Exception;
+namespace RamseyAws\S3\Exception;
 
 class PermanentRedirectException extends S3Exception {}

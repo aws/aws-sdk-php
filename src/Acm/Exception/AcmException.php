@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Acm\Exception;
+namespace RamseyAws\Acm\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS Certificate Manager** service.

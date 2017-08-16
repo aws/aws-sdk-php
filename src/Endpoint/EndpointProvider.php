@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Endpoint;
+namespace RamseyAws\Endpoint;
 
-use Aws\Exception\UnresolvedEndpointException;
+use RamseyAws\Exception\UnresolvedEndpointException;
 
 /**
  * Endpoint providers.
@@ -17,7 +17,7 @@ use Aws\Exception\UnresolvedEndpointException;
  * created. If an endpoint hash is not created, then the resolve() function
  * will throw an {@see Aws\Exception\UnresolvedEndpointException}.
  *
- *     use Aws\Endpoint\EndpointProvider;
+ *     use RamseyAws\Endpoint\EndpointProvider;
  *     $provider = EndpointProvider::defaultProvider();
  *     // Returns an array or NULL.
  *     $endpoint = $provider(['service' => 'ec2', 'region' => 'us-west-2']);

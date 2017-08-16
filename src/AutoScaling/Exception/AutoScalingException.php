@@ -1,7 +1,7 @@
 <?php
-namespace Aws\AutoScaling\Exception;
+namespace RamseyAws\AutoScaling\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error while interacting with the Auto Scaling service.

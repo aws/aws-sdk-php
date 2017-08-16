@@ -1,8 +1,8 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\Multipart\AbstractUploadManager;
-use Aws\ResultInterface;
+use RamseyAws\Multipart\AbstractUploadManager;
+use RamseyAws\ResultInterface;
 use GuzzleHttp\Psr7;
 
 class MultipartCopy extends AbstractUploadManager

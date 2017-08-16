@@ -1,8 +1,8 @@
 <?php
-namespace Aws\Route53;
+namespace RamseyAws\Route53;
 
-use Aws\AwsClient;
-use Aws\CommandInterface;
+use RamseyAws\AwsClient;
+use RamseyAws\CommandInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**

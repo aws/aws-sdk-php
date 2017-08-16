@@ -1,7 +1,7 @@
 <?php
-namespace Aws\LexModelBuildingService\Exception;
+namespace RamseyAws\LexModelBuildingService\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon Lex Model Building Service** service.

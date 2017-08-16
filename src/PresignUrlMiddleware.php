@@ -1,10 +1,10 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
-use Aws\AwsClientInterface;
-use Aws\Signature\SignatureV4;
-use Aws\Endpoint\EndpointProvider;
-use Aws\CommandInterface;
+use RamseyAws\AwsClientInterface;
+use RamseyAws\Signature\SignatureV4;
+use RamseyAws\Endpoint\EndpointProvider;
+use RamseyAws\CommandInterface;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 

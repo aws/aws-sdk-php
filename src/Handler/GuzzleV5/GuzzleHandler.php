@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Handler\GuzzleV5;
+namespace RamseyAws\Handler\GuzzleV5;
 
-use Aws\Sdk;
+use RamseyAws\Sdk;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;

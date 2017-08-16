@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Athena\Exception;
+namespace RamseyAws\Athena\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon Athena** service.

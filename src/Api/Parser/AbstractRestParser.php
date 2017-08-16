@@ -1,11 +1,11 @@
 <?php
-namespace Aws\Api\Parser;
+namespace RamseyAws\Api\Parser;
 
-use Aws\Api\DateTimeResult;
-use Aws\Api\Shape;
-use Aws\Api\StructureShape;
-use Aws\Result;
-use Aws\CommandInterface;
+use RamseyAws\Api\DateTimeResult;
+use RamseyAws\Api\Shape;
+use RamseyAws\Api\StructureShape;
+use RamseyAws\Result;
+use RamseyAws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**

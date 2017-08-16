@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Support;
+namespace RamseyAws\Support;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * AWS Support client.

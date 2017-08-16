@@ -1,7 +1,7 @@
 <?php
-namespace Aws\WorkDocs;
+namespace RamseyAws\WorkDocs;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon WorkDocs** service.

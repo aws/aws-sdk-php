@@ -1,11 +1,11 @@
 <?php
-namespace Aws\Ec2;
+namespace RamseyAws\Ec2;
 
-use Aws\AwsClient;
-use Aws\Api\Service;
-use Aws\Api\DocModel;
-use Aws\Api\ApiProvider;
-use Aws\PresignUrlMiddleware;
+use RamseyAws\AwsClient;
+use RamseyAws\Api\Service;
+use RamseyAws\Api\DocModel;
+use RamseyAws\Api\ApiProvider;
+use RamseyAws\PresignUrlMiddleware;
 
 /**
  * Client used to interact with Amazon EC2.

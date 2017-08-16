@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudFront\Exception;
+namespace RamseyAws\CloudFront\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the Amazon CloudFront service.

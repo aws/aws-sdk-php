@@ -1,5 +1,5 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
 /**
  * Represents an AWS result object that is returned from executing an operation.

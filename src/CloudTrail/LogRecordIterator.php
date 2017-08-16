@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudTrail;
+namespace RamseyAws\CloudTrail;
 
-use Aws\S3\S3Client;
+use RamseyAws\S3\S3Client;
 
 /**
  * The `Aws\CloudTrail\LogRecordIterator` provides an easy way to iterate over

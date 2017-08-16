@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Kinesis\Exception;
+namespace RamseyAws\Kinesis\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the Amazon Kinesis service.

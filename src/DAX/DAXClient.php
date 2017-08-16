@@ -1,7 +1,7 @@
 <?php
-namespace Aws\DAX;
+namespace RamseyAws\DAX;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon DynamoDB Accelerator (DAX)** service.

@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Signature;
+namespace RamseyAws\Signature;
 
 /**
  * Provides signature calculation for SignatureV4.

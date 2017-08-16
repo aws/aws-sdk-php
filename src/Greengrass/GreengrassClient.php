@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Greengrass;
+namespace RamseyAws\Greengrass;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Greengrass** service.

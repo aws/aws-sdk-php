@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Ec2\Exception;
+namespace RamseyAws\Ec2\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the Amazon Elastic Compute Cloud service.

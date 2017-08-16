@@ -1,7 +1,7 @@
 <?php
-namespace Aws\XRay\Exception;
+namespace RamseyAws\XRay\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS X-Ray** service.

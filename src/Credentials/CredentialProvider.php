@@ -1,9 +1,9 @@
 <?php
-namespace Aws\Credentials;
+namespace RamseyAws\Credentials;
 
-use Aws;
-use Aws\CacheInterface;
-use Aws\Exception\CredentialsException;
+use RamseyAws;
+use RamseyAws\CacheInterface;
+use RamseyAws\Exception\CredentialsException;
 use GuzzleHttp\Promise;
 
 /**
@@ -12,7 +12,7 @@ use GuzzleHttp\Promise;
  * or rejected with an {@see \Aws\Exception\CredentialsException}.
  *
  * <code>
- * use Aws\Credentials\CredentialProvider;
+ * use RamseyAws\Credentials\CredentialProvider;
  * $provider = CredentialProvider::defaultProvider();
  * // Returns a CredentialsInterface or throws.
  * $creds = $provider()->wait();

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\LexModelBuildingService;
+namespace RamseyAws\LexModelBuildingService;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Lex Model Building Service** service.

@@ -1,8 +1,8 @@
 <?php
-namespace Aws\DynamoDbStreams;
+namespace RamseyAws\DynamoDbStreams;
 
-use Aws\AwsClient;
-use Aws\DynamoDb\DynamoDbClient;
+use RamseyAws\AwsClient;
+use RamseyAws\DynamoDb\DynamoDbClient;
 
 /**
  * This client is used to interact with the **Amazon DynamoDb Streams** service.

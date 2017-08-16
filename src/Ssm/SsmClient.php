@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Ssm;
+namespace RamseyAws\Ssm;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * Amazon EC2 Simple Systems Manager client.

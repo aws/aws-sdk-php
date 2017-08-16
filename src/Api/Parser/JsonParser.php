@@ -1,8 +1,8 @@
 <?php
-namespace Aws\Api\Parser;
+namespace RamseyAws\Api\Parser;
 
-use Aws\Api\DateTimeResult;
-use Aws\Api\Shape;
+use RamseyAws\Api\DateTimeResult;
+use RamseyAws\Api\Shape;
 
 /**
  * @internal Implements standard JSON parsing.

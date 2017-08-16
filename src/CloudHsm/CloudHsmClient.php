@@ -1,10 +1,10 @@
 <?php
-namespace Aws\CloudHsm;
+namespace RamseyAws\CloudHsm;
 
-use Aws\Api\ApiProvider;
-use Aws\Api\DocModel;
-use Aws\Api\Service;
-use Aws\AwsClient;
+use RamseyAws\Api\ApiProvider;
+use RamseyAws\Api\DocModel;
+use RamseyAws\Api\Service;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with **AWS CloudHSM**.

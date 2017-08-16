@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CodeDeploy;
+namespace RamseyAws\CodeDeploy;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with AWS CodeDeploy

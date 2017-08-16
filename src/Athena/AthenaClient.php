@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Athena;
+namespace RamseyAws\Athena;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Athena** service.

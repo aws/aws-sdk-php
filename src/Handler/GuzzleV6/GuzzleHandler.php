@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Handler\GuzzleV6;
+namespace RamseyAws\Handler\GuzzleV6;
 
-use Aws\Sdk;
+use RamseyAws\Sdk;
 use Exception;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;

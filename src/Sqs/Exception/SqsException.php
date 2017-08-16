@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Sqs\Exception;
+namespace RamseyAws\Sqs\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the Amazon Simple Queue Service.

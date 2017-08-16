@@ -1,8 +1,8 @@
 <?php
-namespace Aws\Signature;
+namespace RamseyAws\Signature;
 
-use Aws\Credentials\CredentialsInterface;
-use Aws\Exception\CouldNotCreateChecksumException;
+use RamseyAws\Credentials\CredentialsInterface;
+use RamseyAws\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 
@@ -86,7 +86,7 @@ class SignatureV4 implements SignatureInterface
         $startTimestamp = isset($options['start_time'])
                             ? $this->convertToTimestamp($options['start_time'], null)
                             : time();
-        
+
         $expiresTimestamp = $this->convertToTimestamp($expires, $startTimestamp);
 
         $parsed = $this->createPresignedRequest($request, $credentials);

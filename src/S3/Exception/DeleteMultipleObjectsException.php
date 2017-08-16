@@ -1,5 +1,5 @@
 <?php
-namespace Aws\S3\Exception;
+namespace RamseyAws\S3\Exception;
 
 /**
  * Exception thrown when errors occur while deleting objects using a

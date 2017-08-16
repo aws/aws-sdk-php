@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ElasticBeanstalk;
+namespace RamseyAws\ElasticBeanstalk;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Elastic Beanstalk** service.

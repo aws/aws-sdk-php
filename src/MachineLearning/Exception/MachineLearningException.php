@@ -1,7 +1,7 @@
 <?php
-namespace Aws\MachineLearning\Exception;
+namespace RamseyAws\MachineLearning\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Amazon Machine Learning exception.

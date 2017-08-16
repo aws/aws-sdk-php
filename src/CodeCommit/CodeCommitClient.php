@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CodeCommit;
+namespace RamseyAws\CodeCommit;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS CodeCommit** service.

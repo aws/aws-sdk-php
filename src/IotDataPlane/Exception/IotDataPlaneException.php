@@ -1,7 +1,7 @@
 <?php
-namespace Aws\IotDataPlane\Exception;
+namespace RamseyAws\IotDataPlane\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS IoT Data Plane** service.

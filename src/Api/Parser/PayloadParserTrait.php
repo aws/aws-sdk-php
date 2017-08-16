@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Api\Parser;
+namespace RamseyAws\Api\Parser;
 
-use Aws\Api\Parser\Exception\ParserException;
+use RamseyAws\Api\Parser\Exception\ParserException;
 
 trait PayloadParserTrait
 {

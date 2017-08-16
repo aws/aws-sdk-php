@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Rekognition\Exception;
+namespace RamseyAws\Rekognition\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon Rekognition** service.

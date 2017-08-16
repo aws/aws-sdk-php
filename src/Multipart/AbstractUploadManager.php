@@ -1,13 +1,13 @@
 <?php
-namespace Aws\Multipart;
+namespace RamseyAws\Multipart;
 
-use Aws\AwsClientInterface as Client;
-use Aws\CommandInterface;
-use Aws\CommandPool;
-use Aws\Exception\AwsException;
-use Aws\Exception\MultipartUploadException;
-use Aws\Result;
-use Aws\ResultInterface;
+use RamseyAws\AwsClientInterface as Client;
+use RamseyAws\CommandInterface;
+use RamseyAws\CommandPool;
+use RamseyAws\Exception\AwsException;
+use RamseyAws\Exception\MultipartUploadException;
+use RamseyAws\Result;
+use RamseyAws\ResultInterface;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7;

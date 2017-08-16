@@ -1,7 +1,7 @@
 <?php
-namespace Aws\MigrationHub;
+namespace RamseyAws\MigrationHub;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Migration Hub** service.

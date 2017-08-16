@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CodePipeline;
+namespace RamseyAws\CodePipeline;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon CodePipeline** service.

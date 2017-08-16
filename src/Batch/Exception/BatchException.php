@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Batch\Exception;
+namespace RamseyAws\Batch\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS Batch** service.

@@ -1,7 +1,7 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 use Exception;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Promise;

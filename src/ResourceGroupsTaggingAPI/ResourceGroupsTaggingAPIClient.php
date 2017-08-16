@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ResourceGroupsTaggingAPI;
+namespace RamseyAws\ResourceGroupsTaggingAPI;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Resource Groups Tagging API** service.

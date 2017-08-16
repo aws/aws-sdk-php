@@ -1,9 +1,9 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws;
-use Aws\CommandInterface;
-use Aws\Exception\AwsException;
+use RamseyAws;
+use RamseyAws\CommandInterface;
+use RamseyAws\Exception\AwsException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Promise\PromisorInterface;

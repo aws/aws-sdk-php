@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudFormation;
+namespace RamseyAws\CloudFormation;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS CloudFormation** service.

@@ -1,5 +1,5 @@
 <?php
-namespace Aws\DynamoDb;
+namespace RamseyAws\DynamoDb;
 
 use Psr\Http\Message\StreamInterface;
 

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CognitoIdentity;
+namespace RamseyAws\CognitoIdentity;
 
-use Aws\Credentials\Credentials;
+use RamseyAws\Credentials\Credentials;
 use GuzzleHttp\Promise;
 
 class CognitoIdentityProvider

@@ -1,9 +1,9 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\Api\Parser\AbstractParser;
-use Aws\CommandInterface;
-use Aws\Exception\AwsException;
+use RamseyAws\Api\Parser\AbstractParser;
+use RamseyAws\CommandInterface;
+use RamseyAws\Exception\AwsException;
 use Psr\Http\Message\ResponseInterface;
 
 /**

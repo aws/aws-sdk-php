@@ -1,7 +1,7 @@
 <?php
-namespace Aws\MarketplaceEntitlementService\Exception;
+namespace RamseyAws\MarketplaceEntitlementService\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS Marketplace Entitlement Service** service.

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudSearch;
+namespace RamseyAws\CloudSearch;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon CloudSearch** service.

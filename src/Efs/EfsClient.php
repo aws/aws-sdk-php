@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Efs;
+namespace RamseyAws\Efs;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with **Amazon EFS**.

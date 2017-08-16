@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Kms\Exception;
+namespace RamseyAws\Kms\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the AWS Key Management Service.

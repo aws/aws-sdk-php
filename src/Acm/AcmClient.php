@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Acm;
+namespace RamseyAws\Acm;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Certificate Manager** service.

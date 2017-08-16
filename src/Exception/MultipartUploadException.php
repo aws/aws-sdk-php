@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Exception;
+namespace RamseyAws\Exception;
 
-use Aws\Multipart\UploadState;
+use RamseyAws\Multipart\UploadState;
 
 class MultipartUploadException extends \RuntimeException
 {

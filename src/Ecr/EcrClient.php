@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Ecr;
+namespace RamseyAws\Ecr;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon EC2 Container Registry** service.

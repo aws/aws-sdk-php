@@ -1,8 +1,8 @@
 <?php
-namespace Aws\Api\Serializer;
+namespace RamseyAws\Api\Serializer;
 
-use Aws\Api\StructureShape;
-use Aws\Api\Service;
+use RamseyAws\Api\StructureShape;
+use RamseyAws\Api\Service;
 
 /**
  * @internal

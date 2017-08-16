@@ -1,7 +1,7 @@
 <?php
-namespace Aws\DataPipeline;
+namespace RamseyAws\DataPipeline;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Data Pipeline** service.

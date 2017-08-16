@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Lambda\Exception;
+namespace RamseyAws\Lambda\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with AWS Lambda

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Inspector\Exception;
+namespace RamseyAws\Inspector\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon Inspector** service.

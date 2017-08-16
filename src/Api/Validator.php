@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Api;
+namespace RamseyAws\Api;
 
-use Aws;
+use RamseyAws;
 
 /**
  * Validates a schema against a hash of input.

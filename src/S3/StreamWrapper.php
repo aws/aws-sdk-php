@@ -1,10 +1,10 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\CacheInterface;
-use Aws\LruArrayCache;
-use Aws\Result;
-use Aws\S3\Exception\S3Exception;
+use RamseyAws\CacheInterface;
+use RamseyAws\LruArrayCache;
+use RamseyAws\Result;
+use RamseyAws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\CachingStream;

@@ -1,5 +1,5 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
 use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Psr7;

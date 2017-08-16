@@ -1,10 +1,10 @@
 <?php
-namespace Aws\Exception;
+namespace RamseyAws\Exception;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
-use Aws\CommandInterface;
-use Aws\ResultInterface;
+use RamseyAws\CommandInterface;
+use RamseyAws\ResultInterface;
 
 /**
  * Represents an AWS exception that is thrown when a command fails.

@@ -1,11 +1,11 @@
 <?php
-namespace Aws\DynamoDb;
+namespace RamseyAws\DynamoDb;
 
-use Aws\AwsClientInterface;
-use Aws\CommandInterface;
-use Aws\CommandPool;
-use Aws\Exception\AwsException;
-use Aws\ResultInterface;
+use RamseyAws\AwsClientInterface;
+use RamseyAws\CommandInterface;
+use RamseyAws\CommandPool;
+use RamseyAws\Exception\AwsException;
+use RamseyAws\ResultInterface;
 
 /**
  * The WriteRequestBatch is an object that is capable of efficiently sending

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ElastiCache\Exception;
+namespace RamseyAws\ElastiCache\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the Amazon ElastiCache service.

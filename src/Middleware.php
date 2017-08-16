@@ -1,10 +1,10 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
-use Aws\Api\Service;
-use Aws\Api\Validator;
-use Aws\Credentials\CredentialsInterface;
-use Aws\Exception\AwsException;
+use RamseyAws\Api\Service;
+use RamseyAws\Api\Validator;
+use RamseyAws\Credentials\CredentialsInterface;
+use RamseyAws\Exception\AwsException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LazyOpenStream;

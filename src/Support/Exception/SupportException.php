@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Support\Exception;
+namespace RamseyAws\Support\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * AWS Support service exception.

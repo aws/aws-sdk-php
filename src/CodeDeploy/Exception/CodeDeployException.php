@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CodeDeploy\Exception;
+namespace RamseyAws\CodeDeploy\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with AWS CodeDeploy.

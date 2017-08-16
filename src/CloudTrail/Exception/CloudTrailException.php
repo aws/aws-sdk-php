@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudTrail\Exception;
+namespace RamseyAws\CloudTrail\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the AWS CloudTrail service.

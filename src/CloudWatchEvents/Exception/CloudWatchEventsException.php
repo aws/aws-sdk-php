@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudWatchEvents\Exception;
+namespace RamseyAws\CloudWatchEvents\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon CloudWatch Events** service.

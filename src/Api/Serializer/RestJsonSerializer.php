@@ -1,8 +1,8 @@
 <?php
-namespace Aws\Api\Serializer;
+namespace RamseyAws\Api\Serializer;
 
-use Aws\Api\Service;
-use Aws\Api\StructureShape;
+use RamseyAws\Api\Service;
+use RamseyAws\Api\StructureShape;
 
 /**
  * Serializes requests for the REST-JSON protocol.

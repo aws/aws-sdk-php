@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Credentials;
+namespace RamseyAws\Credentials;
 
-use Aws\Exception\CredentialsException;
+use RamseyAws\Exception\CredentialsException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;

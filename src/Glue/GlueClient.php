@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Glue;
+namespace RamseyAws\Glue;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Glue** service.

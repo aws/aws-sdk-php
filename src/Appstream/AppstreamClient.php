@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Appstream;
+namespace RamseyAws\Appstream;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon AppStream** service.

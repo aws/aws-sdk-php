@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CodeBuild;
+namespace RamseyAws\CodeBuild;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS CodeBuild** service.

@@ -1,9 +1,9 @@
 <?php
-namespace Aws\Api\Serializer;
+namespace RamseyAws\Api\Serializer;
 
-use Aws\Api\Service;
-use Aws\Api\Shape;
-use Aws\Api\TimestampShape;
+use RamseyAws\Api\Service;
+use RamseyAws\Api\Shape;
+use RamseyAws\Api\TimestampShape;
 
 /**
  * Formats the JSON body of a JSON-REST or JSON-RPC operation.

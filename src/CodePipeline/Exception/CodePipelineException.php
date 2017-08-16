@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CodePipeline\Exception;
+namespace RamseyAws\CodePipeline\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the Amazon CodePipeline service.

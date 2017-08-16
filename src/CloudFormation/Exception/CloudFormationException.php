@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudFormation\Exception;
+namespace RamseyAws\CloudFormation\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the AWS CloudFormation service.

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Glue\Exception;
+namespace RamseyAws\Glue\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS Glue** service.

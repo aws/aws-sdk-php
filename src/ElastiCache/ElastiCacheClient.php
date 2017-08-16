@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ElastiCache;
+namespace RamseyAws\ElastiCache;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon ElastiCache** service.

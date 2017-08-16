@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Iot;
+namespace RamseyAws\Iot;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS IoT** service.

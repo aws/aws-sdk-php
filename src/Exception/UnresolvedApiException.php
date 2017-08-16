@@ -1,4 +1,4 @@
 <?php
-namespace Aws\Exception;
+namespace RamseyAws\Exception;
 
 class UnresolvedApiException extends \RuntimeException {}

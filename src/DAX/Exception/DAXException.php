@@ -1,7 +1,7 @@
 <?php
-namespace Aws\DAX\Exception;
+namespace RamseyAws\DAX\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon DynamoDB Accelerator (DAX)** service.

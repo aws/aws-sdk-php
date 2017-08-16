@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CostandUsageReportService;
+namespace RamseyAws\CostandUsageReportService;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Cost and Usage Report Service** service.

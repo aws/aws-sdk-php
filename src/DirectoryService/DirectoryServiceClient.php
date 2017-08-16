@@ -1,7 +1,7 @@
 <?php
-namespace Aws\DirectoryService;
+namespace RamseyAws\DirectoryService;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * AWS Directory Service client

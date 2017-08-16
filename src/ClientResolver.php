@@ -1,17 +1,17 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
-use Aws\Api\Validator;
-use Aws\Api\ApiProvider;
-use Aws\Api\Service;
-use Aws\Credentials\Credentials;
-use Aws\Credentials\CredentialsInterface;
-use Aws\Endpoint\Partition;
-use Aws\Endpoint\PartitionEndpointProvider;
-use Aws\Endpoint\PartitionProviderInterface;
-use Aws\Signature\SignatureProvider;
-use Aws\Endpoint\EndpointProvider;
-use Aws\Credentials\CredentialProvider;
+use RamseyAws\Api\Validator;
+use RamseyAws\Api\ApiProvider;
+use RamseyAws\Api\Service;
+use RamseyAws\Credentials\Credentials;
+use RamseyAws\Credentials\CredentialsInterface;
+use RamseyAws\Endpoint\Partition;
+use RamseyAws\Endpoint\PartitionEndpointProvider;
+use RamseyAws\Endpoint\PartitionProviderInterface;
+use RamseyAws\Signature\SignatureProvider;
+use RamseyAws\Endpoint\EndpointProvider;
+use RamseyAws\Credentials\CredentialProvider;
 use GuzzleHttp\Promise;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\RequestInterface;

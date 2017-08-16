@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Ssm\Exception;
+namespace RamseyAws\Ssm\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Amazon EC2 Simple Systems Manager exception.

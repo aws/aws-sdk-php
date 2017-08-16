@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CodeStar\Exception;
+namespace RamseyAws\CodeStar\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS CodeStar** service.

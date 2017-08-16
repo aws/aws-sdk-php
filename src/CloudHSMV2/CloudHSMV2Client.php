@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudHSMV2;
+namespace RamseyAws\CloudHSMV2;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS CloudHSM V2** service.
