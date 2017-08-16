@@ -1,8 +1,8 @@
 <?php
-namespace Aws\Api\Parser;
+namespace RamseyAws\Api\Parser;
 
-use Aws\Api\StructureShape;
-use Aws\Api\Service;
+use RamseyAws\Api\StructureShape;
+use RamseyAws\Api\Service;
 use Psr\Http\Message\ResponseInterface;
 
 /**

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CodeBuild\Exception;
+namespace RamseyAws\CodeBuild\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS CodeBuild** service.

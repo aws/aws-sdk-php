@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CodeCommit\Exception;
+namespace RamseyAws\CodeCommit\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS CodeCommit** service.

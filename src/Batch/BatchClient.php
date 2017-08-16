@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Batch;
+namespace RamseyAws\Batch;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Batch** service.

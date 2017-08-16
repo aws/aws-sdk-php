@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CodeStar;
+namespace RamseyAws\CodeStar;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS CodeStar** service.

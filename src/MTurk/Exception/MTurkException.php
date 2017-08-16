@@ -1,7 +1,7 @@
 <?php
-namespace Aws\MTurk\Exception;
+namespace RamseyAws\MTurk\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon Mechanical Turk Requester Service** service.

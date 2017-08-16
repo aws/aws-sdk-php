@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Redshift\Exception;
+namespace RamseyAws\Redshift\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the Amazon Redshift service.

@@ -1,18 +1,18 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\Api\ApiProvider;
-use Aws\Api\DocModel;
-use Aws\Api\Service;
-use Aws\AwsClient;
-use Aws\ClientResolver;
-use Aws\Command;
-use Aws\Exception\AwsException;
-use Aws\HandlerList;
-use Aws\Middleware;
-use Aws\RetryMiddleware;
-use Aws\ResultInterface;
-use Aws\CommandInterface;
+use RamseyAws\Api\ApiProvider;
+use RamseyAws\Api\DocModel;
+use RamseyAws\Api\Service;
+use RamseyAws\AwsClient;
+use RamseyAws\ClientResolver;
+use RamseyAws\Command;
+use RamseyAws\Exception\AwsException;
+use RamseyAws\HandlerList;
+use RamseyAws\Middleware;
+use RamseyAws\RetryMiddleware;
+use RamseyAws\ResultInterface;
+use RamseyAws\CommandInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;

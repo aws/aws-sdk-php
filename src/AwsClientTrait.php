@@ -1,7 +1,7 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
-use Aws\Api\Service;
+use RamseyAws\Api\Service;
 use GuzzleHttp\Promise\Promise;
 
 /**

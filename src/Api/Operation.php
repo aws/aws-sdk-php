@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Api;
+namespace RamseyAws\Api;
 
 /**
  * Represents an API operation.

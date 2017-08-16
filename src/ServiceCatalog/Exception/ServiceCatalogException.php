@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ServiceCatalog\Exception;
+namespace RamseyAws\ServiceCatalog\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS Service Catalog** service.

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\IotDataPlane;
+namespace RamseyAws\IotDataPlane;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS IoT Data Plane** service.

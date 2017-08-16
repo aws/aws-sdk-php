@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Inspector;
+namespace RamseyAws\Inspector;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Inspector** service.

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\WafRegional\Exception;
+namespace RamseyAws\WafRegional\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS WAF Regional** service.

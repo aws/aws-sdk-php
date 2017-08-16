@@ -1,10 +1,10 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
-use Aws\Api\ApiProvider;
-use Aws\Api\DocModel;
-use Aws\Api\Service;
-use Aws\Signature\SignatureProvider;
+use RamseyAws\Api\ApiProvider;
+use RamseyAws\Api\DocModel;
+use RamseyAws\Api\Service;
+use RamseyAws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
 
 /**
@@ -12,7 +12,7 @@ use GuzzleHttp\Psr7\Uri;
  */
 class AwsClient implements AwsClientInterface
 {
-    use AwsClientTrait;
+    use RamseyAwsClientTrait;
 
     /** @var array */
     private $config;

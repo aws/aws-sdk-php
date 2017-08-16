@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudFront;
+namespace RamseyAws\CloudFront;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon CloudFront** service.

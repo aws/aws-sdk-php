@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Multipart;
+namespace RamseyAws\Multipart;
 
 /**
  * Representation of the multipart upload.

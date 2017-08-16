@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ElasticsearchService\Exception;
+namespace RamseyAws\ElasticsearchService\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon Elasticsearch Service** service.

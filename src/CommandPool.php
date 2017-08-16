@@ -1,5 +1,5 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
 use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Promise\EachPromise;

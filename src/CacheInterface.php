@@ -1,5 +1,5 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
 /**
  * Represents a simple cache interface.

@@ -1,9 +1,9 @@
 <?php
-namespace Aws\Sqs;
+namespace RamseyAws\Sqs;
 
-use Aws\AwsClient;
-use Aws\CommandInterface;
-use Aws\Sqs\Exception\SqsException;
+use RamseyAws\AwsClient;
+use RamseyAws\CommandInterface;
+use RamseyAws\Sqs\Exception\SqsException;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7\UriResolver;
 use Psr\Http\Message\RequestInterface;

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\OpsWorks\Exception;
+namespace RamseyAws\OpsWorks\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the AWS OpsWorks service.

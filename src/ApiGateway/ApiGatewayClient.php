@@ -1,8 +1,8 @@
 <?php
-namespace Aws\ApiGateway;
+namespace RamseyAws\ApiGateway;
 
-use Aws\AwsClient;
-use Aws\CommandInterface;
+use RamseyAws\AwsClient;
+use RamseyAws\CommandInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CognitoSync;
+namespace RamseyAws\CognitoSync;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Cognito Sync** service.

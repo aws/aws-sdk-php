@@ -1,14 +1,14 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
-use Aws\Endpoint\PartitionEndpointProvider;
-use Aws\Endpoint\PartitionInterface;
+use RamseyAws\Endpoint\PartitionEndpointProvider;
+use RamseyAws\Endpoint\PartitionInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
 use Psr\Http\Message\RequestInterface;
 
 class MultiRegionClient implements AwsClientInterface
 {
-    use AwsClientTrait;
+    use RamseyAwsClientTrait;
 
     /** @var AwsClientInterface[] A pool of clients keyed by region. */
     private $clientPool = [];

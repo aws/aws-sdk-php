@@ -1,12 +1,12 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\Api\Parser\PayloadParserTrait;
-use Aws\CommandInterface;
-use Aws\Exception\AwsException;
-use Aws\HandlerList;
-use Aws\ResultInterface;
-use Aws\S3\Exception\S3Exception;
+use RamseyAws\Api\Parser\PayloadParserTrait;
+use RamseyAws\CommandInterface;
+use RamseyAws\Exception\AwsException;
+use RamseyAws\HandlerList;
+use RamseyAws\ResultInterface;
+use RamseyAws\S3\Exception\S3Exception;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 

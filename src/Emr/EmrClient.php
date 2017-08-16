@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Emr;
+namespace RamseyAws\Emr;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Elastic MapReduce (Amazon EMR)** service.

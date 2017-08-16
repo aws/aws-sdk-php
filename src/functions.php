@@ -1,5 +1,5 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\ClientInterface;

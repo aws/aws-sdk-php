@@ -1,10 +1,10 @@
 <?php
-namespace Aws\Credentials;
+namespace RamseyAws\Credentials;
 
-use Aws\Exception\AwsException;
-use Aws\Exception\CredentialsException;
-use Aws\Result;
-use Aws\Sts\StsClient;
+use RamseyAws\Exception\AwsException;
+use RamseyAws\Exception\CredentialsException;
+use RamseyAws\Result;
+use RamseyAws\Sts\StsClient;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;

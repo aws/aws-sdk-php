@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ElasticBeanstalk\Exception;
+namespace RamseyAws\ElasticBeanstalk\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the AWS Elastic Beanstalk service.

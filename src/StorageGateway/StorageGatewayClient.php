@@ -1,7 +1,7 @@
 <?php
-namespace Aws\StorageGateway;
+namespace RamseyAws\StorageGateway;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * AWS Storage Gateway client.

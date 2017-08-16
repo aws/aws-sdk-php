@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ApplicationDiscoveryService;
+namespace RamseyAws\ApplicationDiscoveryService;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Application Discovery Service** service.

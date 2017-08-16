@@ -1,9 +1,9 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\CommandInterface;
-use Aws\Multipart\UploadState;
-use Aws\ResultInterface;
+use RamseyAws\CommandInterface;
+use RamseyAws\Multipart\UploadState;
+use RamseyAws\ResultInterface;
 
 trait MultipartUploadingTrait
 {

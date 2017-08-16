@@ -1,11 +1,11 @@
 <?php
-namespace Aws\CognitoIdentityProvider;
+namespace RamseyAws\CognitoIdentityProvider;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Cognito Identity Provider** service.
- * 
+ *
  * @method \Aws\Result addCustomAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addCustomAttributesAsync(array $args = [])
  * @method \Aws\Result adminAddUserToGroup(array $args = [])

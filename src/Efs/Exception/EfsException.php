@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Efs\Exception;
+namespace RamseyAws\Efs\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Amazon EFS exception.

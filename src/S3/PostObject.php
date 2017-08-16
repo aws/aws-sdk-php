@@ -1,7 +1,7 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\Credentials\CredentialsInterface;
+use RamseyAws\Credentials\CredentialsInterface;
 use GuzzleHttp\Psr7\Uri;
 
 /**

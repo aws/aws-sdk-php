@@ -1,9 +1,9 @@
 <?php
-namespace Aws\Polly;
+namespace RamseyAws\Polly;
 
-use Aws\Api\Serializer\JsonBody;
-use Aws\AwsClient;
-use Aws\Signature\SignatureV4;
+use RamseyAws\Api\Serializer\JsonBody;
+use RamseyAws\AwsClient;
+use RamseyAws\Signature\SignatureV4;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7;

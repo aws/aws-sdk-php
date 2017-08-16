@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Iam\Exception;
+namespace RamseyAws\Iam\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the AWS Identity and Access Management service.

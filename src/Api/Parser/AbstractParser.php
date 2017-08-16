@@ -1,9 +1,9 @@
 <?php
-namespace Aws\Api\Parser;
+namespace RamseyAws\Api\Parser;
 
-use Aws\Api\Service;
-use Aws\CommandInterface;
-use Aws\ResultInterface;
+use RamseyAws\Api\Service;
+use RamseyAws\CommandInterface;
+use RamseyAws\ResultInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**

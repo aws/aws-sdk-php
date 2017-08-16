@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Api;
+namespace RamseyAws\Api;
 
-use Aws\Exception\UnresolvedApiException;
+use RamseyAws\Exception\UnresolvedApiException;
 
 /**
  * API providers.
@@ -15,7 +15,7 @@ use Aws\Exception\UnresolvedApiException;
  * API data is not created, then the resolve() method will throw a
  * {@see Aws\Exception\UnresolvedApiException}.
  *
- *     use Aws\Api\ApiProvider;
+ *     use RamseyAws\Api\ApiProvider;
  *     $provider = ApiProvider::defaultProvider();
  *     // Returns an array or NULL.
  *     $data = $provider('api', 's3', '2006-03-01');

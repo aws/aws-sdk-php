@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CostandUsageReportService\Exception;
+namespace RamseyAws\CostandUsageReportService\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS Cost and Usage Report Service** service.

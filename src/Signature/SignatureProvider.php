@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Signature;
+namespace RamseyAws\Signature;
 
-use Aws\Exception\UnresolvedSignatureException;
+use RamseyAws\Exception\UnresolvedSignatureException;
 
 /**
  * Signature providers.
@@ -15,7 +15,7 @@ use Aws\Exception\UnresolvedSignatureException;
  * is created. If a signature object is not created, then the resolve()
  * function will throw a {@see Aws\Exception\UnresolvedSignatureException}.
  *
- *     use Aws\Signature\SignatureProvider;
+ *     use RamseyAws\Signature\SignatureProvider;
  *     $provider = SignatureProvider::defaultProvider();
  *     // Returns a SignatureInterface or NULL.
  *     $signer = $provider('v4', 's3', 'us-west-2');

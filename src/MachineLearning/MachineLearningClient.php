@@ -1,8 +1,8 @@
 <?php
-namespace Aws\MachineLearning;
+namespace RamseyAws\MachineLearning;
 
-use Aws\AwsClient;
-use Aws\CommandInterface;
+use RamseyAws\AwsClient;
+use RamseyAws\CommandInterface;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 

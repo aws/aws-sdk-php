@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Glacier;
+namespace RamseyAws\Glacier;
 
-use Aws\HashInterface;
+use RamseyAws\HashInterface;
 
 /**
  * Encapsulates the creation of a tree hash from streamed data

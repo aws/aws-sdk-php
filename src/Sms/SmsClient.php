@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Sms;
+namespace RamseyAws\Sms;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Server Migration Service** service.

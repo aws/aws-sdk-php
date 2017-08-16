@@ -1,7 +1,7 @@
 <?php
-namespace Aws\MarketplaceCommerceAnalytics;
+namespace RamseyAws\MarketplaceCommerceAnalytics;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Marketplace Commerce Analytics** service.

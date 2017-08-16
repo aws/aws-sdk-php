@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Api\ErrorParser;
+namespace RamseyAws\Api\ErrorParser;
 
-use Aws\Api\Parser\PayloadParserTrait;
+use RamseyAws\Api\Parser\PayloadParserTrait;
 use Psr\Http\Message\ResponseInterface;
 
 /**

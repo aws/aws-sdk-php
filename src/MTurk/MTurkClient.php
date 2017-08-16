@@ -1,7 +1,7 @@
 <?php
-namespace Aws\MTurk;
+namespace RamseyAws\MTurk;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Mechanical Turk Requester Service** service.

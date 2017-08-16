@@ -1,5 +1,5 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
 /**
  * Incremental hashing using PHP's hash functions.

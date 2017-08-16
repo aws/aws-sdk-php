@@ -1,7 +1,7 @@
 <?php
-namespace Aws\LexRuntimeService;
+namespace RamseyAws\LexRuntimeService;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Lex Runtime Service** service.

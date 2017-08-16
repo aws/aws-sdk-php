@@ -1,13 +1,13 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\Api\Parser\PayloadParserTrait;
-use Aws\CacheInterface;
-use Aws\CommandInterface;
-use Aws\LruArrayCache;
-use Aws\MultiRegionClient as BaseClient;
-use Aws\Exception\AwsException;
-use Aws\S3\Exception\PermanentRedirectException;
+use RamseyAws\Api\Parser\PayloadParserTrait;
+use RamseyAws\CacheInterface;
+use RamseyAws\CommandInterface;
+use RamseyAws\LruArrayCache;
+use RamseyAws\MultiRegionClient as BaseClient;
+use RamseyAws\Exception\AwsException;
+use RamseyAws\S3\Exception\PermanentRedirectException;
 use GuzzleHttp\Promise;
 
 /**

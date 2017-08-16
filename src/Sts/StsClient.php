@@ -1,9 +1,9 @@
 <?php
-namespace Aws\Sts;
+namespace RamseyAws\Sts;
 
-use Aws\AwsClient;
-use Aws\Result;
-use Aws\Credentials\Credentials;
+use RamseyAws\AwsClient;
+use RamseyAws\Result;
+use RamseyAws\Credentials\Credentials;
 
 /**
  * This client is used to interact with the **AWS Security Token Service (AWS STS)**.

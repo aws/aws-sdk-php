@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Kms;
+namespace RamseyAws\Kms;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Key Management Service**.

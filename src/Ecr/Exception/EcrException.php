@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Ecr\Exception;
+namespace RamseyAws\Ecr\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon EC2 Container Registry** service.

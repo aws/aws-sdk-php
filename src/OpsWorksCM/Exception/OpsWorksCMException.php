@@ -1,7 +1,7 @@
 <?php
-namespace Aws\OpsWorksCM\Exception;
+namespace RamseyAws\OpsWorksCM\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS OpsWorks for Chef Automate** service.

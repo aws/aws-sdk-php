@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Endpoint;
+namespace RamseyAws\Endpoint;
 
 /**
  * Represents a section of the AWS cloud.
@@ -36,7 +36,7 @@ interface PartitionInterface
      *                                              regions (e.g., 'local' for
      *                                              DynamoDB or
      *                                              'fips-us-gov-west-1' for S3)
-     * 
+     *
      * @return string[]
      */
     public function getAvailableEndpoints(
@@ -48,7 +48,7 @@ interface PartitionInterface
      * A partition must be invokable as an endpoint provider.
      *
      * @see EndpointProvider
-     * 
+     *
      * @param array $args
      * @return array
      */

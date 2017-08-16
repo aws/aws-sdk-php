@@ -1,8 +1,8 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\CommandInterface;
-use Aws\S3\Exception\S3Exception;
+use RamseyAws\CommandInterface;
+use RamseyAws\S3\Exception\S3Exception;
 use Psr\Http\Message\RequestInterface;
 
 /**

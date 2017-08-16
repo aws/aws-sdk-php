@@ -1,9 +1,9 @@
 <?php
-namespace Aws\Api;
+namespace RamseyAws\Api;
 
-use Aws\Api\Serializer\QuerySerializer;
-use Aws\Api\Serializer\Ec2ParamBuilder;
-use Aws\Api\Parser\QueryParser;
+use RamseyAws\Api\Serializer\QuerySerializer;
+use RamseyAws\Api\Serializer\Ec2ParamBuilder;
+use RamseyAws\Api\Parser\QueryParser;
 
 /**
  * Represents a web service API model.

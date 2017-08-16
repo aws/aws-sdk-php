@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Api\ErrorParser;
+namespace RamseyAws\Api\ErrorParser;
 
 use Psr\Http\Message\ResponseInterface;
 

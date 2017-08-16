@@ -1,8 +1,8 @@
 <?php
-namespace Aws\Api\Serializer;
+namespace RamseyAws\Api\Serializer;
 
-use Aws\Api\Shape;
-use Aws\Api\ListShape;
+use RamseyAws\Api\Shape;
+use RamseyAws\Api\ListShape;
 
 /**
  * @internal

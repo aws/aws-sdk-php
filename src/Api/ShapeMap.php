@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Api;
+namespace RamseyAws\Api;
 
 /**
  * Builds shape based on shape references.

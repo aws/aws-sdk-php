@@ -1,7 +1,7 @@
 <?php
-namespace Aws\SnowBall\Exception;
+namespace RamseyAws\SnowBall\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon Import/Export Snowball** service.

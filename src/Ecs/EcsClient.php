@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Ecs;
+namespace RamseyAws\Ecs;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with **Amazon ECS**.

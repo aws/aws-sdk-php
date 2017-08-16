@@ -1,8 +1,8 @@
 <?php
-namespace Aws\Api\Serializer;
+namespace RamseyAws\Api\Serializer;
 
-use Aws\Api\Service;
-use Aws\CommandInterface;
+use RamseyAws\Api\Service;
+use RamseyAws\CommandInterface;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 

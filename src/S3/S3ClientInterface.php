@@ -1,9 +1,9 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\AwsClientInterface;
-use Aws\CommandInterface;
-use Aws\ResultInterface;
+use RamseyAws\AwsClientInterface;
+use RamseyAws\CommandInterface;
+use RamseyAws\ResultInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 

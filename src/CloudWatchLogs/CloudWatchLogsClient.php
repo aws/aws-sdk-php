@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudWatchLogs;
+namespace RamseyAws\CloudWatchLogs;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon CloudWatch Logs** service.

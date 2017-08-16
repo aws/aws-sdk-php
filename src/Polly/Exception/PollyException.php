@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Polly\Exception;
+namespace RamseyAws\Polly\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon Polly** service.

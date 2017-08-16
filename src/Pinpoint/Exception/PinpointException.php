@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Pinpoint\Exception;
+namespace RamseyAws\Pinpoint\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon Pinpoint** service.

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\DynamoDb;
+namespace RamseyAws\DynamoDb;
 
-use Aws\DynamoDb\Exception\DynamoDbException;
+use RamseyAws\DynamoDb\Exception\DynamoDbException;
 
 /**
  * The locking connection adds locking logic to the read operation.

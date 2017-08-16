@@ -1,5 +1,5 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
 /**
  * Loads JSON files and compiles them into PHP arrays.

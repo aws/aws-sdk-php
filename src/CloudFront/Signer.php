@@ -1,5 +1,5 @@
 <?php
-namespace Aws\CloudFront;
+namespace RamseyAws\CloudFront;
 
 /**
  * @internal

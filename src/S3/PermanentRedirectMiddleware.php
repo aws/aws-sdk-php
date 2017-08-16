@@ -1,9 +1,9 @@
 <?php
-namespace Aws\S3;
+namespace RamseyAws\S3;
 
-use Aws\CommandInterface;
-use Aws\ResultInterface;
-use Aws\S3\Exception\PermanentRedirectException;
+use RamseyAws\CommandInterface;
+use RamseyAws\ResultInterface;
+use RamseyAws\S3\Exception\PermanentRedirectException;
 use Psr\Http\Message\RequestInterface;
 
 /**

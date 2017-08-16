@@ -1,8 +1,8 @@
 <?php
-namespace Aws\Endpoint;
+namespace RamseyAws\Endpoint;
 
 use ArrayAccess;
-use Aws\HasDataTrait;
+use RamseyAws\HasDataTrait;
 use InvalidArgumentException as Iae;
 
 /**

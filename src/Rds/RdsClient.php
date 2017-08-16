@@ -1,11 +1,11 @@
 <?php
-namespace Aws\Rds;
+namespace RamseyAws\Rds;
 
-use Aws\AwsClient;
-use Aws\Api\Service;
-use Aws\Api\DocModel;
-use Aws\Api\ApiProvider;
-use Aws\PresignUrlMiddleware;
+use RamseyAws\AwsClient;
+use RamseyAws\Api\Service;
+use RamseyAws\Api\DocModel;
+use RamseyAws\Api\ApiProvider;
+use RamseyAws\PresignUrlMiddleware;
 
 /**
  * This client is used to interact with the **Amazon Relational Database Service (Amazon RDS)**.

@@ -1,13 +1,13 @@
 <?php
-namespace Aws\Api\Serializer;
+namespace RamseyAws\Api\Serializer;
 
-use Aws\Api\MapShape;
-use Aws\Api\Service;
-use Aws\Api\Operation;
-use Aws\Api\Shape;
-use Aws\Api\StructureShape;
-use Aws\Api\TimestampShape;
-use Aws\CommandInterface;
+use RamseyAws\Api\MapShape;
+use RamseyAws\Api\Service;
+use RamseyAws\Api\Operation;
+use RamseyAws\Api\Shape;
+use RamseyAws\Api\StructureShape;
+use RamseyAws\Api\TimestampShape;
+use RamseyAws\CommandInterface;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7\UriResolver;

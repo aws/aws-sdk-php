@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ApplicationAutoScaling;
+namespace RamseyAws\ApplicationAutoScaling;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Application Auto Scaling** service.

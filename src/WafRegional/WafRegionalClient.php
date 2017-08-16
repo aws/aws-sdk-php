@@ -1,7 +1,7 @@
 <?php
-namespace Aws\WafRegional;
+namespace RamseyAws\WafRegional;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS WAF Regional** service.

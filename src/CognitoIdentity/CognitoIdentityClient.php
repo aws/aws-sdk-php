@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CognitoIdentity;
+namespace RamseyAws\CognitoIdentity;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Cognito Identity** service.

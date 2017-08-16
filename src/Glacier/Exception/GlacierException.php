@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Glacier\Exception;
+namespace RamseyAws\Glacier\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the Amazon Glacier service.

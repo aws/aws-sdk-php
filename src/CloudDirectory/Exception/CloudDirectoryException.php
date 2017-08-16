@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudDirectory\Exception;
+namespace RamseyAws\CloudDirectory\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **Amazon CloudDirectory** service.

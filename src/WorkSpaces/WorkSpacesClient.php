@@ -1,7 +1,7 @@
 <?php
-namespace Aws\WorkSpaces;
+namespace RamseyAws\WorkSpaces;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * Amazon WorkSpaces client.

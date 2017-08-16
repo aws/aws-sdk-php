@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Multipart;
+namespace RamseyAws\Multipart;
 
-use Aws\AwsClientInterface as Client;
+use RamseyAws\AwsClientInterface as Client;
 use GuzzleHttp\Psr7;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\StreamInterface as Stream;

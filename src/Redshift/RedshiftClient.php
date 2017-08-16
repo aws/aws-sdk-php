@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Redshift;
+namespace RamseyAws\Redshift;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Redshift** service.

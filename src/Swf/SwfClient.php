@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Swf;
+namespace RamseyAws\Swf;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * Amazon Simple Workflow Service (Amazon SWF) client.

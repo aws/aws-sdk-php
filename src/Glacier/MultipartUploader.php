@@ -1,12 +1,12 @@
 <?php
-namespace Aws\Glacier;
+namespace RamseyAws\Glacier;
 
-use Aws\CommandInterface;
-use Aws\HashingStream;
-use Aws\Multipart\AbstractUploader;
-use Aws\Multipart\UploadState;
-use Aws\PhpHash;
-use Aws\ResultInterface;
+use RamseyAws\CommandInterface;
+use RamseyAws\HashingStream;
+use RamseyAws\Multipart\AbstractUploader;
+use RamseyAws\Multipart\UploadState;
+use RamseyAws\PhpHash;
+use RamseyAws\ResultInterface;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface as Stream;
 

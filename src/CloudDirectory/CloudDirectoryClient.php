@@ -1,7 +1,7 @@
 <?php
-namespace Aws\CloudDirectory;
+namespace RamseyAws\CloudDirectory;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon CloudDirectory** service.

@@ -1,5 +1,5 @@
 <?php
-namespace Aws;
+namespace RamseyAws;
 
 /**
  * Trait implementing ToArrayInterface, \ArrayAccess, \Countable, and

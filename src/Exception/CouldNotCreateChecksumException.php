@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Exception;
+namespace RamseyAws\Exception;
 
 class CouldNotCreateChecksumException extends \RuntimeException
 {

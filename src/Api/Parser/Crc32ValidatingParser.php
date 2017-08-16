@@ -1,8 +1,8 @@
 <?php
-namespace Aws\Api\Parser;
+namespace RamseyAws\Api\Parser;
 
-use Aws\CommandInterface;
-use Aws\Exception\AwsException;
+use RamseyAws\CommandInterface;
+use RamseyAws\Exception\AwsException;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Psr7;
 

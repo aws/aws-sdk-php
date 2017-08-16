@@ -1,7 +1,7 @@
 <?php
-namespace Aws\SnowBall;
+namespace RamseyAws\SnowBall;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Import/Export Snowball** service.

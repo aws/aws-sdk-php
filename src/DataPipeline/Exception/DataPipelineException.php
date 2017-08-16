@@ -1,7 +1,7 @@
 <?php
-namespace Aws\DataPipeline\Exception;
+namespace RamseyAws\DataPipeline\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the AWS Data Pipeline service.

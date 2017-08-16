@@ -1,7 +1,7 @@
 <?php
-namespace Aws\DeviceFarm;
+namespace RamseyAws\DeviceFarm;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon DeviceFarm** service.

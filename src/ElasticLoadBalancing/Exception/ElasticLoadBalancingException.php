@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ElasticLoadBalancing\Exception;
+namespace RamseyAws\ElasticLoadBalancing\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the Elastic Load Balancing service.

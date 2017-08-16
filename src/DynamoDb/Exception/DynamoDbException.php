@@ -1,7 +1,7 @@
 <?php
-namespace Aws\DynamoDb\Exception;
+namespace RamseyAws\DynamoDb\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the Amazon DynamoDB service.

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Sfn\Exception;
+namespace RamseyAws\Sfn\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * Represents an error interacting with the **AWS Step Functions** service.

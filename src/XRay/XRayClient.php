@@ -1,7 +1,7 @@
 <?php
-namespace Aws\XRay;
+namespace RamseyAws\XRay;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS X-Ray** service.

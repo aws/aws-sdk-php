@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Sts\Exception;
+namespace RamseyAws\Sts\Exception;
 
-use Aws\Exception\AwsException;
+use RamseyAws\Exception\AwsException;
 
 /**
  * AWS Security Token Service exception.

@@ -1,7 +1,7 @@
 <?php
-namespace Aws\Firehose;
+namespace RamseyAws\Firehose;
 
-use Aws\AwsClient;
+use RamseyAws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Kinesis Firehose** service.

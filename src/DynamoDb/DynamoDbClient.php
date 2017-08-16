@@ -1,12 +1,12 @@
 <?php
-namespace Aws\DynamoDb;
+namespace RamseyAws\DynamoDb;
 
-use Aws\Api\Parser\Crc32ValidatingParser;
-use Aws\AwsClient;
-use Aws\ClientResolver;
-use Aws\HandlerList;
-use Aws\Middleware;
-use Aws\RetryMiddleware;
+use RamseyAws\Api\Parser\Crc32ValidatingParser;
+use RamseyAws\AwsClient;
+use RamseyAws\ClientResolver;
+use RamseyAws\HandlerList;
+use RamseyAws\Middleware;
+use RamseyAws\RetryMiddleware;
 
 /**
  * This client is used to interact with the **Amazon DynamoDB** service.

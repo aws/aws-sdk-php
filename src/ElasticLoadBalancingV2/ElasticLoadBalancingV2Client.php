@@ -1,9 +1,9 @@
 <?php
-namespace Aws\ElasticLoadBalancingV2;
+namespace RamseyAws\ElasticLoadBalancingV2;
 
-use Aws\AwsClient;
-use Aws\Command;
-use Aws\CommandInterface;
+use RamseyAws\AwsClient;
+use RamseyAws\Command;
+use RamseyAws\CommandInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
