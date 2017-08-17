@@ -121,7 +121,7 @@ For more information regarding ``'assume_role_params'``, see `AssumeRole <http:/
             'region' => 'us-west-2',
             'version' => '2011-06-15'
         ]),
-        'assume_role_param' => [
+        'assume_role_params' => [
             'RoleArn' => '<string>', // REQUIRED
             'RoleSessionName' => '<string>', // REQUIRED
             ...
