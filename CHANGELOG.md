@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeStar` - Launch AWS CodeStar in the US West (N. California) and EU (London) regions.
+
 ## 3.33.2 - 2017-08-16
 
 * `Aws\` - Fixes a bug in `ClientResolver` that would provide incorrect information on required parameters set to `null` when resolving a client.
