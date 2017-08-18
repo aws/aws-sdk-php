@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.33.3 - 2017-08-18
 
 * `Aws\CodeStar` - Launch AWS CodeStar in the US West (N. California) and EU (London) regions.
 
