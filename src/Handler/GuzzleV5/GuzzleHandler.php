@@ -162,7 +162,7 @@ class GuzzleHandler
         $request->setHeader(
             'User-Agent',
             $request->getHeader('User-Agent')
-            . ' ' . Client::getDefaultUserAgent()
+                . ' ' . Client::getDefaultUserAgent()
         );
 
         // Make sure the delay is configured, if provided.
