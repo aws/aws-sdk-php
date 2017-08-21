@@ -81,9 +81,9 @@ class GuzzleHandler
                 return $this->createPsr7Response($response);
             },
             function (Exception $exception) use ($options) {
-                // If we got a 'sink' that's a path, the body is now the path
-                // and the actual response body is in the file, let's load it
-                // to properly build up the exception.
+                // If we got a 'sink' that's a path, set the response body to
+                // the contents of the file. This will build the resulting
+                // exception with more information.
                 if ($exception instanceof RequestException) {
                     if (isset($options['sink'])) {
                         if (!($options['sink'] instanceof Psr7StreamInterface)) {
