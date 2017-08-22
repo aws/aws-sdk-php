@@ -130,6 +130,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getPatchBaselineAsync(array $args = [])
  * @method \Aws\Result getPatchBaselineForPatchGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getPatchBaselineForPatchGroupAsync(array $args = [])
+ * @method \Aws\Result listAssociationVersions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAssociationVersionsAsync(array $args = [])
  * @method \Aws\Result listAssociations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAssociationsAsync(array $args = [])
  * @method \Aws\Result listCommandInvocations(array $args = [])
