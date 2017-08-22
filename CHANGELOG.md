@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.34.0 - 2017-08-22
 
 * `Aws\` - Fixes an issue where exceptions weren't being fully loaded when using a `SaveAs` parameter set to a file path on Guzzle v5.
 * `Aws\` - Update Composer to add dependencies on `simplexml`, `pcre`, `spl` and `json`. This change will cause Composer updates to fail if you do not have these PHP extensions installed.
