@@ -1,6 +1,9 @@
 <?php
 namespace Aws\Ses;
 
+use Aws\Api\ApiProvider;
+use Aws\Api\DocModel;
+use Aws\Api\Service;
 use Aws\Credentials\CredentialsInterface;
 
 /**
@@ -126,5 +129,21 @@ class SesClient extends \Aws\AwsClient
         $signature = hash_hmac($algo, $message, $creds->getSecretKey(), true);
 
         return base64_encode($version . $signature);
+    }
+
+    /**
+     * @internal
+     * @codeCoverageIgnore
+     */
+    public static function applyDocFilters(array $api, array $docs)
+    {
+        $b64 = '<div class="alert alert-info">This value will be base64 encoded on your behalf.</div>';
+
+        $docs['shapes']['RawMessage']['append'] = $b64;
+
+        return [
+            new Service($api, ApiProvider::defaultProvider()),
+            new DocModel($docs)
+        ];
     }
 }
