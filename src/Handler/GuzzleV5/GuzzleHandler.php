@@ -11,6 +11,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\ResponseInterface as GuzzleResponse;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response as Psr7Response;
+use GuzzleHttp\Stream\Stream;
 use Psr\Http\Message\RequestInterface as Psr7Request;
 use Psr\Http\Message\StreamInterface as Psr7StreamInterface;
 
@@ -79,7 +80,21 @@ class GuzzleHandler
                 // Adapt the Guzzle 5 Future to a Guzzle 6 ResponsePromise.
                 return $this->createPsr7Response($response);
             },
-            function (Exception $exception) {
+            function (Exception $exception) use ($options) {
+                // If we got a 'sink' that's a path, set the response body to
+                // the contents of the file. This will build the resulting
+                // exception with more information.
+                if ($exception instanceof RequestException) {
+                    if (isset($options['sink'])) {
+                        if (!($options['sink'] instanceof Psr7StreamInterface)) {
+                            $exception->getResponse()->setBody(
+                                Stream::factory(
+                                    file_get_contents($options['sink'])
+                                )
+                            );
+                        }
+                    }
+                }
                 // Reject with information about the error.
                 return new Promise\RejectedPromise($this->prepareErrorData($exception));
             }

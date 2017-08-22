@@ -4,12 +4,14 @@ namespace Aws\Test\Handler\GuzzleV5;
 use Aws\Handler\GuzzleV5\GuzzleHandler;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\FutureResponse;
 use GuzzleHttp\Message\Request as GuzzleRequest;
 use GuzzleHttp\Message\Response as GuzzleResponse;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Promise\RejectionException;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\Stream as PsrStream;
 use GuzzleHttp\Psr7\Request as PsrRequest;
 use GuzzleHttp\Psr7\Response as PsrResponse;
 use GuzzleHttp\Ring\Client\MockHandler;
@@ -79,6 +81,98 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($wasRejected, 'Reject callback was not triggered.');
     }
 
+    private function getErrorXml()
+    {
+        return <<<EOXML
+<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+  <Code>NoSuchKey</Code>
+  <Message>The specified key does not exist.</Message>
+  <Key>test.png</Key>
+  <RequestId>656c76696e6727732072657175657374</RequestId>
+  <HostId>Uuag1LuByRx9e6j5Onimru9pO4ZVKnJ2Qz7/C1NPcfTWAtRPfTaOFg==</HostId>
+</Error>
+EOXML;
+    }
+
+    public function testHandlerWorksWithFailedRequestFileSink()
+    {
+        $xml = $this->getErrorXml();
+        $sink = sys_get_temp_dir() . '/test_error_sink.txt';
+        $deferred = new Deferred();
+        $handler = $this->getHandler($deferred, $xml);
+        $wasRejected = false;
+
+        $promise = $handler(
+            new PsrRequest('GET', 'http://example.com'),
+            ['delay' => 500, 'sink' => $sink]
+        );
+        $promise->then(null, function (array $error) use (&$wasRejected) {
+            $wasRejected = true;
+        });
+
+        $deferred->reject(new RequestException(
+            'message',
+            new GuzzleRequest('GET', 'http://example.com'),
+            new GuzzleResponse('404')
+        ));
+
+        try {
+            $promise->wait();
+            unlink($sink);
+            $this->fail('An exception should have been thrown.');
+        } catch (RejectionException $e) {
+            $error = $e->getReason();
+            $this->assertInstanceOf(RequestException::class, $error['exception']);
+            $this->assertFalse($error['connection_error']);
+            $this->assertInstanceOf(PsrResponse::class, $error['response']);
+            $this->assertEquals(404, $error['response']->getStatusCode());
+            $this->assertEquals($xml, $error['response']->getBody());
+            $this->assertEquals($xml, file_get_contents($sink));
+            unlink($sink);
+        }
+
+        $this->assertTrue($wasRejected, 'Reject callback was not triggered.');
+    }
+
+    public function testHandlerWorksWithFailedRequestStreamSink()
+    {
+        $xml = $this->getErrorXml();
+        $sink = Psr7\stream_for();
+        $deferred = new Deferred();
+        $handler = $this->getHandler($deferred, $xml);
+        $wasRejected = false;
+
+        $promise = $handler(
+            new PsrRequest('GET', 'http://example.com'),
+            ['delay' => 500, 'sink' => $sink]
+        );
+        $promise->then(null, function (array $error) use (&$wasRejected) {
+            $wasRejected = true;
+        });
+
+        $deferred->reject(new RequestException(
+            'message',
+            new GuzzleRequest('GET', 'http://example.com'),
+            new GuzzleResponse('404', [], Stream::factory($xml))
+        ));
+
+        try {
+            $promise->wait();
+            $this->fail('An exception should have been thrown.');
+        } catch (RejectionException $e) {
+            $error = $e->getReason();
+            $this->assertInstanceOf(RequestException::class, $error['exception']);
+            $this->assertFalse($error['connection_error']);
+            $this->assertInstanceOf(PsrResponse::class, $error['response']);
+            $this->assertEquals(404, $error['response']->getStatusCode());
+            $this->assertEquals($xml, (string)$error['response']->getBody());
+            $this->assertEquals($xml, (string)$sink);
+        }
+
+        $this->assertTrue($wasRejected, 'Reject callback was not triggered.');
+    }
+
     public function testHandlerWorksWithEmptyBody()
     {
         $deferred = new Deferred();
@@ -105,16 +199,20 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($wasCalled);
     }
 
-    private function getHandler(Deferred $deferred)
+    private function getHandler(Deferred $deferred, $output = 'foo')
     {
         $client = $this->getMock('GuzzleHttp\Client', ['send']);
         $future = new FutureResponse($deferred->promise());
         $client->method('send')->willReturn($future);
 
-        return function ($request, $options = []) use ($client) {
+        return function ($request, $options = []) use ($client, $output) {
             /** @var $client \GuzzleHttp\Client */
             if (isset($options['sink'])) {
-                $options['sink']->write('foo');
+                if ($options['sink'] instanceof PsrStream) {
+                    $options['sink']->write($output);
+                } else {
+                    file_put_contents($options['sink'], $output);
+                }
             }
             return call_user_func(new GuzzleHandler($client), $request, $options);
         };
