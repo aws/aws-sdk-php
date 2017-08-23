@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.34.1 - 2017-08-23
 
 * `Aws\AppStream` - Documentation updates for appstream
 
