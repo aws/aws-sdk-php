@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Documentation updates for appstream
+
 ## 3.34.0 - 2017-08-22
 
 * `Aws\` - Fixes an issue where exceptions weren't being fully loaded when using a `SaveAs` parameter set to a file path on Guzzle v5.
