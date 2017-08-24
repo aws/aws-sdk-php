@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Rekognition` - Update the enum value of LandmarkType and GenderType to be consistent with service response
+
 ## 3.34.1 - 2017-08-23
 
 * `Aws\AppStream` - Documentation updates for appstream
