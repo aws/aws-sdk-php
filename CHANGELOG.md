@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.34.2 - 2017-08-24
 
 * `Aws\Rekognition` - Update the enum value of LandmarkType and GenderType to be consistent with service response
 
