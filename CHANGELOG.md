@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.35.0 - 2017-08-25
 
 * `Aws\` - Update CloudHSM smoke tests to CloudHSMV2
 * `Aws\CloudFormation` - Rollback triggers enable you to have AWS CloudFormation monitor the state of your application during stack creation and updating, and to roll back that operation if the application breaches the threshold of any of the alarms you've specified.
