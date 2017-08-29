@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Increased the internal size limit of resourceId
+* `Aws\EC2` - Provides capability to add secondary CIDR blocks to a VPC.
+
 ## 3.35.0 - 2017-08-25
 
 * `Aws\` - Update CloudHSM smoke tests to CloudHSMV2
