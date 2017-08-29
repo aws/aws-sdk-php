@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.35.1 - 2017-08-29
 
 * `Aws\ConfigService` - Increased the internal size limit of resourceId
 * `Aws\EC2` - Provides capability to add secondary CIDR blocks to a VPC.
