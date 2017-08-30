@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - Application Auto Scaling now supports the DisableScaleIn option for Target Tracking Scaling Policies. This allows customers to create scaling policies that will only add capacity to the target.
+* `Aws\Organizations` - The exception ConstraintViolationException now contains a new reason subcode MASTERACCOUNT_MISSING_CONTACT_INFO to make it easier to understand why attempting to remove an account from an Organization can fail. We also improved several other of the text descriptions and examples.
+
 ## 3.35.1 - 2017-08-29
 
 * `Aws\ConfigService` - Increased the internal size limit of resourceId
