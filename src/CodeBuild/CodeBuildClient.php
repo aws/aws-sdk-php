@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS CodeBuild** service.
+ * @method \Aws\Result batchDeleteBuilds(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDeleteBuildsAsync(array $args = [])
  * @method \Aws\Result batchGetBuilds(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetBuildsAsync(array $args = [])
  * @method \Aws\Result batchGetProjects(array $args = [])

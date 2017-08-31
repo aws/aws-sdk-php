@@ -478,6 +478,10 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise replaceIamInstanceProfileAssociationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result unassignIpv6Addresses(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise unassignIpv6AddressesAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result updateSecurityGroupRuleDescriptionsEgress(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise updateSecurityGroupRuleDescriptionsEgressAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result updateSecurityGroupRuleDescriptionsIngress(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise updateSecurityGroupRuleDescriptionsIngressAsync(array $args = []) (supported in versions 2016-11-15)
  */
 class Ec2Client extends AwsClient
 {
