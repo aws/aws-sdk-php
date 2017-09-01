@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.0 - 2017-09-01
 
 * `Aws\GameLift` - GameLift VPC resources can be peered with any other AWS VPC. R4 memory-optimized instances now available to deploy.
 * `Aws\Mobile` - AWS Mobile Hub is an integrated experience designed to help developers build, test, configure and release cloud-based applications for mobile devices using Amazon Web Services. AWS Mobile Hub provides a console and API for developers, allowing them to quickly select desired features and integrate them into mobile applications. Features include NoSQL Database, Cloud Logic, Messaging and Analytics. With AWS Mobile Hub, you pay only for the underlying services that Mobile Hub provisions based on the features you choose in the Mobile Hub console.
