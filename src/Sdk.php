@@ -150,6 +150,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMarketplaceMetering(array $args = [])
  * @method \Aws\MigrationHub\MigrationHubClient createMigrationHub(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHub(array $args = [])
+ * @method \Aws\Mobile\MobileClient createMobile(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMobile(array $args = [])
  * @method \Aws\OpsWorks\OpsWorksClient createOpsWorks(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOpsWorks(array $args = [])
  * @method \Aws\OpsWorksCM\OpsWorksCMClient createOpsWorksCM(array $args = [])
