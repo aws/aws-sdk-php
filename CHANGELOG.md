@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Budgets` - Add an optional "thresholdType" to notifications to support percentage or absolute value thresholds.
+
 ## 3.36.1 - 2017-09-05
 
 * `Aws\CodeStar` - Added support to tag CodeStar projects. Tags can be used to organize and find CodeStar projects on key-value pairs that you can choose. For example, you could add a tag with a key of "Release" and a value of "Beta" to projects your organization is working on for an upcoming beta release.
