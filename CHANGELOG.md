@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.2 - 2017-09-06
 
 * `Aws\Budgets` - Add an optional "thresholdType" to notifications to support percentage or absolute value thresholds.
 
