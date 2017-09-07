@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.3 - 2017-09-07
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for application-autoscaling
 * `Aws\EC2` - With Tagging support, you can add Key and Value metadata to search, filter and organize your NAT Gateways according to your organization's needs.
