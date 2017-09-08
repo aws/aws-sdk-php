@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchLogs` - Adds support for the PutResourcePolicy, DescribeResourcePolicy and DeleteResourcePolicy APIs.
+
 ## 3.36.3 - 2017-09-07
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for application-autoscaling
