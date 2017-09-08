@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.4 - 2017-09-08
 
 * `Aws\CloudWatchLogs` - Adds support for the PutResourcePolicy, DescribeResourcePolicy and DeleteResourcePolicy APIs.
 
