@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.6 - 2017-09-12
 
 * `Aws\EC2` - Fixed bug in EC2 clients preventing HostOfferingSet from being set
 
