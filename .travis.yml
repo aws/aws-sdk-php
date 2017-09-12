@@ -31,6 +31,8 @@ install:
   - 'if [ $(phpenv version-name) != "hhvm" ]; then echo "xdebug.remote_autostart=0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi'
   - 'if [ $(phpenv version-name) != "hhvm" ]; then echo "xdebug.remote_enable=0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi'
   - 'if [ $(phpenv version-name) != "hhvm" ]; then echo "xdebug.profiler_enable=0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi'
+  - 'if [ $(phpenv version-name) != "hhvm" ]; then rm ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini; fi'
+  - composer --version
   - travis_retry composer update $COMPOSER_OPTS --no-interaction --prefer-source
 
 script:
