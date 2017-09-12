@@ -13,14 +13,14 @@ php:
 env:
   - COMPOSER_OPTS=""
   - COMPOSER_OPTS="--prefer-lowest"
-allow_failures:
-  - php: 7.2
-    env: COMPOSER_OPTS="--prefer-lowest"
-  - php: hhvm
-  - php: nightly
-    env: COMPOSER_OPTS="--prefer-lowest"
 
-fast_finish: true
+matrix:
+  allow_failures:
+    - php: 7.2
+      env: COMPOSER_OPTS="--prefer-lowest"
+    - php: hhvm
+    - php: nightly
+  fast_finish: true
 
 sudo: false
 
@@ -28,6 +28,9 @@ install:
   - export AWS_ACCESS_KEY_ID=foo
   - export AWS_SECRET_ACCESS_KEY=bar
   - 'if [ $(phpenv version-name) != "hhvm" ]; then echo "xdebug.overload_var_dump = 0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi'
+  - 'if [ $(phpenv version-name) != "hhvm" ]; then echo "xdebug.remote_autostart=0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi'
+  - 'if [ $(phpenv version-name) != "hhvm" ]; then echo "xdebug.remote_enable=0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi'
+  - 'if [ $(phpenv version-name) != "hhvm" ]; then echo "xdebug.profiler_enable=0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi'
   - travis_retry composer update $COMPOSER_OPTS --no-interaction --prefer-source
 
 script:
