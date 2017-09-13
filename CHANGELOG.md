@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.7 - 2017-09-13
 
 * `Aws\AutoScaling` - Customers can create Life Cycle Hooks at the time of creating Auto Scaling Groups through the CreateAutoScalingGroup API
 * `Aws\Batch` - Documentation updates for batch
