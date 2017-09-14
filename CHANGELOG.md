@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.8 - 2017-09-14
 
 * `Aws\CodeBuild` - Supporting Parameter Store in environment variables for AWS CodeBuild
 * `Aws\Organizations` - Documentation updates for AWS Organizations
