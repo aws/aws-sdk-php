@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeBuild` - Supporting Parameter Store in environment variables for AWS CodeBuild
+* `Aws\Organizations` - Documentation updates for AWS Organizations
+* `Aws\ServiceCatalog` - This release of Service Catalog adds API support to copy products.
+
 ## 3.36.7 - 2017-09-13
 
 * `Aws\AutoScaling` - Customers can create Life Cycle Hooks at the time of creating Auto Scaling Groups through the CreateAutoScalingGroup API
