@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.9 - 2017-09-15
 
 * `Aws\APIGateway` - Add a new enum "REQUEST" to '--type <value>' field in the current create-authorizer API, and make "identitySource" optional.
 
