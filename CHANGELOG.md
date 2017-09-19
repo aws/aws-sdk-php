@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.11 - 2017-09-19
 
 * `Aws\EC2` - Fixed bug in EC2 clients preventing ElasticGpuSet from being set.
 
