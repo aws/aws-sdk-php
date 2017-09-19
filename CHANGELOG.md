@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Fixed bug in EC2 clients preventing ElasticGpuSet from being set.
+
 ## 3.36.10 - 2017-09-18
 
 * `Aws\EC2` - Amazon EC2 now lets you opt for Spot instances to be stopped in the event of an interruption instead of being terminated. Your Spot request can be fulfilled again by restarting instances from a previously stopped state, subject to availability of capacity at or below your preferred price. When you submit a persistent Spot request, you can choose from "terminate" or "stop" as the instance interruption behavior. Choosing "stop" will shutdown your Spot instances so you can continue from this stopped state later on. This feature is only available for instances with Amazon EBS volume as their root device.
