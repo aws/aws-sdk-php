@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - API updates for supporting On-Demand fleets.
+* `Aws\CodePipeline` - This change includes a PipelineMetadata object that is part of the output from the GetPipeline API that includes the Pipeline ARN, created, and updated timestamp.
+* `Aws\Greengrass` - Reset Deployments feature allows you to clean-up the cloud resource so you can delete the group. It also cleans up the core so that it goes back to the pre-deployment state.
+* `Aws\Greengrass` - AWS Greengrass is now available in the Asia Pacific (Tokyo) region, ap-northeast-1.
+* `Aws\LexRuntimeService` - Request attributes can be used to pass client specific information from the client to Amazon Lex as part of each request.
+* `Aws\RDS` - Introduces the --option-group-name parameter to the ModifyDBSnapshot CLI command. You can specify this parameter when you upgrade an Oracle DB snapshot. The same option group considerations apply when upgrading a DB snapshot as when upgrading a DB instance. For more information, see http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Oracle.html#USER_UpgradeDBInstance.Oracle.OGPG.OG
+
 ## 3.36.11 - 2017-09-19
 
 * `Aws\EC2` - Fixed bug in EC2 clients preventing ElasticGpuSet from being set.

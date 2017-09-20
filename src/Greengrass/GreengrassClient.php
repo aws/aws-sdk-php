@@ -117,6 +117,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listSubscriptionDefinitionVersionsAsync(array $args = [])
  * @method \Aws\Result listSubscriptionDefinitions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSubscriptionDefinitionsAsync(array $args = [])
+ * @method \Aws\Result resetDeployments(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise resetDeploymentsAsync(array $args = [])
  * @method \Aws\Result updateConnectivityInfo(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateConnectivityInfoAsync(array $args = [])
  * @method \Aws\Result updateCoreDefinition(array $args = [])
