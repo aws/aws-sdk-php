@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.12 - 2017-09-20
 
 * `Aws\AppStream` - API updates for supporting On-Demand fleets.
 * `Aws\CodePipeline` - This change includes a PipelineMetadata object that is part of the output from the GetPipeline API that includes the Pipeline ARN, created, and updated timestamp.
