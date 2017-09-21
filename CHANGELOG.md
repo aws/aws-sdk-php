@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.13 - 2017-09-21
 
 * `Aws\Budgets` - Including "DuplicateRecordException" in UpdateNotification and UpdateSubscriber. 
 * `Aws\CloudWatchLogs` - Adds support for associating LogGroups with KMS Keys.
