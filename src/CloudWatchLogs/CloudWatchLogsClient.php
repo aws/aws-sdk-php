@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **Amazon CloudWatch Logs** service.
  *
+ * @method \Aws\Result associateKmsKey(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateKmsKeyAsync(array $args = [])
  * @method \Aws\Result cancelExportTask(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelExportTaskAsync(array $args = [])
  * @method \Aws\Result createExportTask(array $args = [])
@@ -42,6 +44,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeResourcePoliciesAsync(array $args = [])
  * @method \Aws\Result describeSubscriptionFilters(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeSubscriptionFiltersAsync(array $args = [])
+ * @method \Aws\Result disassociateKmsKey(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise disassociateKmsKeyAsync(array $args = [])
  * @method \Aws\Result filterLogEvents(array $args = [])
  * @method \GuzzleHttp\Promise\Promise filterLogEventsAsync(array $args = [])
  * @method \Aws\Result getLogEvents(array $args = [])
