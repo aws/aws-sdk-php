@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.14 - 2017-09-22
 
 * `Aws\ConfigService` - AWS Config support for DynamoDB tables and Auto Scaling resource types
 * `Aws\ECS` - Amazon ECS users can now add and drop Linux capabilities to their containers through the use of docker's cap-add and cap-drop features. Customers can specify the capabilities they wish to add or drop for each container in their task definition. 
