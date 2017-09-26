@@ -82,6 +82,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateStackAsync(array $args = [])
  * @method \Aws\Result updateStackSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStackSetAsync(array $args = [])
+ * @method \Aws\Result updateTerminationProtection(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateTerminationProtectionAsync(array $args = [])
  * @method \Aws\Result validateTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise validateTemplateAsync(array $args = [])
  */
