@@ -49,7 +49,7 @@ class CommandPool implements PromisorInterface
         if (!isset($config['concurrency'])) {
             $config['concurrency'] = 25;
         }
-        if (!array_key_exists('preserve_iterator_keys', $config)) {
+        if (empty($config['preserve_iterator_keys'])) {
             $config['preserve_iterator_keys'] = false;
         }
 
