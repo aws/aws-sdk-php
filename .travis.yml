@@ -25,8 +25,7 @@ install:
   - export AWS_SECRET_ACCESS_KEY=bar
   - 'if [ $(phpenv version-name) == "5.5" ]; then rm ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini; fi'
   - 'if [ $(phpenv version-name) != "hhvm" ] && [ $(phpenv version-name) != "nightly" ]; then echo "xdebug.overload_var_dump = 0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi'
-  - 'if [ $(phpenv version-name) == "7.2" ] && [ -v COMPOSER_OPTS ]; then composer require --dev phpunit/phpunit "^5.7.0"; fi'
-  -
+  - 'if [ $(phpenv version-name) == "7.2" ] && [ -v COMPOSER_OPTS ]; then composer require --dev phpunit/phpunit "^5.7.10"; fi'
   - composer --version
   - travis_retry composer update $COMPOSER_OPTS --no-interaction --prefer-source
 
