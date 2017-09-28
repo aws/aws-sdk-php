@@ -49,9 +49,6 @@ class CommandPool implements PromisorInterface
         if (!isset($config['concurrency'])) {
             $config['concurrency'] = 25;
         }
-        if (empty($config['preserve_iterator_keys'])) {
-            $config['preserve_iterator_keys'] = false;
-        }
 
         $before = $this->getBefore($config);
         $mapFn = function ($commands) use ($client, $before, $config) {
@@ -63,7 +60,7 @@ class CommandPool implements PromisorInterface
                 if ($before) {
                     $before($command, $key);
                 }
-                if ($config['preserve_iterator_keys']) {
+                if (!empty($config['preserve_iterator_keys'])) {
                     yield $key => $client->executeAsync($command);
                 } else {
                     yield $client->executeAsync($command);
