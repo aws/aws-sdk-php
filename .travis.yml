@@ -14,8 +14,6 @@ env:
 
 matrix:
   allow_failures:
-    - php: 7.2
-      env: COMPOSER_OPTS="--prefer-lowest"
     - php: hhvm
     - php: nightly
   fast_finish: true
@@ -25,7 +23,9 @@ sudo: false
 install:
   - export AWS_ACCESS_KEY_ID=foo
   - export AWS_SECRET_ACCESS_KEY=bar
-  - 'if [ $(phpenv version-name) != "hhvm" -a $(phpenv version-name) != "nightly" ]; then rm ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini; fi'
+  - 'if [ $(phpenv version-name) == "5.5" ]; then rm ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini; fi'
+  - 'if [ $(phpenv version-name) != "hhvm" ] && [ $(phpenv version-name) != "nightly" ]; then echo "xdebug.overload_var_dump = 0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi'
+  - 'if [ $(phpenv version-name) == "7.2" ] && [ -v COMPOSER_OPTS ]; then composer require --dev phpunit/phpunit "^5.7.10"; fi'
   - composer --version
   - travis_retry composer update $COMPOSER_OPTS --no-interaction --prefer-source
 
