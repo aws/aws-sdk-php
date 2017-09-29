@@ -37,10 +37,6 @@ class S3UriParser
         $url = Psr7\uri_for($uri);
 
         if ($url->getScheme() == $this->streamWrapperScheme) {
-            if (!$url->getHost()) {
-                throw new \InvalidArgumentException('No bucket found in URI: '
-                    . $uri);
-            }
             return $this->parseStreamWrapper($url);
         }
 
