@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.17 - 2017-09-29
 
 * `Aws\AppStream` - Includes APIs for managing and accessing image builders, and deleting images.
 * `Aws\CodeBuild` - Adding support for Building GitHub Pull Requests in AWS CodeBuild
