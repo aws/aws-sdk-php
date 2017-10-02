@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudHSM` - Documentation updates for CloudHSM
+
 ## 3.36.17 - 2017-09-29
 
 * `Aws\AppStream` - Includes APIs for managing and accessing image builders, and deleting images.
