@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.18 - 2017-10-02
 
 * `Aws\CloudHSM` - Documentation updates for CloudHSM
 
