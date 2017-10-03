@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - This release includes service updates to AWS VPN.
+* `Aws\SSM` - EC2 Systems Manager support for tagging SSM Documents. Also support for tag-based permissions to restrict access to SSM Documents based on these tags.
+
 ## 3.36.18 - 2017-10-02
 
 * `Aws\CloudHSM` - Documentation updates for CloudHSM
