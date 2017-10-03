@@ -70,6 +70,44 @@ class CommandPoolTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($results, $called);
     }
 
+    public function testInvokesFulfilledIgnoreKeys()
+    {
+        $results = [new Result(), new Result()];
+        $client = $this->getTestClient('s3');
+        $this->addMockResults($client, $results);
+        $iter = [
+            $client->getCommand('HeadBucket', ['Bucket' => 'Foo']),
+            $client->getCommand('HeadBucket', ['Bucket' => 'Foo'])
+        ];
+        $pool = new CommandPool($client, $iter, [
+            'fulfilled' => function ($result) use (&$called) {
+                $called[] = $result;
+            },
+            'preserve_iterator_keys' => false,
+        ]);
+        $pool->promise()->wait();
+        $this->assertSame($results, $called);
+    }
+
+    public function testInvokesFulfilledKeys()
+     {
+         $results = ['A' => new Result(), 'B' => new Result()];
+         $client = $this->getTestClient('s3');
+         $this->addMockResults($client, $results);
+         $iter = [
+             'A' => $client->getCommand('HeadBucket', ['Bucket' => 'Foo']),
+             'B' => $client->getCommand('HeadBucket', ['Bucket' => 'Foo'])
+         ];
+         $pool = new CommandPool($client, $iter, [
+             'fulfilled' => function ($result, $key) use (&$called) {
+                 $called[$key] = $result;
+             },
+             'preserve_iterator_keys' => true,
+        ]);
+        $pool->promise()->wait();
+        $this->assertSame($results, $called);
+    }
+
     public function testInvokesRejected()
     {
         $client = $this->getTestClient('s3');
