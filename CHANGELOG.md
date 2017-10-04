@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Optionally preserve CommandPool keys during generation
+* `Aws\KinesisAnalytics` - Kinesis Analytics now supports schema discovery on objects in S3. Additionally, Kinesis Analytics now supports input data preprocessing through Lambda.
+* `Aws\Route53Domains` - Added a new API that checks whether a domain name can be transferred to Amazon Route 53.
+
 ## 3.36.19 - 2017-10-03
 
 * `Aws\EC2` - This release includes service updates to AWS VPN.
