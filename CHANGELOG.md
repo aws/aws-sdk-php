@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.20 - 2017-10-04
 
 * `Aws\` - Optionally preserve CommandPool keys during generation
 * `Aws\KinesisAnalytics` - Kinesis Analytics now supports schema discovery on objects in S3. Additionally, Kinesis Analytics now supports input data preprocessing through Lambda.
