@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.21 - 2017-10-05
 
 * `Aws\Redshift` - DescribeEventSubscriptions API supports tag keys and tag values as request parameters. 
 * `Aws\S3` - Properly parse s3:// uri used with StreamWrapper.
