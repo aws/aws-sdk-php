@@ -20,7 +20,8 @@ class S3UriParser
     ];
 
     /**
-     * Parses a URL into an associative array of Amazon S3 data including:
+     * Parses a URL or S3 StreamWrapper Uri (s3://) into an associative array
+     * of Amazon S3 data including:
      *
      * - bucket: The Amazon S3 bucket (null if none)
      * - key: The Amazon S3 key (null if none)
