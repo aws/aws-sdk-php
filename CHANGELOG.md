@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Revert: Added missing enumeration values for ConfigurationItemStatus
+* `Aws\SQS` - Documentation updates regarding availability of FIFO queues and miscellaneous corrections.
+
 ## 3.36.22 - 2017-10-06
 
 * `Aws\ConfigService` - Added missing enumeration values for ConfigurationItemStatus
