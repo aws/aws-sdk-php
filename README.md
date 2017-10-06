@@ -130,7 +130,7 @@ try {
 [sdk-forum]: https://forums.aws.amazon.com/forum.jspa?forumID=80
 [sdk-issues]: https://github.com/aws/aws-sdk-php/issues
 [sdk-license]: http://aws.amazon.com/apache2.0/
-[sdk-blog]: http://blogs.aws.amazon.com/php
+[sdk-blog]: https://aws.amazon.com/blogs/developer/category/php/
 [sdk-twitter]: https://twitter.com/awsforphp
 [sdk-sample]: http://aws.amazon.com/developers/getting-started/php
 

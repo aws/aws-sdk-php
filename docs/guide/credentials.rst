@@ -531,7 +531,7 @@ for AWS IAM users or for users that you authenticate via identity federation.
 One common use case for using temporary credentials is to grant mobile or
 client-side applications access to AWS resources by authenticating users
 through third-party identity providers (read more about `Web Identity Federation
-<http://docs.aws.amazon.com/STS/latest/UsingSTS/CreatingWIF.html>`_).
+<http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html>`_).
 
 .. note::
 

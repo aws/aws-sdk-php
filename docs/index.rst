@@ -24,7 +24,7 @@ External links: `API Docs <http://docs.aws.amazon.com/aws-sdk-php/v3/api/>`_
 | `GitHub <https://github.com/aws/aws-sdk-php>`_
 | `Twitter <https://twitter.com/awsforphp>`_
 | `Gitter <https://gitter.im/aws/aws-sdk-php>`_
-| `Blog <http://blogs.aws.amazon.com/php>`_
+| `Blog <https://aws.amazon.com/blogs/developer/category/php/>`_
 | `Forum <https://forums.aws.amazon.com/forum.jspa?forumID=80>`_
 | `Packagist <https://packagist.org/packages/aws/aws-sdk-php>`_
 
