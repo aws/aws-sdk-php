@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Added missing enumeration values for ConfigurationItemStatus
+* `Aws\SQS` - Documentation updates regarding availability of FIFO queues and miscellaneous corrections.
+
 ## 3.36.21 - 2017-10-05
 
 * `Aws\Redshift` - DescribeEventSubscriptions API supports tag keys and tag values as request parameters. 
