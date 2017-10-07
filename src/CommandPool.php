@@ -34,6 +34,8 @@ class CommandPool implements PromisorInterface
      *   The function is provided an AwsException object, id of the iterator that
      *   the exception came from, and the aggregate promise that can be
      *   resolved/rejected if you need to short-circuit the pool.
+     * - preserve_iterator_keys: (bool) Retain the iterator key when generating
+     *   the commands.
      *
      * @param AwsClientInterface $client   Client used to execute commands.
      * @param array|\Iterator    $commands Iterable that yields commands.
@@ -49,7 +51,7 @@ class CommandPool implements PromisorInterface
         }
 
         $before = $this->getBefore($config);
-        $mapFn = function ($commands) use ($client, $before) {
+        $mapFn = function ($commands) use ($client, $before, $config) {
             foreach ($commands as $key => $command) {
                 if (!($command instanceof CommandInterface)) {
                     throw new \InvalidArgumentException('Each value yielded by '
@@ -58,7 +60,11 @@ class CommandPool implements PromisorInterface
                 if ($before) {
                     $before($command, $key);
                 }
-                yield $client->executeAsync($command);
+                if (!empty($config['preserve_iterator_keys'])) {
+                    yield $key => $client->executeAsync($command);
+                } else {
+                    yield $client->executeAsync($command);
+                }
             }
         };
 

@@ -1,5 +1,128 @@
 # CHANGELOG
 
+## 3.36.23 - 2017-10-06
+
+* `Aws\ConfigService` - Revert: Added missing enumeration values for ConfigurationItemStatus
+* `Aws\SQS` - Documentation updates regarding availability of FIFO queues and miscellaneous corrections.
+
+## 3.36.22 - 2017-10-06
+
+* `Aws\ConfigService` - Added missing enumeration values for ConfigurationItemStatus
+* `Aws\SQS` - Documentation updates regarding availability of FIFO queues and miscellaneous corrections.
+
+## 3.36.21 - 2017-10-05
+
+* `Aws\Redshift` - DescribeEventSubscriptions API supports tag keys and tag values as request parameters. 
+* `Aws\S3` - Properly parse s3:// uri used with StreamWrapper.
+
+## 3.36.20 - 2017-10-04
+
+* `Aws\` - Optionally preserve CommandPool keys during generation
+* `Aws\KinesisAnalytics` - Kinesis Analytics now supports schema discovery on objects in S3. Additionally, Kinesis Analytics now supports input data preprocessing through Lambda.
+* `Aws\Route53Domains` - Added a new API that checks whether a domain name can be transferred to Amazon Route 53.
+
+## 3.36.19 - 2017-10-03
+
+* `Aws\EC2` - This release includes service updates to AWS VPN.
+* `Aws\SSM` - EC2 Systems Manager support for tagging SSM Documents. Also support for tag-based permissions to restrict access to SSM Documents based on these tags.
+
+## 3.36.18 - 2017-10-02
+
+* `Aws\CloudHSM` - Documentation updates for CloudHSM
+
+## 3.36.17 - 2017-09-29
+
+* `Aws\AppStream` - Includes APIs for managing and accessing image builders, and deleting images.
+* `Aws\CodeBuild` - Adding support for Building GitHub Pull Requests in AWS CodeBuild
+* `Aws\MTurk` - Today, Amazon Mechanical Turk (MTurk) supports SQS Notifications being delivered to Customers' SQS queues when different stages of the MTurk workflow are complete. We are going to create new functionality so that Customers can leverage SNS topics as a destination for notification messages when various stages of the MTurk workflow are complete. 
+* `Aws\Organizations` - This release flags the HandshakeParty structure's Type and Id fields as 'required'. They effectively were required in the past, as you received an error if you did not include them. This is now reflected at the API definition level. 
+* `Aws\Route53` - This change allows customers to reset elements of health check.
+* `Aws\rds` - Introduce DBSnapshotAvailable and DBSnapshotDeleted waiters for DBSnapshot
+
+## 3.36.16 - 2017-09-27
+
+* `Aws\Pinpoint` - Added two new push notification channels: Amazon Device Messaging (ADM) and, for push notification support in China, Baidu Cloud Push. Added support for APNs auth via .p8 key file. Added operation for direct message deliveries to user IDs, enabling you to message an individual user on multiple endpoints.
+
+## 3.36.15 - 2017-09-26
+
+* `Aws\CloudFormation` - You can now prevent a stack from being accidentally deleted by enabling termination protection on the stack. If you attempt to delete a stack with termination protection enabled, the deletion fails and the stack, including its status, remains unchanged. You can enable termination protection on a stack when you create it. Termination protection on stacks is disabled by default. After creation, you can set termination protection on a stack whose status is CREATE_COMPLETE, UPDATE_COMPLETE, or UPDATE_ROLLBACK_COMPLETE.
+
+## 3.36.14 - 2017-09-22
+
+* `Aws\ConfigService` - AWS Config support for DynamoDB tables and Auto Scaling resource types
+* `Aws\ECS` - Amazon ECS users can now add and drop Linux capabilities to their containers through the use of docker's cap-add and cap-drop features. Customers can specify the capabilities they wish to add or drop for each container in their task definition. 
+* `Aws\RDS` - Documentation updates for rds
+
+## 3.36.13 - 2017-09-21
+
+* `Aws\Budgets` - Including "DuplicateRecordException" in UpdateNotification and UpdateSubscriber. 
+* `Aws\CloudWatchLogs` - Adds support for associating LogGroups with KMS Keys.
+* `Aws\EC2` - Add EC2 APIs to copy Amazon FPGA Images (AFIs) within the same region and across multiple regions, delete AFIs, and modify AFI attributes. AFI attributes include name, description and granting/denying other AWS accounts to load the AFI.
+
+## 3.36.12 - 2017-09-20
+
+* `Aws\AppStream` - API updates for supporting On-Demand fleets.
+* `Aws\CodePipeline` - This change includes a PipelineMetadata object that is part of the output from the GetPipeline API that includes the Pipeline ARN, created, and updated timestamp.
+* `Aws\Greengrass` - Reset Deployments feature allows you to clean-up the cloud resource so you can delete the group. It also cleans up the core so that it goes back to the pre-deployment state.
+* `Aws\Greengrass` - AWS Greengrass is now available in the Asia Pacific (Tokyo) region, ap-northeast-1.
+* `Aws\LexRuntimeService` - Request attributes can be used to pass client specific information from the client to Amazon Lex as part of each request.
+* `Aws\RDS` - Introduces the --option-group-name parameter to the ModifyDBSnapshot CLI command. You can specify this parameter when you upgrade an Oracle DB snapshot. The same option group considerations apply when upgrading a DB snapshot as when upgrading a DB instance. For more information, see http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_UpgradeDBInstance.Oracle.html#USER_UpgradeDBInstance.Oracle.OGPG.OG
+
+## 3.36.11 - 2017-09-19
+
+* `Aws\EC2` - Fixed bug in EC2 clients preventing ElasticGpuSet from being set.
+
+## 3.36.10 - 2017-09-18
+
+* `Aws\EC2` - Amazon EC2 now lets you opt for Spot instances to be stopped in the event of an interruption instead of being terminated. Your Spot request can be fulfilled again by restarting instances from a previously stopped state, subject to availability of capacity at or below your preferred price. When you submit a persistent Spot request, you can choose from "terminate" or "stop" as the instance interruption behavior. Choosing "stop" will shutdown your Spot instances so you can continue from this stopped state later on. This feature is only available for instances with Amazon EBS volume as their root device.
+* `Aws\IAM` - A new API, DeleteServiceLinkedRole, submits a service-linked role deletion request and returns a DeletionTaskId, which you can use to check the status of the deletion.
+* `Aws\SES` - Amazon Simple Email Service (Amazon SES) now lets you customize the domains used for tracking open and click events. Previously, open and click tracking links referred to destinations hosted on domains operated by Amazon SES. With this feature, you can use your own branded domains for capturing open and click events.
+
+## 3.36.9 - 2017-09-15
+
+* `Aws\APIGateway` - Add a new enum "REQUEST" to '--type <value>' field in the current create-authorizer API, and make "identitySource" optional.
+
+## 3.36.8 - 2017-09-14
+
+* `Aws\CodeBuild` - Supporting Parameter Store in environment variables for AWS CodeBuild
+* `Aws\Organizations` - Documentation updates for AWS Organizations
+* `Aws\ServiceCatalog` - This release of Service Catalog adds API support to copy products.
+
+## 3.36.7 - 2017-09-13
+
+* `Aws\AutoScaling` - Customers can create Life Cycle Hooks at the time of creating Auto Scaling Groups through the CreateAutoScalingGroup API
+* `Aws\Batch` - Documentation updates for batch
+* `Aws\CloudWatchEvents` - Exposes ConcurrentModificationException as one of the valid exceptions for PutPermission and RemovePermission operation.
+* `Aws\EC2` - You are now able to create and launch EC2 x1e.32xlarge instance, a new EC2 instance in the X1 family, in us-east-1, us-west-2, eu-west-1, and ap-northeast-1. x1e.32xlarge offers 128 vCPUs, 3,904 GiB of DDR4 instance memory, high memory bandwidth, large L3 caches, and leading reliability capabilities to boost the performance and reliability of in-memory applications.
+
+## 3.36.6 - 2017-09-12
+
+* `Aws\EC2` - Fixed bug in EC2 clients preventing HostOfferingSet from being set
+
+## 3.36.5 - 2017-09-11
+
+* `Aws\DeviceFarm` - DeviceFarm has added support for two features - RemoteDebugging and Customer Artifacts. Customers can now do remote Debugging on their Private Devices and can now retrieve custom files generated by their tests on the device and the device host (execution environment) on both public and private devices. 
+
+## 3.36.4 - 2017-09-08
+
+* `Aws\CloudWatchLogs` - Adds support for the PutResourcePolicy, DescribeResourcePolicy and DeleteResourcePolicy APIs.
+
+## 3.36.3 - 2017-09-07
+
+* `Aws\ApplicationAutoScaling` - Documentation updates for application-autoscaling
+* `Aws\EC2` - With Tagging support, you can add Key and Value metadata to search, filter and organize your NAT Gateways according to your organization's needs.
+* `Aws\ElasticLoadBalancingv2` - The feature enables the new Network Load Balancer that is optimized to handle volatile traffic patterns while using a single static IP address per Availability Zone. Network Load Balancer operates at the connection level (Layer 4), routing connections to Amazon EC2 instances and containers, within Amazon Virtual Private Cloud (Amazon VPC) based on IP protocol data.
+* `Aws\LexModelBuildingService` - Amazon Lex provides the ability to export your Amazon Lex chatbot definition as a JSON file that can be added to the target platform. The JSON configuration file contains the structure of your Amazon Lex chatbot, including the intent schema with utterances, slots, prompts and slot-types.
+* `Aws\Route53` - You can configure Amazon Route 53 to log information about the DNS queries that Amazon Route 53 receives for your domains and subdomains. When you configure query logging, Amazon Route 53 starts to send logs to CloudWatch Logs. You can use various tools, including the AWS console, to access the query logs.
+
+## 3.36.2 - 2017-09-06
+
+* `Aws\Budgets` - Add an optional "thresholdType" to notifications to support percentage or absolute value thresholds.
+
+## 3.36.1 - 2017-09-05
+
+* `Aws\CodeStar` - Added support to tag CodeStar projects. Tags can be used to organize and find CodeStar projects on key-value pairs that you can choose. For example, you could add a tag with a key of "Release" and a value of "Beta" to projects your organization is working on for an upcoming beta release.
+
 ## 3.36.0 - 2017-09-01
 
 * `Aws\GameLift` - GameLift VPC resources can be peered with any other AWS VPC. R4 memory-optimized instances now available to deploy.

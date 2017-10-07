@@ -49,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getBuiltinIntentsAsync(array $args = [])
  * @method \Aws\Result getBuiltinSlotTypes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBuiltinSlotTypesAsync(array $args = [])
+ * @method \Aws\Result getExport(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getExportAsync(array $args = [])
  * @method \Aws\Result getIntent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getIntentAsync(array $args = [])
  * @method \Aws\Result getIntentVersions(array $args = [])

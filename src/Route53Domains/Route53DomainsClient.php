@@ -8,6 +8,8 @@ use Aws\AwsClient;
  *
  * @method \Aws\Result checkDomainAvailability(array $args = [])
  * @method \GuzzleHttp\Promise\Promise checkDomainAvailabilityAsync(array $args = [])
+ * @method \Aws\Result checkDomainTransferability(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise checkDomainTransferabilityAsync(array $args = [])
  * @method \Aws\Result deleteTagsForDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteTagsForDomainAsync(array $args = [])
  * @method \Aws\Result disableDomainAutoRenew(array $args = [])
