@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeCommit` - This release includes the DeleteBranch API and a change to the contents of a Commit object.
+* `Aws\DatabaseMigrationService` - This change includes addition of new optional parameter to an existing API
+* `Aws\ElasticBeanstalk` - Added the ability to add, delete or update Tags
+* `Aws\Polly` - Amazon Polly exposes two new voices: "Matthew" (US English) and "Takumi" (Japanese)
+* `Aws\RDS` - You can now call DescribeValidDBInstanceModifications to learn what modifications you can make to your DB instance. You can use this information when you call ModifyDBInstance.
+
 ## 3.36.25 - 2017-10-11
 
 * `Aws\ECR` - Adds support for new API set used to manage Amazon ECR repository lifecycle policies. Amazon ECR lifecycle policies enable you to specify the lifecycle management of images in a repository. The configuration is a set of one or more rules, where each rule defines an action for Amazon ECR to apply to an image. This allows the automation of cleaning up unused images, for example expiring images based on age or status. A lifecycle policy preview API is provided as well, which allows you to see the impact of a lifecycle policy on an image repository before you execute it

@@ -64,6 +64,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listAvailableSolutionStacksAsync(array $args = [])
  * @method \Aws\Result listPlatformVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPlatformVersionsAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result rebuildEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rebuildEnvironmentAsync(array $args = [])
  * @method \Aws\Result requestEnvironmentInfo(array $args = [])
@@ -86,6 +88,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateConfigurationTemplateAsync(array $args = [])
  * @method \Aws\Result updateEnvironment(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateEnvironmentAsync(array $args = [])
+ * @method \Aws\Result updateTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateTagsForResourceAsync(array $args = [])
  * @method \Aws\Result validateConfigurationSettings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise validateConfigurationSettingsAsync(array $args = [])
  */

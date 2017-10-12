@@ -12,6 +12,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createBranchAsync(array $args = [])
  * @method \Aws\Result createRepository(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createRepositoryAsync(array $args = [])
+ * @method \Aws\Result deleteBranch(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteBranchAsync(array $args = [])
  * @method \Aws\Result deleteRepository(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteRepositoryAsync(array $args = [])
  * @method \Aws\Result getBlob(array $args = [])
