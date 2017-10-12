@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.26 - 2017-10-12
 
 * `Aws\CodeCommit` - This release includes the DeleteBranch API and a change to the contents of a Commit object.
 * `Aws\DatabaseMigrationService` - This change includes addition of new optional parameter to an existing API
