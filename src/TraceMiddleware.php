@@ -31,6 +31,8 @@ class TraceMiddleware
         '/AWS [A-Z0-9]{20}:.+/' => 'AWS AKI[KEY]:[SIGNATURE]',
         // STS Presigned URLs
         '/X-Amz-Security-Token=[^&]+/i' => 'X-Amz-Security-Token=[TOKEN]',
+        // Crypto *Stream Keys
+        '/\["key.{27,36}Stream.{9}\]=>\s+.{7}\d{2}\) "\X{16,64}"/U' => '["key":[CONTENT KEY]]',
     ];
 
     /**
