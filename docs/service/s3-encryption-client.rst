@@ -56,8 +56,8 @@ interface and requires two new parameters.
     ];
 
     $result = $encryptionClient->putObject([
-        'MaterialsProvider' => $materialsProvider,
-        'CipherOptions' => $cipherOptions,
+        '@MaterialsProvider' => $materialsProvider,
+        '@CipherOptions' => $cipherOptions,
         'Bucket' => $bucket,
         'Key' => $key,
         'Body' => fopen('file-to-encrypt.txt'),
@@ -79,8 +79,8 @@ Additional configuration options are passed through for decryption.
 .. code-block:: php
 
     $result = $encryptionClient->getObject([
-        'MaterialsProvider' => $materialsProvider,
-        'CipherOptions' => [
+        '@MaterialsProvider' => $materialsProvider,
+        '@CipherOptions' => [
             // Additional configuration options
         ],
         'Bucket' => $bucket,
@@ -123,7 +123,7 @@ Metadata Strategies
 -------------------
 
 You also have the option of providing an instance of a class that implements
-the ``Aws\Crypto\MetadataStrategy`` interface. This simple interface handles
+the ``Aws\Crypto\MetadataStrategyInterface``. This simple interface handles
 saving and loading the ``Aws\Crypto\MetadataEnvelope`` that contains your
 envelope encryption materials. The SDK provides two classes that implement
 this: ``Aws\S3\Crypto\HeadersMetadataStrategy`` and
@@ -138,9 +138,9 @@ is used by default.
     );
 
     $result = $encryptionClient->putObject([
-        'MaterialsProvider' => $materialsProvider,
-        'MetadataStrategy' => $strategy,
-        'CipherOptions' => $cipherOptions,
+        '@MaterialsProvider' => $materialsProvider,
+        '@MetadataStrategy' => $strategy,
+        '@CipherOptions' => $cipherOptions,
         'Bucket' => $bucket,
         'Key' => $key,
         'Body' => fopen('file-to-encrypt.txt'),
@@ -153,9 +153,9 @@ Class name constants for the ``HeadersMetadataStrategy`` and
 .. code-block:: php
 
     $result = $encryptionClient->putObject([
-        'MaterialsProvider' => $materialsProvider,
-        'MetadataStrategy' => HeadersMetadataStrategy::class,
-        'CipherOptions' => $cipherOptions,
+        '@MaterialsProvider' => $materialsProvider,
+        '@MetadataStrategy' => HeadersMetadataStrategy::class,
+        '@CipherOptions' => $cipherOptions,
         'Bucket' => $bucket,
         'Key' => $key,
         'Body' => fopen('file-to-encrypt.txt'),
