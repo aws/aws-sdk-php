@@ -69,6 +69,16 @@ class S3EncryptionClientTest extends PHPUnit_Framework_TestCase
         ];
     }
 
+    private function setupProvidedExpectedException($exception)
+    {
+        if (method_exists($this, 'expectException')) {
+            $this->expectException($exception[0]);
+            $this->expectExceptionMessage($exception[1]);
+        } else {
+            $this->setExpectedException($exception[0], $exception[1]);
+        }
+    }
+
     /**
      * @dataProvider getValidMaterialsProviders
      */
@@ -77,8 +87,7 @@ class S3EncryptionClientTest extends PHPUnit_Framework_TestCase
         $exception
     ) {
         if ($exception) {
-            $this->expectException($exception[0]);
-            $this->expectExceptionMessage($exception[1]);
+            $this->setupProvidedExpectedException($exception);
         }
 
         $s3 = $this->getS3Client();
@@ -112,8 +121,7 @@ class S3EncryptionClientTest extends PHPUnit_Framework_TestCase
         $exception
     ) {
         if ($exception) {
-            $this->expectException($exception[0]);
-            $this->expectExceptionMessage($exception[1]);
+            $this->setupProvidedExpectedException($exception);
         }
 
         $s3 = $this->getS3Client();
@@ -195,8 +203,7 @@ class S3EncryptionClientTest extends PHPUnit_Framework_TestCase
         $s3MockCount
     ) {
         if ($exception) {
-            $this->expectException($exception[0]);
-            $this->expectExceptionMessage($exception[1]);
+            $this->setupProvidedExpectedException($exception);
         }
 
         $s3 = $this->getS3Client();
@@ -234,8 +241,7 @@ class S3EncryptionClientTest extends PHPUnit_Framework_TestCase
     public function testPutObjectRejectsInvalidMetadataStrategy($strategy, $exception)
     {
         if ($exception) {
-            $this->expectException($exception[0]);
-            $this->expectExceptionMessage($exception[1]);
+            $this->setupProvidedExpectedException($exception);
         }
 
         $s3 = $this->getS3Client();
@@ -355,8 +361,7 @@ class S3EncryptionClientTest extends PHPUnit_Framework_TestCase
         }
 
         if ($exception) {
-            $this->expectException($exception[0]);
-            $this->expectExceptionMessage($exception[1]);
+            $this->setupProvidedExpectedException($exception);
         }
 
         $s3 = $this->getS3Client();
@@ -424,8 +429,7 @@ class S3EncryptionClientTest extends PHPUnit_Framework_TestCase
         $exception
     ) {
         if ($exception) {
-            $this->expectException($exception[0]);
-            $this->expectExceptionMessage($exception[1]);
+            $this->setupProvidedExpectedException($exception);
         }
 
         $cipherOptions = [
