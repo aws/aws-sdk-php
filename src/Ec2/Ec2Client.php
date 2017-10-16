@@ -482,6 +482,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyFpgaImageAttributeAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyVolume(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyVolumeAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyVpcTenancy(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyVpcTenancyAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result replaceIamInstanceProfileAssociation(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise replaceIamInstanceProfileAssociationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result resetFpgaImageAttribute(array $args = []) (supported in versions 2016-11-15)

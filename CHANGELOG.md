@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudHSM` - Documentation updates for AWS CloudHSM Classic.
+* `Aws\EC2` - You can now change the tenancy of your VPC from dedicated to default with a single API operation. For more details refer to the documentation for changing VPC tenancy.
+* `Aws\ElasticsearchService` - AWS Elasticsearch adds support for enabling slow log publishing. Using slow log publishing options customers can configure and enable index/query slow log publishing of their domain to preferred AWS Cloudwatch log group.
+* `Aws\RDS` - Adds waiters for DBSnapshotAvailable and DBSnapshotDeleted.
+* `Aws\WAF` - This release adds support for regular expressions as match conditions in rules, and support for geographical location by country of request IP address as a match condition in rules.
+* `Aws\WAFRegional` - This release adds support for regular expressions as match conditions in rules, and support for geographical location by country of request IP address as a match condition in rules.
+
 ## 3.36.26 - 2017-10-12
 
 * `Aws\CodeCommit` - This release includes the DeleteBranch API and a change to the contents of a Commit object.
