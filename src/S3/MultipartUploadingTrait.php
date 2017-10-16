@@ -102,8 +102,8 @@ trait MultipartUploadingTrait
             $params['ACL'] = $config['acl'];
         }
 
-        // Set the content type
-        if ($type = $this->getSourceMimeType()) {
+        // Set the ContentType if not already present
+        if (empty($params['ContentType']) && $type = $this->getSourceMimeType()) {
             $params['ContentType'] = $type;
         }
 
