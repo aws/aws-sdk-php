@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.27 - 2017-10-16
 
 * `Aws\CloudHSM` - Documentation updates for AWS CloudHSM Classic.
 * `Aws\EC2` - You can now change the tenancy of your VPC from dedicated to default with a single API operation. For more details refer to the documentation for changing VPC tenancy.
