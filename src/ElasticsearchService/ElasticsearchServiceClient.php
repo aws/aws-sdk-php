@@ -12,6 +12,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createElasticsearchDomainAsync(array $args = [])
  * @method \Aws\Result deleteElasticsearchDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteElasticsearchDomainAsync(array $args = [])
+ * @method \Aws\Result deleteElasticsearchServiceRole(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteElasticsearchServiceRoleAsync(array $args = [])
  * @method \Aws\Result describeElasticsearchDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeElasticsearchDomainAsync(array $args = [])
  * @method \Aws\Result describeElasticsearchDomainConfig(array $args = [])

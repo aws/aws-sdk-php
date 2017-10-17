@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudHSMV2` - Service Region Launch.
+* `Aws\ElasticsearchService` - This release adds support for VPC access to Amazon Elasticsearch Service.
+* `Aws\S3` - No longer override supplied ContentType parameter when performing a multipart upload.
+
 ## 3.36.27 - 2017-10-16
 
 * `Aws\CloudHSM` - Documentation updates for AWS CloudHSM Classic.
