@@ -188,4 +188,73 @@ class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($uploader->getState()->isCompleted());
         $this->assertEquals($url, $result['ObjectURL']);
     }
+
+    public function getContentTypeSettingTests()
+    {
+        $size = 12 * self::MB;
+        $data = str_repeat('.', $size);
+        $filename = sys_get_temp_dir() . '/' . self::FILENAME;
+        file_put_contents($filename, $data);
+
+        return [
+            [ // Successful lookup from filename via stream
+                Psr7\stream_for(fopen($filename, 'r')),
+                [],
+                'text/plain'
+            ],
+            [ // Unsuccessful lookup because of no file name
+                Psr7\stream_for($data),
+                [],
+                'application/octet-stream'
+            ],
+            [ // Successful override of known type from filename
+                Psr7\stream_for(fopen($filename, 'r')),
+                ['ContentType' => 'TestType'],
+                'TestType'
+            ],
+            [ // Successful override of unknown type
+                Psr7\stream_for($data),
+                ['ContentType' => 'TestType'],
+                'TestType'
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider getContentTypeSettingTests
+     */
+    public function testS3MultipartContentTypeSetting(
+        $stream,
+        $params,
+        $expectedContentType
+    ) {
+        /** @var \Aws\S3\S3Client $client */
+        $client = $this->getTestClient('s3');
+        $uploadOptions = [
+            'bucket'          => 'foo',
+            'key'             => 'bar',
+            'params'          => $params,
+            'before_initiate' => function($command) use ($expectedContentType) {
+                $this->assertEquals(
+                    $expectedContentType,
+                    $command['ContentType']
+                );
+            },
+        ];
+        $url = 'http://foo.s3.amazonaws.com/bar';
+
+        $this->addMockResults($client, [
+            new Result(['UploadId' => 'baz']),
+            new Result(['ETag' => 'A']),
+            new Result(['ETag' => 'B']),
+            new Result(['ETag' => 'C']),
+            new Result(['Location' => $url])
+        ]);
+
+        $uploader = new MultipartUploader($client, $stream, $uploadOptions);
+        $result = $uploader->upload();
+
+        $this->assertTrue($uploader->getState()->isCompleted());
+        $this->assertEquals($url, $result['ObjectURL']);
+    }
 }
