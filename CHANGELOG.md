@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.28 - 2017-10-17
 
 * `Aws\CloudHSMV2` - Service Region Launch.
 * `Aws\ElasticsearchService` - This release adds support for VPC access to Amazon Elasticsearch Service.
