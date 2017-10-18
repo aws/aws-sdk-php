@@ -128,8 +128,9 @@ class PostObject
     {
         $uri = new Uri($this->client->getEndpoint());
 
-        if ($uri->getScheme() === 'https'
-            && strpos($this->bucket, '.') !== false
+        if ($this->client->getConfig('use_path_style_endpoint') === true
+            || ($uri->getScheme() === 'https'
+            && strpos($this->bucket, '.') !== false)
         ) {
             // Use path-style URLs
             $uri = $uri->withPath("/{$this->bucket}");
