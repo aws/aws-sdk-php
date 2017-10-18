@@ -71,4 +71,43 @@ class PostObjectTest extends \PHPUnit_Framework_TestCase
             $formAttrs['action']
         );
     }
+
+    /**
+     * @dataProvider pathStyleProvider
+     *
+     * @param string $endpoint
+     * @param string $bucket
+     * @param string $expected
+     */
+    public function testCanHandleForcedPathStyleEndpoint($endpoint, $bucket, $expected)
+    {
+        $s3 = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-east-1',
+            'credentials' => [
+                'key' => 'akid',
+                'secret' => 'secret',
+            ],
+            'endpoint' => $endpoint,
+            'use_path_style_endpoint' => true,
+        ]);
+        $policy = [
+            'expiration' => '2007-12-01T12:00:00.000Z',
+            'conditions' => [
+                'acl' => 'public-read'
+            ]
+        ];
+        $postObject = new PostObject($s3, $bucket, [], $policy);
+        $formAttrs = $postObject->getFormAttributes();
+        $this->assertEquals($expected, $formAttrs['action']);
+    }
+
+    public function pathStyleProvider()
+    {
+        return [
+            ['http://s3.amazonaws.com', 'foo', 'http://s3.amazonaws.com/foo'],
+            ['http://s3.amazonaws.com', 'foo.bar', 'http://s3.amazonaws.com/foo.bar'],
+            ['http://foo.com', 'foo.com', 'http://foo.com/foo.com'],
+        ];
+    }
 }
