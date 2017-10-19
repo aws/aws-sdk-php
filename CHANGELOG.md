@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - PostObject[V4] classes now obey use_path_style_endpoint client configuration in form generation.
+* `Aws\SQS` - Added support for tracking cost allocation by adding, updating, removing, and listing the metadata tags of Amazon SQS queues.
+* `Aws\SSM` - EC2 Systems Manager versioning support for Parameter Store. Also support for referencing parameter versions in SSM Documents.
+
 ## 3.36.29 - 2017-10-18
 
 * `Aws\Lightsail` - This release adds support for Windows Server-based Lightsail instances. The GetInstanceAccessDetails API now returns the password of your Windows Server-based instance when using the default key pair. GetInstanceAccessDetails also returns a PasswordData object for Windows Server instances containing the ciphertext and keyPairName. The Blueprint data type now includes a list of platform values (LINUX_UNIX or WINDOWS). The Bundle data type now includes a list of SupportedPlatforms values (LINUX_UNIX or WINDOWS).

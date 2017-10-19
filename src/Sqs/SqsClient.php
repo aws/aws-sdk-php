@@ -31,6 +31,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise getQueueUrlAsync(array $args = [])
  * @method \Aws\Result listDeadLetterSourceQueues(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDeadLetterSourceQueuesAsync(array $args = [])
+ * @method \Aws\Result listQueueTags(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listQueueTagsAsync(array $args = [])
  * @method \Aws\Result listQueues(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listQueuesAsync(array $args = [])
  * @method \Aws\Result purgeQueue(array $args = [])
@@ -45,6 +47,10 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise sendMessageBatchAsync(array $args = [])
  * @method \Aws\Result setQueueAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setQueueAttributesAsync(array $args = [])
+ * @method \Aws\Result tagQueue(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagQueueAsync(array $args = [])
+ * @method \Aws\Result untagQueue(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagQueueAsync(array $args = [])
  */
 class SqsClient extends AwsClient
 {
