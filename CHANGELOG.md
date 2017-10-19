@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.30 - 2017-10-19
 
 * `Aws\S3` - PostObject[V4] classes now obey use_path_style_endpoint client configuration in form generation.
 * `Aws\SQS` - Added support for tracking cost allocation by adding, updating, removing, and listing the metadata tags of Amazon SQS queues.
