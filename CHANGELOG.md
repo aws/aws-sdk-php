@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Adding pagination support for DescribeSecurityGroups for EC2 Classic and VPC Security Groups
+
 ## 3.36.30 - 2017-10-19
 
 * `Aws\S3` - PostObject[V4] classes now obey use_path_style_endpoint client configuration in form generation.
