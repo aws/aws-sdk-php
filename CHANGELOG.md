@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.31 - 2017-10-20
 
 * `Aws\EC2` - Adding pagination support for DescribeSecurityGroups for EC2 Classic and VPC Security Groups
 
