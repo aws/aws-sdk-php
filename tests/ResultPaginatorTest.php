@@ -282,6 +282,65 @@ class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('2.3', $cmds[3]['Key']);
     }
 
+    public function testMarkerUpdated()
+    {
+        $client = $this->getTestClient('s3');
+        $objects = [
+            ['Key' => 0],
+            ['Key' => 1],
+            ['Key' => 2],
+            ['Key' => 3],
+            ['Key' => 4],
+        ];
+
+        $handler = function (CommandInterface $cmd, RequestInterface $request) use ($objects, &$cmds) {
+            $cmds[] = $cmd;
+
+            $result = [
+                'IsTruncated' => false,
+                'Contents' => []
+            ];
+            foreach ($objects as $object) {
+                if ($object['Key'] <= $cmd['Marker']) {
+                    continue;
+                }
+                $result['Contents'] []= $object;
+                if (count($result['Contents']) >= $cmd['MaxKeys']) {
+                    $result['IsTruncated'] = true;
+                    break;
+                }
+            }
+
+            return \GuzzleHttp\Promise\promise_for(new Result($result));
+        };
+
+        $client->getHandlerList()->setHandler($handler);
+        $p = $client->getPaginator('ListObjects', [
+            'Bucket' => 'foo',
+            'Marker' => 1,
+            'MaxKeys' => 2,
+        ]);
+        $resultSets = 0;
+        $promise = $p->each(function ($page) use ($client, &$resultSets) {
+            if ($resultSets++ > 1) {
+                $this->fail('Marker has not moved.');
+            }
+            return $client->headObjectAsync([
+                'Bucket' => 'foo',
+                'Key'    => implode('.', \JmesPath\search('Contents[].Key', $page))
+            ]);
+        });
+
+        $promise->wait();
+        $this->assertCount(4, $cmds);
+        $this->assertEquals('ListObjects', $cmds[0]->getName());
+        $this->assertEquals('HeadObject', $cmds[1]->getName());
+        $this->assertEquals('ListObjects', $cmds[2]->getName());
+        $this->assertEquals('HeadObject', $cmds[3]->getName());
+        $this->assertEquals('2.3', $cmds[1]['Key']);
+        $this->assertEquals('4', $cmds[3]['Key']);
+    }
+
     public function testDoesNotInsertMissingOutputTokensIntoNextRequest()
     {
         $client = $this->getTestClient('route53');
