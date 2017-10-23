@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.32 - 2017-10-23
 
 * `Aws\` - Override passed in starting token for a ResultPaginator when moving to the next command.
 * `Aws\Organizations` - This release supports integrating other AWS services with AWS Organizations through the use of an IAM service-linked role called AWSServiceRoleForOrganizations. Certain operations automatically create that role if it does not already exist.
