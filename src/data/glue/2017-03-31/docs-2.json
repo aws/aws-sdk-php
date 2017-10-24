@@ -1,12 +1,13 @@
 {
   "version": "2.0",
-  "service": "Defines service operations used by the GlueFrontendService",
+  "service": "<fullname>AWS Glue</fullname> <p>Defines the public endpoint for the AWS Glue service.</p>",
   "operations": {
     "BatchCreatePartition": "<p>Creates one or more partitions in a batch operation.</p>",
     "BatchDeleteConnection": "<p>Deletes a list of connection definitions from the Data Catalog.</p>",
     "BatchDeletePartition": "<p>Deletes one or more partitions in a batch operation.</p>",
     "BatchDeleteTable": "<p>Deletes multiple tables at once.</p>",
     "BatchGetPartition": "<p>Retrieves partitions in a batch request.</p>",
+    "BatchStopJobRun": "<p>Stops a batch of job runs for a given job.</p>",
     "CreateClassifier": "<p>Creates a <code>Classifier</code> in the user's account.</p>",
     "CreateConnection": "<p>Creates a connection definition in the Data Catalog.</p>",
     "CreateCrawler": "<p>Creates a new <code>Crawler</code> with specified targets, role, configuration, and optional schedule. At least one crawl target must be specified, in either the <i>s3Targets</i> or the <i>jdbcTargets</i> field.</p>",
@@ -84,7 +85,7 @@
       }
     },
     "Action": {
-      "base": null,
+      "base": "<p>Defines an action to be initiated by a trigger.</p>",
       "refs": {
         "ActionList$member": null
       }
@@ -177,6 +178,46 @@
         "BatchGetPartitionResponse$UnprocessedKeys": "<p>A list of the partition values in the request for which partions were not returned.</p>"
       }
     },
+    "BatchStopJobRunError": {
+      "base": "<p>Details about the job run and the error that occurred while trying to submit it for stopping.</p>",
+      "refs": {
+        "BatchStopJobRunErrorList$member": null
+      }
+    },
+    "BatchStopJobRunErrorList": {
+      "base": null,
+      "refs": {
+        "BatchStopJobRunResponse$Errors": "<p>A list containing the job run Ids and details of the error that occurred for each job run while submitting to stop.</p>"
+      }
+    },
+    "BatchStopJobRunJobRunIdList": {
+      "base": null,
+      "refs": {
+        "BatchStopJobRunRequest$JobRunIds": "<p>A list of job run Ids of the given job to be stopped.</p>"
+      }
+    },
+    "BatchStopJobRunRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchStopJobRunResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchStopJobRunSuccessfulSubmission": {
+      "base": "<p>Details about the job run which is submitted successfully for stopping.</p>",
+      "refs": {
+        "BatchStopJobRunSuccessfulSubmissionList$member": null
+      }
+    },
+    "BatchStopJobRunSuccessfulSubmissionList": {
+      "base": null,
+      "refs": {
+        "BatchStopJobRunResponse$SuccessfulSubmissions": "<p>A list of job runs which are successfully submitted for stopping.</p>"
+      }
+    },
     "Boolean": {
       "base": null,
       "refs": {
@@ -190,7 +231,8 @@
     "BooleanValue": {
       "base": null,
       "refs": {
-        "GetJobRunRequest$PredecessorsIncluded": "<p>A list of the predecessor runs to return as well.</p>"
+        "GetJobRunRequest$PredecessorsIncluded": "<p>A list of the predecessor runs to return as well.</p>",
+        "UpdateDevEndpointRequest$UpdateEtlLibraries": "<p>True if the list of custom libraries to be loaded in the development endpoint needs to be updated, or False otherwise.</p>"
       }
     },
     "BoundedPartitionValueList": {
@@ -391,7 +433,7 @@
       }
     },
     "Condition": {
-      "base": null,
+      "base": "<p>Defines a condition under which a trigger fires.</p>",
       "refs": {
         "ConditionList$member": null
       }
@@ -444,9 +486,9 @@
     "ConnectionType": {
       "base": null,
       "refs": {
-        "Connection$ConnectionType": "<p>The type of the connection.</p>",
-        "ConnectionInput$ConnectionType": "<p>The type of the connection.</p>",
-        "GetConnectionsFilter$ConnectionType": "<p>The type of connections to return.</p>"
+        "Connection$ConnectionType": "<p>The type of the connection. Currently, only JDBC is supported; SFTP is not supported.</p>",
+        "ConnectionInput$ConnectionType": "<p>The type of the connection. Currently, only JDBC is supported; SFTP is not supported.</p>",
+        "GetConnectionsFilter$ConnectionType": "<p>The type of connections to return. Currently, only JDBC is supported; SFTP is not supported.</p>"
       }
     },
     "ConnectionsList": {
@@ -458,7 +500,7 @@
       }
     },
     "Crawler": {
-      "base": "<p>Specifies a crawler program that examines a data source and uses classifiers to try to its schema. If successful, the crawler records metatdata concerning the data source in the Data Catalog.</p>",
+      "base": "<p>Specifies a crawler program that examines a data source and uses classifiers to try to determine its schema. If successful, the crawler records metatdata concerning the data source in the Data Catalog.</p>",
       "refs": {
         "CrawlerList$member": null,
         "GetCrawlerResponse$Crawler": "<p>The metadata for the specified <code>Crawler</code>.</p>"
@@ -636,10 +678,10 @@
     "CronExpression": {
       "base": null,
       "refs": {
-        "CreateCrawlerRequest$Schedule": "<p>A cron expression that can be used as a Cloudwatch event (see <a href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html\">CloudWatch Schedule Expression Syntax</a>. For example, to run every day at 12:15 UTC, specify: <code>cron(15 12 * * ? *)</code>.</p>",
-        "Schedule$ScheduleExpression": "<p>A <code>cron</code> expression that can be used as a Cloudwatch event to schedule something (see <a href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html\">CloudWatch Schedule Expression Syntax</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
-        "UpdateCrawlerRequest$Schedule": "<p>A cron expression that can be used as a Cloudwatch event (see <a href=\"http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html\">CloudWatch Schedule Expression Syntax</a>. For example, to run every day at 12:15 UTC, specify: <code>cron(15 12 * * ? *)</code>.</p>",
-        "UpdateCrawlerScheduleRequest$Schedule": "<p>Cron expression of the updated schedule.</p>"
+        "CreateCrawlerRequest$Schedule": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
+        "Schedule$ScheduleExpression": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
+        "UpdateCrawlerRequest$Schedule": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
+        "UpdateCrawlerScheduleRequest$Schedule": "<p>The updated <code>cron</code> expression used to specify the schedule (see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>"
       }
     },
     "CustomPatterns": {
@@ -841,7 +883,7 @@
     "DevEndpointCustomLibraries": {
       "base": "<p>Custom libraries to be loaded into a DevEndpoint.</p>",
       "refs": {
-        "UpdateDevEndpointRequest$CustomLibraries": "<p>Custom Python or Java custom libraries to be loaded in the DevEndpoint.</p>"
+        "UpdateDevEndpointRequest$CustomLibraries": "<p>Custom Python or Java libraries to be loaded in the DevEndpoint.</p>"
       }
     },
     "DevEndpointList": {
@@ -864,6 +906,7 @@
     "ErrorDetail": {
       "base": "<p>Contains details about an error.</p>",
       "refs": {
+        "BatchStopJobRunError$ErrorDetail": "<p>The details of the error that occurred.</p>",
         "ErrorByName$value": null,
         "PartitionError$ErrorDetail": "<p>Details about the partition error.</p>",
         "TableError$ErrorDetail": "<p>Detail about the error.</p>"
@@ -906,7 +949,7 @@
     "GenericMap": {
       "base": null,
       "refs": {
-        "Action$Arguments": null,
+        "Action$Arguments": "<p>Arguments to be passed to the job.</p>",
         "CreateJobRequest$DefaultArguments": "<p>The default parameters for this job.</p>",
         "Job$DefaultArguments": "<p>The default parameters for this job.</p>",
         "JobRun$Arguments": "<p>The job arguments associated with this run.</p>",
@@ -920,7 +963,7 @@
         "CreateDevEndpointRequest$EndpointName": "<p>The name to be assigned to the new DevEndpoint.</p>",
         "CreateDevEndpointRequest$SubnetId": "<p>The subnet ID for the new DevEndpoint to use.</p>",
         "CreateDevEndpointRequest$PublicKey": "<p>The public key to use for authentication.</p>",
-        "CreateDevEndpointRequest$ExtraPythonLibsS3Path": "<p>Path to one or more Python libraries in an S3 bucket that should be loaded in your DevEndpoint.</p>",
+        "CreateDevEndpointRequest$ExtraPythonLibsS3Path": "<p>Path(s) to one or more Python libraries in an S3 bucket that should be loaded in your DevEndpoint. Multiple values must be complete paths separated by a comma.</p> <p>Please note that only pure Python libraries can currently be used on a DevEndpoint. Libraries that rely on C extensions, such as the <a href=\"http://pandas.pydata.org/\">pandas</a> Python data analysis library, are not yet supported.</p>",
         "CreateDevEndpointRequest$ExtraJarsS3Path": "<p>Path to one or more Java Jars in an S3 bucket that should be loaded in your DevEndpoint.</p>",
         "CreateDevEndpointResponse$EndpointName": "<p>The name assigned to the new DevEndpoint.</p>",
         "CreateDevEndpointResponse$Status": "<p>The current status of the new DevEndpoint.</p>",
@@ -928,10 +971,10 @@
         "CreateDevEndpointResponse$YarnEndpointAddress": "<p>The address of the YARN endpoint used by this DevEndpoint.</p>",
         "CreateDevEndpointResponse$AvailabilityZone": "<p>The AWS availability zone where this DevEndpoint is located.</p>",
         "CreateDevEndpointResponse$VpcId": "<p>The ID of the VPC used by this DevEndpoint.</p>",
-        "CreateDevEndpointResponse$ExtraPythonLibsS3Path": "<p>Path to one or more Python libraries in an S3 bucket that will be loaded in your DevEndpoint.</p>",
+        "CreateDevEndpointResponse$ExtraPythonLibsS3Path": "<p>Path(s) to one or more Python libraries in an S3 bucket that will be loaded in your DevEndpoint.</p>",
         "CreateDevEndpointResponse$ExtraJarsS3Path": "<p>Path to one or more Java Jars in an S3 bucket that will be loaded in your DevEndpoint.</p>",
         "CreateDevEndpointResponse$FailureReason": "<p>The reason for a current failure in this DevEndpoint.</p>",
-        "CreateTriggerRequest$Schedule": "<p>A cron schedule expression for the new trigger.</p>",
+        "CreateTriggerRequest$Schedule": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
         "DeleteDevEndpointRequest$EndpointName": "<p>The name of the DevEndpoint.</p>",
         "DevEndpoint$EndpointName": "<p>The name of the DevEndpoint.</p>",
         "DevEndpoint$SubnetId": "<p>The subnet ID for this DevEndpoint.</p>",
@@ -940,13 +983,13 @@
         "DevEndpoint$Status": "<p>The current status of this DevEndpoint.</p>",
         "DevEndpoint$AvailabilityZone": "<p>The AWS availability zone where this DevEndpoint is located.</p>",
         "DevEndpoint$VpcId": "<p>The ID of the virtual private cloud (VPC) used by this DevEndpoint.</p>",
-        "DevEndpoint$ExtraPythonLibsS3Path": "<p>Path to one or more Python libraries in an S3 bucket that should be loaded in your DevEndpoint.</p>",
-        "DevEndpoint$ExtraJarsS3Path": "<p>Path to one or more Java Jars in an S3 bucket that should be loaded in your DevEndpoint.</p>",
+        "DevEndpoint$ExtraPythonLibsS3Path": "<p>Path(s) to one or more Python libraries in an S3 bucket that should be loaded in your DevEndpoint. Multiple values must be complete paths separated by a comma.</p> <p>Please note that only pure Python libraries can currently be used on a DevEndpoint. Libraries that rely on C extensions, such as the <a href=\"http://pandas.pydata.org/\">pandas</a> Python data analysis library, are not yet supported.</p>",
+        "DevEndpoint$ExtraJarsS3Path": "<p>Path to one or more Java Jars in an S3 bucket that should be loaded in your DevEndpoint.</p> <p>Please note that only pure Java/Scala libraries can currently be used on a DevEndpoint.</p>",
         "DevEndpoint$FailureReason": "<p>The reason for a current failure in this DevEndpoint.</p>",
         "DevEndpoint$LastUpdateStatus": "<p>The status of the last update.</p>",
         "DevEndpoint$PublicKey": "<p>The public key to be used by this DevEndpoint for authentication.</p>",
-        "DevEndpointCustomLibraries$ExtraPythonLibsS3Path": "<p>Path to one or more Python libraries in an S3 bucket that should be loaded in your DevEndpoint.</p>",
-        "DevEndpointCustomLibraries$ExtraJarsS3Path": "<p>Path to one or more Java Jars in an S3 bucket that should be loaded in your DevEndpoint.</p>",
+        "DevEndpointCustomLibraries$ExtraPythonLibsS3Path": "<p>Path(s) to one or more Python libraries in an S3 bucket that should be loaded in your DevEndpoint. Multiple values must be complete paths separated by a comma.</p> <p>Please note that only pure Python libraries can currently be used on a DevEndpoint. Libraries that rely on C extensions, such as the <a href=\"http://pandas.pydata.org/\">pandas</a> Python data analysis library, are not yet supported.</p>",
+        "DevEndpointCustomLibraries$ExtraJarsS3Path": "<p>Path to one or more Java Jars in an S3 bucket that should be loaded in your DevEndpoint.</p> <p>Please note that only pure Java/Scala libraries can currently be used on a DevEndpoint.</p>",
         "GenericMap$key": null,
         "GenericMap$value": null,
         "GetDevEndpointRequest$EndpointName": "<p>Name of the DevEndpoint for which to retrieve information.</p>",
@@ -960,8 +1003,8 @@
         "GetTriggersResponse$NextToken": "<p>A continuation token, if not all the requested triggers have yet been returned.</p>",
         "JobCommand$Name": "<p>The name of this job command.</p>",
         "StringList$member": null,
-        "Trigger$Schedule": "<p>A cron schedule expression.</p>",
-        "TriggerUpdate$Schedule": "<p>A cron expression specifying the schedule.</p>",
+        "Trigger$Schedule": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
+        "TriggerUpdate$Schedule": "<p>An updated <code>cron</code> expression used to specify the schedule (see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
         "UpdateDevEndpointRequest$EndpointName": "<p>The name of the DevEndpoint to be updated.</p>",
         "UpdateDevEndpointRequest$PublicKey": "<p>The public key for the DevEndpoint to use.</p>"
       }
@@ -1275,6 +1318,9 @@
     "IdString": {
       "base": null,
       "refs": {
+        "BatchStopJobRunError$JobRunId": "<p>The job run Id.</p>",
+        "BatchStopJobRunJobRunIdList$member": null,
+        "BatchStopJobRunSuccessfulSubmission$JobRunId": "<p>The job run Id.</p>",
         "GetJobRunRequest$RunId": "<p>The ID of the job run.</p>",
         "JobRun$Id": "<p>The ID of this job run.</p>",
         "JobRun$PreviousRunId": "<p>The ID of the previous run of this job.</p>",
@@ -1315,10 +1361,12 @@
     "IntegerValue": {
       "base": null,
       "refs": {
-        "CreateDevEndpointRequest$NumberOfNodes": "<p>The number of nodes to use.</p>",
-        "CreateDevEndpointResponse$NumberOfNodes": "<p>The number of nodes in this DevEndpoint.</p>",
+        "CreateDevEndpointRequest$NumberOfNodes": "<p>The number of AWS Glue Data Processing Units (DPUs) to allocate to this DevEndpoint.</p>",
+        "CreateDevEndpointResponse$ZeppelinRemoteSparkInterpreterPort": "<p>The Apache Zeppelin port for the remote Apache Spark interpreter.</p>",
+        "CreateDevEndpointResponse$NumberOfNodes": "<p>The number of AWS Glue Data Processing Units (DPUs) allocated to this DevEndpoint.</p>",
         "CreateJobRequest$AllocatedCapacity": "<p>The number of capacity units allocated to this job.</p>",
-        "DevEndpoint$NumberOfNodes": "<p>The number of nodes used by this DevEndpoint.</p>",
+        "DevEndpoint$ZeppelinRemoteSparkInterpreterPort": "<p>The Apache Zeppelin port for the remote Apache Spark interpreter.</p>",
+        "DevEndpoint$NumberOfNodes": "<p>The number of AWS Glue Data Processing Units (DPUs) allocated to this DevEndpoint.</p>",
         "Job$AllocatedCapacity": "<p>The number of capacity units allocated to this job.</p>",
         "JobBookmarkEntry$Version": "<p>Version of the job.</p>",
         "JobBookmarkEntry$Run": "<p>The run ID number.</p>",
@@ -1400,7 +1448,7 @@
     "JobRunState": {
       "base": null,
       "refs": {
-        "Condition$State": null,
+        "Condition$State": "<p>The condition state.</p>",
         "JobRun$JobRunState": "<p>The current state of the job run.</p>"
       }
     },
@@ -1474,7 +1522,7 @@
     "LogicalOperator": {
       "base": null,
       "refs": {
-        "Condition$LogicalOperator": null
+        "Condition$LogicalOperator": "<p>A logical operator.</p>"
       }
     },
     "MappingEntry": {
@@ -1551,7 +1599,7 @@
     "NameString": {
       "base": null,
       "refs": {
-        "Action$JobName": null,
+        "Action$JobName": "<p>The name of a job to be executed.</p>",
         "BatchCreatePartitionRequest$DatabaseName": "<p>The name of the metadata database in which the partition is to be created.</p>",
         "BatchCreatePartitionRequest$TableName": "<p>The name of the metadata table in which the partition is to be created.</p>",
         "BatchDeletePartitionRequest$DatabaseName": "<p>The name of the catalog database in which the table in question resides.</p>",
@@ -1560,12 +1608,15 @@
         "BatchDeleteTableRequest$DatabaseName": "<p>The name of the catalog database where the tables to delete reside.</p>",
         "BatchGetPartitionRequest$DatabaseName": "<p>The name of the catalog database where the partitions reside.</p>",
         "BatchGetPartitionRequest$TableName": "<p>The name of the partitions' table.</p>",
+        "BatchStopJobRunError$JobName": "<p>The name of the job.</p>",
+        "BatchStopJobRunRequest$JobName": "<p>The name of the job whose job runs are to be stopped.</p>",
+        "BatchStopJobRunSuccessfulSubmission$JobName": "<p>The name of the job.</p>",
         "CatalogEntry$DatabaseName": "<p>The database in which the table metadata resides.</p>",
         "CatalogEntry$TableName": "<p>The name of the table in question.</p>",
         "CatalogImportStatus$ImportedBy": "<p>The name of the person who initiated the migration.</p>",
         "ClassifierNameList$member": null,
         "Column$Name": "<p>The name of the <code>Column</code>.</p>",
-        "Condition$JobName": null,
+        "Condition$JobName": "<p>The name of the job in question.</p>",
         "Connection$Name": "<p>The name of the connection definition.</p>",
         "Connection$LastUpdatedBy": "<p>The user, group or role that last updated this connection definition.</p>",
         "ConnectionInput$Name": "<p>The name of the connection.</p>",
@@ -1805,7 +1856,7 @@
       }
     },
     "PartitionValueList": {
-      "base": null,
+      "base": "<p>Contains a list of values defining partitions.</p>",
       "refs": {
         "BatchDeletePartitionValueList$member": null,
         "BatchGetPartitionValueList$member": null
@@ -1911,12 +1962,12 @@
     "RoleArn": {
       "base": null,
       "refs": {
-        "Crawler$Role": "<p>The ARN of an IAM role used to access customer resources such as data in S3.</p>",
-        "CreateCrawlerRequest$Role": "<p>The AWS ARN of the IAM role used by the new <code>Crawler</code> to access customer resources.</p>",
+        "Crawler$Role": "<p>The IAM role (or ARN of an IAM role) used to access customer resources such as data in S3.</p>",
+        "CreateCrawlerRequest$Role": "<p>The IAM role (or ARN of an IAM role) used by the new <code>Crawler</code> to access customer resources.</p>",
         "CreateDevEndpointRequest$RoleArn": "<p>The IAM role for the DevEndpoint.</p>",
         "CreateDevEndpointResponse$RoleArn": "<p>The AWS ARN of the role assigned to the new DevEndpoint.</p>",
         "DevEndpoint$RoleArn": "<p>The AWS ARN of the IAM role used in this DevEndpoint.</p>",
-        "UpdateCrawlerRequest$Role": "<p>The AWS ARN of the IAM role used by the new <code>Crawler</code> to access customer resources.</p>"
+        "UpdateCrawlerRequest$Role": "<p>The IAM role (or ARN of an IAM role) used by the new <code>Crawler</code> to access customer resources.</p>"
       }
     },
     "RoleString": {
@@ -2104,7 +2155,7 @@
       "refs": {
         "GetTableResponse$Table": "<p>The <code>Table</code> object that defines the specified table.</p>",
         "TableList$member": null,
-        "TableVersion$Table": null
+        "TableVersion$Table": "<p>The table in question</p>"
       }
     },
     "TableError": {
@@ -2155,7 +2206,7 @@
       }
     },
     "TableVersion": {
-      "base": null,
+      "base": "<p>Specifies a version of a table.</p>",
       "refs": {
         "GetTableVersionsList$member": null
       }
@@ -2394,9 +2445,9 @@
     "UriString": {
       "base": null,
       "refs": {
-        "CreateJobRequest$LogUri": "<p>Location of the logs for this job.</p>",
-        "Job$LogUri": "<p>Location of the logs for this job.</p>",
-        "JobUpdate$LogUri": "<p>Location of the logs for this job.</p>"
+        "CreateJobRequest$LogUri": "<p>This field is reserved for future use.</p>",
+        "Job$LogUri": "<p>This field is reserved for future use.</p>",
+        "JobUpdate$LogUri": "<p>This field is reserved for future use.</p>"
       }
     },
     "UserDefinedFunction": {
@@ -2440,7 +2491,7 @@
         "Partition$Values": "<p>The values of the partition.</p>",
         "PartitionError$PartitionValues": "<p>The values that define the partition.</p>",
         "PartitionInput$Values": "<p>The values of the partition.</p>",
-        "PartitionValueList$Values": null
+        "PartitionValueList$Values": "<p>The list of values.</p>"
       }
     },
     "VersionId": {
@@ -2458,7 +2509,7 @@
     "VersionString": {
       "base": null,
       "refs": {
-        "TableVersion$VersionId": null
+        "TableVersion$VersionId": "<p>The ID value that identifies this table version.</p>"
       }
     },
     "ViewTextString": {

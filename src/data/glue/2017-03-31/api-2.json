@@ -86,6 +86,20 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "BatchStopJobRun":{
+      "name":"BatchStopJobRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchStopJobRunRequest"},
+      "output":{"shape":"BatchStopJobRunResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"}
+      ]
+    },
     "CreateClassifier":{
       "name":"CreateClassifier",
       "http":{
@@ -1247,6 +1261,53 @@
       "max":1000,
       "min":0
     },
+    "BatchStopJobRunError":{
+      "type":"structure",
+      "members":{
+        "JobName":{"shape":"NameString"},
+        "JobRunId":{"shape":"IdString"},
+        "ErrorDetail":{"shape":"ErrorDetail"}
+      }
+    },
+    "BatchStopJobRunErrorList":{
+      "type":"list",
+      "member":{"shape":"BatchStopJobRunError"}
+    },
+    "BatchStopJobRunJobRunIdList":{
+      "type":"list",
+      "member":{"shape":"IdString"},
+      "max":25,
+      "min":1
+    },
+    "BatchStopJobRunRequest":{
+      "type":"structure",
+      "required":[
+        "JobName",
+        "JobRunIds"
+      ],
+      "members":{
+        "JobName":{"shape":"NameString"},
+        "JobRunIds":{"shape":"BatchStopJobRunJobRunIdList"}
+      }
+    },
+    "BatchStopJobRunResponse":{
+      "type":"structure",
+      "members":{
+        "SuccessfulSubmissions":{"shape":"BatchStopJobRunSuccessfulSubmissionList"},
+        "Errors":{"shape":"BatchStopJobRunErrorList"}
+      }
+    },
+    "BatchStopJobRunSuccessfulSubmission":{
+      "type":"structure",
+      "members":{
+        "JobName":{"shape":"NameString"},
+        "JobRunId":{"shape":"IdString"}
+      }
+    },
+    "BatchStopJobRunSuccessfulSubmissionList":{
+      "type":"list",
+      "member":{"shape":"BatchStopJobRunSuccessfulSubmission"}
+    },
     "Boolean":{"type":"boolean"},
     "BooleanValue":{"type":"boolean"},
     "BoundedPartitionValueList":{
@@ -1624,8 +1685,7 @@
       "required":[
         "EndpointName",
         "RoleArn",
-        "SecurityGroupIds",
-        "SubnetId"
+        "PublicKey"
       ],
       "members":{
         "EndpointName":{"shape":"GenericString"},
@@ -1647,6 +1707,7 @@
         "SubnetId":{"shape":"GenericString"},
         "RoleArn":{"shape":"RoleArn"},
         "YarnEndpointAddress":{"shape":"GenericString"},
+        "ZeppelinRemoteSparkInterpreterPort":{"shape":"IntegerValue"},
         "NumberOfNodes":{"shape":"IntegerValue"},
         "AvailabilityZone":{"shape":"GenericString"},
         "VpcId":{"shape":"GenericString"},
@@ -2000,6 +2061,7 @@
         "SecurityGroupIds":{"shape":"StringList"},
         "SubnetId":{"shape":"GenericString"},
         "YarnEndpointAddress":{"shape":"GenericString"},
+        "ZeppelinRemoteSparkInterpreterPort":{"shape":"IntegerValue"},
         "PublicAddress":{"shape":"GenericString"},
         "Status":{"shape":"GenericString"},
         "NumberOfNodes":{"shape":"IntegerValue"},
@@ -3415,7 +3477,8 @@
       "members":{
         "EndpointName":{"shape":"GenericString"},
         "PublicKey":{"shape":"GenericString"},
-        "CustomLibraries":{"shape":"DevEndpointCustomLibraries"}
+        "CustomLibraries":{"shape":"DevEndpointCustomLibraries"},
+        "UpdateEtlLibraries":{"shape":"BooleanValue"}
       }
     },
     "UpdateDevEndpointResponse":{
