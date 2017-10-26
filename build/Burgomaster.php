@@ -299,7 +299,7 @@ EOT
     }
 
     /**
-     * Creates a default stub for the phar that includeds the generated
+     * Creates a default stub for the phar that includes the generated
      * autoloader.
      *
      * This phar also registers a constant that can be used to check if you
