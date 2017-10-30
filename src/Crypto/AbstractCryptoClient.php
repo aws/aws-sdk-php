@@ -110,7 +110,7 @@ abstract class AbstractCryptoClient
         Stream $plaintext,
         array $cipherOptions,
         MaterialsProvider $provider,
-        MetadataEnvelope &$envelope
+        MetadataEnvelope $envelope
     );
 
     /**

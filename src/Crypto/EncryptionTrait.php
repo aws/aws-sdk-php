@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Crypto;
 
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\AppendStream;
 use GuzzleHttp\Psr7\Stream;
 
 trait EncryptionTrait
@@ -50,7 +52,7 @@ trait EncryptionTrait
         Stream $plaintext,
         array $cipherOptions,
         MaterialsProvider $provider,
-        MetadataEnvelope &$envelope
+        MetadataEnvelope $envelope
     ) {
         $materialsDescription = $provider->getMaterialsDescription();
 
@@ -146,7 +148,7 @@ trait EncryptionTrait
             case 'gcm':
                 $cipherOptions['TagLength'] = 16;
 
-                $taggedStream = new AesTaggedGcmEncryptingStream(
+                $cipherTextStream = new AesGcmEncryptingStream(
                     $plaintext,
                     $cek,
                     $cipherOptions['Iv'],
@@ -156,9 +158,13 @@ trait EncryptionTrait
                     $cipherOptions['TagLength'],
                     $cipherOptions['KeySize']
                 );
-                $cipherTextStream = $taggedStream->createStream();
-                $cipherOptions['Tag'] = $taggedStream->getTag();
-                return [$cipherTextStream, $taggedStream->getAesName()];
+
+                $appendStream = new AppendStream([
+                    $cipherTextStream->createStream()
+                ]);
+                $cipherOptions['Tag'] = $cipherTextStream->getTag();
+                $appendStream->addStream(Psr7\stream_for($cipherOptions['Tag']));
+                return [$appendStream, $cipherTextStream->getAesName()];
             default:
                 $cipherMethod = $this->buildCipherMethod(
                     $cipherOptions['Cipher'],
