@@ -14,6 +14,9 @@ use \Aws\S3\S3Client;
  * alongside the base file on Amazon S3. The provided client will be used for
  * reading or writing this object. A specified suffix (default of '.instruction'
  * will be applied to each of the operations involved with the instruction file.
+ *
+ * If there is a failure after an instruction file has been uploaded, it will
+ * not be automatically deleted.
  */
 class InstructionFileMetadataStrategy implements MetadataStrategyInterface
 {

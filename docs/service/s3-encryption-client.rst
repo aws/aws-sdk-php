@@ -160,3 +160,8 @@ Class name constants for the ``HeadersMetadataStrategy`` and
         'Key' => $key,
         'Body' => fopen('file-to-encrypt.txt'),
     ]);
+
+.. note::
+
+    If there is a failure after an instruction file has been uploaded, it will
+    not be automatically deleted.
