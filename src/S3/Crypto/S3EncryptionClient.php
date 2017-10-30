@@ -86,13 +86,11 @@ class S3EncryptionClient extends AbstractCryptoClient
                 switch ($args['@MetadataStrategy']) {
                     case HeadersMetadataStrategy::class:
                         return new HeadersMetadataStrategy();
-                        break;
                     case InstructionFileMetadataStrategy::class:
                         return new InstructionFileMetadataStrategy(
                             $this->client,
                             $instructionFileSuffix
                         );
-                        break;
                     default:
                         throw new \InvalidArgumentException('Could not match the'
                             . ' specified string in "MetadataStrategy" to a'
