@@ -10,10 +10,7 @@ use GuzzleHttp\Psr7\Stream;
  */
 abstract class AbstractCryptoClient
 {
-    private static $supportedCiphers = [
-        'cbc' => true,
-        'gcm' => true
-    ];
+    private static $supportedCiphers = ['cbc', 'gcm'];
 
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
@@ -24,7 +21,7 @@ abstract class AbstractCryptoClient
      */
     public static function isSupportedCipher($cipherName)
     {
-        return !empty(self::$supportedCiphers[$cipherName]);
+        return in_array($cipherName, self::$supportedCiphers);
     }
 
     /**
@@ -120,7 +117,7 @@ abstract class AbstractCryptoClient
      * Dependency to provide an interface for building a decryption stream for
      * cipher text given metadata and materials to do so.
      *
-     * @param string $cipherText Plain-text data to be encrypted using the
+     * @param string $cipherText Plain-text data to be decrypted using the
      *                           materials, algorithm, and data provided.
      * @param MaterialsProvider $provider A provider to supply and encrypt
      *                                    materials used in encryption.
