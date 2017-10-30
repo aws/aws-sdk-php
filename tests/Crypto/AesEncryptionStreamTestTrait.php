@@ -74,8 +74,8 @@ trait AesEncryptionStreamTestTrait
     public function plainTextProvider() {
         return [
             [Psr7\stream_for('The rain in Spain falls mainly on the plain.')],
-            [Psr7\stream_for('Ø¯Ø³Øªâ€ŒÙ†ÙˆØ´ØªÙ‡â€ŒÙ‡Ø§ Ù†Ù…ÛŒâ€ŒØ³ÙˆØ²Ù†Ø¯')],
-            [Psr7\stream_for('Ð ÑƒÐºÐ¾Ð¿Ð¸ÑÐ¸ Ð½Ðµ Ð³Ð¾Ñ€ÑÑ‚')],
+            [Psr7\stream_for('دست‌نوشته‌ها نمی‌سوزند')],
+            [Psr7\stream_for('Рукописи не горят')],
             [new CachingStream(new RandomByteStream(2 * 1024 * 1024 + 11))]
         ];
     }
