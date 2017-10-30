@@ -53,8 +53,8 @@ abstract class MaterialsProvider
     abstract public function getWrapAlgorithmName();
 
     /**
-     * Takes a content encryption key and description to return an encrypted
-     * key according to the Provider's specifications.
+     * Takes a content encryption key (CEK) and description to return an
+     * encrypted key according to the Provider's specifications.
      *
      * @param string $unencryptedCek Key for use in encrypting other data
      *                               that itself needs to be encrypted by the
@@ -67,8 +67,8 @@ abstract class MaterialsProvider
     abstract public function encryptCek($unencryptedCek, $materialDescription);
 
     /**
-     * Takes an encrypted key and material description for use decrypting the
-     * key according to the Provider's specifications.
+     * Takes an encrypted content encryption key (CEK) and material description
+     * for use decrypting the key according to the Provider's specifications.
      *
      * @param string $encryptedCek Encrypted key to be decrypted by the Provider
      *                             for use decrypting other data.
@@ -81,7 +81,7 @@ abstract class MaterialsProvider
 
     /**
      * @param string $keySize Length of a cipher key in bits for generating a
-     *                        random content encryption key.
+     *                        random content encryption key (CEK).
      *
      * @return string
      */

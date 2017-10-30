@@ -124,7 +124,7 @@ trait EncryptionTrait
 
     /**
      * Generates a stream that wraps the plaintext with the proper cipher and
-     * uses the content encryption key to encrypt the data when read.
+     * uses the content encryption key (CEK) to encrypt the data when read.
      *
      * @param Stream $plaintext Plain-text data to be encrypted using the
      *                          materials, algorithm, and data provided.

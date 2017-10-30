@@ -123,7 +123,7 @@ trait DecryptionTrait
 
     /**
      * Generates a stream that wraps the cipher text with the proper cipher and
-     * uses the content encryption key to decrypt the data when read.
+     * uses the content encryption key (CEK) to decrypt the data when read.
      *
      * @param string $cipherText Plain-text data to be encrypted using the
      *                           materials, algorithm, and data provided.

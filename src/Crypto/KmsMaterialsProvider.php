@@ -64,7 +64,7 @@ class KmsMaterialsProvider extends MaterialsProvider
     }
 
     /**
-     * Takes a content encryption key and description to return an encrypted
+     * Takes a content encryption key (CEK) and description to return an encrypted
      * key by using KMS' Encrypt API.
      *
      * @param string $unencryptedCek Key for use in encrypting other data
@@ -86,8 +86,8 @@ class KmsMaterialsProvider extends MaterialsProvider
     }
 
     /**
-     * Takes an encrypted key and material description for use decrypting the
-     * key by using KMS' Decrypt API.
+     * Takes an encrypted content encryption key (CEK) and material description
+     * for use decrypting the key by using KMS' Decrypt API.
      *
      * @param string $encryptedCek Encrypted key to be decrypted by the Provider
      *                             for use decrypting other data.
