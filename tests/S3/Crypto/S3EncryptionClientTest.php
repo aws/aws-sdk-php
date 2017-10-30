@@ -1,4 +1,5 @@
 <?php
+namespace Aws\Test\S3\Crypto;
 
 use Aws\S3\Crypto\S3EncryptionClient;
 use Aws\Result;
@@ -18,7 +19,7 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 
-class S3EncryptionClientTest extends PHPUnit_Framework_TestCase
+class S3EncryptionClientTest extends \PHPUnit_Framework_TestCase
 {
     use UsesServiceTrait, UsesMetadataEnvelopeTrait;
 
@@ -59,7 +60,7 @@ class S3EncryptionClientTest extends PHPUnit_Framework_TestCase
 
         return [
             [
-                new stdClass(),
+                new \stdClass(),
                 [
                     'InvalidArgumentException',
                     'An instance of MaterialsProvider'
@@ -174,7 +175,7 @@ class S3EncryptionClientTest extends PHPUnit_Framework_TestCase
     {
         return [
             [
-                new stdClass(),
+                new \stdClass(),
                 [
                     'InvalidArgumentException',
                     'The metadata strategy that'

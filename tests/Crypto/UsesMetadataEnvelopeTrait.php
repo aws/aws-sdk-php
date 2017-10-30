@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\MetadataEnvelope;

@@ -71,7 +71,8 @@ trait AesEncryptionStreamTestTrait
         ];
     }
 
-    public function plainTextProvider() {
+    public function plainTextProvider()
+    {
         return [
             [Psr7\stream_for('The rain in Spain falls mainly on the plain.')],
             [Psr7\stream_for('دست‌نوشته‌ها نمی‌سوزند')],

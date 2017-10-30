@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Crypto\Cipher;
 
 interface CipherMethod

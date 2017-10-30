@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Crypto;
 
 abstract class MaterialsProvider

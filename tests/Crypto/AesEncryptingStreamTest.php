@@ -10,7 +10,6 @@ use Psr\Http\Message\StreamInterface;
 
 class AesEncryptingStreamTest extends \PHPUnit_Framework_TestCase
 {
-
     const KB = 1024;
     const MB = 1048576;
 

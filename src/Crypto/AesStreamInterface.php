@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Crypto;
 
 use Psr\Http\Message\StreamInterface;

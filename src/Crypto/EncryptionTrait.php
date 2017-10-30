@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Crypto;
 
 use GuzzleHttp\Psr7\Stream;
@@ -63,7 +62,7 @@ trait EncryptionTrait
         if (empty($cipherOptions['Cipher'])) {
             throw new \InvalidArgumentException('An encryption cipher must be'
                 . ' specified in the "cipher_options".');
-        } else if (!self::isSupportedCipher($cipherOptions['Cipher'])) {
+        } elseif (!self::isSupportedCipher($cipherOptions['Cipher'])) {
             throw new \InvalidArgumentException('The cipher requested is not'
                 . ' supported by the SDK.');
         }

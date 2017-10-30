@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Crypto;
 
 use GuzzleHttp\Psr7;
@@ -35,5 +34,4 @@ class AesTaggedGcmEncryptingStream extends AesGcmEncryptingStream
             parent::createStream() . $this->getTag()
         );
     }
-
 }

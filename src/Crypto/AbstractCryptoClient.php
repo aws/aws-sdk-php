@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\Crypto;
 
 use Aws\Crypto\Cipher\CipherMethod;
@@ -110,7 +109,7 @@ abstract class AbstractCryptoClient
      *
      * @internal
      */
-    abstract function encrypt(
+    abstract public function encrypt(
         Stream $plaintext,
         array $cipherOptions,
         MaterialsProvider $provider,
@@ -133,7 +132,7 @@ abstract class AbstractCryptoClient
      *
      * @internal
      */
-    abstract function decrypt(
+    abstract public function decrypt(
         $cipherText,
         MaterialsProvider $provider,
         MetadataEnvelope $envelope,

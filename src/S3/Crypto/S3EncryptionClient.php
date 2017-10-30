@@ -1,5 +1,4 @@
 <?php
-
 namespace Aws\S3\Crypto;
 
 use Aws\HashingStream;
@@ -149,7 +148,8 @@ class S3EncryptionClient extends AbstractCryptoClient
      * @throws \InvalidArgumentException Thrown when arguments above are not
      *                                   passed or are passed incorrectly.
      */
-    public function putObjectAsync(array $args) {
+    public function putObjectAsync(array $args)
+    {
         $provider = $this->getMaterialsProvider($args);
         unset($args['@MaterialsProvider']);
 
@@ -195,7 +195,8 @@ class S3EncryptionClient extends AbstractCryptoClient
         );
     }
 
-    private static function getContentShaDecorator(&$args) {
+    private static function getContentShaDecorator(&$args)
+    {
         return function ($hash) use (&$args) {
             $args['ContentSHA256'] = bin2hex($hash);
         };
@@ -280,7 +281,8 @@ class S3EncryptionClient extends AbstractCryptoClient
      * @throws \InvalidArgumentException Thrown when required arguments are not
      *                                   passed or are passed incorrectly.
      */
-    public function getObjectAsync(array $args) {
+    public function getObjectAsync(array $args)
+    {
         $provider = $this->getMaterialsProvider($args);
         unset($args['@MaterialsProvider']);
 
