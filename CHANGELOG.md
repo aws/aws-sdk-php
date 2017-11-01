@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - Documentation updates for acm
+* `Aws\CloudHSMV2` - Minor documentation update for AWS CloudHSM (cloudhsmv2).
+* `Aws\DirectConnect` - AWS DirectConnect now provides support for Global Access for Virtual Private Cloud (VPC) via a new feature called Direct Connect Gateway. A Direct Connect Gateway will allow you to group multiple Direct Connect Private Virtual Interfaces (DX-VIF) and Private Virtual Gateways (VGW) from different AWS regions (but belonging to the same AWS Account) and pass traffic from any DX-VIF to any VPC in the grouping.
+
 ## 3.36.34 - 2017-10-26
 
 * `Aws\CloudFront` - You can now specify additional options for MinimumProtocolVersion, which controls the SSL/TLS protocol that CloudFront uses to communicate with viewers. The minimum protocol version that you choose also determines the ciphers that CloudFront uses to encrypt the content that it returns to viewers.
