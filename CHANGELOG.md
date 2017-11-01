@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.35 - 2017-11-01
 
 * `Aws\ACM` - Documentation updates for acm
 * `Aws\CloudHSMV2` - Minor documentation update for AWS CloudHSM (cloudhsmv2).
