@@ -82,4 +82,22 @@ class PresignUrlMiddlewareTest extends \PHPUnit_Framework_TestCase
             'TargetDBSnapshotIdentifier' => 'my-snapshot-copy',
         ]);
     }
+
+    public function testNoPreSignedUrlWhenDifferentSourceRegionRequired()
+    {
+        $rds = new RdsClient([
+            'region'  => 'us-east-2',
+            'version' => 'latest',
+            'handler' => function (CommandInterface $cmd, RequestInterface $r) {
+                $this->assertNull($cmd['PreSignedUrl']);
+                $this->assertSame('us-east-2', $cmd['DestinationRegion']);
+
+                return new Result;
+            },
+        ]);
+        $rds->createDBInstanceReadReplica([
+            'DBInstanceIdentifier' => 'test-replica',
+            'SourceDBInstanceIdentifier' => 'test-source',
+        ]);
+    }
 }
