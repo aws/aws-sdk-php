@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - This release supports creating and managing Regional and Edge-Optimized API endpoints.
+
 ## 3.36.35 - 2017-11-01
 
 * `Aws\ACM` - Documentation updates for acm
