@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.36.36 - 2017-11-02
 
 * `Aws\APIGateway` - This release supports creating and managing Regional and Edge-Optimized API endpoints.
 
