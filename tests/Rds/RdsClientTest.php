@@ -8,7 +8,7 @@ use Aws\Result;
 /**
  * @covers Aws\Rds\RdsClient
  */
-class Ec2ClientTest extends \PHPUnit_Framework_TestCase
+class RdsClientTest extends \PHPUnit_Framework_TestCase
 {
     public function testAddsCopySnapshotMiddleware()
     {
