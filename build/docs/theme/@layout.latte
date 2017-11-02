@@ -22,6 +22,7 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
     </script>
+    <script language="JavaScript" type="text/javascript" src="https://a0.awsstatic.com/s_code/js/1.0/awshome_s_code.js"></script>
 
     <style>
         .awsicon {
@@ -78,11 +79,11 @@
                     </li>
 
                     {foreach $annotationGroups as $annotation}
-                        <li n:class="$active === 'annotation-group-' . $annotation ? active">
-                            <a n:tag-if="$active !== 'annotation-group-' . $annotation" href="annotation-group-{$annotation}.html" title="List of elements with {$annotation} annotation">
-                                <span>{$annotation|firstUpper}</span>
-                            </a>
-                        </li>
+                    <li n:class="$active === 'annotation-group-' . $annotation ? active">
+                        <a n:tag-if="$active !== 'annotation-group-' . $annotation" href="annotation-group-{$annotation}.html" title="List of elements with {$annotation} annotation">
+                            <span>{$annotation|firstUpper}</span>
+                        </a>
+                    </li>
                     {/foreach}
 
                     <li class="divider-vertical" n:if="$config->download"></li>
@@ -96,9 +97,9 @@
     </nav>
 
     <div id="left">
-    <div id="menu">
-        {define group}
-            <ul>
+        <div id="menu">
+            {define group}
+                <ul>
                 {foreach $groups as $group}
                     {var $nextLevel = substr_count($iterator->nextValue, '\\') > substr_count($group, '\\')}
                     <li n:class="$actualGroup === $group || 0 === strpos($actualGroup, $group . '\\') ? active, $config->main && 0 === strpos($group, $config->main) ? main">
@@ -106,18 +107,18 @@
                             {$group|subgroupName}<span n:tag-if="$nextLevel"></span>
                         </a>
                         {if $nextLevel}
-                            <ul>
+                <ul>
                         {else}
-                            </li>
+                    </li>
                             {if substr_count($iterator->nextValue, '\\') < substr_count($group, '\\')}
-                                {='</ul></li>'|repeat:substr_count($group, '\\') - substr_count($iterator->nextValue, '\\')|noescape}
+                {='</ul></li>'|repeat:substr_count($group, '\\') - substr_count($iterator->nextValue, '\\')|noescape}
                             {/if}
                         {/if}
                 {/foreach}
-            </ul>
-        {/define}
+                </ul>
+            {/define}
 
-        <div id="groups">
+            <div id="groups">
             {if $namespaces}
                 <h3>Namespaces</h3>
                 {include group, groups => $namespaces, actualGroup => $namespace, groupBy => 'namespace'}
@@ -125,85 +126,82 @@
                 <h3>Packages</h3>
                 {include group, groups => $packages, actualGroup => $package, groupBy => 'package'}
             {/if}
-        </div>
+            </div>
 
-        {define elements}
+            {define elements}
             <ul>
                 <li n:foreach="$elements as $element" n:class="$activeElement === $element ? active"><a n:class="$element->deprecated ? deprecated, !$element->valid ? invalid" href="{$element|elementUrl}">{if $namespace}{$element->shortName}{else}{$element->name}{/if}</a></li>
             </ul>
-        {/define}
+            {/define}
 
-        <div id="elements">
-            {if $classes}
-            <h3>Classes</h3>
-            {include elements, elements => $classes, activeElement => $class}
-            {/if}
+            <div id="elements">
+                {if $classes}
+                <h3>Classes</h3>
+                {include elements, elements => $classes, activeElement => $class}
+                {/if}
 
-            {if $interfaces}
-            <h3>Interfaces</h3>
-            {include elements, elements => $interfaces, activeElement => $class}
-            {/if}
+                {if $interfaces}
+                <h3>Interfaces</h3>
+                {include elements, elements => $interfaces, activeElement => $class}
+                {/if}
 
-            {if $traits}
-            <h3>Traits</h3>
-            {include elements, elements => $traits, activeElement => $class}
-            {/if}
+                {if $traits}
+                <h3>Traits</h3>
+                {include elements, elements => $traits, activeElement => $class}
+                {/if}
 
-            {if $exceptions}
-            <h3>Exceptions</h3>
-            {include elements, elements => $exceptions, activeElement => $class}
-            {/if}
+                {if $exceptions}
+                <h3>Exceptions</h3>
+                {include elements, elements => $exceptions, activeElement => $class}
+                {/if}
 
-            {if $constants}
-            <h3>Constants</h3>
-            {include elements, elements => $constants, activeElement => $constant}
-            {/if}
+                {if $constants}
+                <h3>Constants</h3>
+                {include elements, elements => $constants, activeElement => $constant}
+                {/if}
 
-            {if $functions}
-            <h3>Functions</h3>
-            {include elements, elements => $functions, activeElement => $function}
-            {/if}
+                {if $functions}
+                <h3>Functions</h3>
+                {include elements, elements => $functions, activeElement => $function}
+                {/if}
+            </div>
         </div>
     </div>
-</div>
 
-<div id="splitter"></div>
+    <div id="splitter"></div>
 
-<div id="right">
-    <!-- REGION_DISCLAIMER_DO_NOT_REMOVE -->
-    <div id="rightInner">
-    {include content}
+    <div id="right">
+        <!-- REGION_DISCLAIMER_DO_NOT_REMOVE -->
+        <div id="rightInner">
+            {include content}
+        </div>
+
+        <div id="footer">
+            {$config->title} API documentation generated by <a href="http://www.apigen.org">ApiGen</a>
+        </div>
     </div>
-
-    <div id="footer">
-        {$config->title} API documentation generated by <a href="http://www.apigen.org">ApiGen</a>
-    </div>
-</div>
-<!-- SiteCatalyst code version: H.25.2.
-      Copyright 1996-2012 Adobe, Inc. All Rights Reserved
-      More info available at http://www.omniture.com -->
-<script language="JavaScript" type="text/javascript" src="https://a0.awsstatic.com/s_code/js/1.0/awshome_s_code.js"></script>
-<script language="JavaScript" type="text/javascript">
-    s.prop66 = 'AWS SDK for PHP';
-    s.eVar66 = 'D=c66';
-    // Documentation Guide Name
-    s.prop65 = 'API Reference';
-    s.eVar65 = 'D=c65';
-    var s_code=s.t();if(s_code)document.write(s_code)//-->
-</script>
-<script language="JavaScript" type="text/javascript">
-    <!--
-    if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
-    //-->
-</script>
-<noscript>
-    <img src="http://amazonwebservices.d2.sc.omtrdc.net/b/ss/awsamazondev/1/H.25.2--NS/0" height="1" width="1" border="0" alt="" />
-</noscript>
-<!--/DO NOT REMOVE/-->
-<!-- End SiteCatalyst code version: H.25.2. -->
-<!--/DO NOT REMOVE/-->
-<!-- End SiteCatalyst code version: H.25.2. -->
-<script src="{='resources/combined.js'|staticFile}"></script>
-<script src="{='searchIndex.js'|staticFile}"></script>
+    <!-- SiteCatalyst code version: H.25.2.
+          Copyright 1996-2012 Adobe, Inc. All Rights Reserved
+          More info available at http://www.omniture.com -->
+    <script language="JavaScript" type="text/javascript">
+        s.prop66 = 'AWS SDK for PHP';
+        s.eVar66 = 'D=c66';
+        // Documentation Guide Name
+        s.prop65 = 'API Reference';
+        s.eVar65 = 'D=c65';
+        var s_code=s.t();if(s_code)document.write(s_code)//-->
+    </script>
+    <script language="JavaScript" type="text/javascript">
+        <!--
+        if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
+        //-->
+    </script>
+    <noscript>
+        <img src="http://amazonwebservices.d2.sc.omtrdc.net/b/ss/awsamazondev/1/H.25.2--NS/0" height="1" width="1" border="0" alt="" />
+    </noscript>
+    <!--/DO NOT REMOVE/-->
+    <!-- End SiteCatalyst code version: H.25.2. -->
+    <script src="{='resources/combined.js'|staticFile}"></script>
+    <script src="{='searchIndex.js'|staticFile}"></script>
 </body>
 </html>
