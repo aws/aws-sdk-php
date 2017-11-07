@@ -580,7 +580,12 @@ EOT;
 
         $request->expects($this->once())
             ->method('withHeader')
-            ->with('User-Agent', 'aws-sdk-php/' . Sdk::VERSION . ' MockBuilder');
+            ->with(
+                'User-Agent',
+                new \PHPUnit_Framework_Constraint_PCREMatch(
+                    '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
+                )
+            );
 
         $args = [];
         $list = new HandlerList(function () {});
