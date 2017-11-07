@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.37.0 - 2017-11-07
 
 * `Aws\EC2` - You are now able to create and launch EC2 C5 instances, the next generation of EC2's compute-optimized instances, in us-east-1, us-west-2 and eu-west-1. C5 instances offer up to 72 vCPUs, 144 GiB of DDR4 instance memory, 25 Gbps in Network bandwidth and improved EBS and Networking bandwidth on smaller instance sizes to deliver improved performance for compute-intensive workloads.
 * `Aws\KMS` - Documentation updates for AWS KMS. 
