@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.37.1 - 2017-11-07
 
 * `Aws\ElasticLoadBalancingv2` - Added a new limit related to Network Load Balancers on the number of targets per load balancer per AZ.
 * `Aws\RDS` - DescribeOrderableDBInstanceOptions now returns the minimum and maximum allowed values for storage size, total provisioned IOPS, and provisioned IOPS per GiB for a DB instance.
