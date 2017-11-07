@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElasticLoadBalancingv2` - Added a new limit related to Network Load Balancers on the number of targets per load balancer per AZ.
+* `Aws\RDS` - DescribeOrderableDBInstanceOptions now returns the minimum and maximum allowed values for storage size, total provisioned IOPS, and provisioned IOPS per GiB for a DB instance.
+* `Aws\S3` - This releases adds support for 4 features: 1. Default encryption for S3 Bucket, 2. Encryption status in inventory and Encryption support for inventory. 3. Cross region replication of KMS-encrypted objects, and 4. ownership overwrite for CRR. 
+* `Aws\ServiceCatalog` - Region launch expansion of SCS for new region SA-EAST-1
+* `Aws\ServiceCatalog` - Region launch expansion of Service Catalog Service for new region US-WEST-1
+* `Aws\ServiceCatalog` - Region launch expansion for SCS in new region AP-SOUTH-1 BOM
+
 ## 3.37.0 - 2017-11-07
 
 * `Aws\EC2` - You are now able to create and launch EC2 C5 instances, the next generation of EC2's compute-optimized instances, in us-east-1, us-west-2 and eu-west-1. C5 instances offer up to 72 vCPUs, 144 GiB of DDR4 instance memory, 25 Gbps in Network bandwidth and improved EBS and Networking bandwidth on smaller instance sizes to deliver improved performance for compute-intensive workloads.
