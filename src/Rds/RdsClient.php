@@ -209,6 +209,7 @@ class RdsClient extends AwsClient
                         ],
                         'service' => 'rds',
                         'presign_param' => 'PreSignedUrl',
+                        'require_different_region' => true,
                     ]
                 ),
                 'rds.presigner'
