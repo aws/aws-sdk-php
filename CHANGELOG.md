@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - You are now able to create and launch EC2 C5 instances, the next generation of EC2's compute-optimized instances, in us-east-1, us-west-2 and eu-west-1. C5 instances offer up to 72 vCPUs, 144 GiB of DDR4 instance memory, 25 Gbps in Network bandwidth and improved EBS and Networking bandwidth on smaller instance sizes to deliver improved performance for compute-intensive workloads.
+* `Aws\KMS` - Documentation updates for AWS KMS. 
+* `Aws\Organizations` - This release updates permission statements for several API operations, and corrects some other minor errors.
+* `Aws\Pricing` - This is the initial release of AWS Price List Service.
+* `Aws\SFN` - Documentation update.
+
 ## 3.36.37 - 2017-11-03
 
 * `Aws\ECS` - Amazon ECS users can now add devices to their containers and enable init process in containers through the use of docker's 'devices' and 'init' features. These fields can be specified under linuxParameters in ContainerDefinition in the Task Definition Template. 
