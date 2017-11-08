@@ -81,7 +81,7 @@ guide-show:
 
 api-get-apigen:
 	mkdir -p build/artifacts
-	[ -f build/artifacts/apigen.phar ] || wget -q -O build/artifacts/apigen.phar https://github.com/ApiGen/ApiGen/releases/download/v4.1.0/apigen-4.1.0.phar
+	[ -f build/artifacts/apigen.phar ] || wget -q -O build/artifacts/apigen.phar https://github.com/ApiGen/ApiGen/releases/download/v4.1.2/apigen.phar
 
 api: api-get-apigen
 	# Build the package if necessary.

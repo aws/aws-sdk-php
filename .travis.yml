@@ -34,4 +34,4 @@ script:
   - if [ -z "$COMPOSER_OPTS" ]; then make package; fi
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - 'if [ $(phpenv version-name) == "7.1" ] && [ -z "$COMPOSER_OPTS" ]; then bash <(curl -s https://codecov.io/bash); fi'
