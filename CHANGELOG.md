@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next - 2017-11-08
+## 3.38.0 - 2017-11-08
 
 * `Aws\ApplicationAutoScaling` - Application Auto Scaling customers are now able to schedule adjustments to their MinCapacity and MaxCapacity, which makes it possible to pre-provision adequate capacity for anticipated demand and then reduce the provisioned capacity as demand lulls.
 * `Aws\Batch` - Documentation updates for AWS Batch.
