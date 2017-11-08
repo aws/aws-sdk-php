@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - Application Auto Scaling customers are now able to schedule adjustments to their MinCapacity and MaxCapacity, which makes it possible to pre-provision adequate capacity for anticipated demand and then reduce the provisioned capacity as demand lulls.
+* `Aws\Batch` - Documentation updates for AWS Batch.
+* `Aws\EC2` - AWS PrivateLink for Amazon Services - Customers can now privately access Amazon services from their Amazon Virtual Private Cloud (VPC), without using public IPs, and without requiring the traffic to traverse across the Internet.
+* `Aws\ElastiCache` - This release adds online resharding for ElastiCache for Redis offering, providing the ability to add and remove shards from a running cluster. Developers can now dynamically scale-out or scale-in their Redis cluster workloads to adapt to changes in demand. ElastiCache will resize the cluster by adding or removing shards and redistribute hash slots uniformly across the new shard configuration, all while the cluster continues to stay online and serves requests.
+* `Aws\Rds` - Update PresignUrlMiddleware to take an optional require_different_region, default false, for providing presigned urls only if the source and destination regions differ. Require this for RdsClient operations that use the middleware.
+* `Aws\S3` - Updates several S3 endpoints.
+* `Aws\S3` - Adds the S3EncryptionClient with CBC and GCM support. Uses pluggable strategies for handling a MetadataEnvelope in conjunction with a MaterialsProvider. Supports putObject[Async] and getObject[Async] operations.
+
 ## 3.37.1 - 2017-11-07
 
 * `Aws\ElasticLoadBalancingv2` - Added a new limit related to Network Load Balancers on the number of targets per load balancer per AZ.

@@ -106,7 +106,7 @@ EOXML;
 
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string)$client->createPresignedRequest($command, 1342138769)->getUri();
-        $this->assertStringStartsWith('https://foo.s3-us-west-2.amazonaws.com/bar?', $url);
+        $this->assertStringStartsWith('https://foo.s3.us-west-2.amazonaws.com/bar?', $url);
         $this->assertContains('X-Amz-Expires=', $url);
         $this->assertContains('X-Amz-Credential=', $url);
         $this->assertContains('X-Amz-Signature=', $url);
@@ -193,7 +193,7 @@ EOXML;
 
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string)$client->createPresignedRequest($command, 1342138769)->getUri();
-        $this->assertStringStartsWith('https://foo.s3-us-west-2.amazonaws.com/bar?', $url);
+        $this->assertStringStartsWith('https://foo.s3.us-west-2.amazonaws.com/bar?', $url);
         $this->assertContains('X-Amz-Expires=', $url);
         $this->assertContains('X-Amz-Credential=', $url);
         $this->assertContains('X-Amz-Signature=', $url);
@@ -217,7 +217,7 @@ EOXML;
 
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string)$client->createPresignedRequest($command, 1342138769)->getUri();
-        $this->assertStringStartsWith('https://s3-us-west-2.amazonaws.com/foo/bar?', $url);
+        $this->assertStringStartsWith('https://s3.us-west-2.amazonaws.com/foo/bar?', $url);
         $this->assertContains('X-Amz-Expires=', $url);
         $this->assertContains('X-Amz-Credential=', $url);
         $this->assertContains('X-Amz-Signature=', $url);
@@ -244,7 +244,7 @@ EOXML;
         ]);
 
         $url = $client->getObjectUrl('foo', 'bar');
-        $this->assertSame('https://foo.s3-us-west-2.amazonaws.com/bar', $url);
+        $this->assertSame('https://foo.s3.us-west-2.amazonaws.com/bar', $url);
     }
 
     public function testCreatesObjectUrlsForCorrectRegionWithPathStyle()
@@ -264,7 +264,7 @@ EOXML;
         ]);
 
         $url = $client->getObjectUrl('foo', 'bar');
-        $this->assertSame('https://s3-us-west-2.amazonaws.com/foo/bar', $url);
+        $this->assertSame('https://s3.us-west-2.amazonaws.com/foo/bar', $url);
     }
 
     public function testCachesBucketLocation()
@@ -456,7 +456,7 @@ EOXML;
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
-                if ($request->getUri()->getHost() === 'foo.s3-us-west-2.amazonaws.com') {
+                if ($request->getUri()->getHost() === 'foo.s3.us-west-2.amazonaws.com') {
                     return Promise\promise_for(new Response(200, [], 'object!'));
                 }
 
@@ -484,7 +484,7 @@ EOXML;
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
-                if ($request->getUri()->getHost() === 's3-us-west-2.amazonaws.com') {
+                if ($request->getUri()->getHost() === 's3.us-west-2.amazonaws.com') {
                     return Promise\promise_for(new Response(200, [], 'object!'));
                 }
 
