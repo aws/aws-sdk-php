@@ -444,6 +444,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise associateVpcCidrBlockAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result copyFpgaImage(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise copyFpgaImageAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result createDefaultSubnet(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise createDefaultSubnetAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result createDefaultVpc(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise createDefaultVpcAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result createEgressOnlyInternetGateway(array $args = []) (supported in versions 2016-11-15)
