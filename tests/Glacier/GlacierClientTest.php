@@ -7,11 +7,12 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\NoSeekStream;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Glacier\GlacierClient
  */
-class GlacierClientTest extends \PHPUnit_Framework_TestCase
+class GlacierClientTest extends TestCase
 {
     use UsesServiceTrait;
 

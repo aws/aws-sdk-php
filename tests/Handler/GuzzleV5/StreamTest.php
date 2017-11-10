@@ -5,12 +5,13 @@ use Aws\Handler\GuzzleV5\GuzzleStream as GuzzleStreamAdapter;
 use Aws\Handler\GuzzleV5\PsrStream as PsrStreamAdapter;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Stream\Stream as GuzzleStream;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Handler\GuzzleV5\GuzzleStream
  * @covers Aws\Handler\GuzzleV5\PsrStream
  */
-class StreamTest extends \PHPUnit_Framework_TestCase
+class StreamTest extends TestCase
 {
     public function setUp()
     {

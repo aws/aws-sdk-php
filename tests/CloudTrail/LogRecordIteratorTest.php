@@ -8,11 +8,12 @@ use Aws\CloudTrail\LogFileReader;
 use Aws\CloudTrail\LogRecordIterator;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\CloudTrail\LogRecordIterator
  */
-class LogRecordIteratorTest extends \PHPUnit_Framework_TestCase
+class LogRecordIteratorTest extends TestCase
 {
     use UsesServiceTrait;
 

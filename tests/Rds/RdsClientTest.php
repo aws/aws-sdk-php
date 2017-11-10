@@ -4,11 +4,12 @@ namespace Aws\Test\Rds;
 use Aws\Rds\RdsClient;
 use Aws\MockHandler;
 use Aws\Result;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Rds\RdsClient
  */
-class RdsClientTest extends \PHPUnit_Framework_TestCase
+class RdsClientTest extends TestCase
 {
     public function testAddsCopySnapshotMiddleware()
     {

@@ -6,11 +6,12 @@ use Aws\DynamoDb\BinaryValue;
 use Aws\DynamoDb\NumberValue;
 use Aws\DynamoDb\SetValue;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\DynamoDb\Marshaler
  */
-class MarshalerTest extends \PHPUnit_Framework_TestCase
+class MarshalerTest extends TestCase
 {
     const ERROR = 'ERROR';
 

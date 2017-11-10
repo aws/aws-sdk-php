@@ -3,11 +3,12 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\MapShape;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Api\MapShape
  */
-class MapShapeTest extends \PHPUnit_Framework_TestCase
+class MapShapeTest extends TestCase
 {
     public function testReturnsValue()
     {

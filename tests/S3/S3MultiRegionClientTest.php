@@ -16,8 +16,9 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
-class S3MultiRegionClientTest extends \PHPUnit_Framework_TestCase
+class S3MultiRegionClientTest extends TestCase
 {
     use UsesServiceTrait;
 

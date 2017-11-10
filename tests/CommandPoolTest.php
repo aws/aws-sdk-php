@@ -5,11 +5,12 @@ use Aws\Command;
 use Aws\CommandPool;
 use Aws\Exception\AwsException;
 use Aws\Result;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\CommandPool
  */
-class CommandPoolTest extends \PHPUnit_Framework_TestCase
+class CommandPoolTest extends TestCase
 {
     use UsesServiceTrait;
 

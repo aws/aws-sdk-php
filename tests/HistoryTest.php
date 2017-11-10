@@ -6,11 +6,12 @@ use Aws\Command;
 use Aws\History;
 use Aws\Exception\AwsException;
 use GuzzleHttp\Psr7\Request;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\History
  */
-class HistoryTest extends \PHPUnit_Framework_TestCase
+class HistoryTest extends TestCase
 {
     public function testIsCountable()
     {

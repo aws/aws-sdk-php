@@ -16,11 +16,12 @@ use Aws\Result;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\ClientResolver
  */
-class ClientResolverTest extends \PHPUnit_Framework_TestCase
+class ClientResolverTest extends TestCase
 {
     use UsesServiceTrait;
 

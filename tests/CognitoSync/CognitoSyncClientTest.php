@@ -5,8 +5,9 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
-class CognitoSyncClientTest extends \PHPUnit_Framework_TestCase
+class CognitoSyncClientTest extends TestCase
 {
     use UsesServiceTrait;
 

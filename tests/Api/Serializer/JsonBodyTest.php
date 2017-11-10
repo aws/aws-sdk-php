@@ -6,11 +6,12 @@ use Aws\Api\Service;
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\Serializer\JsonBody
  */
-class JsonBodyTest extends \PHPUnit_Framework_TestCase
+class JsonBodyTest extends TestCase
 {
     use UsesServiceTrait;
 

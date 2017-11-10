@@ -3,11 +3,12 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\StructureShape;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Api\StructureShape
  */
-class StructureShapeTest extends \PHPUnit_Framework_TestCase
+class StructureShapeTest extends TestCase
 {
     public function testReturnsWhenMembersAreEmpty()
     {

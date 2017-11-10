@@ -2,8 +2,9 @@
 namespace Aws\Test\Integ;
 
 use GuzzleHttp\Handler\StreamHandler;
+use PHPUnit\Framework\TestCase;
 
-class GuzzleV6StreamHandlerTest extends \PHPUnit_Framework_TestCase
+class GuzzleV6StreamHandlerTest extends TestCase
 {
     use IntegUtils;
 

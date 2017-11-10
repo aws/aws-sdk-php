@@ -3,11 +3,12 @@ namespace Aws\Test\S3;
 
 use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\BucketEndpointMiddleware
  */
-class BucketEndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
+class BucketEndpointMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 

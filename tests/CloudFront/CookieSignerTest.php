@@ -3,8 +3,9 @@ namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CookieSigner;
 use Aws\CloudFront\Policy;
+use PHPUnit\Framework\TestCase;
 
-class CookieSignerTest extends \PHPUnit_Framework_TestCase
+class CookieSignerTest extends TestCase
 {
     public function setUp()
     {

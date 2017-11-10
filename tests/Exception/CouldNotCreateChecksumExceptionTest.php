@@ -2,11 +2,12 @@
 namespace Aws\Test\Exception;
 
 use Aws\Exception\CouldNotCreateChecksumException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Exception\CouldNotCreateChecksumException
  */
-class CouldNotCreateChecksumExceptionTest extends \PHPUnit_Framework_TestCase
+class CouldNotCreateChecksumExceptionTest extends TestCase
 {
     public function testUsesCorrectWords()
     {

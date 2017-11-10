@@ -3,12 +3,13 @@ namespace Aws\Test\Api;
 
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Api\Shape
  * @covers \Aws\Api\AbstractModel
  */
-class ShapeTest extends \PHPUnit_Framework_TestCase
+class ShapeTest extends TestCase
 {
     public function testImplementsArray()
     {

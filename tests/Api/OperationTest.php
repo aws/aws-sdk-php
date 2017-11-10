@@ -3,11 +3,12 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\Operation;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Api\Operation
  */
-class OperationTest extends \PHPUnit_Framework_TestCase
+class OperationTest extends TestCase
 {
     public function testCreatesDefaultMethodAndUri()
     {

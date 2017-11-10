@@ -2,11 +2,12 @@
 namespace Aws\Test\Signature;
 
 use Aws\Signature\SignatureProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Signature\SignatureProvider
  */
-class SignatureProviderTest extends \PHPUnit_Framework_TestCase
+class SignatureProviderTest extends TestCase
 {
     public function versionProvider()
     {

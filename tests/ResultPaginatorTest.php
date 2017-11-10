@@ -6,11 +6,12 @@ use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Result;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\ResultPaginator
  */
-class ResultPaginatorTest extends \PHPUnit_Framework_TestCase
+class ResultPaginatorTest extends TestCase
 {
     use UsesServiceTrait;
 

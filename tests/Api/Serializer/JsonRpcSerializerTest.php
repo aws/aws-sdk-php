@@ -5,11 +5,12 @@ use Aws\Command;
 use Aws\Api\Serializer\JsonRpcSerializer;
 use Aws\Api\Service;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\Serializer\JsonRpcSerializer
  */
-class JsonRpcSerializerTest extends \PHPUnit_Framework_TestCase
+class JsonRpcSerializerTest extends TestCase
 {
     use UsesServiceTrait;
 

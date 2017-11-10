@@ -2,11 +2,12 @@
 namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Api\ShapeMap
  */
-class ShapeMapTest extends \PHPUnit_Framework_TestCase
+class ShapeMapTest extends TestCase
 {
     public function testReturnsShapeName()
     {

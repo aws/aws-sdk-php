@@ -5,11 +5,12 @@ use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\ApplyChecksumMiddleware
  */
-class ApplyChecksumMiddlewareTest extends \PHPUnit_Framework_TestCase
+class ApplyChecksumMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 

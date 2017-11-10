@@ -4,11 +4,12 @@ namespace Aws\Test;
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\Partition;
 use Aws\Endpoint\PartitionEndpointProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Endpoint\PartitionEndpointProvider
  */
-class PartitionEndpointProviderTest extends \PHPUnit_Framework_TestCase
+class PartitionEndpointProviderTest extends TestCase
 {
     /**
      * @dataProvider endpointProvider

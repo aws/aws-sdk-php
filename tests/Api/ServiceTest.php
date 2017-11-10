@@ -3,11 +3,12 @@ namespace Aws\Test\Api;
 
 use Aws\Api\Service;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Api\Service
  */
-class ServiceTest extends \PHPUnit_Framework_TestCase
+class ServiceTest extends TestCase
 {
     use UsesServiceTrait;
 

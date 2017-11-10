@@ -2,8 +2,9 @@
 namespace Aws\Test\EncryptionStreams;
 
 use Aws\Crypto\Cipher\Cbc;
+use PHPUnit\Framework\TestCase;
 
-class CbcTest extends \PHPUnit_Framework_TestCase
+class CbcTest extends TestCase
 {
     public function testShouldReportCipherMethodOfCBC()
     {

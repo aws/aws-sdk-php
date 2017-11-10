@@ -6,6 +6,7 @@ use Aws\Api\Service;
 use Aws\Api\Shape;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\Parser\AbstractParser
@@ -17,7 +18,7 @@ use GuzzleHttp\Psr7;
  * @covers Aws\Api\Parser\QueryParser
  * @covers Aws\Api\Parser\XmlParser
  */
-class ComplianceTest extends \PHPUnit_Framework_TestCase
+class ComplianceTest extends TestCase
 {
     use UsesServiceTrait;
 

@@ -5,11 +5,12 @@ use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\Exception\MultipartUploadException;
 use Aws\Multipart\UploadState;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Exception\MultipartUploadException
  */
-class MultipartUploadExceptionTest extends \PHPUnit_Framework_TestCase
+class MultipartUploadExceptionTest extends TestCase
 {
     /**
      * @dataProvider getTestCases

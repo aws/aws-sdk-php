@@ -6,11 +6,12 @@ use Aws\Exception\AwsException;
 use Aws\S3\Exception\S3MultipartUploadException;
 use Aws\Multipart\UploadState;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\Exception\S3MultipartUploadException
  */
-class S3MultipartUploadExceptionTest extends \PHPUnit_Framework_TestCase
+class S3MultipartUploadExceptionTest extends TestCase
 {
     public function testCanProviderFailedTransferFilePathInfo()
     {

@@ -8,8 +8,9 @@ use Aws\Api\Service;
 use Aws\Api\Shape;
 use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 
-class JsonRpcParserTest extends \PHPUnit_Framework_TestCase
+class JsonRpcParserTest extends TestCase
 {
     public function testCanHandleNullResponses()
     {

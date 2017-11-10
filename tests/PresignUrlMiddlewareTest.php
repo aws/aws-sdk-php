@@ -7,11 +7,12 @@ use Aws\Rds\RdsClient;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\PresignUrlMiddleware
  */
-class PresignUrlMiddlewareTest extends \PHPUnit_Framework_TestCase
+class PresignUrlMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 

@@ -5,11 +5,12 @@ use Aws\Middleware;
 use Aws\Result;
 use Aws\Sqs\SqsClient;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Sqs\SqsClient
  */
-class SqsClientTest extends \PHPUnit_Framework_TestCase
+class SqsClientTest extends TestCase
 {
     use UsesServiceTrait;
 

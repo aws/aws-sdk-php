@@ -3,11 +3,12 @@ namespace Aws\Test;
 
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Endpoint\EndpointProvider
  */
-class EndpointProviderTest extends \PHPUnit_Framework_TestCase
+class EndpointProviderTest extends TestCase
 {
     /**
      * @expectedException \Aws\Exception\UnresolvedEndpointException

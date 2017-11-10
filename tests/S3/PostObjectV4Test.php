@@ -7,11 +7,12 @@ use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 
 require_once __DIR__ . '/sig_hack.php';
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\PostObject
  */
-class PostObjectV4Test extends \PHPUnit_Framework_TestCase
+class PostObjectV4Test extends TestCase
 {
     use UsesServiceTrait;
 

@@ -3,11 +3,12 @@ namespace Aws\Test;
 
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PatternEndpointProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Endpoint\PatternEndpointProvider
  */
-class PatternEndpointProviderTest extends \PHPUnit_Framework_TestCase
+class PatternEndpointProviderTest extends TestCase
 {
     public function testReturnsNullWhenUnresolved()
     {

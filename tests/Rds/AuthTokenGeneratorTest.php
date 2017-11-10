@@ -4,11 +4,12 @@ namespace Aws\Test\Rds;
 use Aws\Credentials\Credentials;
 use Aws\Rds\AuthTokenGenerator;
 use GuzzleHttp\Promise;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Rds\AuthTokenGenerator
  */
-class AuthTokenGeneratorTest extends \PHPUnit_Framework_TestCase
+class AuthTokenGeneratorTest extends TestCase
 {
     public function testCanCreateAuthTokenWthCredentialInstance()
     {

@@ -8,11 +8,12 @@ use Aws\Multipart\UploadState;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Multipart\AbstractUploader
  */
-class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
+class AbstractUploaderTest extends TestCase
 {
     use UsesServiceTrait;
 

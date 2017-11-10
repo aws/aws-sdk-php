@@ -2,11 +2,12 @@
 namespace Aws\Test\Api;
 
 use Aws\Api\DateTimeResult;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Api\DateTimeResult
  */
-class DateTimeResultTest extends \PHPUnit_Framework_TestCase
+class DateTimeResultTest extends TestCase
 {
     public function testCreatesFromEpoch()
     {

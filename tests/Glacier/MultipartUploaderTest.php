@@ -6,11 +6,12 @@ use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Glacier\MultipartUploader
  */
-class MultipartUploaderTest extends \PHPUnit_Framework_TestCase
+class MultipartUploaderTest extends TestCase
 {
     use UsesServiceTrait;
 

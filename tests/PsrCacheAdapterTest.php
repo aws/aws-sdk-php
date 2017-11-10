@@ -4,8 +4,9 @@ namespace Aws\Test;
 use Aws\PsrCacheAdapter;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use PHPUnit\Framework\TestCase;
 
-class PsrCacheAdapterTest extends \PHPUnit_Framework_TestCase
+class PsrCacheAdapterTest extends TestCase
 {
     /** @var CacheItemPoolInterface|\PHPUnit_Framework_MockObject_MockObject $wrappedCache */
     private $wrapped;

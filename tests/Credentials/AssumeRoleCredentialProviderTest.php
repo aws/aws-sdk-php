@@ -16,11 +16,12 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Credentials\AssumeRoleCredentialProvider
  */
-class AssumeRoleCredentialProviderTest extends \PHPUnit_Framework_TestCase
+class AssumeRoleCredentialProviderTest extends TestCase
 {
     const SAMPLE_ROLE_ARN = 'arn:aws:iam::012345678910:role/role_name';
 

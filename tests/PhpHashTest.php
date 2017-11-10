@@ -2,11 +2,12 @@
 namespace Aws\Test;
 
 use Aws\PhpHash;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\PhpHash
  */
-class PhpHashTest extends \PHPUnit_Framework_TestCase
+class PhpHashTest extends TestCase
 {
     public function testHashesData()
     {

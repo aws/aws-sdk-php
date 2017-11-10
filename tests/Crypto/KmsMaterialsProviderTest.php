@@ -6,11 +6,12 @@ use Aws\Crypto\MetadataEnvelope;
 use Aws\Kms\KmsClient;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Crypto\KmsMaterialsProvider
  */
-class KmsMaterialsProviderTest extends \PHPUnit_Framework_TestCase
+class KmsMaterialsProviderTest extends TestCase
 {
     use UsesServiceTrait;
 

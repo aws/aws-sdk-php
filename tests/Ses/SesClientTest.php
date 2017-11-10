@@ -3,8 +3,9 @@ namespace Aws\Test\Ses;
 
 use Aws\Credentials\Credentials;
 use Aws\Ses\SesClient;
+use PHPUnit\Framework\TestCase;
 
-class SesClientTest extends \PHPUnit_Framework_TestCase
+class SesClientTest extends TestCase
 {
     public function testCanGenerateSmtpPasswordFromCredentials()
     {

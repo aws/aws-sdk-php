@@ -8,8 +8,9 @@ use Aws\S3\ObjectCopier;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
+use PHPUnit\Framework\TestCase;
 
-class ObjectCopierTest extends \PHPUnit_Framework_TestCase
+class ObjectCopierTest extends TestCase
 {
     use UsesServiceTrait;
 

@@ -2,11 +2,12 @@
 namespace Aws\Test\Multipart;
 
 use Aws\Multipart\UploadState;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Multipart\UploadState
  */
-class UploadStateTest extends \PHPUnit_Framework_TestCase
+class UploadStateTest extends TestCase
 {
     public function testCanManageStatusAndUploadId()
     {
