@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.38.3 - 2017-11-15
 
 * `Aws\APIGateway` - 1. Extended GetDocumentationParts operation to support retrieving documentation parts resources without contents. 2. Added hosted zone ID in the custom domain response.
 * `Aws\Polly` - Amazon Polly adds Korean language support with new female voice - "Seoyeon" and new Indian English female voice - "Aditi"
