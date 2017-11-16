@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.38.4 - 2017-11-16
 
 * `Aws\ApplicationAutoScaling` - Application Auto Scaling now supports automatic scaling of Amazon Aurora replicas
 * `Aws\EC2` - You are now able to create and launch EC2 x1e smaller instance sizes
