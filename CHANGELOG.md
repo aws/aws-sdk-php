@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - This SDK update contains support for Target Tracking scaling for EC2 Spot Fleet. It allows you to scale an EC2 Spot Fleet using a Target Tracking scaling policy.
+* `Aws\DatabaseMigrationService` - Support for migration task assessment. Support for data validation after the migration.
+* `Aws\ElasticLoadBalancingv2` - This release adds Proxy Protocol v2 support for Network Load Balancer. Proxy protocol provides a convenient way to transport connection information (such as a client's source IP address/port and destination IP address/port) for a TCP connection across multiple layers of NAT or TCP proxies.
+* `Aws\RDS` - Amazon RDS now supports importing MySQL databases by using backup files from Amazon S3.
+* `Aws\S3` - Added ORC to the supported S3 Inventory formats.
+
 ## 3.38.4 - 2017-11-16
 
 * `Aws\ApplicationAutoScaling` - Application Auto Scaling now supports automatic scaling of Amazon Aurora replicas

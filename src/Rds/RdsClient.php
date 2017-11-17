@@ -186,6 +186,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise restoreDBClusterFromSnapshotAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result restoreDBClusterToPointInTime(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise restoreDBClusterToPointInTimeAsync(array $args = []) (supported in versions 2014-10-31)
+ * @method \Aws\Result restoreDBInstanceFromS3(array $args = []) (supported in versions 2014-10-31)
+ * @method \GuzzleHttp\Promise\Promise restoreDBInstanceFromS3Async(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result startDBInstance(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise startDBInstanceAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result stopDBInstance(array $args = []) (supported in versions 2014-10-31)
