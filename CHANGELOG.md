@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.38.5 - 2017-11-17
 
 * `Aws\ApplicationAutoScaling` - This SDK update contains support for Target Tracking scaling for EC2 Spot Fleet. It allows you to scale an EC2 Spot Fleet using a Target Tracking scaling policy.
 * `Aws\DatabaseMigrationService` - Support for migration task assessment. Support for data validation after the migration.
