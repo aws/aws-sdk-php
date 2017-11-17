@@ -879,4 +879,22 @@ class StreamWrapperTest extends TestCase
         $s = fopen('foo://bucket/key', 'r');
         $this->assertEquals('bar', fread($s, 4));
     }
+
+    public function testWithVersionId()
+    {
+        $history = new History();
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
+        $this->addMockResults($this->client, [new Result([
+            'Body' => Psr7\stream_for('test')
+        ])]);
+        $s = file_get_contents('s3://bucket/key?versionId=1234567890');
+        $this->assertEquals('test', $s);
+
+        $this->assertEquals(1, count($history));
+        $cmd = $history->getLastCommand();
+        $this->assertEquals('GetObject', $cmd->getName());
+        $this->assertEquals('bucket', $cmd['Bucket']);
+        $this->assertEquals('key', $cmd['Key']);
+        $this->assertEquals('1234567890', $cmd['VersionId']);
+    }
 }

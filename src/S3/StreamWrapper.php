@@ -11,7 +11,7 @@ use GuzzleHttp\Psr7\CachingStream;
 use Psr\Http\Message\StreamInterface;
 
 /**
- * Amazon S3 stream wrapper to use "s3://<bucket>/<key>" files with PHP
+ * Amazon S3 stream wrapper to use "s3://<bucket>/<key>?versionId=<version>" files with PHP
  * streams, supporting "r", "w", "a", "x".
  *
  * # Opening "r" (read only) streams:
@@ -652,14 +652,17 @@ class StreamWrapper
 
     private function getBucketKey($path)
     {
-        // Remove the protocol
-        $parts = explode('://', $path);
-        // Get the bucket, key
-        $parts = explode('/', $parts[1], 2);
+        $pathInfo = parse_url($path);
+        $versionId = null;
+        if (isset($pathInfo['query'])) {
+            parse_str($pathInfo['query'], $arr);
+            $versionId = isset($arr['versionId']) ? $arr['versionId'] : null;
+        }
 
         return [
-            'Bucket' => $parts[0],
-            'Key'    => isset($parts[1]) ? $parts[1] : null
+            'Bucket'    => $pathInfo['host'],
+            'Key'       => isset($pathInfo['path']) ? ltrim($pathInfo['path'], "/") : null,
+            'VersionId' => $versionId
         ];
     }
 
