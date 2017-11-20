@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.39.0 - 2017-11-20
 
 * `Aws\APIGateway` - Documentation updates for Apigateway
 * `Aws\CodeCommit` - AWS CodeCommit now supports pull requests. You can use pull requests to collaboratively review code changes for minor changes or fixes, major feature additions, or new versions of your released software.
