@@ -49,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeDocumentVersionsAsync(array $args = [])
  * @method \Aws\Result describeFolderContents(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeFolderContentsAsync(array $args = [])
+ * @method \Aws\Result describeGroups(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeGroupsAsync(array $args = [])
  * @method \Aws\Result describeNotificationSubscriptions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeNotificationSubscriptionsAsync(array $args = [])
  * @method \Aws\Result describeResourcePermissions(array $args = [])
