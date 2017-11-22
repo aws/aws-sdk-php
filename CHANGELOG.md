@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.39.1 - 2017-11-22
 
 * `Aws\APIGateway` - Add support for Access logs and customizable integration timeouts
 * `Aws\CloudFormation` - 1) Instance-level parameter overrides (CloudFormation-StackSet feature): This feature will allow the customers to override the template parameters on specific stackInstances. Customers will also have ability to update their existing instances with/without parameter-overrides using a new API "UpdateStackInstances" 2) Add support for SSM parameters in CloudFormation - This feature will allow the customers to use Systems Manager parameters in CloudFormation templates. They will be able to see values for these parameters in Describe APIs.
