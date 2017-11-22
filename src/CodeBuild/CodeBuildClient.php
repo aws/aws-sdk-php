@@ -19,6 +19,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteProjectAsync(array $args = [])
  * @method \Aws\Result deleteWebhook(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteWebhookAsync(array $args = [])
+ * @method \Aws\Result invalidateProjectCache(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise invalidateProjectCacheAsync(array $args = [])
  * @method \Aws\Result listBuilds(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBuildsAsync(array $args = [])
  * @method \Aws\Result listBuildsForProject(array $args = [])

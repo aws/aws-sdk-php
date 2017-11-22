@@ -80,6 +80,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise stopStackSetOperationAsync(array $args = [])
  * @method \Aws\Result updateStack(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStackAsync(array $args = [])
+ * @method \Aws\Result updateStackInstances(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateStackInstancesAsync(array $args = [])
  * @method \Aws\Result updateStackSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateStackSetAsync(array $args = [])
  * @method \Aws\Result updateTerminationProtection(array $args = [])
