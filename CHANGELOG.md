@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.39.2 - 2017-11-22
 
 * `Aws\ACM` - AWS Certificate Manager now supports the ability to import domainless certs and additional Key Types as well as an additional validation method for DNS.
 * `Aws\LexModelBuildingService` - Amazon Lex is now available in the EU (Ireland) region.
