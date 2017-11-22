@@ -320,8 +320,8 @@ class S3EncryptionClient extends AbstractCryptoClient
                         $result['Body'],
                         $provider,
                         $envelope,
-                        isset($loadArgs['@CipherOptions'])
-                            ? $loadArgs['@CipherOptions']
+                        isset($args['@CipherOptions'])
+                            ? $args['@CipherOptions']
                             : []
                     );
                     return $result;
