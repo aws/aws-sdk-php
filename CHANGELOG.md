@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - AWS Certificate Manager now supports the ability to import domainless certs and additional Key Types as well as an additional validation method for DNS.
+* `Aws\LexModelBuildingService` - Amazon Lex is now available in the EU (Ireland) region.
+* `Aws\LexRuntimeService` - Amazon Lex is now available in the EU (Ireland) region.
+* `Aws\S3\Crypto` - Fixes an issue with loading @CipherOptions on getObject[Async] decryption.
+
 ## 3.39.1 - 2017-11-22
 
 * `Aws\APIGateway` - Add support for Access logs and customizable integration timeouts
