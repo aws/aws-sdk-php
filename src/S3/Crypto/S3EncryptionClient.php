@@ -9,6 +9,7 @@ use Aws\Crypto\DecryptionTrait;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\Crypto\MaterialsProvider;
 use Aws\Crypto\MetadataStrategyInterface;
+use Aws\Crypto\Cipher\CipherBuilderTrait;
 use Aws\S3\S3Client;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -20,7 +21,7 @@ use GuzzleHttp\Psr7;
  */
 class S3EncryptionClient extends AbstractCryptoClient
 {
-    use EncryptionTrait, DecryptionTrait;
+    use EncryptionTrait, DecryptionTrait, CipherBuilderTrait, CryptoParamsTrait;
 
     private $client;
     private $instructionFileSuffix;
@@ -41,73 +42,9 @@ class S3EncryptionClient extends AbstractCryptoClient
         $this->instructionFileSuffix = $instructionFileSuffix;
     }
 
-    private function getMaterialsProvider(array $args)
-    {
-        if ($args['@MaterialsProvider'] instanceof MaterialsProvider) {
-            return $args['@MaterialsProvider'];
-        } else {
-            throw new \InvalidArgumentException('An instance of MaterialsProvider'
-                . ' must be passed in the "MaterialsProvider" field.');
-        }
-    }
-
-    private function getInstructionFileSuffix(array $args)
-    {
-        return !empty($args['@InstructionFileSuffix'])
-            ? $args['@InstructionFileSuffix']
-            : $this->instructionFileSuffix;
-    }
-
     private static function getDefaultStrategy()
     {
         return new HeadersMetadataStrategy();
-    }
-
-    private function determineGetObjectStrategy(
-        $result,
-        $instructionFileSuffix
-    ) {
-        if (isset($result['Metadata'][MetadataEnvelope::CONTENT_KEY_V2_HEADER])) {
-            return new HeadersMetadataStrategy();
-        } else {
-            return new InstructionFileMetadataStrategy(
-                $this->client,
-                $instructionFileSuffix
-            );
-        }
-    }
-
-    private function getMetadataStrategy(array $args, $instructionFileSuffix)
-    {
-        if (!empty($args['@MetadataStrategy'])) {
-            if ($args['@MetadataStrategy'] instanceof MetadataStrategyInterface) {
-                return $args['@MetadataStrategy'];
-            } elseif (is_string($args['@MetadataStrategy'])) {
-                switch ($args['@MetadataStrategy']) {
-                    case HeadersMetadataStrategy::class:
-                        return new HeadersMetadataStrategy();
-                    case InstructionFileMetadataStrategy::class:
-                        return new InstructionFileMetadataStrategy(
-                            $this->client,
-                            $instructionFileSuffix
-                        );
-                    default:
-                        throw new \InvalidArgumentException('Could not match the'
-                            . ' specified string in "MetadataStrategy" to a'
-                            . ' predefined strategy.');
-                }
-            } else {
-                throw new \InvalidArgumentException('The metadata strategy that'
-                    . ' was passed to "MetadataStrategy" was unrecognized.');
-            }
-        } elseif ($instructionFileSuffix) {
-            return new InstructionFileMetadataStrategy(
-                $this->client,
-                $instructionFileSuffix
-            );
-        }
-
-        return null;
     }
 
     /**
