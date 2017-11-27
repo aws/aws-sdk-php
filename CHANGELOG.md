@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.40.0 - 2017-11-27
 
 * `Aws\MediaConvert` - AWS Elemental MediaConvert is a file-based video conversion service that transforms media into formats required for traditional broadcast and for internet streaming to multi-screen devices.
 * `Aws\MediaLive` - AWS Elemental MediaLive is a video service that lets you easily create live outputs for broadcast and streaming delivery.
