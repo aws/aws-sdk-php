@@ -68,6 +68,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listGitHubAccountTokenNamesAsync(array $args = [])
  * @method \Aws\Result listOnPremisesInstances(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listOnPremisesInstancesAsync(array $args = [])
+ * @method \Aws\Result putLifecycleEventHookExecutionStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putLifecycleEventHookExecutionStatusAsync(array $args = [])
  * @method \Aws\Result registerApplicationRevision(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerApplicationRevisionAsync(array $args = [])
  * @method \Aws\Result registerOnPremisesInstance(array $args = [])
