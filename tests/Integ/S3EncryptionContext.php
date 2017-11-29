@@ -93,6 +93,12 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
         ]);
         $keyArn = $this->getKmsArnFromAlias($kmsClient, $alias);
 
+        $s3Client = self::getSdk()->createS3([
+            'region' => $this->region,
+            'version' => 'latest'
+        ]);
+        $s3EncryptionClient = new S3EncryptionClient($s3Client);
+
         $materialsProvider = new KmsMaterialsProvider(
             $kmsClient,
             $keyArn
@@ -112,10 +118,10 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
                     $shortCipher = substr($cipher, 4);
                     break;
                 default:
-                    continue;
+                    continue 2;
             }
 
-            if (!AbstractCryptoClient::isSupportedCipher($shortCipher)) {
+            if (!$s3EncryptionClient->isSupportedCipher($shortCipher)) {
                 continue;
             }
 
@@ -183,7 +189,7 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
             try {
                 $result = $s3Client->headObject($params);
             } catch (AwsException $exception) {
-                if ($exception->getAwsErrorCode() == "NotFound") {
+                if ($exception->getAwsErrorCode() === "NotFound") {
                     continue;
                 }
                 throw $exception;
@@ -191,7 +197,7 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
 
             // Skip non-kms wraps that we don't support.
             if (empty($result['Metadata'][MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER])
-                || $result['Metadata'][MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER] != 'kms') {
+                || $result['Metadata'][MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER] !== 'kms') {
                 continue;
             }
 
