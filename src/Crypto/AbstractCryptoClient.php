@@ -10,8 +10,6 @@ use GuzzleHttp\Psr7\Stream;
  */
 abstract class AbstractCryptoClient
 {
-    private static $supportedCiphers = ['cbc', 'gcm'];
-
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
      *
@@ -19,10 +17,7 @@ abstract class AbstractCryptoClient
      *
      * @return bool If the cipher passed is in our supported list.
      */
-    public static function isSupportedCipher($cipherName)
-    {
-        return in_array($cipherName, self::$supportedCiphers);
-    }
+    abstract public function isSupportedCipher($cipherName);
 
     /**
      * Returns an identifier recognizable by `openssl_*` functions, such as
@@ -32,6 +27,8 @@ abstract class AbstractCryptoClient
      *                           or decrypting.
      * @param int $keySize Size of the encryption key, in bits, that will be
      *                     used.
+     *
+     * @return string
      */
     abstract protected function getCipherOpenSslName($cipherName, $keySize);
 
@@ -44,6 +41,8 @@ abstract class AbstractCryptoClient
      * @param int $keySize Size of the encryption key, in bits, that will be
      *                     used.
      *
+     * @return CipherMethod
+     *
      * @internal
      */
     abstract protected function buildCipherMethod($cipherName, $iv, $keySize);
@@ -53,6 +52,8 @@ abstract class AbstractCryptoClient
      * AESName passed in from the MetadataEnvelope.
      *
      * @param $aesName
+     *
+     * @return string
      *
      * @internal
      */
