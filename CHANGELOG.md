@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.41.0 - 2017-11-29
 
 * `Aws\APIGateway` - Changes related to CanaryReleaseDeployment feature. Enables API developer to create a deployment as canary deployment and test API changes with percentage of customers before promoting changes to all customers.
 * `Aws\AppSync` - AWS AppSync is an enterprise-level, fully managed GraphQL service with real-time data synchronization and offline programming features.
