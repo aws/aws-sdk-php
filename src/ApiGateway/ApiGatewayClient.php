@@ -36,6 +36,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise createUsagePlanAsync(array $args = [])
  * @method \Aws\Result createUsagePlanKey(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createUsagePlanKeyAsync(array $args = [])
+ * @method \Aws\Result createVpcLink(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createVpcLinkAsync(array $args = [])
  * @method \Aws\Result deleteApiKey(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteApiKeyAsync(array $args = [])
  * @method \Aws\Result deleteAuthorizer(array $args = [])
@@ -76,6 +78,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise deleteUsagePlanAsync(array $args = [])
  * @method \Aws\Result deleteUsagePlanKey(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteUsagePlanKeyAsync(array $args = [])
+ * @method \Aws\Result deleteVpcLink(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteVpcLinkAsync(array $args = [])
  * @method \Aws\Result flushStageAuthorizersCache(array $args = [])
  * @method \GuzzleHttp\Promise\Promise flushStageAuthorizersCacheAsync(array $args = [])
  * @method \Aws\Result flushStageCache(array $args = [])
@@ -168,6 +172,10 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise getUsagePlanKeysAsync(array $args = [])
  * @method \Aws\Result getUsagePlans(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getUsagePlansAsync(array $args = [])
+ * @method \Aws\Result getVpcLink(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getVpcLinkAsync(array $args = [])
+ * @method \Aws\Result getVpcLinks(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getVpcLinksAsync(array $args = [])
  * @method \Aws\Result importApiKeys(array $args = [])
  * @method \GuzzleHttp\Promise\Promise importApiKeysAsync(array $args = [])
  * @method \Aws\Result importDocumentationParts(array $args = [])
@@ -232,6 +240,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise updateUsageAsync(array $args = [])
  * @method \Aws\Result updateUsagePlan(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateUsagePlanAsync(array $args = [])
+ * @method \Aws\Result updateVpcLink(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateVpcLinkAsync(array $args = [])
  */
 class ApiGatewayClient extends AwsClient
 {
