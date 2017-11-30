@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.43.0 - 2017-11-30
 
 * `Aws\AutoScaling` - You can now use Auto Scaling with EC2 Launch Templates via the CreateAutoScalingGroup and UpdateAutoScalingGroup APIs.
 * `Aws\EC2` - Adds the following updates: 1. T2 Unlimited enables high CPU performance for any period of time whenever required 2. You are now able to create and launch EC2 m5 and h1 instances
