@@ -28,10 +28,10 @@ class AssumeRoleCredentialProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider insufficientArguments
-     * 
+     *
      * @param array $config
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage  Missing required 'AssumeRoleCredentialProvider' configuration option: 
+     * @expectedExceptionMessage  Missing required 'AssumeRoleCredentialProvider' configuration option:
      */
     public function testEnsureSourceProfileProvidedForAssumeRole($config)
     {
@@ -94,7 +94,7 @@ class AssumeRoleCredentialProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('bar', $creds->getSecretKey());
-        $this->assertEquals(null, $creds->getSecurityToken());
+        $this->assertNull($creds->getSecurityToken());
         $this->assertInternalType('int', $creds->getExpiration());
         $this->assertFalse($creds->isExpired());
     }

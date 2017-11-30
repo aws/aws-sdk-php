@@ -117,7 +117,7 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertEquals(1, $timesCalled);
-        $this->assertEquals(1, count($cache));
+        $this->assertCount(1, $cache);
         $this->assertEquals($creds->getAccessKeyId(), $found->getAccessKeyId());
         $this->assertEquals($creds->getSecretKey(), $found->getSecretKey());
         $this->assertEquals($creds->getSecurityToken(), $found->getSecurityToken());
@@ -145,7 +145,7 @@ class CredentialProviderTest extends \PHPUnit_Framework_TestCase
         $creds = call_user_func(CredentialProvider::env())->wait();
         $this->assertEquals('abc', $creds->getAccessKeyId());
         $this->assertEquals('123', $creds->getSecretKey());
-        $this->assertEquals(NULL, $creds->getSecurityToken());
+        $this->assertNull($creds->getSecurityToken());
     }
 
     /**

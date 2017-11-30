@@ -43,6 +43,6 @@ class LockingSessionConnectionTest extends \PHPUnit_Framework_TestCase
         $connection = new LockingSessionConnection($client);
         $data = $connection->read('session1');
 
-        $this->assertEquals(null, $data);
+        $this->assertNull($data);
     }
 }

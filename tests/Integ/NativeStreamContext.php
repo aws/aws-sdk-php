@@ -136,7 +136,7 @@ class NativeStreamContext extends \PHPUnit_Framework_Assert implements
      */
     public function theFileAtShouldContain($key, $contents)
     {
-        $this->assertSame($contents, file_get_contents($this->getS3Path($key)));
+        $this->assertStringEqualsFile($this->getS3Path($key), $contents);
     }
 
     /**

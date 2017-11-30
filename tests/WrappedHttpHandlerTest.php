@@ -210,7 +210,7 @@ class WrappedHttpHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $handler = function ($request, array $options) {
             $this->assertArrayHasKey('http_stats_receiver', $options);
-            $this->assertTrue(is_callable($options['http_stats_receiver']));
+            $this->assertInternalType('callable', $options['http_stats_receiver']);
             return new Response;
         };
 

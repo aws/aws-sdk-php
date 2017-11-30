@@ -866,6 +866,6 @@ EOXML;
             '@MaterialsProvider' => $provider,
             'SaveAs' => $file
         ]);
-        $this->assertEquals((string)$result['Body'], file_get_contents($file));
+        $this->assertStringEqualsFile($file, (string)$result['Body']);
     }
 }

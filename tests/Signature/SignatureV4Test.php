@@ -75,19 +75,19 @@ class SignatureV4Test extends \PHPUnit_Framework_TestCase
         $request = new Request('GET', 'http://www.example.com');
         $credentials = new Credentials('fizz', 'buzz');
         $sig->signRequest($request, $credentials);
-        $this->assertEquals(1, count($this->readAttribute($sig, 'cache')));
+        $this->assertCount(1, $this->readAttribute($sig, 'cache'));
 
         $credentials = new Credentials('fizz', 'baz');
         $sig->signRequest($request, $credentials);
-        $this->assertEquals(2, count($this->readAttribute($sig, 'cache')));
+        $this->assertCount(2, $this->readAttribute($sig, 'cache'));
 
         $credentials = new Credentials('fizz', 'paz');
         $sig->signRequest($request, $credentials);
-        $this->assertEquals(3, count($this->readAttribute($sig, 'cache')));
+        $this->assertCount(3, $this->readAttribute($sig, 'cache'));
 
         $credentials = new Credentials('fizz', 'foobar');
         $sig->signRequest($request, $credentials);
-        $this->assertEquals(1, count($this->readAttribute($sig, 'cache')));
+        $this->assertCount(1, $this->readAttribute($sig, 'cache'));
     }
 
     private function getFixtures()
