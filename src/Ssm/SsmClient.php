@@ -54,6 +54,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeAssociationAsync(array $args = [])
  * @method \Aws\Result describeAutomationExecutions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAutomationExecutionsAsync(array $args = [])
+ * @method \Aws\Result describeAutomationStepExecutions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeAutomationStepExecutionsAsync(array $args = [])
  * @method \Aws\Result describeAvailablePatches(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAvailablePatchesAsync(array $args = [])
  * @method \Aws\Result describeDocument(array $args = [])

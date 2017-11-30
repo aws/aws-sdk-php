@@ -198,6 +198,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionRedshift(array $args = [])
  * @method \Aws\Rekognition\RekognitionClient createRekognition(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionRekognition(array $args = [])
+ * @method \Aws\ResourceGroups\ResourceGroupsClient createResourceGroups(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionResourceGroups(array $args = [])
  * @method \Aws\ResourceGroupsTaggingAPI\ResourceGroupsTaggingAPIClient createResourceGroupsTaggingAPI(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionResourceGroupsTaggingAPI(array $args = [])
  * @method \Aws\Route53\Route53Client createRoute53(array $args = [])
