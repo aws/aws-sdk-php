@@ -156,7 +156,7 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
         $promise = $uploader->promise();
         $this->assertSame($promise, $uploader->promise());
         $this->assertInstanceOf('Aws\Result', $promise->wait());
-        $this->assertEquals(5, $called);
+        $this->assertEquals(6, $called);
     }
 
     /**
