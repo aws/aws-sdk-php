@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - Preparing to release updated waiters week of December 4, 2017 for all supported SDKs.
+
 ## 3.44.0 - 2017-11-30
 
 * `Aws\APIGateway` - Added support Private Integration and VPC Link features in API Gateway. This allows to create an API with the API Gateway private integration, thus providing clients access to HTTP/HTTPS resources in an Amazon VPC from outside of the VPC through a VpcLink resource.
