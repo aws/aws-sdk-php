@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.44.1 - 2017-12-01
 
 * `Aws\SageMaker` - Preparing to release updated waiters week of December 4, 2017 for all supported SDKs.
 
