@@ -1,6 +1,6 @@
-===========================
-Amazon S3 Encryption Client
-===========================
+================================
+Amazon S3 Client Side Encryption
+================================
 
 The AWS SDK for PHP provides an ``S3EncryptionClient``. With client-side
 encryption, data is encrypted and decrypted directly in your environment. This
@@ -67,7 +67,7 @@ interface and requires two new parameters.
 
     In addition to the Amazon S3 and AWS KMS based service errors, you may
     receive thrown ``InvalidArgumentException`` objects if your
-    ``'CipherOptions'`` are not correctly configured.
+    ``'@CipherOptions'`` are not correctly configured.
 
 Decryption
 ----------
@@ -91,7 +91,7 @@ Additional configuration options are passed through for decryption.
 
     In addition to the Amazon S3 and AWS KMS based service errors, you may
     receive thrown ``InvalidArgumentException`` objects if your
-    ``'CipherOptions'`` are not correctly configured.
+    ``'@CipherOptions'`` are not correctly configured.
 
 
 Cipher Configuration
@@ -165,3 +165,55 @@ Class name constants for the ``HeadersMetadataStrategy`` and
 
     If there is a failure after an instruction file has been uploaded, it will
     not be automatically deleted.
+
+Multipart Uploads
+-----------------
+
+Performing a multipart upload with client-side encryption is also possible. The
+``Aws\S3\Crypto\S3EncryptionMultipartUploader`` prepares the source stream for
+for encryption before uploading. Creating one takes on a similar experience to
+using the ``Aws\S3\MultipartUploader`` and the ``Aws\S3\Crypto\S3EncryptionClient``.
+The ``S3EncryptionMultipartUploader`` can handle the same ``'@MetadataStrategy'``
+option as the ``S3, as well as all available ``'@CipherOptions'`` configurations.
+
+.. code-block:: php
+
+    $kmsKeyArn = 'arn-to-the-kms-key';
+    // This materials provider handles generating a cipher key and
+    // initialization vector, as well as encrypting your cipher key via AWS KMS
+    $materialsProvider = new KmsMaterialsProvider(
+        new KmsClient([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+        ]),
+        $kmsKeyArn
+    );
+
+    $bucket = 'the-bucket-name';
+    $key = 'the-upload-key';
+    $cipherOptions = [
+        'Cipher' => 'gcm'
+        'KeySize' => 256,
+        // Additional configuration options
+    ];
+
+    $multipartUploader = new S3EncryptionMultipartUploader(
+        new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+        ]),
+        fopen('large-file-to-encrypt.txt'),
+        [
+            '@MaterialsProvider' => $materialsProvider,
+            '@CipherOptions' => $cipherOptions,
+            'bucket' => 'bucket',
+            'key' => 'key',
+        ]
+    );
+    $multipartUploader->upload();
+
+.. note::
+
+    In addition to the Amazon S3 and AWS KMS based service errors, you may
+    receive thrown ``InvalidArgumentException`` objects if your
+    ``'@CipherOptions'`` are not correctly configured.
