@@ -139,11 +139,12 @@ class AbstractUploaderTest extends \PHPUnit_Framework_TestCase
         };
 
         $uploader = $this->getTestUploader(Psr7\stream_for('abcde'), [
-            'bucket'          => 'foo',
-            'key'             => 'bar',
-            'before_initiate' => $fn,
-            'before_upload'   => $fn,
-            'before_complete' => $fn,
+            'bucket'              => 'foo',
+            'key'                 => 'bar',
+            'prepare_data_source' => $fn,
+            'before_initiate'     => $fn,
+            'before_upload'       => $fn,
+            'before_complete'     => $fn,
         ], [
             new Result(), // Initiate
             new Result(), // Upload
