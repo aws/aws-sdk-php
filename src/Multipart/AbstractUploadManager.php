@@ -103,8 +103,8 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
                 );
             } elseif (!$this->state->isInitiated()) {
                 // Execute the prepare callback.
-                if (is_callable($this->config["prepare_upload"])) {
-                    $this->config["prepare_upload"]();
+                if (is_callable($this->config["prepare_data_source"])) {
+                    $this->config["prepare_data_source"]();
                 }
 
                 $result = (yield $this->execCommand('initiate', $this->getInitiateParams()));
