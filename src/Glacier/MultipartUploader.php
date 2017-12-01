@@ -101,6 +101,9 @@ class MultipartUploader extends AbstractUploader
      * - part_size: (int, default=int(1048576)) Part size, in bytes, to use when
      *   doing a multipart upload. This must between 1 MB and 4 GB, and must be
      *   a power of 2 (in megabytes).
+     * - prepare_data_source: (callable) Callback to invoke before starting the
+     *   multipart upload workflow. The callback should have a function
+     *   signature like `function () {...}`.
      * - state: (Aws\Multipart\UploadState) An object that represents the state
      *   of the multipart upload and that is used to resume a previous upload.
      *   When this options is provided, the `account_id`, `key`, and `part_size`
