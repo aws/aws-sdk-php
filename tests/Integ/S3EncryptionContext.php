@@ -93,12 +93,6 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
         ]);
         $keyArn = $this->getKmsArnFromAlias($kmsClient, $alias);
 
-        $s3Client = self::getSdk()->createS3([
-            'region' => $this->region,
-            'version' => 'latest'
-        ]);
-        $s3EncryptionClient = new S3EncryptionClient($s3Client);
-
         $materialsProvider = new KmsMaterialsProvider(
             $kmsClient,
             $keyArn
@@ -121,7 +115,7 @@ class S3EncryptionContext implements Context, SnippetAcceptingContext
                     continue 2;
             }
 
-            if (!$s3EncryptionClient->isSupportedCipher($shortCipher)) {
+            if (!AbstractCryptoClient::isSupportedCipher($shortCipher)) {
                 continue;
             }
 

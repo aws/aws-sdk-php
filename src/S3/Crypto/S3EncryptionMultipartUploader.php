@@ -1,16 +1,13 @@
 <?php
 namespace Aws\S3\Crypto;
 
-use Aws\CommandPool;
+use Aws\Crypto\AbstractCryptoClient;
 use Aws\Crypto\EncryptionTrait;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\Crypto\Cipher\CipherBuilderTrait;
-use Aws\Exception\AwsException;
-use Aws\Multipart\UploadState;
 use Aws\S3\MultipartUploader;
 use Aws\S3\S3ClientInterface;
 use GuzzleHttp\Promise;
-use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * Encapsulates the execution of a multipart upload of an encrypted object to S3.
@@ -18,6 +15,18 @@ use GuzzleHttp\Promise\PromiseInterface;
 class S3EncryptionMultipartUploader extends MultipartUploader
 {
     use EncryptionTrait, CipherBuilderTrait, CryptoParamsTrait;
+
+    /**
+     * Returns if the passed cipher name is supported for encryption by the SDK.
+     *
+     * @param string $cipherName The name of a cipher to verify is registered.
+     *
+     * @return bool If the cipher passed is in our supported list.
+     */
+    public static function isSupportedCipher($cipherName)
+    {
+        return in_array($cipherName, AbstractCryptoClient::$supportedCiphers);
+    }
 
     private $provider;
     private $instructionFileSuffix;

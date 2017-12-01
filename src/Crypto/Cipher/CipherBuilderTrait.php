@@ -3,20 +3,6 @@ namespace Aws\Crypto\Cipher;
 
 trait CipherBuilderTrait
 {
-    private $supportedCiphers = ['cbc', 'gcm'];
-
-    /**
-     * Returns if the passed cipher name is supported for encryption by the SDK.
-     *
-     * @param string $cipherName The name of a cipher to verify is registered.
-     *
-     * @return bool If the cipher passed is in our supported list.
-     */
-    public function isSupportedCipher($cipherName)
-    {
-        return in_array($cipherName, $this->supportedCiphers);
-    }
-
     /**
      * Returns an identifier recognizable by `openssl_*` functions, such as
      * `aes-256-cbc` or `aes-128-ctr`.

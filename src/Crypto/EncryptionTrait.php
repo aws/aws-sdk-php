@@ -64,7 +64,7 @@ trait EncryptionTrait
         if (empty($cipherOptions['Cipher'])) {
             throw new \InvalidArgumentException('An encryption cipher must be'
                 . ' specified in the "cipher_options".');
-        } elseif (!$this->isSupportedCipher($cipherOptions['Cipher'])) {
+        } elseif (!self::isSupportedCipher($cipherOptions['Cipher'])) {
             throw new \InvalidArgumentException('The cipher requested is not'
                 . ' supported by the SDK.');
         }
