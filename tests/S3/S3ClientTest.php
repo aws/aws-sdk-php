@@ -850,7 +850,7 @@ EOXML;
             'region' => 'us-west-2',
             'http_handler' => function (RequestInterface $r, array $opts = []) {
                 $this->assertArrayHasKey('decode_content', $opts);
-                $this->assertSame(false, $opts['decode_content']);
+                $this->assertFalse($opts['decode_content']);
 
                 return Promise\promise_for(new Response);
             }
@@ -867,7 +867,7 @@ EOXML;
             'http' => ['decode_content' => false],
             'http_handler' => function (RequestInterface $r, array $opts = []) {
                 $this->assertArrayHasKey('decode_content', $opts);
-                $this->assertSame(false, $opts['decode_content']);
+                $this->assertFalse($opts['decode_content']);
 
                 return Promise\promise_for(new Response);
             }
@@ -883,7 +883,7 @@ EOXML;
             'region' => 'us-west-2',
             'http_handler' => function (RequestInterface $r, array $opts = []) {
                 $this->assertArrayHasKey('decode_content', $opts);
-                $this->assertSame(false, $opts['decode_content']);
+                $this->assertFalse($opts['decode_content']);
 
                 return Promise\promise_for(new Response);
             }

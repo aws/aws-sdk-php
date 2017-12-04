@@ -60,7 +60,7 @@ class InstanceProfileProviderTest extends TestCase
         )->wait();
         $this->assertEquals('foo', $c->getAccessKeyId());
         $this->assertEquals('baz', $c->getSecretKey());
-        $this->assertEquals(null, $c->getSecurityToken());
+        $this->assertNull($c->getSecurityToken());
         $this->assertEquals($t, $c->getExpiration());
     }
 
@@ -119,7 +119,7 @@ class InstanceProfileProviderTest extends TestCase
         )->wait();
         $this->assertEquals('foo', $c->getAccessKeyId());
         $this->assertEquals('baz', $c->getSecretKey());
-        $this->assertEquals(null, $c->getSecurityToken());
+        $this->assertNull($c->getSecurityToken());
         $this->assertEquals($t, $c->getExpiration());
     }
 

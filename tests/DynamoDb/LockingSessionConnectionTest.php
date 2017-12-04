@@ -44,6 +44,6 @@ class LockingSessionConnectionTest extends TestCase
         $connection = new LockingSessionConnection($client);
         $data = $connection->read('session1');
 
-        $this->assertEquals(null, $data);
+        $this->assertNull($data);
     }
 }

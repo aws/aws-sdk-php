@@ -289,7 +289,7 @@ class AwsClientTest extends TestCase
         $ref = new \ReflectionMethod($client, 'getSignatureProvider');
         $ref->setAccessible(true);
         $provider = $ref->invoke($client);
-        $this->assertTrue(is_callable($provider));
+        $this->assertInternalType('callable', $provider);
     }
 
     /**

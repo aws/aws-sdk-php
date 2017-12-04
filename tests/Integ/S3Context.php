@@ -128,10 +128,7 @@ class S3Context implements Context, SnippetAcceptingContext
      */
     public function theContentsAtThePresignedUrlShouldBe($body)
     {
-        Assert::assertSame(
-            $body,
-            file_get_contents((string) $this->presignedRequest->getUri())
-        );
+        Assert::assertStringEqualsFile($this->presignedRequest->getUri(), $body);
     }
 
     /**

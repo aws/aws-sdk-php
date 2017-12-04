@@ -708,7 +708,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('404', $cmd); },
         ]);
-        $this->assertFalse(file_exists('s3://bucket/key'));
+        $this->assertFileNotExists('s3://bucket/key');
     }
 
     public function testProvidesDirectoriesForS3()

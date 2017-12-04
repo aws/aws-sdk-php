@@ -129,7 +129,7 @@ EOXML;
             $this->assertInstanceOf(PsrResponse::class, $error['response']);
             $this->assertEquals(404, $error['response']->getStatusCode());
             $this->assertEquals($xml, $error['response']->getBody());
-            $this->assertEquals($xml, file_get_contents($sink));
+            $this->assertStringEqualsFile($sink, $xml);
             unlink($sink);
         }
 

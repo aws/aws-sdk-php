@@ -199,7 +199,7 @@ class ClientResolverTest extends TestCase
             ]
         ]);
         $res = $r->resolve([], new HandlerList());
-        $this->assertTrue(is_callable($callableFunction));
+        $this->assertInternalType('callable', $callableFunction);
         $this->assertEquals(
             '\Aws\test\ClientResolverTest::checkCallable',
             $res['foo']
@@ -545,7 +545,7 @@ EOT;
             'debug'       => ['logfn' => function ($value) use (&$str) { $str .= $value; }]
         ], $list);
         $value = $this->readAttribute($list, 'interposeFn');
-        $this->assertTrue(is_callable($value));
+        $this->assertInternalType('callable', $value);
     }
 
     public function testAppliesUserAgent()
@@ -785,9 +785,9 @@ EOT;
         ];
         $list = new HandlerList;
 
-        $this->assertSame(0, count($list));
+        $this->assertCount(0, $list);
         ClientResolver::_apply_idempotency_auto_fill($value, $args, $list);
-        $this->assertSame($shouldAddIdempotencyMiddleware ? 1 : 0, count($list));
+        $this->assertCount($shouldAddIdempotencyMiddleware ? 1 : 0, $list);
     }
 
     public function idempotencyAutoFillProvider()
