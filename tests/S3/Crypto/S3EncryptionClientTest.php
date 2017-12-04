@@ -18,8 +18,9 @@ use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
-class S3EncryptionClientTest extends \PHPUnit_Framework_TestCase
+class S3EncryptionClientTest extends TestCase
 {
     use UsesServiceTrait, UsesMetadataEnvelopeTrait;
 

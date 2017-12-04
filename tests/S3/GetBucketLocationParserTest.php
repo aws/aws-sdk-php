@@ -6,11 +6,12 @@ use Aws\S3\GetBucketLocationParser;
 use Aws\Command;
 use Aws\Result;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\GetBucketLocationParser
  */
-class GetBucketLocationParserTest extends \PHPUnit_Framework_TestCase
+class GetBucketLocationParserTest extends TestCase
 {
     use UsesServiceTrait;
 

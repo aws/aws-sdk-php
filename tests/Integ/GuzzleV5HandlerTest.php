@@ -6,8 +6,9 @@ use GuzzleHttp\Promise\RejectionException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 
-class GuzzleV5HandlerTest extends \PHPUnit_Framework_TestCase
+class GuzzleV5HandlerTest extends TestCase
 {
     public function setUp()
     {

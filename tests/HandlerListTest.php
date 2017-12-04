@@ -6,11 +6,12 @@ use Aws\CommandInterface;
 use Aws\HandlerList;
 use Aws\Middleware;
 use GuzzleHttp\Psr7\Request;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\HandlerList
  */
-class HandlerListTest extends \PHPUnit_Framework_TestCase
+class HandlerListTest extends TestCase
 {
     /**
      * @expectedException \LogicException

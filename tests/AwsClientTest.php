@@ -15,11 +15,12 @@ use Aws\Sts\StsClient;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\AwsClient
  */
-class AwsClientTest extends \PHPUnit_Framework_TestCase
+class AwsClientTest extends TestCase
 {
     use UsesServiceTrait;
 

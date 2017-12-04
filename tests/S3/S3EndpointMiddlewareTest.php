@@ -7,8 +7,9 @@ use Aws\S3\S3EndpointMiddleware;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
-class S3EndpointMiddlewareTest extends \PHPUnit_Framework_TestCase
+class S3EndpointMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 

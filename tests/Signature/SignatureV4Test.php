@@ -8,11 +8,12 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\NoSeekStream;
 
 require_once __DIR__ . '/sig_hack.php';
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Signature\SignatureV4
  */
-class SignatureV4Test extends \PHPUnit_Framework_TestCase
+class SignatureV4Test extends TestCase
 {
     const DEFAULT_KEY = 'AKIDEXAMPLE';
     const DEFAULT_SECRET = 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY';

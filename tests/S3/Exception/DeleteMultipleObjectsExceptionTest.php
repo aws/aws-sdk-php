@@ -2,11 +2,12 @@
 namespace Aws\Test\S3\Exception;
 
 use Aws\S3\Exception\DeleteMultipleObjectsException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\Exception\DeleteMultipleObjectsException
  */
-class DeleteMultipleObjectsExceptionTest extends \PHPUnit_Framework_TestCase
+class DeleteMultipleObjectsExceptionTest extends TestCase
 {
     public function testReturnsData()
     {

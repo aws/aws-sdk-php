@@ -4,11 +4,12 @@ namespace Aws\Test\S3;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\SSECMiddleware
  */
-class SseCpkListenerTest extends \PHPUnit_Framework_TestCase
+class SseCpkListenerTest extends TestCase
 {
     use UsesServiceTrait;
 

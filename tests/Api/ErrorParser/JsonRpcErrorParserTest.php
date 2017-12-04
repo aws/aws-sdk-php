@@ -3,12 +3,13 @@ namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\ErrorParser\JsonRpcErrorParser
  * @covers Aws\Api\ErrorParser\JsonParserTrait
  */
-class JsonRpcErrorParserTest extends \PHPUnit_Framework_TestCase
+class JsonRpcErrorParserTest extends TestCase
 {
     public function testParsesClientErrorResponses()
     {

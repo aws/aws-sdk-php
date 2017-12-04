@@ -5,8 +5,9 @@ use Aws\Result;
 use Aws\ResultInterface;
 use Aws\S3\MultipartCopy;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
-class MultipartCopyTest extends \PHPUnit_Framework_TestCase
+class MultipartCopyTest extends TestCase
 {
     use UsesServiceTrait;
 

@@ -2,11 +2,12 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\Credentials;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Credentials\Credentials
  */
-class CredentialsTest extends \PHPUnit_Framework_TestCase
+class CredentialsTest extends TestCase
 {
     public function testHasGetters()
     {

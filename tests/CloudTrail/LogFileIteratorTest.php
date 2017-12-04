@@ -8,11 +8,12 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\CloudTrail\LogFileIterator
  */
-class LogFileIteratorTest extends \PHPUnit_Framework_TestCase
+class LogFileIteratorTest extends TestCase
 {
     use UsesServiceTrait;
 

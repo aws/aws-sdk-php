@@ -10,11 +10,12 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Promise;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\TraceMiddleware
  */
-class TraceMiddlewareTest extends \PHPUnit_Framework_TestCase
+class TraceMiddlewareTest extends TestCase
 {
     public function testEmitsDebugInfo()
     {

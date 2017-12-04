@@ -2,11 +2,12 @@
 namespace Aws\Test;
 
 use Aws\JsonCompiler;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\JsonCompiler
  */
-class JsonCompilerTest extends \PHPUnit_Framework_TestCase
+class JsonCompilerTest extends TestCase
 {
     private $models;
 

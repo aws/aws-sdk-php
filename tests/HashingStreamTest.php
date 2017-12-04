@@ -4,11 +4,12 @@ namespace Aws\Test;
 use GuzzleHttp\Psr7;
 use Aws\PhpHash;
 use Aws\HashingStream;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\HashingStream
  */
-class HashingStreamTest extends \PHPUnit_Framework_TestCase
+class HashingStreamTest extends TestCase
 {
     public function testCanCreateRollingMd5()
     {

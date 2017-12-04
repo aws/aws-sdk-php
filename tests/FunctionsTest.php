@@ -5,8 +5,9 @@ use Aws;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
+use PHPUnit\Framework\TestCase;
 
-class FunctionsTest extends \PHPUnit_Framework_TestCase
+class FunctionsTest extends TestCase
 {
     /**
      * @covers Aws\recursive_dir_iterator()

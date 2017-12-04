@@ -2,11 +2,12 @@
 namespace Aws\Test;
 
 use Aws\Result;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Result
  */
-class ResultTest extends \PHPUnit_Framework_TestCase
+class ResultTest extends TestCase
 {
     public function testHasData()
     {

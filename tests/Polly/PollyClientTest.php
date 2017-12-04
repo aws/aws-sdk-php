@@ -3,11 +3,12 @@ namespace Aws\Test\Polly;
 
 use Aws\Credentials\Credentials;
 use Aws\Polly\PollyClient;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Polly\PollyClient
  */
-class PollyClientTest extends \PHPUnit_Framework_TestCase
+class PollyClientTest extends TestCase
 {
     public function testCanGeneratePreSignedUrlForSynthesizeSpeech()
     {

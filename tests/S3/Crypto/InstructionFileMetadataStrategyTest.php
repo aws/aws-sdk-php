@@ -6,11 +6,12 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\Crypto\InstructionFileMetadataStrategy
  */
-class InstructionFileMetadataStrategyTest extends \PHPUnit_Framework_TestCase
+class InstructionFileMetadataStrategyTest extends TestCase
 {
     use UsesMetadataEnvelopeTrait, UsesServiceTrait;
 

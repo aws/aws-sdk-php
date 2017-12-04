@@ -3,12 +3,13 @@ namespace Aws\Test\DynamoDb;
 
 use Aws\DynamoDb\SessionHandler;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\DynamoDb\SessionHandler
  * @runTestsInSeparateProcesses
  */
-class SessionHandlerTest extends \PHPUnit_Framework_TestCase
+class SessionHandlerTest extends TestCase
 {
     use UsesServiceTrait;
 

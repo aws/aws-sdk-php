@@ -2,11 +2,12 @@
 namespace Aws\Test\S3;
 
 use Aws\S3\S3UriParser;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\S3UriParser
  */
-class S3UriParserTest extends \PHPUnit_Framework_TestCase
+class S3UriParserTest extends TestCase
 {
     public function uriProvider()
     {

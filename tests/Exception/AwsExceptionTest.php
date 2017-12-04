@@ -6,11 +6,12 @@ use Aws\Exception\AwsException;
 use Aws\Result;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Exception\AwsException
  */
-class AwsExceptionTest extends \PHPUnit_Framework_TestCase
+class AwsExceptionTest extends TestCase
 {
     use UsesServiceTrait;
 

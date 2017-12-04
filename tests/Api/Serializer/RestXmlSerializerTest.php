@@ -3,11 +3,12 @@ namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Serializer\RestXmlSerializer;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\Serializer\RestXmlSerializer
  */
-class RestXmlSerializerTest extends \PHPUnit_Framework_TestCase
+class RestXmlSerializerTest extends TestCase
 {
     use UsesServiceTrait;
 

@@ -5,11 +5,12 @@ use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\Validator;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\Validator
  */
-class ValidatorTest extends \PHPUnit_Framework_TestCase
+class ValidatorTest extends TestCase
 {
     public function validationProvider()
     {

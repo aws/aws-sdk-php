@@ -4,6 +4,7 @@ namespace Aws\Test\Api\Serializer;
 use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Api\Serializer\QuerySerializer
@@ -16,7 +17,7 @@ use Aws\Test\UsesServiceTrait;
  * @covers \Aws\Api\Serializer\Ec2ParamBuilder
  * @covers \Aws\Api\Serializer\QueryParamBuilder
  */
-class ComplianceTest extends \PHPUnit_Framework_TestCase
+class ComplianceTest extends TestCase
 {
     use UsesServiceTrait;
 

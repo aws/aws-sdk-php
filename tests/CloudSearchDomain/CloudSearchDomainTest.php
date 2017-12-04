@@ -4,11 +4,12 @@ namespace Aws\Test\CloudSearchDomain;
 use Aws\CloudSearchDomain\CloudSearchDomainClient;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\CloudSearchDomain\CloudSearchDomainClient
  */
-class CloudSearchDomainTest extends \PHPUnit_Framework_TestCase
+class CloudSearchDomainTest extends TestCase
 {
     /**
      * @expectedException \InvalidArgumentException

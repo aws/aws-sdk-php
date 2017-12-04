@@ -11,8 +11,9 @@ use Aws\Result;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
-class MultiRegionClientTest extends \PHPUnit_Framework_TestCase
+class MultiRegionClientTest extends TestCase
 {
     /** @var MultiRegionClient */
     private $instance;

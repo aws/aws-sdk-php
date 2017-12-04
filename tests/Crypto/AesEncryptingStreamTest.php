@@ -7,8 +7,9 @@ use Aws\Crypto\Cipher\Cbc;
 use Aws\Crypto\Cipher\CipherMethod;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
+use PHPUnit\Framework\TestCase;
 
-class AesEncryptingStreamTest extends \PHPUnit_Framework_TestCase
+class AesEncryptingStreamTest extends TestCase
 {
     const KB = 1024;
     const MB = 1048576;

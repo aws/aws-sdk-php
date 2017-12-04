@@ -3,11 +3,12 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\ListShape;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Api\ListShape
  */
-class ListShapeTest extends \PHPUnit_Framework_TestCase
+class ListShapeTest extends TestCase
 {
     public function testReturnsMember()
     {

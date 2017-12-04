@@ -2,11 +2,12 @@
 namespace Aws\Test\Build\Changelog;
 
 use Aws\Build\Changelog\ChangelogBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Build\Changelog\ChangelogBuilder
  */
-class ChangelogBuilderTest extends \PHPUnit_Framework_TestCase
+class ChangelogBuilderTest extends TestCase
 {
 
     private $RESOURCE_DIR = "tests/Build/Changelog/resources/";

@@ -6,11 +6,12 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Credentials\InstanceProfileProvider
  */
-class InstanceProfileProviderTest extends \PHPUnit_Framework_TestCase
+class InstanceProfileProviderTest extends TestCase
 {
     private function getCredentialArray(
         $key, $secret, $token = null, $time = null, $success = true

@@ -3,11 +3,12 @@ namespace Aws\Test\S3\Crypto;
 
 use Aws\S3\Crypto\HeadersMetadataStrategy;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\Crypto\HeadersMetadataStrategy
  */
-class HeadersMetadataStrategyTest extends \PHPUnit_Framework_TestCase
+class HeadersMetadataStrategyTest extends TestCase
 {
     use UsesMetadataEnvelopeTrait;
 

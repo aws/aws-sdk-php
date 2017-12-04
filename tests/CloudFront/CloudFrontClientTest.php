@@ -2,11 +2,12 @@
 namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CloudFrontClient;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\CloudFront\CloudFrontClient
  */
-class CloudFrontClientTest extends \PHPUnit_Framework_TestCase
+class CloudFrontClientTest extends TestCase
 {
     /**
      * @expectedException \InvalidArgumentException

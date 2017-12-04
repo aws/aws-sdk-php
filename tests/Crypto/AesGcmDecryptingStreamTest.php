@@ -4,8 +4,9 @@ namespace Aws\Test\Crypto;
 use Aws\Crypto\AesGcmDecryptingStream;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
+use PHPUnit\Framework\TestCase;
 
-class AesGcmDecryptingStreamTest extends \PHPUnit_Framework_TestCase
+class AesGcmDecryptingStreamTest extends TestCase
 {
     use AesEncryptionStreamTestTrait;
 

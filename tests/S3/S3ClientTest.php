@@ -18,11 +18,12 @@ use GuzzleHttp\Psr7\FnStream;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\S3Client
  */
-class S3ClientTest extends \PHPUnit_Framework_TestCase
+class S3ClientTest extends TestCase
 {
     use UsesServiceTrait;
 

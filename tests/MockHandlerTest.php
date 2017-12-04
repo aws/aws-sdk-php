@@ -9,11 +9,12 @@ use Aws\Result;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\MockHandler
  */
-class MockHandlerTest extends \PHPUnit_Framework_TestCase
+class MockHandlerTest extends TestCase
 {
     /**
      * @expectedException \InvalidArgumentException

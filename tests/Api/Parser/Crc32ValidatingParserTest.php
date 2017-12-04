@@ -8,11 +8,12 @@ use Aws\Api\Service;
 use Aws\Command;
 use Aws\Exception\AwsException;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\Parser\Crc32ValidatingParser
  */
-class Crc32ValidatingParserTest extends \PHPUnit_Framework_TestCase
+class Crc32ValidatingParserTest extends TestCase
 {
     private function getWrapped()
     {

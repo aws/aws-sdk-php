@@ -3,11 +3,12 @@ namespace Aws\Test;
 
 use Aws\Endpoint\Partition;
 use Aws\Endpoint\PartitionInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Endpoint\Partition
  */
-class PartitionTest extends \PHPUnit_Framework_TestCase
+class PartitionTest extends TestCase
 {
     /**
      * @dataProvider partitionDefinitionProvider

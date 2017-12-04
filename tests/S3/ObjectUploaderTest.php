@@ -7,8 +7,9 @@ use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
 use Psr\Http\Message\StreamInterface;
+use PHPUnit\Framework\TestCase;
 
-class ObjectUploaderTest extends \PHPUnit_Framework_TestCase
+class ObjectUploaderTest extends TestCase
 {
     use UsesServiceTrait;
 

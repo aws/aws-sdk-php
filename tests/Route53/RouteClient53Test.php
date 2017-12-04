@@ -2,11 +2,12 @@
 namespace Aws\Test\Route53;
 
 use Aws\Route53\Route53Client;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Route53\Route53Client
  */
-class Route53ClientTest extends \PHPUnit_Framework_TestCase
+class Route53ClientTest extends TestCase
 {
     public function testCleansIds()
     {

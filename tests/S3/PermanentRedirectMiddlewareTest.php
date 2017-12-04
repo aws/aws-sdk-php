@@ -2,11 +2,12 @@
 namespace Aws\Test\S3;
 
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\PermanentRedirectMiddleware
  */
-class PermanentRedirectTest extends \PHPUnit_Framework_TestCase
+class PermanentRedirectTest extends TestCase
 {
     use UsesServiceTrait;
 

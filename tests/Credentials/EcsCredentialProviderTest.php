@@ -5,11 +5,12 @@ use Aws\Credentials\EcsCredentialProvider;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Credentials\EcsCredentialProvider
  */
-class EcsCredentialProviderTest extends \PHPUnit_Framework_TestCase
+class EcsCredentialProviderTest extends TestCase
 {
     private $uripath;
 

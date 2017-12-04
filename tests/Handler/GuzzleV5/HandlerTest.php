@@ -18,11 +18,12 @@ use GuzzleHttp\Ring\Client\MockHandler;
 use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Tests\Ring\Client\MockHandlerTest;
 use React\Promise\Deferred;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Handler\GuzzleV5\GuzzleHandler
  */
-class HandlerTest extends \PHPUnit_Framework_TestCase
+class HandlerTest extends TestCase
 {
     public function setUp()
     {

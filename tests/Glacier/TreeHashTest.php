@@ -2,8 +2,9 @@
 namespace Aws\Test\Glacier;
 
 use Aws\Glacier\TreeHash;
+use PHPUnit\Framework\TestCase;
 
-class TreeHashTest extends \PHPUnit_Framework_TestCase
+class TreeHashTest extends TestCase
 {
     /**
      * @covers Aws\Glacier\TreeHash::__construct

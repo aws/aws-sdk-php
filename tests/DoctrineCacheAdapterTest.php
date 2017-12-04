@@ -4,8 +4,9 @@ namespace Aws\Test;
 use Aws\CacheInterface;
 use Aws\DoctrineCacheAdapter;
 use Doctrine\Common\Cache\Cache;
+use PHPUnit\Framework\TestCase;
 
-class DoctrineCacheAdapterTest extends \PHPUnit_Framework_TestCase
+class DoctrineCacheAdapterTest extends TestCase
 {
     public function testProxiesCallsToDoctrine()
     {

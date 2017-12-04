@@ -6,11 +6,12 @@ use Aws\DynamoDb\StandardSessionConnection;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\DynamoDb\StandardSessionConnection
  */
-class StandardSessionConnectionTest extends \PHPUnit_Framework_TestCase
+class StandardSessionConnectionTest extends TestCase
 {
     use UsesServiceTrait;
 

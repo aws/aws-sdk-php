@@ -6,8 +6,9 @@ use Aws\CommandInterface;
 use Aws\S3\AmbiguousSuccessParser;
 use Aws\S3\Exception\S3Exception;
 use Psr\Http\Message\ResponseInterface;
+use PHPUnit\Framework\TestCase;
 
-class AmbiguousSuccessParserTest extends \PHPUnit_Framework_TestCase
+class AmbiguousSuccessParserTest extends TestCase
 {
     private $instance;
 

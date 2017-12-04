@@ -4,11 +4,12 @@ namespace Aws\Test\Ssm;
 use Aws\Ssm\SsmClient;
 use Aws\MockHandler;
 use Aws\Result;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Ssm\SsmClient
  */
-class SsmClientTest extends \PHPUnit_Framework_TestCase
+class SsmClientTest extends TestCase
 {
     public function testCanDisableAutoFillPerClient()
     {

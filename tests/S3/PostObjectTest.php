@@ -5,11 +5,12 @@ use Aws\Credentials\Credentials;
 use Aws\S3\PostObject;
 use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\PostObject
  */
-class PostObjectTest extends \PHPUnit_Framework_TestCase
+class PostObjectTest extends TestCase
 {
     use UsesServiceTrait;
 

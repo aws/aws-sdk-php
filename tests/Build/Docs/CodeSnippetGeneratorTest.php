@@ -5,8 +5,9 @@ namespace Aws\Test\Build\Docs;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Build\Docs\CodeSnippetGenerator;
+use PHPUnit\Framework\TestCase;
 
-class CodeSnippetGeneratorTest extends \PHPUnit_Framework_TestCase
+class CodeSnippetGeneratorTest extends TestCase
 {
     /**
      * @dataProvider exampleProvider

@@ -2,11 +2,12 @@
 namespace Aws\Test;
 
 use Aws\LruArrayCache;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\LruArrayCache
  */
-class LruArrayCacheTest extends \PHPUnit_Framework_TestCase
+class LruArrayCacheTest extends TestCase
 {
     public function testSetRemoveAndRetrieve()
     {

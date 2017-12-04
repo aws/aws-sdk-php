@@ -4,11 +4,12 @@ namespace Aws\Test\CloudFront;
 use Aws\CloudFront\CloudFrontClient;
 use Aws\CloudFront\UrlSigner;
 use GuzzleHttp\Psr7\Uri;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\CloudFront\UrlSigner
  */
-class UrlSignerTest extends \PHPUnit_Framework_TestCase
+class UrlSignerTest extends TestCase
 {
     public function setUp()
     {

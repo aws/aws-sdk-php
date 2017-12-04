@@ -2,11 +2,12 @@
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\MetadataEnvelope;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Crypto\MetadataEnvelope
  */
-class MetadataEnvelopeTest extends \PHPUnit_Framework_TestCase
+class MetadataEnvelopeTest extends TestCase
 {
     use UsesMetadataEnvelopeTrait;
 

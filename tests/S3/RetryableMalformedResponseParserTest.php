@@ -7,8 +7,9 @@ use Aws\CommandInterface;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\RetryableMalformedResponseParser;
 use Psr\Http\Message\ResponseInterface;
+use PHPUnit\Framework\TestCase;
 
-class RetryableMalformedResponseParserTest extends \PHPUnit_Framework_TestCase
+class RetryableMalformedResponseParserTest extends TestCase
 {
     /**
      * @expectedException \Aws\S3\Exception\S3Exception

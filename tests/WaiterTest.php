@@ -15,11 +15,12 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Waiter
  */
-class WaiterTest extends \PHPUnit_Framework_TestCase
+class WaiterTest extends TestCase
 {
     use UsesServiceTrait;
 

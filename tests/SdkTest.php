@@ -5,11 +5,12 @@ use Aws\AwsClientInterface;
 use Aws\MultiRegionClient;
 use Aws\S3\S3MultiRegionClient;
 use Aws\Sdk;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Sdk
  */
-class SdkTest extends \PHPUnit_Framework_TestCase
+class SdkTest extends TestCase
 {
     /**
      * @expectedException \BadMethodCallException

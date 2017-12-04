@@ -3,12 +3,13 @@ namespace Aws\Test;
 
 use Aws\Command;
 use Aws\HandlerList;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Command
  * @covers Aws\HasDataTrait
  */
-class CommandTest extends \PHPUnit_Framework_TestCase
+class CommandTest extends TestCase
 {
     public function testHasName()
     {

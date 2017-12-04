@@ -4,11 +4,12 @@ namespace Aws\Test\Sts;
 use Aws\Api\DateTimeResult;
 use Aws\Result;
 use Aws\Sts\StsClient;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Sts\StsClient
  */
-class StsClientTest extends \PHPUnit_Framework_TestCase
+class StsClientTest extends TestCase
 {
     public function testCanCreateCredentialsObjectFromStsResult()
     {

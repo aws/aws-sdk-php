@@ -4,11 +4,12 @@ namespace Aws\Test\Ec2;
 use Aws\Ec2\Ec2Client;
 use Aws\MockHandler;
 use Aws\Result;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Ec2\Ec2Client
  */
-class Ec2ClientTest extends \PHPUnit_Framework_TestCase
+class Ec2ClientTest extends TestCase
 {
     public function testAddsCopySnapshotMiddleware()
     {

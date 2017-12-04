@@ -5,11 +5,12 @@ use Aws\Api\Service;
 use Aws\Command;
 use Aws\Api\Serializer\RestJsonSerializer;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\Serializer\RestJsonSerializer
  */
-class RestJsonSerializerTest extends \PHPUnit_Framework_TestCase
+class RestJsonSerializerTest extends TestCase
 {
     use UsesServiceTrait;
 

@@ -7,11 +7,12 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\DynamoDb\WriteRequestBatch;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\DynamoDb\WriteRequestBatch
  */
-class WriteRequestBatchTest extends \PHPUnit_Framework_TestCase
+class WriteRequestBatchTest extends TestCase
 {
     use UsesServiceTrait;
 

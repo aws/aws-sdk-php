@@ -4,11 +4,12 @@ namespace Aws\Test\Signature;
 use Aws\Credentials\Credentials;
 use Aws\Signature\AnonymousSignature;
 use GuzzleHttp\Psr7\Request;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Signature\AnonymousSignature
  */
-class AnonymousTest extends \PHPUnit_Framework_TestCase
+class AnonymousTest extends TestCase
 {
     public function testDoesNotSignsRequests()
     {

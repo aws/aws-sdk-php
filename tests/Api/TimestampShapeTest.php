@@ -3,11 +3,12 @@ namespace Aws\Test\Api;
 
 use Aws\Api\TimestampShape;
 use Aws\Api\ShapeMap;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Api\TimestampShape
  */
-class TimestampShapeTest extends \PHPUnit_Framework_TestCase
+class TimestampShapeTest extends TestCase
 {
     public function formatProvider()
     {

@@ -7,11 +7,12 @@ use Aws\Result;
 use Aws\S3\BatchDelete;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\BatchDelete
  */
-class BatchDeleteTest extends \PHPUnit_Framework_TestCase
+class BatchDeleteTest extends TestCase
 {
     use UsesServiceTrait;
 

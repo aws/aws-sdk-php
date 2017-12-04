@@ -11,11 +11,12 @@ use Aws\S3\S3Client;
 use Aws\S3\StreamWrapper;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\StreamWrapper
  */
-class StreamWrapperTest extends \PHPUnit_Framework_TestCase
+class StreamWrapperTest extends TestCase
 {
     use UsesServiceTrait;
 

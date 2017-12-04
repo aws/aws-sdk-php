@@ -8,11 +8,12 @@ use Aws\S3\Transfer;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\Transfer
  */
-class TransferTest extends \PHPUnit_Framework_TestCase
+class TransferTest extends TestCase
 {
     use UsesServiceTrait;
 

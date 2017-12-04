@@ -5,11 +5,12 @@ use Aws\Api\Serializer\QuerySerializer;
 use Aws\Api\Service;
 use Aws\Command;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\Serializer\QuerySerializer
  */
-class QuerySerializerTest extends \PHPUnit_Framework_TestCase
+class QuerySerializerTest extends TestCase
 {
     use UsesServiceTrait;
 

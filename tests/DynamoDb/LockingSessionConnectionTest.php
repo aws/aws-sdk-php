@@ -5,11 +5,12 @@ use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\LockingSessionConnection;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\DynamoDb\LockingSessionConnection
  */
-class LockingSessionConnectionTest extends \PHPUnit_Framework_TestCase
+class LockingSessionConnectionTest extends TestCase
 {
     use UsesServiceTrait;
 

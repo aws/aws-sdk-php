@@ -4,11 +4,12 @@ namespace Aws\Test\CloudTrail;
 use Aws\CloudTrail\LogFileReader;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\CloudTrail\LogFileReader
  */
-class LogFileReaderTest extends \PHPUnit_Framework_TestCase
+class LogFileReaderTest extends TestCase
 {
     use UsesServiceTrait;
 

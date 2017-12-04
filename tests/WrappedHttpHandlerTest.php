@@ -14,11 +14,12 @@ use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\WrappedHttpHandler
  */
-class WrappedHttpHandlerTest extends \PHPUnit_Framework_TestCase
+class WrappedHttpHandlerTest extends TestCase
 {
     public function testParsesResponses()
     {
