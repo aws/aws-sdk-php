@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.44.2 - 2017-12-04
 
 * `Aws\Budgets` - Add additional costTypes to support finer control for different charges included in a cost budget.
 * `Aws\ECS` - Documentation updates for ecs
