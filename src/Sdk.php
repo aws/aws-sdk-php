@@ -220,6 +220,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionServerlessApplicationRepository(array $args = [])
  * @method \Aws\ServiceCatalog\ServiceCatalogClient createServiceCatalog(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionServiceCatalog(array $args = [])
+ * @method \Aws\ServiceDiscovery\ServiceDiscoveryClient createServiceDiscovery(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionServiceDiscovery(array $args = [])
  * @method \Aws\Ses\SesClient createSes(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSes(array $args = [])
  * @method \Aws\Sfn\SfnClient createSfn(array $args = [])
