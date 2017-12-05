@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.45.0 - 2017-12-05
 
 * `Aws\IoT` - Add error action API for RulesEngine. 
 * `Aws\ServiceCatalog` - ServiceCatalog has two distinct personas for its use, an "admin" persona (who creates sets of products with different versions and prescribes who has access to them) and an "end-user" persona (who can launch cloud resources based on the configuration data their admins have given them access to). This API update will allow admin users to deactivate/activate product versions, end-user will only be able to access and launch active product versions. 
