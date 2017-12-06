@@ -55,6 +55,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disableDirectoryAsync(array $args = [])
  * @method \Aws\Result enableDirectory(array $args = [])
  * @method \GuzzleHttp\Promise\Promise enableDirectoryAsync(array $args = [])
+ * @method \Aws\Result getAppliedSchemaVersion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAppliedSchemaVersionAsync(array $args = [])
  * @method \Aws\Result getDirectory(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDirectoryAsync(array $args = [])
  * @method \Aws\Result getFacet(array $args = [])
@@ -123,5 +125,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateSchemaAsync(array $args = [])
  * @method \Aws\Result updateTypedLinkFacet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateTypedLinkFacetAsync(array $args = [])
+ * @method \Aws\Result upgradeAppliedSchema(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise upgradeAppliedSchemaAsync(array $args = [])
+ * @method \Aws\Result upgradePublishedSchema(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise upgradePublishedSchemaAsync(array $args = [])
  */
 class CloudDirectoryClient extends AwsClient {}
