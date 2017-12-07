@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.45.2 - 2017-12-07
 
 * `Aws\ElasticsearchService` - Added support for encryption of data at rest on Amazon Elasticsearch Service using AWS KMS
 * `Aws\SES` - Customers can customize the emails that Amazon SES sends when verifying new identities. This feature is helpful for developers whose applications send email through Amazon SES on behalf of their customers.
