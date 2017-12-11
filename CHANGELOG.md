@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.46.0 - 2017-12-11
 
 * `Aws\CognitoIdentityProvider` - Exposing the hosted UI domain name for a user pool that has a domain configured.
 * `Aws\LexModelBuildingService` - The GetBotChannelAssociation API now returns the status and failure reason, if any, for a bot channel.
