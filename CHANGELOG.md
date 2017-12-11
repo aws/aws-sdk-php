@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentityProvider` - Exposing the hosted UI domain name for a user pool that has a domain configured.
+* `Aws\LexModelBuildingService` - The GetBotChannelAssociation API now returns the status and failure reason, if any, for a bot channel.
+* `Aws\Pinpoint` - Resolves a naming collision with Pinpoint getEndpoint operation and AwsClient::getEndpoint. All Endpoint operations have aliases with UserEndpoint.
+* `Aws\SageMaker` - CreateModel API Update: The request parameter 'ExecutionRoleArn' has changed from optional to required.
+* `Aws\Test` - More refactored tests with PHPUnit assert methods.
+
 ## 3.45.3 - 2017-12-08
 
 * `Aws\AppStream` - This API update is to support the feature that allows customers to automatically consume the latest Amazon AppStream 2.0 agent as and when published by AWS.
