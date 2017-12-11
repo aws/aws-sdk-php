@@ -129,4 +129,28 @@ trait UsesServiceTrait
             ]
         );
     }
+
+    /**
+     * Verifies an operation alias returns the expected types
+     *
+     * @param AwsClientInterface $client
+     * @param string $operation
+     * @param array $params
+     */
+    private function verifyOperationAlias(
+        $client,
+        $operation,
+        $params
+    ) {
+        $this->addMockResults($client, [new Result()]);
+        $output = $client->{$operation}($params);
+        if (substr($operation, -5) === 'Async') {
+            $this->assertFalse($this->mockQueueEmpty());
+            $this->assertInstanceOf('GuzzleHttp\\Promise\\PromiseInterface', $output);
+            $output = $output->wait();
+            $this->assertTrue($this->mockQueueEmpty());
+        }
+        $this->assertInstanceOf(Result::class, $output);
+        $this->assertTrue($this->mockQueueEmpty());
+    }
 }
