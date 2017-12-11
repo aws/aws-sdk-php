@@ -376,7 +376,7 @@ JSON;
         $this->assertEquals(['foo', 'bar', 'baz'], $set->toArray());
         $this->assertEquals('["foo","bar","baz"]', json_encode($set));
         $this->assertCount(3, $set);
-        $this->assertEquals(3, iterator_count($set));
+        $this->assertCount(3, $set);
     }
 
     public function testUnmarshalItemDoesNotCreateReferences()

@@ -86,8 +86,8 @@ class ChangelogBuilderTest extends TestCase
         $params['base_dir'] = $tempDir;
         $obj = new ChangelogBuilder($params);
         touch($tempDir . ".changes/nextrelease/temp.json");
-        $this->assertEquals(1, count(preg_grep('/^([^.])/', scandir($tempDir . ".changes/nextrelease/"))));
+        $this->assertCount(1, preg_grep('/^([^.])/', scandir($tempDir . ".changes/nextrelease/")));
         $obj->cleanNextReleaseFolder();
-        $this->assertEquals(0, count(preg_grep('/^([^.])/', scandir($tempDir . ".changes/nextrelease/"))));
+        $this->assertCount(0, preg_grep('/^([^.])/', scandir($tempDir . ".changes/nextrelease/")));
     }
 }
