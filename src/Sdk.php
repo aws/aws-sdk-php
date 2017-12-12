@@ -254,6 +254,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionWafRegional(array $args = [])
  * @method \Aws\WorkDocs\WorkDocsClient createWorkDocs(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionWorkDocs(array $args = [])
+ * @method \Aws\WorkMail\WorkMailClient createWorkMail(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionWorkMail(array $args = [])
  * @method \Aws\WorkSpaces\WorkSpacesClient createWorkSpaces(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionWorkSpaces(array $args = [])
  * @method \Aws\XRay\XRayClient createXRay(array $args = [])
