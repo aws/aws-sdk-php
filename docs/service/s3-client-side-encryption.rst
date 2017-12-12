@@ -174,7 +174,8 @@ Performing a multipart upload with client-side encryption is also possible. The
 for encryption before uploading. Creating one takes on a similar experience to
 using the ``Aws\S3\MultipartUploader`` and the ``Aws\S3\Crypto\S3EncryptionClient``.
 The ``S3EncryptionMultipartUploader`` can handle the same ``'@MetadataStrategy'``
-option as the ``S3, as well as all available ``'@CipherOptions'`` configurations.
+option as the ``S3EncryptionClient``, as well as all available ``'@CipherOptions'``
+configurations.
 
 .. code-block:: php
 
