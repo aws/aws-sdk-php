@@ -402,13 +402,13 @@ class AwsClientTest extends TestCase
                 return isset($service['waiters'])
                     ? ['waiters' => $service['waiters'], 'version' => 2]
                     : ['waiters' => [], 'version' => 2];
-            } else {
-                if (!isset($service['metadata'])) {
-                    $service['metadata'] = [];
-                }
-                $service['metadata']['protocol'] = 'query';
-                return $service;
             }
+
+            if (!isset($service['metadata'])) {
+                $service['metadata'] = [];
+            }
+            $service['metadata']['protocol'] = 'query';
+            return $service;
         };
 
         return new AwsClient($config + [

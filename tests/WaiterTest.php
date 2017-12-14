@@ -225,34 +225,34 @@ class WaiterTest extends TestCase
                         'signatureVersion' => 'v4'
                     ],
                 ];
-            } else {
-                return ['waiters' => [
-                    'TableExists' =>  [
-                        'delay' => function ($attempt) { return $attempt; },
-                        'maxAttempts' => 5,
-                        'operation' => 'DescribeTable',
-                        'acceptors' => [
-                            [
-                                'state' => 'success',
-                                'matcher' => 'path',
-                                'argument' => 'Table.TableStatus',
-                                'expected' => 'ACTIVE',
-                            ],
-                            [
-                                'state' => 'retry',
-                                'matcher' => 'error',
-                                'expected' => 'ResourceNotFoundException',
-                            ],
-                            [
-                                'state' => 'failed',
-                                'matcher' => 'path',
-                                'argument' => 'Table.TableStatus',
-                                'expected' => 'DELETING',
-                            ],
-                        ],
-                    ]
-                ]];
             }
+
+            return ['waiters' => [
+                'TableExists' =>  [
+                    'delay' => function ($attempt) { return $attempt; },
+                    'maxAttempts' => 5,
+                    'operation' => 'DescribeTable',
+                    'acceptors' => [
+                        [
+                            'state' => 'success',
+                            'matcher' => 'path',
+                            'argument' => 'Table.TableStatus',
+                            'expected' => 'ACTIVE',
+                        ],
+                        [
+                            'state' => 'retry',
+                            'matcher' => 'error',
+                            'expected' => 'ResourceNotFoundException',
+                        ],
+                        [
+                            'state' => 'failed',
+                            'matcher' => 'path',
+                            'argument' => 'Table.TableStatus',
+                            'expected' => 'DELETING',
+                        ],
+                    ],
+                ]
+            ]];
         };
     }
 
@@ -397,8 +397,8 @@ class WaiterTest extends TestCase
                     'result' => new Result(['@metadata' => ['statusCode' => 200]])
                 ]
             );
-        } else {
-            return new Result($data + ['@metadata' => ['statusCode' => 200]]);
         }
+
+        return new Result($data + ['@metadata' => ['statusCode' => 200]]);
     }
 }

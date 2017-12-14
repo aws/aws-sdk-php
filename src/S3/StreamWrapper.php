@@ -281,10 +281,10 @@ class StreamWrapper
                     // Return as if it is a bucket to account for console
                     // bucket objects (e.g., zero-byte object "foo/")
                     return $this->formatUrlStat($path);
-                } else {
-                    // Attempt to stat and cache regular object
-                    return $this->formatUrlStat($result->toArray());
                 }
+
+                // Attempt to stat and cache regular object
+                return $this->formatUrlStat($result->toArray());
             } catch (S3Exception $e) {
                 // Maybe this isn't an actual key, but a prefix. Do a prefix
                 // listing of objects to determine.

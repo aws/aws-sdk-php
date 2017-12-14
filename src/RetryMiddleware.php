@@ -82,9 +82,9 @@ class RetryMiddleware
                 return true;
             } elseif (isset(self::$retryStatusCodes[$error->getStatusCode()])) {
                 return true;
-            } else {
-                return false;
             }
+
+            return false;
         };
     }
 

@@ -28,9 +28,9 @@ class ResultPaginatorTest extends TestCase
                     $res['pagination']['ListTables'] = $config
                         + $res['pagination']['ListTables'];
                     return $res;
-                } else {
-                    return $provider($t, $s, $v);
                 }
+
+                return $provider($t, $s, $v);
             }
         ]);
     }

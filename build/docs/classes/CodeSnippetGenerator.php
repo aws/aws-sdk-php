@@ -125,7 +125,7 @@ class CodeSnippetGenerator
             array_pop($path);
         }
         $lines[] = "{$indent}]";
-        
+
         return implode("\n", $lines);
     }
 
@@ -153,9 +153,9 @@ class CodeSnippetGenerator
         $key = preg_replace('/^\./', '', implode('', $path));
         if (isset($comments[$key])) {
             return '// ' . $comments[$key];
-        } else {
-            return '';
         }
+
+        return '';
     }
 
     private function isAssociative(array $arr)

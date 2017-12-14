@@ -94,11 +94,11 @@ class ChangelogBuilder
             //Minor Version Bump if a newservice is being released
             ++$tag[1];
             $tag[2] = 0;
-            return implode(".", $tag);
         } else {
             ++$tag[2];
-            return implode(".", $tag);
         }
+
+        return implode(".", $tag);
     }
 
     private function createChangelogJson($changelog, $tag)

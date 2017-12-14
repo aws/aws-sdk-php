@@ -188,9 +188,9 @@ abstract class RestSerializer
                     return '';
                 } elseif ($isGreedy) {
                     return str_replace('%2F', '/', rawurlencode($varspecs[$k]));
-                } else {
-                    return rawurlencode($varspecs[$k]);
                 }
+
+                return rawurlencode($varspecs[$k]);
             },
             $operation['http']['requestUri']
         );

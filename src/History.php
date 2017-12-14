@@ -79,9 +79,9 @@ class History implements \Countable, \IteratorAggregate
             return $last['result'];
         } elseif (isset($last['exception'])) {
             return $last['exception'];
-        } else {
-            throw new \LogicException('No return value for last entry.');
         }
+
+        throw new \LogicException('No return value for last entry.');
     }
 
     /**
