@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Adds support for Cognito Authorizer scopes at the API method level.
+* `Aws\SES` - Added information about the maximum number of transactions per second for the SendCustomVerificationEmail operation.
+
 ## 3.47.0 - 2017-12-12
 
 * `Aws\CodeDeploy` - Documentation updates for CodeDeploy.
