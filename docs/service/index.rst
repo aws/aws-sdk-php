@@ -19,4 +19,4 @@ higher level features per service.
     s3-presigned-url
     s3-stream-wrapper
     s3-transfer
-    s3-client-side-encryption
+    s3-encryption-client
