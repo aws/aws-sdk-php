@@ -10,7 +10,7 @@ use GuzzleHttp\Psr7\Stream;
  */
 abstract class AbstractCryptoClient
 {
-    private static $supportedCiphers = ['cbc', 'gcm'];
+    public static $supportedCiphers = ['cbc', 'gcm'];
 
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
@@ -35,10 +35,7 @@ abstract class AbstractCryptoClient
      *
      * @return string
      */
-    protected function getCipherOpenSslName($cipherName, $keySize)
-    {
-        return "aes-{$keySize}-{$cipherName}";
-    }
+    abstract protected function getCipherOpenSslName($cipherName, $keySize);
 
     /**
      * Constructs a CipherMethod for the given name, initialized with the other
@@ -53,18 +50,7 @@ abstract class AbstractCryptoClient
      *
      * @internal
      */
-    protected function buildCipherMethod($cipherName, $iv, $keySize)
-    {
-        switch ($cipherName) {
-            case 'cbc':
-                return new Cbc(
-                    $iv,
-                    $keySize
-                );
-            default:
-                return null;
-        }
-    }
+    abstract protected function buildCipherMethod($cipherName, $iv, $keySize);
 
     /**
      * Performs a reverse lookup to get the openssl_* cipher name from the
@@ -76,18 +62,7 @@ abstract class AbstractCryptoClient
      *
      * @internal
      */
-    protected function getCipherFromAesName($aesName)
-    {
-        switch ($aesName) {
-            case 'AES/GCM/NoPadding':
-                return 'gcm';
-            case 'AES/CBC/PKCS5Padding':
-                return 'cbc';
-            default:
-                throw new \RuntimeException('Unrecognized or unsupported'
-                    . ' AESName for reverse lookup.');
-        }
-    }
+    abstract protected function getCipherFromAesName($aesName);
 
     /**
      * Dependency to provide an interface for building an encryption stream for

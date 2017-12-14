@@ -140,11 +140,12 @@ class AbstractUploaderTest extends TestCase
         };
 
         $uploader = $this->getTestUploader(Psr7\stream_for('abcde'), [
-            'bucket'          => 'foo',
-            'key'             => 'bar',
-            'before_initiate' => $fn,
-            'before_upload'   => $fn,
-            'before_complete' => $fn,
+            'bucket'              => 'foo',
+            'key'                 => 'bar',
+            'prepare_data_source' => $fn,
+            'before_initiate'     => $fn,
+            'before_upload'       => $fn,
+            'before_complete'     => $fn,
         ], [
             new Result(), // Initiate
             new Result(), // Upload
@@ -156,7 +157,7 @@ class AbstractUploaderTest extends TestCase
         $promise = $uploader->promise();
         $this->assertSame($promise, $uploader->promise());
         $this->assertInstanceOf('Aws\Result', $promise->wait());
-        $this->assertEquals(5, $called);
+        $this->assertEquals(6, $called);
     }
 
     /**
