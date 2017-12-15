@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.0 - 2017-12-15
 
 * `Aws\AppStream` - This API update is to enable customers to add tags to their Amazon AppStream 2.0 resources
 * `Aws\Inspector` - expand the region support of Inspector to FRA (eu-central-1)
