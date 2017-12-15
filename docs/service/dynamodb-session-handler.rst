@@ -240,3 +240,25 @@ Best Practices
 #. Instead of using PHP's built-in session garbage collection triggers, schedule your garbage collection via a cron job,
    or another scheduling mechanism, to run during off-peak hours. Use the ``'batch_config'`` option to your advantage.
 
+
+Required IAM Permissions
+------------------------
+
+.. code-block:: js
+
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": [
+            "dynamodb:GetItem",
+            "dynamodb:UpdateItem",
+            "dynamodb:DeleteItem",
+            "dynamodb:Scan",
+            "dynamodb:BatchWriteItem"
+          ],
+          "Effect": "Allow",
+          "Resource": "arn:aws:dynamodb:ap-southeast-2:<account-id>:table/<table-name>"
+        }
+      ]
+    }
