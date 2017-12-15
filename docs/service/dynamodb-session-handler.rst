@@ -258,7 +258,7 @@ Required IAM Permissions
             "dynamodb:BatchWriteItem"
           ],
           "Effect": "Allow",
-          "Resource": "arn:aws:dynamodb:ap-southeast-2:<account-id>:table/<table-name>"
+          "Resource": "arn:aws:dynamodb:<region>:<account-id>:table/<table-name>"
         }
       ]
     }
