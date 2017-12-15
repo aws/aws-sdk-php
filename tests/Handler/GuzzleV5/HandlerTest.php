@@ -202,7 +202,7 @@ EOXML;
 
     private function getHandler(Deferred $deferred, $output = 'foo')
     {
-        $client = $this->getMock('GuzzleHttp\Client', ['send']);
+        $client = $this->getMockBuilder('GuzzleHttp\Client')->setMethods(['send'])->getMock();
         $future = new FutureResponse($deferred->promise());
         $client->method('send')->willReturn($future);
 
