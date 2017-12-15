@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - This API update is to enable customers to add tags to their Amazon AppStream 2.0 resources
+* `Aws\Inspector` - expand the region support of Inspector to FRA (eu-central-1)
+* `Aws\S3\Crypto` - Adds the S3EncryptionMultipartUploader for performing client side encryption before performing a multipart upload operation.
+
 ## 3.47.1 - 2017-12-14
 
 * `Aws\APIGateway` - Adds support for Cognito Authorizer scopes at the API method level.
