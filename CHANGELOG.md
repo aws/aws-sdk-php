@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.2 - 2017-12-19
 
 * `Aws\` - Add support for retrying exception code RequestThrottledException.
 * `Aws\APIGateway` - API Gateway now adds support for calling API with compressed payloads using one of the supported content codings, tagging an API stage for cost allocation, and returning API keys from a custom authorizer for use with a usage plan.
