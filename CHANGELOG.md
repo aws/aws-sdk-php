@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatch` - Documentation updates for monitoring
+* `Aws\ServiceCatalog` - Region launch expansion of Service Catalog Service for new region EU-WEST-3
+
 ## 3.48.0 - 2017-12-15
 
 * `Aws\AppStream` - This API update is to enable customers to add tags to their Amazon AppStream 2.0 resources
