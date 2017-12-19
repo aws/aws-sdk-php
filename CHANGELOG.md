@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.1 - 2017-12-19
 
 * `Aws\CloudWatch` - Documentation updates for monitoring
 * `Aws\ServiceCatalog` - Region launch expansion of Service Catalog Service for new region EU-WEST-3
