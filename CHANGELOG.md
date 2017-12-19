@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Add support for retrying exception code RequestThrottledException.
+* `Aws\APIGateway` - API Gateway now adds support for calling API with compressed payloads using one of the supported content codings, tagging an API stage for cost allocation, and returning API keys from a custom authorizer for use with a usage plan.
+* `Aws\MediaStoreData` - Documentation updates for mediastore
+* `Aws\Route53` - Route 53 added support for a new China (Ningxia) region, cn-northwest-1. You can now specify cn-northwest-1 as the region for latency-based or geoproximity routing. Route 53 also added support for a new EU (Paris) region, eu-west-3. You can now associate VPCs in eu-west-3 with private hosted zones and create alias records that route traffic to resources in eu-west-3.
+
 ## 3.48.1 - 2017-12-19
 
 * `Aws\CloudWatch` - Documentation updates for monitoring
