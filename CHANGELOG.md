@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeStar` - Launch AWS CodeStar in the Asia Pacific (Tokyo) and Canada (Central) regions. 
+* `Aws\ConfigService` - Update ResourceType enum with values for WAF, WAFRegional, and CloudFront resources
+* `Aws\IoT` - This release adds support for code signed Over-the-air update functionality for Amazon FreeRTOS. Users can now create and schedule Over-the-air updates to their Amazon FreeRTOS devices using these new APIs. 
+
 ## 3.48.2 - 2017-12-19
 
 * `Aws\` - Add support for retrying exception code RequestThrottledException.
