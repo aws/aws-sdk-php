@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.3 - 2017-12-20
 
 * `Aws\CodeStar` - Launch AWS CodeStar in the Asia Pacific (Tokyo) and Canada (Central) regions. 
 * `Aws\ConfigService` - Update ResourceType enum with values for WAF, WAFRegional, and CloudFront resources
