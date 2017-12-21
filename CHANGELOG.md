@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.4 - 2017-12-21
 
 * `Aws\CodeBuild` - Adding support allowing AWS CodeBuild customers to select specific curated image versions.
 * `Aws\EC2` - Elastic IP tagging enables you to add key and value metadata to your Elastic IPs so that you can search, filter, and organize them according to your organization's needs.
