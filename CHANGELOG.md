@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeBuild` - Adding support allowing AWS CodeBuild customers to select specific curated image versions.
+* `Aws\EC2` - Elastic IP tagging enables you to add key and value metadata to your Elastic IPs so that you can search, filter, and organize them according to your organization's needs.
+* `Aws\KinesisAnalytics` - Kinesis Analytics now supports AWS Lambda functions as output.
+
 ## 3.48.3 - 2017-12-20
 
 * `Aws\CodeStar` - Launch AWS CodeStar in the Asia Pacific (Tokyo) and Canada (Central) regions. 
