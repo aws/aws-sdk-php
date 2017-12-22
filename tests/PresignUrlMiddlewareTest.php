@@ -5,7 +5,6 @@ use Aws\CommandInterface;
 use Aws\Ec2\Ec2Client;
 use Aws\Rds\RdsClient;
 use Aws\Result;
-use Aws\Test\UsesServiceTrait;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
 

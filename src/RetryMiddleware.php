@@ -2,11 +2,8 @@
 namespace Aws;
 
 use Aws\Exception\AwsException;
-use Exception;
 use Psr\Http\Message\RequestInterface;
-use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
-use GuzzleHttp\Psr7;
 
 /**
  * @internal Middleware that retries failures.

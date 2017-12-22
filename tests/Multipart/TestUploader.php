@@ -2,10 +2,8 @@
 namespace Aws\Test\Multipart;
 
 use Aws\CommandInterface;
-use Aws\Multipart\UploadState;
 use Aws\Multipart\AbstractUploader;
 use Aws\ResultInterface;
-use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use Aws\S3\Exception\S3MultipartUploadException;
 

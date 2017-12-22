@@ -2,7 +2,6 @@
 namespace Aws\S3;
 
 use Aws\CommandInterface;
-use Aws\S3\Exception\S3Exception;
 use Psr\Http\Message\RequestInterface;
 
 /**

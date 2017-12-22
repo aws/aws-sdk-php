@@ -16,7 +16,6 @@ use GuzzleHttp\Psr7\Request as PsrRequest;
 use GuzzleHttp\Psr7\Response as PsrResponse;
 use GuzzleHttp\Ring\Client\MockHandler;
 use GuzzleHttp\Stream\Stream;
-use GuzzleHttp\Tests\Ring\Client\MockHandlerTest;
 use React\Promise\Deferred;
 use PHPUnit\Framework\TestCase;
 

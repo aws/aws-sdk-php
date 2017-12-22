@@ -2,9 +2,6 @@
 namespace Aws\ElasticLoadBalancingV2;
 
 use Aws\AwsClient;
-use Aws\Command;
-use Aws\CommandInterface;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * This client is used to interact with the **Elastic Load Balancing** service.

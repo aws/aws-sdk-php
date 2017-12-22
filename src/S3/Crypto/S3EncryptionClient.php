@@ -8,7 +8,6 @@ use Aws\Crypto\EncryptionTrait;
 use Aws\Crypto\DecryptionTrait;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\Crypto\MaterialsProvider;
-use Aws\Crypto\MetadataStrategyInterface;
 use Aws\Crypto\Cipher\CipherBuilderTrait;
 use Aws\S3\S3Client;
 use GuzzleHttp\Promise;

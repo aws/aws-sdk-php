@@ -2,19 +2,13 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\AssumeRoleCredentialProvider;
-use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
-use Aws\Exception\CredentialsException;
 use Aws\Result;
 use Aws\Sts\StsClient;
 use Aws\Api\DateTimeResult;
-use GuzzleHttp\Psr7;
 use GuzzleHttp\Promise;
-use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Promise\RejectedPromise;
-use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\RequestInterface;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 

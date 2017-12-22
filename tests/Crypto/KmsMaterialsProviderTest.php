@@ -2,7 +2,6 @@
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\KmsMaterialsProvider;
-use Aws\Crypto\MetadataEnvelope;
 use Aws\Kms\KmsClient;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;

@@ -10,7 +10,6 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7;
 

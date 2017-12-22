@@ -5,7 +5,6 @@ use Aws\Exception\CouldNotCreateChecksumException;
 use Aws\Glacier\GlacierClient;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\NoSeekStream;
-use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 

@@ -3,7 +3,6 @@ namespace Aws\Test\CloudSearchDomain;
 
 use Aws\CloudSearchDomain\CloudSearchDomainClient;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 
 /**

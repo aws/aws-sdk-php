@@ -3,7 +3,6 @@ namespace Aws\Test;
 
 use Aws\IdempotencyTokenMiddleware;
 use Aws\Result;
-use GuzzleHttp\Promise;
 use Aws\HandlerList;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
