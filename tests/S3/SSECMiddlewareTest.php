@@ -72,6 +72,20 @@ class SseCpkListenerTest extends TestCase
                     'SSECustomerKeyMD5' => null,
                 ]
             ],
+            [
+                'PutObject',
+                [
+                    'Bucket' => 'a',
+                    'Key' => 'b',
+                    'SSECustomerKey' => 'OUI3RDJDMzRBMzY2QkY4OTBDNzMwNjQxRTZDRUNGNkY=',
+                    'SSECustomerKeyMD5' => 'bar',
+                    'SSECustomerKeyIsBase64' => true
+                ],
+                [
+                    'SSECustomerKey' => 'OUI3RDJDMzRBMzY2QkY4OTBDNzMwNjQxRTZDRUNGNkY=',
+                    'SSECustomerKeyMD5' => base64_encode('bar'),
+                ]
+            ],
         ];
     }
 
