@@ -65,6 +65,17 @@ class RedirectMapBuilder
         // Fall back to api main page if service not found
         $redirectEntry []= $reWriteRulePrefix . '(.*)' . $docPathPrefix . 'index.html' . $flags;
 
+        // Redirect old /AWSSDKforPHP/ paths
+        $reWriteRulePrefix = 'RewriteRule ^/AWSSDKforPHP/';
+        array_unshift($redirectEntry,
+            "RewriteCond %{REQUEST_URI} !^\\/AWSSDKforPHP\\/.*$\n",
+            "RewriteRule \".*\" \"-\" [S={4}]\n",
+            $reWriteRulePrefix . 'latest(.*) /aws-sdk-php/latest/index.html' . $flags,
+            $reWriteRulePrefix . 'v3(.*) /aws-sdk-php/v3/api/index.html' . $flags,
+            $reWriteRulePrefix . 'v2(.*) /aws-sdk-php/v2/api/index.html' . $flags,
+            $reWriteRulePrefix . 'v1(.*) /aws-sdk-php/v1/index.html' . $flags
+        );
+
         file_put_contents($this->outputDir, $redirectEntry);
     }
 
