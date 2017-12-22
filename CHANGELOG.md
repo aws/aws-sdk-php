@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.5 - 2017-12-22
 
 * `Aws\EC2` - This release fixes an issue with tags not showing in DescribeAddresses responses.
 * `Aws\ECS` - Amazon ECS users can now set a health check initialization wait period of their ECS services, the services that are associated with an Elastic Load Balancer (ELB) will wait for a period of time before the ELB become healthy. You can now configure this in Create and Update Service.
