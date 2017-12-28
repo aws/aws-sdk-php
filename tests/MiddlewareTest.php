@@ -79,7 +79,7 @@ class MiddlewareTest extends TestCase
         $list = new HandlerList();
         $mock = function ($command, $request) {
             $this->assertTrue($request->hasHeader('aws-sdk-invocation-id'));
-            return \GuzzleHttp\Promise\promise_for(
+            return Promise\promise_for(
                 new Result(['@metadata' => ['statusCode' => 200]])
             );
         };
@@ -94,7 +94,7 @@ class MiddlewareTest extends TestCase
         $list = new HandlerList();
         $mock = function ($command, $request) use (&$req) {
             $req = $request;
-            return \GuzzleHttp\Promise\promise_for(
+            return Promise\promise_for(
                 new Result(['@metadata' => ['statusCode' => 200]])
             );
         };

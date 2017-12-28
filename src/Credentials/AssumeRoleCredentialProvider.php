@@ -14,7 +14,7 @@ class AssumeRoleCredentialProvider
 {
     const ERROR_MSG = "Missing required 'AssumeRoleCredentialProvider' configuration option: ";
 
-    /** @var callable */
+    /** @var StsClient */
     private $client;
 
     /** @var array */

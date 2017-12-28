@@ -100,7 +100,7 @@ class BatchDelete implements PromisorInterface
         array $options = []
     ) {
         $fn = function (BatchDelete $that) use ($iter) {
-            return \GuzzleHttp\Promise\coroutine(function () use ($that, $iter) {
+            return Promise\coroutine(function () use ($that, $iter) {
                 foreach ($iter as $obj) {
                     if ($promise = $that->enqueue($obj)) {
                         yield $promise;

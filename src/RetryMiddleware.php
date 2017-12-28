@@ -4,6 +4,7 @@ namespace Aws;
 use Aws\Exception\AwsException;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise;
 
 /**
  * @internal Middleware that retries failures.
@@ -131,7 +132,7 @@ class RetryMiddleware
 
             if ($value instanceof \Exception || $value instanceof \Throwable) {
                 if (!$decider($retries, $command, $request, null, $value)) {
-                    return \GuzzleHttp\Promise\rejection_for(
+                    return Promise\rejection_for(
                         $this->bindStatsToReturn($value, $requestStats)
                     );
                 }
