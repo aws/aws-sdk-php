@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.6 - 2017-12-29
 
 * `Aws\` - Clean elses when have already returned something.
 * `Aws\` - Removed or adjusted unused imports.
