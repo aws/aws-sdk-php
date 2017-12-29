@@ -337,9 +337,9 @@ class HandlerList implements \Countable
         } elseif (is_array($fn)) {
             $ele = is_string($fn[0]) ? $fn[0] : get_class($fn[0]);
             return "callable(['{$ele}', '{$fn[1]}'])";
-        } else {
-            return 'callable(' . spl_object_hash($fn) . ')';
         }
+
+        return 'callable(' . spl_object_hash($fn) . ')';
     }
 
     /**

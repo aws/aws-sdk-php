@@ -270,10 +270,10 @@ class Marshaler
             case 'N':
                 if ($this->options['wrap_numbers']) {
                     return new NumberValue($value);
-                } else {
-                    // Use type coercion to unmarshal numbers to int/float.
-                    return $value + 0;
                 }
+
+                // Use type coercion to unmarshal numbers to int/float.
+                return $value + 0;
             case 'M':
                 if ($mapAsObject) {
                     $data = new \stdClass;

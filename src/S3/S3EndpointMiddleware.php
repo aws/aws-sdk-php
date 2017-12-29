@@ -139,9 +139,9 @@ class S3EndpointMiddleware
             && self::isRequestHostStyleCompatible($command, $request)
         ) {
             return self::HOST_STYLE;
-        } else {
-            return self::PATH_STYLE;
         }
+
+        return self::PATH_STYLE;
     }
 
     private function canAccelerate(CommandInterface $command)

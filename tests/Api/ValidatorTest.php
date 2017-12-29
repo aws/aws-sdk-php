@@ -402,9 +402,9 @@ class ValidatorTest extends TestCase
         } catch (\InvalidArgumentException $e) {
             if ($result === true) {
                 throw $e;
-            } else {
-                $this->assertEquals($result, $e->getMessage());
             }
+
+            $this->assertEquals($result, $e->getMessage());
         }
     }
 

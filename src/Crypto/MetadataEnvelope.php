@@ -45,9 +45,9 @@ class MetadataEnvelope implements ArrayAccess, IteratorAggregate, JsonSerializab
         if (is_null($name) || !in_array($name, $constants)) {
             throw new InvalidArgumentException('MetadataEnvelope fields must'
                 . ' must match a predefined offset; use the header constants.');
-        } else {
-            $this->data[$name] = $value;
         }
+
+        $this->data[$name] = $value;
     }
 
     public function jsonSerialize()
