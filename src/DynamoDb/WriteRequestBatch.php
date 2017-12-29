@@ -1,7 +1,6 @@
 <?php
 namespace Aws\DynamoDb;
 
-use Aws\AwsClientInterface;
 use Aws\CommandInterface;
 use Aws\CommandPool;
 use Aws\Exception\AwsException;

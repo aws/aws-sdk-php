@@ -5,7 +5,8 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\LruArrayCache;
 use Aws\Sts\StsClient;
-use GuzzleHttp\Promise;use PHPUnit\Framework\TestCase;
+use GuzzleHttp\Promise;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\Credentials\CredentialProvider
@@ -300,7 +301,7 @@ EOT;
         $creds = new Credentials('foo', 'bar');
         $f = function () use (&$called, $creds) {
             $called++;
-            return \GuzzleHttp\Promise\promise_for($creds);
+            return Promise\promise_for($creds);
         };
         $p = CredentialProvider::memoize($f);
         $this->assertSame($creds, $p()->wait());

@@ -24,7 +24,7 @@ class IdempotencyTokenMiddlewareTest extends TestCase
             $this->assertNotNull($command['ClientToken']);
             $regex = '/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/';
             $this->assertRegExp($regex, $command['ClientToken']);
-            return \GuzzleHttp\Promise\promise_for(new Result([]));
+            return Promise\promise_for(new Result([]));
         });
 
         $provider = ApiProvider::defaultProvider();
@@ -56,7 +56,7 @@ class IdempotencyTokenMiddlewareTest extends TestCase
                 '00000000-0000-4000-8000-000000000000',
                 $command['ClientToken']
             );
-            return \GuzzleHttp\Promise\promise_for(new Result([]));
+            return Promise\promise_for(new Result([]));
         });
 
         $provider = ApiProvider::defaultProvider();

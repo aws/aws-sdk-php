@@ -1,7 +1,6 @@
 <?php
 namespace Aws\S3;
 
-use Aws\Api\Parser\PayloadParserTrait;
 use Aws\CacheInterface;
 use Aws\CommandInterface;
 use Aws\LruArrayCache;

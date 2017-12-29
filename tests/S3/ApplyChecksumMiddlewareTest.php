@@ -3,7 +3,6 @@ namespace Aws\Test\S3;
 
 use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
-use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
 

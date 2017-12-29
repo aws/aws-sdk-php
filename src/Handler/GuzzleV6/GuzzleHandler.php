@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Handler\GuzzleV6;
 
-use Aws\Sdk;
 use Exception;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;

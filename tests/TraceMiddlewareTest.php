@@ -23,7 +23,7 @@ class TraceMiddlewareTest extends TestCase
         $logfn = function ($value) use (&$str) { $str .= $value; };
         $list = new HandlerList();
         $list->setHandler(function ($cmd, $req) {
-            return \GuzzleHttp\Promise\promise_for(new Result([
+            return Promise\promise_for(new Result([
                 'baz' => 'bar',
                 'bam' => 'qux'
             ]));
@@ -63,7 +63,7 @@ class TraceMiddlewareTest extends TestCase
         $logfn = function ($value) use (&$str) { $str .= $value; };
         $list = new HandlerList();
         $list->setHandler(function ($cmd, $req) {
-            return \GuzzleHttp\Promise\promise_for(new Result());
+            return Promise\promise_for(new Result());
         });
         $list->appendInit(function ($handler) {
             return function ($cmd, $req = null) use ($handler) {
@@ -95,7 +95,7 @@ class TraceMiddlewareTest extends TestCase
         $logfn = function ($value) use (&$str) { $str .= $value; };
         $list = new HandlerList();
         $list->setHandler(function ($cmd, $req) {
-            return \GuzzleHttp\Promise\promise_for(new Result());
+            return Promise\promise_for(new Result());
         });
         $list->appendInit(function ($handler) {
             return function ($cmd, $req = null) use ($handler) {
@@ -140,7 +140,7 @@ class TraceMiddlewareTest extends TestCase
         $list->setHandler(function ($cmd, $req) use ($key) {
             // ensure that http level debug information is filtered as well.
             fwrite($cmd['@http']['debug'], "Credential=$key/...\n");
-            return \GuzzleHttp\Promise\promise_for(new Result());
+            return Promise\promise_for(new Result());
         });
 
         $list->appendInit(function ($handler) {
@@ -202,7 +202,7 @@ class TraceMiddlewareTest extends TestCase
         $list = new HandlerList();
 
         $list->setHandler(function ($cmd, $req) {
-            return \GuzzleHttp\Promise\promise_for(new Result());
+            return Promise\promise_for(new Result());
         });
 
         $list->appendInit(function ($handler) {

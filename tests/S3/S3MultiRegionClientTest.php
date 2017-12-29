@@ -4,7 +4,6 @@ namespace Aws\Test\S3;
 use Aws\CacheInterface;
 use Aws\CommandInterface;
 use Aws\Endpoint\Partition;
-use Aws\Exception\AwsException;
 use Aws\LruArrayCache;
 use Aws\ResultInterface;
 use Aws\S3\S3ClientInterface;

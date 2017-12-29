@@ -1,10 +1,8 @@
 <?php
 namespace Aws;
 
-use Aws\AwsClientInterface;
 use Aws\Signature\SignatureV4;
 use Aws\Endpoint\EndpointProvider;
-use Aws\CommandInterface;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 

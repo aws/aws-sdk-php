@@ -2,8 +2,6 @@
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\Cipher\Cbc;
-use Aws\Crypto\Cipher\Ctr;
-use Aws\Crypto\Cipher\Ecb;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\CachingStream;
 

@@ -5,6 +5,7 @@ use Aws\Api\ApiProvider;
 use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Result;
+use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -259,7 +260,7 @@ class ResultPaginatorTest extends TestCase
 
         $handler = function (CommandInterface $cmd, RequestInterface $request) use (&$results, &$cmds) {
             $cmds[] = $cmd;
-            return \GuzzleHttp\Promise\promise_for(
+            return Promise\promise_for(
                 new Result(array_shift($results))
             );
         };
@@ -312,7 +313,7 @@ class ResultPaginatorTest extends TestCase
                 }
             }
 
-            return \GuzzleHttp\Promise\promise_for(new Result($result));
+            return Promise\promise_for(new Result($result));
         };
 
         $client->getHandlerList()->setHandler($handler);
@@ -399,7 +400,7 @@ class ResultPaginatorTest extends TestCase
                 $this->assertArrayHasKey($expectedKey, $cmd);
                 $this->assertSame($expectedValue, $cmd[$expectedKey]);
             }
-            return \GuzzleHttp\Promise\promise_for(
+            return Promise\promise_for(
                 new Result($currentWindow['response'])
             );
         };

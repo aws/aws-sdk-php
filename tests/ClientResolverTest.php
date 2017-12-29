@@ -13,8 +13,6 @@ use Aws\S3\S3Client;
 use Aws\HandlerList;
 use Aws\Sdk;
 use Aws\Result;
-use Aws\WrappedHttpHandler;
-use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
 

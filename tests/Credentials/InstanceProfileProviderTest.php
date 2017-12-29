@@ -5,7 +5,6 @@ use Aws\Credentials\InstanceProfileProvider;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
-use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
 
 /**

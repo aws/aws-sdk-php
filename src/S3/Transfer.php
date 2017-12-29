@@ -5,7 +5,6 @@ use Aws;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use GuzzleHttp\Promise;
-use GuzzleHttp\Psr7;
 use GuzzleHttp\Promise\PromisorInterface;
 use Iterator;
 

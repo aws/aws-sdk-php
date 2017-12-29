@@ -11,7 +11,6 @@ use Aws\Api\StructureShape;
 use Aws\Api\DocModel;
 use TokenReflection\Broker;
 use TokenReflection\ReflectionBase;
-use TokenReflection\ReflectionClass;
 use TokenReflection\ReflectionFunction;
 use TokenReflection\ReflectionMethod;
 
