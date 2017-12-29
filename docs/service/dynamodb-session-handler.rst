@@ -240,3 +240,32 @@ Best Practices
 #. Instead of using PHP's built-in session garbage collection triggers, schedule your garbage collection via a cron job,
    or another scheduling mechanism, to run during off-peak hours. Use the ``'batch_config'`` option to your advantage.
 
+
+Required IAM Permissions
+------------------------
+
+To use the DynamoDB session handler, your `configured credentials <https://docs.aws.amazon.com/aws-sdk-php/v3/guide/guide/credentials.html>`_
+must have permission to use the DynamoDB table that `you created in a previous step <https://docs.aws.amazon.com/aws-sdk-php/v3/guide/service/dynamodb-session-handler.html#create-a-table-for-storing-your-sessions>`_.
+The following IAM policy contains the minimum permissions that you need. To use this policy, replace the Resource value
+with the Amazon Resource Name (ARN) of the table that you created previously. For more information about creating and
+attaching IAM policies, see `Managing IAM Policies <https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage.html>`_
+in the *AWS Identity and Access Management User Guide*.
+
+.. code-block:: js
+
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Action": [
+            "dynamodb:GetItem",
+            "dynamodb:UpdateItem",
+            "dynamodb:DeleteItem",
+            "dynamodb:Scan",
+            "dynamodb:BatchWriteItem"
+          ],
+          "Effect": "Allow",
+          "Resource": "arn:aws:dynamodb:<region>:<account-id>:table/<table-name>"
+        }
+      ]
+    }
