@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Clean elses when have already returned something.
+* `Aws\` - Removed or adjusted unused imports.
+* `Aws\WorkSpaces` - Modify WorkSpaces have been updated with flexible storage and switching of hardware bundles feature. The following configurations have been added to ModifyWorkSpacesProperties: storage and compute. This update provides the capability to configure the storage of a WorkSpace. It also adds the capability of switching hardware bundle of a WorkSpace by specifying an eligible compute (Value, Standard, Performance, Power).
+
 ## 3.48.5 - 2017-12-22
 
 * `Aws\EC2` - This release fixes an issue with tags not showing in DescribeAddresses responses.
