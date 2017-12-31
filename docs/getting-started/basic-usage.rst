@@ -7,7 +7,6 @@ guide assumes that you have already :doc:`downloaded and installed the SDK
 <installation>` and retrieved your `AWS access keys
 <http://aws.amazon.com/developers/access-keys/>`_.
 
-
 Including the SDK
 -----------------
 
@@ -30,7 +29,6 @@ For the remainder of this guide, we will show examples that assume the Composer
 installation method. If you are using a different installation method, then you
 can refer back to this section to substitute in the proper ``require`` code.
 
-
 Usage Summary
 -------------
 
@@ -39,7 +37,6 @@ for the AWS service you want to interact with. Client objects have methods that
 correspond one-to-one with operations in the service's API. To execute a
 particular operation, you call its corresponding method, which either returns an
 array-like **Result** object on success, or throws an **Exception** on failure.
-
 
 Creating a client
 -----------------
@@ -73,7 +70,6 @@ provided to a client may vary based on which client you are creating. These
 custom client configuration options are described in the
 `API documentation <http://docs.aws.amazon.com/aws-sdk-php/latest/>`_ of each
 client.
-
 
 .. _sdk-class:
 
@@ -130,7 +126,6 @@ shallow-merged onto root level values).
     HTTP requests sent by the SDK client may cause inter-service promise
     orchestration to block.
 
-
 Executing service operations
 ----------------------------
 
@@ -171,7 +166,6 @@ of this array (and the structure of the result object) is defined for each
 operation in the SDK's API Documentation (e.g., see the API docs for
 `putObject operation <http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-s3-2006-03-01.html#putobject>`__).
 
-
 HTTP Handler Options
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -191,7 +185,6 @@ instantiate the client with the :ref:`"http" client option <config_http>`.
             'proxy' => 'http://192.168.16.1:10'
         ]
     ]);
-
 
 Asynchronous Requests
 ---------------------
@@ -231,7 +224,6 @@ that is resolved or rejected when the operation completes.
         ->otherwise(function ($reason) {
             echo 'Encountered an error: ' . $reason->getMessage();
         });
-
 
 .. _result_objects:
 
@@ -276,7 +268,6 @@ result.
     // Get the name of each bucket
     $results = $result->search('Buckets[].Name');
 
-
 Handling errors
 ---------------
 
@@ -311,7 +302,6 @@ about the failure, including the request-id, error code, and error type.
         echo $e->getAwsErrorType() . "\n";
         echo $e->getAwsErrorCode() . "\n";
     }
-
 
 Async Error Handling
 ~~~~~~~~~~~~~~~~~~~~

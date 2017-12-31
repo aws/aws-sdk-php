@@ -2,7 +2,6 @@
 Waiters
 =======
 
-
 Introduction
 ------------
 
@@ -24,7 +23,6 @@ the waiter is used to wait until the bucket exists.
 
 If the waiter has to poll the bucket too many times, it will throw a
 ``\RuntimeException`` exception.
-
 
 Waiter Configuration
 --------------------
@@ -87,7 +85,6 @@ before
                 }
             ]
         ]);
-
 
 .. _async_waiters:
 

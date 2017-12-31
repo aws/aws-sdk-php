@@ -10,7 +10,6 @@ a "pre-signed" request and encode it as a URL that an end-user's browser can
 retrieve. Additionally, you can limit a pre-signed request by specifying an
 expiration time.
 
-
 Creating a presigned request
 ----------------------------
 
@@ -36,7 +35,6 @@ The most common scenario is creating a pre-signed URL to GET an object:
 
     $request = $s3Client->createPresignedRequest($cmd, '+20 minutes');
 
-
 Creating a presigned URL
 ------------------------
 
@@ -57,7 +55,6 @@ returned request.
 
     // Get the actual presigned-url
     $presignedUrl = (string) $request->getUri();
-
 
 Getting the URL to an object
 ----------------------------

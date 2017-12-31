@@ -6,12 +6,10 @@ Aside from a baseline understanding of object-oriented programming in PHP
 (including PHP namespaces and autoloading), there are a few minimum system
 requirements to start using the AWS SDK for PHP.
 
-
 Minimum requirements
 --------------------
 
 * PHP >= 5.5.0
-
 
 Optional requirements
 ---------------------
@@ -20,7 +18,6 @@ Optional requirements
 
   You must have the OpenSSL PHP extension to sign private Amazon CloudFront
   URLs.
-
 
 .. _optimal-settings:
 
@@ -61,7 +58,6 @@ Optimal settings
   improve the autoloader's speed. You can generate a classmap autoloader by
   passing the ``-o`` or ``--optimize-autoloader`` option to Composer's
   `install command <http://getcomposer.org/doc/03-cli.md#install>`_.
-
 
 Compatibility test
 ------------------

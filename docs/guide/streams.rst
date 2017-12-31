@@ -25,7 +25,6 @@ can be satisfied with a string, a PHP stream resource, or an instance of
     call ``fclose`` on the underlying stream resource when they are destroyed by
     PHP's garbage collector, so you will not need to close the stream yourself.
 
-
 Stream Decorators
 -----------------
 
@@ -54,7 +53,6 @@ Reads from multiple streams, one after the other.
 
     echo $composed(); // abc, 123. Above all listen to me.
 
-
 CachingStream
 ~~~~~~~~~~~~~
 
@@ -82,7 +80,6 @@ then on disk.
     echo $stream->tell();
     // 0
 
-
 InflateStream
 ~~~~~~~~~~~~~
 
@@ -94,7 +91,6 @@ This stream decorator skips the first 10 bytes of the given stream to remove
 the gzip header, converts the provided stream to a PHP stream resource,
 then appends the zlib.inflate filter. The stream is then converted back
 to a Guzzle stream resource to be used as a Guzzle stream.
-
 
 LazyOpenStream
 ~~~~~~~~~~~~~~
@@ -113,7 +109,6 @@ take place on the stream.
 
     echo $stream->read(10);
     // The file is opened and read from only when needed.
-
 
 LimitStream
 ~~~~~~~~~~~
@@ -139,7 +134,6 @@ chunks (e.g. Amazon S3's multipart upload API).
     echo $stream->tell();
     // >>> 0
 
-
 NoSeekStream
 ~~~~~~~~~~~~
 
@@ -162,7 +156,6 @@ NoSeekStream wraps a stream and does not allow seeking.
     var_export($noSeek->read(3));
     // NULL
 
-
 PumpStream
 ~~~~~~~~~~
 
@@ -176,7 +169,6 @@ this value and return fewer or more bytes than requested. Any extra data
 returned by the provided callable is buffered internally until drained using
 the read() function of the PumpStream. The provided callable MUST return
 false when there is no more data to read.
-
 
 Implementing stream decorators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -240,5 +232,4 @@ This decorator could be added to any existing stream and used like so:
     $eofStream->seek(0);
     $eofStream->read(3);
     // echoes "EOF!"
-
 

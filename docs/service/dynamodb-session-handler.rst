@@ -240,7 +240,6 @@ Best Practices
 #. Instead of using PHP's built-in session garbage collection triggers, schedule your garbage collection via a cron job,
    or another scheduling mechanism, to run during off-peak hours. Use the ``'batch_config'`` option to your advantage.
 
-
 Required IAM Permissions
 ------------------------
 

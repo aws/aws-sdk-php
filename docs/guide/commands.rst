@@ -6,7 +6,6 @@ The SDK uses the `command pattern <http://en.wikipedia.org/wiki/Command_pattern>
 to encapsulate the parameters and handler that will be used to transfer an HTTP
 request at a later point in time.
 
-
 Implicit use of commands
 ------------------------
 
@@ -46,7 +45,6 @@ The following examples are functionally equivalent:
     $command = $s3Client->getCommand('PutObject', $params);
     $result = $s3Client->execute($command);
 
-
 Command parameters
 ------------------
 
@@ -83,7 +81,6 @@ Set to ``0`` to disable retries.
 NB: If you have disabled retries on a client, you cannot selectively enable them
 on individual commands passed to that client.
 
-
 Creating command objects
 ------------------------
 
@@ -106,7 +103,6 @@ to modify the command object before executing the command.
     ]);
     $command['MaxKeys'] = 100;
     $result = $s3Client->execute($command);
-
 
 Command HandlerList
 -------------------
@@ -168,7 +164,6 @@ middleware, which functions as an observer in the handler list.
 
     // Now transfer the command and see the var_dump data.
     $s3Client->execute($command);
-
 
 .. _command_pool:
 
@@ -299,7 +294,6 @@ objects, so we will need to map over the ``SplFileInfo`` objects to return
 
     // Or you can chain then calls off of the pool
     $promise->then(function() { echo "Done\n"; });
-
 
 CommandPool configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -2,7 +2,6 @@
 FAQ
 ===
 
-
 What methods are available on a client?
 ---------------------------------------
 
@@ -11,7 +10,6 @@ The AWS SDK for PHP utilizes service descriptions and dynamic
 to execute API operations. You can find a full list of methods available for a
 web service client in the `API documentation <http://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html>`_
 of the client.
-
 
 What do I do about a cURL SSL certificate error?
 ------------------------------------------------
@@ -25,7 +23,6 @@ The SDK will by default use the CA bundle that is configured when PHP is
 compiled. You can change the default CA bundle used by PHP by modifying the
 ``openssl.cafile`` PHP ini configuration setting to be set to the path a CA
 file on disk.
-
 
 What API versions are available for a client?
 ---------------------------------------------
@@ -46,7 +43,6 @@ SDK for API models).
     pulling in a new minor version of the SDK that includes an API update could
     break your production application.
 
-
 What regions versions are available for a client?
 -------------------------------------------------
 
@@ -62,7 +58,6 @@ http://docs.aws.amazon.com/general/latest/gr/rande.html
         'version' => '2006-03-01'
     ]);
 
-
 Why can't I upload or download files greater than 2GB?
 ------------------------------------------------------
 
@@ -76,7 +71,6 @@ The recommended solution is to use a `64-bit Linux stack <http://aws.amazon.com/
 such as the 64-bit Amazon Linux AMI with the latest version of PHP installed.
 
 For more information, please see: `PHP filesize: Return values <http://docs.php.net/manual/en/function.filesize.php#refsect1-function.filesize-returnvalues>`_.
-
 
 How can I see what data is sent over the wire?
 ----------------------------------------------
@@ -95,7 +89,6 @@ This includes the data that is sent and received over the wire.
         'debug'   => true
     ]);
 
-
 How can I set arbitrary headers on a request?
 ---------------------------------------------
 
@@ -106,7 +99,6 @@ middleware to the ``Aws\HandlerList`` of an ``Aws\CommandInterface`` or
 ``Aws\Middleware::mapRequest`` helper method.
 
 See :ref:`map-request` for more information.
-
 
 How can I sign an arbitrary request?
 ------------------------------------
@@ -129,7 +121,6 @@ parameters to a command before it is sent, essentially adding default options.
 This example uses the ``Aws\Middleware::mapCommand`` helper method.
 
 See :ref:`map-command` for more information.
-
 
 What is a CredentialsException?
 -------------------------------
@@ -155,14 +146,12 @@ credentials to the SDK.
 
 For more information, see :doc:`/guide/credentials`.
 
-
 Does the SDK work on HHVM?
 --------------------------
 
 The SDK does not currently run on HHVM, and won't be able to until the
 `issue with the yield semantics in HHVM <https://github.com/facebook/hhvm/issues/6807>`_
 is resolved.
-
 
 How do I disable SSL?
 ---------------------
@@ -189,7 +178,6 @@ for a list of regions, endpoints, and the supported schemes.
     consider the security implications and the potential for eavesdropping over
     the network.
 
-
 What do I do about a "Parse error"?
 -----------------------------------
 
@@ -199,7 +187,6 @@ was written for a different version of PHP.
 
 If you encounter a parsing error, please check your system and make sure it
 fulfills the SDK's :doc:`/getting-started/requirements`.
-
 
 Why is the S3 client decompressing gzipped files?
 -------------------------------------------------
@@ -212,7 +199,6 @@ recommended that you disable content decoding at the S3 client level.
 
 See :ref:`http_decode_content` for an example of how to disable automatic
 content decoding.
-
 
 How do I disable body signing in S3?
 ------------------------------------
