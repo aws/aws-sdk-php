@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Docs` - Clean up extra lines.
+* `Aws\RDS` - Documentation updates for rds
+
 ## 3.48.6 - 2017-12-29
 
 * `Aws\` - Clean elses when have already returned something.
