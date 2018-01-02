@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.7 - 2018-01-02
 
 * `Aws\Docs` - Clean up extra lines.
 * `Aws\RDS` - Documentation updates for rds
