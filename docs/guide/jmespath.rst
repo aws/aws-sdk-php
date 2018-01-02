@@ -18,7 +18,6 @@ JMESPath is supported in the `AWS CLI <http://aws.amazon.com/cli/>`_.
 Expressions you write for CLI output are 100% compatible with expressions
 written for the AWS SDK for PHP.
 
-
 Extracting data from results
 ----------------------------
 
@@ -233,7 +232,6 @@ filter projection.
 .. code-block:: php
 
     $data = $result->search('Volumes[?starts_with(AvailabilityZone, 'us-') == `true`]');
-
 
 Extracting data from paginators
 -------------------------------

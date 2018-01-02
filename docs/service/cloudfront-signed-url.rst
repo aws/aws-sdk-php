@@ -2,7 +2,6 @@
 Amazon CloudFront Signed URL
 ============================
 
-
 Signing CloudFront URLs for Private Distributions
 -------------------------------------------------
 
@@ -104,7 +103,6 @@ but will require different client-side code.
         </script>
     </body>
     </html>
-
 
 Signing CloudFront Cookies for Private Distributions
 ----------------------------------------------------

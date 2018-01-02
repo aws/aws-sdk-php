@@ -32,7 +32,6 @@ bucket name followed by a forward slash and an optional object key or prefix:
     this permission level, it is recommended that you use S3 client operations
     directly.
 
-
 Downloading data
 ----------------
 
@@ -99,7 +98,6 @@ cached data exceed 2MB, the data in the temp stream will transfer from memory
 to disk. Keep this in mind when downloading large files from Amazon S3 using
 the ``seekable`` stream context setting.
 
-
 Uploading data
 --------------
 
@@ -148,7 +146,6 @@ a A write only stream. If the file already exists, it will be downloaded to a
   the stream will be appended to any previously uploaded data.
 x A write only stream. An error is raised if the file does not already exist.
 = =============================================================================
-
 
 Other object functions
 ----------------------
@@ -212,7 +209,6 @@ rename()        Rename an object by copying the object then deleting the
 
 =============== ================================================================
 
-
 .. note::
 
     While ``copy`` will generally work with the S3 stream wrapper, some errors
@@ -220,7 +216,6 @@ rename()        Rename an object by copying the object then deleting the
     in PHP. It is recommended that you use an instance of `Aws\S3\ObjectCopier
     <http://docs.aws.amazon.com/aws-sdk-php/v3/api/class-Aws.S3.ObjectCopier.html>`_
     instead.
-
 
 Working with buckets
 --------------------
@@ -256,7 +251,6 @@ You can delete buckets using the ``rmdir()`` function.
 .. note::
 
     A bucket can only be deleted if it is empty.
-
 
 Listing the contents of a bucket
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -307,7 +301,6 @@ function.
     foreach ($iter as $filename) {
         echo $filename . "\n";
     }
-
 
 Stream context options
 ----------------------

@@ -5,7 +5,6 @@ Installation
 There are 3 supported methods of installing the AWS SDK for PHP. The
 recommended way to install the SDK is through `Composer <http://getcomposer.org>`_.
 
-
 Installing via Composer
 -----------------------
 
@@ -36,7 +35,6 @@ into your project.
 You can find out more on how to install Composer, configure autoloading, and
 other best-practices for defining dependencies at
 `getcomposer.org <http://getcomposer.org>`_.
-
 
 Installing via Phar
 -------------------

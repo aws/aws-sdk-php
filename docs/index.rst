@@ -33,14 +33,12 @@ External links: `API Docs <http://docs.aws.amazon.com/aws-sdk-php/v3/api/>`_
     Are you migrating your project's code from using Version 2 of the SDK to
     Version 3? If so, you should read our :doc:`guide/migration`.
 
-
 Getting Started
 ---------------
 
 1. :doc:`getting-started/requirements`
 2. :doc:`getting-started/installation`
 3. :doc:`getting-started/basic-usage`
-
 
 SDK Guides
 ----------
@@ -55,7 +53,6 @@ SDK Guides
 * :doc:`guide/waiters`
 * :doc:`guide/jmespath`
 * :doc:`guide/migration`
-
 
 Service-Specific Features
 -------------------------
@@ -87,7 +84,6 @@ Reference
 * :doc:`glossary`
 * `Contributing to the SDK <https://github.com/aws/aws-sdk-php/blob/master/CONTRIBUTING.md>`_
 * `Guzzle Documentation <http://guzzlephp.org>`_
-
 
 .. _supported-services:
 

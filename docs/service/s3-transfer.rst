@@ -5,7 +5,6 @@ Amazon S3 Transfer Manager
 The PHP SDK Amazon S3 transfer manager is used to upload entire directories to
 an Amazon S3 bucket and download entire buckets to a local directory.
 
-
 Uploading a local directory to S3
 ---------------------------------
 
@@ -51,7 +50,6 @@ local files on disk to the ``bucket`` bucket and stores the files under the
     $manager = new \Aws\S3\Transfer($client, $source, $dest);
     $manager->transfer();
 
-
 Downloading an Amazon S3 bucket
 -------------------------------
 
@@ -87,7 +85,6 @@ only files stored under the "/foo" key prefix of the given bucket.
     $manager = new \Aws\S3\Transfer($client, $source, $dest);
     $manager->transfer();
 
-
 Configuration
 -------------
 
@@ -120,7 +117,6 @@ The ``Transfer`` object constructor accepts the following arguments:
 ``$options``
     An associative array of :ref:`transfer options <s3_transfer_options>`.
 
-
 .. _s3_transfer_options:
 
 Transfer Options
@@ -151,7 +147,6 @@ Transfer Options
     (bool) Set to ``true`` to print out debug information for transfers. Set to
     an ``fopen()`` resource to write to a specific stream rather than writing
     to STDOUT.
-
 
 Async transfers
 ---------------

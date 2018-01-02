@@ -6,7 +6,6 @@ The AWS SDK for PHP uses **promises** to allow for asynchronous workflows, and
 this asynchronicity allows HTTP requests to be sent concurrently. The promise
 specification used by the SDK is `Promises/A+ <https://promisesaplus.com/>`_.
 
-
 What is a promise?
 ------------------
 
@@ -26,7 +25,6 @@ loop.
     single thread in which non-blocking calls are used to transfer one or more
     HTTP requests while reacting to state changes (e.g., fulfilling or
     rejecting promises).
-
 
 Promises in the SDK
 -------------------
@@ -85,7 +83,6 @@ rejected (meaning it failed).
         }
     );
 
-
 Executing commands concurrently
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -122,7 +119,6 @@ concurrently.
 
     The :ref:`CommandPool <command_pool>` provide a more powerful
     mechanism for executing multiple API operations concurrently.
-
 
 Chaining promises
 -----------------
@@ -169,7 +165,6 @@ provided callbacks.
     promise chains a value, then you must return a value in the callback
     function.
 
-
 Rejection forwarding
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -179,7 +174,6 @@ exception and the next promises in the chain will be rejected with the
 exception. If you return a value successfully from an ``$onRejected`` callback,
 then the next promises in the promise chain will be fulfilled with the return
 value from the ``$onRejected`` callback.
-
 
 Waiting on promises
 -------------------
@@ -207,7 +201,6 @@ the promise is rejected with the exception and the exception is thrown.
         // handle the error.
     }
 
-
 Calling wait on a promise that has been fulfilled will not trigger the wait
 function. It will simply return the previously delivered value.
 
@@ -229,7 +222,6 @@ can be obtained by calling the ``getReason`` method of the exception.
     reason delivered to a ``then`` method is different due to the addition of
     a custom middleware that alters a rejection reason.
 
-
 Cancelling promises
 -------------------
 
@@ -238,7 +230,6 @@ promise has already been resolved, then calling ``cancel()`` will have no
 effect. Cancelling a promise will cancel the promise and any promises that are
 awaiting delivery from the promise. A cancelled promise is rejected with a
 ``GuzzleHttp\Promise\RejectionException``.
-
 
 Combining promises
 ------------------
@@ -249,7 +240,6 @@ can be used to combine promises.
 
 The API documentation for all of the promise collection functions can be found
 at http://docs.aws.amazon.com/aws-sdk-php/v3/api/namespace-GuzzleHttp.Promise.html.
-
 
 each and each_limit
 ~~~~~~~~~~~~~~~~~~~
@@ -289,7 +279,6 @@ commands of different clients concurrently using a fixed pool size.
 
     // Waiting on an EachPromise will wait on the entire task queue to complete.
     $promise->wait();
-
 
 Promise coroutines
 ~~~~~~~~~~~~~~~~~~

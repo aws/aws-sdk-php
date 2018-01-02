@@ -93,7 +93,6 @@ Additional configuration options are passed through for decryption.
     receive thrown ``InvalidArgumentException`` objects if your
     ``'@CipherOptions'`` are not correctly configured.
 
-
 Cipher Configuration
 --------------------
 
