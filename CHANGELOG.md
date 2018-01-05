@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.8 - 2018-01-05
 
 * `Aws\Inspector` - Added 2 new attributes to the DescribeAssessmentTemplate response, indicating the total number of assessment runs and last assessment run ARN (if present.)
 * `Aws\SSM` - Documentation updates for ssm
