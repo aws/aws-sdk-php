@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Inspector` - Added 2 new attributes to the DescribeAssessmentTemplate response, indicating the total number of assessment runs and last assessment run ARN (if present.)
+* `Aws\SSM` - Documentation updates for ssm
+* `Aws\Snowball` - Documentation updates for snowball
+
 ## 3.48.7 - 2018-01-02
 
 * `Aws\Docs` - Clean up extra lines.
