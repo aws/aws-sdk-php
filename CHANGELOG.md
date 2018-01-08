@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.9 - 2018-01-08
 
 * `Aws\ApplicationDiscoveryService` - Documentation updates for AWS Application Discovery Service.
 * `Aws\CodeDeploy` - The AWS CodeDeploy API was updated to support DeleteGitHubAccountToken, a new method that deletes a GitHub account connection.
