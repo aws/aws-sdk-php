@@ -17,6 +17,7 @@
     "DeleteApplication": "<p>Deletes an application.</p>",
     "DeleteDeploymentConfig": "<p>Deletes a deployment configuration.</p> <note> <p>A deployment configuration cannot be deleted if it is currently in use. Predefined configurations cannot be deleted.</p> </note>",
     "DeleteDeploymentGroup": "<p>Deletes a deployment group.</p>",
+    "DeleteGitHubAccountToken": "<p>Deletes a GitHub account connection.</p>",
     "DeregisterOnPremisesInstance": "<p>Deregisters an on-premises instance.</p>",
     "GetApplication": "<p>Gets information about an application.</p>",
     "GetApplicationRevision": "<p>Gets information about an application revision.</p>",
@@ -408,6 +409,16 @@
     },
     "DeleteDeploymentGroupOutput": {
       "base": "<p>Represents the output of a DeleteDeploymentGroup operation.</p>",
+      "refs": {
+      }
+    },
+    "DeleteGitHubAccountTokenInput": {
+      "base": "<p>Represents the input of a DeleteGitHubAccount operation.</p>",
+      "refs": {
+      }
+    },
+    "DeleteGitHubAccountTokenOutput": {
+      "base": "<p>Represents the output of a DeleteGitHubAccountToken operation.</p>",
       "refs": {
       }
     },
@@ -877,6 +888,8 @@
       "base": null,
       "refs": {
         "ApplicationInfo$gitHubAccountName": "<p>The name for a connection to a GitHub account.</p>",
+        "DeleteGitHubAccountTokenInput$tokenName": "<p>The name of the GitHub account connection to delete.</p>",
+        "DeleteGitHubAccountTokenOutput$tokenName": "<p>The name of the GitHub account connection that was deleted.</p>",
         "GitHubAccountTokenNameList$member": null
       }
     },
@@ -884,6 +897,11 @@
       "base": null,
       "refs": {
         "ListGitHubAccountTokenNamesOutput$tokenNameList": "<p>A list of names of connections to GitHub accounts.</p>"
+      }
+    },
+    "GitHubAccountTokenNameRequiredException": {
+      "base": "<p>The call is missing a required GitHub account connection name.</p>",
+      "refs": {
       }
     },
     "GitHubLocation": {

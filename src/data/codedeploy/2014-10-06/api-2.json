@@ -23,6 +23,7 @@
       "input":{"shape":"AddTagsToOnPremisesInstancesInput"},
       "errors":[
         {"shape":"InstanceNameRequiredException"},
+        {"shape":"InvalidInstanceNameException"},
         {"shape":"TagRequiredException"},
         {"shape":"InvalidTagException"},
         {"shape":"TagLimitExceededException"},
@@ -285,6 +286,22 @@
         {"shape":"DeploymentGroupNameRequiredException"},
         {"shape":"InvalidDeploymentGroupNameException"},
         {"shape":"InvalidRoleException"}
+      ]
+    },
+    "DeleteGitHubAccountToken":{
+      "name":"DeleteGitHubAccountToken",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteGitHubAccountTokenInput"},
+      "output":{"shape":"DeleteGitHubAccountTokenOutput"},
+      "errors":[
+        {"shape":"GitHubAccountTokenNameRequiredException"},
+        {"shape":"GitHubAccountTokenDoesNotExistException"},
+        {"shape":"InvalidGitHubAccountTokenNameException"},
+        {"shape":"ResourceValidationException"},
+        {"shape":"OperationNotSupportedException"}
       ]
     },
     "DeregisterOnPremisesInstance":{
@@ -596,6 +613,7 @@
       "input":{"shape":"RemoveTagsFromOnPremisesInstancesInput"},
       "errors":[
         {"shape":"InstanceNameRequiredException"},
+        {"shape":"InvalidInstanceNameException"},
         {"shape":"TagRequiredException"},
         {"shape":"InvalidTagException"},
         {"shape":"TagLimitExceededException"},
@@ -982,10 +1000,7 @@
     },
     "CreateDeploymentConfigInput":{
       "type":"structure",
-      "required":[
-        "deploymentConfigName",
-        "minimumHealthyHosts"
-      ],
+      "required":["deploymentConfigName"],
       "members":{
         "deploymentConfigName":{"shape":"DeploymentConfigName"},
         "minimumHealthyHosts":{"shape":"MinimumHealthyHosts"},
@@ -1081,6 +1096,18 @@
       "type":"structure",
       "members":{
         "hooksNotCleanedUp":{"shape":"AutoScalingGroupList"}
+      }
+    },
+    "DeleteGitHubAccountTokenInput":{
+      "type":"structure",
+      "members":{
+        "tokenName":{"shape":"GitHubAccountTokenName"}
+      }
+    },
+    "DeleteGitHubAccountTokenOutput":{
+      "type":"structure",
+      "members":{
+        "tokenName":{"shape":"GitHubAccountTokenName"}
       }
     },
     "DeploymentAlreadyCompletedException":{
@@ -1586,6 +1613,12 @@
     "GitHubAccountTokenNameList":{
       "type":"list",
       "member":{"shape":"GitHubAccountTokenName"}
+    },
+    "GitHubAccountTokenNameRequiredException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
     },
     "GitHubLocation":{
       "type":"structure",

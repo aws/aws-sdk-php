@@ -36,6 +36,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteDeploymentConfigAsync(array $args = [])
  * @method \Aws\Result deleteDeploymentGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDeploymentGroupAsync(array $args = [])
+ * @method \Aws\Result deleteGitHubAccountToken(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteGitHubAccountTokenAsync(array $args = [])
  * @method \Aws\Result deregisterOnPremisesInstance(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deregisterOnPremisesInstanceAsync(array $args = [])
  * @method \Aws\Result getApplication(array $args = [])

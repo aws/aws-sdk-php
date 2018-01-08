@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationDiscoveryService` - Documentation updates for AWS Application Discovery Service.
+* `Aws\CodeDeploy` - The AWS CodeDeploy API was updated to support DeleteGitHubAccountToken, a new method that deletes a GitHub account connection.
+* `Aws\Route53` - This release adds an exception to the CreateTrafficPolicyVersion API operation.
+
 ## 3.48.8 - 2018-01-05
 
 * `Aws\Inspector` - Added 2 new attributes to the DescribeAssessmentTemplate response, indicating the total number of assessment runs and last assessment run ARN (if present.)
