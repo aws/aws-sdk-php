@@ -2,7 +2,9 @@
 namespace Aws;
 
 use Aws\Exception\AwsException;
+use GuzzleHttp\Exception\ConnectException;
 use Psr\Http\Message\RequestInterface;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise;
 
@@ -28,6 +30,10 @@ class RetryMiddleware
         'RequestThrottled'                       => true,
         'BandwidthLimitExceeded'                 => true,
         'RequestThrottledException'              => true,
+    ];
+
+    private static $retryCurlErrors = [
+        CURLE_RECV_ERROR => true,
     ];
 
     private $decider;
@@ -56,13 +62,14 @@ class RetryMiddleware
      */
     public static function createDefaultDecider($maxRetries = 3)
     {
+        $guzzleMajorVersion = (string) ClientInterface::VERSION[0];
         return function (
             $retries,
             CommandInterface $command,
             RequestInterface $request,
             ResultInterface $result = null,
             $error = null
-        ) use ($maxRetries) {
+        ) use ($maxRetries, $guzzleMajorVersion) {
             // Allow command-level options to override this value
             $maxRetries = null !== $command['@retries'] ?
                 $command['@retries']
@@ -80,6 +87,18 @@ class RetryMiddleware
                 return true;
             } elseif (isset(self::$retryStatusCodes[$error->getStatusCode()])) {
                 return true;
+            } elseif (($previous = $error->getPrevious())
+                && $previous instanceof ConnectException) {
+                if ($guzzleMajorVersion === '6') {
+                    return isset(self::$retryCurlErrors[$previous->getHandlerContext()['errno']]);
+                } elseif ($guzzleMajorVersion === '5') {
+                    $message = $previous->getMessage();
+                    foreach (array_keys(self::$retryCurlErrors) as $curlError) {
+                        if (strpos($message, 'cURL error ' . $curlError . ':') === 0) {
+                            return true;
+                        }
+                    }
+                }
             }
 
             return false;
