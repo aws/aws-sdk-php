@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.11 - 2018-01-09
 
 * `Aws\KMS` - Documentation updates for AWS KMS
 
