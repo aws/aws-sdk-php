@@ -88,14 +88,15 @@ class RetryMiddlewareTest extends TestCase
         $decider = RetryMiddleware::createDefaultDecider();
         $command = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');
-        if ((string) ClientInterface::VERSION[0] === '6') {
+        $version = (string) ClientInterface::VERSION;
+        if ($version[0] === '6') {
             $previous = new ConnectException(
                 'test',
                 $request,
                 null,
                 ['errno' => CURLE_RECV_ERROR]
             );
-        } elseif ((string) ClientInterface::VERSION[0] === '5') {
+        } elseif ($version[0] === '5') {
             $previous = new ConnectException(
                 'cURL error ' . CURLE_RECV_ERROR . ': test',
                 new \GuzzleHttp\Message\Request('GET', 'http://www.example.com')

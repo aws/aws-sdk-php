@@ -62,14 +62,14 @@ class RetryMiddleware
      */
     public static function createDefaultDecider($maxRetries = 3)
     {
-        $guzzleMajorVersion = (string) ClientInterface::VERSION[0];
+        $version = (string) ClientInterface::VERSION;
         return function (
             $retries,
             CommandInterface $command,
             RequestInterface $request,
             ResultInterface $result = null,
             $error = null
-        ) use ($maxRetries, $guzzleMajorVersion) {
+        ) use ($maxRetries, $version) {
             // Allow command-level options to override this value
             $maxRetries = null !== $command['@retries'] ?
                 $command['@retries']
@@ -89,9 +89,9 @@ class RetryMiddleware
                 return true;
             } elseif (($previous = $error->getPrevious())
                 && $previous instanceof ConnectException) {
-                if ($guzzleMajorVersion === '6') {
+                if ($version[0] === '6') {
                     return isset(self::$retryCurlErrors[$previous->getHandlerContext()['errno']]);
-                } elseif ($guzzleMajorVersion === '5') {
+                } elseif ($version[0] === '5') {
                     $message = $previous->getMessage();
                     foreach (array_keys(self::$retryCurlErrors) as $curlError) {
                         if (strpos($message, 'cURL error ' . $curlError . ':') === 0) {
