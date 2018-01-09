@@ -7,6 +7,8 @@ use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\RetryMiddleware;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -79,6 +81,33 @@ class RetryMiddlewareTest extends TestCase
             $err = new \Error('e');
             $this->assertFalse($decider(0, $command, $request, null, $err));
         }
+    }
+
+    public function testDeciderRetriesWhenCurlErrorCodeMatches()
+    {
+        $decider = RetryMiddleware::createDefaultDecider();
+        $command = new Command('foo');
+        $request = new Request('GET', 'http://www.example.com');
+        if ((string) ClientInterface::VERSION[0] === '6') {
+            $previous = new ConnectException(
+                'test',
+                $request,
+                null,
+                ['errno' => CURLE_RECV_ERROR]
+            );
+        } elseif ((string) ClientInterface::VERSION[0] === '5') {
+            $previous = new ConnectException(
+                'cURL error ' . CURLE_RECV_ERROR . ': test',
+                new \GuzzleHttp\Message\Request('GET', 'http://www.example.com')
+            );
+        }
+        $err = new AwsException(
+            'e',
+            $command,
+            ['connection_error' => false],
+            $previous
+        );
+        $this->assertTrue($decider(0, $command, $request, null, $err));
     }
 
     public function awsErrorCodeProvider()
