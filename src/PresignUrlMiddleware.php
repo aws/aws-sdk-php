@@ -44,7 +44,7 @@ class PresignUrlMiddleware
         array $options = []
     ) {
         return function (callable $handler) use ($endpointProvider, $client, $options) {
-            $f = new PreSignUrlMiddleware($options, $endpointProvider, $client, $handler);
+            $f = new PresignUrlMiddleware($options, $endpointProvider, $client, $handler);
             return $f;
         };
     }
