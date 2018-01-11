@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.12 - 2018-01-11
 
 * `Aws\Aws` - Fix misspelling class PresignUrlMiddleware.
 * `Aws\ElasticLoadBalancing` - Added OperationNotPermittedException to indicate that you cannot create a classic load balancer while deleting the Elastic Load Balancing service-linked role.
