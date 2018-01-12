@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - Support is added to generate ETL scripts in Scala which can now be run by AWS Glue ETL jobs. In addition, the trigger API now supports firing when any conditions are met (in addition to all conditions). Also, jobs can be triggered based on a "failed" or "stopped" job run (in addition to a "succeeded" job run). 
+
 ## 3.48.12 - 2018-01-11
 
 * `Aws\Aws` - Fix misspelling class PresignUrlMiddleware.
