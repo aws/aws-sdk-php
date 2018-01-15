@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.48.14 - 2018-01-15
 
 * `Aws\Lambda` - Support for creating Lambda Functions using 'dotnetcore2.0' and 'go1.x'. 
 
