@@ -62,14 +62,13 @@ class RetryMiddleware
      */
     public static function createDefaultDecider($maxRetries = 3)
     {
-        $version = (string) ClientInterface::VERSION;
         return function (
             $retries,
             CommandInterface $command,
             RequestInterface $request,
             ResultInterface $result = null,
             $error = null
-        ) use ($maxRetries, $version) {
+        ) use ($maxRetries) {
             // Allow command-level options to override this value
             $maxRetries = null !== $command['@retries'] ?
                 $command['@retries']
@@ -87,16 +86,18 @@ class RetryMiddleware
                 return true;
             } elseif (isset(self::$retryStatusCodes[$error->getStatusCode()])) {
                 return true;
-            } elseif (($previous = $error->getPrevious())
-                && $previous instanceof ConnectException) {
-                if ($version[0] === '6') {
+            } elseif (
+                ($previous = $error->getPrevious())
+                && $previous instanceof ConnectException
+            ) {
+                if (method_exists($previous, 'getHandlerContext')) {
                     return isset(self::$retryCurlErrors[$previous->getHandlerContext()['errno']]);
-                } elseif ($version[0] === '5') {
-                    $message = $previous->getMessage();
-                    foreach (array_keys(self::$retryCurlErrors) as $curlError) {
-                        if (strpos($message, 'cURL error ' . $curlError . ':') === 0) {
-                            return true;
-                        }
+                }
+
+                $message = $previous->getMessage();
+                foreach (array_keys(self::$retryCurlErrors) as $curlError) {
+                    if (strpos($message, 'cURL error ' . $curlError . ':') === 0) {
+                        return true;
                     }
                 }
             }
