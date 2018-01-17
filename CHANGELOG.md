@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScalingPlans` - Documentation updates for autoscaling-plans
+* `Aws\EC2` - Documentation updates for EC2
+
 ## 3.49.0 - 2018-01-16
 
 * `Aws\ApplicationAutoScaling` - Application Auto Scaling is adding support for Target Tracking Scaling for ECS services.
