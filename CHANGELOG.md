@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.49.1 - 2018-01-17
 
 * `Aws\AutoScalingPlans` - Documentation updates for autoscaling-plans
 * `Aws\EC2` - Documentation updates for EC2
