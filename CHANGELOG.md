@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.50.0 - 2018-01-18
 
 * `Aws\Rds` - Fixes a bug where DestinationRegion was not being added to automatically generated PreSignedUrl parameters for RDS operations.
 * `Aws\S3` - Updates the type of the S3 Size object to long (from integer) to properly reflect objects over PHP_INT_MAX in size. This will affect ListObjects, ListObjectsV2, ListObjectVersions, and ListParts. This bug fix may be a breaking change for customers who relied on the previously PHP_INT_MAX capped behavior or on the type of the field. You may see objects at their full size, as a string, if they are over PHP_INT_MAX in size.
