@@ -333,6 +333,11 @@ credentials from Amazon EC2 instance profiles.
         'credentials' => $memoizedProvider
     ]);
 
+.. note::
+
+    This attempt to load from Amazon EC2 instance profiles can be disabled by
+    setting the ``AWS_EC2_METADATA_DISABLED`` environment variable to ``true``.
+
 ecsCredentials provider
 ~~~~~~~~~~~~~~~~~~~~~~
 

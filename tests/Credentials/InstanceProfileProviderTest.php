@@ -2,6 +2,7 @@
 namespace Aws\Test\Credentials;
 
 use Aws\Credentials\InstanceProfileProvider;
+use Aws\Exception\CredentialsException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
@@ -125,5 +126,26 @@ class InstanceProfileProviderTest extends TestCase
     public function testDoesNotRequireConfig()
     {
         new InstanceProfileProvider();
+    }
+
+    public function testEnvDisableFlag()
+    {
+        $flag = getenv(InstanceProfileProvider::ENV_DISABLE);
+
+        try {
+            putenv(InstanceProfileProvider::ENV_DISABLE . '=true');
+            $t = time() + 1000;
+            $this->getTestCreds(
+                $this->getCredentialArray('foo', 'baz', null, "@{$t}")
+            )->wait();
+            $this->fail('Did not throw expected CredentialException.');
+        } catch (CredentialsException $e) {
+            if (strstr($e->getMessage(), 'EC2 metadata server access disabled') === false) {
+                $this->fail('Did not throw expected CredentialException when '
+                    . 'provider is disabled.');
+            }
+        } finally {
+            putenv(InstanceProfileProvider::ENV_DISABLE . '=' . $flag);
+        }
     }
 }
