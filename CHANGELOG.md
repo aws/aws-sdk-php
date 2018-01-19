@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.51.0 - 2018-01-19
 
 * `Aws\Credentials` - Add support for an AWS_EC2_METADATA_DISABLED environment variable to short-circuit requests for credentials via the InstanceProfileProvider.
 * `Aws\Glue` - New AWS Glue DataCatalog APIs to manage table versions and a new feature to skip archiving of the old table version when updating table.
