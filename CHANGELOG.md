@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Add support for an AWS_EC2_METADATA_DISABLED environment variable to short-circuit requests for credentials via the InstanceProfileProvider.
+* `Aws\Glue` - New AWS Glue DataCatalog APIs to manage table versions and a new feature to skip archiving of the old table version when updating table.
+* `Aws\TranscribeService` - Amazon Transcribe Public Preview Release
+
 ## 3.50.0 - 2018-01-18
 
 * `Aws\Rds` - Fixes a bug where DestinationRegion was not being added to automatically generated PreSignedUrl parameters for RDS operations.
