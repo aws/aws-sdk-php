@@ -124,7 +124,7 @@ class XmlParser
 
     private function parse_boolean(Shape $shape, $value)
     {
-        return $value == 'true' ? true : false;
+        return $value == 'true';
     }
 
     private function parse_timestamp(Shape $shape, $value)
