@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Retry on a set of CURLE_*_ERROR based failures. Currently, only CURLE_RECV_ERROR (errno 56) is retried.
+* `Aws\Api\Parser` - Simplify return.
+* `Aws\Budgets` - Add additional costTypes: IncludeDiscount, UseAmortized, to support finer control for different charges included in a cost budget.
+
 ## 3.51.0 - 2018-01-19
 
 * `Aws\Credentials` - Add support for an AWS_EC2_METADATA_DISABLED environment variable to short-circuit requests for credentials via the InstanceProfileProvider.
