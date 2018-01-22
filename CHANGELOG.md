@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.0 - 2018-01-22
 
 * `Aws\` - Retry on a set of CURLE_*_ERROR based failures. Currently, only CURLE_RECV_ERROR (errno 56) is retried.
 * `Aws\Api\Parser` - Simplify return.
