@@ -1,5 +1,5 @@
 # language: en
-@smoke @cognitoidentity
+@smoke @cognitoidentity @cognito-identity
 Feature: Amazon Cognito Idenity
 
   Scenario: Making a request

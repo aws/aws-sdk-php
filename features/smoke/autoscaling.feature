@@ -1,5 +1,5 @@
 # language: en
-@autoscaling
+@smoke @autoscaling
 Feature: Auto Scaling
 
   Scenario: Making a request
