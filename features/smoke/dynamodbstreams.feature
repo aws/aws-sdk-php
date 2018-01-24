@@ -1,5 +1,5 @@
 # language: en
-@smoke @dynamodbstreams
+@smoke @dynamodbstreams @streams.dynamodb
 Feature: Amazon DynamoDB Streams
 
   Scenario: Making a request

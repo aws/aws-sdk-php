@@ -1,5 +1,5 @@
 # language: en
-@smoke @cognitosync
+@smoke @cognitosync @cognito-sync
 Feature: Amazon Cognito Sync
 
   Scenario: Making a request
