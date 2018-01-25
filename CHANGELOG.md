@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.1 - 2018-01-25
 
 * `Aws\AlexaForBusiness` - Supports new field for DeviceStatusInfo which provides details about the DeviceStatus following a DeviceSync operation.
 * `Aws\Appstream` - This API update is to support Amazon AppStream 2.0's launch into the Asia Pacific (Singapore) and Asia Pacific (Sydney) regions.
