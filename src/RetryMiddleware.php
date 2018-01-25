@@ -32,10 +32,6 @@ class RetryMiddleware
         'RequestThrottledException'              => true,
     ];
 
-    private static $retryCurlErrors = [
-        CURLE_RECV_ERROR => true,
-    ];
-
     private $decider;
     private $delay;
     private $nextHandler;
@@ -62,13 +58,18 @@ class RetryMiddleware
      */
     public static function createDefaultDecider($maxRetries = 3)
     {
+        $retryCurlErrors = [];
+        if (extension_loaded('curl')) {
+            $retryCurlErrors[CURLE_RECV_ERROR] = true;
+        }
+
         return function (
             $retries,
             CommandInterface $command,
             RequestInterface $request,
             ResultInterface $result = null,
             $error = null
-        ) use ($maxRetries) {
+        ) use ($maxRetries, $retryCurlErrors) {
             // Allow command-level options to override this value
             $maxRetries = null !== $command['@retries'] ?
                 $command['@retries']
@@ -87,15 +88,16 @@ class RetryMiddleware
             } elseif (isset(self::$retryStatusCodes[$error->getStatusCode()])) {
                 return true;
             } elseif (
-                ($previous = $error->getPrevious())
+                count($retryCurlErrors)
+                && ($previous = $error->getPrevious())
                 && $previous instanceof ConnectException
             ) {
                 if (method_exists($previous, 'getHandlerContext')) {
-                    return isset(self::$retryCurlErrors[$previous->getHandlerContext()['errno']]);
+                    return isset($retryCurlErrors[$previous->getHandlerContext()['errno']]);
                 }
 
                 $message = $previous->getMessage();
-                foreach (array_keys(self::$retryCurlErrors) as $curlError) {
+                foreach (array_keys($retryCurlErrors) as $curlError) {
                     if (strpos($message, 'cURL error ' . $curlError . ':') === 0) {
                         return true;
                     }

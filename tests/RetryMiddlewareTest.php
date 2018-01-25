@@ -85,6 +85,9 @@ class RetryMiddlewareTest extends TestCase
 
     public function testDeciderRetriesWhenCurlErrorCodeMatches()
     {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Test skipped on no cURL extension');
+        }
         $decider = RetryMiddleware::createDefaultDecider();
         $command = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');
