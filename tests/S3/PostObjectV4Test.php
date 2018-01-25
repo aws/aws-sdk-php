@@ -10,7 +10,7 @@ require_once __DIR__ . '/sig_hack.php';
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Aws\S3\PostObject
+ * @covers Aws\S3\PostObjectV4
  */
 class PostObjectV4Test extends TestCase
 {
