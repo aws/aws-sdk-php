@@ -19,6 +19,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\S3\S3Client
+ * @covers Aws\S3\S3ClientTrait
  */
 class S3ClientTest extends TestCase
 {
