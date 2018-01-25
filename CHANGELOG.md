@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AlexaForBusiness` - Supports new field for DeviceStatusInfo which provides details about the DeviceStatus following a DeviceSync operation.
+* `Aws\Appstream` - This API update is to support Amazon AppStream 2.0's launch into the Asia Pacific (Singapore) and Asia Pacific (Sydney) regions.
+* `Aws\CloudHsm` - Added service signing name.
+* `Aws\CodeBuild` - Adding support for Shallow Clone and GitHub Enterprise in AWS CodeBuild.
+* `Aws\GuardDuty` - Added the missing AccessKeyDetails object to the resource shape.
+* `Aws\Lambda` - AWS Lambda now supports Revision ID on your function versions and aliases, to track and apply conditional updates when you are updating your function version or alias resources.
+* `Aws\RetryMiddleware` - Verify we have the curl extension before retrying on the CURLE_RECV_ERROR curl const.
+
 ## 3.52.0 - 2018-01-22
 
 * `Aws\` - Retry on a set of CURLE_*_ERROR based failures. Currently, only CURLE_RECV_ERROR (errno 56) is retried.

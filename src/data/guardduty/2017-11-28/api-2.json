@@ -739,6 +739,27 @@
       "type" : "structure",
       "members" : { }
     },
+    "AccessKeyDetails" : {
+      "type" : "structure",
+      "members" : {
+        "AccessKeyId" : {
+          "shape" : "__string",
+          "locationName" : "accessKeyId"
+        },
+        "PrincipalId" : {
+          "shape" : "__string",
+          "locationName" : "principalId"
+        },
+        "UserName" : {
+          "shape" : "__string",
+          "locationName" : "userName"
+        },
+        "UserType" : {
+          "shape" : "__string",
+          "locationName" : "userType"
+        }
+      }
+    },
     "AccountDetail" : {
       "type" : "structure",
       "members" : {
@@ -2282,6 +2303,10 @@
     "Resource" : {
       "type" : "structure",
       "members" : {
+        "AccessKeyDetails" : {
+          "shape" : "AccessKeyDetails",
+          "locationName" : "accessKeyDetails"
+        },
         "InstanceDetails" : {
           "shape" : "InstanceDetails",
           "locationName" : "instanceDetails"

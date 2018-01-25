@@ -45,6 +45,12 @@
       "base" : "AcceptInvitation request body.",
       "refs" : { }
     },
+    "AccessKeyDetails" : {
+      "base" : "The IAM access key details (IAM user information) of a user that engaged in the activity that prompted GuardDuty to generate a finding.",
+      "refs" : {
+        "Resource$AccessKeyDetails" : null
+      }
+    },
     "AccountDetail" : {
       "base" : "An object containing the member's accountId and email address.",
       "refs" : {
@@ -861,6 +867,10 @@
     "__string" : {
       "base" : null,
       "refs" : {
+        "AccessKeyDetails$AccessKeyId" : "Access key ID of the user.",
+        "AccessKeyDetails$PrincipalId" : "The principal ID of the user.",
+        "AccessKeyDetails$UserName" : "The name of the user.",
+        "AccessKeyDetails$UserType" : "The type of the user.",
         "AccountIds$member" : null,
         "Action$ActionType" : "GuardDuty Finding activity type.",
         "AwsApiCallAction$Api" : "AWS API name.",
