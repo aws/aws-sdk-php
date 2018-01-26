@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DeviceFarm` - Add InteractionMode in CreateRemoteAccessSession for DirectDeviceAccess feature.
+* `Aws\MTurk` - Documentation updates for mturk-requester
+* `Aws\MediaLive` - Add InputSpecification to CreateChannel (specification of input attributes is used for channel sizing and affects pricing); add NotFoundException to DeleteInputSecurityGroups.
+
 ## 3.52.1 - 2018-01-25
 
 * `Aws\AlexaForBusiness` - Supports new field for DeviceStatusInfo which provides details about the DeviceStatus following a DeviceSync operation.
