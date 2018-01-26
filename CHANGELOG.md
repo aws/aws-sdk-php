@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.2 - 2018-01-26
 
 * `Aws\DeviceFarm` - Add InteractionMode in CreateRemoteAccessSession for DirectDeviceAccess feature.
 * `Aws\MTurk` - Documentation updates for mturk-requester
