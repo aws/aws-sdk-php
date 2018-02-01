@@ -224,7 +224,9 @@ class TraceMiddleware
     {
         if ($a === $b) {
             return;
-        } elseif (is_array($a)) {
+        }
+
+        if (is_array($a)) {
             $b = (array) $b;
             $keys = array_unique(array_merge(array_keys($a), array_keys($b)));
             foreach ($keys as $k) {
@@ -249,7 +251,9 @@ class TraceMiddleware
     {
         if (is_scalar($value)) {
             return (string) $value;
-        } elseif ($value instanceof \Exception) {
+        }
+
+        if ($value instanceof \Exception) {
             $value = $this->exceptionArray($value);
         }
 

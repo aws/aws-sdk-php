@@ -186,7 +186,9 @@ abstract class RestSerializer
                 $k = $isGreedy ? substr($matches[1], 0, -1) : $matches[1];
                 if (!isset($varspecs[$k])) {
                     return '';
-                } elseif ($isGreedy) {
+                }
+
+                if ($isGreedy) {
                     return str_replace('%2F', '/', rawurlencode($varspecs[$k]));
                 }
 

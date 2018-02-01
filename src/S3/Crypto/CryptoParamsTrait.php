@@ -43,7 +43,9 @@ trait CryptoParamsTrait
         if (!empty($args['@MetadataStrategy'])) {
             if ($args['@MetadataStrategy'] instanceof MetadataStrategyInterface) {
                 return $args['@MetadataStrategy'];
-            } elseif (is_string($args['@MetadataStrategy'])) {
+            }
+
+            if (is_string($args['@MetadataStrategy'])) {
                 switch ($args['@MetadataStrategy']) {
                     case HeadersMetadataStrategy::class:
                         return new HeadersMetadataStrategy();

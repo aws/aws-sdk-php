@@ -386,7 +386,9 @@ class ClientResolver
     {
         if (is_callable($value)) {
             return;
-        } elseif ($value instanceof CredentialsInterface) {
+        }
+
+        if ($value instanceof CredentialsInterface) {
             $args['credentials'] = CredentialProvider::fromCredentials($value);
         } elseif (is_array($value)
             && isset($value['key'])

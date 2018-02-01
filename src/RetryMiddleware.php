@@ -77,21 +77,31 @@ class RetryMiddleware
 
             if ($retries >= $maxRetries) {
                 return false;
-            } elseif (!$error) {
+            }
+
+            if (!$error) {
                 return isset(self::$retryStatusCodes[$result['@metadata']['statusCode']]);
-            } elseif (!($error instanceof AwsException)) {
+            }
+
+            if (!($error instanceof AwsException)) {
                 return false;
-            } elseif ($error->isConnectionError()) {
+            }
+
+            if ($error->isConnectionError()) {
                 return true;
-            } elseif (isset(self::$retryCodes[$error->getAwsErrorCode()])) {
+            }
+
+            if (isset(self::$retryCodes[$error->getAwsErrorCode()])) {
                 return true;
-            } elseif (isset(self::$retryStatusCodes[$error->getStatusCode()])) {
+            }
+
+            if (isset(self::$retryStatusCodes[$error->getStatusCode()])) {
                 return true;
-            } elseif (
-                count($retryCurlErrors)
+            }
+
+            if (count($retryCurlErrors)
                 && ($previous = $error->getPrevious())
-                && $previous instanceof ConnectException
-            ) {
+                && $previous instanceof ConnectException) {
                 if (method_exists($previous, 'getHandlerContext')) {
                     return isset($retryCurlErrors[$previous->getHandlerContext()['errno']]);
                 }

@@ -100,7 +100,9 @@ abstract class AbstractUploadManager implements Promise\PromisorInterface
                 throw new \LogicException('This multipart upload has already '
                     . 'been completed or aborted.'
                 );
-            } elseif (!$this->state->isInitiated()) {
+            }
+
+            if (!$this->state->isInitiated()) {
                 // Execute the prepare callback.
                 if (is_callable($this->config["prepare_data_source"])) {
                     $this->config["prepare_data_source"]();
