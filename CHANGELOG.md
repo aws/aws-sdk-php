@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - Documentation updates for acm
+* `Aws\Cloud9` - API usage examples for AWS Cloud9.
+* `Aws\Kinesis` - Using ListShards a Kinesis Data Streams customer or client can get information about shards in a data stream (including meta-data for each shard) without obtaining data stream level information.
+* `Aws\OpsWorks` - AWS OpsWorks Stacks supports EBS encryption and HDD volume types. Also, a new DescribeOperatingSystems API is available, which lists all operating systems supported by OpsWorks Stacks.
+
 ## 3.52.2 - 2018-01-26
 
 * `Aws\DeviceFarm` - Add InteractionMode in CreateRemoteAccessSession for DirectDeviceAccess feature.

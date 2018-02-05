@@ -30,6 +30,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getShardIteratorAsync(array $args = [])
  * @method \Aws\Result increaseStreamRetentionPeriod(array $args = [])
  * @method \GuzzleHttp\Promise\Promise increaseStreamRetentionPeriodAsync(array $args = [])
+ * @method \Aws\Result listShards(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listShardsAsync(array $args = [])
  * @method \Aws\Result listStreams(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listStreamsAsync(array $args = [])
  * @method \Aws\Result listTagsForStream(array $args = [])

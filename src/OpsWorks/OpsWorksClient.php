@@ -70,6 +70,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeLoadBasedAutoScalingAsync(array $args = [])
  * @method \Aws\Result describeMyUserProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeMyUserProfileAsync(array $args = [])
+ * @method \Aws\Result describeOperatingSystems(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeOperatingSystemsAsync(array $args = [])
  * @method \Aws\Result describePermissions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describePermissionsAsync(array $args = [])
  * @method \Aws\Result describeRaidArrays(array $args = [])
