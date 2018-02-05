@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.3 - 2018-02-05
 
 * `Aws\ACM` - Documentation updates for acm
 * `Aws\Cloud9` - API usage examples for AWS Cloud9.
