@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.4 - 2018-02-06
 
 * `Aws\Glue` - This new feature will now allow customers to add a customized json classifier. They can specify a json path to indicate the object, array or field of the json documents they'd like crawlers to inspect when they crawl json files. 
 * `Aws\SSM` - This Patch Manager release supports configuring Linux repos as part of patch baselines, controlling updates of non-OS security packages and also creating patch baselines for SUSE12
