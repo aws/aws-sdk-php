@@ -108,6 +108,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise searchGameSessionsAsync(array $args = [])
  * @method \Aws\Result startGameSessionPlacement(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startGameSessionPlacementAsync(array $args = [])
+ * @method \Aws\Result startMatchBackfill(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startMatchBackfillAsync(array $args = [])
  * @method \Aws\Result startMatchmaking(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startMatchmakingAsync(array $args = [])
  * @method \Aws\Result stopGameSessionPlacement(array $args = [])

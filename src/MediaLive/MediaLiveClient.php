@@ -33,5 +33,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startChannelAsync(array $args = [])
  * @method \Aws\Result stopChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopChannelAsync(array $args = [])
+ * @method \Aws\Result updateChannel(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateChannelAsync(array $args = [])
  */
 class MediaLiveClient extends AwsClient {}
