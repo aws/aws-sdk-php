@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.5 - 2018-02-08
 
 * `Aws\AppStream` - Adds support for allowing customers to provide a redirect URL for a stack. Users will be redirected to the link provided by the admin at the end of their streaming session. 
 * `Aws\Budgets` - Making budgetLimit and timePeriod optional, and updating budgets docs. 
