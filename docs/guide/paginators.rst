@@ -139,7 +139,7 @@ downstream promises.
         ->then(function ($result) {
             // Result would be the last result to the deleteAsync operation.
         })
-        ->otherwise($reason) {
+        ->otherwise(function ($reason) {
             // Reason would be an exception that was encountered either in the
             // call to deleteAsync or calls performed while iterating.
         });
