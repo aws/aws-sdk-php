@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.6 - 2018-02-09
 
 * `Aws\EC2` - Users can now better understand the longer ID opt-in status of their account using the two new APIs DescribeAggregateIdFormat and DescribePrincipalIdFormat
 * `Aws\LexModelBuildingService` - You can now define a response for your Amazon Lex chatbot directly from the AWS console. A response consists of messages dynamically selected from a group of pre-defined messages, populated by the developer.
