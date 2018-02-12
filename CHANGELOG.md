@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.7 - 2018-02-12
 
 * `Aws\CognitoIdentityProvider` - Support for user migration using AWS Lambda trigger. Support to obtain signing certificate for user pools.
 * `Aws\EC2` - Network interfaces now supply the following additional status of "associated" to better distinguish the current status.
