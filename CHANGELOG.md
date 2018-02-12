@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentityProvider` - Support for user migration using AWS Lambda trigger. Support to obtain signing certificate for user pools.
+* `Aws\EC2` - Network interfaces now supply the following additional status of "associated" to better distinguish the current status.
+* `Aws\GuardDuty` - Added PortProbeAction information to the Action section of the port probe-type finding.
+* `Aws\KMS` - This release of AWS Key Management Service includes support for InvalidArnException in the RetireGrant API.
+* `Aws\RDS` - Aurora MySQL now supports MySQL 5.7.
+
 ## 3.52.6 - 2018-02-09
 
 * `Aws\EC2` - Users can now better understand the longer ID opt-in status of their account using the two new APIs DescribeAggregateIdFormat and DescribePrincipalIdFormat

@@ -124,6 +124,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getGroupAsync(array $args = [])
  * @method \Aws\Result getIdentityProviderByIdentifier(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getIdentityProviderByIdentifierAsync(array $args = [])
+ * @method \Aws\Result getSigningCertificate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getSigningCertificateAsync(array $args = [])
  * @method \Aws\Result getUICustomization(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getUICustomizationAsync(array $args = [])
  * @method \Aws\Result getUser(array $args = [])
