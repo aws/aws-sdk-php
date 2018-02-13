@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.8 - 2018-02-13
 
 * `Aws\Glacier` - Documentation updates for glacier
 * `Aws\Route53` - Added support for creating Private Hosted Zones and metric-based healthchecks in the ap-northeast-3 region for whitelisted customers.
