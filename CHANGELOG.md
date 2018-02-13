@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glacier` - Documentation updates for glacier
+* `Aws\Route53` - Added support for creating Private Hosted Zones and metric-based healthchecks in the ap-northeast-3 region for whitelisted customers.
+
 ## 3.52.7 - 2018-02-12
 
 * `Aws\CognitoIdentityProvider` - Support for user migration using AWS Lambda trigger. Support to obtain signing certificate for user pools.
