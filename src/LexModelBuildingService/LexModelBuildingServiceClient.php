@@ -51,6 +51,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getBuiltinSlotTypesAsync(array $args = [])
  * @method \Aws\Result getExport(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getExportAsync(array $args = [])
+ * @method \Aws\Result getImport(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getImportAsync(array $args = [])
  * @method \Aws\Result getIntent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getIntentAsync(array $args = [])
  * @method \Aws\Result getIntentVersions(array $args = [])
@@ -73,5 +75,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putIntentAsync(array $args = [])
  * @method \Aws\Result putSlotType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putSlotTypeAsync(array $args = [])
+ * @method \Aws\Result startImport(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startImportAsync(array $args = [])
  */
 class LexModelBuildingServiceClient extends AwsClient {}

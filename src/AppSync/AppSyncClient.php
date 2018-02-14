@@ -49,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTypesAsync(array $args = [])
  * @method \Aws\Result startSchemaCreation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startSchemaCreationAsync(array $args = [])
+ * @method \Aws\Result updateApiKey(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateApiKeyAsync(array $args = [])
  * @method \Aws\Result updateDataSource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDataSourceAsync(array $args = [])
  * @method \Aws\Result updateGraphqlApi(array $args = [])
