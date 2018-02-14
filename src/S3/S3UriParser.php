@@ -36,27 +36,28 @@ class S3UriParser
     public function parse($uri)
     {
         $url = Psr7\uri_for($uri);
+        $matches = array();
 
         if ($url->getScheme() == $this->streamWrapperScheme) {
-            return $this->parseStreamWrapper($url);
+            $result = $this->parseStreamWrapper($url);
+        } else {
+            if (!$url->getHost()) {
+                throw new \InvalidArgumentException('No hostname found in URI: '
+                    . $uri);
+            }
+
+            if (!preg_match($this->pattern, $url->getHost(), $matches)) {
+                return $this->parseCustomEndpoint($url);
+            }
+
+            // Parse the URI based on the matched format (path / virtual)
+            $result = empty($matches[1])
+                ? $this->parsePathStyle($url)
+                : $this->parseVirtualHosted($url, $matches);
+
+            // Add the region if one was found and not the classic endpoint
+            $result['region'] = $matches[2] == 'amazonaws' ? null : $matches[2];
         }
-
-        if (!$url->getHost()) {
-            throw new \InvalidArgumentException('No hostname found in URI: '
-                . $uri);
-        }
-
-        if (!preg_match($this->pattern, $url->getHost(), $matches)) {
-            return $this->parseCustomEndpoint($url);
-        }
-
-        // Parse the URI based on the matched format (path / virtual)
-        $result = empty($matches[1])
-            ? $this->parsePathStyle($url)
-            : $this->parseVirtualHosted($url, $matches);
-
-        // Add the region if one was found and not the classic endpoint
-        $result['region'] = $matches[2] == 'amazonaws' ? null : $matches[2];
 
         return $result;
     }
@@ -66,11 +67,22 @@ class S3UriParser
         $result = self::$defaultResult;
         $result['path_style'] = false;
 
-        $result['bucket'] = $url->getHost();
-        if ($url->getPath()) {
-            $key = ltrim($url->getPath(), '/ ');
-            if (!empty($key)) {
-                $result['key'] = $key;
+        if (preg_match($this->pattern, $url->getHost(), $matches)) {
+            $result = $this->parseVirtualHosted($url, $matches);
+
+            if (!empty($matches[2]) && $matches[2] != 'amazonaws') {
+                $result['region'] = $matches[2];
+            } else {
+                $result['region'] = null;
+            }
+        } else {
+            $result['bucket'] = $url->getHost();
+
+            if ($url->getPath()) {
+                $key = ltrim($url->getPath(), '/ ');
+                if (!empty($key)) {
+                    $result['key'] = $key;
+                }
             }
         }
 

@@ -53,6 +53,7 @@ class S3UriParserTest extends TestCase
             ['http://jarjar.binks.com/foo/bar/baz', ['bucket' => 'foo', 'key' => 'bar/baz', 'path_style' => true, 'region' => null]],
             ['http://amazonaws.com/foo', ['bucket' => 'foo', 'key' => null, 'path_style' => true, 'region' => null]],
 
+            ['s3://bar.s3-us-west-2.amazonaws.com/baz/foo', ['region' => 'us-west-2', 'bucket' => 'bar', 'key' => 'baz/foo', 'path_style' => false]],
             ['s3://bar/baz/foo/', ['region' => null, 'bucket' => 'bar', 'key' => 'baz/foo/', 'path_style' => false]],
             ['s3://bar/baz/foo', ['region' => null, 'bucket' => 'bar', 'key' => 'baz/foo', 'path_style' => false]],
             ['s3://bar/baz/', ['region' => null, 'bucket' => 'bar', 'key' => 'baz/', 'path_style' => false]],
