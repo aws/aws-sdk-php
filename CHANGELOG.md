@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.9 - 2018-02-14
 
 * `Aws\AppSync` - AWS AppSync now supports for None Data Source, CreateApiKey now supports setting expiration on API keys, new API UpdateApiKey supports updating expiration on API keys. 
 * `Aws\LexModelBuildingService` - Amazon Lex now provides the ability to export and import your Amazon Lex chatbot definition as a JSON file.
