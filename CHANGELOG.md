@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.10 - 2018-02-15
 
 * `Aws\CodeStar` - Launch AWS CodeStar in the Asia Pacific Northeast 2 (ICN) region.
 * `Aws\GameLift` - Updates to allow Fleets to run on On-Demand or Spot instances.
