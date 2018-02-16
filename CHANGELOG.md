@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RDS` - Updates RDS API to indicate whether a DBEngine supports read replicas.
+
 ## 3.52.10 - 2018-02-15
 
 * `Aws\CodeStar` - Launch AWS CodeStar in the Asia Pacific Northeast 2 (ICN) region.
