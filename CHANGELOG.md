@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.11 - 2018-02-16
 
 * `Aws\RDS` - Updates RDS API to indicate whether a DBEngine supports read replicas.
 
