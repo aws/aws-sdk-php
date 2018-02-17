@@ -120,7 +120,8 @@ class History implements \Countable, \IteratorAggregate
         }
 
         if (isset($this->entries[$ticket]['result'])
-            || isset($this->entries[$ticket]['exception'])) {
+            || isset($this->entries[$ticket]['exception'])
+        ) {
             throw new \LogicException('History entry is already finished');
         }
 

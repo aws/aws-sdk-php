@@ -501,18 +501,18 @@ class S3Client extends AwsClient implements S3ClientInterface
             }
 
             if ($error instanceof AwsException
-                && $retries < $maxRetries) {
+                && $retries < $maxRetries
+            ) {
                 if ($error->getResponse()
-                    && $error->getResponse()->getStatusCode() >= 400) {
+                    && $error->getResponse()->getStatusCode() >= 400
+                ) {
                     return strpos(
                             $error->getResponse()->getBody(),
                             'Your socket connection to the server'
                         ) !== false;
                 }
 
-                if (
-                    $error->getPrevious() instanceof RequestException
-                ) {
+                if ($error->getPrevious() instanceof RequestException) {
                     // All commands except CompleteMultipartUpload are
                     // idempotent and may be retried without worry if a
                     // networking error has occurred.

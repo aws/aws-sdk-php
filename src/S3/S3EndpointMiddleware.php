@@ -141,7 +141,8 @@ class S3EndpointMiddleware
         }
 
         if (!$pathStyle
-            && self::isRequestHostStyleCompatible($command, $request)) {
+            && self::isRequestHostStyleCompatible($command, $request)
+        ) {
             return self::HOST_STYLE;
         }
 

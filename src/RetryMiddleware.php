@@ -101,7 +101,8 @@ class RetryMiddleware
 
             if (count($retryCurlErrors)
                 && ($previous = $error->getPrevious())
-                && $previous instanceof ConnectException) {
+                && $previous instanceof ConnectException
+            ) {
                 if (method_exists($previous, 'getHandlerContext')) {
                     return isset($retryCurlErrors[$previous->getHandlerContext()['errno']]);
                 }
