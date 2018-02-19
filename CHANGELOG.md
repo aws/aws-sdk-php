@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - With this release, AWS Config updated the ConfigurationItemStatus enum values. The values prior to this update did not represent appropriate values returned by GetResourceConfigHistory. You must update your code to enumerate the new enum values so this is a breaking change. To map old properties to new properties, use the following descriptions: New discovered resource - Old property: Discovered, New property: ResourceDiscovered. Updated resource - Old property: Ok, New property: OK. Deleted resource - Old property: Deleted, New property: ResourceDeleted or ResourceDeletedNotRecorded. Not-recorded resource - Old property: N/A, New property: ResourceNotRecorded or ResourceDeletedNotRecorded.
+
 ## 3.52.11 - 2018-02-16
 
 * `Aws\RDS` - Updates RDS API to indicate whether a DBEngine supports read replicas.
