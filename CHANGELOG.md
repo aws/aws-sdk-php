@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.13 - 2018-02-20
 
 * `Aws\AutoScaling` - Amazon EC2 Auto Scaling support for service-linked roles
 * `Aws\WAF` - The new PermissionPolicy APIs in AWS WAF Regional allow customers to attach resource-based policies to their entities.
