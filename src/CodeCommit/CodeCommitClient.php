@@ -58,6 +58,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise postCommentForPullRequestAsync(array $args = [])
  * @method \Aws\Result postCommentReply(array $args = [])
  * @method \GuzzleHttp\Promise\Promise postCommentReplyAsync(array $args = [])
+ * @method \Aws\Result putFile(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putFileAsync(array $args = [])
  * @method \Aws\Result putRepositoryTriggers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putRepositoryTriggersAsync(array $args = [])
  * @method \Aws\Result testRepositoryTriggers(array $args = [])

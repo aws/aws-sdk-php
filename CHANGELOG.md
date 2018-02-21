@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeCommit` - This release adds an API for adding a file directly to an AWS CodeCommit repository without requiring a Git client.
+* `Aws\EC2` - Adds support for tagging an EBS snapshot as part of the API call that creates the EBS snapshot
+* `Aws\MediaPackage` - Mediapackage expands their service to FRA and CDG regions.
+* `Aws\ServerlessApplicationRepository` - Added support for delete-application API and the ability for developers to set a homepage for their application. The homepage is a URL with more information about the application, for example the location of your GitHub repository for the application. 
+
 ## 3.52.13 - 2018-02-20
 
 * `Aws\AutoScaling` - Amazon EC2 Auto Scaling support for service-linked roles

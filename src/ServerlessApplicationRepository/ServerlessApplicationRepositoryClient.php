@@ -11,6 +11,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createApplicationVersionAsync(array $args = [])
  * @method \Aws\Result createCloudFormationChangeSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createCloudFormationChangeSetAsync(array $args = [])
+ * @method \Aws\Result deleteApplication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteApplicationAsync(array $args = [])
  * @method \Aws\Result getApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getApplicationAsync(array $args = [])
  * @method \Aws\Result getApplicationPolicy(array $args = [])
