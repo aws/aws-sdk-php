@@ -9,6 +9,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getCostAndUsageAsync(array $args = [])
  * @method \Aws\Result getDimensionValues(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDimensionValuesAsync(array $args = [])
+ * @method \Aws\Result getReservationCoverage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getReservationCoverageAsync(array $args = [])
  * @method \Aws\Result getReservationUtilization(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getReservationUtilizationAsync(array $args = [])
  * @method \Aws\Result getTags(array $args = [])

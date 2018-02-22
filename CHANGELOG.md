@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CostExplorer` - Added GetReservationCoverage API for retrieving reservation coverage information.
+* `Aws\ElasticLoadBalancingv2` - Added a new load balancer attribute related to Network Load Balancers that enables cross zone capabilities. This feature allows Network Load Balancers to distribute requests regardless of Availability Zone.
+
 ## 3.52.14 - 2018-02-21
 
 * `Aws\CodeCommit` - This release adds an API for adding a file directly to an AWS CodeCommit repository without requiring a Git client.
