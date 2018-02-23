@@ -130,11 +130,17 @@ class S3EndpointMiddleware
             return $this->canAccelerate($command)
                 ? self::ACCELERATE_DUALSTACK
                 : self::DUALSTACK;
-        } elseif ($accelerate && $this->canAccelerate($command)) {
+        }
+
+        if ($accelerate && $this->canAccelerate($command)) {
             return self::ACCELERATE;
-        } elseif ($dualStack) {
+        }
+
+        if ($dualStack) {
             return self::DUALSTACK;
-        } elseif (!$pathStyle
+        }
+
+        if (!$pathStyle
             && self::isRequestHostStyleCompatible($command, $request)
         ) {
             return self::HOST_STYLE;

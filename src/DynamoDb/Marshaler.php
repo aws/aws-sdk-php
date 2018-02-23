@@ -313,7 +313,9 @@ class Marshaler
     {
         if ($this->options['ignore_invalid']) {
             return null;
-        } elseif ($this->options['nullify_invalid']) {
+        }
+
+        if ($this->options['nullify_invalid']) {
             return ['NULL' => true];
         }
 

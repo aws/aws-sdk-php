@@ -87,7 +87,9 @@ class Service extends AbstractModel
 
         if (isset($mapping[$proto])) {
             return new $mapping[$proto]($api, $endpoint);
-        } elseif ($proto == 'ec2') {
+        }
+
+        if ($proto == 'ec2') {
             return new QuerySerializer($api, $endpoint, new Ec2ParamBuilder());
         }
 
@@ -140,7 +142,9 @@ class Service extends AbstractModel
         $proto = $api->getProtocol();
         if (isset($mapping[$proto])) {
             return new $mapping[$proto]($api);
-        } elseif ($proto == 'ec2') {
+        }
+
+        if ($proto == 'ec2') {
             return new QueryParser($api, null, false);
         }
 
@@ -293,7 +297,9 @@ class Service extends AbstractModel
     {
         if (!$key) {
             return $this['metadata'];
-        } elseif (isset($this->definition['metadata'][$key])) {
+        }
+
+        if (isset($this->definition['metadata'][$key])) {
             return $this->definition['metadata'][$key];
         }
 
