@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **Amazon AppStream** service.
  * @method \Aws\Result associateFleet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise associateFleetAsync(array $args = [])
+ * @method \Aws\Result copyImage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise copyImageAsync(array $args = [])
  * @method \Aws\Result createDirectoryConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createDirectoryConfigAsync(array $args = [])
  * @method \Aws\Result createFleet(array $args = [])
