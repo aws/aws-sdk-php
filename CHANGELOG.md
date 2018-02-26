@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.17 - 2018-02-26
 
 * `Aws\Route53` - Added support for creating LBR rules using ap-northeast-3 region.
 * `Aws\STS` - Increased SAMLAssertion parameter size from 50000 to 100000 for AWS Security Token Service AssumeRoleWithSAML API to allow customers to pass bigger SAML assertions
