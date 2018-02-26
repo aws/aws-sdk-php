@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Route53` - Added support for creating LBR rules using ap-northeast-3 region.
+* `Aws\STS` - Increased SAMLAssertion parameter size from 50000 to 100000 for AWS Security Token Service AssumeRoleWithSAML API to allow customers to pass bigger SAML assertions
+
 ## 3.52.16 - 2018-02-23
 
 * `Aws\AppStream` - This API update is to enable customers to copy their Amazon AppStream 2.0 images within and between AWS Regions
