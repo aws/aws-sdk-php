@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECR` - Documentation updates for Amazon ECR.
+
 ## 3.52.17 - 2018-02-26
 
 * `Aws\Route53` - Added support for creating LBR rules using ap-northeast-3 region.
