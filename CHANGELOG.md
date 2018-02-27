@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.18 - 2018-02-27
 
 * `Aws\ECR` - Documentation updates for Amazon ECR.
 
