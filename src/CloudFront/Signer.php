@@ -66,6 +66,7 @@ class Signer
             $policy = preg_replace('/\s/s', '', $policy);
             $signatureHash['Policy'] = $this->encode($policy);
         } elseif ($resource && $expires) {
+            $expires = (int) $expires; // Handle epoch passed as string
             $policy = $this->createCannedPolicy($resource, $expires);
             $signatureHash['Expires'] = $expires;
         } else {

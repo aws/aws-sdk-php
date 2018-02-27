@@ -127,7 +127,7 @@ class UrlSignerTest extends TestCase
     public function testEnsuresUriSchemeIsValid()
     {
         $s = new UrlSigner('a', $_SERVER['CF_PRIVATE_KEY']);
-        $s->getSignedUrl('foo://bar.com', '+10 minutes');
+        $s->getSignedUrl('foo://bar.com', strtotime('+10 minutes'));
     }
 
     /**
