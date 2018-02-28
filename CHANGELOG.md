@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.19 - 2018-02-28
 
 * `Aws\ApplicationAutoScaling` - Application Auto Scaling now supports automatic scaling of SageMaker Production Variants on an Endpoint.
 * `Aws\CloudFront` - Updates the `Signer` to force expire timestamps to match CloudFront required unquoted integers.
