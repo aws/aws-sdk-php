@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchEvents` - Added BatchParameters to the PutTargets API
+* `Aws\EC2` - Added support for modifying Placement Group association of instances via ModifyInstancePlacement API.
+* `Aws\SSM` - This Inventory release supports the status message details reported by the last sync for the resource data sync API.
+* `Aws\ServiceCatalog` - This release of ServiceCatalog adds the DeleteTagOption API.
+* `Aws\StorageGateway` - AWS Storage Gateway (File) support for two new file share attributes are added. 1. Users can specify the S3 Canned ACL to use for new objects created in the file share. 2. Users can create file shares for requester-pays buckets.
+
 ## 3.52.19 - 2018-02-28
 
 * `Aws\ApplicationAutoScaling` - Application Auto Scaling now supports automatic scaling of SageMaker Production Variants on an Endpoint.

@@ -41,6 +41,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteProvisionedProductPlanAsync(array $args = [])
  * @method \Aws\Result deleteProvisioningArtifact(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteProvisioningArtifactAsync(array $args = [])
+ * @method \Aws\Result deleteTagOption(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteTagOptionAsync(array $args = [])
  * @method \Aws\Result describeConstraint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeConstraintAsync(array $args = [])
  * @method \Aws\Result describeCopyProductStatus(array $args = [])
