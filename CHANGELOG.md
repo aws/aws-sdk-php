@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.20 - 2018-03-01
 
 * `Aws\CloudWatchEvents` - Added BatchParameters to the PutTargets API
 * `Aws\EC2` - Added support for modifying Placement Group association of instances via ModifyInstancePlacement API.
