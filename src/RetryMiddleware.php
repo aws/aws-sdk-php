@@ -2,7 +2,7 @@
 namespace Aws;
 
 use Aws\Exception\AwsException;
-use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -101,7 +101,7 @@ class RetryMiddleware
 
             if (count($retryCurlErrors)
                 && ($previous = $error->getPrevious())
-                && $previous instanceof ConnectException
+                && $previous instanceof RequestException
             ) {
                 if (method_exists($previous, 'getHandlerContext')) {
                     return isset($retryCurlErrors[$previous->getHandlerContext()['errno']]);

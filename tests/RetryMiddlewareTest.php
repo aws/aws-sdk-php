@@ -8,7 +8,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\RetryMiddleware;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -93,14 +93,15 @@ class RetryMiddlewareTest extends TestCase
         $request = new Request('GET', 'http://www.example.com');
         $version = (string) ClientInterface::VERSION;
         if ($version[0] === '6') {
-            $previous = new ConnectException(
+            $previous = new RequestException(
                 'test',
                 $request,
+                null,
                 null,
                 ['errno' => CURLE_RECV_ERROR]
             );
         } elseif ($version[0] === '5') {
-            $previous = new ConnectException(
+            $previous = new RequestException(
                 'cURL error ' . CURLE_RECV_ERROR . ': test',
                 new \GuzzleHttp\Message\Request('GET', 'http://www.example.com')
             );
