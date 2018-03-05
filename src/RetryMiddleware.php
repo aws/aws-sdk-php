@@ -4,7 +4,6 @@ namespace Aws;
 use Aws\Exception\AwsException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise;
 
