@@ -103,7 +103,9 @@ class RetryMiddleware
                 && $previous instanceof RequestException
             ) {
                 if (method_exists($previous, 'getHandlerContext')) {
-                    return isset($retryCurlErrors[$previous->getHandlerContext()['errno']]);
+                    $context = $previous->getHandlerContext();
+                    return !empty($context['errno'])
+                        && isset($retryCurlErrors[$context['errno']]);
                 }
 
                 $message = $previous->getMessage();
