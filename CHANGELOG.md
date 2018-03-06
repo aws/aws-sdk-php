@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.21 - 2018-03-06
 
 * `Aws\ECS` - Documentation updates for Amazon ECS
 * `Aws\RetryMiddleware` - Fixes an undefined index issue.
