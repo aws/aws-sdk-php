@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECS` - Documentation updates for Amazon ECS
+* `Aws\RetryMiddleware` - Fixes an undefined index issue.
+* `Aws\RetryMiddleware` - Retries CURLE_RECV_ERROR on all RequestException, not just ConnectException.
+
 ## 3.52.20 - 2018-03-01
 
 * `Aws\CloudWatchEvents` - Added BatchParameters to the PutTargets API
