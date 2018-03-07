@@ -65,6 +65,23 @@ class S3SignatureV4Test extends TestCase
         );
     }
 
+    public function testDoesNotRemoveMultiplePrecedingSlashes()
+    {
+        list($request, $credentials, $signature) = $this->getFixtures();
+        $uri = $request->getUri()->withPath('//foo');
+        $request = $request->withUri($uri);
+        $p = new \ReflectionMethod($signature, 'parseRequest');
+        $p->setAccessible(true);
+        $parsed = $p->invoke($signature, $request);
+        $meth = new \ReflectionMethod($signature, 'createContext');
+        $meth->setAccessible(true);
+        $ctx = $meth->invoke($signature, $parsed, 'foo');
+        $this->assertStringStartsWith(
+            "GET\n//foo",
+            $ctx['creq']
+        );
+    }
+
     public function testCreatesPresignedDatesFromDateTime()
     {
         list($request, $credentials, $signature) = $this->getFixtures();
