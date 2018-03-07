@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaLive` - Updates API to model required traits and minimum/maximum constraints.
+* `Aws\S3/S3SignatureV4` - Fixes an issue that would strip a preceding slash from a key during the signing process on virtual host style pathing, resulting in an invalid signature.
+
 ## 3.52.21 - 2018-03-06
 
 * `Aws\ECS` - Documentation updates for Amazon ECS
