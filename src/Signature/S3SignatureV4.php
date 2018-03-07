@@ -59,6 +59,10 @@ class S3SignatureV4 extends SignatureV4
      */
     protected function createCanonicalizedPath($path)
     {
-        return '/' . ltrim($path, '/');
+        // Only remove one slash in case of keys that have a preceding slash
+        if (substr($path, 0, 1) === '/') {
+            $path = substr($path, 1);
+        }
+        return '/' . $path;
     }
 }
