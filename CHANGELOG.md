@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.23 - 2018-03-08
 
 * `Aws\ECS` - Amazon Elastic Container Service (ECS) now supports container health checks. Customers can now specify a docker container health check command and parameters in their task definition. ECS will monitor, report and take scheduling action based on the health status.
 * `Aws\MigrationHub` - Unused key LABEL removed from ResourceAttrbute
