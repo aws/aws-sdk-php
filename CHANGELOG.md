@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.24 - 2018-03-12
 
 * `Aws\ApplicationDiscoveryService` - Documentation updates for discovery
 * `Aws\CloudHSMV2` - CreateCluster can now take both 8 and 17 character Subnet IDs. DeleteHsm can now take both 8 and 17 character ENI IDs.
