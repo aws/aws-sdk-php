@@ -37,6 +37,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listServicesAsync(array $args = [])
  * @method \Aws\Result registerInstance(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerInstanceAsync(array $args = [])
+ * @method \Aws\Result updateInstanceCustomHealthStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateInstanceCustomHealthStatusAsync(array $args = [])
  * @method \Aws\Result updateService(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateServiceAsync(array $args = [])
  */

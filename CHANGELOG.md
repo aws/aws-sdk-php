@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ServiceDiscovery` - This release adds support for custom health checks, which let you check the health of resources that aren't accessible over the internet. For example, you can use a custom health check when the instance is in an Amazon VPC.
+
 ## 3.52.24 - 2018-03-12
 
 * `Aws\ApplicationDiscoveryService` - Documentation updates for discovery
