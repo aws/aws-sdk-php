@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.26 - 2018-03-14
 
 * `Aws\Lightsail` - Updates to existing Lightsail documentation
 
