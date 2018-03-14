@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lightsail` - Updates to existing Lightsail documentation
+
 ## 3.52.25 - 2018-03-13
 
 * `Aws\ServiceDiscovery` - This release adds support for custom health checks, which let you check the health of resources that aren't accessible over the internet. For example, you can use a custom health check when the instance is in an Amazon VPC.
