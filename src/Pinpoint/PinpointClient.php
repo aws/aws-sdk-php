@@ -36,6 +36,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteCampaignAsync(array $args = [])
  * @method \Aws\Result deleteEmailChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEmailChannelAsync(array $args = [])
+ * @method \Aws\Result deleteEndpoint(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteEndpointAsync(array $args = [])
  * @method \Aws\Result deleteEventStream(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEventStreamAsync(array $args = [])
  * @method \Aws\Result deleteGcmChannel(array $args = [])
