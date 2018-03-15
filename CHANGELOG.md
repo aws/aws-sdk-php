@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.27 - 2018-03-15
 
 * `Aws\Organizations` - This release adds additional reason codes to improve clarity to exceptions that can occur.
 * `Aws\Pinpoint` - With this release, you can delete endpoints from your Amazon Pinpoint projects. Customers can now specify one of their leased dedicated long or short codes to send text messages.
