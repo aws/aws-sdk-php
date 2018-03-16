@@ -36,6 +36,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteEnvironmentConfigurationAsync(array $args = [])
  * @method \Aws\Result deletePlatformVersion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deletePlatformVersionAsync(array $args = [])
+ * @method \Aws\Result describeAccountAttributes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeAccountAttributesAsync(array $args = [])
  * @method \Aws\Result describeApplicationVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeApplicationVersionsAsync(array $args = [])
  * @method \Aws\Result describeApplications(array $args = [])
