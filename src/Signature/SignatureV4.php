@@ -292,7 +292,7 @@ class SignatureV4 implements SignatureInterface
 
     private function convertToTimestamp($dateValue, $relativeTimeBase = null)
     {
-        if ($dateValue instanceof \DateTime) {
+        if ($dateValue instanceof \DateTimeInterface) {
             $timestamp = $dateValue->getTimestamp();
         } elseif (!is_numeric($dateValue)) {
             $timestamp = strtotime($dateValue,
