@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchEvents` - Added SQS FIFO queue target support
+* `Aws\ConfigService` - AWS Config adds support for BatchGetResourceConfig API, allowing you to batch-retrieve the current state of one or more of your resources.
+* `Aws\CostExplorer` - This launch will allow customers to access their Amazon EC2 Reserved Instance (RI) purchase recommendations programmatically via the AWS Cost Explorer API. 
+* `Aws\ECS` - Amazon ECS users can now mount a temporary volume in memory in containers and specify the shared memory that a container can use through the use of docker's 'tmpfs' and 'shm-size' features respectively. These fields can be specified under linuxParameters in ContainerDefinition in the Task Definition Template.
+* `Aws\ElasticBeanstalk` - Documentation updates for the new Elastic Beanstalk API DescribeAccountAttributes.
+* `Aws\Glue` - API Updates for DevEndpoint: PublicKey is now optional for CreateDevEndpoint. The new DevEndpoint field PrivateAddress will be populated for DevEndpoints associated with a VPC.
+* `Aws\MediaLive` - AWS Elemental MediaLive has added support for updating Inputs and Input Security Groups. You can update Input Security Groups at any time and it will update all channels using that Input Security Group. Inputs can be updated as long as they are not attached to a currently running channel.
+
 ## 3.52.28 - 2018-03-16
 
 * `Aws\ElasticBeanstalk` - AWS Elastic Beanstalk is launching a new public API named DescribeAccountAttributes which allows customers to access account level attributes. In this release, the API will support quotas for resources such as applications, application versions, and environments.

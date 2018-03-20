@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with AWS Config.
  *
+ * @method \Aws\Result batchGetResourceConfig(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetResourceConfigAsync(array $args = [])
  * @method \Aws\Result deleteConfigRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteConfigRuleAsync(array $args = [])
  * @method \Aws\Result deleteConfigurationRecorder(array $args = [])
