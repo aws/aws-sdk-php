@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.29 - 2018-03-20
 
 * `Aws\CloudWatchEvents` - Added SQS FIFO queue target support
 * `Aws\ConfigService` - AWS Config adds support for BatchGetResourceConfig API, allowing you to batch-retrieve the current state of one or more of your resources.
