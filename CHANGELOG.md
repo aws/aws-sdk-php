@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.30 - 2018-03-21
 
 * `Aws\MediaPackage` - Elemental MediaPackage is now available in the ICN and GRU regions.
 * `Aws\ServerlessApplicationRepository` - Documentation updates for Serverless Application Respository
