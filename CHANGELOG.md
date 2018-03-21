@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaPackage` - Elemental MediaPackage is now available in the ICN and GRU regions.
+* `Aws\ServerlessApplicationRepository` - Documentation updates for Serverless Application Respository
+
 ## 3.52.29 - 2018-03-20
 
 * `Aws\CloudWatchEvents` - Added SQS FIFO queue target support
