@@ -35,5 +35,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise stopBuildAsync(array $args = [])
  * @method \Aws\Result updateProject(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProjectAsync(array $args = [])
+ * @method \Aws\Result updateWebhook(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateWebhookAsync(array $args = [])
  */
 class CodeBuildClient extends AwsClient {}
