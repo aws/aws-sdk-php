@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.32 - 2018-03-23
 
 * `Aws\RDS` - Documentation updates for RDS
 
