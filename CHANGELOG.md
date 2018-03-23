@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RDS` - Documentation updates for RDS
+
 ## 3.52.31 - 2018-03-22
 
 * `Aws\AppStream` - Feedback URL allows admins to provide a feedback link or a survey link for collecting user feedback while streaming sessions. When a feedback link is provided, streaming users will see a "Send Feedback" choice in their streaming session toolbar. On selecting this choice, user will be redirected to the link provided in a new browser tab. If a feedback link is not provided, users will not see the "Send Feedback" option. 
