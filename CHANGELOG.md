@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - AWS Certificate Manager has added support for customers to disable Certificate Transparency logging on a per-certificate basis.
+
 ## 3.52.33 - 2018-03-26
 
 * `Aws\DynamoDB` - Point-in-time recovery (PITR) provides continuous backups of your DynamoDB table data. With PITR, you do not have to worry about creating, maintaining, or scheduling backups. You enable PITR on your table and your backup is available for restore at any point in time from the moment you enable it, up to a maximum of the 35 preceding days. PITR provides continuous backups until you explicitly disable it. For more information, see the Amazon DynamoDB Developer Guide.
