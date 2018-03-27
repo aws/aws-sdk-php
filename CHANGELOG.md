@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.34 - 2018-03-27
 
 * `Aws\ACM` - AWS Certificate Manager has added support for customers to disable Certificate Transparency logging on a per-certificate basis.
 
