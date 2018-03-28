@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.35 - 2018-03-28
 
 * `Aws\GuardDuty` - Amazon GuardDuty API operations are now supported in the EU (Paris) region.
 * `Aws\IAM` - Add support for Longer Role Sessions. Four APIs manage max session duration: GetRole, ListRoles, CreateRole, and the new API UpdateRole. The max session duration integer attribute is measured in seconds.
