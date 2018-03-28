@@ -230,6 +230,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateLoginProfileAsync(array $args = [])
  * @method \Aws\Result updateOpenIDConnectProviderThumbprint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateOpenIDConnectProviderThumbprintAsync(array $args = [])
+ * @method \Aws\Result updateRole(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateRoleAsync(array $args = [])
  * @method \Aws\Result updateRoleDescription(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRoleDescriptionAsync(array $args = [])
  * @method \Aws\Result updateSAMLProvider(array $args = [])
