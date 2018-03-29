@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.52.36 - 2018-03-29
 
 * `Aws\AlexaForBusiness` - Adds operations for creating and managing address books of phone contacts for use in A4B managed shared devices.
 * `Aws\CloudFormation` - Enabling resource level permission control for StackSets APIs. Adding support for customers to use customized AdministrationRole to create security boundaries between different users.
