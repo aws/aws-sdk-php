@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AlexaForBusiness` - Adds operations for creating and managing address books of phone contacts for use in A4B managed shared devices.
+* `Aws\CloudFormation` - Enabling resource level permission control for StackSets APIs. Adding support for customers to use customized AdministrationRole to create security boundaries between different users.
+* `Aws\Greengrass` - Greengrass APIs now support creating Machine Learning resource types and configuring binary data as the input payload for Greengrass Lambda functions.
+* `Aws\SSM` - This Patch Manager release supports creating patch baselines for CentOS.
+
 ## 3.52.35 - 2018-03-28
 
 * `Aws\GuardDuty` - Amazon GuardDuty API operations are now supported in the EU (Paris) region.
