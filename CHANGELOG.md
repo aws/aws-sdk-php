@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.53.0 - 2018-03-30
 
 * `Aws\ACM` - Documentation updates for acm
 * `Aws\CodeBuild` - Adding FIPS endpoint for CodeBuild service
