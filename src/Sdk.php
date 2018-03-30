@@ -72,6 +72,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionComprehend(array $args = [])
  * @method \Aws\ConfigService\ConfigServiceClient createConfigService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionConfigService(array $args = [])
+ * @method \Aws\Connect\ConnectClient createConnect(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionConnect(array $args = [])
  * @method \Aws\CostExplorer\CostExplorerClient createCostExplorer(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCostExplorer(array $args = [])
  * @method \Aws\CostandUsageReportService\CostandUsageReportServiceClient createCostandUsageReportService(array $args = [])

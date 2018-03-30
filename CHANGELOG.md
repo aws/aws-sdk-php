@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - Documentation updates for acm
+* `Aws\CodeBuild` - Adding FIPS endpoint for CodeBuild service
+* `Aws\Connect` - Amazon Connect is a contact center as a service (CCaS) solution that offers easy, self-service configuration and enables dynamic, personal, and natural customer engagement at any scale. With this release of the Amazon Connect SDK, Outbound APIs (StartOutboundVoiceContact, StopContact) are now generally available. This release supports CTR generation for calls generated through the new APIs. Additionally IAM permissions are supported for the new APIs. 
+
 ## 3.52.36 - 2018-03-29
 
 * `Aws\AlexaForBusiness` - Adds operations for creating and managing address books of phone contacts for use in A4B managed shared devices.
