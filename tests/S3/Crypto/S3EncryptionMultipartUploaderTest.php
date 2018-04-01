@@ -10,7 +10,7 @@ use Aws\Test\UsesServiceTrait;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Psr7;
 
-class S3EncryptionMultipartUploaderTest extends \PHPUnit_Framework_TestCase
+class S3EncryptionMultipartUploaderTest extends \PHPUnit\Framework\TestCase
 {
     use UsesServiceTrait, UsesMetadataEnvelopeTrait, UsesCryptoParamsTrait;
 
