@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.53.2 - 2018-04-03
 
 * `Aws\DeviceFarm` - Added Private Device Management feature. Customers can now manage their private devices efficiently - view their status, set labels and apply profiles on them. Customers can also schedule automated tests and remote access sessions on individual instances in their private device fleet.
 * `Aws\Lambda` - added nodejs8.10 as a valid runtime
