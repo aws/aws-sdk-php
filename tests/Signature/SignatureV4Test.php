@@ -245,6 +245,37 @@ class SignatureV4Test extends TestCase
         $this->assertContains('content-md5;host;x-amz-date;x-amz-foo', $signed->getHeaderLine('Authorization'));
     }
 
+    public function testPresignSpecificHeaders()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('PUT', 'http://foo.com', [
+            'x-amz-date' => 'today',
+            'host' => 'foo.com',
+            'x-amz-foo' => '123',
+            'content-md5' => 'bogus',
+            'x-amz-meta-foo' => 'bar',
+            'x-amz-content-sha256' => 'abc',
+        ]);
+        $presigned = $sig->presign($req, $creds, '+5 minutes');
+        $this->assertContains(urlencode('host;x-amz-foo;content-md5;x-amz-meta-foo'), (string)$presigned->getUri());
+    }
+
+    public function testPresignBlacklistedHeaders()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('PUT', 'http://foo.com', [
+            'user-agent' => 'curl',
+            'content-length' => '1000',
+            'Content-Type' => 'text/html',
+        ]);
+        $presigned = $sig->presign($req, $creds, '+5 minutes');
+        $this->assertNotContains('user-agent', (string)$presigned->getUri());
+        $this->assertNotContains('content-length', (string)$presigned->getUri());
+        $this->assertNotContains('Content-Type', (string)$presigned->getUri());
+    }
+
     /**
      * @expectedException \Aws\Exception\CouldNotCreateChecksumException
      */
