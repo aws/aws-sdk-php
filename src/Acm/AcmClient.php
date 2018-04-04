@@ -12,6 +12,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteCertificateAsync(array $args = [])
  * @method \Aws\Result describeCertificate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeCertificateAsync(array $args = [])
+ * @method \Aws\Result exportCertificate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise exportCertificateAsync(array $args = [])
  * @method \Aws\Result getCertificate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCertificateAsync(array $args = [])
  * @method \Aws\Result importCertificate(array $args = [])

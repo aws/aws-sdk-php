@@ -22,6 +22,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise enableAlarmActionsAsync(array $args = [])
  * @method \Aws\Result getDashboard(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDashboardAsync(array $args = [])
+ * @method \Aws\Result getMetricData(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getMetricDataAsync(array $args = [])
  * @method \Aws\Result getMetricStatistics(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getMetricStatisticsAsync(array $args = [])
  * @method \Aws\Result listDashboards(array $args = [])
