@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SSM` - Documentation updates for ec2
+
 ## 3.54.0 - 2018-04-04
 
 * `Aws\ACM` - AWS Certificate Manager has added support for AWS Certificate Manager Private Certificate Authority (CA). Customers can now request private certificates with the RequestCertificate API, and also export private certificates with the ExportCertificate API.
