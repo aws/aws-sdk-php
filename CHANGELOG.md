@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.54.1 - 2018-04-05
 
 * `Aws\SSM` - Documentation updates for ec2
 
