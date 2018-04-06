@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.54.2 - 2018-04-06
 
 * `Aws\Batch` - Support for Timeout in SubmitJob and RegisterJobDefinition
 
