@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudDirectory` - Cloud Directory customers can fetch attributes within a facet on an object with the new GetObjectAttributes API and can fetch attributes from multiple facets or objects with the BatchGetObjectAttributes operation.
+
 ## 3.54.2 - 2018-04-06
 
 * `Aws\Batch` - Support for Timeout in SubmitJob and RegisterJobDefinition

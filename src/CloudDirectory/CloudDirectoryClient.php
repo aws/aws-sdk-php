@@ -61,6 +61,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDirectoryAsync(array $args = [])
  * @method \Aws\Result getFacet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getFacetAsync(array $args = [])
+ * @method \Aws\Result getObjectAttributes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getObjectAttributesAsync(array $args = [])
  * @method \Aws\Result getObjectInformation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getObjectInformationAsync(array $args = [])
  * @method \Aws\Result getSchemaAsJson(array $args = [])
