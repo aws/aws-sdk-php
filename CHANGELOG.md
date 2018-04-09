@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.54.3 - 2018-04-09
 
 * `Aws\CloudDirectory` - Cloud Directory customers can fetch attributes within a facet on an object with the new GetObjectAttributes API and can fetch attributes from multiple facets or objects with the BatchGetObjectAttributes operation.
 
