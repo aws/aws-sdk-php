@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.54.4 - 2018-04-10
 
 * `Aws\DatabaseMigrationService` - Native Change Data Capture start point and task recovery support in Database Migration Service. 
 * `Aws\Glue` - "AWS Glue now supports timeout values for ETL jobs. With this release, all new ETL jobs have a default timeout value of 48 hours. AWS Glue also now supports the ability to start a schedule or job events trigger when it is created."
