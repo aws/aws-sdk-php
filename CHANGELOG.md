@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.54.5 - 2018-04-19
 
 * `Aws\CloudHSMV2` - The new CloudHSM is now available in the AWS GovCloud (US).
 * `Aws\CodePipeline` - Added new SourceRevision structure to Execution Summary with accompanying definitions as needed in the AWS CodePipeline API Guide.
