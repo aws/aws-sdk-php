@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudHSMV2` - The new CloudHSM is now available in the AWS GovCloud (US).
+* `Aws\CodePipeline` - Added new SourceRevision structure to Execution Summary with accompanying definitions as needed in the AWS CodePipeline API Guide.
+* `Aws\CostExplorer` - Starting today, you can identify opportunities for Amazon RDS cost savings using AWS Cost Explorer's API to access your Amazon RDS Reserved Instance Purchase Recommendations
+* `Aws\DeviceFarm` - Adding support for VPCEndpoint feature. Allows customers to be able to access their private endpoints/services running in their VPC during test automation.
+* `Aws\EC2` - Added support for customers to see the time at which a Dedicated Host was allocated or released.
+* `Aws\RDS` - The ModifyDBCluster operation now includes an EngineVersion parameter. You can use this to upgrade the engine for a clustered database.
+* `Aws\SSM` - Added new APIs DeleteInventory and DescribeInventoryDeletions, for customers to delete their custom inventory data.
+* `Aws\SecretsManager` - Documentation updates
+
 ## 3.54.4 - 2018-04-10
 
 * `Aws\DatabaseMigrationService` - Native Change Data Capture start point and task recovery support in Database Migration Service. 
