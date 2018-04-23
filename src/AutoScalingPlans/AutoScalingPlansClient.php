@@ -13,5 +13,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeScalingPlanResourcesAsync(array $args = [])
  * @method \Aws\Result describeScalingPlans(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeScalingPlansAsync(array $args = [])
+ * @method \Aws\Result updateScalingPlan(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateScalingPlanAsync(array $args = [])
  */
 class AutoScalingPlansClient extends AwsClient {}
