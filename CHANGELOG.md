@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.55.1 - 2018-04-24
 
 * `Aws\` - Fixes docblock @param tags to reference Result class with a consistent case
 * `Aws\ElasticBeanstalk` - Support tracking Elastic Beanstalk resources in AWS Config.
