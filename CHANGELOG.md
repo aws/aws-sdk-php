@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fixes docblock @param tags to reference Result class with a consistent case
+* `Aws\ElasticBeanstalk` - Support tracking Elastic Beanstalk resources in AWS Config.
+* `Aws\SecretsManager` - Documentation updates for secretsmanager
+
 ## 3.55.0 - 2018-04-23
 
 * `Aws\AutoScalingPlans` - The release adds the operation UpdateScalingPlan for updating a scaling plan and the support for tag filters as an application source.
