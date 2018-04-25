@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeDeploy` - AWS CodeDeploy has a new exception that indicates when a GitHub token is not valid.
+* `Aws\Rekognition` - Documentation updates for Amazon Rekognition.
+* `Aws\XRay` - Added PutEncryptionConfig and GetEncryptionConfig APIs for managing data encryption settings. Use PutEncryptionConfig to configure X-Ray to use an AWS Key Management Service customer master key to encrypt trace data at rest.
+
 ## 3.55.1 - 2018-04-24
 
 * `Aws\` - Fixes docblock @param tags to reference Result class with a consistent case
