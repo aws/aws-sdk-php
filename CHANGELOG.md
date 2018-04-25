@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.55.2 - 2018-04-25
 
 * `Aws\CodeDeploy` - AWS CodeDeploy has a new exception that indicates when a GitHub token is not valid.
 * `Aws\Rekognition` - Documentation updates for Amazon Rekognition.
