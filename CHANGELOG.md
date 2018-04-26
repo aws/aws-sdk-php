@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.55.3 - 2018-04-26
 
 * `Aws\CodeCommit` - AWS CodeCommit is now available in an additional region, EU (Paris).
 * `Aws\Glacier` - Documentation updates for Glacier to fix a broken link
