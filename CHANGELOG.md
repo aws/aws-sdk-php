@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeCommit` - AWS CodeCommit is now available in an additional region, EU (Paris).
+* `Aws\Glacier` - Documentation updates for Glacier to fix a broken link
+* `Aws\SecretsManager` - Documentation updates for secretsmanager
+
 ## 3.55.2 - 2018-04-25
 
 * `Aws\CodeDeploy` - AWS CodeDeploy has a new exception that indicates when a GitHub token is not valid.
