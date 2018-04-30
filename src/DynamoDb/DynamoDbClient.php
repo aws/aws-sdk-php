@@ -49,6 +49,8 @@ use Aws\RetryMiddleware;
  * @method \GuzzleHttp\Promise\Promise describeContinuousBackupsAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result describeGlobalTable(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise describeGlobalTableAsync(array $args = []) (supported in versions 2012-08-10)
+ * @method \Aws\Result describeGlobalTableSettings(array $args = []) (supported in versions 2012-08-10)
+ * @method \GuzzleHttp\Promise\Promise describeGlobalTableSettingsAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result describeLimits(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise describeLimitsAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result describeTimeToLive(array $args = []) (supported in versions 2012-08-10)
@@ -71,6 +73,8 @@ use Aws\RetryMiddleware;
  * @method \GuzzleHttp\Promise\Promise updateContinuousBackupsAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result updateGlobalTable(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise updateGlobalTableAsync(array $args = []) (supported in versions 2012-08-10)
+ * @method \Aws\Result updateGlobalTableSettings(array $args = []) (supported in versions 2012-08-10)
+ * @method \GuzzleHttp\Promise\Promise updateGlobalTableSettingsAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result updateTimeToLive(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise updateTimeToLiveAsync(array $args = []) (supported in versions 2012-08-10)
  */

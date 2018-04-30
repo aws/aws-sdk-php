@@ -57,6 +57,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getRoomSkillParameterAsync(array $args = [])
  * @method \Aws\Result getSkillGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSkillGroupAsync(array $args = [])
+ * @method \Aws\Result listDeviceEvents(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listDeviceEventsAsync(array $args = [])
  * @method \Aws\Result listSkills(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSkillsAsync(array $args = [])
  * @method \Aws\Result listTags(array $args = [])
