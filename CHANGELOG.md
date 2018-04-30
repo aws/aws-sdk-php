@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.55.4 - 2018-04-30
 
 * `Aws\AlexaForBusiness` - Adds ListDeviceEvents API to get a paginated list of device events (such as ConnectionStatus). This release also adds ConnectionStatus field to GetDevice and SearchDevices API.
 * `Aws\DynamoDB` - Adds two new APIs UpdateGlobalTableSettings and DescribeGlobalTableSettings. This update introduces new constraints in the CreateGlobalTable and UpdateGlobalTable APIs . Tables must have the same write capacity units. If Global Secondary Indexes exist then they must have the same write capacity units and key schema.
