@@ -416,4 +416,14 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
     {
         $this->assertContains($string->getRaw(), $this->error->getMessage());
     }
+
+    /**
+     * @Then the status code should be :statusCode
+     *
+     * @param string $statusCode
+     */
+    public function theStatusCodeShouldBe($statusCode)
+    {
+        $this->assertEquals($statusCode, $this->error->getStatusCode());
+    }
 }
