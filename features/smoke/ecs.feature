@@ -11,4 +11,4 @@ Feature: Amazon ECS
   Scenario: Handling errors
     When I attempt to call the "StopTask" API with:
     | task  | xxxxxxxxxxx-xxxxxxxxxxxx-xxxxxxxxxxx  |
-    Then the error code should be "ClientException"
+    Then the status code should be "400"
