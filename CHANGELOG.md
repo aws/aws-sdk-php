@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - Documentation updates for acm
+* `Aws\CodePipeline` - Added support for webhooks with accompanying definitions as needed in the AWS CodePipeline API Guide.
+* `Aws\EC2` - Amazon EC2 Fleet is a new feature that simplifies the provisioning of Amazon EC2 capacity across different EC2 instance types, Availability Zones, and the On-Demand, Reserved Instance, and Spot Instance purchase models. With a single API call, you can now provision capacity to achieve desired scale, performance, and cost.
+* `Aws\SSM` - Added support for new parameter, DocumentVersion, for SendCommand API. Users can now specify version of SSM document to be executed on the target(s).
+* `Aws\Test\Integ` - Adds the ability for Integ/Smoke tests to check status codes. Updates ECS Handling errors to use a status code check.
+
 ## 3.55.4 - 2018-04-30
 
 * `Aws\AlexaForBusiness` - Adds ListDeviceEvents API to get a paginated list of device events (such as ConnectionStatus). This release also adds ConnectionStatus field to GetDevice and SearchDevices API.
