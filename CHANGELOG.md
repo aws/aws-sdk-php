@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.55.5 - 2018-05-02
 
 * `Aws\ACM` - Documentation updates for acm
 * `Aws\CodePipeline` - Added support for webhooks with accompanying definitions as needed in the AWS CodePipeline API Guide.
