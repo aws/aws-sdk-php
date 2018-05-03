@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.55.6 - 2018-05-03
 
 * `Aws\AppSync` - This release adds support for authorizing your AWS AppSync endpoint with an OpenID Connect compliant service and also to configure your AWS AppSync endpoint to log requests to Amazon CloudWatch Logs.
 * `Aws\ConfigService` - Update ResourceType enum with values for Lambda, ElasticBeanstalk, WAF and ElasticLoadBalancing resources
