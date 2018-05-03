@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppSync` - This release adds support for authorizing your AWS AppSync endpoint with an OpenID Connect compliant service and also to configure your AWS AppSync endpoint to log requests to Amazon CloudWatch Logs.
+* `Aws\ConfigService` - Update ResourceType enum with values for Lambda, ElasticBeanstalk, WAF and ElasticLoadBalancing resources
+* `Aws\SecretsManager` - Documentation updates for secretsmanager
+* `Aws\Test\Build\Changelog` - Add tests to validate location, naming, and JSON compilability of ChangelogDocuments.
+* `Aws\WorkSpaces` - Amazon WorkSpaces is now available in ca-central-1
+
 ## 3.55.5 - 2018-05-02
 
 * `Aws\ACM` - Documentation updates for acm
