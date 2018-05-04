@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GuardDuty` - Amazon GuardDuty is adding five new API operations for creating and managing filters. For each filter, you can specify a criteria and an action. The action you specify is applied to findings that match the specified criteria.
+
 ## 3.55.6 - 2018-05-03
 
 * `Aws\AppSync` - This release adds support for authorizing your AWS AppSync endpoint with an OpenID Connect compliant service and also to configure your AWS AppSync endpoint to log requests to Amazon CloudWatch Logs.
