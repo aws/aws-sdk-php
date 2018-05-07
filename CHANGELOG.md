@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.55.8 - 2018-05-07
 
 * `Aws\AlexaForBusiness` - This release adds the new Device status "DEREGISTERED". This release also adds DEVICE_STATUS as the new DeviceEventType.
 * `Aws\Budgets` - "With this release, customers can use AWS Budgets to monitor how much of their Amazon EC2, Amazon RDS, Amazon Redshift, and Amazon ElastiCache instance usage is covered by reservations, and receive alerts when their coverage falls below the threshold they define."
