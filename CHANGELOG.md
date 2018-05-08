@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.55.9 - 2018-05-08
 
 * `Aws\EC2` - Enable support for specifying CPU options during instance launch.
 * `Aws\Lightsail` - Lightsail is now available in regions eu-west-3, ap-northeast-2 and ca-central-1. 
