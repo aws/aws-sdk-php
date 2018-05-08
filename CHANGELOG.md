@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Enable support for specifying CPU options during instance launch.
+* `Aws\Lightsail` - Lightsail is now available in regions eu-west-3, ap-northeast-2 and ca-central-1. 
+* `Aws\RDS` - Correction to the documentation about copying unencrypted snapshots.
+
 ## 3.55.8 - 2018-05-07
 
 * `Aws\AlexaForBusiness` - This release adds the new Device status "DEREGISTERED". This release also adds DEVICE_STATUS as the new DeviceEventType.
