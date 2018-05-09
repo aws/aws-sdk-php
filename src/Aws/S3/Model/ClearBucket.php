@@ -161,6 +161,14 @@ class ClearBucket extends AbstractHasDispatcher
         ));
 
         $deleted = 0;
+        // Original implementation for file deletion first creates array of ALL 
+		// objects in the bucket (that matches defined prefix) and then starts 
+		// sending batch delete reqests with 1000 files per reqest.
+		// Loading array with all files increases memory consumption so
+		// deletion of 1 million files with 2GB RAM instance (t2.small) was impossible.
+		// Fix for that is to flush requests manually after every 10k files 
+		// which will clear array and won't increase memory consumption further.
+		$filesToDelete = 0;
         foreach ($this->getIterator() as $object) {
             if (isset($object['VersionId'])) {
                 $versionId = $object['VersionId'] == 'null' ? null : $object['VersionId'];
@@ -169,6 +177,11 @@ class ClearBucket extends AbstractHasDispatcher
             }
             $batch->addKey($object['Key'], $versionId);
             $deleted++;
+            $filesToDelete++;
+			if ($filesToDelete === 10000) {
+				$batch->flush();
+				$filesToDelete = 0;
+			}
         }
         $batch->flush();
 
