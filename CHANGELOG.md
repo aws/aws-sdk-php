@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GameLift` - AutoScaling Target Tracking scaling simplification along with StartFleetActions and StopFleetActions APIs to suspend and resume automatic scaling at will.
+
 ## 3.55.10 - 2018-05-10
 
 * `Aws\Budgets` - Updating the regex for the NumericValue fields.
