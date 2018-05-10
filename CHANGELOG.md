@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.55.10 - 2018-05-10
 
 * `Aws\Budgets` - Updating the regex for the NumericValue fields.
 * `Aws\EC2` - Enable support for latest flag with Get Console Output
