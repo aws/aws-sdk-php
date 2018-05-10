@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.55.11 - 2018-05-10
 
 * `Aws\GameLift` - AutoScaling Target Tracking scaling simplification along with StartFleetActions and StopFleetActions APIs to suspend and resume automatic scaling at will.
 
