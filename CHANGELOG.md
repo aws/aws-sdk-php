@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Budgets` - Updating the regex for the NumericValue fields.
+* `Aws\EC2` - Enable support for latest flag with Get Console Output
+* `Aws\IotDataPlane` - With this release, we're adding support for ap-south-1 AWS region.
+* `Aws\RDS` - Changes to support the Aurora MySQL Backtrack feature.
+
 ## 3.55.9 - 2018-05-08
 
 * `Aws\EC2` - Enable support for specifying CPU options during instance launch.
