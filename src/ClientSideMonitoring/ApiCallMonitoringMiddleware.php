@@ -11,6 +11,24 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
 {
 
     /**
+     * Data format for event properties to be sent to the monitoring agent.
+     *
+     * Associative array in the format:
+     * - eventKey => subarray
+     *
+     *     Subarray keys:
+     *     - 'objectType' => 'command|request|response'
+     *     - 'objectKey' => string (or JMESPath expression for response object)
+     *     - 'eventKey' => string
+     *     - 'maxLength' => int|null
+     *
+     * @var array
+     * @todo Populate with all data that fit the pattern
+     */
+    protected $dataFormat = [];
+
+
+    /**
      * Returns $eventData array with information from the request and command.
      *
      * @param CommandInterface $cmd
@@ -34,18 +52,6 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     protected function populateResponseEventData(array $eventData, ResultInterface $result)
     {
         return $eventData;
-    }
-
-
-    /**
-     * Serializes the event data with string length limitations, returning a JSON-formatted string.
-     *
-     * @param array $eventData
-     * @return string
-     */
-    protected function serializeEventData(array $eventData)
-    {
-        return '';
     }
 
 }

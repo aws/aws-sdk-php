@@ -5,7 +5,7 @@ namespace Aws\ClientSideMonitoring;
 use Aws\CommandInterface;
 use Aws\ResultInterface;
 use GuzzleHttp\Promise\Promise;
-use phpDocumentor\Reflection\Types\Resource_;
+use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -23,15 +23,13 @@ abstract class AbstractMonitoringMiddleware
 
 
     /**
-     * Socket settings. Port is mutable from options setting
+     * Socket settings.
      *
      * @var array
-     * @todo Change depending on resolution of CSM options with Bret
      */
-    protected static $socket_settings = [
+    private static $socket_settings = [
         'address' => '127.0.0.1',
         'domain' => AF_INET,
-        'port' => 31000,
         'protocol' => SOL_UDP,
         'type' => SOCK_DGRAM
     ];
@@ -62,9 +60,6 @@ abstract class AbstractMonitoringMiddleware
     {
         $this->nextHandler = $handler;
         $this->options = $options;
-        if (!empty($options['port'])) {
-            self::$socket_settings['port'] = $options['port'];
-        }
     }
 
 
@@ -103,16 +98,26 @@ abstract class AbstractMonitoringMiddleware
      * @param  bool $forceNewConnection
      * @return Resource
      */
-    private static function prepareSocket($forceNewConnection = false)
+    private function prepareSocket($forceNewConnection = false)
     {
         if (!is_resource(self::$socket) || $forceNewConnection || socket_last_error(self::$socket)) {
+            if ($this->options instanceof PromiseInterface) {
+                $this->options = $this->options->wait(true);
+            };
+            if ($this->options instanceof CSMConfigInterface) {
+                $port = $this->options->getPort();
+            } else if (is_array($this->options) && isset($this->options['port'])) {
+                $port = $this->options['port'];
+            } else {
+                throw new ClientSideMonitoringException('Port setting could not be found for client-side monitoring.');
+            }
+
             self::$socket = socket_create(
                 self::$socket_settings['domain'],
                 self::$socket_settings['type'],
                 self::$socket_settings['protocol']
             );
-
-            socket_connect(self::$socket, self::$socket_settings['address'], self::$socket_settings['port']);
+            socket_connect(self::$socket, self::$socket_settings['address'], $port);
             socket_clear_error(self::$socket);
         }
 
@@ -128,12 +133,33 @@ abstract class AbstractMonitoringMiddleware
      */
     protected function sendEventData($eventData)
     {
-        $socket = self::prepareSocket();
+        $socket = $this->prepareSocket();
         $result = socket_write($socket, $eventData, strlen($eventData));
         if ($result === false) {
-            self::prepareSocket(true);
+            $this->prepareSocket(true);
         }
         return $result;
+    }
+
+
+    /**
+     * Serializes the event data with string length limitations, returning a JSON-formatted string.
+     *
+     * @param array $eventData
+     * @return string
+     */
+    protected function serializeEventData(array $eventData)
+    {
+        if (!isset($this->dataFormat)) {
+            throw new ClientSideMonitoringException("Classes extending AbstractMonitoringMiddleware 
+                must set 'dataFormat' property.");
+        }
+        foreach ($eventData as $key => $datum) {
+            if (!empty($this->dataFormat[$key]['maxLength']) && is_int($this->dataFormat[$key]['maxLength'])) {
+                $eventData[$key] = substr($datum, 0, $this->dataFormat[$key]['maxLength']);
+            }
+        }
+        return json_encode($eventData);
     }
 
 
@@ -171,14 +197,5 @@ abstract class AbstractMonitoringMiddleware
      * @return array
      */
     abstract protected function populateResponseEventData(array $eventData, ResultInterface $result);
-
-
-    /**
-     * Serializes the event data with string length limitations, returning a JSON-formatted string.
-     *
-     * @param array $eventData
-     * @return string
-     */
-    abstract protected function serializeEventData(array $eventData);
 
 }
