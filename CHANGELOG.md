@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.56.1 - 2018-05-15
 
 * `Aws\ConfigService` - Update ResourceType enum with values for XRay resource
 
