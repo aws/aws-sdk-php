@@ -19,20 +19,7 @@ abstract class AbstractMonitoringMiddleware
      * UDP socket resource
      * @var Resource
      */
-    protected static $socket;
-
-
-    /**
-     * Socket settings.
-     *
-     * @var array
-     */
-    private static $socket_settings = [
-        'address' => '127.0.0.1',
-        'domain' => AF_INET,
-        'protocol' => SOL_UDP,
-        'type' => SOCK_DGRAM
-    ];
+    private static $socket;
 
 
     /**
@@ -54,7 +41,6 @@ abstract class AbstractMonitoringMiddleware
      *
      * @param callable $handler
      * @param array $options
-     * @todo Change depending on resolution of CSM options with Bret
      */
     public function __construct(callable $handler, array $options)
     {
@@ -69,26 +55,27 @@ abstract class AbstractMonitoringMiddleware
      * @param  CommandInterface $cmd
      * @param  RequestInterface $request
      * @return Promise
+     * @todo When CSMConfigProvider implemented, revisit $this->options code
+     * @todo Style review for line length limits
      */
     public function __invoke(CommandInterface $cmd, RequestInterface $request) {
 
         $handler = $this->nextHandler;
-
+        $eventData = null;
         if (!empty($this->options['enabled'])) {
             $eventData = $this->populateRequestEventData($cmd, $request);
-        } else {
-            $eventData = null;
         }
 
         return $handler($cmd, $request)->then(function(ResultInterface $result) use ($eventData) {
-            if (!empty($this->options['enabled'])) {
-                $eventData = $this->serializeEventData($this->populateResponseEventData($eventData, $result));
-                $this->sendEventData($eventData);
-            }
+                if (!empty($this->options['enabled'])) {
+                    $eventData = $this->serializeEventData($this->populateResponseEventData($eventData, $result));
+                    $this->sendEventData($eventData);
+                }
             return $result;
         });
 
     }
+
 
     /**
      * Creates a UDP socket resource and stores it with the class, or retrieves it if already
@@ -97,28 +84,25 @@ abstract class AbstractMonitoringMiddleware
      *
      * @param  bool $forceNewConnection
      * @return Resource
+     * @todo When CSMConfigProvider implemented, revisit $this->options code
      */
     private function prepareSocket($forceNewConnection = false)
     {
         if (!is_resource(self::$socket) || $forceNewConnection || socket_last_error(self::$socket)) {
             if ($this->options instanceof PromiseInterface) {
                 $this->options = $this->options->wait(true);
-            };
+            }
             if ($this->options instanceof CSMConfigInterface) {
                 $port = $this->options->getPort();
             } else if (is_array($this->options) && isset($this->options['port'])) {
                 $port = $this->options['port'];
             } else {
-                throw new ClientSideMonitoringException('Port setting could not be found for client-side monitoring.');
+                throw new \InvalidArgumentException('Port setting could not be found for client-side monitoring.');
             }
 
-            self::$socket = socket_create(
-                self::$socket_settings['domain'],
-                self::$socket_settings['type'],
-                self::$socket_settings['protocol']
-            );
-            socket_connect(self::$socket, self::$socket_settings['address'], $port);
+            self::$socket = socket_create(AF_INET,SOCK_DGRAM,SOL_UDP);
             socket_clear_error(self::$socket);
+            socket_connect(self::$socket, '127.0.0.1', $port);
         }
 
         return self::$socket;
@@ -147,15 +131,16 @@ abstract class AbstractMonitoringMiddleware
      *
      * @param array $eventData
      * @return string
+     * @internal Follows specific internal use pattern
      */
     protected function serializeEventData(array $eventData)
     {
         if (!isset($this->dataFormat)) {
-            throw new ClientSideMonitoringException("Classes extending AbstractMonitoringMiddleware 
-                must set 'dataFormat' property.");
+            throw new \InvalidArgumentException("Classes extending 
+                AbstractMonitoringMiddleware must set 'dataFormat' property.");
         }
         foreach ($eventData as $key => $datum) {
-            if (!empty($this->dataFormat[$key]['maxLength']) && is_int($this->dataFormat[$key]['maxLength'])) {
+            if (!empty($this->dataFormat[$key]['maxLength'])) {
                 $eventData[$key] = substr($datum, 0, $this->dataFormat[$key]['maxLength']);
             }
         }
