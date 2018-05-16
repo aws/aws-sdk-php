@@ -4,6 +4,10 @@ namespace Aws;
 use Aws\Api\Validator;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
+use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
+use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
+use Aws\ClientSideMonitoring\CSMConfigInterface;
+use Aws\ClientSideMonitoring\CSMConfigProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
@@ -142,6 +146,14 @@ class ClientResolver
             'doc'     => 'Configures the maximum number of allowed retries for a client (pass 0 to disable retries). ',
             'fn'      => [__CLASS__, '_apply_retries'],
             'default' => 3,
+        ],
+        'csm' => [
+            'type'     => 'value',
+            'valid'    => [CSMConfigInterface::class, CacheInterface::class, 'array', 'callable'],
+            'doc'      => 'CSM options for the client, including whether it is enabled. Provides an associative array of
+            "enabled", "port", and "client_id.", or an instance of CSMConfigInterface',
+            'fn'       => [__CLASS__, '_apply_csm'],
+            'default'  => [CSMConfigProvider::class, 'defaultProvider']
         ],
         'validate' => [
             'type'    => 'value',
@@ -416,6 +428,15 @@ class ClientResolver
                 . 'key-value pairs, a credentials provider function, or false.');
         }
     }
+
+
+    public static function _apply_csm($options, array &$args, HandlerList $list)
+    {
+        $list->before('retry', 'ApiCallMonitoringMiddleware', ApiCallMonitoringMiddleware::wrap($options));
+        $list->after('retry', 'ApiCallAttemptMonitoringMiddleware', ApiCallAttemptMonitoringMiddleware::wrap($options));
+    }
+
+
 
     public static function _apply_api_provider(callable $value, array &$args)
     {

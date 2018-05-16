@@ -22,11 +22,25 @@ interface CSMConfigInterface
     public function getClientId();
 
     /**
+     * Get the UNIX timestamp in which the credentials will expire
+     *
+     * @return int|null
+     */
+    public function getExpiration();
+
+    /**
      * Returns the port if available
      *
      * @return int|null
      */
     public function getPort();
+
+    /**
+     * Check if the credentials are expired
+     *
+     * @return bool
+     */
+    public function isExpired();
 
     /**
      * Converts the config to an associative array.

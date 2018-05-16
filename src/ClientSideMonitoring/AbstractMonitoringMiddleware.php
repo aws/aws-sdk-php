@@ -24,7 +24,7 @@ abstract class AbstractMonitoringMiddleware
 
     /**
      * Client-side monitoring options
-     * @var array
+     * @var PromiseInterface|CSMConfigInterface
      */
     protected $options;
 
@@ -64,9 +64,9 @@ abstract class AbstractMonitoringMiddleware
      * Constructor stores the passed in handler and options
      *
      * @param callable $handler
-     * @param array $options
+     * @param mixed $options
      */
-    public function __construct(callable $handler, array $options)
+    public function __construct(callable $handler, $options)
     {
         $this->nextHandler = $handler;
         $this->options = $options;
@@ -78,13 +78,13 @@ abstract class AbstractMonitoringMiddleware
      * @param  CommandInterface $cmd
      * @param  RequestInterface $request
      * @return Promise
-     * @todo When CSMConfigProvider implemented, revisit $this->options code
+     * @todo Confirm with Bret that @monitoringEvents can be added to result
      */
     public function __invoke(CommandInterface $cmd, RequestInterface $request) {
 
         $handler = $this->nextHandler;
         $eventData = null;
-        if (!empty($this->options['enabled'])) {
+        if ($this->getEnabled()) {
             $eventData = $this->populateRequestEventData(
                 $cmd,
                 $request,
@@ -94,7 +94,7 @@ abstract class AbstractMonitoringMiddleware
 
         return $handler($cmd, $request)->then(
             function(ResultInterface $result) use ($eventData) {
-                if (!empty($this->options['enabled'])) {
+                if ($this->getEnabled()) {
                     $eventData = $this->populateResponseEventData($result, $eventData);
                     if (empty($result['@monitoringEvents'])) {
                         $result['@monitoringEvents'] = [];
@@ -103,7 +103,8 @@ abstract class AbstractMonitoringMiddleware
                     $this->sendEventData($eventData);
                 }
                 return $result;
-            });
+            }
+        );
     }
 
     /**
@@ -113,7 +114,6 @@ abstract class AbstractMonitoringMiddleware
      *
      * @param  bool $forceNewConnection
      * @return Resource
-     * @todo When CSMConfigProvider implemented, revisit $this->options code
      */
     private function prepareSocket($forceNewConnection = false)
     {
@@ -121,20 +121,9 @@ abstract class AbstractMonitoringMiddleware
             || $forceNewConnection
             || socket_last_error(self::$socket)
         ) {
-            if ($this->options instanceof PromiseInterface) {
-                $this->options = $this->options->wait(true);
-            }
-            if ($this->options instanceof CSMConfigInterface) {
-                $port = $this->options->getPort();
-            } else if (is_array($this->options) && isset($this->options['port'])) {
-                $port = $this->options['port'];
-            } else {
-                $port = 31000;
-            }
-
             self::$socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
             socket_clear_error(self::$socket);
-            socket_connect(self::$socket, '127.0.0.1', $port);
+            socket_connect(self::$socket, '127.0.0.1', $this->getPort());
         }
 
         return self::$socket;
@@ -178,15 +167,24 @@ abstract class AbstractMonitoringMiddleware
         return json_encode($eventData);
     }
 
+    /**
+     * Returns the client ID from options, unwrapping options if necessary
+     *
+     * @return string
+     */
     private function getClientId()
     {
-        if ($this->options instanceof CSMConfigInterface) {
-            return $this->options->getPort();
-        }
-        if (is_array($this->options) && !empty($this->options['client_id'])) {
-            return $this->options['client_id'];
-        }
-        return '';
+        return $this->unwrappedOptions()->getClientId();
+    }
+
+    /**
+     * Returns enabled flag from options, unwrapping options if necessary
+     *
+     * @return bool
+     */
+    private function getEnabled()
+    {
+        return $this->unwrappedOptions()->getEnabled();
     }
 
     private function getGlobalEventData()
@@ -194,6 +192,16 @@ abstract class AbstractMonitoringMiddleware
         $event = [];
         $event['ClientId'] = $this->getClientId();
         return $event;
+    }
+
+    /**
+     * Returns port from options, unwrapping options if necessary
+     *
+     * @return int
+     */
+    private function getPort()
+    {
+        return $this->unwrappedOptions()->getPort();
     }
 
     /**
@@ -238,5 +246,18 @@ abstract class AbstractMonitoringMiddleware
             }
         }
         return $event;
+    }
+
+    /**
+     * Unwraps options, if needed, and returns them.
+     *
+     * @return CSMConfigInterface
+     */
+    private function unwrappedOptions()
+    {
+        if (!($this->options instanceof CSMConfigInterface)) {
+            $this->options = CSMConfigProvider::unwrap($this->options);
+        }
+        return $this->options;
     }
 }
