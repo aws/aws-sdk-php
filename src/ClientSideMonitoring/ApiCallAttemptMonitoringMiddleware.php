@@ -6,36 +6,35 @@ use Aws\CommandInterface;
 use Aws\ResultInterface;
 use Psr\Http\Message\RequestInterface;
 
-
+/**
+ * @internal
+ */
 class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
 {
-    protected static function getDataConfiguration()
+    /**
+     * @inheritdoc
+     */
+    public static function getDataConfiguration()
     {
-        static $callAttemptDataConfig = [
-            [
-                'valueObject' => 'command',
-                'valueLocation' => 't',
-                'eventKey' => 'test',
-                'maxLength' => 1,
-            ],
-        ];
-        static $dataConfig;
+        static $callDataConfig;
+        if (empty($callDataConfig)) {
+            $callDataConfig = [
+            ];
+        }
 
-        if (!$dataConfig) {
+        static $dataConfig;
+        if (empty($dataConfig)) {
             $dataConfig = array_merge(
-                $callAttemptDataConfig,
+                $callDataConfig,
                 parent::getDataConfiguration()
             );
         }
+
         return $dataConfig;
     }
 
     /**
-     * Returns $eventData array with information from the request and command.
-     *
-     * @param CommandInterface $cmd
-     * @param RequestInterface $request
-     * @return array
+     * @inheritdoc
      */
     protected function populateRequestEventData(
         CommandInterface $cmd,
@@ -48,12 +47,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
     }
 
     /**
-     * Returns $eventData array with information from the response, including the calculation
-     * for attempt latency
-     *
-     * @param array $event
-     * @param ResultInterface $result
-     * @return array
+     * @inheritdoc
      */
     protected function populateResponseEventData(
         ResultInterface $result,

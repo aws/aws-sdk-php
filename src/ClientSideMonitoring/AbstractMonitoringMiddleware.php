@@ -8,6 +8,9 @@ use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * @internal
+ */
 abstract class AbstractMonitoringMiddleware
 {
     /**
@@ -31,19 +34,26 @@ abstract class AbstractMonitoringMiddleware
     /**
      * Data format for event properties to be sent to the monitoring agent.
      *
-     * Associative array in the format:
-     * - eventKey => subarray
-     *
+     * List of associative arrays in the format:
      *     Subarray keys:
      *     - 'valueObject' => CommandInterface::class, RequestInterface::class, or ResultInterface::class
-     *     - 'valueLocation' => string (or JMESPath expression for response object)
+     *     - 'valueAccessor' => callable
      *     - 'eventKey' => string
      *     - 'maxLength' => int
      *
      * @return array
      */
-    protected static function getDataConfiguration() {
-        return [];
+    public static function getDataConfiguration()
+    {
+        return [
+            [
+                'valueObject' => CommandInterface::class,
+                'valueAccessor' => function (CommandInterface $cmd) {
+                    return $cmd->getName();
+                },
+                'eventKey' => 'Api',
+            ],
+        ];
     }
 
     /**
@@ -80,8 +90,8 @@ abstract class AbstractMonitoringMiddleware
      * @return Promise
      * @todo Confirm with Bret that @monitoringEvents can be added to result
      */
-    public function __invoke(CommandInterface $cmd, RequestInterface $request) {
-
+    public function __invoke(CommandInterface $cmd, RequestInterface $request)
+    {
         $handler = $this->nextHandler;
         $eventData = null;
         if ($this->getEnabled()) {
@@ -93,7 +103,7 @@ abstract class AbstractMonitoringMiddleware
         }
 
         return $handler($cmd, $request)->then(
-            function(ResultInterface $result) use ($eventData) {
+            function (ResultInterface $result) use ($eventData) {
                 if ($this->getEnabled()) {
                     $eventData = $this->populateResponseEventData($result, $eventData);
                     if (empty($result['@monitoringEvents'])) {
@@ -189,8 +199,10 @@ abstract class AbstractMonitoringMiddleware
 
     private function getGlobalEventData()
     {
-        $event = [];
-        $event['ClientId'] = $this->getClientId();
+        $event = [
+            'ClientId' => $this->getClientId(),
+            'Version' => 1
+        ];
         return $event;
     }
 
@@ -219,9 +231,9 @@ abstract class AbstractMonitoringMiddleware
         $dataFormat = static::getDataConfiguration();
         foreach ($dataFormat as $datum) {
             if ($datum['valueObject'] === CommandInterface::class) {
-                $event[$datum['eventKey']] = $cmd[$datum['valueLocation']];
-            } else if ($datum['valueObject'] === RequestInterface::class) {
-                $event[$datum['eventKey']] = $request[$datum['valueLocation']];
+                $event[$datum['eventKey']] = $datum['valueAccessor']($cmd);
+            } elseif ($datum['valueObject'] === RequestInterface::class) {
+                $event[$datum['eventKey']] = $datum['valueAccessor']($request);
             }
         }
         return $event;
@@ -242,7 +254,7 @@ abstract class AbstractMonitoringMiddleware
         $dataFormat = static::getDataConfiguration();
         foreach ($dataFormat as $datum) {
             if ($datum['valueObject'] === ResultInterface::class) {
-                $event['key'] = $result->search($datum['valueLocation']);
+                $event['key'] = $datum['valueAccessor']($result);
             }
         }
         return $event;

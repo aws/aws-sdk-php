@@ -34,7 +34,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         ]));
         $handler = $list->resolve();
 
-        $handler(new Command('RunScheduledInstances', [
+        $response = $handler(new Command('RunScheduledInstances', [
             'LaunchSpecification' => [
                 'ImageId' => 'test-image',
             ],
@@ -42,5 +42,9 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
             'InstanceCount' => 1,
         ]), new Request('POST', 'http://foo.com'))->wait();
         $this->assertTrue($called);
+        $this->assertEquals(
+            'RunScheduledInstances',
+            $response['@monitoringEvents'][0]['Api']
+        );
     }
 }
