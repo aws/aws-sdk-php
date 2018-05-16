@@ -9,24 +9,26 @@ use Psr\Http\Message\RequestInterface;
 
 class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
 {
+    protected static function getDataConfiguration()
+    {
+        static $callAttemptDataConfig = [
+            [
+                'valueObject' => 'command',
+                'valueLocation' => 't',
+                'eventKey' => 'test',
+                'maxLength' => 1,
+            ],
+        ];
+        static $dataConfig;
 
-    /**
-     * Data format for event properties to be sent to the monitoring agent.
-     *
-     * Associative array in the format:
-     * - eventKey => subarray
-     *
-     *     Subarray keys:
-     *     - 'objectType' => 'command|request|response'
-     *     - 'objectKey' => string (or JMESPath expression for response object)
-     *     - 'eventKey' => string
-     *     - 'maxLength' => int|null
-     *
-     * @var array
-     * @todo Populate with all data that fit the pattern
-     */
-    protected $dataFormat = [];
-
+        if (!$dataConfig) {
+            $dataConfig = array_merge(
+                $callAttemptDataConfig,
+                parent::getDataConfiguration()
+            );
+        }
+        return $dataConfig;
+    }
 
     /**
      * Returns $eventData array with information from the request and command.
@@ -35,23 +37,30 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
      * @param RequestInterface $request
      * @return array
      */
-    protected function populateRequestEventData(CommandInterface $cmd, RequestInterface $request)
-    {
-        return [];
+    protected function populateRequestEventData(
+        CommandInterface $cmd,
+        RequestInterface $request,
+        array $event
+    ) {
+        $event = parent::populateRequestEventData($cmd, $request, $event);
+        // Do local changes
+        return $event;
     }
-
 
     /**
      * Returns $eventData array with information from the response, including the calculation
      * for attempt latency
      *
-     * @param array $eventData
+     * @param array $event
      * @param ResultInterface $result
      * @return array
      */
-    protected function populateResponseEventData(array $eventData, ResultInterface $result)
-    {
-        return $eventData;
+    protected function populateResponseEventData(
+        ResultInterface $result,
+        array $event
+    ) {
+        $event = parent::populateResponseEventData($result, $event);
+        // Do local changes
+        return $event;
     }
-
 }
