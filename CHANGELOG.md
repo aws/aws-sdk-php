@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SecretsManager` - Documentation updates for secretsmanager
+* `Aws\ServiceCatalog` - Users can now pass a new option to ListAcceptedPortfolioShares called portfolio-share-type with a value of AWS_SERVICECATALOG in order to access Getting Started Portfolios that contain selected products representing common customer use cases.
+
 ## 3.56.1 - 2018-05-15
 
 * `Aws\ConfigService` - Update ResourceType enum with values for XRay resource
