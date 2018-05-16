@@ -137,7 +137,7 @@ abstract class AbstractMonitoringMiddleware
             }
             if ($this->options instanceof CSMConfigInterface) {
                 $port = $this->options->getPort();
-            } elseif (is_array($this->options) && isset($this->options['port'])) {
+            } else if (is_array($this->options) && isset($this->options['port'])) {
                 $port = $this->options['port'];
             } else {
                 $port = 31000;
