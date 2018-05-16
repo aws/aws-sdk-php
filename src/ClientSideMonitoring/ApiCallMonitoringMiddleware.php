@@ -14,18 +14,11 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     /**
      * @inheritdoc
      */
-    protected static function getDataConfiguration()
+    public static function getDataConfiguration()
     {
         static $callDataConfig;
         if (empty($callDataConfig)) {
             $callDataConfig = [
-                [
-                    'valueObject' => CommandInterface::class,
-                    'valueAccessor' => function (CommandInterface $cmd) {
-                        return $cmd->getName();
-                    },
-                    'eventKey' => 'Api',
-                ],
             ];
         }
 

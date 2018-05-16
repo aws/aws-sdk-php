@@ -43,8 +43,17 @@ abstract class AbstractMonitoringMiddleware
      *
      * @return array
      */
-    protected static function getDataConfiguration() {
-        return [];
+    public static function getDataConfiguration()
+    {
+        return [
+            [
+                'valueObject' => CommandInterface::class,
+                'valueAccessor' => function (CommandInterface $cmd) {
+                    return $cmd->getName();
+                },
+                'eventKey' => 'Api',
+            ],
+        ];
     }
 
     /**
@@ -81,8 +90,8 @@ abstract class AbstractMonitoringMiddleware
      * @return Promise
      * @todo When CSMConfigProvider implemented, revisit $this->options code
      */
-    public function __invoke(CommandInterface $cmd, RequestInterface $request) {
-
+    public function __invoke(CommandInterface $cmd, RequestInterface $request)
+    {
         $handler = $this->nextHandler;
         $eventData = null;
         if (!empty($this->options['enabled'])) {
@@ -94,7 +103,7 @@ abstract class AbstractMonitoringMiddleware
         }
 
         return $handler($cmd, $request)->then(
-            function(ResultInterface $result) use ($eventData) {
+            function (ResultInterface $result) use ($eventData) {
                 if (!empty($this->options['enabled'])) {
                     $eventData = $this->populateResponseEventData($result, $eventData);
                     if (empty($result['@monitoringEvents'])) {
@@ -104,7 +113,8 @@ abstract class AbstractMonitoringMiddleware
                     $this->sendEventData($eventData);
                 }
                 return $result;
-            });
+            }
+        );
     }
 
     /**
@@ -127,7 +137,7 @@ abstract class AbstractMonitoringMiddleware
             }
             if ($this->options instanceof CSMConfigInterface) {
                 $port = $this->options->getPort();
-            } else if (is_array($this->options) && isset($this->options['port'])) {
+            } elseif (is_array($this->options) && isset($this->options['port'])) {
                 $port = $this->options['port'];
             } else {
                 $port = 31000;
@@ -215,7 +225,7 @@ abstract class AbstractMonitoringMiddleware
         foreach ($dataFormat as $datum) {
             if ($datum['valueObject'] === CommandInterface::class) {
                 $event[$datum['eventKey']] = $datum['valueAccessor']($cmd);
-            } else if ($datum['valueObject'] === RequestInterface::class) {
+            } elseif ($datum['valueObject'] === RequestInterface::class) {
                 $event[$datum['eventKey']] = $datum['valueAccessor']($request);
             }
         }
