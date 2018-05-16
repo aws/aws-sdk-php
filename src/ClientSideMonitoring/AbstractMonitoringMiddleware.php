@@ -8,6 +8,9 @@ use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * @internal
+ */
 abstract class AbstractMonitoringMiddleware
 {
     /**
@@ -31,12 +34,10 @@ abstract class AbstractMonitoringMiddleware
     /**
      * Data format for event properties to be sent to the monitoring agent.
      *
-     * Associative array in the format:
-     * - eventKey => subarray
-     *
+     * List of associative arrays in the format:
      *     Subarray keys:
      *     - 'valueObject' => CommandInterface::class, RequestInterface::class, or ResultInterface::class
-     *     - 'valueLocation' => string (or JMESPath expression for response object)
+     *     - 'valueAccessor' => callable
      *     - 'eventKey' => string
      *     - 'maxLength' => int
      *
@@ -191,8 +192,10 @@ abstract class AbstractMonitoringMiddleware
 
     private function getGlobalEventData()
     {
-        $event = [];
-        $event['ClientId'] = $this->getClientId();
+        $event = [
+            'ClientId' => $this->getClientId(),
+            'Version' => 1
+        ];
         return $event;
     }
 
@@ -211,9 +214,9 @@ abstract class AbstractMonitoringMiddleware
         $dataFormat = static::getDataConfiguration();
         foreach ($dataFormat as $datum) {
             if ($datum['valueObject'] === CommandInterface::class) {
-                $event[$datum['eventKey']] = $cmd[$datum['valueLocation']];
+                $event[$datum['eventKey']] = $datum['valueAccessor']($cmd);
             } else if ($datum['valueObject'] === RequestInterface::class) {
-                $event[$datum['eventKey']] = $request[$datum['valueLocation']];
+                $event[$datum['eventKey']] = $datum['valueAccessor']($request);
             }
         }
         return $event;
@@ -234,7 +237,7 @@ abstract class AbstractMonitoringMiddleware
         $dataFormat = static::getDataConfiguration();
         foreach ($dataFormat as $datum) {
             if ($datum['valueObject'] === ResultInterface::class) {
-                $event['key'] = $result->search($datum['valueLocation']);
+                $event['key'] = $datum['valueAccessor']($result);
             }
         }
         return $event;

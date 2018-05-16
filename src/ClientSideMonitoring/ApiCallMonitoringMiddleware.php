@@ -6,35 +6,42 @@ use Aws\CommandInterface;
 use Aws\ResultInterface;
 use Psr\Http\Message\RequestInterface;
 
-
+/**
+ * @internal
+ */
 class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
 {
+    /**
+     * @inheritdoc
+     */
     protected static function getDataConfiguration()
     {
-        static $callDataConfig = [
-//            [
-//                'valueObject' => CommandInterface::class,
-//                'valueLocation' => 'name',
-//                'eventKey' => 'Api',
-//            ],
-        ];
-        static $dataConfig;
+        static $callDataConfig;
+        if (empty($callDataConfig)) {
+            $callDataConfig = [
+                [
+                    'valueObject' => CommandInterface::class,
+                    'valueAccessor' => function (CommandInterface $cmd) {
+                        return $cmd->getName();
+                    },
+                    'eventKey' => 'Api',
+                ],
+            ];
+        }
 
-        if (!$dataConfig) {
+        static $dataConfig;
+        if (empty($dataConfig)) {
             $dataConfig = array_merge(
                 $callDataConfig,
                 parent::getDataConfiguration()
             );
         }
+
         return $dataConfig;
     }
 
     /**
-     * Returns $eventData array with information from the request and command.
-     *
-     * @param CommandInterface $cmd
-     * @param RequestInterface $request
-     * @return array
+     * @inheritdoc
      */
     protected function populateRequestEventData(
         CommandInterface $cmd,
@@ -47,12 +54,7 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     }
 
     /**
-     * Returns $eventData array with information from the response, including the calculation
-     * for attempt latency
-     *
-     * @param array $event
-     * @param ResultInterface $result
-     * @return array
+     * @inheritdoc
      */
     protected function populateResponseEventData(
         ResultInterface $result,
