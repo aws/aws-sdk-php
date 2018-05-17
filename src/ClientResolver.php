@@ -150,8 +150,7 @@ class ClientResolver
         'csm' => [
             'type'     => 'value',
             'valid'    => [CSMConfigInterface::class, CacheInterface::class, 'array', 'callable'],
-            'doc'      => 'CSM options for the client, including whether it is enabled. Provides an associative array of
-            "enabled", "port", and "client_id.", or an instance of CSMConfigInterface',
+            'doc'      => 'CSM options for the client, including whether it is enabled. Provides a callable wrapping a promise, an instance of CSMConfigInterface, an instance of CacheInterface, or an array',
             'fn'       => [__CLASS__, '_apply_csm'],
             'default'  => [CSMConfigProvider::class, 'defaultProvider']
         ],
@@ -429,14 +428,28 @@ class ClientResolver
         }
     }
 
-
+    /**
+     * @todo Investigate handling of retry middleware not existing. Logging?
+     * @todo Pass in relevant client and credentials data
+     */
     public static function _apply_csm($options, array &$args, HandlerList $list)
     {
-        $list->before('retry', 'ApiCallMonitoringMiddleware', ApiCallMonitoringMiddleware::wrap($options));
-        $list->after('retry', 'ApiCallAttemptMonitoringMiddleware', ApiCallAttemptMonitoringMiddleware::wrap($options));
+        try {
+            $list->before('retry', 'ApiCallMonitoringMiddleware',
+                ApiCallMonitoringMiddleware::wrap($options));
+        } catch (IAE $e) {
+            $list->prependSign(ApiCallMonitoringMiddleware::wrap($options),
+                'ApiCallMonitoringMiddleware');
+        }
+
+        try {
+            $list->after('retry', 'ApiCallAttemptMonitoringMiddleware',
+                ApiCallAttemptMonitoringMiddleware::wrap($options));
+        } catch (IAE $e) {
+            $list->appendSign(ApiCallMonitoringMiddleware::wrap($options),
+                'ApiCallAttemptMonitoringMiddleware');
+        }
     }
-
-
 
     public static function _apply_api_provider(callable $value, array &$args)
     {
