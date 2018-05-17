@@ -32,7 +32,6 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
                     'eventKey' => 'Latency',
                 ],
                 [
-                    'valueObject' => null,
                     'valueAccessor' => function () {
                         return 'ApiCall';
                     },

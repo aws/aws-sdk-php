@@ -19,7 +19,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         if (empty($callDataConfig)) {
             $callDataConfig = [
                 [
-                    'valueObject' => null,
                     'valueAccessor' => function () {
                         return 1; // TODO get real value
                     },
@@ -33,7 +32,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     'eventKey' => 'AttemptLatency',
                 ],
                 [
-                    'valueObject' => null,
                     'valueAccessor' => function () {
                         return 1; // TODO get real value
                     },
@@ -41,7 +39,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     'maxLength' => 128,
                 ],
                 [
-                    'valueObject' => null,
                     'valueAccessor' => function () {
                         return 1; // TODO get real value
                     },
@@ -63,7 +60,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     'eventKey' => 'HttpStatusCode',
                 ],
                 [
-                    'valueObject' => null,
                     'valueAccessor' => function () {
                         return 1; // TODO get real value
                     },
@@ -71,7 +67,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     'maxLength' => 128,
                 ],
                 [
-                    'valueObject' => null,
                     'valueAccessor' => function () {
                         return 1; // TODO get real value
                     },
@@ -79,7 +74,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     'maxLength' => 512,
                 ],
                 [
-                    'valueObject' => null,
                     'valueAccessor' => function () {
                         return 'ApiCallAttempt';
                     },

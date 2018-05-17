@@ -194,7 +194,9 @@ abstract class AbstractMonitoringMiddleware
     ) {
         $dataFormat = static::getDataConfiguration();
         foreach ($dataFormat as $datum) {
-            if ($datum['valueObject'] === CommandInterface::class) {
+            if (empty($datum['valueObject'])) {
+                $event[$datum['eventKey']] = $datum['valueAccessor']();
+            } elseif ($datum['valueObject'] === CommandInterface::class) {
                 $event[$datum['eventKey']] = $datum['valueAccessor']($cmd);
             } elseif ($datum['valueObject'] === RequestInterface::class) {
                 $event[$datum['eventKey']] = $datum['valueAccessor']($request);
@@ -217,7 +219,9 @@ abstract class AbstractMonitoringMiddleware
     ) {
         $dataFormat = static::getDataConfiguration();
         foreach ($dataFormat as $datum) {
-            if ($datum['valueObject'] === ResultInterface::class) {
+            if (empty($datum['valueObject'])) {
+                $event[$datum['eventKey']] = $datum['valueAccessor']();
+            } elseif ($datum['valueObject'] === ResultInterface::class) {
                 $event['key'] = $datum['valueAccessor']($result);
             }
         }
