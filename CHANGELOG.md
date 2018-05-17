@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.56.3 - 2018-05-17
 
 * `Aws\CodeDeploy` - Documentation updates for codedeploy
 * `Aws\CognitoIdentityProvider` - Amazon Cognito User Pools now supports federation for users to sign up and sign in with any identity provider following the OpenID Connect standard. Amazon Cognito User Pools now returns the User Pool's Amazon Resource Name (ARN) from the CreateUserPool, UpdateUserPool, and DescribeUserPool APIs.
