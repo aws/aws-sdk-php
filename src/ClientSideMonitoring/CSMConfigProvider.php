@@ -19,50 +19,49 @@ class CSMConfigProvider
     const FALLBACK_ENABLED = false;
     const FALLBACK_PORT = 31000;
 
+    /**
+     * Wraps a credential provider and saves provided credentials in an
+     * instance of Aws\CacheInterface. Forwards calls when no credentials found
+     * in cache and updates cache with the results.
+     *
+     * Defaults to using a simple file-based cache when none provided.
+     *
+     * @param callable $provider Credentials provider function to wrap
+     * @param CacheInterface $cache Cache to store credentials
+     * @param string|null $cacheKey (optional) Cache key to use
+     *
+     * @return callable
+     * @todo Implement for real
+     */
+    public static function cache(
+        callable $provider,
+        CacheInterface $cache,
+        $cacheKey = null
+    ) {
+        $cacheKey = $cacheKey ?: 'aws_cached_credentials';
 
-//    /**
-//     * Wraps a credential provider and saves provided credentials in an
-//     * instance of Aws\CacheInterface. Forwards calls when no credentials found
-//     * in cache and updates cache with the results.
-//     *
-//     * Defaults to using a simple file-based cache when none provided.
-//     *
-//     * @param callable $provider Credentials provider function to wrap
-//     * @param CacheInterface $cache Cache to store credentials
-//     * @param string|null $cacheKey (optional) Cache key to use
-//     *
-//     * @return callable
-//     */
-//    public static function cache(
-//        callable $provider,
-//        CacheInterface $cache,
-//        $cacheKey = null
-//    ) {
-//        $cacheKey = $cacheKey ?: 'aws_cached_credentials';
-//
-//        return function () use ($provider, $cache, $cacheKey) {
-//            $found = $cache->get($cacheKey);
-//            if ($found instanceof CSMConfigInterface && !$found->isExpired()) {
-//                return Promise\promise_for($found);
-//            }
-//
-//            return $provider()
-//                ->then(function (CSMConfigInterface $creds) use (
-//                    $cache,
-//                    $cacheKey
-//                ) {
-//                    $cache->set(
-//                        $cacheKey,
-//                        $creds,
-//                        null === $creds->getExpiration() ?
-//                            0 : $creds->getExpiration() - time()
-//                    );
-//
-//                    return $creds;
-//                });
-//        };
-//    }
+        return function () use ($provider, $cache, $cacheKey) {
+            $found = $cache->get($cacheKey);
+            if ($found instanceof CSMConfigInterface && !$found->isExpired()) {
+                return Promise\promise_for($found);
+            }
 
+            return $provider()
+                ->then(function (CSMConfigInterface $creds) use (
+                    $cache,
+                    $cacheKey
+                ) {
+                    $cache->set(
+                        $cacheKey,
+                        $creds,
+                        null === $creds->getExpiration() ?
+                            0 : $creds->getExpiration() - time()
+                    );
+
+                    return $creds;
+                });
+        };
+    }
 
     /**
      * Creates an aggregate credentials provider that invokes the provided
@@ -88,7 +87,6 @@ class CSMConfigProvider
             return $promise;
         };
     }
-
 
     /**
      * Create a default CSM config provider that first checks for environment
@@ -116,11 +114,11 @@ class CSMConfigProvider
         );
     }
 
-
     /**
      * Provider that creates CSM config from environment variables
      *
      * @return callable
+     * @todo Investigate which config options are necessary
      */
     public static function env()
     {
@@ -129,19 +127,18 @@ class CSMConfigProvider
             $client_id = getenv(self::ENV_CLIENT_ID);
             $enabled = getenv(self::ENV_ENABLED);
             $port = getenv(self::ENV_PORT);
-            if ($client_id && $port && $enabled !== false) {
+            if ($port && $enabled !== false) {
+                $client_id = !empty($client_id) ? $client_id : '';
                 return Promise\promise_for(
                     new CSMConfig($enabled, $port, $client_id)
                 );
             }
 
-            return new Promise\RejectedPromise(new CSMConfigException(
-                'Could not find environment variable CSM config in '
-                . self::ENV_ENABLED. '/' . self::ENV_PORT . '/' . self::ENV_CLIENT_ID
-            ));
+            return self::reject('Could not find environment variable CSM config in '
+                . self::ENV_ENABLED. '/' . self::ENV_PORT . '/'
+                . self::ENV_CLIENT_ID);
         };
     }
-
 
     /**
      * Fallback config options when other sources are not set
@@ -160,7 +157,6 @@ class CSMConfigProvider
             );
         };
     }
-
 
     /**
      * Gets the environment's HOME directory if available.
@@ -181,7 +177,6 @@ class CSMConfigProvider
         return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
     }
 
-
     /**
      * CSM config provider that creates CSM config using an ini file stored
      * in the current user's home directory.
@@ -192,6 +187,7 @@ class CSMConfigProvider
      *                              than looking in the home directory.
      *
      * @return callable
+     * @todo Investigate which config options are necessary
      */
     public static function ini($profile = null, $filename = null)
     {
@@ -228,7 +224,6 @@ class CSMConfigProvider
             );
         };
     }
-
 
     /**
      * Wraps a CSM config provider and caches previously provided configuration.
@@ -275,7 +270,12 @@ class CSMConfigProvider
         };
     }
 
-
+    /**
+     * Reject promise with standardized exception
+     * 
+     * @param $msg
+     * @return Promise\RejectedPromise
+     */
     private static function reject($msg)
     {
         return new Promise\RejectedPromise(new CSMConfigException($msg));
@@ -288,6 +288,7 @@ class CSMConfigProvider
      * @param  PromiseInterface|CSMConfigInterface|callable|array $config
      * @return CSMConfigInterface
      * @throws InvalidArgumentException
+     * @todo Investigate which config options are necessary
      */
     public static function unwrap($config)
     {
@@ -303,7 +304,7 @@ class CSMConfigProvider
             && isset($config['enabled'])
             && isset($config['port'])
         ) {
-            $client_id = isset($config['client_id']) ? $config['client_id'] : '';
+            $client_id = isset($config['client_id']) ? $config['client_id'] : self::FALLBACK_CLIENT_ID;
             return new CSMConfig($config['enabled'], $config['port'], $client_id);
         }
 
