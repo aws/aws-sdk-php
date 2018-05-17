@@ -31,6 +31,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         $service = new Service($data, $provider);
         $list->appendBuild(ApiCallMonitoringMiddleware::wrap([
             'enabled' => true,
+            'port' => 31000
         ]));
         $handler = $list->resolve();
 

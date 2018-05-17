@@ -221,6 +221,7 @@ abstract class AbstractMonitoringMiddleware
      *
      * @param CommandInterface $cmd
      * @param RequestInterface $request
+     * @param array $event
      * @return array
      */
     protected function populateRequestEventData(
