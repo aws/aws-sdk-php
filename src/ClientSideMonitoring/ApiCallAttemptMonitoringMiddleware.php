@@ -2,9 +2,9 @@
 
 namespace Aws\ClientSideMonitoring;
 
-use Aws\CommandInterface;
 use Aws\ResultInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal
@@ -19,6 +19,90 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         static $callDataConfig;
         if (empty($callDataConfig)) {
             $callDataConfig = [
+                [
+                    'valueObject' => ResultInterface::class,
+                    'valueAccessor' => function () {
+                        return 1; // TODO get real value
+                    },
+                    'eventKey' => 'AttemptLatency',
+                ],
+                [
+                    'valueObject' => null,
+                    'valueAccessor' => function () {
+                        return 1; // TODO get real value
+                    },
+                    'eventKey' => 'AwsException',
+                    'maxLength' => 128,
+                ],
+                [
+                    'valueObject' => null,
+                    'valueAccessor' => function () {
+                        return 1; // TODO get real value
+                    },
+                    'eventKey' => 'AwsExceptionMessage',
+                    'maxLength' => 512,
+                ],
+                [
+                    'valueObject' => RequestInterface::class,
+                    'valueAccessor' => function (RequestInterface $request) {
+                        return $request->getUri()->getHost();
+                    },
+                    'eventKey' => 'Fqdn',
+                ],
+                [
+                    'valueObject' => ResponseInterface::class,
+                    'valueAccessor' => function (ResponseInterface $response) {
+                        return $response['@metadata']['statusCode'];
+                    },
+                    'eventKey' => 'HttpStatusCode',
+                ],
+                [
+                    'valueObject' => null,
+                    'valueAccessor' => function () {
+                        return 1; // TODO get real value
+                    },
+                    'eventKey' => 'SdkException',
+                    'maxLength' => 128,
+                ],
+                [
+                    'valueObject' => null,
+                    'valueAccessor' => function () {
+                        return 1; // TODO get real value
+                    },
+                    'eventKey' => 'SdkExceptionMessage',
+                    'maxLength' => 512,
+                ],
+                [
+                    'valueObject' => null,
+                    'valueAccessor' => function () {
+                        return 'ApiCallAttempt';
+                    },
+                    'eventKey' => 'Type',
+                ],
+                [
+                    'valueObject' => RequestInterface::class,
+                    'valueAccessor' => function (RequestInterface $request) {
+                        return $request->getHeaderLine('User-Agent')
+                            . ' ' . \GuzzleHttp\default_user_agent();
+                    },
+                    'eventKey' => 'UserAgent',
+                    'maxLength' => 256,
+                ],
+                [
+                    'valueObject' => ResponseInterface::class,
+                    'valueAccessor' => self::getResponseHeaderAccessor('x-amz-id-2'),
+                    'eventKey' => 'XAmzId2',
+                ],
+                [
+                    'valueObject' => ResponseInterface::class,
+                    'valueAccessor' => self::getResponseHeaderAccessor('x-amz-request-id'),
+                    'eventKey' => 'XAmzRequestId',
+                ],
+                [
+                    'valueObject' => ResponseInterface::class,
+                    'valueAccessor' => self::getResponseHeaderAccessor('x-amzn-RequestId'),
+                    'eventKey' => 'XAmznRequestId',
+                ]
             ];
         }
 
@@ -31,30 +115,5 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         }
 
         return $dataConfig;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function populateRequestEventData(
-        CommandInterface $cmd,
-        RequestInterface $request,
-        array $event
-    ) {
-        $event = parent::populateRequestEventData($cmd, $request, $event);
-        // Do local changes
-        return $event;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function populateResponseEventData(
-        ResultInterface $result,
-        array $event
-    ) {
-        $event = parent::populateResponseEventData($result, $event);
-        // Do local changes
-        return $event;
     }
 }

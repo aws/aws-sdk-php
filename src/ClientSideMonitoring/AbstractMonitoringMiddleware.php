@@ -7,6 +7,7 @@ use Aws\ResultInterface;
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal
@@ -53,7 +54,29 @@ abstract class AbstractMonitoringMiddleware
                 },
                 'eventKey' => 'Api',
             ],
+            [
+                'valueObject' => null,
+                'valueAccessor' => function () {
+                    list($usec, $sec) = explode(' ', microtime());
+                    return ($sec * 1000) . floor($usec / 100);
+                },
+                'eventKey' => 'Timestamp',
+            ],
+            [
+                'valueObject' => null,
+                'valueAccessor' => function () {
+                    return 1;
+                },
+                'eventKey' => 'Version',
+            ],
         ];
+    }
+
+    protected static function getResponseHeaderAccessor($headerName)
+    {
+        return function (ResponseInterface $response) use ($headerName) {
+            return $response['@metadata']['headers'][$headerName];
+        };
     }
 
     /**
