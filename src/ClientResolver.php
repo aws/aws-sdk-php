@@ -433,8 +433,16 @@ class ClientResolver
      */
     public static function _apply_csm($options, array &$args, HandlerList $list)
     {
-        $callMiddleware = ApiCallMonitoringMiddleware::wrap($options);
-        $callAttemptMiddleware = ApiCallAttemptMonitoringMiddleware::wrap($options);
+        $callMiddleware = ApiCallMonitoringMiddleware::wrap(
+            $options,
+            $args['region'],
+            $args['service']
+        );
+        $callAttemptMiddleware = ApiCallAttemptMonitoringMiddleware::wrap(
+            $options,
+            $args['region'],
+            $args['service']
+        );
 
         try {
             $list->before('retry', 'ApiCallMonitoringMiddleware',
@@ -442,7 +450,7 @@ class ClientResolver
             $list->after('retry', 'ApiCallAttemptMonitoringMiddleware',
                 $callAttemptMiddleware);
         } catch (IAE $e) {
-            $list->prependSign($callMiddleware,'ApiCallMonitoringMiddleware');
+            $list->appendSign($callMiddleware,'ApiCallMonitoringMiddleware');
             $list->appendSign($callAttemptMiddleware,'ApiCallAttemptMonitoringMiddleware');
         }
     }

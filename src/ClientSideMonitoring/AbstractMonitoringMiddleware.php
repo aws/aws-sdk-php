@@ -4,33 +4,19 @@ namespace Aws\ClientSideMonitoring;
 
 use Aws\CommandInterface;
 use Aws\ResultInterface;
-use GuzzleHttp\Promise\Promise;
-use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal
  */
 abstract class AbstractMonitoringMiddleware
 {
-    /**
-     * UDP socket resource
-     * @var Resource
-     */
     private static $socket;
 
-    /**
-     * Next handler in middleware stack
-     * @var callable
-     */
-    protected $nextHandler;
-
-    /**
-     * Client-side monitoring options
-     * @var PromiseInterface|ConfigurationInterface
-     */
-    protected $options;
+    private $nextHandler;
+    private $options;
+    private $region;
+    private $service;
 
     /**
      * Data format for event properties to be sent to the monitoring agent.
@@ -72,10 +58,10 @@ abstract class AbstractMonitoringMiddleware
         ];
     }
 
-    protected static function getResponseHeaderAccessor($headerName)
+    protected static function getResultHeaderAccessor($headerName)
     {
-        return function (ResponseInterface $response) use ($headerName) {
-            return $response['@metadata']['headers'][$headerName];
+        return function (ResultInterface $result) use ($headerName) {
+            return $result['@metadata']['headers'][$headerName];
         };
     }
 
@@ -85,11 +71,11 @@ abstract class AbstractMonitoringMiddleware
      * @param  $options
      * @return callable
      */
-    public static function wrap($options)
+    public static function wrap($options, $region, $service)
     {
-        return function (callable $handler) use ($options) {
+        return function (callable $handler) use ($options, $region, $service) {
             $class = get_called_class();
-            return new $class($handler, $options);
+            return new $class($handler, $options, $region, $service);
         };
     }
 
@@ -99,10 +85,12 @@ abstract class AbstractMonitoringMiddleware
      * @param callable $handler
      * @param mixed $options
      */
-    public function __construct(callable $handler, $options)
+    public function __construct(callable $handler, $options, $region, $service)
     {
         $this->nextHandler = $handler;
         $this->options = $options;
+        $this->region = $region;
+        $this->service = $service;
     }
 
     /**
@@ -128,7 +116,7 @@ abstract class AbstractMonitoringMiddleware
         return $handler($cmd, $request)->then(
             function (ResultInterface $result) use ($eventData) {
                 if ($this->isEnabled()) {
-                    $eventData = $this->populateResponseEventData($result, $eventData);
+                    $eventData = $this->populateResultEventData($result, $eventData);
                     if (empty($result['@monitoringEvents'])) {
                         $result['@monitoringEvents'] = [];
                     }
@@ -154,6 +142,8 @@ abstract class AbstractMonitoringMiddleware
     {
         $event = [
             'ClientId' => $this->getClientId(),
+            'Region' => $this->getRegion(),
+            'Service' => $this->getService(),
             'Version' => 1
         ];
         return $event;
@@ -167,6 +157,16 @@ abstract class AbstractMonitoringMiddleware
     private function getPort()
     {
         return $this->unwrappedOptions()->getPort();
+    }
+
+    private function getRegion()
+    {
+        return $this->region;
+    }
+
+    private function getService()
+    {
+        return $this->service;
     }
 
     /**
@@ -211,7 +211,7 @@ abstract class AbstractMonitoringMiddleware
      * @param ResultInterface $result
      * @return array
      */
-    protected function populateResponseEventData(
+    protected function populateResultEventData(
         ResultInterface $result,
         array $event
     ) {

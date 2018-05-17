@@ -4,7 +4,6 @@ namespace Aws\ClientSideMonitoring;
 
 use Aws\ResultInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal
@@ -19,6 +18,13 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         static $callDataConfig;
         if (empty($callDataConfig)) {
             $callDataConfig = [
+                [
+                    'valueObject' => null,
+                    'valueAccessor' => function () {
+                        return 1; // TODO get real value
+                    },
+                    'eventKey' => 'AccessKey',
+                ],
                 [
                     'valueObject' => ResultInterface::class,
                     'valueAccessor' => function () {
@@ -50,9 +56,9 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     'eventKey' => 'Fqdn',
                 ],
                 [
-                    'valueObject' => ResponseInterface::class,
-                    'valueAccessor' => function (ResponseInterface $response) {
-                        return $response['@metadata']['statusCode'];
+                    'valueObject' => ResultInterface::class,
+                    'valueAccessor' => function (ResultInterface $result) {
+                        return $result['@metadata']['statusCode'];
                     },
                     'eventKey' => 'HttpStatusCode',
                 ],
@@ -89,18 +95,18 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     'maxLength' => 256,
                 ],
                 [
-                    'valueObject' => ResponseInterface::class,
-                    'valueAccessor' => self::getResponseHeaderAccessor('x-amz-id-2'),
+                    'valueObject' => ResultInterface::class,
+                    'valueAccessor' => self::getResultHeaderAccessor('x-amz-id-2'),
                     'eventKey' => 'XAmzId2',
                 ],
                 [
-                    'valueObject' => ResponseInterface::class,
-                    'valueAccessor' => self::getResponseHeaderAccessor('x-amz-request-id'),
+                    'valueObject' => ResultInterface::class,
+                    'valueAccessor' => self::getResultHeaderAccessor('x-amz-request-id'),
                     'eventKey' => 'XAmzRequestId',
                 ],
                 [
-                    'valueObject' => ResponseInterface::class,
-                    'valueAccessor' => self::getResponseHeaderAccessor('x-amzn-RequestId'),
+                    'valueObject' => ResultInterface::class,
+                    'valueAccessor' => self::getResultHeaderAccessor('x-amzn-RequestId'),
                     'eventKey' => 'XAmznRequestId',
                 ]
             ];

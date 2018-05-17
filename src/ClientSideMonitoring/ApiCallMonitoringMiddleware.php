@@ -2,10 +2,7 @@
 
 namespace Aws\ClientSideMonitoring;
 
-use Aws\CommandInterface;
 use Aws\ResultInterface;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal
@@ -21,15 +18,15 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
         if (empty($callDataConfig)) {
             $callDataConfig = [
                 [
-                    'valueObject' => ResponseInterface::class,
-                    'valueAccessor' => function (ResponseInterface $response) {
+                    'valueObject' => ResultInterface::class,
+                    'valueAccessor' => function (ResultInterface $result) {
                         return 1; // TODO get real value
                     },
                     'eventKey' => 'AttemptCount',
                 ],
                 [
-                    'valueObject' => ResponseInterface::class,
-                    'valueAccessor' => function (ResponseInterface $response) {
+                    'valueObject' => ResultInterface::class,
+                    'valueAccessor' => function (ResultInterface $result) {
                         return 1; // TODO get real value
                     },
                     'eventKey' => 'Latency',
@@ -58,12 +55,12 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     /**
      * @inheritdoc
      */
-    protected function populateResponseEventData(
+    protected function populateResultEventData(
         ResultInterface $result,
         array $event
     ) {
-        $event = parent::populateResponseEventData($result, $event);
-        unset($event['AccessKey'], $event['Region']);
+        $event = parent::populateResultEventData($result, $event);
+        unset($event['Region']);
         return $event;
     }
 }

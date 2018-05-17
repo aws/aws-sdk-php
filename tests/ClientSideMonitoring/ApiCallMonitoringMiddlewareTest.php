@@ -2,7 +2,6 @@
 
 namespace Aws\ClientSideMonitoring;
 
-use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\Result;
 use GuzzleHttp\Promise;
 use Aws\HandlerList;
@@ -29,10 +28,14 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         $provider = ApiProvider::defaultProvider();
         $data = $provider('api', 'ec2', 'latest');
         $service = new Service($data, $provider);
-        $list->appendBuild(ApiCallMonitoringMiddleware::wrap([
-            'enabled' => true,
-            'port' => 31000
-        ]));
+        $list->appendBuild(ApiCallMonitoringMiddleware::wrap(
+            [
+                'enabled' => true,
+                'port' => 31000
+            ],
+            'us-east-1',
+            'ec2'
+        ));
         $handler = $list->resolve();
 
         $response = $handler(new Command('RunScheduledInstances', [
