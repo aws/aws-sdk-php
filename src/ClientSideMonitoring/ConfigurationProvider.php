@@ -2,7 +2,7 @@
 namespace Aws\ClientSideMonitoring;
 
 use Aws\CacheInterface;
-use Aws\ClientSideMonitoring\Exception\ConfigException;
+use Aws\ClientSideMonitoring\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Log\InvalidArgumentException;
@@ -269,7 +269,7 @@ class ConfigurationProvider
      */
     private static function reject($msg)
     {
-        return new Promise\RejectedPromise(new ConfigException($msg));
+        return new Promise\RejectedPromise(new ConfigurationException($msg));
     }
 
     /**
