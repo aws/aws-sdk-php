@@ -6,8 +6,8 @@ use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
-use Aws\ClientSideMonitoring\CSMConfigInterface;
-use Aws\ClientSideMonitoring\CSMConfigProvider;
+use Aws\ClientSideMonitoring\ConfigurationInterface;
+use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
@@ -149,10 +149,10 @@ class ClientResolver
         ],
         'csm' => [
             'type'     => 'value',
-            'valid'    => [CSMConfigInterface::class, CacheInterface::class, 'array', 'callable'],
-            'doc'      => 'CSM options for the client, including whether it is enabled. Provides a callable wrapping a promise, an instance of CSMConfigInterface, an instance of CacheInterface, or an array',
+            'valid'    => [ConfigurationInterface::class, CacheInterface::class, 'callable'],
+            'doc'      => 'CSM options for the client, including whether it is enabled. Provides a callable wrapping a promise, an instance of ConfigurationInterface, or an instance of CacheInterface',
             'fn'       => [__CLASS__, '_apply_csm'],
-            'default'  => [CSMConfigProvider::class, 'defaultProvider']
+            'default'  => [ConfigurationProvider::class, 'defaultProvider']
         ],
         'validate' => [
             'type'    => 'value',
@@ -429,25 +429,21 @@ class ClientResolver
     }
 
     /**
-     * @todo Investigate handling of retry middleware not existing. Logging?
      * @todo Pass in relevant client and credentials data
      */
     public static function _apply_csm($options, array &$args, HandlerList $list)
     {
-        try {
-            $list->before('retry', 'ApiCallMonitoringMiddleware',
-                ApiCallMonitoringMiddleware::wrap($options));
-        } catch (IAE $e) {
-            $list->prependSign(ApiCallMonitoringMiddleware::wrap($options),
-                'ApiCallMonitoringMiddleware');
-        }
+        $callMiddleware = ApiCallMonitoringMiddleware::wrap($options);
+        $callAttemptMiddleware = ApiCallAttemptMonitoringMiddleware::wrap($options);
 
         try {
+            $list->before('retry', 'ApiCallMonitoringMiddleware',
+                $callMiddleware);
             $list->after('retry', 'ApiCallAttemptMonitoringMiddleware',
-                ApiCallAttemptMonitoringMiddleware::wrap($options));
+                $callAttemptMiddleware);
         } catch (IAE $e) {
-            $list->appendSign(ApiCallMonitoringMiddleware::wrap($options),
-                'ApiCallAttemptMonitoringMiddleware');
+            $list->prependSign($callMiddleware,'ApiCallMonitoringMiddleware');
+            $list->appendSign($callAttemptMiddleware,'ApiCallAttemptMonitoringMiddleware');
         }
     }
 

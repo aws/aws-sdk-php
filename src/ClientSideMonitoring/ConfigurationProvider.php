@@ -2,13 +2,13 @@
 namespace Aws\ClientSideMonitoring;
 
 use Aws\CacheInterface;
-use Aws\ClientSideMonitoring\Exception\CSMConfigException;
+use Aws\ClientSideMonitoring\Exception\ConfigException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Log\InvalidArgumentException;
 
 
-class CSMConfigProvider
+class ConfigurationProvider
 {
 
     const ENV_CLIENT_ID = 'AWS_CSM_CLIENT_ID';
@@ -18,6 +18,7 @@ class CSMConfigProvider
     const FALLBACK_CLIENT_ID = '';
     const FALLBACK_ENABLED = false;
     const FALLBACK_PORT = 31000;
+    const INI_CSM_PROFILE = 'aws_csm';
 
     /**
      * Wraps a credential provider and saves provided credentials in an
@@ -42,12 +43,12 @@ class CSMConfigProvider
 
         return function () use ($provider, $cache, $cacheKey) {
             $found = $cache->get($cacheKey);
-            if ($found instanceof CSMConfigInterface && !$found->isExpired()) {
+            if ($found instanceof ConfigurationInterface && !$found->isExpired()) {
                 return Promise\promise_for($found);
             }
 
             return $provider()
-                ->then(function (CSMConfigInterface $creds) use (
+                ->then(function (ConfigurationInterface $creds) use (
                     $cache,
                     $cacheKey
                 ) {
@@ -91,7 +92,7 @@ class CSMConfigProvider
     /**
      * Create a default CSM config provider that first checks for environment
      * variables, then checks for a specified profile in ~/.aws/config, then
-     * checks for the "default" profile in ~/.aws/config, and failing those uses
+     * checks for the "aws_csm" profile in ~/.aws/config, and failing those uses
      * a default fallback set of configuration options.
      *
      * This provider is automatically wrapped in a memoize function that caches
@@ -130,7 +131,7 @@ class CSMConfigProvider
             if ($port && $enabled !== false) {
                 $client_id = !empty($client_id) ? $client_id : '';
                 return Promise\promise_for(
-                    new CSMConfig($enabled, $port, $client_id)
+                    new Configuration($enabled, $port, $client_id)
                 );
             }
 
@@ -149,7 +150,7 @@ class CSMConfigProvider
     {
         return function() {
             return Promise\promise_for(
-                new CSMConfig(
+                new Configuration(
                     self::FALLBACK_ENABLED,
                     self::FALLBACK_PORT,
                     self::FALLBACK_CLIENT_ID
@@ -182,7 +183,7 @@ class CSMConfigProvider
      * in the current user's home directory.
      *
      * @param string|null $profile  Profile to use. If not specified will use
-     *                              the "default" profile in "~/.aws/config".
+     *                              the "aws_csm" profile in "~/.aws/config".
      * @param string|null $filename If provided, uses a custom filename rather
      *                              than looking in the home directory.
      *
@@ -192,7 +193,7 @@ class CSMConfigProvider
     public static function ini($profile = null, $filename = null)
     {
         $filename = $filename ?: (self::getHomeDir() . '/.aws/config');
-        $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
+        $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: self::INI_CSM_PROFILE);
 
         return function () use ($profile, $filename) {
             if (!is_readable($filename)) {
@@ -216,7 +217,7 @@ class CSMConfigProvider
             }
 
             return Promise\promise_for(
-                new CSMConfig(
+                new Configuration(
                     $data[$profile]['enabled'],
                     $data[$profile]['port'],
                     $data[$profile]['client_id']
@@ -253,19 +254,9 @@ class CSMConfigProvider
 
             // Return config that could expire and refresh when needed.
             return $result
-                ->then(function (CSMConfigInterface $config) use ($provider, &$isConstant, &$result) {
-                    // Determine if these are constant credentials.
-                    if (!$config->getExpiration()) {
-                        $isConstant = true;
-                        return $config;
-                    }
-
-                    // Refresh expired credentials.
-                    if (!$config->isExpired()) {
-                        return $config;
-                    }
-                    // Refresh the result and forward the promise.
-                    return $result = $provider();
+                ->then(function (ConfigurationInterface $config) use ($provider, &$isConstant, &$result) {
+                    $isConstant = true;
+                    return $config;
                 });
         };
     }
@@ -278,15 +269,15 @@ class CSMConfigProvider
      */
     private static function reject($msg)
     {
-        return new Promise\RejectedPromise(new CSMConfigException($msg));
+        return new Promise\RejectedPromise(new ConfigException($msg));
     }
 
     /**
      * Unwraps a configuration object in whatever valid form it is in,
-     * always returning a CSMConfigInterface object.
+     * always returning a ConfigurationInterface object.
      *
-     * @param  PromiseInterface|CSMConfigInterface|callable|array $config
-     * @return CSMConfigInterface
+     * @param  PromiseInterface|ConfigurationInterface|callable|array $config
+     * @return ConfigurationInterface
      * @throws InvalidArgumentException
      * @todo Investigate which config options are necessary
      */
@@ -298,14 +289,14 @@ class CSMConfigProvider
         if ($config instanceof PromiseInterface) {
             $config = $config->wait(true);
         }
-        if ($config instanceof CSMConfigInterface) {
+        if ($config instanceof ConfigurationInterface) {
             return $config;
         } else if (is_array($config)
             && isset($config['enabled'])
             && isset($config['port'])
         ) {
             $client_id = isset($config['client_id']) ? $config['client_id'] : self::FALLBACK_CLIENT_ID;
-            return new CSMConfig($config['enabled'], $config['port'], $client_id);
+            return new Configuration($config['enabled'], $config['port'], $client_id);
         }
 
         throw new \InvalidArgumentException('Not a valid CSM configuration argument.');

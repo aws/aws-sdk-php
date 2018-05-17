@@ -2,7 +2,7 @@
 namespace Aws\ClientSideMonitoring;
 
 
-class CSMConfig implements CSMConfigInterface
+class Configuration implements ConfigurationInterface
 {
     private $client_id;
     private $enabled;
@@ -10,14 +10,13 @@ class CSMConfig implements CSMConfigInterface
     private $port;
 
     /**
-     * Constructs a new CSMConfig object, with the specified CSM options set
+     * Constructs a new Configuration object, with the specified CSM options set
      *
      * @param mixed $enabled
      * @param string|int $port
      * @param string $client_id
-     * @param null|int $expires
      */
-    public function __construct($enabled, $port, $client_id = '', $expires = null)
+    public function __construct($enabled, $port, $client_id = '')
     {
         $this->port = filter_var($port, FILTER_VALIDATE_INT);
         if ($this->port === false) {
@@ -28,7 +27,6 @@ class CSMConfig implements CSMConfigInterface
         // Unparsable $enabled flag errs on the side of disabling CSM
         $this->enabled = filter_var($enabled, FILTER_VALIDATE_BOOLEAN);
         $this->client_id = trim($client_id);
-        $this->expires = $expires;
     }
 
     /**
@@ -36,7 +34,7 @@ class CSMConfig implements CSMConfigInterface
      *
      * @return bool
      */
-    public function getEnabled()
+    public function isEnabled()
     {
         return $this->enabled;
     }
@@ -52,14 +50,6 @@ class CSMConfig implements CSMConfigInterface
     }
 
     /**
-     * @return int|null
-     */
-    public function getExpiration()
-    {
-        return $this->expires;
-    }
-
-    /**
      * Returns the port if available
      *
      * @return int|null
@@ -67,14 +57,6 @@ class CSMConfig implements CSMConfigInterface
     public function getPort()
     {
         return $this->port;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isExpired()
-    {
-        return $this->expires !== null && time() >= $this->expires;
     }
 
     /**
@@ -86,7 +68,7 @@ class CSMConfig implements CSMConfigInterface
     {
         return [
             'client_id' => $this->getClientId(),
-            'enabled' => $this->getEnabled(),
+            'enabled' => $this->isEnabled(),
             'port' => $this->getPort()
         ];
     }

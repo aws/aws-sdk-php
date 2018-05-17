@@ -27,7 +27,7 @@ abstract class AbstractMonitoringMiddleware
 
     /**
      * Client-side monitoring options
-     * @var PromiseInterface|CSMConfigInterface
+     * @var PromiseInterface|ConfigurationInterface
      */
     protected $options;
 
@@ -94,7 +94,7 @@ abstract class AbstractMonitoringMiddleware
     {
         $handler = $this->nextHandler;
         $eventData = null;
-        if ($this->getEnabled()) {
+        if ($this->isEnabled()) {
             $eventData = $this->populateRequestEventData(
                 $cmd,
                 $request,
@@ -104,7 +104,7 @@ abstract class AbstractMonitoringMiddleware
 
         return $handler($cmd, $request)->then(
             function (ResultInterface $result) use ($eventData) {
-                if ($this->getEnabled()) {
+                if ($this->isEnabled()) {
                     $eventData = $this->populateResponseEventData($result, $eventData);
                     if (empty($result['@monitoringEvents'])) {
                         $result['@monitoringEvents'] = [];
@@ -115,6 +115,90 @@ abstract class AbstractMonitoringMiddleware
                 return $result;
             }
         );
+    }
+
+    /**
+     * Returns the client ID from options, unwrapping options if necessary
+     *
+     * @return string
+     */
+    private function getClientId()
+    {
+        return $this->unwrappedOptions()->getClientId();
+    }
+
+    private function getGlobalEventData()
+    {
+        $event = [
+            'ClientId' => $this->getClientId(),
+            'Version' => 1
+        ];
+        return $event;
+    }
+
+    /**
+     * Returns port from options, unwrapping options if necessary
+     *
+     * @return int
+     */
+    private function getPort()
+    {
+        return $this->unwrappedOptions()->getPort();
+    }
+
+    /**
+     * Returns enabled flag from options, unwrapping options if necessary
+     *
+     * @return bool
+     */
+    private function isEnabled()
+    {
+        return $this->unwrappedOptions()->isEnabled();
+    }
+
+    /**
+     * Returns $eventData array with information from the request and command.
+     *
+     * @param CommandInterface $cmd
+     * @param RequestInterface $request
+     * @param array $event
+     * @return array
+     */
+    protected function populateRequestEventData(
+        CommandInterface $cmd,
+        RequestInterface $request,
+        array $event
+    ) {
+        $dataFormat = static::getDataConfiguration();
+        foreach ($dataFormat as $datum) {
+            if ($datum['valueObject'] === CommandInterface::class) {
+                $event[$datum['eventKey']] = $datum['valueAccessor']($cmd);
+            } elseif ($datum['valueObject'] === RequestInterface::class) {
+                $event[$datum['eventKey']] = $datum['valueAccessor']($request);
+            }
+        }
+        return $event;
+    }
+
+    /**
+     * Returns $eventData array with information from the response, including the calculation
+     * for attempt latency
+     *
+     * @param array $event
+     * @param ResultInterface $result
+     * @return array
+     */
+    protected function populateResponseEventData(
+        ResultInterface $result,
+        array $event
+    ) {
+        $dataFormat = static::getDataConfiguration();
+        foreach ($dataFormat as $datum) {
+            if ($datum['valueObject'] === ResultInterface::class) {
+                $event['key'] = $datum['valueAccessor']($result);
+            }
+        }
+        return $event;
     }
 
     /**
@@ -178,98 +262,14 @@ abstract class AbstractMonitoringMiddleware
     }
 
     /**
-     * Returns the client ID from options, unwrapping options if necessary
-     *
-     * @return string
-     */
-    private function getClientId()
-    {
-        return $this->unwrappedOptions()->getClientId();
-    }
-
-    /**
-     * Returns enabled flag from options, unwrapping options if necessary
-     *
-     * @return bool
-     */
-    private function getEnabled()
-    {
-        return $this->unwrappedOptions()->getEnabled();
-    }
-
-    private function getGlobalEventData()
-    {
-        $event = [
-            'ClientId' => $this->getClientId(),
-            'Version' => 1
-        ];
-        return $event;
-    }
-
-    /**
-     * Returns port from options, unwrapping options if necessary
-     *
-     * @return int
-     */
-    private function getPort()
-    {
-        return $this->unwrappedOptions()->getPort();
-    }
-
-    /**
-     * Returns $eventData array with information from the request and command.
-     *
-     * @param CommandInterface $cmd
-     * @param RequestInterface $request
-     * @param array $event
-     * @return array
-     */
-    protected function populateRequestEventData(
-        CommandInterface $cmd,
-        RequestInterface $request,
-        array $event
-    ) {
-        $dataFormat = static::getDataConfiguration();
-        foreach ($dataFormat as $datum) {
-            if ($datum['valueObject'] === CommandInterface::class) {
-                $event[$datum['eventKey']] = $datum['valueAccessor']($cmd);
-            } elseif ($datum['valueObject'] === RequestInterface::class) {
-                $event[$datum['eventKey']] = $datum['valueAccessor']($request);
-            }
-        }
-        return $event;
-    }
-
-    /**
-     * Returns $eventData array with information from the response, including the calculation
-     * for attempt latency
-     *
-     * @param array $event
-     * @param ResultInterface $result
-     * @return array
-     */
-    protected function populateResponseEventData(
-        ResultInterface $result,
-        array $event
-    ) {
-        $dataFormat = static::getDataConfiguration();
-        foreach ($dataFormat as $datum) {
-            if ($datum['valueObject'] === ResultInterface::class) {
-                $event['key'] = $datum['valueAccessor']($result);
-            }
-        }
-        return $event;
-    }
-
-    /**
      * Unwraps options, if needed, and returns them.
      *
-     * @return CSMConfigInterface
+     * @return ConfigurationInterface
      */
     private function unwrappedOptions()
     {
-        if (!($this->options instanceof CSMConfigInterface)) {
-            $this->options = CSMConfigProvider::unwrap($this->options);
+        if (!($this->options instanceof ConfigurationInterface)) {
+            $this->options = ConfigurationProvider::unwrap($this->options);
         }
         return $this->options;
     }
