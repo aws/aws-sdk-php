@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoT` - We are releasing DeleteJob and DeleteJobExecution APIs to allow customer to delete resources created using AWS IoT Jobs.
+* `Aws\SES` - Fixed a broken link in the documentation for S3Action.
+
 ## 3.56.3 - 2018-05-17
 
 * `Aws\CodeDeploy` - Documentation updates for codedeploy
