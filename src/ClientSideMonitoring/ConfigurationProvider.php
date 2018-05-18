@@ -11,13 +11,14 @@ use Psr\Log\InvalidArgumentException;
 class ConfigurationProvider
 {
 
+    const CACHE_KEY = 'aws_cached_csm_config';
+    const DEFAULT_CLIENT_ID = '';
+    const DEFAULT_ENABLED = false;
+    const DEFAULT_PORT = 31000;
     const ENV_CLIENT_ID = 'AWS_CSM_CLIENT_ID';
     const ENV_ENABLED = 'AWS_CSM_ENABLED';
     const ENV_PORT = 'AWS_CSM_PORT';
     const ENV_PROFILE = 'AWS_PROFILE';
-    const FALLBACK_CLIENT_ID = '';
-    const FALLBACK_ENABLED = false;
-    const FALLBACK_PORT = 31000;
     const INI_CSM_PROFILE = 'aws_csm';
 
     /**
@@ -25,41 +26,36 @@ class ConfigurationProvider
      * instance of Aws\CacheInterface. Forwards calls when no credentials found
      * in cache and updates cache with the results.
      *
-     * Defaults to using a simple file-based cache when none provided.
-     *
      * @param callable $provider Credentials provider function to wrap
      * @param CacheInterface $cache Cache to store credentials
      * @param string|null $cacheKey (optional) Cache key to use
      *
      * @return callable
-     * @todo Implement for real
      */
     public static function cache(
         callable $provider,
         CacheInterface $cache,
         $cacheKey = null
     ) {
-        $cacheKey = $cacheKey ?: 'aws_cached_credentials';
+        $cacheKey = $cacheKey ?: self::CACHE_KEY;
 
         return function () use ($provider, $cache, $cacheKey) {
             $found = $cache->get($cacheKey);
-            if ($found instanceof ConfigurationInterface && !$found->isExpired()) {
+            if ($found instanceof ConfigurationInterface) {
                 return Promise\promise_for($found);
             }
 
             return $provider()
-                ->then(function (ConfigurationInterface $creds) use (
+                ->then(function (ConfigurationInterface $config) use (
                     $cache,
                     $cacheKey
                 ) {
                     $cache->set(
                         $cacheKey,
-                        $creds,
-                        null === $creds->getExpiration() ?
-                            0 : $creds->getExpiration() - time()
+                        $config
                     );
 
-                    return $creds;
+                    return $config;
                 });
         };
     }
@@ -119,7 +115,6 @@ class ConfigurationProvider
      * Provider that creates CSM config from environment variables
      *
      * @return callable
-     * @todo Investigate which config options are necessary
      */
     public static function env()
     {
@@ -128,8 +123,9 @@ class ConfigurationProvider
             $client_id = getenv(self::ENV_CLIENT_ID);
             $enabled = getenv(self::ENV_ENABLED);
             $port = getenv(self::ENV_PORT);
-            if ($port && $enabled !== false) {
-                $client_id = !empty($client_id) ? $client_id : '';
+            if ($enabled !== false) {
+                $client_id = !empty($client_id) ? $client_id : self::DEFAULT_CLIENT_ID;
+                $port = !empty($port) ? $port : self::DEFAULT_PORT;
                 return Promise\promise_for(
                     new Configuration($enabled, $port, $client_id)
                 );
@@ -151,9 +147,9 @@ class ConfigurationProvider
         return function() {
             return Promise\promise_for(
                 new Configuration(
-                    self::FALLBACK_ENABLED,
-                    self::FALLBACK_PORT,
-                    self::FALLBACK_CLIENT_ID
+                    self::DEFAULT_ENABLED,
+                    self::DEFAULT_PORT,
+                    self::DEFAULT_CLIENT_ID
                 )
             );
         };
@@ -206,14 +202,19 @@ class ConfigurationProvider
             if (!isset($data[$profile])) {
                 return self::reject("'$profile' not found in config file");
             }
-            if (!isset($data[$profile]['enabled']) || !isset($data[$profile]['port'])) {
+            if (!isset($data[$profile]['enabled'])) {
                 return self::reject("Required CSM config values not present in 
                     INI profile '{$profile}' ({$filename})");
             }
 
             // client_id is optional
             if (empty($data[$profile]['client_id'])) {
-                $data[$profile]['client_id'] = '';
+                $data[$profile]['client_id'] = self::DEFAULT_CLIENT_ID;
+            }
+
+            // port is optional
+            if (empty($data[$profile]['port'])) {
+                $data[$profile]['port'] = self::DEFAULT_PORT;
             }
 
             return Promise\promise_for(
@@ -252,7 +253,7 @@ class ConfigurationProvider
                 $result = $provider();
             }
 
-            // Return config that could expire and refresh when needed.
+            // Return config and set flag that provider is already set
             return $result
                 ->then(function (ConfigurationInterface $config) use ($provider, &$isConstant, &$result) {
                     $isConstant = true;
@@ -291,12 +292,12 @@ class ConfigurationProvider
         }
         if ($config instanceof ConfigurationInterface) {
             return $config;
-        } else if (is_array($config)
-            && isset($config['enabled'])
-            && isset($config['port'])
-        ) {
-            $client_id = isset($config['client_id']) ? $config['client_id'] : self::FALLBACK_CLIENT_ID;
-            return new Configuration($config['enabled'], $config['port'], $client_id);
+        } else if (is_array($config) && isset($config['enabled'])) {
+            $client_id = isset($config['client_id']) ? $config['client_id']
+                : self::DEFAULT_CLIENT_ID;
+            $port = isset($config['port']) ? $config['port']
+                : self::DEFAULT_PORT;
+            return new Configuration($config['enabled'], $port, $client_id);
         }
 
         throw new \InvalidArgumentException('Not a valid CSM configuration argument.');
