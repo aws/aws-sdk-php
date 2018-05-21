@@ -106,9 +106,16 @@ class ConfigurationProvider
             self::ini(),
             self::fallback()
         ];
-        return self::memoize(
+
+        $memo = self::memoize(
             call_user_func_array('self::chain', $configProviders)
         );
+
+        if (isset($config['csm']) && $config['csm'] instanceof CacheInterface) {
+            return self::cache($memo, $config['csm'], self::CACHE_KEY);
+        }
+
+        return $memo;
     }
 
     /**
@@ -184,7 +191,6 @@ class ConfigurationProvider
      *                              than looking in the home directory.
      *
      * @return callable
-     * @todo Investigate which config options are necessary
      */
     public static function ini($profile = null, $filename = null)
     {
@@ -202,26 +208,26 @@ class ConfigurationProvider
             if (!isset($data[$profile])) {
                 return self::reject("'$profile' not found in config file");
             }
-            if (!isset($data[$profile]['enabled'])) {
+            if (!isset($data[$profile]['csm_enabled'])) {
                 return self::reject("Required CSM config values not present in 
                     INI profile '{$profile}' ({$filename})");
             }
 
-            // client_id is optional
-            if (empty($data[$profile]['client_id'])) {
-                $data[$profile]['client_id'] = self::DEFAULT_CLIENT_ID;
+            // port is optional
+            if (empty($data[$profile]['csm_port'])) {
+                $data[$profile]['csm_port'] = self::DEFAULT_PORT;
             }
 
-            // port is optional
-            if (empty($data[$profile]['port'])) {
-                $data[$profile]['port'] = self::DEFAULT_PORT;
+            // client_id is optional
+            if (empty($data[$profile]['csm_clientid'])) {
+                $data[$profile]['csm_clientid'] = self::DEFAULT_CLIENT_ID;
             }
 
             return Promise\promise_for(
                 new Configuration(
-                    $data[$profile]['enabled'],
-                    $data[$profile]['port'],
-                    $data[$profile]['client_id']
+                    $data[$profile]['csm_enabled'],
+                    $data[$profile]['csm_port'],
+                    $data[$profile]['csm_clientid']
                 )
             );
         };
@@ -277,10 +283,9 @@ class ConfigurationProvider
      * Unwraps a configuration object in whatever valid form it is in,
      * always returning a ConfigurationInterface object.
      *
-     * @param  PromiseInterface|ConfigurationInterface|callable|array $config
+     * @param  mixed $config
      * @return ConfigurationInterface
      * @throws InvalidArgumentException
-     * @todo Investigate which config options are necessary
      */
     public static function unwrap($config)
     {
@@ -292,7 +297,7 @@ class ConfigurationProvider
         }
         if ($config instanceof ConfigurationInterface) {
             return $config;
-        } else if (is_array($config) && isset($config['enabled'])) {
+        } elseif (is_array($config) && isset($config['enabled'])) {
             $client_id = isset($config['client_id']) ? $config['client_id']
                 : self::DEFAULT_CLIENT_ID;
             $port = isset($config['port']) ? $config['port']

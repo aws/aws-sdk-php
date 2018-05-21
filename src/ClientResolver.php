@@ -428,11 +428,10 @@ class ClientResolver
         }
     }
 
-    /**
-     * @todo Pass in relevant client and credentials data
-     */
     public static function _apply_csm($options, array &$args, HandlerList $list)
     {
+        $options = ConfigurationProvider::defaultProvider($args);
+
         $callMiddleware = ApiCallMonitoringMiddleware::wrap(
             $options,
             $args['region'],
