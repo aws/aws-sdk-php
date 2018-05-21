@@ -8,5 +8,5 @@ Feature: Amazon SecretsManager
 
   Scenario: Handling errors
     When I attempt to call the "DescribeSecret" API with:
-      | SecretId | fake-secret-id|
+      | SecretId | fake-secret-id |
     Then I expect the response error code to be "ResourceNotFoundException"
