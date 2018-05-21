@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.56.5 - 2018-05-21
 
 * `Aws\CloudFormation` - 1) Filtered Update for StackSet based on Accounts and Regions: This feature will allow flexibility for the customers to roll out updates on a StackSet based on specific Accounts and Regions. 2) Support for customized ExecutionRoleName: This feature will allow customers to attach ExecutionRoleName to the StackSet thus ensuring more security and controlling the behavior of any AWS resources in the target accounts.
 
