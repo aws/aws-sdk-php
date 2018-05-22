@@ -6,7 +6,6 @@ class Configuration implements ConfigurationInterface
 {
     private $client_id;
     private $enabled;
-    private $expires;
     private $port;
 
     /**
