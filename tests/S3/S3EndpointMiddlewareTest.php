@@ -474,8 +474,6 @@ class S3EndpointMiddlewareTest extends TestCase
                 return Promise\promise_for(new Result());
             },
         ]);
-        $s3 = $this->getTestClient('s3');
-        $this->addMockResults($s3, [['@metadata' => ['statusCode' => 200]]]);
 
         $client->getObject([
             'Bucket' => $bucket,
