@@ -3,9 +3,13 @@ namespace Aws\Test\S3;
 
 use Aws\Command;
 use Aws\CommandInterface;
+use Aws\Result;
+use Aws\S3\S3Client;
 use Aws\S3\S3EndpointMiddleware;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -433,5 +437,50 @@ class S3EndpointMiddlewareTest extends TestCase
             $this->assertContains($command['Bucket'], $req->getUri()->getHost());
             $this->assertContains('key=query', $req->getUri()->getQuery());
         };
+    }
+
+    public function jsonCaseProvider()
+    {
+        return json_decode(
+            file_get_contents(__DIR__ . '/test_cases/uri_addressing.json'),
+            true
+        );
+    }
+
+    /**
+     * @dataProvider jsonCaseProvider
+     *
+     * @param array $testCase
+     */
+    public function testPassesCompliance(
+        $bucket,
+        $configuredAddressingStyle,
+        $expectedUri,
+        $region,
+        $useDualstack,
+        $useS3Accelerate
+    ) {
+        $client = new S3Client([
+            'region' => $region,
+            'version' => 'latest',
+            'validate' => false,
+            'use_dual_stack_endpoint' => $useDualstack,
+            'use_accelerate_endpoint' => $useS3Accelerate,
+            'use_path_style_endpoint' => $configuredAddressingStyle === 'path',
+            'handler' => function (
+                CommandInterface $cmd,
+                RequestInterface $req
+            ) use ($expectedUri) {
+                $this->assertEquals($expectedUri, trim($req->getUri(), '/'));
+                return Promise\promise_for(new Result());
+            },
+        ]);
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [['@metadata' => ['statusCode' => 200]]]);
+
+        $client->getObject([
+            'Bucket' => $bucket,
+            'Key' => '',
+        ]);
     }
 }
