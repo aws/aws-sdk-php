@@ -17,6 +17,21 @@ use PHPUnit\Framework\TestCase;
  */
 class ApiCallMonitoringMiddlewareTest extends TestCase
 {
+    /**
+     * Used to get non-public methods for testing
+     *
+     * @param $name
+     * @return \ReflectionMethod
+     * @throws \ReflectionException
+     */
+    protected static function getMethod($name)
+    {
+        $class = new \ReflectionClass('Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware');
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+        return $method;
+    }
+
     public function testPopulatesMonitoringData()
     {
         $list = new HandlerList();
@@ -50,5 +65,23 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
             'RunScheduledInstances',
             $response['@monitoringEvents'][0]['Api']
         );
+    }
+
+    public function testSerializesData()
+    {
+        $serializeEventData = self::getMethod('serializeEventData');
+        $middleware = new ApiCallMonitoringMiddleware(function(){}, [], 'test', 'test');
+        $eventData = [
+            'Api' => 'GetBucket',
+            'AttemptCount' => 2,
+            'ClientId' => 'SomeTestApp',
+            'Latency' => 555.55,
+            'Timestamp' => 1527182299175.3,
+            'Type' => 'ApiCall'
+        ];
+        $expected = '{"Api":"GetBucket","AttemptCount":2,"ClientId":"SomeTestApp","Latency":555.55,"Timestamp":1527182299175.3,"Type":"ApiCall"}';
+
+        $this->assertSame($expected,
+            $serializeEventData->invokeArgs($middleware, array($eventData)));
     }
 }

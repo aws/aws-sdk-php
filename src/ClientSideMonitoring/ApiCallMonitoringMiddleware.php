@@ -17,21 +17,21 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
         static $callDataConfig;
         if (empty($callDataConfig)) {
             $callDataConfig = [
-                [
+                'AttemptCount' => [
                     'valueObject' => ResultInterface::class,
                     'valueAccessor' => function (ResultInterface $result) {
                         return 1; // TODO get real value
                     },
                     'eventKey' => 'AttemptCount',
                 ],
-                [
+                'Latency' => [
                     'valueObject' => ResultInterface::class,
                     'valueAccessor' => function (ResultInterface $result) {
                         return 1; // TODO get real value
                     },
                     'eventKey' => 'Latency',
                 ],
-                [
+                'Type' => [
                     'valueAccessor' => function () {
                         return 'ApiCall';
                     },

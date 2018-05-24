@@ -4,6 +4,7 @@ namespace Aws\ClientSideMonitoring;
 
 use Aws\CommandInterface;
 use Aws\ResultInterface;
+use GuzzleHttp\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -33,22 +34,21 @@ abstract class AbstractMonitoringMiddleware
     public static function getDataConfiguration()
     {
         return [
-            [
+            'Api' => [
                 'valueObject' => CommandInterface::class,
                 'valueAccessor' => function (CommandInterface $cmd) {
                     return $cmd->getName();
                 },
                 'eventKey' => 'Api',
             ],
-            [
+            'Timestamp' => [
                 'valueObject' => null,
                 'valueAccessor' => function () {
-                    list($usec, $sec) = explode(' ', microtime());
-                    return ($sec * 1000) . floor($usec / 100);
+                    return microtime(true) * 1000;
                 },
                 'eventKey' => 'Timestamp',
             ],
-            [
+            'Version' => [
                 'valueObject' => null,
                 'valueAccessor' => function () {
                     return 1;
@@ -61,7 +61,10 @@ abstract class AbstractMonitoringMiddleware
     protected static function getResultHeaderAccessor($headerName)
     {
         return function (ResultInterface $result) use ($headerName) {
-            return $result['@metadata']['headers'][$headerName];
+            if (isset($result['@metadata']['headers'][$headerName])) {
+                return $result['@metadata']['headers'][$headerName];
+            }
+            return null;
         };
     }
 
@@ -69,6 +72,8 @@ abstract class AbstractMonitoringMiddleware
      * Standard middleware wrapper function, with CSM options passed in
      *
      * @param  $options
+     * @param  $region
+     * @param  $service
      * @return callable
      */
     public static function wrap($options, $region, $service)
@@ -84,6 +89,8 @@ abstract class AbstractMonitoringMiddleware
      *
      * @param callable $handler
      * @param mixed $options
+     * @param  $region
+     * @param  $service
      */
     public function __construct(callable $handler, $options, $region, $service)
     {
@@ -220,10 +227,14 @@ abstract class AbstractMonitoringMiddleware
         $dataFormat = static::getDataConfiguration();
         foreach ($dataFormat as $datum) {
             if (empty($datum['valueObject'])) {
-                $event[$datum['eventKey']] = $datum['valueAccessor']();
+                $value = $datum['valueAccessor']();
             } elseif ($datum['valueObject'] === ResultInterface::class) {
-                $event['key'] = $datum['valueAccessor']($result);
+                $value = $datum['valueAccessor']($result);
             }
+            if (isset($value) && !is_null($value)) {
+                $event[$datum['eventKey']] = $value;
+            }
+            $value = null;
         }
         return $event;
     }
