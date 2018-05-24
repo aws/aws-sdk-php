@@ -1993,7 +1993,8 @@
         "PreSignedUrl":{"shape":"String"},
         "DestinationRegion":{"shape":"String"},
         "EnableIAMDatabaseAuthentication":{"shape":"BooleanOptional"},
-        "BacktrackWindow":{"shape":"LongOptional"}
+        "BacktrackWindow":{"shape":"LongOptional"},
+        "EnableCloudwatchLogsExports":{"shape":"LogTypeList"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -2296,7 +2297,8 @@
         "ClusterCreateTime":{"shape":"TStamp"},
         "EarliestBacktrackTime":{"shape":"TStamp"},
         "BacktrackWindow":{"shape":"LongOptional"},
-        "BacktrackConsumedChangeRecords":{"shape":"LongOptional"}
+        "BacktrackConsumedChangeRecords":{"shape":"LongOptional"},
+        "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"}
       },
       "wrapper":true
     },
@@ -4079,6 +4081,7 @@
         "PreferredMaintenanceWindow":{"shape":"String"},
         "EnableIAMDatabaseAuthentication":{"shape":"BooleanOptional"},
         "BacktrackWindow":{"shape":"LongOptional"},
+        "CloudwatchLogsExportConfiguration":{"shape":"CloudwatchLogsExportConfiguration"},
         "EngineVersion":{"shape":"String"}
       }
     },
@@ -4964,7 +4967,8 @@
         "S3BucketName":{"shape":"String"},
         "S3Prefix":{"shape":"String"},
         "S3IngestionRoleArn":{"shape":"String"},
-        "BacktrackWindow":{"shape":"LongOptional"}
+        "BacktrackWindow":{"shape":"LongOptional"},
+        "EnableCloudwatchLogsExports":{"shape":"LogTypeList"}
       }
     },
     "RestoreDBClusterFromS3Result":{
@@ -4994,7 +4998,8 @@
         "Tags":{"shape":"TagList"},
         "KmsKeyId":{"shape":"String"},
         "EnableIAMDatabaseAuthentication":{"shape":"BooleanOptional"},
-        "BacktrackWindow":{"shape":"LongOptional"}
+        "BacktrackWindow":{"shape":"LongOptional"},
+        "EnableCloudwatchLogsExports":{"shape":"LogTypeList"}
       }
     },
     "RestoreDBClusterFromSnapshotResult":{
@@ -5022,7 +5027,8 @@
         "Tags":{"shape":"TagList"},
         "KmsKeyId":{"shape":"String"},
         "EnableIAMDatabaseAuthentication":{"shape":"BooleanOptional"},
-        "BacktrackWindow":{"shape":"LongOptional"}
+        "BacktrackWindow":{"shape":"LongOptional"},
+        "EnableCloudwatchLogsExports":{"shape":"LogTypeList"}
       }
     },
     "RestoreDBClusterToPointInTimeResult":{

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeBuild` - AWS CodeBuild Adds Support for Windows Builds.
+* `Aws\Credentials\EcsCredentialProvider` - Disables proxies on EcsCredentialProvider credential lookups.
+* `Aws\ElasticLoadBalancingv2` - Updated elasticloadbalancingV2 documentation with slow start mode details. The slow start mode can be used to gradually increase the number of requests forwarded by a load balancer to a newly added target in a target group. It provides a new target an opportunity to warm up before it can handle its fair share of requests received from the load balancer. Slow start mode is disabled by default and can be enabled on a per target group basis.
+* `Aws\RDS` - This release adds CloudWatch Logs integration capabilities to RDS Aurora MySQL clusters
+* `Aws\SecretsManager` - Documentation updates for secretsmanager
+* `Aws\Test\S3` - Adds compliance tests for S3 addressing.
+
 ## 3.56.6 - 2018-05-22
 
 * `Aws\ECS` - Amazon Elastic Container Service (ECS) adds service discovery for services that use host or bridged network mode. ECS can now also register instance IPs for active tasks using bridged and host networking with Route 53, making them available via DNS.
