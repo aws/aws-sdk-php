@@ -22,13 +22,12 @@ abstract class AbstractMonitoringMiddleware
     /**
      * Data format for event properties to be sent to the monitoring agent.
      *
-     * List of associative arrays in the format:
-     *     Subarray keys:
-     *     - 'valueObject' => CommandInterface::class, RequestInterface::class, or ResultInterface::class
-     *     - 'valueAccessor' => callable
-     *     - 'eventKey' => string
-     *     - 'maxLength' => int
-     *
+     * Associative array of associative arrays in the format:
+     *     $eventKey => [
+     *         'valueObject' => CommandInterface::class|RequestInterface::class|ResultInterface::class
+     *         'valueAccessor' => callable
+     *         'maxLength' => int
+     *     ]
      * @return array
      */
     public static function getDataConfiguration()
@@ -38,22 +37,19 @@ abstract class AbstractMonitoringMiddleware
                 'valueObject' => CommandInterface::class,
                 'valueAccessor' => function (CommandInterface $cmd) {
                     return $cmd->getName();
-                },
-                'eventKey' => 'Api',
+                }
             ],
             'Timestamp' => [
                 'valueObject' => null,
                 'valueAccessor' => function () {
-                    return microtime(true) * 1000;
-                },
-                'eventKey' => 'Timestamp',
+                    return floor(microtime(true) * 1000);
+                }
             ],
             'Version' => [
                 'valueObject' => null,
                 'valueAccessor' => function () {
                     return 1;
-                },
-                'eventKey' => 'Version',
+                }
             ],
         ];
     }
@@ -200,13 +196,17 @@ abstract class AbstractMonitoringMiddleware
         array $event
     ) {
         $dataFormat = static::getDataConfiguration();
-        foreach ($dataFormat as $datum) {
+        foreach ($dataFormat as $eventKey => $datum) {
+            $value = null;
             if (empty($datum['valueObject'])) {
-                $event[$datum['eventKey']] = $datum['valueAccessor']();
+                $value = $datum['valueAccessor']();
             } elseif ($datum['valueObject'] === CommandInterface::class) {
-                $event[$datum['eventKey']] = $datum['valueAccessor']($cmd);
+                $value = $datum['valueAccessor']($cmd);
             } elseif ($datum['valueObject'] === RequestInterface::class) {
-                $event[$datum['eventKey']] = $datum['valueAccessor']($request);
+                $value = $datum['valueAccessor']($request);
+            }
+            if (!is_null($value)) {
+                $event[$eventKey] = $value;
             }
         }
         return $event;
@@ -225,16 +225,16 @@ abstract class AbstractMonitoringMiddleware
         array $event
     ) {
         $dataFormat = static::getDataConfiguration();
-        foreach ($dataFormat as $datum) {
+        foreach ($dataFormat as $eventKey => $datum) {
+            $value = null;
             if (empty($datum['valueObject'])) {
                 $value = $datum['valueAccessor']();
             } elseif ($datum['valueObject'] === ResultInterface::class) {
                 $value = $datum['valueAccessor']($result);
             }
-            if (isset($value) && !is_null($value)) {
-                $event[$datum['eventKey']] = $value;
+            if (!is_null($value)) {
+                $event[$eventKey] = $value;
             }
-            $value = null;
         }
         return $event;
     }
@@ -287,12 +287,12 @@ abstract class AbstractMonitoringMiddleware
     private function serializeEventData(array $eventData)
     {
         $dataFormat = static::getDataConfiguration();
-        foreach ($eventData as $key => $datum) {
-            if (!empty($dataFormat[$key]['maxLength'])) {
-                $eventData[$key] = substr(
+        foreach ($eventData as $eventKey => $datum) {
+            if (!empty($dataFormat[$eventKey]['maxLength'])) {
+                $eventData[$eventKey] = substr(
                     $datum,
                     0,
-                    $dataFormat[$key]['maxLength']
+                    $dataFormat[$eventKey]['maxLength']
                 );
             }
         }

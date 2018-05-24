@@ -21,21 +21,18 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
                     'valueObject' => ResultInterface::class,
                     'valueAccessor' => function (ResultInterface $result) {
                         return 1; // TODO get real value
-                    },
-                    'eventKey' => 'AttemptCount',
+                    }
                 ],
                 'Latency' => [
                     'valueObject' => ResultInterface::class,
                     'valueAccessor' => function (ResultInterface $result) {
                         return 1; // TODO get real value
-                    },
-                    'eventKey' => 'Latency',
+                    }
                 ],
                 'Type' => [
                     'valueAccessor' => function () {
                         return 'ApiCall';
-                    },
-                    'eventKey' => 'Type',
+                    }
                 ]
             ];
         }
