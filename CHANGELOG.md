@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.57.0 - 2018-05-24
 
 * `Aws\CodeBuild` - AWS CodeBuild Adds Support for Windows Builds.
 * `Aws\Credentials\EcsCredentialProvider` - Disables proxies on EcsCredentialProvider credential lookups.
