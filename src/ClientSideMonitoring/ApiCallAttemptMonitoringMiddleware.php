@@ -65,6 +65,12 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     },
                     'maxLength' => 512,
                 ],
+                'SessionToken' => [
+                    'valueObject' => RequestInterface::class,
+                    'valueAccessor' => function () {
+                        return 1; // TODO get real value
+                    }
+                ],
                 'Type' => [
                     'valueAccessor' => function () {
                         return 'ApiCallAttempt';
