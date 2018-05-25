@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.57.1 - 2018-05-25
 
 * `Aws\AppStream` - This API update enables customers to control whether users can transfer data between their local devices and their streaming applications through file uploads and downloads, clipboard operations, or printing to local devices
 * `Aws\ConfigService` - AWS Config adds support for retention period, allowing you to specify a retention period for your AWS Config configuration items.
