@@ -63,7 +63,7 @@ abstract class AbstractMonitoringMiddleware
                     return $result['@metadata']['headers'][$headerName];
                 }
             }
-            if ($result instanceof \Exception) {
+            if ($result instanceof AwsException) {
                 $headers = $result->getResponse()->getHeaders();
                 if (isset($headers[$headerName][0])) {
                     return $headers[$headerName][0];

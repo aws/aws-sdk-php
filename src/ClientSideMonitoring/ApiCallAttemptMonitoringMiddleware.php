@@ -63,7 +63,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                         if ($result instanceof ResultInterface) {
                             return $result['@metadata']['statusCode'];
                         }
-                        if ($result instanceof \Exception) {
+                        if ($result instanceof AwsException) {
                             return $result->getResponse()->getStatusCode();
                         }
                         return null;
