@@ -22,6 +22,7 @@ class AwsException extends \RuntimeException
     private $connectionError;
     private $transferInfo;
     private $errorMessage;
+    private $monitoringEvents;
 
     /**
      * @param string           $message Exception message
@@ -51,6 +52,7 @@ class AwsException extends \RuntimeException
         $this->errorMessage = isset($context['message'])
             ? $context['message']
             : null;
+        $this->monitoringEvents = [];
         parent::__construct($message, 0, $previous);
     }
 
@@ -194,6 +196,26 @@ class AwsException extends \RuntimeException
         return isset($this->transferInfo[$name])
             ? $this->transferInfo[$name]
             : null;
+    }
+
+    /**
+     * Get client-side monitoring events attached to this exception.
+     *
+     * @return array
+     */
+    public function getMonitoringEvents()
+    {
+        return $this->monitoringEvents;
+    }
+
+    /**
+     * Attach client-side monitoring event to this exception
+     *
+     * @param array $event
+     */
+    public function addMonitoringEvent(array $event)
+    {
+        $this->monitoringEvents []= $event;
     }
 
     /**

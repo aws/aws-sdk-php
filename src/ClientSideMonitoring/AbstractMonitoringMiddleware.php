@@ -3,6 +3,7 @@
 namespace Aws\ClientSideMonitoring;
 
 use Aws\CommandInterface;
+use Aws\Exception\AwsException;
 use Aws\ResultInterface;
 use GuzzleHttp\Promise\Promise;
 use Psr\Http\Message\RequestInterface;
@@ -56,9 +57,17 @@ abstract class AbstractMonitoringMiddleware
 
     protected static function getResultHeaderAccessor($headerName)
     {
-        return function (ResultInterface $result) use ($headerName) {
-            if (isset($result['@metadata']['headers'][$headerName])) {
-                return $result['@metadata']['headers'][$headerName];
+        return function ($result) use ($headerName) {
+            if ($result instanceof ResultInterface) {
+                if (isset($result['@metadata']['headers'][$headerName])) {
+                    return $result['@metadata']['headers'][$headerName];
+                }
+            }
+            if ($result instanceof \Exception) {
+                $headers = $result->getResponse()->getHeaders();
+                if (isset($headers[$headerName][0])) {
+                    return $headers[$headerName][0];
+                }
             }
             return null;
         };
@@ -108,7 +117,9 @@ abstract class AbstractMonitoringMiddleware
     {
         $handler = $this->nextHandler;
         $eventData = null;
-        if ($this->isEnabled()) {
+        $enabled = $this->isEnabled();
+
+        if ($enabled) {
             $eventData = $this->populateRequestEventData(
                 $cmd,
                 $request,
@@ -117,9 +128,13 @@ abstract class AbstractMonitoringMiddleware
         }
 
         return $handler($cmd, $request)->then(
-            function (ResultInterface $result) use ($eventData) {
-                if ($this->isEnabled()) {
-                    $eventData = $this->populateResultEventData($result, $eventData);
+            function (ResultInterface $result) use ($eventData, $enabled) {
+                if ($enabled) {
+                    $eventData = $this->populateResultEventData(
+                        $result,
+                        $eventData
+                    );
+
                     if (empty($result['@monitoringEvents'])) {
                         $result['@monitoringEvents'] = [];
                     }
@@ -127,6 +142,19 @@ abstract class AbstractMonitoringMiddleware
                     $this->sendEventData($eventData);
                 }
                 return $result;
+            },
+            function (\Exception $e) use ($eventData, $enabled) {
+                if ($enabled) {
+                    $eventData = $this->populateResultEventData(
+                        $e,
+                        $eventData
+                    );
+                    if ($e instanceof AwsException) {
+                        $e->addMonitoringEvent($eventData);
+                    }
+                    $this->sendEventData($eventData);
+                }
+                return $e;
             }
         );
     }
@@ -216,12 +244,12 @@ abstract class AbstractMonitoringMiddleware
      * Returns $eventData array with information from the response, including the calculation
      * for attempt latency
      *
+     * @param ResultInterface|\Exception $result
      * @param array $event
-     * @param ResultInterface $result
      * @return array
      */
     protected function populateResultEventData(
-        ResultInterface $result,
+        $result,
         array $event
     ) {
         $dataFormat = static::getDataConfiguration();
@@ -229,7 +257,8 @@ abstract class AbstractMonitoringMiddleware
             $value = null;
             if (empty($datum['valueObject'])) {
                 $value = $datum['valueAccessor']();
-            } elseif ($datum['valueObject'] === ResultInterface::class) {
+            } elseif (in_array($datum['valueObject'],
+                [ResultInterface::class, AwsException::class])) {
                 $value = $datum['valueAccessor']($result);
             }
             if (!is_null($value)) {
@@ -271,7 +300,7 @@ abstract class AbstractMonitoringMiddleware
     {
         $socket = $this->prepareSocket();
         $datagram = $this->serializeEventData($eventData);
-        $result = socket_write($socket, $datagram, strlen($datagram));
+        $result = ''; // socket_write($socket, $datagram, strlen($datagram));
         if ($result === false) {
             $this->prepareSocket(true);
         }
@@ -286,6 +315,7 @@ abstract class AbstractMonitoringMiddleware
      */
     private function serializeEventData(array $eventData)
     {
+        var_dump($eventData);
         $dataFormat = static::getDataConfiguration();
         foreach ($eventData as $eventKey => $datum) {
             if (!empty($dataFormat[$eventKey]['maxLength'])) {

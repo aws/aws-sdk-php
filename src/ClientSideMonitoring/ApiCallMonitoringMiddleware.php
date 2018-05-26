@@ -19,13 +19,13 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
             $callDataConfig = [
                 'AttemptCount' => [
                     'valueObject' => ResultInterface::class,
-                    'valueAccessor' => function (ResultInterface $result) {
+                    'valueAccessor' => function ($result) {
                         return 1; // TODO get real value
                     }
                 ],
                 'Latency' => [
                     'valueObject' => ResultInterface::class,
-                    'valueAccessor' => function (ResultInterface $result) {
+                    'valueAccessor' => function ($result) {
                         return 1; // TODO get real value
                     }
                 ],
@@ -52,7 +52,7 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
      * @inheritdoc
      */
     protected function populateResultEventData(
-        ResultInterface $result,
+        $result,
         array $event
     ) {
         $event = parent::populateResultEventData($result, $event);

@@ -2,6 +2,8 @@
 
 namespace Aws\ClientSideMonitoring;
 
+use Aws\Exception\AwsException;
+use Aws\Result;
 use Aws\ResultInterface;
 use Psr\Http\Message\RequestInterface;
 
@@ -30,14 +32,22 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     }
                 ],
                 'AwsException' => [
-                    'valueAccessor' => function () {
-                        return 1; // TODO get real value
+                    'valueObject' => AwsException::class,
+                    'valueAccessor' => function ($exception) {
+                        if ($exception instanceof AwsException) {
+                            return $exception->getAwsErrorCode();
+                        }
+                        return null;
                     },
                     'maxLength' => 128,
                 ],
                 'AwsExceptionMessage' => [
-                    'valueAccessor' => function () {
-                        return 1; // TODO get real value
+                    'valueObject' => AwsException::class,
+                    'valueAccessor' => function ($exception) {
+                        if ($exception instanceof AwsException) {
+                            return $exception->getAwsErrorMessage();
+                        }
+                        return null;
                     },
                     'maxLength' => 512,
                 ],
@@ -49,8 +59,14 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                 ],
                 'HttpStatusCode' => [
                     'valueObject' => ResultInterface::class,
-                    'valueAccessor' => function (ResultInterface $result) {
-                        return $result['@metadata']['statusCode'];
+                    'valueAccessor' => function ($result) {
+                        if ($result instanceof ResultInterface) {
+                            return $result['@metadata']['statusCode'];
+                        }
+                        if ($result instanceof \Exception) {
+                            return $result->getResponse()->getStatusCode();
+                        }
+                        return null;
                     }
                 ],
                 'SdkException' => [
@@ -86,7 +102,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                 ],
                 'XAmzId2' => [
                     'valueObject' => ResultInterface::class,
-                    'valueAccessor' => self::getResultHeaderAccessor('x-amz-id-2')
+                    'valueAccessor' =>self::getResultHeaderAccessor('x-amz-id-2')
                 ],
                 'XAmzRequestId' => [
                     'valueObject' => ResultInterface::class,
