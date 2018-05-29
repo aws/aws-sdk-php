@@ -204,6 +204,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionOpsWorksCM(array $args = [])
  * @method \Aws\Organizations\OrganizationsClient createOrganizations(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOrganizations(array $args = [])
+ * @method \Aws\PI\PIClient createPI(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPI(array $args = [])
  * @method \Aws\Pinpoint\PinpointClient createPinpoint(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPinpoint(array $args = [])
  * @method \Aws\Polly\PollyClient createPolly(array $args = [])

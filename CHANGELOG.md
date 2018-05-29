@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PI` - Performance Insights is a feature of Amazon Relational Database Service (RDS) that helps you quickly assess the load on your database, and determine when and where to take action. You can use the SDK to retrieve Performance Insights data and integrate your monitoring solutions.
+
 ## 3.57.1 - 2018-05-25
 
 * `Aws\AppStream` - This API update enables customers to control whether users can transfer data between their local devices and their streaming applications through file uploads and downloads, clipboard operations, or printing to local devices
