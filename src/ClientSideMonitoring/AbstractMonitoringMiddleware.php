@@ -258,7 +258,7 @@ abstract class AbstractMonitoringMiddleware
             if (empty($datum['valueObject'])) {
                 $value = $datum['valueAccessor']();
             } elseif (in_array($datum['valueObject'],
-                [ResultInterface::class, AwsException::class])) {
+                [ResultInterface::class, AwsException::class, \Exception::class])) {
                 $value = $datum['valueAccessor']($result);
             }
             if (!is_null($value)) {
