@@ -35,7 +35,6 @@ abstract class AbstractMonitoringMiddleware
     {
         return [
             'Api' => [
-                'valueObject' => CommandInterface::class,
                 'valueAccessor' => [
                     CommandInterface::class => function (CommandInterface $cmd) {
                         return $cmd->getName();
