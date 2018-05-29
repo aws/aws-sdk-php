@@ -70,14 +70,24 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     }
                 ],
                 'SdkException' => [
-                    'valueAccessor' => function () {
-                        return 1; // TODO get real value
+                    'valueObject' => \Exception::class,
+                    'valueAccessor' => function ($exception) {
+                        if ($exception instanceof \Exception &&
+                            !($exception instanceof AwsException)) {
+                            return $exception->getCode();
+                        }
+                        return null;
                     },
                     'maxLength' => 128,
                 ],
                 'SdkExceptionMessage' => [
-                    'valueAccessor' => function () {
-                        return 1; // TODO get real value
+                    'valueObject' => \Exception::class,
+                    'valueAccessor' => function ($exception) {
+                        if ($exception instanceof \Exception &&
+                            !($exception instanceof AwsException)) {
+                            return $exception->getMessage();
+                        }
+                        return null;
                     },
                     'maxLength' => 512,
                 ],

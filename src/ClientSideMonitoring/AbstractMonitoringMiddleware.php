@@ -300,7 +300,7 @@ abstract class AbstractMonitoringMiddleware
     {
         $socket = $this->prepareSocket();
         $datagram = $this->serializeEventData($eventData);
-        $result = ''; // socket_write($socket, $datagram, strlen($datagram));
+        $result = socket_write($socket, $datagram, strlen($datagram));
         if ($result === false) {
             $this->prepareSocket(true);
         }
@@ -315,7 +315,6 @@ abstract class AbstractMonitoringMiddleware
      */
     private function serializeEventData(array $eventData)
     {
-        var_dump($eventData);
         $dataFormat = static::getDataConfiguration();
         foreach ($eventData as $eventKey => $datum) {
             if (!empty($dataFormat[$eventKey]['maxLength'])) {
