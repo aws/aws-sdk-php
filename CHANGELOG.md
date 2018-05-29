@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.58.0 - 2018-05-29
 
 * `Aws\PI` - Performance Insights is a feature of Amazon Relational Database Service (RDS) that helps you quickly assess the load on your database, and determine when and where to take action. You can use the SDK to retrieve Performance Insights data and integrate your monitoring solutions.
 
