@@ -36,38 +36,45 @@ abstract class AbstractMonitoringMiddleware
         return [
             'Api' => [
                 'valueObject' => CommandInterface::class,
-                'valueAccessor' => function (CommandInterface $cmd) {
-                    return $cmd->getName();
-                }
+                'valueAccessor' => [
+                    CommandInterface::class => function (CommandInterface $cmd) {
+                        return $cmd->getName();
+                    }
+                ]
             ],
             'Timestamp' => [
-                'valueObject' => null,
-                'valueAccessor' => function () {
-                    return floor(microtime(true) * 1000);
-                }
+                'valueAccessor' => [
+                    '' => function () {
+                        return floor(microtime(true) * 1000);
+                    }
+                ]
             ],
             'Version' => [
-                'valueObject' => null,
-                'valueAccessor' => function () {
-                    return 1;
-                }
+                'valueAccessor' => [
+                    '' => function () {
+                        return 1;
+                    }
+                ]
             ],
         ];
     }
 
+    protected static function getExceptionHeaderAccessor($headerName)
+    {
+        return function (AwsException $e) use ($headerName) {
+            $header = $e->getResponse()->getHeader($headerName);
+            if (!empty($header[0])) {
+                return $header[0];
+            }
+            return null;
+        };
+    }
+
     protected static function getResultHeaderAccessor($headerName)
     {
-        return function ($result) use ($headerName) {
-            if ($result instanceof ResultInterface) {
-                if (isset($result['@metadata']['headers'][$headerName])) {
-                    return $result['@metadata']['headers'][$headerName];
-                }
-            }
-            if ($result instanceof AwsException) {
-                $headers = $result->getResponse()->getHeaders();
-                if (isset($headers[$headerName][0])) {
-                    return $headers[$headerName][0];
-                }
+        return function (ResultInterface $result) use ($headerName) {
+            if (isset($result['@metadata']['headers'][$headerName])) {
+                return $result['@metadata']['headers'][$headerName];
             }
             return null;
         };
@@ -111,7 +118,6 @@ abstract class AbstractMonitoringMiddleware
      * @param  CommandInterface $cmd
      * @param  RequestInterface $request
      * @return Promise
-     * @todo Confirm with Bret that @monitoringEvents can be added to result
      */
     public function __invoke(CommandInterface $cmd, RequestInterface $request)
     {
@@ -226,12 +232,17 @@ abstract class AbstractMonitoringMiddleware
         $dataFormat = static::getDataConfiguration();
         foreach ($dataFormat as $eventKey => $datum) {
             $value = null;
-            if (empty($datum['valueObject'])) {
-                $value = $datum['valueAccessor']();
-            } elseif ($datum['valueObject'] === CommandInterface::class) {
-                $value = $datum['valueAccessor']($cmd);
-            } elseif ($datum['valueObject'] === RequestInterface::class) {
-                $value = $datum['valueAccessor']($request);
+            foreach ($datum['valueAccessor'] as $class => $accessor) {
+                if (empty($class)) {
+                    $value = $accessor();
+                } elseif ($cmd instanceof $class) {
+                    $value = $accessor($cmd);
+                } elseif ($request instanceof $class) {
+                    $value = $accessor($request);
+                }
+                if (!is_null($value)) {
+                    break;
+                }
             }
             if (!is_null($value)) {
                 $event[$eventKey] = $value;
@@ -255,11 +266,13 @@ abstract class AbstractMonitoringMiddleware
         $dataFormat = static::getDataConfiguration();
         foreach ($dataFormat as $eventKey => $datum) {
             $value = null;
-            if (empty($datum['valueObject'])) {
-                $value = $datum['valueAccessor']();
-            } elseif (in_array($datum['valueObject'],
-                [ResultInterface::class, AwsException::class, \Exception::class])) {
-                $value = $datum['valueAccessor']($result);
+            foreach ($datum['valueAccessor'] as $class => $accessor) {
+                if ($result instanceof $class) {
+                    $value = $accessor($result);
+                    if (!is_null($value)) {
+                        break;
+                    }
+                }
             }
             if (!is_null($value)) {
                 $event[$eventKey] = $value;

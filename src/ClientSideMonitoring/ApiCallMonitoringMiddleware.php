@@ -3,6 +3,7 @@
 namespace Aws\ClientSideMonitoring;
 
 use Aws\ResultInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @internal
@@ -18,21 +19,25 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
         if (empty($callDataConfig)) {
             $callDataConfig = [
                 'AttemptCount' => [
-                    'valueObject' => ResultInterface::class,
-                    'valueAccessor' => function ($result) {
-                        return 1; // TODO get real value
-                    }
+                    'valueAccessor' => [
+                        ResultInterface::class => function ($result) {
+                            return 1; // TODO get real value
+                        }
+                    ]
                 ],
                 'Latency' => [
-                    'valueObject' => ResultInterface::class,
-                    'valueAccessor' => function ($result) {
-                        return 1; // TODO get real value
-                    }
+                    'valueAccessor' => [
+                        ResultInterface::class => function ($result) {
+                            return 1; // TODO get real value
+                        }
+                    ]
                 ],
                 'Type' => [
-                    'valueAccessor' => function () {
-                        return 'ApiCall';
-                    }
+                    'valueAccessor' => [
+                        '' => function () {
+                            return 'ApiCall';
+                        }
+                    ]
                 ]
             ];
         }

@@ -5,6 +5,7 @@ namespace Aws\ClientSideMonitoring;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\ResultInterface;
+use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -21,106 +22,120 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         if (empty($callDataConfig)) {
             $callDataConfig = [
                 'AccessKey' => [
-                    'valueAccessor' => function () {
-                        return 1; // TODO get real value
-                    }
+                    'valueAccessor' => [
+                        RequestInterface::class => function () {
+                            return 1; // TODO get real value
+                        }
+                    ]
                 ],
                 'AttemptLatency' => [
-                    'valueObject' => ResultInterface::class,
-                    'valueAccessor' => function () {
-                        return 1; // TODO get real value
-                    }
+                    'valueAccessor' => [
+                        ResultInterface::class => function () {
+                            return 1; // TODO get real value
+                        }
+                    ]
                 ],
                 'AwsException' => [
-                    'valueObject' => AwsException::class,
-                    'valueAccessor' => function ($exception) {
-                        if ($exception instanceof AwsException) {
-                            return $exception->getAwsErrorCode();
+                    'valueAccessor' => [
+                        AwsException::class => function ($exception) {
+                            if ($exception instanceof AwsException) {
+                                return $exception->getAwsErrorCode();
+                            }
+                            return null;
                         }
-                        return null;
-                    },
+                    ],
                     'maxLength' => 128,
                 ],
                 'AwsExceptionMessage' => [
-                    'valueObject' => AwsException::class,
-                    'valueAccessor' => function ($exception) {
-                        if ($exception instanceof AwsException) {
-                            return $exception->getAwsErrorMessage();
+                    'valueAccessor' => [
+                        AwsException::class => function ($exception) {
+                            if ($exception instanceof AwsException) {
+                                return $exception->getAwsErrorMessage();
+                            }
+                            return null;
                         }
-                        return null;
-                    },
+                    ],
                     'maxLength' => 512,
                 ],
                 'Fqdn' => [
-                    'valueObject' => RequestInterface::class,
-                    'valueAccessor' => function (RequestInterface $request) {
-                        return $request->getUri()->getHost();
-                    }
+                    'valueAccessor' => [
+                        RequestInterface::class => function (RequestInterface $request) {
+                            return $request->getUri()->getHost();
+                        }
+                    ]
                 ],
                 'HttpStatusCode' => [
-                    'valueObject' => ResultInterface::class,
-                    'valueAccessor' => function ($result) {
-                        if ($result instanceof ResultInterface) {
+                    'valueAccessor' => [
+                        ResultInterface::class => function ($result) {
                             return $result['@metadata']['statusCode'];
+                        },
+                        AwsException::class => function(AwsException $e) {
+                            return $e->getResponse()->getStatusCode();
                         }
-                        if ($result instanceof AwsException) {
-                            return $result->getResponse()->getStatusCode();
-                        }
-                        return null;
-                    }
+                    ]
                 ],
                 'SdkException' => [
-                    'valueObject' => \Exception::class,
-                    'valueAccessor' => function ($exception) {
-                        if ($exception instanceof \Exception &&
-                            !($exception instanceof AwsException)) {
-                            return $exception->getCode();
+                    'valueAccessor' => [
+                        \Exception::class => function (\Exception $e) {
+                            if (!($e instanceof AwsException)) {
+                                return $e->getCode();
+                            }
+                            return null;
                         }
-                        return null;
-                    },
+                    ],
                     'maxLength' => 128,
                 ],
                 'SdkExceptionMessage' => [
-                    'valueObject' => \Exception::class,
-                    'valueAccessor' => function ($exception) {
-                        if ($exception instanceof \Exception &&
-                            !($exception instanceof AwsException)) {
-                            return $exception->getMessage();
+                    'valueAccessor' => [
+                        \Exception::class => function (\Exception $e) {
+                            if (!($e instanceof AwsException)) {
+                                return $e->getMessage();
+                            }
+                            return null;
                         }
-                        return null;
-                    },
+                    ],
                     'maxLength' => 512,
                 ],
                 'SessionToken' => [
-                    'valueObject' => RequestInterface::class,
-                    'valueAccessor' => function () {
-                        return 1; // TODO get real value
-                    }
+                    'valueAccessor' => [
+                        RequestInterface::class => function (RequestInterface $request) {
+                            return 1; // TODO get real value
+                        }
+                    ]
                 ],
                 'Type' => [
-                    'valueAccessor' => function () {
-                        return 'ApiCallAttempt';
-                    },
+                    'valueAccessor' => [
+                        '' => function () {
+                            return 'ApiCallAttempt';
+                        }
+                    ]
                 ],
                 'UserAgent' => [
-                    'valueObject' => RequestInterface::class,
-                    'valueAccessor' => function (RequestInterface $request) {
-                        return $request->getHeaderLine('User-Agent')
-                            . ' ' . \GuzzleHttp\default_user_agent();
-                    },
+                    'valueAccessor' => [
+                        RequestInterface::class => function (RequestInterface $request) {
+                            return $request->getHeaderLine('User-Agent')
+                                . ' ' . \GuzzleHttp\default_user_agent();
+                        }
+                    ],
                     'maxLength' => 256,
                 ],
                 'XAmzId2' => [
-                    'valueObject' => ResultInterface::class,
-                    'valueAccessor' =>self::getResultHeaderAccessor('x-amz-id-2')
+                    'valueAccessor' => [
+                        ResultInterface::class => self::getResultHeaderAccessor('x-amz-id-2'),
+                        AwsException::class => self::getExceptionHeaderAccessor('x-amz-id-2')
+                    ]
                 ],
                 'XAmzRequestId' => [
-                    'valueObject' => ResultInterface::class,
-                    'valueAccessor' => self::getResultHeaderAccessor('x-amz-request-id')
+                    'valueAccessor' => [
+                        ResultInterface::class => self::getResultHeaderAccessor('x-amz-request-id'),
+                        AwsException::class => self::getExceptionHeaderAccessor('x-amz-request-id')
+                    ]
                 ],
                 'XAmznRequestId' => [
-                    'valueObject' => ResultInterface::class,
-                    'valueAccessor' => self::getResultHeaderAccessor('x-amzn-RequestId')
+                    'valueAccessor' => [
+                        ResultInterface::class => self::getResultHeaderAccessor('x-amzn-RequestId'),
+                        AwsException::class => self::getExceptionHeaderAccessor('x-amzn-RequestId')
+                    ]
                 ]
             ];
         }
