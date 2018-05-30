@@ -48,13 +48,6 @@ abstract class AbstractMonitoringMiddleware
                     }
                 ]
             ],
-            'Version' => [
-                'valueAccessor' => [
-                    '' => function () {
-                        return 1;
-                    }
-                ]
-            ],
         ];
     }
 
