@@ -15,11 +15,11 @@ abstract class AbstractMonitoringMiddleware
 {
     private static $socket;
 
-    private $credentialProvider;
     private $nextHandler;
     private $options;
-    private $region;
-    private $service;
+    protected $credentialProvider;
+    protected $region;
+    protected $service;
 
     /**
      * Data format for event properties to be sent to the monitoring agent.
@@ -106,7 +106,7 @@ abstract class AbstractMonitoringMiddleware
     public function __construct(
         callable $handler,
         callable $credentialProvider,
-        array $options,
+        $options,
         $region,
         $service
     ) {

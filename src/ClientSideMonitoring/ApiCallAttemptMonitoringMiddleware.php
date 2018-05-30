@@ -2,10 +2,10 @@
 
 namespace Aws\ClientSideMonitoring;
 
+use Aws\Credentials\Credentials;
+use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\AwsException;
-use Aws\Result;
 use Aws\ResultInterface;
-use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -21,13 +21,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         static $callDataConfig;
         if (empty($callDataConfig)) {
             $callDataConfig = [
-                'AccessKey' => [
-                    'valueAccessor' => [
-                        RequestInterface::class => function () {
-                            return 1; // TODO get real value
-                        }
-                    ]
-                ],
                 'AttemptLatency' => [
                     'valueAccessor' => [
                         ResultInterface::class => function () {
@@ -96,13 +89,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     ],
                     'maxLength' => 512,
                 ],
-                'SessionToken' => [
-                    'valueAccessor' => [
-                        RequestInterface::class => function (RequestInterface $request) {
-                            return 1; // TODO get real value
-                        }
-                    ]
-                ],
                 'Type' => [
                     'valueAccessor' => [
                         '' => function () {
@@ -149,5 +135,25 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         }
 
         return $dataConfig;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function populateResultEventData(
+        $result,
+        array $event
+    ) {
+        $event = parent::populateResultEventData($result, $event);
+
+        $provider = $this->credentialProvider;
+        /** @var CredentialsInterface $credentials */
+        $credentials = $provider()->wait();
+        $event['AccessKey'] = $credentials->getAccessKeyId();
+        $sessionToken = $credentials->getSecurityToken();
+        if (!empty($sessionToken)) {
+            $event['SessionToken'] = $sessionToken;
+        }
+        return $event;
     }
 }
