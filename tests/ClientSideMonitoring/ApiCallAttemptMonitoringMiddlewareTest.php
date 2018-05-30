@@ -28,7 +28,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
     public function testSerializesData()
     {
         $serializeEventData = $this->getMethod('serializeEventData');
-        $middleware = new ApiCallAttemptMonitoringMiddleware(function(){}, [], 'test', 'test');
+        $middleware = new ApiCallAttemptMonitoringMiddleware(function(){}, function(){}, [], 'test', 'test');
         $eventData = [
             'AwsException' => str_repeat('a', 300),
             'AttemptLatency' => 314.15,

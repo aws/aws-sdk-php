@@ -44,6 +44,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         $data = $provider('api', 'ec2', 'latest');
         $service = new Service($data, $provider);
         $list->appendBuild(ApiCallMonitoringMiddleware::wrap(
+            function(){},
             [
                 'enabled' => true,
                 'port' => 31000
@@ -70,7 +71,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
     public function testSerializesData()
     {
         $serializeEventData = $this->getMethod('serializeEventData');
-        $middleware = new ApiCallMonitoringMiddleware(function(){}, [], 'test', 'test');
+        $middleware = new ApiCallMonitoringMiddleware(function(){}, function(){}, [], 'test', 'test');
         $eventData = [
             'Api' => 'GetBucket',
             'AttemptCount' => 2,

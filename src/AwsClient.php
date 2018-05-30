@@ -306,11 +306,13 @@ class AwsClient implements AwsClientInterface
         $options = ConfigurationProvider::defaultProvider($args);
 
         $callMiddleware = ApiCallMonitoringMiddleware::wrap(
+            $this->credentialProvider,
             $options,
             $this->region,
             $args['service']
         );
         $callAttemptMiddleware = ApiCallAttemptMonitoringMiddleware::wrap(
+            $this->credentialProvider,
             $options,
             $this->region,
             $args['service']

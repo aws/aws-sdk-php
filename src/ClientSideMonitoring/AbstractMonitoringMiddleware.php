@@ -15,6 +15,7 @@ abstract class AbstractMonitoringMiddleware
 {
     private static $socket;
 
+    private $credentialProvider;
     private $nextHandler;
     private $options;
     private $region;
@@ -80,11 +81,16 @@ abstract class AbstractMonitoringMiddleware
      * @param  $service
      * @return callable
      */
-    public static function wrap($options, $region, $service)
+    public static function wrap($credentialProvider, $options, $region, $service)
     {
-        return function (callable $handler) use ($options, $region, $service) {
+        return function (callable $handler) use (
+            $credentialProvider,
+            $options,
+            $region,
+            $service
+        ) {
             $class = get_called_class();
-            return new $class($handler, $options, $region, $service);
+            return new $class($handler, $credentialProvider, $options, $region, $service);
         };
     }
 
@@ -92,13 +98,20 @@ abstract class AbstractMonitoringMiddleware
      * Constructor stores the passed in handler and options
      *
      * @param callable $handler
-     * @param mixed $options
-     * @param  $region
-     * @param  $service
+     * @param callable $credentialProvider
+     * @param array $options
+     * @param $region
+     * @param $service
      */
-    public function __construct(callable $handler, $options, $region, $service)
-    {
+    public function __construct(
+        callable $handler,
+        callable $credentialProvider,
+        array $options,
+        $region,
+        $service
+    ) {
         $this->nextHandler = $handler;
+        $this->credentialProvider = $credentialProvider;
         $this->options = $options;
         $this->region = $region;
         $this->service = $service;
