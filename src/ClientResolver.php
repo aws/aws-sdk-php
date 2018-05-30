@@ -4,10 +4,6 @@ namespace Aws;
 use Aws\Api\Validator;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
-use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
-use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
-use Aws\ClientSideMonitoring\ConfigurationInterface;
-use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
@@ -146,13 +142,6 @@ class ClientResolver
             'doc'     => 'Configures the maximum number of allowed retries for a client (pass 0 to disable retries). ',
             'fn'      => [__CLASS__, '_apply_retries'],
             'default' => 3,
-        ],
-        'csm' => [
-            'type'     => 'value',
-            'valid'    => [ConfigurationInterface::class, CacheInterface::class, 'callable'],
-            'doc'      => 'CSM options for the client, including whether it is enabled. Provides a callable wrapping a promise, an instance of ConfigurationInterface, or an instance of CacheInterface',
-            'fn'       => [__CLASS__, '_apply_csm'],
-            'default'  => [ConfigurationProvider::class, 'defaultProvider']
         ],
         'validate' => [
             'type'    => 'value',
@@ -425,32 +414,6 @@ class ClientResolver
                 . 'Aws\Credentials\CredentialsInterface, an associative '
                 . 'array that contains "key", "secret", and an optional "token" '
                 . 'key-value pairs, a credentials provider function, or false.');
-        }
-    }
-
-    public static function _apply_csm($options, array &$args, HandlerList $list)
-    {
-        $options = ConfigurationProvider::defaultProvider($args);
-
-        $callMiddleware = ApiCallMonitoringMiddleware::wrap(
-            $options,
-            $args['region'],
-            $args['service']
-        );
-        $callAttemptMiddleware = ApiCallAttemptMonitoringMiddleware::wrap(
-            $options,
-            $args['region'],
-            $args['service']
-        );
-
-        try {
-            $list->before('retry', 'ApiCallMonitoringMiddleware',
-                $callMiddleware);
-            $list->after('retry', 'ApiCallAttemptMonitoringMiddleware',
-                $callAttemptMiddleware);
-        } catch (IAE $e) {
-            $list->appendSign($callMiddleware,'ApiCallMonitoringMiddleware');
-            $list->appendSign($callAttemptMiddleware,'ApiCallAttemptMonitoringMiddleware');
         }
     }
 

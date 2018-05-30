@@ -4,6 +4,9 @@ namespace Aws;
 use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
+use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
+use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
+use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
 
@@ -165,6 +168,7 @@ class AwsClient implements AwsClientInterface
         $this->defaultRequestOptions = $config['http'];
         $this->addSignatureMiddleware();
         $this->addInvocationId();
+        $this->addClientSideMonitoring($args);
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -295,6 +299,44 @@ class AwsClient implements AwsClientInterface
     {
         // Add invocation id to each request
         $this->handlerList->prependSign(Middleware::invocationId(), 'invocation-id');
+    }
+
+    private function addClientSideMonitoring($args)
+    {
+        $options = ConfigurationProvider::defaultProvider($args);
+
+        $callMiddleware = ApiCallMonitoringMiddleware::wrap(
+            $options,
+            $this->region,
+            $args['service']
+        );
+        $callAttemptMiddleware = ApiCallAttemptMonitoringMiddleware::wrap(
+            $options,
+            $this->region,
+            $args['service']
+        );
+
+        try {
+            $this->handlerList->before(
+                'retry',
+                'ApiCallMonitoringMiddleware',
+                $callMiddleware
+            );
+            $this->handlerList->after(
+                'retry',
+                'ApiCallAttemptMonitoringMiddleware',
+                $callAttemptMiddleware
+            );
+        } catch (\InvalidArgumentException $e) {
+            $this->handlerList->appendSign(
+                $callMiddleware,
+                'ApiCallMonitoringMiddleware'
+            );
+            $this->handlerList->appendSign(
+                $callAttemptMiddleware,
+                'ApiCallAttemptMonitoringMiddleware'
+            );
+        }
     }
 
     /**
