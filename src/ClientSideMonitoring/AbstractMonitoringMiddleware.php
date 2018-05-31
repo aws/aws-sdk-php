@@ -2,6 +2,7 @@
 
 namespace Aws\ClientSideMonitoring;
 
+use Aws\ClientSideMonitoring\Exception\SdkException;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\ResultInterface;
@@ -160,9 +161,10 @@ abstract class AbstractMonitoringMiddleware
                         $e,
                         $eventData
                     );
-                    if ($e instanceof AwsException) {
-                        $e->addMonitoringEvent($eventData);
+                    if (!($e instanceof AwsException)) {
+                        $e = new SdkException($e->getMessage(), $e->getCode(), $e);
                     }
+                    $e->addMonitoringEvent($eventData);
                     $this->sendEventData($eventData);
                 }
                 return $e;

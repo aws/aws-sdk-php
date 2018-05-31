@@ -21,6 +21,19 @@ use PHPUnit\Framework\TestCase;
  */
 class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
 {
+
+    protected function getConfiguration()
+    {
+        return new Configuration(true, 31000, 'TestApp');
+    }
+
+    protected function getCredentialProvider()
+    {
+        return CredentialProvider::fromCredentials(
+            new Credentials('testkey', 'testsecret', 'testtoken')
+        );
+    }
+
     /**
      * Used to get non-public methods for testing
      *
@@ -36,6 +49,26 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         return $method;
     }
 
+    protected function getResponse($promise)
+    {
+        $this->resetMiddlewareSocket();
+        $list = new HandlerList();
+        $list->setHandler(function ($command, $request) use ($promise) {
+            return $promise;
+        });
+
+        $list->appendSign(ApiCallAttemptMonitoringMiddleware::wrap(
+            $this->getCredentialProvider(),
+            $this->getConfiguration(),
+            'us-east-1',
+            'ec2'
+        ));
+        $handler = $list->resolve();
+
+        return $handler($this->getTestCommand(),
+            new Request('POST', 'http://foo.com/bar/baz'))->wait();
+    }
+
     protected function getTestCommand()
     {
         return new Command('RunScheduledInstances', [
@@ -47,128 +80,88 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         ]);
     }
 
+    protected function resetMiddlewareSocket()
+    {
+        $prepareSocket = $this->getMethod('prepareSocket');
+        $middleware = new ApiCallAttemptMonitoringMiddleware(function(){},
+            $this->getCredentialProvider(),
+            $this->getConfiguration(),
+            'test',
+            'test');
+        $prepareSocket->invokeArgs($middleware, array(true));
+    }
 
     public function testPopulatesMonitoringData()
     {
-        $list = new HandlerList();
-        $list->setHandler(function ($command, $request) use (&$called) {
-            $called = true;
-            return Promise\promise_for(new Result([
-                '@metadata' => [
-                    'statusCode' => 200,
-                    'headers' => [
-                        'x-amz-request-id' => 'testrequestid1',
-                        'x-amzn-RequestId' => 'testrequestid2',
-                        'x-amz-id-2' => 'testamzid'
-                    ]
+        $promise = Promise\promise_for(new Result([
+            '@metadata' => [
+                'statusCode' => 200,
+                'headers' => [
+                    'x-amz-request-id' => 'testrequestid1',
+                    'x-amzn-RequestId' => 'testrequestid2',
+                    'x-amz-id-2' => 'testamzid'
                 ]
-            ]));
-        });
+            ]
+        ]));
+        $response = $this->getResponse($promise);
 
-        $credentialProvider = CredentialProvider::fromCredentials(
-            new Credentials('testkey', 'testsecret', 'testtoken')
-        );
-        $list->appendSign(ApiCallAttemptMonitoringMiddleware::wrap(
-            $credentialProvider,
+        $this->assertArraySubset(
             [
-                'enabled' => true,
-                'port' => 31000
+                'AccessKey' => 'testkey',
+                'Api' => 'RunScheduledInstances',
+                'Fqdn' => 'foo.com',
+                'HttpStatusCode' => 200,
+                'Region' => 'us-east-1',
+                'Type' => 'ApiCallAttempt',
+                'Service' => 'ec2',
+                'XAmzRequestId' => 'testrequestid1',
+                'XAmznRequestId' => 'testrequestid2',
+                'XAmzId2' => 'testamzid'
             ],
-            'us-east-1',
-            'ec2'
-        ));
-        $handler = $list->resolve();
-
-        $response = $handler($this->getTestCommand(),
-            new Request('POST', 'http://foo.com/bar/baz'))->wait();
-        $this->assertTrue($called);
-        $this->assertEquals(
-            'RunScheduledInstances',
-            $response['@monitoringEvents'][0]['Api']
-        );
-        $this->assertEquals(
-            200,
-            $response['@monitoringEvents'][0]['HttpStatusCode']);
-        $this->assertEquals(
-            'foo.com',
-            $response['@monitoringEvents'][0]['Fqdn']);
-        $this->assertEquals(
-            'us-east-1',
-            $response['@monitoringEvents'][0]['Region']
-        );
-        $this->assertEquals(
-            'ApiCallAttempt',
-            $response['@monitoringEvents'][0]['Type']
-        );
-        $this->assertEquals(
-            'ec2',
-            $response['@monitoringEvents'][0]['Service']
-        );
-        $this->assertEquals(
-            'testrequestid1',
-            $response['@monitoringEvents'][0]['XAmzRequestId']
-        );
-        $this->assertEquals(
-            'testrequestid2',
-            $response['@monitoringEvents'][0]['XAmznRequestId']
-        );
-        $this->assertEquals(
-            'testamzid',
-            $response['@monitoringEvents'][0]['XAmzId2']
-        );
-        $this->assertEquals(
-            'testkey',
-            $response['@monitoringEvents'][0]['AccessKey']
+            $response['@monitoringEvents'][0]
         );
     }
 
     public function testPopulatesAwsExceptionData()
     {
-        $command = $this->getTestCommand();
         $message = 'This is a test exception message!';
-        $exception = new AwsException($message,
-            $command,
+        $code = 'TestExceptionCode';
+        $promise = Promise\rejection_for(new AwsException(
+            $message,
+            $this->getTestCommand(),
             [
                 'message' => $message,
-                'code' => 'TestExceptionCode',
+                'code' => $code,
                 'response' => new Response(405)
-            ]);
-
-        $list = new HandlerList();
-        $list->setHandler(function ($command, $request) use (&$called, $exception) {
-            $called = true;
-            return Promise\rejection_for($exception);
-        });
-
-        $credentialProvider = CredentialProvider::fromCredentials(
-            new Credentials('testkey', 'testsecret', 'testtoken')
-        );
-        $list->appendSign(ApiCallAttemptMonitoringMiddleware::wrap(
-            $credentialProvider,
-            [
-                'enabled' => true,
-                'port' => 31000
-            ],
-            'us-east-1',
-            'ec2'
+            ]
         ));
-        $handler = $list->resolve();
+        $response = $this->getResponse($promise);
+        $events = $response->getMonitoringEvents();
 
-        $result = $handler($command, new Request('POST', 'http://foo.com/bar/baz'))->wait();
-        $events = $result->getMonitoringEvents();
+        $this->assertArraySubset(
+            [
+                'AwsException' => $code,
+                'AwsExceptionMessage' => $message,
+                'HttpStatusCode' => 405
+            ],
+            $events[0]
+        );
+    }
 
-        $this->assertTrue($called);
-        $this->assertEquals(
-            'TestExceptionCode',
-            $events[0]['AwsException']
-        );
-        $this->assertEquals(
-            'This is a test exception message!',
-            $events[0]['AwsExceptionMessage']
-        );
-        $this->assertEquals(
-            405,
-            $events[0]['HttpStatusCode']
+    public function testPopulatesSdkExceptionData()
+    {
+        $message = 'This is a test exception message!';
+        $code = 111;
+        $promise = Promise\rejection_for(new \Exception($message, $code));
+        $response = $this->getResponse($promise);
+        $events = $response->getMonitoringEvents();
+
+        $this->assertArraySubset(
+            [
+                'SdkException' => $code,
+                'SdkExceptionMessage' => $message
+            ],
+            $events[0]
         );
     }
 
