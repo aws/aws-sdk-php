@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.59.0 - 2018-05-31
 
 * `Aws\ElasticLoadBalancingv2` - This release of Elastic Load Balancing introduces user authentication on Application Load Balancer.
 * `Aws\Neptune` - Amazon Neptune is a fast, reliable graph database service that makes it easy to build and run applications that work with highly connected datasets. Neptune supports popular graph models Property Graph and W3C's Resource Description Frame (RDF), and their respective query languages Apache TinkerPop Gremlin 3.3.2 and SPARQL 1.1. 
