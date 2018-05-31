@@ -198,6 +198,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHub(array $args = [])
  * @method \Aws\Mobile\MobileClient createMobile(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMobile(array $args = [])
+ * @method \Aws\Neptune\NeptuneClient createNeptune(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionNeptune(array $args = [])
  * @method \Aws\OpsWorks\OpsWorksClient createOpsWorks(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOpsWorks(array $args = [])
  * @method \Aws\OpsWorksCM\OpsWorksCMClient createOpsWorksCM(array $args = [])
