@@ -7,10 +7,12 @@ use Aws\Api\Service;
 use Aws\Command;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\Result;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -33,6 +35,18 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         $method->setAccessible(true);
         return $method;
     }
+
+    protected function getTestCommand()
+    {
+        return new Command('RunScheduledInstances', [
+            'LaunchSpecification' => [
+                'ImageId' => 'test-image',
+            ],
+            'ScheduledInstanceId' => 'test-instance-id',
+            'InstanceCount' => 1,
+        ]);
+    }
+
 
     public function testPopulatesMonitoringData()
     {
@@ -65,13 +79,8 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         ));
         $handler = $list->resolve();
 
-        $response = $handler(new Command('RunScheduledInstances', [
-            'LaunchSpecification' => [
-                'ImageId' => 'test-image',
-            ],
-            'ScheduledInstanceId' => 'test-instance-id',
-            'InstanceCount' => 1,
-        ]), new Request('POST', 'http://foo.com/bar/baz'))->wait();
+        $response = $handler($this->getTestCommand(),
+            new Request('POST', 'http://foo.com/bar/baz'))->wait();
         $this->assertTrue($called);
         $this->assertEquals(
             'RunScheduledInstances',
@@ -110,6 +119,56 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         $this->assertEquals(
             'testkey',
             $response['@monitoringEvents'][0]['AccessKey']
+        );
+    }
+
+    public function testPopulatesAwsExceptionData()
+    {
+        $command = $this->getTestCommand();
+        $message = 'This is a test exception message!';
+        $exception = new AwsException($message,
+            $command,
+            [
+                'message' => $message,
+                'code' => 'TestExceptionCode',
+                'response' => new Response(405)
+            ]);
+
+        $list = new HandlerList();
+        $list->setHandler(function ($command, $request) use (&$called, $exception) {
+            $called = true;
+            return Promise\rejection_for($exception);
+        });
+
+        $credentialProvider = CredentialProvider::fromCredentials(
+            new Credentials('testkey', 'testsecret', 'testtoken')
+        );
+        $list->appendSign(ApiCallAttemptMonitoringMiddleware::wrap(
+            $credentialProvider,
+            [
+                'enabled' => true,
+                'port' => 31000
+            ],
+            'us-east-1',
+            'ec2'
+        ));
+        $handler = $list->resolve();
+
+        $result = $handler($command, new Request('POST', 'http://foo.com/bar/baz'))->wait();
+        $events = $result->getMonitoringEvents();
+
+        $this->assertTrue($called);
+        $this->assertEquals(
+            'TestExceptionCode',
+            $events[0]['AwsException']
+        );
+        $this->assertEquals(
+            'This is a test exception message!',
+            $events[0]['AwsExceptionMessage']
+        );
+        $this->assertEquals(
+            405,
+            $events[0]['HttpStatusCode']
         );
     }
 
