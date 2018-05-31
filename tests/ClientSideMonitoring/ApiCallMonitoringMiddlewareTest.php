@@ -2,6 +2,8 @@
 
 namespace Aws\ClientSideMonitoring;
 
+use Aws\Credentials\CredentialProvider;
+use Aws\Credentials\Credentials;
 use Aws\Result;
 use GuzzleHttp\Promise;
 use Aws\HandlerList;
@@ -40,14 +42,15 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
             return Promise\promise_for(new Result([]));
         });
 
-        $provider = ApiProvider::defaultProvider();
-        $data = $provider('api', 'ec2', 'latest');
-        $service = new Service($data, $provider);
+        $credentialProvider = CredentialProvider::fromCredentials(
+            new Credentials('testkey', 'testsecret', 'testtoken')
+        );
         $list->appendBuild(ApiCallMonitoringMiddleware::wrap(
-            function(){},
+            $credentialProvider,
             [
                 'enabled' => true,
-                'port' => 31000
+                'port' => 31000,
+                'client_id' => 'TestApp'
             ],
             'us-east-1',
             'ec2'
@@ -65,6 +68,18 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         $this->assertEquals(
             'RunScheduledInstances',
             $response['@monitoringEvents'][0]['Api']
+        );
+        $this->assertEquals(
+            'ApiCall',
+            $response['@monitoringEvents'][0]['Type']
+        );
+        $this->assertEquals(
+            'ec2',
+            $response['@monitoringEvents'][0]['Service']
+        );
+        $this->assertEquals(
+            'TestApp',
+            $response['@monitoringEvents'][0]['ClientId']
         );
     }
 
