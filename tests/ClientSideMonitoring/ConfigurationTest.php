@@ -1,7 +1,8 @@
 <?php
 
-namespace Aws\ClientSideMonitoring;
+namespace Aws\Test\ClientSideMonitoring;
 
+use Aws\ClientSideMonitoring\Configuration;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\InvalidArgumentException;
 

@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Exception;
 
+use Aws\HasMonitoringEventsTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
 use Aws\CommandInterface;
@@ -11,6 +12,8 @@ use Aws\ResultInterface;
  */
 class AwsException extends \RuntimeException
 {
+    use HasMonitoringEventsTrait;
+
     /** @var ResponseInterface */
     private $response;
     private $request;
@@ -22,7 +25,7 @@ class AwsException extends \RuntimeException
     private $connectionError;
     private $transferInfo;
     private $errorMessage;
-    private $monitoringEvents;
+
 
     /**
      * @param string           $message Exception message
@@ -196,26 +199,6 @@ class AwsException extends \RuntimeException
         return isset($this->transferInfo[$name])
             ? $this->transferInfo[$name]
             : null;
-    }
-
-    /**
-     * Get client-side monitoring events attached to this exception.
-     *
-     * @return array
-     */
-    public function getMonitoringEvents()
-    {
-        return $this->monitoringEvents;
-    }
-
-    /**
-     * Attach client-side monitoring event to this exception
-     *
-     * @param array $event
-     */
-    public function addMonitoringEvent(array $event)
-    {
-        $this->monitoringEvents []= $event;
     }
 
     /**

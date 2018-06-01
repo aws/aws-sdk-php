@@ -1,7 +1,9 @@
 <?php
 
-namespace Aws\ClientSideMonitoring;
+namespace Aws\Test\ClientSideMonitoring;
 
+use Aws\ClientSideMonitoring\Configuration;
+use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\LruArrayCache;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
