@@ -1,13 +1,12 @@
 <?php
 
-namespace Aws\Test\ClientSideMonitoring;
+namespace Aws\ClientSideMonitoring;
 
-use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware
- * @covers Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
+ * @covers ApiCallAttemptMonitoringMiddleware
+ * @covers AbstractMonitoringMiddleware
  */
 class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
 {
