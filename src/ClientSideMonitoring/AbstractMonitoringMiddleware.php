@@ -2,7 +2,6 @@
 
 namespace Aws\ClientSideMonitoring;
 
-use Aws\ClientSideMonitoring\Exception\SdkException;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\ResultInterface;
