@@ -1,19 +1,20 @@
 <?php
 
-namespace Aws\ClientSideMonitoring;
+namespace Aws\Test\ClientSideMonitoring;
 
-use Aws\Result;
-use GuzzleHttp\Promise;
+use Aws\Command;
 use Aws\HandlerList;
+use Aws\Result;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
-use Aws\Command;
+use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers ApiCallMonitoringMiddleware
- * @covers AbstractMonitoringMiddleware
+ * @covers Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware
+ * @covers Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
  */
 class ApiCallMonitoringMiddlewareTest extends TestCase
 {
