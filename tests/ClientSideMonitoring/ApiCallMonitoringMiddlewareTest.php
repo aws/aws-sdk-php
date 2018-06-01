@@ -1,27 +1,27 @@
 <?php
 
-namespace Aws\ClientSideMonitoring;
+namespace Aws\Test\ClientSideMonitoring;
 
+use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
+use Aws\ClientSideMonitoring\Configuration;
+use Aws\Command;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\HandlerList;
 use Aws\Result;
 use GuzzleHttp\Promise;
-use Aws\HandlerList;
-use Aws\Api\ApiProvider;
-use Aws\Api\Service;
-use Aws\Command;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers ApiCallMonitoringMiddleware
- * @covers AbstractMonitoringMiddleware
+ * @covers \Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware
+ * @covers \Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
  */
 class ApiCallMonitoringMiddlewareTest extends TestCase
 {
     protected function getConfiguration()
     {
-        return new Configuration(true, 31000, 'TestApp');
+        return new Configuration(true, 31000, 'AwsPhpSdkTestApp');
     }
 
     protected function getCredentialProvider()
@@ -85,7 +85,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         $this->assertArraySubset(
             [
                 'Api' => 'RunScheduledInstances',
-                'ClientId' => 'TestApp',
+                'ClientId' => 'AwsPhpSdkTestApp',
                 'Type' => 'ApiCall',
                 'Service' => 'ec2'
             ],

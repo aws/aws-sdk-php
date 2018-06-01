@@ -1,9 +1,9 @@
 <?php
 
-namespace Aws\ClientSideMonitoring;
+namespace Aws\Test\ClientSideMonitoring;
 
-use Aws\Api\ApiProvider;
-use Aws\Api\Service;
+use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
+use Aws\ClientSideMonitoring\Configuration;
 use Aws\Command;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
@@ -16,15 +16,15 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers ApiCallAttemptMonitoringMiddleware
- * @covers AbstractMonitoringMiddleware
+ * @covers \Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware
+ * @covers \Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
  */
 class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
 {
 
     protected function getConfiguration()
     {
-        return new Configuration(true, 31000, 'TestApp');
+        return new Configuration(true, 31000, 'AwsPhpSdkTestApp');
     }
 
     protected function getCredentialProvider()
@@ -109,6 +109,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
             [
                 'AccessKey' => 'testkey',
                 'Api' => 'RunScheduledInstances',
+                'ClientId' => 'AwsPhpSdkTestApp',
                 'Fqdn' => 'foo.com',
                 'HttpStatusCode' => 200,
                 'Region' => 'us-east-1',
