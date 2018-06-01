@@ -122,6 +122,7 @@ abstract class AbstractMonitoringMiddleware
      */
     public function __invoke(CommandInterface $cmd, RequestInterface $request)
     {
+        $cmd['@http']['collect_stats'] = true;
         $handler = $this->nextHandler;
         $eventData = null;
         $enabled = $this->isEnabled();

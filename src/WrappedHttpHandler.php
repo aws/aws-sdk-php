@@ -73,7 +73,7 @@ class WrappedHttpHandler
         $fn = $this->httpHandler;
         $options = $command['@http'] ?: [];
         $stats = [];
-        if ($this->collectStats) {
+        if ($this->collectStats || !empty($options['collect_stats'])) {
             $options['http_stats_receiver'] = static function (
                 array $transferStats
             ) use (&$stats) {
