@@ -29,13 +29,6 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
                         }
                     ]
                 ],
-                'Latency' => [
-                    'valueAccessor' => [
-                        ResultInterface::class => function (ResultInterface $result) {
-                            return null; // TODO get real value
-                        }
-                    ]
-                ],
             ];
         }
 
@@ -71,6 +64,7 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
         array $event
     ) {
         $event = parent::populateResultEventData($result, $event);
+        $event['Latency'] = (floor(microtime(true) * 1000) - $event['Timestamp']);
         unset($event['Region']);
         return $event;
     }
