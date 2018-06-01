@@ -161,10 +161,9 @@ abstract class AbstractMonitoringMiddleware
                         $e,
                         $eventData
                     );
-                    if (!($e instanceof AwsException)) {
-                        $e = new SdkException($e->getMessage(), $e->getCode(), $e);
+                    if ($e instanceof AwsException) {
+                        $e->addMonitoringEvent($eventData);
                     }
-                    $e->addMonitoringEvent($eventData);
                     $this->sendEventData($eventData);
                 }
                 return $e;

@@ -148,23 +148,6 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         );
     }
 
-    public function testPopulatesSdkExceptionData()
-    {
-        $message = 'This is a test exception message!';
-        $code = 111;
-        $promise = Promise\rejection_for(new \Exception($message, $code));
-        $response = $this->getResponse($promise);
-        $events = $response->getMonitoringEvents();
-
-        $this->assertArraySubset(
-            [
-                'SdkException' => $code,
-                'SdkExceptionMessage' => $message
-            ],
-            $events[0]
-        );
-    }
-
     public function testSerializesData()
     {
         $serializeEventData = $this->getMethod('serializeEventData');
