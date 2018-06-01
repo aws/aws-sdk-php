@@ -5,7 +5,7 @@ namespace Aws\ClientSideMonitoring;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\ResultInterface;
-use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -42,22 +42,18 @@ abstract class AbstractMonitoringMiddleware
                     }
                 ]
             ],
-            'Timestamp' => [
-                'valueAccessor' => [
-                    '' => function () {
-                        return floor(microtime(true) * 1000);
-                    }
-                ]
-            ],
         ];
     }
 
     protected static function getExceptionHeaderAccessor($headerName)
     {
         return function (AwsException $e) use ($headerName) {
-            $header = $e->getResponse()->getHeader($headerName);
-            if (!empty($header[0])) {
-                return $header[0];
+            $response = $e->getResponse();
+            if ($response !== null) {
+                $header = $response->getHeader($headerName);
+                if (!empty($header[0])) {
+                    return $header[0];
+                }
             }
             return null;
         };
@@ -138,36 +134,29 @@ abstract class AbstractMonitoringMiddleware
             );
         }
 
-        return $handler($cmd, $request)->then(
-            function (ResultInterface $result) use ($eventData, $enabled) {
-                if ($enabled) {
-                    $eventData = $this->populateResultEventData(
-                        $result,
-                        $eventData
-                    );
+        $g = function ($value) use ($eventData, $enabled) {
+            if ($enabled) {
+                $eventData = $this->populateResultEventData(
+                    $value,
+                    $eventData
+                );
+                $this->sendEventData($eventData);
 
-                    if (empty($result['@monitoringEvents'])) {
-                        $result['@monitoringEvents'] = [];
+                if ($value instanceof \Exception) {
+                    if ($value instanceof AwsException) {
+                        $value->addMonitoringEvent($eventData);
                     }
-                    $result['@monitoringEvents'] []= $eventData;
-                    $this->sendEventData($eventData);
+                    return Promise\rejection_for($value);
                 }
-                return $result;
-            },
-            function (\Exception $e) use ($eventData, $enabled) {
-                if ($enabled) {
-                    $eventData = $this->populateResultEventData(
-                        $e,
-                        $eventData
-                    );
-                    if ($e instanceof AwsException) {
-                        $e->addMonitoringEvent($eventData);
-                    }
-                    $this->sendEventData($eventData);
+                if (empty($value['@monitoringEvents'])) {
+                    $value['@monitoringEvents'] = [];
                 }
-                return $e;
+                $value['@monitoringEvents'] []= $eventData;
             }
-        );
+            return $value;
+        };
+
+        return $handler($cmd, $request)->then($g, $g);
     }
 
     /**
@@ -186,6 +175,7 @@ abstract class AbstractMonitoringMiddleware
             'ClientId' => $this->getClientId(),
             'Region' => $this->getRegion(),
             'Service' => $this->getService(),
+            'Timestamp' => floor(microtime(true) * 1000),
             'Version' => 1
         ];
         return $event;
@@ -245,12 +235,10 @@ abstract class AbstractMonitoringMiddleware
                 } elseif ($request instanceof $class) {
                     $value = $accessor($request);
                 }
-                if (!is_null($value)) {
-                    break;
+                if ($value !== null) {
+                    $event[$eventKey] = $value;
+                    continue 2;
                 }
-            }
-            if (!is_null($value)) {
-                $event[$eventKey] = $value;
             }
         }
         return $event;
@@ -274,13 +262,11 @@ abstract class AbstractMonitoringMiddleware
             foreach ($datum['valueAccessor'] as $class => $accessor) {
                 if ($result instanceof $class) {
                     $value = $accessor($result);
-                    if (!is_null($value)) {
-                        break;
+                    if ($value !== null) {
+                        $event[$eventKey] = $value;
+                        continue 2;
                     }
                 }
-            }
-            if (!is_null($value)) {
-                $event[$eventKey] = $value;
             }
         }
         return $event;
@@ -316,13 +302,13 @@ abstract class AbstractMonitoringMiddleware
      */
     private function sendEventData(array $eventData)
     {
-        $socket = $this->prepareSocket();
-        $datagram = $this->serializeEventData($eventData);
-        $result = socket_write($socket, $datagram, strlen($datagram));
-        if ($result === false) {
-            $this->prepareSocket(true);
-        }
-        return $result;
+//        $socket = $this->prepareSocket();
+//        $datagram = $this->serializeEventData($eventData);
+//        $result = socket_write($socket, $datagram, strlen($datagram));
+//        if ($result === false) {
+//            $this->prepareSocket(true);
+//        }
+//        return $result;
     }
 
     /**

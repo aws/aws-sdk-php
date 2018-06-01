@@ -2,6 +2,7 @@
 
 namespace Aws\ClientSideMonitoring;
 
+use Aws\CommandInterface;
 use Aws\ResultInterface;
 use Psr\Http\Message\RequestInterface;
 
@@ -20,25 +21,21 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
             $callDataConfig = [
                 'AttemptCount' => [
                     'valueAccessor' => [
-                        ResultInterface::class => function ($result) {
-                            return 1; // TODO get real value
+                        ResultInterface::class => function (ResultInterface $result) {
+                            if (isset($result['@metadata']['transferStats']['http'])) {
+                                return count($result['@metadata']['transferStats']['http']);
+                            }
+                            return null;
                         }
                     ]
                 ],
                 'Latency' => [
                     'valueAccessor' => [
-                        ResultInterface::class => function ($result) {
-                            return 1; // TODO get real value
+                        ResultInterface::class => function (ResultInterface $result) {
+                            return null; // TODO get real value
                         }
                     ]
                 ],
-                'Type' => [
-                    'valueAccessor' => [
-                        '' => function () {
-                            return 'ApiCall';
-                        }
-                    ]
-                ]
             ];
         }
 
@@ -51,6 +48,19 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
         }
 
         return $dataConfig;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function populateRequestEventData(
+        CommandInterface $cmd,
+        RequestInterface $request,
+        array $event
+    ) {
+        $event = parent::populateRequestEventData($cmd, $request, $event);
+        $event['Type'] = 'ApiCall';
+        return $event;
     }
 
     /**

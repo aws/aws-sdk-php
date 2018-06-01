@@ -2,7 +2,7 @@
 
 namespace Aws\ClientSideMonitoring;
 
-use Aws\Credentials\Credentials;
+use Aws\CommandInterface;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\AwsException;
 use Aws\ResultInterface;
@@ -23,32 +23,50 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
             $callDataConfig = [
                 'AttemptLatency' => [
                     'valueAccessor' => [
-                        ResultInterface::class => function () {
-                            return 1; // TODO get real value
+                        ResultInterface::class => function (ResultInterface $result) {
+                            if (isset($result['@metadata']['transferStats']['http'])) {
+                                $attempt = end($result['@metadata']['transferStats']['http']);
+                                reset($result['@metadata']['transferStats']['http']);
+                                if (isset($attempt['total_time'])) {
+                                    return $attempt['total_time'];
+                                }
+                            }
+                            return null;
+                        },
+                        AwsException::class => function (AwsException $exception) {
+                            return null; // TODO get real value
                         }
                     ]
                 ],
                 'AwsException' => [
                     'valueAccessor' => [
-                        AwsException::class => function ($exception) {
-                            if ($exception instanceof AwsException) {
-                                return $exception->getAwsErrorCode();
-                            }
-                            return null;
+                        AwsException::class => function (AwsException $exception) {
+                            return $exception->getAwsErrorCode();
                         }
                     ],
                     'maxLength' => 128,
                 ],
                 'AwsExceptionMessage' => [
                     'valueAccessor' => [
-                        AwsException::class => function ($exception) {
-                            if ($exception instanceof AwsException) {
-                                return $exception->getAwsErrorMessage();
-                            }
-                            return null;
+                        AwsException::class => function (AwsException $exception) {
+                            return $exception->getAwsErrorMessage();
                         }
                     ],
                     'maxLength' => 512,
+                ],
+                'DnsLatency' => [
+                    'valueAccessor' => [
+                        ResultInterface::class => function (ResultInterface $result) {
+                            if (isset($result['@metadata']['transferStats']['http'])) {
+                                $attempt = end($result['@metadata']['transferStats']['http']);
+                                reset($result['@metadata']['transferStats']['http']);
+                                if (isset($attempt['namelookup_time'])) {
+                                    return $attempt['namelookup_time'];
+                                }
+                            }
+                            return null;
+                        }
+                    ]
                 ],
                 'Fqdn' => [
                     'valueAccessor' => [
@@ -59,11 +77,15 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                 ],
                 'HttpStatusCode' => [
                     'valueAccessor' => [
-                        ResultInterface::class => function ($result) {
+                        ResultInterface::class => function (ResultInterface $result) {
                             return $result['@metadata']['statusCode'];
                         },
                         AwsException::class => function(AwsException $e) {
-                            return $e->getResponse()->getStatusCode();
+                            $response = $e->getResponse();
+                            if ($response !== null) {
+                                return $response->getStatusCode();
+                            }
+                            return null;
                         }
                     ]
                 ],
@@ -88,13 +110,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                         }
                     ],
                     'maxLength' => 512,
-                ],
-                'Type' => [
-                    'valueAccessor' => [
-                        '' => function () {
-                            return 'ApiCallAttempt';
-                        }
-                    ]
                 ],
                 'UserAgent' => [
                     'valueAccessor' => [
@@ -135,6 +150,19 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         }
 
         return $dataConfig;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function populateRequestEventData(
+        CommandInterface $cmd,
+        RequestInterface $request,
+        array $event
+    ) {
+        $event = parent::populateRequestEventData($cmd, $request, $event);
+        $event['Type'] = 'ApiCallAttempt';
+        return $event;
     }
 
     /**
