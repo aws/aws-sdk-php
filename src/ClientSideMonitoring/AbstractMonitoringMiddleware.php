@@ -228,9 +228,7 @@ abstract class AbstractMonitoringMiddleware
         foreach ($dataFormat as $eventKey => $datum) {
             $value = null;
             foreach ($datum['valueAccessor'] as $class => $accessor) {
-                if (empty($class)) {
-                    $value = $accessor();
-                } elseif ($cmd instanceof $class) {
+                if ($cmd instanceof $class) {
                     $value = $accessor($cmd);
                 } elseif ($request instanceof $class) {
                     $value = $accessor($request);
@@ -302,13 +300,13 @@ abstract class AbstractMonitoringMiddleware
      */
     private function sendEventData(array $eventData)
     {
-//        $socket = $this->prepareSocket();
-//        $datagram = $this->serializeEventData($eventData);
-//        $result = socket_write($socket, $datagram, strlen($datagram));
-//        if ($result === false) {
-//            $this->prepareSocket(true);
-//        }
-//        return $result;
+        $socket = $this->prepareSocket();
+        $datagram = $this->serializeEventData($eventData);
+        $result = socket_write($socket, $datagram, strlen($datagram));
+        if ($result === false) {
+            $this->prepareSocket(true);
+        }
+        return $result;
     }
 
     /**
