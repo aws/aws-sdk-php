@@ -21,27 +21,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         static $callDataConfig;
         if (empty($callDataConfig)) {
             $callDataConfig = [
-                'AcquireConnectionLatency' => [
-                    'valueAccessor' => [
-                        ResultInterface::class => function (ResultInterface $result) {
-                            if (isset($result['@metadata']['transferStats']['http'])) {
-                                $attempt = end($result['@metadata']['transferStats']['http']);
-                                reset($result['@metadata']['transferStats']['http']);
-                                if (isset($attempt['connect_time'])) {
-                                    return floor($attempt['connect_time'] * 1000);
-                                }
-                            }
-                            return null;
-                        },
-                        AwsException::class => function (AwsException $exception) {
-                            $attempt = $exception->getTransferInfo();
-                            if (isset($attempt['connect_time'])) {
-                                return floor($attempt['connect_time'] * 1000);
-                            }
-                            return null;
-                        }
-                    ]
-                ],
                 'AttemptLatency' => [
                     'valueAccessor' => [
                         ResultInterface::class => function (ResultInterface $result) {
