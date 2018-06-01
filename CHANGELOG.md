@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.60.0 - 2018-06-01
 
 * `Aws\DirectoryService` - Added ResetUserPassword API. Customers can now reset their users' passwords without providing the old passwords in Simple AD and Microsoft AD.
 * `Aws\IoT` - We are releasing force CancelJob and CancelJobExecution functionalities to customers.
