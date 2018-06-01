@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectoryService` - Added ResetUserPassword API. Customers can now reset their users' passwords without providing the old passwords in Simple AD and Microsoft AD.
+* `Aws\IoT` - We are releasing force CancelJob and CancelJobExecution functionalities to customers.
+* `Aws\MediaTailor` - AWS Elemental MediaTailor is a personalization and monetization service that allows scalable server-side ad insertion. The service enables you to serve targeted ads to viewers while maintaining broadcast quality in over-the-top (OTT) video applications. This SDK allows user access to the AWS Elemental MediaTailor configuration interface.
+* `Aws\Redshift` - Documentation updates for redshift
+* `Aws\SNS` - The SNS Subscribe API has been updated with two new optional parameters: Attributes and ReturnSubscriptionArn. Attributes is a map of subscription attributes which can be one or more of: FilterPolicy, DeliveryPolicy, and RawMessageDelivery. ReturnSubscriptionArn is a boolean parameter that overrides the default behavior of returning "pending confirmation" for subscriptions that require confirmation instead of returning the subscription ARN.
+* `Aws\SageMaker` - SageMaker has added support for the Asia Pacific (Tokyo) region.
+
 ## 3.59.0 - 2018-05-31
 
 * `Aws\ElasticLoadBalancingv2` - This release of Elastic Load Balancing introduces user authentication on Application Load Balancer.

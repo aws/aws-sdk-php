@@ -194,6 +194,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMediaStore(array $args = [])
  * @method \Aws\MediaStoreData\MediaStoreDataClient createMediaStoreData(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMediaStoreData(array $args = [])
+ * @method \Aws\MediaTailor\MediaTailorClient createMediaTailor(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMediaTailor(array $args = [])
  * @method \Aws\MigrationHub\MigrationHubClient createMigrationHub(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHub(array $args = [])
  * @method \Aws\Mobile\MobileClient createMobile(array $args = [])

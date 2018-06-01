@@ -22,6 +22,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise cancelCertificateTransferAsync(array $args = [])
  * @method \Aws\Result cancelJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelJobAsync(array $args = [])
+ * @method \Aws\Result cancelJobExecution(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelJobExecutionAsync(array $args = [])
  * @method \Aws\Result clearDefaultAuthorizer(array $args = [])
  * @method \GuzzleHttp\Promise\Promise clearDefaultAuthorizerAsync(array $args = [])
  * @method \Aws\Result createAuthorizer(array $args = [])
