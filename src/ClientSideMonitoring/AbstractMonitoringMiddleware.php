@@ -126,10 +126,7 @@ abstract class AbstractMonitoringMiddleware
                     }
                     return Promise\rejection_for($value);
                 }
-                if (empty($value['@monitoringEvents'])) {
-                    $value['@monitoringEvents'] = [];
-                }
-                $value['@monitoringEvents'] []= $eventData;
+                $value->addMonitoringEvent($eventData);
             }
             return $value;
         };

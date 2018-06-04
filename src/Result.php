@@ -9,6 +9,7 @@ use JmesPath\Env as JmesPath;
 class Result implements ResultInterface
 {
     use HasDataTrait;
+    use HasMonitoringEventsTrait;
 
     public function __construct(array $data = [])
     {

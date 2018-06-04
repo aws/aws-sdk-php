@@ -119,7 +119,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                 'XAmznRequestId' => 'testrequestid2',
                 'XAmzId2' => 'testamzid'
             ],
-            $response['@monitoringEvents'][0]
+            $response->getMonitoringEvents()[0]
         );
     }
 

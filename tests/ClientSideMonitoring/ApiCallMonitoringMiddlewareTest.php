@@ -89,7 +89,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                 'Type' => 'ApiCall',
                 'Service' => 'ec2'
             ],
-            $response['@monitoringEvents'][0]
+            $response->getMonitoringEvents()[0]
         );
     }
 }
