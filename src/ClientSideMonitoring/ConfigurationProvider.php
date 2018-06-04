@@ -127,14 +127,14 @@ class ConfigurationProvider
     {
         return function () {
             // Use credentials from environment variables, if available
-            $client_id = getenv(self::ENV_CLIENT_ID);
             $enabled = getenv(self::ENV_ENABLED);
-            $port = getenv(self::ENV_PORT);
-            if ($enabled !== false) {
-                $client_id = !empty($client_id) ? $client_id : self::DEFAULT_CLIENT_ID;
-                $port = !empty($port) ? $port : self::DEFAULT_PORT;
+            if ($enabled) {
                 return Promise\promise_for(
-                    new Configuration($enabled, $port, $client_id)
+                    new Configuration(
+                        $enabled,
+                        getenv(self::ENV_PORT) ?: self::DEFAULT_PORT,
+                        getenv(self:: ENV_CLIENT_ID) ?: self::DEFAULT_CLIENT_ID
+                     )
                 );
             }
 
