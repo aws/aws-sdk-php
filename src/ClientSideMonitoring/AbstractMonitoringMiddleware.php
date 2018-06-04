@@ -12,6 +12,7 @@ use Psr\Http\Message\RequestInterface;
  * @internal
  */
 abstract class AbstractMonitoringMiddleware
+    implements MonitoringMiddlewareInterface
 {
     private static $socket;
 
@@ -20,22 +21,6 @@ abstract class AbstractMonitoringMiddleware
     protected $credentialProvider;
     protected $region;
     protected $service;
-
-    /**
-     * Data format for event properties to be sent to the monitoring agent.
-     *
-     * Associative array of associative arrays in the format:
-     *     $eventKey => [
-     *         'valueObject' => CommandInterface::class|RequestInterface::class|ResultInterface::class
-     *         'valueAccessor' => callable
-     *         'maxLength' => int
-     *     ]
-     * @return array
-     */
-    public static function getDataConfiguration()
-    {
-        return [];
-    }
 
     protected static function getExceptionHeaderAccessor($headerName)
     {
@@ -207,6 +192,17 @@ abstract class AbstractMonitoringMiddleware
         return $this->unwrappedOptions()->isEnabled();
     }
 
+    private function getTruncatedValue($value, $datum) {
+        if (!empty($datum['maxLength'])) {
+            return substr(
+                $value,
+                0,
+                $datum['maxLength']
+            );
+        }
+        return $value;
+    }
+
     /**
      * Returns $eventData array with information from the request and command.
      *
@@ -220,17 +216,17 @@ abstract class AbstractMonitoringMiddleware
         RequestInterface $request,
         array $event
     ) {
-        $dataFormat = static::getDataConfiguration();
+        $dataFormat = static::getRequestDataConfiguration();
         foreach ($dataFormat as $eventKey => $datum) {
             $value = null;
-            foreach ($datum['valueAccessor'] as $class => $accessor) {
+            foreach ($datum['valueAccessors'] as $class => $accessor) {
                 if ($cmd instanceof $class) {
                     $value = $accessor($cmd);
                 } elseif ($request instanceof $class) {
                     $value = $accessor($request);
                 }
                 if ($value !== null) {
-                    $event[$eventKey] = $value;
+                    $event[$eventKey] = $this->getTruncatedValue($value, $datum);
                     continue 2;
                 }
             }
@@ -250,14 +246,14 @@ abstract class AbstractMonitoringMiddleware
         $result,
         array $event
     ) {
-        $dataFormat = static::getDataConfiguration();
+        $dataFormat = static::getResponseDataConfiguration();
         foreach ($dataFormat as $eventKey => $datum) {
             $value = null;
-            foreach ($datum['valueAccessor'] as $class => $accessor) {
+            foreach ($datum['valueAccessors'] as $class => $accessor) {
                 if ($result instanceof $class) {
                     $value = $accessor($result);
                     if ($value !== null) {
-                        $event[$eventKey] = $value;
+                        $event[$eventKey] = $this->getTruncatedValue($value, $datum);
                         continue 2;
                     }
                 }
@@ -297,33 +293,12 @@ abstract class AbstractMonitoringMiddleware
     private function sendEventData(array $eventData)
     {
         $socket = $this->prepareSocket();
-        $datagram = $this->serializeEventData($eventData);
+        $datagram = json_encode($eventData);
         $result = socket_write($socket, $datagram, strlen($datagram));
         if ($result === false) {
             $this->prepareSocket(true);
         }
         return $result;
-    }
-
-    /**
-     * Serializes the event data with string length limitations, returning a JSON-formatted string.
-     *
-     * @param array $eventData
-     * @return string
-     */
-    private function serializeEventData(array $eventData)
-    {
-        $dataFormat = static::getDataConfiguration();
-        foreach ($eventData as $eventKey => $datum) {
-            if (!empty($dataFormat[$eventKey]['maxLength'])) {
-                $eventData[$eventKey] = substr(
-                    $datum,
-                    0,
-                    $dataFormat[$eventKey]['maxLength']
-                );
-            }
-        }
-        return json_encode($eventData);
     }
 
     /**

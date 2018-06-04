@@ -126,7 +126,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
     public function testPopulatesAwsExceptionData()
     {
         $message = 'This is a test exception message!';
-        $code = 'TestExceptionCode';
+        $code = str_repeat('a', 300);
         $promise = Promise\rejection_for(new AwsException(
             $message,
             $this->getTestCommand(),
@@ -136,36 +136,21 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                 'response' => new Response(405)
             ]
         ));
-        $response = $this->getResponse($promise);
-        $events = $response->getMonitoringEvents();
+        try {
+            $this->getResponse($promise);
+            $this->fail('Exception occurred.');
+        } catch (\Exception $response) {
+            $events = $response->getMonitoringEvents();
 
-        $this->assertArraySubset(
-            [
-                'AwsException' => $code,
-                'AwsExceptionMessage' => $message,
-                'HttpStatusCode' => 405
-            ],
-            $events[0]
-        );
-    }
-
-    public function testSerializesData()
-    {
-        $serializeEventData = $this->getMethod('serializeEventData');
-        $middleware = new ApiCallAttemptMonitoringMiddleware(function(){}, function(){}, [], 'test', 'test');
-        $eventData = [
-            'AwsException' => str_repeat('a', 300),
-            'AttemptLatency' => 314.15,
-            'Fqdn' => 's3-eu-west-1.amazonaws.com',
-            'HttpStatusCode' => 200,
-            'UserAgent' => 'Test User Agent With Spaces'
-        ];
-        $awsExceptionMax = $middleware::getDataConfiguration()['AwsException']['maxLength'];
-        $expected = '{"AwsException":"' . substr($eventData['AwsException'], 0, $awsExceptionMax) .
-            '","AttemptLatency":314.15,"Fqdn":"s3-eu-west-1.amazonaws.com",' .
-            '"HttpStatusCode":200,"UserAgent":"Test User Agent With Spaces"}';
-
-        $this->assertSame($expected,
-            $serializeEventData->invokeArgs($middleware, array($eventData)));
+            $this->assertArraySubset(
+                [
+                    'AwsException' => str_repeat('a', 128),
+                    'AwsExceptionMessage' => $message,
+                    'HttpStatusCode' => 405
+                ],
+                $events[0]
+            );
+            $this->assertEquals(128, strlen($events[0]['AwsException']));
+        }
     }
 }

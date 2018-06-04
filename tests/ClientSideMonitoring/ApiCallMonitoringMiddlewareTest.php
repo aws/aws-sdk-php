@@ -92,23 +92,4 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
             $response['@monitoringEvents'][0]
         );
     }
-
-    public function testSerializesData()
-    {
-        $serializeEventData = $this->getMethod('serializeEventData');
-        $middleware = new ApiCallMonitoringMiddleware(function(){}, function(){}, [], 'test', 'test');
-        $eventData = [
-            'Api' => 'GetBucket',
-            'AttemptCount' => 2,
-            'ClientId' => 'SomeTestApp',
-            'Latency' => 555.55,
-            'Timestamp' => 1527182299175,
-            'Type' => 'ApiCall'
-        ];
-        $expected = '{"Api":"GetBucket","AttemptCount":2,"ClientId":"SomeTestApp",' .
-            '"Latency":555.55,"Timestamp":1527182299175,"Type":"ApiCall"}';
-
-        $this->assertSame($expected,
-            $serializeEventData->invokeArgs($middleware, array($eventData)));
-    }
 }

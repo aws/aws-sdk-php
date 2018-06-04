@@ -14,33 +14,28 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     /**
      * @inheritdoc
      */
-    public static function getDataConfiguration()
+    public static function getRequestDataConfiguration()
     {
-        static $callDataConfig;
-        if (empty($callDataConfig)) {
-            $callDataConfig = [
-                'AttemptCount' => [
-                    'valueAccessor' => [
-                        ResultInterface::class => function (ResultInterface $result) {
-                            if (isset($result['@metadata']['transferStats']['http'])) {
-                                return count($result['@metadata']['transferStats']['http']);
-                            }
-                            return null;
+        return [];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getResponseDataConfiguration()
+    {
+        return [
+            'AttemptCount' => [
+                'valueAccessors' => [
+                    ResultInterface::class => function (ResultInterface $result) {
+                        if (isset($result['@metadata']['transferStats']['http'])) {
+                            return count($result['@metadata']['transferStats']['http']);
                         }
-                    ]
+                        return null;
+                    }
                 ],
-            ];
-        }
-
-        static $dataConfig;
-        if (empty($dataConfig)) {
-            $dataConfig = array_merge(
-                $callDataConfig,
-                parent::getDataConfiguration()
-            );
-        }
-
-        return $dataConfig;
+            ],
+        ];
     }
 
     /**
