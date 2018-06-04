@@ -125,8 +125,14 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
 
     public function testPopulatesAwsExceptionData()
     {
+        $data = ApiCallAttemptMonitoringMiddleware::getResponseDataConfiguration();
+        if (empty($data['AwsException']['maxLength'])) {
+            $this->markTestSkipped();
+        }
+        $maxLength = $data['AwsException']['maxLength'];
+
         $message = 'This is a test exception message!';
-        $code = str_repeat('a', 300);
+        $code = str_repeat('a', 2 * $maxLength);
         $promise = Promise\rejection_for(new AwsException(
             $message,
             $this->getTestCommand(),
@@ -136,21 +142,22 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                 'response' => new Response(405)
             ]
         ));
+
         try {
             $this->getResponse($promise);
-            $this->fail('Exception occurred.');
+            $this->fail('Did not properly surface expected exception.');
         } catch (\Exception $response) {
             $events = $response->getMonitoringEvents();
 
             $this->assertArraySubset(
                 [
-                    'AwsException' => str_repeat('a', 128),
+                    'AwsException' => str_repeat('a', $maxLength),
                     'AwsExceptionMessage' => $message,
                     'HttpStatusCode' => 405
                 ],
                 $events[0]
             );
-            $this->assertEquals(128, strlen($events[0]['AwsException']));
+            $this->assertEquals($maxLength, strlen($events[0]['AwsException']));
         }
     }
 }
