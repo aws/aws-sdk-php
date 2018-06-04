@@ -146,8 +146,8 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         try {
             $this->getResponse($promise);
             $this->fail('Did not properly surface expected exception.');
-        } catch (\Exception $response) {
-            $events = $response->getMonitoringEvents();
+        } catch (AwsException $exception) {
+            $events = $exception->getMonitoringEvents();
 
             $this->assertArraySubset(
                 [
