@@ -5,8 +5,6 @@ use Aws\CacheInterface;
 use Aws\ClientSideMonitoring\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
-use Psr\Log\InvalidArgumentException;
-
 
 class ConfigurationProvider
 {
@@ -19,7 +17,6 @@ class ConfigurationProvider
     const ENV_ENABLED = 'AWS_CSM_ENABLED';
     const ENV_PORT = 'AWS_CSM_PORT';
     const ENV_PROFILE = 'AWS_PROFILE';
-    const INI_CSM_PROFILE = 'aws_csm';
 
     /**
      * Wraps a credential provider and saves provided credentials in an
@@ -119,7 +116,7 @@ class ConfigurationProvider
     }
 
     /**
-     * Provider that creates CSM config from environment variables
+     * Provider that creates CSM config from environment variables.
      *
      * @return callable
      */
@@ -138,14 +135,14 @@ class ConfigurationProvider
                 );
             }
 
-            return self::reject('Could not find environment variable CSM config in '
-                . self::ENV_ENABLED. '/' . self::ENV_PORT . '/'
+            return self::reject('Could not find environment variable CSM config'
+                . ' in ' . self::ENV_ENABLED. '/' . self::ENV_PORT . '/'
                 . self::ENV_CLIENT_ID);
         };
     }
 
     /**
-     * Fallback config options when other sources are not set
+     * Fallback config options when other sources are not set.
      *
      * @return callable
      */
@@ -195,7 +192,7 @@ class ConfigurationProvider
     public static function ini($profile = null, $filename = null)
     {
         $filename = $filename ?: (self::getHomeDir() . '/.aws/config');
-        $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: self::INI_CSM_PROFILE);
+        $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'aws_csm');
 
         return function () use ($profile, $filename) {
             if (!is_readable($filename)) {
@@ -261,7 +258,7 @@ class ConfigurationProvider
 
             // Return config and set flag that provider is already set
             return $result
-                ->then(function (ConfigurationInterface $config) use ($provider, &$isConstant, &$result) {
+                ->then(function (ConfigurationInterface $config) use (&$isConstant) {
                     $isConstant = true;
                     return $config;
                 });
@@ -269,7 +266,7 @@ class ConfigurationProvider
     }
 
     /**
-     * Reject promise with standardized exception
+     * Reject promise with standardized exception.
      * 
      * @param $msg
      * @return Promise\RejectedPromise
@@ -285,7 +282,7 @@ class ConfigurationProvider
      *
      * @param  mixed $config
      * @return ConfigurationInterface
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public static function unwrap($config)
     {
@@ -305,6 +302,7 @@ class ConfigurationProvider
             return new Configuration($config['enabled'], $port, $client_id);
         }
 
-        throw new \InvalidArgumentException('Not a valid CSM configuration argument.');
+        throw new \InvalidArgumentException('Not a valid CSM configuration '
+            . 'argument.');
     }
 }

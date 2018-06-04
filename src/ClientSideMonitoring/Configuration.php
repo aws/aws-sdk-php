@@ -1,21 +1,20 @@
 <?php
 namespace Aws\ClientSideMonitoring;
 
-
 class Configuration implements ConfigurationInterface
 {
-    private $client_id;
+    private $clientId;
     private $enabled;
     private $port;
 
     /**
-     * Constructs a new Configuration object, with the specified CSM options set
+     * Constructs a new Configuration object with the specified CSM options set.
      *
      * @param mixed $enabled
      * @param string|int $port
-     * @param string $client_id
+     * @param string $clientId
      */
-    public function __construct($enabled, $port, $client_id = '')
+    public function __construct($enabled, $port, $clientId = '')
     {
         $this->port = filter_var($port, FILTER_VALIDATE_INT);
         if ($this->port === false) {
@@ -23,15 +22,13 @@ class Configuration implements ConfigurationInterface
                 "CSM 'port' value must be an integer!");
         }
 
-        // Unparsable $enabled flag errs on the side of disabling CSM
+        // Unparsable $enabled flag errors on the side of disabling CSM
         $this->enabled = filter_var($enabled, FILTER_VALIDATE_BOOLEAN);
-        $this->client_id = trim($client_id);
+        $this->clientId = trim($clientId);
     }
 
     /**
-     * Returns whether or not CSM is enabled
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function isEnabled()
     {
@@ -39,19 +36,15 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Returns the client ID if available
-     *
-     * @return string|null
+     * @inheritdoc
      */
     public function getClientId()
     {
-        return $this->client_id;
+        return $this->clientId;
     }
 
     /**
-     * Returns the port if available
-     *
-     * @return int|null
+     * @inheritdoc
      */
     public function getPort()
     {
@@ -59,9 +52,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * Converts the config to an associative array.
-     *
-     * @return array
+     * @inheritdoc
      */
     public function toArray()
     {

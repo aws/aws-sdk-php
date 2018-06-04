@@ -207,7 +207,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         $credentials = $provider()->wait();
         $event['AccessKey'] = $credentials->getAccessKeyId();
         $sessionToken = $credentials->getSecurityToken();
-        if (!empty($sessionToken)) {
+        if ($sessionToken !== null) {
             $event['SessionToken'] = $sessionToken;
         }
         return $event;

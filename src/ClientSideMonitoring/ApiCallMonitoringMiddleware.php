@@ -32,7 +32,7 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
                             return count($result['@metadata']['transferStats']['http']);
                         }
                         return null;
-                    }
+                    },
                 ],
             ],
         ];

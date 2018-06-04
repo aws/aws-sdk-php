@@ -47,7 +47,7 @@ abstract class AbstractMonitoringMiddleware
     }
 
     /**
-     * Standard middleware wrapper function, with CSM options passed in
+     * Standard middleware wrapper function with CSM options passed in.
      *
      * @param  $options
      * @param  $region
@@ -63,12 +63,18 @@ abstract class AbstractMonitoringMiddleware
             $service
         ) {
             $class = get_called_class();
-            return new $class($handler, $credentialProvider, $options, $region, $service);
+            return new $class(
+                $handler,
+                $credentialProvider,
+                $options,
+                $region,
+                $service
+            );
         };
     }
 
     /**
-     * Constructor stores the passed in handler and options
+     * Constructor stores the passed in handler and options.
      *
      * @param callable $handler
      * @param callable $credentialProvider
@@ -91,7 +97,8 @@ abstract class AbstractMonitoringMiddleware
     }
 
     /**
-     * Standard invoke pattern for middleware execution to be implemented by child classes
+     * Standard invoke pattern for middleware execution to be implemented by
+     * child classes.
      *
      * @param  CommandInterface $cmd
      * @param  RequestInterface $request
@@ -137,11 +144,6 @@ abstract class AbstractMonitoringMiddleware
         return $handler($cmd, $request)->then($g, $g);
     }
 
-    /**
-     * Returns the client ID from options, unwrapping options if necessary
-     *
-     * @return string
-     */
     private function getClientId()
     {
         return $this->unwrappedOptions()->getClientId();
@@ -162,11 +164,6 @@ abstract class AbstractMonitoringMiddleware
         return $event;
     }
 
-    /**
-     * Returns port from options, unwrapping options if necessary
-     *
-     * @return int
-     */
     private function getPort()
     {
         return $this->unwrappedOptions()->getPort();
@@ -183,7 +180,7 @@ abstract class AbstractMonitoringMiddleware
     }
 
     /**
-     * Returns enabled flag from options, unwrapping options if necessary
+     * Returns enabled flag from options, unwrapping options if necessary.
      *
      * @return bool
      */
@@ -235,8 +232,8 @@ abstract class AbstractMonitoringMiddleware
     }
 
     /**
-     * Returns $eventData array with information from the response, including the calculation
-     * for attempt latency
+     * Returns $eventData array with information from the response, including
+     * the calculation for attempt latency.
      *
      * @param ResultInterface|\Exception $result
      * @param array $event
@@ -252,10 +249,10 @@ abstract class AbstractMonitoringMiddleware
             foreach ($datum['valueAccessors'] as $class => $accessor) {
                 if ($result instanceof $class) {
                     $value = $accessor($result);
-                    if ($value !== null) {
-                        $event[$eventKey] = $this->getTruncatedValue($value, $datum);
-                        continue 2;
-                    }
+                }
+                if ($value !== null) {
+                    $event[$eventKey] = $this->getTruncatedValue($value, $datum);
+                    continue 2;
                 }
             }
         }
@@ -263,11 +260,12 @@ abstract class AbstractMonitoringMiddleware
     }
 
     /**
-     * Creates a UDP socket resource and stores it with the class, or retrieves it if already
-     * instantiated and connected. Handles error-checking and re-connecting if necessary.
-     * If $forceNewConnection is set to true, a new socket will be created.
+     * Creates a UDP socket resource and stores it with the class, or retrieves
+     * it if already instantiated and connected. Handles error-checking and
+     * re-connecting if necessary. If $forceNewConnection is set to true, a new
+     * socket will be created.
      *
-     * @param  bool $forceNewConnection
+     * @param bool $forceNewConnection
      * @return Resource
      */
     private function prepareSocket($forceNewConnection = false)
@@ -285,7 +283,8 @@ abstract class AbstractMonitoringMiddleware
     }
 
     /**
-     * Sends formatted monitoring event data via the UDP socket connection to the CSM agent endpoint
+     * Sends formatted monitoring event data via the UDP socket connection to
+     * the CSM agent endpoint.
      *
      * @param array $eventData
      * @return int
