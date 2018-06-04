@@ -96,6 +96,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionDynamoDb(array $args = [])
  * @method \Aws\DynamoDbStreams\DynamoDbStreamsClient createDynamoDbStreams(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDynamoDbStreams(array $args = [])
+ * @method \Aws\EKS\EKSClient createEKS(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionEKS(array $args = [])
  * @method \Aws\Ec2\Ec2Client createEc2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionEc2(array $args = [])
  * @method \Aws\Ecr\EcrClient createEcr(array $args = [])
