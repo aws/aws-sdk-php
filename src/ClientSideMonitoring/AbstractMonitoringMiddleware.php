@@ -49,21 +49,25 @@ abstract class AbstractMonitoringMiddleware
     /**
      * Standard middleware wrapper function with CSM options passed in.
      *
-     * @param  $options
-     * @param  $region
-     * @param  $service
+     * @param callable $credentialProvider
+     * @param array $options
+     * @param string $region
+     * @param string $service
      * @return callable
      */
-    public static function wrap($credentialProvider, $options, $region, $service)
-    {
+    public static function wrap(
+        callable $credentialProvider,
+        array $options,
+        $region,
+        $service
+    ) {
         return function (callable $handler) use (
             $credentialProvider,
             $options,
             $region,
             $service
         ) {
-            $class = get_called_class();
-            return new $class(
+            return new static(
                 $handler,
                 $credentialProvider,
                 $options,
@@ -115,7 +119,7 @@ abstract class AbstractMonitoringMiddleware
             $eventData = $this->populateRequestEventData(
                 $cmd,
                 $request,
-                $this->getGlobalEventData($cmd, $request)
+                $this->getNewEvent($cmd, $request)
             );
         }
 
@@ -149,7 +153,7 @@ abstract class AbstractMonitoringMiddleware
         return $this->unwrappedOptions()->getClientId();
     }
 
-    private function getGlobalEventData(
+    private function getNewEvent(
         CommandInterface $cmd,
         RequestInterface $request
     ) {
@@ -216,10 +220,10 @@ abstract class AbstractMonitoringMiddleware
         $dataFormat = static::getRequestDataConfiguration();
         foreach ($dataFormat as $eventKey => $datum) {
             $value = null;
-            foreach ($datum['valueAccessors'] as $class => $accessor) {
-                if ($cmd instanceof $class) {
+            foreach ($datum['valueAccessors'] as $klass => $accessor) {
+                if ($cmd instanceof $klass) {
                     $value = $accessor($cmd);
-                } elseif ($request instanceof $class) {
+                } elseif ($request instanceof $klass) {
                     $value = $accessor($request);
                 }
                 if ($value !== null) {
@@ -246,8 +250,8 @@ abstract class AbstractMonitoringMiddleware
         $dataFormat = static::getResponseDataConfiguration();
         foreach ($dataFormat as $eventKey => $datum) {
             $value = null;
-            foreach ($datum['valueAccessors'] as $class => $accessor) {
-                if ($result instanceof $class) {
+            foreach ($datum['valueAccessors'] as $klass => $accessor) {
+                if ($result instanceof $klass) {
                     $value = $accessor($result);
                 }
                 if ($value !== null) {
