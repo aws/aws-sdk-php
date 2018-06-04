@@ -34,15 +34,7 @@ abstract class AbstractMonitoringMiddleware
      */
     public static function getDataConfiguration()
     {
-        return [
-            'Api' => [
-                'valueAccessor' => [
-                    CommandInterface::class => function (CommandInterface $cmd) {
-                        return $cmd->getName();
-                    }
-                ]
-            ],
-        ];
+        return [];
     }
 
     protected static function getExceptionHeaderAccessor($headerName)
@@ -131,7 +123,7 @@ abstract class AbstractMonitoringMiddleware
             $eventData = $this->populateRequestEventData(
                 $cmd,
                 $request,
-                $this->getGlobalEventData()
+                $this->getGlobalEventData($cmd, $request)
             );
         }
 
@@ -170,9 +162,12 @@ abstract class AbstractMonitoringMiddleware
         return $this->unwrappedOptions()->getClientId();
     }
 
-    private function getGlobalEventData()
-    {
+    private function getGlobalEventData(
+        CommandInterface $cmd,
+        RequestInterface $request
+    ) {
         $event = [
+            'Api' => $cmd->getName(),
             'ClientId' => $this->getClientId(),
             'Region' => $this->getRegion(),
             'Service' => $this->getService(),
