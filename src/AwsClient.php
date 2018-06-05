@@ -305,40 +305,24 @@ class AwsClient implements AwsClientInterface
     {
         $options = ConfigurationProvider::defaultProvider($args);
 
-        $callMiddleware = ApiCallMonitoringMiddleware::wrap(
-            $this->credentialProvider,
-            $options,
-            $this->region,
-            $args['service']
+        $this->handlerList->appendBuild(
+            $callMiddleware = ApiCallMonitoringMiddleware::wrap(
+                $this->credentialProvider,
+                $options,
+                $this->region,
+                $args['service']
+            ),
+            'ApiCallMonitoringMiddleware'
         );
-        $callAttemptMiddleware = ApiCallAttemptMonitoringMiddleware::wrap(
-            $this->credentialProvider,
-            $options,
-            $this->region,
-            $args['service']
+        $this->handlerList->appendSign(
+            $callAttemptMiddleware = ApiCallAttemptMonitoringMiddleware::wrap(
+                $this->credentialProvider,
+                $options,
+                $this->region,
+                $args['service']
+            ),
+            'ApiCallAttemptMonitoringMiddleware'
         );
-
-        try {
-            $this->handlerList->before(
-                'retry',
-                'ApiCallMonitoringMiddleware',
-                $callMiddleware
-            );
-            $this->handlerList->after(
-                'retry',
-                'ApiCallAttemptMonitoringMiddleware',
-                $callAttemptMiddleware
-            );
-        } catch (\InvalidArgumentException $e) {
-            $this->handlerList->appendSign(
-                $callMiddleware,
-                'ApiCallMonitoringMiddleware'
-            );
-            $this->handlerList->appendSign(
-                $callAttemptMiddleware,
-                'ApiCallAttemptMonitoringMiddleware'
-            );
-        }
     }
 
     /**
