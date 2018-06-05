@@ -1,4 +1,11 @@
 <?php
 namespace Aws\Api\Parser\Exception;
 
-class ParserException extends \RuntimeException {}
+use Aws\HasMonitoringEventsTrait;
+use Aws\MonitoringEventsInterface;
+
+class ParserException extends \RuntimeException implements
+    MonitoringEventsInterface
+{
+    use HasMonitoringEventsTrait;
+}

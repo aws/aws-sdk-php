@@ -4,7 +4,8 @@ namespace Aws\Exception;
 use Aws\HasMonitoringEventsTrait;
 use Aws\MonitoringEventsInterface;
 
-class CouldNotCreateChecksumException extends \RuntimeException implements MonitoringEventsInterface
+class CouldNotCreateChecksumException extends \RuntimeException implements
+    MonitoringEventsInterface
 {
     use HasMonitoringEventsTrait;
 

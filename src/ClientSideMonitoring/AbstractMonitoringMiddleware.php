@@ -135,9 +135,9 @@ abstract class AbstractMonitoringMiddleware
                 if ($value instanceof MonitoringEventsInterface) {
                     $value->addMonitoringEvent($eventData);
                 }
-                if ($value instanceof \Exception) {
-                    return Promise\rejection_for($value);
-                }
+            }
+            if ($value instanceof \Exception || $value instanceof \Throwable) {
+                return Promise\rejection_for($value);
             }
             return $value;
         };
