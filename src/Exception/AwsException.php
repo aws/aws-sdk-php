@@ -2,6 +2,7 @@
 namespace Aws\Exception;
 
 use Aws\HasMonitoringEventsTrait;
+use Aws\MonitoringEventsInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
 use Aws\CommandInterface;
@@ -10,7 +11,7 @@ use Aws\ResultInterface;
 /**
  * Represents an AWS exception that is thrown when a command fails.
  */
-class AwsException extends \RuntimeException
+class AwsException extends \RuntimeException implements MonitoringEventsInterface
 {
     use HasMonitoringEventsTrait;
 

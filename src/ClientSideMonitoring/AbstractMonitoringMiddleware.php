@@ -4,6 +4,7 @@ namespace Aws\ClientSideMonitoring;
 
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
+use Aws\MonitoringEventsInterface;
 use Aws\ResultInterface;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
@@ -120,13 +121,12 @@ abstract class AbstractMonitoringMiddleware
                 );
                 $this->sendEventData($eventData);
 
+                if ($value instanceof MonitoringEventsInterface) {
+                    $value->addMonitoringEvent($eventData);
+                }
                 if ($value instanceof \Exception) {
-                    if ($value instanceof AwsException) {
-                        $value->addMonitoringEvent($eventData);
-                    }
                     return Promise\rejection_for($value);
                 }
-                $value->addMonitoringEvent($eventData);
             }
             return $value;
         };
