@@ -2,9 +2,10 @@
 namespace Aws\Exception;
 
 use Aws\HasMonitoringEventsTrait;
+use Aws\MonitoringEventsInterface;
 use Aws\Multipart\UploadState;
 
-class MultipartUploadException extends \RuntimeException
+class MultipartUploadException extends \RuntimeException implements MonitoringEventsInterface
 {
     use HasMonitoringEventsTrait;
 
