@@ -14,13 +14,37 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigurationProviderTest extends TestCase
 {
+    private $originalEnv;
+
+    private $iniFile = <<<EOT
+[aws_csm]
+csm_enabled = true
+csm_port = 555
+csm_clientid = DefaultIniApp
+[custom]
+csm_enabled = false
+csm_port = 777
+csm_clientid = CustomIniApp
+EOT;
+
+
     /**
-     * Reset relevant environment variables & create temporary .aws directory
+     * Saves original environment variables, then clears them
+     * Creates temporary aws config directory
      *
      * @return string
      */
-    private function clearEnv()
+    private function prepEnv()
     {
+        if (!isset($this->originalEnv)) {
+            $this->originalEnv = [
+                'enabled' => getenv(ConfigurationProvider::ENV_ENABLED) ?: '',
+                'port' => getenv(ConfigurationProvider::ENV_PORT) ?: '',
+                'client_id' => getenv(ConfigurationProvider::ENV_CLIENT_ID) ?: '',
+                'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
+            ];
+        }
+
         putenv(ConfigurationProvider::ENV_ENABLED . '=');
         putenv(ConfigurationProvider::ENV_PORT . '=');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=');
@@ -35,71 +59,68 @@ class ConfigurationProviderTest extends TestCase
         return $dir;
     }
 
+    /**
+     * Restores environment variables to what they were originally
+     */
+    private function restoreEnv()
+    {
+        putenv(ConfigurationProvider::ENV_ENABLED . '=' .
+            $this->originalEnv['enabled']);
+        putenv(ConfigurationProvider::ENV_PORT . '=' .
+            $this->originalEnv['port']);
+        putenv(ConfigurationProvider::ENV_CLIENT_ID . '=' .
+            $this->originalEnv['client_id']);
+        putenv(ConfigurationProvider::ENV_PROFILE . '=' .
+            $this->originalEnv['profile']);
+    }
+
     public function testCreatesFromEnvironmentVariables()
     {
-        $this->clearEnv();
+        $this->prepEnv();
         $expected = new Configuration(true, 555, 'EnvApp');
         putenv(ConfigurationProvider::ENV_ENABLED . '=true');
         putenv(ConfigurationProvider::ENV_PORT . '=555');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=EnvApp');
         $result = call_user_func(ConfigurationProvider::env())->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
-        $this->clearEnv();
+        $this->restoreEnv();
     }
 
     public function testCreatesFromEnvironmentVariablesEmptyString()
     {
-        $this->clearEnv();
+        $this->prepEnv();
         $expected = new Configuration(true, 555, '');
         putenv(ConfigurationProvider::ENV_ENABLED . '=true');
         putenv(ConfigurationProvider::ENV_PORT . '=555');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '');
         $result = call_user_func(ConfigurationProvider::env())->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
-        $this->clearEnv();
+        $this->restoreEnv();
     }
 
     public function testCreatesFromIniFileWithDefaultProfile()
     {
-        $dir = $this->clearEnv();
-        $expected  = new Configuration(true, 555, 'IniApp');
-        $iniFile = <<<EOT
-[aws_csm]
-csm_enabled = true
-csm_port = 555
-csm_clientid = IniApp
-EOT;
-
-        file_put_contents($dir . '/config', $iniFile);
+        $dir = $this->prepEnv();
+        $expected  = new Configuration(true, 555, 'DefaultIniApp');
+        file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         $result = call_user_func(ConfigurationProvider::ini())->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
-        $this->clearEnv();
+        $this->restoreEnv();
     }
 
     public function testCreatesFromIniFileWithSpecifiedProfile()
     {
-        $dir = $this->clearEnv();
-        $expected = new Configuration(false, 777, 'CustomApp');
-        $iniFile = <<<EOT
-[aws_csm]
-csm_enabled = true
-csm_port = 555
-csm_clientid = DefaultApp
-[custom]
-csm_enabled = false
-csm_port = 777
-csm_clientid = CustomApp
-EOT;
-
-        file_put_contents($dir . '/config', $iniFile);
+        $dir = $this->prepEnv();
+        $expected = new Configuration(false, 777, 'CustomIniApp');
+        file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         putenv(ConfigurationProvider::ENV_PROFILE . '=custom');
         $result = call_user_func(ConfigurationProvider::ini())->wait();
         $this->assertEquals($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
-        $this->clearEnv();
+        $this->restoreEnv();
     }
 
     /**
@@ -107,9 +128,10 @@ EOT;
      */
     public function testEnsuresIniFileExists()
     {
-        $this->clearEnv();
+        $this->prepEnv();
         putenv('HOME=/does/not/exist');
         call_user_func(ConfigurationProvider::ini())->wait();
+        $this->restoreEnv();
     }
 
     /**
@@ -117,7 +139,7 @@ EOT;
      */
     public function testEnsuresProfileIsNotEmpty()
     {
-        $dir = $this->clearEnv();
+        $dir = $this->prepEnv();
         $ini = "[aws_csm]";
         file_put_contents($dir . '/config', $ini);
         putenv('HOME=' . dirname($dir));
@@ -128,6 +150,7 @@ EOT;
             unlink($dir . '/config');
             throw $e;
         }
+        $this->restoreEnv();
     }
 
     /**
@@ -136,7 +159,7 @@ EOT;
      */
     public function testEnsuresFileIsNotEmpty()
     {
-        $dir = $this->clearEnv();
+        $dir = $this->prepEnv();
         file_put_contents($dir . '/config', '');
         putenv('HOME=' . dirname($dir));
 
@@ -146,12 +169,12 @@ EOT;
             unlink($dir . '/config');
             throw $e;
         }
-        $this->clearEnv();
+        $this->restoreEnv();
     }
     
     public function testUsesClassDefaultOptions()
     {
-        $this->clearEnv();
+        $this->prepEnv();
         $expected = new Configuration(
             ConfigurationProvider::DEFAULT_ENABLED,
             ConfigurationProvider::DEFAULT_PORT,
@@ -160,6 +183,7 @@ EOT;
         $provider = ConfigurationProvider::defaultProvider();
         $result = $provider()->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
+        $this->restoreEnv();
     }
 
     public function testMemoizes()
@@ -179,19 +203,9 @@ EOT;
 
     public function testChainsConfiguration()
     {
-        $dir = $this->clearEnv();
-        $expected = new Configuration(false, 777, 'CustomApp');
-        $iniFile = <<<EOT
-[aws_csm]
-csm_enabled = true
-csm_port = 555
-csm_clientid = DefaultApp
-[custom]
-csm_enabled = false
-csm_port = 777
-csm_clientid = CustomApp
-EOT;
-        file_put_contents($dir . '/config', $iniFile);
+        $dir = $this->prepEnv();
+        $expected = new Configuration(false, 777, 'CustomIniApp');
+        file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         $a = ConfigurationProvider::ini('custom');
         $b = ConfigurationProvider::ini();
@@ -199,63 +213,41 @@ EOT;
         $provider = ConfigurationProvider::chain($a, $b, $c);
         $result = $provider()->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
-        $this->clearEnv();
+        $this->restoreEnv();
     }
 
     public function testSelectsEnvironmentOverIniConfiguration()
     {
-        $dir = $this->clearEnv();
+        $dir = $this->prepEnv();
         $expected = new Configuration(true, 888, 'EnvApp');
         putenv(ConfigurationProvider::ENV_ENABLED . '=true');
         putenv(ConfigurationProvider::ENV_PORT . '=888');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=EnvApp');
-        $iniFile = <<<EOT
-[aws_csm]
-csm_enabled = true
-csm_port = 555
-csm_clientid = DefaultIniApp
-[custom]
-csm_enabled = false
-csm_port = 777
-csm_clientid = CustomIniApp
-EOT;
-
-        file_put_contents($dir . '/config', $iniFile);
+        file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         putenv(ConfigurationProvider::ENV_PROFILE . '=custom');
 
         $provider = ConfigurationProvider::defaultProvider();
         $result = $provider()->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
-        $this->clearEnv();
+        $this->restoreEnv();
     }
 
     public function testSelectsEnvironmentVariablesWithDisabled()
     {
-        $dir = $this->clearEnv();
+        $dir = $this->prepEnv();
         $expected = new Configuration(false, 888, 'EnvApp');
         putenv(ConfigurationProvider::ENV_ENABLED . '=false');
         putenv(ConfigurationProvider::ENV_PORT . '=888');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=EnvApp');
-        $iniFile = <<<EOT
-[aws_csm]
-csm_enabled = true
-csm_port = 555
-csm_clientid = DefaultIniApp
-[custom]
-csm_enabled = false
-csm_port = 777
-csm_clientid = CustomIniApp
-EOT;
-
-        file_put_contents($dir . '/config', $iniFile);
+        file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         putenv(ConfigurationProvider::ENV_PROFILE . '=custom');
 
         $provider = ConfigurationProvider::defaultProvider();
         $result = $provider()->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
-        $this->clearEnv();
+        $this->restoreEnv();
     }
 
     public function testsPersistsToCache()
