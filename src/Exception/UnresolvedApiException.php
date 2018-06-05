@@ -1,4 +1,8 @@
 <?php
 namespace Aws\Exception;
 
-class UnresolvedApiException extends \RuntimeException {}
+use Aws\HasMonitoringEventsTrait;
+
+class UnresolvedApiException extends \RuntimeException {
+    use HasMonitoringEventsTrait;
+}

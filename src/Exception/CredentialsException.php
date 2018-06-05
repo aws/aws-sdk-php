@@ -1,4 +1,8 @@
 <?php
 namespace Aws\Exception;
 
-class CredentialsException extends \RuntimeException {}
+use Aws\HasMonitoringEventsTrait;
+
+class CredentialsException extends \RuntimeException {
+    use HasMonitoringEventsTrait;
+}
