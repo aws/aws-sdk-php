@@ -44,6 +44,7 @@ class ConfigurationProviderTest extends TestCase
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=EnvApp');
         $result = call_user_func(ConfigurationProvider::env())->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
+        $this->clearEnv();
     }
 
     public function testCreatesFromEnvironmentVariablesEmptyString()
@@ -55,6 +56,7 @@ class ConfigurationProviderTest extends TestCase
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '');
         $result = call_user_func(ConfigurationProvider::env())->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
+        $this->clearEnv();
     }
 
     public function testCreatesFromIniFileWithDefaultProfile()
@@ -73,6 +75,7 @@ EOT;
         $result = call_user_func(ConfigurationProvider::ini())->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
+        $this->clearEnv();
     }
 
     public function testCreatesFromIniFileWithSpecifiedProfile()
@@ -96,6 +99,7 @@ EOT;
         $result = call_user_func(ConfigurationProvider::ini())->wait();
         $this->assertEquals($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
+        $this->clearEnv();
     }
 
     /**
@@ -142,6 +146,7 @@ EOT;
             unlink($dir . '/config');
             throw $e;
         }
+        $this->clearEnv();
     }
     
     public function testUsesClassDefaultOptions()
@@ -194,6 +199,7 @@ EOT;
         $provider = ConfigurationProvider::chain($a, $b, $c);
         $result = $provider()->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
+        $this->clearEnv();
     }
 
     public function testSelectsEnvironmentOverIniConfiguration()
@@ -221,6 +227,35 @@ EOT;
         $provider = ConfigurationProvider::defaultProvider();
         $result = $provider()->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
+        $this->clearEnv();
+    }
+
+    public function testSelectsEnvironmentVariablesWithDisabled()
+    {
+        $dir = $this->clearEnv();
+        $expected = new Configuration(false, 888, 'EnvApp');
+        putenv(ConfigurationProvider::ENV_ENABLED . '=false');
+        putenv(ConfigurationProvider::ENV_PORT . '=888');
+        putenv(ConfigurationProvider::ENV_CLIENT_ID . '=EnvApp');
+        $iniFile = <<<EOT
+[aws_csm]
+csm_enabled = true
+csm_port = 555
+csm_clientid = DefaultIniApp
+[custom]
+csm_enabled = false
+csm_port = 777
+csm_clientid = CustomIniApp
+EOT;
+
+        file_put_contents($dir . '/config', $iniFile);
+        putenv('HOME=' . dirname($dir));
+        putenv(ConfigurationProvider::ENV_PROFILE . '=custom');
+
+        $provider = ConfigurationProvider::defaultProvider();
+        $result = $provider()->wait();
+        $this->assertSame($expected->toArray(), $result->toArray());
+        $this->clearEnv();
     }
 
     public function testsPersistsToCache()

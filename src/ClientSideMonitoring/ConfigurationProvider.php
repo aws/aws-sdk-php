@@ -125,7 +125,7 @@ class ConfigurationProvider
         return function () {
             // Use credentials from environment variables, if available
             $enabled = getenv(self::ENV_ENABLED);
-            if ($enabled) {
+            if ($enabled !== false) {
                 return Promise\promise_for(
                     new Configuration(
                         $enabled,
