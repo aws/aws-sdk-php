@@ -49,7 +49,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     ResultInterface::class => function (ResultInterface $result) {
                         if (isset($result['@metadata']['transferStats']['http'])) {
                             $attempt = end($result['@metadata']['transferStats']['http']);
-                            reset($result['@metadata']['transferStats']['http']);
                             if (isset($attempt['total_time'])) {
                                 return floor($attempt['total_time'] * 1000);
                             }
@@ -86,7 +85,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     ResultInterface::class => function (ResultInterface $result) {
                         if (isset($result['@metadata']['transferStats']['http'])) {
                             $attempt = end($result['@metadata']['transferStats']['http']);
-                            reset($result['@metadata']['transferStats']['http']);
                             if (isset($attempt['primary_ip'])) {
                                 return $attempt['primary_ip'];
                             }
@@ -107,7 +105,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     ResultInterface::class => function (ResultInterface $result) {
                         if (isset($result['@metadata']['transferStats']['http'])) {
                             $attempt = end($result['@metadata']['transferStats']['http']);
-                            reset($result['@metadata']['transferStats']['http']);
                             if (isset($attempt['namelookup_time'])) {
                                 return floor($attempt['namelookup_time'] * 1000);
                             }
@@ -207,7 +204,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         $credentials = $provider()->wait();
         $event['AccessKey'] = $credentials->getAccessKeyId();
         $sessionToken = $credentials->getSecurityToken();
-        if (!empty($sessionToken)) {
+        if ($sessionToken !== null) {
             $event['SessionToken'] = $sessionToken;
         }
         return $event;
