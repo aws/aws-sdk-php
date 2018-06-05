@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.61.1 - 2018-06-05
 
 * `Aws\CostExplorer` - Cost Explorer API is providing programmatic access to RI saving metrics to enable customers to optimize their reservations.
 * `Aws\Polly` - Amazon Polly adds new French voice - "Lea"
