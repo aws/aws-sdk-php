@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.61.2 - 2018-06-07
 
 * `Aws\MediaLive` - AWS Elemental MediaLive now makes channel log information available through Amazon CloudWatch Logs. You can set up each MediaLive channel with a logging level; when the channel is run, logs will automatically be published to your account on Amazon CloudWatch Logs
 
