@@ -60,16 +60,8 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
 
     public function getMonitoringDataTests()
     {
-        $command = new Command('RunScheduledInstances', [
-            'LaunchSpecification' => [
-                'ImageId' => 'test-image',
-            ],
-            'ScheduledInstanceId' => 'test-instance-id',
-            'InstanceCount' => 1,
-        ]);
         return [
             [
-                $command,
                 [],
                 [
                     'Api' => 'RunScheduledInstances',
@@ -80,7 +72,6 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                 ]
             ],
             [
-                $command,
                 [
                     '@metadata' => [
                         'transferStats' => [
@@ -106,10 +97,17 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
     /**
      * @dataProvider getMonitoringDataTests
      */
-    public function testPopulatesMonitoringData($command, $result, $expected)
+    public function testPopulatesMonitoringData($result, $expected)
     {
         $this->resetMiddlewareSocket();
         $called = false;
+        $command = new Command('RunScheduledInstances', [
+            'LaunchSpecification' => [
+                'ImageId' => 'test-image',
+            ],
+            'ScheduledInstanceId' => 'test-instance-id',
+            'InstanceCount' => 1,
+        ]);
 
         $list = new HandlerList();
         $list->setHandler(function ($command, $request) use ($result, &$called) {
