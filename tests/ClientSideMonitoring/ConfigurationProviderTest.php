@@ -111,6 +111,15 @@ EOT;
         $promise->wait();
     }
 
+    public function testCreatesDefaultFromFallback()
+    {
+        $this->clearEnv();
+        $expected  = new Configuration(false, 31000, '');
+        /** @var ConfigurationInterface $result */
+        $result = call_user_func(ConfigurationProvider::fallback())->wait();
+        $this->assertSame($expected->toArray(), $result->toArray());
+    }
+
     public function testCreatesFromIniFileWithDefaultProfile()
     {
         $dir = $this->clearEnv();

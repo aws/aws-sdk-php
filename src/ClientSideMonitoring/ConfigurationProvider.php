@@ -146,7 +146,7 @@ class ConfigurationProvider
      *
      * @return callable
      */
-    private static function fallback()
+    public static function fallback()
     {
         return function() {
             return Promise\promise_for(
