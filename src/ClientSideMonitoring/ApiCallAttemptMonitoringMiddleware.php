@@ -50,7 +50,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                         if (isset($result['@metadata']['transferStats']['http'])) {
                             $attempt = end($result['@metadata']['transferStats']['http']);
                             if (isset($attempt['total_time'])) {
-                                return floor($attempt['total_time'] * 1000);
+                                return (int) floor($attempt['total_time'] * 1000);
                             }
                         }
                         return null;
@@ -58,7 +58,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     AwsException::class => function (AwsException $exception) {
                         $attempt = $exception->getTransferInfo();
                         if (isset($attempt['total_time'])) {
-                            return floor($attempt['total_time'] * 1000);
+                            return (int) floor($attempt['total_time'] * 1000);
                         }
                         return null;
                     },
@@ -106,7 +106,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                         if (isset($result['@metadata']['transferStats']['http'])) {
                             $attempt = end($result['@metadata']['transferStats']['http']);
                             if (isset($attempt['namelookup_time'])) {
-                                return floor($attempt['namelookup_time'] * 1000);
+                                return (int) floor($attempt['namelookup_time'] * 1000);
                             }
                         }
                         return null;
@@ -114,7 +114,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                     AwsException::class => function (AwsException $exception) {
                         $attempt = $exception->getTransferInfo();
                         if (isset($attempt['namelookup_time'])) {
-                            return floor($attempt['namelookup_time'] * 1000);
+                            return (int) floor($attempt['namelookup_time'] * 1000);
                         }
                         return null;
                     },
@@ -138,7 +138,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                 'valueAccessors' => [
                     \Exception::class => function (\Exception $e) {
                         if (!($e instanceof AwsException)) {
-                            return $e->getCode();
+                            return get_class($e);
                         }
                         return null;
                     },

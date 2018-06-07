@@ -159,7 +159,7 @@ abstract class AbstractMonitoringMiddleware
             'ClientId' => $this->getClientId(),
             'Region' => $this->getRegion(),
             'Service' => $this->getService(),
-            'Timestamp' => floor(microtime(true) * 1000),
+            'Timestamp' => (int) floor(microtime(true) * 1000),
             'Version' => 1
         ];
         return $event;
