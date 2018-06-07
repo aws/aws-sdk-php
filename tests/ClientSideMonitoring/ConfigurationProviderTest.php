@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigurationProviderTest extends TestCase
 {
-    private $originalEnv;
+    private static $originalEnv;
 
     private $iniFile = <<<EOT
 [aws_csm]
@@ -31,9 +31,9 @@ csm_clientid = CustomIniApp
 csm_enabled = true
 EOT;
 
-    public function setUp()
+    public static function setUpBeforeClass()
     {
-        $this->originalEnv = [
+        self::$originalEnv = [
             'enabled' => getenv(ConfigurationProvider::ENV_ENABLED) ?: '',
             'port' => getenv(ConfigurationProvider::ENV_PORT) ?: '',
             'client_id' => getenv(ConfigurationProvider::ENV_CLIENT_ID) ?: '',
@@ -57,16 +57,16 @@ EOT;
         return $dir;
     }
 
-    public function tearDown()
+    public static function tearDownAfterClass()
     {
         putenv(ConfigurationProvider::ENV_ENABLED . '=' .
-            $this->originalEnv['enabled']);
+            self::$originalEnv['enabled']);
         putenv(ConfigurationProvider::ENV_PORT . '=' .
-            $this->originalEnv['port']);
+            self::$originalEnv['port']);
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=' .
-            $this->originalEnv['client_id']);
+            self::$originalEnv['client_id']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
-            $this->originalEnv['profile']);
+            self::$originalEnv['profile']);
     }
 
     public function testCreatesFromEnvironmentVariables()
