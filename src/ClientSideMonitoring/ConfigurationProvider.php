@@ -290,7 +290,7 @@ class ConfigurationProvider
             $config = $config();
         }
         if ($config instanceof PromiseInterface) {
-            $config = $config->wait(true);
+            $config = $config->wait();
         }
         if ($config instanceof ConfigurationInterface) {
             return $config;
