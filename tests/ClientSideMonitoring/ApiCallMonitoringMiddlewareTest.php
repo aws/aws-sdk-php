@@ -8,6 +8,7 @@ use Aws\Command;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\HandlerList;
+use Aws\MonitoringEventsInterface;
 use Aws\Result;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
@@ -57,15 +58,64 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         $prepareSocket->invokeArgs($middleware, array(true));
     }
 
-    public function testPopulatesMonitoringData()
+    public function getMonitoringDataTests()
+    {
+        $command = new Command('RunScheduledInstances', [
+            'LaunchSpecification' => [
+                'ImageId' => 'test-image',
+            ],
+            'ScheduledInstanceId' => 'test-instance-id',
+            'InstanceCount' => 1,
+        ]);
+        return [
+            [
+                $command,
+                [],
+                [
+                    'Api' => 'RunScheduledInstances',
+                    'ClientId' => 'AwsPhpSdkTestApp',
+                    'Type' => 'ApiCall',
+                    'Service' => 'ec2',
+                    'Version' => 1,
+                ]
+            ],
+            [
+                $command,
+                [
+                    '@metadata' => [
+                        'transferStats' => [
+                            'http' => [
+                                [],
+                                [],
+                            ],
+                        ],
+                    ],
+                ],
+                [
+                    'Api' => 'RunScheduledInstances',
+                    'AttemptCount' => 2,
+                    'ClientId' => 'AwsPhpSdkTestApp',
+                    'Type' => 'ApiCall',
+                    'Service' => 'ec2',
+                    'Version' => 1,
+                ]
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider getMonitoringDataTests
+     */
+    public function testPopulatesMonitoringData($command, $result, $expected)
     {
         $this->resetMiddlewareSocket();
-        $list = new HandlerList();
-        $list->setHandler(function ($command, $request) use (&$called) {
-            $called = true;
-            return Promise\promise_for(new Result([]));
-        });
+        $called = false;
 
+        $list = new HandlerList();
+        $list->setHandler(function ($command, $request) use ($result, &$called) {
+            $called = true;
+            return Promise\promise_for(new Result($result));
+        });
         $list->appendBuild(ApiCallMonitoringMiddleware::wrap(
             $this->getCredentialProvider(),
             $this->getConfiguration(),
@@ -74,22 +124,11 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         ));
         $handler = $list->resolve();
 
-        $response = $handler(new Command('RunScheduledInstances', [
-            'LaunchSpecification' => [
-                'ImageId' => 'test-image',
-            ],
-            'ScheduledInstanceId' => 'test-instance-id',
-            'InstanceCount' => 1,
-        ]), new Request('POST', 'http://foo.com'))->wait();
+        /** @var MonitoringEventsInterface $response */
+        $response = $handler($command, new Request('POST', 'http://foo.com'))->wait();
         $this->assertTrue($called);
-        $this->assertArraySubset(
-            [
-                'Api' => 'RunScheduledInstances',
-                'ClientId' => 'AwsPhpSdkTestApp',
-                'Type' => 'ApiCall',
-                'Service' => 'ec2'
-            ],
-            $response->getMonitoringEvents()[0]
-        );
+        $eventData = $response->getMonitoringEvents()[0];
+        $this->assertArraySubset($expected, $eventData);
+        $this->assertInternalType('int', $eventData['Timestamp']);
     }
 }
