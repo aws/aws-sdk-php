@@ -252,6 +252,34 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                     [
                         'message' => $message,
                         'code' => $code,
+                        'response' => new Response(405)
+                    ]
+                ),
+                [
+                    'AccessKey' => 'testkey',
+                    'Api' => 'RunScheduledInstances',
+                    'AwsException' => str_repeat('a', $maxLength),
+                    'AwsExceptionMessage' => $message,
+                    'ClientId' => 'AwsPhpSdkTestApp',
+                    'Fqdn' => 'foo.com',
+                    'Region' => 'us-east-1',
+                    'SessionToken' => 'testtoken',
+                    'Service' => 'ec2',
+                    'Type' => 'ApiCallAttempt',
+                    'UserAgent' => 'foo-agent' . ' ' .
+                        \GuzzleHttp\default_user_agent(),
+                    'Version' => 1,
+                ]
+            ];
+            $tests []= [
+                $command,
+                $request,
+                new AwsException(
+                    $message,
+                    $command,
+                    [
+                        'message' => $message,
+                        'code' => $code,
                     ]
                 ),
                 [
