@@ -19,6 +19,11 @@ interface MonitoringMiddlewareInterface
      *         'valueAccessors' => [class => callable, ...]
      *         'maxLength' => int
      *     ]
+     *
+     * Callable functions in valueAccessors should take the form of:
+     *     function($command, $request)
+     * with the valueAccessors key type hinted in the anonymous function.
+     *
      * @return array
      */
     public static function getRequestDataConfiguration();

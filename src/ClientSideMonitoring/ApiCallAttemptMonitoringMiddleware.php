@@ -21,14 +21,20 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         return [
             'Fqdn' => [
                 'valueAccessors' => [
-                    RequestInterface::class => function (RequestInterface $request) {
+                    RequestInterface::class => function (
+                        $command,
+                        RequestInterface $request
+                    ) {
                         return $request->getUri()->getHost();
                     },
                 ],
             ],
             'UserAgent' => [
                 'valueAccessors' => [
-                    RequestInterface::class => function (RequestInterface $request) {
+                    RequestInterface::class => function (
+                        $command,
+                        RequestInterface $request
+                    ) {
                         return $request->getHeaderLine('User-Agent')
                             . ' ' . \GuzzleHttp\default_user_agent();
                     },

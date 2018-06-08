@@ -218,11 +218,7 @@ abstract class AbstractMonitoringMiddleware
         foreach ($dataFormat as $eventKey => $datum) {
             $value = null;
             foreach ($datum['valueAccessors'] as $klass => $accessor) {
-                if ($cmd instanceof $klass) {
-                    $value = $accessor($cmd);
-                } elseif ($request instanceof $klass) {
-                    $value = $accessor($request);
-                }
+                $value = $accessor($cmd, $request);
                 if ($value !== null) {
                     $event[$eventKey] = $this->getTruncatedValue($value, $datum);
                     continue 2;
