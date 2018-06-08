@@ -74,17 +74,18 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
             ]),
             new Request('POST', 'http://foo.com')
         ];
+        $eventBase = [
+            'Api' => 'RunScheduledInstances',
+            'ClientId' => 'AwsPhpSdkTestApp',
+            'Type' => 'ApiCall',
+            'Service' => 'ec2',
+            'Version' => 1,
+        ];
 
         return [
             array_merge($baseTest, [
                 [],
-                [
-                    'Api' => 'RunScheduledInstances',
-                    'ClientId' => 'AwsPhpSdkTestApp',
-                    'Type' => 'ApiCall',
-                    'Service' => 'ec2',
-                    'Version' => 1,
-                ]
+                $eventBase
             ]),
             array_merge($baseTest, [
                 [
@@ -97,14 +98,9 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                         ],
                     ],
                 ],
-                [
-                    'Api' => 'RunScheduledInstances',
-                    'AttemptCount' => 2,
+                array_merge($eventBase, [
                     'ClientId' => 'AwsPhpSdkTestApp',
-                    'Type' => 'ApiCall',
-                    'Service' => 'ec2',
-                    'Version' => 1,
-                ]
+                ])
             ]),
         ];
     }
