@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware
  * @covers \Aws\ClientSideMonitoring\AbstractMonitoringMiddleware
- * @todo Use data provider pattern for testing data population
  */
 class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
 {
@@ -69,69 +68,82 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
             'ScheduledInstanceId' => 'test-instance-id',
             'InstanceCount' => 1,
         ]);
-        $request = new Request(
-            'POST',
-            'http://foo.com',
-            [
-                'User-Agent' => 'foo-agent'
+        $baseTest = [
+            ApiCallAttemptMonitoringMiddleware::wrap(
+                $this->getCredentialProvider(),
+                $this->getConfiguration(),
+                'us-east-1',
+                'ec2'
+            ),
+            $command,
+            new Request(
+                'POST',
+                'http://foo.com',
+                [
+                    'User-Agent' => 'foo-agent'
+                ]
+            ),
+        ];
+
+        $headers = [
+            'x-amz-request-id' => 'testrequestid1',
+            'x-amzn-RequestId' => 'testrequestid2',
+            'x-amz-id-2' => 'testamzid',
+        ];
+        $stats = [
+            'http' => [
+                [
+                    'total_time' => .12,
+                    'primary_ip' => '12.34.56.78',
+                    'namelookup_time' => .012,
+                ],
             ]
-        );
-        $middlware = ApiCallAttemptMonitoringMiddleware::wrap(
-            $this->getCredentialProvider(),
-            $this->getConfiguration(),
-            'us-east-1',
-            'ec2'
-        );
+        ];
+        $fullResult = [
+            '@metadata' => [
+                'statusCode' => 200,
+                'headers' => $headers,
+                'transferStats' => $stats,
+            ],
+        ];
+
+        $eventBase = [
+            'AccessKey' => 'testkey',
+            'Api' => 'RunScheduledInstances',
+            'ClientId' => 'AwsPhpSdkTestApp',
+            'Fqdn' => 'foo.com',
+            'Region' => 'us-east-1',
+            'Service' => 'ec2',
+            'SessionToken' => 'testtoken',
+            'Type' => 'ApiCallAttempt',
+            'UserAgent' => 'foo-agent' . ' ' .
+                \GuzzleHttp\default_user_agent(),
+            'Version' => 1,
+        ];
+        $eventStatsPartial = [
+            'AttemptLatency' => 120,
+            'DestinationIp' => '12.34.56.78',
+            'DnsLatency' => 12,
+        ];
+        $eventHeadersPartial = [
+            'XAmzRequestId' => 'testrequestid1',
+            'XAmznRequestId' => 'testrequestid2',
+            'XAmzId2' => 'testamzid',
+        ];
 
         $tests = [
-            [
-                $middlware,
-                $command,
-                $request,
-                [
-                    '@metadata' => [
-                        'statusCode' => 200,
-                        'headers' => [
-                            'x-amz-request-id' => 'testrequestid1',
-                            'x-amzn-RequestId' => 'testrequestid2',
-                            'x-amz-id-2' => 'testamzid',
-                        ],
-                        'transferStats' => [
-                            'http' => [
-                                [
-                                    'total_time' => .12,
-                                    'primary_ip' => '12.34.56.78',
-                                    'namelookup_time' => .012,
-                                ],
-                            ]
-                        ],
-                    ],
-                ],
-                [
-                    'AccessKey' => 'testkey',
-                    'Api' => 'RunScheduledInstances',
-                    'AttemptLatency' => 120,
-                    'ClientId' => 'AwsPhpSdkTestApp',
-                    'DestinationIp' => '12.34.56.78',
-                    'DnsLatency' => 12,
-                    'Fqdn' => 'foo.com',
-                    'HttpStatusCode' => 200,
-                    'Region' => 'us-east-1',
-                    'Service' => 'ec2',
-                    'SessionToken' => 'testtoken',
-                    'Type' => 'ApiCallAttempt',
-                    'UserAgent' => 'foo-agent' . ' ' .
-                        \GuzzleHttp\default_user_agent(),
-                    'Version' => 1,
-                    'XAmzRequestId' => 'testrequestid1',
-                    'XAmznRequestId' => 'testrequestid2',
-                    'XAmzId2' => 'testamzid',
-                ]
-            ],
-            [
-                $middlware,
-                $command,
-                $request,
+            array_merge($baseTest, [
+                $fullResult,
+                array_merge(
+                    $eventBase,
+                    $eventHeadersPartial,
+                    $eventStatsPartial,
+                    [
+                        'HttpStatusCode' => 200,
+                    ]
+                )
+            ]),
+            array_merge($baseTest, [
                 [
                     '@metadata' => [
                         'statusCode' => 200,
@@ -140,21 +152,13 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                         ],
                     ],
                 ],
-                [
-                    'AccessKey' => 'testkey',
-                    'Api' => 'RunScheduledInstances',
-                    'ClientId' => 'AwsPhpSdkTestApp',
-                    'Fqdn' => 'foo.com',
-                    'HttpStatusCode' => 200,
-                    'Region' => 'us-east-1',
-                    'Service' => 'ec2',
-                    'SessionToken' => 'testtoken',
-                    'Type' => 'ApiCallAttempt',
-                    'UserAgent' => 'foo-agent' . ' ' .
-                        \GuzzleHttp\default_user_agent(),
-                    'Version' => 1,
-                ]
-            ],
+                array_merge(
+                    $eventBase,
+                    [
+                        'HttpStatusCode' => 200,
+                    ]
+                )
+            ]),
         ];
 
         $data = ApiCallAttemptMonitoringMiddleware::getResponseDataConfiguration();
@@ -163,150 +167,72 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
 
             $message = 'This is a test exception message!';
             $code = str_repeat('a', 2 * $maxLength);
-            $tests []= [
-                $middlware,
-                $command,
-                $request,
+            $exceptionContext = [
+                'message' => $message,
+                'code' => $code,
+            ];
+            $eventAwsException = array_merge(
+                $eventBase,
+                [
+                    'AwsException' => str_repeat('a', $maxLength),
+                    'AwsExceptionMessage' => $message,
+                ]
+            );
+
+            $tests []= array_merge($baseTest, [
                 new AwsException(
                     $message,
                     $command,
+                    array_merge($exceptionContext, [
+                        'response' => new Response(405, $headers),
+                        'result' => $fullResult,
+                        'transfer_stats' => $stats['http'][0],
+                    ])
+                ),
+                array_merge(
+                    $eventAwsException,
+                    $eventHeadersPartial,
+                    $eventStatsPartial,
                     [
-                        'message' => $message,
-                        'code' => $code,
-                        'response' => new Response(405, [
-                            'x-amz-request-id' => 'testrequestid1',
-                            'x-amzn-RequestId' => 'testrequestid2',
-                            'x-amz-id-2' => 'testamzid'
-                        ]),
-                        'result' => [
-                            '@metadata' => [
-                                'statusCode' => 200,
-                                'headers' => [
-                                    'x-amz-request-id' => 'testrequestid1',
-                                    'x-amzn-RequestId' => 'testrequestid2',
-                                    'x-amz-id-2' => 'testamzid',
-                                ],
-                                'transferStats' => [
-                                    'http' => [
-                                        [
-                                            'total_time' => .12,
-                                            'primary_ip' => '12.34.56.78',
-                                            'namelookup_time' => .012,
-                                        ],
-                                    ]
-                                ],
-                            ],
-                        ],
-                        'transfer_stats' => [
-                            'total_time' => .12,
-                            'primary_ip' => '12.34.56.78',
-                            'namelookup_time' => .012,
-                        ],
+                        'HttpStatusCode' => 405,
                     ]
                 ),
-                [
-                    'AccessKey' => 'testkey',
-                    'Api' => 'RunScheduledInstances',
-                    'AttemptLatency' => 120,
-                    'AwsException' => str_repeat('a', $maxLength),
-                    'AwsExceptionMessage' => $message,
-                    'ClientId' => 'AwsPhpSdkTestApp',
-                    'DestinationIp' => '12.34.56.78',
-                    'DnsLatency' => 12,
-                    'Fqdn' => 'foo.com',
-                    'HttpStatusCode' => 405,
-                    'Region' => 'us-east-1',
-                    'Service' => 'ec2',
-                    'SessionToken' => 'testtoken',
-                    'Type' => 'ApiCallAttempt',
-                    'UserAgent' => 'foo-agent' . ' ' .
-                        \GuzzleHttp\default_user_agent(),
-                    'Version' => 1,
-                    'XAmzRequestId' => 'testrequestid1',
-                    'XAmznRequestId' => 'testrequestid2',
-                    'XAmzId2' => 'testamzid',
-                ]
-            ];
-            $tests []= [
-                $middlware,
-                $command,
-                $request,
+            ]);
+            $tests []= array_merge($baseTest, [
                 new ParserException(
                     $message
                 ),
-                [
-                    'AccessKey' => 'testkey',
-                    'Api' => 'RunScheduledInstances',
-                    'ClientId' => 'AwsPhpSdkTestApp',
-                    'Fqdn' => 'foo.com',
-                    'Region' => 'us-east-1',
-                    'SdkException' => ParserException::class,
-                    'SdkExceptionMessage' => $message,
-                    'Service' => 'ec2',
-                    'SessionToken' => 'testtoken',
-                    'Type' => 'ApiCallAttempt',
-                    'UserAgent' => 'foo-agent' . ' ' .
-                        \GuzzleHttp\default_user_agent(),
-                    'Version' => 1,
-                ]
-            ];
-            $tests []= [
-                $middlware,
-                $command,
-                $request,
+                array_merge(
+                    $eventBase,
+                    [
+                        'SdkException' => ParserException::class,
+                        'SdkExceptionMessage' => $message,
+                    ]
+                ),
+            ]);
+            $tests []= array_merge($baseTest, [
                 new AwsException(
                     $message,
                     $command,
-                    [
-                        'message' => $message,
-                        'code' => $code,
+                    array_merge($exceptionContext, [
                         'response' => new Response(405)
-                    ]
+                    ])
                 ),
-                [
-                    'AccessKey' => 'testkey',
-                    'Api' => 'RunScheduledInstances',
-                    'AwsException' => str_repeat('a', $maxLength),
-                    'AwsExceptionMessage' => $message,
-                    'ClientId' => 'AwsPhpSdkTestApp',
-                    'Fqdn' => 'foo.com',
-                    'Region' => 'us-east-1',
-                    'SessionToken' => 'testtoken',
-                    'Service' => 'ec2',
-                    'Type' => 'ApiCallAttempt',
-                    'UserAgent' => 'foo-agent' . ' ' .
-                        \GuzzleHttp\default_user_agent(),
-                    'Version' => 1,
-                ]
-            ];
-            $tests []= [
-                $middlware,
-                $command,
-                $request,
+                array_merge(
+                    $eventAwsException,
+                    [
+                        'HttpStatusCode' => 405,
+                    ]
+                )
+            ]);
+            $tests []= array_merge($baseTest, [
                 new AwsException(
                     $message,
                     $command,
-                    [
-                        'message' => $message,
-                        'code' => $code,
-                    ]
+                    $exceptionContext
                 ),
-                [
-                    'AccessKey' => 'testkey',
-                    'Api' => 'RunScheduledInstances',
-                    'AwsException' => str_repeat('a', $maxLength),
-                    'AwsExceptionMessage' => $message,
-                    'ClientId' => 'AwsPhpSdkTestApp',
-                    'Fqdn' => 'foo.com',
-                    'Region' => 'us-east-1',
-                    'SessionToken' => 'testtoken',
-                    'Service' => 'ec2',
-                    'Type' => 'ApiCallAttempt',
-                    'UserAgent' => 'foo-agent' . ' ' .
-                        \GuzzleHttp\default_user_agent(),
-                    'Version' => 1,
-                ]
-            ];
+                $eventAwsException
+            ]);
         }
 
         return $tests;

@@ -58,26 +58,25 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
 
     public function getMonitoringDataTests()
     {
-        $command = new Command('RunScheduledInstances', [
-            'LaunchSpecification' => [
-                'ImageId' => 'test-image',
-            ],
-            'ScheduledInstanceId' => 'test-instance-id',
-            'InstanceCount' => 1,
-        ]);
-        $request = new Request('POST', 'http://foo.com');
-        $middlware = ApiCallMonitoringMiddleware::wrap(
-            $this->getCredentialProvider(),
-            $this->getConfiguration(),
-            'us-east-1',
-            'ec2'
-        );
+        $baseTest = [
+            ApiCallMonitoringMiddleware::wrap(
+                $this->getCredentialProvider(),
+                $this->getConfiguration(),
+                'us-east-1',
+                'ec2'
+            ),
+            new Command('RunScheduledInstances', [
+                'LaunchSpecification' => [
+                    'ImageId' => 'test-image',
+                ],
+                'ScheduledInstanceId' => 'test-instance-id',
+                'InstanceCount' => 1,
+            ]),
+            new Request('POST', 'http://foo.com')
+        ];
 
         return [
-            [
-                $middlware,
-                $command,
-                $request,
+            array_merge($baseTest, [
                 [],
                 [
                     'Api' => 'RunScheduledInstances',
@@ -86,11 +85,8 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                     'Service' => 'ec2',
                     'Version' => 1,
                 ]
-            ],
-            [
-                $middlware,
-                $command,
-                $request,
+            ]),
+            array_merge($baseTest, [
                 [
                     '@metadata' => [
                         'transferStats' => [
@@ -109,7 +105,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                     'Service' => 'ec2',
                     'Version' => 1,
                 ]
-            ],
+            ]),
         ];
     }
 }
