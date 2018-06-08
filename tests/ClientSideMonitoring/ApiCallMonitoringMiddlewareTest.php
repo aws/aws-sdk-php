@@ -60,8 +60,18 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
 
     public function getMonitoringDataTests()
     {
+        $command = new Command('RunScheduledInstances', [
+            'LaunchSpecification' => [
+                'ImageId' => 'test-image',
+            ],
+            'ScheduledInstanceId' => 'test-instance-id',
+            'InstanceCount' => 1,
+        ]);
+        $request = new Request('POST', 'http://foo.com');
         return [
             [
+                $command,
+                $request,
                 [],
                 [
                     'Api' => 'RunScheduledInstances',
@@ -72,6 +82,8 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                 ]
             ],
             [
+                $command,
+                $request,
                 [
                     '@metadata' => [
                         'transferStats' => [
@@ -97,17 +109,14 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
     /**
      * @dataProvider getMonitoringDataTests
      */
-    public function testPopulatesMonitoringData($result, $expected)
-    {
+    public function testPopulatesMonitoringData(
+        $command,
+        $request,
+        $result,
+        $expected
+    ) {
         $this->resetMiddlewareSocket();
         $called = false;
-        $command = new Command('RunScheduledInstances', [
-            'LaunchSpecification' => [
-                'ImageId' => 'test-image',
-            ],
-            'ScheduledInstanceId' => 'test-instance-id',
-            'InstanceCount' => 1,
-        ]);
 
         $list = new HandlerList();
         $list->setHandler(function ($command, $request) use ($result, &$called) {
@@ -123,7 +132,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         $handler = $list->resolve();
 
         /** @var MonitoringEventsInterface $response */
-        $response = $handler($command, new Request('POST', 'http://foo.com'))->wait();
+        $response = $handler($command, $request)->wait();
         $this->assertTrue($called);
         $eventData = $response->getMonitoringEvents()[0];
         $this->assertArraySubset($expected, $eventData);
