@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.61.3 - 2018-06-08
 
 * `Aws\MediaTailor` - Fixes a bug in the request URIs for MediaTailor PlaybackConfiguration operations.
 
