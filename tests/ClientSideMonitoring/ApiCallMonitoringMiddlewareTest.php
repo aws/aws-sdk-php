@@ -7,10 +7,6 @@ use Aws\ClientSideMonitoring\Configuration;
 use Aws\Command;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
-use Aws\HandlerList;
-use Aws\MonitoringEventsInterface;
-use Aws\Result;
-use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 
@@ -20,6 +16,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ApiCallMonitoringMiddlewareTest extends TestCase
 {
+    use MonitoringMiddlewareTestingTrait;
+
     protected function getConfiguration()
     {
         return new Configuration(true, 31000, 'AwsPhpSdkTestApp');
@@ -68,8 +66,16 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
             'InstanceCount' => 1,
         ]);
         $request = new Request('POST', 'http://foo.com');
+        $middlware = ApiCallMonitoringMiddleware::wrap(
+            $this->getCredentialProvider(),
+            $this->getConfiguration(),
+            'us-east-1',
+            'ec2'
+        );
+
         return [
             [
+                $middlware,
                 $command,
                 $request,
                 [],
@@ -82,6 +88,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                 ]
             ],
             [
+                $middlware,
                 $command,
                 $request,
                 [
@@ -104,38 +111,5 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                 ]
             ],
         ];
-    }
-
-    /**
-     * @dataProvider getMonitoringDataTests
-     */
-    public function testPopulatesMonitoringData(
-        $command,
-        $request,
-        $result,
-        $expected
-    ) {
-        $this->resetMiddlewareSocket();
-        $called = false;
-
-        $list = new HandlerList();
-        $list->setHandler(function ($command, $request) use ($result, &$called) {
-            $called = true;
-            return Promise\promise_for(new Result($result));
-        });
-        $list->appendBuild(ApiCallMonitoringMiddleware::wrap(
-            $this->getCredentialProvider(),
-            $this->getConfiguration(),
-            'us-east-1',
-            'ec2'
-        ));
-        $handler = $list->resolve();
-
-        /** @var MonitoringEventsInterface $response */
-        $response = $handler($command, $request)->wait();
-        $this->assertTrue($called);
-        $eventData = $response->getMonitoringEvents()[0];
-        $this->assertArraySubset($expected, $eventData);
-        $this->assertInternalType('int', $eventData['Timestamp']);
     }
 }

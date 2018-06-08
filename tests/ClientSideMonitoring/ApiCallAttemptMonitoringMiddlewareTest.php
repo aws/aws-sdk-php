@@ -9,10 +9,6 @@ use Aws\Command;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
-use Aws\HandlerList;
-use Aws\MonitoringEventsInterface;
-use Aws\Result;
-use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
@@ -24,6 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
 {
+    use MonitoringMiddlewareTestingTrait;
 
     protected function getConfiguration()
     {
@@ -79,9 +76,16 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                 'User-Agent' => 'foo-agent'
             ]
         );
+        $middlware = ApiCallAttemptMonitoringMiddleware::wrap(
+            $this->getCredentialProvider(),
+            $this->getConfiguration(),
+            'us-east-1',
+            'ec2'
+        );
 
         $tests = [
             [
+                $middlware,
                 $command,
                 $request,
                 [
@@ -125,6 +129,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                 ]
             ],
             [
+                $middlware,
                 $command,
                 $request,
                 [
@@ -159,6 +164,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
             $message = 'This is a test exception message!';
             $code = str_repeat('a', 2 * $maxLength);
             $tests []= [
+                $middlware,
                 $command,
                 $request,
                 new AwsException(
@@ -222,6 +228,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                 ]
             ];
             $tests []= [
+                $middlware,
                 $command,
                 $request,
                 new ParserException(
@@ -244,6 +251,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                 ]
             ];
             $tests []= [
+                $middlware,
                 $command,
                 $request,
                 new AwsException(
@@ -272,6 +280,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                 ]
             ];
             $tests []= [
+                $middlware,
                 $command,
                 $request,
                 new AwsException(
@@ -301,65 +310,5 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         }
 
         return $tests;
-    }
-
-    /**
-     * @dataProvider getMonitoringDataTests
-     */
-    public function testPopulatesMonitoringData(
-        $command,
-        $request,
-        $result,
-        $expected
-    ) {
-        $this->resetMiddlewareSocket();
-        $called = false;
-        $isResultException = $result instanceof \Exception
-            || $result instanceof \Throwable;
-
-        $list = new HandlerList();
-        $list->setHandler(function ($command, $request) use (
-            $result,
-            $isResultException,
-            &$called
-        ) {
-            $called = true;
-            if ($isResultException) {
-                return Promise\rejection_for($result);
-            }
-            return Promise\promise_for(new Result($result));
-        });
-        $list->appendBuild(ApiCallAttemptMonitoringMiddleware::wrap(
-            $this->getCredentialProvider(),
-            $this->getConfiguration(),
-            'us-east-1',
-            'ec2'
-        ));
-        $handler = $list->resolve();
-
-        try {
-            /** @var MonitoringEventsInterface $response */
-            $response = $handler(
-                $command,
-                $request
-            )->wait();
-
-            if ($isResultException) {
-                $this->fail('Should have received a rejection.');
-            }
-
-            $eventData = $response->getMonitoringEvents()[0];
-        } catch (\Exception $e) {
-            if (!$isResultException) {
-                $this->fail('Should not have received a rejection.');
-            } else if (!($e instanceof MonitoringEventsInterface)) {
-                $this->fail('Unable to validate the specified behavior');
-            }
-            $eventData = $e->getMonitoringEvents()[0];
-        }
-
-        $this->assertTrue($called);
-        $this->assertArraySubset($expected, $eventData);
-        $this->assertInternalType('int', $eventData['Timestamp']);
     }
 }
