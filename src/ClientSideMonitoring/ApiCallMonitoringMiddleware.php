@@ -3,6 +3,8 @@
 namespace Aws\ClientSideMonitoring;
 
 use Aws\CommandInterface;
+use Aws\Exception\AwsException;
+use Aws\MonitoringEventsInterface;
 use Aws\ResultInterface;
 use Psr\Http\Message\RequestInterface;
 
@@ -31,8 +33,21 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
                         if (isset($result['@metadata']['transferStats']['http'])) {
                             return count($result['@metadata']['transferStats']['http']);
                         }
-                        return null;
+                        return 1;
                     },
+                    \Exception::class => function(\Exception $exception) {
+                        if ($exception instanceof MonitoringEventsInterface) {
+                            $attemptCount = 0;
+                            foreach($exception->getMonitoringEvents() as $event) {
+                                if (isset($event['Type']) &&
+                                    $event['Type'] == 'ApiCallAttempt') {
+                                    $attemptCount++;
+                                }
+                            }
+                            return $attemptCount;
+                        }
+                        return 1;
+                    }
                 ],
             ],
         ];

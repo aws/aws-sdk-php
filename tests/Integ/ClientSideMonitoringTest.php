@@ -7,6 +7,7 @@ use Aws\ClientSideMonitoring\Exception\ConfigurationException;
 use Aws\Command;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
+use Aws\MockHandler;
 use Aws\MonitoringEventsInterface;
 use Aws\Result;
 use Aws\Sdk;
@@ -84,8 +85,6 @@ class ClientSideMonitoringTest extends TestCase
 
     private function compareMonitoringEvents($expected, $actual)
     {
-        var_dump($expected);
-        var_dump($actual);
         $this->assertSame(count($expected), count($actual));
         foreach($expected as $index => $expectedEvent) {
             $actualEvent = $actual[$index];
@@ -114,18 +113,13 @@ class ClientSideMonitoringTest extends TestCase
                 ]
             ];
 
-            $promise = Promise\rejection_for(
-                new AwsException($attemptResponse['errorMessage'],
-                    $command,
-                    $context)
-            );
-            return $promise;
+            return new AwsException($attemptResponse['errorMessage'],
+                $command,
+                $context);
         }
         if (isset($attemptResponse['sdkException'])) {
-            return Promise\rejection_for(
-                new ConfigurationException($attemptResponse['sdkExceptionMessage'],
-                    555)
-            );
+            return new ConfigurationException($attemptResponse['sdkExceptionMessage'],
+            555);
         }
         if (isset($attemptResponse['httpStatus'])) {
             $params = [
@@ -142,8 +136,7 @@ class ClientSideMonitoringTest extends TestCase
                     ]
                 ]
             ];
-            $result = new Result($params);
-            return Promise\promise_for($result);
+            return new Result($params);
         }
 
         throw new \InvalidArgumentException('attemptResponse data does not contain required fields.');
@@ -166,10 +159,15 @@ class ClientSideMonitoringTest extends TestCase
                 $request = new Request('POST',
                     'http://foo.com/bar/baz'
                 );
-                $promise = $this->generateResponse($apiCall['attemptResponses'][0], $command);
-                $list->setHandler(function($command, $request) use ($promise) {
-                    return $promise;
-                });
+                $responses = [];
+                foreach($apiCall['attemptResponses'] as $attemptResponse) {
+                    $responses[] = $this->generateResponse($attemptResponse, $command);
+                }
+//                foreach($responses as $response) {
+//                    var_dump(get_class($response));
+//                }
+                $handler = new MockHandler($responses);
+                $list->setHandler($handler);
                 $handler = $list->resolve();
 
                 try {
