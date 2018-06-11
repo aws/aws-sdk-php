@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.61.4 - 2018-06-11
 
 * `Aws\CloudDirectory` - Amazon Cloud Directory now supports optional attributes on Typed Links, giving users the ability to associate and manage data on Typed Links. 
 * `Aws\RDS` - Changed lists of valid EngineVersion values to links to the RDS User Guide.
