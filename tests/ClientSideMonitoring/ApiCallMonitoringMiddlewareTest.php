@@ -58,7 +58,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
 
     public function getMonitoringDataTests()
     {
-        $baseTest = [
+        $testBase = [
             ApiCallMonitoringMiddleware::wrap(
                 $this->getCredentialProvider(),
                 $this->getConfiguration(),
@@ -83,11 +83,11 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         ];
 
         return [
-            array_merge($baseTest, [
+            array_merge($testBase, [
                 [],
                 $eventBase
             ]),
-            array_merge($baseTest, [
+            array_merge($testBase, [
                 [
                     '@metadata' => [
                         'transferStats' => [

@@ -68,7 +68,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
             'ScheduledInstanceId' => 'test-instance-id',
             'InstanceCount' => 1,
         ]);
-        $baseTest = [
+        $testBase = [
             ApiCallAttemptMonitoringMiddleware::wrap(
                 $this->getCredentialProvider(),
                 $this->getConfiguration(),
@@ -132,7 +132,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         ];
 
         $tests = [
-            array_merge($baseTest, [
+            array_merge($testBase, [
                 $fullResult,
                 array_merge(
                     $eventBase,
@@ -143,7 +143,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                     ]
                 )
             ]),
-            array_merge($baseTest, [
+            array_merge($testBase, [
                 [
                     '@metadata' => [
                         'statusCode' => 200,
@@ -179,7 +179,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                 ]
             );
 
-            $tests []= array_merge($baseTest, [
+            $tests []= array_merge($testBase, [
                 new AwsException(
                     $message,
                     $command,
@@ -198,7 +198,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                     ]
                 ),
             ]);
-            $tests []= array_merge($baseTest, [
+            $tests []= array_merge($testBase, [
                 new ParserException(
                     $message
                 ),
@@ -210,7 +210,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                     ]
                 ),
             ]);
-            $tests []= array_merge($baseTest, [
+            $tests []= array_merge($testBase, [
                 new AwsException(
                     $message,
                     $command,
@@ -225,7 +225,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
                     ]
                 )
             ]);
-            $tests []= array_merge($baseTest, [
+            $tests []= array_merge($testBase, [
                 new AwsException(
                     $message,
                     $command,
