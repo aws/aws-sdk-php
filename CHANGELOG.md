@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudDirectory` - Amazon Cloud Directory now supports optional attributes on Typed Links, giving users the ability to associate and manage data on Typed Links. 
+* `Aws\RDS` - Changed lists of valid EngineVersion values to links to the RDS User Guide.
+* `Aws\StorageGateway` -  AWS Storage Gateway now enables you to create cached volumes and tapes with AWS KMS support.
+
 ## 3.61.3 - 2018-06-08
 
 * `Aws\MediaTailor` - Fixes a bug in the request URIs for MediaTailor PlaybackConfiguration operations.
