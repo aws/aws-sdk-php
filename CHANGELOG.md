@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DeviceFarm` - Adding VPCEndpoint support for Remote access. Allows customers to be able to access their private endpoints/services running in their VPC during remote access.
+* `Aws\ECS` - Introduces daemon scheduling capability to deploy one task per instance on selected instances in a cluster. Adds a "force" flag to the DeleteService API to delete a service without requiring to scale down the number of tasks to zero.
+
 ## 3.61.4 - 2018-06-11
 
 * `Aws\CloudDirectory` - Amazon Cloud Directory now supports optional attributes on Typed Links, giving users the ability to associate and manage data on Typed Links. 
