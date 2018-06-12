@@ -20,6 +20,10 @@ use PHPUnit\Framework\TestCase;
 class ClientSideMonitoringTest extends TestCase
 {
 
+    /**
+     * Original environment variables before class instantiated
+     * @var array
+     */
     private static $originalEnv;
 
     /**
@@ -27,17 +31,22 @@ class ClientSideMonitoringTest extends TestCase
      */
     private static $sdk;
 
+    /**
+     * @var array
+     */
     private static $testJson;
 
+    /**
+     * @var array
+     */
     private static $configKeys = [
-        'region' => 'region',
-        'userAgent' => 'ua_append'
+        'region' => 'region'
     ];
 
     public static function setUpBeforeClass()
     {
         self::$testJson = json_decode(
-            file_get_contents('test_cases/client_side_monitoring.json'),
+            file_get_contents(__DIR__ . '/test_cases/client_side_monitoring.json'),
             true
         );
         self::$originalEnv = [
@@ -46,6 +55,7 @@ class ClientSideMonitoringTest extends TestCase
             'client_id' => getenv(ConfigurationProvider::ENV_CLIENT_ID) ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
         ];
+        self::clearAndSetDefaultEnv();
         $sharedConfig = [
             'version' => 'latest'
         ];
@@ -75,12 +85,19 @@ class ClientSideMonitoringTest extends TestCase
             self::$originalEnv['profile']);
     }
 
-    private function clearEnv()
+    private static function clearAndSetDefaultEnv()
     {
         putenv(ConfigurationProvider::ENV_ENABLED . '=');
         putenv(ConfigurationProvider::ENV_PORT . '=');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=');
         putenv(ConfigurationProvider::ENV_PROFILE . '=');
+
+        if (!empty(self::$testJson['defaults']['configuration']['environmentVariables'])) {
+            foreach (self::$testJson['defaults']['configuration']['environmentVariables']
+                     as $key => $value) {
+                putenv("{$key}={$value}");
+            }
+        }
     }
 
     private function compareMonitoringEvents($expected, $actual)
@@ -145,7 +162,7 @@ class ClientSideMonitoringTest extends TestCase
     public function testPopulatesMonitoringEvents()
     {
         foreach (self::$testJson['cases'] as $case) {
-            $this->clearEnv();
+            self::clearAndSetDefaultEnv();
             $events = [];
             if (!empty($case['configuration']['environmentVariables'])) {
                 foreach ($case['configuration']['environmentVariables'] as $key => $value) {
@@ -156,16 +173,11 @@ class ClientSideMonitoringTest extends TestCase
                 $client = self::$sdk->createClient($apiCall['serviceId']);
                 $list = $client->getHandlerList();
                 $command = new Command($apiCall['operationName'], $apiCall['params']);
-                $request = new Request('POST',
-                    'http://foo.com/bar/baz'
-                );
+                $request = new Request('POST', 'http://foo.com/bar/baz');
                 $responses = [];
                 foreach($apiCall['attemptResponses'] as $attemptResponse) {
                     $responses[] = $this->generateResponse($attemptResponse, $command);
                 }
-//                foreach($responses as $response) {
-//                    var_dump(get_class($response));
-//                }
                 $handler = new MockHandler($responses);
                 $list->setHandler($handler);
                 $handler = $list->resolve();
