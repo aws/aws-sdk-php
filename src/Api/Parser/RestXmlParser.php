@@ -30,7 +30,7 @@ class RestXmlParser extends AbstractRestParser
         StructureShape $member,
         array &$result
     ) {
-        $xml = $this->parseXml($response->getBody());
+        $xml = $this->parseXml($response->getBody(), $response);
         $result += $this->parser->parse($member, $xml);
     }
 }

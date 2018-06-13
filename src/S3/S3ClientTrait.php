@@ -9,6 +9,7 @@ use Aws\ResultInterface;
 use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * A trait providing S3-specific functionality. This is meant to be used in
@@ -224,7 +225,7 @@ trait S3ClientTrait
 
                 if ($e->getAwsErrorCode() === 'AuthorizationHeaderMalformed') {
                     $region = $this->determineBucketRegionFromExceptionBody(
-                        $response->getBody()
+                        $response
                     );
                     if (!empty($region)) {
                         return $region;
@@ -236,10 +237,10 @@ trait S3ClientTrait
             });
     }
 
-    private function determineBucketRegionFromExceptionBody($responseBody)
+    private function determineBucketRegionFromExceptionBody(ResponseInterface $response)
     {
         try {
-            $element = $this->parseXml($responseBody);
+            $element = $this->parseXml($response->getBody(), $response);
             if (!empty($element->Region)) {
                 return (string)$element->Region;
             }
