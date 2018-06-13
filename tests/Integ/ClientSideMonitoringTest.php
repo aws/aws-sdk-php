@@ -43,6 +43,14 @@ class ClientSideMonitoringTest extends TestCase
         'region' => 'region'
     ];
 
+    private $allExpectedEvents = [];
+
+    private $udpConfig = [
+        'address' => '127.0.0.1',
+        'port' => 31000,
+        'shutdown' => 'shutdown'
+    ];
+
     public static function setUpBeforeClass()
     {
         self::$testJson = json_decode(
@@ -98,6 +106,13 @@ class ClientSideMonitoringTest extends TestCase
                 putenv("{$key}={$value}");
             }
         }
+    }
+
+    private function checkReceivedDatagrams()
+    {
+        $received = file_get_contents($this->getOutputFilename());
+        $events = json_decode($received, true);
+        $this->compareMonitoringEvents($this->allExpectedEvents, $events);
     }
 
     private function compareMonitoringEvents($expected, $actual)
@@ -159,39 +174,111 @@ class ClientSideMonitoringTest extends TestCase
         throw new \InvalidArgumentException('attemptResponse data does not contain required fields.');
     }
 
+    private function getOutputFilename()
+    {
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        return $dir . '/datagrams.json';
+    }
+
+    private function sendSocketShutdownMessage()
+    {
+        $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        socket_clear_error($socket);
+        socket_connect($socket, $this->udpConfig['address'], $this->udpConfig['port']);
+        socket_write($socket, $this->udpConfig['shutdown'], strlen($this->udpConfig['shutdown']));
+        socket_close($socket);
+    }
+
+    private function startUdpServer()
+    {
+        set_time_limit(0);
+        $localPort = 0;
+        $remoteAddress = 0;
+
+        if (($sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP)) === false) {
+            throw new \Exception('socket_create() failed because: ' . socket_strerror(socket_last_error()) . "\n");
+        }
+
+        if (socket_bind($sock, $this->udpConfig['address'], $this->udpConfig['port']) === false) {
+            throw new \Exception('socket_bind() failed because: ' . socket_strerror(socket_last_error($sock)) . "\n");
+        }
+
+        if (file_exists($this->getOutputFilename())) {
+            unlink($this->getOutputFilename());
+        }
+        $outputFile = fopen($this->getOutputFilename(), 'a');
+        $isFirstDatagram = true;
+        fwrite($outputFile, '[');
+
+        do {
+            socket_recvfrom($sock,$buf, 8096, 0, $remoteAddress, $localPort);
+
+            if ($buf == $this->udpConfig['shutdown']) {
+                fwrite($outputFile, ']');
+                socket_close($sock);
+                break;
+            }
+
+            if (!$isFirstDatagram) {
+                fwrite($outputFile, ',');
+            } else {
+                $isFirstDatagram = false;
+            }
+            fwrite($outputFile, $buf);
+        } while (true);
+    }
+
     public function testPopulatesMonitoringEvents()
     {
-        foreach (self::$testJson['cases'] as $case) {
-            self::clearAndSetDefaultEnv();
-            $events = [];
-            if (!empty($case['configuration']['environmentVariables'])) {
-                foreach ($case['configuration']['environmentVariables'] as $key => $value) {
-                    putenv("{$key}={$value}");
-                }
-            }
-            foreach($case['apiCalls'] as $apiCall) {
-                $client = self::$sdk->createClient($apiCall['serviceId']);
-                $list = $client->getHandlerList();
-                $command = new Command($apiCall['operationName'], $apiCall['params']);
-                $request = new Request('POST', 'http://foo.com/bar/baz');
-                $responses = [];
-                foreach($apiCall['attemptResponses'] as $attemptResponse) {
-                    $responses[] = $this->generateResponse($attemptResponse, $command);
-                }
-                $handler = new MockHandler($responses);
-                $list->setHandler($handler);
-                $handler = $list->resolve();
+        $pid = pcntl_fork();
+        if ($pid != 0) {
+            $this->startUdpServer();
+        } else {
+            sleep(1);
 
-                try {
-                    $result = $handler($command, $request)->wait();
-                    $events = array_merge($events, $result->getMonitoringEvents());
-                } catch (\Exception $e) {
-                    if ($e instanceof MonitoringEventsInterface) {
-                        $events = array_merge($events, $e->getMonitoringEvents());
+            foreach (self::$testJson['cases'] as $case) {
+                self::clearAndSetDefaultEnv();
+                $events = [];
+                if (!empty($case['configuration']['environmentVariables'])) {
+                    foreach ($case['configuration']['environmentVariables'] as $key => $value) {
+                        putenv("{$key}={$value}");
                     }
                 }
+                foreach($case['apiCalls'] as $apiCall) {
+                    $client = self::$sdk->createClient($apiCall['serviceId']);
+                    $list = $client->getHandlerList();
+                    $command = new Command($apiCall['operationName'], $apiCall['params']);
+                    $request = new Request('POST', 'http://foo.com/bar/baz');
+                    $responses = [];
+                    foreach($apiCall['attemptResponses'] as $attemptResponse) {
+                        $responses[] = $this->generateResponse($attemptResponse, $command);
+                    }
+                    $handler = new MockHandler($responses);
+                    $list->setHandler($handler);
+                    $handler = $list->resolve();
+
+                    try {
+                        /**
+                         * @var Result $result
+                         */
+                        $result = $handler($command, $request)->wait();
+                        $events = array_merge($events, $result->getMonitoringEvents());
+                    } catch (\Exception $e) {
+                        if ($e instanceof MonitoringEventsInterface) {
+                            $events = array_merge($events, $e->getMonitoringEvents());
+                        }
+                    }
+                }
+                $this->compareMonitoringEvents($case['expectedMonitoringEvents'], $events);
+                $this->allExpectedEvents = array_merge($this->allExpectedEvents,
+                    $case['expectedMonitoringEvents']);
             }
-            $this->compareMonitoringEvents($case['expectedMonitoringEvents'], $events);
+
+            $this->sendSocketShutdownMessage();
+            $this->checkReceivedDatagrams();
         }
     }
 }
