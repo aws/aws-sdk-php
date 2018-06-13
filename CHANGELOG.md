@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.61.6 - 2018-06-13
 
 * `Aws\CloudHSMV2` - We are launching CloudHSMv2 in LHR (eu-west-2).
 * `Aws\Inspector` - Releases Amazon Inspector, a security assessment service, to the AWS GovCloud (US) region.
