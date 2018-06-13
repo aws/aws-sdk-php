@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudHSMV2` - We are launching CloudHSMv2 in LHR (eu-west-2).
+* `Aws\Inspector` - Releases Amazon Inspector, a security assessment service, to the AWS GovCloud (US) region.
+* `Aws\SSM` - Added support for new parameter, CloudWatchOutputConfig, for SendCommand API. Users can now have RunCommand output sent to CloudWatchLogs.
+* `Aws\ServiceCatalog` - Introduced new length limitations for few of the product fields.
+
 ## 3.61.5 - 2018-06-12
 
 * `Aws\DeviceFarm` - Adding VPCEndpoint support for Remote access. Allows customers to be able to access their private endpoints/services running in their VPC during remote access.
