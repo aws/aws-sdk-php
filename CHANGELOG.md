@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.61.7 - 2018-06-14
 
 * `Aws\APIGateway` - Support for PRIVATE endpoint configuration type
 * `Aws\DynamoDB` - Added two new fields SSEType and KMSMasterKeyArn to SSEDescription block in describe-table output.
