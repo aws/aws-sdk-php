@@ -200,11 +200,16 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
             ]);
             $tests []= array_merge($testBase, [
                 new ParserException(
-                    $message
+                    $message,
+                    0,
+                    null,
+                    ['response' => new Response(200, $headers)]
                 ),
                 array_merge(
                     $eventBase,
+                    $eventHeadersPartial,
                     [
+                        'HttpStatusCode' => 200,
                         'SdkException' => ParserException::class,
                         'SdkExceptionMessage' => $message,
                     ]

@@ -5,9 +5,11 @@ namespace Aws\ClientSideMonitoring;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\MonitoringEventsInterface;
+use Aws\ResponseContainerInterface;
 use Aws\ResultInterface;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal
@@ -42,6 +44,20 @@ abstract class AbstractMonitoringMiddleware
         return function (ResultInterface $result) use ($headerName) {
             if (isset($result['@metadata']['headers'][$headerName])) {
                 return $result['@metadata']['headers'][$headerName];
+            }
+            return null;
+        };
+    }
+
+    protected static function getResponseContainerHeaderAccessor($headerName)
+    {
+        return function (ResponseContainerInterface $responseContainer) use ($headerName) {
+            $response = $responseContainer->getResponse();
+            if ($response instanceof ResponseInterface) {
+                $header = $response->getHeader($headerName);
+                if (!empty($header[0])) {
+                    return $header[0];
+                }
             }
             return null;
         };

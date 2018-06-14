@@ -5,8 +5,10 @@ namespace Aws\ClientSideMonitoring;
 use Aws\CommandInterface;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Exception\AwsException;
+use Aws\ResponseContainerInterface;
 use Aws\ResultInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @internal
@@ -138,6 +140,15 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                         }
                         return null;
                     },
+                    \Exception::class => function (\Exception $exception) {
+                        if ($exception instanceof ResponseContainerInterface) {
+                            $response = $exception->getResponse();
+                            if ($response instanceof ResponseInterface) {
+                                return $response->getStatusCode();
+                            }
+                        }
+                        return null;
+                    },
                 ],
             ],
             'SdkException' => [
@@ -166,18 +177,21 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                 'valueAccessors' => [
                     ResultInterface::class => self::getResultHeaderAccessor('x-amz-id-2'),
                     AwsException::class => self::getExceptionHeaderAccessor('x-amz-id-2'),
+                    ResponseContainerInterface::class => self::getResponseContainerHeaderAccessor('x-amz-id-2'),
                 ],
             ],
             'XAmzRequestId' => [
                 'valueAccessors' => [
                     ResultInterface::class => self::getResultHeaderAccessor('x-amz-request-id'),
                     AwsException::class => self::getExceptionHeaderAccessor('x-amz-request-id'),
+                    ResponseContainerInterface::class => self::getResponseContainerHeaderAccessor('x-amz-request-id'),
                 ],
             ],
             'XAmznRequestId' => [
                 'valueAccessors' => [
                     ResultInterface::class => self::getResultHeaderAccessor('x-amzn-RequestId'),
                     AwsException::class => self::getExceptionHeaderAccessor('x-amzn-RequestId'),
+                    ResponseContainerInterface::class => self::getResponseContainerHeaderAccessor('x-amzn-RequestId'),
                 ],
             ],
         ];
