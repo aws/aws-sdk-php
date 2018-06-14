@@ -123,7 +123,7 @@ abstract class AbstractMonitoringMiddleware
      *
      * @param  CommandInterface $cmd
      * @param  RequestInterface $request
-     * @return Promise
+     * @return Promise\PromiseInterface
      */
     public function __invoke(CommandInterface $cmd, RequestInterface $request)
     {
@@ -158,7 +158,7 @@ abstract class AbstractMonitoringMiddleware
             return $value;
         };
 
-        return $handler($cmd, $request)->then($g, $g);
+        return Promise\promise_for($handler($cmd, $request))->then($g, $g);
     }
 
     private function getClientId()

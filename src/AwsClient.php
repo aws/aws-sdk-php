@@ -321,18 +321,10 @@ class AwsClient implements AwsClientInterface
             $this->region,
             $args['service']
         );
-        try {
-            $this->handlerList->after(
-                'retry',
-                'ApiCallAttemptMonitoringMiddleware',
-                $callAttemptMiddleware
-            );
-        } catch (\InvalidArgumentException $e) {
-            $this->handlerList->appendSign(
-                $callAttemptMiddleware,
-                'ApiCallAttemptMonitoringMiddleware'
-            );
-        }
+        $this->handlerList->appendAttempt (
+            $callAttemptMiddleware,
+            'ApiCallAttemptMonitoringMiddleware'
+        );
     }
 
     /**
