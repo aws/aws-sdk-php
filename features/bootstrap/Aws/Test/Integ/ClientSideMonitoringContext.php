@@ -74,6 +74,118 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
             self::$originalEnv['profile']);
     }
 
+    /**
+     * @Given I have a test file called :filename
+     */
+    public function iHaveATestFileCalled($filename)
+    {
+        $this->testData = json_decode(
+            file_get_contents(__DIR__ . '/test_cases/' . $filename),
+            true
+        );
+
+        if (!empty($this->testData['defaults']['configuration']['environmentVariables'])) {
+            foreach ($this->testData['defaults']['configuration']['environmentVariables']
+                     as $key => $value) {
+                $this->defaultEnv[$key] = $value;
+            }
+        }
+
+        $this->clearAndSetDefaultEnv();
+        $sharedConfig = [
+            'version' => 'latest'
+        ];
+        foreach($this->testData['defaults']['configuration'] as $key => $value) {
+            if (array_key_exists($key, $this->configKeys)) {
+                $sharedConfig[$this->configKeys[$key]] = $value;
+            }
+        }
+        if (isset($this->testData['defaults']['configuration']['accessKey'])) {
+            $sharedConfig['credentials'] = new Credentials(
+                $this->testData['defaults']['configuration']['accessKey'],
+                'test-secret'
+            );
+        }
+        $this->sdk = new Sdk($sharedConfig);
+    }
+
+    /**
+     * @When I run the test cases with mocked responses against a test socket server
+     */
+    public function iRunTheTestCasesWithMockedResponsesAgainstATestSocketServer()
+    {
+        $pid = pcntl_fork();
+        if ($pid == 0) {
+            try {
+                $this->startUdpServer();
+            } catch (\Exception $e) {
+                exit();
+            }
+        } else {
+            sleep(1);
+
+            foreach ($this->testData['cases'] as $case) {
+                $this->clearAndSetDefaultEnv();
+                $events = [];
+                if (!empty($case['configuration']['environmentVariables'])) {
+                    foreach ($case['configuration']['environmentVariables'] as $key => $value) {
+                        putenv("{$key}={$value}");
+                    }
+                }
+                foreach($case['apiCalls'] as $apiCall) {
+                    $client = $this->sdk->createClient($apiCall['serviceId']);
+                    $list = $client->getHandlerList();
+                    $command = new Command($apiCall['operationName'], $apiCall['params']);
+                    $request = new Request('POST', 'http://foo.com/bar/baz');
+                    $responses = [];
+                    foreach($apiCall['attemptResponses'] as $attemptResponse) {
+                        $responses[] = $this->generateResponse($attemptResponse, $command);
+                    }
+                    $handler = new MockHandler($responses);
+                    $list->setHandler($handler);
+                    $handler = $list->resolve();
+
+                    try {
+                        /**
+                         * @var Result $result
+                         */
+                        $result = $handler($command, $request)->wait();
+                        $events = array_merge($events, $result->getMonitoringEvents());
+                    } catch (\Exception $e) {
+                        if ($e instanceof MonitoringEventsInterface) {
+                            $events = array_merge($events, $e->getMonitoringEvents());
+                        }
+                    }
+                }
+                $this->allExpectedEvents = array_merge($this->allExpectedEvents,
+                    $case['expectedMonitoringEvents']);
+                $this->allGeneratedEvents = array_merge($this->allGeneratedEvents,
+                    $events);
+            }
+
+            $this->sendSocketShutdownMessage();
+        }
+    }
+
+    /**
+     * @Then The generated events should match the expected events
+     */
+    public function theGeneratedEventsShouldMatchTheExpectedEvents()
+    {
+        $this->compareMonitoringEvents($this->allExpectedEvents,
+            $this->allGeneratedEvents);
+    }
+
+    /**
+     * @Then The received datagrams should match the expected events
+     */
+    public function theReceivedDatagramsShouldMatchTheExpectedEvents()
+    {
+        $received = file_get_contents($this->getOutputFilename());
+        $events = json_decode($received, true);
+        $this->compareMonitoringEvents($this->allExpectedEvents, $events);
+    }
+
     private function clearAndSetDefaultEnv()
     {
         putenv(ConfigurationProvider::ENV_ENABLED . '=');
@@ -151,7 +263,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
-        return $dir . '/datagrams.json';
+        return $dir . '/test_datagrams.json';
     }
 
     private function sendSocketShutdownMessage()
@@ -169,13 +281,8 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         $localPort = 0;
         $remoteAddress = 0;
 
-        if (($sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP)) === false) {
-            throw new \Exception('socket_create() failed because: ' . socket_strerror(socket_last_error()) . "\n");
-        }
-
-        if (socket_bind($sock, $this->udpConfig['address'], $this->udpConfig['port']) === false) {
-            throw new \Exception('socket_bind() failed because: ' . socket_strerror(socket_last_error($sock)) . "\n");
-        }
+        $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+        socket_bind($socket, $this->udpConfig['address'], $this->udpConfig['port']);
 
         if (file_exists($this->getOutputFilename())) {
             unlink($this->getOutputFilename());
@@ -184,112 +291,19 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         $isFirstDatagram = true;
         fwrite($outputFile, '[');
 
-        do {
-            socket_recvfrom($sock,$buf, 8096, 0, $remoteAddress, $localPort);
-
+        while (true) {
+            socket_recvfrom($socket,$buf, 8096, 0, $remoteAddress, $localPort);
             if ($buf == $this->udpConfig['shutdown']) {
                 fwrite($outputFile, ']');
-                socket_close($sock);
-                break;
+                socket_close($socket);
+                exit();
             }
-
             if (!$isFirstDatagram) {
                 fwrite($outputFile, ',');
             } else {
                 $isFirstDatagram = false;
             }
             fwrite($outputFile, $buf);
-        } while (true);
-    }
-
-    /**
-     * @Given I have a test file called :filename
-     */
-    public function iHaveATestFileCalled($filename)
-    {
-        $this->testData = json_decode(
-            file_get_contents(__DIR__ . '/test_cases/' . $filename),
-            true
-        );
-
-        if (!empty($this->testData['defaults']['configuration']['environmentVariables'])) {
-            foreach ($this->testData['defaults']['configuration']['environmentVariables']
-                     as $key => $value) {
-                $this->defaultEnv[$key] = $value;
-            }
-        }
-
-        $this->clearAndSetDefaultEnv();
-        $sharedConfig = [
-            'version' => 'latest'
-        ];
-        foreach($this->testData['defaults']['configuration'] as $key => $value) {
-            if (array_key_exists($key, $this->configKeys)) {
-                $sharedConfig[$this->configKeys[$key]] = $value;
-            }
-        }
-        if (isset($this->testData['defaults']['configuration']['accessKey'])) {
-            $sharedConfig['credentials'] = new Credentials(
-                $this->testData['defaults']['configuration']['accessKey'],
-                'test-secret'
-            );
-        }
-        $this->sdk = new Sdk($sharedConfig);
-    }
-
-    /**
-     * @When I run the test cases with mocked responses against a test socket server
-     */
-    public function iRunTheTestCasesWithMockedResponsesAgainstATestSocketServer()
-    {
-        $pid = pcntl_fork();
-        if ($pid != 0) {
-            $this->startUdpServer();
-        } else {
-            sleep(1);
-
-            foreach (self::$testJson['cases'] as $case) {
-                $this->clearAndSetDefaultEnv();
-                $events = [];
-                if (!empty($case['configuration']['environmentVariables'])) {
-                    foreach ($case['configuration']['environmentVariables'] as $key => $value) {
-                        putenv("{$key}={$value}");
-                    }
-                }
-                foreach($case['apiCalls'] as $apiCall) {
-                    $client = $this->sdk->createClient($apiCall['serviceId']);
-                    $list = $client->getHandlerList();
-                    $command = new Command($apiCall['operationName'], $apiCall['params']);
-                    $request = new Request('POST', 'http://foo.com/bar/baz');
-                    $responses = [];
-                    foreach($apiCall['attemptResponses'] as $attemptResponse) {
-                        $responses[] = $this->generateResponse($attemptResponse, $command);
-                    }
-                    $handler = new MockHandler($responses);
-                    $list->setHandler($handler);
-                    $handler = $list->resolve();
-
-                    try {
-                        /**
-                         * @var Result $result
-                         */
-                        $result = $handler($command, $request)->wait();
-                        $events = array_merge($events, $result->getMonitoringEvents());
-                    } catch (\Exception $e) {
-                        if ($e instanceof MonitoringEventsInterface) {
-                            $events = array_merge($events, $e->getMonitoringEvents());
-                        }
-                    }
-                }
-                $this->compareMonitoringEvents($case['expectedMonitoringEvents'], $events);
-                $this->allExpectedEvents = array_merge($this->allExpectedEvents,
-                    $case['expectedMonitoringEvents']);
-                $this->allGeneratedEvents = array_merge($this->allGeneratedEvents,
-                    $events);
-            }
-
-            $this->sendSocketShutdownMessage();
-            $this->checkReceivedDatagrams();
         }
     }
 }
