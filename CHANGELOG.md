@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Support for PRIVATE endpoint configuration type
+* `Aws\DynamoDB` - Added two new fields SSEType and KMSMasterKeyArn to SSEDescription block in describe-table output.
+* `Aws\IoTAnalytics` - With this release, AWS IoT Analytics allows you to tag resources. Tags are metadata that you can create and use to manage your IoT Analytics resources. For more information about tagging, see AWS Tagging Strategies. For technical documentation, look for the tagging operations in the AWS IoT Analytics API reference or User Guide.
+
 ## 3.61.6 - 2018-06-13
 
 * `Aws\CloudHSMV2` - We are launching CloudHSMv2 in LHR (eu-west-2).
