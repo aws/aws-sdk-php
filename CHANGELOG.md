@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Aws\Signature` - Added the ability for signatures to be generated off of \DateTimeInterface objects that are not based on \DateTime.
+* `Aws\MediaConvert` - This release adds language code support according to the ISO-639-3 standard. Custom 3-character language codes are now supported on input and output for both audio and captions.
+
 ## 3.61.7 - 2018-06-14
 
 * `Aws\APIGateway` - Support for PRIVATE endpoint configuration type
