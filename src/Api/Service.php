@@ -43,6 +43,7 @@ class Service extends AbstractModel
         ], $defaultMeta = [
             'apiVersion'       => null,
             'serviceFullName'  => null,
+            'serviceId'        => null,
             'endpointPrefix'   => null,
             'signingName'      => null,
             'signatureVersion' => null,
@@ -161,6 +162,16 @@ class Service extends AbstractModel
     public function getServiceFullName()
     {
         return $this->definition['metadata']['serviceFullName'];
+    }
+
+    /**
+     * Get the service id
+     *
+     * @return string
+     */
+    public function getServiceId()
+    {
+        return $this->definition['metadata']['serviceId'];
     }
 
     /**
