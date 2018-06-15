@@ -100,7 +100,22 @@ class SignatureV4Test extends TestCase
         return array($request, $credentials, $signature);
     }
 
-    public function testCreatesPresignedDatesFromDateTime()
+    public function getExpiresDateTimeInterfaceInputs()
+    {
+        return [
+            [
+                new \DateTime('December 11, 2013 00:00:00 UTC')
+            ],
+            [
+                new \DateTimeImmutable('December 11, 2013 00:00:00 UTC')
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider getExpiresDateTimeInterfaceInputs
+     */
+    public function testCreatesPresignedDatesFromDateTime($dateTime)
     {
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature) = $this->getFixtures();
@@ -108,7 +123,7 @@ class SignatureV4Test extends TestCase
         $url = (string) $signature->presign(
             $request,
             $credentials,
-            new \DateTime('December 11, 2013 00:00:00 UTC')
+            $dateTime
         )->getUri();
         $this->assertContains('X-Amz-Expires=518400',$url);
 
@@ -146,9 +161,24 @@ class SignatureV4Test extends TestCase
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
 
-    public function testUsesStartDateFromDateTimeIfPresent()
+    public function getStartDateTimeInterfaceInputs()
     {
-        $options = ['start_time' => new \DateTime('December 5, 2013 00:00:00 UTC')];
+        return [
+            [
+                new \DateTime('December 5, 2013 00:00:00 UTC')
+            ],
+            [
+                new \DateTimeImmutable('December 5, 2013 00:00:00 UTC')
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider getStartDateTimeInterfaceInputs
+     */
+    public function testUsesStartDateFromDateTimeIfPresent($dateTime)
+    {
+        $options = ['start_time' => $dateTime];
         unset($_SERVER['aws_time']);
 
         list($request, $credentials, $signature) = $this->getFixtures();
