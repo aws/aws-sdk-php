@@ -44,7 +44,10 @@ class EcsCredentialProvider
         $request = new Request('GET', self::getEcsUri());
         return $client(
             $request,
-            ['timeout' => $this->timeout]
+            [
+                'timeout' => $this->timeout,
+                'proxy' => '',
+            ]
         )->then(function (ResponseInterface $response) {
             $result = $this->decodeResult((string) $response->getBody());
             return new Credentials(

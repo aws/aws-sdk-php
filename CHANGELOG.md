@@ -1,5 +1,129 @@
 # CHANGELOG
 
+## 3.61.8 - 2018-06-15
+
+* `Aws\Aws\Signature` - Added the ability for signatures to be generated off of \DateTimeInterface objects that are not based on \DateTime.
+* `Aws\MediaConvert` - This release adds language code support according to the ISO-639-3 standard. Custom 3-character language codes are now supported on input and output for both audio and captions.
+
+## 3.61.7 - 2018-06-14
+
+* `Aws\APIGateway` - Support for PRIVATE endpoint configuration type
+* `Aws\DynamoDB` - Added two new fields SSEType and KMSMasterKeyArn to SSEDescription block in describe-table output.
+* `Aws\IoTAnalytics` - With this release, AWS IoT Analytics allows you to tag resources. Tags are metadata that you can create and use to manage your IoT Analytics resources. For more information about tagging, see AWS Tagging Strategies. For technical documentation, look for the tagging operations in the AWS IoT Analytics API reference or User Guide.
+
+## 3.61.6 - 2018-06-13
+
+* `Aws\CloudHSMV2` - We are launching CloudHSMv2 in LHR (eu-west-2).
+* `Aws\Inspector` - Releases Amazon Inspector, a security assessment service, to the AWS GovCloud (US) region.
+* `Aws\SSM` - Added support for new parameter, CloudWatchOutputConfig, for SendCommand API. Users can now have RunCommand output sent to CloudWatchLogs.
+* `Aws\ServiceCatalog` - Introduced new length limitations for few of the product fields.
+
+## 3.61.5 - 2018-06-12
+
+* `Aws\DeviceFarm` - Adding VPCEndpoint support for Remote access. Allows customers to be able to access their private endpoints/services running in their VPC during remote access.
+* `Aws\ECS` - Introduces daemon scheduling capability to deploy one task per instance on selected instances in a cluster. Adds a "force" flag to the DeleteService API to delete a service without requiring to scale down the number of tasks to zero.
+
+## 3.61.4 - 2018-06-11
+
+* `Aws\CloudDirectory` - Amazon Cloud Directory now supports optional attributes on Typed Links, giving users the ability to associate and manage data on Typed Links. 
+* `Aws\RDS` - Changed lists of valid EngineVersion values to links to the RDS User Guide.
+* `Aws\StorageGateway` -  AWS Storage Gateway now enables you to create cached volumes and tapes with AWS KMS support.
+
+## 3.61.3 - 2018-06-08
+
+* `Aws\MediaTailor` - Fixes a bug in the request URIs for MediaTailor PlaybackConfiguration operations.
+
+## 3.61.2 - 2018-06-07
+
+* `Aws\MediaLive` - AWS Elemental MediaLive now makes channel log information available through Amazon CloudWatch Logs. You can set up each MediaLive channel with a logging level; when the channel is run, logs will automatically be published to your account on Amazon CloudWatch Logs
+
+## 3.61.1 - 2018-06-05
+
+* `Aws\CostExplorer` - Cost Explorer API is providing programmatic access to RI saving metrics to enable customers to optimize their reservations.
+* `Aws\Polly` - Amazon Polly adds new French voice - "Lea"
+* `Aws\RDS` - This release adds customizable processor features for RDS instances.
+* `Aws\SecretsManager` - Documentation updates for secretsmanager
+* `Aws\Shield` - DDoS Response Team access management for AWS Shield
+
+## 3.61.0 - 2018-06-04
+
+* `Aws\AppStream` - Amazon AppStream 2.0 adds support for Google Drive for G Suite. With this feature, customers will be able to connect their G Suite accounts with AppStream 2.0 and enable Google Drive access for an AppStream 2.0 stack. Users of the stack can then link their Google Drive using their G Suite login credentials and use their existing files stored in Drive with their AppStream 2.0 applications. File changes will be synced automatically to Google cloud. 
+* `Aws\EC2` - You are now able to use instance storage (up to 3600 GB of NVMe based SSD) on M5 instances, the next generation of EC2's General Purpose instances in us-east-1, us-west-2, us-east-2, eu-west-1 and ca-central-1. M5 instances offer up to 96 vCPUs, 384 GiB of DDR4 instance memory, 25 Gbps in Network bandwidth and improved EBS and Networking bandwidth on smaller instance sizes and provide a balance of compute, memory and network resources for many applications.
+* `Aws\EKS` - Amazon Elastic Container Service for Kubernetes (Amazon EKS) is a fully managed service that makes it easy to deploy, manage, and scale containerized applications using Kubernetes on AWS. Amazon EKS runs the Kubernetes control plane for you across multiple AWS availability zones to eliminate a single point of failure. Amazon EKS is certified Kubernetes conformant so you can use existing tooling and plugins from partners and the Kubernetes community. Applications running on any standard Kubernetes environment are fully compatible and can be easily migrated to Amazon EKS. 
+* `Aws\MediaConvert` - This release adds the support for Common Media Application Format (CMAF) fragmented outputs, RF64 WAV audio output format, and HEV1 or HEVC1 MP4 packaging types when using HEVC in DASH or CMAF outputs.
+* `Aws\MigrationHub` - Documentation updates for AWS Migration Hub
+* `Aws\SageMaker` - Amazon SageMaker has added the ability to run hyperparameter tuning jobs. A hyperparameter tuning job will create and evaluate multiple training jobs while tuning algorithm hyperparameters, to optimize a customer specified objective metric.
+
+## 3.60.0 - 2018-06-01
+
+* `Aws\DirectoryService` - Added ResetUserPassword API. Customers can now reset their users' passwords without providing the old passwords in Simple AD and Microsoft AD.
+* `Aws\IoT` - We are releasing force CancelJob and CancelJobExecution functionalities to customers.
+* `Aws\MediaTailor` - AWS Elemental MediaTailor is a personalization and monetization service that allows scalable server-side ad insertion. The service enables you to serve targeted ads to viewers while maintaining broadcast quality in over-the-top (OTT) video applications. This SDK allows user access to the AWS Elemental MediaTailor configuration interface.
+* `Aws\Redshift` - Documentation updates for redshift
+* `Aws\SNS` - The SNS Subscribe API has been updated with two new optional parameters: Attributes and ReturnSubscriptionArn. Attributes is a map of subscription attributes which can be one or more of: FilterPolicy, DeliveryPolicy, and RawMessageDelivery. ReturnSubscriptionArn is a boolean parameter that overrides the default behavior of returning "pending confirmation" for subscriptions that require confirmation instead of returning the subscription ARN.
+* `Aws\SageMaker` - SageMaker has added support for the Asia Pacific (Tokyo) region.
+
+## 3.59.0 - 2018-05-31
+
+* `Aws\ElasticLoadBalancingv2` - This release of Elastic Load Balancing introduces user authentication on Application Load Balancer.
+* `Aws\Neptune` - Amazon Neptune is a fast, reliable graph database service that makes it easy to build and run applications that work with highly connected datasets. Neptune supports popular graph models Property Graph and W3C's Resource Description Frame (RDF), and their respective query languages Apache TinkerPop Gremlin 3.3.2 and SPARQL 1.1. 
+
+## 3.58.0 - 2018-05-29
+
+* `Aws\PI` - Performance Insights is a feature of Amazon Relational Database Service (RDS) that helps you quickly assess the load on your database, and determine when and where to take action. You can use the SDK to retrieve Performance Insights data and integrate your monitoring solutions.
+
+## 3.57.1 - 2018-05-25
+
+* `Aws\AppStream` - This API update enables customers to control whether users can transfer data between their local devices and their streaming applications through file uploads and downloads, clipboard operations, or printing to local devices
+* `Aws\ConfigService` - AWS Config adds support for retention period, allowing you to specify a retention period for your AWS Config configuration items.
+* `Aws\Glue` - AWS Glue now sends a delay notification to Amazon CloudWatch Events when an ETL job runs longer than the specified delay notification threshold.
+* `Aws\IoT` - We are exposing DELETION_IN_PROGRESS as a new job status in regards to the release of DeleteJob API.
+
+## 3.57.0 - 2018-05-24
+
+* `Aws\CodeBuild` - AWS CodeBuild Adds Support for Windows Builds.
+* `Aws\Credentials\EcsCredentialProvider` - Disables proxies on EcsCredentialProvider credential lookups.
+* `Aws\ElasticLoadBalancingv2` - Updated elasticloadbalancingV2 documentation with slow start mode details. The slow start mode can be used to gradually increase the number of requests forwarded by a load balancer to a newly added target in a target group. It provides a new target an opportunity to warm up before it can handle its fair share of requests received from the load balancer. Slow start mode is disabled by default and can be enabled on a per target group basis.
+* `Aws\RDS` - This release adds CloudWatch Logs integration capabilities to RDS Aurora MySQL clusters
+* `Aws\SecretsManager` - Documentation updates for secretsmanager
+* `Aws\Test\S3` - Adds compliance tests for S3 addressing.
+
+## 3.56.6 - 2018-05-22
+
+* `Aws\ECS` - Amazon Elastic Container Service (ECS) adds service discovery for services that use host or bridged network mode. ECS can now also register instance IPs for active tasks using bridged and host networking with Route 53, making them available via DNS.
+* `Aws\Inspector` - We are launching the ability to target all EC2 instances. With this launch, resourceGroupArn is now optional for CreateAssessmentTarget and UpdateAssessmentTarget. If resourceGroupArn is not specified, all EC2 instances in the account in the AWS region are included in the assessment target.
+
+## 3.56.5 - 2018-05-21
+
+* `Aws\CloudFormation` - 1) Filtered Update for StackSet based on Accounts and Regions: This feature will allow flexibility for the customers to roll out updates on a StackSet based on specific Accounts and Regions. 2) Support for customized ExecutionRoleName: This feature will allow customers to attach ExecutionRoleName to the StackSet thus ensuring more security and controlling the behavior of any AWS resources in the target accounts.
+
+## 3.56.4 - 2018-05-18
+
+* `Aws\IoT` - We are releasing DeleteJob and DeleteJobExecution APIs to allow customer to delete resources created using AWS IoT Jobs.
+* `Aws\SES` - Fixed a broken link in the documentation for S3Action.
+
+## 3.56.3 - 2018-05-17
+
+* `Aws\CodeDeploy` - Documentation updates for codedeploy
+* `Aws\CognitoIdentityProvider` - Amazon Cognito User Pools now supports federation for users to sign up and sign in with any identity provider following the OpenID Connect standard. Amazon Cognito User Pools now returns the User Pool's Amazon Resource Name (ARN) from the CreateUserPool, UpdateUserPool, and DescribeUserPool APIs.
+* `Aws\EC2` - You are now able to use instance storage (up to 1800 GB of NVMe based SSD) on C5 instances, the next generation of EC2's compute optimized instances in us-east-1, us-west-2, us-east-2, eu-west-1 and ca-central-1. C5 instances offer up to 72 vCPUs, 144 GiB of DDR4 instance memory, 25 Gbps in Network bandwidth and improved EBS and Networking bandwidth on smaller instance sizes to deliver improved performance for compute-intensive workloads.You can now run bare metal workloads on EC2 with i3.metal instances. As a new instance size belonging to the I3 instance family, i3.metal instances have the same characteristics as other instances in the family, including NVMe SSD-backed instance storage optimized for low latency, very high random I/O performance, and high sequential read throughput. I3.metal instances are powered by 2.3 GHz Intel Xeon processors, offering 36 hyper-threaded cores (72 logical processors), 512 GiB of memory, and 15.2 TB of NVMe SSD-backed instance storage. These instances deliver high networking throughput and lower latency with up to 25 Gbps of aggregate network bandwidth using Elastic Network Adapter (ENA)-based Enhanced Networking.
+
+## 3.56.2 - 2018-05-16
+
+* `Aws\SecretsManager` - Documentation updates for secretsmanager
+* `Aws\ServiceCatalog` - Users can now pass a new option to ListAcceptedPortfolioShares called portfolio-share-type with a value of AWS_SERVICECATALOG in order to access Getting Started Portfolios that contain selected products representing common customer use cases.
+
+## 3.56.1 - 2018-05-15
+
+* `Aws\ConfigService` - Update ResourceType enum with values for XRay resource
+
+## 3.56.0 - 2018-05-14
+
+* `Aws\CodeBuild` - Adding support for more override fields for StartBuild API, add support for idempotency token field for StartBuild API in AWS CodeBuild.
+* `Aws\IoT1ClickDevicesService` - AWS IoT 1-Click makes it easy for customers to incorporate simple ready-to-use IoT devices into their workflows. These devices can trigger AWS Lambda functions that implement business logic. In order to build applications using AWS IoT 1-Click devices, programmers can use the AWS IoT 1-Click Devices API and the AWS IoT 1-Click Projects API. Learn more at https://aws.amazon.com/documentation/iot-1-click/
+* `Aws\IoT1ClickProjects` - AWS IoT 1-Click makes it easy for customers to incorporate simple ready-to-use IoT devices into their workflows. These devices can trigger AWS Lambda functions that implement business logic. In order to build applications using AWS IoT 1-Click devices, programmers can use the AWS IoT 1-Click Devices API and the AWS IoT 1-Click Projects API. Learn more at https://aws.amazon.com/documentation/iot-1-click/.
+* `Aws\Organizations` - Documentation updates for organizations
+
 ## 3.55.12 - 2018-05-10
 
 * `Aws\Firehose` - With this release, Amazon Kinesis Data Firehose can convert the format of your input data from JSON to Apache Parquet or Apache ORC before storing the data in Amazon S3. Parquet and ORC are columnar data formats that save space and enable faster queries compared to row-oriented formats like JSON.

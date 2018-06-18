@@ -74,6 +74,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise removeIpRoutesAsync(array $args = [])
  * @method \Aws\Result removeTagsFromResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeTagsFromResourceAsync(array $args = [])
+ * @method \Aws\Result resetUserPassword(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise resetUserPasswordAsync(array $args = [])
  * @method \Aws\Result restoreFromSnapshot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreFromSnapshotAsync(array $args = [])
  * @method \Aws\Result startSchemaExtension(array $args = [])
