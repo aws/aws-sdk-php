@@ -31,7 +31,6 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
      */
     private $sdk;
 
-    private $optionalFields = [];
     private $testData;
     private $allExpectedEvents = [];
     private $allGeneratedEvents = [];
@@ -92,8 +91,6 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
             }
         }
         $this->clearAndSetDefaultEnv();
-
-        $this->optionalFields = $this->testData['defaults']['optionalEventFields'];
 
         $sharedConfig = [
             'version' => 'latest'
