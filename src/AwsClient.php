@@ -310,7 +310,7 @@ class AwsClient implements AwsClientInterface
                 $this->credentialProvider,
                 $options,
                 $this->region,
-                $args['service']
+                $this->getApi()->getServiceId()
             ),
             'ApiCallMonitoringMiddleware'
         );
@@ -319,7 +319,7 @@ class AwsClient implements AwsClientInterface
             $this->credentialProvider,
             $options,
             $this->region,
-            $args['service']
+            $this->getApi()->getServiceId()
         );
         $this->handlerList->appendAttempt (
             $callAttemptMiddleware,

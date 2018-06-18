@@ -4,7 +4,7 @@ namespace Aws;
 
 trait HasMonitoringEventsTrait
 {
-    private $monitoringEvents;
+    private $monitoringEvents = [];
 
     /**
      * Get client-side monitoring events attached to this object
