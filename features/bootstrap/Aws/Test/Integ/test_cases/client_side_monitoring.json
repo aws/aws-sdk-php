@@ -3,17 +3,33 @@
   "defaults": {
     "configuration": {
       "accessKey": "myaccesskey",
-      "userAgent": "my-user-agent",
       "region": "us-west-2",
       "environmentVariables": {
-        "AWS_CSM_CLIENT_ID": "TestClientId"
+        "AWS_CSM_ENABLED": "true"
       },
       "sharedConfigFile": {}
+    },
+    "optionalEventFields": {
+      "ApiCall": [],
+      "ApiCallAttempt": [
+        "DestinationIp",
+        "ConnectionReused",
+        "ConnectLatency",
+        "RequestLatency",
+        "DnsLatency",
+        "TcpLatency",
+        "SslLatency"
+      ]
     }
   },
   "cases": [
     {
       "description": "Test a single client API call with Vox-off",
+      "configuration": {
+        "environmentVariables": {
+          "AWS_CSM_ENABLED": "false"
+        }
+      },
       "apiCalls": [
         {
           "serviceId": "EC2",
@@ -31,11 +47,6 @@
     },
     {
       "description": "Test a single client API call",
-      "configuration": {
-        "environmentVariables": {
-          "AWS_CSM_ENABLED": "true"
-        }
-      },
       "apiCalls": [
         {
           "serviceId": "EC2",
@@ -54,37 +65,30 @@
           "Type": "ApiCallAttempt",
           "Service": "EC2",
           "Api": "DescribeRegions",
-          "ClientId": "TestClientId",
+          "ClientId": "",
           "Version": 1,
-          "Timestamp": "ANY",
-          "AttemptLatency": "ANY",
+          "Timestamp": "ANY_INT",
+          "AttemptLatency": "ANY_INT",
           "Fqdn": "ec2.us-west-2.amazonaws.com",
-          "UserAgent": "ANY",
+          "UserAgent": "ANY_STR",
           "Region": "us-west-2",
           "AccessKey": "myaccesskey",
-          "HttpStatusCode": 200,
-          "DnsLatency": "ANY",
-          "DestinationIp": "ANY"
+          "HttpStatusCode": 200
         },
         {
           "Type": "ApiCall",
           "Service": "EC2",
           "Api": "DescribeRegions",
-          "ClientId": "TestClientId",
-          "Timestamp": "ANY",
+          "ClientId": "",
+          "Timestamp": "ANY_INT",
           "Version": 1,
           "AttemptCount": 1,
-          "Latency": "ANY"
+          "Latency": "ANY_INT"
         }
       ]
     },
     {
       "description": "Test a single client API call with bad request",
-      "configuration": {
-        "environmentVariables": {
-          "AWS_CSM_ENABLED": "true"
-        }
-      },
       "apiCalls": [
         {
           "serviceId": "EC2",
@@ -109,39 +113,32 @@
           "Type": "ApiCallAttempt",
           "Service": "EC2",
           "Api": "DescribeRegions",
-          "ClientId": "TestClientId",
+          "ClientId": "",
           "Version": 1,
-          "Timestamp": "ANY",
-          "AttemptLatency": "ANY",
+          "Timestamp": "ANY_INT",
+          "AttemptLatency": "ANY_INT",
           "Fqdn": "ec2.us-west-2.amazonaws.com",
-          "UserAgent": "ANY",
+          "UserAgent": "ANY_STR",
           "Region": "us-west-2",
           "AccessKey": "myaccesskey",
           "HttpStatusCode": 400,
           "AwsException": "InvalidParameterValue",
-          "AwsExceptionMessage": "Invalid region provided",
-          "DnsLatency": "ANY",
-          "DestinationIp": "ANY"
+          "AwsExceptionMessage": "Invalid region provided"
         },
         {
           "Type": "ApiCall",
           "Service": "EC2",
           "Api": "DescribeRegions",
-          "ClientId": "TestClientId",
-          "Timestamp": "ANY",
+          "ClientId": "",
+          "Timestamp": "ANY_INT",
           "Version": 1,
           "AttemptCount": 1,
-          "Latency": "ANY"
+          "Latency": "ANY_INT"
         }
       ]
     },
     {
       "description": "Test a single client API call with retries",
-      "configuration": {
-        "environmentVariables": {
-          "AWS_CSM_ENABLED": "true"
-        }
-      },
       "apiCalls": [
         {
           "serviceId": "EC2",
@@ -166,55 +163,46 @@
           "Type": "ApiCallAttempt",
           "Service": "EC2",
           "Api": "DescribeRegions",
-          "ClientId": "TestClientId",
+          "ClientId": "",
           "Version": 1,
-          "Timestamp": "ANY",
-          "AttemptLatency": "ANY",
+          "Timestamp": "ANY_INT",
+          "AttemptLatency": "ANY_INT",
           "Fqdn": "ec2.us-west-2.amazonaws.com",
-          "UserAgent": "ANY",
+          "UserAgent": "ANY_STR",
           "Region": "us-west-2",
           "AccessKey": "myaccesskey",
           "HttpStatusCode": 503,
           "AwsException": "ServiceUnavailable",
-          "AwsExceptionMessage": "Service is unavailable",
-          "DnsLatency": "ANY",
-          "DestinationIp": "ANY"
+          "AwsExceptionMessage": "Service is unavailable"
         },
         {
           "Type": "ApiCallAttempt",
           "Service": "EC2",
           "Api": "DescribeRegions",
-          "ClientId": "TestClientId",
+          "ClientId": "",
           "Version": 1,
-          "Timestamp": "ANY",
-          "AttemptLatency": "ANY",
+          "Timestamp": "ANY_INT",
+          "AttemptLatency": "ANY_INT",
           "Fqdn": "ec2.us-west-2.amazonaws.com",
-          "UserAgent": "ANY",
+          "UserAgent": "ANY_STR",
           "Region": "us-west-2",
           "AccessKey": "myaccesskey",
-          "HttpStatusCode": 200,
-          "DnsLatency": "ANY",
-          "DestinationIp": "ANY"
+          "HttpStatusCode": 200
         },
         {
           "Type": "ApiCall",
           "Service": "EC2",
           "Api": "DescribeRegions",
-          "ClientId": "TestClientId",
-          "Timestamp": "ANY",
+          "ClientId": "",
+          "Timestamp": "ANY_INT",
           "Version": 1,
           "AttemptCount": 2,
-          "Latency": "ANY"
+          "Latency": "ANY_INT"
         }
       ]
     },
     {
       "description": "Test a single client API call with non-retryable SDK exception",
-      "configuration": {
-        "environmentVariables": {
-          "AWS_CSM_ENABLED": "true"
-        }
-      },
       "apiCalls": [
         {
           "serviceId": "EC2",
@@ -222,8 +210,10 @@
           "params": {},
           "attemptResponses": [
             {
-              "sdkException": "NonRetryableException",
-              "sdkExceptionMessage": "Unexpected exception was thrown"
+              "sdkException": {
+                "isRetryable": false,
+                "message": "Unexpected exception was thrown"
+              }
             }
           ]
         }
@@ -233,26 +223,26 @@
           "Type": "ApiCallAttempt",
           "Service": "EC2",
           "Api": "DescribeRegions",
-          "ClientId": "TestClientId",
+          "ClientId": "",
           "Version": 1,
-          "Timestamp": "ANY",
-          "AttemptLatency": "ANY",
+          "Timestamp": "ANY_INT",
+          "AttemptLatency": "ANY_INT",
           "Fqdn": "ec2.us-west-2.amazonaws.com",
-          "UserAgent": "ANY",
+          "UserAgent": "ANY_STR",
           "Region": "us-west-2",
           "AccessKey": "myaccesskey",
-          "SdkException": "ANY",
+          "SdkException": "ANY_STR",
           "SdkExceptionMessage": "Unexpected exception was thrown"
         },
         {
           "Type": "ApiCall",
           "Service": "EC2",
           "Api": "DescribeRegions",
-          "ClientId": "TestClientId",
-          "Timestamp": "ANY",
+          "ClientId": "",
+          "Timestamp": "ANY_INT",
           "Version": 1,
           "AttemptCount": 1,
-          "Latency": "ANY"
+          "Latency": "ANY_INT"
         }
       ]
     }

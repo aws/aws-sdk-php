@@ -31,6 +31,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
      */
     private $sdk;
 
+    private $optionalFields = [];
     private $testData;
     private $allExpectedEvents = [];
     private $allGeneratedEvents = [];
@@ -90,8 +91,10 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                 $this->defaultEnv[$key] = $value;
             }
         }
-
         $this->clearAndSetDefaultEnv();
+
+        $this->optionalFields = $this->testData['defaults']['optionalEventFields'];
+
         $sharedConfig = [
             'version' => 'latest'
         ];
@@ -203,13 +206,23 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         $this->assertSame(count($expected), count($actual));
         foreach($expected as $index => $expectedEvent) {
             $actualEvent = $actual[$index];
-            $this->assertEquals(count($expectedEvent), count($actualEvent));
             foreach($expectedEvent as $key => $value) {
-                if ($value == 'ANY') {
-                    $this->assertTrue(isset($actualEvent[$key]));
-                } else {
-                    $this->assertSame($value, $actualEvent[$key]);
+                $this->assertTrue(isset($actualEvent[$key]));
+                switch ($value) {
+                    case "ANY_INT":
+                        $this->assertInternalType('int', $actualEvent[$key]);
+                        break;
+                    case "ANY_STR":
+                        $this->assertInternalType('string', $actualEvent[$key]);
+                        break;
+                    default:
+                        $this->assertEquals($value, $actualEvent[$key]);
                 }
+            }
+            $allowedFields = array_merge(array_keys($expectedEvent),
+                $this->testData['defaults']['optionalEventFields'][$actualEvent['Type']]);
+            foreach($actualEvent as $key => $value) {
+                $this->assertTrue(in_array($key, $allowedFields));
             }
         }
     }
@@ -233,8 +246,9 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                 $context);
         }
         if (isset($attemptResponse['sdkException'])) {
-            return new ConfigurationException($attemptResponse['sdkExceptionMessage'],
-                555);
+            return new ConfigurationException(
+                $attemptResponse['sdkException']['message'],555
+            );
         }
         if (isset($attemptResponse['httpStatus'])) {
             $params = [
