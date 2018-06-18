@@ -18,7 +18,6 @@ use GuzzleHttp\Psr7\Response;
 class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     implements Context, SnippetAcceptingContext
 {
-    use IntegUtils;
 
     /**
      * Original environment variables before class instantiated
