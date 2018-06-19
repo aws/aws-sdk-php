@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Aws\Api\Service` - Added a getter for the Service ID property.
+* `Aws\Rekognition` - Documentation updates for rekognition
+
 ## 3.61.8 - 2018-06-15
 
 * `Aws\Aws\Signature` - Added the ability for signatures to be generated off of \DateTimeInterface objects that are not based on \DateTime.
