@@ -91,6 +91,8 @@ class ServiceTest extends TestCase
             ['555 Amazon New Service', '', '', 'New Service'],
             [' 555 Amazon New Service', '', '', 'New Service'],
             ['555 Amazon New Service', '555 NS', '', 'NS'],
+            ['Amazon New Service555', '', '', 'New Service555'],
+            ['AWS New Service555', 'AWS NS 555', '', 'NS 555'],
             ['  AWS @New-Service!', '', '', 'NewService'],
             ['New Service Full Name', '  AWS @New-Service!', '', 'NewService'],
             ['Fullname', 'Abbv', 'Supplied', 'Supplied'],
@@ -109,8 +111,7 @@ class ServiceTest extends TestCase
                 'serviceId' => $id
             ]
         ], function() {});
-        $serviceId = $service->getServiceId();
-        $this->assertEquals($expected, $serviceId);
+        $this->assertEquals($expected, $service->getServiceId());
     }
     
     /**
