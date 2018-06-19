@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.61.9 - 2018-06-19
 
 * `Aws\Aws\Api\Service` - Added a getter for the Service ID property.
 * `Aws\Rekognition` - Documentation updates for rekognition
