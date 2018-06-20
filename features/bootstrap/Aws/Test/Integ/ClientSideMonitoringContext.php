@@ -75,9 +75,9 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     }
 
     /**
-     * @Given I have a test file called :filename
+     * @Given I have loaded a test file called :filename
      */
-    public function iHaveATestFileCalled($filename)
+    public function iHaveLoadedATestFileCalled($filename)
     {
         $this->testData = json_decode(
             file_get_contents(__DIR__ . '/test_cases/' . $filename),
@@ -173,7 +173,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     }
 
     /**
-     * @Then The generated events should match the expected events
+     * @Then the generated events should match the expected events
      */
     public function theGeneratedEventsShouldMatchTheExpectedEvents()
     {
@@ -182,7 +182,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     }
 
     /**
-     * @Then The received datagrams should match the expected events
+     * @Then the received datagrams should match the expected events
      */
     public function theReceivedDatagramsShouldMatchTheExpectedEvents()
     {
