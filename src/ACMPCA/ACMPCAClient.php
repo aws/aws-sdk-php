@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listCertificateAuthoritiesAsync(array $args = [])
  * @method \Aws\Result listTags(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsAsync(array $args = [])
+ * @method \Aws\Result restoreCertificateAuthority(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise restoreCertificateAuthorityAsync(array $args = [])
  * @method \Aws\Result revokeCertificate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise revokeCertificateAsync(array $args = [])
  * @method \Aws\Result tagCertificateAuthority(array $args = [])
