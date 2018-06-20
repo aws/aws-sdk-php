@@ -36,17 +36,17 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
                         return 1;
                     },
                     \Exception::class => function(\Exception $exception) {
+                        $attemptCount = 0;
                         if ($exception instanceof MonitoringEventsInterface) {
-                            $attemptCount = 0;
                             foreach ($exception->getMonitoringEvents() as $event) {
                                 if (isset($event['Type']) &&
                                     $event['Type'] === 'ApiCallAttempt') {
                                     $attemptCount++;
                                 }
                             }
-                            return $attemptCount;
+
                         }
-                        return 1;
+                        return $attemptCount;
                     }
                 ],
             ],
