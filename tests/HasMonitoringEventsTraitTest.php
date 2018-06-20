@@ -27,7 +27,7 @@ class HasMonitoringEventsTraitTest extends TestCase
 
         $mock = $this->getMockForTrait('Aws\HasMonitoringEventsTrait');
         foreach($events as $event) {
-            $mock->addMonitoringEvent($event);
+            $mock->appendMonitoringEvent($event);
         }
 
         $this->assertSame(

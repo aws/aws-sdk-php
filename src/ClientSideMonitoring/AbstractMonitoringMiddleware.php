@@ -149,7 +149,7 @@ abstract class AbstractMonitoringMiddleware
                 $this->sendEventData($eventData);
 
                 if ($value instanceof MonitoringEventsInterface) {
-                    $value->addMonitoringEvent($eventData);
+                    $value->appendMonitoringEvent($eventData);
                 }
             }
             if ($value instanceof \Exception || $value instanceof \Throwable) {

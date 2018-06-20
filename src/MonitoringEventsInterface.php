@@ -15,17 +15,17 @@ interface MonitoringEventsInterface
     public function getMonitoringEvents();
 
     /**
-     * Attach client-side monitoring event to this object
+     * Prepend a client-side monitoring event to this object's event list
      *
      * @param array $event
      */
-    public function addMonitoringEvent(array $event);
+    public function prependMonitoringEvent(array $event);
 
     /**
-     * Set monitoring events for this object
+     * Append a client-side monitoring event to this object's event list
      *
-     * @param array $events
+     * @param array $event
      */
-    public function setMonitoringEvents(array $events);
+    public function appendMonitoringEvent(array $event);
 
 }

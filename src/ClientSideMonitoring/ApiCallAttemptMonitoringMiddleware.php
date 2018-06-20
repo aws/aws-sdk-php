@@ -228,7 +228,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
             $event['SessionToken'] = $sessionToken;
         }
         if (empty($event['AttemptLatency'])) {
-            $event['AttemptLatency'] = (int) floor(microtime(true) * 1000) - $event['Timestamp'];
+            $event['AttemptLatency'] = (int) (floor(microtime(true) * 1000) - $event['Timestamp']);
         }
         return $event;
     }

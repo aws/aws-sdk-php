@@ -167,8 +167,11 @@ class RetryMiddleware
             $this->updateHttpStats($value, $requestStats);
 
             if ($value instanceof MonitoringEventsInterface) {
+                $reversedEvents = array_reverse($monitoringEvents);
                 $monitoringEvents = array_merge($monitoringEvents, $value->getMonitoringEvents());
-                $value->setMonitoringEvents($monitoringEvents);
+                foreach ($reversedEvents as $event) {
+                    $value->prependMonitoringEvent($event);
+                }
             }
             if ($value instanceof \Exception || $value instanceof \Throwable) {
                 if (!$decider($retries, $command, $request, null, $value)) {

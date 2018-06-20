@@ -9,6 +9,7 @@ use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\MonitoringEventsInterface;
 use Aws\Result;
+use Aws\ResultInterface;
 use Aws\Sdk;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
@@ -136,11 +137,16 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                     $list = $client->getHandlerList();
                     $command = new Command($apiCall['operationName'], $apiCall['params']);
                     $request = new Request('POST', 'http://foo.com/bar/baz');
-                    $responses = [];
+                    $handler = new MockHandler();
                     foreach($apiCall['attemptResponses'] as $attemptResponse) {
-                        $responses[] = $this->generateResponse($attemptResponse, $command);
+                        $response = $this->generateResponse($attemptResponse, $command);
+                        if ($response instanceof \Exception &&
+                            !($response instanceof AwsException)) {
+                            $handler->appendException($response);
+                        } else {
+                            $handler->append($response);
+                        }
                     }
-                    $handler = new MockHandler($responses);
                     $list->setHandler($handler);
                     $handler = $list->resolve();
 
