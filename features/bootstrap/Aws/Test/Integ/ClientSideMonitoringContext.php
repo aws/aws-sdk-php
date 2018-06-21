@@ -27,6 +27,12 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     private static $originalEnv;
 
     /**
+     * Store output filename for the UDP server's received datagrams
+     * @var string
+     */
+    private static $outputFile;
+
+    /**
      * @var Sdk
      */
     private $sdk;
@@ -37,19 +43,19 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     private $defaultEnv = [];
 
     private $configKeys = [
-        'region' => 'region'
+        'region' => 'region',
     ];
 
     private $udpConfig = [
         'address' => '127.0.0.1',
         'port' => 31000,
-        'shutdown' => 'shutdown'
+        'shutdown' => 'shutdown',
     ];
 
     /**
      * @BeforeSuite
      */
-    public static function saveOriginalEnv()
+    public static function prepare()
     {
         self::$originalEnv = [
             'enabled' => getenv(ConfigurationProvider::ENV_ENABLED) ?: '',
@@ -57,12 +63,18 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
             'client_id' => getenv(ConfigurationProvider::ENV_CLIENT_ID) ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
         ];
+
+        $dir = sys_get_temp_dir() . '/.aws';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        self::$outputFile = $dir . '/test_datagrams.json';
     }
 
     /**
      * @AfterSuite
      */
-    public static function restoreOriginalEnv()
+    public static function cleanup()
     {
         putenv(ConfigurationProvider::ENV_ENABLED . '=' .
             self::$originalEnv['enabled']);
@@ -72,6 +84,8 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
             self::$originalEnv['client_id']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
+
+        unlink(self::$outputFile);
     }
 
     /**
@@ -86,11 +100,10 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
 
         if (!empty($this->testData['defaults']['configuration']['environmentVariables'])) {
             foreach ($this->testData['defaults']['configuration']['environmentVariables']
-                     as $key => $value) {
+                as $key => $value) {
                 $this->defaultEnv[$key] = $value;
             }
         }
-        $this->clearAndSetDefaultEnv();
 
         $sharedConfig = [
             'version' => 'latest'
@@ -128,17 +141,18 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                 $this->clearAndSetDefaultEnv();
                 $events = [];
                 if (!empty($case['configuration']['environmentVariables'])) {
-                    foreach ($case['configuration']['environmentVariables'] as $key => $value) {
+                    foreach ($case['configuration']['environmentVariables']
+                             as $key => $value) {
                         putenv("{$key}={$value}");
                     }
                 }
-                foreach($case['apiCalls'] as $apiCall) {
+                foreach ($case['apiCalls'] as $apiCall) {
                     $client = $this->sdk->createClient($apiCall['serviceId']);
                     $list = $client->getHandlerList();
                     $command = new Command($apiCall['operationName'], $apiCall['params']);
                     $request = new Request('POST', 'http://foo.com/bar/baz');
                     $handler = new MockHandler();
-                    foreach($apiCall['attemptResponses'] as $attemptResponse) {
+                    foreach ($apiCall['attemptResponses'] as $attemptResponse) {
                         $response = $this->generateResponse($attemptResponse, $command);
                         if ($response instanceof \Exception &&
                             !($response instanceof AwsException)) {
@@ -186,7 +200,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
      */
     public function theReceivedDatagramsShouldMatchTheExpectedEvents()
     {
-        $received = file_get_contents($this->getOutputFilename());
+        $received = file_get_contents(self::$outputFile);
         $events = json_decode($received, true);
         $this->compareMonitoringEvents($this->allExpectedEvents, $events);
     }
@@ -209,7 +223,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         foreach($expected as $index => $expectedEvent) {
             $actualEvent = $actual[$index];
             foreach($expectedEvent as $key => $value) {
-                $this->assertTrue(isset($actualEvent[$key]));
+                $this->assertArrayHasKey($key, $actualEvent);
                 switch ($value) {
                     case "ANY_INT":
                         $this->assertInternalType('int', $actualEvent[$key]);
@@ -221,8 +235,10 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                         $this->assertEquals($value, $actualEvent[$key]);
                 }
             }
-            $allowedFields = array_merge(array_keys($expectedEvent),
-                $this->testData['defaults']['optionalEventFields'][$actualEvent['Type']]);
+            $allowedFields = array_merge(
+                array_keys($expectedEvent),
+                $this->testData['defaults']['optionalEventFields'][$actualEvent['Type']]
+            );
             foreach($actualEvent as $key => $value) {
                 $this->assertTrue(in_array($key, $allowedFields));
             }
@@ -231,7 +247,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
 
     private function generateResponse($attemptResponse, $command)
     {
-        if (isset($attemptResponse['errorCode']) ) {
+        if (!empty($attemptResponse['errorCode']) ) {
             $context = [
                 'code' => $attemptResponse['errorCode'],
                 'message' => $attemptResponse['errorMessage'],
@@ -239,20 +255,20 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                 'transfer_stats' => [
                     'total_time' => .12,
                     'primary_ip' => '12.34.56.78',
-                    'namelookup_time' => .012
-                ]
+                    'namelookup_time' => .012,
+                ],
             ];
 
             return new AwsException($attemptResponse['errorMessage'],
                 $command,
                 $context);
         }
-        if (isset($attemptResponse['sdkException'])) {
+        if (!empty($attemptResponse['sdkException'])) {
             return new ConfigurationException(
-                $attemptResponse['sdkException']['message'],555
+                $attemptResponse['sdkException']['message'], 555
             );
         }
-        if (isset($attemptResponse['httpStatus'])) {
+        if (!empty($attemptResponse['httpStatus'])) {
             $params = [
                 '@metadata' => [
                     'statusCode' => $attemptResponse['httpStatus'],
@@ -263,9 +279,9 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                                 'primary_ip' => '12.34.56.78',
                                 'namelookup_time' => .012,
                             ]
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ];
             return new Result($params);
         }
@@ -273,53 +289,41 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         throw new \InvalidArgumentException('attemptResponse data does not contain required fields.');
     }
 
-    private function getOutputFilename()
-    {
-        $dir = sys_get_temp_dir() . '/.aws';
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-        return $dir . '/test_datagrams.json';
-    }
-
     private function sendSocketShutdownMessage()
     {
         $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         socket_clear_error($socket);
-        socket_connect($socket, $this->udpConfig['address'], $this->udpConfig['port']);
-        socket_write($socket, $this->udpConfig['shutdown'], strlen($this->udpConfig['shutdown']));
+        socket_connect(
+            $socket,
+            $this->udpConfig['address'],
+            $this->udpConfig['port']
+        );
+        socket_write(
+            $socket,
+            $this->udpConfig['shutdown'],
+            strlen($this->udpConfig['shutdown'])
+        );
         socket_close($socket);
     }
 
     private function startUdpServer()
     {
-        set_time_limit(0);
+        set_time_limit(60);
         $localPort = 0;
         $remoteAddress = 0;
-
         $socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
         socket_bind($socket, $this->udpConfig['address'], $this->udpConfig['port']);
-
-        if (file_exists($this->getOutputFilename())) {
-            unlink($this->getOutputFilename());
-        }
-        $outputFile = fopen($this->getOutputFilename(), 'a');
-        $isFirstDatagram = true;
-        fwrite($outputFile, '[');
+        $events = [];
 
         while (true) {
-            socket_recvfrom($socket,$buf, 8096, 0, $remoteAddress, $localPort);
+            socket_recvfrom($socket, $buf, 8096, 0, $remoteAddress, $localPort);
+
             if ($buf == $this->udpConfig['shutdown']) {
-                fwrite($outputFile, ']');
+                file_put_contents(self::$outputFile, json_encode($events));
                 socket_close($socket);
                 exit();
             }
-            if (!$isFirstDatagram) {
-                fwrite($outputFile, ',');
-            } else {
-                $isFirstDatagram = false;
-            }
-            fwrite($outputFile, $buf);
+            $events[] = json_decode($buf, true);
         }
     }
 }
