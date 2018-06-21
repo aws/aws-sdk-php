@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Test\Integ;
 
 use Aws\ClientSideMonitoring\ConfigurationProvider;
@@ -100,7 +101,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
 
         if (!empty($this->testData['defaults']['configuration']['environmentVariables'])) {
             foreach ($this->testData['defaults']['configuration']['environmentVariables']
-                as $key => $value) {
+                     as $key => $value) {
                 $this->defaultEnv[$key] = $value;
             }
         }
@@ -108,7 +109,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         $sharedConfig = [
             'version' => 'latest'
         ];
-        foreach($this->testData['defaults']['configuration'] as $key => $value) {
+        foreach ($this->testData['defaults']['configuration'] as $key => $value) {
             if (array_key_exists($key, $this->configKeys)) {
                 $sharedConfig[$this->configKeys[$key]] = $value;
             }
@@ -212,7 +213,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=');
         putenv(ConfigurationProvider::ENV_PROFILE . '=');
 
-        foreach($this->defaultEnv as $key => $value) {
+        foreach ($this->defaultEnv as $key => $value) {
             putenv("{$key}={$value}");
         }
     }
@@ -220,9 +221,9 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     private function compareMonitoringEvents($expected, $actual)
     {
         $this->assertSame(count($expected), count($actual));
-        foreach($expected as $index => $expectedEvent) {
+        foreach ($expected as $index => $expectedEvent) {
             $actualEvent = $actual[$index];
-            foreach($expectedEvent as $key => $value) {
+            foreach ($expectedEvent as $key => $value) {
                 $this->assertArrayHasKey($key, $actualEvent);
                 switch ($value) {
                     case "ANY_INT":
@@ -239,7 +240,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                 array_keys($expectedEvent),
                 $this->testData['defaults']['optionalEventFields'][$actualEvent['Type']]
             );
-            foreach($actualEvent as $key => $value) {
+            foreach ($actualEvent as $key => $value) {
                 $this->assertTrue(in_array($key, $allowedFields));
             }
         }
@@ -247,7 +248,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
 
     private function generateResponse($attemptResponse, $command)
     {
-        if (!empty($attemptResponse['errorCode']) ) {
+        if (!empty($attemptResponse['errorCode'])) {
             $context = [
                 'code' => $attemptResponse['errorCode'],
                 'message' => $attemptResponse['errorMessage'],
