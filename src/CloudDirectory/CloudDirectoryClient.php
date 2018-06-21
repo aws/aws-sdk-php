@@ -135,5 +135,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise upgradeAppliedSchemaAsync(array $args = [])
  * @method \Aws\Result upgradePublishedSchema(array $args = [])
  * @method \GuzzleHttp\Promise\Promise upgradePublishedSchemaAsync(array $args = [])
+ * @method \Aws\Result listManagedSchemaArns(array $args = []) (supported in versions 2017-01-11)
+ * @method \GuzzleHttp\Promise\Promise listManagedSchemaArnsAsync(array $args = []) (supported in versions 2017-01-11)
  */
 class CloudDirectoryClient extends AwsClient {}
