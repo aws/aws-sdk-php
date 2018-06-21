@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.62.1 - 2018-06-21
 
 * `Aws\CloudDirectory` - SDK release to support Flexible Schema initiative being carried out by Amazon Cloud Directory. This feature lets customers using new capabilities like: variant typed attributes, dynamic facets and AWS managed Cloud Directory schemas.
 
