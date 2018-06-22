@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AlexaForBusiness` -  Introduce DeviceNotRegisteredException for AWSMoneypenny
+* `Aws\AppStream` - This API update enables customers to find their VPC private IP address and ENI ID associated with AppStream streaming sessions.
+* `Aws\Translate` - General availability release of Amazon Translate in the GovCloud West (us-gov-west-1) region. For more information, see the Amazon Translate developer guide.
+
 ## 3.62.1 - 2018-06-21
 
 * `Aws\CloudDirectory` - SDK release to support Flexible Schema initiative being carried out by Amazon Cloud Directory. This feature lets customers using new capabilities like: variant typed attributes, dynamic facets and AWS managed Cloud Directory schemas.
