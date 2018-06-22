@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.62.2 - 2018-06-22
 
 * `Aws\AlexaForBusiness` -  Introduce DeviceNotRegisteredException for AWSMoneypenny
 * `Aws\AppStream` - This API update enables customers to find their VPC private IP address and ENI ID associated with AppStream streaming sessions.
