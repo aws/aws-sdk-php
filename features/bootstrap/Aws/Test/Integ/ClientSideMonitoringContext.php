@@ -60,7 +60,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     ];
 
     /**
-     * @BeforeSuite
+     * @BeforeFeature
      */
     public static function prepare()
     {
@@ -79,7 +79,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     }
 
     /**
-     * @AfterSuite
+     * @AfterFeature
      */
     public static function cleanup()
     {
