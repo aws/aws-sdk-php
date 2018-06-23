@@ -40,8 +40,6 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
      */
     private $sdk;
 
-    private $allExpectedEvents = [];
-    private $allGeneratedEvents = [];
     private $defaultEnv = [];
     private $sharedConfig;
     private $testApiProvider;
@@ -120,7 +118,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     public function iHaveLoadedATestCasesFileCalled($filename)
     {
         $this->testData = json_decode(
-            file_get_contents("{$this->testDir}/$filename"),
+            file_get_contents("{$this->testDir}/{$filename}"),
             true
         );
 
@@ -150,107 +148,103 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     }
 
     /**
-     * @When I run the test cases with mocked responses against a test socket server
+     * @Then I successfully run the test cases with mocked responses against a test server
      */
-    public function iRunTheTestCasesWithMockedResponsesAgainstATestSocketServer()
+    public function iSuccessfullyRunTheTestCasesWithMockedResponsesAgainstATestServer()
     {
-        $pid = pcntl_fork();
-        if ($pid == 0) {
-            try {
-                $this->startUdpServer();
-            } catch (\Exception $e) {
-                exit();
-            }
-        } else {
-            sleep(1);
+        foreach ($this->testData['cases'] as $case) {
 
-            foreach ($this->testData['cases'] as $case) {
-                $this->clearAndSetDefaultEnv();
-                $events = [];
-                if (!empty($case['configuration']['environmentVariables'])) {
-                    foreach ($case['configuration']['environmentVariables']
-                             as $key => $value) {
-                        putenv("{$key}={$value}");
+            $pid = pcntl_fork();
+
+            if ($pid == 0) {
+                try {
+                    $this->startUdpServer();
+                } catch (\Exception $e) {
+                    exit();
+                }
+            } else {
+                try {
+                    usleep(500000);
+
+                    $this->clearAndSetDefaultEnv();
+                    $events = [];
+                    if (!empty($case['configuration']['environmentVariables'])) {
+                        foreach ($case['configuration']['environmentVariables']
+                                 as $key => $value) {
+                            putenv("{$key}={$value}");
+                        }
                     }
-                }
 
-                $params = [];
-                if (!empty($case['configuration']['region'])) {
-                    $params['region'] = $case['configuration']['region'];
-                }
-                if (!empty($case['configuration']['accesskey'])) {
-                    $params['credentials'] = new Credentials(
-                        $case['configuration']['accesskey'],
-                        'test-secret'
-                    );
-                }
-                foreach ($case['apiCalls'] as $apiCall) {
-                    /** @var Service $service */
-                    if (!empty($service = $this->testServices[$apiCall['serviceId']])) {
-                        $params['service'] = $service->getEndpointPrefix();
-                        $params['api_provider'] = $this->testApiProvider;
-                        $params += $this->sharedConfig;
-                        $client = new AwsClient($params);
-                    } else {
-                        $client = $this->sdk->createClient(
-                            $apiCall['serviceId'],
-                            $params
+                    $params = [];
+                    if (!empty($case['configuration']['region'])) {
+                        $params['region'] = $case['configuration']['region'];
+                    }
+                    if (!empty($case['configuration']['accesskey'])) {
+                        $params['credentials'] = new Credentials(
+                            $case['configuration']['accesskey'],
+                            'test-secret'
                         );
                     }
-
-                    $list = $client->getHandlerList();
-                    $command = new Command($apiCall['operationName'], $apiCall['params']);
-                    $request = new Request('POST', (string) $client->getEndpoint());
-                    $handler = new MockHandler();
-                    foreach ($apiCall['attemptResponses'] as $attemptResponse) {
-                        $response = $this->generateResponse($attemptResponse, $command);
-                        if ($response instanceof \Exception &&
-                            !($response instanceof AwsException)) {
-                            $handler->appendException($response);
+                    foreach ($case['apiCalls'] as $apiCall) {
+                        /** @var Service $service */
+                        if (!empty($service = $this->testServices[$apiCall['serviceId']])) {
+                            $params['service'] = $service->getEndpointPrefix();
+                            $params['api_provider'] = $this->testApiProvider;
+                            $params += $this->sharedConfig;
+                            $client = new AwsClient($params);
                         } else {
-                            $handler->append($response);
+                            $client = $this->sdk->createClient(
+                                $apiCall['serviceId'],
+                                $params
+                            );
                         }
-                    }
-                    $list->setHandler($handler);
-                    $handler = $list->resolve();
 
-                    try {
-                        /** @var Result $result */
-                        $result = $handler($command, $request)->wait();
-                        $events = array_merge($events, $result->getMonitoringEvents());
-                    } catch (\Exception $e) {
-                        if ($e instanceof MonitoringEventsInterface) {
-                            $events = array_merge($events, $e->getMonitoringEvents());
+                        $list = $client->getHandlerList();
+                        $command = new Command($apiCall['operationName'], $apiCall['params']);
+                        $request = new Request('POST', (string)$client->getEndpoint());
+                        $handler = new MockHandler();
+                        foreach ($apiCall['attemptResponses'] as $attemptResponse) {
+                            $response = $this->generateResponse($attemptResponse, $command);
+                            if ($response instanceof \Exception &&
+                                !($response instanceof AwsException)) {
+                                $handler->appendException($response);
+                            } else {
+                                $handler->append($response);
+                            }
+                        }
+                        $list->setHandler($handler);
+                        $handler = $list->resolve();
+
+                        try {
+                            /** @var Result $result */
+                            $result = $handler($command, $request)->wait();
+                            $events = array_merge($events, $result->getMonitoringEvents());
+                        } catch (\Exception $e) {
+                            if ($e instanceof MonitoringEventsInterface) {
+                                $events = array_merge($events, $e->getMonitoringEvents());
+                            }
                         }
                     }
+
+                    $this->sendSocketShutdownMessage();
+                    usleep(500000);
+
+                    $this->compareMonitoringEvents(
+                        $case['expectedMonitoringEvents'],
+                        $events
+                    );
+
+                    $received = file_get_contents(self::$outputFile);
+                    $receivedEvents = json_decode($received, true);
+                    $this->compareMonitoringEvents(
+                        $case['expectedMonitoringEvents'],
+                        $receivedEvents
+                    );
+                } catch (\Exception $e) {
+                    $this->sendSocketShutdownMessage();
                 }
-                $this->allExpectedEvents = array_merge($this->allExpectedEvents,
-                    $case['expectedMonitoringEvents']);
-                $this->allGeneratedEvents = array_merge($this->allGeneratedEvents,
-                    $events);
             }
-
-            $this->sendSocketShutdownMessage();
         }
-    }
-
-    /**
-     * @Then the generated events should match the expected events
-     */
-    public function theGeneratedEventsShouldMatchTheExpectedEvents()
-    {
-        $this->compareMonitoringEvents($this->allExpectedEvents,
-            $this->allGeneratedEvents);
-    }
-
-    /**
-     * @Then the received datagrams should match the expected events
-     */
-    public function theReceivedDatagramsShouldMatchTheExpectedEvents()
-    {
-        $received = file_get_contents(self::$outputFile);
-        $events = json_decode($received, true);
-        $this->compareMonitoringEvents($this->allExpectedEvents, $events);
     }
 
     private function clearAndSetDefaultEnv()
