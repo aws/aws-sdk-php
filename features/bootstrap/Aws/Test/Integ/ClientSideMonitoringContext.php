@@ -24,6 +24,12 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
 {
 
     /**
+     * Child process ID used by the test UDP server
+     * @var int
+     */
+    private static $childPid;
+
+    /**
      * Original environment variables before class instantiated
      * @var array
      */
@@ -62,6 +68,10 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
      */
     public static function prepare()
     {
+        if (!function_exists('pcntl_fork') || !extension_loaded('pcntl')) {
+            throw new \RuntimeException("Test skipped because the 'pcntl' extension is not loaded or enabled.");
+        }
+
         self::$originalEnv = [
             'enabled' => getenv(ConfigurationProvider::ENV_ENABLED) ?: '',
             'port' => getenv(ConfigurationProvider::ENV_PORT) ?: '',
@@ -90,7 +100,15 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
 
-        unlink(self::$outputFile);
+        if (file_exists(self::$outputFile)) {
+            unlink(self::$outputFile);
+        }
+
+        if (!empty(self::$childPid) && posix_getpgid(self::$childPid) !== false) {
+            if (posix_kill(self::$childPid, SIGTERM) === false) {
+                posix_kill(self::$childPid, SIGKILL);
+            };
+        }
     }
 
     /**
@@ -156,7 +174,9 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
 
             $pid = pcntl_fork();
 
-            if ($pid == 0) {
+            if ($pid === -1) {
+                throw new \RuntimeException("Test failed because 'pcntl_fork' was unable to fork PHP process.");
+            } elseif ($pid === 0) {
                 try {
                     $this->startUdpServer();
                 } catch (\Exception $e) {
@@ -164,6 +184,8 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                 }
             } else {
                 try {
+                    self::$childPid = $pid;
+
                     usleep(500000);
 
                     $this->clearAndSetDefaultEnv();
@@ -242,6 +264,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                     );
                 } catch (\Exception $e) {
                     $this->sendSocketShutdownMessage();
+                    throw $e;
                 }
             }
         }
