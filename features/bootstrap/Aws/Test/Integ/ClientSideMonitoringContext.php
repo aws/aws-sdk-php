@@ -68,7 +68,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
      */
     public static function prepare()
     {
-        if (!function_exists('pcntl_fork') || !extension_loaded('pcntl')) {
+        if (!extension_loaded('pcntl') || !function_exists('pcntl_fork')) {
             throw new \RuntimeException("Test skipped because the 'pcntl' extension is not loaded or enabled.");
         }
 
@@ -197,30 +197,10 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                         }
                     }
 
-                    $params = [];
-                    if (!empty($case['configuration']['region'])) {
-                        $params['region'] = $case['configuration']['region'];
-                    }
-                    if (!empty($case['configuration']['accesskey'])) {
-                        $params['credentials'] = new Credentials(
-                            $case['configuration']['accesskey'],
-                            'test-secret'
-                        );
-                    }
-                    foreach ($case['apiCalls'] as $apiCall) {
-                        /** @var Service $service */
-                        if (!empty($service = $this->testServices[$apiCall['serviceId']])) {
-                            $params['service'] = $service->getEndpointPrefix();
-                            $params['api_provider'] = $this->testApiProvider;
-                            $params += $this->sharedConfig;
-                            $client = new AwsClient($params);
-                        } else {
-                            $client = $this->sdk->createClient(
-                                $apiCall['serviceId'],
-                                $params
-                            );
-                        }
+                    $params = $this->prepareTestCaseParams($case);
 
+                    foreach ($case['apiCalls'] as $apiCall) {
+                        $client = $this->createClientForApiCall($apiCall, $params);
                         $list = $client->getHandlerList();
                         $command = new Command($apiCall['operationName'], $apiCall['params']);
                         $request = new Request('POST', (string)$client->getEndpoint());
@@ -307,6 +287,22 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         }
     }
 
+    private function createClientForApiCall($apiCall, $params)
+    {
+        /** @var Service $service */
+        if (!empty($service = $this->testServices[$apiCall['serviceId']])) {
+            $params['service'] = $service->getEndpointPrefix();
+            $params['api_provider'] = $this->testApiProvider;
+            $params += $this->sharedConfig;
+            return new AwsClient($params);
+        }
+
+        return $this->sdk->createClient(
+            $apiCall['serviceId'],
+            $params
+        );
+    }
+
     private function generateResponse($attemptResponse, $command)
     {
         if (!empty($attemptResponse['errorCode'])) {
@@ -349,6 +345,21 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         }
 
         throw new \InvalidArgumentException('attemptResponse data does not contain required fields.');
+    }
+
+    private function prepareTestCaseParams(array $case)
+    {
+        $params = [];
+        if (!empty($case['configuration']['region'])) {
+            $params['region'] = $case['configuration']['region'];
+        }
+        if (!empty($case['configuration']['accesskey'])) {
+            $params['credentials'] = new Credentials(
+                $case['configuration']['accesskey'],
+                'test-secret'
+            );
+        }
+        return $params;
     }
 
     private function sendSocketShutdownMessage()
