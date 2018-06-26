@@ -287,7 +287,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         }
     }
 
-    private function createClientForApiCall($apiCall, $params)
+    private function createClientForApiCall(array $apiCall, array $params)
     {
         /** @var Service $service */
         if (!empty($service = $this->testServices[$apiCall['serviceId']])) {
