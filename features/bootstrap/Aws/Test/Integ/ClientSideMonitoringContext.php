@@ -166,9 +166,9 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     }
 
     /**
-     * @Then I successfully run the test cases with mocked responses against a test server
+     * @Then I successfully run the test cases against a test server
      */
-    public function iSuccessfullyRunTheTestCasesWithMockedResponsesAgainstATestServer()
+    public function iSuccessfullyRunTheTestCasesAgainstATestServer()
     {
         foreach ($this->testData['cases'] as $case) {
 
