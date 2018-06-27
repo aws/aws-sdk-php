@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.62.4 - 2018-06-27
 
 * `Aws\CloudFront` - Unpublish delete-service-linked-role API.
 * `Aws\CodePipeline` - UpdatePipeline may now throw a LimitExceededException when adding or updating Source Actions that use periodic checks for change detection
