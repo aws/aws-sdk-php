@@ -302,15 +302,17 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
 
     private function createCredentials(array $configuration)
     {
-        $options = [
-            $configuration['accessKey'], 'test-secret'
-        ];
         if (!empty($configuration['sessionToken'])) {
-            $options[] = $configuration['sessionToken'];
+            $token = $configuration['sessionToken'];
+        } else {
+            $token = null;
         }
 
-        $reflect  = new \ReflectionClass(Credentials::class);
-        return $reflect->newInstanceArgs($options);
+        return new Credentials(
+            $configuration['accessKey'],
+            'test-secret',
+            $token
+        );
     }
 
     private function generateResponse($attemptResponse, $command)
