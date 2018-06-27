@@ -1,7 +1,24 @@
 {
+    "version": 1,
+    "defaults": {
+        "configuration": {
+            "accessKey": "myaccesskey",
+            "sessionToken": "testsessiontoken",
+            "region": "us-west-2",
+            "environmentVariables": {
+                "AWS_CSM_ENABLED": "true",
+                "AWS_CSM_CLIENT_ID": "AwsPhpSdkTestApp"
+            },
+            "sharedConfigFile": {}
+        },
+        "optionalEventFields": {
+            "ApiCall": {},
+            "ApiCallAttempt": {}
+        }
+    },
     "cases": [
         {
-            "description": "Test a client call with specific latency measurements",
+            "description": "Test a client call with all PHP SDK event properties",
             "apiCalls": [
                 {
                     "serviceId": "CSM Test",
@@ -15,14 +32,20 @@
                             "errorMessage": "Service is unavailable",
                             "totalTime": 0.33,
                             "primaryIp": "33.44.55.66",
-                            "namelookupTime": 0.22
+                            "namelookupTime": 0.22,
+                            "xAmzRequestId": "testrequestid1",
+                            "xAmznRequestId": "testrequestid2",
+                            "xAmzId2": "testamzid"
                         },
                         {
                             "httpStatus": 200,
                             "responseHeaders": {},
                             "totalTime": 0.34,
                             "primaryIp": "44.55.66.77",
-                            "namelookupTime": 0.23
+                            "namelookupTime": 0.23,
+                            "xAmzRequestId": "testrequestid3",
+                            "xAmznRequestId": "testrequestid4",
+                            "xAmzId2": "testamzid2"
                         }
                     ]
                 }
@@ -32,7 +55,7 @@
                     "Type": "ApiCallAttempt",
                     "Service": "CSM Test",
                     "Api": "TestOperation",
-                    "ClientId": "",
+                    "ClientId": "AwsPhpSdkTestApp",
                     "Version": 1,
                     "Timestamp": "ANY_INT",
                     "AttemptLatency": 330,
@@ -44,13 +67,17 @@
                     "AwsException": "ServiceUnavailable",
                     "AwsExceptionMessage": "Service is unavailable",
                     "DestinationIp": "33.44.55.66",
-                    "DnsLatency": 220
+                    "DnsLatency": 220,
+                    "XAmzRequestId": "testrequestid1",
+                    "XAmznRequestId": "testrequestid2",
+                    "XAmzId2": "testamzid",
+                    "SessionToken": "testsessiontoken"
                 },
                 {
                     "Type": "ApiCallAttempt",
                     "Service": "CSM Test",
                     "Api": "TestOperation",
-                    "ClientId": "",
+                    "ClientId": "AwsPhpSdkTestApp",
                     "Version": 1,
                     "Timestamp": "ANY_INT",
                     "AttemptLatency": 340,
@@ -60,13 +87,17 @@
                     "AccessKey": "myaccesskey",
                     "HttpStatusCode": 200,
                     "DestinationIp": "44.55.66.77",
-                    "DnsLatency": 230
+                    "DnsLatency": 230,
+                    "XAmzRequestId": "testrequestid3",
+                    "XAmznRequestId": "testrequestid4",
+                    "XAmzId2": "testamzid2",
+                    "SessionToken": "testsessiontoken"
                 },
                 {
                     "Type": "ApiCall",
                     "Service": "CSM Test",
                     "Api": "TestOperation",
-                    "ClientId": "",
+                    "ClientId": "AwsPhpSdkTestApp",
                     "Timestamp": "ANY_INT",
                     "Version": 1,
                     "AttemptCount": 2,

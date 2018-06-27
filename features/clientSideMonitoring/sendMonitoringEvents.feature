@@ -5,5 +5,10 @@ Feature: Send client-side monitoring events
 
     Scenario: Verify generated and sent monitoring events
         Given I have loaded a test manifest file called "manifest.json"
-        And I have loaded test case files called "cases.json" and "cases_php_sdk.json"
+        And I have loaded a test case file called "cases.json"
+        Then I successfully run the test cases against a test server
+
+    Scenario: Verify generated and sent monitoring events
+        Given I have loaded a test manifest file called "manifest.json"
+        And I have loaded a test case file called "cases_php_sdk.json"
         Then I successfully run the test cases against a test server

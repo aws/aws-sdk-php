@@ -64,7 +64,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     ];
 
     /**
-     * @BeforeFeature
+     * @BeforeScenario
      */
     public static function prepare()
     {
@@ -87,7 +87,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     }
 
     /**
-     * @AfterFeature
+     * @AfterScenario
      */
     public static function cleanup()
     {
@@ -131,23 +131,15 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     }
 
     /**
-     * @Given I have loaded test case files called :filename1 and :filename2
+     * @Given I have loaded a test case file called :filename
      */
-    public function iHaveLoadedTestCaseFileCalled($filename1, $filename2)
+    public function iHaveLoadedATestCaseFileCalled($filename)
     {
         $this->testData = json_decode(
-            file_get_contents("{$this->testDir}/{$filename1}"),
+            file_get_contents("{$this->testDir}/{$filename}"),
             true
         );
-        $phpSdkTestCases = json_decode(
-            file_get_contents("{$this->testDir}/{$filename2}"),
-            true
-        );
-        $this->testData['cases'] = array_merge(
-            $this->testData['cases'],
-            $phpSdkTestCases['cases']
-        );
-
+        
         if (!empty($this->testData['defaults']['configuration']['environmentVariables'])) {
             foreach ($this->testData['defaults']['configuration']['environmentVariables']
                      as $key => $value) {
@@ -164,9 +156,8 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
             }
         }
         if (isset($this->testData['defaults']['configuration']['accessKey'])) {
-            $sharedConfig['credentials'] = new Credentials(
-                $this->testData['defaults']['configuration']['accessKey'],
-                'test-secret'
+            $sharedConfig['credentials'] = $this->createCredentials(
+                $this->testData['defaults']['configuration']
             );
         }
         $this->sharedConfig = $sharedConfig;
@@ -309,6 +300,19 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         );
     }
 
+    private function createCredentials(array $configuration)
+    {
+        $options = [
+            $configuration['accessKey'], 'test-secret'
+        ];
+        if (!empty($configuration['sessionToken'])) {
+            $options[] = $configuration['sessionToken'];
+        }
+
+        $reflect  = new \ReflectionClass(Credentials::class);
+        return $reflect->newInstanceArgs($options);
+    }
+
     private function generateResponse($attemptResponse, $command)
     {
         $transferStats = [
@@ -319,11 +323,22 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
             'namelookup_time' => !empty($attemptResponse['namelookupTime']) ?
                 $attemptResponse['namelookupTime'] : 0.012,
         ];
+        $headers = [];
+        $headerProperties = [
+            'xAmzRequestId' => 'x-amz-request-id',
+            'xAmznRequestId' => 'x-amzn-RequestId',
+            'xAmzId2' => 'x-amz-id-2',
+        ];
+        foreach($headerProperties as $property => $header) {
+            if (isset($attemptResponse[$property])) {
+                $headers[$header] = $attemptResponse[$property];
+            }
+        }
         if (!empty($attemptResponse['errorCode'])) {
             $context = [
                 'code' => $attemptResponse['errorCode'],
                 'message' => $attemptResponse['errorMessage'],
-                'response' => new Response($attemptResponse['httpStatus']),
+                'response' => new Response($attemptResponse['httpStatus'], $headers),
                 'transfer_stats' => $transferStats,
             ];
 
@@ -340,6 +355,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
             $params = [
                 '@metadata' => [
                     'statusCode' => $attemptResponse['httpStatus'],
+                    'headers' => $headers,
                     'transferStats' => [
                         'http' => [
                             $transferStats
@@ -359,11 +375,8 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         if (!empty($case['configuration']['region'])) {
             $params['region'] = $case['configuration']['region'];
         }
-        if (!empty($case['configuration']['accesskey'])) {
-            $params['credentials'] = new Credentials(
-                $case['configuration']['accesskey'],
-                'test-secret'
-            );
+        if (!empty($case['configuration']['accessKey'])) {
+            $params['credentials'] = $this->createCredentials($case['configuration']);
         }
         return $params;
     }
