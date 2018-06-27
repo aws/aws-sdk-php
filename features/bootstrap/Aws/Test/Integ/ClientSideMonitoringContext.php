@@ -131,13 +131,21 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     }
 
     /**
-     * @Given I have loaded a test cases file called :filename
+     * @Given I have loaded test case files called :filename1 and :filename2
      */
-    public function iHaveLoadedATestCasesFileCalled($filename)
+    public function iHaveLoadedTestCaseFileCalled($filename1, $filename2)
     {
         $this->testData = json_decode(
-            file_get_contents("{$this->testDir}/{$filename}"),
+            file_get_contents("{$this->testDir}/{$filename1}"),
             true
+        );
+        $phpSdkTestCases = json_decode(
+            file_get_contents("{$this->testDir}/{$filename2}"),
+            true
+        );
+        $this->testData['cases'] = array_merge(
+            $this->testData['cases'],
+            $phpSdkTestCases['cases']
         );
 
         if (!empty($this->testData['defaults']['configuration']['environmentVariables'])) {
@@ -188,15 +196,13 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
 
                     usleep(500000);
 
-                    $this->clearAndSetDefaultEnv();
-                    $events = [];
-                    if (!empty($case['configuration']['environmentVariables'])) {
-                        foreach ($case['configuration']['environmentVariables']
-                                 as $key => $value) {
-                            putenv("{$key}={$value}");
-                        }
+                    if (isset($case['configuration']['environmentVariables'])) {
+                        $this->clearAndSetEnv($case['configuration']['environmentVariables']);
+                    } else {
+                        $this->clearAndSetEnv($this->defaultEnv);
                     }
 
+                    $events = [];
                     $params = $this->prepareTestCaseParams($case);
 
                     foreach ($case['apiCalls'] as $apiCall) {
@@ -250,14 +256,14 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         }
     }
 
-    private function clearAndSetDefaultEnv()
+    private function clearAndSetEnv($env)
     {
         putenv(ConfigurationProvider::ENV_ENABLED . '=');
         putenv(ConfigurationProvider::ENV_PORT . '=');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=');
         putenv(ConfigurationProvider::ENV_PROFILE . '=');
 
-        foreach ($this->defaultEnv as $key => $value) {
+        foreach ($env as $key => $value) {
             putenv("{$key}={$value}");
         }
     }
@@ -305,16 +311,20 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
 
     private function generateResponse($attemptResponse, $command)
     {
+        $transferStats = [
+            'total_time' => !empty($attemptResponse['totalTime']) ?
+                $attemptResponse['totalTime'] : 0.12,
+            'primary_ip' => !empty($attemptResponse['primaryIp']) ?
+                $attemptResponse['primaryIp'] : '12.34.56.78',
+            'namelookup_time' => !empty($attemptResponse['namelookupTime']) ?
+                $attemptResponse['namelookupTime'] : 0.012,
+        ];
         if (!empty($attemptResponse['errorCode'])) {
             $context = [
                 'code' => $attemptResponse['errorCode'],
                 'message' => $attemptResponse['errorMessage'],
                 'response' => new Response($attemptResponse['httpStatus']),
-                'transfer_stats' => [
-                    'total_time' => .12,
-                    'primary_ip' => '12.34.56.78',
-                    'namelookup_time' => .012,
-                ],
+                'transfer_stats' => $transferStats,
             ];
 
             return new AwsException($attemptResponse['errorMessage'],
@@ -332,12 +342,8 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                     'statusCode' => $attemptResponse['httpStatus'],
                     'transferStats' => [
                         'http' => [
-                            [
-                                'total_time' => .12,
-                                'primary_ip' => '12.34.56.78',
-                                'namelookup_time' => .012,
-                            ]
-                        ],
+                            $transferStats
+                        ]
                     ],
                 ],
             ];

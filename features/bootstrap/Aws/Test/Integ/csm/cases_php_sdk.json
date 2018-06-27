@@ -1,0 +1,78 @@
+{
+    "cases": [
+        {
+            "description": "Test a client call with specific latency measurements",
+            "apiCalls": [
+                {
+                    "serviceId": "CSM Test",
+                    "operationName": "TestOperation",
+                    "params": {},
+                    "attemptResponses": [
+                        {
+                            "httpStatus": 500,
+                            "responseHeaders": {},
+                            "errorCode": "ServiceUnavailable",
+                            "errorMessage": "Service is unavailable",
+                            "totalTime": 0.33,
+                            "primaryIp": "33.44.55.66",
+                            "namelookupTime": 0.22
+                        },
+                        {
+                            "httpStatus": 200,
+                            "responseHeaders": {},
+                            "totalTime": 0.34,
+                            "primaryIp": "44.55.66.77",
+                            "namelookupTime": 0.23
+                        }
+                    ]
+                }
+            ],
+            "expectedMonitoringEvents": [
+                {
+                    "Type": "ApiCallAttempt",
+                    "Service": "CSM Test",
+                    "Api": "TestOperation",
+                    "ClientId": "",
+                    "Version": 1,
+                    "Timestamp": "ANY_INT",
+                    "AttemptLatency": 330,
+                    "Fqdn": "csmtest.us-west-2.amazonaws.com",
+                    "UserAgent": "ANY_STR",
+                    "Region": "us-west-2",
+                    "AccessKey": "myaccesskey",
+                    "HttpStatusCode": 500,
+                    "AwsException": "ServiceUnavailable",
+                    "AwsExceptionMessage": "Service is unavailable",
+                    "DestinationIp": "33.44.55.66",
+                    "DnsLatency": 220
+                },
+                {
+                    "Type": "ApiCallAttempt",
+                    "Service": "CSM Test",
+                    "Api": "TestOperation",
+                    "ClientId": "",
+                    "Version": 1,
+                    "Timestamp": "ANY_INT",
+                    "AttemptLatency": 340,
+                    "Fqdn": "csmtest.us-west-2.amazonaws.com",
+                    "UserAgent": "ANY_STR",
+                    "Region": "us-west-2",
+                    "AccessKey": "myaccesskey",
+                    "HttpStatusCode": 200,
+                    "DestinationIp": "44.55.66.77",
+                    "DnsLatency": 230
+                },
+                {
+                    "Type": "ApiCall",
+                    "Service": "CSM Test",
+                    "Api": "TestOperation",
+                    "ClientId": "",
+                    "Timestamp": "ANY_INT",
+                    "Version": 1,
+                    "AttemptCount": 2,
+                    "Latency": "ANY_INT"
+                }
+            ]
+        }
+    ]
+}
