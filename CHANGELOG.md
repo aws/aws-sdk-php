@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.62.5 - 2018-06-28
 
 * `Aws\ElasticBeanstalk` - Elastic Beanstalk adds "Suspended" health status to the EnvironmentHealthStatus enum type and updates document.
 * `Aws\Lambda` - Support for SQS as an event source.
