@@ -318,12 +318,15 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     private function generateResponse($attemptResponse, $command)
     {
         $transferStats = [
-            'total_time' => empty($attemptResponse['totalTime']) ?
-                0.12 : $attemptResponse['totalTime'],
-            'primary_ip' => empty($attemptResponse['primaryIp']) ?
-                '12.34.56.78': $attemptResponse['primaryIp'],
-            'namelookup_time' => empty($attemptResponse['namelookupTime']) ?
-                0.012 : $attemptResponse['namelookupTime'],
+            'total_time' => !empty($attemptResponse['totalTime'])
+                ? $attemptResponse['totalTime']
+                : 0.12,
+            'primary_ip' => !empty($attemptResponse['primaryIp'])
+                ? $attemptResponse['primaryIp']
+                : '12.34.56.78',
+            'namelookup_time' => !empty($attemptResponse['namelookupTime'])
+                ? $attemptResponse['namelookupTime']
+                : 0.012,
         ];
         $headers = [];
         $headerProperties = [
