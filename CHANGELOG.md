@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElasticBeanstalk` - Elastic Beanstalk adds "Suspended" health status to the EnvironmentHealthStatus enum type and updates document.
+* `Aws\Lambda` - Support for SQS as an event source.
+* `Aws\StorageGateway` - AWS Storage Gateway now enables you to use Server Message Block (SMB) protocol to store and access objects in Amazon Simple Storage Service (S3). 
+
 ## 3.62.4 - 2018-06-27
 
 * `Aws\CloudFront` - Unpublish delete-service-linked-role API.
