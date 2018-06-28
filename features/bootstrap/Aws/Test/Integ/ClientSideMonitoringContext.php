@@ -139,7 +139,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
             file_get_contents("{$this->testDir}/{$filename}"),
             true
         );
-        
+
         if (!empty($this->testData['defaults']['configuration']['environmentVariables'])) {
             foreach ($this->testData['defaults']['configuration']['environmentVariables']
                      as $key => $value) {
@@ -318,12 +318,12 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     private function generateResponse($attemptResponse, $command)
     {
         $transferStats = [
-            'total_time' => !empty($attemptResponse['totalTime']) ?
-                $attemptResponse['totalTime'] : 0.12,
-            'primary_ip' => !empty($attemptResponse['primaryIp']) ?
-                $attemptResponse['primaryIp'] : '12.34.56.78',
-            'namelookup_time' => !empty($attemptResponse['namelookupTime']) ?
-                $attemptResponse['namelookupTime'] : 0.012,
+            'total_time' => empty($attemptResponse['totalTime']) ?
+                0.12 : $attemptResponse['totalTime'],
+            'primary_ip' => empty($attemptResponse['primaryIp']) ?
+                '12.34.56.78': $attemptResponse['primaryIp'],
+            'namelookup_time' => empty($attemptResponse['namelookupTime']) ?
+                0.012 : $attemptResponse['namelookupTime'],
         ];
         $headers = [];
         $headerProperties = [
@@ -346,7 +346,8 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
 
             return new AwsException($attemptResponse['errorMessage'],
                 $command,
-                $context);
+                $context
+            );
         }
         if (!empty($attemptResponse['sdkException'])) {
             return new ConfigurationException(
