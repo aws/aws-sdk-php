@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.62.6 - 2018-06-29
 
 * `Aws\SecretsManager` - New SDK code snippet examples for the new APIs released for the Resource-based Policy support in Secrets Manager
 
