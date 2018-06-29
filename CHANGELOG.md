@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SecretsManager` - New SDK code snippet examples for the new APIs released for the Resource-based Policy support in Secrets Manager
+
 ## 3.62.5 - 2018-06-28
 
 * `Aws\ElasticBeanstalk` - Elastic Beanstalk adds "Suspended" health status to the EnvironmentHealthStatus enum type and updates document.
