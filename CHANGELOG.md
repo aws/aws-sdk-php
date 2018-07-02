@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.62.7 - 2018-07-02
 
 * `Aws\SSM` - Execution History and StartAssociationOnce release for State Manager. Users now have the ability to view association execution history with DescribeAssociationExecutions and DescribeAssociationExecutionTargets. Users can also execute an association by calling StartAssociationOnce.
 
