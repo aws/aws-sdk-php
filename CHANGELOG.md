@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SSM` - Execution History and StartAssociationOnce release for State Manager. Users now have the ability to view association execution history with DescribeAssociationExecutions and DescribeAssociationExecutionTargets. Users can also execute an association by calling StartAssociationOnce.
+
 ## 3.62.6 - 2018-06-29
 
 * `Aws\SecretsManager` - New SDK code snippet examples for the new APIs released for the Resource-based Policy support in Secrets Manager
