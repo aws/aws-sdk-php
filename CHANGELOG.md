@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.62.8 - 2018-07-03
 
 * `Aws\ACM` - Adds a "CertificateValidated" waiter to AWS Certificate Manager clients, which polls on a new certificate's validation state.
 * `Aws\EC2` - Added support for customers to tag EC2 Dedicated Hosts
