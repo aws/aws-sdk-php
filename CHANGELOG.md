@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaConvert` - This release adds support for the following 1) users can specify tags to be attached to queues, presets, and templates during creation of those resources on MediaConvert. 2) users can now view the count of jobs in submitted state and in progressing state on a per queue basis.
+* `Aws\ServerlessApplicationRepository` - Added required fields and documentation updates for AWS Serverless Application Repository.
+
 ## 3.62.9 - 2018-07-05
 
 * `Aws\Pinpoint` - This release of the Amazon Pinpoint SDK adds the ability to create complex segments and validate phone numbers for SMS messages. It also adds the ability to get or delete endpoints based on user IDs, remove attributes from endpoints, and list the defined channels for an app.
