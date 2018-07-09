@@ -43,7 +43,6 @@ class Service extends AbstractModel
         ], $defaultMeta = [
             'apiVersion'       => null,
             'serviceFullName'  => null,
-            'serviceId'        => null,
             'endpointPrefix'   => null,
             'signingName'      => null,
             'signatureVersion' => null,
@@ -53,6 +52,18 @@ class Service extends AbstractModel
 
         $definition += $defaults;
         $definition['metadata'] += $defaultMeta;
+
+        if (empty($definition['metadata']['serviceId'])) {
+            if (empty($definition['metadata']['serviceAbbreviation'])) {
+                $serviceId = $definition['metadata']['serviceFullName'];
+            } else {
+                $serviceId = $definition['metadata']['serviceAbbreviation'];
+            }
+            $serviceId = str_replace(['AWS', 'Amazon'], '', $serviceId);
+            $serviceId = preg_replace("/[^a-zA-Z0-9 ]+/", '', $serviceId);
+            $definition['metadata']['serviceId'] = trim(ltrim($serviceId, ' 0123456789'));
+        }
+
         $this->definition = $definition;
         $this->apiProvider = $provider;
         parent::__construct($definition, new ShapeMap($definition['shapes']));

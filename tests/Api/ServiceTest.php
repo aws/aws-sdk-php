@@ -80,6 +80,40 @@ class ServiceTest extends TestCase
         $this->assertArrayHasKey('foo', $s->getOperations());
     }
 
+    public function serviceIdDataProvider()
+    {
+        return [
+            ['AWS New Service', '', '', 'New Service'],
+            ['AWS New Service', 'ANS', '', 'ANS'],
+            ['Amazon New Service', '', '', 'New Service'],
+            ['Amazon New Service', 'AWS NS', '', 'NS'],
+            ['Amazon New 555 Service', '', '', 'New 555 Service'],
+            ['555 Amazon New Service', '', '', 'New Service'],
+            [' 555 Amazon New Service', '', '', 'New Service'],
+            ['555 Amazon New Service', '555 NS', '', 'NS'],
+            ['Amazon New Service555', '', '', 'New Service555'],
+            ['AWS New Service555', 'AWS NS 555', '', 'NS 555'],
+            ['  AWS @New-Service!', '', '', 'NewService'],
+            ['New Service Full Name', '  AWS @New-Service!', '', 'NewService'],
+            ['Fullname', 'Abbv', 'Supplied', 'Supplied'],
+        ];
+    }
+
+    /**
+     * @dataProvider serviceIdDataProvider
+     */
+    public function testGeneratesDefaultServiceIds($fullName, $abbv, $id, $expected)
+    {
+        $service = new Service([
+            'metadata' => [
+                'serviceFullName' => $fullName,
+                'serviceAbbreviation' => $abbv,
+                'serviceId' => $id
+            ]
+        ], function() {});
+        $this->assertEquals($expected, $service->getServiceId());
+    }
+    
     /**
      * @expectedException \InvalidArgumentException
      */
