@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - The release adds support for custom resource auto scaling.
+* `Aws\CostExplorer` - AWS Cost Explorer provides you with Reserved Instance (RI) purchase recommendations based on your total cross-account Amazon EC2 and Amazon RDS usage. Starting today, linked accounts can also access custom RI purchase recommendations for specific linked accounts directly via AWS Cost Explorer API.
+* `Aws\DatabaseMigrationService` - Added support for DmsTransfer endpoint type and support for re-validate option in table reload API.
+* `Aws\Lambda` - Add support for .NET Core 2.1 to Lambda.
+* `Aws\TranscribeService` - You can now specify an Amazon S3 output bucket to store the transcription of your audio file when you call the StartTranscriptionJob operation. 
+
 ## 3.62.10 - 2018-07-06
 
 * `Aws\MediaConvert` - This release adds support for the following 1) users can specify tags to be attached to queues, presets, and templates during creation of those resources on MediaConvert. 2) users can now view the count of jobs in submitted state and in progressing state on a per queue basis.
