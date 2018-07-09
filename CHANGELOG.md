@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.62.11 - 2018-07-09
 
 * `Aws\ApplicationAutoScaling` - The release adds support for custom resource auto scaling.
 * `Aws\CostExplorer` - AWS Cost Explorer provides you with Reserved Instance (RI) purchase recommendations based on your total cross-account Amazon EC2 and Amazon RDS usage. Starting today, linked accounts can also access custom RI purchase recommendations for specific linked accounts directly via AWS Cost Explorer API.
