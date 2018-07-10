@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - This API update adds pagination to the DescribeImages API to support future features and enhancements.
+* `Aws\CodeBuild` - API changes to CodeBuild service, support report build status for Github sources
+* `Aws\EC2` - Support CpuOptions field in Launch Template data and allow Launch Template name to contain hyphen.
+* `Aws\Glue` - AWS Glue adds the ability to crawl DynamoDB tables.
+* `Aws\OpsWorks` - Documentation updates for AWS OpsWorks Stacks.
+
 ## 3.62.12 - 2018-07-10
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for application-autoscaling
