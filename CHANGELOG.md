@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.62.13 - 2018-07-10
 
 * `Aws\AppStream` - This API update adds pagination to the DescribeImages API to support future features and enhancements.
 * `Aws\CodeBuild` - API changes to CodeBuild service, support report build status for Github sources
