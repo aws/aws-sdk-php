@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.62.12 - 2018-07-10
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for application-autoscaling
 
