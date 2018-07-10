@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - Documentation updates for application-autoscaling
+
 ## 3.62.11 - 2018-07-09
 
 * `Aws\ApplicationAutoScaling` - The release adds support for custom resource auto scaling.
