@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.62.14 - 2018-07-11
 
 * `Aws\APIGateway` - Support for fine grain throttling for API gateway. 
 * `Aws\CostExplorer` - Starting today, you can access custom Reserved Instance (RI) purchase recommendations for your Amazon Redshift, Amazon ElastiCache, and Amazon Elasticsearch reservations via AWS Cost Explorer API, in addition to accessing RI purchase recommendations for your Amazon EC2 and Amazon RDS reservations.
