@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Support for fine grain throttling for API gateway. 
+* `Aws\CostExplorer` - Starting today, you can access custom Reserved Instance (RI) purchase recommendations for your Amazon Redshift, Amazon ElastiCache, and Amazon Elasticsearch reservations via AWS Cost Explorer API, in addition to accessing RI purchase recommendations for your Amazon EC2 and Amazon RDS reservations.
+* `Aws\S3` - S3 Select support for BZIP2 compressed input files
+* `Aws\SSM` - Support Conditional Branching OnFailure for SSM Automation
+* `Aws\SageMaker` - SageMaker has added support for FRA and SYD regions.
+
 ## 3.62.13 - 2018-07-10
 
 * `Aws\AppStream` - This API update adds pagination to the DescribeImages API to support future features and enhancements.
