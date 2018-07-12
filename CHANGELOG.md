@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.63.0 - 2018-07-12
 
 * `Aws\AppSync` - This release adds support for configuring HTTP endpoints as data sources for your AWS AppSync GraphQL API.
 * `Aws\CodeBuild` - Update CodeBuild CreateProject API - serviceRole is a required input 
