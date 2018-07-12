@@ -28,5 +28,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeTagsAsync(array $args = [])
  * @method \Aws\Result modifyMountTargetSecurityGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyMountTargetSecurityGroupsAsync(array $args = [])
+ * @method \Aws\Result updateFileSystem(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateFileSystemAsync(array $args = [])
  */
 class EfsClient extends AwsClient {}
