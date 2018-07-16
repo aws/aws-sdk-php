@@ -30,4 +30,14 @@ trait IntegUtils
 
         return $_SERVER['PREFIX'];
     }
+
+    /**
+     * Disable client-side monitoring if local config has it enabled
+     *
+     * @BeforeSuite
+     */
+    public static function disableCsm()
+    {
+        putenv(\Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED . '=false');
+    }
 }
