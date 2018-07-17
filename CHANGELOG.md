@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.63.2 - 2018-07-17
 
 * `Aws\Comprehend` - This release gives customers the ability to tokenize (find word boundaries) text and for each word provide a label for the part of speech, using the DetectSyntax operation. This API is useful to analyze text for specific conditions like for example finding nouns and the correlating adjectives to understand customer feedback. 
 * `Aws\Polly` - Amazon Polly adds new API for asynchronous synthesis to S3
