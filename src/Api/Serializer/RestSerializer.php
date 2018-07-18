@@ -123,8 +123,11 @@ abstract class RestSerializer
 
     private function applyHeader($name, Shape $member, $value, array &$opts)
     {
-        if ($member->getType() == 'timestamp') {
-            $value = TimestampShape::format($value, 'rfc822');
+        if ($member->getType() === 'timestamp') {
+            $timestampFormat = !empty($member['timestampFormat'])
+                ? $member['timestampFormat']
+                : 'rfc822';
+            $value = TimestampShape::format($value, $timestampFormat);
         }
         if ($member['jsonvalue']) {
             $value = json_encode($value);
@@ -157,8 +160,14 @@ abstract class RestSerializer
                 ? $opts['query'] + $value
                 : $value;
         } elseif ($value !== null) {
-            if ($member->getType() === 'boolean') {
+            $type = $member->getType();
+            if ($type === 'boolean') {
                 $value = $value ? 'true' : 'false';
+            } elseif ($type === 'timestamp') {
+                $timestampFormat = !empty($member['timestampFormat'])
+                    ? $member['timestampFormat']
+                    : 'iso8601';
+                $value = TimestampShape::format($value, $timestampFormat);
             }
 
             $opts['query'][$member['locationName'] ?: $name] = $value;

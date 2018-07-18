@@ -43,6 +43,10 @@ class JsonParser
                 return $target;
 
             case 'timestamp':
+                if (!empty($shape['timestampFormat'])
+                    && $shape['timestampFormat'] !== 'unixTimestamp') {
+                    return new DateTimeResult($value);
+                }
                 // The Unix epoch (or Unix time or POSIX time or Unix
                 // timestamp) is the number of seconds that have elapsed since
                 // January 1, 1970 (midnight UTC/GMT).
