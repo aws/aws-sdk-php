@@ -94,8 +94,8 @@ class ComplianceTest extends TestCase
             case 'json':
             case 'rest-json':
                 // Normalize the JSON data.
-                $body = str_replace(':', ': ', $request->getBody());
-                $body = str_replace(',', ', ', $body);
+                $body = str_replace(['":', ','], ['": ', ', '], $body);
+                $body = str_replace(',  ', ', ', $body);
                 break;
             case 'rest-xml':
                 // Normalize XML data.
