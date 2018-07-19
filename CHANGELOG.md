@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.63.4 - 2018-07-19
 
 * `Aws\MediaPackage` - Adds support for DASH OriginEnpoints with multiple media presentation description periods triggered by presence of SCTE-35 ad markers in Channel input streams.
 
