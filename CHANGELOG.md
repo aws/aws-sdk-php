@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.63.5 - 2018-07-20
 
 * `Aws\ConfigService` - Setting internal length limits on resourceId for APIs. 
 * `Aws\DLM` - Update documentation for Amazon Data Lifecycle Manager.
