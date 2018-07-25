@@ -38,20 +38,11 @@ class S3SignatureV4 extends SignatureV4
         if (!$request->hasHeader('x-amz-content-sha256')) {
             $request = $request->withHeader(
                 'X-Amz-Content-Sha256',
-                $this->getPresignedPayload($request)
+                SignatureV4::UNSIGNED_PAYLOAD
             );
         }
 
         return parent::presign($request, $credentials, $expires, $options);
-    }
-
-    /**
-     * Override used to allow pre-signed URLs to be created for an
-     * in-determinate request payload.
-     */
-    protected function getPresignedPayload(RequestInterface $request)
-    {
-        return SignatureV4::UNSIGNED_PAYLOAD;
     }
 
     /**
