@@ -129,6 +129,10 @@ class XmlParser
 
     private function parse_timestamp(Shape $shape, $value)
     {
+        if (!empty($shape['timestampFormat'])
+            && $shape['timestampFormat'] === 'unixTimestamp') {
+            return DateTimeResult::fromEpoch((string) $value);
+        }
         return new DateTimeResult($value);
     }
 }

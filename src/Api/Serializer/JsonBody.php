@@ -81,7 +81,10 @@ class JsonBody
                 return base64_encode($value);
 
             case 'timestamp':
-                return TimestampShape::format($value, 'unixTimestamp');
+                $timestampFormat = !empty($shape['timestampFormat'])
+                    ? $shape['timestampFormat']
+                    : 'unixTimestamp';
+                return TimestampShape::format($value, $timestampFormat);
 
             default:
                 return $value;
