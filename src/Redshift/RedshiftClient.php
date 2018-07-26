@@ -66,6 +66,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeClusterSnapshotsAsync(array $args = [])
  * @method \Aws\Result describeClusterSubnetGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeClusterSubnetGroupsAsync(array $args = [])
+ * @method \Aws\Result describeClusterTracks(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeClusterTracksAsync(array $args = [])
  * @method \Aws\Result describeClusterVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeClusterVersionsAsync(array $args = [])
  * @method \Aws\Result describeClusters(array $args = [])
