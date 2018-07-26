@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.64.0 - 2018-07-26
 
 * `Aws\Api` - Updates parsers and serializers to handle the timestampFormat trait.
 * `Aws\CodeBuild` - Add artifacts encryptionDisabled and build encryptionKey.
