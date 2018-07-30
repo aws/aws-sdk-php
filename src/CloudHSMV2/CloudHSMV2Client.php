@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS CloudHSM V2** service.
+ * @method \Aws\Result copyBackupToRegion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise copyBackupToRegionAsync(array $args = [])
  * @method \Aws\Result createCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createClusterAsync(array $args = [])
  * @method \Aws\Result createHsm(array $args = [])
