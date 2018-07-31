@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.64.2 - 2018-07-31
 
 * `Aws\Connect` - This update includes the new User Management APIs and the Federation API used for SAML authentication. The User Management APIs let you create and manage users in your Amazon Connect instance programmatically. The Federation API enables authentication between AWS and your existing identity provider using tokens.
 * `Aws\ElasticsearchService` - Amazon Elasticsearch Service adds support for enabling Elasticsearch error logs, providing you valuable information for troubleshooting your Elasticsearch domains quickly and easily. These logs are published to the Amazon CloudWatch Logs service and can be turned on or off at will.
