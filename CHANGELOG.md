@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.64.3 - 2018-08-01
 
 * `Aws\StorageGateway` - AWS Storage Gateway now enables you to create stored volumes with AWS KMS support.
 * `Aws\TranscribeService` - With this update Amazon Transcribe now supports channel identification. It transcribes audio from separate channels and combines them into a single transcription. 
