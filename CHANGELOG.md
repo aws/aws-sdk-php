@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\StorageGateway` - AWS Storage Gateway now enables you to create stored volumes with AWS KMS support.
+* `Aws\TranscribeService` - With this update Amazon Transcribe now supports channel identification. It transcribes audio from separate channels and combines them into a single transcription. 
+
 ## 3.64.2 - 2018-07-31
 
 * `Aws\Connect` - This update includes the new User Management APIs and the Federation API used for SAML authentication. The User Management APIs let you create and manage users in your Amazon Connect instance programmatically. The Federation API enables authentication between AWS and your existing identity provider using tokens.
