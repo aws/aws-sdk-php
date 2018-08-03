@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AlexaForBusiness` - Documentation updates for AWS Alexa For Business
+
 ## 3.64.4 - 2018-08-02
 
 * `Aws\Greengrass` - AWS Greengrass is now available in the Dublin, Ireland (Europe) region, eu-west-1.
