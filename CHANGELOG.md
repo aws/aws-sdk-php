@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.64.5 - 2018-08-03
 
 * `Aws\AlexaForBusiness` - Documentation updates for AWS Alexa For Business
 
