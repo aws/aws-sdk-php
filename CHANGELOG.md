@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` -  Amazon DynamoDB Point-in-time recovery (PITR) provides continuous backups of your table data. DynamoDB now supports the ability to self-restore a deleted PITR enabled table. Now, when a table with PITR enabled is deleted, a system backup is automatically created and retained for 35 days (at no additional cost). System backups allow you to restore the deleted PITR enabled table to the state it was just before the point of deletion. For more information, see the Amazon DynamoDB Developer Guide.
+* `Aws\Health` - Updates the ARN structure vended by AWS Health API. All ARNs will now include the service and type code of the associated event, as vended by DescribeEventTypes.
+
 ## 3.64.5 - 2018-08-03
 
 * `Aws\AlexaForBusiness` - Documentation updates for AWS Alexa For Business
