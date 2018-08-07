@@ -114,6 +114,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise phoneNumberValidateAsync(array $args = [])
  * @method \Aws\Result putEventStream(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putEventStreamAsync(array $args = [])
+ * @method \Aws\Result putEvents(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putEventsAsync(array $args = [])
  * @method \Aws\Result removeAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeAttributesAsync(array $args = [])
  * @method \Aws\Result sendMessages(array $args = [])
