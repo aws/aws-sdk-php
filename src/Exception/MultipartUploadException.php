@@ -1,10 +1,15 @@
 <?php
 namespace Aws\Exception;
 
+use Aws\HasMonitoringEventsTrait;
+use Aws\MonitoringEventsInterface;
 use Aws\Multipart\UploadState;
 
-class MultipartUploadException extends \RuntimeException
+class MultipartUploadException extends \RuntimeException implements
+    MonitoringEventsInterface
 {
+    use HasMonitoringEventsTrait;
+
     /** @var UploadState State of the erroneous transfer */
     private $state;
 

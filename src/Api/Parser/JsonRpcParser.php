@@ -34,7 +34,7 @@ class JsonRpcParser extends AbstractParser
             ? null
             : $this->parser->parse(
                 $operation->getOutput(),
-                $this->parseJson($response->getBody())
+                $this->parseJson($response->getBody(), $response)
             );
 
         return new Result($result ?: []);
