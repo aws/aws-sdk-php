@@ -3,6 +3,8 @@ namespace Aws\Test\Integ;
 
 trait IntegUtils
 {
+    private static $originalCsmEnabled;
+
     private static function getSdk(array $args = [])
     {
         return new \Aws\Sdk($args + [
@@ -38,6 +40,20 @@ trait IntegUtils
      */
     public static function disableCsm()
     {
-        putenv(\Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED . '=false');
+        self::$originalCsmEnabled = getenv(
+            \Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED);
+        putenv(\Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED
+            . '=false');
+    }
+
+    /**
+     * Restore original client-side monitoring enabled flag
+     *
+     * @AfterSuite
+     */
+    public static function restoreCsmConfig()
+    {
+        putenv(\Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED .
+            '=' . self::$originalCsmEnabled);
     }
 }
