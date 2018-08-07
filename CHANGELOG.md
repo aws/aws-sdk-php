@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.64.7 - 2018-08-07
 
 * `Aws\CloudWatchLogs` - Documentation Update
 * `Aws\CodeBuild` - Release semantic versioning feature for CodeBuild
