@@ -128,6 +128,8 @@ class RetryMiddleware
      * @param $retries - The number of retries that have already been attempted
      *
      * @return int
+     *
+     * @link https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/
      */
     public static function exponentialDelay($retries)
     {

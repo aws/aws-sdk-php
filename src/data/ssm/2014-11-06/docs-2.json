@@ -26,6 +26,8 @@
     "DeregisterTaskFromMaintenanceWindow": "<p>Removes a task from a Maintenance Window.</p>",
     "DescribeActivations": "<p>Details about the activation, including: the date and time the activation was created, the expiration date, the IAM role assigned to the instances in the activation, and the number of instances activated by this registration.</p>",
     "DescribeAssociation": "<p>Describes the association for the specified target or instance. If you created the association by using the <code>Targets</code> parameter, then you must retrieve the association by using the association ID. If you created the association by specifying an instance ID and a Systems Manager document, then you retrieve the association by specifying the document name and the instance ID. </p>",
+    "DescribeAssociationExecutionTargets": "<p>Use this API action to view information about a specific execution of a specific association.</p>",
+    "DescribeAssociationExecutions": "<p>Use this API action to view all executions for a specific association ID. </p>",
     "DescribeAutomationExecutions": "<p>Provides details about all active and terminated Automation executions.</p>",
     "DescribeAutomationStepExecutions": "<p>Information about all active and terminated step executions in an Automation workflow.</p>",
     "DescribeAvailablePatches": "<p>Lists all patches that could possibly be included in a patch baseline.</p>",
@@ -34,7 +36,7 @@
     "DescribeEffectiveInstanceAssociations": "<p>All associations for the instance(s).</p>",
     "DescribeEffectivePatchesForPatchBaseline": "<p>Retrieves the current effective patches (the patch and the approval state) for the specified patch baseline. Note that this API applies only to Windows patch baselines.</p>",
     "DescribeInstanceAssociationsStatus": "<p>The status of the associations for the instance(s).</p>",
-    "DescribeInstanceInformation": "<p>Describes one or more of your instances. You can use this to get information about instances like the operating system platform, the SSM Agent version (Linux), status etc. If you specify one or more instance IDs, it returns information for those instances. If you do not specify instance IDs, it returns information for all your instances. If you specify an instance ID that is not valid or an instance that you do not own, you receive an error. </p>",
+    "DescribeInstanceInformation": "<p>Describes one or more of your instances. You can use this to get information about instances like the operating system platform, the SSM Agent version (Linux), status etc. If you specify one or more instance IDs, it returns information for those instances. If you do not specify instance IDs, it returns information for all your instances. If you specify an instance ID that is not valid or an instance that you do not own, you receive an error. </p> <note> <p>The IamRole field for this API action is the Amazon Identity and Access Management (IAM) role assigned to on-premises instances. This call does not return the IAM role for Amazon EC2 instances.</p> </note>",
     "DescribeInstancePatchStates": "<p>Retrieves the high-level patch state of one or more instances.</p>",
     "DescribeInstancePatchStatesForPatchGroup": "<p>Retrieves the high-level patch state for the instances in the specified patch group.</p>",
     "DescribeInstancePatches": "<p>Retrieves information about the patches on the specified instance and their state relative to the patch baseline being used for the instance.</p>",
@@ -67,6 +69,7 @@
     "GetParametersByPath": "<p>Retrieve parameters in a specific hierarchy. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-working.html\">Working with Systems Manager Parameters</a> in the <i>AWS Systems Manager User Guide</i>. </p> <p>Request results are returned on a best-effort basis. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of <code>MaxResults</code>. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a <code>NextToken</code>. You can specify the <code>NextToken</code> in a subsequent call to get the next set of results.</p> <note> <p>This API action doesn't support filtering by tags. </p> </note>",
     "GetPatchBaseline": "<p>Retrieves information about a patch baseline.</p>",
     "GetPatchBaselineForPatchGroup": "<p>Retrieves the patch baseline that should be used for the specified patch group.</p>",
+    "LabelParameterVersion": null,
     "ListAssociationVersions": "<p>Retrieves all versions of an association for a specific association ID.</p>",
     "ListAssociations": "<p>Lists the associations for the specified Systems Manager document or instance.</p>",
     "ListCommandInvocations": "<p>An invocation is copy of a command sent to a specific instance. A command can apply to one or more instances. A command invocation applies to one instance. For example, if a user executes SendCommand against three instances, then a command invocation is created for each requested instance ID. ListCommandInvocations provide status about command execution.</p>",
@@ -90,6 +93,7 @@
     "RemoveTagsFromResource": "<p>Removes all tags from the specified resource.</p>",
     "SendAutomationSignal": "<p>Sends a signal to an Automation execution to change the current behavior or status of the execution. </p>",
     "SendCommand": "<p>Executes commands on one or more managed instances.</p>",
+    "StartAssociationsOnce": "<p>Use this API action to execute an association immediately and only one time. This action can be helpful when troubleshooting associations.</p>",
     "StartAutomationExecution": "<p>Initiates execution of an Automation document.</p>",
     "StopAutomationExecution": "<p>Stop an Automation that is currently executing.</p>",
     "UpdateAssociation": "<p>Updates an association. You can update the association name and version, the document version, schedule, parameters, and Amazon S3 output.</p>",
@@ -229,6 +233,91 @@
       "refs": {
       }
     },
+    "AssociationExecution": {
+      "base": "<p>Includes information about the specified association.</p>",
+      "refs": {
+        "AssociationExecutionsList$member": null
+      }
+    },
+    "AssociationExecutionDoesNotExist": {
+      "base": "<p>The specified execution ID does not exist. Verify the ID number and try again.</p>",
+      "refs": {
+      }
+    },
+    "AssociationExecutionFilter": {
+      "base": "<p>Filters used in the request.</p>",
+      "refs": {
+        "AssociationExecutionFilterList$member": null
+      }
+    },
+    "AssociationExecutionFilterKey": {
+      "base": null,
+      "refs": {
+        "AssociationExecutionFilter$Key": "<p>The key value used in the request.</p>"
+      }
+    },
+    "AssociationExecutionFilterList": {
+      "base": null,
+      "refs": {
+        "DescribeAssociationExecutionsRequest$Filters": "<p>Filters for the request. You can specify the following filters and values.</p> <p>ExecutionId (EQUAL)</p> <p>Status (EQUAL)</p> <p>CreatedTime (EQUAL, GREATER_THAN, LESS_THAN)</p>"
+      }
+    },
+    "AssociationExecutionFilterValue": {
+      "base": null,
+      "refs": {
+        "AssociationExecutionFilter$Value": "<p>The value specified for the key.</p>"
+      }
+    },
+    "AssociationExecutionId": {
+      "base": null,
+      "refs": {
+        "AssociationExecution$ExecutionId": "<p>The execution ID for the association. If the association does not run at intervals or according to a schedule, then the ExecutionID is the same as the AssociationID.</p>",
+        "AssociationExecutionTarget$ExecutionId": "<p>The execution ID. If the association does not run at intervals or according to a schedule, then the ExecutionID is the same as the AssociationID.</p>",
+        "DescribeAssociationExecutionTargetsRequest$ExecutionId": "<p>The execution ID for which you want to view details.</p>"
+      }
+    },
+    "AssociationExecutionTarget": {
+      "base": "<p>Includes information about the specified association execution.</p>",
+      "refs": {
+        "AssociationExecutionTargetsList$member": null
+      }
+    },
+    "AssociationExecutionTargetsFilter": {
+      "base": "<p>Filters for the association execution.</p>",
+      "refs": {
+        "AssociationExecutionTargetsFilterList$member": null
+      }
+    },
+    "AssociationExecutionTargetsFilterKey": {
+      "base": null,
+      "refs": {
+        "AssociationExecutionTargetsFilter$Key": "<p>The key value used in the request.</p>"
+      }
+    },
+    "AssociationExecutionTargetsFilterList": {
+      "base": null,
+      "refs": {
+        "DescribeAssociationExecutionTargetsRequest$Filters": "<p>Filters for the request. You can specify the following filters and values.</p> <p>Status (EQUAL)</p> <p>ResourceId (EQUAL)</p> <p>ResourceType (EQUAL)</p>"
+      }
+    },
+    "AssociationExecutionTargetsFilterValue": {
+      "base": null,
+      "refs": {
+        "AssociationExecutionTargetsFilter$Value": "<p>The value specified for the key.</p>"
+      }
+    },
+    "AssociationExecutionTargetsList": {
+      "base": null,
+      "refs": {
+        "DescribeAssociationExecutionTargetsResult$AssociationExecutionTargets": "<p>Information about the execution.</p>"
+      }
+    },
+    "AssociationExecutionsList": {
+      "base": null,
+      "refs": {
+        "DescribeAssociationExecutionsResult$AssociationExecutions": "<p>A list of the executions for the specified association ID.</p>"
+      }
+    },
     "AssociationFilter": {
       "base": "<p>Describes a filter.</p>",
       "refs": {
@@ -247,6 +336,12 @@
         "ListAssociationsRequest$AssociationFilterList": "<p>One or more filters. Use a filter to return a more specific list of results.</p>"
       }
     },
+    "AssociationFilterOperatorType": {
+      "base": null,
+      "refs": {
+        "AssociationExecutionFilter$Type": "<p>The filter type specified in the request.</p>"
+      }
+    },
     "AssociationFilterValue": {
       "base": null,
       "refs": {
@@ -258,13 +353,24 @@
       "refs": {
         "Association$AssociationId": "<p>The ID created by the system when you create an association. An association is a binding between a document and a set of targets with a schedule.</p>",
         "AssociationDescription$AssociationId": "<p>The association ID.</p>",
+        "AssociationExecution$AssociationId": "<p>The association ID.</p>",
+        "AssociationExecutionTarget$AssociationId": "<p>The association ID.</p>",
+        "AssociationIdList$member": null,
         "AssociationVersionInfo$AssociationId": "<p>The ID created by the system when the association was created.</p>",
         "DeleteAssociationRequest$AssociationId": "<p>The association ID that you want to delete.</p>",
+        "DescribeAssociationExecutionTargetsRequest$AssociationId": "<p>The association ID that includes the execution for which you want to view details.</p>",
+        "DescribeAssociationExecutionsRequest$AssociationId": "<p>The association ID for which you want to view execution history details.</p>",
         "DescribeAssociationRequest$AssociationId": "<p>The association ID for which you want information.</p>",
         "InstanceAssociation$AssociationId": "<p>The association ID.</p>",
         "InstanceAssociationStatusInfo$AssociationId": "<p>The association ID.</p>",
         "ListAssociationVersionsRequest$AssociationId": "<p>The association ID for which you want to view all versions.</p>",
         "UpdateAssociationRequest$AssociationId": "<p>The ID of the association you want to update. </p>"
+      }
+    },
+    "AssociationIdList": {
+      "base": null,
+      "refs": {
+        "StartAssociationsOnceRequest$AssociationIds": "<p>The association IDs that you want to execute immediately and only one time.</p>"
       }
     },
     "AssociationLimitExceeded": {
@@ -297,6 +403,18 @@
         "AssociationDescription$Overview": "<p>Information about the association.</p>"
       }
     },
+    "AssociationResourceId": {
+      "base": null,
+      "refs": {
+        "AssociationExecutionTarget$ResourceId": "<p>The resource ID, for example, the instance ID where the association ran.</p>"
+      }
+    },
+    "AssociationResourceType": {
+      "base": null,
+      "refs": {
+        "AssociationExecutionTarget$ResourceType": "<p>The resource type, for example, instance.</p>"
+      }
+    },
     "AssociationStatus": {
       "base": "<p>Describes an association status.</p>",
       "refs": {
@@ -321,6 +439,8 @@
       "refs": {
         "Association$AssociationVersion": "<p>The association version.</p>",
         "AssociationDescription$AssociationVersion": "<p>The association version.</p>",
+        "AssociationExecution$AssociationVersion": "<p>The association version.</p>",
+        "AssociationExecutionTarget$AssociationVersion": "<p>The association version.</p>",
         "AssociationVersionInfo$AssociationVersion": "<p>The association version.</p>",
         "DescribeAssociationRequest$AssociationVersion": "<p>Specify the association version to retrieve. To view the latest version, either specify <code>$LATEST</code> for this parameter, or omit this parameter. To view a list of all associations for an instance, use ListInstanceAssociations. To get a list of versions for a specific association, use ListAssociationVersions. </p>",
         "InstanceAssociation$AssociationVersion": "<p>Version information for the association on the instance.</p>",
@@ -566,6 +686,8 @@
         "PatchRule$EnableNonSecurity": "<p>For instances identified by the approval rule filters, enables a patch baseline to apply non-security updates available in the specified repository. The default value is 'false'. Applies to Linux instances only.</p>",
         "PutParameterRequest$Overwrite": "<p>Overwrite an existing parameter. If not specified, will default to \"false\".</p>",
         "ResolvedTargets$Truncated": "<p>A boolean value indicating whether the resolved target list is truncated.</p>",
+        "StepExecution$IsEnd": "<p>The flag which can be used to end automation no matter whether the step succeeds or fails.</p>",
+        "StepExecution$IsCritical": "<p>The flag which can be used to help decide whether the failure of current step leads to the Automation failure.</p>",
         "UpdateMaintenanceWindowRequest$Replace": "<p>If True, then all fields that are required by the CreateMaintenanceWindow action are also required for this API request. Optional fields that are not specified are set to null. </p>",
         "UpdateMaintenanceWindowTargetRequest$Replace": "<p>If True, then all fields that are required by the RegisterTargetWithMaintenanceWindow action are also required for this API request. Optional fields that are not specified are set to null.</p>",
         "UpdateMaintenanceWindowTaskRequest$Replace": "<p>If True, then all fields that are required by the RegisterTaskWithMaintenanceWndow action are also required for this API request. Optional fields that are not specified are set to null.</p>",
@@ -1054,6 +1176,9 @@
         "AssociationDescription$LastUpdateAssociationDate": "<p>The date when the association was last updated.</p>",
         "AssociationDescription$LastExecutionDate": "<p>The date on which the association was last run.</p>",
         "AssociationDescription$LastSuccessfulExecutionDate": "<p>The last date on which the association was successfully run.</p>",
+        "AssociationExecution$CreatedTime": "<p>The time the execution started.</p>",
+        "AssociationExecution$LastExecutionDate": "<p>The date of the last execution.</p>",
+        "AssociationExecutionTarget$LastExecutionDate": "<p>The date of the last execution.</p>",
         "AssociationStatus$Date": "<p>The date when the status changed.</p>",
         "AssociationVersionInfo$CreatedDate": "<p>The date the association version was created.</p>",
         "AutomationExecution$ExecutionStartTime": "<p>The time the execution started.</p>",
@@ -1091,6 +1216,7 @@
         "MaintenanceWindowExecutionTaskIdentity$EndTime": "<p>The time the task execution finished.</p>",
         "MaintenanceWindowExecutionTaskInvocationIdentity$StartTime": "<p>The time the invocation started.</p>",
         "MaintenanceWindowExecutionTaskInvocationIdentity$EndTime": "<p>The time the invocation finished.</p>",
+        "Parameter$LastModifiedDate": "<p>Date the parameter was last changed or updated and the parameter version was created.</p>",
         "ParameterHistory$LastModifiedDate": "<p>Date the parameter was last changed or updated.</p>",
         "ParameterMetadata$LastModifiedDate": "<p>Date the parameter was last changed or updated.</p>",
         "Patch$ReleaseDate": "<p>The date the patch was released.</p>",
@@ -1275,6 +1401,26 @@
       }
     },
     "DescribeActivationsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeAssociationExecutionTargetsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeAssociationExecutionTargetsResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeAssociationExecutionsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeAssociationExecutionsResult": {
       "base": null,
       "refs": {
       }
@@ -2111,7 +2257,7 @@
       }
     },
     "HierarchyLevelLimitExceededException": {
-      "base": "<p>A hierarchy can have a maximum of 15 levels. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-working.html\">Working with Systems Manager Parameters</a> in the <i>AWS Systems Manager User Guide</i>. </p>",
+      "base": "<p>A hierarchy can have a maximum of 15 levels. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-parameter-name-constraints.html\">Requirements and Constraints for Parameter Names</a> in the <i>AWS Systems Manager User Guide</i>. </p>",
       "refs": {
       }
     },
@@ -2401,6 +2547,11 @@
     },
     "InvalidAllowedPatternException": {
       "base": "<p>The request does not meet the regular expression requirement.</p>",
+      "refs": {
+      }
+    },
+    "InvalidAssociation": {
+      "base": "<p>The association is not valid or does not exist. </p>",
       "refs": {
       }
     },
@@ -2909,6 +3060,16 @@
       "base": null,
       "refs": {
         "RemoveTagsFromResourceRequest$TagKeys": "<p>Tag keys that you want to remove from the specified resource.</p>"
+      }
+    },
+    "LabelParameterVersionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "LabelParameterVersionResult": {
+      "base": null,
+      "refs": {
       }
     },
     "LastResourceDataSyncMessage": {
@@ -3609,6 +3770,8 @@
       "base": null,
       "refs": {
         "DescribeActivationsRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
+        "DescribeAssociationExecutionTargetsRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
+        "DescribeAssociationExecutionsRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
         "DescribeAutomationExecutionsRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
         "DescribeAutomationStepExecutionsRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
         "DescribeInstanceAssociationsStatusRequest$MaxResults": "<p>The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.</p>",
@@ -3648,6 +3811,10 @@
       "refs": {
         "DescribeActivationsRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results. </p>",
         "DescribeActivationsResult$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results. </p>",
+        "DescribeAssociationExecutionTargetsRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results. </p>",
+        "DescribeAssociationExecutionTargetsResult$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>",
+        "DescribeAssociationExecutionsRequest$NextToken": "<p>A token to start the list. Use this token to get the next set of results. </p>",
+        "DescribeAssociationExecutionsResult$NextToken": "<p>The token for the next set of items to return. Use this token to get the next set of results.</p>",
         "DescribeAutomationExecutionsRequest$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
         "DescribeAutomationExecutionsResult$NextToken": "<p>The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.</p>",
         "DescribeAutomationStepExecutionsRequest$NextToken": "<p>The token for the next set of items to return. (You received this token from a previous call.)</p>",
@@ -3779,6 +3946,24 @@
         "UpdatePatchBaselineResult$OperatingSystem": "<p>The operating system rule used by the updated patch baseline.</p>"
       }
     },
+    "OutputSource": {
+      "base": "<p>Information about the source where the association execution details are stored.</p>",
+      "refs": {
+        "AssociationExecutionTarget$OutputSource": "<p>The location where the association details are saved.</p>"
+      }
+    },
+    "OutputSourceId": {
+      "base": null,
+      "refs": {
+        "OutputSource$OutputSourceId": "<p>The ID of the output source, for example the URL of an Amazon S3 bucket.</p>"
+      }
+    },
+    "OutputSourceType": {
+      "base": null,
+      "refs": {
+        "OutputSource$OutputSourceType": "<p>The type of source where the association execution details are stored, for example, Amazon S3.</p>"
+      }
+    },
     "OwnerInformation": {
       "base": null,
       "refs": {
@@ -3797,12 +3982,19 @@
         "DeleteParameterRequest$Name": "<p>The name of the parameter to delete.</p>",
         "GetParameterHistoryRequest$Name": "<p>The name of a parameter you want to query.</p>",
         "GetParameterRequest$Name": "<p>The name of the parameter you want to query.</p>",
-        "GetParametersByPathRequest$Path": "<p>The hierarchy for the parameter. Hierarchies start with a forward slash (/) and end with the parameter name. A hierarchy can have a maximum of 15 levels. Here is an example of a hierarchy: <code>/Finance/Prod/IAD/WinServ2016/license33</code> </p>",
+        "GetParametersByPathRequest$Path": "<p>The hierarchy for the parameter. Hierarchies start with a forward slash (/) and end with the parameter name. A parameter name hierarchy can have a maximum of 15 levels. Here is an example of a hierarchy: <code>/Finance/Prod/IAD/WinServ2016/license33</code> </p>",
+        "LabelParameterVersionRequest$Name": null,
         "Parameter$Name": "<p>The name of the parameter.</p>",
         "ParameterHistory$Name": "<p>The name of the parameter.</p>",
         "ParameterMetadata$Name": "<p>The parameter name.</p>",
         "ParameterNameList$member": null,
-        "PutParameterRequest$Name": "<p>The fully qualified name of the parameter that you want to add to the system. The fully qualified name includes the complete hierarchy of the parameter path and name. For example: <code>/Dev/DBServer/MySQL/db-string13</code> </p> <p>For information about parameter name requirements and restrictions, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-su-create.html\">Creating Systems Manager Parameters</a> in the <i>AWS Systems Manager User Guide</i>.</p> <note> <p>The maximum length constraint listed below includes capacity for additional system attributes that are not part of the name. The maximum length for the fully qualified parameter name is 1011 characters. </p> </note>"
+        "PutParameterRequest$Name": "<p>The fully qualified name of the parameter that you want to add to the system. The fully qualified name includes the complete hierarchy of the parameter path and name. For example: <code>/Dev/DBServer/MySQL/db-string13</code> </p> <p>Naming Constraints:</p> <ul> <li> <p>Parameter names are case sensitive.</p> </li> <li> <p>A parameter name must be unique within an AWS Region</p> </li> <li> <p>A parameter name can't be prefixed with \"aws\" or \"ssm\" (case-insensitive).</p> </li> <li> <p>Parameter names can include only the following symbols and letters: <code>a-zA-Z0-9_.-/</code> </p> </li> <li> <p>A parameter name can't include spaces.</p> </li> <li> <p>Parameter hierarchies are limited to a maximum depth of fifteen levels.</p> </li> </ul> <p>For additional information about valid values for parameter names, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-parameter-name-constraints.html\">Requirements and Constraints for Parameter Names</a> in the <i>AWS Systems Manager User Guide</i>.</p> <note> <p>The maximum length constraint listed below includes capacity for additional system attributes that are not part of the name. The maximum length for the fully qualified parameter name is 1011 characters. </p> </note>"
+      }
+    },
+    "PSParameterSelector": {
+      "base": null,
+      "refs": {
+        "Parameter$Selector": "<p>Either the version number or the label used to retrieve the parameter value. Specify selectors by using one of the following formats:</p> <p>parameter_name:version</p> <p>parameter_name:label</p>"
       }
     },
     "PSParameterValue": {
@@ -3816,6 +4008,7 @@
     "PSParameterVersion": {
       "base": null,
       "refs": {
+        "LabelParameterVersionRequest$ParameterVersion": null,
         "Parameter$Version": "<p>The parameter version.</p>",
         "ParameterHistory$Version": "<p>The parameter version.</p>",
         "ParameterMetadata$Version": "<p>The parameter version.</p>",
@@ -3839,7 +4032,7 @@
       "refs": {
         "ParameterHistory$Description": "<p>Information about the parameter.</p>",
         "ParameterMetadata$Description": "<p>Description of the parameter actions.</p>",
-        "PutParameterRequest$Description": "<p>Information about the parameter that you want to add to the system.</p> <important> <p>Do not enter personally identifiable information in this field.</p> </important>"
+        "PutParameterRequest$Description": "<p>Information about the parameter that you want to add to the system. Optional but recommended.</p> <important> <p>Do not enter personally identifiable information in this field.</p> </important>"
       }
     },
     "ParameterHistory": {
@@ -3859,7 +4052,21 @@
       "refs": {
         "ParameterHistory$KeyId": "<p>The ID of the query key used for this parameter.</p>",
         "ParameterMetadata$KeyId": "<p>The ID of the query key used for this parameter.</p>",
-        "PutParameterRequest$KeyId": "<p>The KMS Key ID that you want to use to encrypt a parameter when you choose the SecureString data type. If you don't specify a key ID, the system uses the default key associated with your AWS account.</p>"
+        "PutParameterRequest$KeyId": "<p>The KMS Key ID that you want to use to encrypt a parameter. Either the default AWS Key Management Service (AWS KMS) key automatically assigned to your AWS account or a custom key. Required for parameters that use the <code>SecureString</code> data type.</p> <p>If you don't specify a key ID, the system uses the default key associated with your AWS account.</p> <ul> <li> <p>To use your default AWS KMS key, choose the <code>SecureString</code> data type, and do <i>not</i> specify the <code>Key ID</code> when you create the parameter. The system automatically populates <code>Key ID</code> with your default KMS key.</p> </li> <li> <p>To use a custom KMS key, choose the <code>SecureString</code> data type with the <code>Key ID</code> parameter.</p> </li> </ul>"
+      }
+    },
+    "ParameterLabel": {
+      "base": null,
+      "refs": {
+        "ParameterLabelList$member": null
+      }
+    },
+    "ParameterLabelList": {
+      "base": null,
+      "refs": {
+        "LabelParameterVersionRequest$Labels": null,
+        "LabelParameterVersionResult$InvalidLabels": null,
+        "ParameterHistory$Labels": "<p>Labels assigned to the parameter version.</p>"
       }
     },
     "ParameterLimitExceeded": {
@@ -3960,7 +4167,7 @@
         "Parameter$Type": "<p>The type of parameter. Valid values include the following: String, String list, Secure string.</p>",
         "ParameterHistory$Type": "<p>The type of parameter used.</p>",
         "ParameterMetadata$Type": "<p>The type of parameter. Valid parameter types include the following: String, String list, Secure string.</p>",
-        "PutParameterRequest$Type": "<p>The type of parameter that you want to add to the system.</p>"
+        "PutParameterRequest$Type": "<p>The type of parameter that you want to add to the system.</p> <p>Items in a <code>StringList</code> must be separated by a comma (,). You can't use other punctuation or special character to escape items in the list. If you have a parameter value that requires a comma, then use the <code>String</code> data type.</p> <note> <p> <code>SecureString</code> is not currently supported for AWS CloudFormation templates or in the China Regions.</p> </note>"
       }
     },
     "ParameterValue": {
@@ -3974,6 +4181,11 @@
       "base": null,
       "refs": {
         "Parameters$value": null
+      }
+    },
+    "ParameterVersionLabelLimitExceeded": {
+      "base": null,
+      "refs": {
       }
     },
     "ParameterVersionNotFound": {
@@ -4122,7 +4334,7 @@
       }
     },
     "PatchFilter": {
-      "base": "<p>Defines a patch filter.</p> <p>A patch filter consists of key/value pairs, but not all keys are valid for all operating system types. For example, the key <code>PRODUCT</code> is valid for all supported operating system types. The key <code>MSRC_SEVERITY</code>, however, is valid only for Windows operating systems, and the key <code>SECTION</code> is valid only for Ubuntu operating systems.</p> <p>Refer to the following sections for information about which keys may be used with each major operating system, and which values are valid for each key.</p> <p> <b>Windows Operating Systems</b> </p> <p>The supported keys for Windows operating systems are <code>PRODUCT</code>, <code>CLASSIFICATION</code>, and <code>MSRC_SEVERITY</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Windows7</code> </p> </li> <li> <p> <code>Windows8</code> </p> </li> <li> <p> <code>Windows8.1</code> </p> </li> <li> <p> <code>Windows8Embedded</code> </p> </li> <li> <p> <code>Windows10</code> </p> </li> <li> <p> <code>Windows10LTSB</code> </p> </li> <li> <p> <code>WindowsServer2008</code> </p> </li> <li> <p> <code>WindowsServer2008R2</code> </p> </li> <li> <p> <code>WindowsServer2012</code> </p> </li> <li> <p> <code>WindowsServer2012R2</code> </p> </li> <li> <p> <code>WindowsServer2016</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>CLASSIFICATION</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>CriticalUpdates</code> </p> </li> <li> <p> <code>DefinitionUpdates</code> </p> </li> <li> <p> <code>Drivers</code> </p> </li> <li> <p> <code>FeaturePacks</code> </p> </li> <li> <p> <code>SecurityUpdates</code> </p> </li> <li> <p> <code>ServicePacks</code> </p> </li> <li> <p> <code>Tools</code> </p> </li> <li> <p> <code>UpdateRollups</code> </p> </li> <li> <p> <code>Updates</code> </p> </li> <li> <p> <code>Upgrades</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>MSRC_SEVERITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Critical</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Moderate</code> </p> </li> <li> <p> <code>Low</code> </p> </li> <li> <p> <code>Unspecified</code> </p> </li> </ul> <p> <b>Ubuntu Operating Systems</b> </p> <p>The supported keys for Ubuntu operating systems are <code>PRODUCT</code>, <code>PRIORITY</code>, and <code>SECTION</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Ubuntu14.04</code> </p> </li> <li> <p> <code>Ubuntu16.04</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>PRIORITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Required</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Standard</code> </p> </li> <li> <p> <code>Optional</code> </p> </li> <li> <p> <code>Extra</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>SECTION</code> </p> <p>Only the length of the key value is validated. Minimum length is 1. Maximum length is 64.</p> <p> <b>Amazon Linux Operating Systems</b> </p> <p>The supported keys for Amazon Linux operating systems are <code>PRODUCT</code>, <code>CLASSIFICATION</code>, and <code>SEVERITY</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>AmazonLinux2012.03</code> </p> </li> <li> <p> <code>AmazonLinux2012.09</code> </p> </li> <li> <p> <code>AmazonLinux2013.03</code> </p> </li> <li> <p> <code>AmazonLinux2013.09</code> </p> </li> <li> <p> <code>AmazonLinux2014.03</code> </p> </li> <li> <p> <code>AmazonLinux2014.09</code> </p> </li> <li> <p> <code>AmazonLinux2015.03</code> </p> </li> <li> <p> <code>AmazonLinux2015.09</code> </p> </li> <li> <p> <code>AmazonLinux2016.03</code> </p> </li> <li> <p> <code>AmazonLinux2016.09</code> </p> </li> <li> <p> <code>AmazonLinux2017.03</code> </p> </li> <li> <p> <code>AmazonLinux2017.09</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>CLASSIFICATION</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Security</code> </p> </li> <li> <p> <code>Bugfix</code> </p> </li> <li> <p> <code>Enhancement</code> </p> </li> <li> <p> <code>Recommended</code> </p> </li> <li> <p> <code>Newpackage</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>SEVERITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Critical</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Medium</code> </p> </li> <li> <p> <code>Low</code> </p> </li> </ul> <p> <b>RedHat Enterprise Linux (RHEL) Operating Systems</b> </p> <p>The supported keys for RedHat Enterprise Linux operating systems are <code>PRODUCT</code>, <code>CLASSIFICATION</code>, and <code>SEVERITY</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>RedhatEnterpriseLinux6.5</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux6.6</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux6.7</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux6.8</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux6.9</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux7.0</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux7.1</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux7.2</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux7.3</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux7.4</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>CLASSIFICATION</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Security</code> </p> </li> <li> <p> <code>Bugfix</code> </p> </li> <li> <p> <code>Enhancement</code> </p> </li> <li> <p> <code>Recommended</code> </p> </li> <li> <p> <code>Newpackage</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>SEVERITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Critical</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Medium</code> </p> </li> <li> <p> <code>Low</code> </p> </li> </ul> <p> <b>SUSE Linux Enterprise Server (SLES) Operating Systems</b> </p> <p>The supported keys for SLES operating systems are <code>PRODUCT</code>, <code>CLASSIFICATION</code>, and <code>SEVERITY</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Suse12.0</code> </p> </li> <li> <p> <code>Suse12.1</code> </p> </li> <li> <p> <code>Suse12.2</code> </p> </li> <li> <p> <code>Suse12.3</code> </p> </li> <li> <p> <code>Suse12.4</code> </p> </li> <li> <p> <code>Suse12.5</code> </p> </li> <li> <p> <code>Suse12.6</code> </p> </li> <li> <p> <code>Suse12.7</code> </p> </li> <li> <p> <code>Suse12.8</code> </p> </li> <li> <p> <code>Suse12.9</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>CLASSIFICATION</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Security</code> </p> </li> <li> <p> <code>Recommended</code> </p> </li> <li> <p> <code>Optional</code> </p> </li> <li> <p> <code>Feature</code> </p> </li> <li> <p> <code>Document</code> </p> </li> <li> <p> <code>Yast</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>SEVERITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Critical</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Moderate</code> </p> </li> <li> <p> <code>Low</code> </p> </li> </ul> <p> <b>CentOS Operating Systems</b> </p> <p>The supported keys for CentOS operating systems are <code>PRODUCT</code>, <code>CLASSIFICATION</code>, and <code>SEVERITY</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>CentOS6.5</code> </p> </li> <li> <p> <code>CentOS6.6</code> </p> </li> <li> <p> <code>CentOS6.7</code> </p> </li> <li> <p> <code>CentOS6.8</code> </p> </li> <li> <p> <code>CentOS6.9</code> </p> </li> <li> <p> <code>CentOS7.0</code> </p> </li> <li> <p> <code>CentOS7.1</code> </p> </li> <li> <p> <code>CentOS7.2</code> </p> </li> <li> <p> <code>CentOS7.3</code> </p> </li> <li> <p> <code>CentOS7.4</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>CLASSIFICATION</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Security</code> </p> </li> <li> <p> <code>Bugfix</code> </p> </li> <li> <p> <code>Enhancement</code> </p> </li> <li> <p> <code>Recommended</code> </p> </li> <li> <p> <code>Newpackage</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>SEVERITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Critical</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Medium</code> </p> </li> <li> <p> <code>Low</code> </p> </li> </ul>",
+      "base": "<p>Defines a patch filter.</p> <p>A patch filter consists of key/value pairs, but not all keys are valid for all operating system types. For example, the key <code>PRODUCT</code> is valid for all supported operating system types. The key <code>MSRC_SEVERITY</code>, however, is valid only for Windows operating systems, and the key <code>SECTION</code> is valid only for Ubuntu operating systems.</p> <p>Refer to the following sections for information about which keys may be used with each major operating system, and which values are valid for each key.</p> <p> <b>Windows Operating Systems</b> </p> <p>The supported keys for Windows operating systems are <code>PRODUCT</code>, <code>CLASSIFICATION</code>, and <code>MSRC_SEVERITY</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Windows7</code> </p> </li> <li> <p> <code>Windows8</code> </p> </li> <li> <p> <code>Windows8.1</code> </p> </li> <li> <p> <code>Windows8Embedded</code> </p> </li> <li> <p> <code>Windows10</code> </p> </li> <li> <p> <code>Windows10LTSB</code> </p> </li> <li> <p> <code>WindowsServer2008</code> </p> </li> <li> <p> <code>WindowsServer2008R2</code> </p> </li> <li> <p> <code>WindowsServer2012</code> </p> </li> <li> <p> <code>WindowsServer2012R2</code> </p> </li> <li> <p> <code>WindowsServer2016</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>CLASSIFICATION</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>CriticalUpdates</code> </p> </li> <li> <p> <code>DefinitionUpdates</code> </p> </li> <li> <p> <code>Drivers</code> </p> </li> <li> <p> <code>FeaturePacks</code> </p> </li> <li> <p> <code>SecurityUpdates</code> </p> </li> <li> <p> <code>ServicePacks</code> </p> </li> <li> <p> <code>Tools</code> </p> </li> <li> <p> <code>UpdateRollups</code> </p> </li> <li> <p> <code>Updates</code> </p> </li> <li> <p> <code>Upgrades</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>MSRC_SEVERITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Critical</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Moderate</code> </p> </li> <li> <p> <code>Low</code> </p> </li> <li> <p> <code>Unspecified</code> </p> </li> </ul> <p> <b>Ubuntu Operating Systems</b> </p> <p>The supported keys for Ubuntu operating systems are <code>PRODUCT</code>, <code>PRIORITY</code>, and <code>SECTION</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Ubuntu14.04</code> </p> </li> <li> <p> <code>Ubuntu16.04</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>PRIORITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Required</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Standard</code> </p> </li> <li> <p> <code>Optional</code> </p> </li> <li> <p> <code>Extra</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>SECTION</code> </p> <p>Only the length of the key value is validated. Minimum length is 1. Maximum length is 64.</p> <p> <b>Amazon Linux Operating Systems</b> </p> <p>The supported keys for Amazon Linux operating systems are <code>PRODUCT</code>, <code>CLASSIFICATION</code>, and <code>SEVERITY</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>AmazonLinux2012.03</code> </p> </li> <li> <p> <code>AmazonLinux2012.09</code> </p> </li> <li> <p> <code>AmazonLinux2013.03</code> </p> </li> <li> <p> <code>AmazonLinux2013.09</code> </p> </li> <li> <p> <code>AmazonLinux2014.03</code> </p> </li> <li> <p> <code>AmazonLinux2014.09</code> </p> </li> <li> <p> <code>AmazonLinux2015.03</code> </p> </li> <li> <p> <code>AmazonLinux2015.09</code> </p> </li> <li> <p> <code>AmazonLinux2016.03</code> </p> </li> <li> <p> <code>AmazonLinux2016.09</code> </p> </li> <li> <p> <code>AmazonLinux2017.03</code> </p> </li> <li> <p> <code>AmazonLinux2017.09</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>CLASSIFICATION</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Security</code> </p> </li> <li> <p> <code>Bugfix</code> </p> </li> <li> <p> <code>Enhancement</code> </p> </li> <li> <p> <code>Recommended</code> </p> </li> <li> <p> <code>Newpackage</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>SEVERITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Critical</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Medium</code> </p> </li> <li> <p> <code>Low</code> </p> </li> </ul> <p> <b>Amazon Linux 2 Operating Systems</b> </p> <p>The supported keys for Amazon Linux 2 operating systems are <code>PRODUCT</code>, <code>CLASSIFICATION</code>, and <code>SEVERITY</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>AmazonLinux2</code> </p> </li> <li> <p> <code>AmazonLinux2.0</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>CLASSIFICATION</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Security</code> </p> </li> <li> <p> <code>Bugfix</code> </p> </li> <li> <p> <code>Enhancement</code> </p> </li> <li> <p> <code>Recommended</code> </p> </li> <li> <p> <code>Newpackage</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>SEVERITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Critical</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Medium</code> </p> </li> <li> <p> <code>Low</code> </p> </li> </ul> <p> <b>RedHat Enterprise Linux (RHEL) Operating Systems</b> </p> <p>The supported keys for RedHat Enterprise Linux operating systems are <code>PRODUCT</code>, <code>CLASSIFICATION</code>, and <code>SEVERITY</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>RedhatEnterpriseLinux6.5</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux6.6</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux6.7</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux6.8</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux6.9</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux7.0</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux7.1</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux7.2</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux7.3</code> </p> </li> <li> <p> <code>RedhatEnterpriseLinux7.4</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>CLASSIFICATION</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Security</code> </p> </li> <li> <p> <code>Bugfix</code> </p> </li> <li> <p> <code>Enhancement</code> </p> </li> <li> <p> <code>Recommended</code> </p> </li> <li> <p> <code>Newpackage</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>SEVERITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Critical</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Medium</code> </p> </li> <li> <p> <code>Low</code> </p> </li> </ul> <p> <b>SUSE Linux Enterprise Server (SLES) Operating Systems</b> </p> <p>The supported keys for SLES operating systems are <code>PRODUCT</code>, <code>CLASSIFICATION</code>, and <code>SEVERITY</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Suse12.0</code> </p> </li> <li> <p> <code>Suse12.1</code> </p> </li> <li> <p> <code>Suse12.2</code> </p> </li> <li> <p> <code>Suse12.3</code> </p> </li> <li> <p> <code>Suse12.4</code> </p> </li> <li> <p> <code>Suse12.5</code> </p> </li> <li> <p> <code>Suse12.6</code> </p> </li> <li> <p> <code>Suse12.7</code> </p> </li> <li> <p> <code>Suse12.8</code> </p> </li> <li> <p> <code>Suse12.9</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>CLASSIFICATION</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Security</code> </p> </li> <li> <p> <code>Recommended</code> </p> </li> <li> <p> <code>Optional</code> </p> </li> <li> <p> <code>Feature</code> </p> </li> <li> <p> <code>Document</code> </p> </li> <li> <p> <code>Yast</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>SEVERITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Critical</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Moderate</code> </p> </li> <li> <p> <code>Low</code> </p> </li> </ul> <p> <b>CentOS Operating Systems</b> </p> <p>The supported keys for CentOS operating systems are <code>PRODUCT</code>, <code>CLASSIFICATION</code>, and <code>SEVERITY</code>. See the following lists for valid values for each of these keys.</p> <p> <i>Supported key:</i> <code>PRODUCT</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>CentOS6.5</code> </p> </li> <li> <p> <code>CentOS6.6</code> </p> </li> <li> <p> <code>CentOS6.7</code> </p> </li> <li> <p> <code>CentOS6.8</code> </p> </li> <li> <p> <code>CentOS6.9</code> </p> </li> <li> <p> <code>CentOS7.0</code> </p> </li> <li> <p> <code>CentOS7.1</code> </p> </li> <li> <p> <code>CentOS7.2</code> </p> </li> <li> <p> <code>CentOS7.3</code> </p> </li> <li> <p> <code>CentOS7.4</code> </p> </li> <li> <p> <code>*</code> </p> <p> <i>Use a wildcard character (*) to target all supported operating system versions.</i> </p> </li> </ul> <p> <i>Supported key:</i> <code>CLASSIFICATION</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Security</code> </p> </li> <li> <p> <code>Bugfix</code> </p> </li> <li> <p> <code>Enhancement</code> </p> </li> <li> <p> <code>Recommended</code> </p> </li> <li> <p> <code>Newpackage</code> </p> </li> </ul> <p> <i>Supported key:</i> <code>SEVERITY</code> </p> <p> <i>Supported values:</i> </p> <ul> <li> <p> <code>Critical</code> </p> </li> <li> <p> <code>Important</code> </p> </li> <li> <p> <code>Medium</code> </p> </li> <li> <p> <code>Low</code> </p> </li> </ul>",
       "refs": {
         "PatchFilterList$member": null
       }
@@ -4357,7 +4569,7 @@
     "PatchSourceConfiguration": {
       "base": null,
       "refs": {
-        "PatchSource$Configuration": "<p>The value of the yum repo configuration. For example:</p> <p> <code>cachedir=/var/cache/yum/$basesearch</code> </p> <p> <code>$releasever</code> </p> <p> <code>keepcache=0</code> </p> <p> <code>debualevel=2</code> </p>"
+        "PatchSource$Configuration": "<p>The value of the yum repo configuration. For example:</p> <p> <code>cachedir=/var/cache/yum/$basesearch</code> </p> <p> <code>$releasever</code> </p> <p> <code>keepcache=0</code> </p> <p> <code>debuglevel=2</code> </p>"
       }
     },
     "PatchSourceList": {
@@ -4561,6 +4773,12 @@
       "base": null,
       "refs": {
         "InventoryDeletionSummaryItem$Count": "<p>A count of the number of deleted items.</p>"
+      }
+    },
+    "ResourceCountByStatus": {
+      "base": null,
+      "refs": {
+        "AssociationExecution$ResourceCountByStatus": "<p>An aggregate status of the resources in the execution based on the status type.</p>"
       }
     },
     "ResourceDataSyncAWSKMSKeyARN": {
@@ -4828,6 +5046,16 @@
         "GetCommandInvocationResult$StandardOutputContent": "<p>The first 24,000 characters written by the plugin to stdout. If the command has not finished executing, if ExecutionStatus is neither Succeeded nor Failed, then this string is empty.</p>"
       }
     },
+    "StartAssociationsOnceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartAssociationsOnceResult": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StartAutomationExecutionRequest": {
       "base": null,
       "refs": {
@@ -4862,6 +5090,10 @@
     "StatusName": {
       "base": null,
       "refs": {
+        "AssociationExecution$Status": "<p>The status of the association execution.</p>",
+        "AssociationExecution$DetailedStatus": "<p>Detailed status information about the execution.</p>",
+        "AssociationExecutionTarget$Status": "<p>The association execution status.</p>",
+        "AssociationExecutionTarget$DetailedStatus": "<p>Detailed information about the execution status.</p>",
         "AssociationOverview$Status": "<p>The status of the association. Status can be: Pending, Success, or Failed.</p>",
         "AssociationOverview$DetailedStatus": "<p>A detailed status of the association.</p>",
         "AssociationStatusAggregatedCount$key": null,
@@ -4941,6 +5173,7 @@
       "refs": {
         "AlreadyExistsException$Message": null,
         "AssociationDoesNotExist$Message": null,
+        "AssociationExecutionDoesNotExist$Message": null,
         "AssociationVersionLimitExceeded$Message": null,
         "AutomationDefinitionNotFoundException$Message": null,
         "AutomationDefinitionVersionNotFoundException$Message": null,
@@ -4969,7 +5202,7 @@
         "FailureDetails$FailureStage": "<p>The stage of the Automation execution when the failure occurred. The stages include the following: InputValidation, PreVerification, Invocation, PostVerification.</p>",
         "FailureDetails$FailureType": "<p>The type of Automation failure. Failure types include the following: Action, Permission, Throttling, Verification, Internal.</p>",
         "FeatureNotAvailableException$Message": null,
-        "HierarchyLevelLimitExceededException$message": "<p>A hierarchy can have a maximum of 15 levels. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-working.html\">Working with Systems Manager Parameters</a> in the <i>AWS Systems Manager User Guide</i>. </p>",
+        "HierarchyLevelLimitExceededException$message": "<p>A hierarchy can have a maximum of 15 levels. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-parameter-name-constraints.html\">Requirements and Constraints for Parameter Names</a> in the <i>AWS Systems Manager User Guide</i>. </p>",
         "HierarchyTypeMismatchException$message": "<p>Parameter Store does not support changing a parameter type in a hierarchy. For example, you can't change a parameter from a String type to a SecureString type. You must create a new, unique parameter.</p>",
         "IdempotentParameterMismatch$Message": null,
         "InstanceInformation$PlatformName": "<p>The name of the operating system platform running on your instance. </p>",
@@ -4979,6 +5212,7 @@
         "InvalidActivation$Message": null,
         "InvalidActivationId$Message": null,
         "InvalidAllowedPatternException$message": "<p>The request does not meet the regular expression requirement.</p>",
+        "InvalidAssociation$Message": null,
         "InvalidAssociationVersion$Message": null,
         "InvalidAutomationExecutionParametersException$Message": null,
         "InvalidAutomationSignalException$Message": null,
@@ -5015,6 +5249,8 @@
         "MaxDocumentSizeExceeded$Message": null,
         "NormalStringMap$key": null,
         "NormalStringMap$value": null,
+        "Parameter$SourceResult": "<p>Applies to parameters that reference information in other AWS services. SourceResult is the raw result or response from the source.</p>",
+        "Parameter$ARN": "<p>The Amazon Resource Name (ARN) of the parameter.</p>",
         "ParameterAlreadyExists$message": null,
         "ParameterHistory$LastModifiedUser": "<p>Amazon Resource Name (ARN) of the AWS user who last changed the parameter.</p>",
         "ParameterLimitExceeded$message": null,
@@ -5022,6 +5258,7 @@
         "ParameterMetadata$LastModifiedUser": "<p>Amazon Resource Name (ARN) of the AWS user who last changed the parameter.</p>",
         "ParameterNotFound$message": null,
         "ParameterPatternMismatchException$message": "<p>The parameter name is not valid.</p>",
+        "ParameterVersionLabelLimitExceeded$message": null,
         "ParameterVersionNotFound$message": null,
         "ResourceDataSyncCountExceededException$Message": null,
         "ResourceDataSyncInvalidConfigurationException$Message": null,
@@ -5033,6 +5270,7 @@
         "StepExecution$Response": "<p>A message associated with the response code for an execution.</p>",
         "StepExecution$FailureMessage": "<p>If a step failed, this message explains why the execution failed.</p>",
         "StepExecution$StepExecutionId": "<p>The unique ID of a step execution.</p>",
+        "StepExecution$NextStep": "<p>The next step after the step succeeds.</p>",
         "StringList$member": null,
         "SubTypeCountLimitExceededException$Message": null,
         "TargetInUseException$Message": null,
@@ -5320,6 +5558,18 @@
         "GetCommandInvocationResult$StandardOutputUrl": "<p>The URL for the complete text written by the plugin to stdout in Amazon S3. If an Amazon S3 bucket was not specified, then this string is empty.</p>",
         "GetCommandInvocationResult$StandardErrorUrl": "<p>The URL for the complete text written by the plugin to stderr. If the command has not finished executing, then this string is empty.</p>",
         "S3OutputUrl$OutputUrl": "<p>A URL for an Amazon S3 bucket where you want to store the results of this request.</p>"
+      }
+    },
+    "ValidNextStep": {
+      "base": null,
+      "refs": {
+        "ValidNextStepList$member": null
+      }
+    },
+    "ValidNextStepList": {
+      "base": null,
+      "refs": {
+        "StepExecution$ValidNextSteps": "<p>Strategies used when step fails, we support Continue and Abort. Abort will fail the automation when the step fails. Continue will ignore the failure of current step and allow automation to execute the next step. With conditional branching, we add step:stepName to support the automation to go to another specific step.</p>"
       }
     },
     "Version": {

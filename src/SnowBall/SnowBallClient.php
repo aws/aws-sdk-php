@@ -33,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listClusterJobsAsync(array $args = [])
  * @method \Aws\Result listClusters(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listClustersAsync(array $args = [])
+ * @method \Aws\Result listCompatibleImages(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCompatibleImagesAsync(array $args = [])
  * @method \Aws\Result listJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listJobsAsync(array $args = [])
  * @method \Aws\Result updateCluster(array $args = [])

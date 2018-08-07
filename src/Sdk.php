@@ -82,6 +82,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCostandUsageReportService(array $args = [])
  * @method \Aws\DAX\DAXClient createDAX(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDAX(array $args = [])
+ * @method \Aws\DLM\DLMClient createDLM(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionDLM(array $args = [])
  * @method \Aws\DataPipeline\DataPipelineClient createDataPipeline(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDataPipeline(array $args = [])
  * @method \Aws\DatabaseMigrationService\DatabaseMigrationServiceClient createDatabaseMigrationService(array $args = [])
@@ -180,6 +182,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMTurk(array $args = [])
  * @method \Aws\MachineLearning\MachineLearningClient createMachineLearning(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMachineLearning(array $args = [])
+ * @method \Aws\Macie\MacieClient createMacie(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMacie(array $args = [])
  * @method \Aws\MarketplaceCommerceAnalytics\MarketplaceCommerceAnalyticsClient createMarketplaceCommerceAnalytics(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMarketplaceCommerceAnalytics(array $args = [])
  * @method \Aws\MarketplaceEntitlementService\MarketplaceEntitlementServiceClient createMarketplaceEntitlementService(array $args = [])
@@ -289,7 +293,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.61.8';
+    const VERSION = '3.64.3';
 
     /** @var array Arguments for creating clients */
     private $args;

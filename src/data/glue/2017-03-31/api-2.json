@@ -6,6 +6,7 @@
     "jsonVersion":"1.1",
     "protocol":"json",
     "serviceFullName":"AWS Glue",
+    "serviceId":"Glue",
     "signatureVersion":"v4",
     "targetPrefix":"AWSGlue",
     "uid":"glue-2017-03-31"
@@ -1709,7 +1710,8 @@
       "type":"structure",
       "members":{
         "S3Targets":{"shape":"S3TargetList"},
-        "JdbcTargets":{"shape":"JdbcTargetList"}
+        "JdbcTargets":{"shape":"JdbcTargetList"},
+        "DynamoDBTargets":{"shape":"DynamoDBTargetList"}
       }
     },
     "CreateClassifierRequest":{
@@ -1789,6 +1791,7 @@
         "SecurityGroupIds":{"shape":"StringList"},
         "SubnetId":{"shape":"GenericString"},
         "PublicKey":{"shape":"GenericString"},
+        "PublicKeys":{"shape":"PublicKeysList"},
         "NumberOfNodes":{"shape":"IntegerValue"},
         "ExtraPythonLibsS3Path":{"shape":"GenericString"},
         "ExtraJarsS3Path":{"shape":"GenericString"}
@@ -2217,7 +2220,8 @@
         "LastUpdateStatus":{"shape":"GenericString"},
         "CreatedTimestamp":{"shape":"TimestampValue"},
         "LastModifiedTimestamp":{"shape":"TimestampValue"},
-        "PublicKey":{"shape":"GenericString"}
+        "PublicKey":{"shape":"GenericString"},
+        "PublicKeys":{"shape":"PublicKeysList"}
       }
     },
     "DevEndpointCustomLibraries":{
@@ -2230,6 +2234,16 @@
     "DevEndpointList":{
       "type":"list",
       "member":{"shape":"DevEndpoint"}
+    },
+    "DynamoDBTarget":{
+      "type":"structure",
+      "members":{
+        "Path":{"shape":"Path"}
+      }
+    },
+    "DynamoDBTargetList":{
+      "type":"list",
+      "member":{"shape":"DynamoDBTarget"}
     },
     "EntityNotFoundException":{
       "type":"structure",
@@ -2979,7 +2993,8 @@
       "type":"structure",
       "members":{
         "Jdbc":{"shape":"CodeGenNodeArgs"},
-        "S3":{"shape":"CodeGenNodeArgs"}
+        "S3":{"shape":"CodeGenNodeArgs"},
+        "DynamoDB":{"shape":"CodeGenNodeArgs"}
       }
     },
     "LocationMap":{
@@ -3214,6 +3229,11 @@
         "ROLE",
         "GROUP"
       ]
+    },
+    "PublicKeysList":{
+      "type":"list",
+      "member":{"shape":"GenericString"},
+      "max":5
     },
     "PythonScript":{"type":"string"},
     "ResetJobBookmarkRequest":{
@@ -3712,6 +3732,8 @@
       "members":{
         "EndpointName":{"shape":"GenericString"},
         "PublicKey":{"shape":"GenericString"},
+        "AddPublicKeys":{"shape":"PublicKeysList"},
+        "DeletePublicKeys":{"shape":"PublicKeysList"},
         "CustomLibraries":{"shape":"DevEndpointCustomLibraries"},
         "UpdateEtlLibraries":{"shape":"BooleanValue"}
       }
