@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SSM` - AWS Systems Manager Automation is launching two new features for Automation Execution Rate Control based on tags and customized parameter maps. With the first feature, customer can target their resources by specifying a Tag with Key/Value. With the second feature, Parameter maps rate control, customers can benefit from customization of input parameters.
+* `Aws\SecretsManager` - This release introduces a ForceDeleteWithoutRecovery parameter to the DeleteSecret API enabling customers to force the deletion of a secret without any recovery window
+
 ## 3.64.7 - 2018-08-07
 
 * `Aws\CloudWatchLogs` - Documentation Update
