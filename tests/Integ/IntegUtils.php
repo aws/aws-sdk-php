@@ -41,9 +41,11 @@ trait IntegUtils
     public static function disableCsm()
     {
         self::$originalCsmEnabled = getenv(
-            \Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED);
+            \Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED
+        );
         putenv(\Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED
-            . '=false');
+            . '=false'
+        );
     }
 
     /**
@@ -54,6 +56,7 @@ trait IntegUtils
     public static function restoreCsmConfig()
     {
         putenv(\Aws\ClientSideMonitoring\ConfigurationProvider::ENV_ENABLED .
-            '=' . self::$originalCsmEnabled);
+            '=' . self::$originalCsmEnabled
+        );
     }
 }
