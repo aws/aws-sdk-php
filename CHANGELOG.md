@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.64.9 - 2018-08-09
 
 * `Aws\DAX` - Add the SSESpecification field to CreateCluster to allow creation of clusters with server-side encryption, and add the SSEDescription field to DescribeClusters to display the status of server-side encryption for a cluster. 
 * `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) introduces support for Docker volumes and Docker volume drivers. Customers can now configure their ECS Tasks to use Docker volumes, enabling stateful and storage-intensive applications to be deployed on ECS.
