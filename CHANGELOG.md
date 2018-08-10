@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.64.10 - 2018-08-10
 
 * `Aws\MediaConvert` - This release adds support for a new rate control mode, Quality-Defined Variable Bitrate (QVBR) encoding, includes updates to optimize transcoding performance, and resolves previously reported bugs.
 * `Aws\MediaPackage` - Elemental MediaPackage is now available in the SFO region.
