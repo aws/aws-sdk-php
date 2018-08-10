@@ -9,4 +9,4 @@ Feature: Amazon Glacier
   Scenario: Handling errors
     When I attempt to call the "ListVaults" API with:
     | accountId | abcmnoxyz |
-    Then I expect the response error code to be "UnrecognizedClientException"
+    Then the request should fail
