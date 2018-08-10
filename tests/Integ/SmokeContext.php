@@ -408,6 +408,14 @@ class SmokeContext extends PHPUnit_Framework_Assert implements
     }
 
     /**
+     * @Then the request should fail
+     */
+    public function theRequestShouldFail()
+    {
+        $this->assertNotEmpty($this->error);
+    }
+
+    /**
      * @Then the error message should contain:
      *
      * @param PyStringNode $string
