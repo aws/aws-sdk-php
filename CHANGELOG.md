@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaConvert` - This release adds support for a new rate control mode, Quality-Defined Variable Bitrate (QVBR) encoding, includes updates to optimize transcoding performance, and resolves previously reported bugs.
+* `Aws\MediaPackage` - Elemental MediaPackage is now available in the SFO region.
+* `Aws\RDS` - Documentation updates for rds
+
 ## 3.64.9 - 2018-08-09
 
 * `Aws\DAX` - Add the SSESpecification field to CreateCluster to allow creation of clusters with server-side encryption, and add the SSEDescription field to DescribeClusters to display the status of server-side encryption for a cluster. 
