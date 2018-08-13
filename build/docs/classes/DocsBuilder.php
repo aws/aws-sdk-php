@@ -119,7 +119,11 @@ class DocsBuilder
             }
         }
 
-        ksort($services, SORT_NATURAL | SORT_FLAG_CASE);
+        uasort($services, function($a, $b) {
+            $serviceA = current($a);
+            $serviceB = current($b);
+            return strcasecmp($serviceA->namespace, $serviceB->namespace);
+        });
         $this->updateHomepage($services);
         $this->updateClients($services);
         $this->updateAliases($services, $aliases);
