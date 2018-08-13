@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.64.11 - 2018-08-13
 
 * `Aws\SageMaker` - SageMaker updated the default endpoint URL to support Private Link via the CLI/SDK.
 
