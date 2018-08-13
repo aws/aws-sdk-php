@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - SageMaker updated the default endpoint URL to support Private Link via the CLI/SDK.
+
 ## 3.64.10 - 2018-08-10
 
 * `Aws\MediaConvert` - This release adds support for a new rate control mode, Quality-Defined Variable Bitrate (QVBR) encoding, includes updates to optimize transcoding performance, and resolves previously reported bugs.
