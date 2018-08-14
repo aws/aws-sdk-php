@@ -216,6 +216,53 @@ class PartitionEndpointProviderTest extends TestCase
         $this->assertSame("https://$endpoint", $data['endpoint']);
     }
 
+    public function testCanMergePrefixData()
+    {
+        $prefixData = [
+            "prefix-groups" => [
+                "ec2" => ["ec2_old", "ec2_deprecated"],
+                "s3" => ["s3_old"],
+            ],
+        ];
+
+        $mergedData = PartitionEndpointProvider::mergePrefixData(
+            [
+                "partitions" => [
+                    [
+                        "services" => [
+                            "ec2" => [
+                                "endpoints" => [
+                                    "us-east-1" => []
+                                ]
+                            ],
+                            "s3" => [
+                                "endpoints" => [
+                                    "us-east-1" => [],
+                                    "us-east-2" => []
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            $prefixData
+        );
+
+        foreach ($mergedData["partitions"] as $partition) {
+            foreach ($prefixData['prefix-groups'] as $current => $old) {
+                foreach ($old as $prefix) {
+                    $this->assertArrayHasKey(
+                        $prefix, $partition["services"]
+                    );
+                    $this->assertSame(
+                        $partition["services"][$current],
+                        $partition["services"][$prefix]
+                    );
+                }
+            }
+        }
+    }
+
     public function knownEndpointProvider()
     {
         $partitions = PartitionEndpointProvider::defaultProvider();

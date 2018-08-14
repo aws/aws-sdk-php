@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Endpoint;
 
+use JmesPath\Env;
+
 class PartitionEndpointProvider
 {
     /** @var Partition[] */
@@ -51,7 +53,7 @@ class PartitionEndpointProvider
      * the provided name can be found.
      *
      * @param string $name
-     * 
+     *
      * @return Partition|null
      */
     public function getPartitionByName($name)
@@ -71,7 +73,36 @@ class PartitionEndpointProvider
     public static function defaultProvider()
     {
         $data = \Aws\load_compiled_json(__DIR__ . '/../data/endpoints.json');
+        $prefixData = \Aws\load_compiled_json(__DIR__ . '/../data/endpoints_prefix_history.json');
+        $mergedData = self::mergePrefixData($data, $prefixData);
 
-        return new self($data['partitions']);
+        return new self($mergedData['partitions']);
+    }
+
+    /**
+     * Copy endpoint data for other prefixes used by a given service
+     *
+     * @param $data
+     * @param $prefixData
+     * @return array
+     */
+    public static function mergePrefixData($data, $prefixData)
+    {
+        $prefixGroups = $prefixData['prefix-groups'];
+
+        foreach ($data["partitions"] as $index => $partition) {
+            foreach ($prefixGroups as $current => $old) {
+                $serviceData = Env::search("services.{$current}", $partition);
+                if (!empty($serviceData)) {
+                    foreach ($old as $prefix) {
+                        if (empty(Env::search("services.{$prefix}", $partition))) {
+                            $data["partitions"][$index]["services"][$prefix] = $serviceData;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $data;
     }
 }
