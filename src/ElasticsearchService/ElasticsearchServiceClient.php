@@ -26,6 +26,12 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeReservedElasticsearchInstanceOfferingsAsync(array $args = [])
  * @method \Aws\Result describeReservedElasticsearchInstances(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeReservedElasticsearchInstancesAsync(array $args = [])
+ * @method \Aws\Result getCompatibleElasticsearchVersions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCompatibleElasticsearchVersionsAsync(array $args = [])
+ * @method \Aws\Result getUpgradeHistory(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getUpgradeHistoryAsync(array $args = [])
+ * @method \Aws\Result getUpgradeStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getUpgradeStatusAsync(array $args = [])
  * @method \Aws\Result listDomainNames(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDomainNamesAsync(array $args = [])
  * @method \Aws\Result listElasticsearchInstanceTypes(array $args = [])
@@ -40,5 +46,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise removeTagsAsync(array $args = [])
  * @method \Aws\Result updateElasticsearchDomainConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateElasticsearchDomainConfigAsync(array $args = [])
+ * @method \Aws\Result upgradeElasticsearchDomain(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise upgradeElasticsearchDomainAsync(array $args = [])
  */
 class ElasticsearchServiceClient extends AwsClient {}
