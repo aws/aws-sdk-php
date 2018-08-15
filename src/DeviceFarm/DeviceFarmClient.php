@@ -114,6 +114,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise renewOfferingAsync(array $args = [])
  * @method \Aws\Result scheduleRun(array $args = [])
  * @method \GuzzleHttp\Promise\Promise scheduleRunAsync(array $args = [])
+ * @method \Aws\Result stopJob(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopJobAsync(array $args = [])
  * @method \Aws\Result stopRemoteAccessSession(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopRemoteAccessSessionAsync(array $args = [])
  * @method \Aws\Result stopRun(array $args = [])
@@ -128,6 +130,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateNetworkProfileAsync(array $args = [])
  * @method \Aws\Result updateProject(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProjectAsync(array $args = [])
+ * @method \Aws\Result updateUpload(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateUploadAsync(array $args = [])
  * @method \Aws\Result updateVPCEConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVPCEConfigurationAsync(array $args = [])
  */

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - We are launching AWS IoT Core and AWS IoT Device Mgmt in GovCloud (us-gov-west-1) region.
+* `Aws\DeviceFarm` - Support for running tests in a custom environment with live logs/video streaming, full test features parity and reduction in overall test execution time.
+
 ## 3.64.12 - 2018-08-14
 
 * `Aws\AutoScaling` - Add batch operations for creating/updating and deleting scheduled scaling actions.
