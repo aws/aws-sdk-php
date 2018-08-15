@@ -25,7 +25,7 @@ abstract class AbstractMonitoringMiddleware
     protected $region;
     protected $service;
 
-    protected static function getExceptionHeaderAccessor($headerName)
+    protected static function getAwsExceptionHeaderAccessor($headerName)
     {
         return function (AwsException $e) use ($headerName) {
             $response = $e->getResponse();
@@ -49,14 +49,16 @@ abstract class AbstractMonitoringMiddleware
         };
     }
 
-    protected static function getResponseContainerHeaderAccessor($headerName)
+    protected static function getExceptionHeaderAccessor($headerName)
     {
-        return function (ResponseContainerInterface $responseContainer) use ($headerName) {
-            $response = $responseContainer->getResponse();
-            if ($response instanceof ResponseInterface) {
-                $header = $response->getHeader($headerName);
-                if (!empty($header[0])) {
-                    return $header[0];
+        return function ($exception) use ($headerName) {
+            if ($exception instanceof ResponseContainerInterface) {
+                $response = $exception->getResponse();
+                if ($response instanceof ResponseInterface) {
+                    $header = $response->getHeader($headerName);
+                    if (!empty($header[0])) {
+                        return $header[0];
+                    }
                 }
             }
             return null;
@@ -256,17 +258,11 @@ abstract class AbstractMonitoringMiddleware
         $result,
         array $event
     ) {
-        $dataFormat = static::getResponseDataConfiguration();
+        $dataFormat = static::getResponseDataConfiguration($result);
         foreach ($dataFormat as $eventKey => $datum) {
-            $value = null;
-            foreach ($datum['valueAccessors'] as $klass => $accessor) {
-                if ($result instanceof $klass) {
-                    $value = $accessor($result);
-                }
-                if ($value !== null) {
-                    $event[$eventKey] = $this->getTruncatedValue($value, $datum);
-                    continue 2;
-                }
+            $value = $datum['value']($result);
+            if ($value !== null) {
+                $event[$eventKey] = $this->getTruncatedValue($value, $datum);
             }
         }
         return $event;

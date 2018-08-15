@@ -24,18 +24,22 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     /**
      * @inheritdoc
      */
-    public static function getResponseDataConfiguration()
+    public static function getResponseDataConfiguration($klass)
     {
-        return [
-            'AttemptCount' => [
-                'valueAccessors' => [
-                    ResultInterface::class => function (ResultInterface $result) {
+        $dataFormat = [
+            ResultInterface::class => [
+                'AttemptCount' => [
+                    'value' => function (ResultInterface $result) {
                         if (isset($result['@metadata']['transferStats']['http'])) {
                             return count($result['@metadata']['transferStats']['http']);
                         }
                         return 1;
                     },
-                    \Exception::class => function(\Exception $exception) {
+                ],
+            ],
+            \Exception::class => [
+                'AttemptCount' => [
+                    'value' => function(\Exception $exception) {
                         $attemptCount = 0;
                         if ($exception instanceof MonitoringEventsInterface) {
                             foreach ($exception->getMonitoringEvents() as $event) {
@@ -49,8 +53,16 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
                         return $attemptCount;
                     }
                 ],
-            ],
+            ]
         ];
+
+        if ($klass instanceof ResultInterface) {
+            return $dataFormat[ResultInterface::class];
+        }
+
+        if ($klass instanceof \Exception) {
+            return $dataFormat[\Exception::class];
+        }
     }
 
     /**

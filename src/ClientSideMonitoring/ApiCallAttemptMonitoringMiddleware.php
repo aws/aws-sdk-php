@@ -46,15 +46,14 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public static function getResponseDataConfiguration()
+
+    public static function getResponseDataConfiguration($klass)
     {
-        return [
-            'AttemptLatency' => [
-                'valueAccessors' => [
-                    ResultInterface::class => function (ResultInterface $result) {
+
+        $dataFormat = [
+            ResultInterface::class => [
+                'AttemptLatency' => [
+                    'value' => function (ResultInterface $result) {
                         if (isset($result['@metadata']['transferStats']['http'])) {
                             $attempt = end($result['@metadata']['transferStats']['http']);
                             if (isset($attempt['total_time'])) {
@@ -62,35 +61,10 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                             }
                         }
                         return null;
-                    },
-                    AwsException::class => function (AwsException $exception) {
-                        $attempt = $exception->getTransferInfo();
-                        if (isset($attempt['total_time'])) {
-                            return (int) floor($attempt['total_time'] * 1000);
-                        }
-                        return null;
-                    },
+                    }
                 ],
-            ],
-            'AwsException' => [
-                'valueAccessors' => [
-                    AwsException::class => function (AwsException $exception) {
-                        return $exception->getAwsErrorCode();
-                    },
-                ],
-                'maxLength' => 128,
-            ],
-            'AwsExceptionMessage' => [
-                'valueAccessors' => [
-                    AwsException::class => function (AwsException $exception) {
-                        return $exception->getAwsErrorMessage();
-                    },
-                ],
-                'maxLength' => 512,
-            ],
-            'DestinationIp' => [
-                'valueAccessors' => [
-                    ResultInterface::class => function (ResultInterface $result) {
+                'DestinationIp' => [
+                    'value' => function (ResultInterface $result) {
                         if (isset($result['@metadata']['transferStats']['http'])) {
                             $attempt = end($result['@metadata']['transferStats']['http']);
                             if (isset($attempt['primary_ip'])) {
@@ -99,18 +73,9 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                         }
                         return null;
                     },
-                    AwsException::class => function (AwsException $exception) {
-                        $attempt = $exception->getTransferInfo();
-                        if (isset($attempt['primary_ip'])) {
-                            return $attempt['primary_ip'];
-                        }
-                        return null;
-                    },
                 ],
-            ],
-            'DnsLatency' => [
-                'valueAccessors' => [
-                    ResultInterface::class => function (ResultInterface $result) {
+                'DnsLatency' => [
+                    'value' => function (ResultInterface $result) {
                         if (isset($result['@metadata']['transferStats']['http'])) {
                             $attempt = end($result['@metadata']['transferStats']['http']);
                             if (isset($attempt['namelookup_time'])) {
@@ -119,7 +84,55 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                         }
                         return null;
                     },
-                    AwsException::class => function (AwsException $exception) {
+                ],
+                'HttpStatusCode' => [
+                    'value' => function (ResultInterface $result) {
+                        return $result['@metadata']['statusCode'];
+                    },
+                ],
+                'XAmzId2' => [
+                    'value' => self::getResultHeaderAccessor('x-amz-id-2'),
+                ],
+                'XAmzRequestId' => [
+                    'value' => self::getResultHeaderAccessor('x-amz-request-id'),
+                ],
+                'XAmznRequestId' => [
+                    'value' => self::getResultHeaderAccessor('x-amzn-RequestId'),
+                ],
+            ],
+            AwsException::class => [
+                'AttemptLatency' => [
+                    'value' => function (AwsException $exception) {
+                        $attempt = $exception->getTransferInfo();
+                        if (isset($attempt['total_time'])) {
+                            return (int) floor($attempt['total_time'] * 1000);
+                        }
+                        return null;
+                    },
+                ],
+                'AwsException' => [
+                    'value' => function (AwsException $exception) {
+                        return $exception->getAwsErrorCode();
+                    },
+                    'maxLength' => 128,
+                ],
+                'AwsExceptionMessage' => [
+                    'value' => function (AwsException $exception) {
+                        return $exception->getAwsErrorMessage();
+                    },
+                    'maxLength' => 512,
+                ],
+                'DestinationIp' => [
+                    'value' => function (AwsException $exception) {
+                        $attempt = $exception->getTransferInfo();
+                        if (isset($attempt['primary_ip'])) {
+                            return $attempt['primary_ip'];
+                        }
+                        return null;
+                    },
+                ],
+                'DnsLatency' => [
+                    'value' => function (AwsException $exception) {
                         $attempt = $exception->getTransferInfo();
                         if (isset($attempt['namelookup_time'])) {
                             return (int) floor($attempt['namelookup_time'] * 1000);
@@ -127,20 +140,28 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                         return null;
                     },
                 ],
-            ],
-            'HttpStatusCode' => [
-                'valueAccessors' => [
-                    ResultInterface::class => function (ResultInterface $result) {
-                        return $result['@metadata']['statusCode'];
-                    },
-                    AwsException::class => function(AwsException $e) {
+                'HttpStatusCode' => [
+                    'value' => function(AwsException $e) {
                         $response = $e->getResponse();
                         if ($response !== null) {
                             return $response->getStatusCode();
                         }
                         return null;
                     },
-                    \Exception::class => function (\Exception $exception) {
+                ],
+                'XAmzId2' => [
+                    'value' => self::getAwsExceptionHeaderAccessor('x-amz-id-2'),
+                ],
+                'XAmzRequestId' => [
+                    'value' => self::getAwsExceptionHeaderAccessor('x-amz-request-id'),
+                ],
+                'XAmznRequestId' => [
+                    'value' => self::getAwsExceptionHeaderAccessor('x-amzn-RequestId'),
+                ],
+            ],
+            \Exception::class => [
+                'HttpStatusCode' => [
+                    'value' => function (\Exception $exception) {
                         if ($exception instanceof ResponseContainerInterface) {
                             $response = $exception->getResponse();
                             if ($response instanceof ResponseInterface) {
@@ -150,51 +171,48 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
                         return null;
                     },
                 ],
-            ],
-            'SdkException' => [
-                'valueAccessors' => [
-                    \Exception::class => function (\Exception $e) {
+                'SdkException' => [
+                    'value' => function (\Exception $e) {
                         if (!($e instanceof AwsException)) {
                             return get_class($e);
                         }
                         return null;
                     },
+                    'maxLength' => 128,
                 ],
-                'maxLength' => 128,
-            ],
-            'SdkExceptionMessage' => [
-                'valueAccessors' => [
-                    \Exception::class => function (\Exception $e) {
+                'SdkExceptionMessage' => [
+                    'value' => function (\Exception $e) {
                         if (!($e instanceof AwsException)) {
                             return $e->getMessage();
                         }
                         return null;
                     },
+                    'maxLength' => 512,
                 ],
-                'maxLength' => 512,
-            ],
-            'XAmzId2' => [
-                'valueAccessors' => [
-                    ResultInterface::class => self::getResultHeaderAccessor('x-amz-id-2'),
-                    AwsException::class => self::getExceptionHeaderAccessor('x-amz-id-2'),
-                    ResponseContainerInterface::class => self::getResponseContainerHeaderAccessor('x-amz-id-2'),
+                'XAmzId2' => [
+                    'value' => self::getExceptionHeaderAccessor('x-amz-id-2'),
                 ],
-            ],
-            'XAmzRequestId' => [
-                'valueAccessors' => [
-                    ResultInterface::class => self::getResultHeaderAccessor('x-amz-request-id'),
-                    AwsException::class => self::getExceptionHeaderAccessor('x-amz-request-id'),
-                    ResponseContainerInterface::class => self::getResponseContainerHeaderAccessor('x-amz-request-id'),
+                'XAmzRequestId' => [
+                    'value' => self::getExceptionHeaderAccessor('x-amz-request-id'),
                 ],
-            ],
-            'XAmznRequestId' => [
-                'valueAccessors' => [
-                    ResultInterface::class => self::getResultHeaderAccessor('x-amzn-RequestId'),
-                    AwsException::class => self::getExceptionHeaderAccessor('x-amzn-RequestId'),
-                    ResponseContainerInterface::class => self::getResponseContainerHeaderAccessor('x-amzn-RequestId'),
+                'XAmznRequestId' => [
+                    'value' => self::getExceptionHeaderAccessor('x-amzn-RequestId'),
                 ],
             ],
         ];
+
+
+        if ($klass instanceof ResultInterface) {
+            return $dataFormat[ResultInterface::class];
+        }
+        if ($klass instanceof AwsException) {
+            return $dataFormat[AwsException::class];
+        }
+        if ($klass instanceof \Exception) {
+            return $dataFormat[\Exception::class];
+        }
+
+        throw new \Exception('illegal class!');
     }
 
     /**
