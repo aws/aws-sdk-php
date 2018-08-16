@@ -292,7 +292,7 @@ class TraceMiddleware
             foreach ($this->config['auth_strings'] as $pattern => $replacement) {
                 $value = preg_replace_callback(
                     $pattern,
-                    function($matches) use ($replacement) {
+                    function ($matches) use ($replacement) {
                         return $replacement;
                     },
                     $value
