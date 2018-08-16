@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationDiscoveryService` - The Application Discovery Service's Continuous Export APIs allow you to analyze your on-premises server inventory data, including system performance and network dependencies, in Amazon Athena.
+* `Aws\EC2` - The 'Attribute' parameter DescribeVolumeAttribute request has been marked as required - the API has always required this parameter, but up until now this wasn't reflected appropriately in the SDK.
+* `Aws\MediaConvert` - Added WriteSegmentTimelineInRepresentation option for Dash Outputs
+* `Aws\Redshift` - You can now resize your Amazon Redshift cluster quickly. With the new ResizeCluster action, your cluster is available for read and write operations within minutes
+* `Aws\SSM` - AWS Systems Manager Inventory now supports groups to quickly see a count of which managed instances are and arent configured to collect one or more Inventory types
+* `Aws\TraceMiddleware` - Removed potential PCRE vulnerability.
+
 ## 3.64.13 - 2018-08-15
 
 * `Aws\` - We are launching AWS IoT Core and AWS IoT Device Mgmt in GovCloud (us-gov-west-1) region.
