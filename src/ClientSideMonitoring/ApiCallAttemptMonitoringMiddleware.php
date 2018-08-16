@@ -49,170 +49,17 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
 
     public static function getResponseDataConfiguration($klass)
     {
-
-        $dataFormat = [
-            ResultInterface::class => [
-                'AttemptLatency' => [
-                    'value' => function (ResultInterface $result) {
-                        if (isset($result['@metadata']['transferStats']['http'])) {
-                            $attempt = end($result['@metadata']['transferStats']['http']);
-                            if (isset($attempt['total_time'])) {
-                                return (int) floor($attempt['total_time'] * 1000);
-                            }
-                        }
-                        return null;
-                    }
-                ],
-                'DestinationIp' => [
-                    'value' => function (ResultInterface $result) {
-                        if (isset($result['@metadata']['transferStats']['http'])) {
-                            $attempt = end($result['@metadata']['transferStats']['http']);
-                            if (isset($attempt['primary_ip'])) {
-                                return $attempt['primary_ip'];
-                            }
-                        }
-                        return null;
-                    },
-                ],
-                'DnsLatency' => [
-                    'value' => function (ResultInterface $result) {
-                        if (isset($result['@metadata']['transferStats']['http'])) {
-                            $attempt = end($result['@metadata']['transferStats']['http']);
-                            if (isset($attempt['namelookup_time'])) {
-                                return (int) floor($attempt['namelookup_time'] * 1000);
-                            }
-                        }
-                        return null;
-                    },
-                ],
-                'HttpStatusCode' => [
-                    'value' => function (ResultInterface $result) {
-                        return $result['@metadata']['statusCode'];
-                    },
-                ],
-                'XAmzId2' => [
-                    'value' => self::getResultHeaderAccessor('x-amz-id-2'),
-                ],
-                'XAmzRequestId' => [
-                    'value' => self::getResultHeaderAccessor('x-amz-request-id'),
-                ],
-                'XAmznRequestId' => [
-                    'value' => self::getResultHeaderAccessor('x-amzn-RequestId'),
-                ],
-            ],
-            AwsException::class => [
-                'AttemptLatency' => [
-                    'value' => function (AwsException $exception) {
-                        $attempt = $exception->getTransferInfo();
-                        if (isset($attempt['total_time'])) {
-                            return (int) floor($attempt['total_time'] * 1000);
-                        }
-                        return null;
-                    },
-                ],
-                'AwsException' => [
-                    'value' => function (AwsException $exception) {
-                        return $exception->getAwsErrorCode();
-                    },
-                    'maxLength' => 128,
-                ],
-                'AwsExceptionMessage' => [
-                    'value' => function (AwsException $exception) {
-                        return $exception->getAwsErrorMessage();
-                    },
-                    'maxLength' => 512,
-                ],
-                'DestinationIp' => [
-                    'value' => function (AwsException $exception) {
-                        $attempt = $exception->getTransferInfo();
-                        if (isset($attempt['primary_ip'])) {
-                            return $attempt['primary_ip'];
-                        }
-                        return null;
-                    },
-                ],
-                'DnsLatency' => [
-                    'value' => function (AwsException $exception) {
-                        $attempt = $exception->getTransferInfo();
-                        if (isset($attempt['namelookup_time'])) {
-                            return (int) floor($attempt['namelookup_time'] * 1000);
-                        }
-                        return null;
-                    },
-                ],
-                'HttpStatusCode' => [
-                    'value' => function(AwsException $e) {
-                        $response = $e->getResponse();
-                        if ($response !== null) {
-                            return $response->getStatusCode();
-                        }
-                        return null;
-                    },
-                ],
-                'XAmzId2' => [
-                    'value' => self::getAwsExceptionHeaderAccessor('x-amz-id-2'),
-                ],
-                'XAmzRequestId' => [
-                    'value' => self::getAwsExceptionHeaderAccessor('x-amz-request-id'),
-                ],
-                'XAmznRequestId' => [
-                    'value' => self::getAwsExceptionHeaderAccessor('x-amzn-RequestId'),
-                ],
-            ],
-            \Exception::class => [
-                'HttpStatusCode' => [
-                    'value' => function (\Exception $exception) {
-                        if ($exception instanceof ResponseContainerInterface) {
-                            $response = $exception->getResponse();
-                            if ($response instanceof ResponseInterface) {
-                                return $response->getStatusCode();
-                            }
-                        }
-                        return null;
-                    },
-                ],
-                'SdkException' => [
-                    'value' => function (\Exception $e) {
-                        if (!($e instanceof AwsException)) {
-                            return get_class($e);
-                        }
-                        return null;
-                    },
-                    'maxLength' => 128,
-                ],
-                'SdkExceptionMessage' => [
-                    'value' => function (\Exception $e) {
-                        if (!($e instanceof AwsException)) {
-                            return $e->getMessage();
-                        }
-                        return null;
-                    },
-                    'maxLength' => 512,
-                ],
-                'XAmzId2' => [
-                    'value' => self::getExceptionHeaderAccessor('x-amz-id-2'),
-                ],
-                'XAmzRequestId' => [
-                    'value' => self::getExceptionHeaderAccessor('x-amz-request-id'),
-                ],
-                'XAmznRequestId' => [
-                    'value' => self::getExceptionHeaderAccessor('x-amzn-RequestId'),
-                ],
-            ],
-        ];
-
-
         if ($klass instanceof ResultInterface) {
-            return $dataFormat[ResultInterface::class];
+            return self::getResultResponseData($klass);
         }
         if ($klass instanceof AwsException) {
-            return $dataFormat[AwsException::class];
+            return self::getAwsExceptionResponseData($klass);
         }
         if ($klass instanceof \Exception) {
-            return $dataFormat[\Exception::class];
+            return self::getExceptionResponseData($klass);
         }
 
-        throw new \Exception('illegal class!');
+        throw new \InvalidArgumentException('Parameter must be an instance of ResultInterface, AwsException or Exception.');
     }
 
     /**
@@ -249,5 +96,195 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
             $event['AttemptLatency'] = (int) (floor(microtime(true) * 1000) - $event['Timestamp']);
         }
         return $event;
+    }
+
+    private static function getResultAttemptLatency(ResultInterface $result)
+    {
+        if (isset($result['@metadata']['transferStats']['http'])) {
+            $attempt = end($result['@metadata']['transferStats']['http']);
+            if (isset($attempt['total_time'])) {
+                return (int) floor($attempt['total_time'] * 1000);
+            }
+        }
+        return null;
+    }
+
+    private static function getResultDestinationIp(ResultInterface $result)
+    {
+        if (isset($result['@metadata']['transferStats']['http'])) {
+            $attempt = end($result['@metadata']['transferStats']['http']);
+            if (isset($attempt['primary_ip'])) {
+                return $attempt['primary_ip'];
+            }
+        }
+        return null;
+    }
+
+    private static function getResultDnsLatency(ResultInterface $result)
+    {
+        if (isset($result['@metadata']['transferStats']['http'])) {
+            $attempt = end($result['@metadata']['transferStats']['http']);
+            if (isset($attempt['namelookup_time'])) {
+                return (int) floor($attempt['namelookup_time'] * 1000);
+            }
+        }
+        return null;
+    }
+
+    private static function getResultResponseData($klass)
+    {
+        return [
+            'AttemptLatency' => [
+                'value' => self::getResultAttemptLatency($klass),
+            ],
+            'DestinationIp' => [
+                'value' => self::getResultDestinationIp($klass),
+            ],
+            'DnsLatency' => [
+                'value' => self::getResultDnsLatency($klass),
+            ],
+            'HttpStatusCode' => [
+                'value' => self::getResultHttpStatusCode($klass),
+            ],
+            'XAmzId2' => [
+                'value' => self::getResultHeader($klass, 'x-amz-id-2'),
+            ],
+            'XAmzRequestId' => [
+                'value' => self::getResultHeader($klass, 'x-amz-request-id'),
+            ],
+            'XAmznRequestId' => [
+                'value' => self::getResultHeader($klass, 'x-amzn-RequestId'),
+            ],
+        ];
+    }
+
+    private static function getAwsExceptionResponseData($klass)
+    {
+        return [
+            'AttemptLatency' => [
+                'value' => self::getAwsExceptionAttemptLatency($klass),
+            ],
+            'AwsException' => [
+                'value' => self::getAwsExceptionErrorCode($klass),
+                'maxLength' => 128,
+            ],
+            'AwsExceptionMessage' => [
+                'value' => self::getAwsExceptionMessage($klass),
+                'maxLength' => 512,
+            ],
+            'DestinationIp' => [
+                'value' => self::getAwsExceptionDestinationIp($klass),
+            ],
+            'DnsLatency' => [
+                'value' => self::getAwsExceptionDnsLatency($klass),
+            ],
+            'HttpStatusCode' => [
+                'value' => self::getAwsExceptionHttpStatusCode($klass),
+            ],
+            'XAmzId2' => [
+                'value' => self::getAwsExceptionHeader($klass, 'x-amz-id-2'),
+            ],
+            'XAmzRequestId' => [
+                'value' => self::getAwsExceptionHeader($klass, 'x-amz-request-id'),
+            ],
+            'XAmznRequestId' => [
+                'value' => self::getAwsExceptionHeader($klass, 'x-amzn-RequestId'),
+            ],
+        ];
+    }
+
+    private static function getExceptionResponseData($klass)
+    {
+        return [
+            'HttpStatusCode' => [
+                'value' => self::getExceptionHttpStatusCode($klass),
+            ],
+            'SdkException' => [
+                'value' => self::getExceptionCode($klass),
+                'maxLength' => 128,
+            ],
+            'SdkExceptionMessage' => [
+                'value' => self::getExceptionMessage($klass),
+                'maxLength' => 512,
+            ],
+            'XAmzId2' => [
+                'value' => self::getExceptionHeader($klass, 'x-amz-id-2'),
+            ],
+            'XAmzRequestId' => [
+                'value' => self::getExceptionHeader($klass, 'x-amz-request-id'),
+            ],
+            'XAmznRequestId' => [
+                'value' => self::getExceptionHeader($klass, 'x-amzn-RequestId'),
+            ],
+        ];
+    }
+
+    private static function getResultHttpStatusCode(ResultInterface $result)
+    {
+        return $result['@metadata']['statusCode'];
+    }
+
+    private static function getAwsExceptionAttemptLatency(AwsException $e) {
+        $attempt = $e->getTransferInfo();
+        if (isset($attempt['total_time'])) {
+            return (int) floor($attempt['total_time'] * 1000);
+        }
+        return null;
+    }
+
+    private static function getAwsExceptionErrorCode(AwsException $e) {
+        return $e->getAwsErrorCode();
+    }
+
+    private static function getAwsExceptionMessage(AwsException $e) {
+        return $e->getAwsErrorMessage();
+    }
+
+    private static function getAwsExceptionDestinationIp(AwsException $e) {
+        $attempt = $e->getTransferInfo();
+        if (isset($attempt['primary_ip'])) {
+            return $attempt['primary_ip'];
+        }
+        return null;
+    }
+
+    private static function getAwsExceptionDnsLatency(AwsException $e) {
+        $attempt = $e->getTransferInfo();
+        if (isset($attempt['namelookup_time'])) {
+            return (int) floor($attempt['namelookup_time'] * 1000);
+        }
+        return null;
+    }
+
+    private static function getAwsExceptionHttpStatusCode(AwsException $e) {
+        $response = $e->getResponse();
+        if ($response !== null) {
+            return $response->getStatusCode();
+        }
+        return null;
+    }
+
+    private static function getExceptionHttpStatusCode(\Exception $e) {
+        if ($e instanceof ResponseContainerInterface) {
+            $response = $e->getResponse();
+            if ($response instanceof ResponseInterface) {
+                return $response->getStatusCode();
+            }
+        }
+        return null;
+    }
+
+    private static function getExceptionCode(\Exception $e) {
+        if (!($e instanceof AwsException)) {
+            return get_class($e);
+        }
+        return null;
+    }
+
+    private static function getExceptionMessage(\Exception $e) {
+        if (!($e instanceof AwsException)) {
+            return $e->getMessage();
+        }
+        return null;
     }
 }

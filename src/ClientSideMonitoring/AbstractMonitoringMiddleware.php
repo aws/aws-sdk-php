@@ -25,44 +25,38 @@ abstract class AbstractMonitoringMiddleware
     protected $region;
     protected $service;
 
-    protected static function getAwsExceptionHeaderAccessor($headerName)
+    protected static function getAwsExceptionHeader(AwsException $e, $headerName)
     {
-        return function (AwsException $e) use ($headerName) {
+        $response = $e->getResponse();
+        if ($response !== null) {
+            $header = $response->getHeader($headerName);
+            if (!empty($header[0])) {
+                return $header[0];
+            }
+        }
+        return null;
+    }
+
+    protected static function getResultHeader(ResultInterface $result, $headerName)
+    {
+        if (isset($result['@metadata']['headers'][$headerName])) {
+            return $result['@metadata']['headers'][$headerName];
+        }
+        return null;
+    }
+
+    protected static function getExceptionHeader(\Exception $e, $headerName)
+    {
+        if ($e instanceof ResponseContainerInterface) {
             $response = $e->getResponse();
-            if ($response !== null) {
+            if ($response instanceof ResponseInterface) {
                 $header = $response->getHeader($headerName);
                 if (!empty($header[0])) {
                     return $header[0];
                 }
             }
-            return null;
-        };
-    }
-
-    protected static function getResultHeaderAccessor($headerName)
-    {
-        return function (ResultInterface $result) use ($headerName) {
-            if (isset($result['@metadata']['headers'][$headerName])) {
-                return $result['@metadata']['headers'][$headerName];
-            }
-            return null;
-        };
-    }
-
-    protected static function getExceptionHeaderAccessor($headerName)
-    {
-        return function ($exception) use ($headerName) {
-            if ($exception instanceof ResponseContainerInterface) {
-                $response = $exception->getResponse();
-                if ($response instanceof ResponseInterface) {
-                    $header = $response->getHeader($headerName);
-                    if (!empty($header[0])) {
-                        return $header[0];
-                    }
-                }
-            }
-            return null;
-        };
+        }
+        return null;
     }
 
     /**
@@ -260,7 +254,7 @@ abstract class AbstractMonitoringMiddleware
     ) {
         $dataFormat = static::getResponseDataConfiguration($result);
         foreach ($dataFormat as $eventKey => $datum) {
-            $value = $datum['value']($result);
+            $value = $datum['value'];
             if ($value !== null) {
                 $event[$eventKey] = $this->getTruncatedValue($value, $datum);
             }
