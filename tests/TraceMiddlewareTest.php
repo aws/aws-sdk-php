@@ -186,10 +186,6 @@ class TraceMiddlewareTest extends TestCase
                         'raw' => 'X-Amz-Security-Token=AQoEXAMPLEH4aoAH0gNCAPyJxz4BlCFFxWNE1OPTgk5TthT+FvwqnKwRcOIfrRh3c/LTo6UDdyJwOOvEVPvLXCrrrUtdnniCEXAMPLE/IvU1dYUg2RVAJBanLiHb4IgRmpRV3zrkuWJOgQs8IZZaIv2BXIa2R4OlgkBN9bkUDNCJiBeb/AXlzBBko7b15fjrBs2+cTQtpZ3CYWFXG8C5zqx37wnOE49mRl/+OtkIKGO7fAE&foo=bar',
                         'scrubbed' => 'X-Amz-Security-Token=[TOKEN]&foo=bar'
                     ],
-                    'S3-Authorization' => [
-                        'raw' => 'AWS 12345678901234567890:abcdef',
-                        'scrubbed' => 'AWS AKI[KEY]:[SIGNATURE]'
-                    ],
                 ],
             ],
         ];
