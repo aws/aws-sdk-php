@@ -16,7 +16,7 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     /**
      * @inheritdoc
      */
-    public static function getRequestDataConfiguration()
+    public static function getRequestData(RequestInterface $request)
     {
         return [];
     }
@@ -27,12 +27,22 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     public static function getResponseDataConfiguration($klass)
     {
         if ($klass instanceof ResultInterface) {
-            return self::getResultResponseData($klass);
+            return [
+                'AttemptCount' => [
+                    'value' => self::getResultAttemptCount($klass),
+                ],
+            ];
         }
 
         if ($klass instanceof \Exception) {
-            return self::getExceptionResponseData($klass);
+            return [
+                'AttemptCount' => [
+                    'value' => self::getExceptionAttemptCount($klass),
+                ],
+            ];
         }
+
+        throw new \InvalidArgumentException('Parameter must be an instance of ResultInterface or Exception.');
     }
 
     /**
@@ -59,24 +69,6 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
         $event['Latency'] = (int) (floor(microtime(true) * 1000) - $event['Timestamp']);
         unset($event['Region']);
         return $event;
-    }
-
-    private static function getResultResponseData($klass)
-    {
-        return [
-            'AttemptCount' => [
-                'value' => self::getResultAttemptCount($klass),
-            ],
-        ];
-    }
-
-    private static function getExceptionResponseData($klass)
-    {
-        return [
-            'AttemptCount' => [
-                'value' => self::getExceptionAttemptCount($klass),
-            ],
-        ];
     }
 
     private static function getResultAttemptCount(ResultInterface $result) {

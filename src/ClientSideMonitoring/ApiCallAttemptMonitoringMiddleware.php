@@ -18,29 +18,15 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
     /**
      * @inheritdoc
      */
-    public static function getRequestDataConfiguration()
+    public static function getRequestData(RequestInterface $request)
     {
         return [
             'Fqdn' => [
-                'valueAccessors' => [
-                    RequestInterface::class => function (
-                        $command,
-                        RequestInterface $request
-                    ) {
-                        return $request->getUri()->getHost();
-                    },
-                ],
+                'value' => $request->getUri()->getHost(),
             ],
             'UserAgent' => [
-                'valueAccessors' => [
-                    RequestInterface::class => function (
-                        $command,
-                        RequestInterface $request
-                    ) {
-                        return $request->getHeaderLine('User-Agent')
-                            . ' ' . \GuzzleHttp\default_user_agent();
-                    },
-                ],
+                'value' => $request->getHeaderLine('User-Agent')
+                    . ' ' . \GuzzleHttp\default_user_agent(),
                 'maxLength' => 256,
             ],
         ];
@@ -50,13 +36,86 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
     public static function getResponseDataConfiguration($klass)
     {
         if ($klass instanceof ResultInterface) {
-            return self::getResultResponseData($klass);
+            return [
+                'AttemptLatency' => [
+                    'value' => self::getResultAttemptLatency($klass),
+                ],
+                'DestinationIp' => [
+                    'value' => self::getResultDestinationIp($klass),
+                ],
+                'DnsLatency' => [
+                    'value' => self::getResultDnsLatency($klass),
+                ],
+                'HttpStatusCode' => [
+                    'value' => self::getResultHttpStatusCode($klass),
+                ],
+                'XAmzId2' => [
+                    'value' => self::getResultHeader($klass, 'x-amz-id-2'),
+                ],
+                'XAmzRequestId' => [
+                    'value' => self::getResultHeader($klass, 'x-amz-request-id'),
+                ],
+                'XAmznRequestId' => [
+                    'value' => self::getResultHeader($klass, 'x-amzn-RequestId'),
+                ],
+            ];
         }
         if ($klass instanceof AwsException) {
-            return self::getAwsExceptionResponseData($klass);
+            return [
+                'AttemptLatency' => [
+                    'value' => self::getAwsExceptionAttemptLatency($klass),
+                ],
+                'AwsException' => [
+                    'value' => self::getAwsExceptionErrorCode($klass),
+                    'maxLength' => 128,
+                ],
+                'AwsExceptionMessage' => [
+                    'value' => self::getAwsExceptionMessage($klass),
+                    'maxLength' => 512,
+                ],
+                'DestinationIp' => [
+                    'value' => self::getAwsExceptionDestinationIp($klass),
+                ],
+                'DnsLatency' => [
+                    'value' => self::getAwsExceptionDnsLatency($klass),
+                ],
+                'HttpStatusCode' => [
+                    'value' => self::getAwsExceptionHttpStatusCode($klass),
+                ],
+                'XAmzId2' => [
+                    'value' => self::getAwsExceptionHeader($klass, 'x-amz-id-2'),
+                ],
+                'XAmzRequestId' => [
+                    'value' => self::getAwsExceptionHeader($klass, 'x-amz-request-id'),
+                ],
+                'XAmznRequestId' => [
+                    'value' => self::getAwsExceptionHeader($klass, 'x-amzn-RequestId'),
+                ],
+            ];
         }
         if ($klass instanceof \Exception) {
-            return self::getExceptionResponseData($klass);
+            return [
+                'HttpStatusCode' => [
+                    'value' => self::getExceptionHttpStatusCode($klass),
+                ],
+                'SdkException' => [
+                    'value' => self::getExceptionCode($klass),
+                    'maxLength' => 128,
+                ],
+                'SdkExceptionMessage' => [
+                    'value' => self::getExceptionMessage($klass),
+                    'maxLength' => 512,
+                ],
+                'XAmzId2' => [
+                    'value' => self::getExceptionHeader($klass, 'x-amz-id-2'),
+                ],
+                'XAmzRequestId' => [
+                    'value' => self::getExceptionHeader($klass, 'x-amz-request-id'),
+                ],
+                'XAmznRequestId' => [
+                    'value' => self::getExceptionHeader($klass, 'x-amzn-RequestId'),
+                ],
+            ];
         }
 
         throw new \InvalidArgumentException('Parameter must be an instance of ResultInterface, AwsException or Exception.');
@@ -129,94 +188,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
             }
         }
         return null;
-    }
-
-    private static function getResultResponseData($klass)
-    {
-        return [
-            'AttemptLatency' => [
-                'value' => self::getResultAttemptLatency($klass),
-            ],
-            'DestinationIp' => [
-                'value' => self::getResultDestinationIp($klass),
-            ],
-            'DnsLatency' => [
-                'value' => self::getResultDnsLatency($klass),
-            ],
-            'HttpStatusCode' => [
-                'value' => self::getResultHttpStatusCode($klass),
-            ],
-            'XAmzId2' => [
-                'value' => self::getResultHeader($klass, 'x-amz-id-2'),
-            ],
-            'XAmzRequestId' => [
-                'value' => self::getResultHeader($klass, 'x-amz-request-id'),
-            ],
-            'XAmznRequestId' => [
-                'value' => self::getResultHeader($klass, 'x-amzn-RequestId'),
-            ],
-        ];
-    }
-
-    private static function getAwsExceptionResponseData($klass)
-    {
-        return [
-            'AttemptLatency' => [
-                'value' => self::getAwsExceptionAttemptLatency($klass),
-            ],
-            'AwsException' => [
-                'value' => self::getAwsExceptionErrorCode($klass),
-                'maxLength' => 128,
-            ],
-            'AwsExceptionMessage' => [
-                'value' => self::getAwsExceptionMessage($klass),
-                'maxLength' => 512,
-            ],
-            'DestinationIp' => [
-                'value' => self::getAwsExceptionDestinationIp($klass),
-            ],
-            'DnsLatency' => [
-                'value' => self::getAwsExceptionDnsLatency($klass),
-            ],
-            'HttpStatusCode' => [
-                'value' => self::getAwsExceptionHttpStatusCode($klass),
-            ],
-            'XAmzId2' => [
-                'value' => self::getAwsExceptionHeader($klass, 'x-amz-id-2'),
-            ],
-            'XAmzRequestId' => [
-                'value' => self::getAwsExceptionHeader($klass, 'x-amz-request-id'),
-            ],
-            'XAmznRequestId' => [
-                'value' => self::getAwsExceptionHeader($klass, 'x-amzn-RequestId'),
-            ],
-        ];
-    }
-
-    private static function getExceptionResponseData($klass)
-    {
-        return [
-            'HttpStatusCode' => [
-                'value' => self::getExceptionHttpStatusCode($klass),
-            ],
-            'SdkException' => [
-                'value' => self::getExceptionCode($klass),
-                'maxLength' => 128,
-            ],
-            'SdkExceptionMessage' => [
-                'value' => self::getExceptionMessage($klass),
-                'maxLength' => 512,
-            ],
-            'XAmzId2' => [
-                'value' => self::getExceptionHeader($klass, 'x-amz-id-2'),
-            ],
-            'XAmzRequestId' => [
-                'value' => self::getExceptionHeader($klass, 'x-amz-request-id'),
-            ],
-            'XAmznRequestId' => [
-                'value' => self::getExceptionHeader($klass, 'x-amzn-RequestId'),
-            ],
-        ];
     }
 
     private static function getResultHttpStatusCode(ResultInterface $result)

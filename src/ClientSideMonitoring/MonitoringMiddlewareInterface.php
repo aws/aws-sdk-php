@@ -24,9 +24,10 @@ interface MonitoringMiddlewareInterface
      *     function($command, $request)
      * with the valueAccessors key type hinted in the anonymous function.
      *
+     * @param RequestInterface $request
      * @return array
      */
-    public static function getRequestDataConfiguration();
+    public static function getRequestData(RequestInterface $request);
 
 
     /**

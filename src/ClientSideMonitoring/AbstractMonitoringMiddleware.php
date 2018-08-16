@@ -226,15 +226,11 @@ abstract class AbstractMonitoringMiddleware
         RequestInterface $request,
         array $event
     ) {
-        $dataFormat = static::getRequestDataConfiguration();
+        $dataFormat = static::getRequestData($request);
         foreach ($dataFormat as $eventKey => $datum) {
-            $value = null;
-            foreach ($datum['valueAccessors'] as $klass => $accessor) {
-                $value = $accessor($cmd, $request);
-                if ($value !== null) {
-                    $event[$eventKey] = $this->getTruncatedValue($value, $datum);
-                    continue 2;
-                }
+            $value = $datum['value'];
+            if ($value !== null) {
+                $event[$eventKey] = $this->getTruncatedValue($value, $datum);
             }
         }
         return $event;
