@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.64.14 - 2018-08-16
 
 * `Aws\ApplicationDiscoveryService` - The Application Discovery Service's Continuous Export APIs allow you to analyze your on-premises server inventory data, including system performance and network dependencies, in Amazon Athena.
 * `Aws\EC2` - The 'Attribute' parameter DescribeVolumeAttribute request has been marked as required - the API has always required this parameter, but up until now this wasn't reflected appropriately in the SDK.
