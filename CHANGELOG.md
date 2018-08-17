@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.64.15 - 2018-08-17
 
 * `Aws\DAX` - DAX CreateClusterRequest is updated to include IamRoleArn as a required request parameter. 
 * `Aws\SageMaker` - Added an optional boolean parameter, 'DisassociateLifecycleConfig', to the UpdateNotebookInstance operation. When set to true, the lifecycle configuration associated with the notebook instance will be removed, allowing a new one to be set via a new 'LifecycleConfigName' parameter.
