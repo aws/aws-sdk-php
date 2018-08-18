@@ -41,7 +41,11 @@ class MultipartUploaderTest extends TestCase
         ]);
 
         if ($error) {
-            $this->expectException($error);
+            if (method_exists($this, 'expectException')) {
+                $this->expectException($error);
+            } else {
+                $this->expectedException($error);
+            }
         }
 
         $uploader = new MultipartUploader($client, $source, $uploadOptions);
