@@ -122,7 +122,7 @@ class ServiceTest extends TestCase
         if (method_exists($this, 'expectException')) {
             $this->expectException(\UnexpectedValueException::class);
         } else {
-            $this->expectedException(\UnexpectedValueException::class);
+            $this->setExpectedException(\UnexpectedValueException::class);
         }
         $api->getWaiterConfig('Fizz');
     }

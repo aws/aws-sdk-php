@@ -34,7 +34,7 @@ class MultipartCopyTest extends TestCase
             if (method_exists($this, 'expectException')) {
                 $this->expectException($error);
             } else {
-                $this->expectedException($error);
+                $this->setExpectedException($error);
             }
         }
 
