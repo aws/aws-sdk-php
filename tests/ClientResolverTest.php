@@ -581,7 +581,7 @@ EOT;
             ->method('withHeader')
             ->with(
                 'User-Agent',
-                new \PHPUnit_Framework_Constraint_PCREMatch(
+                new \PHPUnit\Framework\Constraint\RegularExpression(
                     '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
                 )
             );
