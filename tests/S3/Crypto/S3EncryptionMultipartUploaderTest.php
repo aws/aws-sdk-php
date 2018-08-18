@@ -44,7 +44,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
             $this->expectException($exception[0]);
             $this->expectExceptionMessage($exception[1]);
         } else {
-            $this->setEpectedException($exception[0], $exception[1]);
+            $this->setExpectedException($exception[0], $exception[1]);
         }
     }
 
