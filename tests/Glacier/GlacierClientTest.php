@@ -47,7 +47,7 @@ class GlacierClientTest extends TestCase
 
     public function testErrorWhenHashingNonSeekableStream()
     {
-        $this->setExpectedException(CouldNotCreateChecksumException::class);
+        $this->expectException(CouldNotCreateChecksumException::class);
         $this->getTestClient('Glacier')->uploadArchive([
             'vaultName' => 'foo',
             'body'      => new NoSeekStream(Psr7\stream_for('foo')),

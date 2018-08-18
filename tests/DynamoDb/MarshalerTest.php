@@ -235,7 +235,7 @@ JSON;
 
     public function testErrorIfMarshalingBadJsonDoc()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         (new Marshaler)->marshalJson('foo');
     }
 
@@ -298,7 +298,7 @@ JSON;
     public function testErrorIfUnmarshalingUnknownType()
     {
         $m = new Marshaler;
-        $this->setExpectedException('UnexpectedValueException');
+        $this->expectException('UnexpectedValueException');
         $m->unmarshalValue(['BOMB' => 'BOOM']);
     }
 

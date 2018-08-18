@@ -50,7 +50,7 @@ class S3EncryptionClientTest extends TestCase
             $this->expectException($exception[0]);
             $this->expectExceptionMessage($exception[1]);
         } else {
-            $this->setExpectedException($exception[0], $exception[1]);
+            $this->expectException($exception[0], $exception[1]);
         }
     }
 

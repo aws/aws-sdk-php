@@ -33,7 +33,7 @@ class LogFileIteratorTest extends TestCase
 
     public function testFactoryErrorsOnUnknownBucket()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $s3Client = $this->getMockS3Client();
         $cloudTrailClient = CloudTrailClient::factory([
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],

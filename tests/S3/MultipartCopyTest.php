@@ -31,7 +31,7 @@ class MultipartCopyTest extends TestCase
         ]);
 
         if ($error) {
-            $this->setExpectedException($error);
+            $this->expectException($error);
         }
 
         $uploader = new MultipartCopy($client, '/bucket/key', $uploadOptions);
