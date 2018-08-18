@@ -23,10 +23,12 @@ class WriteRequestBatchTest extends TestCase
         $this->assertEquals(50, $this->readAttribute($batch, 'config')['threshold']);
     }
 
-    /** @dataProvider getInvalidArgUseCases */
+    /**
+     * @dataProvider getInvalidArgUseCases
+     * @expectedException \InvalidArgumentException
+     */
     public function testInstantiationFailsOnInvalidArgs($config)
     {
-        $this->setExpectedException('InvalidArgumentException');
         new WriteRequestBatch($this->getTestClient('DynamoDb'), $config);
     }
 
@@ -63,10 +65,12 @@ class WriteRequestBatchTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testMustProvideTable()
     {
         $batch = new WriteRequestBatch($this->getTestClient('DynamoDb'));
-        $this->setExpectedException('RuntimeException');
         $batch->put(['a' => 'b']);
     }
 

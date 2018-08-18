@@ -87,7 +87,7 @@ class StandardSessionConnectionTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      */
     public function testWriteTriggersWarningOnFailure()
     {
@@ -123,7 +123,7 @@ class StandardSessionConnectionTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      */
     public function testDeleteTriggersWarningOnFailure()
     {
