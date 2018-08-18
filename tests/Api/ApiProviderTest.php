@@ -30,7 +30,11 @@ class ApiProviderTest extends TestCase
         $this->assertEquals($result, ApiProvider::resolve($p, 't', 's', 'v'));
 
         $p = function ($a, $b, $c) {return null;};
-        $this->expectException(UnresolvedApiException::class);
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(UnresolvedApiException::class);
+        } else {
+            $this->setExpectedException(UnresolvedApiException::class);
+        }
         ApiProvider::resolve($p, 't', 's', 'v');
     }
 
@@ -114,23 +118,29 @@ class ApiProviderTest extends TestCase
         $this->assertEquals(['abc' => '456'], $result);
     }
 
+    /**
+     * @expectedException \Aws\Exception\UnresolvedApiException
+     */
     public function testThrowsOnBadType()
     {
-        $this->expectException(UnresolvedApiException::class);
         $p = $this->getTestApiProvider();
         ApiProvider::resolve($p, 'foo', 's3', 'latest');
     }
 
+    /**
+     * @expectedException \Aws\Exception\UnresolvedApiException
+     */
     public function testThrowsOnBadService()
     {
-        $this->expectException(UnresolvedApiException::class);
         $p = $this->getTestApiProvider();
         ApiProvider::resolve($p, 'api', '', 'latest');
     }
 
+    /**
+     * @expectedException \Aws\Exception\UnresolvedApiException
+     */
     public function testThrowsOnBadVersion()
     {
-        $this->expectException(UnresolvedApiException::class);
         $p = $this->getTestApiProvider();
         ApiProvider::resolve($p, 'api', 'dynamodb', 'derp');
     }
