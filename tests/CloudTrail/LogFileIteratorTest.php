@@ -31,9 +31,11 @@ class LogFileIteratorTest extends TestCase
         $this->assertInstanceOf('Aws\CloudTrail\LogFileIterator', $files);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
     public function testFactoryErrorsOnUnknownBucket()
     {
-        $this->setExpectedException('InvalidArgumentException');
         $s3Client = $this->getMockS3Client();
         $cloudTrailClient = CloudTrailClient::factory([
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],

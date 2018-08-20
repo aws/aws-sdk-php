@@ -45,9 +45,11 @@ class GlacierClientTest extends TestCase
         $this->assertEquals($hash, $request->getHeaderLine('x-amz-sha256-tree-hash'));
     }
 
+    /**
+     * @expectedException \Aws\Exception\CouldNotCreateChecksumException
+     */
     public function testErrorWhenHashingNonSeekableStream()
     {
-        $this->setExpectedException(CouldNotCreateChecksumException::class);
         $this->getTestClient('Glacier')->uploadArchive([
             'vaultName' => 'foo',
             'body'      => new NoSeekStream(Psr7\stream_for('foo')),

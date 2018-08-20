@@ -119,7 +119,11 @@ class ServiceTest extends TestCase
         $this->assertEquals(['bar' => 'baz'], $config);
 
         $this->assertFalse($api->hasWaiter('Fizz'));
-        $this->setExpectedException('UnexpectedValueException');
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(\UnexpectedValueException::class);
+        } else {
+            $this->setExpectedException(\UnexpectedValueException::class);
+        }
         $api->getWaiterConfig('Fizz');
     }
 
