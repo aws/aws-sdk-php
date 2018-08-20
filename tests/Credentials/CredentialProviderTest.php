@@ -170,6 +170,7 @@ class CredentialProviderTest extends TestCase
     public function iniFileProvider()
     {
         $credentials = new Credentials('foo', 'bar', 'baz');
+        $credentialsWithEquals = new Credentials('foo', 'bar', 'baz=');
         $standardIni = <<<EOT
 [default]
 aws_access_key_id = foo
@@ -189,11 +190,25 @@ aws_secret_access_key = bar
 aws_session_token = baz
 aws_security_token = fizz
 EOT;
+        $standardWithEqualsIni = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = bar
+aws_session_token = baz=
+EOT;
+        $standardWithEqualsQuotedIni = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = bar
+aws_session_token = "baz="
+EOT;
 
         return [
             [$standardIni, $credentials],
             [$oldIni, $credentials],
             [$mixedIni, $credentials],
+            [$standardWithEqualsIni, $credentialsWithEquals],
+            [$standardWithEqualsQuotedIni, $credentialsWithEquals],
         ];
     }
 
