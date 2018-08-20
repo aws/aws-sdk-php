@@ -35,7 +35,7 @@ your [issues][] or [pull requests][pull-requests] through GitHub.
 
 ## Changelog Documents
 
-A changelog document is a small JSON blob placed in the .changes/nextrelease
+A changelog document is a small JSON blob placed in the `.changes/nextrelease`
 folder. It should be named a clearly and uniquely, akin to a branch name. It
 consists of a type, category, and description as follows:
 
