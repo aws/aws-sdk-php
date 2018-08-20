@@ -233,9 +233,11 @@ JSON;
         $this->assertEquals($expected, $m->marshalItem($array));
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
     public function testErrorIfMarshalingBadJsonDoc()
     {
-        $this->setExpectedException('InvalidArgumentException');
         (new Marshaler)->marshalJson('foo');
     }
 
@@ -295,10 +297,12 @@ JSON;
         $this->assertEquals('b', $result->a);
     }
 
+    /**
+     * @expectedException \UnexpectedValueException
+     */
     public function testErrorIfUnmarshalingUnknownType()
     {
         $m = new Marshaler;
-        $this->setExpectedException('UnexpectedValueException');
         $m->unmarshalValue(['BOMB' => 'BOOM']);
     }
 
