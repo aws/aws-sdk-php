@@ -49,7 +49,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage Cannot open a bucket
      */
     public function testCannotOpenBuckets()
@@ -58,7 +58,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage Mode not supported
      */
     public function testSupportsOnlyReadWriteXA()
@@ -67,7 +67,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage s3://bucket/key already exists on Amazon S3
      */
     public function testValidatesXMode()
@@ -171,7 +171,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage 403 Forbidden
      */
     public function testTriggersErrorInsteadOfExceptionWhenWriteFlushFails()
@@ -242,7 +242,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage 403 Forbidden
      */
     public function testThrowsErrorsWhenUnlinkFails()
@@ -260,7 +260,7 @@ class StreamWrapperTest extends TestCase
 
     /**
      * @expectedExceptionMessage Bucket already exists: s3://already-existing-bucket
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      */
     public function testCreatingAlreadyExistingBucketRaisesError()
     {
@@ -270,7 +270,7 @@ class StreamWrapperTest extends TestCase
 
     /**
      * @expectedExceptionMessage Subfolder already exists: s3://already-existing-bucket/key
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      */
     public function testCreatingAlreadyExistingBucketForKeyRaisesError()
     {
@@ -330,7 +330,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage specify a bucket
      */
     public function testCannotDeleteS3()
@@ -339,7 +339,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage 403 Forbidden
      */
     public function testRmDirWithExceptionTriggersError()
@@ -410,7 +410,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage rename(): Cannot rename a file across wrapper types
      */
     public function testRenameEnsuresProtocolsMatch()
@@ -420,7 +420,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage The Amazon S3 stream wrapper only supports copying objects
      */
     public function testRenameEnsuresKeyIsSet()
@@ -429,7 +429,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage Forbidden
      */
     public function testRenameWithExceptionThrowsError()
@@ -532,7 +532,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage Forbidden
      */
     public function testFailingStatTriggersError()
@@ -547,7 +547,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage File or directory not found: s3://bucket
      */
     public function testBucketNotFoundTriggersError()
@@ -594,7 +594,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage File or directory not found: s3://bucket/prefix
      */
     public function testCannotStatPrefixWithNoResults()
@@ -669,7 +669,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage cannot represent a stream of type user-space
      */
     public function testStreamCastIsNotPossible()
@@ -684,7 +684,7 @@ class StreamWrapperTest extends TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Warning
+     * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage No client in stream context
      */
     public function testEnsuresClientIsSet()

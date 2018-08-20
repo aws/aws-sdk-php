@@ -245,7 +245,7 @@ class TransferTest extends TestCase
             ->method('getCommand')
             ->with(
                 'PutObject',
-                new \PHPUnit_Framework_Constraint_Callback(function (array $args) use ($filesInDirectory) {
+                new \PHPUnit\Framework\Constraint\Callback(function (array $args) use ($filesInDirectory) {
                     return 'bare-bucket' === $args['Bucket']
                         && in_array($args['SourceFile'], $filesInDirectory)
                         && __DIR__ . '/' . $args['Key'] === $args['SourceFile'];
@@ -269,7 +269,7 @@ class TransferTest extends TestCase
             ->method('getCommand')
             ->with(
                 'PutObject',
-                new \PHPUnit_Framework_Constraint_Callback(function (array $args) {
+                new \PHPUnit\Framework\Constraint\Callback(function (array $args) {
                     return 'bucket' === $args['Bucket']
                     && $args['SourceFile'] === __FILE__
                     && __DIR__ . '/' . $args['Key'] === $args['SourceFile'];
@@ -293,7 +293,7 @@ class TransferTest extends TestCase
             ->method('getCommand')
             ->with(
                 'GetObject',
-                new \PHPUnit_Framework_Constraint_Callback(function (array $args) {
+                new \PHPUnit\Framework\Constraint\Callback(function (array $args) {
                     return 'bucket' === $args['Bucket']
                     && $args['Key'] === 'path/to/key';
                 })
