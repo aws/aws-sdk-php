@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` - Added SSESpecification block to update-table command which allows users to modify table Server-Side Encryption. Added two new fields (SSEType and KMSMasterKeyId) to SSESpecification block used by create-table and update-table commands. Added new SSEDescription Status value UPDATING.
+* `Aws\MediaConvert` - This release fixes backward-incompatible changes from a previous release. That previous release changed non-required job settings to required, which prevented jobs and job templates from merging correctly. The current change removes validation of required settings from the SDK and instead centralizes the validation in the service API. For information on required settings, see the Resources chapter of the AWS Elemental MediaConvert API Reference https://docs.aws.amazon.com/mediaconvert/latest/apireference/resources.html
+* `Aws\Signature\SignatureV4` - Add support for pre-signing additional headers. Any additional headers that are supplied and signed must be included when sending the request.
+* `Aws\Test` - Refactored namespaces of tests to prepare for PHPUnit6
+* `Aws\Test` - Refactored exception tests to prepare for PHPUnit6
+
 ## 3.64.15 - 2018-08-17
 
 * `Aws\DAX` - DAX CreateClusterRequest is updated to include IamRoleArn as a required request parameter. 
