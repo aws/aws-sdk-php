@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.65.1 - 2018-08-21
 
 * `Aws\DLM` - Documentation updates for Lifecycle
 * `Aws\EC2` - Added support for T3 Instance type in EC2. To learn more about T3 instances, please see https://aws.amazon.com/ec2/instance-types/t3/
