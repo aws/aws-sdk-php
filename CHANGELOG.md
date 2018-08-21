@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DLM` - Documentation updates for Lifecycle
+* `Aws\EC2` - Added support for T3 Instance type in EC2. To learn more about T3 instances, please see https://aws.amazon.com/ec2/instance-types/t3/
+* `Aws\ElasticBeanstalk` - Elastic Beanstalk adds the "Privileged" field to the "CPUUtilization" type, to support enhanced health reporting in Windows environments.
+* `Aws\RDS` - Adds a paginator for the DescribeDBClusters operation.
+* `Aws\Signature\SignatureV4` - Updates the SignatureV4 presigning process to not sign, and subsequently require on use, the X-Amz-Security-Token header when it's already signed in the query string.
+
 ## 3.65.0 - 2018-08-20
 
 * `Aws\DynamoDB` - Added SSESpecification block to update-table command which allows users to modify table Server-Side Encryption. Added two new fields (SSEType and KMSMasterKeyId) to SSESpecification block used by create-table and update-table commands. Added new SSEDescription Status value UPDATING.
