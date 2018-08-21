@@ -153,6 +153,9 @@ class SignatureV4 implements SignatureInterface
         $shortDate = substr($httpDate, 0, 8);
         $scope = $this->createScope($shortDate, $this->region, $this->service);
         $credential = $credentials->getAccessKeyId() . '/' . $scope;
+        if ($credentials->getSecurityToken()) {
+            unset($parsed['headers']['X-Amz-Security-Token']);
+        }
         $parsed['query']['X-Amz-Algorithm'] = 'AWS4-HMAC-SHA256';
         $parsed['query']['X-Amz-Credential'] = $credential;
         $parsed['query']['X-Amz-Date'] = gmdate('Ymd\THis\Z', $startTimestamp);
