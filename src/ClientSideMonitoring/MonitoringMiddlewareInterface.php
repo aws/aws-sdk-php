@@ -40,7 +40,7 @@ interface MonitoringMiddlewareInterface
      *     ]
      * @return array
      */
-    public static function getResponseDataConfiguration($klass);
+    public static function getResponseData($klass);
 
     public function __invoke(CommandInterface $cmd, RequestInterface $request);
 }

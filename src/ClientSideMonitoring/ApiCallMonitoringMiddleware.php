@@ -24,7 +24,7 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     /**
      * @inheritdoc
      */
-    public static function getResponseDataConfiguration($klass)
+    public static function getResponseData($klass)
     {
         if ($klass instanceof ResultInterface) {
             return [

@@ -248,7 +248,7 @@ abstract class AbstractMonitoringMiddleware
         $result,
         array $event
     ) {
-        $dataFormat = static::getResponseDataConfiguration($result);
+        $dataFormat = static::getResponseData($result);
         foreach ($dataFormat as $eventKey => $datum) {
             $value = $datum['value'];
             if ($value !== null) {
