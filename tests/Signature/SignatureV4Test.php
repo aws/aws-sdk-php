@@ -156,7 +156,9 @@ class SignatureV4Test extends TestCase
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
-        $url = (string) $signature->presign($request, $credentials, 1386720000)->getUri();
+        $request = $signature->presign($request, $credentials, 1386720000);
+        $this->assertEmpty($request->getHeader('X-Amz-Security-Token'));
+        $url = (string) $request->getUri();
         $this->assertContains('X-Amz-Security-Token=123', $url);
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
