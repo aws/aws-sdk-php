@@ -26,7 +26,7 @@ interface MonitoringMiddlewareInterface
     /**
      * Data for event properties to be sent to the monitoring agent.
      *
-     * @param  ResultInterface|AwsException|\Exception
+     * @param ResultInterface|AwsException|\Exception $klass
      * @return array
      */
     public static function getResponseData($klass);
