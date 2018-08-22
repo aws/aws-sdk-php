@@ -28,17 +28,13 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     {
         if ($klass instanceof ResultInterface) {
             return [
-                'AttemptCount' => [
-                    'value' => self::getResultAttemptCount($klass),
-                ],
+                'AttemptCount' => self::getResultAttemptCount($klass),
             ];
         }
 
         if ($klass instanceof \Exception) {
             return [
-                'AttemptCount' => [
-                    'value' => self::getExceptionAttemptCount($klass),
-                ],
+                'AttemptCount' => self::getExceptionAttemptCount($klass),
             ];
         }
 

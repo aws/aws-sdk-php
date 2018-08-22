@@ -202,17 +202,6 @@ abstract class AbstractMonitoringMiddleware
         return $this->unwrappedOptions()->isEnabled();
     }
 
-    private function getTruncatedValue($value, $datum) {
-        if (!empty($datum['maxLength'])) {
-            return substr(
-                $value,
-                0,
-                $datum['maxLength']
-            );
-        }
-        return $value;
-    }
-
     /**
      * Returns $eventData array with information from the request and command.
      *
@@ -227,10 +216,9 @@ abstract class AbstractMonitoringMiddleware
         array $event
     ) {
         $dataFormat = static::getRequestData($request);
-        foreach ($dataFormat as $eventKey => $datum) {
-            $value = $datum['value'];
+        foreach ($dataFormat as $eventKey => $value) {
             if ($value !== null) {
-                $event[$eventKey] = $this->getTruncatedValue($value, $datum);
+                $event[$eventKey] = $value;
             }
         }
         return $event;
@@ -249,10 +237,9 @@ abstract class AbstractMonitoringMiddleware
         array $event
     ) {
         $dataFormat = static::getResponseData($result);
-        foreach ($dataFormat as $eventKey => $datum) {
-            $value = $datum['value'];
+        foreach ($dataFormat as $eventKey => $value) {
             if ($value !== null) {
-                $event[$eventKey] = $this->getTruncatedValue($value, $datum);
+                $event[$eventKey] = $value;
             }
         }
         return $event;

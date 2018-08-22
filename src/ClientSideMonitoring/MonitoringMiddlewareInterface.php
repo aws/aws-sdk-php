@@ -3,6 +3,9 @@
 namespace Aws\ClientSideMonitoring;
 
 use Aws\CommandInterface;
+use Aws\Exception\AwsException;
+use Aws\ResultInterface;
+use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -12,17 +15,7 @@ interface MonitoringMiddlewareInterface
 {
 
     /**
-     * Data format for event properties to be sent to the monitoring agent.
-     *
-     * Associative array of associative arrays in the format:
-     *     $eventKey => [
-     *         'valueAccessors' => [class => callable, ...]
-     *         'maxLength' => int
-     *     ]
-     *
-     * Callable functions in valueAccessors should take the form of:
-     *     function($command, $request)
-     * with the valueAccessors key type hinted in the anonymous function.
+     * Data for event properties to be sent to the monitoring agent.
      *
      * @param RequestInterface $request
      * @return array
@@ -31,13 +24,9 @@ interface MonitoringMiddlewareInterface
 
 
     /**
-     * Data format for event properties to be sent to the monitoring agent.
+     * Data for event properties to be sent to the monitoring agent.
      *
-     * Associative array of associative arrays in the format:
-     *     $eventKey => [
-     *         'valueAccessors' => [class => callable, ...]
-     *         'maxLength' => int
-     *     ]
+     * @param  ResultInterface|AwsException|\Exception
      * @return array
      */
     public static function getResponseData($klass);
