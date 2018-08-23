@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Elemental MediaLive** service.
+ * @method \Aws\Result batchUpdateSchedule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchUpdateScheduleAsync(array $args = [])
  * @method \Aws\Result createChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createChannelAsync(array $args = [])
  * @method \Aws\Result createInput(array $args = [])
@@ -29,6 +31,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeOfferingAsync(array $args = [])
  * @method \Aws\Result describeReservation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeReservationAsync(array $args = [])
+ * @method \Aws\Result describeSchedule(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeScheduleAsync(array $args = [])
  * @method \Aws\Result listChannels(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listChannelsAsync(array $args = [])
  * @method \Aws\Result listInputSecurityGroups(array $args = [])
