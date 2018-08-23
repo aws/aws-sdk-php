@@ -161,84 +161,81 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
             ]),
         ];
 
-        $data = ApiCallAttemptMonitoringMiddleware::getResponseDataConfiguration();
-        if (!empty($data['AwsException']['maxLength'])) {
-            $maxLength = $data['AwsException']['maxLength'];
+        $maxLength = 128;
 
-            $message = 'This is a test exception message!';
-            $code = str_repeat('a', 2 * $maxLength);
-            $exceptionContext = [
-                'message' => $message,
-                'code' => $code,
-            ];
-            $eventAwsException = array_merge(
-                $eventBase,
+        $message = 'This is a test exception message!';
+        $code = str_repeat('a', 2 * $maxLength);
+        $exceptionContext = [
+            'message' => $message,
+            'code' => $code,
+        ];
+        $eventAwsException = array_merge(
+            $eventBase,
+            [
+                'AwsException' => str_repeat('a', $maxLength),
+                'AwsExceptionMessage' => $message,
+            ]
+        );
+
+        $tests []= array_merge($testBase, [
+            new AwsException(
+                $message,
+                $command,
+                array_merge($exceptionContext, [
+                    'response' => new Response(405, $headers),
+                    'result' => $fullResult,
+                    'transfer_stats' => $stats['http'][0],
+                ])
+            ),
+            array_merge(
+                $eventAwsException,
+                $eventHeadersPartial,
+                $eventStatsPartial,
                 [
-                    'AwsException' => str_repeat('a', $maxLength),
-                    'AwsExceptionMessage' => $message,
+                    'HttpStatusCode' => 405,
                 ]
-            );
-
-            $tests []= array_merge($testBase, [
-                new AwsException(
-                    $message,
-                    $command,
-                    array_merge($exceptionContext, [
-                        'response' => new Response(405, $headers),
-                        'result' => $fullResult,
-                        'transfer_stats' => $stats['http'][0],
-                    ])
-                ),
-                array_merge(
-                    $eventAwsException,
-                    $eventHeadersPartial,
-                    $eventStatsPartial,
-                    [
-                        'HttpStatusCode' => 405,
-                    ]
-                ),
-            ]);
-            $tests []= array_merge($testBase, [
-                new ParserException(
-                    $message,
-                    0,
-                    null,
-                    ['response' => new Response(200, $headers)]
-                ),
-                array_merge(
-                    $eventBase,
-                    $eventHeadersPartial,
-                    [
-                        'HttpStatusCode' => 200,
-                        'SdkException' => ParserException::class,
-                        'SdkExceptionMessage' => $message,
-                    ]
-                ),
-            ]);
-            $tests []= array_merge($testBase, [
-                new AwsException(
-                    $message,
-                    $command,
-                    array_merge($exceptionContext, [
-                        'response' => new Response(405)
-                    ])
-                ),
-                array_merge(
-                    $eventAwsException,
-                    [
-                        'HttpStatusCode' => 405,
-                    ]
-                )
-            ]);
-            $tests []= array_merge($testBase, [
-                new AwsException(
-                    $message,
-                    $command,
-                    $exceptionContext
-                ),
-                $eventAwsException
-            ]);
-        }
+            ),
+        ]);
+        $tests []= array_merge($testBase, [
+            new ParserException(
+                $message,
+                0,
+                null,
+                ['response' => new Response(200, $headers)]
+            ),
+            array_merge(
+                $eventBase,
+                $eventHeadersPartial,
+                [
+                    'HttpStatusCode' => 200,
+                    'SdkException' => ParserException::class,
+                    'SdkExceptionMessage' => $message,
+                ]
+            ),
+        ]);
+        $tests []= array_merge($testBase, [
+            new AwsException(
+                $message,
+                $command,
+                array_merge($exceptionContext, [
+                    'response' => new Response(405)
+                ])
+            ),
+            array_merge(
+                $eventAwsException,
+                [
+                    'HttpStatusCode' => 405,
+                ]
+            )
+        ]);
+        $tests []= array_merge($testBase, [
+            new AwsException(
+                $message,
+                $command,
+                $exceptionContext
+            ),
+            $eventAwsException
+        ]);
 
         return $tests;
     }
