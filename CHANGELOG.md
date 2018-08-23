@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.66.0 - 2018-08-23
 
 * `Aws\Credentials` - Update ini parsing to handle unquoted components that contain equals signs.
 * `Aws\IoT` - This release adds support for IoT Thing Group Indexing and Searching functionality.
