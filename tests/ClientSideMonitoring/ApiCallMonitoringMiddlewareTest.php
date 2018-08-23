@@ -7,7 +7,9 @@ use Aws\ClientSideMonitoring\Configuration;
 use Aws\Command;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\Exception\AwsException;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -58,6 +60,14 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
 
     public function getMonitoringDataTests()
     {
+        $command = new Command('RunScheduledInstances', [
+            'LaunchSpecification' => [
+                'ImageId' => 'test-image',
+            ],
+            'ScheduledInstanceId' => 'test-instance-id',
+            'InstanceCount' => 1,
+        ]);
+
         $testBase = [
             ApiCallMonitoringMiddleware::wrap(
                 $this->getCredentialProvider(),
@@ -65,13 +75,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                 'us-east-1',
                 'ec2'
             ),
-            new Command('RunScheduledInstances', [
-                'LaunchSpecification' => [
-                    'ImageId' => 'test-image',
-                ],
-                'ScheduledInstanceId' => 'test-instance-id',
-                'InstanceCount' => 1,
-            ]),
+            $command,
             new Request('POST', 'http://foo.com')
         ];
         $eventBase = [
@@ -81,6 +85,14 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
             'Service' => 'ec2',
             'Version' => 1,
         ];
+
+        $awsException = new AwsException(
+            'This is a test exception message!',
+            $command
+        );
+        $awsException->appendMonitoringEvent([
+            'Type' => 'ApiCallAttempt',
+        ]);
 
         return [
             array_merge($testBase, [
@@ -100,6 +112,14 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                 ],
                 array_merge($eventBase, [
                     'ClientId' => 'AwsPhpSdkTestApp',
+                    'AttemptCount' => 2,
+                ])
+            ]),
+            array_merge($testBase, [
+                $awsException,
+                array_merge($eventBase, [
+                    'ClientId' => 'AwsPhpSdkTestApp',
+                    'AttemptCount' => 1,
                 ])
             ]),
         ];

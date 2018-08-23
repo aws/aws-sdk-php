@@ -57,7 +57,8 @@ trait MonitoringMiddlewareTestingTrait
             } else if (!($e instanceof MonitoringEventsInterface)) {
                 $this->fail('Unable to validate the specified behavior');
             }
-            $eventData = $e->getMonitoringEvents()[0];
+            $monitoringEvents = $e->getMonitoringEvents();
+            $eventData = end($monitoringEvents);
         }
 
         $this->assertTrue($called);
