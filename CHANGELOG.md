@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.66.1 - 2018-08-24
 
 * `Aws\CloudWatchEvents` - Added Fargate and NetworkConfiguration support to EcsParameters.
 * `Aws\CognitoIdentityProvider` - Amazon Cognito now has API support for creating custom domains for our hosted UI for User Pools.
