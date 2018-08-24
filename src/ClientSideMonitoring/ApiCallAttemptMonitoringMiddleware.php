@@ -15,6 +15,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
 {
+
     /**
      * @inheritdoc
      */
@@ -30,7 +31,9 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         ];
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public static function getResponseData($klass)
     {
         if ($klass instanceof ResultInterface) {
@@ -91,42 +94,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
         }
 
         throw new \InvalidArgumentException('Parameter must be an instance of ResultInterface, AwsException or Exception.');
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function populateRequestEventData(
-        CommandInterface $cmd,
-        RequestInterface $request,
-        array $event
-    ) {
-        $event = parent::populateRequestEventData($cmd, $request, $event);
-        $event['Type'] = 'ApiCallAttempt';
-        return $event;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function populateResultEventData(
-        $result,
-        array $event
-    ) {
-        $event = parent::populateResultEventData($result, $event);
-
-        $provider = $this->credentialProvider;
-        /** @var CredentialsInterface $credentials */
-        $credentials = $provider()->wait();
-        $event['AccessKey'] = $credentials->getAccessKeyId();
-        $sessionToken = $credentials->getSecurityToken();
-        if ($sessionToken !== null) {
-            $event['SessionToken'] = $sessionToken;
-        }
-        if (empty($event['AttemptLatency'])) {
-            $event['AttemptLatency'] = (int) (floor(microtime(true) * 1000) - $event['Timestamp']);
-        }
-        return $event;
     }
 
     private static function getResultAttemptLatency(ResultInterface $result)
@@ -229,5 +196,41 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
             return $e->getMessage();
         }
         return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function populateRequestEventData(
+        CommandInterface $cmd,
+        RequestInterface $request,
+        array $event
+    ) {
+        $event = parent::populateRequestEventData($cmd, $request, $event);
+        $event['Type'] = 'ApiCallAttempt';
+        return $event;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function populateResultEventData(
+        $result,
+        array $event
+    ) {
+        $event = parent::populateResultEventData($result, $event);
+
+        $provider = $this->credentialProvider;
+        /** @var CredentialsInterface $credentials */
+        $credentials = $provider()->wait();
+        $event['AccessKey'] = $credentials->getAccessKeyId();
+        $sessionToken = $credentials->getSecurityToken();
+        if ($sessionToken !== null) {
+            $event['SessionToken'] = $sessionToken;
+        }
+        if (empty($event['AttemptLatency'])) {
+            $event['AttemptLatency'] = (int) (floor(microtime(true) * 1000) - $event['Timestamp']);
+        }
+        return $event;
     }
 }

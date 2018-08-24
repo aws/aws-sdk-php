@@ -13,6 +13,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
 {
+
     /**
      * @inheritdoc
      */
@@ -41,6 +42,27 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
         throw new \InvalidArgumentException('Parameter must be an instance of ResultInterface or Exception.');
     }
 
+    private static function getResultAttemptCount(ResultInterface $result) {
+        if (isset($result['@metadata']['transferStats']['http'])) {
+            return count($result['@metadata']['transferStats']['http']);
+        }
+        return 1;
+    }
+
+    private static function getExceptionAttemptCount(\Exception $e) {
+        $attemptCount = 0;
+        if ($e instanceof MonitoringEventsInterface) {
+            foreach ($e->getMonitoringEvents() as $event) {
+                if (isset($event['Type']) &&
+                    $event['Type'] === 'ApiCallAttempt') {
+                    $attemptCount++;
+                }
+            }
+
+        }
+        return $attemptCount;
+    }
+
     /**
      * @inheritdoc
      */
@@ -65,26 +87,5 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
         $event['Latency'] = (int) (floor(microtime(true) * 1000) - $event['Timestamp']);
         unset($event['Region']);
         return $event;
-    }
-
-    private static function getResultAttemptCount(ResultInterface $result) {
-        if (isset($result['@metadata']['transferStats']['http'])) {
-            return count($result['@metadata']['transferStats']['http']);
-        }
-        return 1;
-    }
-
-    private static function getExceptionAttemptCount(\Exception $e) {
-        $attemptCount = 0;
-        if ($e instanceof MonitoringEventsInterface) {
-            foreach ($e->getMonitoringEvents() as $event) {
-                if (isset($event['Type']) &&
-                    $event['Type'] === 'ApiCallAttempt') {
-                    $attemptCount++;
-                }
-            }
-
-        }
-        return $attemptCount;
     }
 }
