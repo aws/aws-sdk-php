@@ -8,7 +8,7 @@ namespace Aws\ClientSideMonitoring;
 interface ConfigurationInterface
 {
     /**
-     * Returns whether or not client-side monitoring is enabled.
+     * Checks whether or not client-side monitoring is enabled.
      *
      * @return bool
      */
@@ -29,7 +29,7 @@ interface ConfigurationInterface
     public function getPort();
 
     /**
-     * Converts the config to an associative array.
+     * Returns the configuration as an associative array.
      *
      * @return array
      */
