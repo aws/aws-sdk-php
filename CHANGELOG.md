@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.0 - 2018-08-27
 
 * `Aws\IoT` - This release adds support to create a Stream and Code signing for Amazon FreeRTOS job along with Over-the-air updates.
 * `Aws\IoTAnalytics` - Added new listDatasetContent API that shows you the list of dataset contents for the corresponding versions
