@@ -2,7 +2,7 @@
 namespace Aws;
 
 /**
- * Interface for adding and retrieving monitoring events
+ * Interface for adding and retrieving client-side monitoring events
  */
 interface MonitoringEventsInterface
 {
