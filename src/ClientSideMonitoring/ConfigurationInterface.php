@@ -2,13 +2,13 @@
 namespace Aws\ClientSideMonitoring;
 
 /**
- * Provides access to AWS Client Side Monitoring (CSM) configuration options:
+ * Provides access to client-side monitoring configuration options:
  * 'client_id', 'enabled', 'port'
  */
 interface ConfigurationInterface
 {
     /**
-     * Returns whether or not CSM is enabled.
+     * Returns whether or not client-side monitoring is enabled.
      *
      * @return bool
      */
