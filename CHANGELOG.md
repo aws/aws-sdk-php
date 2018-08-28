@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.1 - 2018-08-28
 
 * `Aws\Glue` - New Glue APIs for creating, updating, reading and deleting Data Catalog resource-based policies.
 * `Aws\XRay` - Support for new APIs that enable management of sampling rules.
