@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - New Glue APIs for creating, updating, reading and deleting Data Catalog resource-based policies.
+* `Aws\XRay` - Support for new APIs that enable management of sampling rules.
+
 ## 3.67.0 - 2018-08-27
 
 * `Aws\IoT` - This release adds support to create a Stream and Code signing for Amazon FreeRTOS job along with Over-the-air updates.
