@@ -17,7 +17,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
 {
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function getRequestData(RequestInterface $request)
     {
@@ -32,7 +32,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function getResponseData($klass)
     {
@@ -199,7 +199,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function populateRequestEventData(
         CommandInterface $cmd,
@@ -212,7 +212,7 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function populateResultEventData(
         $result,

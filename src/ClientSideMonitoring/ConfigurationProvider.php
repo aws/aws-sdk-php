@@ -7,8 +7,8 @@ use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 
 /**
- * A configuration provider is a function that accepts no arguments and returns a
- * promise that is fulfilled with a {@see \Aws\ClientSideMonitoring\ConfigurationInterface}
+ * A configuration provider is a function that accepts no arguments and returns
+ * a promise that is fulfilled with a {@see \Aws\ClientSideMonitoring\ConfigurationInterface}
  * or rejected with an {@see \Aws\ClientSideMonitoring\Exception\ConfigurationException}.
  *
  * <code>
@@ -18,12 +18,12 @@ use GuzzleHttp\Promise\PromiseInterface;
  * $config = $provider()->wait();
  * </code>
  *
- * Configuration providers can be composed to create configuration using conditional
- * logic that can create different configurations in different environments. You
- * can compose multiple providers into a single provider using
- * {@see Aws\ClientSideMonitoring\ConfigurationProvider::chain}. This function accepts
- * providers as variadic arguments and returns a new function that will invoke
- * each provider until a successful configuration is returned.
+ * Configuration providers can be composed to create configuration using
+ * conditional logic that can create different configurations in different
+ * environments. You can compose multiple providers into a single provider using
+ * {@see Aws\ClientSideMonitoring\ConfigurationProvider::chain}. This function
+ * accepts providers as variadic arguments and returns a new function that will
+ * invoke each provider until a successful configuration is returned.
  *
  * <code>
  * // First try an INI file at this location.

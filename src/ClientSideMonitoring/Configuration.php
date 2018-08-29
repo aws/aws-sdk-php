@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isEnabled()
     {
@@ -36,7 +36,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getClientId()
     {
@@ -44,7 +44,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getPort()
     {
@@ -52,7 +52,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function toArray()
     {
