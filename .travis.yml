@@ -31,6 +31,7 @@ install:
 
 script:
   - make test
+  - 'if [ $(phpenv version-name) == "7.2" ] && [ -z "$COMPOSER_OPTS" ]; then composer require --dev phpstan/phpstan && vendor/bin/phpstan analyse -l 0 src; fi'
   - if [ -z "$COMPOSER_OPTS" ]; then make package; fi
 
 after_success:

@@ -23,6 +23,9 @@ class InstanceProfileProvider
     /** @var callable */
     private $client;
 
+    /** @var float */
+    private $timeout;
+
     /**
      * The constructor accepts the following options:
      *
