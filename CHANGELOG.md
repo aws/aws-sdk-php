@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.3 - 2018-08-30
 
 * `Aws\CodeBuild` - Support multiple sources and artifacts for CodeBuild projects. 
 * `Aws\SageMaker` - VolumeKmsKeyId now available in Batch Transform Job 
