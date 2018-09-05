@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Added support for enabling persistent application settings for a stack. When these settings are enabled, changes that users make to applications and Windows settings are automatically saved after each session and applied to the next session.
+* `Aws\DynamoDB` - New feature for Amazon DynamoDB.
+* `Aws\ElasticLoadBalancing` - Documentation update for DescribeAccountLimits API to include classic-registered-instances.
+* `Aws\RDS` - Fix broken links in the RDS CLI Reference to the Aurora User Guide
+* `Aws\S3` - Parquet input format support added for the SelectObjectContent API
+
 ## 3.67.5 - 2018-09-04
 
 * `Aws\RDS` - Updating cross references for the new Aurora User Guide.
