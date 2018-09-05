@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.6 - 2018-09-05
 
 * `Aws\AppStream` - Added support for enabling persistent application settings for a stack. When these settings are enabled, changes that users make to applications and Windows settings are automatically saved after each session and applied to the next session.
 * `Aws\DynamoDB` - New feature for Amazon DynamoDB.
