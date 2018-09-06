@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.7 - 2018-09-06
 
 * `Aws\APIGateway` - Add support for Active X-Ray with API Gateway
 * `Aws\CodeCommit` - This release adds additional optional fields to the pull request APIs.
