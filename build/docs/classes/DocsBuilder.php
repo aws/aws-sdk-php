@@ -718,13 +718,32 @@ EOT;
             $html->elem('div', 'alert alert-info', 'The results for this operation are always empty.');
         } else {
             $outputShapes = new ShapeIterator($output, $service->docs);
+            $eventStreamExample = null;
+            foreach ($outputShapes as $shape) {
+                if (!empty($shape['eventstream'])) {
+                    $eventStreamExample = new EventStreamExampleBuilder($shape['param']);
+                }
+            }
             $outputExample = new ExampleBuilder($name, false);
             foreach ($outputShapes as $shape) {
                 $outputExample->addShape($shape);
+                if ($eventStreamExample) {
+                    $eventStreamExample->addShape($shape);
+                }
             }
             $html->elem('pre', null, htmlentities($outputExample->getCode()))
                 ->elem('h4', null, 'Result Details')
                 ->append($this->renderShape($service->docs, $output, false));
+            if ($eventStreamExample) {
+                $desc = <<<EOT
+To use an EventParsingIterator, you will need to loop over the events it will
+generate and check the top-level field to determine which type of event it is.
+EOT;
+
+                $html->elem('h5', null, 'Using an EventParsingIterator')
+                    ->elem('p', null, $desc)
+                    ->elem('pre', null, htmlentities($eventStreamExample->getCode()));
+            }
         }
 
         // Errors
@@ -883,6 +902,9 @@ EOT;
     private function getMemberText(AbstractModel $member)
     {
         if ($member instanceof StructureShape) {
+            if (!empty($member['eventstream'])) {
+                return $this->getEventStreamMemberText($member);
+            }
             return $this->memberLink($member->getName()) . ' structure';
         } elseif ($member instanceof ListShape) {
             switch ($member->getMember()['type']) {
@@ -903,6 +925,24 @@ EOT;
         }
 
         return $this->getPrimitivePhpType($member);
+    }
+
+    private function getEventStreamMemberText(StructureShape $member)
+    {
+        return 'EventParsingIterator supplying the following structures: '
+            . implode(', ',
+                array_map(
+                    [$this, 'memberLink'],
+                    array_reduce(
+                        $member->getMembers(),
+                        function ($carry, $item) {
+                            $carry []= $item['name'];
+                            return $carry;
+                        },
+                        []
+                    )
+                )
+            );
     }
 
     private function getPrimitivePhpType($member)
