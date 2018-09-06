@@ -2,9 +2,11 @@
 namespace Aws\Api\Parser;
 
 use Aws\Api\Service;
+use Aws\Api\StructureShape;
 use Aws\Result;
 use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * @internal Parses query (XML) responses (e.g., EC2, SQS, and many others)
@@ -12,9 +14,6 @@ use Psr\Http\Message\ResponseInterface;
 class QueryParser extends AbstractParser
 {
     use PayloadParserTrait;
-
-    /** @var XmlParser */
-    private $xmlParser;
 
     /** @var bool */
     private $honorResultWrapper;
@@ -32,7 +31,7 @@ class QueryParser extends AbstractParser
         $honorResultWrapper = true
     ) {
         parent::__construct($api);
-        $this->xmlParser = $xmlParser ?: new XmlParser();
+        $this->parser = $xmlParser ?: new XmlParser();
         $this->honorResultWrapper = $honorResultWrapper;
     }
 
@@ -47,6 +46,14 @@ class QueryParser extends AbstractParser
             $xml = $xml->{$output['resultWrapper']};
         }
 
-        return new Result($this->xmlParser->parse($output, $xml));
+        return new Result($this->parser->parse($output, $xml));
+    }
+
+    public function parseMemberFromStream(
+        StreamInterface $stream,
+        StructureShape $member
+    ) {
+        $xml = $this->parseXml($stream);
+        return $this->parser->parse($member, $xml);
     }
 }

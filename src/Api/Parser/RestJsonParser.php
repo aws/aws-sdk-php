@@ -4,6 +4,7 @@ namespace Aws\Api\Parser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * @internal Implements REST-JSON parsing (e.g., Glacier, Elastic Transcoder)
@@ -11,9 +12,6 @@ use Psr\Http\Message\ResponseInterface;
 class RestJsonParser extends AbstractRestParser
 {
     use PayloadParserTrait;
-
-    /** @var JsonParser */
-    private $parser;
 
     /**
      * @param Service    $api    Service description
@@ -35,5 +33,16 @@ class RestJsonParser extends AbstractRestParser
         if ($jsonBody) {
             $result += $this->parser->parse($member, $jsonBody);
         }
+    }
+
+    public function parseMemberFromStream(
+        StreamInterface $stream,
+        StructureShape $member
+    ) {
+        $jsonBody = $this->parseJson($stream);
+        if ($jsonBody) {
+            return $this->parser->parse($member, $jsonBody);
+        }
+        return [];
     }
 }
