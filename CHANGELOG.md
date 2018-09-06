@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Add support for Active X-Ray with API Gateway
+* `Aws\CodeCommit` - This release adds additional optional fields to the pull request APIs.
+* `Aws\MediaConvert` - This release adds support for Cost Allocation through tagging and also enables adding, editing, and removal of tags from the MediaConvert console.
+
 ## 3.67.6 - 2018-09-05
 
 * `Aws\AppStream` - Added support for enabling persistent application settings for a stack. When these settings are enabled, changes that users make to applications and Windows settings are automatically saved after each session and applied to the next session.
