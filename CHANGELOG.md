@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.8 - 2018-09-07
 
 * `Aws\CloudWatchLogs` - * Adding a log prefix parameter for filter log events API and minor updates to the documentation
 * `Aws\ConfigService` - Adding a new field "createdBy" to the ConfigRule data model. The field is populated only if the rule is service linked i.e the rule is created by a service. The field is empty for normal rules created by customer.
