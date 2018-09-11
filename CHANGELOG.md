@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OpsWorksCM` - Documentation updates for opsworkscm
+* `Aws\SSM` - Session Manager is a fully managed AWS Systems Manager capability that provides interactive one-click access to Amazon EC2 Linux and Windows instances.
+
 ## 3.67.9 - 2018-09-10
 
 * `Aws\CloudHSMV2` - With this release, we are adding 2 new APIs. DeleteBackup deletes a specified AWS CloudHSM backup. A backup can be restored up to 7 days after the DeleteBackup request. During this 7-day period, the backup will be in state PENDING_DELETION. Backups can be restored using the RestoreBackup API, which will move the backup from state PENDING_DELETION back to ACTIVE.
