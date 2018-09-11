@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.10 - 2018-09-11
 
 * `Aws\OpsWorksCM` - Documentation updates for opsworkscm
 * `Aws\SSM` - Session Manager is a fully managed AWS Systems Manager capability that provides interactive one-click access to Amazon EC2 Linux and Windows instances.
