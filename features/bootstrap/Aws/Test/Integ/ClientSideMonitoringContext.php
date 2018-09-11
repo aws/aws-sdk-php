@@ -71,6 +71,9 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         if (!extension_loaded('pcntl') || !function_exists('pcntl_fork')) {
             throw new \RuntimeException("Test skipped because the 'pcntl' extension is not loaded or enabled.");
         }
+        if (!extension_loaded('sockets') || !function_exists('socket_create')) {
+            throw new \RuntimeException("Test skipped because the 'sockets' extension is not loaded or enabled.");
+        }
 
         self::$originalEnv = [
             'enabled' => getenv(ConfigurationProvider::ENV_ENABLED) ?: '',

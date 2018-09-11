@@ -19,6 +19,10 @@ trait MonitoringMiddlewareTestingTrait
         $result,
         $expected
     ) {
+        if (!extension_loaded('sockets') || !function_exists('socket_create')) {
+            $this->markTestSkipped('Test skipped on no sockets extension');
+        }
+
         $this->resetMiddlewareSocket();
         $called = false;
         $isResultException = $result instanceof \Exception
