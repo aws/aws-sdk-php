@@ -169,6 +169,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise putObjectTaggingAsync(array $args = [])
  * @method \Aws\Result restoreObject(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreObjectAsync(array $args = [])
+ * @method \Aws\Result selectObjectContent(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise selectObjectContentAsync(array $args = [])
  * @method \Aws\Result uploadPart(array $args = [])
  * @method \GuzzleHttp\Promise\Promise uploadPartAsync(array $args = [])
  * @method \Aws\Result uploadPartCopy(array $args = [])
