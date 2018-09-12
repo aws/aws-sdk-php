@@ -6,6 +6,7 @@
 * `Aws\EC2` - Pagination Support for DescribeNetworkInterfaces API
 * `Aws\FMS` - This update of Amazon Fire Wall Manager adds the ability to scope down the policy as well as to get all the member accounts belonging to a certain Fire Wall Manager admin account.
 * `Aws\SES` - Documentation updates for Amazon Simple Email Service
+* `Aws\S3` - Support for S3Select in the AWS SDK for PHP.
 
 ## 3.67.10 - 2018-09-11
 
