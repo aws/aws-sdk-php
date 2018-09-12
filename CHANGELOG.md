@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - This update adds the Amazon Connect Update Contact Attributes API, which lets you update contact attributes for contacts in your Amazon Connect instance.
+* `Aws\EC2` - Pagination Support for DescribeNetworkInterfaces API
+* `Aws\FMS` - This update of Amazon Fire Wall Manager adds the ability to scope down the policy as well as to get all the member accounts belonging to a certain Fire Wall Manager admin account.
+* `Aws\SES` - Documentation updates for Amazon Simple Email Service
+
 ## 3.67.10 - 2018-09-11
 
 * `Aws\OpsWorksCM` - Documentation updates for opsworkscm

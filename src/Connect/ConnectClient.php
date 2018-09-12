@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startOutboundVoiceContactAsync(array $args = [])
  * @method \Aws\Result stopContact(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopContactAsync(array $args = [])
+ * @method \Aws\Result updateContactAttributes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateContactAttributesAsync(array $args = [])
  * @method \Aws\Result updateUserHierarchy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateUserHierarchyAsync(array $args = [])
  * @method \Aws\Result updateUserIdentityInfo(array $args = [])
