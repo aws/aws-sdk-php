@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.12 - 2018-09-13
 
 * `Aws\Polly` - Amazon Polly adds Mandarin Chinese language support with new female voice - "Zhiyu"
 
