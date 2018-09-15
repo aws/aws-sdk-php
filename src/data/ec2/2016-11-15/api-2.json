@@ -4189,13 +4189,12 @@
     "CreateFlowLogsRequest":{
       "type":"structure",
       "required":[
-        "DeliverLogsPermissionArn",
-        "LogGroupName",
         "ResourceIds",
         "ResourceType",
         "TrafficType"
       ],
       "members":{
+        "DryRun":{"shape":"Boolean"},
         "ClientToken":{"shape":"String"},
         "DeliverLogsPermissionArn":{"shape":"String"},
         "LogGroupName":{"shape":"String"},
@@ -4204,7 +4203,9 @@
           "locationName":"ResourceId"
         },
         "ResourceType":{"shape":"FlowLogsResourceType"},
-        "TrafficType":{"shape":"TrafficType"}
+        "TrafficType":{"shape":"TrafficType"},
+        "LogDestinationType":{"shape":"LogDestinationType"},
+        "LogDestination":{"shape":"String"}
       }
     },
     "CreateFlowLogsResult":{
@@ -5306,6 +5307,7 @@
       "type":"structure",
       "required":["FlowLogIds"],
       "members":{
+        "DryRun":{"shape":"Boolean"},
         "FlowLogIds":{
           "shape":"ValueStringList",
           "locationName":"FlowLogId"
@@ -6226,6 +6228,7 @@
     "DescribeFlowLogsRequest":{
       "type":"structure",
       "members":{
+        "DryRun":{"shape":"Boolean"},
         "Filter":{"shape":"FilterList"},
         "FlowLogIds":{
           "shape":"ValueStringList",
@@ -6965,7 +6968,9 @@
         "NetworkInterfaceIds":{
           "shape":"NetworkInterfaceIdList",
           "locationName":"NetworkInterfaceId"
-        }
+        },
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"Integer"}
       }
     },
     "DescribeNetworkInterfacesResult":{
@@ -6974,6 +6979,10 @@
         "NetworkInterfaces":{
           "shape":"NetworkInterfaceList",
           "locationName":"networkInterfaceSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -7763,7 +7772,10 @@
     },
     "DescribeVolumeAttributeRequest":{
       "type":"structure",
-      "required":["VolumeId"],
+      "required":[
+        "Attribute",
+        "VolumeId"
+      ],
       "members":{
         "Attribute":{"shape":"VolumeAttributeName"},
         "VolumeId":{"shape":"String"},
@@ -8657,10 +8669,6 @@
     "EbsBlockDevice":{
       "type":"structure",
       "members":{
-        "Encrypted":{
-          "shape":"Boolean",
-          "locationName":"encrypted"
-        },
         "DeleteOnTermination":{
           "shape":"Boolean",
           "locationName":"deleteOnTermination"
@@ -8669,7 +8677,6 @@
           "shape":"Integer",
           "locationName":"iops"
         },
-        "KmsKeyId":{"shape":"String"},
         "SnapshotId":{
           "shape":"String",
           "locationName":"snapshotId"
@@ -8681,7 +8688,12 @@
         "VolumeType":{
           "shape":"VolumeType",
           "locationName":"volumeType"
-        }
+        },
+        "Encrypted":{
+          "shape":"Boolean",
+          "locationName":"encrypted"
+        },
+        "KmsKeyId":{"shape":"String"}
       }
     },
     "EbsInstanceBlockDevice":{
@@ -9398,6 +9410,14 @@
         "TrafficType":{
           "shape":"TrafficType",
           "locationName":"trafficType"
+        },
+        "LogDestinationType":{
+          "shape":"LogDestinationType",
+          "locationName":"logDestinationType"
+        },
+        "LogDestination":{
+          "shape":"String",
+          "locationName":"logDestination"
         }
       }
     },
@@ -11644,6 +11664,13 @@
         "t2.large",
         "t2.xlarge",
         "t2.2xlarge",
+        "t3.nano",
+        "t3.micro",
+        "t3.small",
+        "t3.medium",
+        "t3.large",
+        "t3.xlarge",
+        "t3.2xlarge",
         "m1.small",
         "m1.medium",
         "m1.large",
@@ -12696,6 +12723,13 @@
         "Group":{"shape":"PermissionGroup"},
         "UserId":{"shape":"String"}
       }
+    },
+    "LogDestinationType":{
+      "type":"string",
+      "enum":[
+        "cloud-watch-logs",
+        "s3"
+      ]
     },
     "Long":{"type":"long"},
     "MarketType":{

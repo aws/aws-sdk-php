@@ -43,6 +43,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDatasetContentAsync(array $args = [])
  * @method \Aws\Result listChannels(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listChannelsAsync(array $args = [])
+ * @method \Aws\Result listDatasetContents(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listDatasetContentsAsync(array $args = [])
  * @method \Aws\Result listDatasets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDatasetsAsync(array $args = [])
  * @method \Aws\Result listDatastores(array $args = [])

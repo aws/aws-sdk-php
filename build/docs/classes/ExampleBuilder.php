@@ -108,6 +108,9 @@ class ExampleBuilder
         if ($shape['recursive']) {
             $tags[] = 'RECURSIVE';
         }
+        if (!empty($shape['eventstream'])) {
+            $tags[] = 'EventParsingIterator';
+        }
 
         return $tags ? ' // ' . implode(', ', $tags) : '';
     }

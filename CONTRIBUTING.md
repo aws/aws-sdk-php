@@ -27,15 +27,15 @@ your [issues][] or [pull requests][pull-requests] through GitHub.
    duplication of effort.
 1. We greatly appreciate contributions to our User Guide. The docs are written
    as a [Sphinx][] website formatted with [reStructuredText][] (very similar to
-   Markdown). The User Guide is located in the `docs` directory of this
-   repository. Please see the [docs README][docs-readme] for more information
-   about how to build the User Guide.
+   Markdown). The User Guide is located in another repository. Please go to the 
+   [awsdocs/aws-php-developers-guide](https://github.com/awsdocs/aws-php-developers-guide/).  
+   repository to suggest edits for the User Guide.
 1. If you are working on the SDK, make sure to check out the `Makefile` for some
    of the common tasks that we have to do.
 
 ## Changelog Documents
 
-A changelog document is a small JSON blob placed in the .changes/nextrelease
+A changelog document is a small JSON blob placed in the `.changes/nextrelease`
 folder. It should be named a clearly and uniquely, akin to a branch name. It
 consists of a type, category, and description as follows:
 

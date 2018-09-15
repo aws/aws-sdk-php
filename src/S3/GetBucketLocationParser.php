@@ -2,8 +2,10 @@
 namespace Aws\S3;
 
 use Aws\Api\Parser\AbstractParser;
+use Aws\Api\StructureShape;
 use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * @internal Decorates a parser for the S3 service to correctly handle the
@@ -11,9 +13,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class GetBucketLocationParser extends AbstractParser
 {
-    /** @var callable */
-    private $parser;
-
     /**
      * @param callable $parser Parser to wrap.
      */
@@ -38,5 +37,13 @@ class GetBucketLocationParser extends AbstractParser
         }
 
         return $result;
+    }
+
+    public function parseMemberFromStream(
+        StreamInterface $stream,
+        StructureShape $member,
+        $response
+    ) {
+        return $this->parser->parseMemberFromStream($stream, $member, $response);
     }
 }

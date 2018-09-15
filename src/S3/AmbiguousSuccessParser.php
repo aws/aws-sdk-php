@@ -2,9 +2,11 @@
 namespace Aws\S3;
 
 use Aws\Api\Parser\AbstractParser;
+use Aws\Api\StructureShape;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Converts errors returned with a status code of 200 to a retryable error type.
@@ -19,8 +21,6 @@ class AmbiguousSuccessParser extends AbstractParser
         'CompleteMultipartUpload' => true,
     ];
 
-    /** @var callable */
-    private $parser;
     /** @var callable */
     private $errorParser;
     /** @var string */
@@ -56,5 +56,13 @@ class AmbiguousSuccessParser extends AbstractParser
 
         $fn = $this->parser;
         return $fn($command, $response);
+    }
+
+    public function parseMemberFromStream(
+        StreamInterface $stream,
+        StructureShape $member,
+        $response
+    ) {
+        return $this->parser->parseMemberFromStream($stream, $member, $response);
     }
 }

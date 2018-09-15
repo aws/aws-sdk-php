@@ -2,7 +2,7 @@
   "version":"2.0",
   "metadata":{
     "apiVersion":"2017-07-24",
-    "endpointPrefix":"sagemaker",
+    "endpointPrefix":"api.sagemaker",
     "jsonVersion":"1.1",
     "protocol":"json",
     "serviceAbbreviation":"SageMaker",
@@ -1111,6 +1111,7 @@
         "Disabled"
       ]
     },
+    "DisassociateNotebookInstanceLifecycleConfig":{"type":"boolean"},
     "EndpointArn":{
       "type":"string",
       "max":2048,
@@ -1177,6 +1178,7 @@
         "OutOfService",
         "Creating",
         "Updating",
+        "SystemUpdating",
         "RollingBack",
         "InService",
         "Deleting",
@@ -2534,7 +2536,8 @@
       ],
       "members":{
         "InstanceType":{"shape":"TransformInstanceType"},
-        "InstanceCount":{"shape":"TransformInstanceCount"}
+        "InstanceCount":{"shape":"TransformInstanceCount"},
+        "VolumeKmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "TransformS3DataSource":{
@@ -2590,7 +2593,9 @@
       "members":{
         "NotebookInstanceName":{"shape":"NotebookInstanceName"},
         "InstanceType":{"shape":"InstanceType"},
-        "RoleArn":{"shape":"RoleArn"}
+        "RoleArn":{"shape":"RoleArn"},
+        "LifecycleConfigName":{"shape":"NotebookInstanceLifecycleConfigName"},
+        "DisassociateLifecycleConfig":{"shape":"DisassociateNotebookInstanceLifecycleConfig"}
       }
     },
     "UpdateNotebookInstanceLifecycleConfigInput":{

@@ -1,5 +1,190 @@
 # CHANGELOG
 
+## 3.67.12 - 2018-09-13
+
+* `Aws\Polly` - Amazon Polly adds Mandarin Chinese language support with new female voice - "Zhiyu"
+
+## 3.67.11 - 2018-09-12
+
+* `Aws\Connect` - This update adds the Amazon Connect Update Contact Attributes API, which lets you update contact attributes for contacts in your Amazon Connect instance.
+* `Aws\EC2` - Pagination Support for DescribeNetworkInterfaces API
+* `Aws\FMS` - This update of Amazon Fire Wall Manager adds the ability to scope down the policy as well as to get all the member accounts belonging to a certain Fire Wall Manager admin account.
+* `Aws\SES` - Documentation updates for Amazon Simple Email Service
+* `Aws\S3` - Support for S3Select in the AWS SDK for PHP.
+
+## 3.67.10 - 2018-09-11
+
+* `Aws\OpsWorksCM` - Documentation updates for opsworkscm
+* `Aws\SSM` - Session Manager is a fully managed AWS Systems Manager capability that provides interactive one-click access to Amazon EC2 Linux and Windows instances.
+
+## 3.67.9 - 2018-09-10
+
+* `Aws\CloudHSMV2` - With this release, we are adding 2 new APIs. DeleteBackup deletes a specified AWS CloudHSM backup. A backup can be restored up to 7 days after the DeleteBackup request. During this 7-day period, the backup will be in state PENDING_DELETION. Backups can be restored using the RestoreBackup API, which will move the backup from state PENDING_DELETION back to ACTIVE.
+* `Aws\Redshift` - Adding support to Redshift to change the encryption type after cluster creation completes.
+
+## 3.67.8 - 2018-09-07
+
+* `Aws\CloudWatchLogs` - * Adding a log prefix parameter for filter log events API and minor updates to the documentation
+* `Aws\ConfigService` - Adding a new field "createdBy" to the ConfigRule data model. The field is populated only if the rule is service linked i.e the rule is created by a service. The field is empty for normal rules created by customer.
+
+## 3.67.7 - 2018-09-06
+
+* `Aws\APIGateway` - Add support for Active X-Ray with API Gateway
+* `Aws\CodeCommit` - This release adds additional optional fields to the pull request APIs.
+* `Aws\MediaConvert` - This release adds support for Cost Allocation through tagging and also enables adding, editing, and removal of tags from the MediaConvert console.
+
+## 3.67.6 - 2018-09-05
+
+* `Aws\AppStream` - Added support for enabling persistent application settings for a stack. When these settings are enabled, changes that users make to applications and Windows settings are automatically saved after each session and applied to the next session.
+* `Aws\DynamoDB` - New feature for Amazon DynamoDB.
+* `Aws\ElasticLoadBalancing` - Documentation update for DescribeAccountLimits API to include classic-registered-instances.
+* `Aws\RDS` - Fix broken links in the RDS CLI Reference to the Aurora User Guide
+* `Aws\S3` - Parquet input format support added for the SelectObjectContent API
+
+## 3.67.5 - 2018-09-04
+
+* `Aws\RDS` - Updating cross references for the new Aurora User Guide.
+* `Aws\Rekognition` - This release introduces a new API called DescribeCollection to Amazon Rekognition. You can use DescribeCollection to get information about an existing face collection. Given the ID for a face collection, DescribeCollection returns the following information: the number of faces indexed into the collection, the version of the face detection model used by the collection, the Amazon Resource Name (ARN) of the collection and the creation date/time of the collection.
+
+## 3.67.4 - 2018-08-31
+
+* `Aws\EKS` - Amazon EKS DescribeCluster API returns a platformVersion attribute which allows you to identify the features that are currently enabled for your clusters. The Amazon EKS platform version represents capabilities of the cluster control plane, such as which Kubernetes API server flags are enabled, as well as the current Kubernetes patch version. 
+* `Aws\WAF` - This change includes support for the WAF FullLogging feature through which Customers will have access to all the logs of requests that are inspected by a WAF WebACL. The new APIs allow Customers to manage association of a WebACL with one or more supported "LogDestination" and redact any request fields from the logs. 
+* `Aws\WAFRegional` - This change includes support for the WAF FullLogging feature through which Customers will have access to all the logs of requests that are inspected by a WAF WebACL. The new APIs allow Customers to manage association of a WebACL with one or more supported "LogDestination" and redact any request fields from the logs. 
+
+## 3.67.3 - 2018-08-30
+
+* `Aws\CodeBuild` - Support multiple sources and artifacts for CodeBuild projects. 
+* `Aws\SageMaker` - VolumeKmsKeyId now available in Batch Transform Job 
+
+## 3.67.2 - 2018-08-29
+
+* `Aws\Glue` - AWS Glue now supports data encryption at rest for ETL jobs and development endpoints. With encryption enabled, when you run ETL jobs, or development endpoints, Glue will use AWS KMS keys to write encrypted data at rest. You can also encrypt the metadata stored in the Glue Data Catalog using keys that you manage with AWS KMS. Additionally, you can use AWS KMS keys to encrypt the logs generated by crawlers and ETL jobs as well as encrypt ETL job bookmarks. Encryption settings for Glue crawlers, ETL jobs, and development endpoints can be configured using the security configurations in Glue. Glue Data Catalog encryption can be enabled via the settings for the Glue Data Catalog.
+* `Aws\MediaPackage` - MediaPackage now provides input redundancy. Channels have two ingest endpoints that can receive input from encoders. OriginEndpoints pick one of the inputs receiving content for playback and automatically switch to the other input if the active input stops receiving content. Refer to the User Guide (https://docs.aws.amazon.com/mediapackage/latest/ug/what-is.html) for more details on this feature.
+* `Aws\SageMakerRuntime` - SageMaker Runtime supports CustomAttributes header which allows customers provide additional information in a request for an inference submitted to a model or in the response about the inference returned by a model hosted at an Amazon SageMaker endpoint.
+
+## 3.67.1 - 2018-08-28
+
+* `Aws\Glue` - New Glue APIs for creating, updating, reading and deleting Data Catalog resource-based policies.
+* `Aws\XRay` - Support for new APIs that enable management of sampling rules.
+
+## 3.67.0 - 2018-08-27
+
+* `Aws\IoT` - This release adds support to create a Stream and Code signing for Amazon FreeRTOS job along with Over-the-air updates.
+* `Aws\IoTAnalytics` - Added new listDatasetContent API that shows you the list of dataset contents for the corresponding versions
+* `Aws\Redshift` - Documentation updates for redshift
+* `Aws\signer` - AWS Signer is a new feature that allows Amazon FreeRTOS (AFR) Over The Air (OTA) customers to cryptographically sign code using code-signing certificates managed by AWS Certificate Manager. 
+
+## 3.66.2 - 2018-08-25
+
+* `Aws\Glue` - AWS Glue now supports data encryption at rest for ETL jobs and development endpoints. With encryption enabled, when you run ETL jobs, or development endpoints, Glue will use AWS KMS keys to write encrypted data at rest. You can also encrypt the metadata stored in the Glue Data Catalog using keys that you manage with AWS KMS. Additionally, you can use AWS KMS keys to encrypt the logs generated by crawlers and ETL jobs as well as encrypt ETL job bookmarks. Encryption settings for Glue crawlers, ETL jobs, and development endpoints can be configured using the security configurations in Glue. Glue Data Catalog encryption can be enabled via the settings for the Glue Data Catalog.
+
+## 3.66.1 - 2018-08-24
+
+* `Aws\CloudWatchEvents` - Added Fargate and NetworkConfiguration support to EcsParameters.
+* `Aws\CognitoIdentityProvider` - Amazon Cognito now has API support for creating custom domains for our hosted UI for User Pools.
+
+## 3.66.0 - 2018-08-23
+
+* `Aws\Credentials` - Update ini parsing to handle unquoted components that contain equals signs.
+* `Aws\IoT` - This release adds support for IoT Thing Group Indexing and Searching functionality.
+* `Aws\IoTAnalytics` - AWS IoT Analytics announces three new features: (1) Bring Your Custom Container - import your custom authored code containers. (2) Automate Container Execution - lets you automate the execution of containers hosting custom authored analytical code or Jupyter Notebooks to perform continuous analysis. (3) Incremental Data Capture with Customizable Time Windows - enables users to perform analysis on new incremental data captured since the last analysis.
+* `Aws\LexModelBuildingService` - Amazon Lex builds bot in two stages. After the first it sets status to READY_BASIC_TESTING. In this state the bot will match user inputs that exactly match the utterances configured for the bot's intents and values in the slot types. 
+* `Aws\MediaLive` - Adds two APIs for working with Channel Schedules: BatchUpdateSchedule and DescribeSchedule. These APIs allow scheduling actions for SCTE-35 message insertion and for static image overlays.
+* `Aws\Rekognition` - This release introduces a new API called DescribeCollection to Amazon Rekognition. You can use DescribeCollection to get information about an existing face collection. Given the ID for a face collection, DescribeCollection returns the following information: the number of faces indexed into the collection, the version of the face detection model used by the collection, the Amazon Resource Name (ARN) of the collection and the creation date/time of the collection.
+
+## 3.65.2 - 2018-08-22
+
+* `Aws\Snowball` - Snowball job states allow customers to track the status of the Snowball job. We are launching a new Snowball job state "WithSortingFacility"! When customer returns the Snowball to AWS, the device first goes to a sorting facility before it reaches an AWS data center. Many customers have requested us to add a new state to reflect the presence of the device at the sorting facility for better tracking. Today when a customer returns the Snowball, the state first changes from "InTransitToAWS" to "WithAWS". With the addition of new state, the device will move from "InTransitToAWS" to "WithAWSSortingFacility", and then to "WithAWS". There are no other changes to the API at this time besides adding this new state.
+
+## 3.65.1 - 2018-08-21
+
+* `Aws\DLM` - Documentation updates for Lifecycle
+* `Aws\EC2` - Added support for T3 Instance type in EC2. To learn more about T3 instances, please see https://aws.amazon.com/ec2/instance-types/t3/
+* `Aws\ElasticBeanstalk` - Elastic Beanstalk adds the "Privileged" field to the "CPUUtilization" type, to support enhanced health reporting in Windows environments.
+* `Aws\RDS` - Adds a paginator for the DescribeDBClusters operation.
+* `Aws\Signature\SignatureV4` - Updates the SignatureV4 presigning process to not sign, and subsequently require on use, the X-Amz-Security-Token header when it's already signed in the query string.
+
+## 3.65.0 - 2018-08-20
+
+* `Aws\DynamoDB` - Added SSESpecification block to update-table command which allows users to modify table Server-Side Encryption. Added two new fields (SSEType and KMSMasterKeyId) to SSESpecification block used by create-table and update-table commands. Added new SSEDescription Status value UPDATING.
+* `Aws\MediaConvert` - This release fixes backward-incompatible changes from a previous release. That previous release changed non-required job settings to required, which prevented jobs and job templates from merging correctly. The current change removes validation of required settings from the SDK and instead centralizes the validation in the service API. For information on required settings, see the Resources chapter of the AWS Elemental MediaConvert API Reference https://docs.aws.amazon.com/mediaconvert/latest/apireference/resources.html
+* `Aws\Signature\SignatureV4` - Add support for pre-signing additional headers. Any additional headers that are supplied and signed must be included when sending the request.
+* `Aws\Test` - Refactored namespaces of tests to prepare for PHPUnit6
+* `Aws\Test` - Refactored exception tests to prepare for PHPUnit6
+
+## 3.64.15 - 2018-08-17
+
+* `Aws\DAX` - DAX CreateClusterRequest is updated to include IamRoleArn as a required request parameter. 
+* `Aws\SageMaker` - Added an optional boolean parameter, 'DisassociateLifecycleConfig', to the UpdateNotebookInstance operation. When set to true, the lifecycle configuration associated with the notebook instance will be removed, allowing a new one to be set via a new 'LifecycleConfigName' parameter.
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+
+## 3.64.14 - 2018-08-16
+
+* `Aws\ApplicationDiscoveryService` - The Application Discovery Service's Continuous Export APIs allow you to analyze your on-premises server inventory data, including system performance and network dependencies, in Amazon Athena.
+* `Aws\EC2` - The 'Attribute' parameter DescribeVolumeAttribute request has been marked as required - the API has always required this parameter, but up until now this wasn't reflected appropriately in the SDK.
+* `Aws\MediaConvert` - Added WriteSegmentTimelineInRepresentation option for Dash Outputs
+* `Aws\Redshift` - You can now resize your Amazon Redshift cluster quickly. With the new ResizeCluster action, your cluster is available for read and write operations within minutes
+* `Aws\SSM` - AWS Systems Manager Inventory now supports groups to quickly see a count of which managed instances are and arent configured to collect one or more Inventory types
+* `Aws\TraceMiddleware` - Removed potential PCRE vulnerability.
+
+## 3.64.13 - 2018-08-15
+
+* `Aws\` - We are launching AWS IoT Core and AWS IoT Device Mgmt in GovCloud (us-gov-west-1) region.
+* `Aws\DeviceFarm` - Support for running tests in a custom environment with live logs/video streaming, full test features parity and reduction in overall test execution time.
+
+## 3.64.12 - 2018-08-14
+
+* `Aws\AutoScaling` - Add batch operations for creating/updating and deleting scheduled scaling actions.
+* `Aws\CloudFront` - Lambda@Edge Now Provides You Access to the Request Body for HTTP POST/PUT Processing. With this feature, you can now offload more origin logic to the edge and improve end-user latency. Developers typically use Web/HTML forms or Web Beacons/Bugs as a mechanism to collect data from the end users and then process that data at their origins servers. For example, if you are collecting end user behavior data through a web beacon on your website, you can use this feature to access the user behavior data and directly log it to an Amazon Kinesis Firehose endpoint from the Lambda function, thereby simplifying your origin infrastructure.
+* `Aws\ElasticsearchService` - Amazon Elasticsearch Service adds support for no downtime, in-place upgrade for Elasticsearch version 5.1 and above.
+
+## 3.64.11 - 2018-08-13
+
+* `Aws\SageMaker` - SageMaker updated the default endpoint URL to support Private Link via the CLI/SDK.
+
+## 3.64.10 - 2018-08-10
+
+* `Aws\MediaConvert` - This release adds support for a new rate control mode, Quality-Defined Variable Bitrate (QVBR) encoding, includes updates to optimize transcoding performance, and resolves previously reported bugs.
+* `Aws\MediaPackage` - Elemental MediaPackage is now available in the SFO region.
+* `Aws\RDS` - Documentation updates for rds
+
+## 3.64.9 - 2018-08-09
+
+* `Aws\DAX` - Add the SSESpecification field to CreateCluster to allow creation of clusters with server-side encryption, and add the SSEDescription field to DescribeClusters to display the status of server-side encryption for a cluster. 
+* `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) introduces support for Docker volumes and Docker volume drivers. Customers can now configure their ECS Tasks to use Docker volumes, enabling stateful and storage-intensive applications to be deployed on ECS.
+* `Aws\RDS` - Launch RDS Aurora Serverless
+
+## 3.64.8 - 2018-08-08
+
+* `Aws\SSM` - AWS Systems Manager Automation is launching two new features for Automation Execution Rate Control based on tags and customized parameter maps. With the first feature, customer can target their resources by specifying a Tag with Key/Value. With the second feature, Parameter maps rate control, customers can benefit from customization of input parameters.
+* `Aws\SecretsManager` - This release introduces a ForceDeleteWithoutRecovery parameter to the DeleteSecret API enabling customers to force the deletion of a secret without any recovery window
+
+## 3.64.7 - 2018-08-07
+
+* `Aws\CloudWatchLogs` - Documentation Update
+* `Aws\CodeBuild` - Release semantic versioning feature for CodeBuild
+* `Aws\EC2` - Amazon VPC Flow Logs adds support for delivering flow logs directly to S3
+* `Aws\Pinpoint` - This release includes a new batch API call for Amazon Pinpoint which can be used to update endpoints and submit events. This call will accept events from clients such as mobile devices and AWS SDKs. This call will accept requests which has multiple endpoints and multiple events attached to those endpoints in a single call. This call will update the endpoints attached and will ingest events for those endpoints. The response from this call will be a multipart response per endpoint/per event submitted.
+* `Aws\SSM` - Two new filters ExecutionStage and DocumentName will be added to ListCommands so that customers will have more approaches to query their commands.
+
+## 3.64.6 - 2018-08-06
+
+* `Aws\DynamoDB` -  Amazon DynamoDB Point-in-time recovery (PITR) provides continuous backups of your table data. DynamoDB now supports the ability to self-restore a deleted PITR enabled table. Now, when a table with PITR enabled is deleted, a system backup is automatically created and retained for 35 days (at no additional cost). System backups allow you to restore the deleted PITR enabled table to the state it was just before the point of deletion. For more information, see the Amazon DynamoDB Developer Guide.
+* `Aws\Health` - Updates the ARN structure vended by AWS Health API. All ARNs will now include the service and type code of the associated event, as vended by DescribeEventTypes.
+
+## 3.64.5 - 2018-08-03
+
+* `Aws\AlexaForBusiness` - Documentation updates for AWS Alexa For Business
+
+## 3.64.4 - 2018-08-02
+
+* `Aws\Greengrass` - AWS Greengrass is now available in the Dublin, Ireland (Europe) region, eu-west-1.
+* `Aws\Kinesis` - This update introduces SubscribeToShard and RegisterStreamConsumer APIs which allows for retrieving records on a data stream over HTTP2 with enhanced fan-out capabilities. With this new feature the Java SDK now supports event streaming natively which will allow you to define payload and exception structures on the client over a persistent connection. For more information, see Developing Consumers with Enhanced Fan-Out in the Kinesis Developer Guide.
+* `Aws\Polly` - Amazon Polly enables female voice Aditi to speak Hindi language
+* `Aws\ResourceGroups` - AWS Resource Groups service added a new feature to filter group resources by resource-type when using the ListGroupResources operation.
+* `Aws\SSM` - This release updates AWS Systems Manager APIs to let customers create and use service-linked roles to register and edit Maintenance Window tasks.
+
 ## 3.64.3 - 2018-08-01
 
 * `Aws\StorageGateway` - AWS Storage Gateway now enables you to create stored volumes with AWS KMS support.

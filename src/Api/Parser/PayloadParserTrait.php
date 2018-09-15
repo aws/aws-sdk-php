@@ -13,7 +13,7 @@ trait PayloadParserTrait
      *
      * @return array
      */
-    private function parseJson($json, ResponseInterface $response)
+    private function parseJson($json, $response)
     {
         $jsonPayload = json_decode($json, true);
 
@@ -36,7 +36,7 @@ trait PayloadParserTrait
      *
      * @return \SimpleXMLElement
      */
-    private function parseXml($xml, ResponseInterface $response)
+    private function parseXml($xml, $response)
     {
         $priorSetting = libxml_use_internal_errors(true);
         try {

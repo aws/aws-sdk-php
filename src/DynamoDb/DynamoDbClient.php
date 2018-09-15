@@ -47,6 +47,8 @@ use Aws\RetryMiddleware;
  * @method \GuzzleHttp\Promise\Promise describeBackupAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result describeContinuousBackups(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise describeContinuousBackupsAsync(array $args = []) (supported in versions 2012-08-10)
+ * @method \Aws\Result describeEndpoints(array $args = []) (supported in versions 2012-08-10)
+ * @method \GuzzleHttp\Promise\Promise describeEndpointsAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result describeGlobalTable(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise describeGlobalTableAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result describeGlobalTableSettings(array $args = []) (supported in versions 2012-08-10)

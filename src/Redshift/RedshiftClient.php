@@ -132,6 +132,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise rebootClusterAsync(array $args = [])
  * @method \Aws\Result resetClusterParameterGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise resetClusterParameterGroupAsync(array $args = [])
+ * @method \Aws\Result resizeCluster(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise resizeClusterAsync(array $args = [])
  * @method \Aws\Result restoreFromClusterSnapshot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreFromClusterSnapshotAsync(array $args = [])
  * @method \Aws\Result restoreTableFromClusterSnapshot(array $args = [])

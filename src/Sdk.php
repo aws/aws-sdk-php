@@ -290,10 +290,12 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionWorkSpaces(array $args = [])
  * @method \Aws\XRay\XRayClient createXRay(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionXRay(array $args = [])
+ * @method \Aws\signer\signerClient createsigner(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionsigner(array $args = [])
  */
 class Sdk
 {
-    const VERSION = '3.64.3';
+    const VERSION = '3.67.12';
 
     /** @var array Arguments for creating clients */
     private $args;

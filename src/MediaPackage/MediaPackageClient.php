@@ -23,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listOriginEndpointsAsync(array $args = [])
  * @method \Aws\Result rotateChannelCredentials(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rotateChannelCredentialsAsync(array $args = [])
+ * @method \Aws\Result rotateIngestEndpointCredentials(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise rotateIngestEndpointCredentialsAsync(array $args = [])
  * @method \Aws\Result updateChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateChannelAsync(array $args = [])
  * @method \Aws\Result updateOriginEndpoint(array $args = [])

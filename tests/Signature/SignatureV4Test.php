@@ -156,7 +156,9 @@ class SignatureV4Test extends TestCase
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
-        $url = (string) $signature->presign($request, $credentials, 1386720000)->getUri();
+        $request = $signature->presign($request, $credentials, 1386720000);
+        $this->assertEmpty($request->getHeader('X-Amz-Security-Token'));
+        $url = (string) $request->getUri();
         $this->assertContains('X-Amz-Security-Token=123', $url);
         $this->assertContains('X-Amz-Expires=518400', $url);
     }
@@ -273,6 +275,37 @@ class SignatureV4Test extends TestCase
         ]);
         $signed = $sig->signRequest($req, $creds);
         $this->assertContains('content-md5;host;x-amz-date;x-amz-foo', $signed->getHeaderLine('Authorization'));
+    }
+
+    public function testPresignSpecificHeaders()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('PUT', 'http://foo.com', [
+            'x-amz-date' => 'today',
+            'host' => 'foo.com',
+            'x-amz-foo' => '123',
+            'content-md5' => 'bogus',
+            'x-amz-meta-foo' => 'bar',
+            'x-amz-content-sha256' => 'abc',
+        ]);
+        $presigned = $sig->presign($req, $creds, '+5 minutes');
+        $this->assertContains(urlencode('host;x-amz-foo;content-md5;x-amz-meta-foo'), (string)$presigned->getUri());
+    }
+
+    public function testPresignBlacklistedHeaders()
+    {
+        $sig = new SignatureV4('foo', 'bar');
+        $creds = new Credentials('a', 'b');
+        $req = new Request('PUT', 'http://foo.com', [
+            'user-agent' => 'curl',
+            'content-length' => '1000',
+            'Content-Type' => 'text/html',
+        ]);
+        $presigned = $sig->presign($req, $creds, '+5 minutes');
+        $this->assertNotContains('user-agent', (string)$presigned->getUri());
+        $this->assertNotContains('content-length', (string)$presigned->getUri());
+        $this->assertNotContains('Content-Type', (string)$presigned->getUri());
     }
 
     /**

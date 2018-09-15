@@ -73,7 +73,13 @@ abstract class AbstractRestParser extends AbstractParser
     ) {
         $member = $output->getMember($payload);
 
-        if ($member instanceof StructureShape) {
+        if (!empty($member['eventstream'])) {
+            $result[$payload] = new EventParsingIterator(
+                $response->getBody(),
+                $member,
+                $this
+            );
+        } else if ($member instanceof StructureShape) {
             // Structure members parse top-level data into a specific key.
             $result[$payload] = [];
             $this->payload($response, $member, $result[$payload]);
