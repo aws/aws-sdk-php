@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.13 - 2018-09-17
 
 * `Aws\CloudWatch` - Amazon CloudWatch adds the ability to publish values and counts using PutMetricData
 * `Aws\CodeBuild` - Support build logs configuration.
