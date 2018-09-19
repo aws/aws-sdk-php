@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.15 - 2018-09-19
 
 * `Aws\CloudWatch` - Amazon CloudWatch adds the ability to request png image snapshots of metric widgets using the GetMetricWidgetImage API.
 * `Aws\Organizations` - Introducing a new exception - AccountOwnerNotVerifiedException which will be returned for InviteAccountToOrganization call for unverified accounts.
