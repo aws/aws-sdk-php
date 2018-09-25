@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Documentation updates for cloudfront
+* `Aws\DirectoryService` - API changes related to launch of cross account for Directory Service.
+* `Aws\EC2` - Add pagination support for ec2.describe-route-tables API. 
+
 ## 3.67.18 - 2018-09-24
 
 * `Aws\Connect` - This update adds the Amazon Connect Metrics API, which lets you get current metric data and historical metric data within 24 hours for the queues in your Amazon Connect instance.
