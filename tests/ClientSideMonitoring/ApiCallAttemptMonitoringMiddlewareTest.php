@@ -9,6 +9,7 @@ use Aws\Command;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
@@ -46,6 +47,17 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         return $method;
+    }
+
+    protected function getDefaultUserAgent()
+    {
+        $version = (string) ClientInterface::VERSION;
+        if ($version[0] === '5') {
+            return \GuzzleHttp\Client::getDefaultUserAgent();
+        }
+        if ($version[0] === '6') {
+            return \GuzzleHttp\default_user_agent();
+        }
     }
 
     protected function resetMiddlewareSocket()
@@ -116,8 +128,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
             'Service' => 'ec2',
             'SessionToken' => 'testtoken',
             'Type' => 'ApiCallAttempt',
-            'UserAgent' => 'foo-agent' . ' ' .
-                \GuzzleHttp\default_user_agent(),
+            'UserAgent' => 'foo-agent ' . $this->getDefaultUserAgent(),
             'Version' => 1,
         ];
         $eventStatsPartial = [
