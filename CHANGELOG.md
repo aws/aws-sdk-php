@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.19 - 2018-09-25
 
 * `Aws\CloudFront` - Documentation updates for cloudfront
 * `Aws\DirectoryService` - API changes related to launch of cross account for Directory Service.
