@@ -49,17 +49,6 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
         return $method;
     }
 
-    protected function getDefaultUserAgent()
-    {
-        $version = (string) ClientInterface::VERSION;
-        if ($version[0] === '5') {
-            return \GuzzleHttp\Client::getDefaultUserAgent();
-        }
-        if ($version[0] === '6') {
-            return \GuzzleHttp\default_user_agent();
-        }
-    }
-
     protected function resetMiddlewareSocket()
     {
         $prepareSocket = $this->getMethod('prepareSocket');
@@ -128,7 +117,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
             'Service' => 'ec2',
             'SessionToken' => 'testtoken',
             'Type' => 'ApiCallAttempt',
-            'UserAgent' => 'foo-agent ' . $this->getDefaultUserAgent(),
+            'UserAgent' => 'foo-agent ' . \Aws\default_user_agent(),
             'Version' => 1,
         ];
         $eventStatsPartial = [
