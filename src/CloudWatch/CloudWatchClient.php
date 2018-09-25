@@ -26,6 +26,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getMetricDataAsync(array $args = [])
  * @method \Aws\Result getMetricStatistics(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getMetricStatisticsAsync(array $args = [])
+ * @method \Aws\Result getMetricWidgetImage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getMetricWidgetImageAsync(array $args = [])
  * @method \Aws\Result listDashboards(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDashboardsAsync(array $args = [])
  * @method \Aws\Result listMetrics(array $args = [])
