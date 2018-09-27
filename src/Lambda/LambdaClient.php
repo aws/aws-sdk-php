@@ -82,6 +82,8 @@ class LambdaClient extends AwsClient
     }
 
     /**
+     * Provides a middleware that sets default Curl options for the command
+     *
      * @return callable
      */
     public function getDefaultCurlOptionsMiddleware()
