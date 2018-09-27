@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.67.21 - 2018-09-27
 
 * `Aws\APIGateway` - Adding support for OpenAPI 3.0 import and export.
 * `Aws\CodeCommit` - This release adds API support for getting the contents of a file, getting the contents of a folder, and for deleting a file in an AWS CodeCommit repository.
