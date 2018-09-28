@@ -23,7 +23,9 @@ class LambdaClientTest extends TestCase
         $list->setHandler(function ($command, $request) {
             $this->assertArraySubset(
                 [
-                    'curl' => LambdaClient::$defaultCurlOptions,
+                    'curl' => [
+                        CURLOPT_TCP_KEEPALIVE => 1,
+                    ],
                 ],
                 $command['@http']
             );

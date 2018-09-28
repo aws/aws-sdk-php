@@ -72,14 +72,6 @@ use Aws\Middleware;
 class LambdaClient extends AwsClient
 {
     /**
-     * Default Curl options for Lambda
-     * @var array
-     */
-    static $defaultCurlOptions = [
-        CURLOPT_TCP_KEEPALIVE => 1,
-    ];
-
-    /**
      * {@inheritdoc}
      */
     public function __construct(array $args)
@@ -99,10 +91,13 @@ class LambdaClient extends AwsClient
     public function getDefaultCurlOptionsMiddleware()
     {
         return Middleware::mapCommand(function (CommandInterface $cmd) {
+            $defaultCurlOptions = [
+                CURLOPT_TCP_KEEPALIVE => 1,
+            ];
             if (!isset($cmd['@http']['curl'])) {
-                $cmd['@http']['curl'] = self::$defaultCurlOptions;
+                $cmd['@http']['curl'] = $defaultCurlOptions;
             } else {
-                $cmd['@http']['curl'] += self::$defaultCurlOptions;
+                $cmd['@http']['curl'] += $defaultCurlOptions;
             }
             return $cmd;
         });
