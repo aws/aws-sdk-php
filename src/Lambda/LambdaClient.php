@@ -86,7 +86,9 @@ class LambdaClient extends AwsClient
     {
         parent::__construct($args);
         $list = $this->getHandlerList();
-        $list->appendInit($this->getDefaultCurlOptionsMiddleware());
+        if (extension_loaded('curl')) {
+            $list->appendInit($this->getDefaultCurlOptionsMiddleware());
+        }
     }
 
     /**

@@ -10,6 +10,10 @@ class LambdaClientTest extends TestCase
 {
     function testsAddsDefaultCurlOptions()
     {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Test skipped on no cURL extension');
+        }
+
         $client = new LambdaClient([
             'region' => 'us-east-1',
             'version' => 'latest'
@@ -20,7 +24,6 @@ class LambdaClientTest extends TestCase
             $this->assertArraySubset(
                 [
                     'curl' => LambdaClient::$defaultCurlOptions,
-
                 ],
                 $command['@http']
             );
