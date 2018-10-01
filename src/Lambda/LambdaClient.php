@@ -2,6 +2,8 @@
 namespace Aws\Lambda;
 
 use Aws\AwsClient;
+use Aws\CommandInterface;
+use Aws\Middleware;
 
 /**
  * This client is used to interact with AWS Lambda
@@ -67,4 +69,37 @@ use Aws\AwsClient;
  * @method \Aws\Result updateFunctionConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFunctionConfigurationAsync(array $args = [])
  */
-class LambdaClient extends AwsClient {}
+class LambdaClient extends AwsClient
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct(array $args)
+    {
+        parent::__construct($args);
+        $list = $this->getHandlerList();
+        if (extension_loaded('curl')) {
+            $list->appendInit($this->getDefaultCurlOptionsMiddleware());
+        }
+    }
+
+    /**
+     * Provides a middleware that sets default Curl options for the command
+     *
+     * @return callable
+     */
+    public function getDefaultCurlOptionsMiddleware()
+    {
+        return Middleware::mapCommand(function (CommandInterface $cmd) {
+            $defaultCurlOptions = [
+                CURLOPT_TCP_KEEPALIVE => 1,
+            ];
+            if (!isset($cmd['@http']['curl'])) {
+                $cmd['@http']['curl'] = $defaultCurlOptions;
+            } else {
+                $cmd['@http']['curl'] += $defaultCurlOptions;
+            }
+            return $cmd;
+        });
+    }
+}
