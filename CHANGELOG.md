@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.68.0 - 2018-10-01
 
 * `Aws\GuardDuty` - Support optional FindingPublishingFrequency parameter in CreateDetector and UpdateDetector operations, and ClientToken on Create* operations
 * `Aws\Lambda` - Added default TCP Keep-Alive Curl setting for the Lambda client.
