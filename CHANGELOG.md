@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GuardDuty` - Support optional FindingPublishingFrequency parameter in CreateDetector and UpdateDetector operations, and ClientToken on Create* operations
+* `Aws\Lambda` - Added default TCP Keep-Alive Curl setting for the Lambda client.
+* `Aws\Rekognition` - Documentation updates for Amazon Rekognition
+
 ## 3.67.22 - 2018-09-28
 
 * `Aws\CodeStar` - This release enables tagging CodeStar Projects at creation. The CreateProject API now includes optional tags parameter.
