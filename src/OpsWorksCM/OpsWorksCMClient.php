@@ -27,6 +27,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeServersAsync(array $args = [])
  * @method \Aws\Result disassociateNode(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disassociateNodeAsync(array $args = [])
+ * @method \Aws\Result exportServerEngineAttribute(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise exportServerEngineAttributeAsync(array $args = [])
  * @method \Aws\Result restoreServer(array $args = [])
  * @method \GuzzleHttp\Promise\Promise restoreServerAsync(array $args = [])
  * @method \Aws\Result startMaintenance(array $args = [])

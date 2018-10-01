@@ -83,6 +83,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getCrawlerMetricsAsync(array $args = [])
  * @method \Aws\Result getCrawlers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCrawlersAsync(array $args = [])
+ * @method \Aws\Result getDataCatalogEncryptionSettings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getDataCatalogEncryptionSettingsAsync(array $args = [])
  * @method \Aws\Result getDatabase(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDatabaseAsync(array $args = [])
  * @method \Aws\Result getDatabases(array $args = [])
