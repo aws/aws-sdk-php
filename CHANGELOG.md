@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.68.1 - 2018-10-02
 
 * `Aws\SageMaker` - Waiter for SageMaker Batch Transform Jobs.
 * `Aws\SecretsManager` - Documentation updates for secretsmanager
