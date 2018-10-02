@@ -126,13 +126,13 @@ class JsonBodyTest extends TestCase
                             'type' => 'structure',
                             'members' => [
                                 'bar' => [
-                                    'type' => 'String'
+                                    'type' => 'string'
                                 ]
                             ]
                         ],
                         'baz' => [
                             'type' => 'map',
-                            'value' => ['type' => 'String']
+                            'value' => ['type' => 'string']
                         ],
                         'foz' => [
                             'type' => 'list',
@@ -142,7 +142,25 @@ class JsonBodyTest extends TestCase
                 ],
                 ['foo' => [], 'baz' => [], 'foz' => []],
                 '{"foo":{},"baz":{},"foz":[]}'
-            ]
+            ],
+            // Formats nested structures which have invalid elements
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'foo' => [
+                            'type' => 'structure',
+                            'members' => [
+                                'bar' => [
+                                    'type' => 'string'
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                ['foo' => ['baz' => 'is not a valid member']],
+                '{"foo":{}}'
+            ],
         ];
     }
 
