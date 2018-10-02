@@ -117,6 +117,32 @@ class JsonBodyTest extends TestCase
                 ['foo' => 1397259637],
                 '{"foo":1397259637}'
             ],
+            // Formats nested structures, maps and lists which have no elements
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'foo' => [
+                            'type' => 'structure',
+                            'members' => [
+                                'bar' => [
+                                    'type' => 'String'
+                                ]
+                            ]
+                        ],
+                        'baz' => [
+                            'type' => 'map',
+                            'value' => ['type' => 'String']
+                        ],
+                        'foz' => [
+                            'type' => 'list',
+                            'member' => ['type' => 'string']
+                        ]
+                    ]
+                ],
+                ['foo' => [], 'baz' => [], 'foz' => []],
+                '{"foo":{},"baz":{},"foz":[]}'
+            ]
         ];
     }
 
