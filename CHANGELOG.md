@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SageMaker` - Waiter for SageMaker Batch Transform Jobs.
+* `Aws\SecretsManager` - Documentation updates for secretsmanager
+
 ## 3.68.0 - 2018-10-01
 
 * `Aws\GuardDuty` - Support optional FindingPublishingFrequency parameter in CreateDetector and UpdateDetector operations, and ClientToken on Create* operations
