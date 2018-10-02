@@ -83,7 +83,8 @@ class EventParsingIterator implements Iterator
                 } else {
                     $parsedEvent[$shape] = $this->parser->parseMemberFromStream(
                         $event['payload'],
-                        $payloadShape
+                        $payloadShape,
+                        null
                     );
                 }
             } else {

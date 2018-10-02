@@ -1,4 +1,11 @@
 <?php
 namespace Aws\Exception;
 
-class UnresolvedEndpointException extends \RuntimeException {}
+use Aws\HasMonitoringEventsTrait;
+use Aws\MonitoringEventsInterface;
+
+class UnresolvedEndpointException extends \RuntimeException implements
+    MonitoringEventsInterface
+{
+    use HasMonitoringEventsTrait;
+}

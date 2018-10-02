@@ -40,7 +40,7 @@ class QueryParser extends AbstractParser
         ResponseInterface $response
     ) {
         $output = $this->api->getOperation($command->getName())->getOutput();
-        $xml = $this->parseXml($response->getBody());
+        $xml = $this->parseXml($response->getBody(), $response);
 
         if ($this->honorResultWrapper && $output['resultWrapper']) {
             $xml = $xml->{$output['resultWrapper']};
@@ -51,9 +51,10 @@ class QueryParser extends AbstractParser
 
     public function parseMemberFromStream(
         StreamInterface $stream,
-        StructureShape $member
+        StructureShape $member,
+        $response
     ) {
-        $xml = $this->parseXml($stream);
+        $xml = $this->parseXml($stream, $response);
         return $this->parser->parse($member, $xml);
     }
 }

@@ -35,6 +35,7 @@ class HandlerList implements \Countable
     const VALIDATE = 'validate';
     const BUILD = 'build';
     const SIGN = 'sign';
+    const ATTEMPT = 'attempt';
 
     /** @var callable */
     private $handler;
@@ -50,6 +51,7 @@ class HandlerList implements \Countable
 
     /** @var array Steps (in reverse order) */
     private $steps = [
+        self::ATTEMPT  => [],
         self::SIGN     => [],
         self::BUILD    => [],
         self::VALIDATE => [],
@@ -202,6 +204,28 @@ class HandlerList implements \Countable
     }
 
     /**
+     * Append a middleware to the attempt step.
+     *
+     * @param callable $middleware Middleware function to add.
+     * @param string   $name       Name of the middleware.
+     */
+    public function appendAttempt(callable $middleware, $name = null)
+    {
+        $this->add(self::ATTEMPT, $name, $middleware);
+    }
+
+    /**
+     * Prepend a middleware to the attempt step.
+     *
+     * @param callable $middleware Middleware function to add.
+     * @param string   $name       Name of the middleware.
+     */
+    public function prependAttempt(callable $middleware, $name = null)
+    {
+        $this->add(self::ATTEMPT, $name, $middleware, true);
+    }
+
+    /**
      * Add a middleware before the given middleware by name.
      *
      * @param string|callable $findName   Add before this
@@ -286,7 +310,8 @@ class HandlerList implements \Countable
         return count($this->steps[self::INIT])
             + count($this->steps[self::VALIDATE])
             + count($this->steps[self::BUILD])
-            + count($this->steps[self::SIGN]);
+            + count($this->steps[self::SIGN])
+            + count($this->steps[self::ATTEMPT]);
     }
 
     /**

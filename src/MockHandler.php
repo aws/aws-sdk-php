@@ -58,6 +58,20 @@ class MockHandler implements \Countable
         }
     }
 
+    /**
+     * Adds one or more \Exception or \Throwable to the queue
+     */
+    public function appendException()
+    {
+        foreach (func_get_args() as $value) {
+            if ($value instanceof \Exception || $value instanceof \Throwable) {
+                $this->queue[] = $value;
+            } else {
+                throw new \InvalidArgumentException('Expected an \Exception or \Throwable.');
+            }
+        }
+    }
+
     public function __invoke(
         CommandInterface $command,
         RequestInterface $request

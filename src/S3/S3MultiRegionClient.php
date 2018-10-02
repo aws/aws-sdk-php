@@ -246,7 +246,7 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
                     } catch (AwsException $e) {
                         if ($e->getAwsErrorCode() === 'AuthorizationHeaderMalformed') {
                             $region = $this->determineBucketRegionFromExceptionBody(
-                                $e->getResponse()->getBody()
+                                $e->getResponse()
                             );
                             if (!empty($region)) {
                                 $this->cache->set($cacheKey, $region);

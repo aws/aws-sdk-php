@@ -148,6 +148,7 @@ class RetryMiddleware
     ) {
         $retries = 0;
         $requestStats = [];
+        $monitoringEvents = [];
         $handler = $this->nextHandler;
         $decider = $this->decider;
         $delay = $this->delay;
@@ -162,10 +163,18 @@ class RetryMiddleware
             $request,
             &$retries,
             &$requestStats,
+            &$monitoringEvents,
             &$g
         ) {
             $this->updateHttpStats($value, $requestStats);
 
+            if ($value instanceof MonitoringEventsInterface) {
+                $reversedEvents = array_reverse($monitoringEvents);
+                $monitoringEvents = array_merge($monitoringEvents, $value->getMonitoringEvents());
+                foreach ($reversedEvents as $event) {
+                    $value->prependMonitoringEvent($event);
+                }
+            }
             if ($value instanceof \Exception || $value instanceof \Throwable) {
                 if (!$decider($retries, $command, $request, null, $value)) {
                     return Promise\rejection_for(

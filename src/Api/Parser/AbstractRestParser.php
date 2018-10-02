@@ -129,7 +129,7 @@ abstract class AbstractRestParser extends AbstractParser
                 }
             case 'string':
                 if ($shape['jsonvalue']) {
-                    $value = $this->parseJson(base64_decode($value));
+                    $value = $this->parseJson(base64_decode($value), $response);
                 }
                 break;
         }

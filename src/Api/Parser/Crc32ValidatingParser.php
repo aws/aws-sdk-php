@@ -46,8 +46,9 @@ class Crc32ValidatingParser extends AbstractParser
 
     public function parseMemberFromStream(
         StreamInterface $stream,
-        StructureShape $member
+        StructureShape $member,
+        $response
     ) {
-        return $this->parser->parseMemberFromStream($stream, $member);
+        return $this->parser->parseMemberFromStream($stream, $member, $response);
     }
 }

@@ -20,7 +20,7 @@ trait JsonParserTrait
             'code'        => null,
             'message'     => null,
             'type'        => $code[0] == '4' ? 'client' : 'server',
-            'parsed'      => $this->parseJson($response->getBody())
+            'parsed'      => $this->parseJson($response->getBody(), $response)
         ];
     }
 }

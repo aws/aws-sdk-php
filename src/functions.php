@@ -275,6 +275,25 @@ function default_http_handler()
 }
 
 /**
+ * Gets the default user agent string depending on the Guzzle version
+ *
+ * @return string
+ */
+function default_user_agent()
+{
+    $version = (string) ClientInterface::VERSION;
+    if ($version[0] === '5') {
+        return \GuzzleHttp\Client::getDefaultUserAgent();
+    }
+
+    if ($version[0] === '6') {
+        return \GuzzleHttp\default_user_agent();
+    }
+
+    throw new \RuntimeException('Unknown Guzzle version: ' . $version);
+}
+
+/**
  * Serialize a request for a command but do not send it.
  *
  * Returns a promise that is fulfilled with the serialized request.

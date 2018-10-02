@@ -28,14 +28,15 @@ class RestXmlParser extends AbstractRestParser
         StructureShape $member,
         array &$result
     ) {
-        $result += $this->parseMemberFromStream($response->getBody(), $member);
+        $result += $this->parseMemberFromStream($response->getBody(), $member, $response);
     }
 
     public function parseMemberFromStream(
         StreamInterface $stream,
-        StructureShape $member
+        StructureShape $member,
+        $response
     ) {
-        $xml = $this->parseXml($stream);
+        $xml = $this->parseXml($stream, $response);
         return $this->parser->parse($member, $xml);
     }
 }

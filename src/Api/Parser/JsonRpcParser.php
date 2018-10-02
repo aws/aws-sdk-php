@@ -34,7 +34,8 @@ class JsonRpcParser extends AbstractParser
             ? null
             : $this->parseMemberFromStream(
                 $response->getBody(),
-                $operation->getOutput()
+                $operation->getOutput(),
+                $response
             );
 
         return new Result($result ?: []);
@@ -42,8 +43,9 @@ class JsonRpcParser extends AbstractParser
 
     public function parseMemberFromStream(
         StreamInterface $stream,
-        StructureShape $member
+        StructureShape $member,
+        $response
     ) {
-        return $this->parser->parse($member, $this->parseJson($stream));
+        return $this->parser->parse($member, $this->parseJson($stream, $response));
     }
 }

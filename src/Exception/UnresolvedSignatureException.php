@@ -1,4 +1,11 @@
 <?php
 namespace Aws\Exception;
 
-class UnresolvedSignatureException extends \RuntimeException {}
+use Aws\HasMonitoringEventsTrait;
+use Aws\MonitoringEventsInterface;
+
+class UnresolvedSignatureException extends \RuntimeException implements
+    MonitoringEventsInterface
+{
+    use HasMonitoringEventsTrait;
+}

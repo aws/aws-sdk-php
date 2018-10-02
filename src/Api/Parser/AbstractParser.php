@@ -40,6 +40,7 @@ abstract class AbstractParser
 
     abstract public function parseMemberFromStream(
         StreamInterface $stream,
-        StructureShape $member
+        StructureShape $member,
+        $response
     );
 }
