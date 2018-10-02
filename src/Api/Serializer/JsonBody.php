@@ -50,9 +50,6 @@ class JsonBody
     {
         switch ($shape['type']) {
             case 'structure':
-                if (empty($value)) {
-                    return new \stdClass;
-                }
                 $data = [];
                 foreach ($value as $k => $v) {
                     if ($v !== null && $shape->hasMember($k)) {
@@ -60,6 +57,9 @@ class JsonBody
                         $data[$valueShape['locationName'] ?: $k]
                             = $this->format($valueShape, $v);
                     }
+                }
+                if (empty($data)) {
+                    return new \stdClass;
                 }
                 return $data;
 
