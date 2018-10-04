@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.0 - 2018-10-04
 
 * `Aws\APIGateway` - Adding support for multi-value parameters in TestInvokeMethod and TestInvokeAuthorizer.
 * `Aws\ClientSideMonitoring` - Code for future SDK instrumentation and telemetry.
