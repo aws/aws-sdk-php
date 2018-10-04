@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Adding support for multi-value parameters in TestInvokeMethod and TestInvokeAuthorizer.
+* `Aws\ClientSideMonitoring` - Code for future SDK instrumentation and telemetry.
+* `Aws\CodeBuild` - Add resolved source version field in build output
+* `Aws\Neptune` - Update neptune command for support in the EU (London) region
+* `Aws\SSM` -  Adds RejectedPatchesAction to baseline to enable stricted validation of the rejected Patches List ; Add InstalledRejected and InstallOverrideList to compliance reporting
+* `Aws\StorageGateway` - AWS Storage Gateway now enables you to specify folders and subfolders when you update your file gateway's view of your S3 objects using the Refresh Cache API.
+
 ## 3.68.1 - 2018-10-02
 
 * `Aws\SageMaker` - Waiter for SageMaker Batch Transform Jobs.
