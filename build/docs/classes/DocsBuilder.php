@@ -861,9 +861,11 @@ EOT;
             $html->elem('span', 'term', $name);
             $html->close();
             $html->open('dd', 'param-def');
-                $html->append($this->describeParam($member));
-                $desc = $docs->getShapeDocs($member['name'], $shape['name'], $name);
-                $html->elem('div', 'param-def-doc', $desc);
+            $required = !empty($shape['required'])
+                && in_array($name, $shape['required']);
+            $html->append($this->describeParam($member, $required));
+            $desc = $docs->getShapeDocs($member['name'], $shape['name'], $name);
+            $html->elem('div', 'param-def-doc', $desc);
             $html->close();
         }
 
@@ -873,7 +875,7 @@ EOT;
         return $html;
     }
 
-    private function describeParam(AbstractModel $member)
+    private function describeParam(AbstractModel $member, $required = false)
     {
         $html = new HtmlDocument();
         if ($member instanceof StructureShape) {
@@ -889,7 +891,7 @@ EOT;
         }
 
         $html->open('div', 'param-attributes')->open('ul');
-        if ($member['required']) {
+        if ($required) {
             $html->elem('li', 'required', 'Required: Yes');
         }
         $html->elem('li', '', 'Type: ' . $typeDesc);
