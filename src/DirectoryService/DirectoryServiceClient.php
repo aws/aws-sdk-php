@@ -102,6 +102,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateNumberOfDomainControllersAsync(array $args = [])
  * @method \Aws\Result updateRadius(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateRadiusAsync(array $args = [])
+ * @method \Aws\Result updateTrust(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateTrustAsync(array $args = [])
  * @method \Aws\Result verifyTrust(array $args = [])
  * @method \GuzzleHttp\Promise\Promise verifyTrustAsync(array $args = [])
  */

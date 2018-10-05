@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectoryService` - SDK changes to create a new type of trust for active directory
+
 ## 3.69.0 - 2018-10-04
 
 * `Aws\APIGateway` - Adding support for multi-value parameters in TestInvokeMethod and TestInvokeAuthorizer.
