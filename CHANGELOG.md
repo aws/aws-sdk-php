@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.1 - 2018-10-05
 
 * `Aws\DirectoryService` - SDK changes to create a new type of trust for active directory
 
