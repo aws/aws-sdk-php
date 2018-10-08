@@ -250,15 +250,15 @@ class ConfigurationProvider
             }
 
             // client_id is optional
-            if (empty($data[$profile]['csm_clientid'])) {
-                $data[$profile]['csm_clientid'] = self::DEFAULT_CLIENT_ID;
+            if (empty($data[$profile]['csm_client_id'])) {
+                $data[$profile]['csm_client_id'] = self::DEFAULT_CLIENT_ID;
             }
 
             return Promise\promise_for(
                 new Configuration(
                     $data[$profile]['csm_enabled'],
                     $data[$profile]['csm_port'],
-                    $data[$profile]['csm_clientid']
+                    $data[$profile]['csm_client_id']
                 )
             );
         };
