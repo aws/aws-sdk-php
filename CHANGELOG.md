@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.2 - 2018-10-08
 
 * `Aws\IoT` - We are releasing job execution timeout functionalities to customers. Customer now can set job execution timeout on the job level when creating a job. 
 * `Aws\IoTJobsDataPlane` - We are releasing job execution timeout functionalities to customers. Device can now set and update their job execution timeout. 
