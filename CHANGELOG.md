@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.3 - 2018-10-09
 
 * `Aws\SSM` - Adds StartDate, EndDate, and ScheduleTimezone to CreateMaintenanceWindow and UpdateMaintenanceWindow; Adds NextExecutionTime to GetMaintenanceWindow and DescribeMaintenanceWindows; Adds CancelMaintenanceWindowExecution, DescribeMaintenanceWindowSchedule and DescribeMaintenanceWindowsForTarget APIs.
 
