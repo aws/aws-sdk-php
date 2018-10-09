@@ -50,7 +50,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
     private $sharedConfig;
     private $testApiProvider;
     private $testData;
-    private $testDir = __DIR__ . "/csm";
+    private $testDir;
     private $testServices = [];
 
     private $configKeys = [
@@ -62,6 +62,11 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
         'port' => 31000,
         'shutdown' => 'shutdown',
     ];
+
+    public function __construct()
+    {
+        $this->testDir = __DIR__ . "/csm";
+    }
 
     /**
      * @BeforeScenario
