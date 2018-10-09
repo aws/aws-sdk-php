@@ -60,37 +60,6 @@ abstract class AbstractMonitoringMiddleware
     }
 
     /**
-     * Standard middleware wrapper function with CSM options passed in.
-     *
-     * @param callable $credentialProvider
-     * @param mixed  $options
-     * @param string $region
-     * @param string $service
-     * @return callable
-     */
-    public static function wrap(
-        callable $credentialProvider,
-        $options,
-        $region,
-        $service
-    ) {
-        return function (callable $handler) use (
-            $credentialProvider,
-            $options,
-            $region,
-            $service
-        ) {
-            return new static(
-                $handler,
-                $credentialProvider,
-                $options,
-                $region,
-                $service
-            );
-        };
-    }
-
-    /**
      * Constructor stores the passed in handler and options.
      *
      * @param callable $handler
