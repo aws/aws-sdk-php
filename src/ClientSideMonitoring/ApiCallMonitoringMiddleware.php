@@ -116,7 +116,6 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     ) {
         $event = parent::populateResultEventData($result, $event);
         $event['Latency'] = (int) (floor(microtime(true) * 1000) - $event['Timestamp']);
-        unset($event['Region']);
         return $event;
     }
 }

@@ -22,11 +22,11 @@ class ConfigurationProviderTest extends TestCase
 [aws_csm]
 csm_enabled = true
 csm_port = 555
-csm_clientid = DefaultIniApp
+csm_client_id = DefaultIniApp
 [custom]
 csm_enabled = false
 csm_port = 777
-csm_clientid = CustomIniApp
+csm_client_id = CustomIniApp
 [enabled]
 csm_enabled = true
 EOT;

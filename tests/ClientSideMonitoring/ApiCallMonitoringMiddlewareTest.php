@@ -81,6 +81,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         $eventBase = [
             'Api' => 'RunScheduledInstances',
             'ClientId' => 'AwsPhpSdkTestApp',
+            'Region' => 'us-east-1',
             'Type' => 'ApiCall',
             'Service' => 'ec2',
             'Version' => 1,
