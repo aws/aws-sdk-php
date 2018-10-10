@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.4 - 2018-10-10
 
 * `Aws\Build/Docs` - Fixes API docs issue with required members in shapes.
 * `Aws\ClientSideMonitoring` - Avoids issue with late static bindings in closures in earlier versions of PHP 5.5.x.
