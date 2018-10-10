@@ -75,6 +75,9 @@ class RetryMiddleware
                 : $maxRetries;
 
             if ($retries >= $maxRetries) {
+                if (!empty($error) && $error instanceof AwsException) {
+                    $error->setMaxRetriesExceeded();
+                }
                 return false;
             }
 

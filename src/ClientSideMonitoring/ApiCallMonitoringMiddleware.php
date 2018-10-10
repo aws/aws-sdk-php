@@ -61,12 +61,14 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
         if ($klass instanceof ResultInterface) {
             return [
                 'AttemptCount' => self::getResultAttemptCount($klass),
+                'MaxRetriesExceeded' => 0,
             ];
         }
 
         if ($klass instanceof \Exception) {
             return [
                 'AttemptCount' => self::getExceptionAttemptCount($klass),
+                'MaxRetriesExceeded' => self::getMaxRetriesExceeded($klass),
             ];
         }
 
@@ -92,6 +94,14 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
 
         }
         return $attemptCount;
+    }
+
+    private static function getMaxRetriesExceeded($klass)
+    {
+        if ($klass instanceof AwsException && $klass->isMaxRetriesExceeded()) {
+            return 1;
+        }
+        return 0;
     }
 
     /**

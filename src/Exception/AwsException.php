@@ -29,6 +29,7 @@ class AwsException extends \RuntimeException implements
     private $connectionError;
     private $transferInfo;
     private $errorMessage;
+    private $maxRetriesExceeded;
 
 
     /**
@@ -60,6 +61,7 @@ class AwsException extends \RuntimeException implements
             ? $context['message']
             : null;
         $this->monitoringEvents = [];
+        $this->maxRetriesExceeded = false;
         parent::__construct($message, 0, $previous);
     }
 
@@ -213,5 +215,23 @@ class AwsException extends \RuntimeException implements
     public function setTransferInfo(array $info)
     {
         $this->transferInfo = $info;
+    }
+
+    /**
+     * Returns whether the max number of retries is exceeded.
+     *
+     * @return bool
+     */
+    public function isMaxRetriesExceeded()
+    {
+        return $this->maxRetriesExceeded;
+    }
+
+    /**
+     * Sets the flag for max number of retries exceeded.
+     */
+    public function setMaxRetriesExceeded()
+    {
+        $this->maxRetriesExceeded = true;
     }
 }
