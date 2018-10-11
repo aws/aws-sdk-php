@@ -94,5 +94,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateLag(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLagAsync(array $args = [])
+ * @method \Aws\Result updateVirtualInterfaceAttributes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateVirtualInterfaceAttributesAsync(array $args = [])
  */
 class DirectConnectClient extends AwsClient {}

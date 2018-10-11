@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api/Serializer` - Fix to correctly format 'structure' options into JSON, when they have no valid values.
+* `Aws\Athena` - 1. GetQueryExecution API changes to return statementType of a submitted Athena query. 2. GetQueryResults API changes to return the number of rows added to a table when a CTAS query is executed.
+* `Aws\ClientSideMonitoring` - Updates to client-side monitoring event entry and config settings to match updated specification.
+* `Aws\DirectConnect` - This release adds support for Jumbo Frames over AWS Direct Connect. You can now set MTU value when creating new virtual interfaces. This release also includes a new API to modify MTU value of existing virtual interfaces.
+* `Aws\EC2` - You can now launch the smaller-sized G3 instance called g3s.xlarge. G3s.xlarge provides 4 vCPU, 30.5 GB RAM and a NVIDIA Tesla M60 GPU. It is ideal for remote workstations, engineering and architectural applications, and 3D visualizations and rendering for visual effects.
+* `Aws\MediaConvert` - Added Paginators for all the MediaConvert list operations
+* `Aws\TranscribeService` - With this release, Amazon Transcribe now supports transcriptions from audio sources in British English (en-UK), Australian English (en-AU), and Canadian French (fr-CA).
+
 ## 3.69.4 - 2018-10-10
 
 * `Aws\Build/Docs` - Fixes API docs issue with required members in shapes.
