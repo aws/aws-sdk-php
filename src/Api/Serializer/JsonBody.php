@@ -58,6 +58,9 @@ class JsonBody
                             = $this->format($valueShape, $v);
                     }
                 }
+                if (empty($data)) {
+                    return new \stdClass;
+                }
                 return $data;
 
             case 'list':
