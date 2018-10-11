@@ -102,7 +102,140 @@
                     "Timestamp": "ANY_INT",
                     "Version": 1,
                     "AttemptCount": 2,
-                    "Latency": "ANY_INT"
+                    "Latency": "ANY_INT",
+                    "MaxRetriesExceeded": 0
+                }
+            ]
+        },
+        {
+            "description": "Test a single client API call that exceeds default max retries",
+            "apiCalls": [
+                {
+                    "serviceId": "CSM Test",
+                    "operationName": "TestOperation",
+                    "params": {},
+                    "attemptResponses": [
+                        {
+                            "httpStatus": 503,
+                            "responseHeaders": {},
+                            "errorCode": "ServiceUnavailable",
+                            "errorMessage": "Service is unavailable"
+                        },
+                        {
+                            "httpStatus": 503,
+                            "responseHeaders": {},
+                            "errorCode": "ServiceUnavailable",
+                            "errorMessage": "Service is unavailable"
+                        },
+                        {
+                            "httpStatus": 503,
+                            "responseHeaders": {},
+                            "errorCode": "ServiceUnavailable",
+                            "errorMessage": "Service is unavailable"
+                        },
+                        {
+                            "httpStatus": 503,
+                            "responseHeaders": {},
+                            "errorCode": "ServiceUnavailable",
+                            "errorMessage": "Service is unavailable"
+                        },
+                        {
+                            "httpStatus": 503,
+                            "responseHeaders": {},
+                            "errorCode": "ServiceUnavailable",
+                            "errorMessage": "Service is unavailable"
+                        }
+                    ]
+                }
+            ],
+            "expectedMonitoringEvents": [
+                {
+                    "Type": "ApiCallAttempt",
+                    "Service": "CSM Test",
+                    "Api": "TestOperation",
+                    "ClientId": "AwsPhpSdkTestApp",
+                    "Version": 1,
+                    "Timestamp": "ANY_INT",
+                    "AttemptLatency": "ANY_INT",
+                    "Fqdn": "csmtest.us-west-2.amazonaws.com",
+                    "UserAgent": "ANY_STR",
+                    "Region": "us-west-2",
+                    "AccessKey": "myaccesskey",
+                    "HttpStatusCode": 503,
+                    "DestinationIp": "ANY_STR",
+                    "DnsLatency": "ANY_INT",
+                    "AwsException": "ServiceUnavailable",
+                    "AwsExceptionMessage": "Service is unavailable",
+                    "SessionToken": "testsessiontoken"
+                },
+                {
+                    "Type": "ApiCallAttempt",
+                    "Service": "CSM Test",
+                    "Api": "TestOperation",
+                    "ClientId": "AwsPhpSdkTestApp",
+                    "Version": 1,
+                    "Timestamp": "ANY_INT",
+                    "AttemptLatency": "ANY_INT",
+                    "Fqdn": "csmtest.us-west-2.amazonaws.com",
+                    "UserAgent": "ANY_STR",
+                    "Region": "us-west-2",
+                    "AccessKey": "myaccesskey",
+                    "HttpStatusCode": 503,
+                    "DestinationIp": "ANY_STR",
+                    "DnsLatency": "ANY_INT",
+                    "AwsException": "ServiceUnavailable",
+                    "AwsExceptionMessage": "Service is unavailable",
+                    "SessionToken": "testsessiontoken"
+                },
+                {
+                    "Type": "ApiCallAttempt",
+                    "Service": "CSM Test",
+                    "Api": "TestOperation",
+                    "ClientId": "AwsPhpSdkTestApp",
+                    "Version": 1,
+                    "Timestamp": "ANY_INT",
+                    "AttemptLatency": "ANY_INT",
+                    "Fqdn": "csmtest.us-west-2.amazonaws.com",
+                    "UserAgent": "ANY_STR",
+                    "Region": "us-west-2",
+                    "AccessKey": "myaccesskey",
+                    "HttpStatusCode": 503,
+                    "DestinationIp": "ANY_STR",
+                    "DnsLatency": "ANY_INT",
+                    "AwsException": "ServiceUnavailable",
+                    "AwsExceptionMessage": "Service is unavailable",
+                    "SessionToken": "testsessiontoken"
+                },
+                {
+                    "Type": "ApiCallAttempt",
+                    "Service": "CSM Test",
+                    "Api": "TestOperation",
+                    "ClientId": "AwsPhpSdkTestApp",
+                    "Version": 1,
+                    "Timestamp": "ANY_INT",
+                    "AttemptLatency": "ANY_INT",
+                    "Fqdn": "csmtest.us-west-2.amazonaws.com",
+                    "UserAgent": "ANY_STR",
+                    "Region": "us-west-2",
+                    "AccessKey": "myaccesskey",
+                    "HttpStatusCode": 503,
+                    "DestinationIp": "ANY_STR",
+                    "DnsLatency": "ANY_INT",
+                    "AwsException": "ServiceUnavailable",
+                    "AwsExceptionMessage": "Service is unavailable",
+                    "SessionToken": "testsessiontoken"
+                },
+                {
+                    "Type": "ApiCall",
+                    "Service": "CSM Test",
+                    "Region": "us-west-2",
+                    "Api": "TestOperation",
+                    "ClientId": "AwsPhpSdkTestApp",
+                    "Timestamp": "ANY_INT",
+                    "Version": 1,
+                    "AttemptCount": 4,
+                    "Latency": "ANY_INT",
+                    "MaxRetriesExceeded": 1
                 }
             ]
         }
