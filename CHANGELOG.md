@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.5 - 2018-10-11
 
 * `Aws\Api/Serializer` - Fix to correctly format 'structure' options into JSON, when they have no valid values.
 * `Aws\Athena` - 1. GetQueryExecution API changes to return statementType of a submitted Athena query. 2. GetQueryResults API changes to return the number of rows added to a table when a CTAS query is executed.
