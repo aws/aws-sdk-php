@@ -9,7 +9,6 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\Exception\AwsException;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -85,15 +84,22 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
             'Type' => 'ApiCall',
             'Service' => 'ec2',
             'Version' => 1,
+            'MaxRetriesExceeded' => 0,
         ];
 
         $awsException = new AwsException(
-            'This is a test exception message!',
+            'AwsException that does not exceed max number of retries!',
             $command
         );
         $awsException->appendMonitoringEvent([
             'Type' => 'ApiCallAttempt',
         ]);
+        $retriesException = new AwsException(
+            'AwsException that exceeds max number of retries!',
+            $command
+        );
+        $retriesException->setMaxRetriesExceeded();
+
 
         return [
             array_merge($testBase, [
@@ -121,6 +127,13 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                 array_merge($eventBase, [
                     'ClientId' => 'AwsPhpSdkTestApp',
                     'AttemptCount' => 1,
+                ])
+            ]),
+            array_merge($testBase, [
+                $retriesException,
+                array_merge($eventBase, [
+                    'ClientId' => 'AwsPhpSdkTestApp',
+                    'MaxRetriesExceeded' => 1,
                 ])
             ]),
         ];

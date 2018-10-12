@@ -74,50 +74,63 @@ class RetryMiddleware
                 $command['@retries']
                 : $maxRetries;
 
+            $isRetryable = self::isRetryable($result, $error, $retryCurlErrors);
+
             if ($retries >= $maxRetries) {
+                if (!empty($error)
+                    && $error instanceof AwsException
+                    && $isRetryable
+                ) {
+                    $error->setMaxRetriesExceeded();
+                }
                 return false;
             }
 
-            if (!$error) {
-                return isset(self::$retryStatusCodes[$result['@metadata']['statusCode']]);
-            }
-
-            if (!($error instanceof AwsException)) {
-                return false;
-            }
-
-            if ($error->isConnectionError()) {
-                return true;
-            }
-
-            if (isset(self::$retryCodes[$error->getAwsErrorCode()])) {
-                return true;
-            }
-
-            if (isset(self::$retryStatusCodes[$error->getStatusCode()])) {
-                return true;
-            }
-
-            if (count($retryCurlErrors)
-                && ($previous = $error->getPrevious())
-                && $previous instanceof RequestException
-            ) {
-                if (method_exists($previous, 'getHandlerContext')) {
-                    $context = $previous->getHandlerContext();
-                    return !empty($context['errno'])
-                        && isset($retryCurlErrors[$context['errno']]);
-                }
-
-                $message = $previous->getMessage();
-                foreach (array_keys($retryCurlErrors) as $curlError) {
-                    if (strpos($message, 'cURL error ' . $curlError . ':') === 0) {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            return $isRetryable;
         };
+    }
+
+    private static function isRetryable($result, $error, $retryCurlErrors)
+    {
+        if (!$error) {
+            return isset(self::$retryStatusCodes[$result['@metadata']['statusCode']]);
+        }
+
+        if (!($error instanceof AwsException)) {
+            return false;
+        }
+
+        if ($error->isConnectionError()) {
+            return true;
+        }
+
+        if (isset(self::$retryCodes[$error->getAwsErrorCode()])) {
+            return true;
+        }
+
+        if (isset(self::$retryStatusCodes[$error->getStatusCode()])) {
+            return true;
+        }
+
+        if (count($retryCurlErrors)
+            && ($previous = $error->getPrevious())
+            && $previous instanceof RequestException
+        ) {
+            if (method_exists($previous, 'getHandlerContext')) {
+                $context = $previous->getHandlerContext();
+                return !empty($context['errno'])
+                    && isset($retryCurlErrors[$context['errno']]);
+            }
+
+            $message = $previous->getMessage();
+            foreach (array_keys($retryCurlErrors) as $curlError) {
+                if (strpos($message, 'cURL error ' . $curlError . ':') === 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
