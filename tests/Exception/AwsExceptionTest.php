@@ -40,6 +40,15 @@ class AwsExceptionTest extends TestCase
         $this->assertEquals(400, $e->getStatusCode());
     }
 
+    public function testSetsMaxRetriesExceeded()
+    {
+        $command = new Command('foo');
+        $e = new AwsException('Foo', $command);
+        $this->assertSame(false, $e->isMaxRetriesExceeded());
+        $e->setMaxRetriesExceeded();
+        $this->assertSame(true, $e->isMaxRetriesExceeded());
+    }
+
     public function testProvidesResult()
     {
         $command = new Command('foo');
