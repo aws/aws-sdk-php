@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.6 - 2018-10-12
 
 * `Aws\ClientSideMonitoring` - Adds MaxRetriesExceeded entry to ApiCall events.
 * `Aws\CloudTrail` - The LookupEvents API now supports two new attribute keys: ReadOnly and AccessKeyId
