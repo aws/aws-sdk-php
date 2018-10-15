@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.7 - 2018-10-15
 
 * `Aws\Lambda` - Documentation updates for lambda
 * `Aws\RDS` - This release adds a new parameter to specify the DB instance or cluster parameter group for restore from DB snapshot and restore to point int time operations. For more information, see Amazon RDS Documentation.
