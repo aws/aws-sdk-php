@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.8 - 2018-10-16
 
 * `Aws\Glue` - New Glue APIs for creating, updating, reading and deleting Data Catalog resource-based policies.
 * `Aws\Lightsail` - Adds support for Lightsail managed databases.
