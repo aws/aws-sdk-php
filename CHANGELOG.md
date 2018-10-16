@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - New Glue APIs for creating, updating, reading and deleting Data Catalog resource-based policies.
+* `Aws\Lightsail` - Adds support for Lightsail managed databases.
+* `Aws\ResourceGroups` - AWS Resource Groups service added a new feature to filter resource groups by resource-type when using the ListGroups operation.
+
 ## 3.69.7 - 2018-10-15
 
 * `Aws\Lambda` - Documentation updates for lambda
