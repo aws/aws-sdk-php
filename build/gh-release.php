@@ -13,6 +13,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Psr7;
 
+$maxRetries = 3;
 $owner = 'aws';
 $repo = 'aws-sdk-php';
 $token = getenv('OAUTH_TOKEN') or die('An OAUTH_TOKEN environment variable is required');
