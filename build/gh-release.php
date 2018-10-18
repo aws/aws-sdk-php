@@ -29,33 +29,72 @@ $client = new GuzzleHttp\Client([
     'headers' => ['Authorization' => "token $token"],
 ]);
 
-// Create the release
-$response = $client->post("repos/${owner}/${repo}/releases", [
-    'json' => [
-        'tag_name'   => $tag,
-        'name'       => "Version {$tag}",
-        'body'       => $message,
-    ]
-]);
+// Publish the release
+$url = retryWrapper(
+    'Publish the release',
+    function() use ($client, $tag, $message, $owner, $repo) {
+        $response = $client->post("repos/${owner}/${repo}/releases", [
+            'json' => [
+                'tag_name'   => $tag,
+                'name'       => "Version {$tag}",
+                'body'       => $message,
+            ]
+        ]);
 
-// Grab the location of the new release
-$url = $response->getHeaderLine('Location');
-echo "Release successfully published to: $url\n";
+        // Grab the location of the new release
+        $url = $response->getHeaderLine('Location');
+        echo "Release successfully published to: $url\n";
+        return $url;
+    },
+    $maxRetries
+);
 
 // Uploads go to uploads.github.com
 $uploadUrl = new Uri($url);
 $uploadUrl = $uploadUrl->withHost('uploads.github.com');
 
 // Upload aws.zip
-$response = $client->post($uploadUrl . '/assets?name=aws.zip', [
-    'headers' => ['Content-Type' => 'application/zip'],
-    'body'    => Psr7\try_fopen(__DIR__ . '/artifacts/aws.zip', 'r')
-]);
-echo "aws.zip uploaded to: " . json_decode($response->getBody(), true)['browser_download_url'] . "\n";
+retryWrapper(
+    'Upload aws.zip',
+    function() use ($client, $uploadUrl) {
+        $response = $client->post($uploadUrl . '/assets?name=aws.zip', [
+            'headers' => ['Content-Type' => 'application/zip'],
+            'body'    => Psr7\try_fopen(__DIR__ . '/artifacts/aws.zip', 'r')
+        ]);
+        echo "aws.zip uploaded to: " . json_decode($response->getBody(), true)['browser_download_url'] . "\n";
+        return $response;
+    },
+    $maxRetries
+);
 
 // Upload aws.phar
-$response = $client->post($uploadUrl . '/assets?name=aws.phar', [
-    'headers' => ['Content-Type' => 'application/phar'],
-    'body'    => Psr7\try_fopen(__DIR__ . '/artifacts/aws.phar', 'r')
-]);
-echo "aws.phar uploaded to: " . json_decode($response->getBody(), true)['browser_download_url'] . "\n";
+retryWrapper(
+    'Upload aws.phar',
+    function() use ($client, $uploadUrl) {
+        $response = $client->post($uploadUrl . '/assets?name=aws.phar', [
+            'headers' => ['Content-Type' => 'application/phar'],
+            'body'    => Psr7\try_fopen(__DIR__ . '/artifacts/aws.phar', 'r')
+        ]);
+        echo "aws.phar uploaded to: " . json_decode($response->getBody(), true)['browser_download_url'] . "\n";
+        return $response;
+    },
+    $maxRetries
+);
+
+function retryWrapper($label, callable $method, $maxRetries)
+{
+    $attempts = 0;
+    echo "{$label}...\n";
+    while ($attempts <= $maxRetries) {
+        $attempts++;
+        try {
+            return $method();
+        } catch (\Exception $e) {
+            if ($attempts > $maxRetries) {
+                throw $e;
+            }
+            echo "{$label} - Attempt #{$attempts} failed: " . $e->getMessage() . "\n";
+            usleep(1000000 * $attempts);
+        }
+    }
+}
