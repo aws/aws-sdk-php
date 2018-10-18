@@ -77,4 +77,3 @@ $response = $client->post($uploadUrl . '/assets?name=aws.phar', [
     'body'    => Psr7\try_fopen(__DIR__ . '/artifacts/aws.phar', 'r')
 ]);
 echo "aws.phar uploaded to: " . json_decode($response->getBody(), true)['browser_download_url'] . "\n";
-return $response;
