@@ -23,13 +23,31 @@ $tag = $argv[1];
 chdir(dirname(__DIR__));
 $message = `chag contents -t "$tag"` or die('Chag could not find or parse the tag');
 
+// Add retry middleware
+$stack = \GuzzleHttp\HandlerStack::create();
+$stack->push(\GuzzleHttp\Middleware::retry(
+    function ($retries, $request, $response) {
+        $statusCode = $response->getStatusCode();
+        if ($retries < 3 && !in_array($statusCode, [200, 201, 202])) {
+            echo "Attempt failed with status code {$statusCode}: "
+                . $response->getBody();
+            return true;
+        }
+        return false;
+    },
+    function ($retries) {
+        return 1000 * (1 + $retries);
+    }
+));
+
 // Create a GitHub client.
 $client = new GuzzleHttp\Client([
     'base_uri' => 'https://api.github.com/',
     'headers' => ['Authorization' => "token $token"],
+    'handler' => $stack,
 ]);
 
-// Create the release
+// Publish the release
 $response = $client->post("repos/${owner}/${repo}/releases", [
     'json' => [
         'tag_name'   => $tag,
