@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.11 - 2018-10-19
 
 * `Aws\Aws` - Bump Guzzle HTTP patch version for PHP 7.3 compatibility.
 * `Aws\SSM` - Rate Control feature release for State Manager. Users now have the ability to apply rate control parameters similar to run command to their association in state manager console or CLI.
