@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Inspector` - Finding will be decorated with ec2 related metadata
+* `Aws\Shield` - AWS Shield Advanced API introduced a new service-specific AccessDeniedException which will be thrown when accessing individual attack information without sufficient permission.
+
 ## 3.69.11 - 2018-10-19
 
 * `Aws\Aws` - Bump Guzzle HTTP patch version for PHP 7.3 compatibility.
