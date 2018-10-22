@@ -45,6 +45,19 @@ Feature: S3 Stream Wrapper
       | key1 | testing!      | 8    | te     | sting!      |
       | key2 | foo, bar, baz | 13   | fo     | o, bar, baz |
 
+  Scenario Outline: Opening streams with versions
+    Given I have a file at "<path>" with the content "<contents1>"
+    And I have a file at "<path>" with the content "<contents2>"
+    And I have a read handle on the file at "<path>" with "<version>" version
+    Then reading 2 bytes should return <first2>
+    And reading 1000 bytes should return <next1000>
+    And calling fstat should report a size of <size>
+
+    Examples:
+      | path | contents1      | contents2  | version | size | first2 | next1000  |
+      | key1 | testing!       | 222        | 1       | 8    | te     | sting!    |
+      | key2 | foo, bar, baz  | 333333     | 2       | 6    | 33     | 3333      |
+
   Scenario: No File Exists
     When I call file_exists on the jkfdsalhjkgdfhsurew path
     Then the call should return false

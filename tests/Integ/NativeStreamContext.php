@@ -10,6 +10,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use phpDocumentor\Reflection\Types\Self_;
 
 /**
  * Defines application features from the specific context.
@@ -51,6 +52,12 @@ class NativeStreamContext extends \PHPUnit_Framework_Assert implements
 
         $client->createBucket(['Bucket' => self::$bucket]);
         $client->waitUntil('BucketExists', ['Bucket' => self::$bucket]);
+        $client->putBucketVersioning([
+            'Bucket' => self::$bucket,
+            'VersioningConfiguration' => [
+                'Status' => 'Enabled',
+                'MFADelete' => 'Disabled']
+        ]);
     }
 
     /**
@@ -148,6 +155,25 @@ class NativeStreamContext extends \PHPUnit_Framework_Assert implements
     }
 
     /**
+     * @Given And I have a read handle on the file at :arg1 with :arg2 version
+     */
+    public function iHaveAReadHandleOnTheFileAtWithVersion($key, $versionIndex)
+    {
+        $result = $this->client->listObjectVersions([
+            'Bucket' => self::$bucket,
+            'Prefix' => $key
+        ]);
+        $versions = \array_filter($result['Versions'], function ($version) use ($key) {
+            return $version['Key'] === $key;
+        });
+
+        $version = $versions[$versionIndex];
+
+        $this->handle = fopen($this->getS3Path($key, $version['VersionId']), 'r');
+    }
+
+
+    /**
      * @Then /^reading (\d+) bytes should return (.+)$/
      */
     public function readingBytesShouldReturn($byteCount, $expected)
@@ -171,8 +197,12 @@ class NativeStreamContext extends \PHPUnit_Framework_Assert implements
         $this->assertSame([$file], scandir($this->getS3Path($dir)));
     }
 
-    private function getS3Path($path)
+    private function getS3Path($path, $version = null)
     {
-        return 's3://' . self::$bucket . '/' . ltrim($path, '/');
+        $query = '';
+        if ($version !== null) {
+            $query = "?versionId=$version";
+        }
+        return 's3://' . self::$bucket . '/' . ltrim($path, '/') . $query;
     }
 }
