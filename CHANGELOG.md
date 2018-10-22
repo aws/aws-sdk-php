@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.12 - 2018-10-22
 
 * `Aws\Inspector` - Finding will be decorated with ec2 related metadata
 * `Aws\Shield` - AWS Shield Advanced API introduced a new service-specific AccessDeniedException which will be thrown when accessing individual attack information without sufficient permission.
