@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.13 - 2018-10-23
 
 * `Aws\EC2` - Provides customers the ability to Bring Your Own IP (BYOIP) prefix. You can bring part or all of your public IPv4 address range from your on-premises network to your AWS account. You continue to own the address range, but AWS advertises it on the internet.
 
