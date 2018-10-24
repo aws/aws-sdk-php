@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.14 - 2018-10-24
 
 * `Aws\AlexaForBusiness` - We extended the functionality of the Alexa for Business SDK, including additional support for third-party Alexa built-in devices, managing private and public skills, and conferencing setup.
 * `Aws\CodeStar` - This release lets you create projects from source code and a toolchain definition that you provide.
