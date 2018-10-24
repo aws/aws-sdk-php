@@ -69,7 +69,11 @@ The GitHub issues are intended for bug reports and feature requests. For help an
    7.16.2+ compiled with a TLS backend (e.g., NSS or OpenSSL).
 1. **Install the SDK** – Using [Composer] is the recommended way to install the
    AWS SDK for PHP. The SDK is available via [Packagist] under the
-   [`aws/aws-sdk-php`][install-packagist] package. Please see the
+   [`aws/aws-sdk-php`][install-packagist] package. If Composer is installed globally on your system, you can run the following in the base directory of your project to add the SDK as a dependency:
+   ```
+   composer require aws/aws-sdk-php
+   ```
+   Please see the
    [Installation section of the User Guide][docs-installation] for more
    detailed information about installing the SDK through Composer and other
    means.
