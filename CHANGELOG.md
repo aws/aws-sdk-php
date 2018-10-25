@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - As part of this release we are introducing EC2 On-Demand Capacity Reservations. With On-Demand Capacity Reservations, customers can reserve the exact EC2 capacity they need, and can keep it only for as long as they need it.
+
 ## 3.69.14 - 2018-10-24
 
 * `Aws\AlexaForBusiness` - We extended the functionality of the Alexa for Business SDK, including additional support for third-party Alexa built-in devices, managing private and public skills, and conferencing setup.
