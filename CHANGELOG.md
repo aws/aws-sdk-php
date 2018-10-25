@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.15 - 2018-10-25
 
 * `Aws\EC2` - As part of this release we are introducing EC2 On-Demand Capacity Reservations. With On-Demand Capacity Reservations, customers can reserve the exact EC2 capacity they need, and can keep it only for as long as they need it.
 
