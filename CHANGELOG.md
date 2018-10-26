@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.69.16 - 2018-10-26
 
 * `Aws\AlexaForBusiness` - Documentation updates for AWS Alexa for Business
 * `Aws\SSM` - Compliance Severity feature release for State Manager. Users now have the ability to select compliance severity to their association in state manager console or CLI.
