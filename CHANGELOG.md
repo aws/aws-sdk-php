@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AlexaForBusiness` - Documentation updates for AWS Alexa for Business
+* `Aws\SSM` - Compliance Severity feature release for State Manager. Users now have the ability to select compliance severity to their association in state manager console or CLI.
+* `Aws\SageMaker` - SageMaker notebook instances can now have a volume size configured.
+
 ## 3.69.15 - 2018-10-25
 
 * `Aws\EC2` - As part of this release we are introducing EC2 On-Demand Capacity Reservations. With On-Demand Capacity Reservations, customers can reserve the exact EC2 capacity they need, and can keep it only for as long as they need it.
