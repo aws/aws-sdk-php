@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Chime` - This is the initial release for the Amazon Chime AWS SDK. In this release, Amazon Chime adds support for administrative actions on users and accounts. API Documentation is also updated on https://docs.aws.amazon.com/chime/index.html
+* `Aws\DatabaseMigrationService` - Add waiters for TestConnectionSucceeds, EndpointDeleted, ReplicationInstanceAvailable, ReplicationInstanceDeleted, ReplicationTaskReady, ReplicationTaskStopped, ReplicationTaskRunning and ReplicationTaskDeleted.
+* `Aws\RDS` - This release adds the listener connection endpoint for SQL Server Always On to the list of fields returned when performing a describe-db-instances operation.
+
 ## 3.69.16 - 2018-10-26
 
 * `Aws\AlexaForBusiness` - Documentation updates for AWS Alexa for Business
