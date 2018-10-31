@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - With this release, AWS Config updated the ResourceType values. The updated list includes AWS Systems Manager AssociationCompliance and PatchCompliance, AWS Shield regional Protection, AWS Config ResourceCompliance, and AWS CodePipeline Pipeline.
+* `Aws\Greengrass` - Greengrass APIs now support bulk deployment operations, and APIs that list definition versions now support pagination.
+* `Aws\MediaStoreData` - The object size limit is increased from 10MB to 25MB and the content type is more permissive.
+* `Aws\SecretsManager` - Documentation updates for AWS Secrets Manager.
+
 ## 3.70.0 - 2018-10-30
 
 * `Aws\Chime` - This is the initial release for the Amazon Chime AWS SDK. In this release, Amazon Chime adds support for administrative actions on users and accounts. API Documentation is also updated on https://docs.aws.amazon.com/chime/index.html
