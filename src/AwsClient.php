@@ -169,6 +169,7 @@ class AwsClient implements AwsClientInterface
         $this->addSignatureMiddleware();
         $this->addInvocationId();
         $this->addClientSideMonitoring($args);
+        $this->addEndpointParameterMiddleware();
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -265,6 +266,18 @@ class AwsClient implements AwsClientInterface
             strtolower($service),
             "Aws\\{$service}\\Exception\\{$service}Exception"
         ];
+    }
+
+    private function addEndpointParameterMiddleware()
+    {
+        $list = $this->getHandlerList();
+        $list->appendBuild(
+            EndpointParameterMiddleware::wrap(
+                $this->api,
+                $this->getRegion()
+            ),
+            'endpoint_parameter'
+        );
     }
 
     private function addSignatureMiddleware()
