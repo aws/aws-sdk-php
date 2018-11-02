@@ -47,7 +47,10 @@ class ComplianceTest extends TestCase
                         $description,
                         $case['given']['name'],
                         isset($case['params']) ? $case['params'] : [],
-                        $case['serialized']
+                        $case['serialized'],
+                        isset($suite['clientEndpoint'])
+                            ? $suite['clientEndpoint']
+                            : null
                     ];
                 }
             }
@@ -64,9 +67,12 @@ class ComplianceTest extends TestCase
         Service $service,
         $name,
         array $args,
-        $serialized
+        $serialized,
+        $clientEndpoint
     ) {
-        $ep = 'http://us-east-1.foo.amazonaws.com';
+        $ep = !empty($clientEndpoint)
+            ? $clientEndpoint
+            : 'http://us-east-1.foo.amazonaws.com';
         $client = new AwsClient([
             'service'      => 'foo',
             'api_provider' => function () use ($service) {
@@ -112,6 +118,10 @@ class ComplianceTest extends TestCase
         }
 
         $this->assertEquals($serialized['body'], $body);
+
+        if (isset($serialized['host'])) {
+            $this->assertEquals($serialized['host'], $request->getUri()->getHost());
+        }
 
         if (isset($serialized['headers'])) {
             foreach ($serialized['headers'] as $key => $value) {
