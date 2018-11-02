@@ -54,8 +54,12 @@ class JsonBody
                 foreach ($value as $k => $v) {
                     if ($v !== null && $shape->hasMember($k)) {
                         $valueShape = $shape->getMember($k);
-                        $data[$valueShape['locationName'] ?: $k]
-                            = $this->format($valueShape, $v);
+                        if (empty($valueShape['location'])
+                            || $valueShape['location'] != 'host')
+                        {
+                            $data[$valueShape['locationName'] ?: $k]
+                                = $this->format($valueShape, $v);
+                        }
                     }
                 }
                 if (empty($data)) {

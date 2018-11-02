@@ -54,6 +54,7 @@ class EndpointParameterMiddleware
                         $command[$parameter],
                         $host
                     );
+                    unset($command[$parameter]);
                 }
             }
 

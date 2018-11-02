@@ -45,6 +45,15 @@ class QuerySerializer
 
         $params = $command->toArray();
 
+        // Remove host parameters
+        foreach ($operation->getInput()->getMembers() as $member => $definition) {
+            if (!empty($definition['location'])
+                && $definition['location'] === 'host')
+            {
+                unset($params[$member]);
+            }
+        }
+
         // Only build up the parameters when there are parameters to build
         if ($params) {
             $body += call_user_func(
