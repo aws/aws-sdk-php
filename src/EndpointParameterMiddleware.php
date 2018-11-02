@@ -18,20 +18,18 @@ class EndpointParameterMiddleware
      * Create a middleware wrapper function
      *
      * @param Service $service
-     * @param $region
      * @return \Closure
      */
-    public static function wrap(Service $service, $region)
+    public static function wrap(Service $service)
     {
-        return function (callable $handler) use ($region, $service) {
-            return new self($handler, $region, $service);
+        return function (callable $handler) use ($service) {
+            return new self($handler, $service);
         };
     }
 
-    public function __construct(callable $nextHandler, $region, Service $service)
+    public function __construct(callable $nextHandler, Service $service)
     {
         $this->nextHandler = $nextHandler;
-        $this->region = (string) $region;
         $this->service = $service;
     }
 

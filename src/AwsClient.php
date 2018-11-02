@@ -273,8 +273,7 @@ class AwsClient implements AwsClientInterface
         $list = $this->getHandlerList();
         $list->appendBuild(
             EndpointParameterMiddleware::wrap(
-                $this->api,
-                $this->getRegion()
+                $this->api
             ),
             'endpoint_parameter'
         );
