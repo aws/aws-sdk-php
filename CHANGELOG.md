@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.70.4 - 2018-11-05
 
 * `Aws\EKS` - Adds waiters for ClusterActive and ClusterDeleted
 * `Aws\ServerlessApplicationRepository` - New AWS Serverless Application Repository APIs that support creating and reading a broader set of AWS CloudFormation templates, as well as enhancements to our existing APIs.
