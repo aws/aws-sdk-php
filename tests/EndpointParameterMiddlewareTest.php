@@ -13,7 +13,38 @@ use PHPUnit\Framework\TestCase;
  */
 class EndpointParameterMiddlewareTest extends TestCase
 {
-    use UsesServiceTrait;
+
+    public function testThrowsExceptionForMissingParameter()
+    {
+        $service = $this->generateTestService();
+        $client = new AwsClient([
+            'service'      => 'foo',
+            'api_provider' => function () use ($service) {
+                return $service->toArray();
+            },
+            'region'       => 'us-east-1',
+            'version'      => 'latest',
+        ]);
+        $command = $client->getCommand('MemberRefOp', []);
+
+        $list = new HandlerList();
+        $list->setHandler(function ($command, $request) {
+            return;
+        });
+        $list->appendBuild(EndpointParameterMiddleware::wrap($service));
+
+        $handler = $list->resolve();
+
+        try {
+            $handler($command, new Request('POST', 'https://foo.com'));
+            $this->fail('Test should have thrown an InvalidArgumentException for not having the host parameter set.');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals(
+                "The parameter 'HostParameter' must be set and not empty.",
+                $e->getMessage()
+            );
+        }
+    }
 
     /**
      * @dataProvider getTestCases
@@ -51,7 +82,52 @@ class EndpointParameterMiddlewareTest extends TestCase
 
     public function getTestCases()
     {
-        $service = new Service(
+        $service = $this->generateTestService();
+
+        return [
+            [
+                $service,
+                'NoEndpointOp',
+                [
+                    'StaticParameter' => 'bar-static',
+                ],
+                'https://foo.com',
+                'foo.com',
+            ],
+            [
+                $service,
+                'StaticOp',
+                [
+                    'StaticParameter' => 'bar-static',
+                ],
+                'https://foo.com',
+                'static.foo.com',
+            ],
+            [
+                $service,
+                'MemberRefOp',
+                [
+                    'HostParameter' => 'bar-host',
+                ],
+                'https://foo.com',
+                'bar-host.foo.com',
+            ],
+            [
+                $service,
+                'MultiRefOp',
+                [
+                    'HostParameter' => 'bar-host',
+                    'HostParameter2' => 'baz-host',
+                ],
+                'https://foo.com',
+                'bar-host.baz-host.foo.com',
+            ],
+        ];
+    }
+    
+    private function generateTestService()
+    {
+        return new Service(
             [
                 'metadata' => [
                     "protocol" => "json",
@@ -142,45 +218,5 @@ class EndpointParameterMiddlewareTest extends TestCase
             ],
             function () { return []; }
         );
-
-        return [
-            [
-                $service,
-                'NoEndpointOp',
-                [
-                    'StaticParameter' => 'bar-static',
-                ],
-                'https://foo.com',
-                'foo.com',
-            ],
-            [
-                $service,
-                'StaticOp',
-                [
-                    'StaticParameter' => 'bar-static',
-                ],
-                'https://foo.com',
-                'static.foo.com',
-            ],
-            [
-                $service,
-                'MemberRefOp',
-                [
-                    'HostParameter' => 'bar-host',
-                ],
-                'https://foo.com',
-                'bar-host.foo.com',
-            ],
-            [
-                $service,
-                'MultiRefOp',
-                [
-                    'HostParameter' => 'bar-host',
-                    'HostParameter2' => 'baz-host',
-                ],
-                'https://foo.com',
-                'bar-host.baz-host.foo.com',
-            ],
-        ];
     }
 }

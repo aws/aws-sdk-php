@@ -40,13 +40,22 @@ class EndpointParameterMiddleware
 
         if (!empty($operation['endpoint']['host'])) {
             $host = $operation['endpoint']['host'];
+
+            // Captures endpoint parameters stored in the modeled host.
+            // These are denoted by enclosure in braces, i.e. '{param}'
             preg_match_all("/\{([a-zA-Z0-9]+)}/", $host, $parameters);
 
             if (!empty($parameters[1])) {
+
+                // Captured parameters without braces stored in $parameters[1],
+                // which should correspond to members in the Command object
                 foreach ($parameters[1] as $index => $parameter) {
                     if (empty($command[$parameter])) {
                         throw new \InvalidArgumentException("The parameter '{$parameter}' must be set and not empty.");
                     }
+
+                    // Captured parameters with braces stored in $parameters[0],
+                    // which are replaced by their corresponding Command value
                     $host = str_replace(
                         $parameters[0][$index],
                         $command[$parameter],
