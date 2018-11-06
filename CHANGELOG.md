@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.71.0 - 2018-11-06
 
 * `Aws\APIGateway` - AWS WAF integration with APIGW. Changes for adding webAclArn as a part of Stage output. When the user calls a get-stage or get-stages, webAclArn will also be returned as a part of the output.
 * `Aws\CodeBuild` - Documentation updates for codebuild
