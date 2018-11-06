@@ -220,6 +220,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPI(array $args = [])
  * @method \Aws\Pinpoint\PinpointClient createPinpoint(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPinpoint(array $args = [])
+ * @method \Aws\PinpointEmail\PinpointEmailClient createPinpointEmail(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPinpointEmail(array $args = [])
  * @method \Aws\Polly\PollyClient createPolly(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPolly(array $args = [])
  * @method \Aws\Pricing\PricingClient createPricing(array $args = [])
