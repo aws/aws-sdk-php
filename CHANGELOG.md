@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.71.1 - 2018-11-07
 
 * `Aws\CostExplorer` - Enable Payer Accounts to View Linked Account Recommendations. Payer Accounts can specify "LINKED" as scope in the request now. In the response, there is a new filed called AccountId in ReservationPurchaseRecommendationDetail for indicating which account is this recommendation detail belongs to.
 * `Aws\DatabaseMigrationService` - Update the DMS TestConnectionSucceeds waiter.
