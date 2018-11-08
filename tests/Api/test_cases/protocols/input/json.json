@@ -573,7 +573,7 @@
         "members": {
           "Name": {
             "shape": "StringType",
-            "location": "host"
+            "hostLabel": true
           }
         }
       },
@@ -592,20 +592,20 @@
             "method": "POST"
           },
           "endpoint":{
-            "host": "data.{@}"
+            "hostPrefix": "data-"
           }
         },
         "params": {
           "Name": "myname"
         },
         "serialized": {
-          "body": "{\"Name\": \"myname\"}",
           "headers": {
             "X-Amz-Target": "com.amazonaws.foo.StaticOp",
             "Content-Type": "application/x-amz-json-1.1"
           },
           "uri": "/",
-          "host": "data.service.region.amazonaws.com"
+          "body": "{\"Name\": \"myname\"}",
+          "host": "data-service.region.amazonaws.com"
         }
       },
       {
@@ -618,20 +618,20 @@
             "method": "POST"
           },
           "endpoint":{
-            "host": "{Name}.{@}"
+            "hostPrefix": "foo-{Name}."
           }
         },
         "params": {
           "Name": "myname"
         },
         "serialized": {
-          "body": "{}",
           "headers": {
             "X-Amz-Target": "com.amazonaws.foo.MemberRefOp",
             "Content-Type": "application/x-amz-json-1.1"
           },
           "uri": "/",
-          "host": "myname.service.region.amazonaws.com"
+          "body": "{\"Name\": \"myname\"}",
+          "host": "foo-myname.service.region.amazonaws.com"
         }
       }
     ]

@@ -1766,7 +1766,7 @@
         "members": {
           "Name": {
             "shape": "StringType",
-            "location": "host"
+            "hostLabel": true
           }
         }
       },
@@ -1779,37 +1779,39 @@
         "given": {
           "name": "StaticOp",
           "input": {
-            "shape": "StaticInputShape"
+            "shape": "StaticInputShape",
+            "locationName": "StaticOpRequest"
           },
           "http": {
             "method": "POST",
             "requestUri": "/path"
           },
           "endpoint":{
-            "host": "data.{@}"
+            "hostPrefix": "data-"
           }
         },
         "params": {
           "Name": "myname"
         },
         "serialized": {
-          "body": "<StaticInputShape><Name>myname</Name></StaticInputShape>",
           "uri": "/path",
-          "host": "data.service.region.amazonaws.com"
+          "body": "<StaticOpRequest><Name>myname</Name></StaticOpRequest>",
+          "host": "data-service.region.amazonaws.com"
         }
       },
       {
         "given": {
           "name": "MemberRefOp",
           "input": {
-            "shape": "MemberRefInputShape"
+            "shape": "MemberRefInputShape",
+            "locationName": "MemberRefOpRequest"
           },
           "http": {
             "method": "GET",
             "requestUri": "/path"
           },
           "endpoint":{
-            "host": "{Name}.{@}"
+            "hostPrefix": "foo-{Name}."
           }
         },
         "params": {
@@ -1817,8 +1819,8 @@
         },
         "serialized": {
           "uri": "/path",
-          "host": "myname.service.region.amazonaws.com",
-          "body": ""
+          "body": "<MemberRefOpRequest><Name>myname</Name></MemberRefOpRequest>",
+          "host": "foo-myname.service.region.amazonaws.com"
         }
       }
     ]

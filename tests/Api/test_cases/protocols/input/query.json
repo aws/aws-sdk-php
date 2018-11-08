@@ -871,7 +871,7 @@
         "members": {
           "Name": {
             "shape": "StringType",
-            "location": "host"
+            "hostLabel": true
           }
         }
       },
@@ -890,7 +890,7 @@
             "method": "POST"
           },
           "endpoint":{
-            "host": "data.{@}"
+            "hostPrefix": "data-"
           }
         },
         "params": {
@@ -899,7 +899,7 @@
         "serialized": {
           "uri": "/",
           "body": "Action=StaticOp&Version=2014-01-01&Name=myname",
-          "host": "data.service.region.amazonaws.com"
+          "host": "data-service.region.amazonaws.com"
         }
       },
       {
@@ -912,7 +912,7 @@
             "method": "POST"
           },
           "endpoint":{
-            "host": "{Name}.{@}"
+            "hostPrefix": "foo-{Name}."
           }
         },
         "params": {
@@ -920,8 +920,8 @@
         },
         "serialized": {
           "uri": "/",
-          "body": "Action=MemberRefOp&Version=2014-01-01",
-          "host": "myname.service.region.amazonaws.com"
+          "body": "Action=MemberRefOp&Version=2014-01-01&Name=myname",
+          "host": "foo-myname.service.region.amazonaws.com"
         }
       }
     ]
