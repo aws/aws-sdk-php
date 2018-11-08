@@ -17,14 +17,7 @@ class EndpointParameterMiddlewareTest extends TestCase
     public function testThrowsExceptionForMissingParameter()
     {
         $service = $this->generateTestService();
-        $client = new AwsClient([
-            'service'      => 'foo',
-            'api_provider' => function () use ($service) {
-                return $service->toArray();
-            },
-            'region'       => 'us-east-1',
-            'version'      => 'latest',
-        ]);
+        $client = $this->generateTestClient($service);
         $command = $client->getCommand('MemberRefOp', []);
 
         $list = new HandlerList();
@@ -46,6 +39,34 @@ class EndpointParameterMiddlewareTest extends TestCase
         }
     }
 
+    public function testThrowsExceptionForInvalidParameter()
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service);
+        $command = $client->getCommand(
+            'MemberRefOp',
+            ['HostParameter' => '<bar)']
+        );
+
+        $list = new HandlerList();
+        $list->setHandler(function ($command, $request) {
+            return;
+        });
+        $list->appendBuild(EndpointParameterMiddleware::wrap($service));
+
+        $handler = $list->resolve();
+
+        try {
+            $handler($command, new Request('POST', 'https://foo.com'));
+            $this->fail('Test should have thrown an InvalidArgumentException for having an invalid host parameter.');
+        } catch (\InvalidArgumentException $e) {
+            $this->assertEquals(
+                "The supplied parameters result in an invalid hostname: '<bar).foo.com'.",
+                $e->getMessage()
+            );
+        }
+    }
+
     /**
      * @dataProvider getTestCases
      */
@@ -56,14 +77,7 @@ class EndpointParameterMiddlewareTest extends TestCase
         $endpoint,
         $expectedHost
     ) {
-        $client = new AwsClient([
-            'service'      => 'foo',
-            'api_provider' => function () use ($service) {
-                return $service->toArray();
-            },
-            'region'       => 'us-east-1',
-            'version'      => 'latest',
-        ]);
+        $client = $this->generateTestClient($service);
         $command = $client->getCommand($cmdName, $params);
 
         $list = new HandlerList();
@@ -124,7 +138,19 @@ class EndpointParameterMiddlewareTest extends TestCase
             ],
         ];
     }
-    
+
+    private function generateTestClient(Service $service)
+    {
+        return new AwsClient([
+            'service'      => 'foo',
+            'api_provider' => function () use ($service) {
+                return $service->toArray();
+            },
+            'region'       => 'us-east-1',
+            'version'      => 'latest',
+        ]);
+    }
+
     private function generateTestService()
     {
         return new Service(
@@ -147,7 +173,7 @@ class EndpointParameterMiddlewareTest extends TestCase
                         "members"=> [
                             "HostParameter"=> [
                                 "shape"=> "StringType",
-                                "location"=> "host"
+                                "hostLabel"=> true
                             ],
                         ],
                     ],
@@ -156,11 +182,11 @@ class EndpointParameterMiddlewareTest extends TestCase
                         "members"=> [
                             "HostParameter"=> [
                                 "shape"=> "StringType",
-                                "location"=> "host"
+                                "hostLabel"=> true
                             ],
                             "HostParameter2"=> [
                                 "shape"=> "StringType",
-                                "location"=> "host"
+                                "hostLabel"=> true
                             ],
                         ],
                     ],
@@ -186,7 +212,7 @@ class EndpointParameterMiddlewareTest extends TestCase
                             "responseCode"=> 200
                         ],
                         "endpoint"=> [
-                            "host"=> "static.{@}"
+                            "hostPrefix"=> "static."
                         ],
                         "input"=> ["shape"=> "StaticInputShape"],
                     ],
@@ -198,7 +224,7 @@ class EndpointParameterMiddlewareTest extends TestCase
                             "responseCode"=> 200
                         ],
                         "endpoint"=> [
-                            "host"=> "{HostParameter}.{@}"
+                            "hostPrefix"=> "{HostParameter}."
                         ],
                         "input"=> ["shape"=> "MemberRefInputShape"],
                     ],
@@ -210,7 +236,7 @@ class EndpointParameterMiddlewareTest extends TestCase
                             "responseCode"=> 200
                         ],
                         "endpoint"=> [
-                            "host"=> "{HostParameter}.{HostParameter2}.{@}"
+                            "hostPrefix"=> "{HostParameter}.{HostParameter2}."
                         ],
                         "input"=> ["shape"=> "MemberRefInputShape"],
                     ],

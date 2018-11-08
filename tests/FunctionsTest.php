@@ -285,4 +285,54 @@ class FunctionsTest extends TestCase
     {
         Aws\manifest('notarealservicename');
     }
+
+    /**
+     * @covers Aws\is_valid_hostname()
+     * @dataProvider getHostnameTestCases
+     */
+    public function testValidatesHostnames($hostname, $expected)
+    {
+        $this->assertEquals($expected, Aws\is_valid_hostname($hostname));
+    }
+
+    public function getHostnameTestCases()
+    {
+        return [
+            ['a', true],
+            ['a.', true],
+            ['0', true],
+            ['1.2.3.4', true],
+            ['a.b', true],
+            ['a.b.c.d.e', true],
+            ['a.b.c.d.e.', true],
+            ['a-b.c-d', true],
+            ['a--b.c--d', true],
+            ['a b', false],
+            ['a..b', false],
+            ['a.b ', false],
+            ['a-.b', false],
+            ['-a.b', false],
+            ['.a.b', false],
+            ['<a', false],
+            ['(a', false],
+            ['a>', false],
+            ['a)', false],
+            ['.', false],
+            [' ', false],
+            ['-', false],
+            ['', false],
+            [str_repeat('a', 63), true],
+            [str_repeat('a', 64), false],
+            [
+                str_repeat('a', 63) . '.' . str_repeat('a', 63) . '.'
+                    . str_repeat('a', 63) . '.' . str_repeat('a', 61),
+                true
+            ],
+            [
+                str_repeat('a', 63) . '.' . str_repeat('a', 63) . '.'
+                    . str_repeat('a', 63) . '.' . str_repeat('a', 62),
+                false
+            ],
+        ];
+    }
 }
