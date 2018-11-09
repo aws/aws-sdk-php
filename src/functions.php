@@ -374,7 +374,7 @@ function manifest($service = null)
 }
 
 /**
- * Checks if supplied parameter is a valid RFC 3986 hostname
+ * Checks if supplied parameter is a valid hostname
  *
  * @param string $hostname
  * @return bool

@@ -72,12 +72,13 @@ class EndpointParameterMiddlewareTest extends TestCase
      */
     public function testCorrectlyOutputsHost(
         Service $service,
+        $clientArgs,
         $cmdName,
         $params,
         $endpoint,
         $expectedHost
     ) {
-        $client = $this->generateTestClient($service);
+        $client = $this->generateTestClient($service, $clientArgs);
         $command = $client->getCommand($cmdName, $params);
 
         $list = new HandlerList();
@@ -88,7 +89,7 @@ class EndpointParameterMiddlewareTest extends TestCase
             );
         });
 
-        $list->appendBuild(EndpointParameterMiddleware::wrap($service));
+        $list->appendBuild(EndpointParameterMiddleware::wrap($service, $clientArgs));
 
         $handler = $list->resolve();
         $handler($command, new Request('POST', $endpoint));
@@ -99,8 +100,10 @@ class EndpointParameterMiddlewareTest extends TestCase
         $service = $this->generateTestService();
 
         return [
+            // Operation without any prefix injection
             [
                 $service,
+                [],
                 'NoEndpointOp',
                 [
                     'StaticParameter' => 'bar-static',
@@ -108,8 +111,10 @@ class EndpointParameterMiddlewareTest extends TestCase
                 'https://foo.com',
                 'foo.com',
             ],
+            // Operation with static prefix injection
             [
                 $service,
+                [],
                 'StaticOp',
                 [
                     'StaticParameter' => 'bar-static',
@@ -117,8 +122,10 @@ class EndpointParameterMiddlewareTest extends TestCase
                 'https://foo.com',
                 'static.foo.com',
             ],
+            // Operation with host parameter injection
             [
                 $service,
+                [],
                 'MemberRefOp',
                 [
                     'HostParameter' => 'bar-host',
@@ -126,8 +133,10 @@ class EndpointParameterMiddlewareTest extends TestCase
                 'https://foo.com',
                 'bar-host.foo.com',
             ],
+            // Operation with multiple host parameter injections
             [
                 $service,
+                [],
                 'MultiRefOp',
                 [
                     'HostParameter' => 'bar-host',
@@ -136,19 +145,37 @@ class EndpointParameterMiddlewareTest extends TestCase
                 'https://foo.com',
                 'bar-host.baz-host.foo.com',
             ],
+            // Operation with host parameter injection, disabled via client argument
+            [
+                $service,
+                [
+                    'disable_host_prefix_injection' => true
+                ],
+                'MemberRefOp',
+                [
+                    'HostParameter' => 'bar-host',
+                ],
+                'https://foo.com',
+                'foo.com',
+            ],
         ];
     }
 
-    private function generateTestClient(Service $service)
+    private function generateTestClient(Service $service, $args = [])
     {
-        return new AwsClient([
-            'service'      => 'foo',
-            'api_provider' => function () use ($service) {
-                return $service->toArray();
-            },
-            'region'       => 'us-east-1',
-            'version'      => 'latest',
-        ]);
+        return new AwsClient(
+            array_merge(
+                [
+                    'service'      => 'foo',
+                    'api_provider' => function () use ($service) {
+                        return $service->toArray();
+                    },
+                    'region'       => 'us-east-1',
+                    'version'      => 'latest',
+                ],
+                $args
+            )
+        );
     }
 
     private function generateTestService()
