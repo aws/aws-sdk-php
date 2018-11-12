@@ -19,6 +19,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteSubscriberAsync(array $args = [])
  * @method \Aws\Result describeBudget(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBudgetAsync(array $args = [])
+ * @method \Aws\Result describeBudgetPerformanceHistory(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeBudgetPerformanceHistoryAsync(array $args = [])
  * @method \Aws\Result describeBudgets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBudgetsAsync(array $args = [])
  * @method \Aws\Result describeNotificationsForBudget(array $args = [])

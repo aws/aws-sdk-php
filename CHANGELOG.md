@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - Adding EC2 Launch Template support in AWS Batch Compute Environments.
+* `Aws\Budgets` - 1. Added budget performance history, enabling you to see how well your budgets matched your actual costs and usage. 2. Added budget performance history, notification state, and last updated time, enabling you to see how well your budgets matched your actual costs and usage, how often your budget alerts triggered, and when your budget was last updated.
+* `Aws\CloudFormation` - The Drift Detection feature enables customers to detect whether a stack's actual configuration differs, or has drifted, from its expected configuration as defined within AWS CloudFormation.
+* `Aws\CodePipeline` - Add support for cross-region pipeline with accompanying definitions as needed in the AWS CodePipeline API Guide.
+* `Aws\Firehose` - With this release, Amazon Kinesis Data Firehose allows you to enable/disable server-side encryption(SSE) for your delivery streams ensuring encryption of data at rest. For technical documentation, look at https://docs.aws.amazon.com/firehose/latest/dev/encryption.html
+* `Aws\Polly` - Amazon Polly adds new female voices: Italian - Bianca, Castilian Spanish - Lucia and new language: Mexican Spanish with new female voice - Mia.
+* `Aws\RDS` - API Update for RDS: this update enables Custom Endpoints, a new feature compatible with Aurora Mysql, Aurora PostgreSQL and Neptune that allows users to configure a customizable endpoint that will provide access to their instances in a cluster. 
+
 ## 3.71.3 - 2018-11-09
 
 * `Aws\MediaPackage` - As a part of SPEKE DRM encryption, MediaPackage now supports encrypted content keys. You can enable this enhanced content protection in an OriginEndpoint's encryption settings. When this is enabled, MediaPackage indicates to the key server that it requires an encrypted response. To use this, your DRM key provider must support content key encryption. For details on this feature, see the AWS MediaPackage User Guide at https://docs.aws.amazon.com/mediapackage/latest/ug/what-is.html.
