@@ -81,15 +81,13 @@ class EndpointParameterMiddlewareTest extends TestCase
         $client = $this->generateTestClient($service, $clientArgs);
         $command = $client->getCommand($cmdName, $params);
 
-        $list = new HandlerList();
+        $list = $client->getHandlerList();
         $list->setHandler(function ($command, $request) use ($expectedHost) {
             $this->assertEquals(
                 $expectedHost,
                 $request->getUri()->getHost()
             );
         });
-
-        $list->appendBuild(EndpointParameterMiddleware::wrap($service, $clientArgs));
 
         $handler = $list->resolve();
         $handler($command, new Request('POST', $endpoint));

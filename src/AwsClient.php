@@ -275,14 +275,15 @@ class AwsClient implements AwsClientInterface
 
     private function addEndpointParameterMiddleware($args)
     {
-        $list = $this->getHandlerList();
-        $list->appendBuild(
-            EndpointParameterMiddleware::wrap(
-                $this->api,
-                $args
-            ),
-            'endpoint_parameter'
-        );
+        if (empty($args['disable_host_prefix_injection'])) {
+            $list = $this->getHandlerList();
+            $list->appendBuild(
+                EndpointParameterMiddleware::wrap(
+                    $this->api
+                ),
+                'endpoint_parameter'
+            );
+        }
     }
 
     private function addSignatureMiddleware()
