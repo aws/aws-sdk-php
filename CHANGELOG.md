@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.71.4 - 2018-11-12
 
 * `Aws\Batch` - Adding EC2 Launch Template support in AWS Batch Compute Environments.
 * `Aws\Budgets` - 1. Added budget performance history, enabling you to see how well your budgets matched your actual costs and usage. 2. Added budget performance history, notification state, and last updated time, enabling you to see how well your budgets matched your actual costs and usage, how often your budget alerts triggered, and when your budget was last updated.
