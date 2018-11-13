@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.71.5 - 2018-11-13
 
 * `Aws\Budgets` - Doc Update: 1. Available monthly-budgets maximal history data points from 12 to 13. 2. Added 'Amazon Elasticsearch' costfilters support.
 * `Aws\Chime` - This release adds support in ListUsers API to filter the list by an email address.
