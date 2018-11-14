@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.71.6 - 2018-11-14
 
 * `Aws\AutoScaling` - EC2 Auto Scaling now allows users to provision and automatically scale instances across purchase options (Spot, On-Demand, and RIs) and instance types in a single Auto Scaling group (ASG).
 * `Aws\EC2` - Amazon EC2 Fleet now supports a new request type "Instant" that you can use to provision capacity synchronously across instance types & purchase models and CreateFleet will return the instances launched in the API response.
