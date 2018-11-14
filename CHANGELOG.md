@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - EC2 Auto Scaling now allows users to provision and automatically scale instances across purchase options (Spot, On-Demand, and RIs) and instance types in a single Auto Scaling group (ASG).
+* `Aws\EC2` - Amazon EC2 Fleet now supports a new request type "Instant" that you can use to provision capacity synchronously across instance types & purchase models and CreateFleet will return the instances launched in the API response.
+* `Aws\MediaTailor` - AWS Elemental MediaTailor SDK now returns a manifest endpoint prefix for clients to initiate a DASH playback session.
+* `Aws\ResourceGroups` - The AWS Resource Groups service added support for AWS CloudFormation stack-based groups.
+* `Aws\SNS` - Added an optional request parameter, named Attributes, to the Amazon SNS CreateTopic API action. For more information, see the Amazon SNS API Reference (https://docs.aws.amazon.com/sns/latest/api/API_CreateTopic.html).
+* `Aws\SageMaker` - SageMaker now makes the final set of metrics published from training jobs available in the DescribeTrainingJob results. Automatic Model Tuning now supports warm start of hyperparameter tuning jobs. Notebook instances now support a larger number of instance types to include instances from the ml.t3, ml.m5, ml.c4, ml.c5 families.
+* `Aws\ServiceCatalog` - Adds support for Cloudformation StackSets in Service Catalog
+
 ## 3.71.5 - 2018-11-13
 
 * `Aws\Budgets` - Doc Update: 1. Available monthly-budgets maximal history data points from 12 to 13. 2. Added 'Amazon Elasticsearch' costfilters support.
