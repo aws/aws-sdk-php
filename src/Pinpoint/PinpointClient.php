@@ -48,6 +48,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteSmsChannelAsync(array $args = [])
  * @method \Aws\Result deleteUserEndpoints(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteUserEndpointsAsync(array $args = [])
+ * @method \Aws\Result deleteVoiceChannel(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteVoiceChannelAsync(array $args = [])
  * @method \Aws\Result getAdmChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAdmChannelAsync(array $args = [])
  * @method \Aws\Result getApnsChannel(array $args = [])
@@ -110,6 +112,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getSmsChannelAsync(array $args = [])
  * @method \Aws\Result getUserEndpoints(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getUserEndpointsAsync(array $args = [])
+ * @method \Aws\Result getVoiceChannel(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getVoiceChannelAsync(array $args = [])
  * @method \Aws\Result phoneNumberValidate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise phoneNumberValidateAsync(array $args = [])
  * @method \Aws\Result putEventStream(array $args = [])
@@ -150,6 +154,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateSegmentAsync(array $args = [])
  * @method \Aws\Result updateSmsChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSmsChannelAsync(array $args = [])
+ * @method \Aws\Result updateVoiceChannel(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateVoiceChannelAsync(array $args = [])
  */
 class PinpointClient extends AwsClient
 {

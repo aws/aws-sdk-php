@@ -5,6 +5,12 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS S3 Control** service.
+ * @method \Aws\Result deletePublicAccessBlock(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deletePublicAccessBlockAsync(array $args = [])
+ * @method \Aws\Result getPublicAccessBlock(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPublicAccessBlockAsync(array $args = [])
+ * @method \Aws\Result putPublicAccessBlock(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putPublicAccessBlockAsync(array $args = [])
  */
 class S3ControlClient extends AwsClient 
 {
