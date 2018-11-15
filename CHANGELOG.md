@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.72.0 - 2018-11-15
 
 * `Aws\CodeBuild` - Adding queue phase and configurable queue timeout to CodeBuild.
 * `Aws\Comprehend` - Amazon Comprehend Custom Classification automatically trains classification models using your text and custom labels.
