@@ -30,7 +30,7 @@ class S3ControlClientTest extends TestCase
             'region' => 'us-west-2',
             'http_handler' => $handler,
         ]);
-        $client->deletePublicLockdown([
+        $client->deletePublicAccessBlock([
             'AccountId' => '111222333444',
         ]);
     }
@@ -52,7 +52,7 @@ class S3ControlClientTest extends TestCase
             'use_dual_stack_endpoint' => true,
             'http_handler' => $handler,
         ]);
-        $dualStackClient->deletePublicLockdown([
+        $dualStackClient->deletePublicAccessBlock([
             'AccountId' => '111222333444',
         ]);
 
@@ -61,7 +61,7 @@ class S3ControlClientTest extends TestCase
             'region' => 'us-west-2',
             'http_handler' => $handler,
         ]);
-        $client->deletePublicLockdown([
+        $client->deletePublicAccessBlock([
             'AccountId' => '111222333444',
             '@use_dual_stack_endpoint' => true,
         ]);
@@ -86,7 +86,7 @@ class S3ControlClientTest extends TestCase
         });
         $handlerList->prependSign($tap, "tap");
 
-        $client->deletePublicLockdown([
+        $client->deletePublicAccessBlock([
             'AccountId' => '111222333444',
         ]);
     }

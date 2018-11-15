@@ -42,7 +42,7 @@ class SignatureProvider
 {
     private static $s3v4SignedServices = [
         's3' => true,
-        's3-control' => true,
+        's3control' => true,
     ];
 
     /**
