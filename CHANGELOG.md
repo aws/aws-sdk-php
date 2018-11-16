@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.72.1 - 2018-11-16
 
 * `Aws\Comprehend` - Amazon Comprehend Custom Entities automatically trains entity recognition models using your entities and noun-based phrases. 
 * `Aws\CostExplorer` - This release introduces a new operation called GetCostForecast operation, which allows you to programmatically access AWS Cost Explorer's forecasting engine and is now generally available.
