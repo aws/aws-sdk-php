@@ -109,6 +109,7 @@ class DynamoDbClientTest extends TestCase
             ),
             new Result(),
         ];
+        $attemptCount = 0;
         $callback = function() use (&$attemptCount) {
             $attemptCount++;
         };
