@@ -37,7 +37,7 @@ class InstructionFileMetadataStrategyTest extends TestCase
             $args
         );
         $this->assertNotEmpty($updatedArgs);
-        $this->assertEquals(0, count($updatedArgs['Metadata']));
+        $this->assertCount(0, $updatedArgs['Metadata']);
     }
 
     /**

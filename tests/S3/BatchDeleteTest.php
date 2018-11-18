@@ -144,7 +144,7 @@ class BatchDeleteTest extends TestCase
         $batch->delete();
         $last = $mock->getLastCommand();
         $this->assertEquals('DeleteObjects', $last->getName());
-        $this->assertEquals(2, count($last['Delete']['Objects']));
+        $this->assertCount(2, $last['Delete']['Objects']);
         $this->assertEquals('foo', $last['Bucket']);
     }
 

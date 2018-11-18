@@ -16,7 +16,7 @@ class ConfigurationTest extends TestCase
     public function testGetsCorrectValues()
     {
         $config = new Configuration(true, 888, 'FooApp');
-        $this->assertSame(true, $config->isEnabled());
+        $this->assertTrue($config->isEnabled());
         $this->assertSame(888, $config->getPort());
         $this->assertSame('FooApp', $config->getClientId());
     }
@@ -43,6 +43,6 @@ class ConfigurationTest extends TestCase
     public function testHandlesInvalidEnabled()
     {
         $config = new Configuration('invalidvalue', 123, 'FooApp');
-        $this->assertSame(false, $config->isEnabled());
+        $this->assertFalse($config->isEnabled());
     }
 }
