@@ -53,6 +53,12 @@ class ClientResolver
             'default'  => 'https',
             'doc'      => 'URI scheme to use when connecting connect. The SDK will utilize "https" endpoints (i.e., utilize SSL/TLS connections) by default. You can attempt to connect to a service over an unencrypted "http" endpoint by setting ``scheme`` to "http".',
         ],
+        'disable_host_prefix_injection' => [
+            'type'      => 'value',
+            'valid'     => ['bool'],
+            'doc'       => 'Set to true to disable host prefix injection logic for services that use it. This disables the entire prefix injection, including the portions supplied by user-defined parameters. Setting this flag will have no effect on services that do not use host prefix injection.',
+            'default'   => false,
+        ],
         'endpoint' => [
             'type'  => 'value',
             'valid' => ['string'],
