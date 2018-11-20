@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.73.0 - 2018-11-20
 
 * `Aws\Batch` - Adding multinode parallel jobs, placement group support for compute environments.
 * `Aws\CloudFormation` - Use the CAPABILITY_AUTO_EXPAND capability to create or update a stack directly from a stack template that contains macros, without first reviewing the resulting changes in a change set first.
