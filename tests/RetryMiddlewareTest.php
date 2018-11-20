@@ -158,6 +158,46 @@ class RetryMiddlewareTest extends TestCase
         $this->assertFalse($decider(0, $command, $request, null, $err));
     }
 
+    public function testDeciderRetriesForCustomErrorCodes()
+    {
+        $decider = RetryMiddleware::createDefaultDecider(
+            3,
+            [
+                'errorCodes' => [
+                    'CustomRetryableException' => true,
+                ],
+            ]
+        );
+        $command = new Command('foo');
+        $request = new Request('GET', 'http://www.example.com');
+        $err = new AwsException('e', $command, [
+            'code' => 'CustomRetryableException'
+        ]);
+        $this->assertTrue($decider(0, $command, $request, null, $err));
+        $err = new AwsException('e', $command, [
+            'code' => 'CustomNonRetryableException'
+        ]);
+        $this->assertFalse($decider(0, $command, $request, null, $err));
+    }
+
+    public function testDeciderRetriesForCustomStatusCodes()
+    {
+        $decider = RetryMiddleware::createDefaultDecider(
+            3,
+            [
+                'statusCodes' => [
+                    400 => true,
+                ],
+            ]
+        );
+        $command = new Command('foo');
+        $request = new Request('GET', 'http://www.example.com');
+        $err = new AwsException('e', $command, ['response' => new Response(400)]);
+        $this->assertTrue($decider(0, $command, $request, null, $err));
+        $err = new AwsException('e', $command, ['response' => new Response(401)]);
+        $this->assertFalse($decider(0, $command, $request, null, $err));
+    }
+
     public function testDeciderDoesNotRetryAfterMaxAttempts()
     {
         $decider = RetryMiddleware::createDefaultDecider();
