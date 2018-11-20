@@ -52,10 +52,10 @@ class RetryMiddleware
      * Creates a default AWS retry decider function.
      *
      * @param int $maxRetries
-     *
+     * @param array $retryCodes
      * @return callable
      */
-    public static function createDefaultDecider($maxRetries = 3)
+    public static function createDefaultDecider($maxRetries = 3, $retryCodes = [])
     {
         $retryCurlErrors = [];
         if (extension_loaded('curl')) {
@@ -68,13 +68,18 @@ class RetryMiddleware
             RequestInterface $request,
             ResultInterface $result = null,
             $error = null
-        ) use ($maxRetries, $retryCurlErrors) {
+        ) use ($maxRetries, $retryCurlErrors, $retryCodes) {
             // Allow command-level options to override this value
             $maxRetries = null !== $command['@retries'] ?
                 $command['@retries']
                 : $maxRetries;
 
-            $isRetryable = self::isRetryable($result, $error, $retryCurlErrors);
+            $isRetryable = self::isRetryable(
+                $result,
+                $error,
+                $retryCurlErrors,
+                $retryCodes
+            );
 
             if ($retries >= $maxRetries) {
                 if (!empty($error)
@@ -90,8 +95,12 @@ class RetryMiddleware
         };
     }
 
-    private static function isRetryable($result, $error, $retryCurlErrors)
-    {
+    private static function isRetryable(
+        $result,
+        $error,
+        $retryCurlErrors,
+        $retryCodes = []
+    ) {
         if (!$error) {
             return isset(self::$retryStatusCodes[$result['@metadata']['statusCode']]);
         }
@@ -104,11 +113,24 @@ class RetryMiddleware
             return true;
         }
 
-        if (isset(self::$retryCodes[$error->getAwsErrorCode()])) {
+        $errorCodes = self::$retryCodes;
+        if (!empty($retryCodes['errorCodes'])
+            && is_array($retryCodes['errorCodes'])
+        ) {
+            $errorCodes += $retryCodes['errorCodes'];
+        }
+
+        if (isset($errorCodes[$error->getAwsErrorCode()])) {
             return true;
         }
 
-        if (isset(self::$retryStatusCodes[$error->getStatusCode()])) {
+        $statusCodes = self::$retryStatusCodes;
+        if (!empty($retryCodes['statusCodes'])
+            && is_array($retryCodes['statusCodes'])
+        ) {
+            $statusCodes += $retryCodes['statusCodes'];
+        }
+        if (isset($statusCodes[$error->getStatusCode()])) {
             return true;
         }
 
