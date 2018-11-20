@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with AWS Config.
  *
+ * @method \Aws\Result batchGetAggregateResourceConfig(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetAggregateResourceConfigAsync(array $args = [])
  * @method \Aws\Result batchGetResourceConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetResourceConfigAsync(array $args = [])
  * @method \Aws\Result deleteAggregationAuthorization(array $args = [])
@@ -58,6 +60,10 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getAggregateComplianceDetailsByConfigRuleAsync(array $args = [])
  * @method \Aws\Result getAggregateConfigRuleComplianceSummary(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAggregateConfigRuleComplianceSummaryAsync(array $args = [])
+ * @method \Aws\Result getAggregateDiscoveredResourceCounts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAggregateDiscoveredResourceCountsAsync(array $args = [])
+ * @method \Aws\Result getAggregateResourceConfig(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAggregateResourceConfigAsync(array $args = [])
  * @method \Aws\Result getComplianceDetailsByConfigRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getComplianceDetailsByConfigRuleAsync(array $args = [])
  * @method \Aws\Result getComplianceDetailsByResource(array $args = [])
@@ -70,6 +76,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDiscoveredResourceCountsAsync(array $args = [])
  * @method \Aws\Result getResourceConfigHistory(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getResourceConfigHistoryAsync(array $args = [])
+ * @method \Aws\Result listAggregateDiscoveredResources(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAggregateDiscoveredResourcesAsync(array $args = [])
  * @method \Aws\Result listDiscoveredResources(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDiscoveredResourcesAsync(array $args = [])
  * @method \Aws\Result putAggregationAuthorization(array $args = [])
