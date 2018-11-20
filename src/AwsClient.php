@@ -85,6 +85,11 @@ class AwsClient implements AwsClientInterface
      *   `http_stats_receiver` option for this to have an effect; timer: (bool)
      *   Set to true to enable a command timer that reports the total wall clock
      *   time spent on an operation in seconds.
+     * - disable_host_prefix_injection: (bool) Set to true to disable host prefix
+     *   injection logic for services that use it. This disables the entire
+     *   prefix injection, including the portions supplied by user-defined
+     *   parameters. Setting this flag will have no effect on services that do
+     *   not use host prefix injection.
      * - endpoint: (string) The full URI of the webservice. This is only
      *   required when connecting to a custom endpoint (e.g., a local version
      *   of S3).
@@ -169,6 +174,7 @@ class AwsClient implements AwsClientInterface
         $this->addSignatureMiddleware();
         $this->addInvocationId();
         $this->addClientSideMonitoring($args);
+        $this->addEndpointParameterMiddleware($args);
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -265,6 +271,19 @@ class AwsClient implements AwsClientInterface
             strtolower($service),
             "Aws\\{$service}\\Exception\\{$service}Exception"
         ];
+    }
+
+    private function addEndpointParameterMiddleware($args)
+    {
+        if (empty($args['disable_host_prefix_injection'])) {
+            $list = $this->getHandlerList();
+            $list->appendBuild(
+                EndpointParameterMiddleware::wrap(
+                    $this->api
+                ),
+                'endpoint_parameter'
+            );
+        }
     }
 
     private function addSignatureMiddleware()

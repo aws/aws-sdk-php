@@ -71,6 +71,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getFolderAsync(array $args = [])
  * @method \Aws\Result getFolderPath(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getFolderPathAsync(array $args = [])
+ * @method \Aws\Result getResources(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getResourcesAsync(array $args = [])
  * @method \Aws\Result initiateDocumentVersionUpload(array $args = [])
  * @method \GuzzleHttp\Promise\Promise initiateDocumentVersionUploadAsync(array $args = [])
  * @method \Aws\Result removeAllResourcePermissions(array $args = [])
