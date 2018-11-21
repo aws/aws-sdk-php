@@ -120,11 +120,7 @@ class DynamoDbClient extends AwsClient
             Middleware::retry(
                 RetryMiddleware::createDefaultDecider(
                     $value,
-                    [
-                        'errorCodes' => [
-                            'TransactionInProgressException' => true,
-                        ],
-                    ]
+                    ['errorCodes' => ['TransactionInProgressException']]
                 ),
                 function ($retries) {
                     return $retries
