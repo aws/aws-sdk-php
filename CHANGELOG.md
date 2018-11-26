@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.75.0 - 2018-11-26
 
 * `Aws\Amplify` - Release of AWS Amplify: Everything you need to develop & deploy cloud-powered mobile and web apps.
 * `Aws\DataSync` - AWS DataSync simplifies, automates, and accelerates moving and replicating data between on-premises storage and AWS services over the network.
