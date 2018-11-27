@@ -136,6 +136,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionGameLift(array $args = [])
  * @method \Aws\Glacier\GlacierClient createGlacier(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGlacier(array $args = [])
+ * @method \Aws\GlobalAccelerator\GlobalAcceleratorClient createGlobalAccelerator(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionGlobalAccelerator(array $args = [])
  * @method \Aws\Glue\GlueClient createGlue(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGlue(array $args = [])
  * @method \Aws\Greengrass\GreengrassClient createGreengrass(array $args = [])
