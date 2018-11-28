@@ -115,6 +115,66 @@ class RetryMiddlewareTest extends TestCase
         $this->assertTrue($decider(0, $command, $request, null, $err));
     }
 
+    public function testDeciderRetriesForCustomCurlErrors()
+    {
+        if (!extension_loaded('curl')) {
+            $this->markTestSkipped('Test skipped on no cURL extension');
+        }
+        $decider = RetryMiddleware::createDefaultDecider(
+            3,
+            ['curlErrors' => [CURLE_BAD_CONTENT_ENCODING]]
+        );
+        $command = new Command('foo');
+        $request = new Request('GET', 'http://www.example.com');
+        $version = (string) ClientInterface::VERSION;
+
+        // Custom error passed in to decider config should result in a retry
+        if ($version[0] === '6') {
+            $previous = new RequestException(
+                'test',
+                $request,
+                null,
+                null,
+                ['errno' => CURLE_BAD_CONTENT_ENCODING]
+            );
+        } elseif ($version[0] === '5') {
+            $previous = new RequestException(
+                'cURL error ' . CURLE_BAD_CONTENT_ENCODING . ': test',
+                new \GuzzleHttp\Message\Request('GET', 'http://www.example.com')
+            );
+        }
+        $err = new AwsException(
+            'e',
+            $command,
+            ['connection_error' => false],
+            $previous
+        );
+        $this->assertTrue($decider(0, $command, $request, null, $err));
+
+        // Error not passed in to decider config should result in no retry
+        if ($version[0] === '6') {
+            $previous = new RequestException(
+                'test',
+                $request,
+                null,
+                null,
+                ['errno' => CURLE_ABORTED_BY_CALLBACK]
+            );
+        } elseif ($version[0] === '5') {
+            $previous = new RequestException(
+                'cURL error ' . CURLE_ABORTED_BY_CALLBACK . ': test',
+                new \GuzzleHttp\Message\Request('GET', 'http://www.example.com')
+            );
+        }
+        $err = new AwsException(
+            'e',
+            $command,
+            ['connection_error' => false],
+            $previous
+        );
+        $this->assertFalse($decider(0, $command, $request, null, $err));
+    }
+
     public function awsErrorCodeProvider()
     {
         $command = new Command('foo');
@@ -155,6 +215,38 @@ class RetryMiddlewareTest extends TestCase
         $err = new AwsException('e', $command, ['response' => new Response(504)]);
         $this->assertTrue($decider(0, $command, $request, null, $err));
         $err = new AwsException('e', $command, ['response' => new Response(403)]);
+        $this->assertFalse($decider(0, $command, $request, null, $err));
+    }
+
+    public function testDeciderRetriesForCustomErrorCodes()
+    {
+        $decider = RetryMiddleware::createDefaultDecider(
+            3,
+            ['errorCodes' => ['CustomRetryableException']]
+        );
+        $command = new Command('foo');
+        $request = new Request('GET', 'http://www.example.com');
+        $err = new AwsException('e', $command, [
+            'code' => 'CustomRetryableException'
+        ]);
+        $this->assertTrue($decider(0, $command, $request, null, $err));
+        $err = new AwsException('e', $command, [
+            'code' => 'CustomNonRetryableException'
+        ]);
+        $this->assertFalse($decider(0, $command, $request, null, $err));
+    }
+
+    public function testDeciderRetriesForCustomStatusCodes()
+    {
+        $decider = RetryMiddleware::createDefaultDecider(
+            3,
+            ['statusCodes' => [400]]
+        );
+        $command = new Command('foo');
+        $request = new Request('GET', 'http://www.example.com');
+        $err = new AwsException('e', $command, ['response' => new Response(400)]);
+        $this->assertTrue($decider(0, $command, $request, null, $err));
+        $err = new AwsException('e', $command, ['response' => new Response(401)]);
         $this->assertFalse($decider(0, $command, $request, null, $err));
     }
 

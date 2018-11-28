@@ -4,6 +4,9 @@ namespace Aws\Test\DynamoDb;
 use Aws\Command;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\Exception\AwsException;
+use Aws\MockHandler;
+use Aws\Result;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
@@ -79,6 +82,55 @@ class DynamoDbClientTest extends TestCase
             [ $handle,       '{"B":"foo"}' ],
             [ $stream,       '{"B":"bar"}' ],
         ];
+    }
+
+    public function testRetriesOnDynamoSpecificRetryableException()
+    {
+        $params = [
+            'TableName' => 'foo',
+            'Key' => ['baz' => ['S' => 'foo']]
+        ];
+        $dynamoRetryableException = new AwsException(
+            'TransactionInProgressException',
+            new Command('GetItem', $params),
+            [
+                'code' => 'TransactionInProgressException'
+            ]
+        );
+        $queue = [
+            $dynamoRetryableException,
+            $dynamoRetryableException,
+            new AwsException(
+                'NonRetryableException',
+                new Command('GetItem', $params),
+                [
+                    'code' => 'NonRetryableException'
+                ]
+            ),
+            new Result(),
+        ];
+        $attemptCount = 0;
+        $callback = function() use (&$attemptCount) {
+            $attemptCount++;
+        };
+        $handler = new MockHandler($queue, $callback, $callback);
+
+        $client = new DynamoDbClient([
+            'region'       => 'us-east-1',
+            'version'      => 'latest'
+        ]);
+
+        $list = $client->getHandlerList();
+        $list->setHandler($handler);
+
+        try {
+            $client->getItem($params);
+            $this->fail('This operation should have failed with a NonRetryableException.');
+        } catch(AwsException $e) {
+            $this->assertEquals('NonRetryableException', $e->getAwsErrorCode());
+        }
+
+        $this->assertEquals(3, $attemptCount);
     }
 
     public function testValidatesAndRetriesCrc32()

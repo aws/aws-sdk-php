@@ -4,6 +4,7 @@ namespace Aws\DynamoDb;
 use Aws\Api\Parser\Crc32ValidatingParser;
 use Aws\AwsClient;
 use Aws\ClientResolver;
+use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\RetryMiddleware;
@@ -117,7 +118,10 @@ class DynamoDbClient extends AwsClient
 
         $list->appendSign(
             Middleware::retry(
-                RetryMiddleware::createDefaultDecider($value),
+                RetryMiddleware::createDefaultDecider(
+                    $value,
+                    ['errorCodes' => ['TransactionInProgressException']]
+                ),
                 function ($retries) {
                     return $retries
                         ? RetryMiddleware::exponentialDelay($retries) / 2
