@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.78.0 - 2018-11-28
 
 * `Aws\DynamoDB` - Amazon DynamoDB now supports the following features: DynamoDB on-demand and transactions. DynamoDB on-demand is a flexible new billing option for DynamoDB capable of serving thousands of requests per second without capacity planning. DynamoDB on-demand offers simple pay-per-request pricing for read and write requests so that you only pay for what you use, making it easy to balance costs and performance. Transactions simplify the developer experience of making coordinated, all-or-nothing changes to multiple items both within and across tables. The new transactional APIs provide atomicity, consistency, isolation, and durability (ACID) in DynamoDB, helping developers support sophisticated workflows and business logic that requires adding, updating, or deleting multiple items using native, server-side transactions. For more information, see the Amazon DynamoDB Developer Guide.
 * `Aws\FSx` - Amazon FSx provides fully-managed third-party file systems optimized for a variety of enterprise and compute-intensive workloads.
