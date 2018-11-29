@@ -21,6 +21,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getApplicationPolicyAsync(array $args = [])
  * @method \Aws\Result getCloudFormationTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCloudFormationTemplateAsync(array $args = [])
+ * @method \Aws\Result listApplicationDependencies(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listApplicationDependenciesAsync(array $args = [])
  * @method \Aws\Result listApplicationVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listApplicationVersionsAsync(array $args = [])
  * @method \Aws\Result listApplications(array $args = [])
