@@ -24,6 +24,7 @@ class ApplyChecksumMiddleware
         'PutBucketReplication',
         'PutObjectLegalHold',
         'PutObjectRetention',
+        'PutObjectLockConfiguration',
     ];
 
     private static $sha256 = [
