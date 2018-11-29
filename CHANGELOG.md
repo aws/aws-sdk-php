@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.80.0 - 2018-11-29
 
 * `Aws\CloudWatchEvents` - Support for Managed Rules (rules that are created and maintained by the AWS services in your account) is added.
 * `Aws\ElasticLoadBalancingv2` - This release allows Application Load Balancers to route traffic to Lambda functions, in addition to instances and IP addresses.
