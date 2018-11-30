@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.80.1 - 2018-11-30
 
 * `Aws\S3` - Fixed issue with Content-MD5 for S3 PutObjectLegalHold, PutObjectRetention and PutObjectLockConfiguration.
 * `Aws\S3` - Add MD5 header to PutObjectLegalHold, PutObjectRetention, and PutObjectLockConfiguration.
