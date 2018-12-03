@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DeviceFarm` - Customers can now schedule runs without a need to create a Device Pool. They also get realtime information on public device availability.
+* `Aws\MediaConvert` - Documentation updates for mediaconvert
+* `Aws\ServiceCatalog` - Documentation updates for servicecatalog
+* `Aws\StorageGateway` - API list-local-disks returns a list of the gateway's local disks. This release adds a field DiskAttributeList to these disks.
+
 ## 3.80.1 - 2018-11-30
 
 * `Aws\S3` - Fixed issue with Content-MD5 for S3 PutObjectLegalHold, PutObjectRetention and PutObjectLockConfiguration.
