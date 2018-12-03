@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.80.2 - 2018-12-03
 
 * `Aws\DeviceFarm` - Customers can now schedule runs without a need to create a Device Pool. They also get realtime information on public device availability.
 * `Aws\MediaConvert` - Documentation updates for mediaconvert
