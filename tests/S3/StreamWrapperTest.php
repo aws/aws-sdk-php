@@ -665,7 +665,7 @@ class StreamWrapperTest extends TestCase
             $this->assertSame($actual, $result);
         }
 
-        $this->assertEquals(count($queue), count($history));
+        $this->assertCount(count($queue), $history);
     }
 
     /**

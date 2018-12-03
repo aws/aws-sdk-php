@@ -103,7 +103,7 @@ class SignerTest extends TestCase
     {
         $signature = $this->instance->getSignature('test.mp4', time() + 1000);
 
-        $this->assertSame(0, preg_match('/[\+\=\/]/', $signature['Signature']));
+        $this->assertNotRegExp('/[\+\=\/]/', $signature['Signature']);
     }
 
     public function testPolicyContainsNoForbiddenCharacters()
@@ -111,7 +111,7 @@ class SignerTest extends TestCase
         $signature = $this->instance
             ->getSignature(null, null, $this->getCustomPolicy());
 
-        $this->assertSame(0, preg_match('/[\+\=\/]/', $signature['Policy']));
+        $this->assertNotRegExp('/[\+\=\/]/', $signature['Policy']);
     }
 
     /**

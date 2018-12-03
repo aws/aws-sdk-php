@@ -276,7 +276,7 @@ class MiddlewareTest extends TestCase
         $handler = $list->resolve();
         $request = new Request('GET', 'http://exmaple.com');
         $result = $handler(new Command('Foo'), $request)->wait();
-        $this->assertTrue(isset($result['@metadata']['transferStats']['total_time']));
+        $this->assertArrayHasKey('total_time', $result['@metadata']['transferStats']);
         $this->assertGreaterThanOrEqual(
             0.001,
             $result['@metadata']['transferStats']['total_time']

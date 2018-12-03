@@ -292,7 +292,7 @@ class RetryMiddlewareTest extends TestCase
         $mock = new MockHandler(
             [
                 function ($command, $request) use ($res1) {
-                    $this->assertFalse(isset($command['@http']['delay']));
+                    $this->assertArrayNotHasKey('delay', $command['@http']);
                     return $res1;
                 },
                 function ($command, $request) use ($res2) {
@@ -323,7 +323,7 @@ class RetryMiddlewareTest extends TestCase
         $mock = new MockHandler(
             [
                 function ($command, $request) {
-                    $this->assertFalse(isset($command['@http']['delay']));
+                    $this->assertArrayNotHasKey('delay', $command['@http']);
                     return new AwsException('foo', $command, [
                         'connection_error' => true
                     ]);
@@ -357,7 +357,7 @@ class RetryMiddlewareTest extends TestCase
         $mock = new MockHandler(
             [
                 function ($command, $request) {
-                    $this->assertFalse(isset($command['@http']['delay']));
+                    $this->assertArrayNotHasKey('delay', $command['@http']);
                     return new AwsException('foo', $command);
                 }
             ],
@@ -427,7 +427,7 @@ class RetryMiddlewareTest extends TestCase
 
         $result = $retryMW(new Command('SomeCommand'), new Request('GET', ''))
             ->wait();
-        $this->assertTrue(isset($result['@metadata']['transferStats']['retries_attempted']));
+        $this->assertArrayHasKey('retries_attempted', $result['@metadata']['transferStats']);
         $this->assertSame(2, $result['@metadata']['transferStats']['retries_attempted']);
     }
 
@@ -469,7 +469,7 @@ class RetryMiddlewareTest extends TestCase
 
         $result = $retryMW(new Command('SomeCommand'), new Request('GET', ''))
             ->wait();
-        $this->assertTrue(isset($result['@metadata']['transferStats']['total_retry_delay']));
+        $this->assertArrayHasKey('total_retry_delay', $result['@metadata']['transferStats']);
         $this->assertSame(200, $result['@metadata']['transferStats']['total_retry_delay']);
     }
 
