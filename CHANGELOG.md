@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.80.3 - 2018-12-04
 
 * `Aws\Health` - AWS Health API DescribeAffectedEntities operation now includes a field that returns the URL of the affected entity.
 * `Aws\S3` - S3 Inventory reports can now be generated in Parquet format by setting the Destination Format to be 'Parquet'.
