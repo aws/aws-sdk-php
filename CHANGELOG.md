@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Health` - AWS Health API DescribeAffectedEntities operation now includes a field that returns the URL of the affected entity.
+* `Aws\S3` - S3 Inventory reports can now be generated in Parquet format by setting the Destination Format to be 'Parquet'.
+* `Aws\Test` - Use dedicated PHPUnit assertions for better error messages.
+* `Aws\Waiter` - Simplify foreach with in_array function.
+
 ## 3.80.2 - 2018-12-03
 
 * `Aws\DeviceFarm` - Customers can now schedule runs without a need to create a Device Pool. They also get realtime information on public device availability.
