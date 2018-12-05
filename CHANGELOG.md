@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.81.0 - 2018-12-05
 
 * `Aws\CostExplorer` - Add normalized unit support for both GetReservationUtilization and GetReservationCoverage API.
 * `Aws\Functions` - This update refactors an unnecessary error suppression operator used in a global function.
