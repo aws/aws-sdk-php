@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CostExplorer` - Add normalized unit support for both GetReservationUtilization and GetReservationCoverage API.
+* `Aws\Functions` - This update refactors an unnecessary error suppression operator used in a global function.
+* `Aws\MQ` - This release adds support for cost allocation tagging. You can now create, delete, and list tags for AmazonMQ resources. For more information about tagging, see AWS Tagging Strategies.
+* `Aws\MediaTailor` - AWS Elemental MediaTailor SDK now includes a new parameter to control the Location tag of DASH manifests.
+
 ## 3.80.3 - 2018-12-04
 
 * `Aws\Health` - AWS Health API DescribeAffectedEntities operation now includes a field that returns the URL of the affected entity.
