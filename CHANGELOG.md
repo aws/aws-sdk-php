@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.81.1 - 2018-12-06
 
 * `Aws\CodeBuild` - Support personal access tokens for GitHub source and app passwords for Bitbucket source
 * `Aws\ElasticLoadBalancingv2` - This release allows Application Load Balancers to route traffic to Lambda functions, in addition to instances and IP addresses.
