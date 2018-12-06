@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeBuild` - Support personal access tokens for GitHub source and app passwords for Bitbucket source
+* `Aws\ElasticLoadBalancingv2` - This release allows Application Load Balancers to route traffic to Lambda functions, in addition to instances and IP addresses.
+* `Aws\MediaLive` - This release enables the AWS Elemental MediaConnect input type in AWS Elemental MediaLive. This can then be used to automatically create and manage AWS Elemental MediaConnect Flow Outputs when you create a channel using those inputs.
+* `Aws\RDS` - Documentation updates for Amazon RDS
+
 ## 3.81.0 - 2018-12-05
 
 * `Aws\CostExplorer` - Add normalized unit support for both GetReservationUtilization and GetReservationCoverage API.
