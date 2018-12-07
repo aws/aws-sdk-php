@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.81.2 - 2018-12-07
 
 * `Aws\AlexaForBusiness` - Alexa for Business now allows IT administrators to create ad-hoc or scheduled usage reports, which help customers understand how Alexa is used in their workplace. To learn how to create usage reports, see https://docs.aws.amazon.com/a4b/latest/ag/creating-reports.html
 * `Aws\EC2` - You can now launch the larger-sized P3dn.24xlarge instance that features NVIDIA Tesla V100s with double the GPU memory, 100Gbps networking and local NVMe storage.
