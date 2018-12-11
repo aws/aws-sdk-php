@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeUserHierarchyGroupAsync(array $args = [])
  * @method \Aws\Result describeUserHierarchyStructure(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeUserHierarchyStructureAsync(array $args = [])
+ * @method \Aws\Result getContactAttributes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getContactAttributesAsync(array $args = [])
  * @method \Aws\Result getCurrentMetricData(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCurrentMetricDataAsync(array $args = [])
  * @method \Aws\Result getFederationToken(array $args = [])
