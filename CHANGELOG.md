@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.81.3 - 2018-12-11
 
 * `Aws\Connect` - This update adds the GetContactAttributes operation to retrieve the attributes associated with a contact.
 * `Aws\ECS` - Documentation updates for Amazon ECS.
