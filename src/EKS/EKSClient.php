@@ -11,7 +11,13 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteClusterAsync(array $args = [])
  * @method \Aws\Result describeCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeClusterAsync(array $args = [])
+ * @method \Aws\Result describeUpdate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeUpdateAsync(array $args = [])
  * @method \Aws\Result listClusters(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listClustersAsync(array $args = [])
+ * @method \Aws\Result listUpdates(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listUpdatesAsync(array $args = [])
+ * @method \Aws\Result updateClusterVersion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateClusterVersionAsync(array $args = [])
  */
 class EKSClient extends AwsClient {}

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EKS` - Added support for updating kubernetes version of Amazon EKS clusters.
+* `Aws\Glue` - API Update for Glue: this update enables encryption of password inside connection objects stored in AWS Glue Data Catalog using DataCatalogEncryptionSettings. In addition, a new "HidePassword" flag is added to GetConnection and GetConnections to return connections without passwords.
+* `Aws\Route53` - You can now specify a new region, eu-north-1 (in Stockholm, Sweden), as a region for latency-based or geoproximity routing.
+* `Aws\SageMaker` - Amazon SageMaker Automatic Model Tuning now supports early stopping of training jobs. With early stopping, training jobs that are unlikely to generate good models will be automatically stopped during a Hyperparameter Tuning Job.
+
 ## 3.81.3 - 2018-12-11
 
 * `Aws\Connect` - This update adds the GetContactAttributes operation to retrieve the attributes associated with a contact.
