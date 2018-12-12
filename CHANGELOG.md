@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.81.4 - 2018-12-12
 
 * `Aws\EKS` - Added support for updating kubernetes version of Amazon EKS clusters.
 * `Aws\Glue` - API Update for Glue: this update enables encryption of password inside connection objects stored in AWS Glue Data Catalog using DataCatalogEncryptionSettings. In addition, a new "HidePassword" flag is added to GetConnection and GetConnections to return connections without passwords.
