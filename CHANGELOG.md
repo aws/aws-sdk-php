@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.81.5 - 2018-12-13
 
 * `Aws\Organizations` - Documentation updates for AWS Organizations
 * `Aws\PinpointEmail` - This release adds new operations for the Amazon Pinpoint Deliverability Dashboard. You can use the Deliverability Dashboard to view response and inbox placement metrics for the domains that you use to send email. You can also perform tests on individual email messages to determine how often your messages are delivered to the inbox on several major email providers.
