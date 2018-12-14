@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.81.6 - 2018-12-14
 
 * `Aws\AlexaForBusiness` - Released new APIs for managing private skill access to Enrolled Users. These API's are the equivalent of the A4B console for Private Skills checkbox "Available for Users".
 * `Aws\CloudFormation` - Documentation updates for cloudformation
