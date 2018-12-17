@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.81.7 - 2018-12-17
 
 * `Aws\ECR` - This release adds support for ECR repository tagging.
 * `Aws\QuickSight` - Amazon QuickSight's RegisterUser API now generates a user invitation URL when registering a user with the QuickSight identity type. This URL can then be used by the registered QuickSight user to complete the user registration process. This release also corrects some HTTP return status codes.
