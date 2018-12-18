@@ -25,6 +25,7 @@ class ApplyChecksumMiddleware
         'PutObjectLegalHold',
         'PutObjectRetention',
         'PutObjectLockConfiguration',
+        'PutObject',
     ];
 
     private static $sha256 = [
@@ -65,7 +66,9 @@ class ApplyChecksumMiddleware
                 'Content-MD5',
                 base64_encode(Psr7\hash($body, 'md5', true))
             );
-        } elseif (in_array($name, self::$sha256) && $command['ContentSHA256']) {
+        }
+
+        if (in_array($name, self::$sha256) && $command['ContentSHA256']) {
             // Set the content hash header if provided in the parameters.
             $request = $request->withHeader(
                 'X-Amz-Content-Sha256',
