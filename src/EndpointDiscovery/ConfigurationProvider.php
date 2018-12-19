@@ -2,7 +2,7 @@
 namespace Aws\EndpointDiscovery;
 
 use Aws\CacheInterface;
-use Aws\ClientSideMonitoring\Exception\ConfigurationException;
+use Aws\EndpointDiscovery\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 
 /**
@@ -128,13 +128,9 @@ class ConfigurationProvider
      */
     public static function defaultProvider(array $config = [])
     {
-        $cacheLimit = isset($config['endpoint_discovery']['cache_limit'])
-            ? $config['endpoint_discovery']['cache_limit']
-            : self::DEFAULT_CACHE_LIMIT;
-
         $configProviders = [
-            self::env($cacheLimit),
-            self::ini($cacheLimit),
+            self::env(),
+            self::ini(),
             self::fallback()
         ];
 

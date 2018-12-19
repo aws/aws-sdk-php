@@ -504,9 +504,7 @@ class ClientResolver
     ) {
         $list->appendBuild(
             EndpointDiscoveryMiddleware::wrap(
-                $args['client'],
-                $args['credentials'],
-                $args['api'],
+                $args,
                 $value
             ),
             'EndpointDiscoveryMiddleware'
