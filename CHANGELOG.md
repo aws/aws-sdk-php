@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.82.1 - 2018-12-19
 
 * `Aws\EC2` - This release adds support for specifying partition as a strategy for EC2 Placement Groups. This new strategy allows one to launch instances into partitions that do not share certain underlying hardware between partitions, to assist with building and deploying highly available replicated applications. 
 * `Aws\SageMaker` - Batch Transform Jobs now supports TFRecord as a Split Type. ListCompilationJobs API action now supports SortOrder and SortBy inputs.
