@@ -497,18 +497,8 @@ class ClientResolver
         }
     }
 
-    public static function _apply_endpoint_discovery(
-        $value,
-        array $args,
-        HandlerList $list
-    ) {
-        $list->appendBuild(
-            EndpointDiscoveryMiddleware::wrap(
-                $args,
-                $value
-            ),
-            'EndpointDiscoveryMiddleware'
-        );
+    public static function _apply_endpoint_discovery($value, array &$args) {
+        $args['endpoint_discovery'] = $value;
     }
 
     public static function _default_endpoint_discovery_provider(array $args)

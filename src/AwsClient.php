@@ -7,6 +7,7 @@ use Aws\Api\Service;
 use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
+use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
 
@@ -174,6 +175,7 @@ class AwsClient implements AwsClientInterface
         $this->addInvocationId();
         $this->addClientSideMonitoring($args);
         $this->addEndpointParameterMiddleware($args);
+        $this->addEndpointDiscoveryMiddleware($config);
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -283,6 +285,20 @@ class AwsClient implements AwsClientInterface
                 'endpoint_parameter'
             );
         }
+    }
+
+    private function addEndpointDiscoveryMiddleware($args)
+    {
+        $list = $this->getHandlerList();
+        $list->appendBuild(
+            EndpointDiscoveryMiddleware::wrap(
+                $this,
+                $args['credentials'],
+                $args['api'],
+                $args['endpoint_discovery']
+            ),
+            'EndpointDiscoveryMiddleware'
+        );
     }
 
     private function addSignatureMiddleware()
