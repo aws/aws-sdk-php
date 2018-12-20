@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.82.2 - 2018-12-20
 
 * `Aws\CognitoIdentityProvider` - Amazon Cognito now has API support for updating the Secure Sockets Layer (SSL) certificate for the custom domain for your user pool.
 * `Aws\Comprehend` - This SDK release adds functionality to stop training Custom Document Classifier or Custom Entity Recognizer in Amazon Comprehend.
