@@ -192,6 +192,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateUserPoolAsync(array $args = [])
  * @method \Aws\Result updateUserPoolClient(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateUserPoolClientAsync(array $args = [])
+ * @method \Aws\Result updateUserPoolDomain(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateUserPoolDomainAsync(array $args = [])
  * @method \Aws\Result verifySoftwareToken(array $args = [])
  * @method \GuzzleHttp\Promise\Promise verifySoftwareTokenAsync(array $args = [])
  * @method \Aws\Result verifyUserAttribute(array $args = [])

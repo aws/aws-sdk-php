@@ -85,5 +85,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise stopKeyPhrasesDetectionJobAsync(array $args = [])
  * @method \Aws\Result stopSentimentDetectionJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopSentimentDetectionJobAsync(array $args = [])
+ * @method \Aws\Result stopTrainingDocumentClassifier(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopTrainingDocumentClassifierAsync(array $args = [])
+ * @method \Aws\Result stopTrainingEntityRecognizer(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopTrainingEntityRecognizerAsync(array $args = [])
  */
 class ComprehendClient extends AwsClient {}
