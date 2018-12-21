@@ -175,7 +175,7 @@ class AwsClient implements AwsClientInterface
         $this->addInvocationId();
         $this->addClientSideMonitoring($args);
         $this->addEndpointParameterMiddleware($args);
-        $this->addEndpointDiscoveryMiddleware($config);
+        $this->addEndpointDiscoveryMiddleware($config, $args);
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -287,15 +287,16 @@ class AwsClient implements AwsClientInterface
         }
     }
 
-    private function addEndpointDiscoveryMiddleware($args)
+    private function addEndpointDiscoveryMiddleware($config, $args)
     {
         $list = $this->getHandlerList();
         $list->appendBuild(
             EndpointDiscoveryMiddleware::wrap(
                 $this,
-                $args['credentials'],
-                $args['api'],
-                $args['endpoint_discovery']
+                $args,
+                $config['credentials'],
+                $config['api'],
+                $config['endpoint_discovery']
             ),
             'EndpointDiscoveryMiddleware'
         );

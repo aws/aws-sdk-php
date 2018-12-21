@@ -3,11 +3,12 @@ namespace Aws\EndpointDiscovery;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
-use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Credentials\CredentialsInterface;
+use Aws\Exception\AwsException;
+use Aws\Exception\UnresolvedEndpointException;
 use Aws\LruArrayCache;
-use Aws\Sdk;
+use Aws\Middleware;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 
@@ -15,22 +16,23 @@ class EndpointDiscoveryMiddleware
 {
     private static $cache;
 
-    private $cacheKey;
+    private $args;
     private $client;
     private $config;
     private $credentials;
-    private $endpointOperation;
     private $nextHandler;
     private $service;
 
     public static function wrap(
         $client,
+        $args,
         $credentials,
         $service,
         $config
     ) {
         return function (callable $handler) use (
             $client,
+            $args,
             $credentials,
             $service,
             $config
@@ -38,6 +40,7 @@ class EndpointDiscoveryMiddleware
             return new static(
                 $handler,
                 $client,
+                $args,
                 $credentials,
                 $service,
                 $config
@@ -48,12 +51,14 @@ class EndpointDiscoveryMiddleware
     public function __construct(
         callable $handler,
         AwsClient $client,
-        $credentials,
+        array $args,
+        callable $credentials,
         Service $service,
         $config
     ) {
         $this->nextHandler = $handler;
         $this->client = $client;
+        $this->args = $args;
         $this->credentials = $credentials;
         $this->service = $service;
         $this->config = $config;
@@ -61,97 +66,126 @@ class EndpointDiscoveryMiddleware
 
     public function __invoke(CommandInterface $cmd, RequestInterface $request)
     {
-        $operation = $this->service->getOperation($cmd->getName())->toArray();
+        // Endpoint discovery disabled if custom endpoint is set
+        if (!isset($args['endpoint'])) {
 
-        if (isset($operation['endpointdiscovery'])) {
-            // Parse model
-            $inputShape = $this->service->getShapeMap()->resolve($operation['input'])->toArray();
-            $identifiers = [];
-            foreach ($inputShape['members'] as $key => $member) {
-                if (!empty($member['endpointdiscoveryid'])) {
-                    $identifiers[] = $key;
+            $operation = $this->service->getOperation($cmd->getName())->toArray();
+
+            if (isset($operation['endpointdiscovery'])) {
+
+                if (isset($operation['endpointoperation'])) {
+                    throw new UnresolvedEndpointException('This operation is contradictorily marked both as using endpoint discovery and being the endpoint discovery operation. Please verify the accuracy of your model files.');
                 }
-            }
 
-            if (!isset($this->cacheKey)) {
-                $this->cacheKey = $this->getCacheKey(
-                    $this->credentials()->wait(),
+                // Parse model
+                $inputShape = $this->service->getShapeMap()->resolve($operation['input'])->toArray();
+                $identifiers = [];
+                foreach ($inputShape['members'] as $key => $member) {
+                    if (!empty($member['endpointdiscoveryid'])) {
+                        $identifiers[] = $key;
+                    }
+                }
+
+                $credentials = $this->credentials;
+                $cacheKey = $this->getCacheKey(
+                    $credentials()->wait(),
                     $cmd,
                     $identifiers
                 );
-            }
 
-            // Check/create cache
-            if (!isset(self::$cache)) {
-                self::$cache = new LruArrayCache();
-            }
+                // Check/create cache
+                if (!isset(self::$cache)) {
+                    self::$cache = new LruArrayCache();
+                }
 
-            if (self::$cache->get($this->cacheKey)) {
+                $endpointList = self::$cache->get($cacheKey);
 
-            }
+                if (!is_null($endpointList)) {
+                    $endpoint = $endpointList->getActive();
+                }
 
-            // Retrieve endpoints
-            if (empty($this->endpointOperation)) {
-                foreach ($this->service->getOperations() as $op) {
-                    if (isset($op['endpointoperation'])) {
-                        $this->endpointOperation = $op->toArray()['name'];
-                        break;
+                // Retrieve endpoints if there is no active endpoint
+                if (empty($endpoint)) {
+
+                    $discCmd = $this->getDiscoveryCommand($cmd, $identifiers);
+
+                    try {
+                        $result = $this->client->execute($discCmd);
+                        if (isset($result['Endpoints'])) {
+                            $endpointData = [];
+                            foreach ($result['Endpoints'] as $datum) {
+                                $uri = new Uri($datum['Address']);
+
+                                // Only use the host & path, not the scheme
+                                $endpoint = $uri->getHost() . $uri->getPath();
+                                $endpointData[$endpoint] = time()
+                                    + ($datum['CachePeriodInMinutes'] * 60);
+                            }
+                            $endpointList = new EndpointList($endpointData);
+                            self::$cache->set($cacheKey, $endpointList);
+                        }
+
+                        $endpointList = self::$cache->get($cacheKey);
+
+                        $endpoint = $endpointList->getActive();
+
+                    } catch (\Exception $e) {
+                        throw $e;
                     }
                 }
+
+                // Modify request
+                $request = $request
+                    ->withUri($request->getUri()->withHost($endpoint))  // ->withScheme('http');
+                    ->withHeader(
+                        'User-Agent',
+                        $request->getHeader('User-Agent')[0] . ' endpoint-discovery'
+                    );
             }
-
-            $name = $this->service->getServiceName();
-            $sdk = new Sdk;
-            $client = $sdk->createClient($name, $this->clientConfig);
-            $params = [];
-            if (!empty($identifiers)) {
-                $params['Operation'] = $operation['name'];
-                $params['Identifiers'] = [];
-                foreach($identifiers as $identifier) {
-                    $params['Identifiers'][$identifier] = $cmd[$identifier];
-                }
-            }
-            var_dump($params);
-            $discCmd = $client->getCommand($this->endpointOperation, $params);
-
-            try {
-                $result = $client->execute($discCmd);
-                if (isset($result['Endpoints'])) {
-                    $endpointData = [];
-                    foreach ($result['Endpoints'] as $datum) {
-                        $uri = new Uri($datum['Address']);
-                        $endpoint = $uri->getHost() . $uri->getPath();
-                        $endpointData[$endpoint] = time()
-                            + ($datum['CachePeriodInMinutes'] * 60);
-                    }
-                    $endpointList = new EndpointList($endpointData);
-                    self::$cache->set($this->cacheKey, $endpointList);
-                }
-
-            } catch (\Exception $e) {
-
-            }
-
-            // Modify request
-            $endpointList = self::$cache->get($this->cacheKey);
-            var_dump($endpointList->getActive());
-            $uri = $request->getUri()->withHost($endpointList->getActive())->withScheme('http');
-            $request = $request->withUri($uri);
         }
 
         $nextHandler = $this->nextHandler;
 
-        var_dump($cmd->toArray());
-//        $cmd['Sdk'] = 'modified';
         return $nextHandler($cmd, $request);
     }
 
+    private function getDiscoveryCommand(CommandInterface $cmd, array $identifiers)
+    {
+        foreach ($this->service->getOperations() as $op) {
+            if (isset($op['endpointoperation'])) {
+                $endpointOperation = $op->toArray()['name'];
+                break;
+            }
+        }
+
+        if (!isset($endpointOperation)) {
+            throw new AwsException('This command is set to use endpoint discovery, but no endpoint discovery operation was found. Please verify the accuracy of your model files.', $cmd);
+        }
+
+        $params = [];
+        if (!empty($identifiers)) {
+            $params['Operation'] = $cmd->getName();
+            $params['Identifiers'] = [];
+            foreach($identifiers as $identifier) {
+                $params['Identifiers'][$identifier] = $cmd[$identifier];
+            }
+        }
+        $command = $this->client->getCommand($endpointOperation, $params);
+        $command->getHandlerList()->appendBuild(
+            Middleware::mapRequest(function (RequestInterface $r) {
+                return $r->withHeader('x-amz-api-version', $this->service->getApiVersion());
+            }),
+            'x-amz-api-version-header'
+        );
+
+        return $command;
+    }
 
     private function getCacheKey(
         CredentialsInterface $creds,
         CommandInterface $cmd,
-        array $identifiers)
-    {
+        array $identifiers
+    ) {
         $key = $creds->getAccessKeyId();
         if (!empty($identifiers)) {
             $key .= '_' . $cmd->getName();
