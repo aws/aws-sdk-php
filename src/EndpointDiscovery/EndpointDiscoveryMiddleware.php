@@ -114,11 +114,7 @@ class EndpointDiscoveryMiddleware
                         if (isset($result['Endpoints'])) {
                             $endpointData = [];
                             foreach ($result['Endpoints'] as $datum) {
-                                $uri = new Uri($datum['Address']);
-
-                                // Only use the host & path, not the scheme
-                                $endpoint = $uri->getHost() . $uri->getPath();
-                                $endpointData[$endpoint] = time()
+                                $endpointData[$datum['Address']] = time()
                                     + ($datum['CachePeriodInMinutes'] * 60);
                             }
                             $endpointList = new EndpointList($endpointData);
@@ -135,8 +131,9 @@ class EndpointDiscoveryMiddleware
                 }
 
                 // Modify request
+                $parsed = $this->parseEndpoint($endpoint);
                 $request = $request
-                    ->withUri($request->getUri()->withHost($endpoint))  // ->withScheme('http');
+                    ->withUri($request->getUri()->withHost($parsed['host'])->withPath($parsed['path']))
                     ->withHeader(
                         'User-Agent',
                         $request->getHeader('User-Agent')[0] . ' endpoint-discovery'
@@ -147,6 +144,22 @@ class EndpointDiscoveryMiddleware
         $nextHandler = $this->nextHandler;
 
         return $nextHandler($cmd, $request);
+    }
+
+    private function getCacheKey(
+        CredentialsInterface $creds,
+        CommandInterface $cmd,
+        array $identifiers
+    ) {
+        $key = $creds->getAccessKeyId();
+        if (!empty($identifiers)) {
+            $key .= '_' . $cmd->getName();
+            foreach ($identifiers as $identifier) {
+                $key .= "_{$cmd[$identifier]}";
+            }
+        }
+
+        return $key;
     }
 
     private function getDiscoveryCommand(CommandInterface $cmd, array $identifiers)
@@ -181,19 +194,34 @@ class EndpointDiscoveryMiddleware
         return $command;
     }
 
-    private function getCacheKey(
-        CredentialsInterface $creds,
-        CommandInterface $cmd,
-        array $identifiers
-    ) {
-        $key = $creds->getAccessKeyId();
-        if (!empty($identifiers)) {
-            $key .= '_' . $cmd->getName();
-            foreach ($identifiers as $identifier) {
-                $key .= "_{$cmd[$identifier]}";
-            }
+    /**
+     * Parses an endpoint returned from the discovery API into an array with
+     * 'host' and 'path' keys.
+     *
+     * @param $endpoint
+     * @return array
+     */
+    private function parseEndpoint($endpoint)
+    {
+        $parsed = parse_url($endpoint);
+
+        // parse_url() will correctly parse full URIs with schemes
+        if (isset($parsed['host'])) {
+            return $parsed;
         }
 
-        return $key;
+        // parse_url() will put host & path in 'path' if scheme is not provided
+        if (isset($parsed['path'])) {
+            $split = explode('/', $parsed['path'], 2);
+            $parsed['host'] = $split[0];
+            if (isset($split[1])) {
+                $parsed['path'] = $split[1];
+            } else {
+                $parsed['path'] = '';
+            }
+            return $parsed;
+        }
+
+        throw new UnresolvedEndpointException("Endpoint '{$endpoint}' returned from the endpoint discovery operation is invalid.");
     }
 }
