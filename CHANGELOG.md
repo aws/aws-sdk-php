@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.82.3 - 2018-12-21
 
 * `Aws\ACMPCA` - This release marks the introduction of waiters in ACM PCA, which allow you to control the progression of your code based on the presence or state of certain resources. Waiters can be implemented in the DescribeCertificateAuthorityAuditReport, GetCertificate, and GetCertificateAuthorityCsr API operations.
 * `Aws\DynamoDB` - Added provisionedThroughPut exception on the request level for transaction APIs.
