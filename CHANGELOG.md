@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - This release marks the introduction of waiters in ACM PCA, which allow you to control the progression of your code based on the presence or state of certain resources. Waiters can be implemented in the DescribeCertificateAuthorityAuditReport, GetCertificate, and GetCertificateAuthorityCsr API operations.
+* `Aws\DynamoDB` - Added provisionedThroughPut exception on the request level for transaction APIs.
+* `Aws\PinpointSMSVoice` - Configuration sets can now use Amazon SNS as an event destination.
+* `Aws\SFN` - This release adds support for cost allocation tagging. You can now create, delete, and list tags for AWS Step Functions activity and state machine resources. For more information about tagging, see AWS Tagging Strategies.
+
 ## 3.82.2 - 2018-12-20
 
 * `Aws\CognitoIdentityProvider` - Amazon Cognito now has API support for updating the Secure Sockets Layer (SSL) certificate for the custom domain for your user pool.
