@@ -6,7 +6,7 @@ class Configuration implements ConfigurationInterface
     private $cacheLimit;
     private $enabled;
 
-    public function __construct($enabled, $cacheLimit)
+    public function __construct($enabled, $cacheLimit = 1000)
     {
         $this->cacheLimit = filter_var($cacheLimit, FILTER_VALIDATE_INT);
         if ($this->cacheLimit === false) {

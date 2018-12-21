@@ -4,6 +4,7 @@ namespace Aws\EndpointDiscovery;
 use Aws\CacheInterface;
 use Aws\EndpointDiscovery\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * A configuration provider is a function that returns a promise that is
@@ -297,5 +298,35 @@ class ConfigurationProvider
     private static function reject($msg)
     {
         return new Promise\RejectedPromise(new ConfigurationException($msg));
+    }
+
+    /**
+     * Unwraps a configuration object in whatever valid form it is in,
+     * always returning a ConfigurationInterface object.
+     *
+     * @param  mixed $config
+     * @return ConfigurationInterface
+     * @throws \InvalidArgumentException
+     */
+    public static function unwrap($config)
+    {
+        if (is_callable($config)) {
+            $config = $config();
+        }
+        if ($config instanceof PromiseInterface) {
+            $config = $config->wait();
+        }
+        if ($config instanceof ConfigurationInterface) {
+            return $config;
+        } elseif (is_array($config) && isset($config['enabled'])) {
+            if (isset($config['cache_limit'])) {
+                return new Configuration($config['enabled'],
+                    $config['cache_limit']);
+            }
+            return new Configuration($config['enabled'],
+                self::DEFAULT_CACHE_LIMIT);
+        }
+
+        throw new \InvalidArgumentException('Not a valid endpoint_discovery configuration argument.');
     }
 }
