@@ -4,6 +4,7 @@ namespace Aws\EndpointDiscovery;
 class EndpointList
 {
     private $active;
+    private $expired;
 
     public function __construct($endpoints)
     {
@@ -13,20 +14,40 @@ class EndpointList
 
     public function getActive()
     {
-        $active = key($this->active);
-        if (next($this->active) === false) {
-            reset($this->active);
+        while (time() > current($this->active)) {
+            $key = key($this->active);
+            $this->expired[$key] = current($this->active);
+            $this->increment($this->active);
+            unset($this->active[$key]);
+            if (count($this->active) < 1) {
+                return null;
+            }
         }
+        $active = key($this->active);
+        $this->increment($this->active);
         return $active;
     }
 
     public function getExpired()
     {
-        return key($this->active);
+        if (count($this->expired) < 1) {
+            return null;
+        }
+        $expired = key($this->expired);
+        $this->increment($this->expired);
+        return $expired;
     }
 
-    public function remove($index)
+    public function remove($key)
     {
-        unset($this->active[$index]);
+        unset($this->active[$key]);
+        unset($this->expired[$key]);
+    }
+
+    private function increment($array)
+    {
+        if (next($array) === false) {
+            reset($array);
+        }
     }
 }
