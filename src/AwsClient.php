@@ -290,16 +290,20 @@ class AwsClient implements AwsClientInterface
     private function addEndpointDiscoveryMiddleware($config, $args)
     {
         $list = $this->getHandlerList();
-        $list->appendBuild(
-            EndpointDiscoveryMiddleware::wrap(
-                $this,
-                $args,
-                $config['credentials'],
-                $config['api'],
-                $config['endpoint_discovery']
-            ),
-            'EndpointDiscoveryMiddleware'
-        );
+
+        // Remove ed_override check before pushing to production
+        if (!isset($args['endpoint']) || isset($args['ed_override'])) {
+            $list->appendBuild(
+                EndpointDiscoveryMiddleware::wrap(
+                    $this,
+                    $args,
+                    $config['credentials'],
+                    $config['api'],
+                    $config['endpoint_discovery']
+                ),
+                'EndpointDiscoveryMiddleware'
+            );
+        }
     }
 
     private function addSignatureMiddleware()

@@ -20,6 +20,11 @@ class EndpointList
         return $active;
     }
 
+    public function getExpired()
+    {
+        return key($this->active);
+    }
+
     public function remove($index)
     {
         unset($this->active[$index]);

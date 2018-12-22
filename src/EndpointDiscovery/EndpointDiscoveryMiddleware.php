@@ -19,6 +19,7 @@ class EndpointDiscoveryMiddleware
     private $client;
     private $config;
     private $credentials;
+    private $lastDiscoveryTime;
     private $nextHandler;
     private $service;
 
@@ -65,91 +66,104 @@ class EndpointDiscoveryMiddleware
 
     public function __invoke(CommandInterface $cmd, RequestInterface $request)
     {
-        // Endpoint discovery disabled if custom endpoint is set
-        if (!isset($args['endpoint'])) {
+        $nextHandler = $this->nextHandler;
+        $operation = $this->service->getOperation($cmd->getName())->toArray();
 
-            $operation = $this->service->getOperation($cmd->getName())->toArray();
+        // Continue only if endpointdiscovery trait is set
+        if (isset($operation['endpointdiscovery'])) {
 
-            // Continue only if endpointdiscovery trait is set
-            if (isset($operation['endpointdiscovery'])) {
+            $config = ConfigurationProvider::unwrap($this->config);
+            $isRequired = !empty($operation['endpointdiscovery']['required']);
 
-                // Continue only if required by operation or enabled by config
-                if ( !empty($operation['endpointdiscovery']['required'])
-                    || ConfigurationProvider::unwrap($this->config)->isEnabled()
-                ) {
-                    if (isset($operation['endpointoperation'])) {
-                        throw new UnresolvedEndpointException('This operation is contradictorily marked both as using endpoint discovery and being the endpoint discovery operation. Please verify the accuracy of your model files.');
-                    }
-
-                    // Get identifiers
-                    $inputShape = $this->service->getShapeMap()->resolve($operation['input'])->toArray();
-                    $identifiers = [];
-                    foreach ($inputShape['members'] as $key => $member) {
-                        if (!empty($member['endpointdiscoveryid'])) {
-                            $identifiers[] = $key;
-                        }
-                    }
-
-                    $credentials = $this->credentials;
-                    $cacheKey = $this->getCacheKey(
-                        $credentials()->wait(),
-                        $cmd,
-                        $identifiers
-                    );
-
-                    // Check/create cache
-                    if (!isset(self::$cache)) {
-                        self::$cache = new LruArrayCache();
-                    }
-
-                    $endpointList = self::$cache->get($cacheKey);
-
-                    if (!is_null($endpointList)) {
-                        $endpoint = $endpointList->getActive();
-                    }
-
-                    // Retrieve endpoints if there is no active endpoint
-                    if (empty($endpoint)) {
-
-                        $discCmd = $this->getDiscoveryCommand($cmd, $identifiers);
-
-                        try {
-                            $result = $this->client->execute($discCmd);
-                            if (isset($result['Endpoints'])) {
-                                $endpointData = [];
-                                foreach ($result['Endpoints'] as $datum) {
-                                    $endpointData[$datum['Address']] = time()
-                                        + ($datum['CachePeriodInMinutes'] * 60);
-                                }
-                                $endpointList = new EndpointList($endpointData);
-                                self::$cache->set($cacheKey, $endpointList);
-                            }
-
-                            $endpointList = self::$cache->get($cacheKey);
-
-                            $endpoint = $endpointList->getActive();
-
-                        } catch (\Exception $e) {
-                            throw $e;
-                        }
-                    }
-
-                    // Modify request
-                    $parsed = $this->parseEndpoint($endpoint);
-                    $request = $request
-                        ->withUri($request->getUri()
-                            ->withHost($parsed['host'])
-                            ->withPath($parsed['path'])
-                        )
-                        ->withHeader(
-                            'User-Agent',
-                            $request->getHeader('User-Agent')[0] . ' endpoint-discovery'
-                        );
+            // Continue only if required by operation or enabled by config
+            if ($isRequired || $config->isEnabled()) {
+                if (isset($operation['endpointoperation'])) {
+                    throw new UnresolvedEndpointException('This operation is contradictorily marked both as using endpoint discovery and being the endpoint discovery operation. Please verify the accuracy of your model files.');
                 }
+
+                // Get identifiers
+                $inputShape = $this->service->getShapeMap()->resolve($operation['input'])->toArray();
+                $identifiers = [];
+                foreach ($inputShape['members'] as $key => $member) {
+                    if (!empty($member['endpointdiscoveryid'])) {
+                        $identifiers[] = $key;
+                    }
+                }
+
+                $credentials = $this->credentials;
+                $cacheKey = $this->getCacheKey(
+                    $credentials()->wait(),
+                    $cmd,
+                    $identifiers
+                );
+
+                // Check/create cache
+                if (!isset(self::$cache)) {
+                    self::$cache = new LruArrayCache($config->getCacheLimit());
+                }
+
+                $endpointList = self::$cache->get($cacheKey);
+
+                if (!is_null($endpointList)) {
+                    $endpoint = $endpointList->getActive();
+                }
+
+                // Retrieve endpoints if there is no active endpoint
+                if (empty($endpoint)) {
+
+                    $discCmd = $this->getDiscoveryCommand($cmd, $identifiers);
+
+                    try {
+                        $this->lastDiscoveryTime = time();
+                        $result = $this->client->execute($discCmd);
+
+                        if (isset($result['Endpoints'])) {
+                            $endpointData = [];
+                            foreach ($result['Endpoints'] as $datum) {
+                                $endpointData[$datum['Address']] = time()
+                                    + ($datum['CachePeriodInMinutes'] * 60);
+                            }
+                            $endpointList = new EndpointList($endpointData);
+                            self::$cache->set($cacheKey, $endpointList);
+                            $endpoint = $endpointList->getActive();
+                        } else {
+                            throw new UnresolvedEndpointException('The endpoint discovery operation yielded a response that did not contain properly formatted endpoint data.');
+                        }
+
+                    } catch (\Exception $e) {
+                        // Use expired endpoint if any remain in the list
+                        $endpoint = $endpointList->getExpired();
+
+                        if (empty($endpoint)) {
+                            // If no cached endpoints but discovery isn't required,
+                            // use default regional endpoint
+                            if (!$isRequired) {
+                                return $nextHandler($cmd, $request);
+                            }
+                            // If discovery is required, throw exception
+                            throw new AwsException(
+                                'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.',
+                                $cmd,
+                                [],
+                                $e
+                            );
+                        }
+                    }
+                }
+
+                // Modify request
+                $parsed = $this->parseEndpoint($endpoint);
+                $request = $request
+                    ->withUri($request->getUri()
+                        ->withHost($parsed['host'])
+                        ->withPath($parsed['path'])
+                    )
+                    ->withHeader(
+                        'User-Agent',
+                        $request->getHeader('User-Agent')[0] . ' endpoint-discovery'
+                    );
             }
         }
-
-        $nextHandler = $this->nextHandler;
 
         return $nextHandler($cmd, $request);
     }
