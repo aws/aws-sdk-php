@@ -46,7 +46,7 @@ class ConfigurationProvider
     const CACHE_KEY = 'aws_cached_endpoint_discovery_config';
     const DEFAULT_ENABLED = false;
     const DEFAULT_CACHE_LIMIT = 1000;
-    const ENV_ENABLED = 'AWS_ENABLE_ENDPOINT_DISCOVERY';
+    const ENV_ENABLED = 'AWS_ENDPOINT_DISCOVERY_ENABLED';
     const ENV_PROFILE = 'AWS_PROFILE';
 
     /**
