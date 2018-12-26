@@ -20,4 +20,11 @@ interface ConfigurationInterface
      * @return string|null
      */
     public function getCacheLimit();
+
+    /**
+     * Returns the configuration as an associative array
+     *
+     * @return array
+     */
+    public function toArray();
 }

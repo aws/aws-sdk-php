@@ -33,4 +33,15 @@ class Configuration implements ConfigurationInterface
     {
         return $this->cacheLimit;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray()
+    {
+        return [
+            'enabled' => $this->isEnabled(),
+            'cache_limit' => $this->getCacheLimit()
+        ];
+    }
 }
