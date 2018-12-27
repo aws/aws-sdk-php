@@ -88,6 +88,9 @@ class EndpointDiscoveryMiddleware
                     throw new UnresolvedEndpointException('This operation is contradictorily marked both as using endpoint discovery and being the endpoint discovery operation. Please verify the accuracy of your model files.');
                 }
 
+                // Original endpoint may be used if discovery optional
+                $originalUri = $request->getUri();
+
                 // Get identifiers
                 $inputShape = $this->service->getShapeMap()->resolve($opDef['input'])->toArray();
                 $identifiers = [];
@@ -111,7 +114,7 @@ class EndpointDiscoveryMiddleware
 
                 $endpoint = null;
                 $endpointList = self::$cache->get($cacheKey);
-                if (!is_null($endpointList)) {
+                if (!empty($endpointList)) {
                     $endpoint = $endpointList->getActive();
                 }
 
@@ -126,15 +129,15 @@ class EndpointDiscoveryMiddleware
                         );
                     } catch (\Exception $e) {
                         // Use expired endpoint if any remain in the list
-                        $endpoint = $endpointList->getExpired();
+                        if (!empty($endpointList)) {
+                            $endpoint = $endpointList->getExpired();
+                        }
 
                         if (empty($endpoint)) {
                             // If no cached endpoints but discovery isn't required,
-                            // use default regional endpoint
+                            // use original endpoint
                             if (!$isRequired) {
-                                $endpoint = $this->getDefaultRegionalEndpoint(
-                                    $operation
-                                );
+                                $endpoint = $originalUri->getHost() . $originalUri->getPath();
                                 $request = $this->modifyRequest($request, $endpoint);
                                 return $nextHandler($cmd, $request);
                             }
@@ -164,6 +167,7 @@ class EndpointDiscoveryMiddleware
                     $isRequired,
                     $nextHandler,
                     $operation,
+                    $originalUri,
                     $request,
                     $f,
                     &$g
@@ -197,10 +201,8 @@ class EndpointDiscoveryMiddleware
                                     return $value;
                                 }
 
-                                // Use default regional endpoint if not required
-                                $newEndpoint = $this->getDefaultRegionalEndpoint(
-                                    $operation
-                                );
+                                // Use original endpoint if not required
+                                $newEndpoint = $originalUri->getHost() . $originalUri->getPath();
                             } else {
                                 $newEndpoint = $this->discoverEndpoint(
                                     $cacheKey,
@@ -255,13 +257,6 @@ class EndpointDiscoveryMiddleware
         }
 
         return $key;
-    }
-
-    private function getDefaultRegionalEndpoint(Operation $operation)
-    {
-        $opHttp = $operation->getHttp();
-        $path = isset($opHttp['requestUri']) ? $opHttp['requestUri'] : '';
-        return $this->client->getEndpoint() . $path;
     }
 
     private function getDiscoveryCommand(CommandInterface $cmd, array $identifiers)
