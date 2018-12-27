@@ -219,6 +219,81 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         ];
     }
 
+    /**
+     * @dataProvider getDiscoveryRequestTestCases
+     * @param $mainCmd
+     * @param $expectedCmd
+     * @param RequestInterface $expectedReq
+     */
+    public function testCorrectlyConstructsDiscoveryRequest(
+        CommandInterface $mainCmd,
+        CommandInterface $expectedCmd,
+        RequestInterface $expectedReq
+    ) {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service);
+        $list = $client->getHandlerList();
+        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) use ($expectedCmd, $expectedReq) {
+            if ($cmd->getName() === 'DescribeEndpoints') {
+                $this->assertEquals($expectedCmd->toArray(), $cmd->toArray());
+                $this->assertEquals(
+                    $expectedReq->getHeader('x-amz-api-header'),
+                    $req->getHeader('x-amz-api-header')
+                );
+                return Promise\promise_for(new Result([
+                    'Endpoints' => [
+                        [
+                            'Address' => 'discovered.com/some/path',
+                            'CachePeriodInMinutes' => 10,
+                        ],
+                    ],
+                ]));
+            }
+            return Promise\promise_for(new Result([]));
+        });
+
+        $handler = $list->resolve();
+        $handler($mainCmd, new Request('POST', new Uri('https:/foo.com')));
+    }
+
+    public function getDiscoveryRequestTestCases()
+    {
+        $baseUri = new Uri('https://awsendpointdiscoverytestservice.us-east-1.amazonaws.com');
+        $baseRequest = new Request(
+            'POST',
+            $baseUri,
+            [
+                'x-amz-api-version' => '2018-08-31',
+            ]
+        );
+
+        return [
+            [
+                new Command('TestDiscoveryRequired', []),
+                new Command('DescribeEndpoints', []),
+                $baseRequest
+            ],
+            [
+                new Command(
+                    'TestDiscoveryIdentifiersRequired',
+                    [
+                        'Sdk' => 'foo'
+                    ]
+                ),
+                new Command(
+                    'DescribeEndpoints',
+                    [
+                        'Operation' => 'TestDiscoveryIdentifiersRequired',
+                        'Identifiers' => [
+                            'Sdk' => 'foo'
+                        ]
+                    ]
+                ),
+                $baseRequest
+            ]
+        ];
+    }
+
     public function testThrowsExceptionWhenMarkedAsEndpointOperation()
     {
         $service = $this->generateTestService();
