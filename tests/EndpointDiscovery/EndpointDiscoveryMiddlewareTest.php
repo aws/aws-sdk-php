@@ -1,22 +1,223 @@
 <?php
 
-namespace Aws\Test\ClientSideMonitoring;
+namespace Aws\Test\EndpointDiscovery;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
+use Aws\Command;
+use Aws\CommandInterface;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\EndpointDiscovery\Configuration;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\Exception\UnresolvedEndpointException;
+use Aws\Result;
+use Aws\ResultInterface;
+use Aws\Sdk;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers \Aws\EndpointDiscovery\EndpointDiscoveryMiddleware
  */
 class EndpointDiscoveryMiddlewareTest extends TestCase
 {
+
+    /**
+     * @dataProvider getRequestTestCases
+     * @param CommandInterface $command
+     * @param array $clientArgs
+     * @param ResultInterface $describeResult
+     * @param RequestInterface $request
+     * @param RequestInterface $expected
+     */
+    public function testCorrectlyModifiesRequest(
+        CommandInterface $command,
+        array $clientArgs,
+        ResultInterface $describeResult,
+        RequestInterface $request,
+        RequestInterface $expected
+    ) {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service, $clientArgs);
+        $list = $client->getHandlerList();
+        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) use ($expected, $describeResult) {
+            // Simulate the DescribeEndpoints API with the supplied result
+            if ($cmd->getName() === 'DescribeEndpoints') {
+                return Promise\promise_for($describeResult);
+            }
+            $this->assertEquals(
+                $expected->getHeader('User-Agent'),
+                $req->getHeader('User-Agent')
+            );
+            $uri = $req->getUri();
+            $expectedUri = $expected->getUri();
+            $this->assertEquals($expectedUri->getHost(), $uri->getHost());
+            $this->assertEquals($expectedUri->getPath(), $uri->getPath());
+            return Promise\promise_for(new Result([]));
+        });
+        $handler = $list->resolve();
+        $handler($command, $request);
+    }
+
+    public function getRequestTestCases()
+    {
+        $baseUri = new Uri('https://awsendpointdiscoverytestservice.us-east-1.amazonaws.com');
+        $baseUserAgent = 'aws-sdk-php/' . Sdk::VERSION;
+        $baseRequest = new Request(
+            'POST',
+            $baseUri,
+            [
+                'User-Agent' => $baseUserAgent,
+            ]
+        );
+
+        return [
+            // Discovery optional, disabled by user
+            [
+                new Command('TestDiscoveryOptional', []),
+                [
+                    'endpoint_discovery' => ['enabled' => false],
+                ],
+                new Result([]),
+                $baseRequest,
+                $baseRequest,
+            ],
+
+            // Discovery optional, enabled by user
+            [
+                new Command('TestDiscoveryOptional', []),
+                [
+                    'endpoint_discovery' => ['enabled' => true],
+                ],
+                new Result([
+                    'Endpoints' => [
+                        [
+                            'Address' => 'discovered.com/some/path',
+                            'CachePeriodInMinutes' => 10,
+                        ],
+                    ],
+                ]),
+                $baseRequest,
+                new Request(
+                    'POST',
+                    new Uri('https://discovered.com/some/path'),
+                    [
+                        'User-Agent' => $baseUserAgent . ' endpoint-discovery',
+                    ]
+                ),
+            ],
+
+            // Discovery optional, no configuration provided
+            [
+                new Command('TestDiscoveryOptional', []),
+                [
+                ],
+                new Result([]),
+                $baseRequest,
+                $baseRequest,
+            ],
+
+            // Discovery required, disabled by user
+            [
+                new Command('TestDiscoveryRequired', []),
+                [
+                    'endpoint_discovery' => ['enabled' => false],
+                ],
+                new Result([
+                    'Endpoints' => [
+                        [
+                            'Address' => 'discovered.com/some/path',
+                            'CachePeriodInMinutes' => 10,
+                        ],
+                    ],
+                ]),
+                $baseRequest,
+                new Request(
+                    'POST',
+                    new Uri('https://discovered.com/some/path'),
+                    [
+                        'User-Agent' => $baseUserAgent . ' endpoint-discovery',
+                    ]
+                ),
+            ],
+
+            // Discovery required, no config provided
+            [
+                new Command('TestDiscoveryRequired', []),
+                [],
+                new Result([
+                    'Endpoints' => [
+                        [
+                            'Address' => 'discovered.com/some/path',
+                            'CachePeriodInMinutes' => 10,
+                        ],
+                    ],
+                ]),
+                $baseRequest,
+                new Request(
+                    'POST',
+                    new Uri('https://discovered.com/some/path'),
+                    [
+                        'User-Agent' => $baseUserAgent . ' endpoint-discovery',
+                    ]
+                ),
+            ],
+
+            // Discovery optional, enabled, custom endpoint supplied by user
+            [
+                new Command('TestDiscoveryOptional', []),
+                [
+                    'endpoint' => 'https://custom.com/custom/path',
+                    'endpoint_discovery' => ['enabled' => true],
+                ],
+                new Result([
+                    'Endpoints' => [
+                        [
+                            'Address' => 'discovered.com/some/path',
+                            'CachePeriodInMinutes' => 10,
+                        ],
+                    ],
+                ]),
+                $baseRequest,
+                new Request(
+                    'POST',
+                    new Uri('https://custom.com/custom/path'),
+                    [
+                        'User-Agent' => $baseUserAgent,
+                    ]
+                ),
+            ],
+
+            // Discovery required, enabled, custom endpoint supplied by user
+            [
+                new Command('TestDiscoveryRequired', []),
+                [
+                    'endpoint' => 'https://custom.com/custom/path',
+                    'endpoint_discovery' => ['enabled' => true],
+                ],
+                new Result([
+                    'Endpoints' => [
+                        [
+                            'Address' => 'discovered.com/some/path',
+                            'CachePeriodInMinutes' => 10,
+                        ],
+                    ],
+                ]),
+                $baseRequest,
+                new Request(
+                    'POST',
+                    new Uri('https://custom.com/custom/path'),
+                    [
+                        'User-Agent' => $baseUserAgent,
+                    ]
+                ),
+            ],
+        ];
+    }
 
     public function testThrowsExceptionWhenMarkedAsEndpointOperation()
     {
@@ -41,7 +242,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
             $this->assertEquals('This operation is contradictorily marked both as using endpoint discovery and being the endpoint discovery operation. Please verify the accuracy of your model files.', $e->getMessage());
             $this->assertInstanceOf(UnresolvedEndpointException::class, $e);
         }
-
     }
 
     private function generateCredentials()
