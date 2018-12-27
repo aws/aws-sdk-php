@@ -73,18 +73,17 @@ class EndpointDiscoveryMiddleware
     public function __invoke(CommandInterface $cmd, RequestInterface $request)
     {
         $nextHandler = $this->nextHandler;
-        $operation = $this->service->getOperation($cmd->getName());
-        $opDef = $operation->toArray();
+        $op = $this->service->getOperation($cmd->getName())->toArray();
 
         // Continue only if endpointdiscovery trait is set
-        if (isset($opDef['endpointdiscovery'])) {
+        if (isset($op['endpointdiscovery'])) {
 
             $config = ConfigurationProvider::unwrap($this->config);
-            $isRequired = !empty($opDef['endpointdiscovery']['required']);
+            $isRequired = !empty($op['endpointdiscovery']['required']);
 
             // Continue only if required by operation or enabled by config
             if ($isRequired || $config->isEnabled()) {
-                if (isset($opDef['endpointoperation'])) {
+                if (isset($op['endpointoperation'])) {
                     throw new UnresolvedEndpointException('This operation is contradictorily marked both as using endpoint discovery and being the endpoint discovery operation. Please verify the accuracy of your model files.');
                 }
 
@@ -92,7 +91,7 @@ class EndpointDiscoveryMiddleware
                 $originalUri = $request->getUri();
 
                 // Get identifiers
-                $inputShape = $this->service->getShapeMap()->resolve($opDef['input'])->toArray();
+                $inputShape = $this->service->getShapeMap()->resolve($op['input'])->toArray();
                 $identifiers = [];
                 foreach ($inputShape['members'] as $key => $member) {
                     if (!empty($member['endpointdiscoveryid'])) {
@@ -166,7 +165,6 @@ class EndpointDiscoveryMiddleware
                     $identifiers,
                     $isRequired,
                     $nextHandler,
-                    $operation,
                     $originalUri,
                     $request,
                     $f,
