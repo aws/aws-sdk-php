@@ -325,7 +325,7 @@ EOT;
         $this->assertEquals(1, $called);
     }
 
-    public function testMemoizesRetriesOnError()
+    public function testMemoizesCleansUpOnError()
     {
         $called = 0;
         $f = function () use (&$called) {
