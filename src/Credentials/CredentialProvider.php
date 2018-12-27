@@ -158,6 +158,11 @@ class CredentialProvider
                     }
                     // Refresh the result and forward the promise.
                     return $result = $provider();
+                })
+                ->otherwise(function($reason) use (&$result) {
+                    // Cleanup rejected promise.
+                    $result = null;
+                    return new Promise\RejectedPromise($reason);
                 });
         };
     }
