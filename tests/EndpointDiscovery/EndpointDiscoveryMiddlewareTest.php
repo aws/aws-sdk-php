@@ -10,7 +10,10 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\EndpointDiscovery\Configuration;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
+use Aws\Exception\AwsException;
 use Aws\Exception\UnresolvedEndpointException;
+use Aws\HandlerList;
+use Aws\MockHandler;
 use Aws\Result;
 use Aws\ResultInterface;
 use Aws\Sdk;
@@ -233,16 +236,9 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                     $expectedReq->getHeader('x-amz-api-header'),
                     $req->getHeader('x-amz-api-header')
                 );
-                return Promise\promise_for(new Result([
-                    'Endpoints' => [
-                        [
-                            'Address' => 'discovered.com/some/path',
-                            'CachePeriodInMinutes' => 10,
-                        ],
-                    ],
-                ]));
+                return $this->generateSingleDescribeResult();
             }
-            return Promise\promise_for(new Result([]));
+            return $this->generateGenericResult();
         });
 
         $handler = $list->resolve();
@@ -301,19 +297,12 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) use (&$operationCounter, &$describeCounter) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $describeCounter++;
-                return Promise\promise_for(new Result([
-                    'Endpoints' => [
-                        [
-                            'Address' => 'discovered.com/some/path',
-                            'CachePeriodInMinutes' => 10,
-                        ],
-                    ],
-                ]));
+                return $this->generateSingleDescribeResult();
             }
             $operationCounter++;
             $this->assertEquals('discovered.com', $req->getUri()->getHost());
             $this->assertEquals('/some/path', $req->getUri()->getPath());
-            return Promise\promise_for(new Result([]));
+            return $this->generateGenericResult();
         });
 
         $command = $client->getCommand('TestDiscoveryRequired', []);
@@ -360,7 +349,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
             $operationCounter++;
             $this->assertEquals('discovered.com', $req->getUri()->getHost());
             $this->assertEquals("/{$cmd['Sdk']}", $req->getUri()->getPath());
-            return Promise\promise_for(new Result([]));
+            return $this->generateGenericResult();
         });
 
         $commandArgs = [
@@ -381,6 +370,72 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         // be one fewer describe call
         $this->assertEquals(5, $describeCounter);
         $this->assertEquals(6, $operationCounter);
+    }
+
+    /**
+     * @backupStaticAttributes enabled
+     */
+    public function testUsesCachedEndpointForInvalidEndpointException()
+    {
+        $service = $this->generateTestService();
+        $callOrder = [];
+        $handler = function (CommandInterface $cmd, RequestInterface $req) use (&$callOrder) {
+            if ($cmd->getName() === 'DescribeEndpoints') {
+                $callOrder[] = 'describe';
+                return $this->generateMultiDescribeResults();
+            }
+            if ($req->getUri()->getHost() == 'discovered.com') {
+                $callOrder[] = 'failure';
+                return $this->generateInvalidEndpointException($cmd);
+            }
+            if ($req->getUri()->getHost() == 'discovered2.com') {
+                $callOrder[] = 'success';
+                return $this->generateGenericResult();
+            }
+        };
+
+        $client = $this->generateTestClient($service, ['handler' => $handler]);
+        $command = $client->getCommand('TestDiscoveryRequired', []);
+
+        $client->execute($command);
+        $this->assertEquals(['describe', 'failure', 'success'], $callOrder);
+    }
+
+    /**
+     * @backupStaticAttributes enabled
+     */
+    public function testFallsBackToRegionalEndpointForInvalidEndpointException()
+    {
+        $service = $this->generateTestService();
+        $callOrder = [];
+        $handler = function (CommandInterface $cmd, RequestInterface $req) use (&$callOrder) {
+            if ($cmd->getName() === 'DescribeEndpoints') {
+                $callOrder[] = 'describe';
+                return $this->generateMultiDescribeResults();
+            }
+            if ($cmd->getName() == 'TestDiscoveryOptional'
+                && $req->getUri()->getHost() == 'awsendpointdiscoverytestservice.us-east-1.amazonaws.com'
+            ) {
+                $callOrder[] = 'success';
+                return $this->generateGenericResult();
+            }
+            $callOrder[] = 'failure';
+            return $this->generateInvalidEndpointException($cmd);
+        };
+
+        $client = $this->generateTestClient(
+            $service,
+            [
+                'endpoint_discovery' => [
+                    'enabled' => true,
+                ],
+                'handler' => $handler
+            ]
+        );
+        $command = $client->getCommand('TestDiscoveryOptional', []);
+
+        $client->execute($command);
+        $this->assertEquals(['describe', 'failure', 'failure', 'success'], $callOrder);
     }
 
     /**
@@ -415,6 +470,50 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     {
         $creds = new Credentials('testkey', 'testsecret');
         return CredentialProvider::fromCredentials($creds);
+    }
+
+    private function generateGenericResult()
+    {
+        return Promise\promise_for(new Result([]));
+    }
+
+    private function generateInvalidEndpointException(CommandInterface $cmd)
+    {
+        return Promise\rejection_for(new AwsException(
+            'Test invalid endpoint exception',
+            $cmd,
+            [
+                'code' => 'InvalidEndpointException'
+            ]
+        ));
+    }
+
+    private function generateMultiDescribeResults()
+    {
+        return Promise\promise_for(new Result([
+            'Endpoints' => [
+                [
+                    'Address' => "discovered.com/some/path",
+                    'CachePeriodInMinutes' => 10,
+                ],
+                [
+                    'Address' => 'discovered2.com/some/path',
+                    'CachePeriodInMinutes' => 10,
+                ],
+            ],
+        ]));
+    }
+
+    private function generateSingleDescribeResult()
+    {
+        return Promise\promise_for(new Result([
+            'Endpoints' => [
+                [
+                    'Address' => 'discovered.com/some/path',
+                    'CachePeriodInMinutes' => 10,
+                ],
+            ],
+        ]));
     }
 
     private function generateTestClient(Service $service, $args = [])
