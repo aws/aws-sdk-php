@@ -160,7 +160,7 @@ class EndpointDiscoveryMiddleware
                 $g = function ($value) use (
                     $cacheKey,
                     $cmd,
-                    $endpoint,
+                    &$endpoint,
                     $identifiers,
                     $isRequired,
                     $nextHandler,
@@ -205,7 +205,8 @@ class EndpointDiscoveryMiddleware
                                 );
                             }
                         }
-                        $request = $this->modifyRequest($request, $newEndpoint);
+                        $endpoint = $newEndpoint;
+                        $request = $this->modifyRequest($request, $endpoint);
                         return $nextHandler($cmd, $request)->then($f, $g);
                     }
                 };
