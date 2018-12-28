@@ -293,14 +293,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     public function testCachesDiscoveredEndpoints()
     {
         $service = $this->generateTestService();
-        $client = $this->generateTestClient(
-            $service,
-            [
-                'endpoint_discovery' => [
-                    'enabled' => true
-                ]
-            ]
-        );
+        $client = $this->generateTestClient($service);
         $list = $client->getHandlerList();
         $operationCounter = 0;
         $describeCounter = 0;
@@ -331,6 +324,60 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
         $this->assertEquals(1, $describeCounter);
         $this->assertEquals(5, $operationCounter);
+    }
+
+    public function testCachesOnlyUpToCacheLimit()
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient(
+            $service,
+            [
+                'endpoint_discovery' => [
+                    'enabled' => true,
+                    'cache_limit' => 2
+                ]
+            ]
+        );
+        $list = $client->getHandlerList();
+        $operationCounter = 0;
+        $describeCounter = 0;
+
+        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) use (&$operationCounter, &$describeCounter) {
+            if ($cmd->getName() === 'DescribeEndpoints') {
+                $describeCounter++;
+                return Promise\promise_for(new Result([
+                    'Endpoints' => [
+                        [
+                            'Address' => "discovered.com/{$cmd['Identifiers']['Sdk']}",
+                            'CachePeriodInMinutes' => 10,
+                        ],
+                    ],
+                ]));
+            }
+            $operationCounter++;
+            $this->assertEquals('discovered.com', $req->getUri()->getHost());
+            $this->assertEquals("/{$cmd['Sdk']}", $req->getUri()->getPath());
+            return Promise\promise_for(new Result([]));
+        });
+
+        $commandArgs = [
+            ['TestDiscoveryIdentifiersRequired', ['Sdk' => 'one']],
+            ['TestDiscoveryIdentifiersRequired', ['Sdk' => 'two']],
+            ['TestDiscoveryIdentifiersRequired', ['Sdk' => 'three']],
+            ['TestDiscoveryIdentifiersRequired', ['Sdk' => 'three']],
+            ['TestDiscoveryIdentifiersRequired', ['Sdk' => 'one']],
+            ['TestDiscoveryIdentifiersRequired', ['Sdk' => 'two']],
+        ];
+
+        foreach ($commandArgs as $arg) {
+            $command = $client->getCommand($arg[0], $arg[1]);
+            $client->execute($command);
+        }
+
+        // Only the repeated call to 'three' should be cached, so there should
+        // be one fewer describe call
+        $this->assertEquals(5, $describeCounter);
+        $this->assertEquals(6, $operationCounter);
     }
 
     /**
