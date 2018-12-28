@@ -27,18 +27,17 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 {
 
     /**
+     * @backupStaticAttributes enabled
      * @dataProvider getRequestTestCases
-     * @param CommandInterface $command
+     * @param array $commandArgs
      * @param array $clientArgs
      * @param ResultInterface $describeResult
-     * @param RequestInterface $request
      * @param RequestInterface $expected
      */
     public function testCorrectlyModifiesRequest(
-        CommandInterface $command,
+        array $commandArgs,
         array $clientArgs,
         ResultInterface $describeResult,
-        RequestInterface $request,
         RequestInterface $expected
     ) {
         $service = $this->generateTestService();
@@ -59,8 +58,8 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
             $this->assertEquals($expectedUri->getPath(), $uri->getPath());
             return Promise\promise_for(new Result([]));
         });
-        $handler = $list->resolve();
-        $handler($command, $request);
+        $command = $client->getCommand($commandArgs[0], $commandArgs[1]);
+        $client->execute($command);
     }
 
     public function getRequestTestCases()
@@ -78,18 +77,17 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         return [
             // Discovery optional, disabled by user
             [
-                new Command('TestDiscoveryOptional', []),
+                ['TestDiscoveryOptional', []],
                 [
                     'endpoint_discovery' => ['enabled' => false],
                 ],
                 new Result([]),
-                $baseRequest,
-                $baseRequest,
+                $baseRequest
             ],
 
             // Discovery optional, enabled by user
             [
-                new Command('TestDiscoveryOptional', []),
+                ['TestDiscoveryOptional', []],
                 [
                     'endpoint_discovery' => ['enabled' => true],
                 ],
@@ -101,7 +99,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                         ],
                     ],
                 ]),
-                $baseRequest,
                 new Request(
                     'POST',
                     new Uri('https://discovered.com/some/path'),
@@ -113,17 +110,16 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
             // Discovery optional, no configuration provided
             [
-                new Command('TestDiscoveryOptional', []),
+                ['TestDiscoveryOptional', []],
                 [
                 ],
                 new Result([]),
-                $baseRequest,
                 $baseRequest,
             ],
 
             // Discovery required, disabled by user
             [
-                new Command('TestDiscoveryRequired', []),
+                ['TestDiscoveryRequired', []],
                 [
                     'endpoint_discovery' => ['enabled' => false],
                 ],
@@ -135,7 +131,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                         ],
                     ],
                 ]),
-                $baseRequest,
                 new Request(
                     'POST',
                     new Uri('https://discovered.com/some/path'),
@@ -147,7 +142,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
             // Discovery required, no config provided
             [
-                new Command('TestDiscoveryRequired', []),
+                ['TestDiscoveryRequired', []],
                 [],
                 new Result([
                     'Endpoints' => [
@@ -157,7 +152,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                         ],
                     ],
                 ]),
-                $baseRequest,
                 new Request(
                     'POST',
                     new Uri('https://discovered.com/some/path'),
@@ -169,7 +163,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
             // Discovery optional, enabled, custom endpoint supplied by user
             [
-                new Command('TestDiscoveryOptional', []),
+                ['TestDiscoveryOptional', []],
                 [
                     'endpoint' => 'https://custom.com/custom/path',
                     'endpoint_discovery' => ['enabled' => true],
@@ -182,7 +176,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                         ],
                     ],
                 ]),
-                $baseRequest,
                 new Request(
                     'POST',
                     new Uri('https://custom.com/custom/path'),
@@ -194,7 +187,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
             // Discovery required, enabled, custom endpoint supplied by user
             [
-                new Command('TestDiscoveryRequired', []),
+                ['TestDiscoveryRequired', []],
                 [
                     'endpoint' => 'https://custom.com/custom/path',
                     'endpoint_discovery' => ['enabled' => true],
@@ -207,7 +200,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                         ],
                     ],
                 ]),
-                $baseRequest,
                 new Request(
                     'POST',
                     new Uri('https://custom.com/custom/path'),
@@ -220,6 +212,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
+     * @backupStaticAttributes enabled
      * @dataProvider getDiscoveryRequestTestCases
      * @param $mainCmd
      * @param $expectedCmd
@@ -253,7 +246,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         });
 
         $handler = $list->resolve();
-        $handler($mainCmd, new Request('POST', new Uri('https:/foo.com')));
+        $handler($mainCmd, new Request('POST', new Uri('https://foo.com')));
     }
 
     public function getDiscoveryRequestTestCases()
@@ -294,6 +287,55 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         ];
     }
 
+    /**
+     * @backupStaticAttributes enabled
+     */
+    public function testCachesDiscoveredEndpoints()
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient(
+            $service,
+            [
+                'endpoint_discovery' => [
+                    'enabled' => true
+                ]
+            ]
+        );
+        $list = $client->getHandlerList();
+        $operationCounter = 0;
+        $describeCounter = 0;
+
+        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) use (&$operationCounter, &$describeCounter) {
+            if ($cmd->getName() === 'DescribeEndpoints') {
+                $describeCounter++;
+                return Promise\promise_for(new Result([
+                    'Endpoints' => [
+                        [
+                            'Address' => 'discovered.com/some/path',
+                            'CachePeriodInMinutes' => 10,
+                        ],
+                    ],
+                ]));
+            }
+            $operationCounter++;
+            $this->assertEquals('discovered.com', $req->getUri()->getHost());
+            $this->assertEquals('/some/path', $req->getUri()->getPath());
+            return Promise\promise_for(new Result([]));
+        });
+
+        $command = $client->getCommand('TestDiscoveryRequired', []);
+
+        for ($i = 0; $i < 5 ; $i++) {
+            $client->execute($command);
+        }
+
+        $this->assertEquals(1, $describeCounter);
+        $this->assertEquals(5, $operationCounter);
+    }
+
+    /**
+     * @backupStaticAttributes enabled
+     */
     public function testThrowsExceptionWhenMarkedAsEndpointOperation()
     {
         $service = $this->generateTestService();
