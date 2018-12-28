@@ -127,9 +127,9 @@ class EndpointDiscoveryMiddleware
                             $identifiers
                         );
                     } catch (\Exception $e) {
-                        // Use expired endpoint if any remain in the list
+                        // Use any endpoint, expired or active, if any remain
                         if (!empty($endpointList)) {
-                            $endpoint = $endpointList->getExpired();
+                            $endpoint = $endpointList->getEndpoint();
                         }
 
                         if (empty($endpoint)) {
@@ -180,12 +180,8 @@ class EndpointDiscoveryMiddleware
                             // Remove invalid endpoints from cached list
                             $endpointList->remove($endpoint);
 
-                            // If possible, get new endpoint from active or
-                            // expired cache
-                            $newEndpoint = $endpointList->getActive();
-                            if (empty($newEndpoint)) {
-                                $newEndpoint = $endpointList->getExpired();
-                            }
+                            // If possible, get another cached endpoint
+                            $newEndpoint = $endpointList->getEndpoint();
                         }
                         if (empty($newEndpoint)) {
 
@@ -235,7 +231,7 @@ class EndpointDiscoveryMiddleware
             }
             $endpointList = new EndpointList($endpointData);
             self::$cache->set($cacheKey, $endpointList);
-            return $endpointList->getActive();
+            return $endpointList->getEndpoint();
         } else {
             throw new UnresolvedEndpointException('The endpoint discovery operation yielded a response that did not contain properly formatted endpoint data.');
         }
