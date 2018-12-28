@@ -161,7 +161,6 @@ class EndpointDiscoveryMiddleware
                     $cacheKey,
                     $cmd,
                     $endpoint,
-                    $endpointList,
                     $identifiers,
                     $isRequired,
                     $nextHandler,
@@ -175,9 +174,10 @@ class EndpointDiscoveryMiddleware
                             || $value->getStatusCode() == 421
                         )
                     ) {
+                        $endpointList = self::$cache->get($cacheKey);
                         if ($endpointList instanceof EndpointList) {
 
-                            // Remove invalid endpoints from cached list
+                            // Remove invalid endpoint from cached list
                             $endpointList->remove($endpoint);
 
                             // If possible, get another cached endpoint
