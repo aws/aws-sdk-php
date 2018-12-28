@@ -14,6 +14,9 @@ class EndpointList
 
     public function getActive()
     {
+        if (count($this->active) < 1) {
+            return null;
+        }
         while (time() > current($this->active)) {
             $key = key($this->active);
             $this->expired[$key] = current($this->active);
@@ -44,7 +47,7 @@ class EndpointList
         unset($this->expired[$key]);
     }
 
-    private function increment($array)
+    private function increment(&$array)
     {
         if (next($array) === false) {
             reset($array);
