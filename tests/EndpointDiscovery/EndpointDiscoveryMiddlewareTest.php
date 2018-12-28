@@ -326,6 +326,9 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $this->assertEquals(5, $operationCounter);
     }
 
+    /**
+     * @backupStaticAttributes enabled
+     */
     public function testCachesOnlyUpToCacheLimit()
     {
         $service = $this->generateTestService();

@@ -12,6 +12,11 @@ class EndpointList
         reset($this->active);
     }
 
+    /**
+     * Gets an active (unexpired) endpoint. Returns null if none found.
+     *
+     * @return null|string
+     */
     public function getActive()
     {
         if (count($this->active) < 1) {
@@ -31,6 +36,25 @@ class EndpointList
         return $active;
     }
 
+    /**
+     * Gets an active endpoint if possible, then an expired endpoint if possible.
+     * Returns null if no endpoints found.
+     *
+     * @return null|string
+     */
+    public function getEndpoint()
+    {
+        if (!empty($active = $this->getActive())) {
+            return $active;
+        }
+        return $this->getExpired();
+    }
+
+    /**
+     * Get an expired endpoint. Returns null if none found.
+     *
+     * @return null|string
+     */
     public function getExpired()
     {
         if (count($this->expired) < 1) {
@@ -41,6 +65,11 @@ class EndpointList
         return $expired;
     }
 
+    /**
+     * Removes an endpoint from both lists.
+     *
+     * @param string $key
+     */
     public function remove($key)
     {
         unset($this->active[$key]);

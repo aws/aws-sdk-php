@@ -16,15 +16,12 @@ class EndpointListTest extends TestCase
         $list = new EndpointList([
             'endpoint_1' => time() + 100,
             'endpoint_2' => time() + 100,
-            'endpoint_3' => time() + 100,
         ]);
 
         $this->assertEquals('endpoint_1', $list->getActive());
         $this->assertEquals('endpoint_2', $list->getActive());
-        $this->assertEquals('endpoint_3', $list->getActive());
         $this->assertEquals('endpoint_1', $list->getActive());
         $this->assertEquals('endpoint_2', $list->getActive());
-        $this->assertEquals('endpoint_3', $list->getActive());
     }
 
     public function testMovesToAndRetrievesFromExpiredEndpoints()
@@ -39,6 +36,21 @@ class EndpointListTest extends TestCase
         $this->assertEquals('endpoint_2', $list->getExpired());
         $this->assertEquals('endpoint_1', $list->getExpired());
         $this->assertEquals('endpoint_2', $list->getExpired());
+    }
+
+    public function testGetEndpointSelectsActiveThenExpired()
+    {
+        $list = new EndpointList([
+            'endpoint_1' => time() - 100,
+            'endpoint_2' => time() + 100,
+        ]);
+
+        $this->assertEquals('endpoint_2', $list->getEndpoint());
+        // Make sure list is not cycling to the expired endpoint
+        $this->assertEquals('endpoint_2', $list->getEndpoint());
+
+        $list->remove('endpoint_2');
+        $this->assertEquals('endpoint_1', $list->getEndpoint());
     }
 
     public function testRemovesEndpoints()
