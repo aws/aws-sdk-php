@@ -11,6 +11,7 @@ use Aws\Exception\AwsException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\LruArrayCache;
 use Aws\Middleware;
+use Aws\Test\EndpointDiscovery\EndpointListTest;
 use Psr\Http\Message\RequestInterface;
 
 class EndpointDiscoveryMiddleware
@@ -23,7 +24,6 @@ class EndpointDiscoveryMiddleware
     private $args;
     private $client;
     private $config;
-    private $credentials;
     private $discoveryTimes;
     private $nextHandler;
     private $service;
@@ -31,23 +31,17 @@ class EndpointDiscoveryMiddleware
     public static function wrap(
         $client,
         $args,
-        $credentials,
-        $service,
         $config
     ) {
         return function (callable $handler) use (
             $client,
             $args,
-            $credentials,
-            $service,
             $config
         ) {
             return new static(
                 $handler,
                 $client,
                 $args,
-                $credentials,
-                $service,
                 $config
             );
         };
@@ -57,15 +51,12 @@ class EndpointDiscoveryMiddleware
         callable $handler,
         AwsClient $client,
         array $args,
-        callable $credentials,
-        Service $service,
         $config
     ) {
         $this->nextHandler = $handler;
         $this->client = $client;
         $this->args = $args;
-        $this->credentials = $credentials;
-        $this->service = $service;
+        $this->service = $client->getApi();
         $this->config = $config;
         $this->discoveryTimes = [];
     }
@@ -99,9 +90,9 @@ class EndpointDiscoveryMiddleware
                     }
                 }
 
-                $credentials = $this->credentials;
+                $credentials = $this->client->getCredentials();
                 $cacheKey = $this->getCacheKey(
-                    $credentials()->wait(),
+                    $credentials->wait(),
                     $cmd,
                     $identifiers
                 );
@@ -111,11 +102,10 @@ class EndpointDiscoveryMiddleware
                     self::$cache = new LruArrayCache($config->getCacheLimit());
                 }
 
-                $endpoint = null;
-                $endpointList = self::$cache->get($cacheKey);
-                if (!empty($endpointList)) {
-                    $endpoint = $endpointList->getActive();
+                if (empty($endpointList = self::$cache->get($cacheKey))) {
+                    $endpointList = new EndpointList([]);
                 }
+                $endpoint = $endpointList->getActive();
 
                 // Retrieve endpoints if there is no active endpoint
                 if (empty($endpoint)) {
@@ -127,10 +117,8 @@ class EndpointDiscoveryMiddleware
                             $identifiers
                         );
                     } catch (\Exception $e) {
-                        // Use any endpoint, expired or active, if any remain
-                        if (!empty($endpointList)) {
-                            $endpoint = $endpointList->getEndpoint();
-                        }
+                        // Use cached endpoint, expired or active, if any remain
+                        $endpoint = $endpointList->getEndpoint();
 
                         if (empty($endpoint)) {
                             // If no cached endpoints but discovery isn't required,
@@ -153,10 +141,6 @@ class EndpointDiscoveryMiddleware
 
                 $request = $this->modifyRequest($request, $endpoint);
 
-                $f = function ($value) {
-                    return $value;
-                };
-
                 $g = function ($value) use (
                     $cacheKey,
                     $cmd,
@@ -166,7 +150,6 @@ class EndpointDiscoveryMiddleware
                     $nextHandler,
                     $originalUri,
                     $request,
-                    $f,
                     &$g
                 ) {
                     if ($value instanceof AwsException
@@ -207,11 +190,11 @@ class EndpointDiscoveryMiddleware
                         }
                         $endpoint = $newEndpoint;
                         $request = $this->modifyRequest($request, $endpoint);
-                        return $nextHandler($cmd, $request)->then($f, $g);
+                        return $nextHandler($cmd, $request)->otherwise($g);
                     }
                 };
 
-                return $nextHandler($cmd, $request)->then($f, $g);
+                return $nextHandler($cmd, $request)->otherwise($g);
             }
         }
 

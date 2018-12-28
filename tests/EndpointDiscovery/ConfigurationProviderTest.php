@@ -71,7 +71,7 @@ EOT;
             },
             function(ConfigurationException $e) {
                 $this->assertStringStartsWith(
-                    'Could not find environment variable CSM config',
+                    'Could not find environment variable config',
                     $e->getMessage()
                 );
             }
@@ -208,7 +208,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\Michael\\Home');
-        $ref = new \ReflectionClass('Aws\ClientSideMonitoring\ConfigurationProvider');
+        $ref = new \ReflectionClass('Aws\EndpointDiscovery\ConfigurationProvider');
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertEquals('C:\\Michael\\Home', $meth->invoke(null));

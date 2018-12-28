@@ -297,8 +297,6 @@ class AwsClient implements AwsClientInterface
                 EndpointDiscoveryMiddleware::wrap(
                     $this,
                     $args,
-                    $config['credentials'],
-                    $config['api'],
                     $config['endpoint_discovery']
                 ),
                 'EndpointDiscoveryMiddleware'

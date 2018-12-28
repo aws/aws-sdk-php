@@ -11,7 +11,7 @@ class Configuration implements ConfigurationInterface
         $this->cacheLimit = filter_var($cacheLimit, FILTER_VALIDATE_INT);
         if ($this->cacheLimit === false) {
             throw new \InvalidArgumentException(
-                "'cache_limit' value must be an integer!");
+                "'cache_limit' value must be an integer.");
         }
 
         // Unparsable $enabled flag errs on the side of disabling endpoint discovery

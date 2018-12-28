@@ -449,8 +449,6 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $middleware = EndpointDiscoveryMiddleware::wrap(
             $client,
             [],
-            $this->generateCredentials(),
-            $service,
             new Configuration(true)
         );
 

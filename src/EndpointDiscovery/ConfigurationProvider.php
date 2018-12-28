@@ -116,7 +116,7 @@ class ConfigurationProvider
     /**
      * Create a default config provider that first checks for environment
      * variables, then checks for a specified profile in ~/.aws/config, then
-     * checks for the "aws_csm" profile in ~/.aws/config, and failing those uses
+     * checks for the "default" profile in ~/.aws/config, and failing those uses
      * a default fallback set of configuration options.
      *
      * This provider is automatically wrapped in a memoize function that caches
@@ -168,7 +168,7 @@ class ConfigurationProvider
                 );
             }
 
-            return self::reject('Could not find environment variable CSM config'
+            return self::reject('Could not find environment variable config'
                 . ' in ' . self::ENV_ENABLED);
         };
     }
@@ -214,7 +214,7 @@ class ConfigurationProvider
      * in the current user's home directory.
      *
      * @param string|null $profile  Profile to use. If not specified will use
-     *                              the "aws_csm" profile in "~/.aws/config".
+     *                              the "default" profile in "~/.aws/config".
      * @param string|null $filename If provided, uses a custom filename rather
      *                              than looking in the home directory.
      * @param int $cacheLimit
