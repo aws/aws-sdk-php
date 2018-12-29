@@ -19,6 +19,7 @@ use Aws\ResultInterface;
 use Aws\Sdk;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -372,21 +373,74 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $this->assertEquals(6, $operationCounter);
     }
 
+    public function testUsesRegionalEndpointOnDescribeFailure()
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service);
+        $list = $client->getHandlerList();
+
+        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) {
+            if ($cmd->getName() === 'DescribeEndpoints') {;
+                return $this->generateDescribeException($cmd);
+            }
+            $this->assertEquals(
+                'awsendpointdiscoverytestservice.us-east-1.amazonaws.com',
+                $req->getUri()->getHost()
+            );
+            return $this->generateGenericResult();
+        });
+
+        $command = $client->getCommand('TestDiscoveryOptional', []);
+        $client->execute($command);
+    }
+
+    public function testThrowsExceptionOnDescribeFailure()
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service);
+        $list = $client->getHandlerList();
+
+        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) {
+            if ($cmd->getName() === 'DescribeEndpoints') {;
+                return $this->generateDescribeException($cmd);
+            }
+            return $this->generateGenericResult();
+        });
+
+        $command = $client->getCommand('TestDiscoveryRequired', []);
+        try {
+            $client->execute($command);
+            $this->fail('This operation should have failed with an EndpointDiscoveryException.');
+        } catch (AwsException $e) {
+            $this->assertEquals(
+                'EndpointDiscoveryException',
+                $e->getAwsErrorCode()
+            );
+            $this->assertEquals(
+                'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.',
+                $e->getAwsErrorMessage()
+            );
+        }
+    }
+
     /**
      * @backupStaticAttributes enabled
+     * @dataProvider getInvalidEndpointExceptions
      */
-    public function testUsesCachedEndpointForInvalidEndpointException()
+    public function testUsesCachedEndpointForInvalidEndpointException($exception)
     {
         $service = $this->generateTestService();
         $callOrder = [];
-        $handler = function (CommandInterface $cmd, RequestInterface $req) use (&$callOrder) {
+        $handler = function (CommandInterface $cmd, RequestInterface $req)
+            use (&$callOrder, $exception)
+        {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $callOrder[] = 'describe';
                 return $this->generateMultiDescribeResults();
             }
             if ($req->getUri()->getHost() == 'discovered.com') {
                 $callOrder[] = 'failure';
-                return $this->generateInvalidEndpointException($cmd);
+                return $exception;
             }
             if ($req->getUri()->getHost() == 'discovered2.com') {
                 $callOrder[] = 'success';
@@ -403,12 +457,15 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     /**
      * @backupStaticAttributes enabled
+     * @dataProvider getInvalidEndpointExceptions
      */
-    public function testFallsBackToRegionalEndpointForInvalidEndpointException()
+    public function testUseRegionalEndpointForInvalidEndpointException($exception)
     {
         $service = $this->generateTestService();
         $callOrder = [];
-        $handler = function (CommandInterface $cmd, RequestInterface $req) use (&$callOrder) {
+        $handler = function (CommandInterface $cmd, RequestInterface $req)
+            use (&$callOrder, $exception)
+        {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $callOrder[] = 'describe';
                 return $this->generateMultiDescribeResults();
@@ -420,7 +477,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                 return $this->generateGenericResult();
             }
             $callOrder[] = 'failure';
-            return $this->generateInvalidEndpointException($cmd);
+            return $exception;
         };
 
         $client = $this->generateTestClient(
@@ -436,6 +493,59 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
         $client->execute($command);
         $this->assertEquals(['describe', 'failure', 'failure', 'success'], $callOrder);
+    }
+
+    /**
+     * @backupStaticAttributes enabled
+     * @dataProvider getInvalidEndpointExceptions
+     */
+    public function testThrowsExceptionOnInvalidEndpointException($exception)
+    {
+        $callOrder = [];
+        $handler = function (CommandInterface $cmd, RequestInterface $req)
+            use (&$callOrder, $exception)
+        {
+            if ($cmd->getName() === 'DescribeEndpoints') {
+                $callOrder[] = 'describe';
+                return $this->generateSingleDescribeResult();
+            }
+            $callOrder[] = 'failure';
+            return $exception;
+        };
+        $client = $this->generateTestClient(
+            $this->generateTestService(),
+            [
+                'endpoint_discovery' => [
+                    'enabled' => true,
+                ],
+                'handler' => $handler
+            ]
+        );
+        $command = $client->getCommand('TestDiscoveryRequired', []);
+
+        try {
+            $client->execute($command);
+        } catch (AwsException $e) {
+            $this->assertEquals(
+                'Test invalid endpoint exception',
+                $e->getAwsErrorMessage()
+            );
+        }
+
+        $this->assertEquals(['describe', 'failure'], $callOrder);
+    }
+
+    /**
+     * Data provider for exceptions treated as invalid endpoint exceptions
+     *
+     * @return array
+     */
+    public function getInvalidEndpointExceptions()
+    {
+        return [
+            [$this->generateInvalidEndpointException()],
+            [$this->generate421Exception()],
+        ];
     }
 
     /**
@@ -470,18 +580,42 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         return CredentialProvider::fromCredentials($creds);
     }
 
+    private function generateDescribeException(CommandInterface $cmd)
+    {
+        return Promise\rejection_for(new AwsException(
+           'Test describe endpoints exception',
+           $cmd
+        ));
+    }
+
     private function generateGenericResult()
     {
         return Promise\promise_for(new Result([]));
     }
 
-    private function generateInvalidEndpointException(CommandInterface $cmd)
+    private function generateInvalidEndpointException()
     {
+        $message = 'Test invalid endpoint exception';
         return Promise\rejection_for(new AwsException(
-            'Test invalid endpoint exception',
-            $cmd,
+            $message,
+            new Command('', []),
             [
-                'code' => 'InvalidEndpointException'
+                'code' => 'InvalidEndpointException',
+                'message' => $message
+            ]
+        ));
+    }
+
+    private function generate421Exception()
+    {
+        $message = 'Test invalid endpoint exception';
+        return Promise\rejection_for(new AwsException(
+            $message,
+            new Command('', []),
+            [
+                'code' => 'Test421Exception',
+                'response' => new Response(421),
+                'message' => $message
             ]
         ));
     }

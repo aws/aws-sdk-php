@@ -129,10 +129,14 @@ class EndpointDiscoveryMiddleware
                                 return $nextHandler($cmd, $request);
                             }
                             // If discovery is required, throw exception
+                            $message = 'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.';
                             throw new AwsException(
-                                'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.',
+                                $message,
                                 $cmd,
-                                [],
+                                [
+                                    'code' => 'EndpointDiscoveryException',
+                                    'message' => $message
+                                ],
                                 $e
                             );
                         }
