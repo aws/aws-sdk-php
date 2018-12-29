@@ -249,7 +249,7 @@ class EndpointDiscoveryMiddleware
         }
 
         if (!isset($endpointOperation)) {
-            throw new AwsException('This command is set to use endpoint discovery, but no endpoint discovery operation was found. Please verify the accuracy of your model files.', $cmd);
+            throw new UnresolvedEndpointException('This command is set to use endpoint discovery, but no endpoint discovery operation was found. Please verify the accuracy of your model files.');
         }
 
         $params = [];

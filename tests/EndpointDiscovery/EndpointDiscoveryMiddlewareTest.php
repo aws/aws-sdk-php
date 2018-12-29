@@ -441,8 +441,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     public function testUsesCachedEndpointForInvalidEndpointException($exception)
     {
         $callOrder = [];
-        $handler = function (CommandInterface $cmd, RequestInterface $req)
-        use (&$callOrder, $exception) {
+        $handler = function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use (&$callOrder, $exception) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $callOrder[] = 'describe';
                 return $this->generateMultiDescribeResults();
@@ -474,8 +476,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     public function testUseRegionalEndpointForInvalidEndpointException($exception)
     {
         $callOrder = [];
-        $handler = function (CommandInterface $cmd, RequestInterface $req)
-        use (&$callOrder, $exception) {
+        $handler = function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use (&$callOrder, $exception) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $callOrder[] = 'describe';
                 return $this->generateMultiDescribeResults();
@@ -513,8 +517,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     public function testThrowsExceptionOnInvalidEndpointException($exception)
     {
         $callOrder = [];
-        $handler = function (CommandInterface $cmd, RequestInterface $req)
-        use (&$callOrder, $exception) {
+        $handler = function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use (&$callOrder, $exception) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $callOrder[] = 'describe';
                 return $this->generateSingleDescribeResult();
@@ -560,8 +566,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $reflection->setAccessible(true);
         $reflection->setValue(0);
         $callOrder = [];
-        $handler = function (CommandInterface $cmd, RequestInterface $req)
-            use (&$callOrder, $exception, $reflection)
+        $handler = function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use (&$callOrder, $exception, $reflection)
         {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 // On the second trip to DescribeEndpoints, can set discoveryCooldown
@@ -671,6 +679,36 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         }
     }
 
+    /**
+     * @backupStaticAttributes enabled
+     */
+    public function testThrowsExceptionForBadModel()
+    {
+        $client = $this->generateTestClient($this->generateFaultyService());
+        $list = $client->getHandlerList();
+
+        $list->setHandler(function (CommandInterface $cmd,RequestInterface $req) {
+            return $this->generateGenericResult();
+        });
+
+        $command = $client->getCommand('TestDiscoveryRequired', []);
+        try {
+            $client->execute($command);
+            $this->fail('This operation should have failed with an UnresolvedEndpointException.');
+        } catch (AwsException $e) {
+            $this->assertEquals(
+                'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.',
+                $e->getAwsErrorMessage()
+            );
+            $previous = $e->getPrevious();
+            $this->assertTrue($previous instanceof UnresolvedEndpointException);
+            $this->assertEquals(
+                'This command is set to use endpoint discovery, but no endpoint discovery operation was found. Please verify the accuracy of your model files.',
+                $previous->getMessage()
+            );
+        }
+    }
+
     private function generateDescribeException(CommandInterface $cmd)
     {
         return Promise\rejection_for(new AwsException(
@@ -756,6 +794,11 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         );
     }
 
+    /**
+     * Returns an endpoint discovery test service
+     *
+     * @return Service
+     */
     private function generateTestService()
     {
         return new Service(
@@ -889,6 +932,79 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                             "DiscoveredEndpoint" => ["shape" => "Boolean"]
                         ]
                     ],
+                    "TestDiscoveryRequiredRequest" => [
+                        "type" => "structure",
+                        "members" => []
+                    ],
+                    "TestDiscoveryRequiredResponse" => [
+                        "type" => "structure",
+                        "members" => [
+                            "DiscoveredEndpoint" => ["shape" => "Boolean"]
+                        ]
+                    ]
+                ]
+            ],
+            function () { return []; }
+        );
+    }
+
+    /**
+     * Returns an endpoint discovery service without a discovery API
+     *
+     * @return Service
+     */
+    private function generateFaultyService()
+    {
+        return new Service(
+            [
+                "version" => "2.0",
+                "metadata" => [
+                    "apiVersion" => "2018-08-31",
+                    "endpointPrefix" => "awsendpointdiscoverytestservice",
+                    "jsonVersion" => "1.1",
+                    "protocol" => "json",
+                    "serviceAbbreviation" => "AwsEndpointDiscoveryTest",
+                    "serviceFullName" => "AwsEndpointDiscoveryTest",
+                    "signatureVersion" => "v4",
+                    "signingName" => "awsendpointdiscoverytestservice",
+                    "targetPrefix" => "AwsEndpointDiscoveryTestService"
+                ],
+                "operations" => [
+                    "TestDiscoveryRequired" => [
+                        "name" => "TestDiscoveryRequired",
+                        "http" => [
+                            "method" => "POST",
+                            "requestUri" => "/"
+                        ],
+                        "input" => ["shape" => "TestDiscoveryRequiredRequest"],
+                        "output" => ["shape" => "TestDiscoveryRequiredResponse"],
+                        "endpointdiscovery" => ["required" => "true"]
+                    ]
+                ],
+                "shapes" => [
+                    "Boolean" => ["type" => "boolean"],
+                    "Endpoint" => [
+                        "type" => "structure",
+                        "required" => [
+                            "Address",
+                            "CachePeriodInMinutes"
+                        ],
+                        "members" => [
+                            "Address" => ["shape" => "String"],
+                            "CachePeriodInMinutes" => ["shape" => "Long"]
+                        ]
+                    ],
+                    "Endpoints" => [
+                        "type" => "list",
+                        "member" => ["shape" => "Endpoint"]
+                    ],
+                    "Identifiers" => [
+                        "type" => "map",
+                        "key" => ["shape" => "String"],
+                        "value" => ["shape" => "String"]
+                    ],
+                    "Long" => ["type" => "long"],
+                    "String" => ["type" => "string"],
                     "TestDiscoveryRequiredRequest" => [
                         "type" => "structure",
                         "members" => []
