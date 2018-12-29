@@ -6,14 +6,10 @@ use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Command;
 use Aws\CommandInterface;
-use Aws\Credentials\CredentialProvider;
-use Aws\Credentials\Credentials;
 use Aws\EndpointDiscovery\Configuration;
 use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\Exception\AwsException;
 use Aws\Exception\UnresolvedEndpointException;
-use Aws\HandlerList;
-use Aws\MockHandler;
 use Aws\Result;
 use Aws\ResultInterface;
 use Aws\Sdk;
@@ -44,10 +40,15 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         ResultInterface $describeResult,
         RequestInterface $expected
     ) {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, $clientArgs);
+        $client = $this->generateTestClient(
+            $this->generateTestService(),
+            $clientArgs
+        );
         $list = $client->getHandlerList();
-        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) use ($expected, $describeResult) {
+        $list->setHandler(function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use ($expected, $describeResult) {
             // Simulate the DescribeEndpoints API with the supplied result
             if ($cmd->getName() === 'DescribeEndpoints') {
                 return Promise\promise_for($describeResult);
@@ -227,10 +228,12 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         CommandInterface $expectedCmd,
         RequestInterface $expectedReq
     ) {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service);
+        $client = $this->generateTestClient($this->generateTestService());
         $list = $client->getHandlerList();
-        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) use ($expectedCmd, $expectedReq) {
+        $list->setHandler(function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use ($expectedCmd, $expectedReq) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $this->assertEquals($expectedCmd->toArray(), $cmd->toArray());
                 $this->assertEquals(
@@ -289,13 +292,15 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
      */
     public function testCachesDiscoveredEndpoints()
     {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service);
+        $client = $this->generateTestClient($this->generateTestService());
         $list = $client->getHandlerList();
         $operationCounter = 0;
         $describeCounter = 0;
 
-        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) use (&$operationCounter, &$describeCounter) {
+        $list->setHandler(function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use (&$operationCounter, &$describeCounter) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $describeCounter++;
                 return $this->generateSingleDescribeResult();
@@ -308,7 +313,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
         $command = $client->getCommand('TestDiscoveryRequired', []);
 
-        for ($i = 0; $i < 5 ; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $client->execute($command);
         }
 
@@ -321,9 +326,8 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
      */
     public function testCachesOnlyUpToCacheLimit()
     {
-        $service = $this->generateTestService();
         $client = $this->generateTestClient(
-            $service,
+            $this->generateTestService(),
             [
                 'endpoint_discovery' => [
                     'enabled' => true,
@@ -335,7 +339,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $operationCounter = 0;
         $describeCounter = 0;
 
-        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) use (&$operationCounter, &$describeCounter) {
+        $list->setHandler(function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use (&$operationCounter, &$describeCounter) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $describeCounter++;
                 return Promise\promise_for(new Result([
@@ -375,12 +382,14 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     public function testUsesRegionalEndpointOnDescribeFailure()
     {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service);
+        $client = $this->generateTestClient($this->generateTestService());
         $list = $client->getHandlerList();
 
-        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) {
-            if ($cmd->getName() === 'DescribeEndpoints') {;
+        $list->setHandler(function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) {
+            if ($cmd->getName() === 'DescribeEndpoints') {
                 return $this->generateDescribeException($cmd);
             }
             $this->assertEquals(
@@ -396,12 +405,14 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     public function testThrowsExceptionOnDescribeFailure()
     {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service);
+        $client = $this->generateTestClient($this->generateTestService());
         $list = $client->getHandlerList();
 
-        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) {
-            if ($cmd->getName() === 'DescribeEndpoints') {;
+        $list->setHandler(function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) {
+            if ($cmd->getName() === 'DescribeEndpoints') {
                 return $this->generateDescribeException($cmd);
             }
             return $this->generateGenericResult();
@@ -429,11 +440,9 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
      */
     public function testUsesCachedEndpointForInvalidEndpointException($exception)
     {
-        $service = $this->generateTestService();
         $callOrder = [];
         $handler = function (CommandInterface $cmd, RequestInterface $req)
-            use (&$callOrder, $exception)
-        {
+        use (&$callOrder, $exception) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $callOrder[] = 'describe';
                 return $this->generateMultiDescribeResults();
@@ -448,7 +457,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
             }
         };
 
-        $client = $this->generateTestClient($service, ['handler' => $handler]);
+        $client = $this->generateTestClient(
+            $this->generateTestService(),
+            ['handler' => $handler]
+        );
         $command = $client->getCommand('TestDiscoveryRequired', []);
 
         $client->execute($command);
@@ -461,11 +473,9 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
      */
     public function testUseRegionalEndpointForInvalidEndpointException($exception)
     {
-        $service = $this->generateTestService();
         $callOrder = [];
         $handler = function (CommandInterface $cmd, RequestInterface $req)
-            use (&$callOrder, $exception)
-        {
+        use (&$callOrder, $exception) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $callOrder[] = 'describe';
                 return $this->generateMultiDescribeResults();
@@ -481,7 +491,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         };
 
         $client = $this->generateTestClient(
-            $service,
+            $this->generateTestService(),
             [
                 'endpoint_discovery' => [
                     'enabled' => true,
@@ -492,7 +502,8 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $command = $client->getCommand('TestDiscoveryOptional', []);
 
         $client->execute($command);
-        $this->assertEquals(['describe', 'failure', 'failure', 'success'], $callOrder);
+        $this->assertEquals(['describe', 'failure', 'failure', 'success'],
+            $callOrder);
     }
 
     /**
@@ -503,8 +514,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     {
         $callOrder = [];
         $handler = function (CommandInterface $cmd, RequestInterface $req)
-            use (&$callOrder, $exception)
-        {
+        use (&$callOrder, $exception) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $callOrder[] = 'describe';
                 return $this->generateSingleDescribeResult();
@@ -536,6 +546,64 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     }
 
     /**
+     * @backupStaticAttributes enabled
+     * @dataProvider getInvalidEndpointExceptions
+     */
+    public function testCallsDiscoveryApiOnInvalidEndpointException($exception)
+    {
+        // Use Reflection to set private static discoveryCooldown variable to 0
+        // to avoid having to wait for default 60 seconds for testing
+        $reflection = new \ReflectionProperty(
+            'Aws\EndpointDiscovery\EndpointDiscoveryMiddleware',
+            'discoveryCooldown'
+        );
+        $reflection->setAccessible(true);
+        $reflection->setValue(0);
+        $callOrder = [];
+        $handler = function (CommandInterface $cmd, RequestInterface $req)
+            use (&$callOrder, $exception, $reflection)
+        {
+            if ($cmd->getName() === 'DescribeEndpoints') {
+                // On the second trip to DescribeEndpoints, can set discoveryCooldown
+                // back to 60, allowing failure to occur naturally on next pass
+                if (in_array('describe', $callOrder)) {
+                    $reflection->setValue(60);
+                }
+                $callOrder[] = 'describe';
+                return $this->generateSingleDescribeResult();
+            }
+            $callOrder[] = 'failure';
+            return $exception;
+        };
+        $client = $this->generateTestClient(
+            $this->generateTestService(),
+            [
+                'endpoint_discovery' => [
+                    'enabled' => true,
+                ],
+                'handler' => $handler
+            ]
+        );
+        $command = $client->getCommand('TestDiscoveryRequired', []);
+
+        try {
+            $client->execute($command);
+        } catch (AwsException $e) {
+            $this->assertEquals(
+                'Test invalid endpoint exception',
+                $e->getAwsErrorMessage()
+            );
+        }
+
+        // Discovery API should have been called twice, once at beginning,
+        // and once when discoveryCooldown was set to 0
+        $this->assertEquals(
+            ['describe', 'failure', 'describe', 'failure'],
+            $callOrder
+        );
+    }
+
+    /**
      * Data provider for exceptions treated as invalid endpoint exceptions
      *
      * @return array
@@ -553,8 +621,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
      */
     public function testThrowsExceptionWhenMarkedAsEndpointOperation()
     {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service);
+        $client = $this->generateTestClient($this->generateTestService());
         $command = $client->getCommand('TestContradictoryOperation', []);
         $middleware = EndpointDiscoveryMiddleware::wrap(
             $client,
@@ -574,10 +641,34 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         }
     }
 
-    private function generateCredentials()
+    /**
+     * @backupStaticAttributes enabled
+     */
+    public function testThrowsExceptionOnBadDiscoveryData()
     {
-        $creds = new Credentials('testkey', 'testsecret');
-        return CredentialProvider::fromCredentials($creds);
+        $client = $this->generateTestClient($this->generateTestService());
+        $list = $client->getHandlerList();
+
+        $list->setHandler(function (CommandInterface $cmd,RequestInterface $req) {
+            return $this->generateGenericResult();
+        });
+
+        $command = $client->getCommand('TestDiscoveryRequired', []);
+        try {
+            $client->execute($command);
+            $this->fail('This operation should have failed with an UnresolvedEndpointException.');
+        } catch (AwsException $e) {
+            $this->assertEquals(
+                'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.',
+                $e->getAwsErrorMessage()
+            );
+            $previous = $e->getPrevious();
+            $this->assertTrue($previous instanceof UnresolvedEndpointException);
+            $this->assertEquals(
+                'The endpoint discovery operation yielded a response that did not contain properly formatted endpoint data.',
+                $previous->getMessage()
+            );
+        }
     }
 
     private function generateDescribeException(CommandInterface $cmd)

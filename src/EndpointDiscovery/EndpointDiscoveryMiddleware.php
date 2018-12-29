@@ -1,8 +1,6 @@
 <?php
 namespace Aws\EndpointDiscovery;
 
-use Aws\Api\Operation;
-use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\CacheInterface;
 use Aws\CommandInterface;
@@ -11,7 +9,6 @@ use Aws\Exception\AwsException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\LruArrayCache;
 use Aws\Middleware;
-use Aws\Test\EndpointDiscovery\EndpointListTest;
 use Psr\Http\Message\RequestInterface;
 
 class EndpointDiscoveryMiddleware
@@ -20,6 +17,7 @@ class EndpointDiscoveryMiddleware
      * @var CacheInterface
      */
     private static $cache;
+    private static $discoveryCooldown = 60;
 
     private $args;
     private $client;
@@ -173,8 +171,8 @@ class EndpointDiscoveryMiddleware
                         if (empty($newEndpoint)) {
 
                             // If no more cached endpoints, make discovery call
-                            // if none made within last 60 seconds for given key
-                            if (time() - $this->discoveryTimes[$cacheKey] < 60) {
+                            // if none made within cooldown for given key
+                            if (time() - $this->discoveryTimes[$cacheKey] < self::$discoveryCooldown) {
 
                                 // If no more cached endpoints and it's required,
                                 // fail with original exception
