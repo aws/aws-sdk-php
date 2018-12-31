@@ -244,6 +244,14 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testChainThrowsExceptionOnEmptyArgs()
+    {
+        ConfigurationProvider::chain();
+    }
+
     public function testSelectsEnvironmentOverIniConfiguration()
     {
         $dir = $this->clearEnv();
@@ -344,6 +352,15 @@ EOT;
                     'cache_limit' => 4000
                 ],
                 $expected
+            ],
+            [
+                [
+                    'enabled' => true,
+                ],
+                new Configuration(
+                    true,
+                    ConfigurationProvider::DEFAULT_CACHE_LIMIT
+                )
             ],
         ];
     }
