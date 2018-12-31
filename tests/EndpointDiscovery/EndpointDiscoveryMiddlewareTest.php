@@ -213,6 +213,27 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                     ]
                 ),
             ],
+
+            // Discovery, endpoint with scheme returned by API (tests parsing)
+            [
+                ['TestDiscoveryRequired', []],
+                [],
+                new Result([
+                    'Endpoints' => [
+                        [
+                            'Address' => 'https://discovered.com/some/path',
+                            'CachePeriodInMinutes' => 10,
+                        ],
+                    ],
+                ]),
+                new Request(
+                    'POST',
+                    new Uri('https://discovered.com/some/path'),
+                    [
+                        'User-Agent' => $baseUserAgent . ' endpoint-discovery',
+                    ]
+                ),
+            ],
         ];
     }
 
@@ -285,6 +306,42 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                 $baseRequest
             ]
         ];
+    }
+
+    /**
+     * @backupStaticAttributes enabled
+     */
+    public function testThrowsExceptionOnUnparsableEndpoint()
+    {
+        $client = $this->generateTestClient($this->generateTestService());
+        $list = $client->getHandlerList();
+
+        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) {
+            if ($cmd->getName() === 'DescribeEndpoints') {
+                return Promise\promise_for(new Result([
+                    'Endpoints' => [
+                        [
+                            'Address' => '#!@$',
+                            'CachePeriodInMinutes' => 10,
+                        ],
+                    ],
+                ]));
+            }
+            return $this->generateGenericResult();
+        });
+
+        $command = $client->getCommand('TestDiscoveryRequired', []);
+
+        try {
+            $client->execute($command);
+            $this->fail('Should have failed with an UnresolvedEndpointException.');
+        } catch (\Exception $e) {
+            $this->assertTrue($e instanceof UnresolvedEndpointException);
+            $this->assertEquals(
+                "The supplied endpoint '#!@$' is invalid.",
+                $e->getMessage()
+            );
+        }
     }
 
     /**
@@ -380,9 +437,19 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $this->assertEquals(6, $operationCounter);
     }
 
+    /**
+     * @backupStaticAttributes enabled
+     */
     public function testUsesRegionalEndpointOnDescribeFailure()
     {
-        $client = $this->generateTestClient($this->generateTestService());
+        $client = $this->generateTestClient(
+            $this->generateTestService(),
+            [
+                'endpoint_discovery' => [
+                    'enabled' => true,
+                ],
+            ]
+        );
         $list = $client->getHandlerList();
 
         $list->setHandler(function (
@@ -403,6 +470,9 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $client->execute($command);
     }
 
+    /**
+     * @backupStaticAttributes enabled
+     */
     public function testThrowsExceptionOnDescribeFailure()
     {
         $client = $this->generateTestClient($this->generateTestService());
