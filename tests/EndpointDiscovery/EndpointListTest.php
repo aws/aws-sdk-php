@@ -27,9 +27,13 @@ class EndpointListTest extends TestCase
     public function testMovesToAndRetrievesFromExpiredEndpoints()
     {
         $list = new EndpointList([
-            'endpoint_1' => time() - 10,
-            'endpoint_2' => time() - 10,
+            'endpoint_1' => time() + 1,
+            'endpoint_2' => time() + 1,
         ]);
+        $this->assertEquals('endpoint_1', $list->getActive());
+        $this->assertEquals('endpoint_2', $list->getActive());
+
+        sleep(2);
 
         $this->assertNull($list->getActive());
         $this->assertEquals('endpoint_1', $list->getExpired());
