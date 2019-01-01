@@ -109,24 +109,10 @@ class EndpointDiscoveryMiddleware
                         $endpoint = $endpointList->getEndpoint();
 
                         if (empty($endpoint)) {
-                            // If no cached endpoints and discovery required,
-                            // throw exception
-                            if ($isRequired) {
-                                $message = 'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.';
-                                throw new AwsException(
-                                    $message,
-                                    $cmd,
-                                    [
-                                        'code' => 'EndpointDiscoveryException',
-                                        'message' => $message
-                                    ],
-                                    $e
-                                );
-                            }
-
-                            // If discovery isn't required, use original endpoint
-                            return $this->useOriginalUri(
+                            $this->handleDiscoveryException(
+                                $isRequired,
                                 $originalUri,
+                                $e,
                                 $cmd,
                                 $request
                             );
@@ -290,6 +276,36 @@ class EndpointDiscoveryMiddleware
             }
         }
         return $identifiers;
+    }
+
+    private function handleDiscoveryException(
+        $isRequired,
+        $originalUri,
+        \Exception $e,
+        CommandInterface $cmd,
+        RequestInterface $request
+    ) {
+        // If no cached endpoints and discovery required,
+        // throw exception
+        if ($isRequired) {
+            $message = 'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.';
+            throw new AwsException(
+                $message,
+                $cmd,
+                [
+                    'code' => 'EndpointDiscoveryException',
+                    'message' => $message
+                ],
+                $e
+            );
+        }
+
+        // If discovery isn't required, use original endpoint
+        return $this->useOriginalUri(
+            $originalUri,
+            $cmd,
+            $request
+        );
     }
 
     private function modifyRequest(RequestInterface $request, $endpoint)
