@@ -78,11 +78,7 @@ class ConfigurationProvider
                     $cache,
                     $cacheKey
                 ) {
-                    $cache->set(
-                        $cacheKey,
-                        $config
-                    );
-
+                    $cache->set($cacheKey, $config);
                     return $config;
                 });
         };
@@ -161,10 +157,7 @@ class ConfigurationProvider
             $enabled = getenv(self::ENV_ENABLED);
             if ($enabled !== false) {
                 return Promise\promise_for(
-                    new Configuration(
-                        $enabled,
-                        $cacheLimit
-                     )
+                    new Configuration($enabled, $cacheLimit)
                 );
             }
 

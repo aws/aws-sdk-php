@@ -66,7 +66,6 @@ class EndpointDiscoveryMiddleware
 
         // Continue only if endpointdiscovery trait is set
         if (isset($op['endpointdiscovery'])) {
-
             $config = ConfigurationProvider::unwrap($this->config);
             $isRequired = !empty($op['endpointdiscovery']['required']);
 
@@ -99,7 +98,6 @@ class EndpointDiscoveryMiddleware
 
                 // Retrieve endpoints if there is no active endpoint
                 if (empty($endpoint)) {
-
                     try {
                         $endpoint = $this->discoverEndpoint(
                             $cacheKey,
@@ -111,26 +109,26 @@ class EndpointDiscoveryMiddleware
                         $endpoint = $endpointList->getEndpoint();
 
                         if (empty($endpoint)) {
-                            // If no cached endpoints but discovery isn't
-                            // required, use original endpoint
-                            if (!$isRequired) {
-                                return $this->useOriginalUri(
-                                    $originalUri,
+                            // If no cached endpoints and discovery required,
+                            // throw exception
+                            if ($isRequired) {
+                                $message = 'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.';
+                                throw new AwsException(
+                                    $message,
                                     $cmd,
-                                    $request
+                                    [
+                                        'code' => 'EndpointDiscoveryException',
+                                        'message' => $message
+                                    ],
+                                    $e
                                 );
                             }
 
-                            // If discovery is required, throw exception
-                            $message = 'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.';
-                            throw new AwsException(
-                                $message,
+                            // If discovery isn't required, use original endpoint
+                            return $this->useOriginalUri(
+                                $originalUri,
                                 $cmd,
-                                [
-                                    'code' => 'EndpointDiscoveryException',
-                                    'message' => $message
-                                ],
-                                $e
+                                $request
                             );
                         }
                     }
@@ -141,12 +139,12 @@ class EndpointDiscoveryMiddleware
                 $g = function ($value) use (
                     $cacheKey,
                     $cmd,
-                    &$endpoint,
                     $identifiers,
                     $isRequired,
                     $nextHandler,
                     $originalUri,
                     $request,
+                    &$endpoint,
                     &$g
                 ) {
                     if ($value instanceof AwsException
