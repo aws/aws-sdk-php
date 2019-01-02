@@ -78,7 +78,7 @@ class EndpointDiscoveryMiddleware
                 // Original endpoint may be used if discovery optional
                 $originalUri = $request->getUri();
 
-                $identifiers =$this->getIdentifiers($op);
+                $identifiers = $this->getIdentifiers($op);
 
                 $cacheKey = $this->getCacheKey(
                     $this->client->getCredentials()->wait(),
@@ -216,7 +216,7 @@ class EndpointDiscoveryMiddleware
         CommandInterface $cmd,
         array $identifiers
     ) {
-        $key = $creds->getAccessKeyId();
+        $key = $this->service->getServiceName() . '_' . $creds->getAccessKeyId();
         if (!empty($identifiers)) {
             $key .= '_' . $cmd->getName();
             foreach ($identifiers as $identifier) {

@@ -9,7 +9,7 @@ class Configuration implements ConfigurationInterface
     public function __construct($enabled, $cacheLimit = 1000)
     {
         $this->cacheLimit = filter_var($cacheLimit, FILTER_VALIDATE_INT);
-        if ($this->cacheLimit == false) {
+        if ($this->cacheLimit == false || $this->cacheLimit < 1) {
             throw new \InvalidArgumentException(
                 "'cache_limit' value must be a positive integer.");
         }
