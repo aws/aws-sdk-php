@@ -291,8 +291,7 @@ class AwsClient implements AwsClientInterface
     {
         $list = $this->getHandlerList();
 
-        // Remove ed_override check before pushing to production
-        if (!isset($args['endpoint']) || isset($args['ed_override'])) {
+        if (!isset($args['endpoint'])) {
             $list->appendBuild(
                 EndpointDiscoveryMiddleware::wrap(
                     $this,

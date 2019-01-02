@@ -4,9 +4,9 @@ namespace Aws\EndpointDiscovery;
 class EndpointList
 {
     private $active;
-    private $expired;
+    private $expired = [];
 
-    public function __construct($endpoints)
+    public function __construct(array $endpoints)
     {
         $this->active = $endpoints;
         reset($this->active);
