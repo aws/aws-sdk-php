@@ -36,10 +36,10 @@ class EndpointListTest extends TestCase
         sleep(2);
 
         $this->assertNull($list->getActive());
-        $this->assertEquals('endpoint_1', $list->getExpired());
-        $this->assertEquals('endpoint_2', $list->getExpired());
-        $this->assertEquals('endpoint_1', $list->getExpired());
-        $this->assertEquals('endpoint_2', $list->getExpired());
+        $this->assertEquals('endpoint_1', $list->getEndpoint());
+        $this->assertEquals('endpoint_2', $list->getEndpoint());
+        $this->assertEquals('endpoint_1', $list->getEndpoint());
+        $this->assertEquals('endpoint_2', $list->getEndpoint());
     }
 
     public function testGetEndpointSelectsActiveThenExpired()
@@ -65,10 +65,14 @@ class EndpointListTest extends TestCase
         ]);
 
         $this->assertEquals('endpoint_2', $list->getActive());
-        $this->assertEquals('endpoint_1', $list->getExpired());
+
         $list->remove('endpoint_2');
         $this->assertNull($list->getActive());
+        $this->assertEquals('endpoint_1', $list->getEndpoint());
+        // Check that 'endpoint_2' was not moved to the expired list
+        $this->assertEquals('endpoint_1', $list->getEndpoint());
+
         $list->remove('endpoint_1');
-        $this->assertNull($list->getExpired());
+        $this->assertNull($list->getEndpoint());
     }
 }

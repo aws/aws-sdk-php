@@ -51,21 +51,6 @@ class EndpointList
     }
 
     /**
-     * Get an expired endpoint. Returns null if none found.
-     *
-     * @return null|string
-     */
-    public function getExpired()
-    {
-        if (count($this->expired) < 1) {
-            return null;
-        }
-        $expired = key($this->expired);
-        $this->increment($this->expired);
-        return $expired;
-    }
-
-    /**
      * Removes an endpoint from both lists.
      *
      * @param string $key
@@ -74,6 +59,21 @@ class EndpointList
     {
         unset($this->active[$key]);
         unset($this->expired[$key]);
+    }
+
+    /**
+     * Get an expired endpoint. Returns null if none found.
+     *
+     * @return null|string
+     */
+    private function getExpired()
+    {
+        if (count($this->expired) < 1) {
+            return null;
+        }
+        $expired = key($this->expired);
+        $this->increment($this->expired);
+        return $expired;
     }
 
     private function increment(&$array)
