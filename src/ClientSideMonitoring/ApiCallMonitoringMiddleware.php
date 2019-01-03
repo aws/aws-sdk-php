@@ -59,17 +59,21 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
     public static function getResponseData($klass)
     {
         if ($klass instanceof ResultInterface) {
-            return [
+            $data = [
                 'AttemptCount' => self::getResultAttemptCount($klass),
                 'MaxRetriesExceeded' => 0,
             ];
+
+            return $data + self::getFinalAttemptData($klass);
         }
 
         if ($klass instanceof \Exception) {
-            return [
+            $data = [
                 'AttemptCount' => self::getExceptionAttemptCount($klass),
                 'MaxRetriesExceeded' => self::getMaxRetriesExceeded($klass),
             ];
+
+            return $data + self::getFinalAttemptData($klass);
         }
 
         throw new \InvalidArgumentException('Parameter must be an instance of ResultInterface or Exception.');
@@ -94,6 +98,46 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
 
         }
         return $attemptCount;
+    }
+
+    private static function getFinalAttemptData($klass)
+    {
+        $data = [];
+        if ($klass instanceof MonitoringEventsInterface) {
+            $finalAttempt = self::getFinalAttempt($klass->getMonitoringEvents());
+
+            if (!empty($finalAttempt)) {
+                $eventKeys = [
+                    'FinalAwsException' => 'AwsException',
+                    'FinalAwsExceptionMessage' => 'AwsExceptionMessage',
+                    'FinalSdkException' => 'SdkException',
+                    'FinalSdkExceptionMessage' => 'SdkExceptionMessage',
+                    'FinalHttpStatusCode' => 'HttpStatusCode',
+                ];
+
+                foreach ($eventKeys as $callKey => $attemptKey) {
+                    if (isset($finalAttempt[$attemptKey])) {
+                        $data[$callKey] = $finalAttempt[$attemptKey];
+                    }
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    private static function getFinalAttempt(array $events)
+    {
+        for (end($events); key($events) !== null; prev($events)) {
+            $current = current($events);
+            if (isset($current['Type'])
+                && $current['Type'] === 'ApiCallAttempt'
+            ) {
+                return $current;
+            }
+        }
+
+        return null;
     }
 
     private static function getMaxRetriesExceeded($klass)

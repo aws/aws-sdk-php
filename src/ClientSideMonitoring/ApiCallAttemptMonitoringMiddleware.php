@@ -54,11 +54,6 @@ class ApiCallAttemptMonitoringMiddleware extends AbstractMonitoringMiddleware
     {
         return [
             'Fqdn' => $request->getUri()->getHost(),
-            'UserAgent' => substr(
-                $request->getHeaderLine('User-Agent') . ' ' . \Aws\default_user_agent(),
-                0,
-                256
-            ),
         ];
     }
 

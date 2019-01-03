@@ -141,6 +141,11 @@ abstract class AbstractMonitoringMiddleware
             'Region' => $this->getRegion(),
             'Service' => $this->getService(),
             'Timestamp' => (int) floor(microtime(true) * 1000),
+            'UserAgent' => substr(
+                $request->getHeaderLine('User-Agent') . ' ' . \Aws\default_user_agent(),
+                0,
+                256
+            ),
             'Version' => 1
         ];
         return $event;
