@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.82.5 - 2019-01-03
 
 * `Aws\IoTAnalytics` - ListDatasetContents now has a filter to limit results by date scheduled.
 
