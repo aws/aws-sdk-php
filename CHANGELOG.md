@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTAnalytics` - ListDatasetContents now has a filter to limit results by date scheduled.
+
 ## 3.82.4 - 2019-01-03
 
 * `Aws\OpsWorksCM` - Documentation updates for opsworkscm
