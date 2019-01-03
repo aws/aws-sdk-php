@@ -75,7 +75,13 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                 'ec2'
             ),
             $command,
-            new Request('POST', 'http://foo.com')
+            new Request(
+                'POST',
+                'http://foo.com',
+                [
+                    'User-Agent' => 'foo-agent'
+                ]
+            )
         ];
         $eventBase = [
             'Api' => 'RunScheduledInstances',
@@ -83,6 +89,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
             'Region' => 'us-east-1',
             'Type' => 'ApiCall',
             'Service' => 'ec2',
+            'UserAgent' => 'foo-agent ' . \Aws\default_user_agent(),
             'Version' => 1,
             'MaxRetriesExceeded' => 0,
         ];
@@ -100,6 +107,35 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
         );
         $retriesException->setMaxRetriesExceeded();
 
+        // Test API call event capturing final AwsException data
+        $finalAwsException = new AwsException('FinalExceptionMessage', $command);
+        $finalAwsException->appendMonitoringEvent([
+            'Type' => 'ApiCallAttempt',
+            'HttpStatusCode' => 421,
+            'AwsException' => 'FirstException',
+            'AwsExceptionMessage' => 'FirstExceptionMessage'
+        ]);
+        $finalAwsException->appendMonitoringEvent([
+            'Type' => 'ApiCallAttempt',
+            'HttpStatusCode' => 503,
+            'AwsException' => 'FinalException',
+            'AwsExceptionMessage' => 'FinalExceptionMessage'
+        ]);
+
+        // Test API call event capturing final SdkException data
+        $finalSdkException = new AwsException('FinalExceptionMessage', $command);
+        $finalSdkException->appendMonitoringEvent([
+            'Type' => 'ApiCallAttempt',
+            'HttpStatusCode' => 421,
+            'SdkException' => 'FirstException',
+            'SdkExceptionMessage' => 'FirstExceptionMessage'
+        ]);
+        $finalSdkException->appendMonitoringEvent([
+            'Type' => 'ApiCallAttempt',
+            'HttpStatusCode' => 503,
+            'SdkException' => 'FinalException',
+            'SdkExceptionMessage' => 'FinalExceptionMessage'
+        ]);
 
         return [
             array_merge($testBase, [
@@ -134,6 +170,22 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                 array_merge($eventBase, [
                     'ClientId' => 'AwsPhpSdkTestApp',
                     'MaxRetriesExceeded' => 1,
+                ])
+            ]),
+            array_merge($testBase, [
+                $finalAwsException,
+                array_merge($eventBase, [
+                    'FinalHttpStatusCode' => 503,
+                    'FinalAwsException' => 'FinalException',
+                    'FinalAwsExceptionMessage' => 'FinalExceptionMessage'
+                ])
+            ]),
+            array_merge($testBase, [
+                $finalSdkException,
+                array_merge($eventBase, [
+                    'FinalHttpStatusCode' => 503,
+                    'FinalSdkException' => 'FinalException',
+                    'FinalSdkExceptionMessage' => 'FinalExceptionMessage'
                 ])
             ]),
         ];
