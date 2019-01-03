@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.82.4 - 2019-01-03
 
 * `Aws\OpsWorksCM` - Documentation updates for opsworkscm
 
