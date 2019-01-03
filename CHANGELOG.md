@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\OpsWorksCM` - Documentation updates for opsworkscm
+
 ## 3.82.3 - 2018-12-21
 
 * `Aws\ACMPCA` - This release marks the introduction of waiters in ACM PCA, which allow you to control the progression of your code based on the presence or state of certain resources. Waiters can be implemented in the DescribeCertificateAuthorityAuditReport, GetCertificate, and GetCertificateAuthorityCsr API operations.
