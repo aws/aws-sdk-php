@@ -145,6 +145,29 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                 ),
             ],
 
+            // Discovery required, enabled by user
+            [
+                ['TestDiscoveryRequired', []],
+                [
+                    'endpoint_discovery' => ['enabled' => true],
+                ],
+                new Result([
+                    'Endpoints' => [
+                        [
+                            'Address' => 'discovered.com/some/path',
+                            'CachePeriodInMinutes' => 10,
+                        ],
+                    ],
+                ]),
+                new Request(
+                    'POST',
+                    new Uri('https://discovered.com/some/path'),
+                    [
+                        'User-Agent' => $baseUserAgent . ' endpoint-discovery',
+                    ]
+                ),
+            ],
+
             // Discovery required, no config provided
             [
                 ['TestDiscoveryRequired', []],
