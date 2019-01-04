@@ -15,6 +15,19 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
 {
 
     /**
+     * Api Call Attempt event keys for each Api Call event key
+     *
+     * @var array
+     */
+    private static $eventKeys = [
+        'FinalAwsException' => 'AwsException',
+        'FinalAwsExceptionMessage' => 'AwsExceptionMessage',
+        'FinalSdkException' => 'SdkException',
+        'FinalSdkExceptionMessage' => 'SdkExceptionMessage',
+        'FinalHttpStatusCode' => 'HttpStatusCode',
+    ];
+
+    /**
      * Standard middleware wrapper function with CSM options passed in.
      *
      * @param callable $credentialProvider
@@ -63,20 +76,16 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
                 'AttemptCount' => self::getResultAttemptCount($klass),
                 'MaxRetriesExceeded' => 0,
             ];
-
-            return $data + self::getFinalAttemptData($klass);
-        }
-
-        if ($klass instanceof \Exception) {
+        } elseif ($klass instanceof \Exception) {
             $data = [
                 'AttemptCount' => self::getExceptionAttemptCount($klass),
                 'MaxRetriesExceeded' => self::getMaxRetriesExceeded($klass),
             ];
-
-            return $data + self::getFinalAttemptData($klass);
+        } else {
+            throw new \InvalidArgumentException('Parameter must be an instance of ResultInterface or Exception.');
         }
 
-        throw new \InvalidArgumentException('Parameter must be an instance of ResultInterface or Exception.');
+        return $data + self::getFinalAttemptData($klass);
     }
 
     private static function getResultAttemptCount(ResultInterface $result) {
@@ -107,15 +116,7 @@ class ApiCallMonitoringMiddleware extends AbstractMonitoringMiddleware
             $finalAttempt = self::getFinalAttempt($klass->getMonitoringEvents());
 
             if (!empty($finalAttempt)) {
-                $eventKeys = [
-                    'FinalAwsException' => 'AwsException',
-                    'FinalAwsExceptionMessage' => 'AwsExceptionMessage',
-                    'FinalSdkException' => 'SdkException',
-                    'FinalSdkExceptionMessage' => 'SdkExceptionMessage',
-                    'FinalHttpStatusCode' => 'HttpStatusCode',
-                ];
-
-                foreach ($eventKeys as $callKey => $attemptKey) {
+                foreach (self::$eventKeys as $callKey => $attemptKey) {
                     if (isset($finalAttempt[$attemptKey])) {
                         $data[$callKey] = $finalAttempt[$attemptKey];
                     }
