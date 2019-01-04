@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.82.6 - 2019-01-04
 
 * `Aws\DeviceFarm` - "This release provides support for running Appium Node.js and Appium Ruby tests on AWS Device Farm.
 * `Aws\ECS` - Documentation updates for Amazon ECS tagging feature.
