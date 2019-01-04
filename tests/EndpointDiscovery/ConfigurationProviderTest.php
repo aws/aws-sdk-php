@@ -36,6 +36,7 @@ EOT;
     private function clearEnv()
     {
         putenv(ConfigurationProvider::ENV_ENABLED . '=');
+        putenv(ConfigurationProvider::ENV_ENABLED_ALT . '=');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -52,19 +53,32 @@ EOT;
             self::$originalEnv['enabled']);
     }
 
-    public function testCreatesFromEnvironmentVariables()
+    /**
+     * @dataProvider getEnvVariableNames
+     * @param $envName
+     */
+    public function testCreatesFromEnvironmentVariables($envName)
     {
         $this->clearEnv();
         $expected = new Configuration(true, 2000);
-        putenv(ConfigurationProvider::ENV_ENABLED . '=true');
+        putenv($envName . '=true');
         $result = call_user_func(ConfigurationProvider::env(2000))->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
+    }
+
+    public function getEnvVariableNames()
+    {
+        return [
+            [ConfigurationProvider::ENV_ENABLED],
+            [ConfigurationProvider::ENV_ENABLED_ALT],
+        ];
     }
 
     public function testRejectsOnNoEnvironmentVars()
     {
         $this->clearEnv();
         putenv(ConfigurationProvider::ENV_ENABLED);
+        putenv(ConfigurationProvider::ENV_ENABLED_ALT);
         $promise = call_user_func(ConfigurationProvider::env())->then(
             function() {
                 $this->fail('Should have received a rejection.');

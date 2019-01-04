@@ -47,6 +47,7 @@ class ConfigurationProvider
     const DEFAULT_ENABLED = false;
     const DEFAULT_CACHE_LIMIT = 1000;
     const ENV_ENABLED = 'AWS_ENDPOINT_DISCOVERY_ENABLED';
+    const ENV_ENABLED_ALT = 'AWS_ENABLE_ENDPOINT_DISCOVERY';
     const ENV_PROFILE = 'AWS_PROFILE';
 
     /**
@@ -155,7 +156,10 @@ class ConfigurationProvider
         return function () use ($cacheLimit) {
             // Use config from environment variables, if available
             $enabled = getenv(self::ENV_ENABLED);
-            if ($enabled !== false) {
+            if ($enabled === false || $enabled === '') {
+                $enabled = getenv(self::ENV_ENABLED_ALT);
+            }
+            if ($enabled !== false || $enabled === '') {
                 return Promise\promise_for(
                     new Configuration($enabled, $cacheLimit)
                 );
