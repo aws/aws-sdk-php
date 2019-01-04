@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DeviceFarm` - "This release provides support for running Appium Node.js and Appium Ruby tests on AWS Device Farm.
+* `Aws\ECS` - Documentation updates for Amazon ECS tagging feature.
+
 ## 3.82.5 - 2019-01-03
 
 * `Aws\IoTAnalytics` - ListDatasetContents now has a filter to limit results by date scheduled.
