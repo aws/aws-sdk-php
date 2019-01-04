@@ -138,46 +138,17 @@ class EndpointDiscoveryMiddleware
                             || $value->getStatusCode() == 421
                         )
                     ) {
-                        $endpointList = self::$cache->get($cacheKey);
-                        if ($endpointList instanceof EndpointList) {
-
-                            // Remove invalid endpoint from cached list
-                            $endpointList->remove($endpoint);
-
-                            // If possible, get another cached endpoint
-                            $newEndpoint = $endpointList->getEndpoint();
-                        }
-                        if (empty($newEndpoint)) {
-
-                            // If no more cached endpoints, make discovery call
-                            // if none made within cooldown for given key
-                            if (time() - $this->discoveryTimes[$cacheKey]
-                                < self::$discoveryCooldown
-                            ) {
-
-                                // If no more cached endpoints and it's required,
-                                // fail with original exception
-                                if ($isRequired) {
-                                    return $value;
-                                }
-
-                                // Use original endpoint if not required
-                                return $this->useOriginalUri(
-                                    $originalUri,
-                                    $cmd,
-                                    $request
-                                );
-                            }
-
-                            $newEndpoint = $this->discoverEndpoint(
-                                $cacheKey,
-                                $cmd,
-                                $identifiers
-                            );
-                        }
-                        $endpoint = $newEndpoint;
-                        $request = $this->modifyRequest($request, $endpoint);
-                        return $nextHandler($cmd, $request)->otherwise($g);
+                        return $this->handleInvalidEndpoint(
+                            $cacheKey,
+                            $cmd,
+                            $identifiers,
+                            $isRequired,
+                            $originalUri,
+                            $request,
+                            $value,
+                            $endpoint,
+                            $g
+                        );
                     }
                 };
 
@@ -306,6 +277,60 @@ class EndpointDiscoveryMiddleware
             $cmd,
             $request
         );
+    }
+
+    private function handleInvalidEndpoint(
+        $cacheKey,
+        $cmd,
+        $identifiers,
+        $isRequired,
+        $originalUri,
+        $request,
+        $value,
+        &$endpoint,
+        &$g
+    ) {
+        $nextHandler = $this->nextHandler;
+        $endpointList = self::$cache->get($cacheKey);
+        if ($endpointList instanceof EndpointList) {
+
+            // Remove invalid endpoint from cached list
+            $endpointList->remove($endpoint);
+
+            // If possible, get another cached endpoint
+            $newEndpoint = $endpointList->getEndpoint();
+        }
+        if (empty($newEndpoint)) {
+
+            // If no more cached endpoints, make discovery call
+            // if none made within cooldown for given key
+            if (time() - $this->discoveryTimes[$cacheKey]
+                < self::$discoveryCooldown
+            ) {
+
+                // If no more cached endpoints and it's required,
+                // fail with original exception
+                if ($isRequired) {
+                    return $value;
+                }
+
+                // Use original endpoint if not required
+                return $this->useOriginalUri(
+                    $originalUri,
+                    $cmd,
+                    $request
+                );
+            }
+
+            $newEndpoint = $this->discoverEndpoint(
+                $cacheKey,
+                $cmd,
+                $identifiers
+            );
+        }
+        $endpoint = $newEndpoint;
+        $request = $this->modifyRequest($request, $endpoint);
+        return $nextHandler($cmd, $request)->otherwise($g);
     }
 
     private function modifyRequest(RequestInterface $request, $endpoint)
