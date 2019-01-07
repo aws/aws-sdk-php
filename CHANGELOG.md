@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.83.0 - 2019-01-07
 
 * `Aws\AppMesh` - AWS App Mesh now supports active health checks. You can specify TCP or HTTP health checks with custom thresholds and intervals on your VirtualNode definitions. See the AWS App Mesh HealthCheckPolicy documentation for more information.
 * `Aws\ClientSideMonitoring` - Adds User-Agent and final API call attempt entries to API call event.
