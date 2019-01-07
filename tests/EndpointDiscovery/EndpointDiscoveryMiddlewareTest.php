@@ -490,7 +490,9 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         });
 
         $command = $client->getCommand('TestDiscoveryOptional', []);
-        $client->execute($command);
+
+        $handler = $list->resolve();
+        $handler($command, new Request('POST', new Uri('https://foo.com')));
     }
 
     /**

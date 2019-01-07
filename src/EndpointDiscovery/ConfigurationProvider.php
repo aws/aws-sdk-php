@@ -159,7 +159,7 @@ class ConfigurationProvider
             if ($enabled === false || $enabled === '') {
                 $enabled = getenv(self::ENV_ENABLED_ALT);
             }
-            if ($enabled !== false || $enabled === '') {
+            if ($enabled !== false && $enabled !== '') {
                 return Promise\promise_for(
                     new Configuration($enabled, $cacheLimit)
                 );

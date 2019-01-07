@@ -150,6 +150,8 @@ class EndpointDiscoveryMiddleware
                             $g
                         );
                     }
+                    
+                    return $value;
                 };
 
                 return $nextHandler($cmd, $request)->otherwise($g);
