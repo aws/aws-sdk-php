@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppMesh` - AWS App Mesh now supports active health checks. You can specify TCP or HTTP health checks with custom thresholds and intervals on your VirtualNode definitions. See the AWS App Mesh HealthCheckPolicy documentation for more information.
+* `Aws\ClientSideMonitoring` - Adds User-Agent and final API call attempt entries to API call event.
+
 ## 3.82.6 - 2019-01-04
 
 * `Aws\DeviceFarm` - "This release provides support for running Appium Node.js and Appium Ruby tests on AWS Device Farm.
