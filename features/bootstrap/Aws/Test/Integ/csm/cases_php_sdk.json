@@ -27,25 +27,27 @@
                     "attemptResponses": [
                         {
                             "httpStatus": 500,
-                            "responseHeaders": {},
                             "errorCode": "ServiceUnavailable",
                             "errorMessage": "Service is unavailable",
                             "totalTime": 0.33,
                             "primaryIp": "33.44.55.66",
                             "namelookupTime": 0.22,
-                            "xAmzRequestId": "testrequestid1",
-                            "xAmznRequestId": "testrequestid2",
-                            "xAmzId2": "testamzid"
+                            "responseHeaders": {
+                                "x-amz-request-id": "testrequestid1",
+                                "x-amzn-RequestId": "testrequestid2",
+                                "x-amz-id-2": "testamzid"
+                            }
                         },
                         {
                             "httpStatus": 200,
-                            "responseHeaders": {},
                             "totalTime": 0.34,
                             "primaryIp": "44.55.66.77",
                             "namelookupTime": 0.23,
-                            "xAmzRequestId": "testrequestid3",
-                            "xAmznRequestId": "testrequestid4",
-                            "xAmzId2": "testamzid2"
+                            "responseHeaders": {
+                                "x-amz-request-id": "testrequestid3",
+                                "x-amzn-RequestId": "testrequestid4",
+                                "x-amz-id-2": "testamzid2"
+                            }
                         }
                     ]
                 }
@@ -103,7 +105,9 @@
                     "Version": 1,
                     "AttemptCount": 2,
                     "Latency": "ANY_INT",
-                    "MaxRetriesExceeded": 0
+                    "MaxRetriesExceeded": 0,
+                    "UserAgent": "ANY_STR",
+                    "FinalHttpStatusCode": 200
                 }
             ]
         },
@@ -235,7 +239,11 @@
                     "Version": 1,
                     "AttemptCount": 4,
                     "Latency": "ANY_INT",
-                    "MaxRetriesExceeded": 1
+                    "MaxRetriesExceeded": 1,
+                    "UserAgent": "ANY_STR",
+                    "FinalHttpStatusCode": 503,
+                    "FinalAwsException": "ServiceUnavailable",
+                    "FinalAwsExceptionMessage": "Service is unavailable"
                 }
             ]
         }

@@ -336,17 +336,14 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
                 ? $attemptResponse['namelookupTime']
                 : 0.012,
         ];
+
         $headers = [];
-        $headerProperties = [
-            'xAmzRequestId' => 'x-amz-request-id',
-            'xAmznRequestId' => 'x-amzn-RequestId',
-            'xAmzId2' => 'x-amz-id-2',
-        ];
-        foreach($headerProperties as $property => $header) {
-            if (isset($attemptResponse[$property])) {
-                $headers[$header] = $attemptResponse[$property];
+        if (isset($attemptResponse['responseHeaders'])) {
+            foreach($attemptResponse['responseHeaders'] as $header => $value) {
+                $headers[$header] = $value;
             }
         }
+
         if (!empty($attemptResponse['errorCode'])) {
             $context = [
                 'code' => $attemptResponse['errorCode'],
