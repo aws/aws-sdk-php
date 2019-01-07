@@ -694,6 +694,14 @@ return array (
                     'type' => 'numeric',
                     'location' => 'aws.query',
                 ),
+                'MessageGroupId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
+                'MessageDeduplicationId' => array(
+                    'type' => 'string',
+                    'location' => 'aws.query',
+                ),
                 'MessageAttributes' => array(
                     'type' => 'object',
                     'location' => 'aws.query',
