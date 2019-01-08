@@ -30,6 +30,9 @@ EOT;
     {
         self::$originalEnv = [
             'enabled' => getenv(ConfigurationProvider::ENV_ENABLED) ?: '',
+            'enabled_alt' => getenv(ConfigurationProvider::ENV_ENABLED_ALT) ?: '',
+            'home' => getenv('HOME') ?: '',
+            'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
         ];
     }
 
@@ -51,6 +54,11 @@ EOT;
     {
         putenv(ConfigurationProvider::ENV_ENABLED . '=' .
             self::$originalEnv['enabled']);
+        putenv(ConfigurationProvider::ENV_ENABLED_ALT . '=' .
+            self::$originalEnv['enabled_alt']);
+        putenv(ConfigurationProvider::ENV_PROFILE . '=' .
+            self::$originalEnv['profile']);
+        putenv('HOME=' . self::$originalEnv['home']);
     }
 
     /**
@@ -256,6 +264,7 @@ EOT;
         /** @var ConfigurationInterface $result */
         $result = $provider()->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
     }
 
     /**
@@ -279,6 +288,7 @@ EOT;
         /** @var ConfigurationInterface $result */
         $result = $provider()->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
     }
 
     public function testSelectsEnvironmentVariablesWithDisabled()
@@ -294,6 +304,7 @@ EOT;
         /** @var ConfigurationInterface $result */
         $result = $provider()->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
     }
 
     public function testsPersistsToCache()
