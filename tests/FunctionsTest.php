@@ -83,7 +83,13 @@ class FunctionsTest extends TestCase
     {
         $soughtData = ['foo' => 'bar'];
         $jsonPath = sys_get_temp_dir() . '/some-file-name-' . time() . '.json';
+
+        file_put_contents($jsonPath, json_encode($soughtData), LOCK_EX);
+
+        $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
+
         file_put_contents($jsonPath, 'INVALID JSON', LOCK_EX);
+
         file_put_contents(
             "$jsonPath.php",
             '<?php return ' . var_export($soughtData, true) . ';',
