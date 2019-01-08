@@ -263,8 +263,8 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     /**
      * @backupStaticAttributes enabled
      * @dataProvider getDiscoveryRequestTestCases
-     * @param $mainCmd
-     * @param $expectedCmd
+     * @param CommandInterface $mainCmd
+     * @param CommandInterface $expectedCmd
      * @param RequestInterface $expectedReq
      */
     public function testCorrectlyConstructsDiscoveryRequest(
@@ -490,9 +490,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         });
 
         $command = $client->getCommand('TestDiscoveryOptional', []);
-
-        $handler = $list->resolve();
-        $handler($command, new Request('POST', new Uri('https://foo.com')));
+        $client->execute($command);
     }
 
     /**
@@ -532,6 +530,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     /**
      * @backupStaticAttributes enabled
      * @dataProvider getInvalidEndpointExceptions
+     * @param $exception
      */
     public function testUsesCachedEndpointForInvalidEndpointException($exception)
     {
@@ -567,6 +566,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     /**
      * @backupStaticAttributes enabled
      * @dataProvider getInvalidEndpointExceptions
+     * @param $exception
      */
     public function testUseRegionalEndpointForInvalidEndpointException($exception)
     {
@@ -608,6 +608,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     /**
      * @backupStaticAttributes enabled
      * @dataProvider getInvalidEndpointExceptions
+     * @param $exception
      */
     public function testThrowsExceptionOnInvalidEndpointException($exception)
     {
@@ -649,6 +650,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     /**
      * @backupStaticAttributes enabled
      * @dataProvider getInvalidEndpointExceptions
+     * @param $exception
      */
     public function testCallsDiscoveryApiOnInvalidEndpointException($exception)
     {

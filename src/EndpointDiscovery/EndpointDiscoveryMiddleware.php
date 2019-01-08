@@ -109,7 +109,7 @@ class EndpointDiscoveryMiddleware
                         $endpoint = $endpointList->getEndpoint();
 
                         if (empty($endpoint)) {
-                            $this->handleDiscoveryException(
+                            return $this->handleDiscoveryException(
                                 $isRequired,
                                 $originalUri,
                                 $e,
