@@ -325,6 +325,19 @@ EOT;
         $this->assertEquals(1, $called);
     }
 
+    public function testMemoizesCleansUpOnError()
+    {
+        $called = 0;
+        $f = function () use (&$called) {
+            $called++;
+            return Promise\rejection_for('Error');
+        };
+        $p = CredentialProvider::memoize($f);
+        $p()->wait(false);
+        $p()->wait(false);
+        $this->assertEquals(2, $called);
+    }
+
     public function testCallsDefaultsCreds()
     {
         $k = getenv(CredentialProvider::ENV_KEY);
