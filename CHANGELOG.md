@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Fixes a failure loop if InstanceProfileProvider fails.
+* `Aws\DocDB` - Amazon DocumentDB (with MongoDB compatibility) is a fast, reliable, and fully-managed database service. Amazon DocumentDB makes it easy for developers to set up, run, and scale MongoDB-compatible databases in the cloud.
+* `Aws\Redshift` - DescribeSnapshotSchedules returns a list of snapshot schedules. With this release, this API will have a list of clusters and number of clusters associated with the schedule.
+
 ## 3.83.0 - 2019-01-07
 
 * `Aws\AppMesh` - AWS App Mesh now supports active health checks. You can specify TCP or HTTP health checks with custom thresholds and intervals on your VirtualNode definitions. See the AWS App Mesh HealthCheckPolicy documentation for more information.
