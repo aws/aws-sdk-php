@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
  */
 class EndpointListTest extends TestCase
 {
-
     public function testStoresRetrievesAndCyclesActiveEndpoints()
     {
         $list = new EndpointList([

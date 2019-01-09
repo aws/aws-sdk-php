@@ -11,7 +11,6 @@ use Psr\Log\InvalidArgumentException;
  */
 class ConfigurationTest extends TestCase
 {
-
     public function testGetsCorrectValues()
     {
         $config = new Configuration(true, 2000);

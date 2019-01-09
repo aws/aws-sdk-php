@@ -72,7 +72,10 @@ class EndpointDiscoveryMiddleware
             // Continue only if required by operation or enabled by config
             if ($isRequired || $config->isEnabled()) {
                 if (isset($op['endpointoperation'])) {
-                    throw new UnresolvedEndpointException('This operation is contradictorily marked both as using endpoint discovery and being the endpoint discovery operation. Please verify the accuracy of your model files.');
+                    throw new UnresolvedEndpointException('This operation is '
+                        . 'contradictorily marked both as using endpoint discovery '
+                        . 'and being the endpoint discovery operation. Please '
+                        . 'verify the accuracy of your model files.');
                 }
 
                 // Original endpoint may be used if discovery optional
@@ -134,7 +137,8 @@ class EndpointDiscoveryMiddleware
                     &$g
                 ) {
                     if ($value instanceof AwsException
-                        && ($value->getAwsErrorCode() == 'InvalidEndpointException'
+                        && (
+                            $value->getAwsErrorCode() == 'InvalidEndpointException'
                             || $value->getStatusCode() == 421
                         )
                     ) {
@@ -181,7 +185,9 @@ class EndpointDiscoveryMiddleware
             return $endpointList->getEndpoint();
         }
 
-        throw new UnresolvedEndpointException('The endpoint discovery operation yielded a response that did not contain properly formatted endpoint data.');
+        throw new UnresolvedEndpointException('The endpoint discovery operation '
+            . 'yielded a response that did not contain properly formatted '
+            . 'endpoint data.');
     }
 
     private function getCacheKey(
@@ -212,14 +218,16 @@ class EndpointDiscoveryMiddleware
         }
 
         if (!isset($endpointOperation)) {
-            throw new UnresolvedEndpointException('This command is set to use endpoint discovery, but no endpoint discovery operation was found. Please verify the accuracy of your model files.');
+            throw new UnresolvedEndpointException('This command is set to use '
+                . 'endpoint discovery, but no endpoint discovery operation was '
+                . 'found. Please verify the accuracy of your model files.');
         }
 
         $params = [];
         if (!empty($identifiers)) {
             $params['Operation'] = $cmd->getName();
             $params['Identifiers'] = [];
-            foreach($identifiers as $identifier) {
+            foreach ($identifiers as $identifier) {
                 $params['Identifiers'][$identifier] = $cmd[$identifier];
             }
         }
@@ -261,7 +269,9 @@ class EndpointDiscoveryMiddleware
         // If no cached endpoints and discovery required,
         // throw exception
         if ($isRequired) {
-            $message = 'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.';
+            $message = 'The endpoint required for this service is currently '
+                . 'unable to be retrieved, and your request can not be fulfilled '
+                . 'unless you manually specify an endpoint.';
             throw new AwsException(
                 $message,
                 $cmd,
@@ -348,7 +358,8 @@ class EndpointDiscoveryMiddleware
         }
 
         return $request
-            ->withUri($request->getUri()
+            ->withUri(
+                $request->getUri()
                 ->withHost($parsed['host'])
                 ->withPath($parsed['path'])
             )
@@ -383,7 +394,8 @@ class EndpointDiscoveryMiddleware
             return $parsed;
         }
 
-        throw new UnresolvedEndpointException("The supplied endpoint '{$endpoint}' is invalid.");
+        throw new UnresolvedEndpointException("The supplied endpoint '"
+            . "{$endpoint}' is invalid.");
     }
 
     private function useOriginalUri(

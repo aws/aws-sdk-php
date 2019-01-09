@@ -42,7 +42,6 @@ use GuzzleHttp\Promise\PromiseInterface;
  */
 class ConfigurationProvider
 {
-
     const CACHE_KEY = 'aws_cached_endpoint_discovery_config';
     const DEFAULT_ENABLED = false;
     const DEFAULT_CACHE_LIMIT = 1000;
@@ -177,7 +176,7 @@ class ConfigurationProvider
      */
     public static function fallback()
     {
-        return function() {
+        return function () {
             return Promise\promise_for(
                 new Configuration(
                     self::DEFAULT_ENABLED,
@@ -288,7 +287,7 @@ class ConfigurationProvider
 
     /**
      * Reject promise with standardized exception.
-     * 
+     *
      * @param $msg
      * @return Promise\RejectedPromise
      */
@@ -317,13 +316,18 @@ class ConfigurationProvider
             return $config;
         } elseif (is_array($config) && isset($config['enabled'])) {
             if (isset($config['cache_limit'])) {
-                return new Configuration($config['enabled'],
-                    $config['cache_limit']);
+                return new Configuration(
+                    $config['enabled'],
+                    $config['cache_limit']
+                );
             }
-            return new Configuration($config['enabled'],
-                self::DEFAULT_CACHE_LIMIT);
+            return new Configuration(
+                $config['enabled'],
+                self::DEFAULT_CACHE_LIMIT
+            );
         }
 
-        throw new \InvalidArgumentException('Not a valid endpoint_discovery configuration argument.');
+        throw new \InvalidArgumentException('Not a valid endpoint_discovery '
+            . 'configuration argument.');
     }
 }

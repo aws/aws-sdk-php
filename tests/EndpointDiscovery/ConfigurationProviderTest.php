@@ -88,10 +88,10 @@ EOT;
         putenv(ConfigurationProvider::ENV_ENABLED);
         putenv(ConfigurationProvider::ENV_ENABLED_ALT);
         $promise = call_user_func(ConfigurationProvider::env())->then(
-            function() {
+            function () {
                 $this->fail('Should have received a rejection.');
             },
-            function(ConfigurationException $e) {
+            function (ConfigurationException $e) {
                 $this->assertStringStartsWith(
                     'Could not find environment variable config',
                     $e->getMessage()
@@ -259,7 +259,9 @@ EOT;
         putenv('HOME=' . dirname($dir));
         $a = ConfigurationProvider::ini('custom', null, 2000);
         $b = ConfigurationProvider::ini();
-        $c = function () { $this->fail('Should not have called'); };
+        $c = function () {
+            $this->fail('Should not have called');
+        };
         $provider = ConfigurationProvider::chain($a, $b, $c);
         /** @var ConfigurationInterface $result */
         $result = $provider()->wait();
@@ -358,7 +360,7 @@ EOT;
         $expected = new Configuration(true, 4000);
         return [
             [
-                function() use ($expected) {
+                function () use ($expected) {
                     return $expected;
                 },
                 $expected

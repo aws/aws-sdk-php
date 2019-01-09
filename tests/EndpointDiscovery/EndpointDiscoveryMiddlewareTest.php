@@ -514,14 +514,17 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $command = $client->getCommand('TestDiscoveryRequired', []);
         try {
             $client->execute($command);
-            $this->fail('This operation should have failed with an EndpointDiscoveryException.');
+            $this->fail('This operation should have failed with an '
+                . 'EndpointDiscoveryException.');
         } catch (AwsException $e) {
             $this->assertEquals(
                 'EndpointDiscoveryException',
                 $e->getAwsErrorCode()
             );
             $this->assertEquals(
-                'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.',
+                'The endpoint required for this service is currently unable to '
+                    . 'be retrieved, and your request can not be fulfilled '
+                    . 'unless you manually specify an endpoint.',
                 $e->getAwsErrorMessage()
             );
         }
@@ -601,8 +604,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $command = $client->getCommand('TestDiscoveryOptional', []);
 
         $client->execute($command);
-        $this->assertEquals(['describe', 'failure', 'failure', 'success'],
-            $callOrder);
+        $this->assertEquals(
+            ['describe', 'failure', 'failure', 'success'],
+            $callOrder
+        );
     }
 
     /**
@@ -666,8 +671,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $handler = function (
             CommandInterface $cmd,
             RequestInterface $req
-        ) use (&$callOrder, $exception, $reflection)
-        {
+        ) use (&$callOrder, $exception, $reflection) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 // On the second trip to DescribeEndpoints, can set discoveryCooldown
                 // back to 60, allowing failure to occur naturally on next pass
@@ -739,9 +743,15 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $handler = $list->resolve();
         try {
             $handler($command, new Request('POST', 'https://foo.com'));
-            $this->fail('This operation should have failed with a UnresolvedEndpointException!');
+            $this->fail('This operation should have failed with a '
+                . 'UnresolvedEndpointException!');
         } catch (\Exception $e) {
-            $this->assertEquals('This operation is contradictorily marked both as using endpoint discovery and being the endpoint discovery operation. Please verify the accuracy of your model files.', $e->getMessage());
+            $this->assertEquals(
+                'This operation is contradictorily marked both as using endpoint '
+                    . 'discovery and being the endpoint discovery operation. '
+                    . 'Please verify the accuracy of your model files.',
+                $e->getMessage()
+            );
             $this->assertInstanceOf(UnresolvedEndpointException::class, $e);
         }
     }
@@ -754,23 +764,27 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $client = $this->generateTestClient($this->generateTestService());
         $list = $client->getHandlerList();
 
-        $list->setHandler(function (CommandInterface $cmd,RequestInterface $req) {
+        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) {
             return $this->generateGenericResult();
         });
 
         $command = $client->getCommand('TestDiscoveryRequired', []);
         try {
             $client->execute($command);
-            $this->fail('This operation should have failed with an UnresolvedEndpointException.');
+            $this->fail('This operation should have failed with an '
+                . 'UnresolvedEndpointException.');
         } catch (AwsException $e) {
             $this->assertEquals(
-                'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.',
+                'The endpoint required for this service is currently unable to '
+                    . 'be retrieved, and your request can not be fulfilled '
+                    . 'unless you manually specify an endpoint.',
                 $e->getAwsErrorMessage()
             );
             $previous = $e->getPrevious();
             $this->assertTrue($previous instanceof UnresolvedEndpointException);
             $this->assertEquals(
-                'The endpoint discovery operation yielded a response that did not contain properly formatted endpoint data.',
+                'The endpoint discovery operation yielded a response that did '
+                    . 'not contain properly formatted endpoint data.',
                 $previous->getMessage()
             );
         }
@@ -784,23 +798,28 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         $client = $this->generateTestClient($this->generateFaultyService());
         $list = $client->getHandlerList();
 
-        $list->setHandler(function (CommandInterface $cmd,RequestInterface $req) {
+        $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) {
             return $this->generateGenericResult();
         });
 
         $command = $client->getCommand('TestDiscoveryRequired', []);
         try {
             $client->execute($command);
-            $this->fail('This operation should have failed with an UnresolvedEndpointException.');
+            $this->fail('This operation should have failed with an '
+                . 'UnresolvedEndpointException.');
         } catch (AwsException $e) {
             $this->assertEquals(
-                'The endpoint required for this service is currently unable to be retrieved, and your request can not be fulfilled unless you manually specify an endpoint.',
+                'The endpoint required for this service is currently unable to '
+                    . 'be retrieved, and your request can not be fulfilled '
+                    . 'unless you manually specify an endpoint.',
                 $e->getAwsErrorMessage()
             );
             $previous = $e->getPrevious();
             $this->assertTrue($previous instanceof UnresolvedEndpointException);
             $this->assertEquals(
-                'This command is set to use endpoint discovery, but no endpoint discovery operation was found. Please verify the accuracy of your model files.',
+                'This command is set to use endpoint discovery, but no endpoint '
+                    . 'discovery operation was found. Please verify the '
+                    . 'accuracy of your model files.',
                 $previous->getMessage()
             );
         }
@@ -1041,7 +1060,9 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                     ]
                 ]
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
     }
 
@@ -1114,7 +1135,9 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                     ]
                 ]
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
     }
 }
