@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.84.0 - 2019-01-09
 
 * `Aws\Credentials` - Fixes a failure loop if InstanceProfileProvider fails.
 * `Aws\DocDB` - Amazon DocumentDB (with MongoDB compatibility) is a fast, reliable, and fully-managed database service. Amazon DocumentDB makes it easy for developers to set up, run, and scale MongoDB-compatible databases in the cloud.
