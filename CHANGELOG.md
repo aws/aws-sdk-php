@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeDeploy` - Documentation updates for codedeploy
+* `Aws\EC2` - EC2 Spot: a) CreateFleet support for Single AvailabilityZone requests and b) support for paginated DescribeSpotInstanceRequests.
+* `Aws\EndpointDiscovery` - This feature adds SDK support for discovering the correct endpoint for a customer by making requests against a service-provided API, for operations specified by the service.
+* `Aws\IoT` - This release adds tagging support for rules of AWS IoT Rules Engine. Tags enable you to categorize your rules in different ways, for example, by purpose, owner, or environment. For more information about tagging, see AWS Tagging Strategies (https://aws.amazon.com/answers/account-management/aws-tagging-strategies/). For technical documentation, look for the tagging operations in the AWS IoT Core API reference or User Guide (https://docs.aws.amazon.com/iot/latest/developerguide/tagging-iot.html).
+* `Aws\SageMaker` - SageMaker Training Jobs now support Inter-Container traffic encryption.
+
 ## 3.84.0 - 2019-01-09
 
 * `Aws\Credentials` - Fixes a failure loop if InstanceProfileProvider fails.
