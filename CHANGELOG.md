@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.85.0 - 2019-01-10
 
 * `Aws\CodeDeploy` - Documentation updates for codedeploy
 * `Aws\EC2` - EC2 Spot: a) CreateFleet support for Single AvailabilityZone requests and b) support for paginated DescribeSpotInstanceRequests.
