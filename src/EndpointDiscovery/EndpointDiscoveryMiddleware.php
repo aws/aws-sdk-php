@@ -360,8 +360,8 @@ class EndpointDiscoveryMiddleware
         return $request
             ->withUri(
                 $request->getUri()
-                ->withHost($parsed['host'])
-                ->withPath($parsed['path'])
+                    ->withHost($parsed['host'])
+                    ->withPath($parsed['path'])
             )
             ->withHeader('User-Agent', $userAgent);
     }
