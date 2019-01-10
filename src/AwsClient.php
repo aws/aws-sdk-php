@@ -7,6 +7,7 @@ use Aws\Api\Service;
 use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\ClientSideMonitoring\ConfigurationProvider;
+use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\Signature\SignatureProvider;
 use GuzzleHttp\Psr7\Uri;
 
@@ -93,6 +94,14 @@ class AwsClient implements AwsClientInterface
      * - endpoint: (string) The full URI of the webservice. This is only
      *   required when connecting to a custom endpoint (e.g., a local version
      *   of S3).
+     * - endpoint_discovery: (Aws\EndpointDiscovery\ConfigurationInterface,
+     *   Aws\CacheInterface, array, callable) Settings for endpoint discovery.
+     *   Provide an instance of Aws\EndpointDiscovery\ConfigurationInterface,
+     *   an instance Aws\CacheInterface, a callable that provides a promise for
+     *   a Configuration object, or an associative array with the following
+     *   keys: enabled: (bool) Set to true to enable endpoint discovery,
+     *   defaults to false; cache_limit: (int) The maximum number of keys in the
+     *   endpoints cache, defaults to 1000.
      * - endpoint_provider: (callable) An optional PHP callable that
      *   accepts a hash of options including a "service" and "region" key and
      *   returns NULL or a hash of endpoint data, of which the "endpoint" key
@@ -160,7 +169,6 @@ class AwsClient implements AwsClientInterface
         if (!isset($args['exception_class'])) {
             $args['exception_class'] = $exceptionClass;
         }
-
         $this->handlerList = new HandlerList();
         $resolver = new ClientResolver(static::getArguments());
         $config = $resolver->resolve($args, $this->handlerList);
@@ -175,6 +183,7 @@ class AwsClient implements AwsClientInterface
         $this->addInvocationId();
         $this->addClientSideMonitoring($args);
         $this->addEndpointParameterMiddleware($args);
+        $this->addEndpointDiscoveryMiddleware($config, $args);
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -282,6 +291,22 @@ class AwsClient implements AwsClientInterface
                     $this->api
                 ),
                 'endpoint_parameter'
+            );
+        }
+    }
+
+    private function addEndpointDiscoveryMiddleware($config, $args)
+    {
+        $list = $this->getHandlerList();
+
+        if (!isset($args['endpoint'])) {
+            $list->appendBuild(
+                EndpointDiscoveryMiddleware::wrap(
+                    $this,
+                    $args,
+                    $config['endpoint_discovery']
+                ),
+                'EndpointDiscoveryMiddleware'
             );
         }
     }

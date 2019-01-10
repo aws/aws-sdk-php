@@ -7,6 +7,9 @@ use Aws\Api\Service;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
+use Aws\EndpointDiscovery\ConfigurationInterface;
+use Aws\EndpointDiscovery\ConfigurationProvider;
+use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
 use Aws\Credentials\CredentialProvider;
@@ -134,6 +137,13 @@ class ClientResolver
             'doc'     => 'Specifies the credentials used to sign requests. Provide an Aws\Credentials\CredentialsInterface object, an associative array of "key", "secret", and an optional "token" key, `false` to use null credentials, or a callable credentials provider used to create credentials or return null. See Aws\\Credentials\\CredentialProvider for a list of built-in credentials providers. If no credentials are provided, the SDK will attempt to load them from the environment.',
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [CredentialProvider::class, 'defaultProvider'],
+        ],
+        'endpoint_discovery' => [
+            'type'     => 'value',
+            'valid'    => [ConfigurationInterface::class, CacheInterface::class, 'array', 'callable'],
+            'doc'      => 'Specifies settings for endpoint discovery. Provide an instance of Aws\EndpointDiscovery\ConfigurationInterface, an instance Aws\CacheInterface, a callable that provides a promise for a Configuration object, or an associative array with the following keys: enabled: (bool) Set to true to enable endpoint discovery. Defaults to false; cache_limit: (int) The maximum number of keys in the endpoints cache. Defaults to 1000.',
+            'fn'       => [__CLASS__, '_apply_endpoint_discovery'],
+            'default'  => [__CLASS__, '_default_endpoint_discovery_provider']
         ],
         'stats' => [
             'type'  => 'value',
@@ -485,6 +495,15 @@ class ClientResolver
                 $args['config']['signing_name'] = $result['signingName'];
             }
         }
+    }
+
+    public static function _apply_endpoint_discovery($value, array &$args) {
+        $args['endpoint_discovery'] = $value;
+    }
+
+    public static function _default_endpoint_discovery_provider(array $args)
+    {
+        return ConfigurationProvider::defaultProvider($args);
     }
 
     public static function _apply_serializer($value, array &$args, HandlerList $list)
