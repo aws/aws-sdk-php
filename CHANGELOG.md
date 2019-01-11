@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.85.1 - 2019-01-11
 
 * `Aws\EMR` - Documentation updates for Amazon EMR
 * `Aws\RDSDataService` - Documentation updates for RDS Data API.
