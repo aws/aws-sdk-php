@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EMR` - Documentation updates for Amazon EMR
+* `Aws\RDSDataService` - Documentation updates for RDS Data API.
+
 ## 3.85.0 - 2019-01-10
 
 * `Aws\CodeDeploy` - Documentation updates for codedeploy
