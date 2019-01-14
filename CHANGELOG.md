@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.85.2 - 2019-01-14
 
 * `Aws\MediaConvert` - IMF decode from a Composition Playlist for IMF specializations App #2 and App #2e; up to 99 input clippings; caption channel selection for MXF; and updated rate control for CBR jobs. Added support for acceleration in preview
 * `Aws\StorageGateway` - JoinDomain API supports two more parameters: organizational unit(OU) and domain controllers. Two new APIs are introduced: DetachVolume and AttachVolume.
