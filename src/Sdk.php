@@ -34,6 +34,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAutoScaling(array $args = [])
  * @method \Aws\AutoScalingPlans\AutoScalingPlansClient createAutoScalingPlans(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAutoScalingPlans(array $args = [])
+ * @method \Aws\Backup\BackupClient createBackup(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionBackup(array $args = [])
  * @method \Aws\Batch\BatchClient createBatch(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBatch(array $args = [])
  * @method \Aws\Budgets\BudgetsClient createBudgets(array $args = [])
