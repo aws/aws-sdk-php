@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.86.1 - 2019-01-17
 
 * `Aws\Lambda` - Documentation updates for AWS Lambda
 * `Aws\Lightsail` - This release adds functionality to the CreateDiskSnapshot API that allows users to snapshot instance root volumes. It also adds various documentation updates.
