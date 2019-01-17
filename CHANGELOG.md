@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lambda` - Documentation updates for AWS Lambda
+* `Aws\Lightsail` - This release adds functionality to the CreateDiskSnapshot API that allows users to snapshot instance root volumes. It also adds various documentation updates.
+* `Aws\Pinpoint` - This release updates the PutEvents operation. AppPackageName, AppTitle, AppVersionCode, SdkName fields will now be accepted as a part of the event when submitting events.
+* `Aws\Rekognition` - GetLabelDetection now returns bounding box information for common objects and a hierarchical taxonomy of detected labels. The version of the model used for video label detection is also returned. DetectModerationLabels now returns the version of the model used for detecting unsafe content.
+
 ## 3.86.0 - 2019-01-16
 
 * `Aws\Backup` - AWS Backup is a unified backup service designed to protect AWS services and their associated data. AWS Backup simplifies the creation, migration, restoration, and deletion of backups, while also providing reporting and auditing
