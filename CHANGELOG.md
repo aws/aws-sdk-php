@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.86.2 - 2019-01-18
 
 * `Aws\EC2` - Adjust EC2's available instance types.
 * `Aws\Glue` - AllocatedCapacity field is being deprecated and replaced with MaxCapacity field
