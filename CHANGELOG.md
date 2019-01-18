@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Adjust EC2's available instance types.
+* `Aws\Glue` - AllocatedCapacity field is being deprecated and replaced with MaxCapacity field
+
 ## 3.86.1 - 2019-01-17
 
 * `Aws\Lambda` - Documentation updates for AWS Lambda
