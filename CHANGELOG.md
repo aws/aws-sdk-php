@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.86.3 - 2019-01-21
 
 * `Aws\AppStream` - This API update includes support for tagging Stack, Fleet, and ImageBuilder resources at creation time.
 * `Aws\ApplicationDiscoveryService` - The Application Discovery Service's import APIs allow you to import information about your on-premises servers and applications into ADS so that you can track the status of your migrations through the Migration Hub console.
