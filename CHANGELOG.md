@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - This API update includes support for tagging Stack, Fleet, and ImageBuilder resources at creation time.
+* `Aws\ApplicationDiscoveryService` - The Application Discovery Service's import APIs allow you to import information about your on-premises servers and applications into ADS so that you can track the status of your migrations through the Migration Hub console.
+* `Aws\DatabaseMigrationService` - Update for DMS TestConnectionSucceeds waiter
+* `Aws\FMS` - This release provides support for cleaning up web ACLs during Firewall Management policy deletion. You can now enable the DeleteAllPolicyResources flag and it will delete all system-generated web ACLs.
+* `Aws\SSM` - AWS Systems Manager State Manager now supports configuration management of all AWS resources through integration with Automation. 
+
 ## 3.86.2 - 2019-01-18
 
 * `Aws\EC2` - Adjust EC2's available instance types.
