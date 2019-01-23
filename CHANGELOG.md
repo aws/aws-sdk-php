@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.0 - 2019-01-23
 
 * `Aws\ACMPCA` - Added TagOnCreate parameter to the CreateCertificateAuthority operation, updated the Tag regex pattern to align with AWS tagging APIs, and added RevokeCertificate limit.
 * `Aws\ApiGatewayManagementApi` - Fixes a typo in the 'max' constraint.
