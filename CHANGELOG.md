@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - Added TagOnCreate parameter to the CreateCertificateAuthority operation, updated the Tag regex pattern to align with AWS tagging APIs, and added RevokeCertificate limit.
+* `Aws\ApiGatewayManagementApi` - Fixes a typo in the 'max' constraint.
+* `Aws\WorkLink` - This is the initial SDK release for Amazon WorkLink. Amazon WorkLink is a fully managed, cloud-based service that enables secure, one-click access to internal websites and web apps from mobile phones. With Amazon WorkLink, employees can access internal websites as seamlessly as they access any other website. IT administrators can manage users, devices, and domains by enforcing their own security and access policies via the AWS Console or the AWS SDK.
+
 ## 3.86.3 - 2019-01-21
 
 * `Aws\AppStream` - This API update includes support for tagging Stack, Fleet, and ImageBuilder resources at creation time.
