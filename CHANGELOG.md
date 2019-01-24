@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.1 - 2019-01-24
 
 * `Aws\CloudWatchLogs` - Documentation updates for CloudWatch Logs
 * `Aws\CodeBuild` - This release adds support for cross-account ECR images and private registry authentication. 
