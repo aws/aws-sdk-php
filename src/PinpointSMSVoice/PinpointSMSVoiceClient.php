@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteConfigurationSetEventDestinationAsync(array $args = [])
  * @method \Aws\Result getConfigurationSetEventDestinations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getConfigurationSetEventDestinationsAsync(array $args = [])
+ * @method \Aws\Result listConfigurationSets(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listConfigurationSetsAsync(array $args = [])
  * @method \Aws\Result sendVoiceMessage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendVoiceMessageAsync(array $args = [])
  * @method \Aws\Result updateConfigurationSetEventDestination(array $args = [])
