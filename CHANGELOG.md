@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeCommit` - The PutFile API will now throw new exception FilePathConflictsWithSubmodulePathException when a submodule exists at the input file path; PutFile API will also throw FolderContentSizeLimitExceededException when the total size of any folder on the path exceeds the limit as a result of the operation.
+* `Aws\DeviceFarm` - Introduces a new rule in Device Pools - "Availability". Customers can now ensure they pick devices that are available (i.e., not being used by other customers).
+* `Aws\MediaConnect` - This release adds support for tagging, untagging, and listing tags for existing AWS Elemental MediaConnect resources.
+* `Aws\MediaLive` - This release adds support for Frame Capture output groups and for I-frame only manifests (playlists) in HLS output groups.
+
 ## 3.87.1 - 2019-01-24
 
 * `Aws\CloudWatchLogs` - Documentation updates for CloudWatch Logs
