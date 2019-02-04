@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.3 - 2019-02-04
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for application-autoscaling
 * `Aws\CodeCommit` - This release supports a more graceful handling of the error case when a repository is not associated with a pull request ID in a merge request in AWS CodeCommit.
