@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.4 - 2019-02-05
 
 * `Aws\Aws` - Remove requirement of the always available SPL extension in composer.json.
 * `Aws\Credentials` - This update adds the default SDK user agent to requests made to the instance metadata service.
