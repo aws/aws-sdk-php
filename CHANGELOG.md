@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Aws` - Remove requirement of the always available SPL extension in composer.json.
+* `Aws\Credentials` - This update adds the default SDK user agent to requests made to the instance metadata service.
+* `Aws\EC2` - ec2.DescribeVpcPeeringConnections pagination support
+* `Aws\ServiceCatalog` - Service Catalog Documentation Update for ProvisionedProductDetail
+* `Aws\Shield` - The DescribeProtection request now accepts resource ARN as valid parameter.
+
 ## 3.87.3 - 2019-02-04
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for application-autoscaling
