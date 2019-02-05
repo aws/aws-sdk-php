@@ -3,10 +3,12 @@ namespace Aws\Test\Credentials;
 
 use Aws\Credentials\InstanceProfileProvider;
 use Aws\Exception\CredentialsException;
+use Aws\Sdk;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers Aws\Credentials\InstanceProfileProvider
@@ -48,6 +50,23 @@ class InstanceProfileProviderTest extends TestCase
         $args['client'] = $client;
         $provider = new InstanceProfileProvider($args);
 
+        return $provider();
+    }
+
+    public function testAddsUserAgentToRequest()
+    {
+        $response = new Response(200, [], Psr7\stream_for('test'));
+
+        $client = function (RequestInterface $request) use ($response) {
+            $this->assertEquals(
+                'aws-sdk-php/' . Sdk::VERSION . ' ' . \Aws\default_user_agent(),
+                $request->getHeader('User-Agent')[0]
+            );
+
+            return Promise\promise_for($response);
+        };
+
+        $provider = new InstanceProfileProvider(['client' => $client]);
         return $provider();
     }
 
