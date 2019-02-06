@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.5 - 2019-02-06
 
 * `Aws\EC2` - Add Linux with SQL Server Standard, Linux with SQL Server Web, and Linux with SQL Server Enterprise to the list of allowed instance platforms for On-Demand Capacity Reservations.
 * `Aws\FSx` - New optional ExportPath parameter added to the CreateFileSystemLustreConfiguration object for user-defined export paths. Used with the CreateFileSystem action when creating an Amazon FSx for Lustre file system.
