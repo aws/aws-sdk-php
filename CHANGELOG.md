@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.6 - 2019-02-07
 
 * `Aws\ElasticsearchService` - Feature: Support for three Availability Zone deployments
 * `Aws\GameLift` - This release delivers a new API action for deleting unused matchmaking rule sets. More details are available at https://aws.amazon.com/releasenotes/?tag=releasenotes%23keywords%23amazon-gamelift.
