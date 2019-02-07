@@ -40,6 +40,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteGameSessionQueueAsync(array $args = [])
  * @method \Aws\Result deleteMatchmakingConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteMatchmakingConfigurationAsync(array $args = [])
+ * @method \Aws\Result deleteMatchmakingRuleSet(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteMatchmakingRuleSetAsync(array $args = [])
  * @method \Aws\Result deleteScalingPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteScalingPolicyAsync(array $args = [])
  * @method \Aws\Result deleteVpcPeeringAuthorization(array $args = [])

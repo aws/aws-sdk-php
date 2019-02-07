@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElasticsearchService` - Feature: Support for three Availability Zone deployments
+* `Aws\GameLift` - This release delivers a new API action for deleting unused matchmaking rule sets. More details are available at https://aws.amazon.com/releasenotes/?tag=releasenotes%23keywords%23amazon-gamelift.
+* `Aws\MediaLive` - This release adds tagging of channels, inputs, and input security groups.
+* `Aws\RoboMaker` - Added support for tagging and tag-based access control for AWS RoboMaker resources. Also, DescribeSimulationJob now includes a new failureReason field to help debug simulation job failures
+
 ## 3.87.5 - 2019-02-06
 
 * `Aws\EC2` - Add Linux with SQL Server Standard, Linux with SQL Server Web, and Linux with SQL Server Enterprise to the list of allowed instance platforms for On-Demand Capacity Reservations.
