@@ -54,6 +54,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTasksAsync(array $args = [])
  * @method \Aws\Result putAccountSetting(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAccountSettingAsync(array $args = [])
+ * @method \Aws\Result putAccountSettingDefault(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putAccountSettingDefaultAsync(array $args = [])
  * @method \Aws\Result putAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAttributesAsync(array $args = [])
  * @method \Aws\Result registerContainerInstance(array $args = [])
