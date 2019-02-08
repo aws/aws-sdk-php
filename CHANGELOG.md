@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.7 - 2019-02-08
 
 * `Aws\ApplicationDiscoveryService` - Documentation updates for the AWS Application Discovery Service.
 * `Aws\DLM` - This release is to correct the timestamp format to ISO8601 for the DateCreated and DateModified files in the GetLifecyclePolicy response object.
