@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - This update enables customers to find the start time, max expiration time, and connection status associated with AppStream streaming session.
+* `Aws\CodeBuild` - Add customized webhook filter support
+* `Aws\MediaPackage` - Adds optional configuration for DASH to compact the manifest by combining duplicate SegmentTemplate tags. Adds optional configuration for DASH SegmentTemplate format to refer to segments by "Number" (default) or by "Time".
+
 ## 3.87.7 - 2019-02-08
 
 * `Aws\ApplicationDiscoveryService` - Documentation updates for the AWS Application Discovery Service.
