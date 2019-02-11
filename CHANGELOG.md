@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.8 - 2019-02-11
 
 * `Aws\AppStream` - This update enables customers to find the start time, max expiration time, and connection status associated with AppStream streaming session.
 * `Aws\CodeBuild` - Add customized webhook filter support
