@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.9 - 2019-02-12
 
 * `Aws\Lambda` - Documentation updates for AWS Lambda
 
