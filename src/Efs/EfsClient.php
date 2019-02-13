@@ -20,6 +20,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteTagsAsync(array $args = [])
  * @method \Aws\Result describeFileSystems(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeFileSystemsAsync(array $args = [])
+ * @method \Aws\Result describeLifecycleConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeLifecycleConfigurationAsync(array $args = [])
  * @method \Aws\Result describeMountTargetSecurityGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeMountTargetSecurityGroupsAsync(array $args = [])
  * @method \Aws\Result describeMountTargets(array $args = [])
@@ -28,6 +30,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeTagsAsync(array $args = [])
  * @method \Aws\Result modifyMountTargetSecurityGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyMountTargetSecurityGroupsAsync(array $args = [])
+ * @method \Aws\Result putLifecycleConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putLifecycleConfigurationAsync(array $args = [])
  * @method \Aws\Result updateFileSystem(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFileSystemAsync(array $args = [])
  */
