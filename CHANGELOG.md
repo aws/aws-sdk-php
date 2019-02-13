@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.10 - 2019-02-13
 
 * `Aws\EFS` - Customers can now use the EFS Infrequent Access (IA) storage class to more cost-effectively store larger amounts of data in their file systems. EFS IA is cost-optimized storage for files that are not accessed every day. You can create a new file system and enable Lifecycle Management to automatically move files that have not been accessed for 30 days from the Standard storage class to the IA storage class.
 * `Aws\MediaTailor` - This release adds support for tagging AWS Elemental MediaTailor resources.
