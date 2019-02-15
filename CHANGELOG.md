@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.12 - 2019-02-15
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for Application Auto Scaling
 * `Aws\Chime` - Documentation updates for Amazon Chime
