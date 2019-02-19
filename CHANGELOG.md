@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.14 - 2019-02-19
 
 * `Aws\DirectoryService` - This release adds support for tags during directory creation (CreateDirectory, CreateMicrosoftAd, ConnectDirectory).
 * `Aws\EFS` - Amazon EFS now supports adding tags to file system resources as part of the CreateFileSystem API . Using this capability, customers can now more easily enforce tag-based authorization for EFS file system resources.
