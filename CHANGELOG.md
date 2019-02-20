@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.15 - 2019-02-20
 
 * `Aws\CodeCommit` - This release adds an API for adding / updating / deleting / copying / moving / setting file modes for one or more files directly to an AWS CodeCommit repository without requiring a Git client.
 * `Aws\DirectConnect` - Documentation updates for AWS Direct Connect
