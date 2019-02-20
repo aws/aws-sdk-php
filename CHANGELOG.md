@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeCommit` - This release adds an API for adding / updating / deleting / copying / moving / setting file modes for one or more files directly to an AWS CodeCommit repository without requiring a Git client.
+* `Aws\DirectConnect` - Documentation updates for AWS Direct Connect
+* `Aws\MediaLive` - This release adds support for VPC inputs, allowing you to push content from your Amazon VPC directly to MediaLive.
+
 ## 3.87.14 - 2019-02-19
 
 * `Aws\DirectoryService` - This release adds support for tags during directory creation (CreateDirectory, CreateMicrosoftAd, ConnectDirectory).
