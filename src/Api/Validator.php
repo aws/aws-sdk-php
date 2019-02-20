@@ -249,7 +249,20 @@ class Validator
 
     private function checkAssociativeArray($value)
     {
-        if (!is_array($value) || isset($value[0])) {
+        $assoc = false;
+
+        if (is_array($value)) {
+            $i   = 0;
+            $key = key($value);
+
+            do {
+                $assoc = $key !== $i++;
+                next($value);
+                $key = key($value);
+            } while (!$assoc && null !== $key);
+        }
+
+        if (!$assoc) {
             $this->addError('must be an associative array. Found '
                 . Aws\describe_type($value));
             return false;
