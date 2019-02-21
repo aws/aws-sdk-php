@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatch` - Documentation updates for monitoring
+* `Aws\CodeBuild` - Add support for CodeBuild local caching feature
+* `Aws\KinesisVideo` - Documentation updates for Kinesis Video Streams
+* `Aws\KinesisVideoArchivedMedia` - In this release, HLS playback of KVS streams can be configured to output MPEG TS fragments using the ContainerFormat parameter. HLS playback of KVS streams can also be configured to include the EXT-X-PROGRAM-DATE-TIME field using the DisplayFragmentTimestamp parameter.
+* `Aws\KinesisVideoMedia` - Documentation updates for Kinesis Video Streams
+* `Aws\Organizations` - Documentation updates for organizations
+* `Aws\Transfer` - Bug fix: increased the max length allowed for request parameter NextToken when paginating List operations
+* `Aws\WorkDocs` - Documentation updates for workdocs
+
 ## 3.87.15 - 2019-02-20
 
 * `Aws\CodeCommit` - This release adds an API for adding / updating / deleting / copying / moving / setting file modes for one or more files directly to an AWS CodeCommit repository without requiring a Git client.
