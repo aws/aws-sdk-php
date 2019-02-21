@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.16 - 2019-02-21
 
 * `Aws\CloudWatch` - Documentation updates for monitoring
 * `Aws\CodeBuild` - Add support for CodeBuild local caching feature
