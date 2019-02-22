@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.17 - 2019-02-22
 
 * `Aws\Athena` - This release adds tagging support for Workgroups to Amazon Athena. Use these APIs to add, remove, or list tags on Workgroups, and leverage the tags for various authorization and billing scenarios.
 * `Aws\Cloud9` - Adding EnvironmentLifecycle to the Environment data type.
