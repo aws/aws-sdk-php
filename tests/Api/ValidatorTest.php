@@ -160,6 +160,42 @@ class ValidatorTest extends TestCase
                 ['foo' => [1, 3]],
                 "Found 1 error while validating the input provided for the Foo operation:\n[foo] must be an associative array. Found array(2)"
             ],
+            // empty array must validate as an assoc array
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'structure']]
+                ],
+                ['foo' => []],
+                true
+            ],
+            // non-contiguous numeric keys must validate as assoc
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'structure']]
+                ],
+                ['foo' => [0 => 'foo', 1 => 'bar', 5 => 'baz']],
+                true
+            ],
+            // contiguous, but non-sequential numeric keys must validate as assoc
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'structure']]
+                ],
+                ['foo' => [2 => 'foo', 0 => 'bar', 1 => 'baz']],
+                true
+            ],
+            // mixed numeric and string keys must validate as assoc
+            [
+                [
+                    'type' => 'structure',
+                    'members' => ['foo' => ['type' => 'structure']]
+                ],
+                ['foo' => [1, 3, 'abc' => '123']],
+                true
+            ],
             [
                 [
                     'type' => 'structure',
