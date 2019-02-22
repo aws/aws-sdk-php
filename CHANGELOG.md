@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Athena` - This release adds tagging support for Workgroups to Amazon Athena. Use these APIs to add, remove, or list tags on Workgroups, and leverage the tags for various authorization and billing scenarios.
+* `Aws\Cloud9` - Adding EnvironmentLifecycle to the Environment data type.
+* `Aws\Glue` - AWS Glue adds support for assigning AWS resource tags to jobs, triggers, development endpoints, and crawlers. Each tag consists of a key and an optional value, both of which you define. With this capacity, customers can use tags in AWS Glue to easily organize and identify your resources, create cost allocation reports, and control access to resources. 
+* `Aws\SFN` - This release adds support for tag-on-create. You can now add tags when you create AWS Step Functions activity and state machine resources. For more information about tagging, see AWS Tagging Strategies.
+
 ## 3.87.16 - 2019-02-21
 
 * `Aws\CloudWatch` - Documentation updates for monitoring
