@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.18 - 2019-02-25
 
 * `Aws\Api` - Fixes validation on assoc arrays having a 0 index.
 * `Aws\AutoScaling` - Added support for passing an empty SpotMaxPrice parameter to remove a value previously set when updating an Amazon EC2 Auto Scaling group.
