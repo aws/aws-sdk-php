@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Fixes validation on assoc arrays having a 0 index.
+* `Aws\AutoScaling` - Added support for passing an empty SpotMaxPrice parameter to remove a value previously set when updating an Amazon EC2 Auto Scaling group.
+* `Aws\CostExplorer` - Added metrics to normalized units.
+* `Aws\ElasticLoadBalancingv2` - This release enables you to use the existing client secret when modifying a rule with an action of type authenticate-oidc.
+* `Aws\MediaStore` - This release adds support for access logging, which provides detailed records for the requests that are made to objects in a container.
+
 ## 3.87.17 - 2019-02-22
 
 * `Aws\Athena` - This release adds tagging support for Workgroups to Amazon Athena. Use these APIs to add, remove, or list tags on Workgroups, and leverage the tags for various authorization and billing scenarios.

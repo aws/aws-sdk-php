@@ -31,5 +31,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putCorsPolicyAsync(array $args = [])
  * @method \Aws\Result putLifecyclePolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putLifecyclePolicyAsync(array $args = [])
+ * @method \Aws\Result startAccessLogging(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startAccessLoggingAsync(array $args = [])
+ * @method \Aws\Result stopAccessLogging(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopAccessLoggingAsync(array $args = [])
  */
 class MediaStoreClient extends AwsClient {}
