@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationDiscoveryService` - Documentation updates for discovery
+* `Aws\CostandUsageReportService` - Adding support for Athena and new report preferences to the Cost and Usage Report API.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added several features including support for: auto-rotation or user-specified rotation of 0, 90, 180, or 270 degrees; multiple output groups with DRM; ESAM XML documents to specify ad insertion points; Offline Apple HLS FairPlay content protection. 
+* `Aws\OpsWorksCM` - Documentation updates for opsworkscm
+* `Aws\Organizations` - Documentation updates for AWS Organizations
+* `Aws\Pinpoint` - This release adds support for the Amazon Resource Groups Tagging API to Amazon Pinpoint, which means that you can now add and manage tags for Amazon Pinpoint projects (apps), campaigns, and segments. A tag is a label that you optionally define and associate with Amazon Pinpoint resource. Tags can help you categorize and manage these types of resources in different ways, such as by purpose, owner, environment, or other criteria. For example, you can use tags to apply policies or automation, or to identify resources that are subject to certain compliance requirements. A project, campaign, or segment can have as many as 50 tags. For more information about using and managing tags in Amazon Pinpoint, see the Amazon Pinpoint Developer Guide at https://docs.aws.amazon.com/pinpoint/latest/developerguide/welcome.html. For more information about the Amazon Resource Group Tagging API, see the Amazon Resource Group Tagging API Reference at https://docs.aws.amazon.com/resourcegroupstagging/latest/APIReference/Welcome.html.
+* `Aws\ResourceGroups` - Documentation updates for Resource Groups API; updating description of Tag API.
+
 ## 3.87.18 - 2019-02-25
 
 * `Aws\Api` - Fixes validation on assoc arrays having a 0 index.
