@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.19 - 2019-02-26
 
 * `Aws\ApplicationDiscoveryService` - Documentation updates for discovery
 * `Aws\CostandUsageReportService` - Adding support for Athena and new report preferences to the Cost and Usage Report API.
