@@ -76,13 +76,13 @@ class SdkTest extends TestCase
             $sdk->createDynamoDb()->getRegion()
         );
 
-        $clone = $sdk->clone([
+        $copy = $sdk->copy([
             'region' => 'eu-west-1',
         ]);
 
         $this->assertSame(
             'eu-west-1',
-            $clone->createDynamoDb()->getRegion()
+            $copy->createDynamoDb()->getRegion()
         );
     }
 }
