@@ -426,7 +426,7 @@ class Sdk
      *
      * @return self
      */
-    public function clone(array $args = [])
+    public function copy(array $args = [])
     {
         return new self($args + $this->args);
     }
