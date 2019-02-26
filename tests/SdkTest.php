@@ -63,4 +63,26 @@ class SdkTest extends TestCase
             ])
         );
     }
+
+    public function testClonesWithExtraArgs()
+    {
+        $sdk = new Sdk([
+            'version' => 'latest',
+            'region'  => 'us-east-1',
+        ]);
+
+        $this->assertSame(
+            'us-east-1',
+            $sdk->createDynamoDb()->getRegion()
+        );
+
+        $clone = $sdk->clone([
+            'region' => 'eu-west-1',
+        ]);
+
+        $this->assertSame(
+            'eu-west-1',
+            $clone->createDynamoDb()->getRegion()
+        );
+    }
 }
