@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.20 - 2019-02-27
 
 * `Aws\WAF` - Documentation updates for waf
 * `Aws\WAFRegional` - Documentation updates for waf-regional
