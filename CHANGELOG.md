@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WAF` - Documentation updates for waf
+* `Aws\WAFRegional` - Documentation updates for waf-regional
+
 ## 3.87.19 - 2019-02-26
 
 * `Aws\ApplicationDiscoveryService` - Documentation updates for discovery
