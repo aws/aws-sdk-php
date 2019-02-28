@@ -158,7 +158,6 @@ $(window).load(function() {
 		var height = $(window).height() - navigationHeight;
 		$left.height(height);
 		$splitter.height(height);
-		$right.height(height);
 	}
 	function setContentWidth()
 	{
