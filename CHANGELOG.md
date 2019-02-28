@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AlexaForBusiness` - This release adds the PutInvitationConfiguration API to configure the user invitation email template with custom attributes, and the GetInvitationConfiguration API to retrieve the configured values.
+* `Aws\ApiGatewayV2` - Marking certain properties as explicitly required and fixing an issue with the GetApiMappings operation for ApiMapping resources.
+* `Aws\ApplicationAutoScaling` - Documentation updates for application-autoscaling
+* `Aws\SSM` - AWS Systems Manager State Manager now supports associations using documents shared by other AWS accounts.
+
 ## 3.87.20 - 2019-02-27
 
 * `Aws\WAF` - Documentation updates for waf
