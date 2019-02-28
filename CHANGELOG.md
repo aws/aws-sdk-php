@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.21 - 2019-02-28
 
 * `Aws\AlexaForBusiness` - This release adds the PutInvitationConfiguration API to configure the user invitation email template with custom attributes, and the GetInvitationConfiguration API to retrieve the configured values.
 * `Aws\ApiGatewayV2` - Marking certain properties as explicitly required and fixing an issue with the GetApiMappings operation for ApiMapping resources.
