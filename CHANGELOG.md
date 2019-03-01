@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.87.22 - 2019-03-01
 
 * `Aws\AutoScalingPlans` - Documentation updates for autoscaling-plans
 * `Aws\EC2` - This release adds support for modifying instance event start time which allows users to reschedule EC2 events.
