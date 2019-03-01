@@ -94,6 +94,8 @@ class StreamWrapper
     /** @var string The opened protocol (e.g., "s3") */
     private $protocol = 's3';
 
+    private $isFlushed = false;
+
     /**
      * Register the 's3://' stream wrapper
      *
@@ -127,12 +129,16 @@ class StreamWrapper
 
     public function stream_close()
     {
+        if ($this->body->getSize() === 0 && !($this->isFlushed)) {
+            $this->stream_flush();
+        }
         $this->body = $this->cache = null;
     }
 
     public function stream_open($path, $mode, $options, &$opened_path)
     {
         $this->initProtocol($path);
+        $this->isFlushed = false;
         $this->params = $this->getBucketKey($path);
         $this->mode = rtrim($mode, 'bt');
 
@@ -156,6 +162,7 @@ class StreamWrapper
 
     public function stream_flush()
     {
+        $this->isFlushed = true;
         if ($this->mode == 'r') {
             return false;
         }
