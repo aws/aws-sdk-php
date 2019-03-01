@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScalingPlans` - Documentation updates for autoscaling-plans
+* `Aws\EC2` - This release adds support for modifying instance event start time which allows users to reschedule EC2 events.
+
 ## 3.87.21 - 2019-02-28
 
 * `Aws\AlexaForBusiness` - This release adds the PutInvitationConfiguration API to configure the user invitation email template with custom attributes, and the GetInvitationConfiguration API to retrieve the configured values.
