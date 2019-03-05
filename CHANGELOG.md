@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.88.0 - 2019-03-05
 
 * `Aws\CodeDeploy` - Documentation updates for codedeploy
 * `Aws\MediaLive` - This release adds support for pausing and unpausing one or both pipelines at scheduled times.
