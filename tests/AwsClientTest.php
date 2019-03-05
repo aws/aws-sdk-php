@@ -152,12 +152,12 @@ class AwsClientTest extends TestCase
         $client = $this->getTestClient('ec2', ['api_provider' => $provider]);
         $data = ['foo', 'bar', 'baz'];
         $this->addMockResults($client, [new Result([
-            'Examples' => $data,
+            'Examples' => [$data, $data],
         ])]);
         $iterator = $client->getIterator('DescribeExamples');
         $this->assertInstanceOf('Traversable', $iterator);
         foreach ($iterator as $iterated) {
-            $this->assertContains($iterated, $data);
+            $this->assertSame($iterated, $data);
         }
     }
 
