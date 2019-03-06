@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectConnect` - Exposed a new available port speeds field in the DescribeLocation api call.
+* `Aws\EC2` - This release adds pagination support for ec2.DescribeVpcs, ec2.DescribeInternetGateways and ec2.DescribeNetworkAcls APIs
+* `Aws\EFS` - Documentation updates for elasticfilesystem adding new examples for EFS Lifecycle Management feature.
+
 ## 3.88.0 - 2019-03-05
 
 * `Aws\CodeDeploy` - Documentation updates for codedeploy
