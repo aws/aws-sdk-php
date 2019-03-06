@@ -94,6 +94,7 @@ class StreamWrapper
     /** @var string The opened protocol (e.g., "s3") */
     private $protocol = 's3';
 
+    /** @var bool Keeps track of whether stream has been flushed since opening */
     private $isFlushed = false;
 
     /**
