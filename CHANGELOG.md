@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.88.1 - 2019-03-06
 
 * `Aws\DirectConnect` - Exposed a new available port speeds field in the DescribeLocation api call.
 * `Aws\EC2` - This release adds pagination support for ec2.DescribeVpcs, ec2.DescribeInternetGateways and ec2.DescribeNetworkAcls APIs
