@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppMesh` - This release includes a new version of the AWS App Mesh APIs. You can read more about the new APIs here: https://docs.aws.amazon.com/app-mesh/latest/APIReference/Welcome.html.
+* `Aws\AutoScaling` - Documentation updates for autoscaling
+* `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) introduces additional task definition parameters that enable you to define dependencies for container startup and shutdown, a per-container start and stop timeout value, as well as an AWS App Mesh proxy configuration which eases the integration between Amazon ECS and AWS App Mesh.
+* `Aws\GameLift` - Amazon GameLift-hosted instances can now securely access resources on other AWS services using IAM roles. See more details at https://aws.amazon.com/releasenotes/amazon-gamelift/.
+* `Aws\Greengrass` - Greengrass group UID and GID settings can now be configured to use a provided default via FunctionDefaultConfig. If configured, all Lambda processes in your deployed Greengrass group will by default start with the provided UID and/or GID, rather than by default starting with UID "ggc_user" and GID "ggc_group" as they would if not configured. Individual Lambdas can also be configured to override the defaults if desired via each object in the Functions list of your FunctionDefinitionVersion.
+* `Aws\MediaLive` - This release adds a MediaPackage output group, simplifying configuration of outputs to AWS Elemental MediaPackage.
+* `Aws\RDS` - You can configure your Aurora database cluster to automatically copy tags on the cluster to any automated or manual database cluster snapshots that are created from the cluster. This allows you to easily set metadata on your snapshots to match the parent cluster, including access policies. You may enable or disable this functionality while creating a new cluster, or by modifying an existing database cluster.
+* `Aws\S3` - Updates the S3 stream wrapper to be able to write empty files for PHP 7+.
+
 ## 3.88.1 - 2019-03-06
 
 * `Aws\DirectConnect` - Exposed a new available port speeds field in the DescribeLocation api call.
