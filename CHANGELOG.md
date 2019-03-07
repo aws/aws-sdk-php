@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.89.0 - 2019-03-07
 
 * `Aws\AppMesh` - This release includes a new version of the AWS App Mesh APIs. You can read more about the new APIs here: https://docs.aws.amazon.com/app-mesh/latest/APIReference/Welcome.html.
 * `Aws\AutoScaling` - Documentation updates for autoscaling
