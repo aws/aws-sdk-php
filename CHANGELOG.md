@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.89.1 - 2019-03-08
 
 * `Aws\CodeBuild` - CodeBuild also now supports Git Submodules. CodeBuild now supports opting out of Encryption for S3 Build Logs. By default these logs are encrypted.
 * `Aws\S3` - Documentation updates for s3
