@@ -1,5 +1,62 @@
 # CHANGELOG
 
+## 3.89.0 - 2019-03-07
+
+* `Aws\AppMesh` - This release includes a new version of the AWS App Mesh APIs. You can read more about the new APIs here: https://docs.aws.amazon.com/app-mesh/latest/APIReference/Welcome.html.
+* `Aws\AutoScaling` - Documentation updates for autoscaling
+* `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) introduces additional task definition parameters that enable you to define dependencies for container startup and shutdown, a per-container start and stop timeout value, as well as an AWS App Mesh proxy configuration which eases the integration between Amazon ECS and AWS App Mesh.
+* `Aws\GameLift` - Amazon GameLift-hosted instances can now securely access resources on other AWS services using IAM roles. See more details at https://aws.amazon.com/releasenotes/amazon-gamelift/.
+* `Aws\Greengrass` - Greengrass group UID and GID settings can now be configured to use a provided default via FunctionDefaultConfig. If configured, all Lambda processes in your deployed Greengrass group will by default start with the provided UID and/or GID, rather than by default starting with UID "ggc_user" and GID "ggc_group" as they would if not configured. Individual Lambdas can also be configured to override the defaults if desired via each object in the Functions list of your FunctionDefinitionVersion.
+* `Aws\MediaLive` - This release adds a MediaPackage output group, simplifying configuration of outputs to AWS Elemental MediaPackage.
+* `Aws\RDS` - You can configure your Aurora database cluster to automatically copy tags on the cluster to any automated or manual database cluster snapshots that are created from the cluster. This allows you to easily set metadata on your snapshots to match the parent cluster, including access policies. You may enable or disable this functionality while creating a new cluster, or by modifying an existing database cluster.
+* `Aws\S3` - Updates the S3 stream wrapper to be able to write empty files for PHP 7+.
+
+## 3.88.1 - 2019-03-06
+
+* `Aws\DirectConnect` - Exposed a new available port speeds field in the DescribeLocation api call.
+* `Aws\EC2` - This release adds pagination support for ec2.DescribeVpcs, ec2.DescribeInternetGateways and ec2.DescribeNetworkAcls APIs
+* `Aws\EFS` - Documentation updates for elasticfilesystem adding new examples for EFS Lifecycle Management feature.
+
+## 3.88.0 - 2019-03-05
+
+* `Aws\CodeDeploy` - Documentation updates for codedeploy
+* `Aws\MediaLive` - This release adds support for pausing and unpausing one or both pipelines at scheduled times.
+* `Aws\StorageGateway` - ActivateGateway, CreateNFSFileShare and CreateSMBFileShare APIs support a new parameter: Tags (to be attached to the created resource). Output for DescribeNFSFileShare, DescribeSMBFileShare and DescribeGatewayInformation APIs now also list the Tags associated with the resource. Minimum length of a KMSKey is now 7 characters.
+* `Aws\Test` - Refactor client iterator tests to use mocked model data.
+* `Aws\Textract` - This release is intended ONLY for customers that are officially part of the Amazon Textract Preview program. If you are not officially part of the Amazon Textract program THIS WILL NOT WORK. Our two main regions for Amazon Textract Preview are N. Virginia and Dublin. Also some members have been added to Oregon and Ohio. If you are outside of any of these AWS regions, Amazon Textract Preview definitely will not work. If you would like to be part of the Amazon Textract program, you can officially request sign up here - https://pages.awscloud.com/textract-preview.html. To set expectations appropriately, we are aiming to admit new preview participants once a week until General Availability.
+
+## 3.87.23 - 2019-03-04
+
+* `Aws\MediaPackage` - This release adds support for user-defined tagging of MediaPackage resources. Users may now call operations to list, add and remove tags from channels and origin-endpoints. Users can also specify tags to be attached to these resources during their creation. Describe and list operations on these resources will now additionally return any tags associated with them.
+* `Aws\SSM` - This release updates AWS Systems Manager APIs to support service settings for AWS customers. A service setting is a key-value pair that defines how a user interacts with or uses an AWS service, and is typically created and consumed by the AWS service team. AWS customers can read a service setting via GetServiceSetting API and update the setting via UpdateServiceSetting API or ResetServiceSetting API, which are introduced in this release. For example, if an AWS service charges money to the account based on a feature or service usage, then the AWS service team might create a setting with the default value of "false". This means the user can't use this feature unless they update the setting to "true" and intentionally opt in for a paid feature.
+
+## 3.87.22 - 2019-03-01
+
+* `Aws\AutoScalingPlans` - Documentation updates for autoscaling-plans
+* `Aws\EC2` - This release adds support for modifying instance event start time which allows users to reschedule EC2 events.
+
+## 3.87.21 - 2019-02-28
+
+* `Aws\AlexaForBusiness` - This release adds the PutInvitationConfiguration API to configure the user invitation email template with custom attributes, and the GetInvitationConfiguration API to retrieve the configured values.
+* `Aws\ApiGatewayV2` - Marking certain properties as explicitly required and fixing an issue with the GetApiMappings operation for ApiMapping resources.
+* `Aws\ApplicationAutoScaling` - Documentation updates for application-autoscaling
+* `Aws\SSM` - AWS Systems Manager State Manager now supports associations using documents shared by other AWS accounts.
+
+## 3.87.20 - 2019-02-27
+
+* `Aws\WAF` - Documentation updates for waf
+* `Aws\WAFRegional` - Documentation updates for waf-regional
+
+## 3.87.19 - 2019-02-26
+
+* `Aws\ApplicationDiscoveryService` - Documentation updates for discovery
+* `Aws\CostandUsageReportService` - Adding support for Athena and new report preferences to the Cost and Usage Report API.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added several features including support for: auto-rotation or user-specified rotation of 0, 90, 180, or 270 degrees; multiple output groups with DRM; ESAM XML documents to specify ad insertion points; Offline Apple HLS FairPlay content protection. 
+* `Aws\OpsWorksCM` - Documentation updates for opsworkscm
+* `Aws\Organizations` - Documentation updates for AWS Organizations
+* `Aws\Pinpoint` - This release adds support for the Amazon Resource Groups Tagging API to Amazon Pinpoint, which means that you can now add and manage tags for Amazon Pinpoint projects (apps), campaigns, and segments. A tag is a label that you optionally define and associate with Amazon Pinpoint resource. Tags can help you categorize and manage these types of resources in different ways, such as by purpose, owner, environment, or other criteria. For example, you can use tags to apply policies or automation, or to identify resources that are subject to certain compliance requirements. A project, campaign, or segment can have as many as 50 tags. For more information about using and managing tags in Amazon Pinpoint, see the Amazon Pinpoint Developer Guide at https://docs.aws.amazon.com/pinpoint/latest/developerguide/welcome.html. For more information about the Amazon Resource Group Tagging API, see the Amazon Resource Group Tagging API Reference at https://docs.aws.amazon.com/resourcegroupstagging/latest/APIReference/Welcome.html.
+* `Aws\ResourceGroups` - Documentation updates for Resource Groups API; updating description of Tag API.
+
 ## 3.87.18 - 2019-02-25
 
 * `Aws\Api` - Fixes validation on assoc arrays having a 0 index.

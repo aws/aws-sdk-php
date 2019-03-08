@@ -170,6 +170,25 @@ class StreamWrapperTest extends TestCase
         $this->assertEquals('test', (string) $cmd['Body']);
     }
 
+    public function testCanWriteEmptyFileToStream()
+    {
+        $history = new History();
+        $this->client->getHandlerList()->appendSign(Middleware::history($history));
+        $this->addMockResults($this->client, [new Result()]);
+        $s = fopen('s3://bucket/key', 'w');
+        $this->assertEquals(0, fwrite($s, ''));
+        $this->assertTrue(fclose($s));
+
+        // Ensure that the stream was flushed even with zero characters, and
+        // that it only executed PutObject once.
+        $this->assertCount(1, $history);
+        $cmd = $history->getLastCommand();
+        $this->assertEquals('PutObject', $cmd->getName());
+        $this->assertEquals('bucket', $cmd['Bucket']);
+        $this->assertEquals('key', $cmd['Key']);
+        $this->assertEquals('', (string) $cmd['Body']);
+    }
+
     /**
      * @expectedException \PHPUnit\Framework\Error\Warning
      * @expectedExceptionMessage 403 Forbidden

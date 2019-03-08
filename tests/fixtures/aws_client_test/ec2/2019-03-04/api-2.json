@@ -1,0 +1,71 @@
+{
+    "version": "2.0",
+    "metadata": {
+        "apiVersion": "2019-03-04",
+        "endpointPrefix": "ec2",
+        "protocol": "ec2",
+        "serviceAbbreviation": "Test EC2 Service",
+        "serviceFullName": "Test EC2 Service",
+        "serviceId": "EC2",
+        "signatureVersion": "v4",
+        "uid": "ec2-2016-11-15",
+        "xmlNamespace": "http://ec2.amazonaws.com/doc/2016-11-15"
+    },
+    "operations": {
+        "DescribeExamples":{
+            "name":"DescribeExamples",
+            "http":{
+                "method":"POST",
+                "requestUri":"/"
+            },
+            "input":{"shape":"DescribeExamplesRequest"},
+            "output":{"shape":"DescribeExamplesResult"}
+        },
+        "DescribePaginatedExamples":{
+            "name":"DescribePaginatedExamples",
+            "http":{
+                "method":"POST",
+                "requestUri":"/"
+            },
+            "input":{"shape":"DescribePaginatedExamplesRequest"},
+            "output":{"shape":"DescribePaginatedExamplesResult"}
+        }
+    },
+    "shapes": {
+        "DescribeExamplesRequest":{
+            "type":"structure",
+            "members":{}
+        },
+        "DescribeExamplesResult":{
+            "type":"structure",
+            "members":{
+                "Examples":{
+                    "shape":"ExamplesList"
+                }
+            }
+        },
+        "DescribePaginatedExamplesRequest":{
+            "type":"structure",
+            "members":{
+                "MaxResults":{"shape":"MaxResults"},
+                "NextToken":{"shape":"NextToken"}
+            }
+        },
+        "DescribePaginatedExamplesResult":{
+            "type":"structure",
+            "members":{
+                "Examples":{
+                    "shape":"ExamplesList"
+                }
+            }
+        },
+        "ExamplesList":{
+            "type":"list",
+            "member":{
+                "shape":"Example"
+            }
+        },
+        "MaxResults":{"type":"integer"},
+        "NextToken":{"type":"string"}
+    }
+}

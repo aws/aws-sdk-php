@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Api\ApiProvider;
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\AwsClient;
 use Aws\CommandInterface;
@@ -137,24 +138,26 @@ class AwsClientTest extends TestCase
 
     public function testCanGetIterator()
     {
-        $client = $this->getTestClient('s3');
+        $provider = ApiProvider::filesystem(__DIR__ . '/fixtures/aws_client_test');
+        $client = $this->getTestClient('ec2', ['api_provider' => $provider]);
         $this->assertInstanceOf(
             'Generator',
-            $client->getIterator('ListObjects', ['Bucket' => 'foobar'])
+            $client->getIterator('DescribePaginatedExamples')
         );
     }
 
-    public function testCanGetIteratorWithoutDefinedPaginator()
+    public function testCanGetIteratorWithoutFullyDefinedPaginator()
     {
-        $client = $this->getTestClient('ec2');
+        $provider = ApiProvider::filesystem(__DIR__ . '/fixtures/aws_client_test');
+        $client = $this->getTestClient('ec2', ['api_provider' => $provider]);
         $data = ['foo', 'bar', 'baz'];
         $this->addMockResults($client, [new Result([
-            'Subnets' => [$data],
+            'Examples' => [$data, $data],
         ])]);
-        $iterator = $client->getIterator('DescribeSubnets');
+        $iterator = $client->getIterator('DescribeExamples');
         $this->assertInstanceOf('Traversable', $iterator);
         foreach ($iterator as $iterated) {
-            $this->assertSame($data, $iterated);
+            $this->assertSame($iterated, $data);
         }
     }
 

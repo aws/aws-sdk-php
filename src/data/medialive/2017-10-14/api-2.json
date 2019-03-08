@@ -2125,6 +2125,10 @@
         "State": {
           "shape": "ChannelState",
           "locationName": "state"
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
         }
       }
     },
@@ -2292,6 +2296,10 @@
         "Type": {
           "shape": "InputType",
           "locationName": "type"
+        },
+        "Vpc": {
+          "shape": "InputVpcRequest",
+          "locationName": "vpc"
         }
       }
     },
@@ -5734,6 +5742,32 @@
         }
       }
     },
+    "MediaPackageGroupSettings": {
+      "type": "structure",
+      "members": {
+        "Destination": {
+          "shape": "OutputLocationRef",
+          "locationName": "destination"
+        }
+      },
+      "required": [
+        "Destination"
+      ]
+    },
+    "MediaPackageOutputDestinationSettings": {
+      "type": "structure",
+      "members": {
+        "ChannelId": {
+          "shape": "__stringMin1",
+          "locationName": "channelId"
+        }
+      }
+    },
+    "MediaPackageOutputSettings": {
+      "type": "structure",
+      "members": {
+      }
+    },
     "Mp2CodingMode": {
       "type": "string",
       "enum": [
@@ -5980,6 +6014,10 @@
           "shape": "__string",
           "locationName": "id"
         },
+        "MediaPackageSettings": {
+          "shape": "__listOfMediaPackageOutputDestinationSettings",
+          "locationName": "mediaPackageSettings"
+        },
         "Settings": {
           "shape": "__listOfOutputDestinationSettings",
           "locationName": "settings"
@@ -6043,6 +6081,10 @@
           "shape": "HlsGroupSettings",
           "locationName": "hlsGroupSettings"
         },
+        "MediaPackageGroupSettings": {
+          "shape": "MediaPackageGroupSettings",
+          "locationName": "mediaPackageGroupSettings"
+        },
         "MsSmoothGroupSettings": {
           "shape": "MsSmoothGroupSettings",
           "locationName": "msSmoothGroupSettings"
@@ -6081,6 +6123,10 @@
           "shape": "HlsOutputSettings",
           "locationName": "hlsOutputSettings"
         },
+        "MediaPackageOutputSettings": {
+          "shape": "MediaPackageOutputSettings",
+          "locationName": "mediaPackageOutputSettings"
+        },
         "MsSmoothOutputSettings": {
           "shape": "MsSmoothOutputSettings",
           "locationName": "msSmoothOutputSettings"
@@ -6099,6 +6145,34 @@
       "type": "structure",
       "members": {
       }
+    },
+    "PauseStateScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "Pipelines": {
+          "shape": "__listOfPipelinePauseStateSettings",
+          "locationName": "pipelines"
+        }
+      }
+    },
+    "PipelineId": {
+      "type": "string",
+      "enum": [
+        "PIPELINE_0",
+        "PIPELINE_1"
+      ]
+    },
+    "PipelinePauseStateSettings": {
+      "type": "structure",
+      "members": {
+        "PipelineId": {
+          "shape": "PipelineId",
+          "locationName": "pipelineId"
+        }
+      },
+      "required": [
+        "PipelineId"
+      ]
     },
     "PurchaseOffering": {
       "type": "structure",
@@ -6494,6 +6568,10 @@
         "InputSwitchSettings": {
           "shape": "InputSwitchScheduleActionSettings",
           "locationName": "inputSwitchSettings"
+        },
+        "PauseStateSettings": {
+          "shape": "PauseStateScheduleActionSettings",
+          "locationName": "pauseStateSettings"
         },
         "Scte35ReturnToNetworkSettings": {
           "shape": "Scte35ReturnToNetworkScheduleActionSettings",
@@ -7998,6 +8076,12 @@
         "shape": "MediaConnectFlowRequest"
       }
     },
+    "__listOfMediaPackageOutputDestinationSettings": {
+      "type": "list",
+      "member": {
+        "shape": "MediaPackageOutputDestinationSettings"
+      }
+    },
     "__listOfOffering": {
       "type": "list",
       "member": {
@@ -8026,6 +8110,12 @@
       "type": "list",
       "member": {
         "shape": "OutputGroup"
+      }
+    },
+    "__listOfPipelinePauseStateSettings": {
+      "type": "list",
+      "member": {
+        "shape": "PipelinePauseStateSettings"
       }
     },
     "__listOfReservation": {

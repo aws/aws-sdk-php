@@ -43,5 +43,15 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateVirtualNodeAsync(array $args = [])
  * @method \Aws\Result updateVirtualRouter(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVirtualRouterAsync(array $args = [])
+ * @method \Aws\Result createVirtualService(array $args = []) (supported in versions 2019-01-25)
+ * @method \GuzzleHttp\Promise\Promise createVirtualServiceAsync(array $args = []) (supported in versions 2019-01-25)
+ * @method \Aws\Result deleteVirtualService(array $args = []) (supported in versions 2019-01-25)
+ * @method \GuzzleHttp\Promise\Promise deleteVirtualServiceAsync(array $args = []) (supported in versions 2019-01-25)
+ * @method \Aws\Result describeVirtualService(array $args = []) (supported in versions 2019-01-25)
+ * @method \GuzzleHttp\Promise\Promise describeVirtualServiceAsync(array $args = []) (supported in versions 2019-01-25)
+ * @method \Aws\Result listVirtualServices(array $args = []) (supported in versions 2019-01-25)
+ * @method \GuzzleHttp\Promise\Promise listVirtualServicesAsync(array $args = []) (supported in versions 2019-01-25)
+ * @method \Aws\Result updateVirtualService(array $args = []) (supported in versions 2019-01-25)
+ * @method \GuzzleHttp\Promise\Promise updateVirtualServiceAsync(array $args = []) (supported in versions 2019-01-25)
  */
 class AppMeshClient extends AwsClient {}
