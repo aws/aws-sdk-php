@@ -420,6 +420,19 @@ class Sdk
         return new $klass($this->mergeArgs($namespace, $service, $args));
     }
 
+    /**
+     * Clone existing SDK instance with ability to pass an associative array
+     * of extra client settings.
+     *
+     * @param array $args
+     *
+     * @return self
+     */
+    public function copy(array $args = [])
+    {
+        return new self($args + $this->args);
+    }
+
     private function mergeArgs($namespace, array $manifest, array $args = [])
     {
         // Merge provided args with stored, service-specific args.
