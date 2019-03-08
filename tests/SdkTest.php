@@ -67,8 +67,9 @@ class SdkTest extends TestCase
     public function testClonesWithExtraArgs()
     {
         $sdk = new Sdk([
-            'version' => 'latest',
-            'region'  => 'us-east-1',
+            'version'  => 'latest',
+            'endpoint' => 'https://foo',
+            'region'   => 'us-east-1',
         ]);
 
         $this->assertSame(
@@ -83,6 +84,11 @@ class SdkTest extends TestCase
         $this->assertSame(
             'eu-west-1',
             $copy->createDynamoDb()->getRegion()
+        );
+
+        $this->assertSame(
+            'https://foo',
+            (string) $copy->createDynamoDb()->getEndpoint()
         );
     }
 }
