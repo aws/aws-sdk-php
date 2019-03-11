@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.90.0 - 2019-03-11
 
 * `Aws\` - Adds ability to clone existing Sdk instance with extra arguments.
 * `Aws\CostExplorer` - The only change in this release is to make TimePeriod a required parameter in GetCostAndUsageRequest.
