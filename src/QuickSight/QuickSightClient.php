@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteGroupMembershipAsync(array $args = [])
  * @method \Aws\Result deleteUser(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteUserAsync(array $args = [])
+ * @method \Aws\Result deleteUserByPrincipalId(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteUserByPrincipalIdAsync(array $args = [])
  * @method \Aws\Result describeGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeGroupAsync(array $args = [])
  * @method \Aws\Result describeUser(array $args = [])
