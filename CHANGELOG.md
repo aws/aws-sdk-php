@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ServerlessApplicationRepository` - The AWS Serverless Application Repository now supports associating a ZIP source code archive with versions of an application.
+
 ## 3.90.0 - 2019-03-11
 
 * `Aws\` - Adds ability to clone existing Sdk instance with extra arguments.
