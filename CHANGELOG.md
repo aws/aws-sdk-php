@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchLogs` - Documentation updates for logs
+* `Aws\ConfigService` - Config released Remediation APIs allowing Remediation of Config Rules
+
 ## 3.90.1 - 2019-03-12
 
 * `Aws\ServerlessApplicationRepository` - The AWS Serverless Application Repository now supports associating a ZIP source code archive with versions of an application.
