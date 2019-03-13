@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.90.2 - 2019-03-13
 
 * `Aws\CloudWatchLogs` - Documentation updates for logs
 * `Aws\ConfigService` - Config released Remediation APIs allowing Remediation of Config Rules
