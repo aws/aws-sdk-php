@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.90.3 - 2019-03-14
 
 * `Aws\ACM` - AWS Certificate Manager has added a new API action, RenewCertificate. RenewCertificate causes ACM to force the renewal of any private certificate which has been exported.
 * `Aws\ACMPCA` - AWS Certificate Manager (ACM) Private CA allows customers to manage permissions on their CAs. Customers can grant or deny AWS Certificate Manager permission to renew exported private certificates.
