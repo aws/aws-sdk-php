@@ -24,6 +24,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForCertificateAsync(array $args = [])
  * @method \Aws\Result removeTagsFromCertificate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeTagsFromCertificateAsync(array $args = [])
+ * @method \Aws\Result renewCertificate(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise renewCertificateAsync(array $args = [])
  * @method \Aws\Result requestCertificate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise requestCertificateAsync(array $args = [])
  * @method \Aws\Result resendValidationEmail(array $args = [])

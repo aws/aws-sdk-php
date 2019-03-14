@@ -86,6 +86,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listAggregateDiscoveredResourcesAsync(array $args = [])
  * @method \Aws\Result listDiscoveredResources(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDiscoveredResourcesAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putAggregationAuthorization(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAggregationAuthorizationAsync(array $args = [])
  * @method \Aws\Result putConfigRule(array $args = [])
@@ -110,5 +112,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startRemediationExecutionAsync(array $args = [])
  * @method \Aws\Result stopConfigurationRecorder(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopConfigurationRecorderAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class ConfigServiceClient extends AwsClient {}
