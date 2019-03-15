@@ -74,7 +74,7 @@ options <http://www.php.net/manual/en/function.stream-context-create.php>`_ of a
 Opening seekable streams allows you to seek only to bytes that were previously read. You cannot skip ahead to bytes
 that have not yet been read from the remote server. In order to allow previously read data to recalled, data is
 buffered in a PHP temp stream using Guzzle's
-`CachingEntityBody <https://github.com/guzzle/guzzle/blob/master/src/Guzzle/Http/CachingEntityBody.php>`_ decorator.
+`CachingEntityBody <https://guzzle3.readthedocs.io/http-client/entity-bodies.html>`_ decorator.
 When the amount of cached data exceed 2MB, the data in the temp stream will transfer from memory to disk. Keep this in
 mind when downloading large files from Amazon S3 using the ``seekable`` stream context setting.
 

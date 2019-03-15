@@ -139,7 +139,7 @@ If you prefer JSON syntax, you can define your configuration in JSON format inst
     }
 
 For more information about writing custom configuration files, please see `Using the Service Builder
-<http://docs.guzzlephp.org/en/latest/webservice-client/using-the-service-builder.html>`_ in the Guzzle documentation.
+<https://guzzle3.readthedocs.io/webservice-client/using-the-service-builder.html>`_ in the Guzzle documentation.
 
 Client configuration options
 -----------------------------

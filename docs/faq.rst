@@ -122,7 +122,7 @@ For more complex logging or logging to a file, you can build a LogPlugin manuall
     // Add the LogPlugin to the client
     $s3Client->addSubscriber($logPlugin);
 
-You can find out more about the LogPlugin on the Guzzle website: http://guzzlephp.org/guide/plugins.html#log-plugin
+You can find out more about the LogPlugin on the Guzzle website: https://guzzle3.readthedocs.io/plugins/log-plugin.html
 
 How can I set arbitrary headers on a request?
 ---------------------------------------------

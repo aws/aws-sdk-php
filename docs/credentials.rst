@@ -94,7 +94,7 @@ The easiest way to add a cache to your IAM role credentials is to specify a cred
 ``credentials.cache`` option in a client's factory method or in a service builder configuration file. The
 ``credentials.cache`` configuration setting should be set to an object that implements Guzzle's
 ``Guzzle\Cache\CacheAdapterInterface`` (see `Guzzle cache adapters
-<http://docs.guzzlephp.org/en/latest/plugins/cache-plugin.html#cache-adapters>`_). This interface provides an
+<https://guzzle3.readthedocs.io/plugins/cache-plugin.html>`_). This interface provides an
 abstraction layer over various cache backends, including Doctrine Cache, Zend Framework 2 cache, etc.
 
 .. code-block:: php
@@ -312,7 +312,7 @@ Using temporary credentials from AWS STS
 request limited-privilege, **temporary credentials** for AWS IAM users or for users that you authenticate via identity
 federation. One common use case for using temporary credentials is to grant mobile or client-side applications access to
 AWS resources by authenticating users through third-party identity providers (read more about `Web Identity Federation
-<http://docs.aws.amazon.com/STS/latest/UsingSTS/CreatingWIF.html>`_).
+<https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html>`_).
 
 .. note::
 

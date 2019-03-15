@@ -320,7 +320,6 @@ Articles from the Blog
 * `Iterating through Amazon DynamoDB Results <http://blogs.aws.amazon.com/php/post/TxJGHHKBUJO1AL/Iterating-through-Amazon-DynamoDB-Results>`_
 * `Sending requests through a proxy <http://blogs.aws.amazon.com/php/post/Tx9FZ2MY1XP7X6/Sending-requests-through-a-proxy>`_
 * `Wire Logging in the AWS SDK for PHP <http://blogs.aws.amazon.com/php/post/Tx1W2JMJBQHBNRS/Wire-Logging-in-the-AWS-SDK-for-PHP>`_
-* `Streaming Amazon S3 Objects From a Web Server <http://blogs.aws.amazon.com/php/post/Tx2C4WJBMSMW68A/Streaming-Amazon-S3-Objects-From-a-Web-Server>`_
 * `Using New Regions and Endpoints <http://blogs.aws.amazon.com/php/post/Tx39XJNNO5OOX3U/Using-New-Regions-and-Endpoints>`_
 * `Receiving Amazon SNS Messages in PHP <http://blogs.aws.amazon.com/php/post/Tx2G9D94IE6KPAY/Receiving-Amazon-SNS-Messages-in-PHP>`_
 * `Testing Webhooks Locally for Amazon SNS <http://blogs.aws.amazon.com/php/post/Tx2CO24DVG9CAK0/Testing-Webhooks-Locally-for-Amazon-SNS>`_
