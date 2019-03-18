@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS Database Migration Service** service.
  * @method \Aws\Result addTagsToResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addTagsToResourceAsync(array $args = [])
+ * @method \Aws\Result applyPendingMaintenanceAction(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise applyPendingMaintenanceActionAsync(array $args = [])
  * @method \Aws\Result createEndpoint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createEndpointAsync(array $args = [])
  * @method \Aws\Result createEventSubscription(array $args = [])
@@ -47,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeEventsAsync(array $args = [])
  * @method \Aws\Result describeOrderableReplicationInstances(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeOrderableReplicationInstancesAsync(array $args = [])
+ * @method \Aws\Result describePendingMaintenanceActions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describePendingMaintenanceActionsAsync(array $args = [])
  * @method \Aws\Result describeRefreshSchemasStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeRefreshSchemasStatusAsync(array $args = [])
  * @method \Aws\Result describeReplicationInstanceTaskLogs(array $args = [])

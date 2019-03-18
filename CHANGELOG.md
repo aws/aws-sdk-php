@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Chime` - This release adds support for the Amazon Chime Business Calling and Voice Connector features.
+* `Aws\DatabaseMigrationService` - S3 Endpoint Settings added support for 1) Migrating to Amazon S3 as a target in Parquet format 2) Encrypting S3 objects after migration with custom KMS Server-Side encryption. Redshift Endpoint Settings added support for encrypting intermediate S3 objects during migration with custom KMS Server-Side encryption. 
+* `Aws\EC2` - DescribeFpgaImages API now returns a new DataRetentionSupport attribute to indicate if the AFI meets the requirements to support DRAM data retention. DataRetentionSupport is a read-only attribute.
+
 ## 3.90.3 - 2019-03-14
 
 * `Aws\ACM` - AWS Certificate Manager has added a new API action, RenewCertificate. RenewCertificate causes ACM to force the renewal of any private certificate which has been exported.
