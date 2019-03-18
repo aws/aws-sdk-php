@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.90.4 - 2019-03-18
 
 * `Aws\Chime` - This release adds support for the Amazon Chime Business Calling and Voice Connector features.
 * `Aws\DatabaseMigrationService` - S3 Endpoint Settings added support for 1) Migrating to Amazon S3 as a target in Parquet format 2) Encrypting S3 objects after migration with custom KMS Server-Side encryption. Redshift Endpoint Settings added support for encrypting intermediate S3 objects during migration with custom KMS Server-Side encryption. 
