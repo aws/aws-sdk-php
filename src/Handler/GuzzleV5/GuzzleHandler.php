@@ -26,14 +26,15 @@ use Psr\Http\Message\StreamInterface as Psr7StreamInterface;
 class GuzzleHandler
 {
     private static $validOptions = [
-        'proxy'           => true,
-        'verify'          => true,
-        'timeout'         => true,
-        'debug'           => true,
-        'connect_timeout' => true,
-        'stream'          => true,
-        'delay'           => true,
-        'sink'            => true,
+        'proxy'             => true,
+        'expect'            => true,
+        'verify'            => true,
+        'timeout'           => true,
+        'debug'             => true,
+        'connect_timeout'   => true,
+        'stream'            => true,
+        'delay'             => true,
+        'sink'              => true,
     ];
 
     /** @var ClientInterface */
