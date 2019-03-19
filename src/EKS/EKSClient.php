@@ -17,6 +17,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listClustersAsync(array $args = [])
  * @method \Aws\Result listUpdates(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listUpdatesAsync(array $args = [])
+ * @method \Aws\Result updateClusterConfig(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateClusterConfigAsync(array $args = [])
  * @method \Aws\Result updateClusterVersion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateClusterVersionAsync(array $args = [])
  */

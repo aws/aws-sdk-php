@@ -104,6 +104,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putRemediationConfigurationsAsync(array $args = [])
  * @method \Aws\Result putRetentionConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putRetentionConfigurationAsync(array $args = [])
+ * @method \Aws\Result selectResourceConfig(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise selectResourceConfigAsync(array $args = [])
  * @method \Aws\Result startConfigRulesEvaluation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startConfigRulesEvaluationAsync(array $args = [])
  * @method \Aws\Result startConfigurationRecorder(array $args = [])

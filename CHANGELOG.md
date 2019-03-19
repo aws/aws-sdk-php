@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - AWS Config adds a new API called SelectResourceConfig to run advanced queries based on resource configuration properties.
+* `Aws\EKS` - Added support to control private/public access to the Kubernetes API-server endpoint
+
 ## 3.90.4 - 2019-03-18
 
 * `Aws\Chime` - This release adds support for the Amazon Chime Business Calling and Voice Connector features.
