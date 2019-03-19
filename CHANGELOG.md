@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.90.5 - 2019-03-19
 
 * `Aws\ConfigService` - AWS Config adds a new API called SelectResourceConfig to run advanced queries based on resource configuration properties.
 * `Aws\EKS` - Added support to control private/public access to the Kubernetes API-server endpoint
