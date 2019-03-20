@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodePipeline` - Add support for viewing details of each action execution belonging to past and latest pipeline executions that have occurred in customer's pipeline. The details include start/updated times, action execution results, input/output artifacts information, etc. Customers also have the option to add pipelineExecutionId in the input to filter the results down to a single pipeline execution.
+* `Aws\CognitoIdentity` - This release adds tags and tag-based access control support to Amazon Cognito Identity Pools (Federated Identities). 
+* `Aws\MarketplaceMetering` - This release increases AWS Marketplace Metering Service maximum usage quantity to 2147483647 and makes parameters usage quantity and dryrun optional.
+
 ## 3.90.5 - 2019-03-19
 
 * `Aws\ConfigService` - AWS Config adds a new API called SelectResourceConfig to run advanced queries based on resource configuration properties.
