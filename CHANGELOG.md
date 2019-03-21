@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.90.7 - 2019-03-21
 
 * `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling
 * `Aws\CloudWatchEvents` - Added 3 new APIs, and one additional parameter to the PutRule API, to support tagging of CloudWatch Events rules.
