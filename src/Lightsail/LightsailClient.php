@@ -63,6 +63,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteInstanceSnapshotAsync(array $args = [])
  * @method \Aws\Result deleteKeyPair(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteKeyPairAsync(array $args = [])
+ * @method \Aws\Result deleteKnownHostKeys(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteKnownHostKeysAsync(array $args = [])
  * @method \Aws\Result deleteLoadBalancer(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteLoadBalancerAsync(array $args = [])
  * @method \Aws\Result deleteLoadBalancerTlsCertificate(array $args = [])

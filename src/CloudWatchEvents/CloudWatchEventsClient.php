@@ -20,6 +20,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listRuleNamesByTargetAsync(array $args = [])
  * @method \Aws\Result listRules(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listRulesAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result listTargetsByRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTargetsByRuleAsync(array $args = [])
  * @method \Aws\Result putEvents(array $args = [])
@@ -34,7 +36,11 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise removePermissionAsync(array $args = [])
  * @method \Aws\Result removeTargets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeTargetsAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result testEventPattern(array $args = [])
  * @method \GuzzleHttp\Promise\Promise testEventPatternAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class CloudWatchEventsClient extends AwsClient {}

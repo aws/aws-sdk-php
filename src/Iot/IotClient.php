@@ -178,6 +178,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getPolicyVersionAsync(array $args = [])
  * @method \Aws\Result getRegistrationCode(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRegistrationCodeAsync(array $args = [])
+ * @method \Aws\Result getStatistics(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getStatisticsAsync(array $args = [])
  * @method \Aws\Result getTopicRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getTopicRuleAsync(array $args = [])
  * @method \Aws\Result getV2LoggingOptions(array $args = [])
