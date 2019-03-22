@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoT1ClickProjects` - This release adds tagging support for AWS IoT 1-Click Project resources. Use these APIs to add, remove, or list tags on Projects, and leverage the tags for various authorization and billing scenarios. This release also adds the ARN property to projects for DescribeProject and ListProject responses.
+* `Aws\TranscribeService` - Amazon Transcribe - support transcriptions from audio sources in German (de-DE) and Korean (ko-KR).
+
 ## 3.90.7 - 2019-03-21
 
 * `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling
