@@ -21,6 +21,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getNotificationChannelAsync(array $args = [])
  * @method \Aws\Result getPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getPolicyAsync(array $args = [])
+ * @method \Aws\Result getProtectionStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getProtectionStatusAsync(array $args = [])
  * @method \Aws\Result listComplianceStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listComplianceStatusAsync(array $args = [])
  * @method \Aws\Result listMemberAccounts(array $args = [])
