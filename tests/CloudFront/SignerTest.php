@@ -34,10 +34,14 @@ class SignerTest extends TestCase
     public function testBadPrivateKey() {
         $filename = tempnam(sys_get_temp_dir(), 'cloudfront-fake-key');
         file_put_contents($filename, "Not a real private key");
-        $s = new Signer(
-            "not a real keypair id",
-            $filename
-        );
+        try {
+           $s = new Signer(
+               "not a real keypair id",
+               $filename
+           );
+        } finally {
+           unlink($filename);
+        }
     }
 
     /**
