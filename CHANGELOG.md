@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.90.10 - 2019-03-26
 
 * `Aws\Glue` - This new feature will now allow customers to add a customized csv classifier with classifier API. They can specify a custom delimiter, quote symbol and control other behavior they'd like crawlers to have while recognizing csv files
 * `Aws\WorkMail` - Documentation updates for Amazon WorkMail.
