@@ -26,6 +26,25 @@ class SignerTest extends TestCase
     }
 
     /**
+     * Assert that the key is parsed during construction
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessageRegExp /PEM .*no start line/
+     */
+    public function testBadPrivateKey() {
+        $filename = tempnam(sys_get_temp_dir(), 'cloudfront-fake-key');
+        file_put_contents($filename, "Not a real private key");
+        try {
+           $s = new Signer(
+               "not a real keypair id",
+               $filename
+           );
+        } finally {
+           unlink($filename);
+        }
+    }
+
+    /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage PK file not found
      */
