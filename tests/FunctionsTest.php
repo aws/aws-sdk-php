@@ -342,7 +342,7 @@ class FunctionsTest extends TestCase
      */
     public function testParsesIniFile($ini, $expected)
     {
-        $tmpFile = sys_get_temp_dir() . 'test.ini';
+        $tmpFile = sys_get_temp_dir() . '/test.ini';
         file_put_contents($tmpFile, $ini);
         $this->assertEquals(
             $expected,
