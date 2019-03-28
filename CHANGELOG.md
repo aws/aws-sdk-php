@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.90.12 - 2019-03-28
 
 * `Aws\CloudFront` - Parse the private key used to sign Cloudfront Urls once during construction instead of on every call to ->sign(). For a 2048bit key, this dropped the signing time from 1.3ms to 0.7ms. For a 1024bit key, the time went from 0.40ms to 0.16ms.
 * `Aws\MediaLive` - This release adds a new output locking mode synchronized to the Unix epoch.
