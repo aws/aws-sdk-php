@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Parse the private key used to sign Cloudfront Urls once during construction instead of on every call to ->sign(). For a 2048bit key, this dropped the signing time from 1.3ms to 0.7ms. For a 1024bit key, the time went from 0.40ms to 0.16ms.
+* `Aws\MediaLive` - This release adds a new output locking mode synchronized to the Unix epoch.
+* `Aws\PinpointEmail` - This release adds support for using the Amazon Pinpoint Email API to tag the following types of Amazon Pinpoint resources: configuration sets; dedicated IP pools; deliverability dashboard reports; and, email identities. A tag is a label that you optionally define and associate with these types of resources. Tags can help you categorize and manage these resources in different ways, such as by purpose, owner, environment, or other criteria. A resource can have as many as 50 tags. For more information, see the Amazon Pinpoint Email API Reference.
+* `Aws\ServiceCatalog` - Adds "Tags" field in UpdateProvisionedProduct API. The product should have a new RESOURCE_UPDATE Constraint with TagUpdateOnProvisionedProduct field set to ALLOWED for it to work. See API docs for CreateConstraint for more information
+* `Aws\WorkSpaces` - Amazon WorkSpaces adds tagging support for WorkSpaces Images, WorkSpaces directories, WorkSpaces bundles and IP Access control groups.
+
 ## 3.90.11 - 2019-03-27
 
 * `Aws\AppMesh` - This release includes AWS Tagging integration for App Mesh, VirtualNode access logging, TCP routing, and Mesh-wide external traffic egress control. See https://docs.aws.amazon.com/app-mesh/latest/APIReference/Welcome.html for more details.
