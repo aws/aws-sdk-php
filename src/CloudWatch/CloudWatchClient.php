@@ -32,6 +32,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listDashboardsAsync(array $args = [])
  * @method \Aws\Result listMetrics(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listMetricsAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putDashboard(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putDashboardAsync(array $args = [])
  * @method \Aws\Result putMetricAlarm(array $args = [])
@@ -40,5 +42,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putMetricDataAsync(array $args = [])
  * @method \Aws\Result setAlarmState(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setAlarmStateAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class CloudWatchClient extends AwsClient {}

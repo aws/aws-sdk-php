@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatch` - Added 3 new APIs, and one additional parameter to PutMetricAlarm API, to support tagging of CloudWatch Alarms.
+* `Aws\Comprehend` - With this release AWS Comprehend supports encryption of output results of analysis jobs and volume data on the storage volume attached to the compute instance that processes the analysis job.
+* `Aws\Greengrass` - Greengrass APIs now support tagging operations on resources
+
 ## 3.90.12 - 2019-03-28
 
 * `Aws\CloudFront` - Parse the private key used to sign Cloudfront Urls once during construction instead of on every call to ->sign(). For a 2048bit key, this dropped the signing time from 1.3ms to 0.7ms. For a 1024bit key, the time went from 0.40ms to 0.16ms.
