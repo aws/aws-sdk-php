@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.90.13 - 2019-03-29
 
 * `Aws\CloudWatch` - Added 3 new APIs, and one additional parameter to PutMetricAlarm API, to support tagging of CloudWatch Alarms.
 * `Aws\Comprehend` - With this release AWS Comprehend supports encryption of output results of analysis jobs and volume data on the storage volume attached to the compute instance that processes the analysis job.
