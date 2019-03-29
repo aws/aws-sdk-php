@@ -335,4 +335,64 @@ class FunctionsTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @covers Aws\parse_ini_file()
+     * @dataProvider getIniFileTestCases
+     */
+    public function testParsesIniFile($ini, $expected)
+    {
+        $tmpFile = sys_get_temp_dir() . '/test.ini';
+        file_put_contents($tmpFile, $ini);
+        $this->assertEquals(
+            $expected,
+            Aws\parse_ini_file($tmpFile, true, INI_SCANNER_RAW)
+        );
+        unlink($tmpFile);
+    }
+
+    public function getIniFileTestCases()
+    {
+        return [
+            [
+                <<<EOT
+[default]
+foo_key = bar
+baz_key = qux
+[custom]
+foo_key = bar-custom
+baz_key = qux-custom
+EOT
+                ,
+                [
+                    'default' => [
+                        'foo_key' => 'bar',
+                        'baz_key' => 'qux',
+                    ],
+                    'custom' => [
+                        'foo_key' => 'bar-custom',
+                        'baz_key' => 'qux-custom',
+                    ]
+                ]
+            ],
+            [
+                <<<EOT
+[default]
+;Full-line comment = ignored
+#Full-line comment = ignored
+foo_key = bar;Inline comment = ignored
+baz_key = qux
+*star_key = not_ignored
+EOT
+                ,
+                [
+                    'default' => [
+                        'foo_key' => 'bar',
+                        'baz_key' => 'qux',
+                        '*star_key' => 'not_ignored'
+                    ],
+                ],
+            ],
+        ];
+    }
 }

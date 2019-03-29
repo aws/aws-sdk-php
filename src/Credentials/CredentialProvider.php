@@ -294,7 +294,7 @@ class CredentialProvider
             if (!is_readable($filename)) {
                 return self::reject("Cannot read credentials from $filename");
             }
-            $data = parse_ini_file($filename, true, INI_SCANNER_RAW);
+            $data = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
             if ($data === false) {
                 return self::reject("Invalid credentials file: $filename");
             }
