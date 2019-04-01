@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds helper function to parse full-line hash comments for credentials and config files, which was removed in PHP 7's implemention of parse_ini_file.
+* `Aws\EMR` - Amazon EMR adds the ability to modify instance group configurations on a running cluster through the new "configurations" field in the ModifyInstanceGroups API.
+* `Aws\SSM` - March 2019 documentation updates for Systems Manager.
+
 ## 3.90.13 - 2019-03-29
 
 * `Aws\CloudWatch` - Added 3 new APIs, and one additional parameter to PutMetricAlarm API, to support tagging of CloudWatch Alarms.
