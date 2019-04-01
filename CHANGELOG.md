@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.91.0 - 2019-04-01
 
 * `Aws\` - Adds helper function to parse full-line hash comments for credentials and config files, which was removed in PHP 7's implemention of parse_ini_file.
 * `Aws\EMR` - Amazon EMR adds the ability to modify instance group configurations on a running cluster through the new "configurations" field in the ModifyInstanceGroups API.
