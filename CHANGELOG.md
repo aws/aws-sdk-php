@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - Documentation updates for acm
+* `Aws\EC2` - Add paginators.
+* `Aws\SecurityHub` - This update includes 3 additional error codes: AccessDeniedException, InvalidAccessException, and ResourceConflictException. This update also removes the error code ResourceNotFoundException from the GetFindings, GetInvitationsCount, ListInvitations, and ListMembers operations. 
+
 ## 3.91.0 - 2019-04-01
 
 * `Aws\` - Adds helper function to parse full-line hash comments for credentials and config files, which was removed in PHP 7's implemention of parse_ini_file.
