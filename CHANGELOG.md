@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.91.1 - 2019-04-02
 
 * `Aws\ACM` - Documentation updates for acm
 * `Aws\EC2` - Add paginators.
