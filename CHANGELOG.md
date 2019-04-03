@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.91.2 - 2019-04-03
 
 * `Aws\Batch` - Support for GPU resource requirement in RegisterJobDefinition and SubmitJob
 * `Aws\Comprehend` - With this release AWS Comprehend adds tagging support for document-classifiers and entity-recognizers.
