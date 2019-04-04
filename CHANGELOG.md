@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EKS` - Added support to enable or disable publishing Kubernetes cluster logs in AWS CloudWatch
+* `Aws\IAM` - Documentation updates for iam
+
 ## 3.91.2 - 2019-04-03
 
 * `Aws\Batch` - Support for GPU resource requirement in RegisterJobDefinition and SubmitJob
