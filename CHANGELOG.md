@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.91.3 - 2019-04-04
 
 * `Aws\EKS` - Added support to enable or disable publishing Kubernetes cluster logs in AWS CloudWatch
 * `Aws\IAM` - Documentation updates for iam
