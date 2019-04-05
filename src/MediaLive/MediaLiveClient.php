@@ -61,5 +61,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateInputAsync(array $args = [])
  * @method \Aws\Result updateInputSecurityGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateInputSecurityGroupAsync(array $args = [])
+ * @method \Aws\Result updateReservation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateReservationAsync(array $args = [])
  */
 class MediaLiveClient extends AwsClient {}

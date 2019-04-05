@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Enables Expect http config to be passed through GuzzleV5 Handler.
+* `Aws\Comprehend` - With this release AWS Comprehend provides confusion matrix for custom document classifier.
+* `Aws\Glue` - AWS Glue now supports workerType choices in the CreateJob, UpdateJob, and StartJobRun APIs, to be used for memory-intensive jobs.
+* `Aws\IoT1ClickDevicesService` - Documentation updates for 1-Click: improved descriptions of resource tagging APIs.
+* `Aws\MediaConvert` - Rectify incorrect modelling of DisassociateCertificate method
+* `Aws\MediaLive` - Today AWS Elemental MediaLive (https://aws.amazon.com/medialive/) adds the option to create "Single Pipeline" channels, which offers a lower-cost option compared to Standard channels. MediaLive Single Pipeline channels have a single encoding pipeline rather than the redundant dual Availability Zone (AZ) pipelines that MediaLive provides with a "Standard" channel.
+
 ## 3.91.3 - 2019-04-04
 
 * `Aws\EKS` - Added support to enable or disable publishing Kubernetes cluster logs in AWS CloudWatch
