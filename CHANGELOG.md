@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.91.4 - 2019-04-05
 
 * `Aws\` - Enables Expect http config to be passed through GuzzleV5 Handler.
 * `Aws\Comprehend` - With this release AWS Comprehend provides confusion matrix for custom document classifier.
