@@ -459,6 +459,8 @@ class StreamWrapper
             $this->dir_opendir($this->openedPath, null);
             return true;
         });
+
+        return true;
     }
 
     /**
