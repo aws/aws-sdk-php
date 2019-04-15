@@ -277,6 +277,80 @@ EOT;
         }
     }
 
+    public function testCreatesFromProcessCredentialProvider()
+    {
+        $dir = $this->clearEnv();
+        $ini = "[foo]\ncredential_process = "
+            . "echo '{\"AccessKeyId\":\"foo\",\"SecretAccessKey\":\"bar\", \"Version\":1}'";
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        $creds = call_user_func(CredentialProvider::process('foo'))->wait();
+        $this->assertEquals('foo', $creds->getAccessKeyId());
+        $this->assertEquals('bar', $creds->getSecretKey());
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage No credential_process present in INI profile
+     */
+    public function testEnsuresProcessCredentialIsPresent()
+    {
+        $dir = $this->clearEnv();
+        $ini = "[default]\naws_access_key_id = foo\n"
+            . "aws_secret_access_key = baz\n[foo]";
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            $creds = call_user_func(CredentialProvider::process())->wait();
+        } catch (\Exception $e) {
+            unlink($dir . '/credentials');
+            throw $e;
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage credential_process does not return Version == 1
+     */
+    public function testEnsuresProcessCredentialVersion()
+    {
+        $dir = $this->clearEnv();
+        $ini = "[default]\ncredential_process = "
+            . "echo '{\"AccessKeyId\":\"foo\",\"SecretAccessKey\":\"bar\", \"Version\":2}'";
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            $creds = call_user_func(CredentialProvider::process())->wait();
+        } catch (\Exception $e) {
+            unlink($dir . '/credentials');
+            throw $e;
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage credential_process returned expired credentials
+     */
+    public function testEnsuresProcessCredentialsAreCurrent()
+    {
+        $dir = $this->clearEnv();
+        $ini = "[default]\ncredential_process = "
+            . "echo '{\"AccessKeyId\":\"foo\",\"SecretAccessKey\":\"bar\", \"SessionToken\":\"baz\","
+            . "\"Version\":1, \"Expiration\":\"1970-01-01T00:00:00.000Z\"}'";
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            $creds = call_user_func(CredentialProvider::process())->wait();
+        } catch (\Exception $e) {
+            unlink($dir . '/credentials');
+            throw $e;
+        }
+    }
+
     public function testCreatesFromInstanceProfileProvider()
     {
         $p = CredentialProvider::instanceProfile();
