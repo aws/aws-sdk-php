@@ -360,7 +360,7 @@ class CredentialProvider
             }
 
             $credential_process = $data[$profile]['credential_process'];
-            $json = exec($credential_process);
+            $json = shell_exec($credential_process);
 
             $process_data = json_decode($json, true);
 
@@ -376,9 +376,13 @@ class CredentialProvider
             }
 
             if (isset($process_data['Expiration'])) {
-                $expiration = DateTimeResult::createFromFormat('Y-m-d\TH:i:s+', $process_data['Expiration']);
+                try {
+                    $expiration = new DateTimeResult($process_data['Expiration']);
+                } catch (\Exception $e) {
+                    return self::reject("credential_process returned invalid expiration");
+                }
                 $now = new DateTimeResult();
-                if($expiration < $now) {
+                if ($expiration < $now) {
                     return self::reject("credential_process returned expired credentials");
                 }
             } else {
