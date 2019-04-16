@@ -53,8 +53,10 @@ class CredentialProvider
      * variables, then checks for the "default" profile in ~/.aws/credentials,
      * then checks for "profile default" profile in ~/.aws/config (which is
      * the default profile of AWS CLI), then tries to make a GET Request to
-     * fetch credentials if Ecs environment variable is presented, and finally
-     * checks for EC2 instance profile credentials.
+     * fetch credentials if Ecs environment variable is presented, then checks
+     * for credential_process in the "default" profile in ~/.aws/credentials,
+     * then for credential_process in the "default profile" profile in
+     * ~/.aws/config, and finally checks for EC2 instance profile credentials.
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided credentials.
@@ -359,25 +361,25 @@ class CredentialProvider
                     . "'$profile' ($filename)");
             }
 
-            $credential_process = $data[$profile]['credential_process'];
-            $json = shell_exec($credential_process);
+            $credentialProcess = $data[$profile]['credential_process'];
+            $json = shell_exec($credentialProcess);
 
-            $process_data = json_decode($json, true);
+            $processData = json_decode($json, true);
 
             // Only support version 1
-            if (isset($process_data['Version'])) {
-                if ($process_data['Version'] !== 1) {
+            if (isset($processData['Version'])) {
+                if ($processData['Version'] !== 1) {
                     return self::reject("credential_process does not return Version == 1");
                 }
             }
 
-            if (!isset($process_data['AccessKeyId']) || !isset($process_data['SecretAccessKey'])) {
+            if (!isset($processData['AccessKeyId']) || !isset($processData['SecretAccessKey'])) {
                 return self::reject("credential_process does not return valid credentials");
             }
 
-            if (isset($process_data['Expiration'])) {
+            if (isset($processData['Expiration'])) {
                 try {
-                    $expiration = new DateTimeResult($process_data['Expiration']);
+                    $expiration = new DateTimeResult($processData['Expiration']);
                 } catch (\Exception $e) {
                     return self::reject("credential_process returned invalid expiration");
                 }
@@ -386,19 +388,19 @@ class CredentialProvider
                     return self::reject("credential_process returned expired credentials");
                 }
             } else {
-                $process_data['Expiration'] = null;
+                $processData['Expiration'] = null;
             }
 
-            if (empty($process_data['SessionToken'])) {
-                $process_data['SessionToken'] = null;
+            if (empty($processData['SessionToken'])) {
+                $processData['SessionToken'] = null;
             }
 
             return Promise\promise_for(
                 new Credentials(
-                    $process_data['AccessKeyId'],
-                    $process_data['SecretAccessKey'],
-                    $process_data['SessionToken'],
-                    $process_data['Expiration']
+                    $processData['AccessKeyId'],
+                    $processData['SecretAccessKey'],
+                    $processData['SessionToken'],
+                    $processData['Expiration']
                 )
             );
         };
