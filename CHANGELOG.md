@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatch` - Documentation updates for monitoring
+* `Aws\CognitoIdentityProvider` - This release adds support for the new email configuration in Amazon Cognito User Pools. You can now specify whether Amazon Cognito emails your users by using its built-in email functionality or your Amazon SES email configuration.
+* `Aws\MQ` - This release adds the ability to retrieve information about broker engines and broker instance options. See Broker Engine Types and Broker Instance Options in the Amazon MQ REST API Reference.
+* `Aws\Organizations` - Documentation updates for organizations
+* `Aws\Redshift` - DescribeResize can now return percent of data transferred from source cluster to target cluster for a classic resize.
+* `Aws\StorageGateway` - This change allows you to select either a weekly or monthly maintenance window for your volume or tape gateway. It also allows you to tag your tape and volume resources on creation by adding a Tag value on calls to the respective api endpoints.
+
 ## 3.91.4 - 2019-04-05
 
 * `Aws\` - Enables Expect http config to be passed through GuzzleV5 Handler.
