@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.91.5 - 2019-04-16
 
 * `Aws\CloudWatch` - Documentation updates for monitoring
 * `Aws\CognitoIdentityProvider` - This release adds support for the new email configuration in Amazon Cognito User Pools. You can now specify whether Amazon Cognito emails your users by using its built-in email functionality or your Amazon SES email configuration.
