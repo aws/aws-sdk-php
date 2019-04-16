@@ -13,6 +13,23 @@ like Amazon S3, Amazon DynamoDB, Amazon Glacier, etc. You can get started in
 minutes by [installing the SDK through Composer][docs-installation] or by
 downloading a single zip or phar file from our [latest release][latest-release].
 
+## Deprecation Notice - S3 Signature V2
+
+[S3 support for Signature V2 is being deprecated](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingAWSSDK.html#UsingAWSSDK-sig2-deprecation), 
+after which only Signature V4 will be supported. Users of V2 of the PHP SDK will 
+have to upgrade to version 2.5 or later in order to continue using S3. It is 
+recommended to upgrade to version 3 of the SDK, which uses Signature V4
+as a default, if possible. To use Signature V4 with version 2.5+ of the SDK, you 
+can specify `signature` as a configuration option, as in the following example.
+
+```php
+    $client = S3Client::factory([
+        'region' => 'us-east-2',
+        'version' => 'latest',
+        'signature' => 'v4'
+    ]);
+```
+
 ## Resources
 
 * [User Guide][docs-guide] – For in-depth getting started and usage information
