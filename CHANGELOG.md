@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.91.6 - 2019-04-17
 
 * `Aws\EC2` - This release adds support for requester-managed Interface VPC Endpoints (powered by AWS PrivateLink). The feature prevents VPC endpoint owners from accidentally deleting or otherwise mismanaging the VPC endpoints of some AWS VPC endpoint services.
 * `Aws\Polly` - Amazon Polly adds Arabic language support with new female voice - "Zeina"
