@@ -2,6 +2,7 @@
 namespace Aws\Credentials;
 
 use Aws;
+use Aws\Api\DateTimeResult;
 use Aws\CacheInterface;
 use Aws\Exception\CredentialsException;
 use GuzzleHttp\Promise;
@@ -52,8 +53,10 @@ class CredentialProvider
      * variables, then checks for the "default" profile in ~/.aws/credentials,
      * then checks for "profile default" profile in ~/.aws/config (which is
      * the default profile of AWS CLI), then tries to make a GET Request to
-     * fetch credentials if Ecs environment variable is presented, and finally
-     * checks for EC2 instance profile credentials.
+     * fetch credentials if Ecs environment variable is presented, then checks
+     * for credential_process in the "default" profile in ~/.aws/credentials,
+     * then for credential_process in the "default profile" profile in
+     * ~/.aws/config, and finally checks for EC2 instance profile credentials.
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided credentials.
@@ -326,6 +329,85 @@ class CredentialProvider
     }
 
     /**
+     * Credentials provider that creates credentials using a process configured in
+     * ini file stored in the current user's home directory.
+     *
+     * @param string|null $profile  Profile to use. If not specified will use
+     *                              the "default" profile in "~/.aws/credentials".
+     * @param string|null $filename If provided, uses a custom filename rather
+     *                              than looking in the home directory.
+     *
+     * @return callable
+     */
+    public static function process($profile = null, $filename = null)
+    {
+        $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
+        $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
+
+        return function () use ($profile, $filename) {
+            if (!is_readable($filename)) {
+                return self::reject("Cannot read process credentials from $filename");
+            }
+            $data = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
+            if ($data === false) {
+                return self::reject("Invalid credentials file: $filename");
+            }
+            if (!isset($data[$profile])) {
+                return self::reject("'$profile' not found in credentials file");
+            }
+            if (!isset($data[$profile]['credential_process'])
+            ) {
+                return self::reject("No credential_process present in INI profile "
+                    . "'$profile' ($filename)");
+            }
+
+            $credentialProcess = $data[$profile]['credential_process'];
+            $json = shell_exec($credentialProcess);
+
+            $processData = json_decode($json, true);
+
+            // Only support version 1
+            if (isset($processData['Version'])) {
+                if ($processData['Version'] !== 1) {
+                    return self::reject("credential_process does not return Version == 1");
+                }
+            }
+
+            if (!isset($processData['AccessKeyId']) || !isset($processData['SecretAccessKey'])) {
+                return self::reject("credential_process does not return valid credentials");
+            }
+
+            if (isset($processData['Expiration'])) {
+                try {
+                    $expiration = new DateTimeResult($processData['Expiration']);
+                } catch (\Exception $e) {
+                    return self::reject("credential_process returned invalid expiration");
+                }
+                $now = new DateTimeResult();
+                if ($expiration < $now) {
+                    return self::reject("credential_process returned expired credentials");
+                }
+            } else {
+                $processData['Expiration'] = null;
+            }
+
+            if (empty($processData['SessionToken'])) {
+                $processData['SessionToken'] = null;
+            }
+
+            return Promise\promise_for(
+                new Credentials(
+                    $processData['AccessKeyId'],
+                    $processData['SecretAccessKey'],
+                    $processData['SessionToken'],
+                    $processData['Expiration']
+                )
+            );
+        };
+    }
+
+
+    /**
      * Local credential providers returns a list of local credential providers
      * in following order:
      *  - credentials from environment variables
@@ -358,6 +440,11 @@ class CredentialProvider
         if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
             $providers['ecs'] = self::ecsCredentials($config);
         }
+        $providers['process_credentials'] = self::process();
+        $providers['process_config'] = self::process(
+            'profile default',
+            self::getHomeDir() . '/.aws/config'
+        );
         $providers['instance'] = self::instanceProfile($config);
 
         if (isset($config['credentials'])

@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Credentials;
 
+use Aws\Api\DateTimeResult;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\LruArrayCache;
@@ -277,6 +278,150 @@ EOT;
         }
     }
 
+    public function testCreatesFromProcessCredentialProvider()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[foo]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        $creds = call_user_func(CredentialProvider::process('foo'))->wait();
+        unlink($dir . '/credentials');
+        $this->assertEquals('foo', $creds->getAccessKeyId());
+        $this->assertEquals('bar', $creds->getSecretKey());
+    }
+
+    public function testCreatesFromProcessCredentialWithFilename()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[baz]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":1}'
+EOT;
+        file_put_contents($dir . '/mycreds', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        $creds = call_user_func(CredentialProvider::process('baz', $dir . '/mycreds'))->wait();
+        unlink($dir . '/mycreds');
+        $this->assertEquals('foo', $creds->getAccessKeyId());
+        $this->assertEquals('bar', $creds->getSecretKey());
+    }
+
+    public function testCreatesTemporaryFromProcessCredential()
+    {
+        $dir = $this->clearEnv();
+        $expiration = new DateTimeResult("+1 hour");
+        $ini = <<<EOT
+[foo]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken": "baz", "Expiration":"$expiration", "Version":1}'
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        $creds = call_user_func(CredentialProvider::process('foo'))->wait();
+        unlink($dir . '/credentials');
+        $this->assertEquals('foo', $creds->getAccessKeyId());
+        $this->assertEquals('bar', $creds->getSecretKey());
+        $this->assertEquals('baz', $creds->getSecurityToken());
+        $this->assertEquals($expiration, $creds->getExpiration());
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage No credential_process present in INI profile
+     */
+    public function testEnsuresProcessCredentialIsPresent()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = baz
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            $creds = call_user_func(CredentialProvider::process())->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage credential_process does not return Version == 1
+     */
+    public function testEnsuresProcessCredentialVersion()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "Version":2}'
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            $creds = call_user_func(CredentialProvider::process())->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage credential_process returned expired credentials
+     */
+    public function testEnsuresProcessCredentialsAreCurrent()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken":"baz","Version":1, "Expiration":"1970-01-01T00:00:00.000Z"}'
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            $creds = call_user_func(CredentialProvider::process())->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+        /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage credential_process returned invalid expiration
+     */
+    public function testEnsuresProcessCredentialsExpirationIsValid()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken":"baz","Version":1, "Expiration":"invalid_date_format"}'
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            $creds = call_user_func(CredentialProvider::process())->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
     public function testCreatesFromInstanceProfileProvider()
     {
         $p = CredentialProvider::instanceProfile();
@@ -393,5 +538,36 @@ EOT;
         $creds = $provider()->wait();
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('baz', $creds->getSecretKey());
+    }
+
+    public function testProcessCredentialDefaultChain()
+    {
+        $dir = $this->clearEnv();
+        $credentialsIni = <<<EOT
+[default]
+credential_process = echo '{"AccessKeyId":"credentialsFoo","SecretAccessKey":"bar", "Version":1}'
+EOT;
+        file_put_contents($dir . '/credentials', $credentialsIni);
+        putenv('HOME=' . dirname($dir));
+        $provider = CredentialProvider::defaultProvider();
+        $creds = $provider()->wait();
+        unlink($dir . '/credentials');
+        $this->assertEquals('credentialsFoo', $creds->getAccessKeyId());
+    }
+
+    public function testProcessCredentialConfigDefaultChain()
+    {
+        $dir = $this->clearEnv();
+        $configIni = <<<EOT
+[profile default]
+credential_process = echo '{"AccessKeyId":"configFoo","SecretAccessKey":"baz", "Version":1}'
+EOT;
+
+        file_put_contents($dir . '/config', $configIni);
+        putenv('HOME=' . dirname($dir));
+        $provider = CredentialProvider::defaultProvider();
+        $creds = $provider()->wait();
+        unlink($dir . '/config');
+        $this->assertEquals('configFoo', $creds->getAccessKeyId());
     }
 }
