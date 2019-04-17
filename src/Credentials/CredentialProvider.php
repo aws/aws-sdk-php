@@ -441,8 +441,10 @@ class CredentialProvider
             $providers['ecs'] = self::ecsCredentials($config);
         }
         $providers['process_credentials'] = self::process();
-        $providers['process_config']
-            = self::process('profile default', self::getHomeDir() . '/.aws/config');
+        $providers['process_config'] = self::process(
+            'profile default',
+            self::getHomeDir() . '/.aws/config'
+        );
         $providers['instance'] = self::instanceProfile($config);
 
         if (isset($config['credentials'])
