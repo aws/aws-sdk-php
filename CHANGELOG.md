@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationDiscoveryService` - The Application Discovery Service's DescribeImportTasks and BatchDeleteImportData APIs now return additional statuses for error reporting.
+* `Aws\CognitoIdentityProvider` - Document updates for Amazon Cognito Identity Provider.
+* `Aws\Credentials` - This update adds a process credential provider. Credetentials can be sourced from a command returning json on stdout.
+* `Aws\Kafka` - Amazon Kafka - Added tagging APIs
+* `Aws\Organizations` - AWS Organizations is now available in the AWS GovCloud (US) Regions, and we added a new API action for creating accounts in those Regions. For more information, see CreateGovCloudAccount in the AWS Organizations API Reference. 
+* `Aws\RDS` - This release adds the TimeoutAction parameter to the ScalingConfiguration of an Aurora Serverless DB cluster. You can now configure the behavior when an auto-scaling capacity change can't find a scaling point.
+* `Aws\WorkLink` - Amazon WorkLink is a fully managed, cloud-based service that enables secure, one-click access to internal websites and web apps from mobile phones. This release introduces new APIs to link and manage internal websites and web apps with Amazon WorkLink fleets. 
+* `Aws\WorkSpaces` - Documentation updates for workspaces
+
 ## 3.91.6 - 2019-04-17
 
 * `Aws\EC2` - This release adds support for requester-managed Interface VPC Endpoints (powered by AWS PrivateLink). The feature prevents VPC endpoint owners from accidentally deleting or otherwise mismanaging the VPC endpoints of some AWS VPC endpoint services.

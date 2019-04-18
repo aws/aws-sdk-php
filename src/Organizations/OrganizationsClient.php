@@ -13,6 +13,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise cancelHandshakeAsync(array $args = [])
  * @method \Aws\Result createAccount(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createAccountAsync(array $args = [])
+ * @method \Aws\Result createGovCloudAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createGovCloudAccountAsync(array $args = [])
  * @method \Aws\Result createOrganization(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createOrganizationAsync(array $args = [])
  * @method \Aws\Result createOrganizationalUnit(array $args = [])
