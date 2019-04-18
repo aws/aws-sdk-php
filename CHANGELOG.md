@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.92.0 - 2019-04-18
 
 * `Aws\ApplicationDiscoveryService` - The Application Discovery Service's DescribeImportTasks and BatchDeleteImportData APIs now return additional statuses for error reporting.
 * `Aws\CognitoIdentityProvider` - Document updates for Amazon Cognito Identity Provider.
