@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.92.1 - 2019-04-19
 
 * `Aws\ResourceGroups` - The AWS Resource Groups service increased the query size limit to 4096 bytes.
 * `Aws\TranscribeService` - Amazon Transcribe - support transcriptions from audio sources in Spanish Spanish (es-ES).
