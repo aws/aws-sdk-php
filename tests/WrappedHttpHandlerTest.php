@@ -4,6 +4,8 @@ namespace Aws\Test;
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\Api\ErrorParser\RestJsonErrorParser;
 use Aws\Api\ErrorParser\XmlErrorParser;
+use Aws\Api\Service;
+use Aws\AwsClient;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
@@ -97,16 +99,22 @@ class WrappedHttpHandlerTest extends TestCase
      * @param $errorParser
      * @param $expectedCode
      * @param $expectedId
+     * @param $expectedArray
      */
     public function testCanRejectWithAndParseResponse(
         Response $res,
         $errorParser,
         $expectedCode,
-        $expectedId
+        $expectedId,
+        $expectedArray
     )
     {
+        $client = $this->generateTestClient(
+            $this->generateTestService('rest-json'),
+            []
+        );
+        $cmd = $client->getCommand('TestOperation', []);
         $e = new \Exception('a');
-        $cmd = new Command('foo');
         $req = new Request('GET', 'http://foo.com');
         $handler = function () use ($e, $req, $res) {
             return new RejectedPromise(['exception' => $e, 'response' => $res]);
@@ -124,6 +132,7 @@ class WrappedHttpHandlerTest extends TestCase
             $this->assertNull($e->getResult());
             $this->assertEquals($expectedCode, $e->getAwsErrorCode());
             $this->assertEquals($expectedId, $e->getAwsRequestId());
+            $this->assertEquals($expectedArray, $e->toArray());
         }
     }
 
@@ -139,6 +148,7 @@ class WrappedHttpHandlerTest extends TestCase
                 new JsonRpcErrorParser(),
                 'bar',
                 '123',
+                [],
             ],
             [
                 new Response(
@@ -152,6 +162,7 @@ class WrappedHttpHandlerTest extends TestCase
                 new RestJsonErrorParser(),
                 'foo',
                 '123',
+                [],
             ],
             [
                 new Response(
@@ -162,6 +173,7 @@ class WrappedHttpHandlerTest extends TestCase
                 new XmlErrorParser(),
                 'InternalError',
                 '656c76696e6727732072657175657374',
+                [],
             ],
             [
                 new Response(
@@ -172,6 +184,28 @@ class WrappedHttpHandlerTest extends TestCase
                 new XmlErrorParser(),
                 null,
                 null,
+                [],
+            ],
+            // Rest-json with modeled exception
+            [
+                new Response(
+                    400,
+                    [
+                        'X-Amzn-RequestId' => '123',
+                        'X-Amzn-ErrorType' => 'TestException'
+                    ],
+                    json_encode([
+                        'TestString' => 'foo-string',
+                        'TestInt' => 456
+                    ])
+                ),
+                new RestJsonErrorParser(),
+                'TestException',
+                '123',
+                [
+                    'TestString' => 'foo-string',
+                    'TestInt' => 456
+                ],
             ],
         ];
     }
@@ -226,5 +260,66 @@ class WrappedHttpHandlerTest extends TestCase
 
         $wrapped(new Command('a'), new Request('GET', 'http://foo.com'))
             ->wait();
+    }
+
+    private function generateTestClient(Service $service, $args = [])
+    {
+        return new AwsClient(
+            array_merge(
+                [
+                    'service'      => 'foo',
+                    'api_provider' => function () use ($service) {
+                        return $service->toArray();
+                    },
+                    'region'       => 'us-east-1',
+                    'version'      => 'latest',
+                ],
+                $args
+            )
+        );
+    }
+
+    private function generateTestService($protocol)
+    {
+        return new Service(
+            [
+                'metadata' => [
+                    "protocol" => $protocol,
+                    "apiVersion" => "2019-05-01"
+                ],
+                'shapes' => [
+                    "TestException"=>[
+                        "type" => "structure",
+                        "members" => [
+                            "TestString" => ["shape" => "String"],
+                            "TestInt" => ["shape" => "Integer"]
+                        ],
+                        "error" => ["httpStatusCode" => 502],
+                        "exception" => true
+                    ],
+                    "TestInput"=>[
+                        "type" => "structure",
+                        "members" => [
+                            "TestInput" => ["shape" => "String"]
+                        ],
+                    ],
+                ],
+                'operations' => [
+                    "TestOperation"=> [
+                        "name"=> "TestOperation",
+                        "http"=> [
+                            "method"=> "POST",
+                            "requestUri"=> "/",
+                            "responseCode"=> 200
+                        ],
+                        "input" => ["shape"=> "TestInput"],
+                        "errors" => [
+                            ["shape" => "TestException"]
+                        ],
+                    ],
+                ],
+            ],
+            function () { return []; }
+        );
     }
 }
