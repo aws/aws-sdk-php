@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Exception;
 
+use Aws\HasDataTrait;
 use Aws\HasMonitoringEventsTrait;
 use Aws\MonitoringEventsInterface;
 use Aws\ResponseContainerInterface;
@@ -14,8 +15,10 @@ use Aws\ResultInterface;
  */
 class AwsException extends \RuntimeException implements
     MonitoringEventsInterface,
-    ResponseContainerInterface
+    ResponseContainerInterface,
+    \ArrayAccess
 {
+    use HasDataTrait;
     use HasMonitoringEventsTrait;
 
     /** @var ResponseInterface */
@@ -42,8 +45,10 @@ class AwsException extends \RuntimeException implements
         $message,
         CommandInterface $command,
         array $context = [],
-        \Exception $previous = null
+        \Exception $previous = null,
+        array $data = []
     ) {
+        $this->data = $data;
         $this->command = $command;
         $this->response = isset($context['response']) ? $context['response'] : null;
         $this->request = isset($context['request']) ? $context['request'] : null;
@@ -233,5 +238,20 @@ class AwsException extends \RuntimeException implements
     public function setMaxRetriesExceeded()
     {
         $this->maxRetriesExceeded = true;
+    }
+
+    public function hasKey($name)
+    {
+        return isset($this->data[$name]);
+    }
+
+    public function get($key)
+    {
+        return $this[$key];
+    }
+
+    public function search($expression)
+    {
+        return JmesPath::search($expression, $this->toArray());
     }
 }
