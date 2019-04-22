@@ -1,18 +1,26 @@
 <?php
 namespace Aws\Api\ErrorParser;
 
+use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Parses JSON-REST errors.
  */
-class RestJsonErrorParser
+class RestJsonErrorParser extends AbstractErrorParser
 {
     use JsonParserTrait;
 
-    public function __invoke(ResponseInterface $response)
-    {
+    public function __invoke(
+        ResponseInterface $response,
+        CommandInterface $command = null
+    ) {
         $data = $this->genericHandler($response);
+
+        if (!empty($command) && !empty($this->api)) {
+            $errors = $this->api->getOperation($command->getName())->getErrors();
+            $data['body'] = [];
+        }
 
         // Merge in error data from the JSON body
         if ($json = $data['parsed']) {

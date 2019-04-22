@@ -107,7 +107,7 @@ class Service extends AbstractModel
      * @return callable
      * @throws \UnexpectedValueException
      */
-    public static function createErrorParser($protocol)
+    public static function createErrorParser($protocol, Service $api = null)
     {
         static $mapping = [
             'json'      => 'Aws\Api\ErrorParser\JsonRpcErrorParser',
@@ -118,7 +118,7 @@ class Service extends AbstractModel
         ];
 
         if (isset($mapping[$protocol])) {
-            return new $mapping[$protocol]();
+            return new $mapping[$protocol]($api);
         }
 
         throw new \UnexpectedValueException("Unknown protocol: $protocol");

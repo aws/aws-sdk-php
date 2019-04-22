@@ -2,17 +2,20 @@
 namespace Aws\Api\ErrorParser;
 
 use Aws\Api\Parser\PayloadParserTrait;
+use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Parses XML errors.
  */
-class XmlErrorParser
+class XmlErrorParser extends AbstractErrorParser
 {
     use PayloadParserTrait;
 
-    public function __invoke(ResponseInterface $response)
-    {
+    public function __invoke(
+        ResponseInterface $response,
+        CommandInterface $command = null
+    ) {
         $code = (string) $response->getStatusCode();
 
         $data = [

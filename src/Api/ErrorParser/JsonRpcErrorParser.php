@@ -1,17 +1,20 @@
 <?php
 namespace Aws\Api\ErrorParser;
 
+use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Parsers JSON-RPC errors.
  */
-class JsonRpcErrorParser
+class JsonRpcErrorParser extends AbstractErrorParser
 {
     use JsonParserTrait;
 
-    public function __invoke(ResponseInterface $response)
-    {
+    public function __invoke(
+        ResponseInterface $response,
+        CommandInterface $command = null
+    ) {
         $data = $this->genericHandler($response);
         // Make the casing consistent across services.
         if ($data['parsed']) {

@@ -454,7 +454,7 @@ class ClientResolver
 
         $args['api'] = $api;
         $args['parser'] = Service::createParser($api);
-        $args['error_parser'] = Service::createErrorParser($api->getProtocol());
+        $args['error_parser'] = Service::createErrorParser($api->getProtocol(), $api);
     }
 
     public static function _apply_endpoint_provider(callable $value, array &$args)

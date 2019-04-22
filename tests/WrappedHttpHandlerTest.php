@@ -103,16 +103,14 @@ class WrappedHttpHandlerTest extends TestCase
      */
     public function testCanRejectWithAndParseResponse(
         Response $res,
+        Service $service,
         $errorParser,
         $expectedCode,
         $expectedId,
         $expectedArray
     )
     {
-        $client = $this->generateTestClient(
-            $this->generateTestService('rest-json'),
-            []
-        );
+        $client = $this->generateTestClient($service, []);
         $cmd = $client->getCommand('TestOperation', []);
         $e = new \Exception('a');
         $req = new Request('GET', 'http://foo.com');
@@ -138,6 +136,13 @@ class WrappedHttpHandlerTest extends TestCase
 
     public function responseAndParserProvider()
     {
+        $services = [
+            'json' => $this->generateTestService('json'),
+            'query' => $this->generateTestService('query'),
+            'rest-json' => $this->generateTestService('rest-json'),
+            'rest-xml' => $this->generateTestService('rest-xml'),
+        ];
+
         return [
             [
                 new Response(
@@ -145,7 +150,8 @@ class WrappedHttpHandlerTest extends TestCase
                     ['X-Amzn-RequestId' => '123'],
                     json_encode(['__type' => 'foo#bar'])
                 ),
-                new JsonRpcErrorParser(),
+                $services['json'],
+                new JsonRpcErrorParser($services['json']),
                 'bar',
                 '123',
                 [],
@@ -159,7 +165,8 @@ class WrappedHttpHandlerTest extends TestCase
                     ],
                     json_encode(['message' => 'sorry!'])
                 ),
-                new RestJsonErrorParser(),
+                $services['rest-json'],
+                new RestJsonErrorParser($services['rest-json']),
                 'foo',
                 '123',
                 [],
@@ -170,7 +177,8 @@ class WrappedHttpHandlerTest extends TestCase
                     [],
                     '<?xml version="1.0" encoding="UTF-8"?><Error><Code>InternalError</Code><RequestId>656c76696e6727732072657175657374</RequestId></Error>'
                 ),
-                new XmlErrorParser(),
+                $services['rest-xml'],
+                new XmlErrorParser($services['rest-xml']),
                 'InternalError',
                 '656c76696e6727732072657175657374',
                 [],
@@ -181,7 +189,8 @@ class WrappedHttpHandlerTest extends TestCase
                     ['X-Amzn-RequestId' => '123'],
                     openssl_random_pseudo_bytes(1024)
                 ),
-                new XmlErrorParser(),
+                $services['query'],
+                new XmlErrorParser($services['query']),
                 null,
                 null,
                 [],
@@ -199,7 +208,8 @@ class WrappedHttpHandlerTest extends TestCase
                         'TestInt' => 456
                     ])
                 ),
-                new RestJsonErrorParser(),
+                $services['rest-json'],
+                new RestJsonErrorParser($services['rest-json']),
                 'TestException',
                 '123',
                 [
