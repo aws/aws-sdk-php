@@ -28,7 +28,7 @@ class ParserException extends \RuntimeException implements
      *
      * @return string|null
      */
-    public function errorCode()
+    public function getErrorCode()
     {
         return $this->errorCode;
     }

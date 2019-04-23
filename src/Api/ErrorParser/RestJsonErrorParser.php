@@ -69,7 +69,7 @@ class RestJsonErrorParser extends AbstractErrorParser
                 // If indicated error code can't be found in model, throw exception
                 if (!isset($modeledError)) {
                     throw new ParserException(
-                        "No corresponding shape could be found for error code '{$data['code']}'.",
+                        "Shape for error code '{$data['code']}' not defined.",
                         0,
                         null,
                         [
