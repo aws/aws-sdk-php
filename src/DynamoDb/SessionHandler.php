@@ -44,7 +44,9 @@ class SessionHandler implements \SessionHandlerInterface
      * The configuration array accepts the following array keys and values:
      * - table_name:               Name of table to store the sessions.
      * - hash_key:                 Name of hash key in table. Default: "id".
+     * - data_attribute:           Name of the data attribute in table. Default: "data".
      * - session_lifetime:         Lifetime of inactive sessions expiration.
+     * - session_lifetime_attribute: Name of the session life time attribute in table. Default: "expires".
      * - consistent_read:          Whether or not to use consistent reads.
      * - batch_config:             Batch options used for garbage collection.
      * - locking:                  Whether or not to use session locking.
@@ -135,14 +137,16 @@ class SessionHandler implements \SessionHandlerInterface
         // PHP expects an empty string to be returned from this method if no
         // data is retrieved
         $this->dataRead = '';
+        $data_attribute = $this->connection->getAttribute('data_attribute');
+        $session_lifetime_attribute = $this->connection->getAttribute('session_lifetime_attribute');
 
         // Get session data using the selected locking strategy
         $item = $this->connection->read($this->formatId($id));
 
         // Return the data if it is not expired. If it is expired, remove it
-        if (isset($item['expires']) && isset($item['data'])) {
-            $this->dataRead = $item['data'];
-            if ($item['expires'] <= time()) {
+        if (isset($item[$session_lifetime_attribute]) && isset($item[$data_attribute])) {
+            $this->dataRead = $item[$data_attribute];
+            if ($item[$session_lifetime_attribute] <= time()) {
                 $this->dataRead = '';
                 $this->destroy($id);
             }

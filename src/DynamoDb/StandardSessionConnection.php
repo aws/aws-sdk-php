@@ -24,7 +24,9 @@ class StandardSessionConnection implements SessionConnectionInterface
         $this->config = $config + [
             'table_name'       => 'sessions',
             'hash_key'         => 'id',
+            'data_attribute'   => 'data',
             'session_lifetime' => (int) ini_get('session.gc_maxlifetime'),
+            'session_lifetime_attribute' => 'expires',
             'consistent_read'  => true,
             'batch_config'     => [],
         ];
@@ -58,14 +60,14 @@ class StandardSessionConnection implements SessionConnectionInterface
         // Prepare the attributes
         $expires = time() + $this->config['session_lifetime'];
         $attributes = [
-            'expires' => ['Value' => ['N' => (string) $expires]],
+            $this->config['session_lifetime_attribute'] => ['Value' => ['N' => (string) $expires]],
             'lock' => ['Action' => 'DELETE'],
         ];
         if ($isChanged) {
             if ($data != '') {
-                $attributes['data'] = ['Value' => ['S' => $data]];
+                $attributes[$this->config['data_attribute']] = ['Value' => ['S' => $data]];
             } else {
-                $attributes['data'] = ['Action' => 'DELETE'];
+                $attributes[$this->config['data_attribute']] = ['Action' => 'DELETE'];
             }
         }
 
@@ -100,7 +102,7 @@ class StandardSessionConnection implements SessionConnectionInterface
             'TableName' => $this->config['table_name'],
             'AttributesToGet' => [$this->config['hash_key']],
             'ScanFilter' => [
-                'expires' => [
+                $this->config['session_lifetime_attribute'] => [
                     'ComparisonOperator' => 'LT',
                     'AttributeValueList' => [['N' => (string) time()]],
                 ],
@@ -144,6 +146,21 @@ class StandardSessionConnection implements SessionConnectionInterface
     {
         trigger_error($error, E_USER_WARNING);
 
+        return false;
+    }
+    
+    /**
+     * @param string $error
+     *
+     * @return string|bool
+     */
+    public function getAttribute($attribute)
+    {
+        if ($attribute !== '' && isset($this->config[$attribute]))
+        {
+            return $this->config[$attribute];
+        }
+            
         return false;
     }
 }
