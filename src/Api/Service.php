@@ -102,6 +102,8 @@ class Service extends AbstractModel
     /**
      * Creates an error parser for the given protocol.
      *
+     * Redundant method signature to preserve backwards compatibility.
+     *
      * @param string $protocol Protocol to parse (e.g., query, json, etc.)
      *
      * @return callable

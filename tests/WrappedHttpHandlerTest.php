@@ -161,13 +161,12 @@ class WrappedHttpHandlerTest extends TestCase
                     400,
                     [
                         'X-Amzn-RequestId' => '123',
-                        'X-Amzn-ErrorType' => 'foo:bar'
                     ],
                     json_encode(['message' => 'sorry!'])
                 ),
                 $services['rest-json'],
                 new RestJsonErrorParser($services['rest-json']),
-                'foo',
+                null,
                 '123',
                 [],
             ],
@@ -195,7 +194,7 @@ class WrappedHttpHandlerTest extends TestCase
                 null,
                 [],
             ],
-            // Rest-json with modeled exception
+            // Rest-json with modeled exception from header error type
             [
                 new Response(
                     400,
@@ -205,7 +204,8 @@ class WrappedHttpHandlerTest extends TestCase
                     ],
                     json_encode([
                         'TestString' => 'foo-string',
-                        'TestInt' => 456
+                        'TestInt' => 456,
+                        'NotModeled' => 'bar'
                     ])
                 ),
                 $services['rest-json'],
@@ -215,6 +215,29 @@ class WrappedHttpHandlerTest extends TestCase
                 [
                     'TestString' => 'foo-string',
                     'TestInt' => 456
+                ],
+            ],
+            // Rest-json with modeled exception from body error code
+            [
+                new Response(
+                    400,
+                    [
+                        'X-Amzn-RequestId' => '123'
+                    ],
+                    json_encode([
+                        'TestString' => 'foo-string',
+                        'TestInt' => 456,
+                        'NotModeled' => 'bar',
+                        'code' => 'TestException'
+                    ])
+                ),
+                $services['rest-json'],
+                new RestJsonErrorParser($services['rest-json']),
+                'TestException',
+                '123',
+                [
+                    'TestString' => 'foo-string',
+                    'TestInt' => 456,
                 ],
             ],
         ];
@@ -298,6 +321,8 @@ class WrappedHttpHandlerTest extends TestCase
                     "apiVersion" => "2019-05-01"
                 ],
                 'shapes' => [
+                    "Integer" => ["type" => "integer"],
+                    "String" => ["type" => "string"],
                     "TestException"=>[
                         "type" => "structure",
                         "members" => [
@@ -312,7 +337,7 @@ class WrappedHttpHandlerTest extends TestCase
                         "members" => [
                             "TestInput" => ["shape" => "String"]
                         ],
-                    ],
+                    ]
                 ],
                 'operations' => [
                     "TestOperation"=> [

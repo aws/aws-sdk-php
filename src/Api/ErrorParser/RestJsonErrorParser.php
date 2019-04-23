@@ -1,6 +1,10 @@
 <?php
 namespace Aws\Api\ErrorParser;
 
+use Aws\Api\Parser\Exception\ParserException;
+use Aws\Api\Parser\JsonParser;
+use Aws\Api\Service;
+use Aws\Api\StructureShape;
 use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -11,16 +15,19 @@ class RestJsonErrorParser extends AbstractErrorParser
 {
     use JsonParserTrait;
 
+    private $parser;
+
+    public function __construct(Service $api = null, JsonParser $parser = null)
+    {
+        parent::__construct($api);
+        $this->parser = $parser ?: new JsonParser();
+    }
+
     public function __invoke(
         ResponseInterface $response,
         CommandInterface $command = null
     ) {
         $data = $this->genericHandler($response);
-
-        if (!empty($command) && !empty($this->api)) {
-            $errors = $this->api->getOperation($command->getName())->getErrors();
-            $data['body'] = [];
-        }
 
         // Merge in error data from the JSON body
         if ($json = $data['parsed']) {
@@ -38,6 +45,54 @@ class RestJsonErrorParser extends AbstractErrorParser
             $data['code'] = $colon ? substr($code, 0, $colon) : $code;
         }
 
+        if (!empty($command) && !empty($this->api)) {
+
+            // If modeled error code is indicated, check for known error shape
+            if (!empty($data['code'])) {
+
+                $errors = $this->api->getOperation($command->getName())->getErrors();
+                foreach ($errors as $key => $error) {
+
+                    // If error code matches a known error shape, populate the body
+                    if ($data['code'] == $error['name']
+                        && $error instanceof StructureShape
+                    ) {
+                        $modeledError = $error;
+                        $data['body'] = $this->extractPayload(
+                            $modeledError,
+                            $response
+                        );
+                        break;
+                    }
+                }
+
+                // If indicated error code can't be found in model, throw exception
+                if (!isset($modeledError)) {
+                    throw new ParserException(
+                        "No corresponding shape could be found for error code '{$data['code']}'.",
+                        0,
+                        null,
+                        [
+                            'error_code' => $data['code'],
+                            'request_id' => $response->getHeaderLine('X-Amzn-Requestid'),
+                            'response' => $response,
+                        ]
+                    );
+                }
+            }
+        }
+
         return $data;
+    }
+
+    protected function payload(
+        ResponseInterface $response,
+        StructureShape $member
+    ) {
+        $jsonBody = $this->parseJson($response->getBody(), $response);
+
+        if ($jsonBody) {
+            return $this->parser->parse($member, $jsonBody);
+        }
     }
 }

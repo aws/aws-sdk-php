@@ -45,10 +45,9 @@ class AwsException extends \RuntimeException implements
         $message,
         CommandInterface $command,
         array $context = [],
-        \Exception $previous = null,
-        array $data = []
+        \Exception $previous = null
     ) {
-        $this->data = $data;
+        $this->data = isset($context['body']) ? $context['body'] : [];
         $this->command = $command;
         $this->response = isset($context['response']) ? $context['response'] : null;
         $this->request = isset($context['request']) ? $context['request'] : null;
