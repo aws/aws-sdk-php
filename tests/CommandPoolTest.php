@@ -77,12 +77,12 @@ class CommandPoolTest extends TestCase
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, $results);
         $iter = [
-            $client->getCommand('HeadBucket', ['Bucket' => 'Foo']),
-            $client->getCommand('HeadBucket', ['Bucket' => 'Foo'])
+            'A' => $client->getCommand('HeadBucket', ['Bucket' => 'Foo']),
+            'B' => $client->getCommand('HeadBucket', ['Bucket' => 'Foo'])
         ];
         $pool = new CommandPool($client, $iter, [
-            'fulfilled' => function ($result) use (&$called) {
-                $called[] = $result;
+            'fulfilled' => function ($result, $key) use (&$called) {
+                $called[$key] = $result;
             },
             'preserve_iterator_keys' => false,
         ]);
