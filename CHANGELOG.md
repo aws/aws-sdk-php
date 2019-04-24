@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.92.2 - 2019-04-24
 
 * `Aws\AlexaForBusiness` - This release adds support for the Alexa for Business gateway and gateway group APIs.
 * `Aws\CloudFormation` - Documentation updates for cloudformation
