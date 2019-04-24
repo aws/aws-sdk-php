@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AlexaForBusiness` - This release adds support for the Alexa for Business gateway and gateway group APIs.
+* `Aws\CloudFormation` - Documentation updates for cloudformation
+* `Aws\EC2` - You can now launch the new Amazon EC2 general purpose burstable instance types T3a that feature AMD EPYC processors.
+* `Aws\MediaConnect` - Adds support for ListEntitlements pagination.
+* `Aws\MediaTailor` - AWS Elemental MediaTailor SDK now includes a new parameter to support origin servers that produce single-period DASH manifests.
+* `Aws\RDS` - A new parameter "feature-name" is added to the add-role and remove-role db cluster APIs. The value for the parameter is optional for Aurora MySQL compatible database clusters, but mandatory for Aurora PostgresQL. You can find the valid list of values using describe db engine versions API.
+* `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (Hong Kong) Region (ap-east-1) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+* `Aws\S3` - Updates ObjectLoader's requiresMultipart() to handle php://input streams without data loss.
+* `Aws\SSM` - This release updates AWS Systems Manager APIs to allow customers to configure parameters to use either the standard-parameter tier (the default tier) or the advanced-parameter tier. It allows customers to create parameters with larger values and attach parameter policies to an Advanced Parameter. 
+* `Aws\StorageGateway` - AWS Storage Gateway now supports Access Control Lists (ACLs) on File Gateway SMB shares, enabling you to apply fine grained access controls for Active Directory users and groups.
+* `Aws\Textract` - This release adds support for checkbox also known as SELECTION_ELEMENT in Amazon Textract.
+
 ## 3.92.1 - 2019-04-19
 
 * `Aws\ResourceGroups` - The AWS Resource Groups service increased the query size limit to 4096 bytes.
