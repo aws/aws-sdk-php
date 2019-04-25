@@ -116,4 +116,42 @@ class AwsExceptionTest extends TestCase
             $e->__toString()
         );
     }
+
+    public function testHasData()
+    {
+        $e = new AwsException(
+            'foo-message',
+            new Command('bar'),
+            ['body' => ['a' => 'b', 'c' => 'd']]
+        );
+        $this->assertEquals('b', $e['a']);
+        $this->assertEquals('d', $e['c']);
+        $this->assertEquals('d', $e->get('c'));
+        $this->assertTrue($e->hasKey('c'));
+        $this->assertFalse($e->hasKey('f'));
+        $this->assertEquals('b', $e->search('a'));
+    }
+
+    public function testCanIndirectlyModifyLikeAnArray()
+    {
+        $e = new AwsException(
+            'foo-message',
+            new Command('bar'),
+            [
+                'body' => [
+                    'foo' => ['baz' => 'bar'],
+                    'qux' => 0
+                ]
+            ]
+        );
+        $this->assertNull($e['missing']);
+        $this->assertEquals(['baz' => 'bar'], $e['foo']);
+        $e['foo']['lorem'] = 'ipsum';
+        $this->assertEquals(['baz' => 'bar', 'lorem' => 'ipsum'], $e['foo']);
+        unset($e['foo']['baz']);
+        $this->assertEquals(['lorem' => 'ipsum'], $e['foo']);
+        $q = $e['qux'];
+        $q = 100;
+        $this->assertSame(0, $e['qux']);
+    }
 }

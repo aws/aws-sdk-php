@@ -1,14 +1,15 @@
 <?php
 namespace Aws\Exception;
 
+use Aws\CommandInterface;
 use Aws\HasDataTrait;
 use Aws\HasMonitoringEventsTrait;
 use Aws\MonitoringEventsInterface;
 use Aws\ResponseContainerInterface;
+use Aws\ResultInterface;
+use JmesPath\Env as JmesPath;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
-use Aws\CommandInterface;
-use Aws\ResultInterface;
 
 /**
  * Represents an AWS exception that is thrown when a command fails.
