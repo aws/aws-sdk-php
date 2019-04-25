@@ -40,6 +40,8 @@ use Aws\Middleware;
  * @method \GuzzleHttp\Promise\Promise getFunctionConfigurationAsync(array $args = [])
  * @method \Aws\Result getLayerVersion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getLayerVersionAsync(array $args = [])
+ * @method \Aws\Result getLayerVersionByArn(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getLayerVersionByArnAsync(array $args = [])
  * @method \Aws\Result getLayerVersionPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getLayerVersionPolicyAsync(array $args = [])
  * @method \Aws\Result getPolicy(array $args = [])
