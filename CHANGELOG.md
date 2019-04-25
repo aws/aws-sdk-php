@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.92.3 - 2019-04-25
 
 * `Aws\Batch` - Documentation updates for AWS Batch.
 * `Aws\DynamoDB` - This update allows you to tag Amazon DynamoDB tables when you create them. Tags are labels you can attach to AWS resources to make them easier to manage, search, and filter. 
