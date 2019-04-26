@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IAM` - AWS Security Token Service (STS) enables you to request session tokens from the global STS endpoint that work in all AWS Regions. You can configure the global STS endpoint to vend session tokens that are compatible with all AWS Regions using the new IAM SetSecurityTokenServicePreferences API. 
+* `Aws\SNS` - With this release AWS SNS adds tagging support for Topics.
+
 ## 3.92.3 - 2019-04-25
 
 * `Aws\Batch` - Documentation updates for AWS Batch.
