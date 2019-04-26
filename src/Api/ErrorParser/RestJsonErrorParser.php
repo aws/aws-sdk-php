@@ -62,6 +62,21 @@ class RestJsonErrorParser extends AbstractErrorParser
                             $modeledError,
                             $response
                         );
+
+                        foreach ($error->getMembers() as $name => $member) {
+                            switch ($member['location']) {
+                                case 'header':
+                                    $this->extractHeader($name, $member, $response, $data['body']);
+                                    break;
+                                case 'headers':
+                                    $this->extractHeaders($name, $member, $response, $data['body']);
+                                    break;
+                                case 'statusCode':
+                                    $this->extractStatus($name, $response, $data['body']);
+                                    break;
+                            }
+                        }
+
                         break;
                     }
                 }

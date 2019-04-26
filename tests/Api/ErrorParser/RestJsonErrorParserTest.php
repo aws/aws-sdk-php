@@ -82,6 +82,9 @@ class RestJsonErrorParserTest extends TestCase
             // Parser with code in body, and a modeled exception
             [
                 "HTTP/1.1 400 Bad Request\r\n" .
+                "TestHeader: foo-header\r\n" .
+                "x-meta-foo: foo-meta\r\n" .
+                "x-meta-bar: bar-meta\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "TestString": "foo", "TestInt": 123, "NotModeled": "bar", "code": "TestException" }',
                 $command,
@@ -94,14 +97,20 @@ class RestJsonErrorParserTest extends TestCase
                         'TestString'    => 'foo',
                         'TestInt'       => 123,
                         'NotModeled'    => 'bar',
-                        'code'          => 'TestException'
+                        'code'          => 'TestException',
                     ],
                     'TestString' => 'foo',
                     'TestInt'       => 123,
                     'NotModeled'    => 'bar',
                     'body' => [
-                        'TestString'    => 'foo',
-                        'TestInt'       => 123,
+                        'TestString'        => 'foo',
+                        'TestInt'           => 123,
+                        'TestHeaderMember'  => 'foo-header',
+                        'TestHeaders'       => [
+                            'foo' => 'foo-meta',
+                            'bar' => 'bar-meta',
+                        ],
+                        'TestStatus'        => 400,
                     ],
                     'message' => null
                 ]
@@ -109,6 +118,9 @@ class RestJsonErrorParserTest extends TestCase
             // Parser with code in header, and a modeled exception
             [
                 "HTTP/1.1 400 Bad Request\r\n" .
+                "TestHeader: foo-header\r\n" .
+                "x-meta-foo: foo-meta\r\n" .
+                "x-meta-bar: bar-meta\r\n" .
                 "x-amzn-ErrorType: TestException\r\n" .
                 "x-amzn-requestid: xyz\r\n\r\n" .
                 '{ "TestString": "foo", "TestInt": 123, "NotModeled": "bar"}',
@@ -127,8 +139,14 @@ class RestJsonErrorParserTest extends TestCase
                     'TestInt'       => 123,
                     'NotModeled'    => 'bar',
                     'body' => [
-                        'TestString'    => 'foo',
-                        'TestInt'       => 123,
+                        'TestString'        => 'foo',
+                        'TestInt'           => 123,
+                        'TestHeaderMember'  => 'foo-header',
+                        'TestHeaders'       => [
+                            'foo' => 'foo-meta',
+                            'bar' => 'bar-meta',
+                        ],
+                        'TestStatus'        => 400,
                     ],
                     'message' => null
                 ]
@@ -186,23 +204,46 @@ class RestJsonErrorParserTest extends TestCase
                     "apiVersion" => "2019-05-01"
                 ],
                 'shapes' => [
+                    "HeaderMap"=> [
+                        "type"=> "map",
+                        "key"=> [
+                            "shape"=> "String"
+                        ],
+                        "value"=> [
+                            "shape"=> "String"
+                        ]
+                    ],
                     "Integer" => ["type" => "integer"],
                     "String" => ["type" => "string"],
                     "TestException"=>[
                         "type" => "structure",
                         "members" => [
                             "TestString" => ["shape" => "String"],
-                            "TestInt" => ["shape" => "Integer"]
+                            "TestInt" => ["shape" => "Integer"],
+                            "TestHeaderMember" => [
+                                "shape" => "String",
+                                "location" => "header",
+                                "locationName" => "TestHeader",
+                            ],
+                            "TestHeaders" => [
+                                "shape" => "HeaderMap",
+                                "location" => "headers",
+                                "locationName" => "x-meta-",
+                            ],
+                            "TestStatus" => [
+                                "shape" => "Integer",
+                                "location" => "statusCode",
+                            ],
                         ],
                         "error" => ["httpStatusCode" => 502],
-                        "exception" => true
+                        "exception" => true,
                     ],
                     "TestInput"=>[
                         "type" => "structure",
                         "members" => [
                             "TestInput" => ["shape" => "String"]
                         ],
-                    ]
+                    ],
                 ],
                 'operations' => [
                     "TestOperation"=> [
