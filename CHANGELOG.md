@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.92.5 - 2019-04-29
 
 * `Aws\` - Added simple cache (PSR-16) adapter.
 * `Aws\Aws\Multipart` - Updated the coroutine promise catch to type-hint against `Throwable` for PHP 7+ while keeping `Exception` for backwards-compatibility.
