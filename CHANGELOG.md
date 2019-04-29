@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Added simple cache (PSR-16) adapter.
+* `Aws\Aws\Multipart` - Updated the coroutine promise catch to type-hint against `Throwable` for PHP 7+ while keeping `Exception` for backwards-compatibility.
+* `Aws\EC2` - Adds support for Elastic Fabric Adapter (EFA) ENIs. 
+* `Aws\Transfer` - This release adds support for per-server host-key management. You can now specify the SSH RSA private key used by your SFTP server.
+
 ## 3.92.4 - 2019-04-26
 
 * `Aws\IAM` - AWS Security Token Service (STS) enables you to request session tokens from the global STS endpoint that work in all AWS Regions. You can configure the global STS endpoint to vend session tokens that are compatible with all AWS Regions using the new IAM SetSecurityTokenServicePreferences API. 
