@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodePipeline` - This release contains an update to the PipelineContext object that includes the Pipeline ARN, and the Pipeline Execution Id. The ActionContext object is also updated to include the Action Execution Id.
+* `Aws\DirectConnect` - This release adds support for AWS Direct Connect customers to use AWS Transit Gateway with AWS Direct Connect gateway to route traffic between on-premise networks and their VPCs.
+* `Aws\ManagedBlockchain` - (New Service) Amazon Managed Blockchain is a fully managed service that makes it easy to create and manage scalable blockchain networks using popular open source frameworks.
+* `Aws\Neptune` - Adds a feature to allow customers to specify a custom parameter group when restoring a database cluster.
+* `Aws\S3Control` - Add support for Amazon S3 Batch Operations.
+* `Aws\ServiceCatalog` - Admin users can now associate/disassociate aws budgets with a portfolio or product in Service Catalog. End users can see the association by listing it or as part of the describe portfolio/product output. A new optional boolean parameter, "DisableTemplateValidation", is added to ProvisioningArtifactProperties data type. The purpose of the parameter is to enable or disable the CloudFormation template validtion when creating a product or a provisioning artifact.
+
 ## 3.92.5 - 2019-04-29
 
 * `Aws\` - Added simple cache (PSR-16) adapter.
