@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.93.0 - 2019-04-30
 
 * `Aws\CodePipeline` - This release contains an update to the PipelineContext object that includes the Pipeline ARN, and the Pipeline Execution Id. The ActionContext object is also updated to include the Action Execution Id.
 * `Aws\DirectConnect` - This release adds support for AWS Direct Connect customers to use AWS Transit Gateway with AWS Direct Connect gateway to route traffic between on-premise networks and their VPCs.
