@@ -4,37 +4,37 @@ namespace Aws\DynamoDb;
 trait SessionConnectionConfigTrait
 {
     /** @var string Name of table to store the sessions */
-    protected $table_name = 'sessions';
+    protected $tableName = 'sessions';
     
     /** @var string Name of hash key in table. Default: "id" */
-    protected $hash_key = 'id';
+    protected $hashKey = 'id';
     
     /** @var string Name of the data attribute in table. Default: "data" */
-    protected $data_attribute = 'data';
+    protected $dataAttribute = 'data';
     
     /** @var integer Lifetime of inactive sessions expiration */
-    protected $session_lifetime;
+    protected $sessionLifetime;
     
     /** @var string Name of the session life time attribute in table. Default: "expires" */
-    protected $session_lifetime_attribute = 'expires';
+    protected $sessionLifetimeAttribute = 'expires';
     
     /** @var string Whether or not to use consistent reads */
-    protected $consistent_read = true;
+    protected $consistentRead = true;
     
     /** @var string Batch options used for garbage collection */
-    protected $batch_config = [];
+    protected $batchConfig = [];
     
     /** @var boolean Whether or not to use session locking */
     protected $locking = false;
     
     /** @var integer Max time (s) to wait for lock acquisition */
-    protected $max_lock_wait_time = 10;
+    protected $maxLockWaitTime = 10;
     
     /** @var integer Min time (µs) to wait between lock attempts */
-    protected $min_lock_retry_microtime = 10000;
+    protected $minLockRetryMicrotime = 10000;
     
     /** @var integer Max time (µs) to wait between lock attempts */
-    protected $max_lock_retry_microtime = 50000;
+    protected $maxLockRetryMicrotime = 50000;
     
     
     /**
@@ -72,15 +72,15 @@ trait SessionConnectionConfigTrait
      */
     public function getTableName()
     {
-        return $this->table_name;
+        return $this->tableName;
     }
 
     /**
-     * @param string $table_name
+     * @param string $tableName
      */
-    public function setTableName($table_name)
+    public function setTableName($tableName)
     {
-        $this->table_name = $table_name;
+        $this->tableName = $tableName;
     }
 
     /**
@@ -88,15 +88,15 @@ trait SessionConnectionConfigTrait
      */
     public function getHashKey()
     {
-        return $this->hash_key;
+        return $this->hashKey;
     }
 
     /**
-     * @param string $hash_key
+     * @param string $hashKey
      */
-    public function setHashKey($hash_key)
+    public function setHashKey($hashKey)
     {
-        $this->hash_key = $hash_key;
+        $this->hashKey = $hashKey;
     }
 
     /**
@@ -104,15 +104,15 @@ trait SessionConnectionConfigTrait
      */
     public function getDataAttribute()
     {
-        return $this->data_attribute;
+        return $this->dataAttribute;
     }
 
     /**
-     * @param string $data_attribute
+     * @param string $dataAttribute
      */
-    public function setDataAttribute($data_attribute)
+    public function setDataAttribute($dataAttribute)
     {
-        $this->data_attribute = $data_attribute;
+        $this->dataAttribute = $dataAttribute;
     }
 
     /**
@@ -120,15 +120,15 @@ trait SessionConnectionConfigTrait
      */
     public function getSessionLifetime()
     {
-        return $this->session_lifetime;
+        return $this->sessionLifetime;
     }
 
     /**
-     * @param number $session_lifetime
+     * @param number $sessionLifetime
      */
-    public function setSessionLifetime($session_lifetime)
+    public function setSessionLifetime($sessionLifetime)
     {
-        $this->session_lifetime = $session_lifetime;
+        $this->sessionLifetime = $sessionLifetime;
     }
 
     /**
@@ -136,15 +136,15 @@ trait SessionConnectionConfigTrait
      */
     public function getSessionLifetimeAttribute()
     {
-        return $this->session_lifetime_attribute;
+        return $this->sessionLifetimeAttribute;
     }
 
     /**
-     * @param string $session_lifetime_attribute
+     * @param string $sessionLifetimeAttribute
      */
-    public function setSessionLifetimeAttribute($session_lifetime_attribute)
+    public function setSessionLifetimeAttribute($sessionLifetimeAttribute)
     {
-        $this->session_lifetime_attribute = $session_lifetime_attribute;
+        $this->sessionLifetimeAttribute = $sessionLifetimeAttribute;
     }
 
     /**
@@ -152,15 +152,15 @@ trait SessionConnectionConfigTrait
      */
     public function isConsistentRead()
     {
-        return $this->consistent_read;
+        return $this->consistentRead;
     }
 
     /**
-     * @param boolean $consistent_read
+     * @param boolean $consistentRead
      */
-    public function setConsistentRead($consistent_read)
+    public function setConsistentRead($consistentRead)
     {
-        $this->consistent_read = $consistent_read;
+        $this->consistentRead = $consistentRead;
     }
 
     /**
@@ -168,15 +168,15 @@ trait SessionConnectionConfigTrait
      */
     public function getBatchConfig()
     {
-        return $this->batch_config;
+        return $this->batchConfig;
     }
 
     /**
-     * @param multitype: $batch_config
+     * @param multitype: $batchConfig
      */
-    public function setBatchConfig($batch_config)
+    public function setBatchConfig($batchConfig)
     {
-        $this->batch_config = $batch_config;
+        $this->batchConfig = $batchConfig;
     }
     /**
      * @return boolean
@@ -199,15 +199,15 @@ trait SessionConnectionConfigTrait
      */
     public function getMaxLockWaitTime()
     {
-        return $this->max_lock_wait_time;
+        return $this->maxLockWaitTime;
     }
 
     /**
-     * @param number $max_lock_wait_time
+     * @param number $maxLockWaitTime
      */
-    public function setMaxLockWaitTime($max_lock_wait_time)
+    public function setMaxLockWaitTime($maxLockWaitTime)
     {
-        $this->max_lock_wait_time = $max_lock_wait_time;
+        $this->maxLockWaitTime = $maxLockWaitTime;
     }
 
     /**
@@ -215,15 +215,15 @@ trait SessionConnectionConfigTrait
      */
     public function getMinLockRetryMicrotime()
     {
-        return $this->min_lock_retry_microtime;
+        return $this->minLockRetryMicrotime;
     }
 
     /**
-     * @param number $min_lock_retry_microtime
+     * @param number $minLockRetryMicrotime
      */
-    public function setMinLockRetryMicrotime($min_lock_retry_microtime)
+    public function setMinLockRetryMicrotime($minLockRetryMicrotime)
     {
-        $this->min_lock_retry_microtime = $min_lock_retry_microtime;
+        $this->minLockRetryMicrotime = $minLockRetryMicrotime;
     }
 
     /**
@@ -231,14 +231,14 @@ trait SessionConnectionConfigTrait
      */
     public function getMaxLockRetryMicrotime()
     {
-        return $this->max_lock_retry_microtime;
+        return $this->maxLockRetryMicrotime;
     }
 
     /**
-     * @param number $max_lock_retry_microtime
+     * @param number $maxLockRetryMicrotime
      */
-    public function setMaxLockRetryMicrotime($max_lock_retry_microtime)
+    public function setMaxLockRetryMicrotime($maxLockRetryMicrotime)
     {
-        $this->max_lock_retry_microtime = $max_lock_retry_microtime;
+        $this->maxLockRetryMicrotime = $maxLockRetryMicrotime;
     }
 }
