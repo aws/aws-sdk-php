@@ -30,22 +30,22 @@ class StandardSessionConnectionTest extends TestCase
         $this->assertEquals(10000, $scc->getMinLockRetryMicrotime());
         $this->assertEquals(50000, $scc->getMaxLockRetryMicrotime());
     }
-    
+
     public function testCustomConfig()
     {
         $client = $this->getTestSdk()->createDynamoDb();
         $config = [
-            'table_name'       => 'sessions_custom',
-            'hash_key'         => 'id_custom',
-            'data_attribute'   => 'data_custom',
-            'session_lifetime' => 2019,
-            'session_lifetime_attribute' => 'expires_custom',
-            'consistent_read'  => false,
-            'batch_config'     => ['hello'=>'hello'],
-            'locking' => true,
-            'max_lock_wait_time' => 2019,
-            'min_lock_retry_microtime' => 2019,
-            'max_lock_retry_microtime' => 2019
+            'table_name'                    => 'sessions_custom',
+            'hash_key'                      => 'id_custom',
+            'data_attribute'                => 'data_custom',
+            'session_lifetime'              => 2019,
+            'session_lifetime_attribute'    => 'expires_custom',
+            'consistent_read'               => false,
+            'batch_config'                  => ['hello' => 'hello'],
+            'locking'                       => true,
+            'max_lock_wait_time'            => 2019,
+            'min_lock_retry_microtime'      => 2019,
+            'max_lock_retry_microtime'      => 2019
         ];
         $scc = new StandardSessionConnection($client, $config);
         $this->assertEquals('sessions_custom', $scc->getTableName());
@@ -59,7 +59,7 @@ class StandardSessionConnectionTest extends TestCase
         $this->assertEquals(2019, $scc->getMinLockRetryMicrotime());
         $this->assertEquals(2019, $scc->getMaxLockRetryMicrotime());
     }
-    
+
     public function testReadRetrievesItemData()
     {
         $client = $this->getTestSdk()->createDynamoDb();

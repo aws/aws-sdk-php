@@ -5,38 +5,37 @@ trait SessionConnectionConfigTrait
 {
     /** @var string Name of table to store the sessions */
     protected $tableName = 'sessions';
-    
+
     /** @var string Name of hash key in table. Default: "id" */
     protected $hashKey = 'id';
-    
+
     /** @var string Name of the data attribute in table. Default: "data" */
     protected $dataAttribute = 'data';
-    
+
     /** @var integer Lifetime of inactive sessions expiration */
     protected $sessionLifetime;
-    
+
     /** @var string Name of the session life time attribute in table. Default: "expires" */
     protected $sessionLifetimeAttribute = 'expires';
-    
+
     /** @var string Whether or not to use consistent reads */
     protected $consistentRead = true;
-    
+
     /** @var string Batch options used for garbage collection */
     protected $batchConfig = [];
-    
+
     /** @var boolean Whether or not to use session locking */
     protected $locking = false;
-    
+
     /** @var integer Max time (s) to wait for lock acquisition */
     protected $maxLockWaitTime = 10;
-    
+
     /** @var integer Min time (µs) to wait between lock attempts */
     protected $minLockRetryMicrotime = 10000;
-    
+
     /** @var integer Max time (µs) to wait between lock attempts */
     protected $maxLockRetryMicrotime = 50000;
-    
-    
+
     /**
      * It initialize the Config class and
      * it sets values in case of valid configurations.
@@ -59,14 +58,14 @@ trait SessionConnectionConfigTrait
                 }
             }
         }
-        
+
         // It applies the default PHP session lifetime, if no session lifetime config is provided
         if(!isset($config['session_lifetime']))
         {
             $this->setSessionLifetime((int) ini_get('session.gc_maxlifetime'));
         }
     }
-    
+
     /**
      * @return string
      */
