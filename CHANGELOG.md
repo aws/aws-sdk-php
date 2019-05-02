@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.93.2 - 2019-05-02
 
 * `Aws\AlexaForBusiness` - This release allows developers and customers to send text and audio announcements to rooms.
 * `Aws\KMS` - AWS Key Management Service (KMS) can return an INTERNAL_ERROR connection error code if it cannot connect a custom key store to its AWS CloudHSM cluster. INTERNAL_ERROR is one of several connection error codes that help you to diagnose and fix a problem with your custom key store.
