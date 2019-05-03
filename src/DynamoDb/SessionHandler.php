@@ -144,13 +144,13 @@ class SessionHandler implements \SessionHandlerInterface
         // Get session data using the selected locking strategy
         $item = $this->connection->read($this->formatId($id));
 
-        $data_attribute = $this->connection->getDataAttribute();
-        $session_lifetime_attribute = $this->connection->getSessionLifetimeAttribute();
+        $dataAttribute = $this->connection->getDataAttribute();
+        $sessionLifetimeAttribute = $this->connection->getSessionLifetimeAttribute();
 
         // Return the data if it is not expired. If it is expired, remove it
-        if (isset($item[$session_lifetime_attribute]) && isset($item[$data_attribute])) {
-            $this->dataRead = $item[$data_attribute];
-            if ($item[$session_lifetime_attribute] <= time()) {
+        if (isset($item[$sessionLifetimeAttribute]) && isset($item[$dataAttribute])) {
+            $this->dataRead = $item[$dataAttribute];
+            if ($item[$sessionLifetimeAttribute] <= time()) {
                 $this->dataRead = '';
                 $this->destroy($id);
             }
