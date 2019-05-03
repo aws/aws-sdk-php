@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getSamplingTargetsAsync(array $args = [])
  * @method \Aws\Result getServiceGraph(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getServiceGraphAsync(array $args = [])
+ * @method \Aws\Result getTimeSeriesServiceStatistics(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getTimeSeriesServiceStatisticsAsync(array $args = [])
  * @method \Aws\Result getTraceGraph(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getTraceGraphAsync(array $args = [])
  * @method \Aws\Result getTraceSummaries(array $args = [])

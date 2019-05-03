@@ -1,5 +1,37 @@
 # CHANGELOG
 
+## 3.93.2 - 2019-05-02
+
+* `Aws\AlexaForBusiness` - This release allows developers and customers to send text and audio announcements to rooms.
+* `Aws\KMS` - AWS Key Management Service (KMS) can return an INTERNAL_ERROR connection error code if it cannot connect a custom key store to its AWS CloudHSM cluster. INTERNAL_ERROR is one of several connection error codes that help you to diagnose and fix a problem with your custom key store.
+
+## 3.93.1 - 2019-05-01
+
+* `Aws\EC2` - This release adds an API for the modification of a VPN Connection, enabling migration from a Virtual Private Gateway (VGW) to a Transit Gateway (TGW), while preserving the VPN endpoint IP addresses on the AWS side as well as the tunnel options.
+* `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) introduces additional task definition parameters that enable you to define secret options for Docker log configuration, a per-container list contains secrets stored in AWS Systems Manager Parameter Store or AWS Secrets Manager.
+* `Aws\XRay` - AWS X-Ray now includes Analytics, an interactive approach to analyzing user request paths (i.e., traces). Analytics will allow you to easily understand how your application and its underlying services are performing. With X-Ray Analytics, you can quickly detect application issues, pinpoint the root cause of the issue, determine the severity of the issues, and identify which end users were impacted. With AWS X-Ray Analytics you can explore, analyze, and visualize traces, allowing you to find increases in response time to user requests or increases in error rates. Metadata around peak periods, including frequency and actual times of occurrence, can be investigated by applying filters with a few clicks. You can then drill down on specific errors, faults, and response time root causes and view the associated traces. 
+
+## 3.93.0 - 2019-04-30
+
+* `Aws\CodePipeline` - This release contains an update to the PipelineContext object that includes the Pipeline ARN, and the Pipeline Execution Id. The ActionContext object is also updated to include the Action Execution Id.
+* `Aws\DirectConnect` - This release adds support for AWS Direct Connect customers to use AWS Transit Gateway with AWS Direct Connect gateway to route traffic between on-premise networks and their VPCs.
+* `Aws\ManagedBlockchain` - (New Service) Amazon Managed Blockchain is a fully managed service that makes it easy to create and manage scalable blockchain networks using popular open source frameworks.
+* `Aws\Neptune` - Adds a feature to allow customers to specify a custom parameter group when restoring a database cluster.
+* `Aws\S3Control` - Add support for Amazon S3 Batch Operations.
+* `Aws\ServiceCatalog` - Admin users can now associate/disassociate aws budgets with a portfolio or product in Service Catalog. End users can see the association by listing it or as part of the describe portfolio/product output. A new optional boolean parameter, "DisableTemplateValidation", is added to ProvisioningArtifactProperties data type. The purpose of the parameter is to enable or disable the CloudFormation template validtion when creating a product or a provisioning artifact.
+
+## 3.92.5 - 2019-04-29
+
+* `Aws\` - Added simple cache (PSR-16) adapter.
+* `Aws\Aws\Multipart` - Updated the coroutine promise catch to type-hint against `Throwable` for PHP 7+ while keeping `Exception` for backwards-compatibility.
+* `Aws\EC2` - Adds support for Elastic Fabric Adapter (EFA) ENIs. 
+* `Aws\Transfer` - This release adds support for per-server host-key management. You can now specify the SSH RSA private key used by your SFTP server.
+
+## 3.92.4 - 2019-04-26
+
+* `Aws\IAM` - AWS Security Token Service (STS) enables you to request session tokens from the global STS endpoint that work in all AWS Regions. You can configure the global STS endpoint to vend session tokens that are compatible with all AWS Regions using the new IAM SetSecurityTokenServicePreferences API. 
+* `Aws\SNS` - With this release AWS SNS adds tagging support for Topics.
+
 ## 3.92.3 - 2019-04-25
 
 * `Aws\Batch` - Documentation updates for AWS Batch.

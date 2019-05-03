@@ -145,6 +145,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise searchSkillGroupsAsync(array $args = [])
  * @method \Aws\Result searchUsers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchUsersAsync(array $args = [])
+ * @method \Aws\Result sendAnnouncement(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise sendAnnouncementAsync(array $args = [])
  * @method \Aws\Result sendInvitation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendInvitationAsync(array $args = [])
  * @method \Aws\Result startDeviceSync(array $args = [])
