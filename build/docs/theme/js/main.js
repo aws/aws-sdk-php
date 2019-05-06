@@ -39,6 +39,9 @@ $(window).load(function() {
 
 	// Content
 
+	// Add current location to feedback link
+	$('.feedback-message a').attr('href', $('.feedback-message a').attr('href') + '&topic_url=' + encodeURI(window.location.href));
+
 	// Search autocompletion
 	var autocompleteFound = false;
 	var autocompleteFiles = {'c': 'class', 'co': 'constant', 'f': 'function', 'm': 'class', 'mm': 'class', 'p': 'class', 'mp': 'class', 'cc': 'class'};
