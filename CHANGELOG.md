@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.93.4 - 2019-05-06
 
 * `Aws\CodePipeline` - Documentation updates for codepipeline
 * `Aws\ConfigService` - AWS Config now supports tagging on PutConfigRule, PutConfigurationAggregator and PutAggregationAuthorization APIs.
