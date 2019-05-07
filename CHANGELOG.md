@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.93.5 - 2019-05-07
 
 * `Aws\AlexaForBusiness` - This release adds an API allowing authorized users to delete a shared device's history of voice recordings and associated response data.
 * `Aws\AppSync` - AWS AppSync now supports the ability to add additional authentication providers to your AWS AppSync GraphQL API as well as the ability to retrieve directives configured against fields or object type definitions during schema introspection.
