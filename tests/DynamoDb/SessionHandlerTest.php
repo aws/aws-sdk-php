@@ -33,13 +33,25 @@ class SessionHandlerTest extends TestCase
     {
         $data = ['fizz' => 'buzz'];
         $connection = $this->getMockForAbstractClass(
-            'Aws\DynamoDb\SessionConnectionInterface'
+            'Aws\DynamoDb\SessionConnectionInterface',
+            array(),
+            '',
+            true,
+            true,
+            true,
+            array('getDataAttribute', 'getSessionLifetimeAttribute')
         );
+        $connection->expects($this->any())
+            ->method('getDataAttribute')
+            ->willReturn('data');
+        $connection->expects($this->any())
+            ->method('getSessionLifetimeAttribute')
+            ->willReturn('expires');
         $connection->expects($this->any())
             ->method('read')
             ->willReturn([
                 'expires' => time() - 1000,
-                'data' => ['fizz' => 'buzz'],
+                'data' => ['fizz' => 'buzz']
             ]);
         $connection->expects($this->any())
             ->method('write')
@@ -76,8 +88,20 @@ class SessionHandlerTest extends TestCase
     {
         $data = 'serializedData';
         $connection = $this->getMockForAbstractClass(
-            'Aws\DynamoDb\SessionConnectionInterface'
+            'Aws\DynamoDb\SessionConnectionInterface',
+            array(),
+            '',
+            true,
+            true,
+            true,
+            array('getDataAttribute', 'getSessionLifetimeAttribute')
         );
+        $connection->expects($this->any())
+            ->method('getDataAttribute')
+            ->willReturn('data');
+        $connection->expects($this->any())
+            ->method('getSessionLifetimeAttribute')
+            ->willReturn('expires');
         $connection->expects($this->once())
             ->method('read')
             ->with('name_test1')

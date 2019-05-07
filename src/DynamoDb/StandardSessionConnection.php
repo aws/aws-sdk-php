@@ -8,26 +8,19 @@ use Aws\DynamoDb\Exception\DynamoDbException;
  */
 class StandardSessionConnection implements SessionConnectionInterface
 {
+    use SessionConnectionConfigTrait;
+    
     /** @var DynamoDbClient The DynamoDB client */
     protected $client;
-
-    /** @var array The session handler config options */
-    protected $config;
-
+    
     /**
-     * @param DynamoDbClient $client DynamoDB client
-     * @param array          $config Session handler config
+     * @param DynamoDbClient    $client DynamoDB client
+     * @param array             $config Session handler config
      */
     public function __construct(DynamoDbClient $client, array $config = [])
     {
         $this->client = $client;
-        $this->config = $config + [
-            'table_name'       => 'sessions',
-            'hash_key'         => 'id',
-            'session_lifetime' => (int) ini_get('session.gc_maxlifetime'),
-            'consistent_read'  => true,
-            'batch_config'     => [],
-        ];
+        $this->initConfig($config);
     }
 
     public function read($id)
@@ -36,9 +29,9 @@ class StandardSessionConnection implements SessionConnectionInterface
         try {
             // Execute a GetItem command to retrieve the item.
             $result = $this->client->getItem([
-                 'TableName'      => $this->config['table_name'],
+                 'TableName'      => $this->getTableName(),
                  'Key'            => $this->formatKey($id),
-                 'ConsistentRead' => (bool) $this->config['consistent_read'],
+                 'ConsistentRead' => $this->isConsistentRead(),
              ]);
 
             // Get the item values
@@ -56,23 +49,23 @@ class StandardSessionConnection implements SessionConnectionInterface
     public function write($id, $data, $isChanged)
     {
         // Prepare the attributes
-        $expires = time() + $this->config['session_lifetime'];
+        $expires = time() + $this->getSessionLifetime();
         $attributes = [
-            'expires' => ['Value' => ['N' => (string) $expires]],
+            $this->getSessionLifetimeAttribute() => ['Value' => ['N' => (string) $expires]],
             'lock' => ['Action' => 'DELETE'],
         ];
         if ($isChanged) {
             if ($data != '') {
-                $attributes['data'] = ['Value' => ['S' => $data]];
+                $attributes[$this->getDataAttribute()] = ['Value' => ['S' => $data]];
             } else {
-                $attributes['data'] = ['Action' => 'DELETE'];
+                $attributes[$this->getDataAttribute()] = ['Action' => 'DELETE'];
             }
         }
 
         // Perform the UpdateItem command
         try {
             return (bool) $this->client->updateItem([
-                'TableName'        => $this->config['table_name'],
+                'TableName'        => $this->getTableName(),
                 'Key'              => $this->formatKey($id),
                 'AttributeUpdates' => $attributes,
             ]);
@@ -85,7 +78,7 @@ class StandardSessionConnection implements SessionConnectionInterface
     {
         try {
             return (bool) $this->client->deleteItem([
-                'TableName' => $this->config['table_name'],
+                'TableName' => $this->getTableName(),
                 'Key'       => $this->formatKey($id),
             ]);
         } catch (DynamoDbException $e) {
@@ -97,10 +90,10 @@ class StandardSessionConnection implements SessionConnectionInterface
     {
         // Create a Scan iterator for finding expired session items
         $scan = $this->client->getPaginator('Scan', [
-            'TableName' => $this->config['table_name'],
-            'AttributesToGet' => [$this->config['hash_key']],
+            'TableName' => $this->getTableName(),
+            'AttributesToGet' => [$this->getHashKey()],
             'ScanFilter' => [
-                'expires' => [
+                $this->getSessionLifetimeAttribute() => [
                     'ComparisonOperator' => 'LT',
                     'AttributeValueList' => [['N' => (string) time()]],
                 ],
@@ -111,13 +104,13 @@ class StandardSessionConnection implements SessionConnectionInterface
         ]);
 
         // Create a WriteRequestBatch for deleting the expired items
-        $batch = new WriteRequestBatch($this->client, $this->config['batch_config']);
+        $batch = new WriteRequestBatch($this->client, $this->getBatchConfig());
 
         // Perform Scan and BatchWriteItem (delete) operations as needed
         foreach ($scan->search('Items') as $item) {
             $batch->delete(
-                [$this->config['hash_key'] => $item[$this->config['hash_key']]],
-                $this->config['table_name']
+                [$this->getHashKey() => $item[$this->getHashKey()]],
+                $this->getTableName()
             );
         }
 
@@ -132,7 +125,7 @@ class StandardSessionConnection implements SessionConnectionInterface
      */
     protected function formatKey($key)
     {
-        return [$this->config['hash_key'] => ['S' => $key]];
+        return [$this->getHashKey() => ['S' => $key]];
     }
 
     /**

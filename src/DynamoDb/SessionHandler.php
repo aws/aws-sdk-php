@@ -42,15 +42,20 @@ class SessionHandler implements \SessionHandlerInterface
      * Creates a new DynamoDB Session Handler.
      *
      * The configuration array accepts the following array keys and values:
-     * - table_name:               Name of table to store the sessions.
-     * - hash_key:                 Name of hash key in table. Default: "id".
-     * - session_lifetime:         Lifetime of inactive sessions expiration.
-     * - consistent_read:          Whether or not to use consistent reads.
-     * - batch_config:             Batch options used for garbage collection.
-     * - locking:                  Whether or not to use session locking.
-     * - max_lock_wait_time:       Max time (s) to wait for lock acquisition.
-     * - min_lock_retry_microtime: Min time (µs) to wait between lock attempts.
-     * - max_lock_retry_microtime: Max time (µs) to wait between lock attempts.
+     * - table_name:                    Name of table to store the sessions.
+     * - hash_key:                      Name of hash key in table. Default: "id".
+     * - data_attribute:                Name of the data attribute in table. Default: "data".
+     * - session_lifetime:              Lifetime of inactive sessions expiration.
+     * - session_lifetime_attribute:    Name of the session life time attribute in table. Default: "expires".
+     * - consistent_read:               Whether or not to use consistent reads.
+     * - batch_config:                  Batch options used for garbage collection.
+     * - locking:                       Whether or not to use session locking.
+     * - max_lock_wait_time:            Max time (s) to wait for lock acquisition.
+     * - min_lock_retry_microtime:      Min time (µs) to wait between lock attempts.
+     * - max_lock_retry_microtime:      Max time (µs) to wait between lock attempts.
+     *
+     * You can find the full list of parameters and defaults within the trait
+     * Aws\DynamoDb\SessionConnectionConfigTrait
      *
      * @param DynamoDbClient $client Client for doing DynamoDB operations
      * @param array          $config Configuration for the Session Handler
@@ -139,10 +144,13 @@ class SessionHandler implements \SessionHandlerInterface
         // Get session data using the selected locking strategy
         $item = $this->connection->read($this->formatId($id));
 
+        $dataAttribute = $this->connection->getDataAttribute();
+        $sessionLifetimeAttribute = $this->connection->getSessionLifetimeAttribute();
+
         // Return the data if it is not expired. If it is expired, remove it
-        if (isset($item['expires']) && isset($item['data'])) {
-            $this->dataRead = $item['data'];
-            if ($item['expires'] <= time()) {
+        if (isset($item[$sessionLifetimeAttribute]) && isset($item[$dataAttribute])) {
+            $this->dataRead = $item[$dataAttribute];
+            if ($item[$sessionLifetimeAttribute] <= time()) {
                 $this->dataRead = '';
                 $this->destroy($id);
             }
