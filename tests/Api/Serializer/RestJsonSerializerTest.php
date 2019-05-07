@@ -93,7 +93,7 @@ class RestJsonSerializerTest extends TestCase
         $this->assertEquals('http://foo.com/', (string) $request->getUri());
         $this->assertEquals('{"baz":"bar"}', (string) $request->getBody());
         $this->assertEquals(
-            'application/x-amz-json-1.1',
+            'application/json',
             $request->getHeaderLine('Content-Type')
         );
     }
@@ -156,7 +156,7 @@ class RestJsonSerializerTest extends TestCase
         $this->assertEquals('http://foo.com/', (string) $request->getUri());
         $this->assertEquals('{"baz":"1234"}', (string) $request->getBody());
         $this->assertEquals(
-            'application/x-amz-json-1.1',
+            'application/json',
             $request->getHeaderLine('Content-Type')
         );
     }

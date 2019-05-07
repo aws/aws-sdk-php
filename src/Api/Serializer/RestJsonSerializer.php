@@ -27,7 +27,7 @@ class RestJsonSerializer extends RestSerializer
         JsonBody $jsonFormatter = null
     ) {
         parent::__construct($api, $endpoint);
-        $this->contentType = JsonBody::getContentType($api);
+        $this->contentType = 'application/json';
         $this->jsonFormatter = $jsonFormatter ?: new JsonBody($api);
     }
 
