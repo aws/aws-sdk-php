@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AlexaForBusiness` - This release adds an API allowing authorized users to delete a shared device's history of voice recordings and associated response data.
+* `Aws\AppSync` - AWS AppSync now supports the ability to add additional authentication providers to your AWS AppSync GraphQL API as well as the ability to retrieve directives configured against fields or object type definitions during schema introspection.
+* `Aws\Docs` - Add feedback link for API documentation.
+* `Aws\SSM` - Patch Manager adds support for Microsoft Application Patching.
+* `Aws\StorageGateway` - Add optional field AdminUserList to CreateSMBFileShare and UpdateSMBFileShare APIs.
+
 ## 3.93.4 - 2019-05-06
 
 * `Aws\CodePipeline` - Documentation updates for codepipeline

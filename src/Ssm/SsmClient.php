@@ -110,6 +110,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describePatchGroupStateAsync(array $args = [])
  * @method \Aws\Result describePatchGroups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describePatchGroupsAsync(array $args = [])
+ * @method \Aws\Result describePatchProperties(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describePatchPropertiesAsync(array $args = [])
  * @method \Aws\Result describeSessions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeSessionsAsync(array $args = [])
  * @method \Aws\Result getAutomationExecution(array $args = [])

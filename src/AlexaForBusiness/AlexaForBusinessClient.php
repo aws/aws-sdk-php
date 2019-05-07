@@ -45,6 +45,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteContactAsync(array $args = [])
  * @method \Aws\Result deleteDevice(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteDeviceAsync(array $args = [])
+ * @method \Aws\Result deleteDeviceUsageData(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteDeviceUsageDataAsync(array $args = [])
  * @method \Aws\Result deleteGatewayGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteGatewayGroupAsync(array $args = [])
  * @method \Aws\Result deleteProfile(array $args = [])
