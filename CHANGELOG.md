@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Build` - Fix behat scalars on ~v4.0
+* `Aws\EKS` - Documentation update for Amazon EKS to clarify allowed parameters in update-cluster-config.
+* `Aws\IoT1ClickProjects` - Added automatic pagination support for ListProjects and ListPlacements APIs.
+* `Aws\KinesisAnalytics` - Kinesis Data Analytics APIs now support tagging on applications.
+* `Aws\KinesisAnalyticsV2` - Kinesis Data Analytics APIs now support tagging on applications.
+* `Aws\SageMaker` - Workteams now supports notification configurations. Neo now supports Jetson Nano as a target device and NumberOfHumanWorkersPerDataObject is now included in the ListLabelingJobsForWorkteam response.
+* `Aws\ServiceCatalog` - Adds "Parameters" field in UpdateConstraint API, which will allow Admin user to update "Parameters" in created Constraints.
+
 ## 3.93.5 - 2019-05-07
 
 * `Aws\AlexaForBusiness` - This release adds an API allowing authorized users to delete a shared device's history of voice recordings and associated response data.
