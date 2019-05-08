@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.93.6 - 2019-05-08
 
 * `Aws\Build` - Fix behat scalars on ~v4.0
 * `Aws\EKS` - Documentation update for Amazon EKS to clarify allowed parameters in update-cluster-config.
