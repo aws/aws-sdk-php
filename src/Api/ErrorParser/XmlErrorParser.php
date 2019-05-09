@@ -2,6 +2,8 @@
 namespace Aws\Api\ErrorParser;
 
 use Aws\Api\Parser\PayloadParserTrait;
+use Aws\Api\Parser\XmlParser;
+use Aws\Api\Service;
 use Aws\CommandInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -12,6 +14,12 @@ class XmlErrorParser extends AbstractErrorParser
 {
     use PayloadParserTrait;
 
+    public function __construct(Service $api = null, XmlParser $parser = null)
+    {
+        parent::__construct($api);
+        $this->parser = $parser ?: new XmlParser();
+    }
+
     public function __invoke(
         ResponseInterface $response,
         CommandInterface $command = null
@@ -19,11 +27,11 @@ class XmlErrorParser extends AbstractErrorParser
         $code = (string) $response->getStatusCode();
 
         $data = [
-            'type'        => $code[0] == '4' ? 'client' : 'server',
-            'request_id'  => null,
-            'code'        => null,
-            'message'     => null,
-            'parsed'      => null
+            'type' => $code[0] == '4' ? 'client' : 'server',
+            'request_id' => null,
+            'code' => null,
+            'message' => null,
+            'parsed' => null
         ];
 
         $body = $response->getBody();
@@ -54,16 +62,7 @@ class XmlErrorParser extends AbstractErrorParser
     private function parseBody(\SimpleXMLElement $body, array &$data)
     {
         $data['parsed'] = $body;
-
-        $namespaces = $body->getDocNamespaces();
-        if (!isset($namespaces[''])) {
-            $prefix = '';
-        } else {
-            // Account for the default namespace being defined and PHP not
-            // being able to handle it :(.
-            $body->registerXPathNamespace('ns', $namespaces['']);
-            $prefix = 'ns:';
-        }
+        $prefix = $this->registerNamespacePrefix($body);
 
         if ($tempXml = $body->xpath("//{$prefix}Code[1]")) {
             $data['code'] = (string) $tempXml[0];
@@ -79,7 +78,20 @@ class XmlErrorParser extends AbstractErrorParser
         }
 
         if (isset($tempXml[0])) {
-            $data['request_id'] = (string) $tempXml[0];
+            $data['request_id'] = (string)$tempXml[0];
         }
+    }
+
+    protected function registerNamespacePrefix(\SimpleXMLElement $element)
+    {
+        $namespaces = $element->getDocNamespaces();
+        if (!isset($namespaces[''])) {
+            return '';
+        } 
+        
+        // Account for the default namespace being defined and PHP not
+        // being able to handle it :(.
+        $element->registerXPathNamespace('ns', $namespaces['']);
+        return 'ns:';
     }
 }
