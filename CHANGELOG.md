@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.93.7 - 2019-05-10
 
 * `Aws\Api` - Use application/json content-type on rest-json requests
 * `Aws\Build` - Add newline character to generated changelog json files.
