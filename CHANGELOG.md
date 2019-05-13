@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataSync` - AWS DataSync now enables exclude and include filters to control what files and directories will be copied as part of a task execution.
+* `Aws\IoTAnalytics` - ContentDeliveryRule to support sending dataset to S3 and glue
+* `Aws\Lambda` - AWS Lambda now supports Node.js v10
+
 ## 3.93.7 - 2019-05-10
 
 * `Aws\Api` - Use application/json content-type on rest-json requests
