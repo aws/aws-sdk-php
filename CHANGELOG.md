@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.93.8 - 2019-05-13
 
 * `Aws\DataSync` - AWS DataSync now enables exclude and include filters to control what files and directories will be copied as part of a task execution.
 * `Aws\IoTAnalytics` - ContentDeliveryRule to support sending dataset to S3 and glue
