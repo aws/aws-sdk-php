@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.93.9 - 2019-05-14
 
 * `Aws\Chime` - Amazon Chime private bots GA release.
 * `Aws\Comprehend` - With this release AWS Comprehend now supports Virtual Private Cloud for Asynchronous Batch Processing jobs
