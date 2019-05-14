@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Chime` - Amazon Chime private bots GA release.
+* `Aws\Comprehend` - With this release AWS Comprehend now supports Virtual Private Cloud for Asynchronous Batch Processing jobs
+* `Aws\EC2` - Pagination support for ec2.DescribeSubnets, ec2.DescribeDhcpOptions 
+* `Aws\StorageGateway` - Add Tags parameter to CreateSnapshot and UpdateSnapshotSchedule APIs, used for creating tags on create for one off snapshots and scheduled snapshots.
+
 ## 3.93.8 - 2019-05-13
 
 * `Aws\DataSync` - AWS DataSync now enables exclude and include filters to control what files and directories will be copied as part of a task execution.
