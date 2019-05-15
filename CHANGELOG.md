@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.93.10 - 2019-05-15
 
 * `Aws\CodePipeline` - This feature includes new APIs to add, edit, remove and view tags for pipeline, custom action type and webhook resources. You can also add tags while creating these resources.
 * `Aws\EC2` - Adding tagging support for VPC Endpoints and VPC Endpoint Services.
