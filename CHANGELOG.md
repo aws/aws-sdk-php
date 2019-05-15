@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodePipeline` - This feature includes new APIs to add, edit, remove and view tags for pipeline, custom action type and webhook resources. You can also add tags while creating these resources.
+* `Aws\EC2` - Adding tagging support for VPC Endpoints and VPC Endpoint Services.
+* `Aws\MediaPackage` - Adds optional configuration for DASH SegmentTemplateFormat to refer to segments by Number with Duration, rather than Number or Time with SegmentTimeline.
+* `Aws\RDS` - In the RDS API and CLI documentation, corrections to the descriptions for Boolean parameters to avoid references to TRUE and FALSE. The RDS CLI does not allow TRUE and FALSE values values for Boolean parameters.
+* `Aws\TranscribeService` - Amazon Transcribe - support transcriptions from audio sources in Indian English (en-IN) and Hindi (hi-IN).
+
 ## 3.93.9 - 2019-05-14
 
 * `Aws\Chime` - Amazon Chime private bots GA release.
