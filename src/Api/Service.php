@@ -115,7 +115,7 @@ class Service extends AbstractModel
             'json'      => 'Aws\Api\ErrorParser\JsonRpcErrorParser',
             'query'     => 'Aws\Api\ErrorParser\XmlErrorParser',
             'rest-json' => 'Aws\Api\ErrorParser\RestJsonErrorParser',
-            'rest-xml'  => 'Aws\Api\ErrorParser\RestXmlErrorParser',
+            'rest-xml'  => 'Aws\Api\ErrorParser\XmlErrorParser',
             'ec2'       => 'Aws\Api\ErrorParser\XmlErrorParser'
         ];
 
