@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Api\ErrorParser;
 
-use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Parser\JsonParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
