@@ -83,5 +83,7 @@ abstract class AbstractErrorParser
                 }
             }
         }
+
+        return $data;
     }
 }

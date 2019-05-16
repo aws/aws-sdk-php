@@ -48,15 +48,4 @@ class RestJsonErrorParser extends AbstractErrorParser
 
         return $data;
     }
-
-    protected function payload(
-        ResponseInterface $response,
-        StructureShape $member
-    ) {
-        $jsonBody = $this->parseJson($response->getBody(), $response);
-
-        if ($jsonBody) {
-            return $this->parser->parse($member, $jsonBody);
-        }
-    }
 }
