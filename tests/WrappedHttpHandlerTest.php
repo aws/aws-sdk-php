@@ -23,6 +23,8 @@ use PHPUnit\Framework\TestCase;
  */
 class WrappedHttpHandlerTest extends TestCase
 {
+    use ParserTestServiceTrait;
+
     public function testParsesResponses()
     {
         $called = false;
@@ -137,6 +139,7 @@ class WrappedHttpHandlerTest extends TestCase
     public function responseAndParserProvider()
     {
         $services = [
+            'ec2' => $this->generateTestService('ec2'),
             'json' => $this->generateTestService('json'),
             'query' => $this->generateTestService('query'),
             'rest-json' => $this->generateTestService('rest-json'),
@@ -214,7 +217,10 @@ class WrappedHttpHandlerTest extends TestCase
                 '123',
                 [
                     'TestString' => 'foo-string',
-                    'TestInt' => 456
+                    'TestInt' => 456,
+                    'TestHeaderMember' => '',
+                    'TestHeaders' => [],
+                    'TestStatus' => 400
                 ],
             ],
             // Rest-json with modeled exception from body error code
@@ -238,6 +244,95 @@ class WrappedHttpHandlerTest extends TestCase
                 [
                     'TestString' => 'foo-string',
                     'TestInt' => 456,
+                    'TestHeaderMember' => '',
+                    'TestHeaders' => [],
+                    'TestStatus' => 400
+                ],
+            ],
+            // Ec2 with modeled exception
+            [
+                new Response(
+                    400,
+                    [],
+                    '<?xml version="1.0" encoding="UTF-8"?>' . "\n" .
+                    '<Response>' .
+                    '  <Errors>' .
+                    '    <Error>' .
+                    '      <Code>TestException</Code>' .
+                    '      <Message>Error Message</Message>' .
+                    '      <TestString>SomeString</TestString>' .
+                    '      <TestInt>456</TestInt>' .
+                    '    </Error>' .
+                    '  </Errors>' .
+                    '  <RequestId>xyz</RequestId>' .
+                    '</Response>'
+                ),
+                $services['ec2'],
+                new XmlErrorParser($services['ec2']),
+                'TestException',
+                'xyz',
+                [
+                    'TestString' => 'SomeString',
+                    'TestInt' => 456,
+                    'TestHeaderMember' => '',
+                    'TestHeaders' => [],
+                    'TestStatus' => 400,
+                ],
+            ],
+            // Query with modeled exception
+            [
+                new Response(
+                    400,
+                    [],
+                    '<ErrorResponse xmlns="http://sns.amazonaws.com/doc/2010-03-31/">' .
+                    '  <Error>' .
+                    '    <Type>ErrorType</Type>' .
+                    '    <Code>TestException</Code>' .
+                    '    <Message>Error Message</Message>' .
+                    '    <TestString>SomeString</TestString>' .
+                    '    <TestInt>456</TestInt>' .
+                    '  </Error>' .
+                    '  <RequestId>xyz</RequestId>' .
+                    '</ErrorResponse>'
+                ),
+                $services['query'],
+                new XmlErrorParser($services['query']),
+                'TestException',
+                'xyz',
+                [
+                    'TestString' => 'SomeString',
+                    'TestInt' => 456,
+                    'TestHeaderMember' => '',
+                    'TestHeaders' => [],
+                    'TestStatus' => 400,
+                ],
+            ],
+            // Rest-xml with modeled exception
+            [
+                new Response(
+                    400,
+                    [],
+                    '<ErrorResponse xmlns="http://sns.amazonaws.com/doc/2010-03-31/">' .
+                    '  <Error>' .
+                    '    <Type>ErrorType</Type>' .
+                    '    <Code>TestException</Code>' .
+                    '    <Message>Error Message</Message>' .
+                    '    <TestString>SomeString</TestString>' .
+                    '    <TestInt>456</TestInt>' .
+                    '  </Error>' .
+                    '  <RequestId>xyz</RequestId>' .
+                    '</ErrorResponse>'
+                ),
+                $services['rest-xml'],
+                new XmlErrorParser($services['rest-xml']),
+                'TestException',
+                'xyz',
+                [
+                    'TestString' => 'SomeString',
+                    'TestInt' => 456,
+                    'TestHeaderMember' => '',
+                    'TestHeaders' => [],
+                    'TestStatus' => 400,
                 ],
             ],
         ];
@@ -293,68 +388,5 @@ class WrappedHttpHandlerTest extends TestCase
 
         $wrapped(new Command('a'), new Request('GET', 'http://foo.com'))
             ->wait();
-    }
-
-    private function generateTestClient(Service $service, $args = [])
-    {
-        return new AwsClient(
-            array_merge(
-                [
-                    'service'      => 'foo',
-                    'api_provider' => function () use ($service) {
-                        return $service->toArray();
-                    },
-                    'region'       => 'us-east-1',
-                    'version'      => 'latest',
-                ],
-                $args
-            )
-        );
-    }
-
-    private function generateTestService($protocol)
-    {
-        return new Service(
-            [
-                'metadata' => [
-                    "protocol" => $protocol,
-                    "apiVersion" => "2019-05-01"
-                ],
-                'shapes' => [
-                    "Integer" => ["type" => "integer"],
-                    "String" => ["type" => "string"],
-                    "TestException"=>[
-                        "type" => "structure",
-                        "members" => [
-                            "TestString" => ["shape" => "String"],
-                            "TestInt" => ["shape" => "Integer"]
-                        ],
-                        "error" => ["httpStatusCode" => 502],
-                        "exception" => true
-                    ],
-                    "TestInput"=>[
-                        "type" => "structure",
-                        "members" => [
-                            "TestInput" => ["shape" => "String"]
-                        ],
-                    ]
-                ],
-                'operations' => [
-                    "TestOperation"=> [
-                        "name"=> "TestOperation",
-                        "http"=> [
-                            "method"=> "POST",
-                            "requestUri"=> "/",
-                            "responseCode"=> 200
-                        ],
-                        "input" => ["shape"=> "TestInput"],
-                        "errors" => [
-                            ["shape" => "TestException"]
-                        ],
-                    ],
-                ],
-            ],
-            function () { return []; }
-        );
     }
 }

@@ -1,18 +1,18 @@
 <?php
 
-namespace Aws\Test\Api\ErrorParser;
+namespace Aws\Test;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
 
 /**
- * Trait ErrorParserTestServiceTrait
+ * Trait ParserTestServiceTrait
  *
- * Used to generate a test service and client for error parser tests
+ * Used to generate a test service and client for parser-related tests
  *
- * @package Aws\Test\Api\ErrorParser
+ * @package Aws\Test
  */
-trait ErrorParserTestServiceTrait
+trait ParserTestServiceTrait
 {
     private function generateTestClient(Service $service, $args = [])
     {
