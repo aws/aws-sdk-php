@@ -42,6 +42,7 @@ class RestXmlErrorParserTest extends TestCase
         $command = $client->getCommand('TestOperation', []);
 
         return [
+            // Modeled exception
             [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "TestHeader: foo-header\r\n" .
@@ -75,6 +76,32 @@ class RestXmlErrorParserTest extends TestCase
                         'TestString' => 'SomeString',
                         'TestInt' => 456
                     ],
+                ],
+            ],
+            // Exception code without corresponding error shape
+            [
+                "HTTP/1.1 400 Bad Request\r\n" .
+                "TestHeader: foo-header\r\n" .
+                "x-meta-foo: foo-meta\r\n" .
+                "x-meta-bar: bar-meta\r\n" .
+                "\"x-amzn-requestid: xyz\r\n\r\n" .
+                '<ErrorResponse xmlns="http://cloudfront.amazonaws.com/doc/2016-09-07/">' .
+                '  <Error>' .
+                '    <Type>ErrorType</Type>' .
+                '    <Code>NonExistentException</Code>' .
+                '    <Message>Error Message</Message>' .
+                '    <TestString>SomeString</TestString>' .
+                '    <TestInt>456</TestInt>' .
+                '  </Error>' .
+                '  <RequestId>xyz</RequestId>' .
+                '</ErrorResponse>',
+                $command,
+                new RestXmlErrorParser($service),
+                [
+                    'type' => 'client',
+                    'request_id' => 'xyz',
+                    'code' => 'NonExistentException',
+                    'message' => 'Error Message',
                 ],
             ],
         ];

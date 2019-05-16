@@ -53,20 +53,6 @@ class RestXmlErrorParser extends XmlErrorParser
                         break;
                     }
                 }
-
-                // If indicated error code can't be found in model, throw exception
-                if (!isset($modeledError)) {
-                    throw new ParserException(
-                        "Shape for error code '{$data['code']}' not defined.",
-                        0,
-                        null,
-                        [
-                            'error_code' => $data['code'],
-                            'request_id' => $response->getHeaderLine('X-Amzn-Requestid'),
-                            'response' => $response,
-                        ]
-                    );
-                }
             }
         }
 
