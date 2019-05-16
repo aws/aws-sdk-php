@@ -1,19 +1,17 @@
 <?php
 namespace Aws\Test\Api\ErrorParser;
 
-use Aws\Api\ErrorParser\RestJsonErrorParser;
 use Aws\Api\ErrorParser\RestXmlErrorParser;
-use Aws\Api\Parser\Exception\ParserException;
-use Aws\Api\Service;
-use Aws\AwsClient;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Aws\Api\ErrorParser\RestXmlErrorParser
+ * @covers \Aws\Api\ErrorParser\RestXmlErrorParser
  */
 class RestXmlErrorParserTest extends TestCase
 {
+    use ErrorParserTestServiceTrait;
+
     /**
      * @dataProvider errorResponsesProvider
      *
@@ -37,7 +35,7 @@ class RestXmlErrorParserTest extends TestCase
 
     public function errorResponsesProvider()
     {
-        $service = $this->generateTestService();
+        $service = $this->generateTestService('rest-xml');
         $client = $this->generateTestClient($service);
         $command = $client->getCommand('TestOperation', []);
 
@@ -105,91 +103,5 @@ class RestXmlErrorParserTest extends TestCase
                 ],
             ],
         ];
-    }
-
-    private function generateTestClient(Service $service, $args = [])
-    {
-        return new AwsClient(
-            array_merge(
-                [
-                    'service'      => 'foo',
-                    'api_provider' => function () use ($service) {
-                        return $service->toArray();
-                    },
-                    'region'       => 'us-east-1',
-                    'version'      => 'latest',
-                ],
-                $args
-            )
-        );
-    }
-
-    private function generateTestService()
-    {
-        return new Service(
-            [
-                'metadata' => [
-                    "protocol" => 'rest-xml',
-                    "apiVersion" => "2019-05-01"
-                ],
-                'shapes' => [
-                    "HeaderMap"=> [
-                        "type"=> "map",
-                        "key"=> [
-                            "shape"=> "String"
-                        ],
-                        "value"=> [
-                            "shape"=> "String"
-                        ]
-                    ],
-                    "Integer" => ["type" => "integer"],
-                    "String" => ["type" => "string"],
-                    "TestException"=>[
-                        "type" => "structure",
-                        "members" => [
-                            "TestString" => ["shape" => "String"],
-                            "TestInt" => ["shape" => "Integer"],
-                            "TestHeaderMember" => [
-                                "shape" => "String",
-                                "location" => "header",
-                                "locationName" => "TestHeader",
-                            ],
-                            "TestHeaders" => [
-                                "shape" => "HeaderMap",
-                                "location" => "headers",
-                                "locationName" => "x-meta-",
-                            ],
-                            "TestStatus" => [
-                                "shape" => "Integer",
-                                "location" => "statusCode",
-                            ],
-                        ],
-                        "error" => ["httpStatusCode" => 502],
-                        "exception" => true,
-                    ],
-                    "TestInput"=>[
-                        "type" => "structure",
-                        "members" => [
-                            "TestInput" => ["shape" => "String"]
-                        ],
-                    ],
-                ],
-                'operations' => [
-                    "TestOperation"=> [
-                        "name"=> "TestOperation",
-                        "http"=> [
-                            "method"=> "POST",
-                            "requestUri"=> "/",
-                            "responseCode"=> 200
-                        ],
-                        "input" => ["shape"=> "TestInput"],
-                        "errors" => [
-                            ["shape" => "TestException"]
-                        ],
-                    ],
-                ],
-            ],
-            function () { return []; }
-        );
     }
 }
