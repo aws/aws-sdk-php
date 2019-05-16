@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.93.11 - 2019-05-16
 
 * `Aws\MediaLive` - Added channel state waiters to MediaLive.
 * `Aws\S3` - This release updates the Amazon S3 PUT Bucket replication API to include a new optional field named token, which allows you to add a replication configuration to an S3 bucket that has Object Lock enabled.
