@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.93.12 - 2019-05-17
 
 * `Aws\AppStream` - Includes APIs for managing subscriptions to AppStream 2.0 usage reports and configuring idle disconnect timeouts on AppStream 2.0 fleets.
 * `Aws\Crypto` - Changed type hint to StreamInterface
