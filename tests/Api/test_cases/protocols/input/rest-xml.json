@@ -49,6 +49,30 @@
       {
         "given": {
           "http": {
+            "method": "POST",
+            "requestUri": "/2014-01-01/hostedzone"
+          },
+          "input": {
+            "shape": "InputShape",
+            "locationName": "OperationRequest",
+            "xmlNamespace": {"uri": "https://foo/"}
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "Name": "f>o<o",
+          "Description": "escaped"
+        },
+        "serialized": {
+          "method": "POST",
+          "body": "<OperationRequest xmlns=\"https://foo/\"><Name>f&gt;o&lt;o</Name><Description>escaped</Description></OperationRequest>",
+          "uri": "/2014-01-01/hostedzone",
+          "headers": {}
+        }
+      },
+      {
+        "given": {
+          "http": {
             "method": "PUT",
             "requestUri": "/2014-01-01/hostedzone"
           },
