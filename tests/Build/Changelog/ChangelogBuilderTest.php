@@ -69,10 +69,14 @@ class ChangelogBuilderTest extends TestCase
         $this->assertEquals("* `Aws\s3` - Test string placeholder for new service\n", $lines[6]);
         $this->assertEquals("* `Aws\util` - Parse ini files containing comments using #\n", $lines[7]);
         unlink($tempDir . '/CHANGELOG.md');
+        $expected = file_get_contents($this->RESOURCE_DIR . "/release-json-valid");
+        $output = file_get_contents($tempDir . "/.changes/3.22.0");
         $this->assertEquals(
-            json_decode(file_get_contents($this->RESOURCE_DIR . "/release-json-valid"), true),
-            json_decode(file_get_contents($tempDir . "/.changes/3.22.0"), true)
+            json_decode($expected, true),
+            json_decode($output, true)
         );
+        // Verify last character newline matches expected value
+        $this->assertEquals(substr($expected, -1), substr($output, -1));
         unlink($tempDir . "/.changes/3.22.0");
     }
 

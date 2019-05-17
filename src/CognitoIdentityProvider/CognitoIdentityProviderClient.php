@@ -48,6 +48,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise adminRespondToAuthChallengeAsync(array $args = [])
  * @method \Aws\Result adminSetUserMFAPreference(array $args = [])
  * @method \GuzzleHttp\Promise\Promise adminSetUserMFAPreferenceAsync(array $args = [])
+ * @method \Aws\Result adminSetUserPassword(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise adminSetUserPasswordAsync(array $args = [])
  * @method \Aws\Result adminSetUserSettings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise adminSetUserSettingsAsync(array $args = [])
  * @method \Aws\Result adminUpdateAuthEventFeedback(array $args = [])

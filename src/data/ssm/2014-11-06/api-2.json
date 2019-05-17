@@ -750,6 +750,18 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "DescribePatchProperties":{
+      "name":"DescribePatchProperties",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribePatchPropertiesRequest"},
+      "output":{"shape":"DescribePatchPropertiesResult"},
+      "errors":[
+        {"shape":"InternalServerError"}
+      ]
+    },
     "DescribeSessions":{
       "name":"DescribeSessions",
       "http":{
@@ -827,7 +839,8 @@
       "output":{"shape":"GetDeployablePatchSnapshotForInstanceResult"},
       "errors":[
         {"shape":"InternalServerError"},
-        {"shape":"UnsupportedOperatingSystem"}
+        {"shape":"UnsupportedOperatingSystem"},
+        {"shape":"UnsupportedFeatureRequiredException"}
       ]
     },
     "GetDocument":{
@@ -1306,7 +1319,11 @@
         {"shape":"InvalidAllowedPatternException"},
         {"shape":"ParameterMaxVersionLimitExceeded"},
         {"shape":"ParameterPatternMismatchException"},
-        {"shape":"UnsupportedParameterType"}
+        {"shape":"UnsupportedParameterType"},
+        {"shape":"PoliciesLimitExceededException"},
+        {"shape":"InvalidPolicyTypeException"},
+        {"shape":"InvalidPolicyAttributeException"},
+        {"shape":"IncompatiblePolicyException"}
       ]
     },
     "RegisterDefaultPatchBaseline":{
@@ -3740,7 +3757,11 @@
         },
         "InstancesWithMissingPatches":{"shape":"Integer"},
         "InstancesWithFailedPatches":{"shape":"Integer"},
-        "InstancesWithNotApplicablePatches":{"shape":"Integer"}
+        "InstancesWithNotApplicablePatches":{"shape":"Integer"},
+        "InstancesWithUnreportedNotApplicablePatches":{
+          "shape":"Integer",
+          "box":true
+        }
       }
     },
     "DescribePatchGroupsRequest":{
@@ -3758,6 +3779,30 @@
       "type":"structure",
       "members":{
         "Mappings":{"shape":"PatchGroupPatchBaselineMappingList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribePatchPropertiesRequest":{
+      "type":"structure",
+      "required":[
+        "OperatingSystem",
+        "Property"
+      ],
+      "members":{
+        "OperatingSystem":{"shape":"OperatingSystem"},
+        "Property":{"shape":"PatchProperty"},
+        "PatchSet":{"shape":"PatchSet"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribePatchPropertiesResult":{
+      "type":"structure",
+      "members":{
+        "Properties":{"shape":"PatchPropertiesList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -4611,6 +4656,13 @@
       },
       "exception":true
     },
+    "IncompatiblePolicyException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "InstallOverrideList":{
       "type":"string",
       "max":256,
@@ -4812,6 +4864,10 @@
         },
         "MissingCount":{"shape":"PatchMissingCount"},
         "FailedCount":{"shape":"PatchFailedCount"},
+        "UnreportedNotApplicableCount":{
+          "shape":"PatchUnreportedNotApplicableCount",
+          "box":true
+        },
         "NotApplicableCount":{"shape":"PatchNotApplicableCount"},
         "OperationStartTime":{"shape":"DateTime"},
         "OperationEndTime":{"shape":"DateTime"},
@@ -5127,6 +5183,20 @@
     "InvalidPluginName":{
       "type":"structure",
       "members":{
+      },
+      "exception":true
+    },
+    "InvalidPolicyAttributeException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "InvalidPolicyTypeException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
       },
       "exception":true
     },
@@ -6292,11 +6362,7 @@
       "max":128,
       "min":0
     },
-    "PSParameterValue":{
-      "type":"string",
-      "max":4096,
-      "min":1
-    },
+    "PSParameterValue":{"type":"string"},
     "PSParameterVersion":{"type":"long"},
     "Parameter":{
       "type":"structure",
@@ -6335,12 +6401,22 @@
         "Value":{"shape":"PSParameterValue"},
         "AllowedPattern":{"shape":"AllowedPattern"},
         "Version":{"shape":"PSParameterVersion"},
-        "Labels":{"shape":"ParameterLabelList"}
+        "Labels":{"shape":"ParameterLabelList"},
+        "Tier":{"shape":"ParameterTier"},
+        "Policies":{"shape":"ParameterPolicyList"}
       }
     },
     "ParameterHistoryList":{
       "type":"list",
       "member":{"shape":"ParameterHistory"}
+    },
+    "ParameterInlinePolicy":{
+      "type":"structure",
+      "members":{
+        "PolicyText":{"shape":"String"},
+        "PolicyType":{"shape":"String"},
+        "PolicyStatus":{"shape":"String"}
+      }
     },
     "ParameterKeyId":{
       "type":"string",
@@ -6387,7 +6463,9 @@
         "LastModifiedUser":{"shape":"String"},
         "Description":{"shape":"ParameterDescription"},
         "AllowedPattern":{"shape":"AllowedPattern"},
-        "Version":{"shape":"PSParameterVersion"}
+        "Version":{"shape":"PSParameterVersion"},
+        "Tier":{"shape":"ParameterTier"},
+        "Policies":{"shape":"ParameterPolicyList"}
       }
     },
     "ParameterMetadataList":{
@@ -6415,6 +6493,15 @@
       },
       "exception":true
     },
+    "ParameterPolicies":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
+    "ParameterPolicyList":{
+      "type":"list",
+      "member":{"shape":"ParameterInlinePolicy"}
+    },
     "ParameterStringFilter":{
       "type":"structure",
       "required":["Key"],
@@ -6428,7 +6515,7 @@
       "type":"string",
       "max":132,
       "min":1,
-      "pattern":"tag:.+|Name|Type|KeyId|Path|Label"
+      "pattern":"tag:.+|Name|Type|KeyId|Path|Label|Tier"
     },
     "ParameterStringFilterList":{
       "type":"list",
@@ -6449,6 +6536,13 @@
       "type":"string",
       "max":10,
       "min":1
+    },
+    "ParameterTier":{
+      "type":"string",
+      "enum":[
+        "Standard",
+        "Advanced"
+      ]
     },
     "ParameterType":{
       "type":"string",
@@ -6644,7 +6738,9 @@
     "PatchFilterKey":{
       "type":"string",
       "enum":[
+        "PATCH_SET",
         "PRODUCT",
+        "PRODUCT_FAMILY",
         "CLASSIFICATION",
         "MSRC_SEVERITY",
         "PATCH_ID",
@@ -6751,6 +6847,26 @@
     },
     "PatchProduct":{"type":"string"},
     "PatchProductFamily":{"type":"string"},
+    "PatchPropertiesList":{
+      "type":"list",
+      "member":{"shape":"PatchPropertyEntry"}
+    },
+    "PatchProperty":{
+      "type":"string",
+      "enum":[
+        "PRODUCT",
+        "PRODUCT_FAMILY",
+        "CLASSIFICATION",
+        "MSRC_SEVERITY",
+        "PRIORITY",
+        "SEVERITY"
+      ]
+    },
+    "PatchPropertyEntry":{
+      "type":"map",
+      "key":{"shape":"AttributeName"},
+      "value":{"shape":"AttributeValue"}
+    },
     "PatchRule":{
       "type":"structure",
       "required":[
@@ -6782,6 +6898,13 @@
       "member":{"shape":"PatchRule"},
       "max":10,
       "min":0
+    },
+    "PatchSet":{
+      "type":"string",
+      "enum":[
+        "OS",
+        "APPLICATION"
+      ]
     },
     "PatchSeverity":{"type":"string"},
     "PatchSource":{
@@ -6833,6 +6956,7 @@
       }
     },
     "PatchTitle":{"type":"string"},
+    "PatchUnreportedNotApplicableCount":{"type":"integer"},
     "PatchVendor":{"type":"string"},
     "PingStatus":{
       "type":"string",
@@ -6852,6 +6976,13 @@
     "PlatformTypeList":{
       "type":"list",
       "member":{"shape":"PlatformType"}
+    },
+    "PoliciesLimitExceededException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
     },
     "Product":{"type":"string"},
     "ProgressCounters":{
@@ -6923,7 +7054,9 @@
           "box":true
         },
         "AllowedPattern":{"shape":"AllowedPattern"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "Tier":{"shape":"ParameterTier"},
+        "Policies":{"shape":"ParameterPolicies"}
       }
     },
     "PutParameterResult":{
@@ -7920,6 +8053,13 @@
     },
     "TotalCount":{"type":"integer"},
     "TotalSizeLimitExceededException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "UnsupportedFeatureRequiredException":{
       "type":"structure",
       "members":{
         "Message":{"shape":"String"}

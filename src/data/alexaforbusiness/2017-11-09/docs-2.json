@@ -12,6 +12,7 @@
     "CreateBusinessReportSchedule": "<p>Creates a recurring schedule for usage reports to deliver to the specified S3 location with a specified daily or weekly interval.</p>",
     "CreateConferenceProvider": "<p>Adds a new conference provider under the user's AWS account.</p>",
     "CreateContact": "<p>Creates a contact with the specified details.</p>",
+    "CreateGatewayGroup": "<p>Creates a gateway group with the specified details.</p>",
     "CreateProfile": "<p>Creates a new room profile with the specified details.</p>",
     "CreateRoom": "<p>Creates a room with the specified details.</p>",
     "CreateSkillGroup": "<p>Creates a skill group with a specified name and description.</p>",
@@ -21,6 +22,8 @@
     "DeleteConferenceProvider": "<p>Deletes a conference provider.</p>",
     "DeleteContact": "<p>Deletes a contact by the contact ARN.</p>",
     "DeleteDevice": "<p>Removes a device from Alexa For Business.</p>",
+    "DeleteDeviceUsageData": "<p>When this action is called for a specified shared device, it allows authorized users to delete the device's entire previous history of voice input data and associated response data. This action can be called once every 24 hours for a specific shared device.</p>",
+    "DeleteGatewayGroup": "<p>Deletes a gateway group.</p>",
     "DeleteProfile": "<p>Deletes a room profile by the profile ARN.</p>",
     "DeleteRoom": "<p>Deletes a room by the room ARN.</p>",
     "DeleteRoomSkillParameter": "<p>Deletes room skill parameter details by room, skill, and parameter key ID.</p>",
@@ -38,6 +41,8 @@
     "GetConferenceProvider": "<p>Gets details about a specific conference provider.</p>",
     "GetContact": "<p>Gets the contact details by the contact ARN.</p>",
     "GetDevice": "<p>Gets the details of a device by device ARN.</p>",
+    "GetGateway": "<p>Retrieves the details of a gateway.</p>",
+    "GetGatewayGroup": "<p>Retrieves the details of a gateway group.</p>",
     "GetInvitationConfiguration": "<p>Retrieves the configured values for the user enrollment invitation email template.</p>",
     "GetProfile": "<p>Gets the details of a room profile by profile ARN.</p>",
     "GetRoom": "<p>Gets room details by room ARN.</p>",
@@ -46,6 +51,8 @@
     "ListBusinessReportSchedules": "<p>Lists the details of the schedules that a user configured.</p>",
     "ListConferenceProviders": "<p>Lists conference providers under a specific AWS account.</p>",
     "ListDeviceEvents": "<p>Lists the device event history, including device connection status, for up to 30 days.</p>",
+    "ListGatewayGroups": "<p>Retrieves a list of gateway group summaries. Use GetGatewayGroup to retrieve details of a specific gateway group.</p>",
+    "ListGateways": "<p>Retrieves a list of gateway summaries. Use GetGateway to retrieve details of a specific gateway. An optional gateway group ARN can be provided to only retrieve gateway summaries of gateways that are associated with that gateway group ARN.</p>",
     "ListSkills": "<p>Lists all enabled skills in a specific skill group.</p>",
     "ListSkillsStoreCategories": "<p>Lists all categories in the Alexa skill store.</p>",
     "ListSkillsStoreSkillsByCategory": "<p>Lists all skills in the Alexa skill store by category.</p>",
@@ -66,6 +73,7 @@
     "SearchRooms": "<p>Searches rooms and lists the ones that meet a set of filter and sort criteria.</p>",
     "SearchSkillGroups": "<p>Searches skill groups and lists the ones that meet a set of filter and sort criteria.</p>",
     "SearchUsers": "<p>Searches users and lists the ones that meet a set of filter and sort criteria.</p>",
+    "SendAnnouncement": "<p>Triggers an asynchronous flow to send text, SSML, or audio announcements to rooms that are identified by a search or filter. </p>",
     "SendInvitation": "<p>Sends an enrollment invitation email with a URL to a user. The URL is valid for 72 hours or until you call this operation again, whichever comes first. </p>",
     "StartDeviceSync": "<p>Resets a device and its account to the known default settings, by clearing all information and settings set by previous users.</p>",
     "StartSmartHomeApplianceDiscovery": "<p>Initiates the discovery of any smart home appliances associated with the room.</p>",
@@ -76,6 +84,8 @@
     "UpdateConferenceProvider": "<p>Updates an existing conference provider's settings.</p>",
     "UpdateContact": "<p>Updates the contact details by the contact ARN.</p>",
     "UpdateDevice": "<p>Updates the device name by device ARN.</p>",
+    "UpdateGateway": "<p>Updates the details of a gateway. If any optional field is not provided, the existing corresponding value is left unmodified.</p>",
+    "UpdateGatewayGroup": "<p>Updates the details of a gateway group. If any optional field is not provided, the existing corresponding value is left unmodified.</p>",
     "UpdateProfile": "<p>Updates an existing room profile by room profile ARN.</p>",
     "UpdateRoom": "<p>Updates room details by room ARN.</p>",
     "UpdateSkillGroup": "<p>Updates skill group details by skill group ARN.</p>"
@@ -186,6 +196,7 @@
         "CreateBusinessReportScheduleResponse$ScheduleArn": "<p>The ARN of the business report schedule.</p>",
         "CreateConferenceProviderResponse$ConferenceProviderArn": "<p>The ARN of the newly-created conference provider.</p>",
         "CreateContactResponse$ContactArn": "<p>The ARN of the newly created address book.</p>",
+        "CreateGatewayGroupResponse$GatewayGroupArn": "<p>The ARN of the created gateway group.</p>",
         "CreateProfileResponse$ProfileArn": "<p>The ARN of the newly created room profile in the response.</p>",
         "CreateRoomRequest$ProfileArn": "<p>The profile ARN for the room.</p>",
         "CreateRoomResponse$RoomArn": "<p>The ARN of the newly created room in the response.</p>",
@@ -196,6 +207,8 @@
         "DeleteConferenceProviderRequest$ConferenceProviderArn": "<p>The ARN of the conference provider.</p>",
         "DeleteContactRequest$ContactArn": "<p>The ARN of the contact to delete.</p>",
         "DeleteDeviceRequest$DeviceArn": "<p>The ARN of the device for which to request details.</p>",
+        "DeleteDeviceUsageDataRequest$DeviceArn": "<p>The ARN of the device.</p>",
+        "DeleteGatewayGroupRequest$GatewayGroupArn": "<p>The ARN of the gateway group to delete.</p>",
         "DeleteProfileRequest$ProfileArn": "<p>The ARN of the room profile to delete. Required.</p>",
         "DeleteRoomRequest$RoomArn": "<p>The ARN of the room to delete. Required.</p>",
         "DeleteRoomSkillParameterRequest$RoomArn": "<p>The ARN of the room from which to remove the room skill parameter details.</p>",
@@ -213,15 +226,24 @@
         "DisassociateSkillGroupFromRoomRequest$SkillGroupArn": "<p>The ARN of the skill group to disassociate from a room. Required.</p>",
         "DisassociateSkillGroupFromRoomRequest$RoomArn": "<p>The ARN of the room from which the skill group is to be disassociated. Required.</p>",
         "ForgetSmartHomeAppliancesRequest$RoomArn": "<p>The room that the appliances are associated with.</p>",
+        "Gateway$Arn": "<p>The ARN of the gateway.</p>",
+        "Gateway$GatewayGroupArn": "<p>The ARN of the gateway group that the gateway is associated to.</p>",
+        "GatewayGroup$Arn": "<p>The ARN of the gateway group.</p>",
+        "GatewayGroupSummary$Arn": "<p>The ARN of the gateway group.</p>",
+        "GatewaySummary$Arn": "<p>The ARN of the gateway.</p>",
+        "GatewaySummary$GatewayGroupArn": "<p>The ARN of the gateway group that the gateway is associated to.</p>",
         "GetAddressBookRequest$AddressBookArn": "<p>The ARN of the address book for which to request details.</p>",
         "GetConferenceProviderRequest$ConferenceProviderArn": "<p>The ARN of the newly created conference provider.</p>",
         "GetContactRequest$ContactArn": "<p>The ARN of the contact for which to request details.</p>",
         "GetDeviceRequest$DeviceArn": "<p>The ARN of the device for which to request details. Required.</p>",
+        "GetGatewayGroupRequest$GatewayGroupArn": "<p>The ARN of the gateway group to get.</p>",
+        "GetGatewayRequest$GatewayArn": "<p>The ARN of the gateway to get.</p>",
         "GetProfileRequest$ProfileArn": "<p>The ARN of the room profile for which to request details. Required.</p>",
         "GetRoomRequest$RoomArn": "<p>The ARN of the room for which to request details. Required.</p>",
         "GetRoomSkillParameterRequest$RoomArn": "<p>The ARN of the room from which to get the room skill parameter details. </p>",
         "GetSkillGroupRequest$SkillGroupArn": "<p>The ARN of the skill group for which to get details. Required.</p>",
         "ListDeviceEventsRequest$DeviceArn": "<p>The ARN of a device.</p>",
+        "ListGatewaysRequest$GatewayGroupArn": "<p>The gateway group ARN for which to list gateways.</p>",
         "ListSkillsRequest$SkillGroupArn": "<p>The ARN of the skill group for which to list enabled skills. Required.</p>",
         "ListSmartHomeAppliancesRequest$RoomArn": "<p>The room that the appliances are associated with.</p>",
         "ListTagsRequest$Arn": "<p>The ARN of the specified resource for which to list tags.</p>",
@@ -237,6 +259,7 @@
         "Room$ProfileArn": "<p>The profile ARN of a room.</p>",
         "RoomData$RoomArn": "<p>The ARN of a room.</p>",
         "RoomData$ProfileArn": "<p>The profile ARN of a room.</p>",
+        "SendAnnouncementResponse$AnnouncementArn": "<p>The identifier of the announcement.</p>",
         "SendInvitationRequest$UserArn": "<p>The ARN of the user to whom to send an invitation. Required.</p>",
         "SkillGroup$SkillGroupArn": "<p>The ARN of a skill group.</p>",
         "SkillGroupData$SkillGroupArn": "<p>The skill group ARN of a skill group.</p>",
@@ -250,6 +273,8 @@
         "UpdateConferenceProviderRequest$ConferenceProviderArn": "<p>The ARN of the conference provider.</p>",
         "UpdateContactRequest$ContactArn": "<p>The ARN of the contact to update.</p>",
         "UpdateDeviceRequest$DeviceArn": "<p>The ARN of the device to update. Required.</p>",
+        "UpdateGatewayGroupRequest$GatewayGroupArn": "<p>The ARN of the gateway group to update.</p>",
+        "UpdateGatewayRequest$GatewayArn": "<p>The ARN of the gateway to update.</p>",
         "UpdateProfileRequest$ProfileArn": "<p>The ARN of the room profile to update. Required.</p>",
         "UpdateRoomRequest$RoomArn": "<p>The ARN of the room to update. </p>",
         "UpdateRoomRequest$ProfileArn": "<p>The updated profile ARN for the room.</p>",
@@ -307,6 +332,24 @@
       "refs": {
       }
     },
+    "Audio": {
+      "base": "<p>The audio message. There is a 1 MB limit on the audio file input and the only supported format is MP3. To convert your MP3 audio files to an Alexa-friendly, </p> <p>required codec version (MPEG version 2) and bit rate (48 kbps), you might use converter software. One option for this is a command-line tool, FFmpeg. For more information, see <a href=\"https://www.ffmpeg.org/\">FFmpeg</a>. The following command converts the provided &lt;input-file&gt; to an MP3 file that is played in the announcement:</p> <p> <code>ffmpeg -i &lt;input-file&gt; -ac 2 -codec:a libmp3lame -b:a 48k -ar 16000 &lt;output-file.mp3&gt;</code> </p>",
+      "refs": {
+        "AudioList$member": null
+      }
+    },
+    "AudioList": {
+      "base": null,
+      "refs": {
+        "Content$AudioList": "<p>The list of audio messages.</p>"
+      }
+    },
+    "AudioLocation": {
+      "base": null,
+      "refs": {
+        "Audio$Location": "<p>The location of the audio file. Currently, S3 URLs are supported. Only S3 locations comprised of safe characters are valid. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMetadata.html#Safe%20Characters\">Safe Characters</a>.</p>"
+      }
+    },
     "AuthorizationResult": {
       "base": null,
       "refs": {
@@ -351,6 +394,12 @@
       "refs": {
         "BusinessReportSchedule$ContentRange": "<p>The content range of the reports.</p>",
         "CreateBusinessReportScheduleRequest$ContentRange": "<p>The content range of the reports.</p>"
+      }
+    },
+    "BusinessReportDeliveryTime": {
+      "base": null,
+      "refs": {
+        "BusinessReport$DeliveryTime": "<p>The time of report delivery.</p>"
       }
     },
     "BusinessReportDownloadUrl": {
@@ -457,17 +506,19 @@
       }
     },
     "ClientRequestToken": {
-      "base": null,
+      "base": "<p>A unique, user-specified identifier for the request that ensures idempotency.</p>",
       "refs": {
         "CreateAddressBookRequest$ClientRequestToken": "<p>A unique, user-specified identifier for the request that ensures idempotency.</p>",
         "CreateBusinessReportScheduleRequest$ClientRequestToken": "<p>The client request token.</p>",
         "CreateConferenceProviderRequest$ClientRequestToken": "<p>The request token of the client.</p>",
         "CreateContactRequest$ClientRequestToken": "<p>A unique, user-specified identifier for this request that ensures idempotency.</p>",
+        "CreateGatewayGroupRequest$ClientRequestToken": "<p> A unique, user-specified identifier for the request that ensures idempotency.</p>",
         "CreateProfileRequest$ClientRequestToken": "<p>The user-specified token that is used during the creation of a profile.</p>",
         "CreateRoomRequest$ClientRequestToken": "<p>A unique, user-specified identifier for this request that ensures idempotency. </p>",
         "CreateSkillGroupRequest$ClientRequestToken": "<p>A unique, user-specified identifier for this request that ensures idempotency. </p>",
         "CreateUserRequest$ClientRequestToken": "<p>A unique, user-specified identifier for this request that ensures idempotency. </p>",
-        "ResourceInUseException$ClientRequestToken": null
+        "ResourceInUseException$ClientRequestToken": null,
+        "SendAnnouncementRequest$ClientRequestToken": "<p>The unique, user-specified identifier for the request that ensures idempotency.</p>"
       }
     },
     "CommsProtocol": {
@@ -557,6 +608,12 @@
         "UpdateContactRequest$LastName": "<p>The updated last name of the contact.</p>"
       }
     },
+    "Content": {
+      "base": "<p>The content definition. This can contain only one text, SSML, or audio list object.</p>",
+      "refs": {
+        "SendAnnouncementRequest$Content": "<p>The announcement content. This can contain only one of the three possible announcement types (text, SSML or audio).</p>"
+      }
+    },
     "CountryCode": {
       "base": null,
       "refs": {
@@ -599,6 +656,16 @@
       }
     },
     "CreateContactResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateGatewayGroupRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateGatewayGroupResponse": {
       "base": null,
       "refs": {
       }
@@ -708,6 +775,26 @@
       "refs": {
       }
     },
+    "DeleteDeviceUsageDataRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteDeviceUsageDataResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteGatewayGroupRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteGatewayGroupResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteProfileRequest": {
       "base": null,
       "refs": {
@@ -810,6 +897,12 @@
         "ListDeviceEventsResponse$DeviceEvents": "<p>The device events requested for the device ARN.</p>"
       }
     },
+    "DeviceEventTime": {
+      "base": null,
+      "refs": {
+        "DeviceEvent$Timestamp": "<p>The time (in epoch) when the event occurred. </p>"
+      }
+    },
     "DeviceEventType": {
       "base": null,
       "refs": {
@@ -886,6 +979,12 @@
       "refs": {
         "Device$DeviceType": "<p>The type of a device.</p>",
         "DeviceData$DeviceType": "<p>The type of a device.</p>"
+      }
+    },
+    "DeviceUsageType": {
+      "base": null,
+      "refs": {
+        "DeleteDeviceUsageDataRequest$DeviceUsageType": "<p>The type of usage data to delete.</p>"
       }
     },
     "DisassociateContactFromAddressBookRequest": {
@@ -1016,6 +1115,7 @@
         "LimitExceededException$Message": null,
         "NameInUseException$Message": null,
         "NotFoundException$Message": null,
+        "ResourceAssociatedException$Message": null,
         "ResourceInUseException$Message": null,
         "SkillNotLinkedException$Message": null,
         "UnauthorizedException$Message": null
@@ -1054,7 +1154,8 @@
         "SearchProfilesRequest$Filters": "<p>The filters to use to list a specified set of room profiles. Supported filter keys are ProfileName and Address. Required. </p>",
         "SearchRoomsRequest$Filters": "<p>The filters to use to list a specified set of rooms. The supported filter keys are RoomName and ProfileName.</p>",
         "SearchSkillGroupsRequest$Filters": "<p>The filters to use to list a specified set of skill groups. The supported filter key is SkillGroupName. </p>",
-        "SearchUsersRequest$Filters": "<p>The filters to use for listing a specific set of users. Required. Supported filter keys are UserId, FirstName, LastName, Email, and EnrollmentStatus.</p>"
+        "SearchUsersRequest$Filters": "<p>The filters to use for listing a specific set of users. Required. Supported filter keys are UserId, FirstName, LastName, Email, and EnrollmentStatus.</p>",
+        "SendAnnouncementRequest$RoomFilters": "<p>The filters to use to send an announcement to a specified list of rooms. The supported filter keys are RoomName, ProfileName, RoomArn, and ProfileArn. To send to all rooms, specify an empty RoomFilters list.</p>"
       }
     },
     "FilterValue": {
@@ -1077,6 +1178,84 @@
     "ForgetSmartHomeAppliancesResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "Gateway": {
+      "base": "<p>The details of the gateway. </p>",
+      "refs": {
+        "GetGatewayResponse$Gateway": "<p>The details of the gateway.</p>"
+      }
+    },
+    "GatewayDescription": {
+      "base": null,
+      "refs": {
+        "Gateway$Description": "<p>The description of the gateway.</p>",
+        "GatewaySummary$Description": "<p>The description of the gateway.</p>",
+        "UpdateGatewayRequest$Description": "<p>The updated description of the gateway.</p>"
+      }
+    },
+    "GatewayGroup": {
+      "base": "<p>The details of the gateway group.</p>",
+      "refs": {
+        "GetGatewayGroupResponse$GatewayGroup": null
+      }
+    },
+    "GatewayGroupDescription": {
+      "base": null,
+      "refs": {
+        "CreateGatewayGroupRequest$Description": "<p>The description of the gateway group.</p>",
+        "GatewayGroup$Description": "<p>The description of the gateway group.</p>",
+        "GatewayGroupSummary$Description": "<p>The description of the gateway group.</p>",
+        "UpdateGatewayGroupRequest$Description": "<p>The updated description of the gateway group.</p>"
+      }
+    },
+    "GatewayGroupName": {
+      "base": null,
+      "refs": {
+        "CreateGatewayGroupRequest$Name": "<p>The name of the gateway group.</p>",
+        "GatewayGroup$Name": "<p>The name of the gateway group.</p>",
+        "GatewayGroupSummary$Name": "<p>The name of the gateway group.</p>",
+        "UpdateGatewayGroupRequest$Name": "<p>The updated name of the gateway group.</p>"
+      }
+    },
+    "GatewayGroupSummaries": {
+      "base": null,
+      "refs": {
+        "ListGatewayGroupsResponse$GatewayGroups": "<p>The gateway groups in the list.</p>"
+      }
+    },
+    "GatewayGroupSummary": {
+      "base": "<p>The summary of a gateway group.</p>",
+      "refs": {
+        "GatewayGroupSummaries$member": null
+      }
+    },
+    "GatewayName": {
+      "base": null,
+      "refs": {
+        "Gateway$Name": "<p>The name of the gateway.</p>",
+        "GatewaySummary$Name": "<p>The name of the gateway.</p>",
+        "UpdateGatewayRequest$Name": "<p>The updated name of the gateway.</p>"
+      }
+    },
+    "GatewaySummaries": {
+      "base": null,
+      "refs": {
+        "ListGatewaysResponse$Gateways": "<p>The gateways in the list.</p>"
+      }
+    },
+    "GatewaySummary": {
+      "base": "<p>The summary of a gateway.</p>",
+      "refs": {
+        "GatewaySummaries$member": null
+      }
+    },
+    "GatewayVersion": {
+      "base": null,
+      "refs": {
+        "Gateway$SoftwareVersion": "<p>The software version of the gateway. The gateway automatically updates its software version during normal operation.</p>",
+        "GatewaySummary$SoftwareVersion": "<p>The software version of the gateway. The gateway automatically updates its software version during normal operation.</p>",
+        "UpdateGatewayRequest$SoftwareVersion": "<p>The updated software version of the gateway. The gateway automatically updates its software version during normal operation.</p>"
       }
     },
     "GenericKeyword": {
@@ -1137,6 +1316,26 @@
       }
     },
     "GetDeviceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetGatewayGroupRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetGatewayGroupResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetGatewayRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetGatewayResponse": {
       "base": null,
       "refs": {
       }
@@ -1267,6 +1466,26 @@
       "refs": {
       }
     },
+    "ListGatewayGroupsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGatewayGroupsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGatewaysRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListGatewaysResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListSkillsRequest": {
       "base": null,
       "refs": {
@@ -1317,6 +1536,14 @@
       "refs": {
       }
     },
+    "Locale": {
+      "base": null,
+      "refs": {
+        "Audio$Locale": "<p>The locale of the audio message. Currently, en-US is supported.</p>",
+        "Ssml$Locale": "<p>The locale of the SSML message. Currently, en-US is supported.</p>",
+        "Text$Locale": "<p>The locale of the text message. Currently, en-US is supported.</p>"
+      }
+    },
     "MacAddress": {
       "base": null,
       "refs": {
@@ -1330,6 +1557,8 @@
         "ListBusinessReportSchedulesRequest$MaxResults": "<p>The maximum number of schedules listed in the call.</p>",
         "ListConferenceProvidersRequest$MaxResults": "<p>The maximum number of conference providers to be returned, per paginated calls.</p>",
         "ListDeviceEventsRequest$MaxResults": "<p>The maximum number of results to include in the response. The default value is 50. If more results exist than the specified MaxResults value, a token is included in the response so that the remaining results can be retrieved. </p>",
+        "ListGatewayGroupsRequest$MaxResults": "<p>The maximum number of gateway group summaries to return. The default is 50.</p>",
+        "ListGatewaysRequest$MaxResults": "<p>The maximum number of gateway summaries to return. The default is 50.</p>",
         "ListSkillsStoreCategoriesRequest$MaxResults": "<p>The maximum number of categories returned, per paginated calls.</p>",
         "ListSmartHomeAppliancesRequest$MaxResults": "<p>The maximum number of appliances to be returned, per paginated calls.</p>",
         "ListTagsRequest$MaxResults": "<p>The maximum number of results to include in the response. If more results exist than the specified <code>MaxResults</code> value, a token is included in the response so that the remaining results can be retrieved.</p>",
@@ -1378,6 +1607,10 @@
         "ListConferenceProvidersResponse$NextToken": "<p>The tokens used for pagination.</p>",
         "ListDeviceEventsRequest$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response only includes results beyond the token, up to the value specified by MaxResults. When the end of results is reached, the response has a value of null.</p>",
         "ListDeviceEventsResponse$NextToken": "<p>The token returned to indicate that there is more data available.</p>",
+        "ListGatewayGroupsRequest$NextToken": "<p>The token used to paginate though multiple pages of gateway group summaries.</p>",
+        "ListGatewayGroupsResponse$NextToken": "<p>The token used to paginate though multiple pages of gateway group summaries.</p>",
+        "ListGatewaysRequest$NextToken": "<p>The token used to paginate though multiple pages of gateway summaries.</p>",
+        "ListGatewaysResponse$NextToken": "<p>The token used to paginate though multiple pages of gateway summaries.</p>",
         "ListSkillsRequest$NextToken": "<p>An optional token returned from a prior request. Use this token for pagination of results from this action. If this parameter is specified, the response includes only results beyond the token, up to the value specified by <code>MaxResults</code>. Required.</p>",
         "ListSkillsResponse$NextToken": "<p>The token returned to indicate that there is more data available.</p>",
         "ListSkillsStoreCategoriesRequest$NextToken": "<p>The tokens used for pagination.</p>",
@@ -1579,6 +1812,11 @@
       "refs": {
       }
     },
+    "ResourceAssociatedException": {
+      "base": "<p>Another resource is associated with the resource in the request.</p>",
+      "refs": {
+      }
+    },
     "ResourceInUseException": {
       "base": "<p>The resource in the request is already in use.</p>",
       "refs": {
@@ -1758,6 +1996,16 @@
       }
     },
     "SearchUsersResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SendAnnouncementRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SendAnnouncementResponse": {
       "base": null,
       "refs": {
       }
@@ -1963,6 +2211,24 @@
         "Sort$Value": "<p>The sort value of a sort object.</p>"
       }
     },
+    "Ssml": {
+      "base": "<p>The SSML message. For more information, see <a href=\"https://developer.amazon.com/docs/custom-skills/speech-synthesis-markup-language-ssml-reference.html\">SSML Reference</a>.</p>",
+      "refs": {
+        "SsmlList$member": null
+      }
+    },
+    "SsmlList": {
+      "base": null,
+      "refs": {
+        "Content$SsmlList": "<p>The list of SSML messages.</p>"
+      }
+    },
+    "SsmlValue": {
+      "base": null,
+      "refs": {
+        "Ssml$Value": "<p>The value of the SSML message in the correct SSML format. The audio tag is not supported.</p>"
+      }
+    },
     "StartDeviceSyncRequest": {
       "base": null,
       "refs": {
@@ -2036,11 +2302,28 @@
         "UpdateProfileRequest$TemperatureUnit": "<p>The updated temperature unit for the room profile.</p>"
       }
     },
-    "Timestamp": {
+    "Text": {
+      "base": "<p>The text message.</p>",
+      "refs": {
+        "TextList$member": null
+      }
+    },
+    "TextList": {
       "base": null,
       "refs": {
-        "BusinessReport$DeliveryTime": "<p>The time of report delivery.</p>",
-        "DeviceEvent$Timestamp": "<p>The time (in epoch) when the event occurred. </p>"
+        "Content$TextList": "<p>The list of text messages.</p>"
+      }
+    },
+    "TextValue": {
+      "base": null,
+      "refs": {
+        "Text$Value": "<p>The value of the text message.</p>"
+      }
+    },
+    "TimeToLiveInSeconds": {
+      "base": null,
+      "refs": {
+        "SendAnnouncementRequest$TimeToLiveInSeconds": "<p>The time to live for an announcement. Default is 300. If delivery doesn't occur within this time, the announcement is not delivered.</p>"
       }
     },
     "Timezone": {
@@ -2125,6 +2408,26 @@
       }
     },
     "UpdateDeviceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateGatewayGroupRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateGatewayGroupResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateGatewayRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateGatewayResponse": {
       "base": null,
       "refs": {
       }

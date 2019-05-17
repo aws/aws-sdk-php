@@ -1,5 +1,132 @@
 # CHANGELOG
 
+## 3.93.11 - 2019-05-16
+
+* `Aws\MediaLive` - Added channel state waiters to MediaLive.
+* `Aws\S3` - This release updates the Amazon S3 PUT Bucket replication API to include a new optional field named token, which allows you to add a replication configuration to an S3 bucket that has Object Lock enabled.
+
+## 3.93.10 - 2019-05-15
+
+* `Aws\CodePipeline` - This feature includes new APIs to add, edit, remove and view tags for pipeline, custom action type and webhook resources. You can also add tags while creating these resources.
+* `Aws\EC2` - Adding tagging support for VPC Endpoints and VPC Endpoint Services.
+* `Aws\MediaPackage` - Adds optional configuration for DASH SegmentTemplateFormat to refer to segments by Number with Duration, rather than Number or Time with SegmentTimeline.
+* `Aws\RDS` - In the RDS API and CLI documentation, corrections to the descriptions for Boolean parameters to avoid references to TRUE and FALSE. The RDS CLI does not allow TRUE and FALSE values values for Boolean parameters.
+* `Aws\TranscribeService` - Amazon Transcribe - support transcriptions from audio sources in Indian English (en-IN) and Hindi (hi-IN).
+
+## 3.93.9 - 2019-05-14
+
+* `Aws\Chime` - Amazon Chime private bots GA release.
+* `Aws\Comprehend` - With this release AWS Comprehend now supports Virtual Private Cloud for Asynchronous Batch Processing jobs
+* `Aws\EC2` - Pagination support for ec2.DescribeSubnets, ec2.DescribeDhcpOptions 
+* `Aws\StorageGateway` - Add Tags parameter to CreateSnapshot and UpdateSnapshotSchedule APIs, used for creating tags on create for one off snapshots and scheduled snapshots.
+
+## 3.93.8 - 2019-05-13
+
+* `Aws\DataSync` - AWS DataSync now enables exclude and include filters to control what files and directories will be copied as part of a task execution.
+* `Aws\IoTAnalytics` - ContentDeliveryRule to support sending dataset to S3 and glue
+* `Aws\Lambda` - AWS Lambda now supports Node.js v10
+
+## 3.93.7 - 2019-05-10
+
+* `Aws\Api` - Use application/json content-type on rest-json requests
+* `Aws\Build` - Add newline character to generated changelog json files.
+* `Aws\Glue` - AWS Glue now supports specifying existing catalog tables for a crawler to examine as a data source. A new parameter CatalogTargets is added to the CrawlerTargets data type. 
+* `Aws\STS` - AWS Security Token Service (STS) now supports passing IAM Managed Policy ARNs as session policies when you programmatically create temporary sessions for a role or federated user. The Managed Policy ARNs can be passed via the PolicyArns parameter, which is now available in the AssumeRole, AssumeRoleWithWebIdentity, AssumeRoleWithSAML, and GetFederationToken APIs. The session policies referenced by the PolicyArn parameter will only further restrict the existing permissions of an IAM User or Role for individual sessions.
+
+## 3.93.6 - 2019-05-08
+
+* `Aws\Build` - Fix behat scalars on ~v4.0
+* `Aws\EKS` - Documentation update for Amazon EKS to clarify allowed parameters in update-cluster-config.
+* `Aws\IoT1ClickProjects` - Added automatic pagination support for ListProjects and ListPlacements APIs.
+* `Aws\KinesisAnalytics` - Kinesis Data Analytics APIs now support tagging on applications.
+* `Aws\KinesisAnalyticsV2` - Kinesis Data Analytics APIs now support tagging on applications.
+* `Aws\SageMaker` - Workteams now supports notification configurations. Neo now supports Jetson Nano as a target device and NumberOfHumanWorkersPerDataObject is now included in the ListLabelingJobsForWorkteam response.
+* `Aws\ServiceCatalog` - Adds "Parameters" field in UpdateConstraint API, which will allow Admin user to update "Parameters" in created Constraints.
+
+## 3.93.5 - 2019-05-07
+
+* `Aws\AlexaForBusiness` - This release adds an API allowing authorized users to delete a shared device's history of voice recordings and associated response data.
+* `Aws\AppSync` - AWS AppSync now supports the ability to add additional authentication providers to your AWS AppSync GraphQL API as well as the ability to retrieve directives configured against fields or object type definitions during schema introspection.
+* `Aws\Docs` - Add feedback link for API documentation.
+* `Aws\SSM` - Patch Manager adds support for Microsoft Application Patching.
+* `Aws\StorageGateway` - Add optional field AdminUserList to CreateSMBFileShare and UpdateSMBFileShare APIs.
+
+## 3.93.4 - 2019-05-06
+
+* `Aws\CodePipeline` - Documentation updates for codepipeline
+* `Aws\ConfigService` - AWS Config now supports tagging on PutConfigRule, PutConfigurationAggregator and PutAggregationAuthorization APIs.
+* `Aws\IAM` - Documentation updates for iam
+* `Aws\STS` - Documentation updates for sts
+
+## 3.93.3 - 2019-05-03
+
+* `Aws\CognitoIdentityProvider` - This release of Amazon Cognito User Pools introduces the new AdminSetUserPassword API that allows administrators of a user pool to change a user's password. The new password can be temporary or permanent.
+* `Aws\MediaConvert` - DASH output groups using DRM encryption can now enable a playback device compatibility mode to correct problems with playback on older devices. 
+* `Aws\MediaLive` - You can now switch the channel mode of your channels from standard to single pipeline and from single pipeline to standard. In order to switch a channel from single pipeline to standard all inputs attached to the channel must support two encoder pipelines.
+* `Aws\WorkMail` - Amazon WorkMail is releasing two new actions: 'GetMailboxDetails' and 'UpdateMailboxQuota'. They add insight into how much space is used by a given mailbox (size) and what its limit is (quota). A mailbox quota can be updated, but lowering the value will not influence WorkMail per user charges. For a closer look at the actions please visit https://docs.aws.amazon.com/workmail/latest/APIReference/API_Operations.html
+
+## 3.93.2 - 2019-05-02
+
+* `Aws\AlexaForBusiness` - This release allows developers and customers to send text and audio announcements to rooms.
+* `Aws\KMS` - AWS Key Management Service (KMS) can return an INTERNAL_ERROR connection error code if it cannot connect a custom key store to its AWS CloudHSM cluster. INTERNAL_ERROR is one of several connection error codes that help you to diagnose and fix a problem with your custom key store.
+
+## 3.93.1 - 2019-05-01
+
+* `Aws\EC2` - This release adds an API for the modification of a VPN Connection, enabling migration from a Virtual Private Gateway (VGW) to a Transit Gateway (TGW), while preserving the VPN endpoint IP addresses on the AWS side as well as the tunnel options.
+* `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) introduces additional task definition parameters that enable you to define secret options for Docker log configuration, a per-container list contains secrets stored in AWS Systems Manager Parameter Store or AWS Secrets Manager.
+* `Aws\XRay` - AWS X-Ray now includes Analytics, an interactive approach to analyzing user request paths (i.e., traces). Analytics will allow you to easily understand how your application and its underlying services are performing. With X-Ray Analytics, you can quickly detect application issues, pinpoint the root cause of the issue, determine the severity of the issues, and identify which end users were impacted. With AWS X-Ray Analytics you can explore, analyze, and visualize traces, allowing you to find increases in response time to user requests or increases in error rates. Metadata around peak periods, including frequency and actual times of occurrence, can be investigated by applying filters with a few clicks. You can then drill down on specific errors, faults, and response time root causes and view the associated traces. 
+
+## 3.93.0 - 2019-04-30
+
+* `Aws\CodePipeline` - This release contains an update to the PipelineContext object that includes the Pipeline ARN, and the Pipeline Execution Id. The ActionContext object is also updated to include the Action Execution Id.
+* `Aws\DirectConnect` - This release adds support for AWS Direct Connect customers to use AWS Transit Gateway with AWS Direct Connect gateway to route traffic between on-premise networks and their VPCs.
+* `Aws\ManagedBlockchain` - (New Service) Amazon Managed Blockchain is a fully managed service that makes it easy to create and manage scalable blockchain networks using popular open source frameworks.
+* `Aws\Neptune` - Adds a feature to allow customers to specify a custom parameter group when restoring a database cluster.
+* `Aws\S3Control` - Add support for Amazon S3 Batch Operations.
+* `Aws\ServiceCatalog` - Admin users can now associate/disassociate aws budgets with a portfolio or product in Service Catalog. End users can see the association by listing it or as part of the describe portfolio/product output. A new optional boolean parameter, "DisableTemplateValidation", is added to ProvisioningArtifactProperties data type. The purpose of the parameter is to enable or disable the CloudFormation template validtion when creating a product or a provisioning artifact.
+
+## 3.92.5 - 2019-04-29
+
+* `Aws\` - Added simple cache (PSR-16) adapter.
+* `Aws\Aws\Multipart` - Updated the coroutine promise catch to type-hint against `Throwable` for PHP 7+ while keeping `Exception` for backwards-compatibility.
+* `Aws\EC2` - Adds support for Elastic Fabric Adapter (EFA) ENIs. 
+* `Aws\Transfer` - This release adds support for per-server host-key management. You can now specify the SSH RSA private key used by your SFTP server.
+
+## 3.92.4 - 2019-04-26
+
+* `Aws\IAM` - AWS Security Token Service (STS) enables you to request session tokens from the global STS endpoint that work in all AWS Regions. You can configure the global STS endpoint to vend session tokens that are compatible with all AWS Regions using the new IAM SetSecurityTokenServicePreferences API. 
+* `Aws\SNS` - With this release AWS SNS adds tagging support for Topics.
+
+## 3.92.3 - 2019-04-25
+
+* `Aws\Batch` - Documentation updates for AWS Batch.
+* `Aws\DynamoDB` - This update allows you to tag Amazon DynamoDB tables when you create them. Tags are labels you can attach to AWS resources to make them easier to manage, search, and filter. 
+* `Aws\GameLift` - This release introduces the new Realtime Servers feature, giving game developers a lightweight yet flexible solution that eliminates the need to build a fully custom game server. The AWS SDK updates provide support for scripts, which are used to configure and customize Realtime Servers.
+* `Aws\Inspector` - AWS Inspector - Improve the ListFindings API response time and decreases the maximum number of agentIDs from 500 to 99.
+* `Aws\Lambda` - AWS Lambda now supports the GetLayerVersionByArn API.
+* `Aws\Organizations` - Add back the partitionEndpoint field for Organizations in the endpoints file.
+* `Aws\WorkSpaces` - Documentation updates for workspaces
+
+## 3.92.2 - 2019-04-24
+
+* `Aws\AlexaForBusiness` - This release adds support for the Alexa for Business gateway and gateway group APIs.
+* `Aws\CloudFormation` - Documentation updates for cloudformation
+* `Aws\EC2` - You can now launch the new Amazon EC2 general purpose burstable instance types T3a that feature AMD EPYC processors.
+* `Aws\MediaConnect` - Adds support for ListEntitlements pagination.
+* `Aws\MediaTailor` - AWS Elemental MediaTailor SDK now includes a new parameter to support origin servers that produce single-period DASH manifests.
+* `Aws\RDS` - A new parameter "feature-name" is added to the add-role and remove-role db cluster APIs. The value for the parameter is optional for Aurora MySQL compatible database clusters, but mandatory for Aurora PostgresQL. You can find the valid list of values using describe db engine versions API.
+* `Aws\Route53` - Amazon Route 53 now supports the Asia Pacific (Hong Kong) Region (ap-east-1) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+* `Aws\S3` - Updates ObjectLoader's requiresMultipart() to handle php://input streams without data loss.
+* `Aws\SSM` - This release updates AWS Systems Manager APIs to allow customers to configure parameters to use either the standard-parameter tier (the default tier) or the advanced-parameter tier. It allows customers to create parameters with larger values and attach parameter policies to an Advanced Parameter. 
+* `Aws\StorageGateway` - AWS Storage Gateway now supports Access Control Lists (ACLs) on File Gateway SMB shares, enabling you to apply fine grained access controls for Active Directory users and groups.
+* `Aws\Textract` - This release adds support for checkbox also known as SELECTION_ELEMENT in Amazon Textract.
+
+## 3.92.1 - 2019-04-19
+
+* `Aws\ResourceGroups` - The AWS Resource Groups service increased the query size limit to 4096 bytes.
+* `Aws\TranscribeService` - Amazon Transcribe - support transcriptions from audio sources in Spanish Spanish (es-ES).
+* `Aws\WorkSpaces` - Added a new reserved field.
+
 ## 3.92.0 - 2019-04-18
 
 * `Aws\ApplicationDiscoveryService` - The Application Discovery Service's DescribeImportTasks and BatchDeleteImportData APIs now return additional statuses for error reporting.

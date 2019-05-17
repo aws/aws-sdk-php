@@ -5,12 +5,22 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS S3 Control** service.
+ * @method \Aws\Result createJob(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createJobAsync(array $args = [])
  * @method \Aws\Result deletePublicAccessBlock(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deletePublicAccessBlockAsync(array $args = [])
+ * @method \Aws\Result describeJob(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeJobAsync(array $args = [])
  * @method \Aws\Result getPublicAccessBlock(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getPublicAccessBlockAsync(array $args = [])
+ * @method \Aws\Result listJobs(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listJobsAsync(array $args = [])
  * @method \Aws\Result putPublicAccessBlock(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putPublicAccessBlockAsync(array $args = [])
+ * @method \Aws\Result updateJobPriority(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateJobPriorityAsync(array $args = [])
+ * @method \Aws\Result updateJobStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateJobStatusAsync(array $args = [])
  */
 class S3ControlClient extends AwsClient 
 {

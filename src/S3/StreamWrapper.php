@@ -454,7 +454,7 @@ class StreamWrapper
      */
     public function dir_rewinddir()
     {
-        $this->boolCall(function() {
+        return $this->boolCall(function() {
             $this->objectIterator = null;
             $this->dir_opendir($this->openedPath, null);
             return true;

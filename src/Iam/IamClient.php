@@ -234,6 +234,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise resyncMFADeviceAsync(array $args = [])
  * @method \Aws\Result setDefaultPolicyVersion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setDefaultPolicyVersionAsync(array $args = [])
+ * @method \Aws\Result setSecurityTokenServicePreferences(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise setSecurityTokenServicePreferencesAsync(array $args = [])
  * @method \Aws\Result simulateCustomPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise simulateCustomPolicyAsync(array $args = [])
  * @method \Aws\Result simulatePrincipalPolicy(array $args = [])

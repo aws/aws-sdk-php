@@ -269,6 +269,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetLayerVersionByArn":{
+      "name":"GetLayerVersionByArn",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2018-10-31/layers?find=LayerVersion",
+        "responseCode":200
+      },
+      "input":{"shape":"GetLayerVersionByArnRequest"},
+      "output":{"shape":"GetLayerVersionResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "GetLayerVersionPolicy":{
       "name":"GetLayerVersionPolicy",
       "http":{
@@ -1209,6 +1225,17 @@
         "Concurrency":{"shape":"Concurrency"}
       }
     },
+    "GetLayerVersionByArnRequest":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{
+          "shape":"LayerVersionArn",
+          "location":"querystring",
+          "locationName":"Arn"
+        }
+      }
+    },
     "GetLayerVersionPolicyRequest":{
       "type":"structure",
       "required":[
@@ -2026,6 +2053,7 @@
         "nodejs4.3",
         "nodejs6.10",
         "nodejs8.10",
+        "nodejs10.x",
         "java8",
         "python2.7",
         "python3.6",
