@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Includes APIs for managing subscriptions to AppStream 2.0 usage reports and configuring idle disconnect timeouts on AppStream 2.0 fleets.
+* `Aws\Crypto` - Changed type hint to StreamInterface
+
 ## 3.93.11 - 2019-05-16
 
 * `Aws\MediaLive` - Added channel state waiters to MediaLive.
