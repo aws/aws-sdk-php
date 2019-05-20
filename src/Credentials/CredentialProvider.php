@@ -425,14 +425,8 @@ class CredentialProvider
                 }
             }
 
-            if (
-                !isset($processData['AccessKeyId'])
-                    || !isset($processData['SecretAccessKey'])
-            )
-            {
-                return self::reject(
-                    "credential_process does not return valid credentials"
-                );
+            if (!isset($processData['AccessKeyId']) || !isset($processData['SecretAccessKey'])) {
+                return self::reject("credential_process does not return valid credentials");
             }
 
             if (isset($processData['Expiration'])) {
