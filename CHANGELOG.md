@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.94.0 - 2019-05-20
 
 * `Aws\Api` - Fix XML body escaping
 * `Aws\Kafka` - Updated APIs for the Managed Streaming for Kafka service that let customers create clusters with custom Kafka configuration. 
