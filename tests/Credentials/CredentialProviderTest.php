@@ -4,7 +4,9 @@ namespace Aws\Test\Credentials;
 use Aws\Api\DateTimeResult;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\History;
 use Aws\LruArrayCache;
+use Aws\Middleware;
 use Aws\Result;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Promise;
@@ -450,6 +452,7 @@ aws_secret_access_key = defaultSecret
 [assume]
 role_arn = arn:aws:iam::012345678910:role/role_name
 source_profile = default
+role_session_name = foobar
 EOT;
         file_put_contents($dir . '/credentials', $ini);
         putenv('HOME=' . dirname($dir));
@@ -468,6 +471,9 @@ EOT;
             new Result($result)
         ]);
 
+        $history = new History();
+        $sts->getHandlerList()->appendSign(\Aws\Middleware::history($history));
+
         try {
             $config = [
                 'stsClient' => $sts
@@ -477,11 +483,65 @@ EOT;
                 null,
                 $config
             ))->wait();
+
+            $body = (string) $history->getLastRequest()->getBody();
+            $this->assertContains('RoleSessionName=foobar', $body);
             $this->assertEquals('foo', $creds->getAccessKeyId());
             $this->assertEquals('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertInternalType('int', $creds->getExpiration());
             $this->assertFalse($creds->isExpired());
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    public function testSetsRoleSessionNameToDefault()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = defaultSecret
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = default
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'assumedSecret',
+                'SessionToken'    => null,
+                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+            ],
+        ];
+
+        $sts = $this->getTestClient('Sts');
+        $this->addMockResults($sts, [
+            new Result($result)
+        ]);
+
+        $history = new History();
+        $sts->getHandlerList()->appendSign(\Aws\Middleware::history($history));
+
+        try {
+            $config = [
+                'stsClient' => $sts
+            ];
+            $creds = call_user_func(CredentialProvider::ini(
+                'assume',
+                null,
+                $config
+            ))->wait();
+
+            $last = $history->getLastRequest();
+            $body = (string) $history->getLastRequest()->getBody();
+            $this->assertRegExp('/RoleSessionName=aws-sdk-php-\d{13}/', $body);
         } catch (\Exception $e) {
             throw $e;
         } finally {
