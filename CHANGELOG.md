@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.94.1 - 2019-05-21
 
 * `Aws\AlexaForBusiness` - This release contains API changes to allow customers to create and manage Network Profiles for their Shared devices
 * `Aws\DataSync` - Documentation update and refine pagination token on Datasync List API's
