@@ -3,12 +3,16 @@ namespace Aws\Test;
 
 use Aws\Api\Service;
 use Aws\AwsClient;
+use Aws\ClientResolver;
+use Aws\CommandInterface;
 use Aws\HandlerList;
+use Aws\Middleware;
 use Aws\Result;
 use Aws\StreamRequestPayloadMiddleware;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @covers \Aws\StreamRequestPayloadMiddleware
@@ -16,29 +20,107 @@ use PHPUnit\Framework\TestCase;
 class StreamRequestPayloadMiddlewareTest extends TestCase
 {
 
-    public function testAddsProperHeaders()
+    /**
+     * @dataProvider generateTestCases
+     *
+     * @param CommandInterface $command
+     * @param array $expectedHeaders
+     * @param array $expectedNonHeaders
+     */
+    public function testAddsProperHeaders(
+        CommandInterface $command,
+        array $expectedHeaders,
+        array $expectedNonHeaders
+    ) {
+        $service = $this->generateTestService();
+        $serializer = ClientResolver::_default_serializer([
+            'api' => $service,
+            'endpoint' => ''
+        ]);
+
+        $list = new HandlerList();
+        $list->prependBuild(Middleware::requestBuilder($serializer), 'builder');
+        $list->prependSign(
+            StreamRequestPayloadMiddleware::wrap($service),
+            'StreamRequestPayloadMiddleware'
+        );
+
+        $list->setHandler(function (
+            CommandInterface $command,
+            RequestInterface $request
+        ) use (
+            $expectedHeaders,
+            $expectedNonHeaders
+        ) {
+            $this->assertArraySubset($expectedHeaders, $request->getHeaders());
+            foreach ($expectedNonHeaders as $header) {
+                $this->assertArrayNotHasKey($header, $request->getHeaders());
+            }
+            return new Result([]);
+        });
+
+        $handler = $list->resolve();
+        $handler($command, new Request('POST', 'https://foo.com'));
+    }
+
+    public function generateTestCases()
     {
         $service = $this->generateTestService();
         $client = $this->generateTestClient($service);
-        $command = $client->getCommand(
-            'StreamingOp',
+        $inputStream = Psr7\stream_for('test');
+
+        return [
             [
-                'InputStream' => Psr7\stream_for('test'),
-//                'InputString' => 'some_string'
-            ]
-        );
-
-        $list = $command->getHandlerList();
-//        $list = new HandlerList();
-        $list->setHandler(function ($command, $request) {
-//            var_dump($request);
-            return new Result([]);
-        });
-//        $list->appendSign(StreamRequestPayloadMiddleware::wrap($service));
-
-        $handler = $list->resolve();
-
-        $result = $handler($command, new Request('POST', 'https://foo.com'));
+                $client->getCommand(
+                    'NonStreamingOp',
+                    [
+                        'InputString' => 'teststring',
+                    ]
+                ),
+                [],
+                [ 'transfer-encoding', 'content-length' ],
+            ],
+            [
+                $client->getCommand(
+                    'StreamingOp',
+                    [
+                        'InputStream' => $inputStream,
+                    ]
+                ),
+                [ 'content-length' => [26] ],
+                [ 'transfer-encoding' ],
+            ],
+            [
+                $client->getCommand(
+                    'StreamingLengthOp',
+                    [
+                        'InputStream' => $inputStream,
+                    ]
+                ),
+                [ 'content-length' => [26] ],
+                [ 'transfer-encoding' ],
+            ],
+            [
+                $client->getCommand(
+                    'StreamingUnsignedOp',
+                    [
+                        'InputStream' => $inputStream,
+                    ]
+                ),
+                [ 'transfer-encoding' => ['chunked'] ],
+                [ 'content-length' ],
+            ],
+            [
+                $client->getCommand(
+                    'StreamingLengthUnsignedOp',
+                    [
+                        'InputStream' => $inputStream,
+                    ]
+                ),
+                [ 'content-length' => [26] ],
+                [ 'transfer-encoding' ],
+            ],
+        ];
     }
 
     private function generateTestClient(Service $service, $args = [])
@@ -76,6 +158,17 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                         "type" => "blob",
                         "streaming" => true,
                     ],
+                    "NonStreamingInputShape" => [
+                        "type" => "structure",
+                        "required" => [
+                            "InputString",
+                        ],
+                        "members" => [
+                            "InputString" => [
+                                "shape" => "StringType",
+                            ],
+                        ],
+                    ],
                     "StreamingInputShape" => [
                         "type" => "structure",
                         "required" => [
@@ -103,6 +196,15 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                     ],
                 ],
                 'operations' => [
+                    "NonStreamingOp" => [
+                        "name"=> "NonStreamingOp",
+                        "http"=> [
+                            "method"=> "POST",
+                            "requestUri"=> "/",
+                            "responseCode"=> 200
+                        ],
+                        "input"=> ["shape"=> "NonStreamingInputShape"],
+                    ],
                     "StreamingOp" => [
                         "name"=> "StreamingOp",
                         "http"=> [

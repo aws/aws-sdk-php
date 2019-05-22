@@ -58,7 +58,8 @@ class StreamRequestPayloadMiddleware
             // to be calculated and not already known
             if (empty($requiresLength)
                 && empty($contentLength)
-                && !empty($operation['v4-unsigned-body'])
+                && isset($operation['authtype'])
+                && $operation['authtype'] == 'v4-unsigned-body'
             ) {
                 $request = $request->withHeader('transfer-encoding', 'chunked');
 
