@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.94.2 - 2019-05-22
 
 * `Aws\APIGateway` - This release adds support for tagging of Amazon API Gateway resources.
 * `Aws\Budgets` - Added new datatype PlannedBudgetLimits to Budget model, and updated examples for AWS Budgets API for UpdateBudget, CreateBudget, DescribeBudget, and DescribeBudgets
