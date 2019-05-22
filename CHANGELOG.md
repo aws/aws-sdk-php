@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - This release adds support for tagging of Amazon API Gateway resources.
+* `Aws\Budgets` - Added new datatype PlannedBudgetLimits to Budget model, and updated examples for AWS Budgets API for UpdateBudget, CreateBudget, DescribeBudget, and DescribeBudgets
+* `Aws\DeviceFarm` - This release introduces support for tagging, tag-based access control, and resource-based access control.
+* `Aws\EC2` - This release adds idempotency support for associate, create route and authorization APIs for AWS Client VPN Endpoints.
+* `Aws\EFS` - AWS EFS documentation updated to reflect the minimum required value for ProvisionedThroughputInMibps is 1 from the previously documented 0. The service has always required a minimum value of 1, therefor service behavior is not changed. 
+* `Aws\RDS` - Documentation updates for rds
+* `Aws\ServiceCatalog` - Service Catalog UpdateProvisionedProductProperties API enables customers to manage provisioned product ownership. Administrators can now update the user associated to a provisioned product to another user within the same account allowing the new user to describe, update, terminate and execute service actions in that Service Catalog resource. New owner will also be able to list and describe all past records executed for that provisioned product.
+* `Aws\WorkLink` - Amazon WorkLink is a fully managed, cloud-based service that enables secure, one-click access to internal websites and web apps from mobile phones. This release introduces new APIs to associate and manage website authorization providers with Amazon WorkLink fleets.
+
 ## 3.94.1 - 2019-05-21
 
 * `Aws\AlexaForBusiness` - This release contains API changes to allow customers to create and manage Network Profiles for their Shared devices

@@ -159,6 +159,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateProductAsync(array $args = [])
  * @method \Aws\Result updateProvisionedProduct(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProvisionedProductAsync(array $args = [])
+ * @method \Aws\Result updateProvisionedProductProperties(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateProvisionedProductPropertiesAsync(array $args = [])
  * @method \Aws\Result updateProvisioningArtifact(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateProvisioningArtifactAsync(array $args = [])
  * @method \Aws\Result updateServiceAction(array $args = [])
