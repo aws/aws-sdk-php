@@ -1,6 +1,9 @@
 <?php
 namespace Aws\GroundStation;
 
+use Aws\Api\ApiProvider;
+use Aws\Api\DocModel;
+use Aws\Api\Service;
 use Aws\AwsClient;
 
 /**
@@ -59,5 +62,33 @@ use Aws\AwsClient;
  */
 class GroundStationClient extends AwsClient
 {
+    public function __call($name, array $args)
+    {
+        // Overcomes a naming collision with `AwsClient::getConfig`.
+        if (lcfirst($name) === 'getMissionProfileConfig') {
+            $name = 'GetConfig';
+        } elseif (lcfirst($name) === 'getMissionProfileConfigAsync') {
+            $name = 'GetConfigAsync';
+        }
 
+        return parent::__call($name, $args);
+    }
+
+    /**
+     * @internal
+     * @codeCoverageIgnore
+     */
+    public static function applyDocFilters(array $api, array $docs)
+    {
+        // Overcomes a naming collision with `AwsClient::getConfig`.
+        $api['operations']['GetMissionProfileConfig'] = $api['operations']['GetConfig'];
+        $docs['operations']['GetMissionProfileConfig'] = $docs['operations']['GetConfig'];
+        unset($api['operations']['GetConfig'], $docs['operations']['GetConfig']);
+        ksort($api['operations']);
+
+        return [
+            new Service($api, ApiProvider::defaultProvider()),
+            new DocModel($docs)
+        ];
+    }
 }
