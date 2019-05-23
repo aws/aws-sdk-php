@@ -12,11 +12,14 @@ class ClientAnnotator
     private $versions;
     /** @var array */
     private $methods;
+    /** @var array */
+    private $aliases;
 
 
     public function __construct($clientClassName)
     {
         $this->reflection = new ReflectionClass($clientClassName);
+        $this->aliases = \Aws\load_compiled_json(__DIR__ . '/../src/data/aliases.json');
     }
 
     /**
@@ -80,6 +83,11 @@ class ClientAnnotator
                     $this->getApiDefinition($version)['operations']
                 );
                 foreach ($methodsInVersion as $method) {
+
+                    if (!empty($this->aliases[$this->endpoint][$version][$method])) {
+                        $method = $this->aliases[$this->endpoint][$version][$method];
+                    }
+
                     if (empty($this->methods[$method])) {
                         $this->methods[$method] = [];
                     }
