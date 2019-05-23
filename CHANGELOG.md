@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.94.3 - 2019-05-23
 
 * `Aws\Api` - Preserve path on custom endpoints
 * `Aws\EC2` - New APIs to enable EBS encryption by default feature. Once EBS encryption by default is enabled in a region within the account, all new EBS volumes and snapshot copies are always encrypted
