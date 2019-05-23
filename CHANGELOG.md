@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Preserve path on custom endpoints
+* `Aws\EC2` - New APIs to enable EBS encryption by default feature. Once EBS encryption by default is enabled in a region within the account, all new EBS volumes and snapshot copies are always encrypted
+* `Aws\WAFRegional` - Documentation updates for waf-regional
+
 ## 3.94.2 - 2019-05-22
 
 * `Aws\APIGateway` - This release adds support for tagging of Amazon API Gateway resources.
