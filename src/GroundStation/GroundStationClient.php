@@ -1,9 +1,6 @@
 <?php
 namespace Aws\GroundStation;
 
-use Aws\Api\ApiProvider;
-use Aws\Api\DocModel;
-use Aws\Api\Service;
 use Aws\AwsClient;
 
 /**
@@ -25,8 +22,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteMissionProfileAsync(array $args = [])
  * @method \Aws\Result describeContact(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeContactAsync(array $args = [])
- * @method \Aws\Result getConfig(array $args = [])
- * @method \GuzzleHttp\Promise\Promise getConfigAsync(array $args = [])
+ * @method \Aws\Result getMissionProfileConfig(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getMissionProfileConfigAsync(array $args = [])
  * @method \Aws\Result getDataflowEndpointGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDataflowEndpointGroupAsync(array $args = [])
  * @method \Aws\Result getMissionProfile(array $args = [])
@@ -60,35 +57,4 @@ use Aws\AwsClient;
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
-class GroundStationClient extends AwsClient
-{
-    public function __call($name, array $args)
-    {
-        // Overcomes a naming collision with `AwsClient::getConfig`.
-        if (lcfirst($name) === 'getMissionProfileConfig') {
-            $name = 'GetConfig';
-        } elseif (lcfirst($name) === 'getMissionProfileConfigAsync') {
-            $name = 'GetConfigAsync';
-        }
-
-        return parent::__call($name, $args);
-    }
-
-    /**
-     * @internal
-     * @codeCoverageIgnore
-     */
-    public static function applyDocFilters(array $api, array $docs)
-    {
-        // Overcomes a naming collision with `AwsClient::getConfig`.
-        $api['operations']['GetMissionProfileConfig'] = $api['operations']['GetConfig'];
-        $docs['operations']['GetMissionProfileConfig'] = $docs['operations']['GetConfig'];
-        unset($api['operations']['GetConfig'], $docs['operations']['GetConfig']);
-        ksort($api['operations']);
-
-        return [
-            new Service($api, ApiProvider::defaultProvider()),
-            new DocModel($docs)
-        ];
-    }
-}
+class GroundStationClient extends AwsClient {}

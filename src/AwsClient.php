@@ -19,6 +19,9 @@ class AwsClient implements AwsClientInterface
     use AwsClientTrait;
 
     /** @var array */
+    private $aliases;
+
+    /** @var array */
     private $config;
 
     /** @var string */
@@ -184,6 +187,14 @@ class AwsClient implements AwsClientInterface
         $this->addClientSideMonitoring($args);
         $this->addEndpointParameterMiddleware($args);
         $this->addEndpointDiscoveryMiddleware($config, $args);
+
+        if (!isset($this->aliases)) {
+            $aliases = \Aws\load_compiled_json(__DIR__ . '/data/aliases.json');
+            $this->aliases = $aliases[$this->api->getEndpointPrefix()][$this->getApi()->getApiVersion()];
+            if (!empty($this->aliases)) {
+                $this->aliases = array_flip($this->aliases);
+            }
+        }
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -385,6 +396,20 @@ class AwsClient implements AwsClientInterface
      */
     public static function applyDocFilters(array $api, array $docs)
     {
+        $aliases = \Aws\load_compiled_json(__DIR__ . '/data/aliases.json');
+        $endpointPrefix = $api['metadata']['endpointPrefix'];
+        $version = $api['metadata']['apiVersion'];
+
+        // Replace names for any operations with SDK aliases
+        if (!empty($aliases[$endpointPrefix][$version])) {
+            foreach ($aliases[$endpointPrefix][$version] as $op => $alias) {
+                $api['operations'][$alias] = $api['operations'][$op];
+                $docs['operations'][$alias] = $docs['operations'][$op];
+                unset($api['operations'][$op], $docs['operations'][$op]);
+            }
+        }
+        ksort($api['operations']);
+
         return [
             new Service($api, ApiProvider::defaultProvider()),
             new DocModel($docs)
