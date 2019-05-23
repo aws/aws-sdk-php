@@ -32,18 +32,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
         array $expectedHeaders,
         array $expectedNonHeaders
     ) {
-        $service = $this->generateTestService();
-        $serializer = ClientResolver::_default_serializer([
-            'api' => $service,
-            'endpoint' => ''
-        ]);
-
-        $list = new HandlerList();
-        $list->prependBuild(Middleware::requestBuilder($serializer), 'builder');
-        $list->prependSign(
-            StreamRequestPayloadMiddleware::wrap($service),
-            'StreamRequestPayloadMiddleware'
-        );
+        $list = $this->generateTestHandlerList();
 
         $list->setHandler(function (
             CommandInterface $command,
@@ -121,6 +110,59 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                 [ 'transfer-encoding' ],
             ],
         ];
+    }
+
+    /**
+     * @expectedException \Aws\Exception\IncalculablePayloadException
+     * @expectedExceptionMessage Payload content length is required and can not be calculated.
+     */
+    public function testThrowsExceptionOnIncalculableSize()
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service);
+        $command = $client->getCommand(
+            'StreamingOp',
+            [
+                'InputStream' => Psr7\stream_for('test'),
+            ]
+        );
+        $middleware = StreamRequestPayloadMiddleware::wrap($service);
+        $invokable = $middleware(function($cmd, $req) {});
+
+        // Mock a request with a body whose size returns null
+        $streamMock = $this->getMockBuilder(\stdClass::class)
+            ->setMethods(['getSize'])
+            ->getMock();
+        $streamMock->expects($this->any())
+            ->method('getSize')
+            ->willReturn(null);
+        $requestMock = $this->getMockBuilder(Request::class)
+            ->setConstructorArgs(['POST', 'https://foo.com'])
+            ->setMethods(['getBody'])
+            ->getMock();
+        $requestMock->expects($this->any())
+            ->method('getBody')
+            ->willReturn($streamMock);
+
+        $invokable($command, $requestMock);
+    }
+
+    private function generateTestHandlerList()
+    {
+        $service = $this->generateTestService();
+        $serializer = ClientResolver::_default_serializer([
+            'api' => $service,
+            'endpoint' => ''
+        ]);
+
+        $list = new HandlerList();
+        $list->prependBuild(Middleware::requestBuilder($serializer), 'builder');
+        $list->prependSign(
+            StreamRequestPayloadMiddleware::wrap($service),
+            'StreamRequestPayloadMiddleware'
+        );
+
+        return $list;
     }
 
     private function generateTestClient(Service $service, $args = [])
