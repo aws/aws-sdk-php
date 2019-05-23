@@ -190,8 +190,10 @@ class AwsClient implements AwsClientInterface
 
         if (!isset($this->aliases)) {
             $aliases = \Aws\load_compiled_json(__DIR__ . '/data/aliases.json');
-            $this->aliases = $aliases[$this->api->getEndpointPrefix()][$this->getApi()->getApiVersion()];
-            if (!empty($this->aliases)) {
+            $prefix = $this->api->getEndpointPrefix();
+            $version = $this->getApi()->getApiVersion();
+            if (!empty($aliases[$prefix][$version])) {
+                $this->aliases = $aliases[$prefix][$version];
                 $this->aliases = array_flip($this->aliases);
             }
         }
