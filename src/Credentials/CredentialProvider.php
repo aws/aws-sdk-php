@@ -498,7 +498,6 @@ class CredentialProvider
                 CredentialProvider::ini($sourceProfileName, $filename, $config)
             )->wait();
             $stsClient = new StsClient([
-                'profile' => $sourceProfileName,
                 'credentials' => $sourceCredentials,
                 'region' => $sourceRegion,
                 'version' => '2011-06-15',
