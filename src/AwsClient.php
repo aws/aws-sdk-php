@@ -188,6 +188,7 @@ class AwsClient implements AwsClientInterface
         $this->addEndpointParameterMiddleware($args);
         $this->addEndpointDiscoveryMiddleware($config, $args);
         $this->loadAliases();
+        $this->addStreamRequestPayload();
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -374,7 +375,6 @@ class AwsClient implements AwsClientInterface
             'ApiCallAttemptMonitoringMiddleware'
         );
     }
-
     private function loadAliases($file = null)
     {
         if (!isset($this->aliases)) {
@@ -388,6 +388,18 @@ class AwsClient implements AwsClientInterface
                 $this->aliases = array_flip($aliases['operations'][$serviceId][$version]);
             }
         }
+    }
+
+    private function addStreamRequestPayload()
+    {
+        $streamRequestPayloadMiddleware = StreamRequestPayloadMiddleware::wrap(
+            $this->api
+        );
+
+        $this->handlerList->prependSign(
+            $streamRequestPayloadMiddleware,
+            'StreamRequestPayloadMiddleware'
+        );
     }
 
     /**
