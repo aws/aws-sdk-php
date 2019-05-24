@@ -374,6 +374,70 @@ class AwsClientTest extends TestCase
         $client->bar();
     }
 
+    public function testLoadsAliases()
+    {
+        $client = $this->createClient([
+            'metadata' => [
+                'serviceId' => 'TestService',
+                'apiVersion' => '2019-05-23'
+            ]
+        ]);
+        $ref = new \ReflectionClass(AwsClient::class);
+        $method = $ref->getMethod('loadAliases');
+        $method->setAccessible(true);
+        $property = $ref->getProperty('aliases');
+        $property->setAccessible(true);
+        $method->invokeArgs(
+            $client,
+            [__DIR__ . '/fixtures/aws_client_test/aliases.json']
+        );
+        $this->assertEquals(
+            ['GetConfigAlias' => 'GetConfig'],
+            $property->getValue($client)
+        );
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage Operation not found: GetConfig
+     */
+    public function testCallsAliasedFunction()
+    {
+        $client = $this->createClient([
+            'metadata' => [
+                'serviceId' => 'TestService',
+                'apiVersion' => '2019-05-23'
+            ]
+        ]);
+        $ref = new \ReflectionClass(AwsClient::class);
+        $method = $ref->getMethod('loadAliases');
+        $method->setAccessible(true);
+        $method->invokeArgs(
+            $client,
+            [__DIR__ . '/fixtures/aws_client_test/aliases.json']
+        );
+
+        $client->getConfigAlias();
+    }
+
+    public function testVerifyGetConfig()
+    {
+        $client = $this->createClient([
+            'metadata' => [
+                'serviceId' => 'TestService',
+                'apiVersion' => '2019-05-23'
+            ]
+        ]);
+        $this->assertEquals(
+            [
+                'signature_version' => 'v4',
+                'signing_name' => 'foo',
+                'signing_region' => 'foo',
+            ],
+            $client->getConfig()
+        );
+    }
+
     private function createHttpsEndpointClient(array $service = [], array $config = [])
     {
         $apiProvider = function () use ($service) {
