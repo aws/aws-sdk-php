@@ -59,7 +59,6 @@ EOT;
            'RoleName' => self::$roleName,
         ]);
         $iamClient->waitUntil('RoleExists', ['RoleName' => self::$roleName]);
-
         $sourceKeyId = getenv('AWS_ACCESS_KEY_ID');
         $sourceAccessKey = getenv('AWS_SECRET_ACCESS_KEY');
         $sourceToken = getenv('AWS_SESSION_TOKEN');
@@ -95,7 +94,6 @@ EOT;
      */
     public function iHaveAnStsClient()
     {
-        //sleep(10);
         $this->client = self::getSdk()->createSts([
             'credentials' => $this->credentials
         ]);
@@ -106,7 +104,19 @@ EOT;
      */
     public function iCallGetCallerIdentity()
     {
-        $this->result = $this->client->getCallerIdentity();
+        //Assume role should exist, but may not yet be assumable.
+        $maxAttempts = 10;
+        $attempts = 0;
+        do {
+            try {
+                $this->result = $this->client->getCallerIdentity();
+            } catch (\Exception $e) {
+                $attempts++;
+                sleep(2);
+                continue;
+            }
+            break;
+        } while ($attempts < $maxAttempts);
     }
 
     /**
