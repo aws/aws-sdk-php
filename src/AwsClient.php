@@ -382,10 +382,10 @@ class AwsClient implements AwsClientInterface
                 $file = __DIR__ . '/data/aliases.json';
             }
             $aliases = \Aws\load_compiled_json($file);
-            $prefix = $this->api->getEndpointPrefix();
+            $serviceId = $this->api->getServiceId();
             $version = $this->getApi()->getApiVersion();
-            if (!empty($aliases[$prefix][$version])) {
-                $this->aliases = array_flip($aliases[$prefix][$version]);
+            if (!empty($aliases[$serviceId][$version])) {
+                $this->aliases = array_flip($aliases[$serviceId][$version]);
             }
         }
     }
@@ -405,12 +405,12 @@ class AwsClient implements AwsClientInterface
     public static function applyDocFilters(array $api, array $docs)
     {
         $aliases = \Aws\load_compiled_json(__DIR__ . '/data/aliases.json');
-        $endpointPrefix = $api['metadata']['endpointPrefix'];
+        $serviceId = $api['metadata']['serviceId'];
         $version = $api['metadata']['apiVersion'];
 
         // Replace names for any operations with SDK aliases
-        if (!empty($aliases[$endpointPrefix][$version])) {
-            foreach ($aliases[$endpointPrefix][$version] as $op => $alias) {
+        if (!empty($aliases[$serviceId][$version])) {
+            foreach ($aliases[$serviceId][$version] as $op => $alias) {
                 $api['operations'][$alias] = $api['operations'][$op];
                 $docs['operations'][$alias] = $docs['operations'][$op];
                 unset($api['operations'][$op], $docs['operations'][$op]);

@@ -378,7 +378,7 @@ class AwsClientTest extends TestCase
     {
         $client = $this->createClient([
             'metadata' => [
-                'endpointPrefix' => 'testservice',
+                'serviceId' => 'TestService',
                 'apiVersion' => '2019-05-23'
             ]
         ]);
@@ -405,7 +405,7 @@ class AwsClientTest extends TestCase
     {
         $client = $this->createClient([
             'metadata' => [
-                'endpointPrefix' => 'testservice',
+                'serviceId' => 'TestService',
                 'apiVersion' => '2019-05-23'
             ]
         ]);

@@ -82,10 +82,18 @@ class ClientAnnotator
                 $methodsInVersion = array_keys(
                     $this->getApiDefinition($version)['operations']
                 );
+
+                $api = $this->getApiDefinition($version);
+                $serviceId = !empty($api['metadata']['serviceId'])
+                    ? $api['metadata']['serviceId']
+                    : null;
+
                 foreach ($methodsInVersion as $method) {
 
-                    if (!empty($this->aliases[$this->endpoint][$version][$method])) {
-                        $method = $this->aliases[$this->endpoint][$version][$method];
+                    if (!empty($serviceId)
+                        && !empty($this->aliases[$serviceId][$version][$method])
+                    ) {
+                        $method = $this->aliases[$serviceId][$version][$method];
                     }
 
                     if (empty($this->methods[$method])) {
