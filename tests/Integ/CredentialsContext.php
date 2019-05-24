@@ -59,9 +59,10 @@ EOT;
            'RoleName' => self::$roleName,
         ]);
         $iamClient->waitUntil('RoleExists', ['RoleName' => self::$roleName]);
-        $sourceKeyId = getenv('AWS_ACCESS_KEY_ID');
-        $sourceAccessKey = getenv('AWS_SECRET_ACCESS_KEY');
-        $sourceToken = getenv('AWS_SESSION_TOKEN');
+        $creds = $iamClient->getCredentials()->wait();
+        $sourceKeyId = $creds->getAccessKeyId();
+        $sourceAccessKey = $creds->getSecretKey();
+        $sourceToken = $creds->getSecurityToken();
         $roleArn = $result['Role']['Arn'];
         $ini = <<<EOT
 [default]
