@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.95.0 - 2019-05-24
 
 * `Aws\` - Adds support for 'requiresLength' trait, adding headers as necessary for streaming operations.
 * `Aws\CodeDeploy` - AWS CodeDeploy now supports tagging for the application and deployment group resources.
