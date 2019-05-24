@@ -72,7 +72,7 @@ trait AwsClientTrait
         }
 
         if (!empty($this->aliases[ucfirst($name)])) {
-            $name = $this->aliases[$name];
+            $name = $this->aliases[ucfirst($name)];
         }
 
         $params = isset($args[0]) ? $args[0] : [];

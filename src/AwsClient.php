@@ -187,16 +187,7 @@ class AwsClient implements AwsClientInterface
         $this->addClientSideMonitoring($args);
         $this->addEndpointParameterMiddleware($args);
         $this->addEndpointDiscoveryMiddleware($config, $args);
-
-        if (!isset($this->aliases)) {
-            $aliases = \Aws\load_compiled_json(__DIR__ . '/data/aliases.json');
-            $prefix = $this->api->getEndpointPrefix();
-            $version = $this->getApi()->getApiVersion();
-            if (!empty($aliases[$prefix][$version])) {
-                $this->aliases = $aliases[$prefix][$version];
-                $this->aliases = array_flip($this->aliases);
-            }
-        }
+        $this->loadAliases();
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -382,6 +373,21 @@ class AwsClient implements AwsClientInterface
             $callAttemptMiddleware,
             'ApiCallAttemptMonitoringMiddleware'
         );
+    }
+
+    private function loadAliases($file = null)
+    {
+        if (!isset($this->aliases)) {
+            if (is_null($file)) {
+                $file = __DIR__ . '/data/aliases.json';
+            }
+            $aliases = \Aws\load_compiled_json($file);
+            $prefix = $this->api->getEndpointPrefix();
+            $version = $this->getApi()->getApiVersion();
+            if (!empty($aliases[$prefix][$version])) {
+                $this->aliases = array_flip($aliases[$prefix][$version]);
+            }
+        }
     }
 
     /**
