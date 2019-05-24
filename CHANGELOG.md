@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds support for 'requiresLength' trait, adding headers as necessary for streaming operations.
+* `Aws\CodeDeploy` - AWS CodeDeploy now supports tagging for the application and deployment group resources.
+* `Aws\MediaStoreData` - MediaStore - This release adds support for chunked transfer of objects, which reduces latency by making an object available for downloading while it is still being uploaded.
+* `Aws\OpsWorksCM` - Documentation updates for OpsWorks for Chef Automate; attribute values updated for Chef Automate 2.0 release.
+
 ## 3.94.3 - 2019-05-23
 
 * `Aws\Api` - Preserve path on custom endpoints
