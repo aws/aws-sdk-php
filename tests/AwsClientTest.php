@@ -420,6 +420,17 @@ class AwsClientTest extends TestCase
         $client->getConfigAlias();
     }
 
+    public function testVerifyGetConfig()
+    {
+        $client = $this->createClient([
+            'metadata' => [
+                'serviceId' => 'TestService',
+                'apiVersion' => '2019-05-23'
+            ]
+        ]);
+        $this->assertInternalType('array', $client->getConfig());
+    }
+
     private function createHttpsEndpointClient(array $service = [], array $config = [])
     {
         $apiProvider = function () use ($service) {
