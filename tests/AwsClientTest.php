@@ -428,7 +428,14 @@ class AwsClientTest extends TestCase
                 'apiVersion' => '2019-05-23'
             ]
         ]);
-        $this->assertInternalType('array', $client->getConfig());
+        $this->assertEquals(
+            [
+                'signature_version' => 'v4',
+                'signing_name' => 'foo',
+                'signing_region' => 'foo',
+            ],
+            $client->getConfig()
+        );
     }
 
     private function createHttpsEndpointClient(array $service = [], array $config = [])
