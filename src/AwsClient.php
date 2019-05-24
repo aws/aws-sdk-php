@@ -184,6 +184,7 @@ class AwsClient implements AwsClientInterface
         $this->addClientSideMonitoring($args);
         $this->addEndpointParameterMiddleware($args);
         $this->addEndpointDiscoveryMiddleware($config, $args);
+        $this->addStreamRequestPayload();
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -368,6 +369,18 @@ class AwsClient implements AwsClientInterface
         $this->handlerList->appendAttempt (
             $callAttemptMiddleware,
             'ApiCallAttemptMonitoringMiddleware'
+        );
+    }
+
+    private function addStreamRequestPayload()
+    {
+        $streamRequestPayloadMiddleware = StreamRequestPayloadMiddleware::wrap(
+            $this->api
+        );
+
+        $this->handlerList->prependSign(
+            $streamRequestPayloadMiddleware,
+            'StreamRequestPayloadMiddleware'
         );
     }
 
