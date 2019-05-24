@@ -384,8 +384,8 @@ class AwsClient implements AwsClientInterface
             $aliases = \Aws\load_compiled_json($file);
             $serviceId = $this->api->getServiceId();
             $version = $this->getApi()->getApiVersion();
-            if (!empty($aliases[$serviceId][$version])) {
-                $this->aliases = array_flip($aliases[$serviceId][$version]);
+            if (!empty($aliases['operations'][$serviceId][$version])) {
+                $this->aliases = array_flip($aliases['operations'][$serviceId][$version]);
             }
         }
     }
@@ -409,8 +409,8 @@ class AwsClient implements AwsClientInterface
         $version = $api['metadata']['apiVersion'];
 
         // Replace names for any operations with SDK aliases
-        if (!empty($aliases[$serviceId][$version])) {
-            foreach ($aliases[$serviceId][$version] as $op => $alias) {
+        if (!empty($aliases['operations'][$serviceId][$version])) {
+            foreach ($aliases['operations'][$serviceId][$version] as $op => $alias) {
                 $api['operations'][$alias] = $api['operations'][$op];
                 $docs['operations'][$alias] = $docs['operations'][$op];
                 unset($api['operations'][$op], $docs['operations'][$op]);

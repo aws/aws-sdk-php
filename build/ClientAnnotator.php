@@ -91,9 +91,9 @@ class ClientAnnotator
                 foreach ($methodsInVersion as $method) {
 
                     if (!empty($serviceId)
-                        && !empty($this->aliases[$serviceId][$version][$method])
+                        && !empty($this->aliases['operations'][$serviceId][$version][$method])
                     ) {
-                        $method = $this->aliases[$serviceId][$version][$method];
+                        $method = $this->aliases['operations'][$serviceId][$version][$method];
                     }
 
                     if (empty($this->methods[$method])) {
