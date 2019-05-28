@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.96.0 - 2019-05-28
 
 * `Aws\` - Adds general support for service operation aliasing defined in a JSON file.
 * `Aws\Chime` - This release adds the ability to search and order toll free phone numbers for Voice Connectors.
