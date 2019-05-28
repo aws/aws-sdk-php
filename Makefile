@@ -64,10 +64,10 @@ integ:
 	vendor/bin/behat --format=progress --tags=integ
 
 smoke:
-	vendor/bin/behat --format=progress --tags=smoke
+	vendor/bin/behat --format=progress --suite=smoke
 
 smoke-noassumerole:
-	vendor/bin/behat --format=progress --tags='~@noassumerole&&@smoke'
+	vendor/bin/behat --format=progress --suite=smoke --tags='~@noassumerole'
 
 # Packages the phar and zip
 package:
