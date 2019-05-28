@@ -1,3 +1,5 @@
+@credentials @integ
+
 Feature: Assume Role Credentials
 
   Scenario: Assume role from credentials

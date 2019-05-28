@@ -20,11 +20,35 @@ class CredentialsContext extends \PHPUnit_Framework_Assert implements
     private static $roleName;
 
     /**
+     * @BeforeSuite
+     */
+    public static function createCredentialsFile()
+    {
+        self::$credentialsFile = tempnam(sys_get_temp_dir(), '/.aws/credentials');
+        touch(self::$credentialsFile);
+    }
+
+    /**
      * @AfterSuite
      */
     public static function deleteCredentialsFile()
     {
         unlink(self::$credentialsFile);
+    }
+
+    /**
+     * @BeforeSuite
+     */
+    public static function setRoleName()
+    {
+        self::$roleName = 'php-integration-' . round(microtime(true) * 1000);
+    }
+
+    /**
+     * @AfterSuite
+     */
+    public static function deleteRole()
+    {
         $client = self::getSdk()->createIam();
         $client->deleteRole([
             'RoleName' => self::$roleName
@@ -52,7 +76,6 @@ class CredentialsContext extends \PHPUnit_Framework_Assert implements
     }]
 }
 EOT;
-        self::$roleName = 'php-integration-' . round(microtime(true) * 1000);
         $iamClient = self::getSdk()->createIam();
         $result = $iamClient->createRole([
            'AssumeRolePolicyDocument' => $assumeRolePolicy,
@@ -74,8 +97,6 @@ role_arn = $roleArn
 source_profile = default
 role_session_name = $sessionName
 EOT;
-
-        self::$credentialsFile = tempnam(sys_get_temp_dir(), '/.aws/credentials');
         file_put_contents(self::$credentialsFile, $ini);
     }
 
