@@ -302,14 +302,12 @@ class CredentialProvider
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename, $config) {
-            $preferStaticCredentials
-                = isset($config['preferStaticCredentials'])
-                    ? $config['preferStaticCredentials']
-                    : false;
-            $disableAssumeRole
-                = isset($config['disableAssumeRole'])
-                    ? $config['disableAssumeRole']
-                    : false;
+            $preferStaticCredentials = isset($config['preferStaticCredentials'])
+                ? $config['preferStaticCredentials']
+                : false;
+            $disableAssumeRole = isset($config['disableAssumeRole'])
+                ? $config['disableAssumeRole']
+                : false;
             $stsClient = isset($config['stsClient']) ? $config['stsClient'] : null;
 
             if (!is_readable($filename)) {
@@ -337,13 +335,11 @@ class CredentialProvider
                 && isset($data[$profile]['aws_access_key_id'])
                 && isset($data[$profile]['aws_secret_access_key']));
 
-            if (
-                isset($data[$profile]['role_arn'])
-                    && !$preferStaticCredentialsToRoleArn
+            if (isset($data[$profile]['role_arn'])
+                && !$preferStaticCredentialsToRoleArn
             )
             {
-                if ($disableAssumeRole)
-                {
+                if ($disableAssumeRole) {
                     return self::reject(
                         "Role assumption profiles are disabled. "
                         . "Failed to load profile " . $profile);
@@ -407,8 +403,7 @@ class CredentialProvider
             if (!isset($data[$profile])) {
                 return self::reject("'$profile' not found in credentials file");
             }
-            if (!isset($data[$profile]['credential_process'])
-            ) {
+            if (!isset($data[$profile]['credential_process'])) {
                 return self::reject("No credential_process present in INI profile "
                     . "'$profile' ($filename)");
             }
@@ -425,7 +420,9 @@ class CredentialProvider
                 }
             }
 
-            if (!isset($processData['AccessKeyId']) || !isset($processData['SecretAccessKey'])) {
+            if (!isset($processData['AccessKeyId'])
+                || !isset($processData['SecretAccessKey']))
+            {
                 return self::reject("credential_process does not return valid credentials");
             }
 
@@ -467,10 +464,9 @@ class CredentialProvider
     {
         $roleProfile = $profiles[$profileName];
         $roleArn = isset($roleProfile['role_arn']) ? $roleProfile['role_arn'] : '';
-        $roleSessionName
-            = isset($roleProfile['role_session_name'])
-                ? $roleProfile['role_session_name']
-                : 'aws-sdk-php-' . round(microtime(true) * 1000);
+        $roleSessionName = isset($roleProfile['role_session_name'])
+            ? $roleProfile['role_session_name']
+            : 'aws-sdk-php-' . round(microtime(true) * 1000);
 
         if (empty($profiles[$profileName]['source_profile'])) {
             return self::reject("source_profile is not set using profile " .
@@ -479,16 +475,14 @@ class CredentialProvider
         }
 
         $sourceProfileName = $roleProfile['source_profile'];
-        if (!isset($profiles[$sourceProfileName]))
-        {
+        if (!isset($profiles[$sourceProfileName])) {
             return self::reject("source_profile " . $sourceProfileName
                 . " using profile " . $profileName . " does not exist"
             );
         }
-        $sourceRegion
-            = isset($profiles[$sourceProfileName]['region'])
-                ? $profiles[$sourceProfileName]['region']
-                : 'us-east-1';
+        $sourceRegion = isset($profiles[$sourceProfileName]['region'])
+            ? $profiles[$sourceProfileName]['region']
+            : 'us-east-1';
 
         if (empty($stsClient)) {
             $config = [
@@ -598,9 +592,8 @@ class CredentialProvider
         $profileData = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
 
         // If loading .aws/credentials, also load .aws/config when AWS_SDK_LOAD_NONDEFAULT_CONFIG is set
-        if (
-            $filename === self::getHomeDir() . '/.aws/credentials'
-                && getenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG')
+        if ($filename === self::getHomeDir() . '/.aws/credentials'
+            && getenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG')
         )
         {
             $configFilename = self::getHomeDir() . '/.aws/config';
@@ -609,8 +602,7 @@ class CredentialProvider
             {
                 // standardize config profile names
                 $name = str_replace('profile ', '', $name);
-                if (!isset($profileData[$name]))
-                {
+                if (!isset($profileData[$name])) {
                     $profileData[$name] = $profile;
                 }
             }
