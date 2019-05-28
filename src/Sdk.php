@@ -156,6 +156,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionGlue(array $args = [])
  * @method \Aws\Greengrass\GreengrassClient createGreengrass(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGreengrass(array $args = [])
+ * @method \Aws\GroundStation\GroundStationClient createGroundStation(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionGroundStation(array $args = [])
  * @method \Aws\GuardDuty\GuardDutyClient createGuardDuty(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGuardDuty(array $args = [])
  * @method \Aws\Health\HealthClient createHealth(array $args = [])

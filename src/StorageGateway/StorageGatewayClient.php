@@ -16,6 +16,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise addUploadBufferAsync(array $args = [])
  * @method \Aws\Result addWorkingStorage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise addWorkingStorageAsync(array $args = [])
+ * @method \Aws\Result assignTapePool(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise assignTapePoolAsync(array $args = [])
  * @method \Aws\Result attachVolume(array $args = [])
  * @method \GuzzleHttp\Promise\Promise attachVolumeAsync(array $args = [])
  * @method \Aws\Result cancelArchival(array $args = [])
