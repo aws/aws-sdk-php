@@ -64,7 +64,7 @@ abstract class AbstractMonitoringMiddleware
      *
      * @param callable $handler
      * @param callable $credentialProvider
-     * @param array $options
+     * @param $options
      * @param $region
      * @param $service
      */
@@ -268,7 +268,15 @@ abstract class AbstractMonitoringMiddleware
     private function unwrappedOptions()
     {
         if (!($this->options instanceof ConfigurationInterface)) {
-            $this->options = ConfigurationProvider::unwrap($this->options);
+            try {
+                $this->options = ConfigurationProvider::unwrap($this->options);
+            } catch (\Exception $e) {
+                // Errors unwrapping CSM config defaults to disabling it
+                $this->options = new Configuration(
+                    false,
+                    ConfigurationProvider::DEFAULT_PORT
+                );
+            }
         }
         return $this->options;
     }
