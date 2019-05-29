@@ -48,8 +48,6 @@ use Aws\Middleware;
  * @method \GuzzleHttp\Promise\Promise getPolicyAsync(array $args = [])
  * @method \Aws\Result invoke(array $args = [])
  * @method \GuzzleHttp\Promise\Promise invokeAsync(array $args = [])
- * @method \Aws\Result invokeAsync(array $args = [])
- * @method \GuzzleHttp\Promise\Promise invokeAsyncAsync(array $args = [])
  * @method \Aws\Result listAliases(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAliasesAsync(array $args = [])
  * @method \Aws\Result listEventSourceMappings(array $args = [])
