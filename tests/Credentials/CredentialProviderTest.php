@@ -29,7 +29,6 @@ class CredentialProviderTest extends TestCase
         putenv(CredentialProvider::ENV_SECRET . '=');
         putenv(CredentialProvider::ENV_PROFILE . '=');
         putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI');
-        putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
