@@ -482,6 +482,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise createLaunchTemplateVersionAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result createNetworkInterfacePermission(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise createNetworkInterfacePermissionAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result createSnapshots(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise createSnapshotsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result createTransitGateway(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise createTransitGatewayAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result createTransitGatewayRoute(array $args = []) (supported in versions 2016-11-15)

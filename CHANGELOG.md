@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DLM` - Customers can now simultaneously take snapshots of multiple EBS volumes attached to an EC2 instance. With this new capability, snapshots guarantee crash-consistency across multiple volumes by preserving the order of IO operations. This new feature is fully integrated with Amazon Data Lifecycle Manager (DLM) allowing customers to automatically manage snapshots by creating lifecycle policies. 
+* `Aws\EC2` - Customers can now simultaneously take snapshots of multiple EBS volumes attached to an EC2 instance. With this new capability, snapshots guarantee crash-consistency across multiple volumes by preserving the order of IO operations. This new feature is fully integrated with Amazon Data Lifecycle Manager (DLM) allowing customers to automatically manage snapshots by creating lifecycle policies. 
+* `Aws\IoTThingsGraph` - Initial release.
+* `Aws\Pinpoint` - Removes aliases in favor of generic aliasing
+* `Aws\RDS` - Documentation updates for rds
+* `Aws\SSM` - Systems Manager - Documentation updates
+* `Aws\SecurityHub` - This update adds the ListProductSubscribers API, DescribeProducts API, removes CONTAINS as a comparison value for the StringFilter, and only allows use of EQUALS instead of CONTAINS in MapFilter. 
+
 ## 3.96.0 - 2019-05-28
 
 * `Aws\` - Adds general support for service operation aliasing defined in a JSON file.
