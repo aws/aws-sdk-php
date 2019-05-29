@@ -337,8 +337,7 @@ class CredentialProvider
 
             if (isset($data[$profile]['role_arn'])
                 && !$preferStaticCredentialsToRoleArn
-            )
-            {
+            ) {
                 if ($disableAssumeRole) {
                     return self::reject(
                         "Role assumption profiles are disabled. "
@@ -504,9 +503,7 @@ class CredentialProvider
         ]);
 
         $creds = $stsClient->createCredentials($result);
-        return Promise\promise_for(
-            $creds
-        );
+        return Promise\promise_for($creds);
     }
 
 
