@@ -190,4 +190,21 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
             ]),
         ];
     }
+
+    public function testDisablesMiddlewareForUnwrapErrors()
+    {
+        $middleware = new ApiCallMonitoringMiddleware(
+            function() {},
+            $this->getCredentialProvider(),
+            function() {
+                throw new \Exception('Test exception');
+            },
+            'us-east-1',
+            'ec2'
+        );
+        $ref = new \ReflectionClass(ApiCallMonitoringMiddleware::class);
+        $method = $ref->getMethod('isEnabled');
+        $method->setAccessible(true);
+        $this->assertEquals(false, $method->invoke($middleware));
+    }
 }
