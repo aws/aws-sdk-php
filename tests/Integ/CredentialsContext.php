@@ -20,7 +20,7 @@ class CredentialsContext extends \PHPUnit_Framework_Assert implements
     private static $roleName;
 
     /**
-     * @BeforeSuite
+     * @BeforeFeature
      */
     public static function createCredentialsFile()
     {
@@ -29,7 +29,7 @@ class CredentialsContext extends \PHPUnit_Framework_Assert implements
     }
 
     /**
-     * @AfterSuite
+     * @AfterFeature
      */
     public static function deleteCredentialsFile()
     {
@@ -37,7 +37,7 @@ class CredentialsContext extends \PHPUnit_Framework_Assert implements
     }
 
     /**
-     * @BeforeSuite
+     * @BeforeFeature
      */
     public static function setRoleName()
     {
@@ -45,7 +45,7 @@ class CredentialsContext extends \PHPUnit_Framework_Assert implements
     }
 
     /**
-     * @AfterSuite
+     * @AfterFeature
      */
     public static function deleteRole()
     {
