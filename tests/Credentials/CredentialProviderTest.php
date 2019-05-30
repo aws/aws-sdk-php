@@ -4,10 +4,15 @@ namespace Aws\Test\Credentials;
 use Aws\Api\DateTimeResult;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\History;
 use Aws\LruArrayCache;
+use Aws\Middleware;
+use Aws\Result;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Promise;
+use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+
 
 /**
  * @covers \Aws\Credentials\CredentialProvider
@@ -15,6 +20,8 @@ use PHPUnit\Framework\TestCase;
 class CredentialProviderTest extends TestCase
 {
     private $home, $homedrive, $homepath, $key, $secret, $profile;
+
+    use UsesServiceTrait;
 
     private function clearEnv()
     {
@@ -399,7 +406,7 @@ EOT;
         }
     }
 
-        /**
+    /**
      * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage credential_process returned invalid expiration
      */
@@ -434,14 +441,276 @@ EOT;
         $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $p);
     }
 
-    public function testCreatesFromAssumeRoleCredentialProvider()
+    public function testCreatesFromRoleArn()
     {
-        $config = [
-            'client' => new StsClient(['region' => 'foo', 'version' => 'latest']),
-            'assume_role_params' => [ 'foo' => 'bar' ]
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = defaultSecret
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = default
+role_session_name = foobar
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'assumedSecret',
+                'SessionToken'    => null,
+                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+            ],
         ];
-        $p = CredentialProvider::assumeRole($config);
-        $this->assertInstanceOf('Aws\Credentials\AssumeRoleCredentialProvider', $p);
+
+        $sts = $this->getTestClient('Sts');
+        $this->addMockResults($sts, [
+            new Result($result)
+        ]);
+
+        $history = new History();
+        $sts->getHandlerList()->appendSign(\Aws\Middleware::history($history));
+
+        try {
+            $config = [
+                'stsClient' => $sts
+            ];
+            $creds = call_user_func(CredentialProvider::ini(
+                'assume',
+                null,
+                $config
+            ))->wait();
+
+            $body = (string) $history->getLastRequest()->getBody();
+            $this->assertContains('RoleSessionName=foobar', $body);
+            $this->assertEquals('foo', $creds->getAccessKeyId());
+            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertFalse($creds->isExpired());
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    public function testSetsRoleSessionNameToDefault()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = defaultSecret
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = default
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'assumedSecret',
+                'SessionToken'    => null,
+                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+            ],
+        ];
+
+        $sts = $this->getTestClient('Sts');
+        $this->addMockResults($sts, [
+            new Result($result)
+        ]);
+
+        $history = new History();
+        $sts->getHandlerList()->appendSign(\Aws\Middleware::history($history));
+
+        try {
+            $config = [
+                'stsClient' => $sts
+            ];
+            $creds = call_user_func(CredentialProvider::ini(
+                'assume',
+                null,
+                $config
+            ))->wait();
+
+            $last = $history->getLastRequest();
+            $body = (string) $history->getLastRequest()->getBody();
+            $this->assertRegExp('/RoleSessionName=aws-sdk-php-\d{13}/', $body);
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Role assumption profiles are disabled. Failed to load profile assume
+     */
+    public function testEnsuresAssumeRoleCanBeDisabled()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = baz
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = default
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+        putenv('AWS_PROFILE=assume');
+
+        try {
+            $config = [
+                'preferStaticCredentials' => false,
+                'disableAssumeRole' => true
+            ];
+            $creds = call_user_func(CredentialProvider::ini(
+                "assume",
+                null,
+                $config
+            ))->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage source_profile is not set using profile assume
+     */
+    public function testEnsuresSourceProfileIsSpecified()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = baz
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+        putenv('AWS_PROFILE=assume');
+
+        try {
+            $creds = call_user_func(CredentialProvider::ini())->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage source_profile default using profile assume does not exist
+     */
+    public function testEnsuresSourceProfileConfigIsSpecified()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = default
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+        putenv('AWS_PROFILE=assume');
+
+        try {
+            $creds = call_user_func(CredentialProvider::ini())->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage No credentials present in INI profile 'default'
+     */
+    public function testEnsuresSourceProfileHasCredentials()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = default
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+        putenv('AWS_PROFILE=assume');
+
+        try {
+            $creds = call_user_func(CredentialProvider::ini())->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    public function testPreferRoleArnToStaticCredentialsInBaseProfile()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = baz
+[assume]
+aws_access_key_id = foo
+aws_secret_access_key = staticSecret
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = default
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'assumedSecret',
+                'SessionToken'    => null,
+                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+            ],
+        ];
+
+        $sts = $this->getTestClient('Sts');
+        $this->addMockResults($sts, [
+            new Result($result)
+        ]);
+
+        try {
+            $config = [
+                'stsClient' => $sts
+            ];
+            $creds = call_user_func(CredentialProvider::ini(
+                'assume',
+                null,
+                $config
+            ))->wait();
+            $this->assertEquals('foo', $creds->getAccessKeyId());
+            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertFalse($creds->isExpired());
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
     }
 
     public function testGetsHomeDirectoryForWindowsUsers()

@@ -5,6 +5,7 @@ use Aws;
 use Aws\Api\DateTimeResult;
 use Aws\CacheInterface;
 use Aws\Exception\CredentialsException;
+use Aws\Sts\StsClient;
 use GuzzleHttp\Promise;
 
 /**
@@ -285,15 +286,30 @@ class CredentialProvider
      *                              the "default" profile in "~/.aws/credentials".
      * @param string|null $filename If provided, uses a custom filename rather
      *                              than looking in the home directory.
+     * @param array|null $config If provided, may contain the following:
+     *                           preferStaticCredentials: If true, prefer static
+     *                           credentials to role_arn if both are present
+     *                           disableAssumeRole: If true, disable support for
+     *                           roles that assume an IAM role. If true and role profile
+     *                           is selected, an error is raised.
+     *                           stsClient: StsClient used to assume role specified in profile
      *
      * @return callable
      */
-    public static function ini($profile = null, $filename = null)
+    public static function ini($profile = null, $filename = null, array $config = [])
     {
         $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
-        return function () use ($profile, $filename) {
+        return function () use ($profile, $filename, $config) {
+            $preferStaticCredentials = isset($config['preferStaticCredentials'])
+                ? $config['preferStaticCredentials']
+                : false;
+            $disableAssumeRole = isset($config['disableAssumeRole'])
+                ? $config['disableAssumeRole']
+                : false;
+            $stsClient = isset($config['stsClient']) ? $config['stsClient'] : null;
+
             if (!is_readable($filename)) {
                 return self::reject("Cannot read credentials from $filename");
             }
@@ -304,6 +320,37 @@ class CredentialProvider
             if (!isset($data[$profile])) {
                 return self::reject("'$profile' not found in credentials file");
             }
+
+            /*
+            In the CLI, the presence of both a role_arn and static credentials have
+            different meanings depending on how many profiles have been visited. For
+            the first profile processed, role_arn takes precedence over any static
+            credentials, but for all subsequent profiles, static credentials are
+            used if present, and only in their absence will the profile's
+            source_profile and role_arn keys be used to load another set of
+            credentials. This bool is intended to yield compatible behaviour in this
+            sdk.
+            */
+            $preferStaticCredentialsToRoleArn = ($preferStaticCredentials
+                && isset($data[$profile]['aws_access_key_id'])
+                && isset($data[$profile]['aws_secret_access_key']));
+
+            if (isset($data[$profile]['role_arn'])
+                && !$preferStaticCredentialsToRoleArn
+            ) {
+                if ($disableAssumeRole) {
+                    return self::reject(
+                        "Role assumption profiles are disabled. "
+                        . "Failed to load profile " . $profile);
+                }
+                return self::loadRoleProfile(
+                    $data,
+                    $profile,
+                    $filename,
+                    $stsClient
+                );
+            }
+
             if (!isset($data[$profile]['aws_access_key_id'])
                 || !isset($data[$profile]['aws_secret_access_key'])
             ) {
@@ -355,8 +402,7 @@ class CredentialProvider
             if (!isset($data[$profile])) {
                 return self::reject("'$profile' not found in credentials file");
             }
-            if (!isset($data[$profile]['credential_process'])
-            ) {
+            if (!isset($data[$profile]['credential_process'])) {
                 return self::reject("No credential_process present in INI profile "
                     . "'$profile' ($filename)");
             }
@@ -373,7 +419,9 @@ class CredentialProvider
                 }
             }
 
-            if (!isset($processData['AccessKeyId']) || !isset($processData['SecretAccessKey'])) {
+            if (!isset($processData['AccessKeyId'])
+                || !isset($processData['SecretAccessKey']))
+            {
                 return self::reject("credential_process does not return valid credentials");
             }
 
@@ -404,6 +452,58 @@ class CredentialProvider
                 )
             );
         };
+    }
+
+    /**
+     * Assumes role for profile that includes role_arn
+     *
+     * @return callable
+     */
+    private static function loadRoleProfile($profiles, $profileName, $filename, $stsClient)
+    {
+        $roleProfile = $profiles[$profileName];
+        $roleArn = isset($roleProfile['role_arn']) ? $roleProfile['role_arn'] : '';
+        $roleSessionName = isset($roleProfile['role_session_name'])
+            ? $roleProfile['role_session_name']
+            : 'aws-sdk-php-' . round(microtime(true) * 1000);
+
+        if (empty($profiles[$profileName]['source_profile'])) {
+            return self::reject("source_profile is not set using profile " .
+                $profileName
+            );
+        }
+
+        $sourceProfileName = $roleProfile['source_profile'];
+        if (!isset($profiles[$sourceProfileName])) {
+            return self::reject("source_profile " . $sourceProfileName
+                . " using profile " . $profileName . " does not exist"
+            );
+        }
+        $sourceRegion = isset($profiles[$sourceProfileName]['region'])
+            ? $profiles[$sourceProfileName]['region']
+            : 'us-east-1';
+
+        if (empty($stsClient)) {
+            $config = [
+                'preferStaticCredentials' => true
+            ];
+            $sourceCredentials = call_user_func(
+                CredentialProvider::ini($sourceProfileName, $filename, $config)
+            )->wait();
+            $stsClient = new StsClient([
+                'credentials' => $sourceCredentials,
+                'region' => $sourceRegion,
+                'version' => '2011-06-15',
+            ]);
+        }
+
+        $result = $stsClient->assumeRole([
+            'RoleArn' => $roleArn,
+            'RoleSessionName' => $roleSessionName
+        ]);
+
+        $creds = $stsClient->createCredentials($result);
+        return Promise\promise_for($creds);
     }
 
 
