@@ -21,6 +21,9 @@ default:
         concurrency:
             paths: [ "%paths.base%/features/concurrency" ]
             contexts: [ Aws\Test\Integ\ConcurrencyContext ]
+        credentials:
+            paths: [ "%paths.base%/features/credentials" ]
+            contexts: [ Aws\Test\Integ\CredentialsContext ]
         streams:
             paths: [ "%paths.base%/features/streams" ]
             contexts: [ Aws\Test\Integ\NativeStreamContext ]
