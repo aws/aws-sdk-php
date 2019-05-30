@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.98.0 - 2019-05-30
 
 * `Aws\CodeCommit` - This release adds APIs that allow adding and removing tags to a repository, and viewing tags for a repository. It also enables adding tags when creating a repository.
 * `Aws\IoTAnalytics` - IoT Analytics adds the option to use your own S3 bucket to store channel and data store resources. Previously, only service-managed storage was used.
