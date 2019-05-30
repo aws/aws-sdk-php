@@ -37,25 +37,6 @@ class CredentialsContext extends \PHPUnit_Framework_Assert implements
     }
 
     /**
-     * @BeforeFeature
-     */
-    public static function setRoleName()
-    {
-        self::$roleName = 'php-integration-' . round(microtime(true) * 1000);
-    }
-
-    /**
-     * @AfterFeature
-     */
-    public static function deleteRole()
-    {
-        $client = self::getSdk()->createIam();
-        $client->deleteRole([
-            'RoleName' => self::$roleName
-        ]);
-    }
-
-    /**
      * @Given I have a credentials file with session name :value
      */
     public function iHaveACredentialsFile($sessionName)
@@ -77,6 +58,7 @@ class CredentialsContext extends \PHPUnit_Framework_Assert implements
 }
 EOT;
         $iamClient = self::getSdk()->createIam();
+        self::$roleName = 'php-integration-' . round(microtime(true) * 1000);
         $result = $iamClient->createRole([
            'AssumeRolePolicyDocument' => $assumeRolePolicy,
            'RoleName' => self::$roleName,
@@ -146,6 +128,10 @@ EOT;
      */
     public function theValueAtShouldBeA($key, $value)
     {
+        $client = self::getSdk()->createIam();
+        $client->deleteRole([
+            'RoleName' => self::$roleName
+        ]);
         $this->assertInstanceOf(Result::class, $this->result);
         $this->assertContains($value, $this->result->search($key));
     }
