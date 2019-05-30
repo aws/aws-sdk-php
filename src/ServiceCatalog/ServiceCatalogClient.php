@@ -135,6 +135,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listServiceActionsAsync(array $args = [])
  * @method \Aws\Result listServiceActionsForProvisioningArtifact(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listServiceActionsForProvisioningArtifactAsync(array $args = [])
+ * @method \Aws\Result listStackInstancesForProvisionedProduct(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listStackInstancesForProvisionedProductAsync(array $args = [])
  * @method \Aws\Result listTagOptions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagOptionsAsync(array $args = [])
  * @method \Aws\Result provisionProduct(array $args = [])
