@@ -46,6 +46,8 @@ abstract class AbstractErrorParser
         ResponseInterface $response,
         CommandInterface $command = null
     ) {
+        $data['body'] = [];
+
         if (!empty($command) && !empty($this->api)) {
 
             // If modeled error code is indicated, check for known error shape
