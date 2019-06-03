@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.99.0 - 2019-06-03
 
 * `Aws\` - Auto assume credential role from source_profile
 * `Aws\ClientSideMonitoring` - Unwrapping errors for CSM options will default to disabling it.
