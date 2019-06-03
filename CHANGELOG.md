@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Auto assume credential role from source_profile
+* `Aws\ClientSideMonitoring` - Unwrapping errors for CSM options will default to disabling it.
+* `Aws\EC2` - Amazon EC2 I3en instances are the new storage-optimized instances offering up to 60 TB NVMe SSD instance storage and up to 100 Gbps of network bandwidth.
+* `Aws\RDS` - Amazon RDS Data API is generally available. Removing beta notes in the documentation.
+
 ## 3.98.0 - 2019-05-30
 
 * `Aws\CodeCommit` - This release adds APIs that allow adding and removing tags to a repository, and viewing tags for a repository. It also enables adding tags when creating a repository.
