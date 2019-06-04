@@ -146,6 +146,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateNFSFileShareAsync(array $args = [])
  * @method \Aws\Result updateSMBFileShare(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSMBFileShareAsync(array $args = [])
+ * @method \Aws\Result updateSMBSecurityStrategy(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateSMBSecurityStrategyAsync(array $args = [])
  * @method \Aws\Result updateSnapshotSchedule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSnapshotScheduleAsync(array $args = [])
  * @method \Aws\Result updateVTLDeviceType(array $args = [])
