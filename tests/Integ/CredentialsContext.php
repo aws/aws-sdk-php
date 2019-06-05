@@ -18,9 +18,10 @@ class CredentialsContext extends \PHPUnit_Framework_Assert implements
 
     private static $credentialsFile;
     private static $roleName;
+    private static $roleArn;
 
     /**
-     * @BeforeFeature
+     * @BeforeFeature @credentials
      */
     public static function createCredentialsFile()
     {
@@ -29,7 +30,7 @@ class CredentialsContext extends \PHPUnit_Framework_Assert implements
     }
 
     /**
-     * @AfterFeature
+     * @AfterFeature @credentials
      */
     public static function deleteCredentialsFile()
     {
@@ -37,9 +38,9 @@ class CredentialsContext extends \PHPUnit_Framework_Assert implements
     }
 
     /**
-     * @Given I have a credentials file with session name :value
+     * @BeforeFeature @credentials
      */
-    public function iHaveACredentialsFile($sessionName)
+    public static function setupIamRole()
     {
         $stsClient = self::getSdk()->createSts();
         $sourceIdentity = $stsClient->getCallerIdentity();
@@ -63,12 +64,32 @@ EOT;
            'AssumeRolePolicyDocument' => $assumeRolePolicy,
            'RoleName' => self::$roleName,
         ]);
+        self::$roleArn = $result['Role']['Arn'];
         $iamClient->waitUntil('RoleExists', ['RoleName' => self::$roleName]);
+    }
+
+    /**
+     * @AfterFeature @credentials
+     */
+    public static function teardownIamRole()
+    {
+        $client = self::getSdk()->createIam();
+        $client->deleteRole([
+            'RoleName' => self::$roleName
+        ]);
+    }
+
+    /**
+     * @Given I have a credentials file with session name :value
+     */
+    public function iHaveACredentialsFile($sessionName)
+    {
+        $iamClient = self::getSdk()->createIam();
         $creds = $iamClient->getCredentials()->wait();
         $sourceKeyId = $creds->getAccessKeyId();
         $sourceAccessKey = $creds->getSecretKey();
         $sourceToken = $creds->getSecurityToken();
-        $roleArn = $result['Role']['Arn'];
+        $roleArn = self::$roleArn;
         $ini = <<<EOT
 [default]
 aws_access_key_id = $sourceKeyId
@@ -128,10 +149,6 @@ EOT;
      */
     public function theValueAtShouldBeA($key, $value)
     {
-        $client = self::getSdk()->createIam();
-        $client->deleteRole([
-            'RoleName' => self::$roleName
-        ]);
         $this->assertInstanceOf(Result::class, $this->result);
         $this->assertContains($value, $this->result->search($key));
     }
