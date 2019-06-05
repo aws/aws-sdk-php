@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - Support specifying python version for Python shell jobs. A new parameter PythonVersion is added to the JobCommand data type.
+
 ## 3.99.1 - 2019-06-04
 
 * `Aws\EC2` - This release adds support for Host Recovery feature which automatically restarts instances on to a new replacement host if failures are detected on Dedicated Host.
