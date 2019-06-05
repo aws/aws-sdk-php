@@ -9,14 +9,14 @@ use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Aws\Api\Parser\AbstractParser
- * @covers Aws\Api\Parser\AbstractRestParser
- * @covers Aws\Api\Parser\JsonRpcParser
- * @covers Aws\Api\Parser\JsonParser
- * @covers Aws\Api\Parser\RestJsonParser
- * @covers Aws\Api\Parser\RestXmlParser
- * @covers Aws\Api\Parser\QueryParser
- * @covers Aws\Api\Parser\XmlParser
+ * @covers \Aws\Api\Parser\AbstractParser
+ * @covers \Aws\Api\Parser\AbstractRestParser
+ * @covers \Aws\Api\Parser\JsonRpcParser
+ * @covers \Aws\Api\Parser\JsonParser
+ * @covers \Aws\Api\Parser\RestJsonParser
+ * @covers \Aws\Api\Parser\RestXmlParser
+ * @covers \Aws\Api\Parser\QueryParser
+ * @covers \Aws\Api\Parser\XmlParser
  */
 class ComplianceTest extends TestCase
 {
@@ -40,12 +40,25 @@ class ComplianceTest extends TestCase
                         ]
                     ];
                     $description = new Service($serviceData, function () { return []; });
+                    if (!empty($case['error'])) {
+                        if (empty($case['errorCode'])) {
+                            throw new \InvalidArgumentException('Protocol test error cases must have associated "errorType" value.');
+                        }
+                        $result = $case['error'];
+                    } elseif (!empty($case['result'])) {
+                        $result = $case['result'];
+                    } else {
+                        $result = [];
+                    }
                     $cases[] = [
                         $file . ': ' . $suite['description'],
                         $description,
                         $case['given']['name'],
-                        $case['result'],
-                        $case['response']
+                        $result,
+                        $case['response'],
+                        !empty($case['errorCode'])
+                            ? $case['errorCode']
+                            : null
                     ];
                 }
             }
@@ -56,15 +69,22 @@ class ComplianceTest extends TestCase
 
     /**
      * @dataProvider testCaseProvider
+     *
+     * @param $about
+     * @param Service $service
+     * @param $name
+     * @param array $expectedResult
+     * @param $res
+     * @param null $errorCode
      */
     public function testPassesComplianceTest(
         $about,
         Service $service,
         $name,
         array $expectedResult,
-        $res
+        $res,
+        $errorCode = null
     ) {
-        $parser = Service::createParser($service);
         $command = new Command($name);
 
         // Create a response based on the serialized property of the test.
@@ -74,7 +94,16 @@ class ComplianceTest extends TestCase
             Psr7\stream_for($res['body'])
         );
 
-        $result = $parser($command, $response)->toArray();
+        if (!is_null($errorCode)) {
+            $parser = Service::createErrorParser($service->getProtocol(), $service);
+            $parsed = $parser($response, $command);
+            $result = $parsed['body'];
+            $this->assertEquals($errorCode, $parsed['code']);
+        } else {
+            $parser = Service::createParser($service);
+            $result = $parser($command, $response)->toArray();
+        }
+
         $this->fixTimestamps($result, $service->getOperation($name)->getOutput());
         $this->assertEquals($expectedResult, $result);
     }
