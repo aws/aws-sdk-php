@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.99.2 - 2019-06-05
 
 * `Aws\Glue` - Support specifying python version for Python shell jobs. A new parameter PythonVersion is added to the JobCommand data type.
 
