@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.99.3 - 2019-06-06
 
 * `Aws\CloudWatchLogs` - Documentation updates for logs
 * `Aws\DynamoDB` - Documentation updates for dynamodb
