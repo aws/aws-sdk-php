@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchLogs` - Documentation updates for logs
+* `Aws\DynamoDB` - Documentation updates for dynamodb
+* `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) introduces support for launching container instances using supported Amazon EC2 instance types that have increased elastic network interface density. Using these instance types and opting in to the awsvpcTrunking account setting provides increased elastic network interface (ENI) density on newly launched container instances which allows you to place more tasks on each container instance.
+* `Aws\GuardDuty` - Improve FindingCriteria Condition field names, support long-typed conditions and deprecate old Condition field names.
+* `Aws\MediaConnect` - This release adds support for encrypting entitlements using Secure Packager and Encoder Key Exchange (SPEKE).
+* `Aws\Organizations` - You can tag and untag accounts in your organization and view tags on an account in your organization.
+* `Aws\SES` - You can now specify whether the Amazon Simple Email Service must deliver email over a connection that is encrypted using Transport Layer Security (TLS).
+* `Aws\SSM` - OpsCenter is a new Systems Manager capability that allows you to view, diagnose, and remediate, operational issues, aka OpsItems, related to various AWS resources by bringing together contextually relevant investigation information. New APIs to create, update, describe, and get OpsItems as well as OpsItems summary API. 
+
 ## 3.99.2 - 2019-06-05
 
 * `Aws\Glue` - Support specifying python version for Python shell jobs. A new parameter PythonVersion is added to the JobCommand data type.
