@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.99.4 - 2019-06-07
 
 * `Aws\EC2` - Adds DNS entries and NLB ARNs to describe-vpc-endpoint-connections API response. Adds owner ID to describe-vpc-endpoints and create-vpc-endpoint API responses.
 
