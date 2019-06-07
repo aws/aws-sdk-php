@@ -25,12 +25,18 @@ class XmlErrorParserTest extends TestCase
         $response,
         $command,
         $parser,
-        $expected
+        $expected,
+        $expectedParsedType
     ) {
         $response = Psr7\parse_response($response);
         $result = $parser($response, $command);
         $this->assertArraySubset($expected, $result);
-        $this->assertInstanceOf('SimpleXMLElement', $result['parsed']);
+
+        if (is_null($expectedParsedType)) {
+            $this->assertNull($result['parsed']);
+        } else {
+            $this->assertInstanceOf($expectedParsedType, $result['parsed']);
+        }
     }
 
     public function errorResponsesProvider()
@@ -85,6 +91,7 @@ class XmlErrorParserTest extends TestCase
                         'TestInt' => 456
                     ],
                 ],
+                'SimpleXMLElement',
             ],
             // ec2, no modeled shape
             [
@@ -113,6 +120,7 @@ class XmlErrorParserTest extends TestCase
                     'code' => 'NonExistentException',
                     'message' => 'Error Message',
                 ],
+                'SimpleXMLElement',
             ],
             // query, modeled exception
             [
@@ -149,6 +157,7 @@ class XmlErrorParserTest extends TestCase
                         'TestInt' => 456
                     ],
                 ],
+                'SimpleXMLElement',
             ],
             // query, no modeled shape
             [
@@ -175,6 +184,7 @@ class XmlErrorParserTest extends TestCase
                     'code' => 'NonExistentException',
                     'message' => 'Error Message',
                 ],
+                'SimpleXMLElement',
             ],
             // rest-xml, modeled exception
             [
@@ -211,6 +221,7 @@ class XmlErrorParserTest extends TestCase
                         'TestInt' => 456
                     ],
                 ],
+                'SimpleXMLElement',
             ],
             // rest-xml, no modeled shape
             [
@@ -237,14 +248,14 @@ class XmlErrorParserTest extends TestCase
                     'code' => 'NonExistentException',
                     'message' => 'Error Message',
                 ],
+                'SimpleXMLElement',
             ],
-            // legacy format, modeled exception
+            // S3 format, modeled exception
             [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "TestHeader: foo-header\r\n" .
                 "x-meta-foo: foo-meta\r\n" .
-                "x-meta-bar: bar-meta\r\n" .
-                "x-amzn-requestid: xyz\r\n\r\n" .
+                "x-meta-bar: bar-meta\r\n\r\n" .
                 '<Error>' .
                 '  <Type>ErrorType</Type>' .
                 '  <Code>TestException</Code>' .
@@ -253,6 +264,7 @@ class XmlErrorParserTest extends TestCase
                 '  <Resource>Foo</Resource>' .
                 '  <TestString>SomeString</TestString>' .
                 '  <TestInt>456</TestInt>' .
+                '  <HostId>baz</HostId>' .
                 '</Error>',
                 $restXmlCommand,
                 new XmlErrorParser($restXmlService),
@@ -272,14 +284,14 @@ class XmlErrorParserTest extends TestCase
                         'TestInt' => 456
                     ],
                 ],
+                'SimpleXMLElement',
             ],
-            // legacy format, no modeled shape
+            // S3 format, no modeled shape
             [
                 "HTTP/1.1 400 Bad Request\r\n" .
                 "TestHeader: foo-header\r\n" .
                 "x-meta-foo: foo-meta\r\n" .
-                "x-meta-bar: bar-meta\r\n" .
-                "x-amzn-requestid: xyz\r\n\r\n" .
+                "x-meta-bar: bar-meta\r\n\r\n" .
                 '<Error>' .
                 '  <Type>ErrorType</Type>' .
                 '  <Code>NonExistentException</Code>' .
@@ -288,6 +300,7 @@ class XmlErrorParserTest extends TestCase
                 '  <Resource>Foo</Resource>' .
                 '  <TestString>SomeString</TestString>' .
                 '  <TestInt>456</TestInt>' .
+                '  <HostId>baz</HostId>' .
                 '</Error>',
                 $restXmlCommand,
                 new XmlErrorParser($restXmlService),
@@ -297,6 +310,23 @@ class XmlErrorParserTest extends TestCase
                     'code' => 'NonExistentException',
                     'message' => 'Error Message',
                 ],
+                'SimpleXMLElement',
+            ],
+            // S3 format, empty body, request id in header
+            [
+                "HTTP/1.1 400 Bad Request\r\n" .
+                "TestHeader: foo-header\r\n" .
+                "x-meta-foo: foo-meta\r\n" .
+                "x-meta-bar: bar-meta\r\n" .
+                "x-amz-request-id: xyz\r\n\r\n",
+                $restXmlCommand,
+                new XmlErrorParser($restXmlService),
+                [
+                    'type' => 'client',
+                    'request_id' => 'xyz',
+                    'body' => [],
+                ],
+                null
             ],
         ];
     }
