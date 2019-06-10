@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.100.0 - 2019-06-10
 
 * `Aws\CodeBuild` - AWS CodeBuild adds support for source version on project level.
 * `Aws\CodeCommit` - This release adds two merge strategies for merging pull requests: squash and three-way. It also adds functionality for resolving merge conflicts, testing merge outcomes, and for merging branches using one of the three supported merge strategies.
