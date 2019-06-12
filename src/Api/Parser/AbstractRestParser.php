@@ -129,14 +129,19 @@ abstract class AbstractRestParser extends AbstractParser
                 }
             case 'string':
                 try {
-                     if ($shape['jsonvalue']) {
-                         $value = $this->parseJson(base64_decode($value), $response);
-                     }
-                     break;
+                    if ($shape['jsonvalue']) {
+                        $value = $this->parseJson(base64_decode($value), $response);
+                    }
+
+                    // If value is not set, do not add to output structure.
+                    if (!isset($value)) {
+                        return;
+                    }
+                    break;
                 } catch (\Exception $e) {
                     //If the value cannot be parsed, then do not add it to the
                     //output structure.
-                   return;
+                    return;
                 }
         }
 
