@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.100.2 - 2019-06-12
 
 * `Aws\ServiceCatalog` - This release adds a new field named Guidance to update provisioning artifact, this field can be set by the administrator to provide guidance to end users about which provisioning artifacts to use.
 
