@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.100.3 - 2019-06-13
 
 * `Aws\Api` - Fix json parse error when extracting header
 * `Aws\AppMesh` - This release adds support for AWS Cloud Map as a service discovery method for virtual nodes.
