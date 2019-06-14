@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Added 2 new values(WINDOWS_SERVER_2016, WINDOWS_SERVER_2019) for PlatformType enum.
+* `Aws\CloudFront` - A new datatype in the CloudFront API, AliasICPRecordal, provides the ICP recordal status for CNAMEs associated with distributions. AWS services in China customers must file for an Internet Content Provider (ICP) recordal if they want to serve content publicly on an alternate domain name, also known as a CNAME, that they have added to CloudFront. The status value is returned in the CloudFront response; you cannot configure it yourself. The status is set to APPROVED for all CNAMEs (aliases) in regions outside of China.
+* `Aws\EC2` - Correction to enumerations in EC2 client.
+* `Aws\Personalize` - Documentation updates for Amazon Personalize.
+
 ## 3.100.3 - 2019-06-13
 
 * `Aws\Api` - Fix json parse error when extracting header
