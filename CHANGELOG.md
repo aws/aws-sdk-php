@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Neptune` - This release adds a feature to configure Amazon Neptune to publish audit logs to Amazon CloudWatch Logs.
+* `Aws\RoboMaker` - Add the ServiceUnavailableException (503) into CreateSimulationJob API.
+* `Aws\ServiceCatalog` - Restrict concurrent calls by a single customer account for CreatePortfolioShare and DeletePortfolioShare when sharing/unsharing to an Organization.
+
 ## 3.100.4 - 2019-06-14
 
 * `Aws\AppStream` - Added 2 new values(WINDOWS_SERVER_2016, WINDOWS_SERVER_2019) for PlatformType enum.
