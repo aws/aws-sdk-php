@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.100.5 - 2019-06-17
 
 * `Aws\Neptune` - This release adds a feature to configure Amazon Neptune to publish audit logs to Amazon CloudWatch Logs.
 * `Aws\RoboMaker` - Add the ServiceUnavailableException (503) into CreateSimulationJob API.
