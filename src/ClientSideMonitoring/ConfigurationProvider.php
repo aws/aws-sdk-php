@@ -46,9 +46,11 @@ class ConfigurationProvider
     const CACHE_KEY = 'aws_cached_csm_config';
     const DEFAULT_CLIENT_ID = '';
     const DEFAULT_ENABLED = false;
+    const DEFAULT_HOST = '127.0.0.1';
     const DEFAULT_PORT = 31000;
     const ENV_CLIENT_ID = 'AWS_CSM_CLIENT_ID';
     const ENV_ENABLED = 'AWS_CSM_ENABLED';
+    const ENV_HOST = 'AWS_CSM_HOST';
     const ENV_PORT = 'AWS_CSM_PORT';
     const ENV_PROFILE = 'AWS_PROFILE';
 
@@ -163,6 +165,7 @@ class ConfigurationProvider
                 return Promise\promise_for(
                     new Configuration(
                         $enabled,
+                        getenv(self::ENV_HOST) ?: self::DEFAULT_HOST,
                         getenv(self::ENV_PORT) ?: self::DEFAULT_PORT,
                         getenv(self:: ENV_CLIENT_ID) ?: self::DEFAULT_CLIENT_ID
                      )
@@ -170,8 +173,8 @@ class ConfigurationProvider
             }
 
             return self::reject('Could not find environment variable CSM config'
-                . ' in ' . self::ENV_ENABLED. '/' . self::ENV_PORT . '/'
-                . self::ENV_CLIENT_ID);
+                . ' in ' . self::ENV_ENABLED. '/' . self::ENV_HOST . '/'
+                . self::ENV_PORT . '/' . self::ENV_CLIENT_ID);
         };
     }
 
@@ -186,6 +189,7 @@ class ConfigurationProvider
             return Promise\promise_for(
                 new Configuration(
                     self::DEFAULT_ENABLED,
+                    self::DEFAULT_HOST,
                     self::DEFAULT_PORT,
                     self::DEFAULT_CLIENT_ID
                 )
@@ -244,6 +248,11 @@ class ConfigurationProvider
                     INI profile '{$profile}' ({$filename})");
             }
 
+            // host is optional
+            if (empty($data[$profile]['csm_host'])) {
+                $data[$profile]['csm_host'] = self::DEFAULT_HOST;
+            }
+
             // port is optional
             if (empty($data[$profile]['csm_port'])) {
                 $data[$profile]['csm_port'] = self::DEFAULT_PORT;
@@ -257,6 +266,7 @@ class ConfigurationProvider
             return Promise\promise_for(
                 new Configuration(
                     $data[$profile]['csm_enabled'],
+                    $data[$profile]['csm_host'],
                     $data[$profile]['csm_port'],
                     $data[$profile]['csm_client_id']
                 )
@@ -331,9 +341,11 @@ class ConfigurationProvider
         } elseif (is_array($config) && isset($config['enabled'])) {
             $client_id = isset($config['client_id']) ? $config['client_id']
                 : self::DEFAULT_CLIENT_ID;
+            $host = isset($config['host']) ? $config['host']
+                : self::DEFAULT_HOST;
             $port = isset($config['port']) ? $config['port']
                 : self::DEFAULT_PORT;
-            return new Configuration($config['enabled'], $port, $client_id);
+            return new Configuration($config['enabled'], $host, $port, $client_id);
         }
 
         throw new \InvalidArgumentException('Not a valid CSM configuration '

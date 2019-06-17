@@ -24,7 +24,7 @@ class ApiCallAttemptMonitoringMiddlewareTest extends TestCase
 
     protected function getConfiguration()
     {
-        return new Configuration(true, 31000, 'AwsPhpSdkTestApp');
+        return new Configuration(true, '127.0.0.1', 31000, 'AwsPhpSdkTestApp');
     }
 
     protected function getCredentialProvider()
