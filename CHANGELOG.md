@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.100.7 - 2019-06-19
 
 * `Aws\EKS` - Changing Amazon EKS full service name to Amazon Elastic Kubernetes Service.
 
