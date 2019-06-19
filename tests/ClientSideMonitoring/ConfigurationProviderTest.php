@@ -21,10 +21,12 @@ class ConfigurationProviderTest extends TestCase
     private $iniFile = <<<EOT
 [aws_csm]
 csm_enabled = true
+csm_host = 123.4.5.6
 csm_port = 555
 csm_client_id = DefaultIniApp
 [custom]
 csm_enabled = false
+csm_host = 192.168.0.1
 csm_port = 777
 csm_client_id = CustomIniApp
 [enabled]
@@ -35,6 +37,7 @@ EOT;
     {
         self::$originalEnv = [
             'enabled' => getenv(ConfigurationProvider::ENV_ENABLED) ?: '',
+            'host' => getenv(ConfigurationProvider::ENV_HOST) ?: '',
             'port' => getenv(ConfigurationProvider::ENV_PORT) ?: '',
             'client_id' => getenv(ConfigurationProvider::ENV_CLIENT_ID) ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
@@ -44,6 +47,7 @@ EOT;
     private function clearEnv()
     {
         putenv(ConfigurationProvider::ENV_ENABLED . '=');
+        putenv(ConfigurationProvider::ENV_HOST . '=');
         putenv(ConfigurationProvider::ENV_PORT . '=');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=');
         putenv(ConfigurationProvider::ENV_PROFILE . '=');
@@ -61,6 +65,8 @@ EOT;
     {
         putenv(ConfigurationProvider::ENV_ENABLED . '=' .
             self::$originalEnv['enabled']);
+        putenv(ConfigurationProvider::ENV_HOST . '=' .
+            self::$originalEnv['host']);
         putenv(ConfigurationProvider::ENV_PORT . '=' .
             self::$originalEnv['port']);
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=' .
@@ -72,8 +78,9 @@ EOT;
     public function testCreatesFromEnvironmentVariables()
     {
         $this->clearEnv();
-        $expected = new Configuration(true, 555, 'EnvApp');
+        $expected = new Configuration(true, '123.4.5.6', 555, 'EnvApp');
         putenv(ConfigurationProvider::ENV_ENABLED . '=true');
+        putenv(ConfigurationProvider::ENV_HOST . '=123.4.5.6');
         putenv(ConfigurationProvider::ENV_PORT . '=555');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=EnvApp');
         $result = call_user_func(ConfigurationProvider::env())->wait();
@@ -83,8 +90,9 @@ EOT;
     public function testCreatesFromEnvironmentVariablesEmptyString()
     {
         $this->clearEnv();
-        $expected = new Configuration(true, 555, '');
+        $expected = new Configuration(true, '123.4.5.6', 555, '');
         putenv(ConfigurationProvider::ENV_ENABLED . '=true');
+        putenv(ConfigurationProvider::ENV_HOST . '=123.4.5.6');
         putenv(ConfigurationProvider::ENV_PORT . '=555');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '');
         $result = call_user_func(ConfigurationProvider::env())->wait();
@@ -95,6 +103,7 @@ EOT;
     {
         $this->clearEnv();
         putenv(ConfigurationProvider::ENV_ENABLED);
+        putenv(ConfigurationProvider::ENV_HOST);
         putenv(ConfigurationProvider::ENV_PORT);
         putenv(ConfigurationProvider::ENV_CLIENT_ID);
         $promise = call_user_func(ConfigurationProvider::env())->then(
@@ -114,7 +123,7 @@ EOT;
     public function testCreatesDefaultFromFallback()
     {
         $this->clearEnv();
-        $expected  = new Configuration(false, 31000, '');
+        $expected  = new Configuration(false, '127.0.0.1', 31000, '');
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::fallback())->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
@@ -123,7 +132,7 @@ EOT;
     public function testCreatesFromIniFileWithDefaultProfile()
     {
         $dir = $this->clearEnv();
-        $expected  = new Configuration(true, 555, 'DefaultIniApp');
+        $expected  = new Configuration(true, '123.4.5.6', 555, 'DefaultIniApp');
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
@@ -135,7 +144,7 @@ EOT;
     public function testCreatesFromIniFileWithSpecifiedProfile()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration(false, 777, 'CustomIniApp');
+        $expected = new Configuration(false, '192.168.0.1', 777, 'CustomIniApp');
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         putenv(ConfigurationProvider::ENV_PROFILE . '=custom');
@@ -150,6 +159,7 @@ EOT;
         $dir = $this->clearEnv();
         $expected = new Configuration(
             true,
+            ConfigurationProvider::DEFAULT_HOST,
             ConfigurationProvider::DEFAULT_PORT,
             ''
         );
@@ -231,6 +241,7 @@ EOT;
         $this->clearEnv();
         $expected = new Configuration(
             ConfigurationProvider::DEFAULT_ENABLED,
+            ConfigurationProvider::DEFAULT_HOST,
             ConfigurationProvider::DEFAULT_PORT,
             ConfigurationProvider::DEFAULT_CLIENT_ID
         );
@@ -254,7 +265,7 @@ EOT;
     public function testMemoizes()
     {
         $called = 0;
-        $expected = new Configuration(true, 555, 'FooApp');
+        $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
         $f = function () use (&$called, $expected) {
             $called++;
             return Promise\promise_for($expected);
@@ -269,7 +280,7 @@ EOT;
     public function testChainsConfiguration()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration(false, 777, 'CustomIniApp');
+        $expected = new Configuration(false, '192.168.0.1', 777, 'CustomIniApp');
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         $a = ConfigurationProvider::ini('custom');
@@ -284,8 +295,9 @@ EOT;
     public function testSelectsEnvironmentOverIniConfiguration()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration(true, 888, 'EnvApp');
+        $expected = new Configuration(true, '10.0.0.1', 888, 'EnvApp');
         putenv(ConfigurationProvider::ENV_ENABLED . '=true');
+        putenv(ConfigurationProvider::ENV_HOST . '=10.0.0.1');
         putenv(ConfigurationProvider::ENV_PORT . '=888');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=EnvApp');
         file_put_contents($dir . '/config', $this->iniFile);
@@ -301,8 +313,9 @@ EOT;
     public function testSelectsEnvironmentVariablesWithDisabled()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration(false, 888, 'EnvApp');
+        $expected = new Configuration(false, '10.0.0.1', 888, 'EnvApp');
         putenv(ConfigurationProvider::ENV_ENABLED . '=false');
+        putenv(ConfigurationProvider::ENV_HOST . '=10.0.0.1');
         putenv(ConfigurationProvider::ENV_PORT . '=888');
         putenv(ConfigurationProvider::ENV_CLIENT_ID . '=EnvApp');
         file_put_contents($dir . '/config', $this->iniFile);
@@ -318,7 +331,7 @@ EOT;
     public function testsPersistsToCache()
     {
         $cache = new LruArrayCache();
-        $expected = new Configuration(true, 555, 'FooApp');
+        $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
 
         $timesCalled = 0;
         $volatileProvider = function () use ($expected, &$timesCalled) {
@@ -345,7 +358,7 @@ EOT;
 
     public function testCreatesFromCache()
     {
-        $expected = new Configuration(true, 555, 'FooApp');
+        $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
         $cacheBuilder = $this->getMockBuilder('Aws\CacheInterface');
         $cacheBuilder->setMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
@@ -363,7 +376,7 @@ EOT;
 
     public function getSuccessfulUnwrapData()
     {
-        $expected = new Configuration(true, 555, 'FooApp');
+        $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
         return [
             [
                 function() use ($expected) {
@@ -382,6 +395,7 @@ EOT;
             [
                 [
                     'enabled' => true,
+                    'host' => '123.4.5.6',
                     'port' => 555,
                     'client_id' => 'FooApp'
                 ],
