@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EKS` - Changing Amazon EKS full service name to Amazon Elastic Kubernetes Service.
+
 ## 3.100.6 - 2019-06-18
 
 * `Aws\EC2` - You can now launch new 12xlarge, 24xlarge, and metal instance sizes on the Amazon EC2 compute optimized C5 instance types featuring 2nd Gen Intel Xeon Scalable Processors.
