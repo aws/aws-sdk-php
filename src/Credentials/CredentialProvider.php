@@ -591,12 +591,10 @@ class CredentialProvider
         // If loading .aws/credentials, also load .aws/config when AWS_SDK_LOAD_NONDEFAULT_CONFIG is set
         if ($filename === self::getHomeDir() . '/.aws/credentials'
             && getenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG')
-        )
-        {
+        ) {
             $configFilename = self::getHomeDir() . '/.aws/config';
             $configProfileData = \Aws\parse_ini_file($configFilename, true, INI_SCANNER_RAW);
-            foreach ($configProfileData as $name => $profile)
-            {
+            foreach ($configProfileData as $name => $profile) {
                 // standardize config profile names
                 $name = str_replace('profile ', '', $name);
                 if (!isset($profileData[$name])) {
