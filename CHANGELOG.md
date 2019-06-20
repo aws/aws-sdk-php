@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - ACM Private CA is launching Root CAs and hierarchy management, a new feature that expands the scope of ACM Private CA from supporting only subordinate issuing CAs, to now include a full CA hierarchy that includes root CAs - the cryptographic root of trust for an organization.
+* `Aws\ClientSideMonitoring` - Support host configuration for CSM
+* `Aws\Glue` - Starting today, you can now use workflows in AWS Glue to author directed acyclic graphs (DAGs) of Glue triggers, crawlers and jobs. Workflows enable orchestration of your ETL workloads by building dependencies between Glue entities (triggers, crawlers and jobs). You can visually track status of the different nodes in the workflows on the console making it easier to monitor progress and troubleshoot issues. Also, you can share parameters across entities in the workflow.
+* `Aws\Health` - API improvements for the AWS Health service.
+* `Aws\IoTEventsData` - "The colon character ':' is now permitted in Detector Model 'key' parameter values.
+* `Aws\OpsWorks` - Documentation updates for OpsWorks Stacks.
+* `Aws\RDS` - This release adds support for RDS storage autoscaling
+
 ## 3.100.7 - 2019-06-19
 
 * `Aws\EKS` - Changing Amazon EKS full service name to Amazon Elastic Kubernetes Service.
