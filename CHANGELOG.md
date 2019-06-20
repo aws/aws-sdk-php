@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.100.8 - 2019-06-20
 
 * `Aws\ACMPCA` - ACM Private CA is launching Root CAs and hierarchy management, a new feature that expands the scope of ACM Private CA from supporting only subordinate issuing CAs, to now include a full CA hierarchy that includes root CAs - the cryptographic root of trust for an organization.
 * `Aws\ClientSideMonitoring` - Support host configuration for CSM
