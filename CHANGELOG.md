@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.100.9 - 2019-06-21
 
 * `Aws\DeviceFarm` - This release includes updated documentation about the default timeout value for test runs and remote access sessions. This release also includes miscellaneous bug fixes for the documentation.
 * `Aws\IAM` - We are making it easier for you to manage your permission guardrails i.e. service control policies by enabling you to retrieve the last timestamp when an AWS service was accessed within an account or AWS Organizations entity.
