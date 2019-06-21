@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DeviceFarm` - This release includes updated documentation about the default timeout value for test runs and remote access sessions. This release also includes miscellaneous bug fixes for the documentation.
+* `Aws\IAM` - We are making it easier for you to manage your permission guardrails i.e. service control policies by enabling you to retrieve the last timestamp when an AWS service was accessed within an account or AWS Organizations entity.
+* `Aws\KinesisVideoMedia` - Documentation updates for Amazon Kinesis Video Streams.
+* `Aws\MediaPackage` - Added two new origin endpoint fields for configuring which SCTE-35 messages are treated as advertisements.
+
 ## 3.100.8 - 2019-06-20
 
 * `Aws\ACMPCA` - ACM Private CA is launching Root CAs and hierarchy management, a new feature that expands the scope of ACM Private CA from supporting only subordinate issuing CAs, to now include a full CA hierarchy that includes root CAs - the cryptographic root of trust for an organization.
