@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Customers can pick different security policies (TLS version + cipher suite) for custom domains in API Gateway
+* `Aws\ApiGatewayV2` - Customers can get information about security policies set on custom domain resources in API Gateway
+* `Aws\ApplicationInsights` - CloudWatch Application Insights detects errors and exceptions from logs, including .NET custom application logs, SQL Server logs, IIS logs, and more, and uses a combination of built-in rules and machine learning, such as dynamic baselining, to identify common problems. You can then easily drill into specific issues with CloudWatch Automatic Dashboards that are dynamically generated. These dashboards contain the most recent alarms, a summary of relevant metrics, and log snippets to help you identify root cause.
+* `Aws\ElasticLoadBalancingv2` - This release adds support for UDP on Network Load Balancers
+* `Aws\FSx` - Starting today, you can join your Amazon FSx for Windows File Server file systems to your organization's self-managed Microsoft Active Directory while creating the file system. You can also perform in-place updates of file systems to keep your Active Directory configuration up to date.
+* `Aws\ResourceGroupsTaggingAPI` - Updated service APIs and documentation.
+* `Aws\SSM` - AWS Systems Manager now supports deleting a specific version of a SSM Document.
+* `Aws\SecurityHub` - This release includes a new Tags parameter for the EnableSecurityHub operation, and the following new operations: DescribeHub, CreateActionTarget, DeleteActionTarget, DescribeActionTargets, UpdateActionTarget, TagResource, UntagResource, and ListTagsforResource. It removes the operation ListProductSubscribers, and makes Title and Description required attributes of AwsSecurityFinding.
+* `Aws\ServiceQuotas` - Service Quotas enables you to view and manage your quotas for AWS services from a central location.
+
 ## 3.100.9 - 2019-06-21
 
 * `Aws\DeviceFarm` - This release includes updated documentation about the default timeout value for test runs and remote access sessions. This release also includes miscellaneous bug fixes for the documentation.
