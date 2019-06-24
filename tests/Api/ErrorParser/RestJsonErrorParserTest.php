@@ -58,7 +58,8 @@ class RestJsonErrorParserTest extends TestCase
                         'type'    => 'client',
                         'message' => 'lorem ipsum',
                         'code'    => 'foo'
-                    ]
+                    ],
+                    'body' => [],
                 ]
             ],
             // Error code in header
@@ -76,7 +77,8 @@ class RestJsonErrorParserTest extends TestCase
                     'request_id' => 'xyz',
                     'parsed'     => [
                         'message' => 'lorem ipsum',
-                    ]
+                    ],
+                    'body' => [],
                 ]
             ],
             // Error code in body, with service, modeled exception
@@ -166,7 +168,8 @@ class RestJsonErrorParserTest extends TestCase
                     'request_id' => 'xyz',
                     'parsed'     => [
                         'message' => 'lorem ipsum',
-                    ]
+                    ],
+                    'body' => [],
                 ]
             ],
             // Error code in body, with service, unmodeled code
@@ -185,7 +188,8 @@ class RestJsonErrorParserTest extends TestCase
                         'type'    => 'client',
                         'message' => 'lorem ipsum',
                         'code'    => 'NonExistentException'
-                    ]
+                    ],
+                    'body' => [],
                 ]
             ],
         ];

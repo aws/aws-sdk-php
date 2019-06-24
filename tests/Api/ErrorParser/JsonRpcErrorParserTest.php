@@ -58,7 +58,8 @@ class JsonRpcErrorParserTest extends TestCase
                     'parsed'     => [
                         'message' => 'lorem ipsum',
                         '__type'    => 'foo'
-                    ]
+                    ],
+                    'body' => [],
                 ]
             ],
             // Modeled exception, with service
@@ -116,7 +117,8 @@ class JsonRpcErrorParserTest extends TestCase
                         'notmodeled'    => 'bar',
                         'message'       => 'Test Message',
                         '__type'        => 'NonExistentException',
-                    ]
+                    ],
+                    'body' => [],
                 ]
             ],
         ];
