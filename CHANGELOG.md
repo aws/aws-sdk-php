@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.101.0 - 2019-06-24
 
 * `Aws\APIGateway` - Customers can pick different security policies (TLS version + cipher suite) for custom domains in API Gateway
 * `Aws\ApiGatewayV2` - Customers can get information about security policies set on custom domain resources in API Gateway
