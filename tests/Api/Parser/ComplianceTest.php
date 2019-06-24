@@ -58,6 +58,9 @@ class ComplianceTest extends TestCase
                         $case['response'],
                         !empty($case['errorCode'])
                             ? $case['errorCode']
+                            : null,
+                        !empty($case['errorMessage'])
+                            ? $case['errorMessage']
                             : null
                     ];
                 }
@@ -75,7 +78,8 @@ class ComplianceTest extends TestCase
      * @param $name
      * @param array $expectedResult
      * @param $res
-     * @param null $errorCode
+     * @param string|null $errorCode
+     * @param string|null $errorMessage
      */
     public function testPassesComplianceTest(
         $about,
@@ -83,7 +87,8 @@ class ComplianceTest extends TestCase
         $name,
         array $expectedResult,
         $res,
-        $errorCode = null
+        $errorCode = null,
+        $errorMessage = null
     ) {
         $command = new Command($name);
 
@@ -99,6 +104,9 @@ class ComplianceTest extends TestCase
             $parsed = $parser($response, $command);
             $result = $parsed['body'];
             $this->assertEquals($errorCode, $parsed['code']);
+            if (!is_null($errorMessage)) {
+                $this->assertEquals($errorMessage, $parsed['message']);
+            }
         } else {
             $parser = Service::createParser($service);
             $result = $parser($command, $response)->toArray();

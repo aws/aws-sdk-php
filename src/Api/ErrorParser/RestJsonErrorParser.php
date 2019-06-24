@@ -44,6 +44,13 @@ class RestJsonErrorParser extends AbstractErrorParser
             $data['code'] = $colon ? substr($code, 0, $colon) : $code;
         }
 
+        // Retrieve error message directly
+        $data['message'] = isset($data['parsed']['message'])
+            ? $data['parsed']['message']
+            : (isset($data['parsed']['Message'])
+                ? $data['parsed']['Message']
+                : null);
+
         $this->populateShape($data, $response, $command);
 
         return $data;
