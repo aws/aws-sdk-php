@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS RoboMaker** service.
  * @method \Aws\Result batchDescribeSimulationJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchDescribeSimulationJobAsync(array $args = [])
+ * @method \Aws\Result cancelDeploymentJob(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelDeploymentJobAsync(array $args = [])
  * @method \Aws\Result cancelSimulationJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelSimulationJobAsync(array $args = [])
  * @method \Aws\Result createDeploymentJob(array $args = [])

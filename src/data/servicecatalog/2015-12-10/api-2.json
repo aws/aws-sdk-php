@@ -178,7 +178,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"LimitExceededException"},
         {"shape":"InvalidParametersException"},
-        {"shape":"OperationNotSupportedException"}
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"InvalidStateException"}
       ]
     },
     "CreateProduct":{
@@ -289,7 +290,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParametersException"},
-        {"shape":"OperationNotSupportedException"}
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"InvalidStateException"}
       ]
     },
     "DeleteProduct":{
@@ -875,6 +877,19 @@
         {"shape":"InvalidParametersException"}
       ]
     },
+    "ListStackInstancesForProvisionedProduct":{
+      "name":"ListStackInstancesForProvisionedProduct",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListStackInstancesForProvisionedProductInput"},
+      "output":{"shape":"ListStackInstancesForProvisionedProductOutput"},
+      "errors":[
+        {"shape":"InvalidParametersException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListTagOptions":{
       "name":"ListTagOptions",
       "http":{
@@ -1028,6 +1043,20 @@
       "errors":[
         {"shape":"InvalidParametersException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "UpdateProvisionedProductProperties":{
+      "name":"UpdateProvisionedProductProperties",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateProvisionedProductPropertiesInput"},
+      "output":{"shape":"UpdateProvisionedProductPropertiesOutput"},
+      "errors":[
+        {"shape":"InvalidParametersException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidStateException"}
       ]
     },
     "UpdateProvisioningArtifact":{
@@ -2444,6 +2473,23 @@
         "NextPageToken":{"shape":"PageToken"}
       }
     },
+    "ListStackInstancesForProvisionedProductInput":{
+      "type":"structure",
+      "required":["ProvisionedProductId"],
+      "members":{
+        "AcceptLanguage":{"shape":"AcceptLanguage"},
+        "ProvisionedProductId":{"shape":"Id"},
+        "PageToken":{"shape":"PageToken"},
+        "PageSize":{"shape":"PageSize"}
+      }
+    },
+    "ListStackInstancesForProvisionedProductOutput":{
+      "type":"structure",
+      "members":{
+        "StackInstances":{"shape":"StackInstances"},
+        "NextPageToken":{"shape":"PageToken"}
+      }
+    },
     "ListTagOptionsFilters":{
       "type":"structure",
       "members":{
@@ -2710,7 +2756,18 @@
         "SupportUrl":{"shape":"SupportUrl"}
       }
     },
+    "PropertyKey":{
+      "type":"string",
+      "enum":["OWNER"],
+      "max":128,
+      "min":1
+    },
     "PropertyName":{"type":"string"},
+    "PropertyValue":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "ProviderName":{
       "type":"string",
       "max":50,
@@ -2859,6 +2916,13 @@
       "type":"list",
       "member":{"shape":"ProvisionedProductPlanSummary"}
     },
+    "ProvisionedProductProperties":{
+      "type":"map",
+      "key":{"shape":"PropertyKey"},
+      "value":{"shape":"PropertyValue"},
+      "max":100,
+      "min":1
+    },
     "ProvisionedProductStatus":{
       "type":"string",
       "enum":[
@@ -2886,7 +2950,8 @@
         "Id":{"shape":"Id"},
         "Name":{"shape":"ProvisioningArtifactName"},
         "Description":{"shape":"ProvisioningArtifactDescription"},
-        "CreatedTime":{"shape":"ProvisioningArtifactCreatedTime"}
+        "CreatedTime":{"shape":"ProvisioningArtifactCreatedTime"},
+        "Guidance":{"shape":"ProvisioningArtifactGuidance"}
       }
     },
     "ProvisioningArtifactActive":{"type":"boolean"},
@@ -2900,12 +2965,20 @@
         "Description":{"shape":"ProvisioningArtifactName"},
         "Type":{"shape":"ProvisioningArtifactType"},
         "CreatedTime":{"shape":"CreationTime"},
-        "Active":{"shape":"ProvisioningArtifactActive"}
+        "Active":{"shape":"ProvisioningArtifactActive"},
+        "Guidance":{"shape":"ProvisioningArtifactGuidance"}
       }
     },
     "ProvisioningArtifactDetails":{
       "type":"list",
       "member":{"shape":"ProvisioningArtifactDetail"}
+    },
+    "ProvisioningArtifactGuidance":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "DEPRECATED"
+      ]
     },
     "ProvisioningArtifactInfo":{
       "type":"map",
@@ -3431,6 +3504,26 @@
       "key":{"shape":"ProvisioningArtifactPropertyName"},
       "value":{"shape":"ProvisioningArtifactPropertyValue"}
     },
+    "StackInstance":{
+      "type":"structure",
+      "members":{
+        "Account":{"shape":"AccountId"},
+        "Region":{"shape":"Region"},
+        "StackInstanceStatus":{"shape":"StackInstanceStatus"}
+      }
+    },
+    "StackInstanceStatus":{
+      "type":"string",
+      "enum":[
+        "CURRENT",
+        "OUTDATED",
+        "INOPERABLE"
+      ]
+    },
+    "StackInstances":{
+      "type":"list",
+      "member":{"shape":"StackInstance"}
+    },
     "StackSetAccounts":{
       "type":"list",
       "member":{"shape":"AccountId"}
@@ -3686,6 +3779,32 @@
         "RecordDetail":{"shape":"RecordDetail"}
       }
     },
+    "UpdateProvisionedProductPropertiesInput":{
+      "type":"structure",
+      "required":[
+        "ProvisionedProductId",
+        "ProvisionedProductProperties",
+        "IdempotencyToken"
+      ],
+      "members":{
+        "AcceptLanguage":{"shape":"AcceptLanguage"},
+        "ProvisionedProductId":{"shape":"Id"},
+        "ProvisionedProductProperties":{"shape":"ProvisionedProductProperties"},
+        "IdempotencyToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateProvisionedProductPropertiesOutput":{
+      "type":"structure",
+      "members":{
+        "ProvisionedProductId":{"shape":"Id"},
+        "ProvisionedProductProperties":{"shape":"ProvisionedProductProperties"},
+        "RecordId":{"shape":"Id"},
+        "Status":{"shape":"RecordStatus"}
+      }
+    },
     "UpdateProvisioningArtifactInput":{
       "type":"structure",
       "required":[
@@ -3698,7 +3817,8 @@
         "ProvisioningArtifactId":{"shape":"Id"},
         "Name":{"shape":"ProvisioningArtifactName"},
         "Description":{"shape":"ProvisioningArtifactDescription"},
-        "Active":{"shape":"ProvisioningArtifactActive"}
+        "Active":{"shape":"ProvisioningArtifactActive"},
+        "Guidance":{"shape":"ProvisioningArtifactGuidance"}
       }
     },
     "UpdateProvisioningArtifactOutput":{

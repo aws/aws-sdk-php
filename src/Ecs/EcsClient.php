@@ -74,6 +74,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startTaskAsync(array $args = [])
  * @method \Aws\Result stopTask(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopTaskAsync(array $args = [])
+ * @method \Aws\Result submitAttachmentStateChanges(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise submitAttachmentStateChangesAsync(array $args = [])
  * @method \Aws\Result submitContainerStateChange(array $args = [])
  * @method \GuzzleHttp\Promise\Promise submitContainerStateChangeAsync(array $args = [])
  * @method \Aws\Result submitTaskStateChange(array $args = [])

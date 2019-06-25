@@ -28,6 +28,7 @@ class GuzzleHandler
     private static $validOptions = [
         'proxy'             => true,
         'expect'            => true,
+        'cert'              => true,
         'verify'            => true,
         'timeout'           => true,
         'debug'             => true,

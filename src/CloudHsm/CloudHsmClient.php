@@ -29,8 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeHsmAsync(array $args = [])
  * @method \Aws\Result describeLunaClient(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeLunaClientAsync(array $args = [])
- * @method \Aws\Result getConfig(array $args = [])
- * @method \GuzzleHttp\Promise\Promise getConfigAsync(array $args = [])
+ * @method \Aws\Result getConfigFiles(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getConfigFilesAsync(array $args = [])
  * @method \Aws\Result listAvailableZones(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAvailableZonesAsync(array $args = [])
  * @method \Aws\Result listHapgs(array $args = [])
@@ -50,35 +50,4 @@ use Aws\AwsClient;
  * @method \Aws\Result removeTagsFromResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removeTagsFromResourceAsync(array $args = [])
  */
-class CloudHsmClient extends AwsClient
-{
-    public function __call($name, array $args)
-    {
-        // Overcomes a naming collision with `AwsClient::getConfig`.
-        if (lcfirst($name) === 'getConfigFiles') {
-            $name = 'GetConfig';
-        } elseif (lcfirst($name) === 'getConfigFilesAsync') {
-            $name = 'GetConfigAsync';
-        }
-
-        return parent::__call($name, $args);
-    }
-
-    /**
-     * @internal
-     * @codeCoverageIgnore
-     */
-    public static function applyDocFilters(array $api, array $docs)
-    {
-        // Overcomes a naming collision with `AwsClient::getConfig`.
-        $api['operations']['GetConfigFiles'] = $api['operations']['GetConfig'];
-        $docs['operations']['GetConfigFiles'] = $docs['operations']['GetConfig'];
-        unset($api['operations']['GetConfig'], $docs['operations']['GetConfig']);
-        ksort($api['operations']);
-
-        return [
-            new Service($api, ApiProvider::defaultProvider()),
-            new DocModel($docs)
-        ];
-    }
-}
+class CloudHsmClient extends AwsClient {}

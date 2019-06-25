@@ -64,7 +64,7 @@ abstract class AbstractMonitoringMiddleware
      *
      * @param callable $handler
      * @param callable $credentialProvider
-     * @param array $options
+     * @param $options
      * @param $region
      * @param $service
      */
@@ -149,6 +149,11 @@ abstract class AbstractMonitoringMiddleware
             'Version' => 1
         ];
         return $event;
+    }
+
+    private function getHost()
+    {
+        return $this->unwrappedOptions()->getHost();
     }
 
     private function getPort()
@@ -236,7 +241,7 @@ abstract class AbstractMonitoringMiddleware
         ) {
             self::$socket = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
             socket_clear_error(self::$socket);
-            socket_connect(self::$socket, '127.0.0.1', $this->getPort());
+            socket_connect(self::$socket, $this->getHost(), $this->getPort());
         }
 
         return self::$socket;
@@ -268,7 +273,16 @@ abstract class AbstractMonitoringMiddleware
     private function unwrappedOptions()
     {
         if (!($this->options instanceof ConfigurationInterface)) {
-            $this->options = ConfigurationProvider::unwrap($this->options);
+            try {
+                $this->options = ConfigurationProvider::unwrap($this->options);
+            } catch (\Exception $e) {
+                // Errors unwrapping CSM config defaults to disabling it
+                $this->options = new Configuration(
+                    false,
+                    ConfigurationProvider::DEFAULT_HOST,
+                    ConfigurationProvider::DEFAULT_PORT
+                );
+            }
         }
         return $this->options;
     }

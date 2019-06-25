@@ -21,7 +21,7 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
 
     protected function getConfiguration()
     {
-        return new Configuration(true, 31000, 'AwsPhpSdkTestApp');
+        return new Configuration(true, '127.0.0.1', 31000, 'AwsPhpSdkTestApp');
     }
 
     protected function getCredentialProvider()
@@ -189,5 +189,22 @@ class ApiCallMonitoringMiddlewareTest extends TestCase
                 ])
             ]),
         ];
+    }
+
+    public function testDisablesMiddlewareForUnwrapErrors()
+    {
+        $middleware = new ApiCallMonitoringMiddleware(
+            function() {},
+            $this->getCredentialProvider(),
+            function() {
+                throw new \Exception('Test exception');
+            },
+            'us-east-1',
+            'ec2'
+        );
+        $ref = new \ReflectionClass(ApiCallMonitoringMiddleware::class);
+        $method = $ref->getMethod('isEnabled');
+        $method->setAccessible(true);
+        $this->assertEquals(false, $method->invoke($middleware));
     }
 }

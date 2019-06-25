@@ -543,7 +543,6 @@ class PartitionEndpointProviderTest extends TestCase
             [$partitions, 'us-east-1', 'support', 'support.us-east-1.amazonaws.com'],
             [$partitions, 'us-east-1', 'swf', 'swf.us-east-1.amazonaws.com'],
             [$partitions, 'us-east-1', 'workspaces', 'workspaces.us-east-1.amazonaws.com'],
-            [$partitions, 'us-east-1', 'waf', 'waf.amazonaws.com'],
             [$partitions, 'us-gov-west-1', 'autoscaling', 'autoscaling.us-gov-west-1.amazonaws.com'],
             [$partitions, 'us-gov-west-1', 'cloudformation', 'cloudformation.us-gov-west-1.amazonaws.com'],
             [$partitions, 'us-gov-west-1', 'cloudhsm', 'cloudhsm.us-gov-west-1.amazonaws.com'],

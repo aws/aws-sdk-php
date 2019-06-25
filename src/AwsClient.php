@@ -19,6 +19,9 @@ class AwsClient implements AwsClientInterface
     use AwsClientTrait;
 
     /** @var array */
+    private $aliases;
+
+    /** @var array */
     private $config;
 
     /** @var string */
@@ -184,6 +187,8 @@ class AwsClient implements AwsClientInterface
         $this->addClientSideMonitoring($args);
         $this->addEndpointParameterMiddleware($args);
         $this->addEndpointDiscoveryMiddleware($config, $args);
+        $this->loadAliases();
+        $this->addStreamRequestPayload();
 
         if (isset($args['with_resolved'])) {
             $args['with_resolved']($config);
@@ -370,6 +375,32 @@ class AwsClient implements AwsClientInterface
             'ApiCallAttemptMonitoringMiddleware'
         );
     }
+    private function loadAliases($file = null)
+    {
+        if (!isset($this->aliases)) {
+            if (is_null($file)) {
+                $file = __DIR__ . '/data/aliases.json';
+            }
+            $aliases = \Aws\load_compiled_json($file);
+            $serviceId = $this->api->getServiceId();
+            $version = $this->getApi()->getApiVersion();
+            if (!empty($aliases['operations'][$serviceId][$version])) {
+                $this->aliases = array_flip($aliases['operations'][$serviceId][$version]);
+            }
+        }
+    }
+
+    private function addStreamRequestPayload()
+    {
+        $streamRequestPayloadMiddleware = StreamRequestPayloadMiddleware::wrap(
+            $this->api
+        );
+
+        $this->handlerList->prependSign(
+            $streamRequestPayloadMiddleware,
+            'StreamRequestPayloadMiddleware'
+        );
+    }
 
     /**
      * Returns a service model and doc model with any necessary changes
@@ -385,6 +416,20 @@ class AwsClient implements AwsClientInterface
      */
     public static function applyDocFilters(array $api, array $docs)
     {
+        $aliases = \Aws\load_compiled_json(__DIR__ . '/data/aliases.json');
+        $serviceId = $api['metadata']['serviceId'];
+        $version = $api['metadata']['apiVersion'];
+
+        // Replace names for any operations with SDK aliases
+        if (!empty($aliases['operations'][$serviceId][$version])) {
+            foreach ($aliases['operations'][$serviceId][$version] as $op => $alias) {
+                $api['operations'][$alias] = $api['operations'][$op];
+                $docs['operations'][$alias] = $docs['operations'][$op];
+                unset($api['operations'][$op], $docs['operations'][$op]);
+            }
+        }
+        ksort($api['operations']);
+
         return [
             new Service($api, ApiProvider::defaultProvider()),
             new DocModel($docs)

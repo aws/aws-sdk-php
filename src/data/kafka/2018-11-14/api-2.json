@@ -41,6 +41,35 @@
         "shape" : "ConflictException"
       } ]
     },
+    "CreateConfiguration" : {
+      "name" : "CreateConfiguration",
+      "http" : {
+        "method" : "POST",
+        "requestUri" : "/v1/configurations",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "CreateConfigurationRequest"
+      },
+      "output" : {
+        "shape" : "CreateConfigurationResponse"
+      },
+      "errors" : [ {
+        "shape" : "BadRequestException"
+      }, {
+        "shape" : "InternalServerErrorException"
+      }, {
+        "shape" : "UnauthorizedException"
+      }, {
+        "shape" : "ForbiddenException"
+      }, {
+        "shape" : "ServiceUnavailableException"
+      }, {
+        "shape" : "TooManyRequestsException"
+      }, {
+        "shape" : "ConflictException"
+      } ]
+    },
     "DeleteCluster" : {
       "name" : "DeleteCluster",
       "http" : {
@@ -89,6 +118,85 @@
         "shape" : "ForbiddenException"
       } ]
     },
+    "DescribeClusterOperation" : {
+      "name" : "DescribeClusterOperation",
+      "http" : {
+        "method" : "GET",
+        "requestUri" : "/v1/operations/{clusterOperationArn}",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "DescribeClusterOperationRequest"
+      },
+      "output" : {
+        "shape" : "DescribeClusterOperationResponse"
+      },
+      "errors" : [ {
+        "shape" : "NotFoundException"
+      }, {
+        "shape" : "BadRequestException"
+      }, {
+        "shape" : "UnauthorizedException"
+      }, {
+        "shape" : "InternalServerErrorException"
+      }, {
+        "shape" : "ForbiddenException"
+      } ]
+    },
+    "DescribeConfiguration" : {
+      "name" : "DescribeConfiguration",
+      "http" : {
+        "method" : "GET",
+        "requestUri" : "/v1/configurations/{arn}",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "DescribeConfigurationRequest"
+      },
+      "output" : {
+        "shape" : "DescribeConfigurationResponse"
+      },
+      "errors" : [ {
+        "shape" : "BadRequestException"
+      }, {
+        "shape" : "UnauthorizedException"
+      }, {
+        "shape" : "InternalServerErrorException"
+      }, {
+        "shape" : "ForbiddenException"
+      }, {
+        "shape" : "NotFoundException"
+      }, {
+        "shape" : "ServiceUnavailableException"
+      } ]
+    },
+    "DescribeConfigurationRevision" : {
+      "name" : "DescribeConfigurationRevision",
+      "http" : {
+        "method" : "GET",
+        "requestUri" : "/v1/configurations/{arn}/revisions/{revision}",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "DescribeConfigurationRevisionRequest"
+      },
+      "output" : {
+        "shape" : "DescribeConfigurationRevisionResponse"
+      },
+      "errors" : [ {
+        "shape" : "BadRequestException"
+      }, {
+        "shape" : "UnauthorizedException"
+      }, {
+        "shape" : "InternalServerErrorException"
+      }, {
+        "shape" : "ForbiddenException"
+      }, {
+        "shape" : "NotFoundException"
+      }, {
+        "shape" : "ServiceUnavailableException"
+      } ]
+    },
     "GetBootstrapBrokers" : {
       "name" : "GetBootstrapBrokers",
       "http" : {
@@ -114,6 +222,29 @@
         "shape" : "ForbiddenException"
       } ]
     },
+    "ListClusterOperations" : {
+      "name" : "ListClusterOperations",
+      "http" : {
+        "method" : "GET",
+        "requestUri" : "/v1/clusters/{clusterArn}/operations",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "ListClusterOperationsRequest"
+      },
+      "output" : {
+        "shape" : "ListClusterOperationsResponse"
+      },
+      "errors" : [ {
+        "shape" : "BadRequestException"
+      }, {
+        "shape" : "InternalServerErrorException"
+      }, {
+        "shape" : "UnauthorizedException"
+      }, {
+        "shape" : "ForbiddenException"
+      } ]
+    },
     "ListClusters" : {
       "name" : "ListClusters",
       "http" : {
@@ -133,6 +264,58 @@
         "shape" : "InternalServerErrorException"
       }, {
         "shape" : "UnauthorizedException"
+      }, {
+        "shape" : "ForbiddenException"
+      } ]
+    },
+    "ListConfigurationRevisions" : {
+      "name" : "ListConfigurationRevisions",
+      "http" : {
+        "method" : "GET",
+        "requestUri" : "/v1/configurations/{arn}/revisions",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "ListConfigurationRevisionsRequest"
+      },
+      "output" : {
+        "shape" : "ListConfigurationRevisionsResponse"
+      },
+      "errors" : [ {
+        "shape" : "BadRequestException"
+      }, {
+        "shape" : "UnauthorizedException"
+      }, {
+        "shape" : "InternalServerErrorException"
+      }, {
+        "shape" : "ForbiddenException"
+      }, {
+        "shape" : "NotFoundException"
+      }, {
+        "shape" : "ServiceUnavailableException"
+      } ]
+    },
+    "ListConfigurations" : {
+      "name" : "ListConfigurations",
+      "http" : {
+        "method" : "GET",
+        "requestUri" : "/v1/configurations",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "ListConfigurationsRequest"
+      },
+      "output" : {
+        "shape" : "ListConfigurationsResponse"
+      },
+      "errors" : [ {
+        "shape" : "ServiceUnavailableException"
+      }, {
+        "shape" : "BadRequestException"
+      }, {
+        "shape" : "UnauthorizedException"
+      }, {
+        "shape" : "InternalServerErrorException"
       }, {
         "shape" : "ForbiddenException"
       } ]
@@ -216,6 +399,58 @@
       }, {
         "shape" : "InternalServerErrorException"
       } ]
+    },
+    "UpdateBrokerStorage" : {
+      "name" : "UpdateBrokerStorage",
+      "http" : {
+        "method" : "PUT",
+        "requestUri" : "/v1/clusters/{clusterArn}/nodes/storage",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "UpdateBrokerStorageRequest"
+      },
+      "output" : {
+        "shape" : "UpdateBrokerStorageResponse"
+      },
+      "errors" : [ {
+        "shape" : "ServiceUnavailableException"
+      }, {
+        "shape" : "BadRequestException"
+      }, {
+        "shape" : "UnauthorizedException"
+      }, {
+        "shape" : "InternalServerErrorException"
+      }, {
+        "shape" : "ForbiddenException"
+      } ]
+    },
+    "UpdateClusterConfiguration" : {
+      "name" : "UpdateClusterConfiguration",
+      "http" : {
+        "method" : "PUT",
+        "requestUri" : "/v1/clusters/{clusterArn}/configuration",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "UpdateClusterConfigurationRequest"
+      },
+      "output" : {
+        "shape" : "UpdateClusterConfigurationResponse"
+      },
+      "errors" : [ {
+        "shape" : "BadRequestException"
+      }, {
+        "shape" : "UnauthorizedException"
+      }, {
+        "shape" : "InternalServerErrorException"
+      }, {
+        "shape" : "ForbiddenException"
+      }, {
+        "shape" : "NotFoundException"
+      }, {
+        "shape" : "ServiceUnavailableException"
+      } ]
     }
   },
   "shapes" : {
@@ -239,6 +474,20 @@
     "BrokerAZDistribution" : {
       "type" : "string",
       "enum" : [ "DEFAULT" ]
+    },
+    "BrokerEBSVolumeInfo" : {
+      "type" : "structure",
+      "members" : {
+        "KafkaBrokerNodeId" : {
+          "shape" : "__string",
+          "locationName" : "kafkaBrokerNodeId"
+        },
+        "VolumeSizeGB" : {
+          "shape" : "__integer",
+          "locationName" : "volumeSizeGB"
+        }
+      },
+      "required" : [ "VolumeSizeGB", "KafkaBrokerNodeId" ]
     },
     "BrokerNodeGroupInfo" : {
       "type" : "structure",
@@ -288,6 +537,10 @@
         "CurrentBrokerSoftwareInfo" : {
           "shape" : "BrokerSoftwareInfo",
           "locationName" : "currentBrokerSoftwareInfo"
+        },
+        "Endpoints" : {
+          "shape" : "__listOf__string",
+          "locationName" : "endpoints"
         }
       }
     },
@@ -299,7 +552,7 @@
           "locationName" : "configurationArn"
         },
         "ConfigurationRevision" : {
-          "shape" : "__string",
+          "shape" : "__long",
           "locationName" : "configurationRevision"
         },
         "KafkaVersion" : {
@@ -308,12 +561,33 @@
         }
       }
     },
+    "ClientAuthentication" : {
+      "type" : "structure",
+      "members" : {
+        "Tls" : {
+          "shape" : "Tls",
+          "locationName" : "tls"
+        }
+      }
+    },
+    "ClientBroker" : {
+      "type" : "string",
+      "enum" : [ "TLS", "TLS_PLAINTEXT", "PLAINTEXT" ]
+    },
     "ClusterInfo" : {
       "type" : "structure",
       "members" : {
+        "ActiveOperationArn" : {
+          "shape" : "__string",
+          "locationName" : "activeOperationArn"
+        },
         "BrokerNodeGroupInfo" : {
           "shape" : "BrokerNodeGroupInfo",
           "locationName" : "brokerNodeGroupInfo"
+        },
+        "ClientAuthentication" : {
+          "shape" : "ClientAuthentication",
+          "locationName" : "clientAuthentication"
         },
         "ClusterArn" : {
           "shape" : "__string",
@@ -351,15 +625,126 @@
           "shape" : "ClusterState",
           "locationName" : "state"
         },
+        "Tags" : {
+          "shape" : "__mapOf__string",
+          "locationName" : "tags"
+        },
         "ZookeeperConnectString" : {
           "shape" : "__string",
           "locationName" : "zookeeperConnectString"
         }
       }
     },
+    "ClusterOperationInfo" : {
+      "type" : "structure",
+      "members" : {
+        "ClientRequestId" : {
+          "shape" : "__string",
+          "locationName" : "clientRequestId"
+        },
+        "ClusterArn" : {
+          "shape" : "__string",
+          "locationName" : "clusterArn"
+        },
+        "CreationTime" : {
+          "shape" : "__timestampIso8601",
+          "locationName" : "creationTime"
+        },
+        "EndTime" : {
+          "shape" : "__timestampIso8601",
+          "locationName" : "endTime"
+        },
+        "ErrorInfo" : {
+          "shape" : "ErrorInfo",
+          "locationName" : "errorInfo"
+        },
+        "OperationArn" : {
+          "shape" : "__string",
+          "locationName" : "operationArn"
+        },
+        "OperationState" : {
+          "shape" : "__string",
+          "locationName" : "operationState"
+        },
+        "OperationType" : {
+          "shape" : "__string",
+          "locationName" : "operationType"
+        },
+        "SourceClusterInfo" : {
+          "shape" : "MutableClusterInfo",
+          "locationName" : "sourceClusterInfo"
+        },
+        "TargetClusterInfo" : {
+          "shape" : "MutableClusterInfo",
+          "locationName" : "targetClusterInfo"
+        }
+      }
+    },
     "ClusterState" : {
       "type" : "string",
-      "enum" : [ "ACTIVE", "CREATING", "DELETING", "FAILED" ]
+      "enum" : [ "ACTIVE", "CREATING", "UPDATING", "DELETING", "FAILED" ]
+    },
+    "Configuration" : {
+      "type" : "structure",
+      "members" : {
+        "Arn" : {
+          "shape" : "__string",
+          "locationName" : "arn"
+        },
+        "CreationTime" : {
+          "shape" : "__timestampIso8601",
+          "locationName" : "creationTime"
+        },
+        "Description" : {
+          "shape" : "__string",
+          "locationName" : "description"
+        },
+        "KafkaVersions" : {
+          "shape" : "__listOf__string",
+          "locationName" : "kafkaVersions"
+        },
+        "LatestRevision" : {
+          "shape" : "ConfigurationRevision",
+          "locationName" : "latestRevision"
+        },
+        "Name" : {
+          "shape" : "__string",
+          "locationName" : "name"
+        }
+      },
+      "required" : [ "Description", "LatestRevision", "CreationTime", "KafkaVersions", "Arn", "Name" ]
+    },
+    "ConfigurationInfo" : {
+      "type" : "structure",
+      "members" : {
+        "Arn" : {
+          "shape" : "__string",
+          "locationName" : "arn"
+        },
+        "Revision" : {
+          "shape" : "__long",
+          "locationName" : "revision"
+        }
+      },
+      "required" : [ "Revision", "Arn" ]
+    },
+    "ConfigurationRevision" : {
+      "type" : "structure",
+      "members" : {
+        "CreationTime" : {
+          "shape" : "__timestampIso8601",
+          "locationName" : "creationTime"
+        },
+        "Description" : {
+          "shape" : "__string",
+          "locationName" : "description"
+        },
+        "Revision" : {
+          "shape" : "__long",
+          "locationName" : "revision"
+        }
+      },
+      "required" : [ "Revision", "CreationTime" ]
     },
     "ConflictException" : {
       "type" : "structure",
@@ -385,9 +770,17 @@
           "shape" : "BrokerNodeGroupInfo",
           "locationName" : "brokerNodeGroupInfo"
         },
+        "ClientAuthentication" : {
+          "shape" : "ClientAuthentication",
+          "locationName" : "clientAuthentication"
+        },
         "ClusterName" : {
           "shape" : "__stringMin1Max64",
           "locationName" : "clusterName"
+        },
+        "ConfigurationInfo" : {
+          "shape" : "ConfigurationInfo",
+          "locationName" : "configurationInfo"
         },
         "EncryptionInfo" : {
           "shape" : "EncryptionInfo",
@@ -404,6 +797,10 @@
         "NumberOfBrokerNodes" : {
           "shape" : "__integerMin1Max15",
           "locationName" : "numberOfBrokerNodes"
+        },
+        "Tags" : {
+          "shape" : "__mapOf__string",
+          "locationName" : "tags"
         }
       },
       "required" : [ "BrokerNodeGroupInfo", "KafkaVersion", "NumberOfBrokerNodes", "ClusterName" ]
@@ -422,6 +819,49 @@
         "State" : {
           "shape" : "ClusterState",
           "locationName" : "state"
+        }
+      }
+    },
+    "CreateConfigurationRequest" : {
+      "type" : "structure",
+      "members" : {
+        "Description" : {
+          "shape" : "__string",
+          "locationName" : "description"
+        },
+        "KafkaVersions" : {
+          "shape" : "__listOf__string",
+          "locationName" : "kafkaVersions"
+        },
+        "Name" : {
+          "shape" : "__string",
+          "locationName" : "name"
+        },
+        "ServerProperties" : {
+          "shape" : "__blob",
+          "locationName" : "serverProperties"
+        }
+      },
+      "required" : [ "ServerProperties", "KafkaVersions", "Name" ]
+    },
+    "CreateConfigurationResponse" : {
+      "type" : "structure",
+      "members" : {
+        "Arn" : {
+          "shape" : "__string",
+          "locationName" : "arn"
+        },
+        "CreationTime": {
+          "shape": "__timestampIso8601",
+          "locationName": "creationTime"
+        },
+        "LatestRevision" : {
+          "shape" : "ConfigurationRevision",
+          "locationName" : "latestRevision"
+        },
+        "Name" : {
+          "shape" : "__string",
+          "locationName" : "name"
         }
       }
     },
@@ -454,6 +894,26 @@
         }
       }
     },
+    "DescribeClusterOperationRequest" : {
+      "type" : "structure",
+      "members" : {
+        "ClusterOperationArn" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "clusterOperationArn"
+        }
+      },
+      "required" : [ "ClusterOperationArn" ]
+    },
+    "DescribeClusterOperationResponse" : {
+      "type" : "structure",
+      "members" : {
+        "ClusterOperationInfo" : {
+          "shape" : "ClusterOperationInfo",
+          "locationName" : "clusterOperationInfo"
+        }
+      }
+    },
     "DescribeClusterRequest" : {
       "type" : "structure",
       "members" : {
@@ -471,6 +931,87 @@
         "ClusterInfo" : {
           "shape" : "ClusterInfo",
           "locationName" : "clusterInfo"
+        }
+      }
+    },
+    "DescribeConfigurationRequest" : {
+      "type" : "structure",
+      "members" : {
+        "Arn" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "arn"
+        }
+      },
+      "required" : [ "Arn" ]
+    },
+    "DescribeConfigurationResponse" : {
+      "type" : "structure",
+      "members" : {
+        "Arn" : {
+          "shape" : "__string",
+          "locationName" : "arn"
+        },
+        "CreationTime" : {
+          "shape" : "__timestampIso8601",
+          "locationName" : "creationTime"
+        },
+        "Description" : {
+          "shape" : "__string",
+          "locationName" : "description"
+        },
+        "KafkaVersions" : {
+          "shape" : "__listOf__string",
+          "locationName" : "kafkaVersions"
+        },
+        "LatestRevision" : {
+          "shape" : "ConfigurationRevision",
+          "locationName" : "latestRevision"
+        },
+        "Name" : {
+          "shape" : "__string",
+          "locationName" : "name"
+        }
+      }
+    },
+    "DescribeConfigurationRevisionRequest" : {
+      "type" : "structure",
+      "members" : {
+        "Arn" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "arn"
+        },
+        "Revision" : {
+          "shape" : "__long",
+          "location" : "uri",
+          "locationName" : "revision"
+        }
+      },
+      "required" : [ "Revision", "Arn" ]
+    },
+    "DescribeConfigurationRevisionResponse" : {
+      "type" : "structure",
+      "members" : {
+        "Arn" : {
+          "shape" : "__string",
+          "locationName" : "arn"
+        },
+        "CreationTime" : {
+          "shape" : "__timestampIso8601",
+          "locationName" : "creationTime"
+        },
+        "Description" : {
+          "shape" : "__string",
+          "locationName" : "description"
+        },
+        "Revision" : {
+          "shape" : "__long",
+          "locationName" : "revision"
+        },
+        "ServerProperties" : {
+          "shape" : "__blob",
+          "locationName" : "serverProperties"
         }
       }
     },
@@ -493,12 +1034,29 @@
       },
       "required" : [ "DataVolumeKMSKeyId" ]
     },
+    "EncryptionInTransit" : {
+      "type" : "structure",
+      "members" : {
+        "ClientBroker" : {
+          "shape" : "ClientBroker",
+          "locationName" : "clientBroker"
+        },
+        "InCluster" : {
+          "shape" : "__boolean",
+          "locationName" : "inCluster"
+        }
+      }
+    },
     "EncryptionInfo" : {
       "type" : "structure",
       "members" : {
         "EncryptionAtRest" : {
           "shape" : "EncryptionAtRest",
           "locationName" : "encryptionAtRest"
+        },
+        "EncryptionInTransit" : {
+          "shape" : "EncryptionInTransit",
+          "locationName" : "encryptionInTransit"
         }
       }
     },
@@ -516,6 +1074,19 @@
         "Message" : {
           "shape" : "__string",
           "locationName" : "message"
+        }
+      }
+    },
+    "ErrorInfo" : {
+      "type" : "structure",
+      "members" : {
+        "ErrorCode" : {
+          "shape" : "__string",
+          "locationName" : "errorCode"
+        },
+        "ErrorString" : {
+          "shape" : "__string",
+          "locationName" : "errorString"
         }
       }
     },
@@ -553,6 +1124,10 @@
         "BootstrapBrokerString" : {
           "shape" : "__string",
           "locationName" : "bootstrapBrokerString"
+        },
+        "BootstrapBrokerStringTls" : {
+          "shape" : "__string",
+          "locationName" : "bootstrapBrokerStringTls"
         }
       }
     },
@@ -571,6 +1146,40 @@
       "exception" : true,
       "error" : {
         "httpStatusCode" : 500
+      }
+    },
+    "ListClusterOperationsRequest" : {
+      "type" : "structure",
+      "members" : {
+        "ClusterArn" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "clusterArn"
+        },
+        "MaxResults" : {
+          "shape" : "MaxResults",
+          "location" : "querystring",
+          "locationName" : "maxResults"
+        },
+        "NextToken" : {
+          "shape" : "__string",
+          "location" : "querystring",
+          "locationName" : "nextToken"
+        }
+      },
+      "required" : [ "ClusterArn" ]
+    },
+    "ListClusterOperationsResponse" : {
+      "type" : "structure",
+      "members" : {
+        "ClusterOperationInfoList" : {
+          "shape" : "__listOfClusterOperationInfo",
+          "locationName" : "clusterOperationInfoList"
+        },
+        "NextToken" : {
+          "shape" : "__string",
+          "locationName" : "nextToken"
+        }
       }
     },
     "ListClustersRequest" : {
@@ -599,6 +1208,68 @@
         "ClusterInfoList" : {
           "shape" : "__listOfClusterInfo",
           "locationName" : "clusterInfoList"
+        },
+        "NextToken" : {
+          "shape" : "__string",
+          "locationName" : "nextToken"
+        }
+      }
+    },
+    "ListConfigurationRevisionsRequest" : {
+      "type" : "structure",
+      "members" : {
+        "Arn" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "arn"
+        },
+        "MaxResults" : {
+          "shape" : "MaxResults",
+          "location" : "querystring",
+          "locationName" : "maxResults"
+        },
+        "NextToken" : {
+          "shape" : "__string",
+          "location" : "querystring",
+          "locationName" : "nextToken"
+        }
+      },
+      "required" : [ "Arn" ]
+    },
+    "ListConfigurationRevisionsResponse" : {
+      "type" : "structure",
+      "members" : {
+        "NextToken" : {
+          "shape" : "__string",
+          "locationName" : "nextToken"
+        },
+        "Revisions" : {
+          "shape" : "__listOfConfigurationRevision",
+          "locationName" : "revisions"
+        }
+      }
+    },
+    "ListConfigurationsRequest" : {
+      "type" : "structure",
+      "members" : {
+        "MaxResults" : {
+          "shape" : "MaxResults",
+          "location" : "querystring",
+          "locationName" : "maxResults"
+        },
+        "NextToken" : {
+          "shape" : "__string",
+          "location" : "querystring",
+          "locationName" : "nextToken"
+        }
+      }
+    },
+    "ListConfigurationsResponse" : {
+      "type" : "structure",
+      "members" : {
+        "Configurations" : {
+          "shape" : "__listOfConfiguration",
+          "locationName" : "configurations"
         },
         "NextToken" : {
           "shape" : "__string",
@@ -664,6 +1335,23 @@
       "type" : "integer",
       "min" : 1,
       "max" : 100
+    },
+    "MutableClusterInfo" : {
+      "type" : "structure",
+      "members" : {
+        "BrokerEBSVolumeInfo" : {
+          "shape" : "__listOfBrokerEBSVolumeInfo",
+          "locationName" : "brokerEBSVolumeInfo"
+        },
+        "ConfigurationInfo" : {
+          "shape" : "ConfigurationInfo",
+          "locationName" : "configurationInfo"
+        },
+        "NumberOfBrokerNodes" : {
+          "shape" : "__integer",
+          "locationName" : "numberOfBrokerNodes"
+        }
+      }
     },
     "NodeInfo" : {
       "type" : "structure",
@@ -756,6 +1444,15 @@
       },
       "required" : [ "ResourceArn", "Tags" ]
     },
+    "Tls" : {
+      "type" : "structure",
+      "members" : {
+        "CertificateAuthorityArnList" : {
+          "shape" : "__listOf__string",
+          "locationName" : "certificateAuthorityArnList"
+        }
+      }
+    },
     "TooManyRequestsException" : {
       "type" : "structure",
       "members" : {
@@ -806,6 +1503,70 @@
       },
       "required" : [ "TagKeys", "ResourceArn" ]
     },
+    "UpdateBrokerStorageRequest" : {
+      "type" : "structure",
+      "members" : {
+        "ClusterArn" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "clusterArn"
+        },
+        "CurrentVersion" : {
+          "shape" : "__string",
+          "locationName" : "currentVersion"
+        },
+        "TargetBrokerEBSVolumeInfo" : {
+          "shape" : "__listOfBrokerEBSVolumeInfo",
+          "locationName" : "targetBrokerEBSVolumeInfo"
+        }
+      },
+      "required" : [ "ClusterArn", "TargetBrokerEBSVolumeInfo", "CurrentVersion" ]
+    },
+    "UpdateBrokerStorageResponse" : {
+      "type" : "structure",
+      "members" : {
+        "ClusterArn" : {
+          "shape" : "__string",
+          "locationName" : "clusterArn"
+        },
+        "ClusterOperationArn" : {
+          "shape" : "__string",
+          "locationName" : "clusterOperationArn"
+        }
+      }
+    },
+    "UpdateClusterConfigurationRequest" : {
+      "type" : "structure",
+      "members" : {
+        "ClusterArn" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "clusterArn"
+        },
+        "ConfigurationInfo" : {
+          "shape" : "ConfigurationInfo",
+          "locationName" : "configurationInfo"
+        },
+        "CurrentVersion" : {
+          "shape" : "__string",
+          "locationName" : "currentVersion"
+        }
+      },
+      "required" : [ "ClusterArn", "CurrentVersion", "ConfigurationInfo" ]
+    },
+    "UpdateClusterConfigurationResponse" : {
+      "type" : "structure",
+      "members" : {
+        "ClusterArn" : {
+          "shape" : "__string",
+          "locationName" : "clusterArn"
+        },
+        "ClusterOperationArn" : {
+          "shape" : "__string",
+          "locationName" : "clusterOperationArn"
+        }
+      }
+    },
     "ZookeeperNodeInfo" : {
       "type" : "structure",
       "members" : {
@@ -816,6 +1577,10 @@
         "ClientVpcIpAddress" : {
           "shape" : "__string",
           "locationName" : "clientVpcIpAddress"
+        },
+        "Endpoints" : {
+          "shape" : "__listOf__string",
+          "locationName" : "endpoints"
         },
         "ZookeeperId" : {
           "shape" : "__double",
@@ -829,6 +1594,9 @@
     },
     "__boolean" : {
       "type" : "boolean"
+    },
+    "__blob" : {
+      "type" : "blob"
     },
     "__double" : {
       "type" : "double"
@@ -846,10 +1614,34 @@
       "min" : 1,
       "max" : 16384
     },
+    "__listOfBrokerEBSVolumeInfo" : {
+      "type" : "list",
+      "member" : {
+        "shape" : "BrokerEBSVolumeInfo"
+      }
+    },
     "__listOfClusterInfo" : {
       "type" : "list",
       "member" : {
         "shape" : "ClusterInfo"
+      }
+    },
+    "__listOfClusterOperationInfo" : {
+      "type" : "list",
+      "member" : {
+        "shape" : "ClusterOperationInfo"
+      }
+    },
+    "__listOfConfiguration" : {
+      "type" : "list",
+      "member" : {
+        "shape" : "Configuration"
+      }
+    },
+    "__listOfConfigurationRevision" : {
+      "type" : "list",
+      "member" : {
+        "shape" : "ConfigurationRevision"
       }
     },
     "__listOfNodeInfo" : {
