@@ -528,13 +528,6 @@
       "ExceptionShape": {
         "type": "structure",
         "members": {
-          "ImaHeader": {
-            "shape": "HeaderShape"
-          },
-          "ImaHeaderLocation": {
-            "shape": "HeaderShape",
-            "locationName": "X-Foo"
-          },
           "Status": {
             "shape": "StatusShape",
             "location": "statusCode"
@@ -552,10 +545,6 @@
           "shape": "StringType"
         }
       },
-      "HeaderShape": {
-        "type": "string",
-        "location": "header"
-      },
       "StatusShape": {
         "type": "integer"
       },
@@ -572,8 +561,6 @@
           "name": "OperationName"
         },
         "error": {
-          "ImaHeader": "test",
-          "ImaHeaderLocation": "abc",
           "Status": 400,
           "BodyMember": "mybody",
           "Message": "mymessage"
@@ -582,10 +569,7 @@
         "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
-          "headers": {
-            "ImaHeader": "test",
-            "X-Foo": "abc"
-          },
+          "headers": {},
           "body": "<Response><Errors><Error><Code>ExceptionShape</Code><Message>mymessage</Message><BodyMember>mybody</BodyMember></Error></Errors></Response>"
         }
       },
@@ -601,10 +585,7 @@
         "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
-          "headers": {
-            "ImaHeader": "test",
-            "X-Foo": "abc"
-          },
+          "headers": {},
           "body": "<Response><Errors><Error><Code>OtherExceptionShape</Code><Message>mymessage</Message><BodyMember>mybody</BodyMember></Error></Errors></Response>"
         }
       },
@@ -619,10 +600,7 @@
         "errorCode": "UndefinedShape",
         "response": {
           "status_code": 400,
-          "headers": {
-            "ImaHeader": "test",
-            "X-Foo": "abc"
-          },
+          "headers": {},
           "body": "<Response><Errors><Error><Code>UndefinedShape</Code><BodyMember>mybody</BodyMember></Error></Errors></Response>"
         }
       }
