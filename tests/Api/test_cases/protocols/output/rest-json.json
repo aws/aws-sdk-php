@@ -727,6 +727,9 @@
           },
           "BodyMember": {
             "shape": "StringType"
+          },
+          "Message": {
+            "shape": "StringType"
           }
         }
       },
@@ -758,9 +761,11 @@
           "ImaHeader": "test",
           "ImaHeaderLocation": "abc",
           "Status": 400,
-          "BodyMember": "mybody"
+          "BodyMember": "mybody",
+          "Message": "mymessage"
         },
         "errorCode": "ExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
@@ -768,7 +773,7 @@
             "X-Foo": "abc",
             "X-Amzn-Errortype": "ExceptionShape"
           },
-          "body": "{\"BodyMember\": \"mybody\"}"
+          "body": "{\"BodyMember\": \"mybody\", \"Message\": \"mymessage\"}"
         }
       },
       {
@@ -782,16 +787,18 @@
           "ImaHeader": "test",
           "ImaHeaderLocation": "abc",
           "Status": 400,
-          "BodyMember": "mybody"
+          "BodyMember": "mybody",
+          "Message": "mymessage"
         },
         "errorCode": "ExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
             "ImaHeader": "test",
             "X-Foo": "abc"
           },
-          "body": "{ \"code\": \"ExceptionShape\", \"BodyMember\": \"mybody\"}"
+          "body": "{ \"code\": \"ExceptionShape\", \"BodyMember\": \"mybody\", \"Message\": \"mymessage\"}"
         }
       },
       {
@@ -805,9 +812,11 @@
           "ImaHeader": "test",
           "ImaHeaderLocation": "abc",
           "Status": 400,
-          "BodyMember": "mybody"
+          "BodyMember": "mybody",
+          "Message": "mymessage"
         },
         "errorCode": "ExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
@@ -815,7 +824,7 @@
             "X-Foo": "abc",
             "X-Amzn-Errortype": "ExceptionShape"
           },
-          "body": "{ \"code\": \"OtherExceptionShape\", \"BodyMember\": \"mybody\"}"
+          "body": "{ \"code\": \"OtherExceptionShape\", \"BodyMember\": \"mybody\", \"Message\": \"mymessage\"}"
         }
       },
       {
@@ -827,6 +836,7 @@
         },
         "error": {},
         "errorCode": "OtherExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
@@ -834,7 +844,7 @@
             "X-Foo": "abc",
             "X-Amzn-Errortype": "OtherExceptionShape"
           },
-          "body": "{ \"BodyMember\": \"mybody\"}"
+          "body": "{ \"BodyMember\": \"mybody\", \"Message\": \"mymessage\"}"
         }
       },
       {
@@ -846,13 +856,14 @@
         },
         "error": {},
         "errorCode": "OtherExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
             "ImaHeader": "test",
             "X-Foo": "abc"
           },
-          "body": "{ \"code\": \"OtherExceptionShape\", \"BodyMember\": \"mybody\"}"
+          "body": "{ \"code\": \"OtherExceptionShape\", \"BodyMember\": \"mybody\", \"Message\": \"mymessage\"}"
         }
       },
       {

@@ -541,6 +541,9 @@
           },
           "BodyMember": {
             "shape": "StringType"
+          },
+          "Message": {
+            "shape": "StringType"
           }
         }
       },
@@ -572,16 +575,18 @@
           "ImaHeader": "test",
           "ImaHeaderLocation": "abc",
           "Status": 400,
-          "BodyMember": "mybody"
+          "BodyMember": "mybody",
+          "Message": "mymessage"
         },
         "errorCode": "ExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
             "ImaHeader": "test",
             "X-Foo": "abc"
           },
-          "body": "<Response><Errors><Error><Code>ExceptionShape</Code><BodyMember>mybody</BodyMember></Error></Errors></Response>"
+          "body": "<Response><Errors><Error><Code>ExceptionShape</Code><Message>mymessage</Message><BodyMember>mybody</BodyMember></Error></Errors></Response>"
         }
       },
       {
@@ -593,13 +598,14 @@
         },
         "error": {},
         "errorCode": "OtherExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
             "ImaHeader": "test",
             "X-Foo": "abc"
           },
-          "body": "<Response><Errors><Error><Code>OtherExceptionShape</Code><BodyMember>mybody</BodyMember></Error></Errors></Response>"
+          "body": "<Response><Errors><Error><Code>OtherExceptionShape</Code><Message>mymessage</Message><BodyMember>mybody</BodyMember></Error></Errors></Response>"
         }
       },
       {

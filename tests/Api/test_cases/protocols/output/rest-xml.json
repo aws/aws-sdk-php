@@ -830,6 +830,9 @@
           },
           "BodyMember": {
             "shape": "StringType"
+          },
+          "Message": {
+            "shape": "StringType"
           }
         }
       },
@@ -861,9 +864,11 @@
           "ImaHeader": "test",
           "ImaHeaderLocation": "abc",
           "Status": 400,
-          "BodyMember": "mybody"
+          "BodyMember": "mybody",
+          "Message": "mymessage"
         },
         "errorCode": "ExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
@@ -871,7 +876,7 @@
             "X-Foo": "abc",
             "X-Amzn-Requestid": "foo-id"
           },
-          "body": "<ErrorResponse><Error><Type>SomeType</Type><Code>ExceptionShape</Code><BodyMember>mybody</BodyMember></Error></ErrorResponse>"
+          "body": "<ErrorResponse><Error><Type>SomeType</Type><Code>ExceptionShape</Code><Message>mymessage</Message><BodyMember>mybody</BodyMember></Error></ErrorResponse>"
         }
       },
       {
@@ -883,6 +888,7 @@
         },
         "error": {},
         "errorCode": "OtherExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
@@ -890,7 +896,7 @@
             "X-Foo": "abc",
             "X-Amzn-Requestid": "foo-id"
           },
-          "body": "<ErrorResponse><Error><Type>SomeType</Type><Code>OtherExceptionShape</Code><BodyMember>mybody</BodyMember></Error></ErrorResponse>"
+          "body": "<ErrorResponse><Error><Type>SomeType</Type><Code>OtherExceptionShape</Code><Message>mymessage</Message><BodyMember>mybody</BodyMember></Error></ErrorResponse>"
         }
       },
       {

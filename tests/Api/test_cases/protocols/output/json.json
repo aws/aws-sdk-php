@@ -408,6 +408,9 @@
           },
           "Code": {
             "shape": "StringType"
+          },
+          "Message": {
+            "shape": "StringType"
           }
         }
       },
@@ -440,16 +443,18 @@
           "ImaHeaderLocation": "abc",
           "Status": 400,
           "BodyMember": "mybody",
-          "Code": "OtherExceptionShape"
+          "Code": "OtherExceptionShape",
+          "Message": "mymessage"
         },
         "errorCode": "ExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
             "ImaHeader": "test",
             "X-Foo": "abc"
           },
-          "body": "{ \"__type\": \"ExceptionShape\", \"Code\": \"OtherExceptionShape\", \"BodyMember\": \"mybody\"}"
+          "body": "{ \"__type\": \"ExceptionShape\", \"Code\": \"OtherExceptionShape\", \"BodyMember\": \"mybody\", \"Message\": \"mymessage\"}"
         }
       },
       {
@@ -461,13 +466,14 @@
         },
         "error": {},
         "errorCode": "OtherExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
             "ImaHeader": "test",
             "X-Foo": "abc"
           },
-          "body": "{ \"__type\": \"OtherExceptionShape\", \"Code\": \"ExceptionShape\", \"BodyMember\": \"mybody\"}"
+          "body": "{ \"__type\": \"OtherExceptionShape\", \"Code\": \"ExceptionShape\", \"BodyMember\": \"mybody\", \"Message\": \"mymessage\"}"
         }
       },
       {
@@ -513,6 +519,9 @@
           },
           "BodyMember": {
             "shape": "StringType"
+          },
+          "Message": {
+            "shape": "StringType"
           }
         }
       },
@@ -539,16 +548,18 @@
           "ImaHeader": "test",
           "ImaHeaderLocation": "abc",
           "Status": 400,
-          "BodyMember": "mybody"
+          "BodyMember": "mybody",
+          "Message": "mymessage"
         },
         "errorCode": "ExceptionShape",
+        "errorMessage": "mymessage",
         "response": {
           "status_code": 400,
           "headers": {
             "ImaHeader": "test",
             "X-Foo": "abc"
           },
-          "body": "{ \"__type\": \"FooPrefix#ExceptionShape\", \"BodyMember\": \"mybody\"}"
+          "body": "{ \"__type\": \"FooPrefix#ExceptionShape\", \"BodyMember\": \"mybody\", \"Message\": \"mymessage\"}"
         }
       }
     ]
