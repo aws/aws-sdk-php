@@ -763,7 +763,7 @@ EOT;
             [
                 ['service' => 'dynamodb', 'region' => 'local'] + $invocationArgs,
                 'signing_region',
-                'us-east-1',
+                'local',
             ],
         ];
     }
