@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.102.0 - 2019-06-26
 
 * `Aws\` - Auto assume credential role using profile in `~/.aws/config`
 * `Aws\ApiGatewayV2` - You can now perform tag operations on ApiGatewayV2 Resources (typically associated with WebSocket APIs)
