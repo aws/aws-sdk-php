@@ -29,6 +29,7 @@ class RetryMiddleware
         'RequestThrottled'                       => true,
         'BandwidthLimitExceeded'                 => true,
         'RequestThrottledException'              => true,
+        'TooManyRequestsException'               => true,
     ];
 
     private $decider;
