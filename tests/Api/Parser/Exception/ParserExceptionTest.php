@@ -5,7 +5,7 @@ use Aws\Api\Parser\Exception\ParserException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Aws\Api\Parser\Exception\ParserException
+ * @covers \Aws\Api\Parser\Exception\ParserException
  */
 class ParserExceptionTest extends TestCase
 {
