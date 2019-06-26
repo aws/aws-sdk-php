@@ -313,7 +313,7 @@ class CredentialProvider
             if (!is_readable($filename)) {
                 return self::reject("Cannot read credentials from $filename");
             }
-            $data = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
+            $data = self::loadProfiles($filename);
             if ($data === false) {
                 return self::reject("Invalid credentials file: $filename");
             }
@@ -579,6 +579,31 @@ class CredentialProvider
         $homePath = getenv('HOMEPATH');
 
         return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
+    }
+
+    /**
+     * Gets profiles from specified $filename, or default ini files.
+     */
+    private static function loadProfiles($filename)
+    {
+        $profileData = \Aws\parse_ini_file($filename, true, INI_SCANNER_RAW);
+
+        // If loading .aws/credentials, also load .aws/config when AWS_SDK_LOAD_NONDEFAULT_CONFIG is set
+        if ($filename === self::getHomeDir() . '/.aws/credentials'
+            && getenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG')
+        ) {
+            $configFilename = self::getHomeDir() . '/.aws/config';
+            $configProfileData = \Aws\parse_ini_file($configFilename, true, INI_SCANNER_RAW);
+            foreach ($configProfileData as $name => $profile) {
+                // standardize config profile names
+                $name = str_replace('profile ', '', $name);
+                if (!isset($profileData[$name])) {
+                    $profileData[$name] = $profile;
+                }
+            }
+        }
+
+        return $profileData;
     }
 
     private static function reject($msg)
