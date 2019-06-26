@@ -145,6 +145,14 @@ class ServiceTest extends TestCase
         $this->assertInstanceOf($cl, Service::createErrorParser($p));
     }
 
+    /**
+     * @expectedException \UnexpectedValueException
+     */
+    public function testThrowsOnUnexpectedProtocol()
+    {
+        Service::createErrorParser('undefined_protocol');
+    }
+
     public function serializerDataProvider()
     {
         return [

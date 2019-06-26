@@ -192,6 +192,27 @@ class RestJsonErrorParserTest extends TestCase
                     'body' => [],
                 ]
             ],
+            // Error code in body, with service, unmodeled code, capitalized message
+            [
+                "HTTP/1.1 400 Bad Request\r\n" .
+                "x-amzn-requestid: xyz\r\n\r\n" .
+                '{ "type": "client", "Message": "lorem ipsum", "code": "NonExistentException" }',
+                null,
+                new RestJsonErrorParser($service),
+                [
+                    'code'       => 'NonExistentException',
+                    'message'    => 'lorem ipsum',
+                    'Message'    => 'lorem ipsum',
+                    'type'       => 'client',
+                    'request_id' => 'xyz',
+                    'parsed'     => [
+                        'type'    => 'client',
+                        'Message' => 'lorem ipsum',
+                        'code'    => 'NonExistentException'
+                    ],
+                    'body' => [],
+                ]
+            ],
         ];
     }
 }
