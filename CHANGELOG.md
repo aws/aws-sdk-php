@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Auto assume credential role using profile in `~/.aws/config`
+* `Aws\ApiGatewayV2` - You can now perform tag operations on ApiGatewayV2 Resources (typically associated with WebSocket APIs)
+* `Aws\CodeCommit` - This release supports better exception handling for merges.
+* `Aws\Test` - Updated endpoints file with corresponding updated partition tests.
+
 ## 3.101.1 - 2019-06-25
 
 * `Aws\EC2` - Starting today, you can use Traffic Mirroring to copy network traffic from an elastic network interface of Amazon EC2 instances and then send it to out-of-band security and monitoring appliances for content inspection, threat monitoring, and troubleshooting. These appliances can be deployed as individual instances, or as a fleet of instances behind a Network Load Balancer with a User Datagram Protocol (UDP) listener. Traffic Mirroring supports filters and packet truncation, so that you only extract the traffic of interest to monitor by using monitoring tools of your choice.
