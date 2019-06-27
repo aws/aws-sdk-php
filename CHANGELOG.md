@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.102.1 - 2019-06-27
 
 * `Aws\DynamoDB` - Documentation updates for dynamodb
 * `Aws\Test` - Removed outdated endpoints tests.
