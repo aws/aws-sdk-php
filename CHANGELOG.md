@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` - Documentation updates for dynamodb
+* `Aws\Test` - Removed outdated endpoints tests.
+
 ## 3.102.0 - 2019-06-26
 
 * `Aws\` - Auto assume credential role using profile in `~/.aws/config`
