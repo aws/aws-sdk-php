@@ -184,7 +184,6 @@ class AwsClient implements AwsClientInterface
         $this->defaultRequestOptions = $config['http'];
         $this->addSignatureMiddleware();
         $this->addInvocationId();
-        $this->addClientSideMonitoring($args);
         $this->addEndpointParameterMiddleware($args);
         $this->addEndpointDiscoveryMiddleware($config, $args);
         $this->loadAliases();
@@ -350,31 +349,6 @@ class AwsClient implements AwsClientInterface
         $this->handlerList->prependSign(Middleware::invocationId(), 'invocation-id');
     }
 
-    private function addClientSideMonitoring($args)
-    {
-        $options = ConfigurationProvider::defaultProvider($args);
-
-        $this->handlerList->appendBuild(
-            ApiCallMonitoringMiddleware::wrap(
-                $this->credentialProvider,
-                $options,
-                $this->region,
-                $this->getApi()->getServiceId()
-            ),
-            'ApiCallMonitoringMiddleware'
-        );
-
-        $callAttemptMiddleware = ApiCallAttemptMonitoringMiddleware::wrap(
-            $this->credentialProvider,
-            $options,
-            $this->region,
-            $this->getApi()->getServiceId()
-        );
-        $this->handlerList->appendAttempt (
-            $callAttemptMiddleware,
-            'ApiCallAttemptMonitoringMiddleware'
-        );
-    }
     private function loadAliases($file = null)
     {
         if (!isset($this->aliases)) {

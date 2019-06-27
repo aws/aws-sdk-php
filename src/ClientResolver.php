@@ -4,6 +4,8 @@ namespace Aws;
 use Aws\Api\Validator;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
+use Aws\ClientSideMonitoring\ApiCallAttemptMonitoringMiddleware;
+use Aws\ClientSideMonitoring\ApiCallMonitoringMiddleware;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
@@ -137,6 +139,13 @@ class ClientResolver
             'doc'     => 'Specifies the credentials used to sign requests. Provide an Aws\Credentials\CredentialsInterface object, an associative array of "key", "secret", and an optional "token" key, `false` to use null credentials, or a callable credentials provider used to create credentials or return null. See Aws\\Credentials\\CredentialProvider for a list of built-in credentials providers. If no credentials are provided, the SDK will attempt to load them from the environment.',
             'fn'      => [__CLASS__, '_apply_credentials'],
             'default' => [CredentialProvider::class, 'defaultProvider'],
+        ],
+        'csm' => [
+            'type'     => 'value',
+            'valid'    => [ConfigurationInterface::class, CacheInterface::class, 'callable', 'array'],
+            'doc'      => 'CSM options for the client, including whether it is enabled. Provides a callable wrapping a promise, an instance of ConfigurationInterface, an instance of CacheInterface, or an associative array of "enabled", "port", and "client_id".',
+            'fn'       => [__CLASS__, '_apply_csm'],
+            'default'  => [\Aws\ClientSideMonitoring\ConfigurationProvider::class, 'defaultProvider']
         ],
         'endpoint_discovery' => [
             'type'     => 'value',
@@ -431,6 +440,29 @@ class ClientResolver
                 . 'array that contains "key", "secret", and an optional "token" '
                 . 'key-value pairs, a credentials provider function, or false.');
         }
+    }
+
+    public static function _apply_csm($value, array &$args, HandlerList $list)
+    {
+        $list->appendBuild(
+            ApiCallMonitoringMiddleware::wrap(
+                $args['credentials'],
+                $value,
+                $args['region'],
+                $args['api']->getServiceId()
+            ),
+            'ApiCallMonitoringMiddleware'
+        );
+
+        $list->appendAttempt (
+            ApiCallAttemptMonitoringMiddleware::wrap(
+                $args['credentials'],
+                $value,
+                $args['region'],
+                $args['api']->getServiceId()
+            ),
+            'ApiCallAttemptMonitoringMiddleware'
+        );
     }
 
     public static function _apply_api_provider(callable $value, array &$args)
