@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.103.1 - 2019-06-28
 
 * `Aws\AlexaForBusiness` - This release allows developers and customers to add SIP addresses and international phone numbers to contacts.
 * `Aws\EC2` - You can now launch 8xlarge and 16xlarge instance sizes on the general purpose M5 and memory optimized R5 instance types.
