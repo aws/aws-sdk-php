@@ -44,10 +44,13 @@ use GuzzleHttp\Promise;
  */
 class CredentialProvider
 {
+    const ENV_ARN = 'AWS_ROLE_ARN';
     const ENV_KEY = 'AWS_ACCESS_KEY_ID';
+    const ENV_PROFILE = 'AWS_PROFILE';
+    const ENV_ROLE_SESSION_NAME = 'AWS_ROLE_SESSION_NAME';
     const ENV_SECRET = 'AWS_SECRET_ACCESS_KEY';
     const ENV_SESSION = 'AWS_SESSION_TOKEN';
-    const ENV_PROFILE = 'AWS_PROFILE';
+    const ENV_TOKEN_FILE = 'AWS_WEB_IDENTITY_TOKEN_FILE';
 
     /**
      * Create a default credential provider that first checks for environment
@@ -69,13 +72,18 @@ class CredentialProvider
      */
     public static function defaultProvider(array $config = [])
     {
-        $localCredentialProviders = self::localCredentialProviders();
+        $defaultChain = [
+            self::env(),
+            self::assumeRoleWithWebIdentityCredentialProvider(),
+            self::ini(),
+            self::ini('profile default', self::getHomeDir() . '/.aws/config'),
+        ];
         $remoteCredentialProviders = self::remoteCredentialProviders($config);
 
         return self::memoize(
             call_user_func_array(
                 'self::chain',
-                array_merge($localCredentialProviders, $remoteCredentialProviders)
+                array_merge($defaultChain, $remoteCredentialProviders)
             )
         );
     }
@@ -276,6 +284,42 @@ class CredentialProvider
     public static function assumeRole(array $config=[])
     {
         return new AssumeRoleCredentialProvider($config);
+    }
+
+    /**
+     * Credential provider that creates credentials by assuming role from a
+     * Web Identity Token
+     *
+     * @return callable
+     * @see Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider for
+     * $config details.
+     */
+    public static function assumeRoleWithWebIdentityCredentialProvider()
+    {
+        return function () {
+            $arnFromEnv = getenv(self::ENV_ARN);
+            $tokenFromEnv = getenv(self::ENV_TOKEN_FILE);
+            $profileName = getenv(self::ENV_PROFILE) ?: 'default';
+            $profiles = self::loadProfiles(self::getHomeDir() . '/.aws/credentials');
+            $profile = $profiles[$profileName];
+
+            if ($tokenFromEnv && $arnFromEnv) {
+                return new AssumeRoleWithWebIdentityCredentialProvider([
+                    'RoleArn' => $arnFromEnv,
+                    'WebIdentityTokenFile' => $tokenFromEnv,
+                    'SessionName' => getenv(self::ENV_ROLE_SESSION_NAME)
+                ]);
+            } else if (isset($profileData[$profileName]['web_identity_token_file'])
+                && isset($profileData[$profileName]['role_arn'])
+            ) {
+                return new AssumeRoleWithWebIdentityCredentialProvider([
+                    'RoleArn' => $profileData['role_arn'],
+                    'WebIdentityTokenFile' => $profileData['web_identity_token_file'],
+                    'SessionName' => $profileData['role_session_name']
+                ]);
+            }
+            return self::reject("No RoleArn or WebIdentityTokenFile specified");
+        };
     }
 
     /**
@@ -504,25 +548,6 @@ class CredentialProvider
 
         $creds = $stsClient->createCredentials($result);
         return Promise\promise_for($creds);
-    }
-
-
-    /**
-     * Local credential providers returns a list of local credential providers
-     * in following order:
-     *  - credentials from environment variables
-     *  - 'default' profile in '.aws/credentials' file
-     *  - 'profile default' profile in '.aws/config' file
-     *
-     * @return array
-     */
-    private static function localCredentialProviders()
-    {
-        return [
-            self::env(),
-            self::ini(),
-            self::ini('profile default', self::getHomeDir() . '/.aws/config')
-        ];
     }
 
     /**
