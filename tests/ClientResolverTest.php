@@ -3,6 +3,8 @@ namespace Aws\Test;
 
 use Aws\Api\Service;
 use Aws\ClientResolver;
+use Aws\ClientSideMonitoring\Configuration;
+use Aws\ClientSideMonitoring\ConfigurationProvider;
 use Aws\CommandInterface;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
@@ -386,6 +388,51 @@ EOT;
         }
 
         $this->assertSame($c, $cached);
+    }
+
+    public function testCanUseCsmConfigObject()
+    {
+        $config = new Configuration(true, 'foohost', 1111, 'barid');
+        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $resolver->resolve([
+            'service'     => 'sqs',
+            'region'      => 'x',
+            'csm'         => $config,
+            'version'     => 'latest'
+        ], new HandlerList());
+        $this->assertEquals($config->toArray(), $conf['csm']->toArray());
+    }
+
+    public function testCanUseCsmArray()
+    {
+        $config = new Configuration(true, 'foohost', 1111, 'barid');
+        $configArray = $config->toArray();
+        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $resolver->resolve([
+            'service'     => 'sqs',
+            'region'      => 'x',
+            'csm'         => $configArray,
+            'version'     => 'latest'
+        ], new HandlerList());
+        $this->assertEquals($configArray, $conf['csm']);
+    }
+
+    public function testCanUseCsmFalse()
+    {
+        $config = new Configuration(
+            false,
+            ConfigurationProvider::DEFAULT_HOST,
+            ConfigurationProvider::DEFAULT_PORT,
+            ConfigurationProvider::DEFAULT_CLIENT_ID
+        );
+        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $resolver->resolve([
+            'service'     => 'sqs',
+            'region'      => 'x',
+            'csm'         => false,
+            'version'     => 'latest'
+        ], new HandlerList());
+        $this->assertEquals($config->toArray(), $conf['csm']->toArray());
     }
 
     public function testCanUseCustomEndpointProviderWithExtraData()
