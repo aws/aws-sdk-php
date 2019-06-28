@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## 3.103.1 - 2019-06-28
+
+* `Aws\AlexaForBusiness` - This release allows developers and customers to add SIP addresses and international phone numbers to contacts.
+* `Aws\EC2` - You can now launch 8xlarge and 16xlarge instance sizes on the general purpose M5 and memory optimized R5 instance types.
+* `Aws\Redshift` - ClusterAvailabilityStatus: The availability status of the cluster for queries. Possible values are the following: Available, Unavailable, Maintenance, Modifying, Failed.
+* `Aws\WorkSpaces` - Minor API fixes for WorkSpaces.
+
+## 3.103.0 - 2019-06-27
+
+* `Aws\DirectConnect` - Tags will now be included in the API responses of all supported resources (Virtual interfaces, Connections, Interconnects and LAGs). You can also add tags while creating these resources.
+* `Aws\EC2InstanceConnect` - Amazon EC2 Instance Connect is a simple and secure way to connect to your instances using Secure Shell (SSH). With EC2 Instance Connect, you can control SSH access to your instances using AWS Identity and Access Management (IAM) policies as well as audit connection requests with AWS CloudTrail events. In addition, you can leverage your existing SSH keys or further enhance your security posture by generating one-time use SSH keys each time an authorized user connects.
+* `Aws\Pinpoint` - This release includes editorial updates for the Amazon Pinpoint API documentation.
+* `Aws\WorkSpaces` - Added support for the WorkSpaces restore feature and copying WorkSpaces Images across AWS Regions.
+
+## 3.102.1 - 2019-06-27
+
+* `Aws\DynamoDB` - Documentation updates for dynamodb
+* `Aws\Test` - Removed outdated endpoints tests.
+
+## 3.102.0 - 2019-06-26
+
+* `Aws\` - Auto assume credential role using profile in `~/.aws/config`
+* `Aws\ApiGatewayV2` - You can now perform tag operations on ApiGatewayV2 Resources (typically associated with WebSocket APIs)
+* `Aws\CodeCommit` - This release supports better exception handling for merges.
+* `Aws\Test` - Updated endpoints file with corresponding updated partition tests.
+
 ## 3.101.1 - 2019-06-25
 
 * `Aws\EC2` - Starting today, you can use Traffic Mirroring to copy network traffic from an elastic network interface of Amazon EC2 instances and then send it to out-of-band security and monitoring appliances for content inspection, threat monitoring, and troubleshooting. These appliances can be deployed as individual instances, or as a fleet of instances behind a Network Load Balancer with a User Datagram Protocol (UDP) listener. Traffic Mirroring supports filters and packet truncation, so that you only extract the traffic of interest to monitor by using monitoring tools of your choice.

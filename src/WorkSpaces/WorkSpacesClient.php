@@ -10,6 +10,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise associateIpGroupsAsync(array $args = [])
  * @method \Aws\Result authorizeIpRules(array $args = [])
  * @method \GuzzleHttp\Promise\Promise authorizeIpRulesAsync(array $args = [])
+ * @method \Aws\Result copyWorkspaceImage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise copyWorkspaceImageAsync(array $args = [])
  * @method \Aws\Result createIpGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createIpGroupAsync(array $args = [])
  * @method \Aws\Result createTags(array $args = [])
