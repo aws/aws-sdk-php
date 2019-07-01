@@ -98,7 +98,6 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         } finally {
             unlink($tokenPath);
         }
-
     }
 
     /**

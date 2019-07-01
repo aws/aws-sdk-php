@@ -93,7 +93,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
 
         return $client->assumeRoleWithWebIdentityAsync($assumeParams)
             ->then(function (Result $result) {
-                    return $this->client->createCredentials($result);
+                return $this->client->createCredentials($result);
             })->otherwise(function (\RuntimeException $exception) {
                 throw new CredentialsException(
                     "Error assuming role from web identity credentials",
