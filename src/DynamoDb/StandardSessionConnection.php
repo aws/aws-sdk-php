@@ -9,10 +9,10 @@ use Aws\DynamoDb\Exception\DynamoDbException;
 class StandardSessionConnection implements SessionConnectionInterface
 {
     use SessionConnectionConfigTrait;
-    
+
     /** @var DynamoDbClient The DynamoDB client */
     protected $client;
-    
+
     /**
      * @param DynamoDbClient    $client DynamoDB client
      * @param array             $config Session handler config
@@ -56,7 +56,7 @@ class StandardSessionConnection implements SessionConnectionInterface
         ];
         if ($isChanged) {
             if ($data != '') {
-                $attributes[$this->getDataAttribute()] = ['Value' => ['S' => $data]];
+                $attributes[$this->getDataAttribute()] = ['Value' => ['B' => $data]];
             } else {
                 $attributes[$this->getDataAttribute()] = ['Action' => 'DELETE'];
             }
