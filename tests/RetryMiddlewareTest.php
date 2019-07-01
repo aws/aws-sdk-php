@@ -186,8 +186,12 @@ class RetryMiddlewareTest extends TestCase
             [new AwsException('e', $command, ['code' => 'RequestThrottled'])],
             [new AwsException('e', $command, ['code' => 'BandwidthLimitExceeded'])],
             [new AwsException('e', $command, ['code' => 'RequestThrottledException'])],
+<<<<<<< HEAD
             [new AwsException('e', $command, ['code' => 'TooManyRequestsException'])],
             [new AwsException('e', $command, ['code' => 'IDPCommunicationError'])],
+=======
+            [new AwsException('e', $command, ['code' => 'TooManyRequestsException'])]
+>>>>>>> be04607c91573df9fb5364ad8658d25705f82bfe
         ];
     }
     /**
