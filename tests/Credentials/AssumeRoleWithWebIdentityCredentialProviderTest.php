@@ -74,7 +74,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $tokenPath = $dir . '/my-token.jwt';
         file_put_contents($tokenPath, 'token');
 
-        $sts = $this->getTestClient('Sts');
+        $sts = $this->getTestClient('Sts', ['credentials' => false]);
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
                 return Promise\promise_for(new Result($result));

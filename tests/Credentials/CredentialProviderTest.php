@@ -30,6 +30,8 @@ class CredentialProviderTest extends TestCase
         putenv(CredentialProvider::ENV_PROFILE . '=');
         putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI');
         putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG');
+        putenv('AWS_WEB_IDENTITY_TOKEN_FILE');
+        putenv('AWS_ROLE_ARN');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -815,6 +817,160 @@ EOT;
         } finally {
             unlink($dir . '/credentials');
             unlink($dir . '/config');
+        }
+    }
+
+    public function testPrefersEnvToProfileInAssumeRoleWebIdentity()
+    {
+        $dir = $this->clearEnv();
+        $tokenPath = $dir . '/token';
+        file_put_contents($tokenPath, 'token');
+        putenv('HOME=' . dirname($dir));
+        putenv('AWS_WEB_IDENTITY_TOKEN_FILE=' . $tokenPath);
+        putenv('AWS_ROLE_ARN=arn:aws:iam::012345678910:role/role_name');
+
+        $ini = <<<EOT
+[default]
+web_identity_token_file = /invalid/path
+role_arn = arn:aws:iam::012345678910:role/role_name
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'assumedSecret',
+                'SessionToken'    => null,
+                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+            ],
+        ];
+        $sts = $this->getTestClient('Sts', ['credentials' => false]);
+        $this->addMockResults($sts, [
+            new Result($result)
+        ]);
+
+        try {
+            $config = [
+                'stsClient' => $sts
+            ];
+            $creds = call_user_func(CredentialProvider::assumeRoleWithWebIdentityCredentialProvider(
+                $config
+            ))->wait();
+            $this->assertEquals('foo', $creds->getAccessKeyId());
+            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertFalse($creds->isExpired());
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+            unlink($tokenPath);
+        }
+    }
+
+    public function testAssumeRoleWebIdentityFromCredentials()
+    {
+        $dir = $this->clearEnv();
+        $tokenPath = $dir . '/token';
+        file_put_contents($tokenPath, 'token');
+        putenv('HOME=' . dirname($dir));
+        putenv('AWS_PROFILE=credentials');
+
+        $ini = <<<EOT
+[credentials]
+web_identity_token_file = $tokenPath
+role_arn = arn:aws:iam::012345678910:role/role_name
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'assumedSecret',
+                'SessionToken'    => null,
+                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+            ],
+        ];
+        $sts = $this->getTestClient('Sts', ['credentials' => false]);
+        $this->addMockResults($sts, [
+            new Result($result)
+        ]);
+
+        try {
+            $config = [
+                'stsClient' => $sts
+            ];
+            $creds = call_user_func(CredentialProvider::assumeRoleWithWebIdentityCredentialProvider(
+                $config
+            ))->wait();
+            $this->assertEquals('foo', $creds->getAccessKeyId());
+            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertFalse($creds->isExpired());
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+            unlink($tokenPath);
+        }
+    }
+
+    public function testAssumeRoleWebIdentityFromConfig()
+    {
+        $dir = $this->clearEnv();
+        $tokenPath = $dir . '/token';
+        file_put_contents($tokenPath, 'token');
+        putenv('HOME=' . dirname($dir));
+        putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG=1');
+        putenv('AWS_PROFILE=config');
+
+        $ini = <<<EOT
+[default]
+web_identity_token_file = $tokenPath
+role_arn = arn:aws:iam::012345678910:role/role_name
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+
+        $ini = <<<EOT
+[profile config]
+web_identity_token_file = $tokenPath
+role_arn = arn:aws:iam::012345678910:role/role_name
+EOT;
+        file_put_contents($dir . '/config', $ini);
+
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'assumedSecret',
+                'SessionToken'    => null,
+                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+            ],
+        ];
+        $sts = $this->getTestClient('Sts', ['credentials' => false]);
+        $this->addMockResults($sts, [
+            new Result($result)
+        ]);
+
+        try {
+            $config = [
+                'stsClient' => $sts
+            ];
+            $creds = call_user_func(CredentialProvider::assumeRoleWithWebIdentityCredentialProvider(
+                $config
+            ))->wait();
+            $this->assertEquals('foo', $creds->getAccessKeyId());
+            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertFalse($creds->isExpired());
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/config');
+            unlink($dir . '/credentials');
+            unlink($tokenPath);
         }
     }
 

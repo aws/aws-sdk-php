@@ -290,33 +290,55 @@ class CredentialProvider
      * Credential provider that creates credentials by assuming role from a
      * Web Identity Token
      *
+     * @param array $config Array of configuration data
      * @return callable
      * @see Aws\Credentials\AssumeRoleWithWebIdentityCredentialProvider for
      * $config details.
      */
-    public static function assumeRoleWithWebIdentityCredentialProvider()
+    public static function assumeRoleWithWebIdentityCredentialProvider(array $config = [])
     {
-        return function () {
+        return function () use ($config) {
             $arnFromEnv = getenv(self::ENV_ARN);
             $tokenFromEnv = getenv(self::ENV_TOKEN_FILE);
-            $profileName = getenv(self::ENV_PROFILE) ?: 'default';
-            $profiles = self::loadProfiles(self::getHomeDir() . '/.aws/credentials');
-            $profile = $profiles[$profileName];
+            $stsClient = isset($config['stsClient'])
+                ? $config['stsClient']
+                : null;
 
             if ($tokenFromEnv && $arnFromEnv) {
-                return new AssumeRoleWithWebIdentityCredentialProvider([
+                $sessionName = getenv(self::ENV_ROLE_SESSION_NAME)
+                    ? getenv(self::ENV_ROLE_SESSION_NAME)
+                    : null;
+                $provider = new AssumeRoleWithWebIdentityCredentialProvider([
                     'RoleArn' => $arnFromEnv,
                     'WebIdentityTokenFile' => $tokenFromEnv,
-                    'SessionName' => getenv(self::ENV_ROLE_SESSION_NAME)
+                    'SessionName' => $sessionName,
+                    'client' => $stsClient
                 ]);
-            } else if (isset($profileData[$profileName]['web_identity_token_file'])
-                && isset($profileData[$profileName]['role_arn'])
+
+                return $provider();
+            }
+
+            $profileName = getenv(self::ENV_PROFILE) ?: 'default';
+            $filename = isset($config['filename'])
+                ? $config['filename']
+                : self::getHomeDir() . '/.aws/credentials';
+            $profiles = self::loadProfiles($filename);
+            $profile = $profiles[$profileName];
+
+            if (isset($profile['web_identity_token_file'])
+                && isset($profile['role_arn'])
             ) {
-                return new AssumeRoleWithWebIdentityCredentialProvider([
-                    'RoleArn' => $profileData['role_arn'],
-                    'WebIdentityTokenFile' => $profileData['web_identity_token_file'],
-                    'SessionName' => $profileData['role_session_name']
+                $sessionName = isset($profile['role_session_name'])
+                    ? $profile['role_session_name']
+                    : null;
+                $provider = new AssumeRoleWithWebIdentityCredentialProvider([
+                    'RoleArn' => $profile['role_arn'],
+                    'WebIdentityTokenFile' => $profile['web_identity_token_file'],
+                    'SessionName' => $sessionName,
+                    'client' => $stsClient
                 ]);
+
+                return $provider();
             }
             return self::reject("No RoleArn or WebIdentityTokenFile specified");
         };
