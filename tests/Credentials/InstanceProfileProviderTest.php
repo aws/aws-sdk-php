@@ -177,7 +177,7 @@ class InstanceProfileProviderTest extends TestCase
         $t = time() + 1000;
         $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
         $c = $this->getTestCreds(
-            '{\n "Code":"Success"}', //initial json
+            '{\n "Code":"Success"}', //invalid json
             'foo',
             new Response(200, [], Psr7\stream_for($result)),
             ['retries' => 1]
@@ -190,7 +190,7 @@ class InstanceProfileProviderTest extends TestCase
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Invalid Instance JSON Response
+     * @expectedExceptionMessage Invalid JSON Response
      */
     public function testThrowsExceptionOnInvalidJsonResponse()
     {
