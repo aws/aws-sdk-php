@@ -25,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getLifecyclePolicyAsync(array $args = [])
  * @method \Aws\Result listContainers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listContainersAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putContainerPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putContainerPolicyAsync(array $args = [])
  * @method \Aws\Result putCorsPolicy(array $args = [])
@@ -35,5 +37,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise startAccessLoggingAsync(array $args = [])
  * @method \Aws\Result stopAccessLogging(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopAccessLoggingAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class MediaStoreClient extends AwsClient {}

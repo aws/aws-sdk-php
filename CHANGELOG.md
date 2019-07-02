@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Adding ImageBuilderName in Fleet API and Documentation updates for AppStream. 
+* `Aws\ClientSideMonitoring` - Added client configuration options for client-side monitoring.
+* `Aws\MediaStore` - This release adds support for tagging, untagging, and listing tags for AWS Elemental MediaStore containers.
+
 ## 3.103.2 - 2019-07-01
 
 * `Aws\DocDB` - This release provides support for cluster delete protection and the ability to stop and start clusters.
