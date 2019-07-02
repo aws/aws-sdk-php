@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.104.0 - 2019-07-02
 
 * `Aws\AppStream` - Adding ImageBuilderName in Fleet API and Documentation updates for AppStream. 
 * `Aws\ClientSideMonitoring` - Added client configuration options for client-side monitoring.
