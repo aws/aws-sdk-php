@@ -13,9 +13,6 @@ use GuzzleHttp\Promise;
 class AssumeRoleWithWebIdentityCredentialProvider
 {
     const ERROR_MSG = "Missing required 'AssumeRoleWithWebIdentityCredentialProvider' configuration option: ";
-    const ENV_TOKEN_FILE = 'AWS_WEB_IDENTITY_TOKEN_FILE';
-    const ENV_ARN = 'AWS_ROLE_ARN';
-    const ENV_SESSION = 'AWS_ROLE_SESSION';
 
     /** @var string */
     private $tokenFile;
@@ -51,6 +48,10 @@ class AssumeRoleWithWebIdentityCredentialProvider
             throw new \InvalidArgumentException(self::ERROR_MSG . "'WebIdentityTokenFile'.");
         }
         $this->tokenFile = $config['WebIdentityTokenFile'];
+
+        if (!preg_match("/^\w\:|^\/|^\\\/", $this->tokenFile)) {
+            throw new \InvalidArgumentException("'WebIdentityTokenFile' must be absolute path.");
+        }
 
         $this->session = isset($config['SessionName'])
             ? $config['SessionName']

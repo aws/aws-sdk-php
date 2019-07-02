@@ -57,6 +57,19 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
     }
 
     /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage 'WebIdentityTokenFile' must be absolute path.
+     */
+    public function testEnsureWebIdentityTokenFileIsAbsolutePath()
+    {
+        $config = [
+            'RoleArn' => self::SAMPLE_ROLE_ARN,
+            'WebIdentityTokenFile' => '..\foo\path'
+        ];
+        new AssumeRoleWithWebIdentityCredentialProvider($config);
+    }
+
+    /**
      * @group foo
      */
     public function testCanLoadAssumeRoleWithWebIdentityCredentials()
