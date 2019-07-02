@@ -923,15 +923,7 @@ EOT;
         $tokenPath = $dir . '/token';
         file_put_contents($tokenPath, 'token');
         putenv('HOME=' . dirname($dir));
-        putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG=1');
         putenv('AWS_PROFILE=config');
-
-        $ini = <<<EOT
-[default]
-web_identity_token_file = $tokenPath
-role_arn = arn:aws:iam::012345678910:role/role_name
-EOT;
-        file_put_contents($dir . '/credentials', $ini);
 
         $ini = <<<EOT
 [profile config]
@@ -969,7 +961,6 @@ EOT;
             throw $e;
         } finally {
             unlink($dir . '/config');
-            unlink($dir . '/credentials');
             unlink($tokenPath);
         }
     }
