@@ -349,10 +349,11 @@ class CredentialProvider
             }
 
             $profileName = getenv(self::ENV_PROFILE) ?: 'default';
-            $filename = isset($config['filename'])
-                ? $config['filename']
-                : self::getHomeDir() . '/.aws/credentials';
-            $profiles = self::loadProfiles($filename);
+            if (isset($config['filename'])) {
+                $profiles = self::loadProfiles($config['filename']);
+            } else {
+                $profiles = self::loadDefaultProfiles();
+            }
             $profile = $profiles[$profileName];
 
             if (isset($profile['web_identity_token_file'])
@@ -644,6 +645,31 @@ class CredentialProvider
         }
 
         return $profileData;
+    }
+
+    /**
+     * Gets profiles from ~/.aws/credentials and ~/.aws/config ini files
+     */
+    private static function loadDefaultProfiles() {
+        $profiles = [];
+        $credFile = self::getHomeDir() . '/.aws/credentials';
+        $configFile = self::getHomeDir() . '/.aws/config';
+        if (file_exists($credFile)) {
+            $profiles = \Aws\parse_ini_file($credFile, true, INI_SCANNER_RAW);
+        }
+
+        if (file_exists($configFile)) {
+        $configProfileData = \Aws\parse_ini_file($configFile, true, INI_SCANNER_RAW);
+            foreach ($configProfileData as $name => $profile) {
+                // standardize config profile names
+                $name = str_replace('profile ', '', $name);
+                if (!isset($profiles[$name])) {
+                    $profiles[$name] = $profile;
+                }
+            }
+        }
+
+        return $profiles;
     }
 
     private static function reject($msg)
