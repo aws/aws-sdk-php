@@ -78,12 +78,42 @@ class CredentialProvider
             self::ini(),
             self::ini('profile default', self::getHomeDir() . '/.aws/config'),
         ];
-        $remoteCredentialProviders = self::remoteCredentialProviders($config);
+
+        if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
+            $defaultChain['ecs'] = self::ecsCredentials($config);
+        }
+        $defaultChain['process_credentials'] = self::process();
+        $defaultChain['process_config'] = self::process(
+            'profile default',
+            self::getHomeDir() . '/.aws/config'
+        );
+        $defaultChain['instance'] = self::instanceProfile($config);
+
+        $cacheable = [
+            'ecs',
+            'process_credentials',
+            'process_config',
+            'instance'
+        ];
+
+        if (isset($config['credentials'])
+            && $config['credentials'] instanceof CacheInterface
+        ) {
+            foreach ($cacheable as $provider) {
+                if (isset($defaultChain[$provider])) {
+                    $defaultChain[$provider] = self::cache(
+                        $defaultChain[$provider],
+                        $config['credentials'],
+                        'aws_cached_' . $provider . '_credentials'
+                    );
+                };
+            }
+        }
 
         return self::memoize(
             call_user_func_array(
                 'self::chain',
-                array_merge($defaultChain, $remoteCredentialProviders)
+                $defaultChain
             )
         );
     }
@@ -570,43 +600,6 @@ class CredentialProvider
 
         $creds = $stsClient->createCredentials($result);
         return Promise\promise_for($creds);
-    }
-
-    /**
-     * Remote credential providers returns a list of credentials providers
-     * for the remote endpoints such as EC2 or ECS Roles.
-     *
-     * @param array $config Array of configuration data.
-     *
-     * @return array
-     * @see Aws\Credentials\InstanceProfileProvider for $config details.
-     * @see Aws\Credentials\EcsCredentialProvider for $config details.
-     */
-    private static function remoteCredentialProviders(array $config = [])
-    {
-        if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
-            $providers['ecs'] = self::ecsCredentials($config);
-        }
-        $providers['process_credentials'] = self::process();
-        $providers['process_config'] = self::process(
-            'profile default',
-            self::getHomeDir() . '/.aws/config'
-        );
-        $providers['instance'] = self::instanceProfile($config);
-
-        if (isset($config['credentials'])
-            && $config['credentials'] instanceof CacheInterface
-        ) {
-            foreach ($providers as $key => $provider) {
-                $providers[$key] = self::cache(
-                    $provider,
-                    $config['credentials'],
-                    'aws_cached_' . $key . '_credentials'
-                );
-            }
-        }
-
-        return $providers;
     }
 
     /**
