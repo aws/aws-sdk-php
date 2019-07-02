@@ -2,6 +2,7 @@
 namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
+use Aws\Exception\InvalidJsonException;
 use Aws\Sdk;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
@@ -24,11 +25,18 @@ class InstanceProfileProvider
     /** @var callable */
     private $client;
 
+    /** @var int */
+    private $retries;
+
+    /** @var int */
+    private $attempts;
+
     /**
      * The constructor accepts the following options:
      *
      * - timeout: Connection timeout, in seconds.
      * - profile: Optional EC2 profile name, if known.
+     * - retries: Optional number of retries to be attempted.
      *
      * @param array $config Configuration options.
      */
@@ -36,6 +44,8 @@ class InstanceProfileProvider
     {
         $this->timeout = isset($config['timeout']) ? $config['timeout'] : 1.0;
         $this->profile = isset($config['profile']) ? $config['profile'] : null;
+        $this->retries = isset($config['retries']) ? $config['retries'] : 0;
+        $this->attempts = 0;
         $this->client = isset($config['client'])
             ? $config['client'] // internal use only
             : \Aws\default_http_handler();
@@ -52,8 +62,22 @@ class InstanceProfileProvider
             if (!$this->profile) {
                 $this->profile = (yield $this->request(self::CRED_PATH));
             }
-            $json = (yield $this->request(self::CRED_PATH . $this->profile));
-            $result = $this->decodeResult($json);
+            $result = null;
+            while ($result == null) {
+                try {
+                    $json = (yield $this->request(self::CRED_PATH . $this->profile));
+                    $result = $this->decodeResult($json);
+                } catch (InvalidJsonException $e) {
+                    if ($this->attempts < $this->retries) {
+                        sleep(1.2 ** $this->attempts);
+                    } else {
+                        throw new CredentialsException(
+                            'Invalid JSON Response, retries exhausted.'
+                        );
+                    }
+                }
+                $this->attempts++;
+            }
             yield new Credentials(
                 $result['AccessKeyId'],
                 $result['SecretAccessKey'],
@@ -107,6 +131,10 @@ class InstanceProfileProvider
     private function decodeResult($response)
     {
         $result = json_decode($response, true);
+
+        if (json_last_error() > 0) {
+            throw new InvalidJsonException();
+        }
 
         if ($result['Code'] !== 'Success') {
             throw new CredentialsException('Unexpected instance profile '

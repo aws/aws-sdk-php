@@ -16,7 +16,11 @@ use Psr\Http\Message\RequestInterface;
 class InstanceProfileProviderTest extends TestCase
 {
     private function getCredentialArray(
-        $key, $secret, $token = null, $time = null, $success = true
+        $key,
+        $secret,
+        $token = null,
+        $time = null,
+        $success = true
     ) {
         return [
             'Code'            => $success ? 'Success' : 'Failed',
@@ -27,14 +31,14 @@ class InstanceProfileProviderTest extends TestCase
         ];
     }
 
-    private function getTestCreds($result, $profile = null, Response $more = null)
+    private function getTestCreds($result, $profile = null, Response $more = null, array $args = [])
     {
         $responses = [];
         if (!$profile) {
             $responses[] = new Response(200, [], Psr7\stream_for('test'));
         }
 
-        $responses[] = new Response(200, [], Psr7\stream_for(json_encode($result)));
+        $responses[] = new Response(200, [], Psr7\stream_for($result));
         if ($more) {
             $responses[] = $more;
         }
@@ -46,7 +50,7 @@ class InstanceProfileProviderTest extends TestCase
             return Promise\promise_for(array_shift($responses));
         };
 
-        $args = ['profile' => $profile];
+        $args['profile'] = $profile;
         $args['client'] = $client;
         $provider = new InstanceProfileProvider($args);
 
@@ -74,7 +78,7 @@ class InstanceProfileProviderTest extends TestCase
     {
         $t = time() + 1000;
         $c = $this->getTestCreds(
-            $this->getCredentialArray('foo', 'baz', null, "@{$t}"),
+            json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}")),
             'foo'
         )->wait();
         $this->assertEquals('foo', $c->getAccessKeyId());
@@ -125,7 +129,7 @@ class InstanceProfileProviderTest extends TestCase
     public function testThrowsExceptionOnInvalidMetadata()
     {
         $this->getTestCreds(
-            $this->getCredentialArray(null, null, null, null, false),
+            json_encode($this->getCredentialArray(null, null, null, null, false)),
             'foo'
         )->wait();
     }
@@ -134,7 +138,7 @@ class InstanceProfileProviderTest extends TestCase
     {
         $t = time() + 1000;
         $c = $this->getTestCreds(
-            $this->getCredentialArray('foo', 'baz', null, "@{$t}")
+            json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"))
         )->wait();
         $this->assertEquals('foo', $c->getAccessKeyId());
         $this->assertEquals('baz', $c->getSecretKey());
@@ -155,7 +159,7 @@ class InstanceProfileProviderTest extends TestCase
             putenv(InstanceProfileProvider::ENV_DISABLE . '=true');
             $t = time() + 1000;
             $this->getTestCreds(
-                $this->getCredentialArray('foo', 'baz', null, "@{$t}")
+                json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"))
             )->wait();
             $this->fail('Did not throw expected CredentialException.');
         } catch (CredentialsException $e) {
@@ -166,5 +170,33 @@ class InstanceProfileProviderTest extends TestCase
         } finally {
             putenv(InstanceProfileProvider::ENV_DISABLE . '=' . $flag);
         }
+    }
+
+    public function testRetryInvalidJson()
+    {
+        $t = time() + 1000;
+        $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
+        $c = $this->getTestCreds(
+            '{\n "Code":"Success"}', //initial json
+            'foo',
+            new Response(200, [], Psr7\stream_for($result)),
+            ['retries' => 1]
+        )->wait();
+        $this->assertEquals('foo', $c->getAccessKeyId());
+        $this->assertEquals('baz', $c->getSecretKey());
+        $this->assertNull($c->getSecurityToken());
+        $this->assertEquals($t, $c->getExpiration());
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Invalid Instance JSON Response
+     */
+    public function testThrowsExceptionOnInvalidJsonResponse()
+    {
+        $c = $this->getTestCreds(
+            '{\n "Code":"Success"}', //invalid json
+            'foo'
+        )->wait();
     }
 }
