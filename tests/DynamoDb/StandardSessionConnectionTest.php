@@ -70,7 +70,7 @@ class StandardSessionConnectionTest extends TestCase
             new Result(['Item' => [
                 'sessionid' => ['S' => 'session1'],
                 'otherkey'  => ['S' => 'foo'],
-                'binarykey' => ['B' => 'bar']k
+                'binarykey' => ['B' => 'bar']
             ]]),
         ]);
         
