@@ -179,8 +179,7 @@ class InstanceProfileProviderTest extends TestCase
         $c = $this->getTestCreds(
             '{\n "Code":"Success"}', //invalid json
             'foo',
-            new Response(200, [], Psr7\stream_for($result)),
-            ['retries' => 1]
+            new Response(200, [], Psr7\stream_for($result))
         )->wait();
         $this->assertEquals('foo', $c->getAccessKeyId());
         $this->assertEquals('baz', $c->getSecretKey());
@@ -196,7 +195,9 @@ class InstanceProfileProviderTest extends TestCase
     {
         $c = $this->getTestCreds(
             '{\n "Code":"Success"}', //invalid json
-            'foo'
+            'foo',
+            null,
+            ['retries' => 0]
         )->wait();
     }
 }
