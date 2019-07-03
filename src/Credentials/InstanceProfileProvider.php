@@ -44,7 +44,7 @@ class InstanceProfileProvider
     {
         $this->timeout = isset($config['timeout']) ? $config['timeout'] : 1.0;
         $this->profile = isset($config['profile']) ? $config['profile'] : null;
-        $this->retries = isset($config['retries']) ? $config['retries'] : 0;
+        $this->retries = isset($config['retries']) ? $config['retries'] : 3;
         $this->attempts = 0;
         $this->client = isset($config['client'])
             ? $config['client'] // internal use only
