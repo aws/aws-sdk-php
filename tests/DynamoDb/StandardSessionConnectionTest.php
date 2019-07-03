@@ -22,6 +22,7 @@ class StandardSessionConnectionTest extends TestCase
         $this->assertEquals('sessions', $scc->getTableName());
         $this->assertEquals('id', $scc->getHashKey());
         $this->assertEquals('data', $scc->getDataAttribute());
+        $this->assertEquals('string', $scc->getDataAttributeType());
         $this->assertEquals((int) ini_get('session.gc_maxlifetime'), $scc->getSessionLifetime());
         $this->assertEquals('expires', $scc->getSessionLifetimeAttribute());
         $this->assertTrue($scc->isConsistentRead());
@@ -38,6 +39,7 @@ class StandardSessionConnectionTest extends TestCase
             'table_name'                    => 'sessions_custom',
             'hash_key'                      => 'id_custom',
             'data_attribute'                => 'data_custom',
+            'data_attribute_type'           => 'binary',
             'session_lifetime'              => 2019,
             'session_lifetime_attribute'    => 'expires_custom',
             'consistent_read'               => false,
@@ -51,6 +53,7 @@ class StandardSessionConnectionTest extends TestCase
         $this->assertEquals('sessions_custom', $scc->getTableName());
         $this->assertEquals('id_custom', $scc->getHashKey());
         $this->assertEquals('data_custom', $scc->getDataAttribute());
+        $this->assertEquals('binary', $scc->getDataAttributeType());
         $this->assertEquals(2019, $scc->getSessionLifetime());
         $this->assertEquals('expires_custom', $scc->getSessionLifetimeAttribute());
         $this->assertFalse($scc->isConsistentRead());
@@ -66,7 +69,8 @@ class StandardSessionConnectionTest extends TestCase
         $this->addMockResults($client, [
             new Result(['Item' => [
                 'sessionid' => ['S' => 'session1'],
-                'otherkey'  => ['S' => 'foo']
+                'otherkey'  => ['S' => 'foo'],
+                'binarykey' => ['B' => 'bar']
             ]]),
         ]);
         
@@ -83,7 +87,7 @@ class StandardSessionConnectionTest extends TestCase
         $data = $connection->read('session1');
 
         $this->assertEquals(
-            ['sessionid' => 'session1', 'otherkey' => 'foo'],
+            ['sessionid' => 'session1', 'otherkey' => 'foo', 'binarykey' => 'bar'],
             $data
         );
     }
@@ -109,8 +113,25 @@ class StandardSessionConnectionTest extends TestCase
             $this->assertArrayHasKey('expires', $updates);
             $this->assertArrayHasKey('lock', $updates);
             $this->assertArrayHasKey('data', $updates);
+            $this->assertArrayHasKey('S', $updates['data']['Value']);
         }));
         $connection = new StandardSessionConnection($client);
+        $return = $connection->write('s1', serialize(['foo' => 'bar']), true);
+        $this->assertTrue($return);
+    }
+
+    public function testWriteUpdatesItemDataAsBinary()
+    {
+        $client = $this->getTestSdk()->createDynamoDb();
+        $this->addMockResults($client, [new Result([])]);
+        $client->getHandlerList()->appendBuild(Middleware::tap(function ($command) {
+            $updates = $command['AttributeUpdates'];
+            $this->assertArrayHasKey('data', $updates);
+            $this->assertArrayHasKey('B', $updates['data']['Value']);
+        }));
+        $connection = new StandardSessionConnection($client, [
+            'data_attribute_type' => 'binary',
+        ]);
         $return = $connection->write('s1', serialize(['foo' => 'bar']), true);
         $this->assertTrue($return);
     }
