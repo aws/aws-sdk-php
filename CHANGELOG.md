@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.104.1 - 2019-07-03
 
 * `Aws\EC2` - AssignPrivateIpAddresses response includes two new fields: AssignedPrivateIpAddresses, NetworkInterfaceId
 * `Aws\RDS` - This release supports Cross-Account Cloning for Amazon Aurora clusters.
