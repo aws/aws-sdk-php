@@ -78,10 +78,6 @@ class XmlErrorParser extends AbstractErrorParser
         }
 
         $tempXml = $body->xpath("//{$prefix}RequestId[1]");
-        if (empty($tempXml)) {
-            $tempXml = $body->xpath("//{$prefix}RequestID[1]");
-        }
-
         if (isset($tempXml[0])) {
             $data['request_id'] = (string)$tempXml[0];
         }
