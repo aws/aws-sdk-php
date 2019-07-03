@@ -4,6 +4,8 @@ namespace Aws\Test;
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\Api\ErrorParser\RestJsonErrorParser;
 use Aws\Api\ErrorParser\XmlErrorParser;
+use Aws\Api\Service;
+use Aws\AwsClient;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
@@ -21,6 +23,8 @@ use PHPUnit\Framework\TestCase;
  */
 class WrappedHttpHandlerTest extends TestCase
 {
+    use ParserTestServiceTrait;
+
     public function testParsesResponses()
     {
         $called = false;
@@ -97,16 +101,20 @@ class WrappedHttpHandlerTest extends TestCase
      * @param $errorParser
      * @param $expectedCode
      * @param $expectedId
+     * @param $expectedArray
      */
     public function testCanRejectWithAndParseResponse(
         Response $res,
+        Service $service,
         $errorParser,
         $expectedCode,
-        $expectedId
+        $expectedId,
+        $expectedArray
     )
     {
+        $client = $this->generateTestClient($service, []);
+        $cmd = $client->getCommand('TestOperation', []);
         $e = new \Exception('a');
-        $cmd = new Command('foo');
         $req = new Request('GET', 'http://foo.com');
         $handler = function () use ($e, $req, $res) {
             return new RejectedPromise(['exception' => $e, 'response' => $res]);
@@ -124,11 +132,20 @@ class WrappedHttpHandlerTest extends TestCase
             $this->assertNull($e->getResult());
             $this->assertEquals($expectedCode, $e->getAwsErrorCode());
             $this->assertEquals($expectedId, $e->getAwsRequestId());
+            $this->assertEquals($expectedArray, $e->toArray());
         }
     }
 
     public function responseAndParserProvider()
     {
+        $services = [
+            'ec2' => $this->generateTestService('ec2'),
+            'json' => $this->generateTestService('json'),
+            'query' => $this->generateTestService('query'),
+            'rest-json' => $this->generateTestService('rest-json'),
+            'rest-xml' => $this->generateTestService('rest-xml'),
+        ];
+
         return [
             [
                 new Response(
@@ -136,22 +153,25 @@ class WrappedHttpHandlerTest extends TestCase
                     ['X-Amzn-RequestId' => '123'],
                     json_encode(['__type' => 'foo#bar'])
                 ),
-                new JsonRpcErrorParser(),
+                $services['json'],
+                new JsonRpcErrorParser($services['json']),
                 'bar',
                 '123',
+                [],
             ],
             [
                 new Response(
                     400,
                     [
                         'X-Amzn-RequestId' => '123',
-                        'X-Amzn-ErrorType' => 'foo:bar'
                     ],
                     json_encode(['message' => 'sorry!'])
                 ),
-                new RestJsonErrorParser(),
-                'foo',
+                $services['rest-json'],
+                new RestJsonErrorParser($services['rest-json']),
+                null,
                 '123',
+                [],
             ],
             [
                 new Response(
@@ -159,9 +179,11 @@ class WrappedHttpHandlerTest extends TestCase
                     [],
                     '<?xml version="1.0" encoding="UTF-8"?><Error><Code>InternalError</Code><RequestId>656c76696e6727732072657175657374</RequestId></Error>'
                 ),
-                new XmlErrorParser(),
+                $services['rest-xml'],
+                new XmlErrorParser($services['rest-xml']),
                 'InternalError',
                 '656c76696e6727732072657175657374',
+                [],
             ],
             [
                 new Response(
@@ -169,9 +191,149 @@ class WrappedHttpHandlerTest extends TestCase
                     ['X-Amzn-RequestId' => '123'],
                     openssl_random_pseudo_bytes(1024)
                 ),
-                new XmlErrorParser(),
+                $services['query'],
+                new XmlErrorParser($services['query']),
                 null,
                 null,
+                [],
+            ],
+            // Rest-json with modeled exception from header error type
+            [
+                new Response(
+                    400,
+                    [
+                        'X-Amzn-RequestId' => '123',
+                        'X-Amzn-ErrorType' => 'TestException'
+                    ],
+                    json_encode([
+                        'TestString' => 'foo-string',
+                        'TestInt' => 456,
+                        'NotModeled' => 'bar'
+                    ])
+                ),
+                $services['rest-json'],
+                new RestJsonErrorParser($services['rest-json']),
+                'TestException',
+                '123',
+                [
+                    'TestString' => 'foo-string',
+                    'TestInt' => 456,
+                    'TestHeaderMember' => '',
+                    'TestHeaders' => [],
+                    'TestStatus' => 400
+                ],
+            ],
+            // Rest-json with modeled exception from body error code
+            [
+                new Response(
+                    400,
+                    [
+                        'X-Amzn-RequestId' => '123'
+                    ],
+                    json_encode([
+                        'TestString' => 'foo-string',
+                        'TestInt' => 456,
+                        'NotModeled' => 'bar',
+                        'code' => 'TestException'
+                    ])
+                ),
+                $services['rest-json'],
+                new RestJsonErrorParser($services['rest-json']),
+                'TestException',
+                '123',
+                [
+                    'TestString' => 'foo-string',
+                    'TestInt' => 456,
+                    'TestHeaderMember' => '',
+                    'TestHeaders' => [],
+                    'TestStatus' => 400
+                ],
+            ],
+            // Ec2 with modeled exception
+            [
+                new Response(
+                    400,
+                    [],
+                    '<?xml version="1.0" encoding="UTF-8"?>' . "\n" .
+                    '<Response>' .
+                    '  <Errors>' .
+                    '    <Error>' .
+                    '      <Code>TestException</Code>' .
+                    '      <Message>Error Message</Message>' .
+                    '      <TestString>SomeString</TestString>' .
+                    '      <TestInt>456</TestInt>' .
+                    '    </Error>' .
+                    '  </Errors>' .
+                    '  <RequestId>xyz</RequestId>' .
+                    '</Response>'
+                ),
+                $services['ec2'],
+                new XmlErrorParser($services['ec2']),
+                'TestException',
+                'xyz',
+                [
+                    'TestString' => 'SomeString',
+                    'TestInt' => 456,
+                    'TestHeaderMember' => '',
+                    'TestHeaders' => [],
+                    'TestStatus' => 400,
+                ],
+            ],
+            // Query with modeled exception
+            [
+                new Response(
+                    400,
+                    [],
+                    '<ErrorResponse xmlns="http://sns.amazonaws.com/doc/2010-03-31/">' .
+                    '  <Error>' .
+                    '    <Type>ErrorType</Type>' .
+                    '    <Code>TestException</Code>' .
+                    '    <Message>Error Message</Message>' .
+                    '    <TestString>SomeString</TestString>' .
+                    '    <TestInt>456</TestInt>' .
+                    '  </Error>' .
+                    '  <RequestId>xyz</RequestId>' .
+                    '</ErrorResponse>'
+                ),
+                $services['query'],
+                new XmlErrorParser($services['query']),
+                'TestException',
+                'xyz',
+                [
+                    'TestString' => 'SomeString',
+                    'TestInt' => 456,
+                    'TestHeaderMember' => '',
+                    'TestHeaders' => [],
+                    'TestStatus' => 400,
+                ],
+            ],
+            // Rest-xml with modeled exception
+            [
+                new Response(
+                    400,
+                    [],
+                    '<ErrorResponse xmlns="http://sns.amazonaws.com/doc/2010-03-31/">' .
+                    '  <Error>' .
+                    '    <Type>ErrorType</Type>' .
+                    '    <Code>TestException</Code>' .
+                    '    <Message>Error Message</Message>' .
+                    '    <TestString>SomeString</TestString>' .
+                    '    <TestInt>456</TestInt>' .
+                    '  </Error>' .
+                    '  <RequestId>xyz</RequestId>' .
+                    '</ErrorResponse>'
+                ),
+                $services['rest-xml'],
+                new XmlErrorParser($services['rest-xml']),
+                'TestException',
+                'xyz',
+                [
+                    'TestString' => 'SomeString',
+                    'TestInt' => 456,
+                    'TestHeaderMember' => '',
+                    'TestHeaders' => [],
+                    'TestStatus' => 400,
+                ],
             ],
         ];
     }

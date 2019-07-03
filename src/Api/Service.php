@@ -102,12 +102,14 @@ class Service extends AbstractModel
     /**
      * Creates an error parser for the given protocol.
      *
+     * Redundant method signature to preserve backwards compatibility.
+     *
      * @param string $protocol Protocol to parse (e.g., query, json, etc.)
      *
      * @return callable
      * @throws \UnexpectedValueException
      */
-    public static function createErrorParser($protocol)
+    public static function createErrorParser($protocol, Service $api = null)
     {
         static $mapping = [
             'json'      => 'Aws\Api\ErrorParser\JsonRpcErrorParser',
@@ -118,7 +120,7 @@ class Service extends AbstractModel
         ];
 
         if (isset($mapping[$protocol])) {
-            return new $mapping[$protocol]();
+            return new $mapping[$protocol]($api);
         }
 
         throw new \UnexpectedValueException("Unknown protocol: $protocol");

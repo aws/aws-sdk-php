@@ -14,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 abstract class AbstractRestParser extends AbstractParser
 {
     use PayloadParserTrait;
+
     /**
      * Parses a payload from a response.
      *
