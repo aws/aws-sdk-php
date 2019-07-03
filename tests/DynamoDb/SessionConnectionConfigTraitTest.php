@@ -18,6 +18,7 @@ class SessionConnectionConfigTraitTest extends TestCase
         $this->assertEquals('sessions', $scc->getTableName());
         $this->assertEquals('id', $scc->getHashKey());
         $this->assertEquals('data', $scc->getDataAttribute());
+        $this->assertEquals('string', $scc->getDataAttributeType());
         $this->assertEquals((int) ini_get('session.gc_maxlifetime'), $scc->getSessionLifetime());
         $this->assertEquals('expires', $scc->getSessionLifetimeAttribute());
         $this->assertTrue($scc->isConsistentRead());
@@ -34,6 +35,7 @@ class SessionConnectionConfigTraitTest extends TestCase
             'table_name'                    => 'sessions_custom',
             'hash_key'                      => 'id_custom',
             'data_attribute'                => 'data_custom',
+            'data_attribute_type'           => 'binary',
             'session_lifetime'              => 2019,
             'session_lifetime_attribute'    => 'expires_custom',
             'consistent_read'               => false,
@@ -48,6 +50,7 @@ class SessionConnectionConfigTraitTest extends TestCase
         $this->assertEquals('sessions_custom', $scc->getTableName());
         $this->assertEquals('id_custom', $scc->getHashKey());
         $this->assertEquals('data_custom', $scc->getDataAttribute());
+        $this->assertEquals('binary', $scc->getDataAttributeType());
         $this->assertEquals(2019, $scc->getSessionLifetime());
         $this->assertEquals('expires_custom', $scc->getSessionLifetimeAttribute());
         $this->assertFalse($scc->isConsistentRead());
