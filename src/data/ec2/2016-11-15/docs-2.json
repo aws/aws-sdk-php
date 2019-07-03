@@ -172,7 +172,7 @@
     "DescribeInstanceAttribute": "<p>Describes the specified attribute of the specified instance. You can specify only one attribute at a time. Valid attribute values are: <code>instanceType</code> | <code>kernel</code> | <code>ramdisk</code> | <code>userData</code> | <code>disableApiTermination</code> | <code>instanceInitiatedShutdownBehavior</code> | <code>rootDeviceName</code> | <code>blockDeviceMapping</code> | <code>productCodes</code> | <code>sourceDestCheck</code> | <code>groupSet</code> | <code>ebsOptimized</code> | <code>sriovNetSupport</code> </p>",
     "DescribeInstanceCreditSpecifications": "<p>Describes the credit option for CPU usage of the specified T2 or T3 instances. The credit options are <code>standard</code> and <code>unlimited</code>.</p> <p>If you do not specify an instance ID, Amazon EC2 returns T2 and T3 instances with the <code>unlimited</code> credit option, as well as instances that were previously configured as T2 or T3 with the <code>unlimited</code> credit option. For example, if you resize a T2 instance, while it is configured as <code>unlimited</code>, to an M4 instance, Amazon EC2 returns the M4 instance.</p> <p>If you specify one or more instance IDs, Amazon EC2 returns the credit option (<code>standard</code> or <code>unlimited</code>) of those instances. If you specify an instance ID that is not valid, such as an instance that is not a T2 or T3 instance, an error is returned.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>If an Availability Zone is experiencing a service disruption and you specify instance IDs in the affected zone, or do not specify any instance IDs at all, the call fails. If you specify only instance IDs in an unaffected zone, the call works normally.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html\">Burstable Performance Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
     "DescribeInstanceStatus": "<p>Describes the status of the specified instances or all of your instances. By default, only running instances are described, unless you specifically indicate to return the status of all instances.</p> <p>Instance status includes the following components:</p> <ul> <li> <p> <b>Status checks</b> - Amazon EC2 performs status checks on running EC2 instances to identify hardware and software issues. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html\">Status Checks for Your Instances</a> and <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html\">Troubleshooting Instances with Failed Status Checks</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> </li> <li> <p> <b>Scheduled events</b> - Amazon EC2 can schedule events (such as reboot, stop, or terminate) for your instances related to hardware issues, software updates, or system maintenance. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-instances-status-check_sched.html\">Scheduled Events for Your Instances</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> </li> <li> <p> <b>Instance state</b> - You can manage your instances from the moment you launch them through their termination. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html\">Instance Lifecycle</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> </li> </ul>",
-    "DescribeInstances": "<p>Describes the specified instances or all of your instances.</p> <p>If you specify one or more instance IDs, Amazon EC2 returns information for those instances. If you do not specify instance IDs, Amazon EC2 returns information for all relevant instances. If you specify an instance ID that is not valid, an error is returned. If you specify an instance that you do not own, it is not included in the returned results.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>If you describe instances in the rare case where an Availability Zone is experiencing a service disruption and you specify instance IDs that are in the affected zone, or do not specify any instance IDs at all, the call fails. If you describe instances and specify only instance IDs that are in an unaffected zone, the call works normally.</p>",
+    "DescribeInstances": "<p>Describes the specified instances or all of AWS account's instances.</p> <p>If you specify one or more instance IDs, Amazon EC2 returns information for those instances. If you do not specify instance IDs, Amazon EC2 returns information for all relevant instances. If you specify an instance ID that is not valid, an error is returned. If you specify an instance that you do not own, it is not included in the returned results.</p> <p>Recently terminated instances might appear in the returned results. This interval is usually less than one hour.</p> <p>If you describe instances in the rare case where an Availability Zone is experiencing a service disruption and you specify instance IDs that are in the affected zone, or do not specify any instance IDs at all, the call fails. If you describe instances and specify only instance IDs that are in an unaffected zone, the call works normally.</p>",
     "DescribeInternetGateways": "<p>Describes one or more of your internet gateways.</p>",
     "DescribeKeyPairs": "<p>Describes the specified key pairs or all of your key pairs.</p> <p>For more information about key pairs, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html\">Key Pairs</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
     "DescribeLaunchTemplateVersions": "<p>Describes one or more versions of a specified launch template. You can describe all versions, individual versions, or a range of versions.</p>",
@@ -561,6 +561,23 @@
     "AssignPrivateIpAddressesRequest": {
       "base": "<p>Contains the parameters for AssignPrivateIpAddresses.</p>",
       "refs": {
+      }
+    },
+    "AssignPrivateIpAddressesResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AssignedPrivateIpAddress": {
+      "base": "<p>Describes the private IP addresses assigned to a network interface.</p>",
+      "refs": {
+        "AssignedPrivateIpAddressList$member": null
+      }
+    },
+    "AssignedPrivateIpAddressList": {
+      "base": null,
+      "refs": {
+        "AssignPrivateIpAddressesResult$AssignedPrivateIpAddresses": "<p>The private IP addresses assigned to the network interface.</p>"
       }
     },
     "AssociateAddressRequest": {
@@ -966,7 +983,7 @@
         "CopyFpgaImageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CopyImageRequest$Encrypted": "<p>Specifies whether the destination snapshots of the copied image should be encrypted. You can encrypt a copy of an unencrypted snapshot, but you cannot create an unencrypted copy of an encrypted snapshot. The default CMK for EBS is used unless you specify a non-default AWS Key Management Service (AWS KMS) CMK using <code>KmsKeyId</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
         "CopyImageRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
-        "CopySnapshotRequest$Encrypted": "<p>Specifies whether the destination snapshot should be encrypted. You can encrypt a copy of an unencrypted snapshot, but you cannot use it to create an unencrypted copy of an encrypted snapshot. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
+        "CopySnapshotRequest$Encrypted": "<p>To encrypt a copy of an unencrypted snapshot if encryption by default is not enabled, enable encryption using this parameter. Otherwise, omit this parameter. Encrypted snapshots are encrypted, even if you omit this parameter and encryption by default is not enabled. You cannot set this parameter to false. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html\">Amazon EBS Encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>",
         "CopySnapshotRequest$DryRun": "<p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>",
         "CreateCapacityReservationRequest$EbsOptimized": "<p>Indicates whether the Capacity Reservation supports EBS-optimized instances. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS- optimized instance.</p>",
         "CreateCapacityReservationRequest$EphemeralStorage": "<p>Indicates whether the Capacity Reservation supports instances with temporary, block-level storage.</p>",
@@ -3145,6 +3162,12 @@
       "refs": {
       }
     },
+    "DescribeByoipCidrsMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeByoipCidrsRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
+      }
+    },
     "DescribeByoipCidrsRequest": {
       "base": null,
       "refs": {
@@ -3171,6 +3194,12 @@
       "refs": {
       }
     },
+    "DescribeClassicLinkInstancesMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeClassicLinkInstancesRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p> <p>Constraint: If the value is greater than 1000, we return only 1000 items.</p>"
+      }
+    },
     "DescribeClassicLinkInstancesRequest": {
       "base": null,
       "refs": {
@@ -3179,6 +3208,12 @@
     "DescribeClassicLinkInstancesResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "DescribeClientVpnAuthorizationRulesMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeClientVpnAuthorizationRulesRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the nextToken value.</p>"
       }
     },
     "DescribeClientVpnAuthorizationRulesRequest": {
@@ -3191,6 +3226,12 @@
       "refs": {
       }
     },
+    "DescribeClientVpnConnectionsMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeClientVpnConnectionsRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the nextToken value.</p>"
+      }
+    },
     "DescribeClientVpnConnectionsRequest": {
       "base": null,
       "refs": {
@@ -3199,6 +3240,12 @@
     "DescribeClientVpnConnectionsResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "DescribeClientVpnEndpointMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeClientVpnEndpointsRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the nextToken value.</p>"
       }
     },
     "DescribeClientVpnEndpointsRequest": {
@@ -3211,6 +3258,12 @@
       "refs": {
       }
     },
+    "DescribeClientVpnRoutesMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeClientVpnRoutesRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the nextToken value.</p>"
+      }
+    },
     "DescribeClientVpnRoutesRequest": {
       "base": null,
       "refs": {
@@ -3219,6 +3272,12 @@
     "DescribeClientVpnRoutesResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "DescribeClientVpnTargetNetworksMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeClientVpnTargetNetworksRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the nextToken value.</p>"
       }
     },
     "DescribeClientVpnTargetNetworksRequest": {
@@ -3271,6 +3330,12 @@
     "DescribeDhcpOptionsResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "DescribeEgressOnlyInternetGatewaysMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeEgressOnlyInternetGatewaysRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
       }
     },
     "DescribeEgressOnlyInternetGatewaysRequest": {
@@ -3383,6 +3448,12 @@
       "refs": {
       }
     },
+    "DescribeFpgaImagesMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeFpgaImagesRequest$MaxResults": "<p>The maximum number of results to return in a single call.</p>"
+      }
+    },
     "DescribeFpgaImagesRequest": {
       "base": null,
       "refs": {
@@ -3427,6 +3498,12 @@
     "DescribeHostsResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "DescribeIamInstanceProfileAssociationsMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeIamInstanceProfileAssociationsRequest$MaxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>"
       }
     },
     "DescribeIamInstanceProfileAssociationsRequest": {
@@ -3587,6 +3664,12 @@
       "refs": {
       }
     },
+    "DescribeMovingAddressesMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeMovingAddressesRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results of the initial request can be seen by sending another request with the returned <code>NextToken</code> value. This value can be between 5 and 1000; if <code>MaxResults</code> is given a value outside of this range, an error is returned.</p> <p>Default: If no value is provided, the default is 1000.</p>"
+      }
+    },
     "DescribeMovingAddressesRequest": {
       "base": null,
       "refs": {
@@ -3595,6 +3678,12 @@
     "DescribeMovingAddressesResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "DescribeNatGatewaysMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeNatGatewaysRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
       }
     },
     "DescribeNatGatewaysRequest": {
@@ -3685,6 +3774,12 @@
       "refs": {
       }
     },
+    "DescribePrincipalIdFormatMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribePrincipalIdFormatRequest$MaxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned NextToken value. </p>"
+      }
+    },
     "DescribePrincipalIdFormatRequest": {
       "base": null,
       "refs": {
@@ -3771,6 +3866,12 @@
       "refs": {
       }
     },
+    "DescribeScheduledInstanceAvailabilityMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeScheduledInstanceAvailabilityRequest$MaxResults": "<p>The maximum number of results to return in a single call. This value can be between 5 and 300. The default value is 300. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>"
+      }
+    },
     "DescribeScheduledInstanceAvailabilityRequest": {
       "base": "<p>Contains the parameters for DescribeScheduledInstanceAvailability.</p>",
       "refs": {
@@ -3847,6 +3948,12 @@
       "refs": {
       }
     },
+    "DescribeSpotFleetInstancesMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeSpotFleetInstancesRequest$MaxResults": "<p>The maximum number of results to return in a single call. Specify a value between 1 and 1000. The default value is 1000. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>"
+      }
+    },
     "DescribeSpotFleetInstancesRequest": {
       "base": "<p>Contains the parameters for DescribeSpotFleetInstances.</p>",
       "refs": {
@@ -3855,6 +3962,12 @@
     "DescribeSpotFleetInstancesResponse": {
       "base": "<p>Contains the output of DescribeSpotFleetInstances.</p>",
       "refs": {
+      }
+    },
+    "DescribeSpotFleetRequestHistoryMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeSpotFleetRequestHistoryRequest$MaxResults": "<p>The maximum number of results to return in a single call. Specify a value between 1 and 1000. The default value is 1000. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>"
       }
     },
     "DescribeSpotFleetRequestHistoryRequest": {
@@ -4063,6 +4176,19 @@
     "DescribeVpcAttributeResult": {
       "base": null,
       "refs": {
+      }
+    },
+    "DescribeVpcClassicLinkDnsSupportMaxResults": {
+      "base": null,
+      "refs": {
+        "DescribeVpcClassicLinkDnsSupportRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
+      }
+    },
+    "DescribeVpcClassicLinkDnsSupportNextToken": {
+      "base": null,
+      "refs": {
+        "DescribeVpcClassicLinkDnsSupportRequest$NextToken": "<p>The token for the next page of results.</p>",
+        "DescribeVpcClassicLinkDnsSupportResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"
       }
     },
     "DescribeVpcClassicLinkDnsSupportRequest": {
@@ -6050,8 +6176,6 @@
         "CreateVolumeRequest$Iops": "<p>The number of I/O operations per second (IOPS) to provision for the volume, with a maximum ratio of 50 IOPS/GiB. Range is 100 to 64,000 IOPS for volumes in most Regions. Maximum IOPS of 64,000 is guaranteed only on <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances\">Nitro-based instances</a>. Other instance families guarantee performance up to 32,000 IOPS. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSVolumeTypes.html\">Amazon EBS Volume Types</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>This parameter is valid only for Provisioned IOPS SSD (io1) volumes.</p>",
         "CreateVolumeRequest$Size": "<p>The size of the volume, in GiBs.</p> <p>Constraints: 1-16,384 for <code>gp2</code>, 4-16,384 for <code>io1</code>, 500-16,384 for <code>st1</code>, 500-16,384 for <code>sc1</code>, and 1-1,024 for <code>standard</code>. If you specify a snapshot, the volume size must be equal to or larger than the snapshot size.</p> <p>Default: If you're creating the volume from a snapshot and don't specify a volume size, the default is the snapshot size.</p> <note> <p>At least one of Size or SnapshotId is required.</p> </note>",
         "DeleteNetworkAclEntryRequest$RuleNumber": "<p>The rule number of the entry to delete.</p>",
-        "DescribeClassicLinkInstancesRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p> <p>Constraint: If the value is greater than 1000, we return only 1000 items.</p>",
-        "DescribeEgressOnlyInternetGatewaysRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "DescribeElasticGpusResult$MaxResults": "<p>The total number of items to return. If the total number of items available is more than the value specified in max-items then a Next-Token will be provided in the output that you can use to resume pagination.</p>",
         "DescribeFleetHistoryRequest$MaxResults": "<p>The maximum number of results to return in a single call. Specify a value between 1 and 1000. The default value is 1000. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>",
         "DescribeFleetInstancesRequest$MaxResults": "<p>The maximum number of results to return in a single call. Specify a value between 1 and 1000. The default value is 1000. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>",
@@ -6066,19 +6190,13 @@
         "DescribeInstanceStatusRequest$MaxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value. This value can be between 5 and 1000. You cannot specify this parameter and the instance IDs parameter in the same call.</p>",
         "DescribeInstancesRequest$MaxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value. This value can be between 5 and 1000. You cannot specify this parameter and the instance IDs parameter in the same call.</p>",
         "DescribeLaunchTemplateVersionsRequest$MaxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value. This value can be between 1 and 200.</p>",
-        "DescribeMovingAddressesRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results of the initial request can be seen by sending another request with the returned <code>NextToken</code> value. This value can be between 5 and 1000; if <code>MaxResults</code> is given a value outside of this range, an error is returned.</p> <p>Default: If no value is provided, the default is 1000.</p>",
-        "DescribeNatGatewaysRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "DescribePrefixListsRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
-        "DescribePrincipalIdFormatRequest$MaxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned NextToken value. </p>",
         "DescribeReservedInstancesOfferingsRequest$MaxInstanceCount": "<p>The maximum number of instances to filter when searching for offerings.</p> <p>Default: 20</p>",
         "DescribeReservedInstancesOfferingsRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results of the initial request can be seen by sending another request with the returned <code>NextToken</code> value. The maximum is 100.</p> <p>Default: 100</p>",
-        "DescribeScheduledInstanceAvailabilityRequest$MaxResults": "<p>The maximum number of results to return in a single call. This value can be between 5 and 300. The default value is 300. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>",
         "DescribeScheduledInstanceAvailabilityRequest$MaxSlotDurationInHours": "<p>The maximum available duration, in hours. This value must be greater than <code>MinSlotDurationInHours</code> and less than 1,720.</p>",
         "DescribeScheduledInstanceAvailabilityRequest$MinSlotDurationInHours": "<p>The minimum available duration, in hours. The minimum required duration is 1,200 hours per year. For example, the minimum daily schedule is 4 hours, the minimum weekly schedule is 24 hours, and the minimum monthly schedule is 100 hours.</p>",
         "DescribeScheduledInstancesRequest$MaxResults": "<p>The maximum number of results to return in a single call. This value can be between 5 and 300. The default value is 100. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>",
         "DescribeSnapshotsRequest$MaxResults": "<p>The maximum number of snapshot results returned by <code>DescribeSnapshots</code> in paginated output. When this parameter is used, <code>DescribeSnapshots</code> only returns <code>MaxResults</code> results in a single page along with a <code>NextToken</code> response element. The remaining results of the initial request can be seen by sending another <code>DescribeSnapshots</code> request with the returned <code>NextToken</code> value. This value can be between 5 and 1000; if <code>MaxResults</code> is given a value larger than 1000, only 1000 results are returned. If this parameter is not used, then <code>DescribeSnapshots</code> returns all results. You cannot specify this parameter and the snapshot IDs parameter in the same request.</p>",
-        "DescribeSpotFleetInstancesRequest$MaxResults": "<p>The maximum number of results to return in a single call. Specify a value between 1 and 1000. The default value is 1000. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>",
-        "DescribeSpotFleetRequestHistoryRequest$MaxResults": "<p>The maximum number of results to return in a single call. Specify a value between 1 and 1000. The default value is 1000. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>",
         "DescribeSpotFleetRequestsRequest$MaxResults": "<p>The maximum number of results to return in a single call. Specify a value between 1 and 1000. The default value is 1000. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>",
         "DescribeSpotInstanceRequestsRequest$MaxResults": "<p>The maximum number of results to return in a single call. Specify a value between 5 and 1000. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>",
         "DescribeSpotPriceHistoryRequest$MaxResults": "<p>The maximum number of results to return in a single call. Specify a value between 1 and 1000. The default value is 1000. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>",
@@ -6132,6 +6250,7 @@
         "ModifyCapacityReservationRequest$InstanceCount": "<p>The number of instances for which to reserve capacity.</p>",
         "ModifyInstancePlacementRequest$PartitionNumber": "<p>Reserved for future use.</p>",
         "ModifySpotFleetRequestRequest$TargetCapacity": "<p>The size of the fleet.</p>",
+        "ModifySpotFleetRequestRequest$OnDemandTargetCapacity": "<p>The number of On-Demand Instances in the fleet.</p>",
         "ModifyTrafficMirrorFilterRuleRequest$RuleNumber": "<p>The number of the Traffic Mirror rule. This number must be unique for each Traffic Mirror rule in a given direction. The rules are processed in ascending order by rule number.</p>",
         "ModifyTrafficMirrorFilterRuleRequest$Protocol": "<p>The protocol, for example TCP, to assign to the Traffic Mirror rule.</p>",
         "ModifyTrafficMirrorSessionRequest$PacketLength": "<p>The number of bytes in each packet to mirror. These are bytes after the VXLAN header. To mirror a subset, set this to the length (in bytes) to mirror. For example, if you set this value to 100, then the first 100 bytes that meet the filter criteria are copied to the target. Do not specify this parameter when you want to mirror the entire packet.</p>",
@@ -6200,8 +6319,8 @@
         "StaleIpPermission$ToPort": "<p>The end of the port range for the TCP and UDP protocols, or an ICMP type number. A value of <code>-1</code> indicates all ICMP types. </p>",
         "Subnet$AvailableIpAddressCount": "<p>The number of unused private IPv4 addresses in the subnet. The IPv4 addresses for any stopped instances are considered unavailable.</p>",
         "TargetCapacitySpecification$TotalTargetCapacity": "<p>The number of units to request, filled using <code>DefaultTargetCapacityType</code>.</p>",
-        "TargetCapacitySpecification$OnDemandTargetCapacity": "<p>The number of On-Demand units to request.</p>",
-        "TargetCapacitySpecification$SpotTargetCapacity": "<p>The maximum number of Spot units to launch.</p>",
+        "TargetCapacitySpecification$OnDemandTargetCapacity": "<p>The number of On-Demand units to request. If you specify a target capacity for Spot units, you cannot specify a target capacity for On-Demand units.</p>",
+        "TargetCapacitySpecification$SpotTargetCapacity": "<p>The maximum number of Spot units to launch. If you specify a target capacity for On-Demand units, you cannot specify a target capacity for Spot units.</p>",
         "TargetCapacitySpecificationRequest$TotalTargetCapacity": "<p>The number of units to request, filled using <code>DefaultTargetCapacityType</code>.</p>",
         "TargetCapacitySpecificationRequest$OnDemandTargetCapacity": "<p>The number of On-Demand units to request.</p>",
         "TargetCapacitySpecificationRequest$SpotTargetCapacity": "<p>The number of Spot units to request.</p>",
@@ -6835,20 +6954,6 @@
         "LaunchTemplateInstanceMarketOptionsRequest$MarketType": "<p>The market type.</p>"
       }
     },
-    "MaxResults": {
-      "base": null,
-      "refs": {
-        "DescribeByoipCidrsRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
-        "DescribeClientVpnAuthorizationRulesRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the nextToken value.</p>",
-        "DescribeClientVpnConnectionsRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the nextToken value.</p>",
-        "DescribeClientVpnEndpointsRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the nextToken value.</p>",
-        "DescribeClientVpnRoutesRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the nextToken value.</p>",
-        "DescribeClientVpnTargetNetworksRequest$MaxResults": "<p>The maximum number of results to return for the request in a single page. The remaining results can be seen by sending another request with the nextToken value.</p>",
-        "DescribeFpgaImagesRequest$MaxResults": "<p>The maximum number of results to return in a single call.</p>",
-        "DescribeIamInstanceProfileAssociationsRequest$MaxResults": "<p>The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned <code>NextToken</code> value.</p>",
-        "DescribeVpcClassicLinkDnsSupportRequest$MaxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
-      }
-    },
     "MillisecondDateTime": {
       "base": null,
       "refs": {
@@ -7313,7 +7418,7 @@
     "NetworkInterfaceCreationType": {
       "base": null,
       "refs": {
-        "CreateNetworkInterfaceRequest$InterfaceType": "<p>Indicates the type of network interface. To create an Elastic Fabric Adapter (EFA), specify <code>efa</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html\"> Elastic Fabric Adapter</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p> <p>If you are not creating an EFA, specify <code>interface</code> or omit this parameter.</p>"
+        "CreateNetworkInterfaceRequest$InterfaceType": "<p>Indicates the type of network interface. To create an Elastic Fabric Adapter (EFA), specify <code>efa</code>. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html\"> Elastic Fabric Adapter</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>"
       }
     },
     "NetworkInterfaceIdList": {
@@ -7429,9 +7534,7 @@
         "DescribePublicIpv4PoolsRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeTrafficMirrorFiltersRequest$NextToken": "<p>The token for the next page of results.</p>",
         "DescribeTrafficMirrorSessionsRequest$NextToken": "<p>The token for the next page of results.</p>",
-        "DescribeTrafficMirrorTargetsRequest$NextToken": "<p>The token for the next page of results.</p>",
-        "DescribeVpcClassicLinkDnsSupportRequest$NextToken": "<p>The token for the next page of results.</p>",
-        "DescribeVpcClassicLinkDnsSupportResult$NextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"
+        "DescribeTrafficMirrorTargetsRequest$NextToken": "<p>The token for the next page of results.</p>"
       }
     },
     "OccurrenceDayRequestSet": {
@@ -7471,15 +7574,15 @@
       }
     },
     "OnDemandOptions": {
-      "base": "<p>The allocation strategy of On-Demand Instances in an EC2 Fleet.</p>",
+      "base": "<p>Describes the configuration of On-Demand Instances in an EC2 Fleet.</p>",
       "refs": {
         "FleetData$OnDemandOptions": "<p>The allocation strategy of On-Demand Instances in an EC2 Fleet.</p>"
       }
     },
     "OnDemandOptionsRequest": {
-      "base": "<p>The allocation strategy of On-Demand Instances in an EC2 Fleet.</p>",
+      "base": "<p>Describes the configuration of On-Demand Instances in an EC2 Fleet.</p>",
       "refs": {
-        "CreateFleetRequest$OnDemandOptions": "<p>The allocation strategy of On-Demand Instances in an EC2 Fleet.</p>"
+        "CreateFleetRequest$OnDemandOptions": "<p>Describes the configuration of On-Demand Instances in an EC2 Fleet.</p>"
       }
     },
     "OperationType": {
@@ -9096,6 +9199,8 @@
         "AssignIpv6AddressesRequest$NetworkInterfaceId": "<p>The ID of the network interface.</p>",
         "AssignIpv6AddressesResult$NetworkInterfaceId": "<p>The ID of the network interface.</p>",
         "AssignPrivateIpAddressesRequest$NetworkInterfaceId": "<p>The ID of the network interface.</p>",
+        "AssignPrivateIpAddressesResult$NetworkInterfaceId": "<p>The ID of the network interface.</p>",
+        "AssignedPrivateIpAddress$PrivateIpAddress": "<p>The private IP address assigned to the network interface.</p>",
         "AssociateAddressRequest$AllocationId": "<p>[EC2-VPC] The allocation ID. This is required for EC2-VPC.</p>",
         "AssociateAddressRequest$InstanceId": "<p>The ID of the instance. This is required for EC2-Classic. For EC2-VPC, you can specify either the instance ID or the network interface ID, but not both. The operation fails if you specify an instance ID unless exactly one network interface is attached.</p>",
         "AssociateAddressRequest$PublicIp": "<p>The Elastic IP address to associate with the instance. This is required for EC2-Classic.</p>",
@@ -10121,6 +10226,8 @@
         "NetworkInterfacePrivateIpAddress$PrivateDnsName": "<p>The private DNS name.</p>",
         "NetworkInterfacePrivateIpAddress$PrivateIpAddress": "<p>The private IPv4 address.</p>",
         "NewDhcpConfiguration$Key": null,
+        "OnDemandOptions$MaxTotalPrice": "<p>The maximum amount per hour for On-Demand Instances that you're willing to pay.</p>",
+        "OnDemandOptionsRequest$MaxTotalPrice": "<p>The maximum amount per hour for On-Demand Instances that you're willing to pay.</p>",
         "OwnerStringList$member": null,
         "PciId$DeviceId": "<p>The ID of the device.</p>",
         "PciId$VendorId": "<p>The ID of the vendor.</p>",
@@ -10432,6 +10539,8 @@
         "SpotFleetRequestConfigData$ClientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of your listings. This helps to avoid duplicate listings. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html\">Ensuring Idempotency</a>.</p>",
         "SpotFleetRequestConfigData$IamFleetRole": "<p>The Amazon Resource Name (ARN) of an AWS Identity and Access Management (IAM) role that grants the Spot Fleet the permission to request, launch, terminate, and tag instances on your behalf. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-requests.html#spot-fleet-prerequisites\">Spot Fleet Prerequisites</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>. Spot Fleet can terminate Spot Instances on your behalf when you cancel its Spot Fleet request using <a>CancelSpotFleetRequests</a> or when the Spot Fleet request expires, if you set <code>TerminateInstancesWithExpiration</code>.</p>",
         "SpotFleetRequestConfigData$SpotPrice": "<p>The maximum price per unit hour that you are willing to pay for a Spot Instance. The default is the On-Demand price.</p>",
+        "SpotFleetRequestConfigData$OnDemandMaxTotalPrice": "<p>The maximum amount per hour for On-Demand Instances that you're willing to pay. You can use the <code>onDemandMaxTotalPrice</code> parameter, the <code>spotMaxTotalPrice</code> parameter, or both parameters to ensure that your fleet cost does not exceed your budget. If you set a maximum price per hour for the On-Demand Instances and Spot Instances in your request, Spot Fleet will launch instances until it reaches the maximum amount you're willing to pay. When the maximum amount you're willing to pay is reached, the fleet stops launching instances even if it hasn’t met the target capacity.</p>",
+        "SpotFleetRequestConfigData$SpotMaxTotalPrice": "<p>The maximum amount per hour for Spot Instances that you're willing to pay. You can use the <code>spotdMaxTotalPrice</code> parameter, the <code>onDemandMaxTotalPrice</code> parameter, or both parameters to ensure that your fleet cost does not exceed your budget. If you set a maximum price per hour for the On-Demand Instances and Spot Instances in your request, Spot Fleet will launch instances until it reaches the maximum amount you're willing to pay. When the maximum amount you're willing to pay is reached, the fleet stops launching instances even if it hasn’t met the target capacity.</p>",
         "SpotInstanceRequest$ActualBlockHourlyPrice": "<p>If you specified a duration and your Spot Instance request was fulfilled, this is the fixed hourly price in effect for the Spot Instance while it runs.</p>",
         "SpotInstanceRequest$AvailabilityZoneGroup": "<p>The Availability Zone group. If you specify the same Availability Zone group for all Spot Instance requests, all Spot Instances are launched in the same Availability Zone.</p>",
         "SpotInstanceRequest$InstanceId": "<p>The instance ID, if an instance has been launched to fulfill the Spot Instance request.</p>",
@@ -10445,6 +10554,8 @@
         "SpotInstanceStatus$Code": "<p>The status code. For a list of status codes, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-bid-status.html#spot-instance-bid-status-understand\">Spot Status Codes</a> in the <i>Amazon EC2 User Guide for Linux Instances</i>.</p>",
         "SpotInstanceStatus$Message": "<p>The description for the status code.</p>",
         "SpotMarketOptions$MaxPrice": "<p>The maximum hourly price you're willing to pay for the Spot Instances. The default is the On-Demand price.</p>",
+        "SpotOptions$MaxTotalPrice": "<p>The maximum amount per hour for Spot Instances that you're willing to pay.</p>",
+        "SpotOptionsRequest$MaxTotalPrice": "<p>The maximum amount per hour for Spot Instances that you're willing to pay.</p>",
         "SpotPlacement$AvailabilityZone": "<p>The Availability Zone.</p> <p>[Spot Fleet only] To specify multiple Availability Zones, separate them using commas; for example, \"us-west-2a, us-west-2b\".</p>",
         "SpotPlacement$GroupName": "<p>The name of the placement group.</p>",
         "SpotPrice$AvailabilityZone": "<p>The Availability Zone.</p>",
@@ -10804,15 +10915,15 @@
       }
     },
     "TargetCapacitySpecification": {
-      "base": "<p>The number of units to request. You can choose to set the target capacity in terms of instances or a performance characteristic that is important to your application workload, such as vCPUs, memory, or I/O. If the request type is <code>maintain</code>, you can specify a target capacity of 0 and add capacity later.</p>",
+      "base": "<p>The number of units to request. You can choose to set the target capacity in terms of instances or a performance characteristic that is important to your application workload, such as vCPUs, memory, or I/O. If the request type is <code>maintain</code>, you can specify a target capacity of 0 and add capacity later.</p> <p>You can use the On-Demand Instance <code>MaxTotalPrice</code> parameter, the Spot Instance <code>MaxTotalPrice</code>, or both to ensure your fleet cost does not exceed your budget. If you set a maximum price per hour for the On-Demand Instances and Spot Instances in your request, EC2 Fleet will launch instances until it reaches the maximum amount you're willing to pay. When the maximum amount you're willing to pay is reached, the fleet stops launching instances even if it hasn’t met the target capacity. The <code>MaxTotalPrice</code> parameters are located in and </p>",
       "refs": {
         "FleetData$TargetCapacitySpecification": "<p>The number of units to request. You can choose to set the target capacity in terms of instances or a performance characteristic that is important to your application workload, such as vCPUs, memory, or I/O. If the request type is <code>maintain</code>, you can specify a target capacity of 0 and add capacity later.</p>"
       }
     },
     "TargetCapacitySpecificationRequest": {
-      "base": "<p>The number of units to request. You can choose to set the target capacity in terms of instances or a performance characteristic that is important to your application workload, such as vCPUs, memory, or I/O. If the request type is <code>maintain</code>, you can specify a target capacity of 0 and add capacity later.</p>",
+      "base": "<p>The number of units to request. You can choose to set the target capacity as the number of instances. Or you can set the target capacity to a performance characteristic that is important to your application workload, such as vCPUs, memory, or I/O. If the request type is <code>maintain</code>, you can specify a target capacity of 0 and add capacity later.</p> <p>You can use the On-Demand Instance <code>MaxTotalPrice</code> parameter, the Spot Instance <code>MaxTotalPrice</code> parameter, or both parameters to ensure that your fleet cost does not exceed your budget. If you set a maximum price per hour for the On-Demand Instances and Spot Instances in your request, EC2 Fleet will launch instances until it reaches the maximum amount you're willing to pay. When the maximum amount you're willing to pay is reached, the fleet stops launching instances even if it hasn’t met the target capacity. The <code>MaxTotalPrice</code> parameters are located in and .</p>",
       "refs": {
-        "CreateFleetRequest$TargetCapacitySpecification": "<p>The <code>TotalTargetCapacity</code>, <code>OnDemandTargetCapacity</code>, <code>SpotTargetCapacity</code>, and <code>DefaultCapacityType</code> structure.</p>",
+        "CreateFleetRequest$TargetCapacitySpecification": "<p>The number of units to request.</p>",
         "ModifyFleetRequest$TargetCapacitySpecification": "<p>The size of the EC2 Fleet.</p>"
       }
     },

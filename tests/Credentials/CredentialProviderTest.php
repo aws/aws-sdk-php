@@ -29,6 +29,7 @@ class CredentialProviderTest extends TestCase
         putenv(CredentialProvider::ENV_SECRET . '=');
         putenv(CredentialProvider::ENV_PROFILE . '=');
         putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI');
+        putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -710,6 +711,110 @@ EOT;
             throw $e;
         } finally {
             unlink($dir . '/credentials');
+        }
+    }
+
+    public function testAssumeRoleInCredentialsFromSourceInConfig()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = credentialSecret
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = configProfile
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        $config = <<<EOT
+[configProfile]
+aws_access_key_id = foo
+aws_secret_access_key = configSecret
+EOT;
+        file_put_contents($dir . '/config', $config);
+        putenv('HOME=' . dirname($dir));
+        putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG=1');
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'assumedSecret',
+                'SessionToken'    => null,
+                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+            ],
+        ];
+        $sts = $this->getTestClient('Sts');
+        $this->addMockResults($sts, [
+            new Result($result)
+        ]);
+        try {
+            $config = [
+                'stsClient' => $sts
+            ];
+            $creds = call_user_func(CredentialProvider::ini(
+                'assume',
+                null,
+                $config
+            ))->wait();
+            $this->assertEquals('foo', $creds->getAccessKeyId());
+            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertFalse($creds->isExpired());
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+            unlink($dir . '/config');
+        }
+    }
+    public function testAssumeRoleInConfigFromSourceInCredentials()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = credentialSecret
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        $config = <<<EOT
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+source_profile = default
+EOT;
+        file_put_contents($dir . '/config', $config);
+        putenv('HOME=' . dirname($dir));
+        putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG=1');
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'assumedSecret',
+                'SessionToken'    => null,
+                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+            ],
+        ];
+        $sts = $this->getTestClient('Sts');
+        $this->addMockResults($sts, [
+            new Result($result)
+        ]);
+        try {
+            $config = [
+                'stsClient' => $sts
+            ];
+            $creds = call_user_func(CredentialProvider::ini(
+                'assume',
+                null,
+                $config
+            ))->wait();
+            $this->assertEquals('foo', $creds->getAccessKeyId());
+            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertInternalType('int', $creds->getExpiration());
+            $this->assertFalse($creds->isExpired());
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+            unlink($dir . '/config');
         }
     }
 
