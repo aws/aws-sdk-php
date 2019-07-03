@@ -69,7 +69,7 @@ class InstanceProfileProvider
                     $result = $this->decodeResult($json);
                 } catch (InvalidJsonException $e) {
                     if ($this->attempts < $this->retries) {
-                        sleep(1.2 ** $this->attempts);
+                        sleep(pow(1.2, $this->attempts));
                     } else {
                         throw new CredentialsException(
                             'Invalid JSON Response, retries exhausted.'
