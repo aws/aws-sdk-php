@@ -1018,6 +1018,31 @@ EOT;
         $this->assertEquals('123', $creds->getSecretKey());
     }
 
+    public function testCachesCacheableInDefaultChain()
+    {
+        $this->clearEnv();
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
+        $cacheable = [
+            'web_identity',
+            'ecs',
+            'process_credentials',
+            'process_config',
+            'instance'
+        ];
+
+        $credsForCache = new Credentials('foo', 'bar', 'baz', PHP_INT_MAX);
+        foreach ($cacheable as $provider) {
+            $cache = new LruArrayCache;
+            $cache->set('aws_cached_' . $provider . '_credentials', $credsForCache);
+            $credentials = call_user_func(CredentialProvider::defaultProvider([
+                'credentials' => $cache,
+            ]))
+                ->wait();
+            $this->assertEquals($credsForCache->getAccessKeyId(), $credentials->getAccessKeyId());
+            $this->assertEquals($credsForCache->getSecretKey(), $credentials->getSecretKey());
+        }
+    }
+
     public function testCachesAsPartOfDefaultChain()
     {
         $instanceCredential = new Credentials('instance_foo', 'instance_bar', 'instance_baz', PHP_INT_MAX);
