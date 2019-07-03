@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - AssignPrivateIpAddresses response includes two new fields: AssignedPrivateIpAddresses, NetworkInterfaceId
+* `Aws\RDS` - This release supports Cross-Account Cloning for Amazon Aurora clusters.
+* `Aws\S3` - Add S3 x-amz-server-side-encryption-context support.
+* `Aws\SWF` - This release adds APIs that allow adding and removing tags to a SWF domain, and viewing tags for a domain. It also enables adding tags when creating a domain.
+
 ## 3.104.0 - 2019-07-02
 
 * `Aws\AppStream` - Adding ImageBuilderName in Fleet API and Documentation updates for AppStream. 
