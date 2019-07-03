@@ -72,11 +72,19 @@ class CredentialProvider
      */
     public static function defaultProvider(array $config = [])
     {
+        $cacheable = [
+            'web_identity',
+            'ecs',
+            'process_credentials',
+            'process_config',
+            'instance'
+        ];
+
         $defaultChain = [
-            self::env(),
-            self::assumeRoleWithWebIdentityCredentialProvider(),
-            self::ini(),
-            self::ini('profile default', self::getHomeDir() . '/.aws/config'),
+            'env' => self::env(),
+            'web_identity' => self::assumeRoleWithWebIdentityCredentialProvider(),
+            'ini' => self::ini(),
+            'ini_config' => self::ini('profile default', self::getHomeDir() . '/.aws/config'),
         ];
 
         if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
@@ -88,13 +96,6 @@ class CredentialProvider
             self::getHomeDir() . '/.aws/config'
         );
         $defaultChain['instance'] = self::instanceProfile($config);
-
-        $cacheable = [
-            'ecs',
-            'process_credentials',
-            'process_config',
-            'instance'
-        ];
 
         if (isset($config['credentials'])
             && $config['credentials'] instanceof CacheInterface
