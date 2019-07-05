@@ -23,6 +23,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
 
     private function clearEnv()
     {
+        putenv('AWS_ROLE_SESSION_NAME');
         $dir = sys_get_temp_dir() . '/.aws';
 
         if (!is_dir($dir)) {
@@ -110,6 +111,37 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         } finally {
             unlink($tokenPath);
         }
+    }
+
+    public function testSetsSessionNameWhenNotProvided()
+    {
+        $dir = $this->clearEnv();
+        $result = [
+            'Credentials' => [
+                'AccessKeyId'     => 'foo',
+                'SecretAccessKey' => 'bar',
+                'SessionToken'    => 'baz',
+                'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
+            ],
+        ];
+
+        $tokenPath = $dir . '/my-token.jwt';
+        file_put_contents($tokenPath, 'token');
+
+        $sts = $this->getTestClient('Sts', ['credentials' => false]);
+        $sts->getHandlerList()->setHandler(
+            function ($c, $r) use ($result) {
+                $this->assertContains('aws-sdk-php-', $c->toArray()['RoleSessionName']);
+                return Promise\promise_for(new Result($result));
+            }
+        );
+
+        $args['client'] = $sts;
+        $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
+        $args['WebIdentityTokenFile'] = $tokenPath;
+        $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
+        $creds = $provider()->wait();
+        unlink($tokenPath);
     }
 
     /**
