@@ -32,6 +32,7 @@ class CredentialProviderTest extends TestCase
         putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG');
         putenv('AWS_WEB_IDENTITY_TOKEN_FILE');
         putenv('AWS_ROLE_ARN');
+        putenv('AWS_ROLE_SESSION_NAME');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -828,11 +829,13 @@ EOT;
         putenv('HOME=' . dirname($dir));
         putenv('AWS_WEB_IDENTITY_TOKEN_FILE=' . $tokenPath);
         putenv('AWS_ROLE_ARN=arn:aws:iam::012345678910:role/role_name');
+        putenv('AWS_ROLE_SESSION_NAME=fooEnv');
 
         $ini = <<<EOT
 [default]
 web_identity_token_file = /invalid/path
 role_arn = arn:aws:iam::012345678910:role/role_name
+role_session_name = barSession
 EOT;
         file_put_contents($dir . '/credentials', $ini);
 
@@ -845,9 +848,12 @@ EOT;
             ],
         ];
         $sts = $this->getTestClient('Sts', ['credentials' => false]);
-        $this->addMockResults($sts, [
-            new Result($result)
-        ]);
+        $sts->getHandlerList()->setHandler(
+            function ($c, $r) use ($result) {
+                $this->assertEquals('fooEnv', $c->toArray()['RoleSessionName']);
+                return Promise\promise_for(new Result($result));
+            }
+        );
 
         try {
             $config = [
@@ -881,6 +887,7 @@ EOT;
 [credentials]
 web_identity_token_file = $tokenPath
 role_arn = arn:aws:iam::012345678910:role/role_name
+role_session_name = fooCreds
 EOT;
         file_put_contents($dir . '/credentials', $ini);
 
@@ -893,9 +900,12 @@ EOT;
             ],
         ];
         $sts = $this->getTestClient('Sts', ['credentials' => false]);
-        $this->addMockResults($sts, [
-            new Result($result)
-        ]);
+        $sts->getHandlerList()->setHandler(
+            function ($c, $r) use ($result) {
+                $this->assertEquals('fooCreds', $c->toArray()['RoleSessionName']);
+                return Promise\promise_for(new Result($result));
+            }
+        );
 
         try {
             $config = [
@@ -929,6 +939,7 @@ EOT;
 [profile config]
 web_identity_token_file = $tokenPath
 role_arn = arn:aws:iam::012345678910:role/role_name
+role_session_name = fooConfig
 EOT;
         file_put_contents($dir . '/config', $ini);
 
@@ -941,9 +952,12 @@ EOT;
             ],
         ];
         $sts = $this->getTestClient('Sts', ['credentials' => false]);
-        $this->addMockResults($sts, [
-            new Result($result)
-        ]);
+        $sts->getHandlerList()->setHandler(
+            function ($c, $r) use ($result) {
+                $this->assertEquals('fooConfig', $c->toArray()['RoleSessionName']);
+                return Promise\promise_for(new Result($result));
+            }
+        );
 
         try {
             $config = [
