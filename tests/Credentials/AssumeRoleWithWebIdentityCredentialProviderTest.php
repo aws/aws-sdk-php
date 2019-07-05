@@ -69,9 +69,6 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         new AssumeRoleWithWebIdentityCredentialProvider($config);
     }
 
-    /**
-     * @group foo
-     */
     public function testCanLoadAssumeRoleWithWebIdentityCredentials()
     {
         $dir = $this->clearEnv();
@@ -90,6 +87,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $sts = $this->getTestClient('Sts', ['credentials' => false]);
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
+                $this->assertEquals('fooSession', $c->toArray()['RoleSessionName']);
                 return Promise\promise_for(new Result($result));
             }
         );
@@ -97,6 +95,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $args['client'] = $sts;
         $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
         $args['WebIdentityTokenFile'] = $tokenPath;
+        $args['SessionName'] = 'fooSession';
         $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
         $creds = $provider()->wait();
 
