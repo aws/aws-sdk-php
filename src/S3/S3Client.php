@@ -337,7 +337,7 @@ class S3Client extends AwsClient implements S3ClientInterface
             preg_match('/^[a-z0-9]([a-z0-9\-\.]*[a-z0-9])?$/', $bucket);
     }
 
-    public function createPresignedRequest(CommandInterface $command, $expires)
+    public function createPresignedRequest(CommandInterface $command, $expires, array $options = [])
     {
         $command = clone $command;
         $command->getHandlerList()->remove('signer');
@@ -353,7 +353,8 @@ class S3Client extends AwsClient implements S3ClientInterface
         return $signer->presign(
             \Aws\serialize($command),
             $this->getCredentials()->wait(),
-            $expires
+            $expires,
+            $options
         );
     }
 

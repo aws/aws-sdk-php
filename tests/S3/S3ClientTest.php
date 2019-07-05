@@ -82,6 +82,25 @@ class S3ClientTest extends TestCase
         $this->assertContains('X-Amz-Signature=', $url);
     }
 
+    public function testCreatesPresignedRequestsWithStartTime()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region'      => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
+        $url = (string) $client->createPresignedRequest(
+            $command,
+            '+20 minutes',
+            ['start_time' => 1562349366]
+        )->getUri();
+        $this->assertStringStartsWith('https://foo.s3.amazonaws.com/bar?', $url);
+        $this->assertContains('X-Amz-Expires=1200', $url);
+        $this->assertContains('X-Amz-Credential=', $url);
+        $this->assertContains('X-Amz-Signature=61a9940ecdd901be8e36833f6d47123c0c719fc6aa82042144a6c5cf44a25988', $url);
+    }
+
     public function testCreatesPresignedRequestsWithPathStyleFallback()
     {
         /** @var S3Client $client */
