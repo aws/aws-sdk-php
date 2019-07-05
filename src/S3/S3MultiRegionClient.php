@@ -285,7 +285,7 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
         };
     }
 
-    public function createPresignedRequest(CommandInterface $command, $expires)
+    public function createPresignedRequest(CommandInterface $command, $expires, array $options = [])
     {
         if (empty($command['Bucket'])) {
             throw new \InvalidArgumentException('The S3\\MultiRegionClient'
