@@ -58,7 +58,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage 'WebIdentityTokenFile' must be absolute path.
+     * @expectedExceptionMessage 'WebIdentityTokenFile' must be an absolute path.
      */
     public function testEnsureWebIdentityTokenFileIsAbsolutePath()
     {

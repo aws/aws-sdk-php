@@ -50,7 +50,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
         $this->tokenFile = $config['WebIdentityTokenFile'];
 
         if (!preg_match("/^\w\:|^\/|^\\\/", $this->tokenFile)) {
-            throw new \InvalidArgumentException("'WebIdentityTokenFile' must be absolute path.");
+            throw new \InvalidArgumentException("'WebIdentityTokenFile' must be an absolute path.");
         }
 
         $this->session = isset($config['SessionName'])
