@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.105.0 - 2019-07-08
 
 * `Aws\Api` - Added support for unmarshalling modeled exception data returned by services.
 * `Aws\CostExplorer` - This release introduces a new operation called GetUsageForecast, which allows you to programmatically access AWS Cost Explorer's forecasting engine on usage data (running hours, data transfer, etc).
