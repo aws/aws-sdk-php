@@ -83,7 +83,13 @@ class FunctionsTest extends TestCase
     {
         $soughtData = ['foo' => 'bar'];
         $jsonPath = sys_get_temp_dir() . '/some-file-name-' . time() . '.json';
+
+        file_put_contents($jsonPath, json_encode($soughtData), LOCK_EX);
+
+        $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
+
         file_put_contents($jsonPath, 'INVALID JSON', LOCK_EX);
+
         file_put_contents(
             "$jsonPath.php",
             '<?php return ' . var_export($soughtData, true) . ';',
@@ -91,6 +97,38 @@ class FunctionsTest extends TestCase
         );
 
         $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
+    }
+
+    /**
+     * @covers Aws\load_compiled_json()
+     */
+    public function testOnlyLoadsCompiledJsonOnce()
+    {
+        $soughtData = ['foo' => 'bar'];
+        $jsonPath = sys_get_temp_dir() . '/some-file-name-' . time() . '.json';
+
+        file_put_contents($jsonPath, json_encode($soughtData), LOCK_EX);
+
+        $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
+        $jsonAtime = fileatime($jsonPath);
+
+        file_put_contents($jsonPath, 'INVALID JSON', LOCK_EX);
+
+        $compiledPath = "{$jsonPath}.php";
+        file_put_contents(
+            $compiledPath,
+            '<?php return ' . var_export($soughtData, true) . ';',
+            LOCK_EX
+        );
+
+        $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
+        $compiledAtime = fileatime($compiledPath);
+
+        sleep(1);
+        clearstatcache();
+        $this->assertSame($soughtData, Aws\load_compiled_json($jsonPath));
+        $this->assertEquals($jsonAtime, fileatime($jsonPath));
+        $this->assertEquals($compiledAtime, fileatime($compiledPath));
     }
 
     /**

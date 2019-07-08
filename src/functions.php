@@ -141,9 +141,18 @@ function or_chain()
  */
 function load_compiled_json($path)
 {
+    static $compiledList = [];
+
     $compiledFilepath = "{$path}.php";
-    if (is_readable($compiledFilepath)) {
-        return include($compiledFilepath);
+
+    if (!isset($compiledList[$compiledFilepath])) {
+        if (is_readable($compiledFilepath)) {
+            $compiledList[$compiledFilepath] = include($compiledFilepath);
+        }
+    }
+
+    if (isset($compiledList[$compiledFilepath])) {
+        return $compiledList[$compiledFilepath];
     }
 
     if (!file_exists($path)) {
