@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Added support for unmarshalling modeled exception data returned by services.
+* `Aws\CostExplorer` - This release introduces a new operation called GetUsageForecast, which allows you to programmatically access AWS Cost Explorer's forecasting engine on usage data (running hours, data transfer, etc).
+* `Aws\DynamoDb` - Added support configuring data attribute type as 'binary', defaults to 'string'.
+* `Aws\S3` - Added support for passing options to presign via createPresignedRequest.
+
 ## 3.104.1 - 2019-07-03
 
 * `Aws\EC2` - AssignPrivateIpAddresses response includes two new fields: AssignedPrivateIpAddresses, NetworkInterfaceId

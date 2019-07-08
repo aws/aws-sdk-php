@@ -19,5 +19,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getReservationUtilizationAsync(array $args = [])
  * @method \Aws\Result getTags(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getTagsAsync(array $args = [])
+ * @method \Aws\Result getUsageForecast(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getUsageForecastAsync(array $args = [])
  */
 class CostExplorerClient extends AwsClient {}
