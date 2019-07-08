@@ -145,7 +145,7 @@ function load_compiled_json($path)
 
     $compiledFilepath = "{$path}.php";
 
-    if(!isset($compiledList[$compiledFilepath])) {
+    if (!isset($compiledList[$compiledFilepath])) {
         if (is_readable($compiledFilepath)) {
             $compiledList[$compiledFilepath] = include($compiledFilepath);
         }
