@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.106.0 - 2019-07-09
 
 * `Aws\` - Added support for assuming credential role via web identity token.
 * `Aws\Amplify` - This release adds webhook APIs and manual deployment APIs for AWS Amplify Console.
