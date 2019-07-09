@@ -1031,6 +1031,56 @@ EOT;
         }
     }
 
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Unknown profile: fooProfile
+     */
+    public function testEnsuresAssumeRoleWebIdentityProfileIsPresent()
+    {
+        $dir = $this->clearEnv();
+        putenv('AWS_PROFILE=fooProfile');
+
+        $ini = <<<EOT
+[barProfile]
+web_identity_token_file = /token/path
+role_arn = arn:aws:iam::012345678910:role/role_name
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+
+        try {
+            $creds = call_user_func(
+                CredentialProvider::assumeRoleWithWebIdentityCredentialProvider()
+            )->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Unknown profile: fooProfile
+     */
+    public function testEnsuresAssumeRoleWebIdentityProfileInDefaultFiles()
+    {
+        $dir = $this->clearEnv();
+        putenv('AWS_PROFILE=fooProfile');
+        touch($dir . '/credentials');
+        touch($dir . '/config');
+
+        try {
+            $creds = call_user_func(
+                CredentialProvider::assumeRoleWithWebIdentityCredentialProvider()
+            )->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+            unlink($dir . '/config');
+        }
+    }
+
     public function testGetsHomeDirectoryForWindowsUsers()
     {
         putenv('HOME=');

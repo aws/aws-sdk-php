@@ -355,22 +355,26 @@ class CredentialProvider
             } else {
                 $profiles = self::loadDefaultProfiles();
             }
-            $profile = $profiles[$profileName];
 
-            if (isset($profile['web_identity_token_file'])
-                && isset($profile['role_arn'])
-            ) {
-                $sessionName = isset($profile['role_session_name'])
-                    ? $profile['role_session_name']
-                    : null;
-                $provider = new AssumeRoleWithWebIdentityCredentialProvider([
-                    'RoleArn' => $profile['role_arn'],
-                    'WebIdentityTokenFile' => $profile['web_identity_token_file'],
-                    'SessionName' => $sessionName,
-                    'client' => $stsClient
-                ]);
+            if (isset($profiles[$profileName])) {
+                $profile = $profiles[$profileName];
+                if (isset($profile['web_identity_token_file'])
+                    && isset($profile['role_arn'])
+                ) {
+                    $sessionName = isset($profile['role_session_name'])
+                        ? $profile['role_session_name']
+                        : null;
+                    $provider = new AssumeRoleWithWebIdentityCredentialProvider([
+                        'RoleArn' => $profile['role_arn'],
+                        'WebIdentityTokenFile' => $profile['web_identity_token_file'],
+                        'SessionName' => $sessionName,
+                        'client' => $stsClient
+                    ]);
 
-                return $provider();
+                    return $provider();
+                }
+            } else {
+                return self::reject("Unknown profile: $profileName");
             }
             return self::reject("No RoleArn or WebIdentityTokenFile specified");
         };
