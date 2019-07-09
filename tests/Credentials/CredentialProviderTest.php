@@ -1048,7 +1048,9 @@ EOT;
         file_put_contents($dir . '/credentials', $ini);
 
         try {
-            $creds = call_user_func(CredentialProvider::assumeRoleWithWebIdentityCredentialProvider())->wait();
+            $creds = call_user_func(
+                CredentialProvider::assumeRoleWithWebIdentityCredentialProvider()
+            )->wait();
         } catch (\Exception $e) {
             throw $e;
         } finally {
@@ -1068,7 +1070,9 @@ EOT;
         touch($dir . '/config');
 
         try {
-            $creds = call_user_func(CredentialProvider::assumeRoleWithWebIdentityCredentialProvider())->wait();
+            $creds = call_user_func(
+                CredentialProvider::assumeRoleWithWebIdentityCredentialProvider()
+            )->wait();
         } catch (\Exception $e) {
             throw $e;
         } finally {
