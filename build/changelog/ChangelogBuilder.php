@@ -22,6 +22,7 @@ class ChangelogBuilder
     const CHANGELOG_API_CHANGE = 'api-change';
     const CHANGELOG_ENHANCEMENT = 'enhancement';
     const CHANGELOG_BUGFIX = 'bugfix';
+    const CHANGELOG_DOCUMENTATION = 'documentation';
 
     /**
      *  The constructor requires following configure parameters:
