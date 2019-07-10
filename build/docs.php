@@ -1,6 +1,8 @@
 <?php
 use Aws\Build\Docs\DocsBuilder;
 
+error_reporting(E_ERROR | E_WARNING);
+
 // Setup autoloading for SDK and build classes.
 $loader = require __DIR__ . '/../vendor/autoload.php';
 

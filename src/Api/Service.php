@@ -300,6 +300,24 @@ class Service extends AbstractModel
     }
 
     /**
+     * Get all of the error shapes of the service
+     *
+     * @return array
+     */
+    public function getErrorShapes()
+    {
+        $result = [];
+        foreach ($this->definition['shapes'] as $name => $definition) {
+            if (!empty($definition['exception'])) {
+                $definition['name'] = $name;
+                $result[] = new StructureShape($definition, $this->getShapeMap());
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Get all of the service metadata or a specific metadata key value.
      *
      * @param string|null $key Key to retrieve or null to retrieve all metadata

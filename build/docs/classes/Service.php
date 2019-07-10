@@ -29,6 +29,9 @@ class Service
     public $docs;
 
     /** @var string */
+    public $exceptionLink;
+
+    /** @var string */
     public $fullNamespace;
 
     /** @var string */
@@ -70,6 +73,7 @@ class Service
         $this->clientName = $this->namespace . 'Client';
         $this->client = 'Aws\\' . $this->namespace . '\\' . $this->clientName;
         $this->clientLink = 'class-Aws.' . $this->namespace . '.' . $this->namespace . 'Client.html';
+        $this->exceptionLink = 'class-Aws.' . $this->namespace . '.Exception.' . $this->namespace . 'Exception.html';
         $this->namespaceLink = 'namespace-Aws.' . $this->namespace . '.html';
         $this->serviceLink = 'api-' . $this->slug . '.html';
         $this->shortTitle = $api->getMetadata('serviceAbbreviation');
