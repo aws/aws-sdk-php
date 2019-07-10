@@ -56,7 +56,9 @@ outward impact, or updates to the SDK foundations. This will result in a minor
 version change.
 * `enhancement` - For minor additive features or incremental sized changes.
 This will result in a patch version change.
-* `bugfix` - For updates to guides and documentation files only. This will
+* `bugfix` - For minor changes that resolve an issue. This will result in a
+patch version change.
+* `documentation` - For updates to guides and documentation files only. This will
 result in a patch version change.
 
 #### Changelog Categories
