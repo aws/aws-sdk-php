@@ -806,6 +806,12 @@ EOT;
                 'signing_name',
                 'execute-api',
             ],
+            // signingRegion
+            [
+                ['service' => 'dynamodb', 'region' => 'local'] + $invocationArgs,
+                'signing_region',
+                'us-east-1',
+            ],
         ];
     }
 
