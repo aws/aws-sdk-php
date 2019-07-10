@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.106.1 - 2019-07-10
 
 * `Aws\Credentials` - Fixes empty or unknown profile name causing error in default chain.
 * `Aws\Glacier` - Documentation updates for glacier
