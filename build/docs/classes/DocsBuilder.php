@@ -798,7 +798,16 @@ EOT;
                     ?: 'This error does not currently have a description.';
                 $html
                     ->open('li')
-                        ->elem('p', null, $error['name'] . ': ' . $desc)
+                        ->open('p')
+                            ->elem(
+                                'a',
+                                [
+                                    'href' => $service->exceptionLink . '#shape-'
+                                        . strtolower($error->getName())
+                                ],
+                                $error['name'] . ': ')
+                            ->elem('p', null, $desc)
+                        ->close()
                     ->close();
             }
             $html->close();

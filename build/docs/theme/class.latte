@@ -51,8 +51,6 @@
         {$class|longDescription|noescape}
     </div>
 
-    <!-- modeled_exceptions -->
-
     {define children}
         <p class="csv-list">
         {foreach $children as $child}
@@ -359,5 +357,7 @@
             <ul><li n:foreach="$class->reasons as $reason">Class was redeclared in {$reason->getSender()->getFileName()|relativePath}.</li></ul>
         </div>
     {/if}
+
+    <!-- modeled_exceptions -->
 </div>
 {/block}
