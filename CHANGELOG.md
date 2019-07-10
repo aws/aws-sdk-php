@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Fixes empty or unknown profile name causing error in default chain.
+* `Aws\Glacier` - Documentation updates for glacier
+* `Aws\QuickSight` - Amazon QuickSight now supports embedding dashboards for all non-federated QuickSight users. This includes IAM users, AD users and users from the QuickSight user pool. The get-dashboard-embed-url API accepts QUICKSIGHT as identity type with a user ARN to authenticate the embeddable dashboard viewer as a non-federated user.
+* `Aws\ServiceCatalog` - This release adds support for Parameters in ExecuteProvisionedProductServiceAction and adds functionality to get the default parameter values for a Self-Service Action execution against a Provisioned Product via DescribeServiceActionExecutionParameters
+
 ## 3.106.0 - 2019-07-09
 
 * `Aws\` - Added support for assuming credential role via web identity token.

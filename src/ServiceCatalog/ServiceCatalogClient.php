@@ -81,6 +81,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeRecordAsync(array $args = [])
  * @method \Aws\Result describeServiceAction(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeServiceActionAsync(array $args = [])
+ * @method \Aws\Result describeServiceActionExecutionParameters(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeServiceActionExecutionParametersAsync(array $args = [])
  * @method \Aws\Result describeTagOption(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeTagOptionAsync(array $args = [])
  * @method \Aws\Result disableAWSOrganizationsAccess(array $args = [])
