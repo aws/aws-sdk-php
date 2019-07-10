@@ -6,13 +6,13 @@ use Aws\Api\Service;
 use Aws\AwsClient;
 
 /**
- * Trait ParserTestServiceTrait
+ * Trait TestServiceTrait
  *
- * Used to generate a test service and client for parser-related tests
+ * Used to generate a mock service and client for testing
  *
  * @package Aws\Test
  */
-trait ParserTestServiceTrait
+trait TestServiceTrait
 {
     private function generateTestClient(Service $service, $args = [])
     {

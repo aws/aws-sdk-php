@@ -2,6 +2,8 @@
 namespace Aws\Test\Api;
 
 use Aws\Api\Service;
+use Aws\Api\StructureShape;
+use Aws\Test\TestServiceTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -11,6 +13,7 @@ use PHPUnit\Framework\TestCase;
 class ServiceTest extends TestCase
 {
     use UsesServiceTrait;
+    use TestServiceTrait;
 
     public function testSetsDefaultValues()
     {
@@ -67,6 +70,16 @@ class ServiceTest extends TestCase
         ];
         $this->assertEquals('foo', $s->getMetadata('serviceFullName'));
         $this->assertNull($s->getMetadata('baz'));
+    }
+
+    public function testReturnsErrorShapes()
+    {
+        $service = $this->generateTestService('rest-json');
+        $errorShapes = $service->getErrorShapes();
+        $errorShape = $errorShapes[0];
+        $this->assertEquals(1, count($errorShapes));
+        $this->assertInstanceOf(StructureShape::class, $errorShape);
+        $this->assertEquals('TestException', $errorShape->getName());
     }
 
     public function testReturnsIfOperationExists()

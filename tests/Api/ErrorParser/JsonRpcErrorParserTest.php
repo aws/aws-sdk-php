@@ -3,7 +3,7 @@ namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\Api\ErrorParser\RestJsonErrorParser;
-use Aws\Test\ParserTestServiceTrait;
+use Aws\Test\TestServiceTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 
@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 class JsonRpcErrorParserTest extends TestCase
 {
-    use ParserTestServiceTrait;
+    use TestServiceTrait;
 
     /**
      * @dataProvider errorResponsesProvider
