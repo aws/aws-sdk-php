@@ -255,7 +255,7 @@ class InstanceProfileProviderTest extends TestCase
         $error = $this->getRequestException();
 
         $client = function () use (&$retries, $responses, $error) {
-            if (0 === --$retries) {
+            if (0 === $retries--) {
                 return Promise\promise_for(array_shift($responses));
             }
 
