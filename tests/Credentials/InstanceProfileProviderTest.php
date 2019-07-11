@@ -4,9 +4,11 @@ namespace Aws\Test\Credentials;
 use Aws\Credentials\InstanceProfileProvider;
 use Aws\Exception\CredentialsException;
 use Aws\Sdk;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Message\Request as GuzzleRequest;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
@@ -57,6 +59,23 @@ class InstanceProfileProviderTest extends TestCase
         $provider = new InstanceProfileProvider($args);
 
         return $provider();
+    }
+
+    private function getRequestException()
+    {
+        $version = (string) ClientInterface::VERSION;
+
+        if ($version[0] === '6') {
+            return new RequestException(
+                'test',
+                new Request('GET', 'http://www.example.com')
+            );
+        } elseif ($version[0] === '5') {
+            return new RequestException(
+                'test',
+                new GuzzleRequest('GET', 'http://www.example.com')
+            );
+        }
     }
 
     public function testAddsUserAgentToRequest()
@@ -209,13 +228,10 @@ class InstanceProfileProviderTest extends TestCase
      */
     public function testThrowsExceptionOnNetorkRetryExhaustion()
     {
-        $client = function () {
+        $error = $this->getRequestException();
+        $client = function () use ($error) {
             return Promise\rejection_for([
-                'exception' => new RequestException(
-                    'message',
-                    new Request('GET', 'http://example.com'),
-                    new Response('500')
-                )
+                'exception' => $error
             ]);
         };
 
@@ -236,17 +252,15 @@ class InstanceProfileProviderTest extends TestCase
         $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
         $responses = [new Response(200, [], Psr7\stream_for($result))];
 
-        $client = function () use (&$retries, $responses) {
+        $error = $this->getRequestException();
+
+        $client = function () use (&$retries, $responses, $error) {
             if (0 === --$retries) {
                 return Promise\promise_for(array_shift($responses));
             }
 
             return Promise\rejection_for([
-                'exception' => new RequestException(
-                    'message',
-                    new Request('GET', 'http://example.com'),
-                    new Response('500')
-                )
+                'exception' => $error
             ]);
         };
 
