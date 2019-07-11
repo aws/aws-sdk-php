@@ -5,6 +5,7 @@ use Aws\Exception\CredentialsException;
 use Aws\Exception\InvalidJsonException;
 use Aws\Sdk;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -75,6 +76,14 @@ class InstanceProfileProvider
                             'Invalid JSON Response, retries exhausted.'
                         );
                     }
+                } catch (RequestException $e) {
+                    if ($this->attempts < $this->retries) {
+                        sleep(pow(1.2, $this->attempts));
+                    } else {
+                        throw new CredentialsException(
+                            'Networking error, retries exhausted.'
+                        );
+                    }
                 }
                 $this->attempts++;
             }
@@ -115,6 +124,9 @@ class InstanceProfileProvider
                 return (string) $response->getBody();
             })->otherwise(function (array $reason) {
                 $reason = $reason['exception'];
+                if ($reason instanceof \GuzzleHttp\Exception\RequestException) {
+                    throw $reason;
+                }
                 $msg = $reason->getMessage();
                 throw new CredentialsException(
                     $this->createErrorMessage($msg)

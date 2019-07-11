@@ -6,6 +6,8 @@ use Aws\Exception\CredentialsException;
 use Aws\Sdk;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -191,7 +193,7 @@ class InstanceProfileProviderTest extends TestCase
      * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Invalid JSON Response
      */
-    public function testThrowsExceptionOnInvalidJsonResponse()
+    public function testThrowsExceptionOnInvalidJsonRetryExhaustion()
     {
         $c = $this->getTestCreds(
             '{\n "Code":"Success"}', //invalid json
@@ -199,5 +201,64 @@ class InstanceProfileProviderTest extends TestCase
             null,
             ['retries' => 0]
         )->wait();
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Networking error
+     */
+    public function testThrowsExceptionOnNetorkRetryExhaustion()
+    {
+        $client = function () {
+            return Promise\rejection_for([
+                'exception' => new RequestException(
+                    'message',
+                    new Request('GET', 'http://example.com'),
+                    new Response('500')
+                )
+            ]);
+        };
+
+        $args = [
+            'profile' => 'foo',
+            'client' => $client,
+            'retries' => 0
+        ];
+        $provider = new InstanceProfileProvider($args);
+        $c = $provider()->wait();
+    }
+
+    public function testNetworkingErrorsAreRetried()
+    {
+        $retries = 1;
+
+        $t = time() + 1000;
+        $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
+        $responses = [new Response(200, [], Psr7\stream_for($result))];
+
+        $client = function () use (&$retries, $responses) {
+            if (0 === --$retries) {
+                return Promise\promise_for(array_shift($responses));
+            }
+
+            return Promise\rejection_for([
+                'exception' => new RequestException(
+                    'message',
+                    new Request('GET', 'http://example.com'),
+                    new Response('500')
+                )
+            ]);
+        };
+
+        $args = [
+            'profile' => 'foo',
+            'client' => $client
+        ];
+        $provider = new InstanceProfileProvider($args);
+        $c = $provider()->wait();
+        $this->assertEquals('foo', $c->getAccessKeyId());
+        $this->assertEquals('baz', $c->getSecretKey());
+        $this->assertNull($c->getSecurityToken());
+        $this->assertEquals($t, $c->getExpiration());
     }
 }
