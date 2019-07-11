@@ -1,11 +1,10 @@
 <?php
-namespace Aws\CloudWatchEvents;
+namespace Aws\EventBridge;
 
 use Aws\AwsClient;
 
 /**
- * This client is used to interact with the **Amazon CloudWatch Events** service.
- *
+ * This client is used to interact with the **Amazon EventBridge** service.
  * @method \Aws\Result activateEventSource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise activateEventSourceAsync(array $args = [])
  * @method \Aws\Result createEventBus(array $args = [])
@@ -69,4 +68,4 @@ use Aws\AwsClient;
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
-class CloudWatchEventsClient extends AwsClient {}
+class EventBridgeClient extends AwsClient {}
