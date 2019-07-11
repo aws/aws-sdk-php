@@ -124,6 +124,15 @@ class PartitionEndpointProviderTest extends TestCase
                 ],
             ],
             [
+                ['region' => 'local', 'service' => 'dynamodb', 'scheme' => 'http'],
+                [
+                    'endpoint' => 'http://localhost:8000',
+                    'signatureVersion' => 'v4',
+                    'signingRegion' => 'us-east-1',
+                    'signingName' => 'dynamodb',
+                ],
+            ],
+            [
                 ['region' => 'us-east-1', 'service' => 'iot'],
                 [
                     'endpoint' => 'https://iot.us-east-1.amazonaws.com',
@@ -456,6 +465,7 @@ class PartitionEndpointProviderTest extends TestCase
             [$partitions, 'eu-west-1', 'swf', 'swf.eu-west-1.amazonaws.com'],
             [$partitions, 'eu-west-1', 'workspaces', 'workspaces.eu-west-1.amazonaws.com'],
             [$partitions, 'fips-us-gov-west-1', 's3', 's3-fips-us-gov-west-1.amazonaws.com'],
+            [$partitions, 'local', 'dynamodb', 'localhost:8000'],
             [$partitions, 's3-external-1', 's3', 's3-external-1.amazonaws.com'],
             [$partitions, 'sa-east-1', 'autoscaling', 'autoscaling.sa-east-1.amazonaws.com'],
             [$partitions, 'sa-east-1', 'cloudformation', 'cloudformation.sa-east-1.amazonaws.com'],
