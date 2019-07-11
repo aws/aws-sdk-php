@@ -126,6 +126,7 @@ class DocsBuilder
         });
         $this->updateHomepage($services);
         $this->updateClients($services);
+        $this->updateExceptions($services);
         $this->updateAliases($services, $aliases);
         $this->updateSitemap();
         $this->updateSearch($services);
@@ -400,6 +401,45 @@ EOT;
             }
             $html .= '</ul></div>';
             $this->replaceInner($service->clientLink, $html, '<!-- api -->');
+        }
+    }
+
+    private function updateExceptions(array $services)
+    {
+        fwrite(STDOUT, "Updating exception pages with modeled exception data...\n");
+
+        foreach ($services as $versions) {
+            krsort($versions);
+            $service = reset($versions);
+            $shapes = $service->api->getErrorShapes();
+            if (count($shapes) > 0) {
+                $html = new HtmlDocument;
+                $html->section(2, 'Expected Exception Codes');
+                $desc = <<<EOT
+The following are the known exception codes and corresponding data shapes that 
+this service may return as part of an error response. 
+EOT;
+                $html->elem('div', null, $desc);
+                foreach ($shapes as $shape) {
+                    if ($shape['type'] == 'structure'
+                        && !isset($this->skipMembers[$shape])
+                    ) {
+                        $html->section(3, $shape->getName(), 'shape', 'method-title');
+
+                        // Add error syntax
+                        $outputShapes = new ShapeIterator($shape, $service->docs);
+                        $outputExample = new ExampleBuilder($shape->getName(), false);
+                        foreach ($outputShapes as $outputShape) {
+                            $outputExample->addShape($outputShape);
+                        }
+                        $html->elem('pre', null, htmlentities($outputExample->getCode()));
+
+                        // Add member details
+                        $html->append($this->renderShape($service->docs, $shape));
+                    }
+                }
+                $this->replaceInner($service->exceptionLink, $html->render(), '<!-- modeled_exceptions -->');
+            }
         }
     }
 
@@ -758,7 +798,16 @@ EOT;
                     ?: 'This error does not currently have a description.';
                 $html
                     ->open('li')
-                        ->elem('p', null, $error['name'] . ': ' . $desc)
+                        ->open('p')
+                            ->elem(
+                                'a',
+                                [
+                                    'href' => $service->exceptionLink . '#shape-'
+                                        . strtolower($error->getName())
+                                ],
+                                $error['name'] . ': ')
+                            ->elem('p', null, $desc)
+                        ->close()
                     ->close();
             }
             $html->close();

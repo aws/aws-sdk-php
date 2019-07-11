@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
  */
 class WrappedHttpHandlerTest extends TestCase
 {
-    use ParserTestServiceTrait;
+    use TestServiceTrait;
 
     public function testParsesResponses()
     {
