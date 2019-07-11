@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.107.0 - 2019-07-11
 
 * `Aws\CloudWatchEvents` - Adds APIs for partner event sources, partner event buses, and custom event buses. These new features are managed in the EventBridge service.
 * `Aws\EventBridge` - Amazon EventBridge is a serverless event bus service that makes it easy to connect your applications with data from a variety of sources, including AWS services, partner applications, and your own applications.
