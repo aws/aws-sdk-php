@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.107.1 - 2019-07-12
 
 * `Aws\ApiGatewayV2` - Bug fix (Add tags field to Update Stage , Api and DomainName Responses )
 * `Aws\Build` - Adds API documentation generation for modeled exception error shapes.
