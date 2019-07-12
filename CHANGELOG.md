@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGatewayV2` - Bug fix (Add tags field to Update Stage , Api and DomainName Responses )
+* `Aws\Build` - Adds API documentation generation for modeled exception error shapes.
+* `Aws\ElasticsearchService` - Amazon Elasticsearch Service now supports M5, C5, and R5 instance types.
+* `Aws\IAM` - Removed exception that was indicated but never thrown for IAM GetAccessKeyLastUsed API
+* `Aws\RoboMaker` - Added Melodic as a supported Robot Software Suite Version
+* `Aws\Test` - Add back partition endpoint tests for DynamoDb local endpoints.
+
 ## 3.107.0 - 2019-07-11
 
 * `Aws\CloudWatchEvents` - Adds APIs for partner event sources, partner event buses, and custom event buses. These new features are managed in the EventBridge service.
