@@ -358,6 +358,20 @@ class S3Client extends AwsClient implements S3ClientInterface
         );
     }
 
+    /**
+     * Returns the URL to an object identified by its bucket and key.
+     *
+     * The URL returned by this method is not signed nor does it ensure the the
+     * bucket and key given to the method exist. If you need a signed URL, then
+     * use the {@see \Aws\S3\S3Client::createPresignedRequest} method and get
+     * the URI of the signed request.
+     *
+     * @param string $bucket  The name of the bucket where the object is located
+     * @param string $key     The key of the object
+     * @param array  $options Aws\Signature\SignatureInterface::presign options
+     *
+     * @return string The URL to the object
+     */
     public function getObjectUrl($bucket, $key)
     {
         $command = $this->getCommand('GetObject', [
