@@ -368,7 +368,6 @@ class S3Client extends AwsClient implements S3ClientInterface
      *
      * @param string $bucket  The name of the bucket where the object is located
      * @param string $key     The key of the object
-     * @param array  $options Aws\Signature\SignatureInterface::presign options
      *
      * @return string The URL to the object
      */
