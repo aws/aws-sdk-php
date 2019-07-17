@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Documentation updates for autoscaling
+* `Aws\ConfigService` - This release adds more granularity to the status of an OrganizationConfigRule by adding a new status. It also adds an exception when organization access is denied.
+* `Aws\Credentials` - Adds retry option for invalid json returned to instance profile credential provider.
+* `Aws\DatabaseMigrationService` - S3 endpoint settings update: 1) Option to append operation column to full-load files. 2) Option to add a commit timestamp column to full-load and cdc files. Updated DescribeAccountAttributes to include UniqueAccountIdentifier.
+
 ## 3.107.1 - 2019-07-12
 
 * `Aws\ApiGatewayV2` - Bug fix (Add tags field to Update Stage , Api and DomainName Responses )
