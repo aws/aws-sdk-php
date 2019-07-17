@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.107.2 - 2019-07-17
 
 * `Aws\AutoScaling` - Documentation updates for autoscaling
 * `Aws\ConfigService` - This release adds more granularity to the status of an OrganizationConfigRule by adding a new status. It also adds an exception when organization access is denied.
