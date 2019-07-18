@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.107.3 - 2019-07-18
 
 * `Aws\CodeDeploy` - Documentation updates for codedeploy
 * `Aws\Comprehend` - Amazon Comprehend now supports multiple entities for custom entity recognition
