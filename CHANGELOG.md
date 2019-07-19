@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTEvents` - Adds support for IoT Events, Lambda, SQS and Kinesis Firehose actions.
+* `Aws\SQS` - This release updates the information about the availability of FIFO queues and includes miscellaneous fixes.
+
 ## 3.107.3 - 2019-07-18
 
 * `Aws\CodeDeploy` - Documentation updates for codedeploy
