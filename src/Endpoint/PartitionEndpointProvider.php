@@ -9,6 +9,8 @@ class PartitionEndpointProvider
     private $partitions;
     /** @var string */
     private $defaultPartition;
+    /** @var array  */
+    private $options;
 
     public function __construct(
         array $partitions,

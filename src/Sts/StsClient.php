@@ -2,8 +2,10 @@
 namespace Aws\Sts;
 
 use Aws\AwsClient;
-use Aws\Result;
+use Aws\CacheInterface;
 use Aws\Credentials\Credentials;
+use Aws\Result;
+use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
 
 /**
  * This client is used to interact with the **AWS Security Token Service (AWS STS)**.
@@ -25,6 +27,16 @@ use Aws\Credentials\Credentials;
  */
 class StsClient extends AwsClient
 {
+    public function __construct(array $args)
+    {
+        if (!isset($args['sts_regional_endpoints'])) {
+            $args['sts_regional_endpoints'] = ConfigurationProvider::defaultProvider();
+        } elseif ($args['sts_regional_endpoints'] instanceof CacheInterface) {
+            $args['sts_regional_endpoints'] = ConfigurationProvider::defaultProvider($args);
+        }
+        parent::__construct($args);
+    }
+
     /**
      * Creates credentials from the result of an STS operations
      *

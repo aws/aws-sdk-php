@@ -3,6 +3,7 @@ namespace Aws\Endpoint;
 
 use ArrayAccess;
 use Aws\HasDataTrait;
+use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
 use InvalidArgumentException as Iae;
 
 /**
@@ -202,7 +203,9 @@ final class Partition implements ArrayAccess, PartitionInterface
         return $service === 'sts'
             && in_array($region, $this->stsLegacyGlobalRegions)
             && (empty($options['sts_regional_endpoints'])
-                || $options['sts_regional_endpoints'] !== 'regional'
+                || ConfigurationProvider::unwrap(
+                    $options['sts_regional_endpoints']
+                )->getEndpointsType() !== 'regional'
             );
     }
 
