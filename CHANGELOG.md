@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.107.4 - 2019-07-19
 
 * `Aws\IoTEvents` - Adds support for IoT Events, Lambda, SQS and Kinesis Firehose actions.
 * `Aws\SQS` - This release updates the information about the availability of FIFO queues and includes miscellaneous fixes.
