@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MQ` - Adds support for AWS Key Management Service (KMS) to offer server-side encryption. You can now select your own customer managed CMK, or use an AWS managed CMK in your KMS account.
+* `Aws\Shield` - Adding new VectorType (HTTP_Reflection) and related top contributor types to describe WordPress Pingback DDoS attacks.
+
 ## 3.107.4 - 2019-07-19
 
 * `Aws\IoTEvents` - Adds support for IoT Events, Lambda, SQS and Kinesis Firehose actions.
