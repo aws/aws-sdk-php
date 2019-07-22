@@ -10,7 +10,7 @@ class Configuration implements ConfigurationInterface
         $this->endpointsType = strtolower($endpointsType);
         if (!in_array($this->endpointsType, ['legacy', 'regional'])) {
             throw new \InvalidArgumentException(
-                "'endpoints_type' value must either be 'legacy' or 'regional'."
+                "Configuration parameter must either be 'legacy' or 'regional'."
             );
         }
     }

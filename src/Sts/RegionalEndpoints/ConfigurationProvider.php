@@ -2,7 +2,7 @@
 namespace Aws\Sts\RegionalEndpoints;
 
 use Aws\CacheInterface;
-use Aws\EndpointDiscovery\Exception\ConfigurationException;
+use Aws\Sts\RegionalEndpoints\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 
