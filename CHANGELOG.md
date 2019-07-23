@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## 3.107.6 - 2019-07-23
+
+* `Aws\SSM` - You can now use Maintenance Windows to select a resource group as the target. By selecting a resource group as the target of a Maintenance Window, customers can perform routine tasks across different resources such as Amazon Elastic Compute Cloud (AmazonEC2) instances, Amazon Elastic Block Store (Amazon EBS) volumes, and Amazon Simple Storage Service(Amazon S3) buckets within the same recurring time window.
+* `Aws\SecretsManager` - This release increases the maximum allowed size of SecretString or SecretBinary from 7KB to 10KB in the CreateSecret, UpdateSecret, PutSecretValue and GetSecretValue APIs. This release also increases the maximum allowed size of ResourcePolicy from 4KB to 20KB in the GetResourcePolicy and PutResourcePolicy APIs.
+
+## 3.107.5 - 2019-07-22
+
+* `Aws\MQ` - Adds support for AWS Key Management Service (KMS) to offer server-side encryption. You can now select your own customer managed CMK, or use an AWS managed CMK in your KMS account.
+* `Aws\Shield` - Adding new VectorType (HTTP_Reflection) and related top contributor types to describe WordPress Pingback DDoS attacks.
+
+## 3.107.4 - 2019-07-19
+
+* `Aws\IoTEvents` - Adds support for IoT Events, Lambda, SQS and Kinesis Firehose actions.
+* `Aws\SQS` - This release updates the information about the availability of FIFO queues and includes miscellaneous fixes.
+
+## 3.107.3 - 2019-07-18
+
+* `Aws\CodeDeploy` - Documentation updates for codedeploy
+* `Aws\Comprehend` - Amazon Comprehend now supports multiple entities for custom entity recognition
+* `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) introduces support for cluster settings. Cluster settings specify whether CloudWatch Container Insights is enabled or disabled for the cluster.
+* `Aws\ElastiCache` - Updates for Elasticache
+
 ## 3.107.2 - 2019-07-17
 
 * `Aws\AutoScaling` - Documentation updates for autoscaling
