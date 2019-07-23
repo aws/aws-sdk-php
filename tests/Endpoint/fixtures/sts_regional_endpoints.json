@@ -1,0 +1,127 @@
+{
+  "partitions": [
+    {
+      "defaults": {
+        "hostname": "{service}.{region}.{dnsSuffix}",
+        "protocols": [
+          "https"
+        ],
+        "signatureVersions": [
+          "v4"
+        ]
+      },
+      "dnsSuffix": "amazonaws.com",
+      "partition": "aws",
+      "partitionName": "AWS Standard",
+      "regionRegex": "^(us|eu|ap|sa|ca)\\-\\w+\\-\\d+$",
+      "regions": {
+        "ap-east-1": {
+          "description": "Asia Pacific (Hong Kong)"
+        },
+        "ap-northeast-1": {
+          "description": "Asia Pacific (Tokyo)"
+        },
+        "ap-northeast-2": {
+          "description": "Asia Pacific (Seoul)"
+        },
+        "ap-south-1": {
+          "description": "Asia Pacific (Mumbai)"
+        },
+        "ap-southeast-1": {
+          "description": "Asia Pacific (Singapore)"
+        },
+        "ap-southeast-2": {
+          "description": "Asia Pacific (Sydney)"
+        },
+        "ca-central-1": {
+          "description": "Canada (Central)"
+        },
+        "eu-central-1": {
+          "description": "EU (Frankfurt)"
+        },
+        "eu-north-1": {
+          "description": "EU (Stockholm)"
+        },
+        "eu-west-1": {
+          "description": "EU (Ireland)"
+        },
+        "eu-west-2": {
+          "description": "EU (London)"
+        },
+        "eu-west-3": {
+          "description": "EU (Paris)"
+        },
+        "sa-east-1": {
+          "description": "South America (Sao Paulo)"
+        },
+        "us-east-1": {
+          "description": "US East (N. Virginia)"
+        },
+        "us-east-2": {
+          "description": "US East (Ohio)"
+        },
+        "us-west-1": {
+          "description": "US West (N. California)"
+        },
+        "us-west-2": {
+          "description": "US West (Oregon)"
+        }
+      },
+      "services": {
+        "sts": {
+          "defaults": {},
+          "endpoints": {
+            "ap-east-1": {},
+            "ap-northeast-1": {},
+            "ap-northeast-2": {},
+            "ap-south-1": {},
+            "ap-southeast-1": {},
+            "ap-southeast-2": {},
+            "aws-global": {
+              "credentialScope": {
+                "region": "us-east-1"
+              },
+              "hostname": "sts.amazonaws.com"
+            },
+            "ca-central-1": {},
+            "eu-central-1": {},
+            "eu-north-1": {},
+            "eu-west-1": {},
+            "eu-west-2": {},
+            "eu-west-3": {},
+            "sa-east-1": {},
+            "us-east-1": {},
+            "us-east-1-fips": {
+              "credentialScope": {
+                "region": "us-east-1"
+              },
+              "hostname": "sts-fips.us-east-1.amazonaws.com"
+            },
+            "us-east-2": {},
+            "us-east-2-fips": {
+              "credentialScope": {
+                "region": "us-east-2"
+              },
+              "hostname": "sts-fips.us-east-2.amazonaws.com"
+            },
+            "us-west-1": {},
+            "us-west-1-fips": {
+              "credentialScope": {
+                "region": "us-west-1"
+              },
+              "hostname": "sts-fips.us-west-1.amazonaws.com"
+            },
+            "us-west-2": {},
+            "us-west-2-fips": {
+              "credentialScope": {
+                "region": "us-west-2"
+              },
+              "hostname": "sts-fips.us-west-2.amazonaws.com"
+            }
+          },
+          "partitionEndpoint": "aws-global"
+        }
+      }
+    }
+  ]
+}

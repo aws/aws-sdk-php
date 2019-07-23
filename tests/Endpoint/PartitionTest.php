@@ -464,4 +464,31 @@ class PartitionTest extends TestCase
             [$partition, 'us-east-1', 's3', 's3'],
         ];
     }
+
+    public function testResolvesStsRegionalEndpoints()
+    {
+        $data = json_decode(
+            file_get_contents(__DIR__ . '/fixtures/sts_regional_endpoints.json'),
+            true
+        );
+        $partition = new Partition($data['partitions'][0]);
+
+        $legacy = $partition([
+            'service' => 'sts',
+            'region' => 'us-west-2'
+        ]);
+        $this->assertEquals('https://sts.amazonaws.com', $legacy['endpoint']);
+
+        $regional = $partition([
+            'service' => 'sts',
+            'region' => 'us-west-2',
+            'options' => [
+                'sts_regional_endpoints' => 'regional'
+            ]
+        ]);
+        $this->assertEquals(
+            'https://sts.us-west-2.amazonaws.com',
+            $regional['endpoint']
+        );
+    }
 }

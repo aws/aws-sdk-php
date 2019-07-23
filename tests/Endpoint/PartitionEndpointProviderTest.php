@@ -193,6 +193,28 @@ class PartitionEndpointProviderTest extends TestCase
         $this->assertNull($unknownPartition);
     }
 
+    public function testPassesOptionsToProvider()
+    {
+        $data = json_decode(
+            file_get_contents(__DIR__ . '/fixtures/sts_regional_endpoints.json'),
+            true
+        );
+        $provider = new PartitionEndpointProvider(
+            $data['partitions'],
+            'aws',
+            ['sts_regional_endpoints' => 'regional']
+        );
+        $endpoint = $provider([
+            'service' => 'sts',
+            'region' => 'us-east-1',
+        ]);
+
+        $this->assertEquals(
+            'https://sts.us-east-1.amazonaws.com',
+            $endpoint['endpoint']
+        );
+    }
+
     /**
      * @dataProvider knownEndpointProvider
      *
