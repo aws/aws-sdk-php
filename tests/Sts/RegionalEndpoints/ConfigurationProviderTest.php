@@ -197,11 +197,11 @@ EOT;
     {
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
-        putenv('HOMEPATH=\\Michael\\Home');
-        $ref = new \ReflectionClass('Aws\EndpointDiscovery\ConfigurationProvider');
+        putenv('HOMEPATH=\\My\\Home');
+        $ref = new \ReflectionClass('Aws\Sts\RegionalEndpoints\ConfigurationProvider');
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
-        $this->assertEquals('C:\\Michael\\Home', $meth->invoke(null));
+        $this->assertEquals('C:\\My\\Home', $meth->invoke(null));
     }
 
     public function testMemoizes()
