@@ -18,6 +18,8 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  * @method \GuzzleHttp\Promise\Promise assumeRoleWithWebIdentityAsync(array $args = [])
  * @method \Aws\Result decodeAuthorizationMessage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise decodeAuthorizationMessageAsync(array $args = [])
+ * @method \Aws\Result getAccessKeyInfo(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getAccessKeyInfoAsync(array $args = [])
  * @method \Aws\Result getCallerIdentity(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCallerIdentityAsync(array $args = [])
  * @method \Aws\Result getFederationToken(array $args = [])
