@@ -27,6 +27,26 @@ use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
  */
 class StsClient extends AwsClient
 {
+
+    /**
+     * {@inheritdoc}
+     *
+     * In addition to the options available to
+     * {@see \Aws\AwsClient::__construct}, StsClient accepts the following
+     * options:
+     *
+     * - sts_regional_endpoints:
+     *   (Aws\Sts\RegionalEndpoints\ConfigurationInterface|Aws\CacheInterface\|callable|string|array)
+     *   Specifies whether to use regional or legacy endpoints for legacy regions.
+     *   Provide an Aws\Sts\RegionalEndpoints\ConfigurationInterface object, an
+     *   instance of Aws\CacheInterface, a callable configuration provider used
+     *   to create endpoint configuration, a string value of `legacy` or
+     *   `regional`, or an associative array with the following keys:
+     *   endpoint_types (string)  Set to `legacy` or `regional`, defaults to
+     *   `legacy`
+     *
+     * @param array $args
+     */
     public function __construct(array $args)
     {
         if (!isset($args['sts_regional_endpoints'])) {
