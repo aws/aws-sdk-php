@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.107.7 - 2019-07-24
 
 * `Aws\EC2` - This release introduces support for split tunnel with AWS Client VPN, and also adds support for opt-in Regions in DescribeRegions API. In addition, customers can now also tag Launch Templates on creation.
 * `Aws\Glue` - This release provides GlueVersion option for Job APIs and WorkerType option for DevEndpoint APIs. Job APIs enable users to pick specific GlueVersion for a specific job and pin the job to a specific runtime environment. DevEndpoint APIs enable users to pick different WorkerType for memory intensive workload.
