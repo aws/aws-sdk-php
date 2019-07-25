@@ -44,6 +44,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putImage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putImageAsync(array $args = [])
+ * @method \Aws\Result putImageTagMutability(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putImageTagMutabilityAsync(array $args = [])
  * @method \Aws\Result putLifecyclePolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putLifecyclePolicyAsync(array $args = [])
  * @method \Aws\Result setRepositoryPolicy(array $args = [])
