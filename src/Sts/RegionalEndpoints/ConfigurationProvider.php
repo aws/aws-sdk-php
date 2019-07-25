@@ -239,8 +239,6 @@ class ConfigurationProvider
     /**
      * Wraps a config provider and caches previously provided configuration.
      *
-     * Ensures that cached configuration is refreshed when it expires.
-     *
      * @param callable $provider Config provider function to wrap.
      *
      * @return callable
@@ -257,7 +255,6 @@ class ConfigurationProvider
             }
 
             // Create the initial promise that will be used as the cached value
-            // until it expires.
             if (null === $result) {
                 $result = $provider();
             }
@@ -270,6 +267,7 @@ class ConfigurationProvider
                 });
         };
     }
+
 
     /**
      * Reject promise with standardized exception.
