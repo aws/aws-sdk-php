@@ -71,7 +71,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
     /**
      * Loads assume role with web identity credentials.
      *
-     * @return PromiseInterface
+     * @return Promise\PromiseInterface
      */
     public function __invoke()
     {
