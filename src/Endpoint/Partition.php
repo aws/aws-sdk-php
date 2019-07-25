@@ -3,6 +3,7 @@ namespace Aws\Endpoint;
 
 use ArrayAccess;
 use Aws\HasDataTrait;
+use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
 use InvalidArgumentException as Iae;
 
 /**
@@ -11,6 +12,25 @@ use InvalidArgumentException as Iae;
 final class Partition implements ArrayAccess, PartitionInterface
 {
     use HasDataTrait;
+
+    private $stsLegacyGlobalRegions = [
+        'ap-northeast-1',
+        'ap-south-1',
+        'ap-southeast-1',
+        'ap-southeast-2',
+        'aws-global',
+        'ca-central-1',
+        'eu-central-1',
+        'eu-north-1',
+        'eu-west-1',
+        'eu-west-2',
+        'eu-west-3',
+        'sa-east-1',
+        'us-east-1',
+        'us-east-2',
+        'us-west-1',
+        'us-west-2',
+    ];
 
     /**
      * The partition constructor accepts the following options:
@@ -98,7 +118,8 @@ final class Partition implements ArrayAccess, PartitionInterface
         $service = isset($args['service']) ? $args['service'] : '';
         $region = isset($args['region']) ? $args['region'] : '';
         $scheme = isset($args['scheme']) ? $args['scheme'] : 'https';
-        $data = $this->getEndpointData($service, $region);
+        $options = isset($args['options']) ? $args['options'] : [];
+        $data = $this->getEndpointData($service, $region, $options);
 
         return [
             'endpoint' => "{$scheme}://" . $this->formatEndpoint(
@@ -116,10 +137,9 @@ final class Partition implements ArrayAccess, PartitionInterface
         ];
     }
 
-    private function getEndpointData($service, $region)
+    private function getEndpointData($service, $region, $options)
     {
-
-        $resolved = $this->resolveRegion($service, $region);
+        $resolved = $this->resolveRegion($service, $region, $options);
         $data = isset($this->data['services'][$service]['endpoints'][$resolved])
             ? $this->data['services'][$service]['endpoints'][$resolved]
             : [];
@@ -151,9 +171,11 @@ final class Partition implements ArrayAccess, PartitionInterface
         return array_shift($possibilities);
     }
 
-    private function resolveRegion($service, $region)
+    private function resolveRegion($service, $region, $options)
     {
-        if ($this->isServicePartitionGlobal($service)) {
+        if ($this->isServicePartitionGlobal($service)
+            || $this->isStsLegacyEndpointUsed($service, $region, $options)
+        ) {
             return $this->getPartitionEndpoint($service);
         }
 
@@ -165,6 +187,26 @@ final class Partition implements ArrayAccess, PartitionInterface
         return isset($this->data['services'][$service]['isRegionalized'])
             && false === $this->data['services'][$service]['isRegionalized']
             && isset($this->data['services'][$service]['partitionEndpoint']);
+    }
+
+    /**
+     * STS legacy endpoints used for valid regions unless option is explicitly
+     * set to 'regional'
+     *
+     * @param string $service
+     * @param string $region
+     * @param array $options
+     * @return bool
+     */
+    private function isStsLegacyEndpointUsed($service, $region, $options)
+    {
+        return $service === 'sts'
+            && in_array($region, $this->stsLegacyGlobalRegions)
+            && (empty($options['sts_regional_endpoints'])
+                || ConfigurationProvider::unwrap(
+                    $options['sts_regional_endpoints']
+                )->getEndpointsType() !== 'regional'
+            );
     }
 
     private function getPartitionEndpoint($service)

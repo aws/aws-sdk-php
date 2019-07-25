@@ -453,6 +453,28 @@ EOT;
         $this->assertEquals('v4', $conf['config']['signature_version']);
     }
 
+    public function testCanPassStsRegionalEndpointsToEndpointProvider()
+    {
+        $data = json_decode(
+            file_get_contents(__DIR__ . '/Endpoint/fixtures/sts_regional_endpoints.json'),
+            true
+        );
+        $partition = new Partition($data['partitions'][0]);
+        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $resolver->resolve([
+            'service'                   => 'sts',
+            'region'                    => 'us-west-2',
+            'sts_regional_endpoints'    => 'regional',
+            'version'                   => 'latest',
+            'endpoint_provider'         => $partition
+        ], new HandlerList());
+
+        $this->assertEquals(
+            'https://sts.us-west-2.amazonaws.com',
+            $conf['endpoint']
+        );
+    }
+
     public function testAddsLoggerWithDebugSettings()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());

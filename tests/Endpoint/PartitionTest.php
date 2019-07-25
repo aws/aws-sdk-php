@@ -464,4 +464,103 @@ class PartitionTest extends TestCase
             [$partition, 'us-east-1', 's3', 's3'],
         ];
     }
+
+    /**
+     * @dataProvider stsEndpointTestCases
+     *
+     * @param $region
+     * @param $configOption
+     * @param $expectedEndpoint
+     */
+    public function testResolvesStsRegionalEndpoints(
+        $region,
+        $configOption,
+        $expectedEndpoint
+    ) {
+        $data = json_decode(
+            file_get_contents(__DIR__ . '/fixtures/sts_regional_endpoints.json'),
+            true
+        );
+        $partition = new Partition($data['partitions'][0]);
+
+        $params = [
+            'service' => 'sts',
+            'region' => $region
+        ];
+        if (!empty($configOption)) {
+            $params['options'] = [
+                'sts_regional_endpoints' => $configOption
+            ];
+        }
+
+        $data = $partition($params);
+        $this->assertEquals($expectedEndpoint, $data['endpoint']);
+
+    }
+
+    public function stsEndpointTestCases()
+    {
+        return [
+            [
+                'us-west-2',
+                'legacy',
+                'https://sts.amazonaws.com'
+            ],
+            [
+                'us-west-2',
+                'regional',
+                'https://sts.us-west-2.amazonaws.com'
+            ],
+            [
+                'us-west-2',
+                null,
+                'https://sts.amazonaws.com'
+            ],
+            [
+                'us-west-2-fips',
+                'legacy',
+                'https://sts-fips.us-west-2.amazonaws.com'
+            ],
+            [
+                'us-west-2-fips',
+                'regional',
+                'https://sts-fips.us-west-2.amazonaws.com'
+            ],
+            [
+                'us-west-2-fips',
+                null,
+                'https://sts-fips.us-west-2.amazonaws.com'
+            ],
+            [
+                'ap-east-1',
+                'legacy',
+                'https://sts.ap-east-1.amazonaws.com'
+            ],
+            [
+                'ap-east-1',
+                'regional',
+                'https://sts.ap-east-1.amazonaws.com'
+            ],
+            [
+                'ap-east-1',
+                null,
+                'https://sts.ap-east-1.amazonaws.com'
+            ],
+            [
+                'aws-global',
+                'legacy',
+                'https://sts.amazonaws.com'
+            ],
+            [
+                'aws-global',
+                'regional',
+                'https://sts.amazonaws.com'
+            ],
+            [
+                'aws-global',
+                null,
+                'https://sts.amazonaws.com'
+            ],
+        ];
+    }
 }
