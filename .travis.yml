@@ -33,7 +33,7 @@ install:
 
 script:
   - make test
-  - 'if [ $(phpenv version-name) -ge "7.1" ] && [ -z "$COMPOSER_OPTS" ]; then composer require --dev phpstan/phpstan && vendor/bin/phpstan analyse -l 1 src; fi'
+  - 'if [ $(phpenv version-name) > "7.1" ] && [ -z "$COMPOSER_OPTS" ]; then composer require --dev phpstan/phpstan && vendor/bin/phpstan analyse src; fi'
   - if [ -z "$COMPOSER_OPTS" ]; then make package; fi
 
 after_success:
