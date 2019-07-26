@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.108.0 - 2019-07-26
 
 * `Aws\Batch` - AWS Batch now supports SDK auto-pagination and Job-level docker devices.
 * `Aws\CloudWatchLogs` - Allow for specifying multiple log groups in an Insights query, and deprecate storedByte field for LogStreams and interleaved field for FilterLogEventsRequest.
