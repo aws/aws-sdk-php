@@ -1,11 +1,11 @@
 language: php
 
 php:
-#  - 5.5
-#  - 5.6
-#  - 7.0
-#  - 7.1
-#  - 7.2
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
   - 7.3
   - hhvm
   - nightly
@@ -40,8 +40,8 @@ script:
   # Unit tests
   - make test
 
-  # Static analysis
-  - 'versions=("7.1" "7.2" "7.3"); if [ printf "%s\n" ${versions[@]} | grep -q -P "^$(phpenv version-name)$" ] && [ -z "$COMPOSER_OPTS" ]; then composer require --dev nette/neon "^3.0" && composer require --dev phpstan/phpstan && vendor/bin/phpstan analyse src; fi'
+  # Static analysis (run only for a single build job)
+  - 'if [ $(phpenv version-name) == "7.3" ] && [ -z "$COMPOSER_OPTS" ]; then composer require --dev nette/neon "^3.0" && composer require --dev phpstan/phpstan && vendor/bin/phpstan analyse src; fi'
 
   # Package generation
   - if [ -z "$COMPOSER_OPTS" ]; then make package; fi
