@@ -41,7 +41,7 @@ script:
   - make test
 
   # Static analysis
-  - 'versions=("7.1" "7.2" "7.3"); if [ printf "%s\n" ${versions[@]} | grep -q -P "^$(phpenv version-name)" ] && [ -z "$COMPOSER_OPTS" ]; then composer require --dev nette/neon "^3.0" && composer require --dev phpstan/phpstan && vendor/bin/phpstan analyse src; fi'
+  - 'versions=("7.1" "7.2" "7.3"); if [ printf "%s\n" ${versions[@]} | grep -q -P "^$(phpenv version-name)$" ] && [ -z "$COMPOSER_OPTS" ]; then composer require --dev nette/neon "^3.0" && composer require --dev phpstan/phpstan && vendor/bin/phpstan analyse src; fi'
 
   # Package generation
   - if [ -z "$COMPOSER_OPTS" ]; then make package; fi
