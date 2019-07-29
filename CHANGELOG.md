@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeCommit` - This release supports better exception handling for merges.
+
 ## 3.108.0 - 2019-07-26
 
 * `Aws\Batch` - AWS Batch now supports SDK auto-pagination and Job-level docker devices.
