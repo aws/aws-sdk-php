@@ -634,6 +634,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise exportClientVpnClientConfigurationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result exportTransitGatewayRoutes(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise exportTransitGatewayRoutesAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result getCapacityReservationUsage(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise getCapacityReservationUsageAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getEbsDefaultKmsKeyId(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getEbsDefaultKmsKeyIdAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getEbsEncryptionByDefault(array $args = []) (supported in versions 2016-11-15)

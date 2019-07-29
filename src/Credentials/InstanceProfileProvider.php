@@ -32,6 +32,9 @@ class InstanceProfileProvider
     /** @var int */
     private $attempts;
 
+    /** @var float|mixed */
+    private $timeout;
+
     /**
      * The constructor accepts the following options:
      *

@@ -71,7 +71,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
     /**
      * Loads assume role with web identity credentials.
      *
-     * @return PromiseInterface
+     * @return Promise\PromiseInterface
      */
     public function __invoke()
     {
@@ -95,7 +95,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
         return $client->assumeRoleWithWebIdentityAsync($assumeParams)
             ->then(function (Result $result) {
                 return $this->client->createCredentials($result);
-            })->otherwise(function (\RuntimeException $exception) {
+            })->otherwise(function (\Exception $exception) {
                 throw new CredentialsException(
                     "Error assuming role from web identity credentials",
                     0,
