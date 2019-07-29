@@ -42,10 +42,10 @@ script:
   # Unit tests
   - make test
 
-  # Static analysis (run only for a single build job)
+  # Static analysis
   - >
-    if { [ $(phpenv version-name) == "7.1" ] || [ $(phpenv version-name) == "7.2" ] || [ $(phpenv version-name) == "7.3" ] || [ $(phpenv version-name) == "7.4" ]; } && [ -z "$COMPOSER_OPTS" ];
-    then
+    test_versions=("7.1" "7.2" "7.3" 7.4")
+    if [[ " ${test_versions[@]} " =~ " $(phpenv version-name) " ]]; then
       composer require --dev nette/neon "^3.0"
       composer require --dev phpstan/phpstan
       vendor/bin/phpstan analyse src
