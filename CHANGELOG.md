@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.108.1 - 2019-07-29
 
 * `Aws\CodeCommit` - This release supports better exception handling for merges.
 
