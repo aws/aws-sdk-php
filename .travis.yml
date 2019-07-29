@@ -47,8 +47,8 @@ script:
     if { [ $(phpenv version-name) == "7.1" ] || [ $(phpenv version-name) == "7.2" ] || [ $(phpenv version-name) == "7.3" ] || [ $(phpenv version-name) == "7.4" ]; } && [ -z "$COMPOSER_OPTS" ];
     then
       composer require --dev nette/neon "^3.0"
-      && omposer require --dev phpstan/phpstan
-      && vendor/bin/phpstan analyse src;
+      composer require --dev phpstan/phpstan
+      vendor/bin/phpstan analyse src
     fi
 
   # Package generation
