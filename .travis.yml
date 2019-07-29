@@ -1,9 +1,9 @@
 language: php
 
 php:
-  - 5.5
-  - 5.6
-  - 7.0
+#  - 5.5
+#  - 5.6
+#  - 7.0
   - 7.1
   - 7.2
   - 7.3
@@ -43,7 +43,13 @@ script:
   - make test
 
   # Static analysis (run only for a single build job)
-  - 'if [ $(phpenv version-name) == "7.3" ] && [ -z "$COMPOSER_OPTS" ]; then composer require --dev nette/neon "^3.0" && composer require --dev phpstan/phpstan && vendor/bin/phpstan analyse src; fi'
+  - >
+    if { [ $(phpenv version-name) == "7.1" ] || [ $(phpenv version-name) == "7.2" ] || [ $(phpenv version-name) == "7.3" ] || [ $(phpenv version-name) == "7.4" ]; } && [ -z "$COMPOSER_OPTS" ];
+    then
+      composer require --dev nette/neon "^3.0"
+      && omposer require --dev phpstan/phpstan
+      && vendor/bin/phpstan analyse src;
+    fi
 
   # Package generation
   - if [ -z "$COMPOSER_OPTS" ]; then make package; fi
