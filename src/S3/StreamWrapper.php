@@ -147,11 +147,11 @@ class StreamWrapper
             return $this->triggerError($errors);
         }
 
-        return $this->boolCall(function() use ($path) {
+        return $this->boolCall(function() {
             switch ($this->mode) {
-                case 'r': return $this->openReadStream($path);
-                case 'a': return $this->openAppendStream($path);
-                default: return $this->openWriteStream($path);
+                case 'r': return $this->openReadStream();
+                case 'a': return $this->openAppendStream();
+                default: return $this->openWriteStream();
             }
         });
     }

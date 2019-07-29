@@ -4,6 +4,7 @@ namespace Aws\Api\Parser\Exception;
 use Aws\HasMonitoringEventsTrait;
 use Aws\MonitoringEventsInterface;
 use Aws\ResponseContainerInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class ParserException extends \RuntimeException implements
     MonitoringEventsInterface,

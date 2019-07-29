@@ -130,7 +130,6 @@ class EndpointDiscoveryMiddleware
                     $cmd,
                     $identifiers,
                     $isRequired,
-                    $nextHandler,
                     $originalUri,
                     $request,
                     &$endpoint,

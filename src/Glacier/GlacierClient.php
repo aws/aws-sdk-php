@@ -146,7 +146,7 @@ class GlacierClient extends AwsClient
                     if (!$command['checksum']) {
                         $body = new HashingStream(
                             $body, new TreeHash(),
-                            function ($result) use ($command, &$request) {
+                            function ($result) use (&$request) {
                                 $request = $request->withHeader(
                                     'x-amz-sha256-tree-hash',
                                     bin2hex($result)
