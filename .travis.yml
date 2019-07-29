@@ -45,7 +45,7 @@ script:
   # Static analysis
   - >
     test_versions=("7.1" "7.2" "7.3" "7.4");
-    if [ " ${test_versions[@]} " =~ " $(phpenv version-name) " ] && [ -v COMPOSER_OPTS ]; then
+    if [ " ${test_versions[@]} " =~ " $(phpenv version-name) " ] && [ -z $COMPOSER_OPTS ]; then
       composer require --dev nette/neon "^3.0"
       composer require --dev phpstan/phpstan
       vendor/bin/phpstan analyse src
