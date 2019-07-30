@@ -31,6 +31,7 @@ class RetryMiddleware
         'RequestThrottledException'              => true,
         'TooManyRequestsException'               => true,
         'IDPCommunicationError'                  => true,
+        'InvalidIdentityToken'                   => true,
     ];
 
     private $decider;
