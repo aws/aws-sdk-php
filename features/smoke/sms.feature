@@ -9,4 +9,4 @@ Feature: AWS Server Migration Service
   Scenario: Handling errors
     When I attempt to call the "DeleteReplicationJob" API with:
       | replicationJobId | invalidId |
-    Then I expect the response error code to be "InvalidParameterException"
+    Then the request should fail

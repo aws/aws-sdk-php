@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 3.108.2 - 2019-07-30
+
+* `Aws\MediaConvert` - MediaConvert adds support for specifying priority (-50 to 50) on jobs submitted to on demand or reserved queues
+* `Aws\Polly` - Amazon Polly adds support for Neural text-to-speech engine.
+* `Aws\Route53` - Amazon Route 53 now supports the Middle East (Bahrain) Region (me-south-1) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+
+## 3.108.1 - 2019-07-29
+
+* `Aws\CodeCommit` - This release supports better exception handling for merges.
+
 ## 3.108.0 - 2019-07-26
 
 * `Aws\Batch` - AWS Batch now supports SDK auto-pagination and Job-level docker devices.
