@@ -82,7 +82,7 @@ class CredentialProvider
 
         $defaultChain = [
             'env' => self::env(),
-            'web_identity' => self::assumeRoleWithWebIdentityCredentialProvider(),
+            'web_identity' => self::assumeRoleWithWebIdentityCredentialProvider($config),
             'ini' => self::ini(),
             'ini_config' => self::ini('profile default', self::getHomeDir() . '/.aws/config'),
         ];
@@ -334,6 +334,9 @@ class CredentialProvider
             $stsClient = isset($config['stsClient'])
                 ? $config['stsClient']
                 : null;
+            $region = isset($config['region'])
+                ? $config['region']
+                : null;
 
             if ($tokenFromEnv && $arnFromEnv) {
                 $sessionName = getenv(self::ENV_ROLE_SESSION_NAME)
@@ -343,7 +346,8 @@ class CredentialProvider
                     'RoleArn' => $arnFromEnv,
                     'WebIdentityTokenFile' => $tokenFromEnv,
                     'SessionName' => $sessionName,
-                    'client' => $stsClient
+                    'client' => $stsClient,
+                    'region' => $region
                 ]);
 
                 return $provider();
