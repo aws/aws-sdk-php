@@ -362,6 +362,9 @@ class CredentialProvider
 
             if (isset($profiles[$profileName])) {
                 $profile = $profiles[$profileName];
+                if (isset($profile['region'])) {
+                    $region = $profile['region'];
+                }
                 if (isset($profile['web_identity_token_file'])
                     && isset($profile['role_arn'])
                 ) {
@@ -372,7 +375,8 @@ class CredentialProvider
                         'RoleArn' => $profile['role_arn'],
                         'WebIdentityTokenFile' => $profile['web_identity_token_file'],
                         'SessionName' => $sessionName,
-                        'client' => $stsClient
+                        'client' => $stsClient,
+                        'region' => $region
                     ]);
 
                     return $provider();
