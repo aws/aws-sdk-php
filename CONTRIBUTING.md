@@ -14,7 +14,7 @@ your [issues][] or [pull requests][pull-requests] through GitHub.
    The [PHP CS Fixer][cs-fixer] tool can be helpful for formatting your code.
 1. We maintain a high percentage of code coverage in our unit tests. If you make
    changes to the code, please add, update, and/or remove tests as appropriate.
-1. We run automated static code analysis with [PHPStan][phpstan] in the `src` 
+1. Static code analysis with [PHPStan][phpstan] is automatically run on the `src` 
    directory for submitted pull requests. If there is a case that needs to be
    ignored by static analysis, please update the `ignoreErrors` section in the
    `phpstan.neon` config file in your PR, and point out why this case warrants
