@@ -9,6 +9,7 @@ php:
   - 7.1
   - 7.2
   - 7.3
+  - 7.4
   - hhvm
   - nightly
 env:
@@ -19,23 +20,56 @@ matrix:
   allow_failures:
     - php: hhvm
     - php: nightly
+    - php: 7.4
   fast_finish: true
 
 sudo: false
 
 install:
+  # Setup environment variables for testing
   - export AWS_ACCESS_KEY_ID=foo
   - export AWS_SECRET_ACCESS_KEY=bar
   - export AWS_CSM_ENABLED=false
-  - 'if [ $(phpenv version-name) == "5.5" ]; then rm ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini; fi'
-  - 'if [ $(phpenv version-name) != "hhvm" ] && [ $(phpenv version-name) != "nightly" ]; then echo "xdebug.overload_var_dump = 0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi'
-  - 'if { [ $(phpenv version-name) == "7.2" ] || [ $(phpenv version-name) == "7.3" ]; } && [ -v COMPOSER_OPTS ]; then composer require --dev phpunit/phpunit "^5.7.11"; fi'
+
+  # Build job specific tweaks
+  - >
+    if [ $(phpenv version-name) == "5.5" ]; then
+      rm ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini
+    fi
+
+  - >
+    if [ $(phpenv version-name) != "hhvm" ] && [ $(phpenv version-name) != "nightly" ]; then
+      echo "xdebug.overload_var_dump = 0" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    fi
+
+  - >
+    if { [ $(phpenv version-name) == "7.2" ] || [ $(phpenv version-name) == "7.3" ]; } && [ -v COMPOSER_OPTS ]; then
+      composer require --dev phpunit/phpunit "^5.7.11"
+    fi
+
+  # Resolve dependencies
   - composer --version
   - travis_retry composer update $COMPOSER_OPTS --no-interaction --prefer-source
 
 script:
+  # Unit tests
   - make test
+
+  # Static analysis
+  - >
+    test_versions=("7.1" "7.2" "7.3" "7.4");
+    if [[ " ${test_versions[@]} " =~ " $(phpenv version-name) " ]] && [ -z $COMPOSER_OPTS ]; then
+      composer require --dev nette/neon "^3.0"
+      composer require --dev phpstan/phpstan
+      vendor/bin/phpstan analyse src
+    fi
+
+  # Package generation
   - if [ -z "$COMPOSER_OPTS" ]; then make package; fi
 
 after_success:
-  - 'if [ $(phpenv version-name) == "7.1" ]; then bash <(curl -s https://codecov.io/bash); fi'
+  # Code coverage report
+  - >
+    if [ $(phpenv version-name) == "7.1" ]; then
+      bash <(curl -s https://codecov.io/bash)
+    fi

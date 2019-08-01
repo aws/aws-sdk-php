@@ -1,0 +1,22 @@
+parameters:
+
+  level: 0
+
+  excludes_analyse:
+    # Guzzle V5 classes & interfaces changed in V6
+    - %rootDir%/../../../src/Handler/GuzzleV5/*
+
+  ignoreErrors:
+    # Intentional
+    - '#Aws\\Api\\Parser\\Crc32ValidatingParser::__construct\(\) does not call parent constructor from Aws\\Api\\Parser\\AbstractParser\.#'
+    - '#Aws\\S3\\(RetryableMalformedResponse|GetBucketLocation|AmbiguousSuccess)Parser::__construct\(\) does not call parent constructor from Aws\\Api\\Parser\\AbstractParser\.#'
+
+    # HashContext definition sometimes not found by static analysis
+    - '#Property Aws\\PhpHash::\$context has unknown class HashContext as its type\.#'
+    - '#Property Aws\\Api\\Parser\\DecodingEventStreamIterator::\$hashContext has unknown class HashContext as its type\.#'
+    - '#Return typehint of method Aws\\PhpHash::getContext\(\) has invalid type HashContext\.#'
+
+    # Guzzle V5 classes & interfaces changed in V6
+    - '#Call to an undefined static method GuzzleHttp\\Client::getDefaultUserAgent\(\)\.#'
+
+  reportUnmatchedIgnoredErrors: false
