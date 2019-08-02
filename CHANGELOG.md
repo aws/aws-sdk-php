@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Added static code analysis using PHPStan to Travis CI configuration.
+* `Aws\STS` - Documentation updates for sts
+
 ## 3.108.2 - 2019-07-30
 
 * `Aws\MediaConvert` - MediaConvert adds support for specifying priority (-50 to 50) on jobs submitted to on demand or reserved queues
