@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.108.3 - 2019-08-02
 
 * `Aws\` - Added static code analysis using PHPStan to Travis CI configuration.
 * `Aws\STS` - Documentation updates for sts
