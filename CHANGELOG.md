@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.108.4 - 2019-08-05
 
 * `Aws\DataSync` - Support VPC endpoints.
 * `Aws\EC2` - Amazon EC2 now supports a new Spot allocation strategy "Capacity-optimized" that fulfills your request using Spot Instance pools that are optimally chosen based on the available Spot capacity.
