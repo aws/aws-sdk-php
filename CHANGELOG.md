@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataSync` - Support VPC endpoints.
+* `Aws\EC2` - Amazon EC2 now supports a new Spot allocation strategy "Capacity-optimized" that fulfills your request using Spot Instance pools that are optimally chosen based on the available Spot capacity.
+* `Aws\IoT` - In this release, AWS IoT Device Defender introduces audit mitigation actions that can be applied to audit findings to help mitigate security issues.
+
 ## 3.108.3 - 2019-08-02
 
 * `Aws\` - Added static code analysis using PHPStan to Travis CI configuration.
