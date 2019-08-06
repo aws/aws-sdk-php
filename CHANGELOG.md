@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - Documentation updates for AWS Batch
+
 ## 3.108.4 - 2019-08-05
 
 * `Aws\DataSync` - Support VPC endpoints.
