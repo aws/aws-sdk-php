@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.108.5 - 2019-08-06
 
 * `Aws\Batch` - Documentation updates for AWS Batch
 
