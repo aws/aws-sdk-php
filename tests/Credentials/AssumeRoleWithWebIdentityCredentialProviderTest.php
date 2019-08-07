@@ -197,7 +197,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
     }
 
     public function testRetryInvalidIdentityToken()
-    {   
+    {
         $dir = $this->clearEnv();
         $result = [
             'Credentials' => [
@@ -248,7 +248,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
      * @expectedExceptionMessage InvalidIdentityToken, retries exhausted
      */
     public function testThrowsExceptionWhenInvalidIdentityTokenRetriesExhausted()
-    {   
+    {
         $dir = $this->clearEnv();
         $result = [
             'Credentials' => [
@@ -294,7 +294,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
      * @expectedExceptionMessage InvalidIdentityToken, retries exhausted
      */
     public function testCanDisableInvalidIdentityTokenRetries()
-    {   
+    {
         $dir = $this->clearEnv();
         $result = [
             'Credentials' => [
@@ -316,10 +316,10 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
                 }
 
                 return new StsException(
-                    "foo", 
+                    "foo",
                     new Command("foo"),
-                    ['code' => 'InvalidIdentityToken'
-                ]);
+                    ['code' => 'InvalidIdentityToken']
+                );
             }
         ]);
         
