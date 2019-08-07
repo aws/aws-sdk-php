@@ -33,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listComponentsAsync(array $args = [])
  * @method \Aws\Result listProblems(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listProblemsAsync(array $args = [])
+ * @method \Aws\Result updateApplication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateApplicationAsync(array $args = [])
  * @method \Aws\Result updateComponent(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateComponentAsync(array $args = [])
  * @method \Aws\Result updateComponentConfiguration(array $args = [])
