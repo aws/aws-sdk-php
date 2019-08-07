@@ -218,7 +218,11 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
                     return Promise\promise_for(new Result($result));
                 }
 
-                return new StsException("foo message", new Command("fooCommand"), ['code' => 'InvalidIdentityToken']);
+                return new StsException(
+                    "foo",
+                    new Command("foo"),
+                    ['code' => 'InvalidIdentityToken']
+                );
             }
         ]);
         
@@ -269,7 +273,11 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
                     return Promise\promise_for(new Result($result));
                 }
 
-                return new StsException("foo message", new Command("fooCommand"), ['code' => 'InvalidIdentityToken']);
+                return new StsException(
+                    "foo",
+                    new Command("foo"),
+                    ['code' => 'InvalidIdentityToken']
+                );
             }
         ]);
         
