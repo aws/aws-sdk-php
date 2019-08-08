@@ -58,7 +58,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
             throw new \InvalidArgumentException("'WebIdentityTokenFile' must be an absolute path.");
         }
 
-        $this->retries = isset($config['retries']) ? $config['retries'] : 1;
+        $this->retries = isset($config['retries']) ? $config['retries'] : 3;
         $this->attempts = 0;
 
         $this->session = isset($config['SessionName'])
