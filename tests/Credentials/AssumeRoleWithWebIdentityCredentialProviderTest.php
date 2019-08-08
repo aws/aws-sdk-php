@@ -262,7 +262,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
                 'Expiration'      => DateTimeResult::fromEpoch(time() + 10)
             ],
         ];
-        $retries = 2;
+        $retries = 4;
 
         $sts = new StsClient([
             'region' => 'us-west-2',
