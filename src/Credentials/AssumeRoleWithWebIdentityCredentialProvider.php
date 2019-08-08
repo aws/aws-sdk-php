@@ -26,6 +26,11 @@ class AssumeRoleWithWebIdentityCredentialProvider
     /** @var StsClient */
     private $client;
 
+    /** @var integer */
+    private $retries;
+
+    /** @var integer */
+    private $attempts;
 
     /**
      * The constructor attempts to load config from environment variables.
@@ -53,6 +58,9 @@ class AssumeRoleWithWebIdentityCredentialProvider
             throw new \InvalidArgumentException("'WebIdentityTokenFile' must be an absolute path.");
         }
 
+        $this->retries = isset($config['retries']) ? $config['retries'] : 3;
+        $this->attempts = 0;
+
         $this->session = isset($config['SessionName'])
             ? $config['SessionName']
             : 'aws-sdk-php-' . round(microtime(true) * 1000);
@@ -75,32 +83,49 @@ class AssumeRoleWithWebIdentityCredentialProvider
      */
     public function __invoke()
     {
-        $client = $this->client;
-        try {
-            $token = file_get_contents($this->tokenFile);
-        } catch (\Exception $exception) {
-            throw new CredentialsException(
-                "Error reading WebIdentityTokenFile from " . $this->tokenFile,
-                0,
-                $exception
-            );
-        }
+        return Promise\coroutine(function () {
+            $client = $this->client;
+            $result = null;
+            while ($result == null) {
+                try {
+                    $token = file_get_contents($this->tokenFile);
+                } catch (\Exception $exception) {
+                    throw new CredentialsException(
+                        "Error reading WebIdentityTokenFile from " . $this->tokenFile,
+                        0,
+                        $exception
+                    );
+                }
 
-        $assumeParams = [
-            'RoleArn' => $this->arn,
-            'RoleSessionName' => $this->session,
-            'WebIdentityToken' => $token
-        ];
+                $assumeParams = [
+                    'RoleArn' => $this->arn,
+                    'RoleSessionName' => $this->session,
+                    'WebIdentityToken' => $token
+                ];
 
-        return $client->assumeRoleWithWebIdentityAsync($assumeParams)
-            ->then(function (Result $result) {
-                return $this->client->createCredentials($result);
-            })->otherwise(function (\Exception $exception) {
-                throw new CredentialsException(
-                    "Error assuming role from web identity credentials",
-                    0,
-                    $exception
-                );
-            });
+                try {
+                    $result = $client->assumeRoleWithWebIdentity($assumeParams);
+                } catch (\Exception $e) {
+                    if ($e->getAwsErrorCode() == 'InvalidIdentityToken') {
+                        if ($this->attempts < $this->retries) {
+                            sleep(pow(1.2, $this->attempts));
+                        } else {
+                            throw new CredentialsException(
+                                "InvalidIdentityToken, retries exhausted"
+                            );
+                        }
+                    } else {
+                        throw new CredentialsException(
+                            "Error assuming role from web identity credentials",
+                            0,
+                            $e
+                        );
+                    }
+                }
+                $this->attempts++;
+            }
+
+            yield $this->client->createCredentials($result);
+        });
     }
 }
