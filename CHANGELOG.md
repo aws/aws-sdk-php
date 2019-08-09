@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Retry InvalidIdentityToken errors for AssumeRoleWithWebIdentityCredentialProvider
+* `Aws\GuardDuty` - New "evidence" field in the finding model to provide evidence information explaining why the finding has been triggered. Currently only threat-intelligence findings have this field. Some documentation updates.
+* `Aws\IoT` - This release adds Quality of Service (QoS) support for AWS IoT rules engine republish action.
+* `Aws\LexRuntimeService` - Manage Amazon Lex session state using APIs on the client
+* `Aws\MediaConvert` - AWS Elemental MediaConvert has added support for multi-DRM SPEKE with CMAF outputs, MP3 ingest, and options for improved video quality. 
+* `Aws\Redshift` - Add expectedNextSnapshotScheduleTime and expectedNextSnapshotScheduleTimeStatus to redshift cluster object.
+* `Aws\Test\Integ` - Add waiter to S3 integration test to prevent failed bucket deletions on cleanup.
+
 ## 3.109.0 - 2019-08-08
 
 * `Aws\CodeBuild` - CodeBuild adds CloudFormation support for SourceCredential
