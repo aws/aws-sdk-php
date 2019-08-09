@@ -85,7 +85,20 @@ class S3Context implements Context, SnippetAcceptingContext
     public static function deleteTestBucket()
     {
         $client = self::getSdk()->createS3();
+        $result = $client->listObjectsV2([
+            'Bucket' => self::getResourceName()
+        ]);
+
+        // Delete objects & wait until no longer available before deleting bucket
         $client->deleteMatchingObjects(self::getResourceName(), '', '//');
+        foreach ($result['Contents'] as $object) {
+            $client->waitUntil('ObjectNotExists', [
+                'Bucket' => self::getResourceName(),
+                'Key' => $object['Key']
+            ]);
+        }
+
+        // Delete bucket and wait until bucket is no longer available
         $client->deleteBucket(['Bucket' => self::getResourceName()]);
         $client->waitUntil('BucketNotExists', [
             'Bucket' => self::getResourceName(),
