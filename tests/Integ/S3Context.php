@@ -91,11 +91,13 @@ class S3Context implements Context, SnippetAcceptingContext
 
         // Delete objects & wait until no longer available before deleting bucket
         $client->deleteMatchingObjects(self::getResourceName(), '', '//');
-        foreach ($result['Contents'] as $object) {
-            $client->waitUntil('ObjectNotExists', [
-                'Bucket' => self::getResourceName(),
-                'Key' => $object['Key']
-            ]);
+        if (!empty($result['Contents']) && is_array($result['Contents'])) {
+            foreach ($result['Contents'] as $object) {
+                $client->waitUntil('ObjectNotExists', [
+                    'Bucket' => self::getResourceName(),
+                    'Key' => $object['Key']
+                ]);
+            }
         }
 
         // Delete bucket and wait until bucket is no longer available
