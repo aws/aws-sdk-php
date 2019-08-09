@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.109.1 - 2019-08-09
 
 * `Aws\` - Retry InvalidIdentityToken errors for AssumeRoleWithWebIdentityCredentialProvider
 * `Aws\GuardDuty` - New "evidence" field in the finding model to provide evidence information explaining why the finding has been triggered. Currently only threat-intelligence findings have this field. Some documentation updates.
