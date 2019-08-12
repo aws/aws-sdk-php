@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.109.2 - 2019-08-12
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for Application Auto Scaling
 * `Aws\AutoScaling` - Amazon EC2 Auto Scaling now supports a new Spot allocation strategy "capacity-optimized" that fulfills your request using Spot Instance pools that are optimally chosen based on the available Spot capacity.
