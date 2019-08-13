@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppSync` - Adds a configuration option for AppSync GraphQL APIs
+
 ## 3.109.2 - 2019-08-12
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for Application Auto Scaling
