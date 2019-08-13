@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.109.3 - 2019-08-13
 
 * `Aws\AppSync` - Adds a configuration option for AppSync GraphQL APIs
 
