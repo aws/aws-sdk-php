@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.109.4 - 2019-08-14
 
 * `Aws\EC2` - This release adds a new API called SendDiagnosticInterrupt, which allows you to send diagnostic interrupts to your EC2 instance.
 
