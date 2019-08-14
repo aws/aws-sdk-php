@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - This release adds a new API called SendDiagnosticInterrupt, which allows you to send diagnostic interrupts to your EC2 instance.
+
 ## 3.109.3 - 2019-08-13
 
 * `Aws\AppSync` - Adds a configuration option for AppSync GraphQL APIs
