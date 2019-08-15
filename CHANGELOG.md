@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppMesh` - This release adds support for http header based routing and route prioritization.
+* `Aws\Athena` - This release adds support for querying S3 Requester Pays buckets. Users can enable this feature through their Workgroup settings.
+* `Aws\CodeCommit` - This release adds an API, BatchGetCommits, that allows retrieval of metadata for multiple commits in an AWS CodeCommit repository.
+* `Aws\EC2` - This release adds an option to use private certificates from AWS Certificate Manager (ACM) to authenticate a Site-to-Site VPN connection's tunnel endpoints and customer gateway device. 
+* `Aws\Glue` - GetJobBookmarks API is withdrawn.
+* `Aws\StorageGateway` - CreateSnapshotFromVolumeRecoveryPoint API supports new parameter: Tags (to be attached to the created resource)
+
 ## 3.109.4 - 2019-08-14
 
 * `Aws\EC2` - This release adds a new API called SendDiagnosticInterrupt, which allows you to send diagnostic interrupts to your EC2 instance.

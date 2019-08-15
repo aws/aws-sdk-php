@@ -121,8 +121,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getJobAsync(array $args = [])
  * @method \Aws\Result getJobBookmark(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getJobBookmarkAsync(array $args = [])
- * @method \Aws\Result getJobBookmarks(array $args = [])
- * @method \GuzzleHttp\Promise\Promise getJobBookmarksAsync(array $args = [])
  * @method \Aws\Result getJobRun(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getJobRunAsync(array $args = [])
  * @method \Aws\Result getJobRuns(array $args = [])

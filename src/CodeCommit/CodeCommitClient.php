@@ -8,6 +8,8 @@ use Aws\AwsClient;
  *
  * @method \Aws\Result batchDescribeMergeConflicts(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchDescribeMergeConflictsAsync(array $args = [])
+ * @method \Aws\Result batchGetCommits(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetCommitsAsync(array $args = [])
  * @method \Aws\Result batchGetRepositories(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetRepositoriesAsync(array $args = [])
  * @method \Aws\Result createBranch(array $args = [])

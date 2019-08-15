@@ -688,6 +688,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyVpcTenancyAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyVpnConnection(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyVpnConnectionAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyVpnTunnelCertificate(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyVpnTunnelCertificateAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result provisionByoipCidr(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise provisionByoipCidrAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result rejectTransitGatewayVpcAttachment(array $args = []) (supported in versions 2016-11-15)
