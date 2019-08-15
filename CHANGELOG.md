@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.109.5 - 2019-08-15
 
 * `Aws\AppMesh` - This release adds support for http header based routing and route prioritization.
 * `Aws\Athena` - This release adds support for querying S3 Requester Pays buckets. Users can enable this feature through their Workgroup settings.
