@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.109.6 - 2019-08-16
 
 * `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) introduces support for controlling the usage of swap space on a per-container basis for Linux containers.
 * `Aws\EMR` - Amazon EMR has introduced an account level configuration called Block Public Access that allows you to block clusters with ports open to traffic from public IP sources (i.e. 0.0.0.0/0 for IPv4 and ::/0 for IPv6) from launching. Individual ports or port ranges can be added as exceptions to allow public access.
