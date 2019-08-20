@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.109.8 - 2019-08-20
 
 * `Aws\AlexaForBusiness` - Adding support for optional locale input in CreateProfile and UpdateProfile APIs
 * `Aws\AppStream` - Includes API updates to support streaming through VPC endpoints for image builders and stacks.
