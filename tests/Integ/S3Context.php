@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\Integ;
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
@@ -13,7 +12,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use PHPUnit_Framework_Assert as Assert;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
 class S3Context implements Context, SnippetAcceptingContext
@@ -95,7 +93,11 @@ class S3Context implements Context, SnippetAcceptingContext
             foreach ($result['Contents'] as $object) {
                 $client->waitUntil('ObjectNotExists', [
                     'Bucket' => self::getResourceName(),
-                    'Key' => $object['Key']
+                    'Key' => $object['Key'],
+                    '@waiter' => [
+                        'maxAttempts' => 60,
+                        'delay' => 10,
+                    ],
                 ]);
             }
         }
