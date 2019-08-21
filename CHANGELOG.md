@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.110.0 - 2019-08-21
 
 * `Aws\ElastiCache` - ElastiCache extends support for Scale down for Redis Cluster-mode enabled and disabled replication groups 
 * `Aws\ForecastQueryService` - Amazon Forecast is a fully managed machine learning service that makes it easy for customers to generate accurate forecasts using their historical time-series data
