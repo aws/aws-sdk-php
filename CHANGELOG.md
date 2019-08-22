@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.110.1 - 2019-08-22
 
 * `Aws\DataSync` - This release adds support for SMB location type.
 * `Aws\RDS` - This release allows users to enable RDS Data API while creating Aurora Serverless databases. 
