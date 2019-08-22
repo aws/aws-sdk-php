@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataSync` - This release adds support for SMB location type.
+* `Aws\RDS` - This release allows users to enable RDS Data API while creating Aurora Serverless databases. 
+* `Aws\Test\Integ` - Modifies waiter settings for S3 integration test.
+
 ## 3.110.0 - 2019-08-21
 
 * `Aws\ElastiCache` - ElastiCache extends support for Scale down for Redis Cluster-mode enabled and disabled replication groups 
