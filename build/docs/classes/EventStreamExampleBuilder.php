@@ -65,7 +65,7 @@ class EventStreamExampleBuilder
                 } else {
                     $this->buffer .= ' else ';
                 }
-                $this->buffer .= 'if (isset($event[' . $shape['param'] . ']) {' . "\n";
+                $this->buffer .= 'if (isset($event[' . $shape['param'] . '])) {' . "\n";
                 $this->tabLevel++;
                 $this->buffer .= $this->tab() . '// Handle the ' . $shape['param'] . " event.\n";
             } else {
