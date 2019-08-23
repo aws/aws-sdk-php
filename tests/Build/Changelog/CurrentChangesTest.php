@@ -62,7 +62,7 @@ class CurrentChangesTest extends TestCase
 
             if (!in_array(
                 $data[0]['type'],
-                ['feature', 'api-change', 'enhancement', 'bugfix']
+                ['feature', 'api-change', 'enhancement', 'bugfix', 'documentation']
             )) {
                 $this->fail('Invalid `type` provided in `'
                         . $name . '` changelog document.');
