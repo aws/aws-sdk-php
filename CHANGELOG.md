@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.110.2 - 2019-08-23
 
 * `Aws\EC2` - This release of EC2 VM Import Export adds support for exporting Amazon Machine Image(AMI)s to a VM file
 * `Aws\MediaPackageVod` - Adds optional Constant Initialization Vector (IV) to HLS Encryption for MediaPackage VOD.
