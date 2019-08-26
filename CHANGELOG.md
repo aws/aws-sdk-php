@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.110.3 - 2019-08-26
 
 * `Aws\` - Fixes EventParsingIterator example
 * `Aws\SSM` - This feature adds "default tier" to the AWS Systems Manager Parameter Store for parameter creation and update. AWS customers can now set the "default tier" to one of the following values: Standard (default), Advanced or Intelligent-Tiering. This allows customers to create advanced parameters or parameters in corresponding tiers with one setting rather than code change to specify parameter tiers.
