@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.110.4 - 2019-08-27
 
 * `Aws\Organizations` - Documentation updates for organizations
 
