@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Organizations` - Documentation updates for organizations
+
 ## 3.110.3 - 2019-08-26
 
 * `Aws\` - Fixes EventParsingIterator example
