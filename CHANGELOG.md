@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.110.5 - 2019-08-28
 
 * `Aws\GlobalAccelerator` - API Update for AWS Global Accelerator Client IP Preservation
 * `Aws\MediaConvert` - This release adds the ability to send a job to an on-demand queue while simulating the performance of a job sent to a reserved queue. Use this setting to estimate the number of reserved transcoding slots (RTS) you need for a reserved queue.
