@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.110.6 - 2019-08-29
 
 * `Aws\ApplicationAutoScaling` - With the current release, you can suspend and later resume any of the following scaling actions in Application Auto Scaling: scheduled scaling actions, dynamic scaling in actions, dynamic scaling out actions.
 * `Aws\CodePipeline` - Introducing pipeline execution trigger details in ListPipelineExecutions API.
