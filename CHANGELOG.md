@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.110.7 - 2019-08-30
 
 * `Aws\ApiGatewayManagementApi` - You can use getConnection to return information about the connection (when it is connected, IP address, etc) and deleteConnection to disconnect the given connection
 * `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) introduces support for modifying the cluster settings for existing clusters, which enables you to toggle whether Container Insights is enabled or not. Support is also introduced for custom log routing using the ECS FireLens integration.
