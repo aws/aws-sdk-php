@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.110.8 - 2019-09-03
 
 * `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) introduces support for attaching Amazon Elastic Inference accelerators to your containers. This enables you to run deep learning inference workloads with hardware acceleration in a more efficient way.
 * `Aws\GameLift` - You can now make use of PKI resources to provide more secure connections between your game clients and servers. To learn more, please refer to the public Amazon GameLift documentation.
