@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.110.9 - 2019-09-04
 
 * `Aws\EKS` - Amazon EKS DescribeCluster API returns a new OIDC issuer field that can be used to create OIDC identity provider for IAM for Service Accounts feature.
 * `Aws\SFN` - Added support for new history events
