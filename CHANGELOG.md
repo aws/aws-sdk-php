@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.110.11 - 2019-09-06
 
 * `Aws\KinesisAnalytics` - Documentation updates for kinesisanalytics
 
