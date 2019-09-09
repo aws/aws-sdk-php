@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.111.0 - 2019-09-09
 
 * `Aws\AppMesh` - This release adds support for http retry policies.
 * `Aws\AppStream` - IamRoleArn support in CreateFleet, UpdateFleet, CreateImageBuilder APIs
