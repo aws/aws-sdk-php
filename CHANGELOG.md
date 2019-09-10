@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\StorageGateway` - The CloudWatchLogGroupARN parameter of the UpdateGatewayInformation API allows for configuring the gateway to use a CloudWatch log-group where Storage Gateway health events will be logged. 
+
 ## 3.111.0 - 2019-09-09
 
 * `Aws\AppMesh` - This release adds support for http retry policies.
