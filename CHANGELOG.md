@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.111.1 - 2019-09-10
 
 * `Aws\StorageGateway` - The CloudWatchLogGroupARN parameter of the UpdateGatewayInformation API allows for configuring the gateway to use a CloudWatch log-group where Storage Gateway health events will be logged. 
 
