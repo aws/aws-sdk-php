@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.111.2 - 2019-09-11
 
 * `Aws\ConfigService` - Adding input validation for the OrganizationConfigRuleName string.
 * `Aws\EC2` - This release adds support for new data fields and log format in VPC flow logs.
