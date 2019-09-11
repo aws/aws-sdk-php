@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Adding input validation for the OrganizationConfigRuleName string.
+* `Aws\EC2` - This release adds support for new data fields and log format in VPC flow logs.
+* `Aws\MediaConnect` - This release adds support for the RIST protocol on sources and outputs.
+* `Aws\RDS` - This release allows customers to specify a custom parameter group when creating a Read Replica, for DB engines which support this feature.
+* `Aws\SES` - Updated API documentation to correct broken links, and to update content based on customer feedback.
+* `Aws\SFN` - Fixing letter case in Map history event details to be small case
+
 ## 3.111.1 - 2019-09-10
 
 * `Aws\StorageGateway` - The CloudWatchLogGroupARN parameter of the UpdateGatewayInformation API allows for configuring the gateway to use a CloudWatch log-group where Storage Gateway health events will be logged. 
