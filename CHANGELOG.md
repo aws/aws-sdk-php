@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.0 - 2019-09-12
 
 * `Aws\EC2` - Fix for FleetActivityStatus and FleetStateCode enum
 * `Aws\ElasticLoadBalancingv2` - Documentation updates for elasticloadbalancingv2: This release adds support for TLS SNI on Network Load Balancers 
