@@ -65,12 +65,16 @@ class AssumeRoleWithWebIdentityCredentialProvider
             ? $config['SessionName']
             : 'aws-sdk-php-' . round(microtime(true) * 1000);
 
+        $region = isset($config['region'])
+            ? $config['region']
+            : 'us-east-1';
+
         if (isset($config['client'])) {
             $this->client = $config['client'];
         } else {
             $this->client = new StsClient([
                 'credentials' => false,
-                'region' => 'us-east-1',
+                'region' => $region,
                 'version' => 'latest'
             ]);
         }
