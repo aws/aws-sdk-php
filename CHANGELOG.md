@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EKS` - This release lets customers add tags to an Amazon EKS cluster. These tags can be used to control access to the EKS API for managing the cluster using IAM. The Amazon EKS TagResource API allows customers to associate tags with their cluster. Customers can list tags for a cluster using the ListTagsForResource API and remove tags from a cluster with the UntagResource API. Note: tags are specific to the EKS cluster resource, they do not propagate to other AWS resources used by the cluster.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for multi-DRM SPEKE with CMAF outputs, MP3 ingest, and options for improved video quality.
+
 ## 3.112.0 - 2019-09-12
 
 * `Aws\EC2` - Fix for FleetActivityStatus and FleetStateCode enum
