@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Respect client region when assuming credential role via web identity token.
+* `Aws\Athena` - This release adds DataManifestLocation field indicating the location and file name of the data manifest file. Users can get a list of files that the Athena query wrote or intended to write from the manifest file.
+* `Aws\IAM` - Documentation updates for iam
+* `Aws\Personalize` - [Personalize] Adds trainingHours to solutionVersion properties.
+
 ## 3.112.1 - 2019-09-16
 
 * `Aws\EKS` - This release lets customers add tags to an Amazon EKS cluster. These tags can be used to control access to the EKS API for managing the cluster using IAM. The Amazon EKS TagResource API allows customers to associate tags with their cluster. Customers can list tags for a cluster using the ListTagsForResource API and remove tags from a cluster with the UntagResource API. Note: tags are specific to the EKS cluster resource, they do not propagate to other AWS resources used by the cluster.
