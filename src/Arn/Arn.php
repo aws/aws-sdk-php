@@ -3,21 +3,15 @@ namespace Aws\Arn;
 
 use Aws\Arn\Exception\InvalidArnException;
 
-class Arn
+/**
+ * Amazon Resource Names (ARNs) uniquely identify AWS resources. The Arn class
+ * parses and stores a generic ARN object representation that can apply to any
+ * service resource.
+ */
+class Arn implements ArnInterface
 {
-    private $data;
-    private $string;
-
-    /**
-     * @todo Replace with cross-SDK standard when available
-     *
-     * @param $string
-     * @return bool
-     */
-    public static function isArn($string)
-    {
-        return strpos($string, 'arn:') === 0;
-    }
+    protected $data;
+    protected $string;
 
     public static function parse($string)
     {
@@ -25,7 +19,8 @@ class Arn
         $count = count($input);
 
         if ($count < 6) {
-            throw new InvalidArnException("ARNs must contain at least 6 components delimited by ':'.");
+            throw new InvalidArnException("ARNs must contain at least 6' 
+                . ' components delimited by ':'.");
         }
 
         $data = [
@@ -76,7 +71,8 @@ class Arn
             $this->string = $data;
             $this->data = self::parse($data);
         } else {
-            throw new InvalidArnException('Constructor accepts a string or an array as an argument.');
+            throw new InvalidArnException('Constructor accepts a string or an'
+                . ' array as an argument.');
         }
 
         self::validate($this->data);
@@ -85,7 +81,21 @@ class Arn
     public function __toString()
     {
         if (!isset($this->string)) {
-            $this->string = '';
+            $components = [
+                $this->getPrefix(),
+                $this->getPartition(),
+                $this->getService(),
+                $this->getRegion(),
+                $this->getAccountId(),
+            ];
+
+            // Some valid ARNs can omit resource type without a placeholder
+            if (!empty($this->getResourceType())) {
+                $components[] = $this->getResourceType();
+            }
+            $components[] = $this->getResourceId();
+
+            $this->string = implode(':', $components);
         }
         return $this->string;
     }
@@ -135,22 +145,26 @@ class Arn
      *
      * @param array $data
      */
-    private static function validate(array $data)
+    protected static function validate(array $data)
     {
         if ($data['arn'] !== 'arn') {
-            throw new InvalidArnException("The 1st component of an ARN must be 'arn'.");
+            throw new InvalidArnException("The 1st component of an ARN must be"
+                . " 'arn'.");
         }
 
         if (empty($data['partition'])) {
-            throw new InvalidArnException("The 2nd component of an ARN represents the partition and must not be empty.");
+            throw new InvalidArnException("The 2nd component of an ARN"
+                . " represents the partition and must not be empty.");
         }
 
         if (empty($data['service'])) {
-            throw new InvalidArnException("The 3rd component of an ARN represents the service and must not be empty.");
+            throw new InvalidArnException("The 3rd component of an ARN"
+                . " represents the service and must not be empty.");
         }
 
         if (empty($data['resource_id'])) {
-            throw new InvalidArnException("The 6th or 7th component of an ARN represents the resource ID and must not be empty.");
+            throw new InvalidArnException("The 6th or 7th component of an ARN"
+                . " represents the resource ID and must not be empty.");
         }
     }
 }
