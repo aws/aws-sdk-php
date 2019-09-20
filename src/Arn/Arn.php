@@ -19,8 +19,8 @@ class Arn implements ArnInterface
         $count = count($input);
 
         if ($count < 6) {
-            throw new InvalidArnException("ARNs must contain at least 6' 
-                . ' components delimited by ':'.");
+            throw new InvalidArnException("ARNs must contain at least 6"
+                . " components delimited by ':'.");
         }
 
         $data = [
@@ -33,9 +33,9 @@ class Arn implements ArnInterface
 
         if ($count === 6) {
             // Some ARNs may use '/' as delimiter between resource type and ID
-            if ($pos = strpos($data[5], '/') > 0) {
+            if (($pos = strpos($input[5], '/')) > 0) {
                 $data['resource_type'] = substr($input[5], 0, $pos);
-                $data['resource_id'] = substr($input[5], $pos);
+                $data['resource_id'] = substr($input[5], $pos + 1);
             } else {
                 // ARNs which only have 6 sections omit resource type
                 $data['resource_id'] = $input[5];
@@ -55,7 +55,7 @@ class Arn implements ArnInterface
             // was used in the resource ID
             $data['resource_id'] = $input[6];
 
-            for ($i = 7; $i < $count - 1; $i++) {
+            for ($i = 7; $i < $count; $i++) {
                 $data['resource_id'] .= ":{$input[$i]}";
             }
         }
@@ -68,7 +68,6 @@ class Arn implements ArnInterface
         if (is_array($data)) {
             $this->data = $data;
         } elseif (is_string($data)) {
-            $this->string = $data;
             $this->data = self::parse($data);
         } else {
             throw new InvalidArnException('Constructor accepts a string or an'
@@ -89,7 +88,7 @@ class Arn implements ArnInterface
                 $this->getAccountId(),
             ];
 
-            // Some valid ARNs can omit resource type without a placeholder
+            // One valid ARN format can omit resource type without a placeholder
             if (!empty($this->getResourceType())) {
                 $components[] = $this->getResourceType();
             }
@@ -163,8 +162,8 @@ class Arn implements ArnInterface
         }
 
         if (empty($data['resource_id'])) {
-            throw new InvalidArnException("The 6th or 7th component of an ARN"
-                . " represents the resource ID and must not be empty.");
+            throw new InvalidArnException("The final (6th or 7th) component of"
+                . " an ARN represents the resource ID and must not be empty.");
         }
     }
 }
