@@ -91,6 +91,20 @@ class ArnTest extends TestCase
                 ],
                 'arn:aws:foo:us-west-2:123456789012:bar_type:baz_id:extra:comps',
             ],
+            // Slash delimiter and more than 7 components
+            [
+                'arn:aws:foo:us-west-2:123456789012:bar_type/baz_id:extra:comps',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 'foo',
+                    'region' => 'us-west-2',
+                    'account_id' => 123456789012,
+                    'resource_type' => 'bar_type',
+                    'resource_id' => 'baz_id:extra:comps',
+                ],
+                'arn:aws:foo:us-west-2:123456789012:bar_type:baz_id:extra:comps',
+            ],
         ];
     }
 
@@ -114,12 +128,14 @@ class ArnTest extends TestCase
     {
         return [
             [
-                'one_component',
-                "ARNs must contain at least 6 components delimited by ':'.",
+                'arn',
+                "The 2nd component of an ARN represents the partition and must"
+                . " not be empty.",
             ],
             [
-                'five:com:po:nen:ts',
-                "ARNs must contain at least 6 components delimited by ':'.",
+                'arn:five:com:po:nents',
+                "The final (6th or 7th) component of an ARN represents the"
+                . " resource ID and must not be empty.",
             ],
             [
                 'foo:bar:baz:seven:com:po:nents',

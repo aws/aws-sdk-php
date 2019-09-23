@@ -15,48 +15,46 @@ class Arn implements ArnInterface
 
     public static function parse($string)
     {
-        $input = explode(':', $string);
-        $count = count($input);
-
-        if ($count < 6) {
-            throw new InvalidArnException("ARNs must contain at least 6"
-                . " components delimited by ':'.");
-        }
-
         $data = [
-            'arn' => $input[0] ?: null,
-            'partition' => $input[1] ?: null,
-            'service' => $input[2] ?: null,
-            'region' => $input[3] ?: null,
-            'account_id' => $input[4] ?: null,
+            'arn' => null,
+            'partition' => null,
+            'service' => null,
+            'region' => null,
+            'account_id' => null,
+            'resource_type' => null,
+            'resource_id' => null,
         ];
 
-        if ($count === 6) {
+        $length = strlen($string);
+        $lastDelim = 0;
+        $numComponents = 0;
+        for ($i = 0; $i < $length; $i++) {
+
             // Some ARNs may use '/' as delimiter between resource type and ID
-            if (($pos = strpos($input[5], '/')) > 0) {
-                $data['resource_type'] = substr($input[5], 0, $pos);
-                $data['resource_id'] = substr($input[5], $pos + 1);
-            } else {
-                // ARNs which only have 6 sections omit resource type
-                $data['resource_id'] = $input[5];
-                $data['resource_type'] = null;
+            if (($numComponents < 6 && $string[$i] === ':')
+                || ($numComponents === 5 && $string[$i] === '/')
+            ) {
+                // Split components between delimiters
+                $data[key($data)] = substr($string, $lastDelim, $i - $lastDelim);
+
+                // Do not include delimiter character itself
+                $lastDelim = $i + 1;
+                next($data);
+                $numComponents++;
             }
-        } else {
-            $data['resource_type'] = $input[5];
-        }
 
-        if ($count === 7) {
-            $data['resource_id'] = $input[6];
-        }
-
-        if ($count > 7) {
-
-            // Consolidate sections after the 7th, as the delimiter character
-            // was used in the resource ID
-            $data['resource_id'] = $input[6];
-
-            for ($i = 7; $i < $count; $i++) {
-                $data['resource_id'] .= ":{$input[$i]}";
+            if ($i === $length - 1) {
+                // Put the remainder in the last component. Some ARNs may only
+                // have 6 components. If so, resource_type is null and last
+                // component is resource_id
+                if (in_array($numComponents, [5,6])) {
+                    $data['resource_id'] = substr($string, $lastDelim);
+                } else {
+                    // If there are < 5 components, put remainder in current
+                    // component, to help provide more informative validation
+                    // message
+                    $data[key($data)] = substr($string, $lastDelim);
+                }
             }
         }
 
