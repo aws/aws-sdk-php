@@ -51,8 +51,7 @@ class Arn implements ArnInterface
                     $data['resource_id'] = substr($string, $lastDelim);
                 } else {
                     // If there are < 5 components, put remainder in current
-                    // component, to help provide more informative validation
-                    // message
+                    // component
                     $data[key($data)] = substr($string, $lastDelim);
                 }
             }

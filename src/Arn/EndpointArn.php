@@ -37,10 +37,5 @@ class EndpointArn extends Arn implements ArnInterface
             throw new InvalidArnException("The 6th component of an endpoint ARN"
                 . " represents the resource type and must be 'endpoint'.");
         }
-
-        if (empty($data['resource_id'])) {
-            throw new InvalidArnException("The 7th component of an endpoint ARN"
-                . " represents the resource ID and must not be empty.");
-        }
     }
 }
