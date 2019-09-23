@@ -953,6 +953,6 @@ class StreamWrapper
     {
         $size = $this->body->getSize();
 
-        return $size !== null ? $size : $this->size;
+        return !empty($size) ? $size : $this->size;
     }
 }
