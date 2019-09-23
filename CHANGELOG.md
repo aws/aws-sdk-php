@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.6 - 2019-09-23
 
 * `Aws\RDSDataService` - RDS Data API now supports Amazon Aurora Serverless PostgreSQL databases.
 * `Aws\Redshift` - Adds API operation DescribeNodeConfigurationOptions and associated data structures.
