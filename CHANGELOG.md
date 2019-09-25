@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.8 - 2019-09-25
 
 * `Aws\DatabaseMigrationService` - This release adds a new DeleteConnection API to delete the connection between a replication instance and an endpoint. It also adds an optional S3 setting to specify the precision of any TIMESTAMP column values written to an S3 object file in .parquet format.
 * `Aws\GlobalAccelerator` - API Update for AWS Global Accelerator to support for DNS aliasing.
