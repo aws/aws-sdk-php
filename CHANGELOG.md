@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.9 - 2019-09-26
 
 * `Aws\CodePipeline` - Documentation updates for CodePipeline
 * `Aws\SSM` - This release updates the AWS Systems Manager Parameter Store PutParameter and LabelParameterVersion APIs to return the "Tier" of parameter created/updated and the "parameter version" labeled respectively. 
