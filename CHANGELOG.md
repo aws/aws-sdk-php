@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodePipeline` - Documentation updates for CodePipeline
+* `Aws\SSM` - This release updates the AWS Systems Manager Parameter Store PutParameter and LabelParameterVersion APIs to return the "Tier" of parameter created/updated and the "parameter version" labeled respectively. 
+
 ## 3.112.8 - 2019-09-25
 
 * `Aws\DatabaseMigrationService` - This release adds a new DeleteConnection API to delete the connection between a replication instance and an endpoint. It also adds an optional S3 setting to specify the precision of any TIMESTAMP column values written to an S3 object file in .parquet format.
