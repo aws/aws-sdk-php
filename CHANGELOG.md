@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.10 - 2019-09-27
 
 * `Aws\Amplify` - This release adds access logs APIs and artifact APIs for AWS Amplify Console.
 * `Aws\ECS` - This release of Amazon Elastic Container Service (Amazon ECS) removes FirelensConfiguration from the DescribeTask output during the FireLens public preview.
