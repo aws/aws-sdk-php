@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MQ` - Amazon MQ now includes the ability to scale your brokers by changing the host instance type. See the hostInstanceType property of UpdateBrokerInput (https://docs.aws.amazon.com/amazon-mq/latest/api-reference/brokers-broker-id.html#brokers-broker-id-model-updatebrokerinput), and pendingHostInstanceType property of DescribeBrokerOutput (https://docs.aws.amazon.com/amazon-mq/latest/api-reference/brokers-broker-id.html#brokers-broker-id-model-describebrokeroutput).
+* `Aws\RDS` - This release adds support for creating a Read Replica with Active Directory domain information. This release updates RDS API to indicate whether an OrderableDBInstanceOption supports Kerberos Authentication.
+* `Aws\WAF` - Lowering the threshold for Rate Based rule from 2000 to 100.
+
 ## 3.112.10 - 2019-09-27
 
 * `Aws\Amplify` - This release adds access logs APIs and artifact APIs for AWS Amplify Console.
