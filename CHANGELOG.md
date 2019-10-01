@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.12 - 2019-10-01
 
 * `Aws\DocDB` - This release provides support for describe and modify CA certificates.
 
