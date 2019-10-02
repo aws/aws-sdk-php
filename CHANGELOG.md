@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.13 - 2019-10-02
 
 * `Aws\Lightsail` - This release adds support for the automatic snapshots add-on for instances and block storage disks.
 
