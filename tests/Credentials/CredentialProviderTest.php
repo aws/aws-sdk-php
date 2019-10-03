@@ -325,6 +325,7 @@ EOT;
     {
         $dir = $this->clearEnv();
         $expiration = new DateTimeResult("+1 hour");
+        $expires = $expiration->getTimestamp();
         $ini = <<<EOT
 [foo]
 credential_process = echo '{"AccessKeyId":"foo","SecretAccessKey":"bar", "SessionToken": "baz", "Expiration":"$expiration", "Version":1}'
@@ -337,7 +338,7 @@ EOT;
         $this->assertEquals('foo', $creds->getAccessKeyId());
         $this->assertEquals('bar', $creds->getSecretKey());
         $this->assertEquals('baz', $creds->getSecurityToken());
-        $this->assertEquals($expiration, $creds->getExpiration());
+        $this->assertEquals($expires, $creds->getExpiration());
     }
 
     /**

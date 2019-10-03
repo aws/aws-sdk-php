@@ -545,8 +545,9 @@ class CredentialProvider
                 if ($expiration < $now) {
                     return self::reject("credential_process returned expired credentials");
                 }
+                $expires = $expiration->getTimestamp();
             } else {
-                $processData['Expiration'] = null;
+                $expires = null;
             }
 
             if (empty($processData['SessionToken'])) {
@@ -558,7 +559,7 @@ class CredentialProvider
                     $processData['AccessKeyId'],
                     $processData['SecretAccessKey'],
                     $processData['SessionToken'],
-                    $processData['Expiration']
+                    $expires
                 )
             );
         };
