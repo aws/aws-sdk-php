@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.14 - 2019-10-03
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for Application Auto Scaling
 * `Aws\Credentials` - Fixed an issue that the credentials by process provider won't cache.
