@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - Documentation updates for Application Auto Scaling
+* `Aws\Credentials` - Fixed an issue that the credentials by process provider won't cache.
+* `Aws\DeviceFarm` - Documentation updates for devicefarm
+* `Aws\EC2` - This release allows customers to purchase regional EC2 RIs on a future date.
+* `Aws\ElasticsearchService` - Amazon Elasticsearch Service now supports configuring additional options for domain endpoint, such as whether to require HTTPS for all traffic.
+
 ## 3.112.13 - 2019-10-02
 
 * `Aws\Lightsail` - This release adds support for the automatic snapshots add-on for instances and block storage disks.

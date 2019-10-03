@@ -520,6 +520,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise deleteLaunchTemplateVersionsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result deleteNetworkInterfacePermission(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise deleteNetworkInterfacePermissionAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result deleteQueuedReservedInstances(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise deleteQueuedReservedInstancesAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result deleteTrafficMirrorFilter(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise deleteTrafficMirrorFilterAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result deleteTrafficMirrorFilterRule(array $args = []) (supported in versions 2016-11-15)
