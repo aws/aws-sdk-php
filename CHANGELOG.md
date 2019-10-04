@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentityProvider` - This release adds ClientMetadata input parameter to multiple Cognito User Pools operations, making this parameter available to the customer configured lambda triggers as applicable. 
+* `Aws\MediaPackage` - New Harvest Job APIs to export segment-accurate content windows from MediaPackage Origin Endpoints to S3. See https://docs.aws.amazon.com/mediapackage/latest/ug/harvest-jobs.html for more info
+* `Aws\SSM` - Documentation updates for Systems Manager / StartSession.
+
 ## 3.112.14 - 2019-10-03
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for Application Auto Scaling
