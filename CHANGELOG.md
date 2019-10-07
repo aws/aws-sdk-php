@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectConnect` - This release adds a service provider field for physical connection creation and provides a list of available partner providers for each Direct Connect location.
+* `Aws\Firehose` - Amazon Kinesis Data Firehose now allows delivering data to Elasticsearch clusters set up in a different AWS account than the Firehose AWS account. For technical documentation, look for ElasticsearchDestinationConfiguration in the Amazon Kinesis Firehose API reference.
+* `Aws\Glue` - AWS Glue now provides ability to use custom certificates for JDBC Connections.
+* `Aws\Pinpoint` - This release of the Amazon Pinpoint API introduces support for using and managing message templates.
+* `Aws\PinpointEmail` - This release of the Amazon Pinpoint Email API introduces support for using and managing message templates.
+* `Aws\Snowball` - AWS Snowball Edge now allows you to perform an offline update to the software of your Snowball Edge device when your device is not connected to the internet. Previously, updating your Snowball Edge's software required that the device be connected to the internet or be sent back to AWS. Now, you can keep your Snowball Edge software up to date even if your device(s) cannot connect to the internet, or are required to run in an air-gapped environment. To complete offline updates, download the software update from a client machine with connection to the internet using the AWS Command Line Interface (CLI). Then, have the Snowball Edge device download and install the software update using the Snowball Edge device API. For more information about offline updates, visit the Snowball Edge documentation page.
+
 ## 3.112.15 - 2019-10-04
 
 * `Aws\CognitoIdentityProvider` - This release adds ClientMetadata input parameter to multiple Cognito User Pools operations, making this parameter available to the customer configured lambda triggers as applicable. 

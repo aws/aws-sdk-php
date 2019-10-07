@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getJobUnlockCodeAsync(array $args = [])
  * @method \Aws\Result getSnowballUsage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSnowballUsageAsync(array $args = [])
+ * @method \Aws\Result getSoftwareUpdates(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getSoftwareUpdatesAsync(array $args = [])
  * @method \Aws\Result listClusterJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listClusterJobsAsync(array $args = [])
  * @method \Aws\Result listClusters(array $args = [])
