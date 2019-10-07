@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.16 - 2019-10-07
 
 * `Aws\DirectConnect` - This release adds a service provider field for physical connection creation and provides a list of available partner providers for each Direct Connect location.
 * `Aws\Firehose` - Amazon Kinesis Data Firehose now allows delivering data to Elasticsearch clusters set up in a different AWS account than the Firehose AWS account. For technical documentation, look for ElasticsearchDestinationConfiguration in the Amazon Kinesis Firehose API reference.
