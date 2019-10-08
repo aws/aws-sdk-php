@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.17 - 2019-10-08
 
 * `Aws\DataSync` - Add Sync options to enable/disable TaskQueueing
 * `Aws\EventBridge` - Documentation updates for Amazon EventBridge.
