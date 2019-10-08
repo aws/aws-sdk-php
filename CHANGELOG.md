@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataSync` - Add Sync options to enable/disable TaskQueueing
+* `Aws\EventBridge` - Documentation updates for Amazon EventBridge.
+* `Aws\Firehose` - With this release, you can use Amazon Kinesis Firehose delivery streams to deliver streaming data to Amazon Elasticsearch Service version 7.x clusters. For technical documentation, look for CreateDeliveryStream operation in Amazon Kinesis Firehose API reference.
+* `Aws\Organizations` - Documentation updates for organizations
+
 ## 3.112.16 - 2019-10-07
 
 * `Aws\DirectConnect` - This release adds a service provider field for physical connection creation and provides a list of available partner providers for each Direct Connect location.
