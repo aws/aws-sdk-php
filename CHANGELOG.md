@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.18 - 2019-10-09
 
 * `Aws\ElastiCache` - Amazon ElastiCache now allows you to apply available service updates on demand to your Memcached and Redis Cache Clusters. Features included: (1) Access to the list of applicable service updates and their priorities. (2) Service update monitoring and regular status updates. (3) Recommended apply-by-dates for scheduling the service updates. (4) Ability to stop and later re-apply updates. For more information, see https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Self-Service-Updates.html and https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Self-Service-Updates.html
 * `Aws\Kafka` - Updated documentation for Amazon Managed Streaming for Kafka service.
