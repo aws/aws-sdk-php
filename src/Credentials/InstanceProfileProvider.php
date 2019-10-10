@@ -152,7 +152,7 @@ class InstanceProfileProvider
         }
 
         $fn = $this->client;
-        $request = new Request('GET', self::SERVER_URI . $url);
+        $request = new Request($method, self::SERVER_URI . $url);
         $userAgent = 'aws-sdk-php/' . Sdk::VERSION;
         if (defined('HHVM_VERSION')) {
             $userAgent .= ' HHVM/' . HHVM_VERSION;
