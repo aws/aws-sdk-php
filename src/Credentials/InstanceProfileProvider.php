@@ -167,7 +167,7 @@ class InstanceProfileProvider
             $request = $request->withBody($body);
         }
 
-        return $fn($request, ['timeout' => $this->timeout])
+        return $fn($request, ['timeout' => $this->timeout, 'debug' => true])
             ->then(function (ResponseInterface $response) {
                 echo "Response: " . (string) $response->getBody() . "\n";
                 return (string) $response->getBody();
