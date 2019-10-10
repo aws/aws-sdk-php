@@ -17,6 +17,7 @@ class InstanceProfileProvider
 {
     const SERVER_URI = 'http://169.254.169.254/latest/';
     const CRED_PATH = 'meta-data/iam/security-credentials/';
+    const TOKEN_PATH = 'api/token/';
 
     const ENV_DISABLE = 'AWS_EC2_METADATA_DISABLED';
 
@@ -35,6 +36,15 @@ class InstanceProfileProvider
     /** @var float|mixed */
     private $timeout;
 
+    /** @var string */
+    private $token;
+
+    /** @var int */
+    private $tokenExpiry;
+
+    /** @var int */
+    private $tokenTtl;
+
     /**
      * The constructor accepts the following options:
      *
@@ -49,6 +59,9 @@ class InstanceProfileProvider
         $this->timeout = isset($config['timeout']) ? $config['timeout'] : 1.0;
         $this->profile = isset($config['profile']) ? $config['profile'] : null;
         $this->retries = isset($config['retries']) ? $config['retries'] : 3;
+        $this->tokenTtl = isset($config['token_ttl'])
+            ? $config['token_ttl']
+            : 21600;
         $this->attempts = 0;
         $this->client = isset($config['client'])
             ? $config['client'] // internal use only
@@ -63,13 +76,29 @@ class InstanceProfileProvider
     public function __invoke()
     {
         return Promise\coroutine(function () {
+
+            if (empty($this->token) || time() >= $this->tokenExpiry) {
+                $this->token = (yield $this->request(
+                    self::TOKEN_PATH,
+                    [
+                        'x-aws-ec2-metadata-token-ttl-seconds' => $this->tokenTtl
+                    ]
+                ));
+                $this->tokenExpiry = $this->calculateExpiry($this->tokenTtl);
+            }
+
             if (!$this->profile) {
                 $this->profile = (yield $this->request(self::CRED_PATH));
             }
             $result = null;
             while ($result == null) {
                 try {
-                    $json = (yield $this->request(self::CRED_PATH . $this->profile));
+                    $json = (yield $this->request(
+                        self::CRED_PATH . $this->profile,
+                        [
+                            'x-aws-ec2-metadata-token' => $this->token
+                        ]
+                    ));
                     $result = $this->decodeResult($json);
                 } catch (InvalidJsonException $e) {
                     if ($this->attempts < $this->retries) {
@@ -101,10 +130,11 @@ class InstanceProfileProvider
 
     /**
      * @param string $url
+     * @param array $headers
      * @return PromiseInterface Returns a promise that is fulfilled with the
      *                          body of the response as a string.
      */
-    private function request($url)
+    private function request($url, $headers = [])
     {
         $disabled = getenv(self::ENV_DISABLE) ?: false;
         if (strcasecmp($disabled, 'true') === 0) {
@@ -121,6 +151,9 @@ class InstanceProfileProvider
         }
         $userAgent .= ' ' . \Aws\default_user_agent();
         $request = $request->withHeader('User-Agent', $userAgent);
+        foreach ($headers as $key => $value) {
+            $request = $request->withHeader($key, $value);
+        }
 
         return $fn($request, ['timeout' => $this->timeout])
             ->then(function (ResponseInterface $response) {
@@ -157,5 +190,10 @@ class InstanceProfileProvider
         }
 
         return $result;
+    }
+
+    private function calculateExpiry($timeToLive)
+    {
+        return time() + $timeToLive;
     }
 }
