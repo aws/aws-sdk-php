@@ -89,7 +89,13 @@ class InstanceProfileProvider
             }
 
             if (!$this->profile) {
-                $this->profile = (yield $this->request(self::CRED_PATH));
+                $this->profile = (yield $this->request(
+                    self::CRED_PATH,
+                    'GET',
+                    [
+                        'x-aws-ec2-metadata-token' => $this->token
+                    ]
+                ));
             }
             echo "Token: {$this->token}\n";
             echo "Token TTL: {$this->tokenTtl}\n";
@@ -104,8 +110,7 @@ class InstanceProfileProvider
                         'GET',
                         [
                             'x-aws-ec2-metadata-token' => $this->token
-                        ],
-                        $this->token
+                        ]
                     ));
                     $result = $this->decodeResult($json);
                 } catch (InvalidJsonException $e) {
@@ -143,7 +148,7 @@ class InstanceProfileProvider
      * @return PromiseInterface Returns a promise that is fulfilled with the
      *                          body of the response as a string.
      */
-    private function request($url, $method = 'GET', $headers = [], $body = null)
+    private function request($url, $method = 'GET', $headers = [])
     {
         $disabled = getenv(self::ENV_DISABLE) ?: false;
         if (strcasecmp($disabled, 'true') === 0) {
@@ -162,9 +167,6 @@ class InstanceProfileProvider
         $request = $request->withHeader('User-Agent', $userAgent);
         foreach ($headers as $key => $value) {
             $request = $request->withHeader($key, $value);
-        }
-        if (!is_null($body)) {
-            $request = $request->withBody($body);
         }
 
         return $fn($request, ['timeout' => $this->timeout, 'debug' => true])
