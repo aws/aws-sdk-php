@@ -17,7 +17,7 @@ class InstanceProfileProvider
 {
     const SERVER_URI = 'http://169.254.169.254/latest/';
     const CRED_PATH = 'meta-data/iam/security-credentials/';
-    const TOKEN_PATH = 'api/token/';
+    const TOKEN_PATH = 'api/token';
 
     const ENV_DISABLE = 'AWS_EC2_METADATA_DISABLED';
 
@@ -104,7 +104,8 @@ class InstanceProfileProvider
                         'GET',
                         [
                             'x-aws-ec2-metadata-token' => $this->token
-                        ]
+                        ],
+                        $this->token
                     ));
                     $result = $this->decodeResult($json);
                 } catch (InvalidJsonException $e) {
@@ -142,7 +143,7 @@ class InstanceProfileProvider
      * @return PromiseInterface Returns a promise that is fulfilled with the
      *                          body of the response as a string.
      */
-    private function request($url, $method = 'GET', $headers = [])
+    private function request($url, $method = 'GET', $headers = [], $body = null)
     {
         $disabled = getenv(self::ENV_DISABLE) ?: false;
         if (strcasecmp($disabled, 'true') === 0) {
@@ -161,6 +162,9 @@ class InstanceProfileProvider
         $request = $request->withHeader('User-Agent', $userAgent);
         foreach ($headers as $key => $value) {
             $request = $request->withHeader($key, $value);
+        }
+        if (!is_null($body)) {
+            $request = $request->withBody($body);
         }
 
         return $fn($request, ['timeout' => $this->timeout])
