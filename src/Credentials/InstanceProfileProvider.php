@@ -90,6 +90,11 @@ class InstanceProfileProvider
             if (!$this->profile) {
                 $this->profile = (yield $this->request(self::CRED_PATH));
             }
+            echo "Token: {$this->token}\n";
+            echo "Token TTL: {$this->tokenTtl}\n";
+            echo "Token Expiry: {$this->tokenExpiry}\n";
+            echo "Current Time: " . time() . "\n";
+            echo "Profile: {$this->profile}\n";
             $result = null;
             while ($result == null) {
                 try {
@@ -157,6 +162,7 @@ class InstanceProfileProvider
 
         return $fn($request, ['timeout' => $this->timeout])
             ->then(function (ResponseInterface $response) {
+                echo "Response: " . (string) $response->getBody() . "\n";
                 return (string) $response->getBody();
             })->otherwise(function (array $reason) {
                 $reason = $reason['exception'];
