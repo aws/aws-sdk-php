@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.19 - 2019-10-10
 
 * `Aws\EC2` - New EC2 M5n, M5dn, R5n, R5dn instances with 100 Gbps network performance and Elastic Fabric Adapter (EFA) for ultra low latency; New A1.metal bare metal instance powered by AWS Graviton Processors
 * `Aws\FMS` - Firewall Manager now supports Amazon VPC security groups, making it easier to configure and manage security groups across multiple accounts from a single place.
