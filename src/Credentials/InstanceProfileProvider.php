@@ -80,6 +80,7 @@ class InstanceProfileProvider
             if (empty($this->token) || time() >= $this->tokenExpiry) {
                 $this->token = (yield $this->request(
                     self::TOKEN_PATH,
+                    'PUT',
                     [
                         'x-aws-ec2-metadata-token-ttl-seconds' => $this->tokenTtl
                     ]
@@ -100,6 +101,7 @@ class InstanceProfileProvider
                 try {
                     $json = (yield $this->request(
                         self::CRED_PATH . $this->profile,
+                        'GET',
                         [
                             'x-aws-ec2-metadata-token' => $this->token
                         ]
@@ -135,11 +137,12 @@ class InstanceProfileProvider
 
     /**
      * @param string $url
+     * @param string $method
      * @param array $headers
      * @return PromiseInterface Returns a promise that is fulfilled with the
      *                          body of the response as a string.
      */
-    private function request($url, $headers = [])
+    private function request($url, $method = 'GET', $headers = [])
     {
         $disabled = getenv(self::ENV_DISABLE) ?: false;
         if (strcasecmp($disabled, 'true') === 0) {
