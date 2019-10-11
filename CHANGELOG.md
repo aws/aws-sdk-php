@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Greengrass` - Greengrass OTA service supports Raspbian/Armv6l platforms.
+
 ## 3.112.19 - 2019-10-10
 
 * `Aws\EC2` - New EC2 M5n, M5dn, R5n, R5dn instances with 100 Gbps network performance and Elastic Fabric Adapter (EFA) for ultra low latency; New A1.metal bare metal instance powered by AWS Graviton Processors
