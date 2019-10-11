@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.20 - 2019-10-11
 
 * `Aws\Greengrass` - Greengrass OTA service supports Raspbian/Armv6l platforms.
 
