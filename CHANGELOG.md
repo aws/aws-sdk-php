@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.21 - 2019-10-14
 
 * `Aws\Personalize` - AWS Personalize: Adds ability to create a solution version using FULL or UPDATE training mode
 * `Aws\WorkSpaces` - Documentation updates for WorkSpaces
