@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Personalize` - AWS Personalize: Adds ability to create a solution version using FULL or UPDATE training mode
+* `Aws\WorkSpaces` - Documentation updates for WorkSpaces
+
 ## 3.112.20 - 2019-10-11
 
 * `Aws\Greengrass` - Greengrass OTA service supports Raspbian/Armv6l platforms.
