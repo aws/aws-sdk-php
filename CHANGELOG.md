@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.22 - 2019-10-15
 
 * `Aws\KinesisVideoArchivedMedia` - Add ON_DISCONTINUITY mode to the GetHLSStreamingSessionURL API
 
