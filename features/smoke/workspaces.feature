@@ -10,5 +10,5 @@ Feature: Amazon WorkSpaces
 
   Scenario: Handling errors
     When I attempt to call the "DescribeWorkspaces" API with:
-    | DirectoryId | fake-id |
+    | DirectoryId | fake-id-value |
     Then I expect the response error code to be "ValidationException"
