@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kafka` - AWS MSK has added support for adding brokers to a cluster.
+* `Aws\MarketplaceCommerceAnalytics` - add 2 more values for the supporting sections - age of past due funds + uncollected funds breakdown
+* `Aws\RoboMaker` - This release adds support for ROS2 Dashing as a beta feature
+
 ## 3.112.22 - 2019-10-15
 
 * `Aws\KinesisVideoArchivedMedia` - Add ON_DISCONTINUITY mode to the GetHLSStreamingSessionURL API

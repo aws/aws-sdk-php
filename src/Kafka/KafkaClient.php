@@ -37,6 +37,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateBrokerCount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateBrokerCountAsync(array $args = [])
  * @method \Aws\Result updateBrokerStorage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateBrokerStorageAsync(array $args = [])
  * @method \Aws\Result updateClusterConfiguration(array $args = [])
