@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.23 - 2019-10-16
 
 * `Aws\Kafka` - AWS MSK has added support for adding brokers to a cluster.
 * `Aws\MarketplaceCommerceAnalytics` - add 2 more values for the supporting sections - age of past due funds + uncollected funds breakdown
