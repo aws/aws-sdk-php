@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - Adding support for Compute Environment Allocation Strategies 
+* `Aws\RDS` - Amazon RDS now supports Amazon RDS on VMware with the introduction of APIs related to Custom Availability Zones and Media installation.
+* `Aws\WorkSpaces` - Updates Smoke Test
+
 ## 3.112.23 - 2019-10-16
 
 * `Aws\Kafka` - AWS MSK has added support for adding brokers to a cluster.
