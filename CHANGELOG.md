@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.24 - 2019-10-17
 
 * `Aws\Batch` - Adding support for Compute Environment Allocation Strategies 
 * `Aws\RDS` - Amazon RDS now supports Amazon RDS on VMware with the introduction of APIs related to Custom Availability Zones and Media installation.
