@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.25 - 2019-10-18
 
 * `Aws\CloudWatch` - New Period parameter added to MetricDataQuery structure.
 
