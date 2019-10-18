@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatch` - New Period parameter added to MetricDataQuery structure.
+
 ## 3.112.24 - 2019-10-17
 
 * `Aws\Batch` - Adding support for Compute Environment Allocation Strategies 
