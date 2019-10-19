@@ -36,14 +36,8 @@ class InstanceProfileProvider
     /** @var float|mixed */
     private $timeout;
 
-    /** @var string */
-    private $token;
-
-    /** @var int */
-    private $tokenExpiry;
-
-    /** @var int */
-    private $tokenTtl;
+    /** @var bool */
+    private $secureMode = true;
 
     /**
      * The constructor accepts the following options:
@@ -59,9 +53,6 @@ class InstanceProfileProvider
         $this->timeout = isset($config['timeout']) ? $config['timeout'] : 1.0;
         $this->profile = isset($config['profile']) ? $config['profile'] : null;
         $this->retries = isset($config['retries']) ? $config['retries'] : 3;
-        $this->tokenTtl = isset($config['token_ttl'])
-            ? $config['token_ttl']
-            : 21600;
         $this->attempts = 0;
         $this->client = isset($config['client'])
             ? $config['client'] // internal use only
@@ -77,58 +68,89 @@ class InstanceProfileProvider
     {
         return Promise\coroutine(function () {
 
-            if (empty($this->token) || time() >= $this->tokenExpiry) {
-                $this->token = (yield $this->request(
-                    self::TOKEN_PATH,
-                    'PUT',
-                    [
-                        'x-aws-ec2-metadata-token-ttl-seconds' => $this->tokenTtl
-                    ]
-                ));
-                $this->tokenExpiry = $this->calculateExpiry($this->tokenTtl);
+            // Retrieve token or switch out of secure mode
+            $token = null;
+            while ($this->secureMode && is_null($token)) {
+                try {
+                    $token = (yield $this->request(
+                        self::TOKEN_PATH,
+                        'PUT',
+                        [
+                            'x-aws-ec2-metadata-token-ttl-seconds' => 21600
+                        ]
+                    ));
+                } catch (RequestException $e) {
+                    if (!empty($e->getResponse())
+                        && !in_array(
+                            $e->getResponse()->getStatusCode(),
+                            [400, 401, 403, 500, 502, 503, 504]
+                        )
+                    ) {
+                        $this->secureMode = false;
+                    } else {
+                        $this->handleRetryableException(
+                            $e,
+                            [ 'blacklist' => [401, 403] ],
+                            $this->createErrorMessage(
+                                'Error retrieving metadata token'
+                            )
+                        );
+                    }
+                }
+                $this->attempts++;
             }
 
-            if (!$this->profile) {
-                $this->profile = (yield $this->request(
-                    self::CRED_PATH,
-                    'GET',
-                    [
-                        'x-aws-ec2-metadata-token' => $this->token
-                    ]
-                ));
+            // Set token header only for secure mode
+            $headers = [];
+            if ($this->secureMode) {
+                $headers = [
+                    'x-aws-ec2-metadata-token' => $token
+                ];
             }
-            echo "Token: {$this->token}\n";
-            echo "Token TTL: {$this->tokenTtl}\n";
-            echo "Token Expiry: {$this->tokenExpiry}\n";
-            echo "Current Time: " . time() . "\n";
-            echo "Profile: {$this->profile}\n";
+
+            // Retrieve profile
+            while (!$this->profile) {
+                try {
+                    $this->profile = (yield $this->request(
+                        self::CRED_PATH,
+                        'GET',
+                        $headers
+                    ));
+                } catch (RequestException $e) {
+                    $this->handleRetryableException(
+                        $e,
+                        [ 'blacklist' => [401, 403] ],
+                        $this->createErrorMessage($e->getMessage())
+                    );
+                }
+
+                $this->attempts++;
+            }
+
+            // Retrieve credentials
             $result = null;
             while ($result == null) {
                 try {
                     $json = (yield $this->request(
                         self::CRED_PATH . $this->profile,
                         'GET',
-                        [
-                            'x-aws-ec2-metadata-token' => $this->token
-                        ]
+                        $headers
                     ));
                     $result = $this->decodeResult($json);
                 } catch (InvalidJsonException $e) {
-                    if ($this->attempts < $this->retries) {
-                        sleep(pow(1.2, $this->attempts));
-                    } else {
-                        throw new CredentialsException(
-                            'Invalid JSON Response, retries exhausted.'
-                        );
-                    }
+                    $this->handleRetryableException(
+                        $e,
+                        [ 'blacklist' => [401, 403] ],
+                        $this->createErrorMessage(
+                            'Invalid JSON response, retries exhausted'
+                        )
+                    );
                 } catch (RequestException $e) {
-                    if ($this->attempts < $this->retries) {
-                        sleep(pow(1.2, $this->attempts));
-                    } else {
-                        throw new CredentialsException(
-                            'Networking error, retries exhausted.'
-                        );
-                    }
+                    $this->handleRetryableException(
+                        $e,
+                        [ 'blacklist' => [401, 403] ],
+                        $this->createErrorMessage($e->getMessage())
+                    );
                 }
                 $this->attempts++;
             }
@@ -171,7 +193,6 @@ class InstanceProfileProvider
 
         return $fn($request, ['timeout' => $this->timeout, 'debug' => true])
             ->then(function (ResponseInterface $response) {
-                echo "Response: " . (string) $response->getBody() . "\n";
                 return (string) $response->getBody();
             })->otherwise(function (array $reason) {
                 $reason = $reason['exception'];
@@ -183,6 +204,35 @@ class InstanceProfileProvider
                     $this->createErrorMessage($msg)
                 );
             });
+    }
+
+    private function handleRetryableException(
+        \Exception $e,
+        $retryOptions,
+        $message
+    ) {
+        $isRetryable = true;
+        if (!empty($status = $this->getExceptionStatusCode($e))
+            && isset($retryOptions['blacklist'])
+            && in_array($status, $retryOptions['blacklist'])
+        ) {
+            $isRetryable = false;
+        }
+        if ($isRetryable && $this->attempts < $this->retries) {
+            sleep(pow(1.2, $this->attempts));
+        } else {
+            throw new CredentialsException($message);
+        }
+    }
+
+    private function getExceptionStatusCode(\Exception $e)
+    {
+        if (method_exists($e, 'getResponse')
+            && !empty($e->getResponse())
+        ) {
+            return $e->getResponse()->getStatusCode();
+        }
+        return null;
     }
 
     private function createErrorMessage($previous)
@@ -205,10 +255,5 @@ class InstanceProfileProvider
         }
 
         return $result;
-    }
-
-    private function calculateExpiry($timeToLive)
-    {
-        return time() + $timeToLive;
     }
 }
