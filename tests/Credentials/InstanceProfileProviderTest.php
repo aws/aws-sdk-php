@@ -37,6 +37,26 @@ class InstanceProfileProviderTest extends TestCase
         ];
     }
 
+    private function getRequestClass()
+    {
+        // Guzzle 5 vs 6 namespace differences
+        $version = (string) ClientInterface::VERSION;
+        if ($version[0] === '5') {
+            return "\GuzzleHttp\Message\Request";
+        }
+        return "\GuzzleHttp\Psr7\Request";
+    }
+
+    private function getResponseClass()
+    {
+        // Guzzle 5 vs 6 namespace differences
+        $version = (string) ClientInterface::VERSION;
+        if ($version[0] === '5') {
+            return "\GuzzleHttp\Message\Response";
+        }
+        return "\GuzzleHttp\Psr7\Response";
+    }
+
     /**
      * Test client for secure data flow with metadata token requirement
      *
@@ -252,31 +272,21 @@ class InstanceProfileProviderTest extends TestCase
         $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
         $credsObject = new Credentials($creds[0], $creds[1], $creds[2], $expiry);
 
-        // Guzzle 5 vs 6 Request namespace differences
-        $version = (string) ClientInterface::VERSION;
-        if ($version[0] === '5') {
-            $getRequest = new \GuzzleHttp\Message\Request(
-                'GET',
-                '/latest/meta-data/foo'
-            );
-            $putRequest = new \GuzzleHttp\Message\Request(
-                'PUT',
-                '/latest/meta-data/foo'
-            );
-        } else {
-            $getRequest = new Request('GET', '/latest/meta-data/foo');
-            $putRequest = new Request('PUT', '/latest/meta-data/foo');
-        }
+        $requestClass = $this->getRequestClass();
+        $responseClass = $this->getResponseClass();
+        $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
+        $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
+        $throttledResponse = new $responseClass(503);
 
         $getThrottleException = new RequestException(
             '503 ThrottlingException',
             $getRequest,
-            new Response(503)
+            $throttledResponse
         );
         $putThrottleException = new RequestException(
             '503 ThrottlingException',
             $putRequest,
-            new Response(503)
+            $throttledResponse
         );
 
         $promiseProfile = Promise\promise_for(
@@ -417,21 +427,10 @@ class InstanceProfileProviderTest extends TestCase
 
     public function failureTestCases()
     {
-        // Guzzle 5 vs 6 Request namespace differences
-        $version = (string) ClientInterface::VERSION;
-        if ($version[0] === '5') {
-            $getRequest = new \GuzzleHttp\Message\Request(
-                'GET',
-                '/latest/meta-data/foo'
-            );
-            $putRequest = new \GuzzleHttp\Message\Request(
-                'PUT',
-                '/latest/meta-data/foo'
-            );
-        } else {
-            $getRequest = new Request('GET', '/latest/meta-data/foo');
-            $putRequest = new Request('PUT', '/latest/meta-data/foo');
-        }
+        $requestClass = $this->getRequestClass();
+        $responseClass = $this->getResponseClass();
+        $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
+        $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
 
         $promiseBadJsonCreds = Promise\promise_for(
             new Response(200, [], Psr7\stream_for('{'))
@@ -440,42 +439,42 @@ class InstanceProfileProviderTest extends TestCase
             'exception' => new RequestException(
                 '403 Forbidden',
                 $putRequest,
-                new Response(403)
+                new $responseClass(403)
             )
         ]);
         $rejectionThrottleToken = Promise\rejection_for([
             'exception' => new RequestException(
                 '503 ThrottlingException',
                 $putRequest,
-                new Response(503)
+                new $responseClass(503)
             )
         ]);
         $rejectionProfile = Promise\rejection_for([
             'exception' => new RequestException(
                 '401 Unathorized',
                 $getRequest,
-                new Response(401)
+                new $responseClass(401)
             )
         ]);
         $rejectionThrottleProfile = Promise\rejection_for([
             'exception' => new RequestException(
                 '503 ThrottlingException',
                 $getRequest,
-                new Response(503)
+                new $responseClass(503)
             )
         ]);
         $rejectionCreds = Promise\rejection_for([
             'exception' => new RequestException(
                 '401 Unathorized',
                 $getRequest,
-                new Response(401)
+                new $responseClass(401)
             )
         ]);
         $rejectionThrottleCreds = Promise\rejection_for([
             'exception' => new RequestException(
                 '503 ThrottlingException',
                 $getRequest,
-                new Response(503)
+                new $responseClass(503)
             )
         ]);
 
