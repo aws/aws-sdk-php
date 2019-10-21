@@ -402,7 +402,6 @@ class InstanceProfileProviderTest extends TestCase
         ];
     }
 
-
     /**
      * @dataProvider failureTestCases
      *
