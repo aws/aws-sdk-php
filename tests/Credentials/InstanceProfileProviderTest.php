@@ -6,6 +6,7 @@ use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\InstanceProfileProvider;
 use Aws\Exception\CredentialsException;
 use Aws\Sdk;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
@@ -251,6 +252,33 @@ class InstanceProfileProviderTest extends TestCase
         $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
         $credsObject = new Credentials($creds[0], $creds[1], $creds[2], $expiry);
 
+        // Guzzle 5 vs 6 Request namespace differences
+        $version = (string) ClientInterface::VERSION;
+        if ($version[0] === '5') {
+            $getRequest = new \GuzzleHttp\Message\Request(
+                'GET',
+                '/latest/meta-data/foo'
+            );
+            $putRequest = new \GuzzleHttp\Message\Request(
+                'PUT',
+                '/latest/meta-data/foo'
+            );
+        } else {
+            $getRequest = new Request('GET', '/latest/meta-data/foo');
+            $putRequest = new Request('PUT', '/latest/meta-data/foo');
+        }
+
+        $getThrottleException = new RequestException(
+            '503 ThrottlingException',
+            $getRequest,
+            new Response(503)
+        );
+        $putThrottleException = new RequestException(
+            '503 ThrottlingException',
+            $putRequest,
+            new Response(503)
+        );
+
         $promiseProfile = Promise\promise_for(
             new Response(200, [], Psr7\stream_for('MockProfile'))
         );
@@ -265,19 +293,12 @@ class InstanceProfileProviderTest extends TestCase
         $promiseBadJsonCreds = Promise\promise_for(
             new Response(200, [], Psr7\stream_for('{'))
         );
+
         $rejectionThrottleProfile = Promise\rejection_for([
-            'exception' => new RequestException(
-                '503 ThrottlingException',
-                new Request('GET', '/latest/meta-data/iam/security-credentials'),
-                new Response(503)
-            )
+            'exception' => $getThrottleException
         ]);
         $rejectionThrottleCreds = Promise\rejection_for([
-            'exception' => new RequestException(
-                '503 ThrottlingException',
-                new Request('GET', '/latest/meta-data/iam/security-credentials/MockProfile'),
-                new Response(503)
-            )
+            'exception' => $getThrottleException
         ]);
 
         return [
@@ -299,11 +320,7 @@ class InstanceProfileProviderTest extends TestCase
                     [
                         'put' => [
                             Promise\rejection_for([
-                                'exception' => new RequestException(
-                                    '503 ThrottlingException',
-                                    new Request('PUT', '/latest/api/token'),
-                                    new Response(503)
-                                )
+                                'exception' => $putThrottleException
                             ]),
                             Promise\promise_for(
                                 new Response(200, [], Psr7\stream_for('MOCK_TOKEN_VALUE'))
@@ -400,54 +417,64 @@ class InstanceProfileProviderTest extends TestCase
 
     public function failureTestCases()
     {
+        // Guzzle 5 vs 6 Request namespace differences
+        $version = (string) ClientInterface::VERSION;
+        if ($version[0] === '5') {
+            $getRequest = new \GuzzleHttp\Message\Request(
+                'GET',
+                '/latest/meta-data/foo'
+            );
+            $putRequest = new \GuzzleHttp\Message\Request(
+                'PUT',
+                '/latest/meta-data/foo'
+            );
+        } else {
+            $getRequest = new Request('GET', '/latest/meta-data/foo');
+            $putRequest = new Request('PUT', '/latest/meta-data/foo');
+        }
+
         $promiseBadJsonCreds = Promise\promise_for(
             new Response(200, [], Psr7\stream_for('{'))
         );
         $rejectionToken = Promise\rejection_for([
             'exception' => new RequestException(
-                '401 Unathorized',
-                new Request('PUT', '/latest/api/token'),
-                new Response(401)
+                '403 Forbidden',
+                $putRequest,
+                new Response(403)
             )
         ]);
         $rejectionThrottleToken = Promise\rejection_for([
             'exception' => new RequestException(
                 '503 ThrottlingException',
-                new Request('PUT', '/latest/api/token'),
+                $putRequest,
                 new Response(503)
             )
         ]);
         $rejectionProfile = Promise\rejection_for([
             'exception' => new RequestException(
                 '401 Unathorized',
-                new Request('GET', '/latest/meta-data/iam/security-credentials'),
+                $getRequest,
                 new Response(401)
             )
         ]);
         $rejectionThrottleProfile = Promise\rejection_for([
             'exception' => new RequestException(
                 '503 ThrottlingException',
-                new Request('PUT', '/latest/meta-data/iam/security-credentials'),
+                $getRequest,
                 new Response(503)
             )
         ]);
         $rejectionCreds = Promise\rejection_for([
             'exception' => new RequestException(
                 '401 Unathorized',
-                new Request(
-                    'GET',
-                    '/latest/meta-data/iam/security-credentials/MockProfile'
-                ),
+                $getRequest,
                 new Response(401)
             )
         ]);
         $rejectionThrottleCreds = Promise\rejection_for([
             'exception' => new RequestException(
                 '503 ThrottlingException',
-                new Request(
-                    'GET',
-                    '/latest/meta-data/iam/security-credentials/MockProfile'
-                ),
+                $getRequest,
                 new Response(503)
             )
         ]);
@@ -654,7 +681,6 @@ class InstanceProfileProviderTest extends TestCase
     private function getTestCreds(
         $result,
         $profile = null,
-        Response $more = null,
         array $args = []
     ) {
         $args['profile'] = $profile;

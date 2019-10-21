@@ -83,7 +83,7 @@ class InstanceProfileProvider
                     if (!empty($e->getResponse())
                         && !in_array(
                             $e->getResponse()->getStatusCode(),
-                            [400, 401, 403, 500, 502, 503, 504]
+                            [400, 403, 500, 502, 503, 504]
                         )
                     ) {
                         $this->secureMode = false;
