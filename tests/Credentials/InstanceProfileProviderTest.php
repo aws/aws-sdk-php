@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * @covers InstanceProfileProvider
+ * @covers \Aws\Credentials\InstanceProfileProvider
  */
 class InstanceProfileProviderTest extends TestCase
 {
