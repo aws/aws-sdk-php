@@ -167,6 +167,7 @@ class InstanceProfileProviderTest extends TestCase
         $creds = ['foo_key', 'baz_secret', 'qux_token', null]
     )
     {
+        $requestClass = $this->getRequestClass();
         $responseClass = $this->getResponseClass();
         $getProfileRequests = 0;
         $getCredsRequests = 0;
@@ -174,6 +175,7 @@ class InstanceProfileProviderTest extends TestCase
         return function (RequestInterface $request) use (
             $responses,
             $responseClass,
+            $requestClass,
             $profile,
             $creds,
             &$getProfileRequests,
@@ -185,7 +187,11 @@ class InstanceProfileProviderTest extends TestCase
                 return Promise\rejection_for([
                     'exception' => new RequestException(
                         '404 Not Found',
-                        $request,
+                        // Needed for different interfaces in Guzzle V5 & V6
+                        new $requestClass(
+                            $request->getMethod(),
+                            $request->getUri()->getPath()
+                        ),
                         new $responseClass(404)
                     )
                 ]);
