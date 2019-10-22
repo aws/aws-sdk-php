@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.26 - 2019-10-22
 
 * `Aws\IoTEvents` - Add support for new serial evaluation method for events in a detector model.
 * `Aws\OpsWorksCM` - AWS OpsWorks for Chef Automate (OWCA) now allows customers to use a custom domain and respective certificate, for their AWS OpsWorks For Chef Automate servers. Customers can now provide a CustomDomain, CustomCertificate and CustomPrivateKey in CreateServer API to configure their Chef Automate servers with a custom domain and certificate.
