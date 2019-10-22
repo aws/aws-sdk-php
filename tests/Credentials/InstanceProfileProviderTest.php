@@ -10,7 +10,6 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -168,11 +167,13 @@ class InstanceProfileProviderTest extends TestCase
         $creds = ['foo_key', 'baz_secret', 'qux_token', null]
     )
     {
+        $responseClass = $this->getResponseClass();
         $getProfileRequests = 0;
         $getCredsRequests = 0;
 
         return function (RequestInterface $request) use (
             $responses,
+            $responseClass,
             $profile,
             $creds,
             &$getProfileRequests,
@@ -185,7 +186,7 @@ class InstanceProfileProviderTest extends TestCase
                     'exception' => new RequestException(
                         '404 Not Found',
                         $request,
-                        new Response(404)
+                        new $responseClass(404)
                     )
                 ]);
             }
