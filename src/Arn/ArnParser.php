@@ -6,8 +6,6 @@ use Aws\Arn\S3\BucketArn;
 class ArnParser
 {
     /**
-     * @todo Replace with cross-SDK standard when available
-     *
      * @param $string
      * @return bool
      */
@@ -27,10 +25,12 @@ class ArnParser
     public static function parse($string)
     {
         $data = Arn::parse($string);
-        if ($data['resource_type'] === 'endpoint') {
-            return new EndpointArn($data);
+        if (substr($data['resource'], 0, 11) === 'accesspoint') {
+            return new AccessPointArn($data);
         }
-        if ($data['resource_type'] === 'bucket' && $data['service'] === 's3') {
+        if (substr($data['resource'], 0, 6) === 'bucket'
+            && $data['service'] === 's3'
+        ) {
             return new BucketArn($data);
         }
 

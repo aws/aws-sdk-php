@@ -27,8 +27,7 @@ class ArnTest extends TestCase
         $this->assertEquals($expected['service'], $arn->getService());
         $this->assertEquals($expected['region'], $arn->getRegion());
         $this->assertEquals($expected['account_id'], $arn->getAccountId());
-        $this->assertEquals($expected['resource_type'], $arn->getResourceType());
-        $this->assertEquals($expected['resource_id'], $arn->getResourceId());
+        $this->assertEquals($expected['resource'], $arn->getResource());
         $this->assertEquals($expectedString, (string) $arn);
     }
 
@@ -44,8 +43,7 @@ class ArnTest extends TestCase
                     'service' => 'foo',
                     'region' => 'us-west-2',
                     'account_id' => 123456789012,
-                    'resource_type' => 'bar_type',
-                    'resource_id' => 'baz_id',
+                    'resource' => 'bar_type:baz_id',
                 ],
                 'arn:aws:foo:us-west-2:123456789012:bar_type:baz_id',
             ],
@@ -58,8 +56,7 @@ class ArnTest extends TestCase
                     'service' => 'foo',
                     'region' => 'us-west-2',
                     'account_id' => 123456789012,
-                    'resource_type' => null,
-                    'resource_id' => 'baz_id',
+                    'resource' => 'baz_id',
                 ],
                 'arn:aws:foo:us-west-2:123456789012:baz_id',
             ],
@@ -72,10 +69,9 @@ class ArnTest extends TestCase
                     'service' => 'foo',
                     'region' => 'us-west-2',
                     'account_id' => 123456789012,
-                    'resource_type' => 'bar_type',
-                    'resource_id' => 'baz_id',
+                    'resource' => 'bar_type/baz_id',
                 ],
-                'arn:aws:foo:us-west-2:123456789012:bar_type:baz_id',
+                'arn:aws:foo:us-west-2:123456789012:bar_type/baz_id',
             ],
             // More than 7 components
             [
@@ -86,8 +82,7 @@ class ArnTest extends TestCase
                     'service' => 'foo',
                     'region' => 'us-west-2',
                     'account_id' => 123456789012,
-                    'resource_type' => 'bar_type',
-                    'resource_id' => 'baz_id:extra:comps',
+                    'resource' => 'bar_type:baz_id:extra:comps',
                 ],
                 'arn:aws:foo:us-west-2:123456789012:bar_type:baz_id:extra:comps',
             ],
@@ -100,10 +95,9 @@ class ArnTest extends TestCase
                     'service' => 'foo',
                     'region' => 'us-west-2',
                     'account_id' => 123456789012,
-                    'resource_type' => 'bar_type',
-                    'resource_id' => 'baz_id:extra:comps',
+                    'resource' => 'bar_type/baz_id:extra:comps',
                 ],
-                'arn:aws:foo:us-west-2:123456789012:bar_type:baz_id:extra:comps',
+                'arn:aws:foo:us-west-2:123456789012:bar_type/baz_id:extra:comps',
             ],
         ];
     }
@@ -134,8 +128,9 @@ class ArnTest extends TestCase
             ],
             [
                 'arn:five:com:po:nents',
-                "The final (6th or 7th) component of an ARN represents the"
-                . " resource ID and must not be empty.",
+                "The 6th component of an ARN represents the resource information"
+                . " and must not be empty. Individual service ARNs may include"
+                . " additional delimiters to further qualify resources.",
             ],
             [
                 'foo:bar:baz:seven:com:po:nents',
@@ -153,8 +148,9 @@ class ArnTest extends TestCase
             ],
             [
                 'arn:bar:baz:six:com:',
-                "The final (6th or 7th) component of an ARN represents the"
-                    . " resource ID and must not be empty."
+                "The 6th component of an ARN represents the resource information"
+                    . " and must not be empty. Individual service ARNs may include"
+                    . " additional delimiters to further qualify resources.",
             ],
         ];
     }

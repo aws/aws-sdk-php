@@ -1,14 +1,14 @@
 <?php
 namespace Aws\Test\Arn;
 
-use Aws\Arn\EndpointArn;
+use Aws\Arn\AccessPointArn;
 use Aws\Arn\Exception\InvalidArnException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Aws\Arn
+ * @covers \Aws\Arn\AccessPointArn
  */
-class EndpointArnTestArnTest extends TestCase
+class AccessPointArnTest extends TestCase
 {
 
     /**
@@ -20,7 +20,7 @@ class EndpointArnTestArnTest extends TestCase
     public function testThrowsOnInvalidArn($string, $message)
     {
         try {
-            new EndpointArn($string);
+            new AccessPointArn($string);
             $this->fail('This test should have thrown an InvalidArnException.');
         } catch (InvalidArnException $e) {
             $this->assertEquals($message, $e->getMessage());
@@ -32,18 +32,23 @@ class EndpointArnTestArnTest extends TestCase
         return [
             [
                 'arn:bar:baz::com:po:nents',
-                "The 4th component of an endpoint ARN represents the region and"
+                "The 4th component of an access point ARN represents the region and"
                 . " must not be empty.",
             ],
             [
                 'arn:bar:baz:seven::po:nents',
-                "The 5th component of an endpoint ARN represents the account ID"
+                "The 5th component of an access point ARN represents the account ID"
                 . " and must not be empty.",
             ],
             [
                 'arn:bar:baz:seven:com:po:nents',
-                "The 6th component of an endpoint ARN represents the resource"
-                . " type and must be 'endpoint'.",
+                "The 6th component of an access point ARN represents the resource"
+                . " type and must be 'accesspoint'.",
+            ],
+            [
+                'arn:bar:baz:seven:com:accesspoint:',
+                "The 7th component of an access point ARN represents the resource"
+                . " ID and must not be empty.",
             ],
         ];
     }

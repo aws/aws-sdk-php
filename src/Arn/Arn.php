@@ -21,8 +21,7 @@ class Arn implements ArnInterface
             'service' => null,
             'region' => null,
             'account_id' => null,
-            'resource_type' => null,
-            'resource_id' => null,
+            'resource' => null,
         ];
 
         $length = strlen($string);
@@ -31,9 +30,7 @@ class Arn implements ArnInterface
         for ($i = 0; $i < $length; $i++) {
 
             // Some ARNs may use '/' as delimiter between resource type and ID
-            if (($numComponents < 6 && $string[$i] === ':')
-                || ($numComponents === 5 && $string[$i] === '/')
-            ) {
+            if (($numComponents < 5 && $string[$i] === ':')) {
                 // Split components between delimiters
                 $data[key($data)] = substr($string, $lastDelim, $i - $lastDelim);
 
@@ -44,14 +41,12 @@ class Arn implements ArnInterface
             }
 
             if ($i === $length - 1) {
-                // Put the remainder in the last component. Some ARNs may only
-                // have 6 components. If so, resource_type is null and last
-                // component is resource_id
-                if (in_array($numComponents, [5,6])) {
-                    $data['resource_id'] = substr($string, $lastDelim);
+                // Put the remainder in the last component.
+                if (in_array($numComponents, [5])) {
+                    $data['resource'] = substr($string, $lastDelim);
                 } else {
                     // If there are < 5 components, put remainder in current
-                    // component
+                    // component.
                     $data[key($data)] = substr($string, $lastDelim);
                 }
             }
@@ -65,7 +60,7 @@ class Arn implements ArnInterface
         if (is_array($data)) {
             $this->data = $data;
         } elseif (is_string($data)) {
-            $this->data = self::parse($data);
+            $this->data = static::parse($data);
         } else {
             throw new InvalidArnException('Constructor accepts a string or an'
                 . ' array as an argument.');
@@ -83,13 +78,8 @@ class Arn implements ArnInterface
                 $this->getService(),
                 $this->getRegion(),
                 $this->getAccountId(),
+                $this->getResource(),
             ];
-
-            // One valid ARN format can omit resource type without a placeholder
-            if (!empty($this->getResourceType())) {
-                $components[] = $this->getResourceType();
-            }
-            $components[] = $this->getResourceId();
 
             $this->string = implode(':', $components);
         }
@@ -121,14 +111,9 @@ class Arn implements ArnInterface
         return $this->data['account_id'];
     }
 
-    public function getResourceType()
+    public function getResource()
     {
-        return $this->data['resource_type'];
-    }
-
-    public function getResourceId()
-    {
-        return $this->data['resource_id'];
+        return $this->data['resource'];
     }
 
     public function toArray()
@@ -158,9 +143,11 @@ class Arn implements ArnInterface
                 . " represents the service and must not be empty.");
         }
 
-        if (empty($data['resource_id'])) {
-            throw new InvalidArnException("The final (6th or 7th) component of"
-                . " an ARN represents the resource ID and must not be empty.");
+        if (empty($data['resource'])) {
+            throw new InvalidArnException("The 6th component of an ARN"
+                . " represents the resource information and must not be empty."
+                . " Individual service ARNs may include additional delimiters"
+                . " to further qualify resources.");
         }
     }
 }

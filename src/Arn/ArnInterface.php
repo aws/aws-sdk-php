@@ -29,9 +29,7 @@ interface ArnInterface
 
     public function getAccountId();
 
-    public function getResourceType();
-
-    public function getResourceId();
+    public function getResource();
 
     public function toArray();
 }
