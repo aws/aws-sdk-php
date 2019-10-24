@@ -13,7 +13,7 @@ trait ResourceTypeAndIdTrait
         return $this->data['resource_id'];
     }
 
-    public static function parseResourceTypeAndId(array $data)
+    private static function parseResourceTypeAndId(array $data)
     {
         $data['resource_type'] = null;
         $data['resource_id'] = null;

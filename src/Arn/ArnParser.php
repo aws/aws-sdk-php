@@ -26,12 +26,12 @@ class ArnParser
     {
         $data = Arn::parse($string);
         if (substr($data['resource'], 0, 11) === 'accesspoint') {
-            return new AccessPointArn($data);
+            return new AccessPointArn($string);
         }
-        if (substr($data['resource'], 0, 6) === 'bucket'
+        if (substr($data['resource'], 0, 11) === 'bucket_name'
             && $data['service'] === 's3'
         ) {
-            return new BucketArn($data);
+            return new BucketArn($string);
         }
 
         return new Arn($data);

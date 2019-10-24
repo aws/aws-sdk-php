@@ -10,6 +10,58 @@ use PHPUnit\Framework\TestCase;
  */
 class BucketArnTest extends TestCase
 {
+    /**
+     * @dataProvider parsedArnProvider
+     *
+     * @param $string
+     * @param $expected
+     */
+    public function testParsesArnString($string, $expected, $expectedString)
+    {
+        $arn = new BucketArn($string);
+        $this->assertEquals($expected, $arn->toArray());
+        $this->assertEquals($expected['arn'], $arn->getPrefix());
+        $this->assertEquals($expected['partition'], $arn->getPartition());
+        $this->assertEquals($expected['service'], $arn->getService());
+        $this->assertEquals($expected['region'], $arn->getRegion());
+        $this->assertEquals($expected['account_id'], $arn->getAccountId());
+        $this->assertEquals($expected['resource'], $arn->getResource());
+        $this->assertEquals($expectedString, (string) $arn);
+    }
+
+    public function parsedArnProvider()
+    {
+        return [
+            [
+                'arn:aws:s3:us-west-2:123456789012:bucket_name:mybucket',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 's3',
+                    'region' => 'us-west-2',
+                    'account_id' => 123456789012,
+                    'resource_type' => 'bucket_name',
+                    'resource_id' => 'mybucket',
+                    'resource' => 'bucket_name:mybucket',
+                ],
+                'arn:aws:s3:us-west-2:123456789012:bucket_name:mybucket',
+            ],
+            [
+                'arn:aws-cn:s3:cn-north-1:123456789012:bucket_name:mybucket',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws-cn',
+                    'service' => 's3',
+                    'region' => 'cn-north-1',
+                    'account_id' => 123456789012,
+                    'resource_type' => 'bucket_name',
+                    'resource_id' => 'mybucket',
+                    'resource' => 'bucket_name:mybucket',
+                ],
+                'arn:aws-cn:s3:cn-north-1:123456789012:bucket_name:mybucket',
+            ],
+        ];
+    }
 
     /**
      * @dataProvider invalidArnCases
@@ -44,6 +96,11 @@ class BucketArnTest extends TestCase
                 'arn:bar:baz:seven:com:po:nents',
                 "The 6th component of a S3 bucket ARN represents the resource"
                 . " type and must be 'bucket_name'.",
+            ],
+            [
+                'arn:bar:baz:seven:com:bucket_name:',
+                "The 7th component of a S3 bucket ARN represents the resource"
+                . " ID and must not be empty.",
             ],
         ];
     }
