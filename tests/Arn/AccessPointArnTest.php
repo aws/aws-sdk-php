@@ -15,6 +15,7 @@ class AccessPointArnTest extends TestCase
      *
      * @param $string
      * @param $expected
+     * @param $expectedString
      */
     public function testParsesArnString($string, $expected, $expectedString)
     {
@@ -32,6 +33,7 @@ class AccessPointArnTest extends TestCase
     public function parsedArnProvider()
     {
         return [
+            // All components
             [
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
                 [
@@ -46,6 +48,7 @@ class AccessPointArnTest extends TestCase
                 ],
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
             ],
+            // Alternate partition
             [
                 'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
                 [
@@ -59,6 +62,36 @@ class AccessPointArnTest extends TestCase
                     'resource' => 'accesspoint:myendpoint',
                 ],
                 'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
+            ],
+            // Slash delimiter
+            [
+                'arn:aws:foo:us-west-2:123456789012:accesspoint/myendpoint',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 'foo',
+                    'region' => 'us-west-2',
+                    'account_id' => 123456789012,
+                    'resource_type' => 'accesspoint',
+                    'resource_id' => 'myendpoint',
+                    'resource' => 'accesspoint/myendpoint',
+                ],
+                'arn:aws:foo:us-west-2:123456789012:accesspoint:myendpoint',
+            ],
+            // Slash delimiter, 9 components
+            [
+                'arn:aws:foo:us-west-2:123456789012:accesspoint/myendpoint:more:cmps',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 'foo',
+                    'region' => 'us-west-2',
+                    'account_id' => 123456789012,
+                    'resource_type' => 'accesspoint',
+                    'resource_id' => 'myendpoint:more:cmps',
+                    'resource' => 'accesspoint/myendpoint:more:cmps',
+                ],
+                'arn:aws:foo:us-west-2:123456789012:accesspoint:myendpoint:more:cmps',
             ],
         ];
     }

@@ -17,6 +17,7 @@ class ArnTest extends TestCase
      *
      * @param $string
      * @param $expected
+     * @param $expectedString
      */
     public function testParsesArnString($string, $expected, $expectedString)
     {
@@ -59,19 +60,6 @@ class ArnTest extends TestCase
                     'resource' => 'baz_id',
                 ],
                 'arn:aws:foo:us-west-2:123456789012:baz_id',
-            ],
-            // Slash delimiter between resource type and ID
-            [
-                'arn:aws:foo:us-west-2:123456789012:bar_type/baz_id',
-                [
-                    'arn' => 'arn',
-                    'partition' => 'aws',
-                    'service' => 'foo',
-                    'region' => 'us-west-2',
-                    'account_id' => 123456789012,
-                    'resource' => 'bar_type/baz_id',
-                ],
-                'arn:aws:foo:us-west-2:123456789012:bar_type/baz_id',
             ],
             // More than 7 components
             [

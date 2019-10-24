@@ -15,6 +15,7 @@ class BucketArnTest extends TestCase
      *
      * @param $string
      * @param $expected
+     * @param $expectedString
      */
     public function testParsesArnString($string, $expected, $expectedString)
     {
@@ -32,6 +33,7 @@ class BucketArnTest extends TestCase
     public function parsedArnProvider()
     {
         return [
+            // All components
             [
                 'arn:aws:s3:us-west-2:123456789012:bucket_name:mybucket',
                 [
@@ -46,6 +48,7 @@ class BucketArnTest extends TestCase
                 ],
                 'arn:aws:s3:us-west-2:123456789012:bucket_name:mybucket',
             ],
+            // Alternate partition
             [
                 'arn:aws-cn:s3:cn-north-1:123456789012:bucket_name:mybucket',
                 [
@@ -59,6 +62,36 @@ class BucketArnTest extends TestCase
                     'resource' => 'bucket_name:mybucket',
                 ],
                 'arn:aws-cn:s3:cn-north-1:123456789012:bucket_name:mybucket',
+            ],
+            // Slash delimiter
+            [
+                'arn:aws:foo:us-west-2:123456789012:bucket_name/mybucket',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 'foo',
+                    'region' => 'us-west-2',
+                    'account_id' => 123456789012,
+                    'resource_type' => 'bucket_name',
+                    'resource_id' => 'mybucket',
+                    'resource' => 'bucket_name/mybucket',
+                ],
+                'arn:aws:foo:us-west-2:123456789012:bucket_name:mybucket',
+            ],
+            // Slash delimiter, 9 components
+            [
+                'arn:aws:foo:us-west-2:123456789012:bucket_name/mybucket:more:cmps',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 'foo',
+                    'region' => 'us-west-2',
+                    'account_id' => 123456789012,
+                    'resource_type' => 'bucket_name',
+                    'resource_id' => 'mybucket:more:cmps',
+                    'resource' => 'bucket_name/mybucket:more:cmps',
+                ],
+                'arn:aws:foo:us-west-2:123456789012:bucket_name:mybucket:more:cmps',
             ],
         ];
     }
