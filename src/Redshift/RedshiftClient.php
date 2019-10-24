@@ -98,6 +98,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeHsmConfigurationsAsync(array $args = [])
  * @method \Aws\Result describeLoggingStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeLoggingStatusAsync(array $args = [])
+ * @method \Aws\Result describeNodeConfigurationOptions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeNodeConfigurationOptionsAsync(array $args = [])
  * @method \Aws\Result describeOrderableClusterOptions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeOrderableClusterOptionsAsync(array $args = [])
  * @method \Aws\Result describeReservedNodeOfferings(array $args = [])

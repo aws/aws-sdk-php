@@ -25,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getResourceShareInvitationsAsync(array $args = [])
  * @method \Aws\Result getResourceShares(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getResourceSharesAsync(array $args = [])
+ * @method \Aws\Result listPendingInvitationResources(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listPendingInvitationResourcesAsync(array $args = [])
  * @method \Aws\Result listPrincipals(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPrincipalsAsync(array $args = [])
  * @method \Aws\Result listResources(array $args = [])

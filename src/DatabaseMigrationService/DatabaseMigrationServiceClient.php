@@ -21,6 +21,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createReplicationTaskAsync(array $args = [])
  * @method \Aws\Result deleteCertificate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteCertificateAsync(array $args = [])
+ * @method \Aws\Result deleteConnection(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteConnectionAsync(array $args = [])
  * @method \Aws\Result deleteEndpoint(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEndpointAsync(array $args = [])
  * @method \Aws\Result deleteEventSubscription(array $args = [])
