@@ -83,14 +83,14 @@ class InstanceProfileProvider
                     if (!empty($e->getResponse())
                         && !in_array(
                             $e->getResponse()->getStatusCode(),
-                            [400, 403, 500, 502, 503, 504]
+                            [400, 500, 502, 503, 504]
                         )
                     ) {
                         $this->secureMode = false;
                     } else {
                         $this->handleRetryableException(
                             $e,
-                            [ 'blacklist' => [401, 403] ],
+                            [ 'blacklist' => [401] ],
                             $this->createErrorMessage(
                                 'Error retrieving metadata token'
                             )

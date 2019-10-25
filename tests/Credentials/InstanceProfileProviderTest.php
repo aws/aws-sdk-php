@@ -426,6 +426,7 @@ class InstanceProfileProviderTest extends TestCase
             $provider()->wait();
             $this->fail('Provider should have thrown an exception.');
         } catch (\Exception $e) {
+            var_dump($e);
             $this->assertEquals(get_class($expected), get_class($e));
             $this->assertEquals($expected->getMessage(), $e->getMessage());
         }
@@ -441,13 +442,6 @@ class InstanceProfileProviderTest extends TestCase
         $promiseBadJsonCreds = Promise\promise_for(
             new Response(200, [], Psr7\stream_for('{'))
         );
-        $rejectionToken = Promise\rejection_for([
-            'exception' => new RequestException(
-                '403 Forbidden',
-                $putRequest,
-                new $responseClass(403)
-            )
-        ]);
         $rejectionThrottleToken = Promise\rejection_for([
             'exception' => new RequestException(
                 '503 ThrottlingException',
@@ -485,19 +479,6 @@ class InstanceProfileProviderTest extends TestCase
         ]);
 
         return [
-            // Secure data flow, token call, non-retryable error
-            [
-                $this->getSecureTestClient(
-                    [
-                        'put' => [$rejectionToken]
-                    ],
-                    'MockProfile'
-                ),
-                new CredentialsException(
-                    'Error retrieving credentials from the instance profile '
-                        . 'metadata server. (Error retrieving metadata token)'
-                )
-            ],
 
             // Secure data flow, profile call, non-retryable error
             [
