@@ -14,6 +14,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchApplyUpdateActionAsync(array $args = [])
  * @method \Aws\Result batchStopUpdateAction(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchStopUpdateActionAsync(array $args = [])
+ * @method \Aws\Result completeMigration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise completeMigrationAsync(array $args = [])
  * @method \Aws\Result copySnapshot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise copySnapshotAsync(array $args = [])
  * @method \Aws\Result createCacheCluster(array $args = [])
@@ -96,6 +98,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise resetCacheParameterGroupAsync(array $args = [])
  * @method \Aws\Result revokeCacheSecurityGroupIngress(array $args = [])
  * @method \GuzzleHttp\Promise\Promise revokeCacheSecurityGroupIngressAsync(array $args = [])
+ * @method \Aws\Result startMigration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startMigrationAsync(array $args = [])
  * @method \Aws\Result testFailover(array $args = [])
  * @method \GuzzleHttp\Promise\Promise testFailoverAsync(array $args = [])
  */
