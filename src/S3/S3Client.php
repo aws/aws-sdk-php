@@ -289,7 +289,6 @@ class S3Client extends AwsClient implements S3ClientInterface
             's3.content_type'
         );
 
-
         // Use the bucket style middleware when using a "bucket_endpoint" (for cnames)
         if ($this->getConfig('bucket_endpoint')) {
             $stack->appendBuild(BucketEndpointMiddleware::wrap(), 's3.bucket_endpoint');
@@ -307,6 +306,10 @@ class S3Client extends AwsClient implements S3ClientInterface
             );
         }
 
+        $stack->appendBuild(
+            BucketEndpointArnMiddleware::wrap($this->getApi()),
+            's3.bucket_endpoint_arn'
+        );
         $stack->appendSign(PutObjectUrlMiddleware::wrap(), 's3.put_object_url');
         $stack->appendSign(PermanentRedirectMiddleware::wrap(), 's3.permanent_redirect');
         $stack->appendInit(Middleware::sourceFile($this->getApi()), 's3.source_file');
