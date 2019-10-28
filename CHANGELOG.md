@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.30 - 2019-10-28
 
 * `Aws\S3` - Adding support in SelectObjectContent for scanning a portion of an object specified by a scan range.
 
