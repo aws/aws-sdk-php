@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3` - Adding support in SelectObjectContent for scanning a portion of an object specified by a scan range.
+
 ## 3.112.29 - 2019-10-28
 
 * `Aws\ECR` - This release of Amazon Elastic Container Registry Service (Amazon ECR) introduces support for image scanning. This identifies the software vulnerabilities in the container image based on the Common Vulnerabilities and Exposures (CVE) database.
