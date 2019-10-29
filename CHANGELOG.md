@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.31 - 2019-10-29
 
 * `Aws\AppStream` - Adds support for providing domain names that can embed streaming sessions
 * `Aws\Cloud9` - Added CREATING and CREATE_FAILED environment lifecycle statuses. 
