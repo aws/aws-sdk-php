@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Adds support for providing domain names that can embed streaming sessions
+* `Aws\Cloud9` - Added CREATING and CREATE_FAILED environment lifecycle statuses. 
+
 ## 3.112.30 - 2019-10-28
 
 * `Aws\S3` - Adding support in SelectObjectContent for scanning a portion of an object specified by a scan range.
