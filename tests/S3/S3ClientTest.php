@@ -82,6 +82,27 @@ class S3ClientTest extends TestCase
         $this->assertContains('X-Amz-Signature=', $url);
     }
 
+    public function testCreatesPresignedRequestsWithAccessPointArn()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region'      => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                'Key' => 'bar'
+            ]
+        );
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringStartsWith('https://myendpoint-123456789012.s3.us-east-1.aws/bar?', $url);
+        $this->assertContains('X-Amz-Expires=', $url);
+        $this->assertContains('X-Amz-Credential=', $url);
+        $this->assertContains('X-Amz-Signature=', $url);
+    }
+
     public function testCreatesPresignedRequestsWithStartTime()
     {
         /** @var S3Client $client */
