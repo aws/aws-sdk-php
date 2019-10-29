@@ -6,6 +6,7 @@ use Aws\Arn\AccessPointArn;
 use Aws\Arn\ArnParser;
 use Aws\Arn\Exception\InvalidArnException;
 use Aws\CommandInterface;
+use Aws\Exception\InvalidRegionException;
 use Aws\S3\Exception\S3Exception;
 use Psr\Http\Message\RequestInterface;
 
@@ -23,21 +24,25 @@ class BucketEndpointArnMiddleware
     /** @var callable */
     private $nextHandler;
 
+    /** @var string */
+    private $region;
+
     /**
      * Create a middleware wrapper function.
      *
      * @param Service $service
      * @return callable
      */
-    public static function wrap(Service $service)
+    public static function wrap(Service $service, $region)
     {
-        return function (callable $handler) use ($service) {
-            return new self($handler, $service);
+        return function (callable $handler) use ($service, $region) {
+            return new self($handler, $service, $region);
         };
     }
 
-    public function __construct(callable $nextHandler, Service $service)
+    public function __construct(callable $nextHandler, Service $service, $region)
     {
+        $this->region = $region;
         $this->service = $service;
         $this->nextHandler = $nextHandler;
     }
@@ -62,6 +67,16 @@ class BucketEndpointArnMiddleware
                     try {
                         $arn = ArnParser::parse($cmd[$arnableKey]);
                         if ($arn instanceof AccessPointArn) {
+
+                            // Ensure ARN region matches client region
+                            if (strtolower($this->region)
+                                !== strtolower($arn->getRegion())
+                            ) {
+                                throw new InvalidRegionException('The region'
+                                . " specified in the ARN (" . $arn->getRegion()
+                                . ") does not match the client region ("
+                                . "{$this->region}).");
+                            }
 
                             // Access point host pattern
                             $host = $arn->getResourceId() . '-' . $arn->getAccountId()

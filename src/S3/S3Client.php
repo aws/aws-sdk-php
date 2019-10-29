@@ -307,7 +307,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         }
 
         $stack->appendBuild(
-            BucketEndpointArnMiddleware::wrap($this->getApi()),
+            BucketEndpointArnMiddleware::wrap($this->getApi(), $this->getRegion()),
             's3.bucket_endpoint_arn'
         );
         $stack->appendSign(PutObjectUrlMiddleware::wrap(), 's3.put_object_url');
