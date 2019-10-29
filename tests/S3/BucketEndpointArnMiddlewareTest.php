@@ -20,7 +20,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
      * @param $arn
      * @param $options
      * @param $endpoint
-     * @param $path
+     * @param $key
      * @throws \Exception
      */
     public function testCorrectlyModifiesUri($arn, $options, $endpoint, $key)
