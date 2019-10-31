@@ -2,10 +2,13 @@
 namespace Aws\Test\S3;
 
 use Aws\Command;
+use Aws\CommandInterface;
 use Aws\Exception\AwsException;
+use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
+use Aws\S3\UseArnRegion\Configuration;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
@@ -1208,5 +1211,52 @@ EOXML;
             '@use_dual_stack_endpoint' => true,
             '@use_path_style_endpoint' => true,
         ]);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid configuration value provided for "use_arn_region"
+     */
+    public function testAddsUseArnRegionArgument()
+    {
+        new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'use_arn_region' => 'trigger exception'
+        ]);
+    }
+
+    public function testAddsUseArnRegionCacheArgument()
+    {
+        // Create cache object
+        $cache = new LruArrayCache();
+        $cache->set('aws_s3_use_arn_region_config', new Configuration(true));
+
+        // Create client using cached use_arn_region config
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'use_arn_region' => $cache,
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) {
+                $this->assertEquals(
+                    'myendpoint-123456789012.s3.us-west-2.aws',
+                    $req->getUri()->getHost()
+                );
+                $this->assertEquals(
+                    '/Bar/Baz',
+                    $req->getUri()->getPath()
+                );
+                return new Result([]);
+            },
+        ]);
+
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $client->execute($command);
     }
 }

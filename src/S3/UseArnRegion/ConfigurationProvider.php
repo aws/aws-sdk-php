@@ -29,10 +29,10 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             call_user_func_array('self::chain', $configProviders)
         );
 
-        if (isset($config['s3_use_arn_region'])
-            && $config['s3_use_arn_region'] instanceof CacheInterface
+        if (isset($config['use_arn_region'])
+            && $config['use_arn_region'] instanceof CacheInterface
         ) {
-            return self::cache($memo, $config['s3_use_arn_region'], self::$cacheKey);
+            return self::cache($memo, $config['use_arn_region'], self::$cacheKey);
         }
 
         return $memo;

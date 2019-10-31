@@ -89,6 +89,24 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'myendpoint-123456789012.s3.us-west-2.aws',
                 'Bar/Baz',
             ],
+            [
+                'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'us-east-2',
+                    'use_arn_region' => true,
+                ],
+                'myendpoint-123456789012.s3.us-west-2.aws',
+                'Bar/Baz',
+            ],
+            [
+                'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'us-west-2',
+                    'use_arn_region' => false,
+                ],
+                'myendpoint-123456789012.s3.us-west-2.aws',
+                'Bar/Baz',
+            ],
         ];
     }
 

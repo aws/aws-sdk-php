@@ -8,6 +8,7 @@ use Aws\Arn\Exception\InvalidArnException;
 use Aws\CommandInterface;
 use Aws\Exception\InvalidRegionException;
 use Aws\S3\Exception\S3Exception;
+use Aws\S3\UseArnRegion\ConfigurationInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -27,23 +28,36 @@ class BucketEndpointArnMiddleware
     /** @var string */
     private $region;
 
+    /** @var ConfigurationInterface */
+    private $useArnRegion;
+
     /**
      * Create a middleware wrapper function.
      *
      * @param Service $service
+     * @param $region
+     * @param ConfigurationInterface $useArnRegion
      * @return callable
      */
-    public static function wrap(Service $service, $region)
-    {
-        return function (callable $handler) use ($service, $region) {
-            return new self($handler, $service, $region);
+    public static function wrap(
+        Service $service,
+        $region,
+        ConfigurationInterface $useArnRegion
+    ) {
+        return function (callable $handler) use ($service, $region, $useArnRegion) {
+            return new self($handler, $service, $region, $useArnRegion);
         };
     }
 
-    public function __construct(callable $nextHandler, Service $service, $region)
-    {
+    public function __construct(
+        callable $nextHandler,
+        Service $service,
+        $region,
+        ConfigurationInterface $useArnRegion
+    ) {
         $this->region = $region;
         $this->service = $service;
+        $this->useArnRegion = $useArnRegion;
         $this->nextHandler = $nextHandler;
     }
 
@@ -69,8 +83,8 @@ class BucketEndpointArnMiddleware
                         if ($arn instanceof AccessPointArn) {
 
                             // Ensure ARN region matches client region
-                            if (strtolower($this->region)
-                                !== strtolower($arn->getRegion())
+                            if (strtolower($this->region) !== strtolower($arn->getRegion())
+                                && !($this->useArnRegion->isUseArnRegion())
                             ) {
                                 throw new InvalidRegionException('The region'
                                 . " specified in the ARN (" . $arn->getRegion()
