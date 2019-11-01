@@ -2,9 +2,9 @@
 namespace Aws\S3;
 
 use Aws\Api\Service;
-use Aws\Arn\AccessPointArn;
 use Aws\Arn\ArnParser;
 use Aws\Arn\Exception\InvalidArnException;
+use Aws\Arn\S3\AccessPointArn;
 use Aws\CommandInterface;
 use Aws\Exception\InvalidRegionException;
 use Aws\S3\Exception\S3Exception;
@@ -108,13 +108,18 @@ class BucketEndpointArnMiddleware
                             $req = $req->withUri(
                                 $req->getUri()->withHost($host)->withPath($path)
                             );
+                        } else {
+                            throw new InvalidArnException('Provided ARN was not'
+                                . ' a valid S3 access point ARN');
                         }
                     } catch (InvalidArnException $e) {
                         // Add context to ARN exception
                         throw new S3Exception(
-                            'Bucket parameter parsed as access point ARN and 
-                                failed with: ' . $e->getMessage(),
-                            $cmd
+                            'Bucket parameter parsed as ARN and failed with: '
+                                . $e->getMessage(),
+                            $cmd,
+                            [],
+                            $e
                         );
                     }
                 }

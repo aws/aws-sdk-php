@@ -15,7 +15,7 @@ class AccessPointArn extends Arn implements ArnInterface
     public function __construct($data)
     {
         parent::__construct($data);
-        self::validate($this->data);
+        static::validate($this->data);
     }
 
     public static function parse($string)

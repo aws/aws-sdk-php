@@ -127,4 +127,40 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         );
         $s3->execute($command);
     }
+
+    /**
+     * @expectedException \Aws\S3\Exception\S3Exception
+     * @expectedExceptionMessage Bucket parameter parsed as ARN and failed with: Provided ARN was not a valid S3 access point ARN
+     */
+    public function testThrowsForWrongArnType()
+    {
+        $s3 = $this->getTestClient('s3', ['region' => 'us-west-2']);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:some_type:myendpoint',
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $s3->execute($command);
+    }
+
+    /**
+     * @expectedException \Aws\S3\Exception\S3Exception
+     * @expectedExceptionMessage Bucket parameter parsed as ARN and failed with: The 6th component of an ARN
+     */
+    public function testThrowsForInvalidArn()
+    {
+        $s3 = $this->getTestClient('s3', ['region' => 'us-west-2']);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:not:valid',
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $s3->execute($command);
+    }
 }

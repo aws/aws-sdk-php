@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Arn;
 
+use Aws\Arn\S3\AccessPointArn as S3AccessPointArn;
 use Aws\Arn\S3\BucketArn;
 
 class ArnParser
@@ -26,6 +27,9 @@ class ArnParser
     {
         $data = Arn::parse($string);
         if (substr($data['resource'], 0, 11) === 'accesspoint') {
+            if ($data['service'] === 's3') {
+                return new S3AccessPointArn($string);
+            }
             return new AccessPointArn($string);
         }
         if (substr($data['resource'], 0, 11) === 'bucket_name'
