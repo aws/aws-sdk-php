@@ -32,11 +32,6 @@ class ArnParser
             }
             return new AccessPointArn($string);
         }
-        if (substr($data['resource'], 0, 11) === 'bucket_name'
-            && $data['service'] === 's3'
-        ) {
-            return new BucketArn($string);
-        }
 
         return new Arn($data);
     }
