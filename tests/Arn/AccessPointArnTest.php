@@ -78,21 +78,6 @@ class AccessPointArnTest extends TestCase
                 ],
                 'arn:aws:foo:us-west-2:123456789012:accesspoint:myendpoint',
             ],
-            // Slash delimiter, 9 components
-            [
-                'arn:aws:foo:us-west-2:123456789012:accesspoint/myendpoint:more:cmps',
-                [
-                    'arn' => 'arn',
-                    'partition' => 'aws',
-                    'service' => 'foo',
-                    'region' => 'us-west-2',
-                    'account_id' => 123456789012,
-                    'resource_type' => 'accesspoint',
-                    'resource_id' => 'myendpoint:more:cmps',
-                    'resource' => 'accesspoint/myendpoint:more:cmps',
-                ],
-                'arn:aws:foo:us-west-2:123456789012:accesspoint:myendpoint:more:cmps',
-            ],
         ];
     }
 
@@ -134,6 +119,11 @@ class AccessPointArnTest extends TestCase
                 'arn:bar:baz:seven:com:accesspoint:',
                 "The 7th component of an access point ARN represents the resource"
                 . " ID and must not be empty.",
+            ],
+            [
+                'arn:aws:foo:us-west-2:123456789012:accesspoint:myendpoint:more:cmps',
+                "The resource ID component of an access point ARN must not contain"
+                    . " additional components (delimited by ':').",
             ],
         ];
     }

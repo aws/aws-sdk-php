@@ -68,5 +68,25 @@ class AccessPointArn extends Arn implements ArnInterface
             throw new InvalidArnException("The 7th component of an access point ARN"
                 . " represents the resource ID and must not be empty.");
         }
+
+        if (strpos($data['resource_id'], ':') !== false) {
+            throw new InvalidArnException("The resource ID component of an access"
+                . " point ARN must not contain additional components"
+                . " (delimited by ':').");
+        }
+    }
+
+    protected function isValidHostLabel($string)
+    {
+        $length = strlen($string);
+        if ($length < 1 || $length > 63) {
+            return false;
+        }
+        if (preg_match("/^[a-zA-Z0-9-]/", $string)) {
+            return false;
+        }
+        return true;0
+    +
+    3+00œ¡å™.
     }
 }
