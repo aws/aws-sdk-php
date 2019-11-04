@@ -85,8 +85,6 @@ class AccessPointArn extends Arn implements ArnInterface
         if (preg_match("/^[a-zA-Z0-9-]/", $string)) {
             return false;
         }
-        return true;0
-    +
-    3+00œ¡å™.
+        return true;
     }
 }
