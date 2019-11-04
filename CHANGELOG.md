@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.112.35 - 2019-11-04
 
 * `Aws\DAX` - Documentation updates for dax
 * `Aws\EC2` - Documentation updates for ec2
