@@ -426,7 +426,6 @@ class InstanceProfileProviderTest extends TestCase
             $provider()->wait();
             $this->fail('Provider should have thrown an exception.');
         } catch (\Exception $e) {
-            var_dump($e);
             $this->assertEquals(get_class($expected), get_class($e));
             $this->assertEquals($expected->getMessage(), $e->getMessage());
         }

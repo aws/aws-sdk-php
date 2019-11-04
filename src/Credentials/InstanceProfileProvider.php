@@ -90,7 +90,7 @@ class InstanceProfileProvider
                     } else {
                         $this->handleRetryableException(
                             $e,
-                            [ 'blacklist' => [401] ],
+                            [],
                             $this->createErrorMessage(
                                 'Error retrieving metadata token'
                             )
@@ -191,7 +191,7 @@ class InstanceProfileProvider
             $request = $request->withHeader($key, $value);
         }
 
-        return $fn($request, ['timeout' => $this->timeout, 'debug' => true])
+        return $fn($request, ['timeout' => $this->timeout])
             ->then(function (ResponseInterface $response) {
                 return (string) $response->getBody();
             })->otherwise(function (array $reason) {
