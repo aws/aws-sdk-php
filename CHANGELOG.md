@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DAX` - Documentation updates for dax
+* `Aws\EC2` - Documentation updates for ec2
+* `Aws\RoboMaker` - RoboMaker Fleet Management launch a feature to verify your robot is ready to download and install the new robot application using a download condition file, which is a script run on the robot prior to downloading the new deployment. 
+
 ## 3.112.34 - 2019-11-01
 
 * `Aws\CloudTrail` - This release adds two new APIs, GetTrail and ListTrails, and support for adding tags when you create a trail by using a new TagsList parameter on CreateTrail operations.
