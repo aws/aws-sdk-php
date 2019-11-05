@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeStarNotifications` - This release adds a notification manager for events in repositories, build projects, deployments, and pipelines. You can now configure rules and receive notifications about events that occur for resources. Each notification includes a status message as well as a link to the resource (repository, build project, deployment application, or pipeline) whose event generated the notification.
+* `Aws\RDS` - Documentation updates for Amazon RDS
+
 ## 3.112.35 - 2019-11-04
 
 * `Aws\DAX` - Documentation updates for dax

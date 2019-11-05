@@ -78,6 +78,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCodePipeline(array $args = [])
  * @method \Aws\CodeStar\CodeStarClient createCodeStar(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCodeStar(array $args = [])
+ * @method \Aws\CodeStarNotifications\CodeStarNotificationsClient createCodeStarNotifications(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCodeStarNotifications(array $args = [])
  * @method \Aws\CognitoIdentity\CognitoIdentityClient createCognitoIdentity(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCognitoIdentity(array $args = [])
  * @method \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient createCognitoIdentityProvider(array $args = [])
