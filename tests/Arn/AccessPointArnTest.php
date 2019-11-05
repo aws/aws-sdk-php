@@ -125,6 +125,31 @@ class AccessPointArnTest extends TestCase
                 "The resource ID component of an access point ARN must not contain"
                     . " additional components (delimited by ':').",
             ],
+            [
+                'arn:aws:foo:us-west-2:1!:accesspoint:myendpoint',
+                "The account ID in an access point ARN must be a valid host"
+                    . " label value.",
+            ],
+            [
+                'arn:aws:foo:us-west-2:1!:accesspoint:myendpoint',
+                "The account ID in an access point ARN must be a valid host"
+                . " label value.",
+            ],
+            [
+                'arn:aws:foo:us-west-2:' . str_repeat('1', 64) . ':accesspoint:myendpoint',
+                "The account ID in an access point ARN must be a valid host"
+                . " label value.",
+            ],
+            [
+                'arn:aws:foo:us-west-2:123456789012:accesspoint:endpoint@',
+                "The resource ID in an access point ARN must be a valid host"
+                . " label value.",
+            ],
+            [
+                'arn:aws:foo:us-west-2:123456789012:accesspoint:' . str_repeat('1', 64),
+                "The resource ID in an access point ARN must be a valid host"
+                . " label value.",
+            ],
         ];
     }
 }
