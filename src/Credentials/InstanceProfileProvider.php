@@ -117,6 +117,13 @@ class InstanceProfileProvider
                         $headers
                     ));
                 } catch (RequestException $e) {
+                    // 401 indicates insecure flow not supported, switch to
+                    // attempting secure mode for subsequent calls
+                    if (!empty($this->getExceptionStatusCode($e))
+                        && $this->getExceptionStatusCode($e) === 401
+                    ) {
+                        $this->secureMode = true;
+                    }
                     $this->handleRetryableException(
                         $e,
                         [ 'blacklist' => [401, 403] ],
@@ -146,6 +153,13 @@ class InstanceProfileProvider
                         )
                     );
                 } catch (RequestException $e) {
+                    // 401 indicates insecure flow not supported, switch to
+                    // attempting secure mode for subsequent calls
+                    if (!empty($this->getExceptionStatusCode($e))
+                        && $this->getExceptionStatusCode($e) === 401
+                    ) {
+                        $this->secureMode = true;
+                    }
                     $this->handleRetryableException(
                         $e,
                         [ 'blacklist' => [401, 403] ],

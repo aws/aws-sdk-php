@@ -19,14 +19,26 @@ use Psr\Http\Message\RequestInterface;
  */
 class InstanceProfileProviderTest extends TestCase
 {
+    static $originalFlag;
+
+    public static function setUpBeforeClass()
+    {
+        self::$originalFlag = getenv(InstanceProfileProvider::ENV_DISABLE) ?: '';
+        putenv(InstanceProfileProvider::ENV_DISABLE. '=false');
+    }
+
+    public static function tearDownAfterClass()
+    {
+        putenv(InstanceProfileProvider::ENV_DISABLE. '=' . self::$originalFlag);
+    }
+
     private function getCredentialArray(
         $key,
         $secret,
         $token = null,
         $time = null,
         $success = true
-    )
-    {
+    ) {
         return [
             'Code' => $success ? 'Success' : 'Failed',
             'AccessKeyId' => $key,
@@ -108,8 +120,10 @@ class InstanceProfileProviderTest extends TestCase
                     !== 'MOCK_TOKEN_VALUE'
                 ) {
                     return Promise\rejection_for([
-                        'exception' => new \Exception(
-                            '401 Unauthorized - Valid unexpired token required'
+                        'exception' => new RequestException(
+                            '401 Unauthorized - Valid unexpired token required',
+                            $request,
+                            new Response(401)
                         )
                     ]);
                 }
@@ -246,8 +260,9 @@ class InstanceProfileProviderTest extends TestCase
     public function testHandlesSuccessScenarios(
         callable $client,
         CredentialsInterface $expected
-    )
-    {
+    ) {
+        $flag = getenv(InstanceProfileProvider::ENV_DISABLE);
+
         $provider = new InstanceProfileProvider([
             'client' => $client,
             'retries' => 5
@@ -661,6 +676,63 @@ class InstanceProfileProviderTest extends TestCase
                 )
             ],
         ];
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata server. (999 Expected Exception)
+     */
+    public function testSwitchesBackToSecureModeOn401()
+    {
+        $responseClass = $this->getResponseClass();
+        $reqNumber = 0;
+
+        $client = function (RequestInterface $request) use (
+            &$reqNumber,
+            $responseClass
+        ) {
+            $reqNumber++;
+            if ($request->getMethod() === 'PUT'
+                && $request->getUri()->getPath() === '/latest/api/token'
+            ) {
+                if ($reqNumber === 1) {
+                    return Promise\rejection_for([
+                        'exception' => new RequestException('404 Not Found',
+                            $request,
+                            new $responseClass(404)
+                        )
+                    ]);
+                }
+
+                return Promise\rejection_for([
+                    'exception' => new \Exception('999 Expected Exception')
+                ]);
+            }
+            if ($request->getMethod() === 'GET') {
+                return Promise\rejection_for([
+                    'exception' => new RequestException(
+                        '401 Unauthorized - Valid unexpired token required',
+                        $request,
+                        new $responseClass(401)
+                    )
+                ]);
+            }
+        };
+
+        $provider = new InstanceProfileProvider([
+            'client' => $client,
+            'retries' => 1,
+        ]);
+
+        try {
+            // 1st pass should fall back to insecure mode, then switch back to
+            // secure mode on hitting the 401
+            $provider()->wait();
+            $this->fail('Provider should have thrown an exception.');
+        } catch (\Exception $e) {
+            // If secure mode is set, this should hit the PUT request again
+            $provider()->wait();
+        }
     }
 
     private function getTestCreds(
