@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.114.0 - 2019-11-06
 
 * `Aws\Budgets` - Documentation updates for budgets to track Savings Plans utilization and coverage
 * `Aws\CodeBuild` - Add support for Build Number, Secrets Manager and Exported Environment Variables.
