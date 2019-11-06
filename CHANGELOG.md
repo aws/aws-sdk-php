@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SavingsPlans` - This is the first release of Savings Plans, a new flexible pricing model that offers low prices on Amazon EC2 and AWS Fargate usage.
+
 ## 3.114.0 - 2019-11-06
 
 * `Aws\Budgets` - Documentation updates for budgets to track Savings Plans utilization and coverage
