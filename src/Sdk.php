@@ -324,6 +324,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSageMaker(array $args = [])
  * @method \Aws\SageMakerRuntime\SageMakerRuntimeClient createSageMakerRuntime(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSageMakerRuntime(array $args = [])
+ * @method \Aws\SavingsPlans\SavingsPlansClient createSavingsPlans(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSavingsPlans(array $args = [])
  * @method \Aws\SecretsManager\SecretsManagerClient createSecretsManager(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSecretsManager(array $args = [])
  * @method \Aws\SecurityHub\SecurityHubClient createSecurityHub(array $args = [])
