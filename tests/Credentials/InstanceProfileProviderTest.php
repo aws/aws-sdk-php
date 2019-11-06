@@ -687,7 +687,7 @@ class InstanceProfileProviderTest extends TestCase
         $responseClass = $this->getResponseClass();
         $reqNumber = 0;
 
-        $client = function (RequestInterface $request) use (
+        $client = function ($request) use (
             &$reqNumber,
             $responseClass
         ) {
