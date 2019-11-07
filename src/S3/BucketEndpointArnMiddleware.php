@@ -2,13 +2,14 @@
 namespace Aws\S3;
 
 use Aws\Api\Service;
+use Aws\Arn\ArnInterface;
 use Aws\Arn\ArnParser;
 use Aws\Arn\Exception\InvalidArnException;
 use Aws\Arn\S3\AccessPointArn;
 use Aws\CommandInterface;
+use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\S3\Exception\S3Exception;
-use Aws\S3\UseArnRegion\ConfigurationInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -28,24 +29,27 @@ class BucketEndpointArnMiddleware
     /** @var string */
     private $region;
 
-    /** @var ConfigurationInterface */
-    private $useArnRegion;
+    /** @var $config */
+    private $config;
+
+    /** @var PartitionEndpointProvider */
+    private $partitionEndpointProvider;
 
     /**
      * Create a middleware wrapper function.
      *
      * @param Service $service
      * @param $region
-     * @param ConfigurationInterface $useArnRegion
+     * @param array $config
      * @return callable
      */
     public static function wrap(
         Service $service,
         $region,
-        ConfigurationInterface $useArnRegion
+        array $config
     ) {
-        return function (callable $handler) use ($service, $region, $useArnRegion) {
-            return new self($handler, $service, $region, $useArnRegion);
+        return function (callable $handler) use ($service, $region, $config) {
+            return new self($handler, $service, $region, $config);
         };
     }
 
@@ -53,11 +57,12 @@ class BucketEndpointArnMiddleware
         callable $nextHandler,
         Service $service,
         $region,
-        ConfigurationInterface $useArnRegion
+        array $config = []
     ) {
+        $this->partitionEndpointProvider = PartitionEndpointProvider::defaultProvider();
         $this->region = $region;
         $this->service = $service;
-        $this->useArnRegion = $useArnRegion;
+        $this->config = $config;
         $this->nextHandler = $nextHandler;
     }
 
@@ -84,7 +89,9 @@ class BucketEndpointArnMiddleware
 
                             // Ensure ARN region matches client region
                             if (strtolower($this->region) !== strtolower($arn->getRegion())
-                                && !($this->useArnRegion->isUseArnRegion())
+                                && !(!empty($this->config['use_arn_region'])
+                                    && $this->config['use_arn_region']->isUseArnRegion()
+                                )
                             ) {
                                 throw new InvalidRegionException('The region'
                                 . " specified in the ARN (" . $arn->getRegion()
@@ -92,9 +99,7 @@ class BucketEndpointArnMiddleware
                                 . "{$this->region}).");
                             }
 
-                            // Access point host pattern
-                            $host = $arn->getResourceId() . '-' . $arn->getAccountId()
-                                . '.s3.' . $arn->getRegion() . '.aws';
+                            $host = $this->generateAccessPointHost($arn, $req);
 
                             // Remove encoded bucket string from path
                             $path = $req->getUri()->getPath();
@@ -127,5 +132,39 @@ class BucketEndpointArnMiddleware
         }
 
         return $nextHandler($cmd, $req);
+    }
+
+    private function generateAccessPointHost(
+        AccessPointArn $arn,
+        RequestInterface $req
+    ) {
+        $host = $arn->getResourceId() . '-' . $arn->getAccountId()
+            . '.s3-accesspoint';
+        if ($this->hasFips($req->getUri()->getHost())) {
+            $host .= '-fips';
+        }
+        if (!empty($this->config['dual_stack'])) {
+            $host .= '.dualstack';
+        }
+        $host .= '.' . $arn->getRegion() . '.' . $this->getPartitionSuffix($arn);
+
+        return $host;
+    }
+
+    private function getPartitionSuffix(ArnInterface $arn)
+    {
+        $partition = $this->partitionEndpointProvider
+            ->getPartition($arn->getRegion(), $arn->getService());
+        return $partition->getDnsSuffix();
+    }
+
+    private function hasFips($host)
+    {
+        if (strpos($host, 'fips-') !== false
+            || strpos($host, '-fips') !== false
+        ) {
+            return true;
+        }
+        return false;
     }
 }

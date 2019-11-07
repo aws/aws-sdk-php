@@ -41,11 +41,15 @@ class PartitionTest extends TestCase
      *
      * @param array $definition
      */
-    public function testReportsName(array $definition)
+    public function testReportsData(array $definition)
     {
         $this->assertSame(
             $definition['partition'],
             (new Partition($definition))->getName()
+        );
+        $this->assertSame(
+            $definition['dnsSuffix'],
+            (new Partition($definition))->getDnsSuffix()
         );
     }
 

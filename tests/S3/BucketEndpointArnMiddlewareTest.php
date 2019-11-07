@@ -1,8 +1,10 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Arn\ArnParser;
 use Aws\CommandInterface;
 use Aws\Middleware;
+use Aws\S3\BucketEndpointArnMiddleware;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -58,7 +60,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 [
                     'region' => 'us-west-2',
                 ],
-                'myendpoint-123456789012.s3.us-west-2.aws',
+                'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                 'Bar/Baz',
             ],
             [
@@ -67,7 +69,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_dual_stack_endpoint' => true,
                 ],
-                'myendpoint-123456789012.s3.us-west-2.aws',
+                'myendpoint-123456789012.s3-accesspoint.dualstack.us-west-2.amazonaws.com',
                 'Bar/Baz',
             ],
             [
@@ -76,7 +78,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_accelerate_endpoint' => true,
                 ],
-                'myendpoint-123456789012.s3.us-west-2.aws',
+                'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                 'Bar/Baz',
             ],
             [
@@ -86,7 +88,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'use_accelerate_endpoint' => true,
                     'use_dual_stack_endpoint' => true,
                 ],
-                'myendpoint-123456789012.s3.us-west-2.aws',
+                'myendpoint-123456789012.s3-accesspoint.dualstack.us-west-2.amazonaws.com',
                 'Bar/Baz',
             ],
             [
@@ -95,7 +97,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-east-2',
                     'use_arn_region' => true,
                 ],
-                'myendpoint-123456789012.s3.us-west-2.aws',
+                'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                 'Bar/Baz',
             ],
             [
@@ -104,7 +106,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                     'use_arn_region' => false,
                 ],
-                'myendpoint-123456789012.s3.us-west-2.aws',
+                'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                 'Bar/Baz',
             ],
         ];
