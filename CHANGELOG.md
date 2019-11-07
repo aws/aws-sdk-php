@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.115.0 - 2019-11-07
 
 * `Aws\Comprehend` - This release adds new languages (ar, hi, ko, ja, zh, zh-TW) for Amazon Comprehend's DetectSentiment, DetectEntities, DetectKeyPhrases, BatchDetectSentiment, BatchDetectEntities and BatchDetectKeyPhrases APIs
 * `Aws\SSM` - AWS Systems Manager Session Manager target length increased to 400.
