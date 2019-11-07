@@ -333,6 +333,7 @@ class S3Client extends AwsClient implements S3ClientInterface
                     'use_arn_region' => $this->getConfig('use_arn_region'),
                     'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
                     'accelerate' => $this->getConfig('use_accelerate_endpoint'),
+                    'path_style' => $this->getConfig('use_path_style_endpoint'),
                 ]
             ),
             's3.bucket_endpoint_arn'

@@ -96,6 +96,16 @@ class BucketEndpointArnMiddleware
                                 );
                             }
 
+                            // Path-style is not supported with access points
+                            if (!empty($this->config['path_style'])) {
+                                throw new UnresolvedEndpointException(
+                                    'Path-style addressing is currently not'
+                                    . ' supported with access points. Please'
+                                    . ' disable path-style or do not supply an'
+                                    . ' access point ARN.'
+                                );
+                            }
+
                             // Ensure ARN region matches client region unless
                             // configured for using ARN region over client region
                             if (strtolower($this->region) !== strtolower($arn->getRegion())

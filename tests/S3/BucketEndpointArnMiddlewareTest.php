@@ -144,6 +144,30 @@ class BucketEndpointArnMiddlewareTest extends TestCase
     }
 
     /**
+     * @expectedException \Aws\Exception\UnresolvedEndpointException
+     * @expectedExceptionMessage Path-style addressing is currently not supported with access points.
+     */
+    public function testThrowsForPathStyle()
+    {
+        $s3 = $this->getTestClient(
+            's3',
+            [
+                'region' => 'us-west-2',
+                'use_path_style_endpoint' => true,
+            ]
+        );
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $s3->execute($command);
+    }
+
+    /**
      * @expectedException \Aws\S3\Exception\S3Exception
      * @expectedExceptionMessage Bucket parameter parsed as ARN and failed with: Provided ARN was not a valid S3 access point ARN
      */
