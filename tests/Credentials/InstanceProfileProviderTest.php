@@ -275,4 +275,37 @@ class InstanceProfileProviderTest extends TestCase
         $this->assertNull($c->getSecurityToken());
         $this->assertEquals($t, $c->getExpiration());
     }
+
+    public function testRetriesEnvVarIsUsed()
+    {
+        putenv(InstanceProfileProvider::ENV_RETRIES . '=1');
+        $retries = (int) getenv(InstanceProfileProvider::ENV_RETRIES);
+
+        $t = time() + 1000;
+        $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
+        $responses = [new Response(200, [], Psr7\stream_for($result))];
+
+        $error = $this->getRequestException();
+
+        $client = function () use (&$retries, $responses, $error) {
+            if (0 === $retries--) {
+                return Promise\promise_for(array_shift($responses));
+            }
+
+            return Promise\rejection_for([
+                'exception' => $error
+            ]);
+        };
+
+        $args = [
+            'profile' => 'foo',
+            'client' => $client
+        ];
+        $provider = new InstanceProfileProvider($args);
+        $c = $provider()->wait();
+        $this->assertEquals('foo', $c->getAccessKeyId());
+        $this->assertEquals('baz', $c->getSecretKey());
+        $this->assertNull($c->getSecurityToken());
+        $this->assertEquals($t, $c->getExpiration());
+    }
 }
