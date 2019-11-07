@@ -64,28 +64,17 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'Bar/Baz',
             ],
             [
-                'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
                 [
-                    'region' => 'us-west-2',
-                    'use_dual_stack_endpoint' => true,
+                    'region' => 'us-east-1',
                 ],
-                'myendpoint-123456789012.s3-accesspoint.dualstack.us-west-2.amazonaws.com',
+                'myendpoint-123456789012.s3-accesspoint.us-east-1.amazonaws.com',
                 'Bar/Baz',
             ],
             [
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
                 [
                     'region' => 'us-west-2',
-                    'use_accelerate_endpoint' => true,
-                ],
-                'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
-                'Bar/Baz',
-            ],
-            [
-                'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
-                [
-                    'region' => 'us-west-2',
-                    'use_accelerate_endpoint' => true,
                     'use_dual_stack_endpoint' => true,
                 ],
                 'myendpoint-123456789012.s3-accesspoint.dualstack.us-west-2.amazonaws.com',
@@ -119,6 +108,30 @@ class BucketEndpointArnMiddlewareTest extends TestCase
     public function testThrowsInvalidRegionException()
     {
         $s3 = $this->getTestClient('s3', ['region' => 'us-west-2']);
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $s3->execute($command);
+    }
+
+    /**
+     * @expectedException \Aws\Exception\UnresolvedEndpointException
+     * @expectedExceptionMessage Accelerate is currently not supported with access points.
+     */
+    public function testThrowsForAccelerate()
+    {
+        $s3 = $this->getTestClient(
+            's3',
+            [
+                'region' => 'us-west-2',
+                'use_accelerate_endpoint' => true,
+            ]
+        );
         $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand(
             'GetObject',

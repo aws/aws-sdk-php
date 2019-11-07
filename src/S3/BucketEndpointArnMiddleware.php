@@ -9,6 +9,7 @@ use Aws\Arn\S3\AccessPointArn;
 use Aws\CommandInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\InvalidRegionException;
+use Aws\Exception\UnresolvedEndpointException;
 use Aws\S3\Exception\S3Exception;
 use Psr\Http\Message\RequestInterface;
 
@@ -86,8 +87,17 @@ class BucketEndpointArnMiddleware
                     try {
                         $arn = ArnParser::parse($cmd[$arnableKey]);
                         if ($arn instanceof AccessPointArn) {
+                            // Accelerate is not supported with access points
+                            if (!empty($this->config['accelerate'])) {
+                                throw new UnresolvedEndpointException(
+                                    'Accelerate is currently not supported with'
+                                        . ' access points. Please disable accelerate'
+                                        . ' or do not supply an access point ARN.'
+                                );
+                            }
 
-                            // Ensure ARN region matches client region
+                            // Ensure ARN region matches client region unless
+                            // configured for using ARN region over client region
                             if (strtolower($this->region) !== strtolower($arn->getRegion())
                                 && !(!empty($this->config['use_arn_region'])
                                     && $this->config['use_arn_region']->isUseArnRegion()
