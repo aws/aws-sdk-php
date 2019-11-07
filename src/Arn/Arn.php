@@ -29,7 +29,6 @@ class Arn implements ArnInterface
         $numComponents = 0;
         for ($i = 0; $i < $length; $i++) {
 
-            // Some ARNs may use '/' as delimiter between resource type and ID
             if (($numComponents < 5 && $string[$i] === ':')) {
                 // Split components between delimiters
                 $data[key($data)] = substr($string, $lastDelim, $i - $lastDelim);
