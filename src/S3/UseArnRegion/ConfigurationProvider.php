@@ -63,7 +63,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             if (!is_readable($filename)) {
                 return self::reject("Cannot read configuration from $filename");
             }
-            $data = \Aws\parse_ini_file($filename, true);
+            $data = \Aws\parse_ini_file($filename, true, INI_SCANNER_TYPED);
             if ($data === false) {
                 return self::reject("Invalid config file: $filename");
             }

@@ -108,15 +108,20 @@ class BucketEndpointArnMiddleware
 
                             // Ensure ARN region matches client region unless
                             // configured for using ARN region over client region
-                            if (strtolower($this->region) !== strtolower($arn->getRegion())
-                                && !(!empty($this->config['use_arn_region'])
-                                    && $this->config['use_arn_region']->isUseArnRegion()
-                                )
+                            if (strtolower($this->region)
+                                !== strtolower($arn->getRegion())
                             ) {
-                                throw new InvalidRegionException('The region'
-                                . " specified in the ARN (" . $arn->getRegion()
-                                . ") does not match the client region ("
-                                . "{$this->region}).");
+                                if (!empty($this->config['use_arn_region'])
+                                    && $this->config['use_arn_region']->isUseArnRegion()
+                                ) {
+                                    // Update signing region if configured to do so
+                                    $cmd['@context']['signing_region'] = $arn->getRegion();
+                                } else {
+                                    throw new InvalidRegionException('The region'
+                                        . " specified in the ARN (" . $arn->getRegion()
+                                        . ") does not match the client region ("
+                                        . "{$this->region}).");
+                                }
                             }
 
                             $host = $this->generateAccessPointHost($arn, $req);
