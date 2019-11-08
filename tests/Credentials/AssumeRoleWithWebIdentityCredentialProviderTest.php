@@ -199,7 +199,6 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
     /**
      * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Error retrieving web identity credentials: Found 1 error while validating the input provided for the AssumeRoleWithWebIdentity operation:
-    [RoleArn] expected string length to be >= 20, but found string length of 11 (0)
      */
     public function testThrowsNonAwsExceptionWhenRetrievingAssumeRoleCredentialFails()
     {

@@ -131,7 +131,6 @@ class AssumeRoleWithWebIdentityCredentialProvider
                         "Error retrieving web identity credentials: " . $e->getMessage()
                         . " (" . $e->getCode() . ")"
                     );
-
                 }
                 $this->attempts++;
             }
