@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.115.1 - 2019-11-08
 
 * `Aws\CognitoIdentity` - This release adds support for disabling classic flow.
 * `Aws\ECR` - This release contains ticket fixes for Amazon ECR.
