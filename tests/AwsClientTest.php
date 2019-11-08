@@ -374,6 +374,42 @@ class AwsClientTest extends TestCase
         $client->bar();
     }
 
+    public function testUsesCommandContextSigningRegion()
+    {
+        $client = $this->createHttpsEndpointClient(
+            [
+                'metadata' => [
+                    'signatureVersion' => 'v4',
+                ],
+                'operations' => [
+                    'Bar' => [
+                        'http' => ['method' => 'POST'],
+                        'authtype' => 'v4-unsigned-body',
+                    ],
+                ],
+            ],
+            [
+                'handler' => function (
+                    CommandInterface $command,
+                    RequestInterface $request
+                ) {
+                    $this->assertContains('Credential=foo/20191108/ap-southeast-1', $request->getHeader('Authorization')[0]);
+                    return new Result;
+                }
+            ]
+        );
+        $list = $client->getHandlerList();
+        $list->appendBuild(function ($handler) {
+            return function (CommandInterface $cmd, RequestInterface $req)
+                use ($handler)
+            {
+                $cmd['@context']['signing_region'] = 'ap-southeast-1';
+                return $handler($cmd, $req);
+            };
+        });
+        $client->bar();
+    }
+
     public function testLoadsAliases()
     {
         $client = $this->createClient([
