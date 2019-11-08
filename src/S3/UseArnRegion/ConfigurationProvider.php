@@ -65,7 +65,9 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             if (!is_readable($filename)) {
                 return self::reject("Cannot read configuration from $filename");
             }
-            $data = \Aws\parse_ini_file($filename, true, INI_SCANNER_TYPED);
+
+            // Use INI_SCANNER_NORMAL instead of INI_SCANNER_TYPED for PHP 5.5 compatibility
+            $data = \Aws\parse_ini_file($filename, true, INI_SCANNER_NORMAL);
             if ($data === false) {
                 return self::reject("Invalid config file: $filename");
             }
@@ -75,6 +77,11 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             if (!isset($data[$profile][self::INI_USE_ARN_REGION])) {
                 return self::reject("Required S3 Use Arn Region config values 
                     not present in INI profile '{$profile}' ({$filename})");
+            }
+
+            // INI_SCANNER_NORMAL parses false-y values as an empty string
+            if ($data[$profile][self::INI_USE_ARN_REGION] === "") {
+                $data[$profile][self::INI_USE_ARN_REGION] = false;
             }
 
             return Promise\promise_for(
