@@ -299,7 +299,7 @@ EOT;
             ->with(ConfigurationProvider::$cacheKey)
             ->willReturn($expected);
 
-        $provider = ConfigurationProvider::defaultProvider(['s3_use_arn_region' => $cache]);
+        $provider = ConfigurationProvider::defaultProvider(['use_arn_region' => $cache]);
         /** @var ConfigurationInterface $result */
         $result = $provider()->wait();
         $this->assertInstanceOf(Configuration::class, $result);

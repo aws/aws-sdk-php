@@ -100,7 +100,7 @@ class S3ClientTest extends TestCase
             ]
         );
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
-        $this->assertStringStartsWith('https://myendpoint-123456789012.s3.us-east-1.aws/bar?', $url);
+        $this->assertStringStartsWith('https://myendpoint-123456789012.s3-accesspoint.us-east-1.amazonaws.com/bar?', $url);
         $this->assertContains('X-Amz-Expires=', $url);
         $this->assertContains('X-Amz-Credential=', $url);
         $this->assertContains('X-Amz-Signature=', $url);
@@ -1239,7 +1239,7 @@ EOXML;
             'use_arn_region' => $cache,
             'handler' => function (CommandInterface $cmd, RequestInterface $req) {
                 $this->assertEquals(
-                    'myendpoint-123456789012.s3.us-west-2.aws',
+                    'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                     $req->getUri()->getHost()
                 );
                 $this->assertEquals(
