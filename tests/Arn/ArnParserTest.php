@@ -69,19 +69,19 @@ class ArnParserTest extends TestCase
     {
         return [
             [
-                'arn:aws:foo:us-west-2:123456789012:bar_type:baz_id',
+                'arn:aws:foo:us-west-2:123456789012:bar_type:baz-id',
                 Arn::class
             ],
             [
-                'arn:aws:foo:us-west-2:123456789012:accesspoint:baz_id',
+                'arn:aws:foo:us-west-2:123456789012:accesspoint:baz-id',
                 AccessPointArn::class
             ],
             [
-                'arn:aws:s3:us-west-2:123456789012:accesspoint:baz_id',
+                'arn:aws:s3:us-west-2:123456789012:accesspoint:baz-id',
                 S3AccessPointArn::class
             ],
             [
-                'arn:aws:foo:us-west-2:123456789012:bucket_name:baz_id',
+                'arn:aws:foo:us-west-2:123456789012:bucket_name:baz-id',
                 Arn::class
             ],
         ];

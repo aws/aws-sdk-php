@@ -30,7 +30,7 @@ class AccessPointArnTest extends TestCase
     {
         return [
             [
-                'arn:bar:baz:seven:com:accesspoint:resource_id',
+                'arn:bar:baz:seven:com:accesspoint:resource-id',
                 "The 3rd component of an S3 access point ARN represents the"
                     . " region and must be 's3'.",
             ],
