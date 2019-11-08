@@ -3,10 +3,12 @@ namespace Aws\S3\UseArnRegion;
 
 use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
+use Aws\ConfigurationProviderInterface;
 use Aws\S3\UseArnRegion\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 
 class ConfigurationProvider extends AbstractConfigurationProvider
+    implements ConfigurationProviderInterface
 {
     const ENV_USE_ARN_REGION = 'AWS_S3_USE_ARN_REGION';
     const INI_USE_ARN_REGION = 's3_use_arn_region';
