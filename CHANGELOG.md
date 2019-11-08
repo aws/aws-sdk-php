@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentity` - This release adds support for disabling classic flow.
+* `Aws\ECR` - This release contains ticket fixes for Amazon ECR.
+
 ## 3.115.0 - 2019-11-07
 
 * `Aws\Comprehend` - This release adds new languages (ar, hi, ko, ja, zh, zh-TW) for Amazon Comprehend's DetectSentiment, DetectEntities, DetectKeyPhrases, BatchDetectSentiment, BatchDetectEntities and BatchDetectKeyPhrases APIs
