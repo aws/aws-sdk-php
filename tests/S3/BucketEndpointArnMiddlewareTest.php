@@ -1,10 +1,8 @@
 <?php
 namespace Aws\Test\S3;
 
-use Aws\Arn\ArnParser;
 use Aws\CommandInterface;
 use Aws\Middleware;
-use Aws\S3\BucketEndpointArnMiddleware;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -53,6 +51,10 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     $req->getUri()->getHost()
                 );
                 $this->assertEquals("/{$key}", $req->getRequestTarget());
+                $this->assertEquals(
+                    $signingRegion,
+                    $cmd['@context']['signing_region']
+                );
                 $this->assertContains(
                     "/{$signingRegion}/s3/",
                     $req->getHeader('Authorization')[0]
