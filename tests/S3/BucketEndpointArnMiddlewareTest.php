@@ -23,10 +23,16 @@ class BucketEndpointArnMiddlewareTest extends TestCase
      * @param $options
      * @param $endpoint
      * @param $key
+     * @param $signingRegion
      * @throws \Exception
      */
-    public function testCorrectlyModifiesUri($arn, $options, $endpoint, $key)
-    {
+    public function testCorrectlyModifiesUri(
+        $arn,
+        $options,
+        $endpoint,
+        $key,
+        $signingRegion
+    ) {
         $s3 = $this->getTestClient('s3', $options);
         $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand(
@@ -41,12 +47,16 @@ class BucketEndpointArnMiddlewareTest extends TestCase
             Middleware::tap(function (
                 CommandInterface $cmd,
                 RequestInterface $req
-            ) use ($endpoint, $key) {
+            ) use ($endpoint, $key, $signingRegion) {
                 $this->assertEquals(
                     $endpoint,
                     $req->getUri()->getHost()
                 );
                 $this->assertEquals("/{$key}", $req->getRequestTarget());
+                $this->assertContains(
+                    "/{$signingRegion}/s3/",
+                    $req->getHeader('Authorization')[0]
+                );
             })
         );
         $s3->execute($command);
@@ -58,19 +68,11 @@ class BucketEndpointArnMiddlewareTest extends TestCase
             [
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
                 [
-                    'region' => 'us-east-2',
-                    'use_arn_region' => true,
-                ],
-                'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
-                'Bar/Baz',
-            ],
-            [
-                'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
-                [
                     'region' => 'us-west-2',
                 ],
                 'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                 'Bar/Baz',
+                'us-west-2',
             ],
             [
                 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
@@ -79,6 +81,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myendpoint-123456789012.s3-accesspoint.us-east-1.amazonaws.com',
                 'Bar/Baz',
+                'us-east-1',
             ],
             [
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
@@ -88,6 +91,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myendpoint-123456789012.s3-accesspoint.dualstack.us-west-2.amazonaws.com',
                 'Bar/Baz',
+                'us-west-2',
             ],
             [
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
@@ -97,6 +101,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                 'Bar/Baz',
+                'us-west-2',
             ],
             [
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
@@ -106,6 +111,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                 'Bar/Baz',
+                'us-west-2',
             ],
         ];
     }
