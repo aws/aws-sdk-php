@@ -86,7 +86,7 @@ class BucketEndpointArnMiddleware
 
                     try {
                         $arn = ArnParser::parse($cmd[$arnableKey]);
-                        $this->validateArn($arn);
+                        $partition = $this->validateArn($arn);
 
                         $host = $this->generateAccessPointHost($arn, $req);
 
@@ -102,6 +102,14 @@ class BucketEndpointArnMiddleware
                         $req = $req->withUri(
                             $req->getUri()->withHost($host)->withPath($path)
                         );
+
+                        // Update signing region based on ARN data
+                        $endpointData = $partition([
+                            'region' => $arn->getRegion(),
+                            'service' => $arn->getService()
+                        ]);
+                        $cmd['@context']['signing_region'] = $endpointData['signingRegion'];
+
                     } catch (InvalidArnException $e) {
                         // Add context to ARN exception
                         throw new S3Exception(
@@ -155,6 +163,13 @@ class BucketEndpointArnMiddleware
         return false;
     }
 
+    /**
+     * Validates an ARN, returning a partition object corresponding to ARN
+     * if successful
+     *
+     * @param $arn
+     * @return \Aws\Endpoint\Partition
+     */
     private function validateArn($arn)
     {
         if ($arn instanceof AccessPointArn) {
@@ -177,48 +192,46 @@ class BucketEndpointArnMiddleware
                 );
             }
 
+            // Verify that the ARN partition is valid
+            $arnPart = $this->partitionProvider->getPartition(
+                $arn->getRegion(),
+                's3'
+            );
+            $clientPart = $this->partitionProvider->getPartition(
+                $this->region,
+                's3'
+            );
+            if ($arn->getPartition() !== $clientPart->getName()) {
+                throw new InvalidRegionException('The'
+                    . ' supplied ARN partition does not'
+                    . " match the client's partition.");
+            }
+            if ($clientPart->getName() !== $arnPart->getName()) {
+                throw new InvalidRegionException('The'
+                    . ' corresponding partition for the'
+                    . ' supplied ARN region does not match'
+                    . " the client's partition.");
+            }
+
             // Ensure ARN region matches client region unless
             // configured for using ARN region over client region
             if (strtolower($this->region)
                 !== strtolower($arn->getRegion())
             ) {
-                if (!empty($this->config['use_arn_region'])
-                    && $this->config['use_arn_region']->isUseArnRegion()
+                if (empty($this->config['use_arn_region'])
+                    || !($this->config['use_arn_region']->isUseArnRegion())
                 ) {
-                    $clientPart = $this->partitionProvider->getPartition(
-                        $this->region,
-                        's3'
-                    );
-                    $arnPart = $this->partitionProvider->getPartition(
-                        $arn->getRegion(),
-                        's3'
-                    );
-
-                    if ($arn->getPartition() !== $clientPart->getName()) {
-                        throw new InvalidRegionException('The'
-                            . ' supplied ARN partition does not'
-                            . " match the client's partition.");
-                    }
-
-                    if ($clientPart->getName() !== $arnPart->getName()) {
-                        throw new InvalidRegionException('The'
-                            . ' corresponding partition for the'
-                            . ' supplied ARN region does not match'
-                            . " the client's partition.");
-                    }
-
-                    // Update signing region if configured to do so
-                    $cmd['@context']['signing_region'] = $arn->getRegion();
-                } else {
                     throw new InvalidRegionException('The region'
                         . " specified in the ARN (" . $arn->getRegion()
                         . ") does not match the client region ("
                         . "{$this->region}).");
                 }
             }
-        } else {
-            throw new InvalidArnException('Provided ARN was not'
-                . ' a valid S3 access point ARN');
+
+            return $arnPart;
         }
+
+        throw new InvalidArnException('Provided ARN was not'
+            . ' a valid S3 access point ARN');
     }
 }
