@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.115.2 - 2019-11-11
 
 * `Aws\CloudFormation` - The Resource Import feature enables customers to import existing AWS resources into new or existing CloudFormation Stacks.
 * `Aws\CostExplorer` - This launch provides customers with access to GetCostAndUsageWithResources API.
