@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS Cost Explorer Service** service.
  * @method \Aws\Result getCostAndUsage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCostAndUsageAsync(array $args = [])
+ * @method \Aws\Result getCostAndUsageWithResources(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCostAndUsageWithResourcesAsync(array $args = [])
  * @method \Aws\Result getCostForecast(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCostForecastAsync(array $args = [])
  * @method \Aws\Result getDimensionValues(array $args = [])
