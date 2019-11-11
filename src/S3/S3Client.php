@@ -5,6 +5,7 @@ use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
 use Aws\AwsClient;
+use Aws\CacheInterface;
 use Aws\ClientResolver;
 use Aws\Command;
 use Aws\Exception\AwsException;
@@ -13,6 +14,7 @@ use Aws\Middleware;
 use Aws\RetryMiddleware;
 use Aws\ResultInterface;
 use Aws\CommandInterface;
+use Aws\S3\RegionalEndpoint\ConfigurationProvider;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 
@@ -280,6 +282,11 @@ class S3Client extends AwsClient implements S3ClientInterface
      */
     public function __construct(array $args)
     {
+        if (!isset($args['s3_us_east_1_regional_endpoint'])) {
+            $args['s3_us_east_1_regional_endpoint'] = ConfigurationProvider::defaultProvider();
+        } elseif ($args['s3_us_east_1_regional_endpoint'] instanceof CacheInterface) {
+            $args['s3_us_east_1_regional_endpoint'] = ConfigurationProvider::defaultProvider($args);
+        }
         parent::__construct($args);
         $stack = $this->getHandlerList();
         $stack->appendInit(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), 's3.ssec');
