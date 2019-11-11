@@ -34,7 +34,7 @@ class BucketEndpointArnMiddleware
     private $config;
 
     /** @var PartitionEndpointProvider */
-    private $partitionEndpointProvider;
+    private $partitionProvider;
 
     /**
      * Create a middleware wrapper function.
@@ -60,7 +60,7 @@ class BucketEndpointArnMiddleware
         $region,
         array $config = []
     ) {
-        $this->partitionEndpointProvider = PartitionEndpointProvider::defaultProvider();
+        $this->partitionProvider = PartitionEndpointProvider::defaultProvider();
         $this->region = $region;
         $this->service = $service;
         $this->config = $config;
@@ -86,62 +86,22 @@ class BucketEndpointArnMiddleware
 
                     try {
                         $arn = ArnParser::parse($cmd[$arnableKey]);
-                        if ($arn instanceof AccessPointArn) {
-                            // Accelerate is not supported with access points
-                            if (!empty($this->config['accelerate'])) {
-                                throw new UnresolvedEndpointException(
-                                    'Accelerate is currently not supported with'
-                                        . ' access points. Please disable accelerate'
-                                        . ' or do not supply an access point ARN.'
-                                );
-                            }
+                        $this->validateArn($arn);
 
-                            // Path-style is not supported with access points
-                            if (!empty($this->config['path_style'])) {
-                                throw new UnresolvedEndpointException(
-                                    'Path-style addressing is currently not'
-                                    . ' supported with access points. Please'
-                                    . ' disable path-style or do not supply an'
-                                    . ' access point ARN.'
-                                );
-                            }
+                        $host = $this->generateAccessPointHost($arn, $req);
 
-                            // Ensure ARN region matches client region unless
-                            // configured for using ARN region over client region
-                            if (strtolower($this->region)
-                                !== strtolower($arn->getRegion())
-                            ) {
-                                if (!empty($this->config['use_arn_region'])
-                                    && $this->config['use_arn_region']->isUseArnRegion()
-                                ) {
-                                    // Update signing region if configured to do so
-                                    $cmd['@context']['signing_region'] = $arn->getRegion();
-                                } else {
-                                    throw new InvalidRegionException('The region'
-                                        . " specified in the ARN (" . $arn->getRegion()
-                                        . ") does not match the client region ("
-                                        . "{$this->region}).");
-                                }
-                            }
-
-                            $host = $this->generateAccessPointHost($arn, $req);
-
-                            // Remove encoded bucket string from path
-                            $path = $req->getUri()->getPath();
-                            $encoded = rawurlencode($cmd[$arnableKey]);
-                            $len = strlen($encoded) + 1;
-                            if (substr($path, 0, $len) === "/{$encoded}") {
-                                $path = substr($path, $len);
-                            }
-
-                            // Set modified request
-                            $req = $req->withUri(
-                                $req->getUri()->withHost($host)->withPath($path)
-                            );
-                        } else {
-                            throw new InvalidArnException('Provided ARN was not'
-                                . ' a valid S3 access point ARN');
+                        // Remove encoded bucket string from path
+                        $path = $req->getUri()->getPath();
+                        $encoded = rawurlencode($cmd[$arnableKey]);
+                        $len = strlen($encoded) + 1;
+                        if (substr($path, 0, $len) === "/{$encoded}") {
+                            $path = substr($path, $len);
                         }
+
+                        // Set modified request
+                        $req = $req->withUri(
+                            $req->getUri()->withHost($host)->withPath($path)
+                        );
                     } catch (InvalidArnException $e) {
                         // Add context to ARN exception
                         throw new S3Exception(
@@ -178,8 +138,10 @@ class BucketEndpointArnMiddleware
 
     private function getPartitionSuffix(ArnInterface $arn)
     {
-        $partition = $this->partitionEndpointProvider
-            ->getPartition($arn->getRegion(), $arn->getService());
+        $partition = $this->partitionProvider->getPartition(
+            $arn->getRegion(),
+            $arn->getService()
+        );
         return $partition->getDnsSuffix();
     }
 
@@ -191,5 +153,72 @@ class BucketEndpointArnMiddleware
             return true;
         }
         return false;
+    }
+
+    private function validateArn($arn)
+    {
+        if ($arn instanceof AccessPointArn) {
+            // Accelerate is not supported with access points
+            if (!empty($this->config['accelerate'])) {
+                throw new UnresolvedEndpointException(
+                    'Accelerate is currently not supported with'
+                    . ' access points. Please disable accelerate'
+                    . ' or do not supply an access point ARN.'
+                );
+            }
+
+            // Path-style is not supported with access points
+            if (!empty($this->config['path_style'])) {
+                throw new UnresolvedEndpointException(
+                    'Path-style addressing is currently not'
+                    . ' supported with access points. Please'
+                    . ' disable path-style or do not supply an'
+                    . ' access point ARN.'
+                );
+            }
+
+            // Ensure ARN region matches client region unless
+            // configured for using ARN region over client region
+            if (strtolower($this->region)
+                !== strtolower($arn->getRegion())
+            ) {
+                if (!empty($this->config['use_arn_region'])
+                    && $this->config['use_arn_region']->isUseArnRegion()
+                ) {
+                    $clientPart = $this->partitionProvider->getPartition(
+                        $this->region,
+                        's3'
+                    );
+                    $arnPart = $this->partitionProvider->getPartition(
+                        $arn->getRegion(),
+                        's3'
+                    );
+
+                    if ($arn->getPartition() !== $clientPart->getName()) {
+                        throw new InvalidRegionException('The'
+                            . ' supplied ARN partition does not'
+                            . " match the client's partition.");
+                    }
+
+                    if ($clientPart->getName() !== $arnPart->getName()) {
+                        throw new InvalidRegionException('The'
+                            . ' corresponding partition for the'
+                            . ' supplied ARN region does not match'
+                            . " the client's partition.");
+                    }
+
+                    // Update signing region if configured to do so
+                    $cmd['@context']['signing_region'] = $arn->getRegion();
+                } else {
+                    throw new InvalidRegionException('The region'
+                        . " specified in the ARN (" . $arn->getRegion()
+                        . ") does not match the client region ("
+                        . "{$this->region}).");
+                }
+            }
+        } else {
+            throw new InvalidArnException('Provided ARN was not'
+                . ' a valid S3 access point ARN');
+        }
     }
 }
