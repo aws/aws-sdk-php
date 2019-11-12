@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.116.0 - 2019-11-12
 
 * `Aws\CodePipeline` - AWS CodePipeline now supports the use of variables in action configuration.
 * `Aws\DynamoDB` - Amazon DynamoDB enables you to restore your data to a new DynamoDB table using a point-in-time or on-demand backup. You now can modify the settings on the new restored table. Specifically, you can exclude some or all of the local and global secondary indexes from being created with the restored table. In addition, you can change the billing mode and provisioned capacity settings.
