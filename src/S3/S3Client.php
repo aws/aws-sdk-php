@@ -262,6 +262,15 @@ class S3Client extends AwsClient implements S3ClientInterface
      *   interacting with CNAME endpoints.
      * - calculate_md5: (bool) Set to false to disable calculating an MD5
      *   for all Amazon S3 signed uploads.
+     * - s3_us_east_1_regional_endpoint:
+     *   (Aws\S3\RegionalEndpoint\ConfigurationInterface|Aws\CacheInterface\|callable|string|array)
+     *   Specifies whether to use regional or legacy endpoints for the us-east-1
+     *   region. Provide an Aws\S3\RegionalEndpoint\ConfigurationInterface object, an
+     *   instance of Aws\CacheInterface, a callable configuration provider used
+     *   to create endpoint configuration, a string value of `legacy` or
+     *   `regional`, or an associative array with the following keys:
+     *   endpoint_types: (string)  Set to `legacy` or `regional`, defaults to
+     *   `legacy`
      * - use_accelerate_endpoint: (bool) Set to true to send requests to an S3
      *   Accelerate endpoint by default. Can be enabled or disabled on
      *   individual operations by setting '@use_accelerate_endpoint' to true or
