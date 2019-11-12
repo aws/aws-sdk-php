@@ -75,7 +75,6 @@ class AbstractConfigurationProviderTest extends TestCase
 
     public function testsPersistsToCache()
     {
-        $provider = $this->provider;
         $cache = new LruArrayCache();
         $expected = new Result(['expected_key' => 'expected_value']);
 
@@ -98,7 +97,7 @@ class AbstractConfigurationProviderTest extends TestCase
         for ($i = 0; $i < 10; $i++) {
             /** @var ResultInterface $result */
             $result = call_user_func(
-                call_user_func([$provider, 'cache'], $volatileProvider, $cache)
+                call_user_func([$this->provider, 'cache'], $volatileProvider, $cache)
             )->wait();
         }
 
