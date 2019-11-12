@@ -41,8 +41,7 @@ class AbstractConfigurationProviderTest extends TestCase
             $called++;
             return Promise\promise_for($expected);
         };
-        $provider = $this->provider;
-        $p = $provider::memoize($f);
+        $p = call_user_func([$this->provider, 'memoize'], $f);
         $this->assertSame($expected, $p()->wait());
         $this->assertEquals(1, $called);
         $this->assertSame($expected, $p()->wait());
@@ -61,8 +60,7 @@ class AbstractConfigurationProviderTest extends TestCase
         $c = function () {
             $this->fail('Should not have called');
         };
-        $provider = $this->provider;
-        $chained = $provider::chain($a, $b, $c);
+        $chained = call_user_func([$this->provider, 'chain'], $a, $b, $c);
         $result = $chained()->wait();
         $this->assertSame($expected, $result);
     }
@@ -72,8 +70,7 @@ class AbstractConfigurationProviderTest extends TestCase
      */
     public function testChainThrowsExceptionOnEmptyArgs()
     {
-        $provider = $this->provider;
-        $provider::chain();
+        call_user_func([$this->provider, 'chain']);
     }
 
     public function testsPersistsToCache()
@@ -101,7 +98,7 @@ class AbstractConfigurationProviderTest extends TestCase
         for ($i = 0; $i < 10; $i++) {
             /** @var ResultInterface $result */
             $result = call_user_func(
-                $provider::cache($volatileProvider, $cache)
+                call_user_func([$provider, 'cache'], $volatileProvider, $cache)
             )->wait();
         }
 
