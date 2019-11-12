@@ -193,58 +193,6 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public function testGetsHomeDirectoryForWindowsUsers()
-    {
-        putenv('HOME=');
-        putenv('HOMEDRIVE=C:');
-        putenv('HOMEPATH=\\My\\Home');
-        $ref = new \ReflectionClass('Aws\S3\RegionalEndpoint\ConfigurationProvider');
-        $meth = $ref->getMethod('getHomeDir');
-        $meth->setAccessible(true);
-        $this->assertEquals('C:\\My\\Home', $meth->invoke(null));
-    }
-
-    public function testMemoizes()
-    {
-        $called = 0;
-        $expected = new Configuration('legacy');
-        $f = function () use (&$called, $expected) {
-            $called++;
-            return Promise\promise_for($expected);
-        };
-        $p = ConfigurationProvider::memoize($f);
-        $this->assertSame($expected, $p()->wait());
-        $this->assertEquals(1, $called);
-        $this->assertSame($expected, $p()->wait());
-        $this->assertEquals(1, $called);
-    }
-
-    public function testChainsConfiguration()
-    {
-        $dir = $this->clearEnv();
-        $expected = new Configuration('regional');
-        file_put_contents($dir . '/config', $this->iniFile);
-        putenv('HOME=' . dirname($dir));
-        $a = ConfigurationProvider::ini('custom', null);
-        $b = ConfigurationProvider::ini();
-        $c = function () {
-            $this->fail('Should not have called');
-        };
-        $provider = ConfigurationProvider::chain($a, $b, $c);
-        /** @var ConfigurationInterface $result */
-        $result = $provider()->wait();
-        $this->assertSame($expected->toArray(), $result->toArray());
-        unlink($dir . '/config');
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testChainThrowsExceptionOnEmptyArgs()
-    {
-        ConfigurationProvider::chain();
-    }
-
     public function testSelectsEnvironmentOverIniConfiguration()
     {
         $dir = $this->clearEnv();
@@ -259,34 +207,6 @@ EOT;
         $result = $provider()->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
-    }
-
-    public function testsPersistsToCache()
-    {
-        $cache = new LruArrayCache();
-        $expected = new Configuration('regional');
-
-        $timesCalled = 0;
-        $volatileProvider = function () use ($expected, &$timesCalled) {
-            if (0 === $timesCalled) {
-                ++$timesCalled;
-                return Promise\promise_for($expected);
-            }
-
-            throw new \BadFunctionCallException('I was called too many times!');
-        };
-
-        for ($i = 0; $i < 10; $i++) {
-            /** @var ConfigurationInterface $result */
-            $result = call_user_func(
-                ConfigurationProvider::cache($volatileProvider, $cache)
-            )
-                ->wait();
-        }
-
-        $this->assertEquals(1, $timesCalled);
-        $this->assertCount(1, $cache);
-        $this->assertSame($expected->toArray(), $result->toArray());
     }
 
     public function testCreatesFromCache()
