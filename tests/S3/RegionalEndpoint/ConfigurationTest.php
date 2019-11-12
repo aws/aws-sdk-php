@@ -1,6 +1,6 @@
 <?php
 
-namespace Aws\Test\S3\RegionalEndpoints;
+namespace Aws\Test\S3\RegionalEndpoint;
 
 use Aws\Sts\RegionalEndpoints\Configuration;
 use PHPUnit\Framework\TestCase;
