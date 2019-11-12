@@ -7,6 +7,40 @@ use Aws\ConfigurationProviderInterface;
 use Aws\S3\RegionalEndpoint\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 
+/**
+ * A configuration provider is a function that returns a promise that is
+ * fulfilled with a {@see \Aws\S3\RegionalEndpoint\ConfigurationInterface}
+ * or rejected with an {@see \Aws\S3\RegionalEndpoint\Exception\ConfigurationException}.
+ *
+ * <code>
+ * use Aws\S3\RegionalEndpoint\ConfigurationProvider;
+ * $provider = ConfigurationProvider::defaultProvider();
+ * // Returns a ConfigurationInterface or throws.
+ * $config = $provider()->wait();
+ * </code>
+ *
+ * Configuration providers can be composed to create configuration using
+ * conditional logic that can create different configurations in different
+ * environments. You can compose multiple providers into a single provider using
+ * {@see \Aws\S3\RegionalEndpoint\ConfigurationProvider::chain}. This function
+ * accepts providers as variadic arguments and returns a new function that will
+ * invoke each provider until a successful configuration is returned.
+ *
+ * <code>
+ * // First try an INI file at this location.
+ * $a = ConfigurationProvider::ini(null, '/path/to/file.ini');
+ * // Then try an INI file at this location.
+ * $b = ConfigurationProvider::ini(null, '/path/to/other-file.ini');
+ * // Then try loading from environment variables.
+ * $c = ConfigurationProvider::env();
+ * // Combine the three providers together.
+ * $composed = ConfigurationProvider::chain($a, $b, $c);
+ * // Returns a promise that is fulfilled with a configuration or throws.
+ * $promise = $composed();
+ * // Wait on the configuration to resolve.
+ * $config = $promise->wait();
+ * </code>
+ */
 class ConfigurationProvider extends AbstractConfigurationProvider
     implements ConfigurationProviderInterface
 {
