@@ -219,4 +219,25 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         );
         $s3->execute($command);
     }
+
+    /**
+     * @expectedException \Aws\Exception\UnresolvedEndpointException
+     * @expectedExceptionMessage A custom endpoint has been supplied along with an access point ARN
+     */
+    public function testThrowsForEndpointAndArnSet()
+    {
+        $s3 = $this->getTestClient(
+            's3',
+            ['region' => 'us-west-2', 'endpoint' => 'https://foo.com']
+        );
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $s3->execute($command);
+    }
 }

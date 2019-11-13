@@ -185,10 +185,18 @@ class BucketEndpointArnMiddleware
             // Path-style is not supported with access points
             if (!empty($this->config['path_style'])) {
                 throw new UnresolvedEndpointException(
-                    'Path-style addressing is currently not'
-                    . ' supported with access points. Please'
-                    . ' disable path-style or do not supply an'
-                    . ' access point ARN.'
+                    'Path-style addressing is currently not supported with'
+                    . ' access points. Please disable path-style or do not'
+                    . ' supply an access point ARN.'
+                );
+            }
+
+            // Custom endpoint is not supported with access points
+            if (!is_null($this->config['endpoint'])) {
+                throw new UnresolvedEndpointException(
+                    'A custom endpoint has been supplied along with an access'
+                    . ' point ARN, and these are not compatible with each other.'
+                    . ' Please only use one or the other.'
                 );
             }
 
