@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.117.0 - 2019-11-13
 
 * `Aws\CloudSearch` - Amazon CloudSearch domains let you require that all traffic to the domain arrive over HTTPS. This security feature helps you block clients that send unencrypted requests to the domain.
 * `Aws\Credentials` - Adds extra catch block in AssumeRoleWithWebIdentityCredentialProvider to account for non-AWS exceptions.
