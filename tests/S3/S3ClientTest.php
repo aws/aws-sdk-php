@@ -5,6 +5,7 @@ use Aws\Command;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\AwsException;
 use Aws\LruArrayCache;
+use Aws\Middleware;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\RegionalEndpoint\Configuration;
@@ -1227,5 +1228,107 @@ EOXML;
         ]);
         $uri = new Uri($endpoint['endpoint']);
         $this->assertEquals($uri->getHost(), $client->getEndpoint()->getHost());
+    }
+
+    /**
+     * Tests that S3 client configuration options lead to correct endpoints
+     *
+     * @dataProvider optionsToEndpointsCases
+     * @param $options
+     * @param $host
+     */
+    public function testResolvesOptionsToProperEndpoints($options, $host)
+    {
+        $client = new S3Client($options);
+        $client->getHandlerList()->appendSign(
+            Middleware::tap(function ($cmd, $req) use ($host) {
+                $this->assertEquals($host, $req->getUri()->getHost());
+            })
+        );
+        $client->listBuckets();
+    }
+
+    public function optionsToEndpointsCases()
+    {
+        $handler = function ($cmd, $req) {
+            return Promise\promise_for(new Result([]));
+        };
+        $data = json_decode(
+            file_get_contents(__DIR__ . '/../Endpoint/fixtures/s3_us_east_1_regional_endpoint.json'),
+            true
+        );
+        $regionalProvider = new PartitionEndpointProvider(
+            $data['partitions'],
+            'aws',
+            [
+                's3_us_east_1_regional_endpoint' => 'regional',
+            ]
+        );
+        $legacyProvider = new PartitionEndpointProvider(
+            $data['partitions'],
+            'aws',
+            [
+                's3_us_east_1_regional_endpoint' => 'legacy',
+            ]
+        );
+
+        return [
+            [
+                [
+                    'region' => 'us-east-1',
+                    'version' => 'latest',
+                    'handler' => $handler,
+                    'endpoint_provider' => $legacyProvider,
+                ],
+                's3.amazonaws.com'
+            ],
+            [
+                [
+                    'region' => 'us-east-1',
+                    'version' => 'latest',
+                    'handler' => $handler,
+                    'endpoint_provider' => $regionalProvider,
+                ],
+                's3.us-east-1.amazonaws.com'
+            ],
+            [
+                [
+                    'region' => 'us-west-2',
+                    'version' => 'latest',
+                    'handler' => $handler,
+                    'endpoint_provider' => $legacyProvider,
+                ],
+                's3.us-west-2.amazonaws.com'
+            ],
+            [
+                [
+                    'region' => 'us-west-2',
+                    'version' => 'latest',
+                    'handler' => $handler,
+                    'endpoint_provider' => $regionalProvider,
+                ],
+                's3.us-west-2.amazonaws.com'
+            ],
+            [
+                [
+                    'region' => 'us-east-1',
+                    'version' => 'latest',
+                    'handler' => $handler,
+                    'endpoint_provider' => $legacyProvider,
+                    'use_dual_stack_endpoint' => true,
+                ],
+                's3.dualstack.us-east-1.amazonaws.com'
+            ],
+            [
+                [
+                    'region' => 'us-east-1',
+                    'version' => 'latest',
+                    'handler' => $handler,
+                    'endpoint_provider' => $regionalProvider,
+                    'use_dual_stack_endpoint' => true,
+                ],
+                's3.dualstack.us-east-1.amazonaws.com'
+            ],
+        ];
     }
 }
