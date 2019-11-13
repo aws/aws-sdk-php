@@ -22,6 +22,8 @@ class ConfigurationProviderTest extends TestCase
 s3_us_east_1_regional_endpoint = regional
 [default]
 s3_us_east_1_regional_endpoint = legacy
+[casetest]
+s3_us_east_1_regional_endpoint = ReGiOnAl
 EOT;
 
     public static function setUpBeforeClass()
@@ -111,6 +113,19 @@ EOT;
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         putenv(ConfigurationProvider::ENV_PROFILE . '=custom');
+        /** @var ConfigurationInterface $result */
+        $result = call_user_func(ConfigurationProvider::ini())->wait();
+        $this->assertEquals($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
+    }
+
+    public function testCreatesFromNonLowercaseValue()
+    {
+        $dir = $this->clearEnv();
+        $expected = new Configuration('regional');
+        file_put_contents($dir . '/config', $this->iniFile);
+        putenv('HOME=' . dirname($dir));
+        putenv(ConfigurationProvider::ENV_PROFILE . '=casetest');
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::ini())->wait();
         $this->assertEquals($expected->toArray(), $result->toArray());

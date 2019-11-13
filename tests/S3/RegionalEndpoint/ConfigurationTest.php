@@ -16,6 +16,12 @@ class ConfigurationTest extends TestCase
         $this->assertEquals('regional', $config->getEndpointsType());
     }
 
+    public function testAcceptsNonLowercase()
+    {
+        $config = new Configuration('rEgIoNaL');
+        $this->assertEquals('regional', $config->getEndpointsType());
+    }
+
     public function testToArray()
     {
         $config = new Configuration('regional');
