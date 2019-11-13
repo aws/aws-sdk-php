@@ -164,7 +164,7 @@ class BucketEndpointArnMiddleware
     }
 
     /**
-     * Validates an ARN, returning a partition object corresponding to ARN
+     * Validates an ARN, returning a partition object corresponding to the ARN
      * if successful
      *
      * @param $arn
@@ -176,10 +176,9 @@ class BucketEndpointArnMiddleware
             // Accelerate is not supported with access points
             if (!empty($this->config['accelerate'])) {
                 throw new UnresolvedEndpointException(
-                    'Accelerate is currently not supported with'
-                    . ' access points. Please disable accelerate'
-                    . ' or do not supply an access point ARN.'
-                );
+                    'Accelerate is currently not supported with access points.'
+                    . ' Please disable accelerate or do not supply an access'
+                    . ' point ARN.');
             }
 
             // Path-style is not supported with access points
@@ -187,8 +186,7 @@ class BucketEndpointArnMiddleware
                 throw new UnresolvedEndpointException(
                     'Path-style addressing is currently not supported with'
                     . ' access points. Please disable path-style or do not'
-                    . ' supply an access point ARN.'
-                );
+                    . ' supply an access point ARN.');
             }
 
             // Custom endpoint is not supported with access points
@@ -196,8 +194,7 @@ class BucketEndpointArnMiddleware
                 throw new UnresolvedEndpointException(
                     'A custom endpoint has been supplied along with an access'
                     . ' point ARN, and these are not compatible with each other.'
-                    . ' Please only use one or the other.'
-                );
+                    . ' Please only use one or the other.');
             }
 
             // Verify that the ARN partition is valid
@@ -210,15 +207,13 @@ class BucketEndpointArnMiddleware
                 's3'
             );
             if ($arn->getPartition() !== $clientPart->getName()) {
-                throw new InvalidRegionException('The'
-                    . ' supplied ARN partition does not'
-                    . " match the client's partition.");
+                throw new InvalidRegionException('The supplied ARN partition'
+                    . " does not match the client's partition.");
             }
             if ($clientPart->getName() !== $arnPart->getName()) {
-                throw new InvalidRegionException('The'
-                    . ' corresponding partition for the'
-                    . ' supplied ARN region does not match'
-                    . " the client's partition.");
+                throw new InvalidRegionException('The corresponding partition'
+                    . ' for the supplied ARN region does not match the'
+                    . " client's partition.");
             }
 
             // Ensure ARN region matches client region unless

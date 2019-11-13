@@ -240,4 +240,52 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         );
         $s3->execute($command);
     }
+
+    /**
+     * @expectedException \Aws\Exception\InvalidRegionException
+     * @expectedExceptionMessage The supplied ARN partition does not match the client's partition
+     */
+    public function testThrowsForNonmatchingPartition()
+    {
+        $s3 = $this->getTestClient(
+            's3',
+            [
+                'region' => 'cn-north-1',
+                's3_use_arn_region' => true,
+            ]
+        );
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $s3->execute($command);
+    }
+
+    /**
+     * @expectedException \Aws\Exception\InvalidRegionException
+     * @expectedExceptionMessage The corresponding partition for the supplied ARN region does not match the client's partition
+     */
+    public function testThrowsForNonmatchingCalculatedPartition()
+    {
+        $s3 = $this->getTestClient(
+            's3',
+            [
+                'region' => 'us-east-1',
+                's3_use_arn_region' => true,
+            ]
+        );
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3:cn-north-1:123456789012:accesspoint:myendpoint',
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $s3->execute($command);
+    }
 }
