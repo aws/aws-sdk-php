@@ -133,13 +133,15 @@ class BucketEndpointArnMiddleware
     ) {
         $host = $arn->getResourceId() . '-' . $arn->getAccountId()
             . '.s3-accesspoint';
-        if ($this->hasFips($req->getUri()->getHost())) {
-            $host .= '-fips';
-        }
         if (!empty($this->config['dual_stack'])) {
             $host .= '.dualstack';
         }
-        $host .= '.' . $arn->getRegion() . '.' . $this->getPartitionSuffix($arn);
+        if (!empty($this->config['use_arn_region']->isUseArnRegion())) {
+            $region = $arn->getRegion();
+        } else {
+            $region = $this->region;
+        }
+        $host .= '.' . $region . '.' . $this->getPartitionSuffix($arn);
 
         return $host;
     }
@@ -153,10 +155,18 @@ class BucketEndpointArnMiddleware
         return $partition->getDnsSuffix();
     }
 
-    private function hasFips($host)
+    private function isMatchingSigningRegion($arnRegion, $clientRegion)
     {
-        if (strpos($host, 'fips-') !== false
-            || strpos($host, '-fips') !== false
+        $arnRegion = strtolower($arnRegion);
+        $clientRegion = strtolower($clientRegion);
+        $clientRegion = str_replace(['fips-', '-fips'], ['', ''], $clientRegion);
+        if ($arnRegion === $clientRegion) {
+            return true;
+        }
+        $partition = PartitionEndpointProvider::defaultProvider()->getPartition($clientRegion, 's3');
+        $data = $partition->toArray();
+        if (isset($data['services']['s3']['endpoints'][$clientRegion]['credentialScope']['region'])
+            && $data['services']['s3']['endpoints'][$clientRegion]['credentialScope']['region'] === $arnRegion
         ) {
             return true;
         }
@@ -218,9 +228,7 @@ class BucketEndpointArnMiddleware
 
             // Ensure ARN region matches client region unless
             // configured for using ARN region over client region
-            if (strtolower($this->region)
-                !== strtolower($arn->getRegion())
-            ) {
+            if (!($this->isMatchingSigningRegion($arn->getRegion(), $this->region))) {
                 if (empty($this->config['use_arn_region'])
                     || !($this->config['use_arn_region']->isUseArnRegion())
                 ) {
