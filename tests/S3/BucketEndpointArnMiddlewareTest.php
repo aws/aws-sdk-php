@@ -161,16 +161,6 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
                 [
                     'region' => 'fips-us-gov-east-1',
-                    'use_arn_region' => false,
-                ],
-                'myendpoint-123456789012.s3-accesspoint.fips-us-gov-east-1.amazonaws.com',
-                'Bar/Baz',
-                'us-gov-east-1',
-            ],
-            [
-                'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
-                [
-                    'region' => 'fips-us-gov-east-1',
                     'use_arn_region' => true,
                 ],
                 'myendpoint-123456789012.s3-accesspoint.us-gov-east-1.amazonaws.com',

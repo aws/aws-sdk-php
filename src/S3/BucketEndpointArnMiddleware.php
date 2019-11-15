@@ -103,9 +103,14 @@ class BucketEndpointArnMiddleware
                             $req->getUri()->withHost($host)->withPath($path)
                         );
 
-                        // Update signing region based on ARN data
+                        // Update signing region based on ARN data if configured to do so
+                        if ($this->config['use_arn_region']->isUseArnRegion()) {
+                            $region = $arn->getRegion();
+                        } else {
+                            $region = $this->region;
+                        }
                         $endpointData = $partition([
-                            'region' => $arn->getRegion(),
+                            'region' => $region,
                             'service' => $arn->getService()
                         ]);
                         $cmd['@context']['signing_region'] = $endpointData['signingRegion'];
@@ -155,6 +160,16 @@ class BucketEndpointArnMiddleware
         return $partition->getDnsSuffix();
     }
 
+    private function getSigningRegion($region)
+    {
+        $partition = PartitionEndpointProvider::defaultProvider()->getPartition($region, 's3');
+        $data = $partition->toArray();
+        if (isset($data['services']['s3']['endpoints'][$region]['credentialScope']['region'])) {
+            return $data['services']['s3']['endpoints'][$region]['credentialScope']['region'];
+        }
+        return $region;
+    }
+
     private function isMatchingSigningRegion($arnRegion, $clientRegion)
     {
         $arnRegion = strtolower($arnRegion);
@@ -162,11 +177,7 @@ class BucketEndpointArnMiddleware
         if ($arnRegion === $clientRegion) {
             return true;
         }
-        $partition = PartitionEndpointProvider::defaultProvider()->getPartition($clientRegion, 's3');
-        $data = $partition->toArray();
-        if (isset($data['services']['s3']['endpoints'][$clientRegion]['credentialScope']['region'])
-            && $data['services']['s3']['endpoints'][$clientRegion]['credentialScope']['region'] === $arnRegion
-        ) {
+        if ($this->getSigningRegion($clientRegion) === $arnRegion) {
             return true;
         }
         return false;
