@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.117.2 - 2019-11-15
 
 * `Aws\Chime` - This release adds support for Chime Room Management APIs
 * `Aws\CloudWatchLogs` - Documentation updates for logs
