@@ -90,7 +90,8 @@ class BucketEndpointArnMiddlewareTest extends TestCase
             [
                 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
                 [
-                    'region' => 'us-east-1',
+                    'region' => 's3-external-1',
+                    'use_arn_region' => true,
                 ],
                 'myendpoint-123456789012.s3-accesspoint.us-east-1.amazonaws.com',
                 'Bar/Baz',
@@ -100,6 +101,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
                 [
                     'region' => 's3-external-1',
+                    'use_arn_region' => false,
                 ],
                 'myendpoint-123456789012.s3-accesspoint.s3-external-1.amazonaws.com',
                 'Bar/Baz',
@@ -116,14 +118,75 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'us-west-2',
             ],
             [
-                'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
                 [
-                    'region' => 'us-west-2',
+                    'region' => 'cn-north-1',
+                    'use_arn_region' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint.cn-north-1.amazonaws.com.cn',
+                'Bar/Baz',
+                'cn-north-1',
+            ],
+            [
+                'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'cn-north-1',
                     'use_arn_region' => false,
                 ],
-                'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
+                'myendpoint-123456789012.s3-accesspoint.cn-north-1.amazonaws.com.cn',
                 'Bar/Baz',
-                'us-west-2',
+                'cn-north-1',
+            ],
+            [
+                'arn:aws-cn:s3:cn-northwest-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'cn-north-1',
+                    'use_arn_region' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint.cn-northwest-1.amazonaws.com.cn',
+                'Bar/Baz',
+                'cn-northwest-1',
+            ],
+            [
+                'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint.us-gov-east-1.amazonaws.com',
+                'Bar/Baz',
+                'us-gov-east-1',
+            ],
+            [
+                'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => false,
+                ],
+                'myendpoint-123456789012.s3-accesspoint.fips-us-gov-east-1.amazonaws.com',
+                'Bar/Baz',
+                'us-gov-east-1',
+            ],
+            [
+                'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint.us-gov-east-1.amazonaws.com',
+                'Bar/Baz',
+                'us-gov-east-1',
+            ],
+            [
+                'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true,
+                    'use_dual_stack_endpoint' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint.dualstack.us-gov-east-1.amazonaws.com',
+                'Bar/Baz',
+                'us-gov-east-1',
             ],
         ];
     }
@@ -260,7 +323,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         $s3 = $this->getTestClient(
             's3',
             [
-                'region' => 'cn-north-1',
+                'region' => 'us-west-2',
                 's3_use_arn_region' => true,
             ]
         );
@@ -268,7 +331,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         $command = $s3->getCommand(
             'GetObject',
             [
-                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                'Bucket' => 'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
                 'Key' => 'Bar/Baz',
             ]
         );

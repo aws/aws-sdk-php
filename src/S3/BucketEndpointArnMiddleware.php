@@ -158,8 +158,7 @@ class BucketEndpointArnMiddleware
     private function isMatchingSigningRegion($arnRegion, $clientRegion)
     {
         $arnRegion = strtolower($arnRegion);
-        $clientRegion = strtolower($clientRegion);
-        $clientRegion = str_replace(['fips-', '-fips'], ['', ''], $clientRegion);
+        $clientRegion = $this->stripPseudoRegions(strtolower($clientRegion));
         if ($arnRegion === $clientRegion) {
             return true;
         }
@@ -171,6 +170,11 @@ class BucketEndpointArnMiddleware
             return true;
         }
         return false;
+    }
+
+    private function stripPseudoRegions($region)
+    {
+        return str_replace(['fips-', '-fips'], ['', ''], $region);
     }
 
     /**
@@ -207,7 +211,7 @@ class BucketEndpointArnMiddleware
                     . ' Please only use one or the other.');
             }
 
-            // Verify that the ARN partition is valid
+            // Get partitions for ARN and client region
             $arnPart = $this->partitionProvider->getPartition(
                 $arn->getRegion(),
                 's3'
@@ -216,6 +220,16 @@ class BucketEndpointArnMiddleware
                 $this->region,
                 's3'
             );
+
+            // If client partition not found, try removing pseudo-region qualifiers
+            if (!($clientPart->isRegionMatch($this->region, 's3'))) {
+                $clientPart = $this->partitionProvider->getPartition(
+                    $this->stripPseudoRegions($this->region),
+                    's3'
+                );
+            }
+
+            // Verify that the partition matches for supplied partition and region
             if ($arn->getPartition() !== $clientPart->getName()) {
                 throw new InvalidRegionException('The supplied ARN partition'
                     . " does not match the client's partition.");

@@ -37,16 +37,42 @@ class ArnTest extends TestCase
         return [
             // All components
             [
-                'arn:aws:foo:us-west-2:123456789012:bar_type:baz_id',
+                'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
                 [
                     'arn' => 'arn',
                     'partition' => 'aws',
-                    'service' => 'foo',
+                    'service' => 's3',
                     'region' => 'us-west-2',
                     'account_id' => 123456789012,
-                    'resource' => 'bar_type:baz_id',
+                    'resource' => 'accesspoint:myendpoint',
                 ],
-                'arn:aws:foo:us-west-2:123456789012:bar_type:baz_id',
+                'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+            ],
+            // All components, aws-cn
+            [
+                'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws-cn',
+                    'service' => 's3',
+                    'region' => 'cn-north-1',
+                    'account_id' => 123456789012,
+                    'resource' => 'accesspoint:myendpoint',
+                ],
+                'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
+            ],
+            // All components, SNS
+            [
+                'arn:aws:sns:us-west-2:123456789012:myTopic',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 'sns',
+                    'region' => 'us-west-2',
+                    'account_id' => 123456789012,
+                    'resource' => 'myTopic',
+                ],
+                'arn:aws:sns:us-west-2:123456789012:myTopic',
             ],
             // 6 components
             [
