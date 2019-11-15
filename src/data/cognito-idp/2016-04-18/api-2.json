@@ -2571,7 +2571,8 @@
         "REFRESH_TOKEN",
         "CUSTOM_AUTH",
         "ADMIN_NO_SRP_AUTH",
-        "USER_PASSWORD_AUTH"
+        "USER_PASSWORD_AUTH",
+        "ADMIN_USER_PASSWORD_AUTH"
       ]
     },
     "AuthParametersType":{
@@ -2960,7 +2961,8 @@
         "AllowedOAuthFlows":{"shape":"OAuthFlowsType"},
         "AllowedOAuthScopes":{"shape":"ScopeListType"},
         "AllowedOAuthFlowsUserPoolClient":{"shape":"BooleanType"},
-        "AnalyticsConfiguration":{"shape":"AnalyticsConfigurationType"}
+        "AnalyticsConfiguration":{"shape":"AnalyticsConfigurationType"},
+        "PreventUserExistenceErrors":{"shape":"PreventUserExistenceErrorTypes"}
       }
     },
     "CreateUserPoolClientResponse":{
@@ -3357,7 +3359,9 @@
       "members":{
         "SourceArn":{"shape":"ArnType"},
         "ReplyToEmailAddress":{"shape":"EmailAddressType"},
-        "EmailSendingAccount":{"shape":"EmailSendingAccountType"}
+        "EmailSendingAccount":{"shape":"EmailSendingAccountType"},
+        "From":{"shape":"StringType"},
+        "ConfigurationSet":{"shape":"SESConfigurationSet"}
       }
     },
     "EmailNotificationBodyType":{
@@ -3488,7 +3492,12 @@
       "enum":[
         "ADMIN_NO_SRP_AUTH",
         "CUSTOM_AUTH_FLOW_ONLY",
-        "USER_PASSWORD_AUTH"
+        "USER_PASSWORD_AUTH",
+        "ALLOW_ADMIN_USER_PASSWORD_AUTH",
+        "ALLOW_CUSTOM_AUTH",
+        "ALLOW_USER_PASSWORD_AUTH",
+        "ALLOW_USER_SRP_AUTH",
+        "ALLOW_REFRESH_TOKEN_AUTH"
       ]
     },
     "FeedbackValueType":{
@@ -4218,6 +4227,13 @@
       },
       "exception":true
     },
+    "PreventUserExistenceErrorTypes":{
+      "type":"string",
+      "enum":[
+        "LEGACY",
+        "ENABLED"
+      ]
+    },
     "ProviderDescription":{
       "type":"structure",
       "members":{
@@ -4423,6 +4439,12 @@
       "max":1024,
       "min":3,
       "pattern":"^[0-9A-Za-z\\.\\-_]*(?<!\\.)$"
+    },
+    "SESConfigurationSet":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_-]+$"
     },
     "SMSMfaSettingsType":{
       "type":"structure",
@@ -4961,7 +4983,8 @@
         "AllowedOAuthFlows":{"shape":"OAuthFlowsType"},
         "AllowedOAuthScopes":{"shape":"ScopeListType"},
         "AllowedOAuthFlowsUserPoolClient":{"shape":"BooleanType"},
-        "AnalyticsConfiguration":{"shape":"AnalyticsConfigurationType"}
+        "AnalyticsConfiguration":{"shape":"AnalyticsConfigurationType"},
+        "PreventUserExistenceErrors":{"shape":"PreventUserExistenceErrorTypes"}
       }
     },
     "UpdateUserPoolClientResponse":{
@@ -5156,7 +5179,8 @@
           "shape":"BooleanType",
           "box":true
         },
-        "AnalyticsConfiguration":{"shape":"AnalyticsConfigurationType"}
+        "AnalyticsConfiguration":{"shape":"AnalyticsConfigurationType"},
+        "PreventUserExistenceErrors":{"shape":"PreventUserExistenceErrorTypes"}
       }
     },
     "UserPoolDescriptionType":{

@@ -52,7 +52,7 @@
     "DescribeMaintenanceWindows": "<p>Retrieves the maintenance windows in an AWS account.</p>",
     "DescribeMaintenanceWindowsForTarget": "<p>Retrieves information about the maintenance window targets or tasks that an instance is associated with.</p>",
     "DescribeOpsItems": "<p>Query a set of OpsItems. You must have permission in AWS Identity and Access Management (IAM) to query a list of OpsItems. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-getting-started.html\">Getting Started with OpsCenter</a> in the <i>AWS Systems Manager User Guide</i>.</p> <p>Operations engineers and IT professionals use OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their AWS resources. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html\">AWS Systems Manager OpsCenter</a> in the <i>AWS Systems Manager User Guide</i>. </p>",
-    "DescribeParameters": "<p>Get information about a parameter.</p> <p>Request results are returned on a best-effort basis. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of <code>MaxResults</code>. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a <code>NextToken</code>. You can specify the <code>NextToken</code> in a subsequent call to get the next set of results.</p>",
+    "DescribeParameters": "<p>Get information about a parameter.</p> <note> <p>Request results are returned on a best-effort basis. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of <code>MaxResults</code>. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a <code>NextToken</code>. You can specify the <code>NextToken</code> in a subsequent call to get the next set of results.</p> </note>",
     "DescribePatchBaselines": "<p>Lists the patch baselines in your AWS account.</p>",
     "DescribePatchGroupState": "<p>Returns high-level aggregated patch compliance state for a patch group.</p>",
     "DescribePatchGroups": "<p>Lists all patch groups that have been registered with patch baselines.</p>",
@@ -76,7 +76,7 @@
     "GetParameter": "<p>Get information about a parameter by using the parameter name. Don't confuse this API action with the <a>GetParameters</a> API action.</p>",
     "GetParameterHistory": "<p>Query a list of all parameters used by the AWS account.</p>",
     "GetParameters": "<p>Get details of a parameter. Don't confuse this API action with the <a>GetParameter</a> API action.</p>",
-    "GetParametersByPath": "<p>Retrieve parameters in a specific hierarchy. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-working.html\">Working with Systems Manager Parameters</a> in the <i>AWS Systems Manager User Guide</i>. </p> <p>Request results are returned on a best-effort basis. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of <code>MaxResults</code>. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a <code>NextToken</code>. You can specify the <code>NextToken</code> in a subsequent call to get the next set of results.</p> <note> <p>This API action doesn't support filtering by tags. </p> </note>",
+    "GetParametersByPath": "<p>Retrieve information about one or more parameters in a specific hierarchy. </p> <note> <p>Request results are returned on a best-effort basis. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of <code>MaxResults</code>. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a <code>NextToken</code>. You can specify the <code>NextToken</code> in a subsequent call to get the next set of results.</p> </note>",
     "GetPatchBaseline": "<p>Retrieves information about a patch baseline.</p>",
     "GetPatchBaselineForPatchGroup": "<p>Retrieves the patch baseline that should be used for the specified patch group.</p>",
     "GetServiceSetting": "<p> <code>ServiceSetting</code> is an account-level setting for an AWS service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an AWS service charges money to the account based on feature or service usage, then the AWS service team might create a default setting of \"false\". This means the user can't use this feature unless they change the setting to \"true\" and intentionally opt in for a paid feature.</p> <p>Services map a <code>SettingId</code> object to a setting value. AWS services teams define the default value for a <code>SettingId</code>. You can't create a new <code>SettingId</code>, but you can overwrite the default value if you have the <code>ssm:UpdateServiceSetting</code> permission for the setting. Use the <a>UpdateServiceSetting</a> API action to change the default setting. Or use the <a>ResetServiceSetting</a> to change the value back to the original value defined by the AWS service team.</p> <p>Query the current service setting for the account. </p>",
@@ -528,6 +528,12 @@
         "AttachmentContent$HashType": "<p>The hash algorithm used to calculate the hash value.</p>"
       }
     },
+    "AttachmentIdentifier": {
+      "base": null,
+      "refs": {
+        "AttachmentsSource$Name": "<p>The name of the document attachment file.</p>"
+      }
+    },
     "AttachmentInformation": {
       "base": "<p>An attribute of an attachment, such as the attachment name.</p>",
       "refs": {
@@ -554,7 +560,7 @@
       }
     },
     "AttachmentsSource": {
-      "base": "<p>A key and value pair that identifies the location of an attachment to a document.</p>",
+      "base": "<p>Identifying information about a document attachment, including the file name and a key-value pair that identifies the location of an attachment to a document.</p>",
       "refs": {
         "AttachmentsSourceList$member": null
       }
@@ -562,7 +568,7 @@
     "AttachmentsSourceKey": {
       "base": null,
       "refs": {
-        "AttachmentsSource$Key": "<p>The key of a key and value pair that identifies the location of an attachment to a document.</p>"
+        "AttachmentsSource$Key": "<p>The key of a key-value pair that identifies the location of an attachment to a document.</p>"
       }
     },
     "AttachmentsSourceList": {
@@ -581,7 +587,7 @@
     "AttachmentsSourceValues": {
       "base": null,
       "refs": {
-        "AttachmentsSource$Values": "<p>The URL of the location of a document attachment, such as the URL of an Amazon S3 bucket.</p>"
+        "AttachmentsSource$Values": "<p>The value of a key-value pair that identifies the location of an attachment to a document. The format is the URL of the location of a document attachment, such as the URL of an Amazon S3 bucket.</p>"
       }
     },
     "AttributeName": {
@@ -907,7 +913,7 @@
     "CommandFilterList": {
       "base": null,
       "refs": {
-        "ListCommandInvocationsRequest$Filters": "<p>(Optional) One or more filters. Use a filter to return a more specific list of results.</p>",
+        "ListCommandInvocationsRequest$Filters": "<p>(Optional) One or more filters. Use a filter to return a more specific list of results. Note that the <code>DocumentName</code> filter is not supported for ListCommandInvocations.</p>",
         "ListCommandsRequest$Filters": "<p>(Optional) One or more filters. Use a filter to return a more specific list of results. </p>"
       }
     },
@@ -2700,7 +2706,7 @@
         "ListCommandsRequest$InstanceId": "<p>(Optional) Lists commands issued against this instance ID.</p>",
         "ListInventoryEntriesRequest$InstanceId": "<p>The instance ID for which you want inventory information.</p>",
         "ListInventoryEntriesResult$InstanceId": "<p>The instance ID targeted by the request to query inventory information.</p>",
-        "PutInventoryRequest$InstanceId": "<p>One or more instance IDs where you want to add or update inventory items.</p>",
+        "PutInventoryRequest$InstanceId": "<p>An instance ID where you want to add or update inventory items.</p>",
         "UpdateAssociationStatusRequest$InstanceId": "<p>The ID of the instance.</p>"
       }
     },
@@ -4921,7 +4927,7 @@
       }
     },
     "ParameterStringFilter": {
-      "base": "<p>One or more filters. Use a filter to return a more specific list of results.</p> <note> <p>The <code>Name</code> and <code>Tier</code> filter keys can't be used with the <a>GetParametersByPath</a> API action. Also, the <code>Label</code> filter key can't be used with the <a>DescribeParameters</a> API action.</p> </note>",
+      "base": "<p>One or more filters. Use a filter to return a more specific list of results.</p> <important> <p>The <code>ParameterStringFilter</code> object is used by the <a>DescribeParameters</a> and <a>GetParametersByPath</a> API actions. However, not all of the pattern values listed for <code>Key</code> can be used with both actions.</p> <p>For <code>DescribeActions</code>, all of the listed patterns are valid, with the exception of <code>Label</code>.</p> <p>For <code>GetParametersByPath</code>, the following patterns listed for <code>Key</code> are not valid: <code>Name</code>, <code>Path</code>, and <code>Tier</code>.</p> <p>For examples of CLI commands demonstrating valid parameter filter constructions, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-search.html\">Searching for Systems Manager Parameters</a> in the <i>AWS Systems Manager User Guide</i>.</p> </important>",
       "refs": {
         "ParameterStringFilterList$member": null
       }
@@ -4936,7 +4942,7 @@
       "base": null,
       "refs": {
         "DescribeParametersRequest$ParameterFilters": "<p>Filters to limit the request results.</p>",
-        "GetParametersByPathRequest$ParameterFilters": "<p>Filters to limit the request results.</p> <note> <p>You can't filter using the parameter name.</p> </note>"
+        "GetParametersByPathRequest$ParameterFilters": "<p>Filters to limit the request results.</p>"
       }
     },
     "ParameterStringFilterValue": {
@@ -4954,7 +4960,7 @@
     "ParameterStringQueryOption": {
       "base": null,
       "refs": {
-        "ParameterStringFilter$Option": "<p>Valid options are Equals and BeginsWith. For Path filter, valid options are Recursive and OneLevel.</p>"
+        "ParameterStringFilter$Option": "<p>For all filters used with <a>DescribeParameters</a>, valid options include <code>Equals</code> and <code>BeginsWith</code>. The <code>Name</code> filter additionally supports the <code>Contains</code> option. (Exception: For filters using the key <code>Path</code>, valid options include <code>Recursive</code> and <code>OneLevel</code>.)</p> <p>For filters used with <a>GetParametersByPath</a>, valid options include <code>Equals</code> and <code>BeginsWith</code>. (Exception: For filters using the key <code>Label</code>, the only valid option is <code>Equals</code>.)</p>"
       }
     },
     "ParameterTier": {
@@ -5026,7 +5032,7 @@
     "ParametersFilterList": {
       "base": null,
       "refs": {
-        "DescribeParametersRequest$Filters": "<p>One or more filters. Use a filter to return a more specific list of results.</p>"
+        "DescribeParametersRequest$Filters": "<p>This data type is deprecated. Instead, use <code>ParameterFilters</code>.</p>"
       }
     },
     "ParametersFilterValue": {

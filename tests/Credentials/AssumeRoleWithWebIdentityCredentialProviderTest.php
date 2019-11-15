@@ -196,6 +196,42 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         }
     }
 
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Error retrieving web identity credentials: Found 1 error while validating the input provided for the AssumeRoleWithWebIdentity operation:
+     */
+    public function testThrowsNonAwsExceptionWhenRetrievingAssumeRoleCredentialFails()
+    {
+        $dir = $this->clearEnv();
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'http_handler' => function () {
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => new \Exception("", 0),
+                    'result' => null,
+                ]);
+            }
+        ]);
+
+        $tokenPath = $dir . '/my-token.jwt';
+        file_put_contents($tokenPath, 'token');
+
+        $args['client'] = $sts;
+        $args['RoleArn'] = "invalidrole";
+        $args['WebIdentityTokenFile'] = $tokenPath;
+        $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
+        try {
+            $provider()->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($tokenPath);
+        }
+    }
+
     public function testRetryInvalidIdentityToken()
     {
         $dir = $this->clearEnv();
@@ -225,10 +261,10 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
                 );
             }
         ]);
-        
+
         $tokenPath = $dir . '/my-token.jwt';
         file_put_contents($tokenPath, 'token');
-        
+
         $args['client'] = $sts;
         $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
         $args['WebIdentityTokenFile'] = $tokenPath;
@@ -280,10 +316,10 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
                 );
             }
         ]);
-        
+
         $tokenPath = $dir . '/my-token.jwt';
         file_put_contents($tokenPath, 'token');
-        
+
         $args['client'] = $sts;
         $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
         $args['WebIdentityTokenFile'] = $tokenPath;
@@ -330,7 +366,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
                 );
             }
         ]);
-        
+
         $tokenPath = $dir . '/my-token.jwt';
         file_put_contents($tokenPath, 'token');
 
