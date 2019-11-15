@@ -461,7 +461,7 @@ class PartitionTest extends TestCase
             // no overrides
             [$partition, 'puff', 'quux', 'quux'],
             // unknown service
-            [$partition, 'us-east-2', 's3', 's3'],
+            [$partition, 'us-east-1', 's3', 's3'],
         ];
     }
 
@@ -560,90 +560,6 @@ class PartitionTest extends TestCase
                 'aws-global',
                 null,
                 'https://sts.amazonaws.com'
-            ],
-        ];
-    }
-
-    /**
-     * @dataProvider s3EndpointTestCases
-     *
-     * @param $region
-     * @param $configOption
-     * @param $expectedEndpoint
-     */
-    public function testResolvesS3RegionalEndpoint(
-        $region,
-        $configOption,
-        $expectedEndpoint
-    ) {
-        $data = json_decode(
-            file_get_contents(__DIR__ . '/fixtures/s3_us_east_1_regional_endpoint.json'),
-            true
-        );
-        $partition = new Partition($data['partitions'][0]);
-
-        $params = [
-            'service' => 's3',
-            'region' => $region
-        ];
-        if (!empty($configOption)) {
-            $params['options'] = [
-                's3_us_east_1_regional_endpoint' => $configOption
-            ];
-        }
-
-        $data = $partition($params);
-        $this->assertEquals($expectedEndpoint, $data['endpoint']);
-
-    }
-
-    public function s3EndpointTestCases()
-    {
-        return [
-            [
-                'us-west-2',
-                'legacy',
-                'https://s3.us-west-2.amazonaws.com'
-            ],
-            [
-                'us-west-2',
-                'regional',
-                'https://s3.us-west-2.amazonaws.com'
-            ],
-            [
-                'us-west-2',
-                null,
-                'https://s3.us-west-2.amazonaws.com'
-            ],
-            [
-                'us-east-1',
-                'legacy',
-                'https://s3.amazonaws.com'
-            ],
-            [
-                'us-east-1',
-                'regional',
-                'https://s3.us-east-1.amazonaws.com'
-            ],
-            [
-                'us-east-1',
-                null,
-                'https://s3.amazonaws.com'
-            ],
-            [
-                'aws-global',
-                'legacy',
-                'https://s3.amazonaws.com'
-            ],
-            [
-                'aws-global',
-                'regional',
-                'https://s3.amazonaws.com'
-            ],
-            [
-                'aws-global',
-                null,
-                'https://s3.amazonaws.com'
             ],
         ];
     }
