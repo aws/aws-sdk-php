@@ -1259,4 +1259,37 @@ EOXML;
         );
         $client->execute($command);
     }
+
+    public function testCopyOperationCorrectlyPopulates()
+    {
+        $client = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) {
+                $this->assertEquals(
+                    'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
+                    $req->getUri()->getHost()
+                );
+                $this->assertEquals(
+                    '/copied-object',
+                    $req->getUri()->getPath()
+                );
+                $this->assertEquals(
+                    'arn:aws:s3:us-west-2:1234567890123:accesspoint:my-my/finks-object',
+                    $req->getHeader('x-amz-copy-source')[0]
+                );
+                return new Result([]);
+            },
+        ]);
+
+        $command = $client->getCommand(
+            'CopyObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                'Key' => 'copied-object',
+                'CopySource' => 'arn:aws:s3:us-west-2:1234567890123:accesspoint:my-my/finks-object'
+            ]
+        );
+        $client->execute($command);
+    }
 }
