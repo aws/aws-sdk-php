@@ -825,12 +825,10 @@ EOT;
     private static function getEndpointProviderOptions(array $args)
     {
         $options = [];
-        $optionKeys = ['sts_regional_endpoints', 's3_us_east_1_regional_endpoint'];
-        foreach ($optionKeys as $key) {
-            if (isset($args[$key])) {
-                $options[$key] = $args[$key];
-            }
+        if (isset($args['sts_regional_endpoints'])) {
+            $options['sts_regional_endpoints'] = $args['sts_regional_endpoints'];
         }
+
         return $options;
     }
 }

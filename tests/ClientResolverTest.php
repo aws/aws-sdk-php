@@ -475,38 +475,6 @@ EOT;
         );
     }
 
-    /**
-     * @dataProvider s3EndpointCases
-     *
-     * @param $config
-     * @param $endpoint
-     */
-    public function testCanPassS3RegionalEndpointToEndpointProvider($config, $endpoint)
-    {
-        $data = json_decode(
-            file_get_contents(__DIR__ . '/Endpoint/fixtures/s3_us_east_1_regional_endpoint.json'),
-            true
-        );
-        $partition = new Partition($data['partitions'][0]);
-        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
-        $conf = $resolver->resolve([
-            'service'                           => 's3',
-            'region'                            => 'us-east-1',
-            's3_us_east_1_regional_endpoint'    => $config,
-            'version'                           => 'latest',
-            'endpoint_provider'                 => $partition
-        ], new HandlerList());
-        $this->assertEquals($endpoint, $conf['endpoint']);
-    }
-
-    public function s3EndpointCases()
-    {
-        return [
-            ['regional', 'https://s3.us-east-1.amazonaws.com'],
-            ['legacy', 'https://s3.amazonaws.com'],
-        ];
-    }
-
     public function testAddsLoggerWithDebugSettings()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
