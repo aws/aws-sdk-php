@@ -13,6 +13,12 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getLifecyclePoliciesAsync(array $args = [])
  * @method \Aws\Result getLifecyclePolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getLifecyclePolicyAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateLifecyclePolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateLifecyclePolicyAsync(array $args = [])
  */

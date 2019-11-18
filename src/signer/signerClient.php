@@ -19,9 +19,15 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listSigningPlatformsAsync(array $args = [])
  * @method \Aws\Result listSigningProfiles(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSigningProfilesAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putSigningProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putSigningProfileAsync(array $args = [])
  * @method \Aws\Result startSigningJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startSigningJobAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class signerClient extends AwsClient {}

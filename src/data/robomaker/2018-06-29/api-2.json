@@ -978,7 +978,8 @@
       "members":{
         "concurrentDeploymentPercentage":{"shape":"Percentage"},
         "failureThresholdPercentage":{"shape":"Percentage"},
-        "robotDeploymentTimeoutInSeconds":{"shape":"DeploymentTimeout"}
+        "robotDeploymentTimeoutInSeconds":{"shape":"DeploymentTimeout"},
+        "downloadConditionFile":{"shape":"S3Object"}
       }
     },
     "DeploymentJob":{
@@ -1013,6 +1014,7 @@
         "PreLaunchFileFailure",
         "PostLaunchFileFailure",
         "BadPermissionError",
+        "DownloadConditionFailed",
         "InternalServerError"
       ]
     },
@@ -1228,7 +1230,8 @@
     "EnvironmentVariableValue":{
       "type":"string",
       "max":1024,
-      "min":1
+      "min":1,
+      "pattern":".*"
     },
     "FailureBehavior":{
       "type":"string",
@@ -1284,7 +1287,8 @@
     "Id":{
       "type":"string",
       "max":1224,
-      "min":1
+      "min":1,
+      "pattern":".*"
     },
     "IdempotentParameterMismatchException":{
       "type":"structure",
@@ -1491,7 +1495,8 @@
     "Path":{
       "type":"string",
       "max":1024,
-      "min":1
+      "min":1,
+      "pattern":".*"
     },
     "PercentDone":{
       "type":"float",
@@ -1677,6 +1682,7 @@
       "enum":[
         "Validating",
         "DownloadingExtracting",
+        "ExecutingDownloadCondition",
         "ExecutingPreLaunch",
         "Launching",
         "ExecutingPostLaunch",
@@ -1696,13 +1702,17 @@
     },
     "RobotSoftwareSuiteType":{
       "type":"string",
-      "enum":["ROS"]
+      "enum":[
+        "ROS",
+        "ROS2"
+      ]
     },
     "RobotSoftwareSuiteVersionType":{
       "type":"string",
       "enum":[
         "Kinetic",
-        "Melodic"
+        "Melodic",
+        "Dashing"
       ]
     },
     "RobotStatus":{
@@ -1752,6 +1762,18 @@
       "member":{"shape":"S3Key"},
       "max":100,
       "min":1
+    },
+    "S3Object":{
+      "type":"structure",
+      "required":[
+        "bucket",
+        "key"
+      ],
+      "members":{
+        "bucket":{"shape":"S3Bucket"},
+        "key":{"shape":"S3Key"},
+        "etag":{"shape":"S3Etag"}
+      }
     },
     "SecurityGroups":{
       "type":"list",
@@ -1912,7 +1934,7 @@
     },
     "SimulationSoftwareSuiteVersionType":{
       "type":"string",
-      "pattern":"7|9|Kinetic|Melodic"
+      "pattern":"7|9|Kinetic|Melodic|Dashing"
     },
     "SimulationTimeMillis":{"type":"long"},
     "Source":{
