@@ -261,8 +261,6 @@ class InstanceProfileProviderTest extends TestCase
         callable $client,
         CredentialsInterface $expected
     ) {
-        $flag = getenv(InstanceProfileProvider::ENV_DISABLE);
-
         $provider = new InstanceProfileProvider([
             'client' => $client,
             'retries' => 5
@@ -684,12 +682,17 @@ class InstanceProfileProviderTest extends TestCase
      */
     public function testSwitchesBackToSecureModeOn401()
     {
+        $requestClass = $this->getRequestClass();
         $responseClass = $this->getResponseClass();
+        $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
+        $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
         $reqNumber = 0;
 
         $client = function ($request) use (
             &$reqNumber,
-            $responseClass
+            $responseClass,
+            $getRequest,
+            $putRequest
         ) {
             $reqNumber++;
             if ($request->getMethod() === 'PUT'
@@ -698,7 +701,7 @@ class InstanceProfileProviderTest extends TestCase
                 if ($reqNumber === 1) {
                     return Promise\rejection_for([
                         'exception' => new RequestException('404 Not Found',
-                            $request,
+                            $putRequest,
                             new $responseClass(404)
                         )
                     ]);
@@ -712,7 +715,7 @@ class InstanceProfileProviderTest extends TestCase
                 return Promise\rejection_for([
                     'exception' => new RequestException(
                         '401 Unauthorized - Valid unexpired token required',
-                        $request,
+                        $getRequest,
                         new $responseClass(401)
                     )
                 ]);
