@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - This release introduces APIs for the CloudFormation Registry, a new service to submit and discover resource providers with which you can manage third-party resources natively in CloudFormation.
+* `Aws\CostExplorer` - add EstimatedOnDemandCostWithCurrentCommitment to GetSavingsPlansPurchaseRecommendationRequest API
+* `Aws\Pinpoint` - This release of the Amazon Pinpoint API introduces support for using and managing message templates for messages that are sent through the voice channel. It also introduces support for specifying default values for message variables in message templates. 
+* `Aws\RDS` - Documentation updates for rds
+* `Aws\S3` - Added support for S3 Replication for existing objects. This release allows customers who have requested and been granted access to replicate existing S3 objects across buckets.
+* `Aws\SSM` - The release contains new API and API changes for AWS Systems Manager Explorer product.
+* `Aws\SageMaker` - Amazon SageMaker now supports multi-model endpoints to host multiple models on an endpoint using a single inference container.
+* `Aws\SageMakerRuntime` - Amazon SageMaker Runtime now supports a new TargetModel header to invoke a specific model hosted on multi model endpoints.
+
 ## 3.117.2 - 2019-11-15
 
 * `Aws\Chime` - This release adds support for Chime Room Management APIs
