@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.118.0 - 2019-11-18
 
 * `Aws\CloudFormation` - This release introduces APIs for the CloudFormation Registry, a new service to submit and discover resource providers with which you can manage third-party resources natively in CloudFormation.
 * `Aws\CostExplorer` - add EstimatedOnDemandCostWithCurrentCommitment to GetSavingsPlansPurchaseRecommendationRequest API
