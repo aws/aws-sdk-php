@@ -58,6 +58,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise detectStackDriftAsync(array $args = [])
  * @method \Aws\Result detectStackResourceDrift(array $args = [])
  * @method \GuzzleHttp\Promise\Promise detectStackResourceDriftAsync(array $args = [])
+ * @method \Aws\Result detectStackSetDrift(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise detectStackSetDriftAsync(array $args = [])
  * @method \Aws\Result estimateTemplateCost(array $args = [])
  * @method \GuzzleHttp\Promise\Promise estimateTemplateCostAsync(array $args = [])
  * @method \Aws\Result executeChangeSet(array $args = [])

@@ -672,6 +672,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyInstanceCreditSpecificationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyInstanceEventStartTime(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyInstanceEventStartTimeAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyInstanceMetadataOptions(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyInstanceMetadataOptionsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyLaunchTemplate(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyLaunchTemplateAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyTrafficMirrorFilterNetworkServices(array $args = []) (supported in versions 2016-11-15)
