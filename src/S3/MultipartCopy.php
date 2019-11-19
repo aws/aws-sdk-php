@@ -1,6 +1,7 @@
 <?php
 namespace Aws\S3;
 
+use Aws\Arn\ArnParser;
 use Aws\Multipart\AbstractUploadManager;
 use Aws\ResultInterface;
 use GuzzleHttp\Psr7;
@@ -59,7 +60,12 @@ class MultipartCopy extends AbstractUploadManager
         $source,
         array $config = []
     ) {
-        $this->source = '/' . ltrim($source, '/');
+        if (ArnParser::isArn($source)) {
+            $this->source = '';
+        } else {
+            $this->source = "/";
+        }
+        $this->source .= ltrim($source, '/');
         parent::__construct($client, array_change_key_case($config) + [
             'source_metadata' => null
         ]);
