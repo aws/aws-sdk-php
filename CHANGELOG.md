@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.120.0 - 2019-11-20
 
 * `Aws\ApplicationDiscoveryService` - New exception type for use with Migration Hub home region
 * `Aws\Chime` - Adds APIs to create and manage meeting session resources for the Amazon Chime SDK
