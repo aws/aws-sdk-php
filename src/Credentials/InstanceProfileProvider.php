@@ -80,8 +80,8 @@ class InstanceProfileProvider
                         ]
                     ));
                 } catch (RequestException $e) {
-                    if (!empty($e->getResponse())
-                        && !in_array(
+                    if (empty($e->getResponse())
+                        || !in_array(
                             $e->getResponse()->getStatusCode(),
                             [400, 500, 502, 503, 504]
                         )
