@@ -264,6 +264,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMediaTailor(array $args = [])
  * @method \Aws\MigrationHub\MigrationHubClient createMigrationHub(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHub(array $args = [])
+ * @method \Aws\MigrationHubConfig\MigrationHubConfigClient createMigrationHubConfig(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMigrationHubConfig(array $args = [])
  * @method \Aws\Mobile\MobileClient createMobile(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMobile(array $args = [])
  * @method \Aws\Neptune\NeptuneClient createNeptune(array $args = [])
