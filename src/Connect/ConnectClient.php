@@ -41,6 +41,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listUserHierarchyGroupsAsync(array $args = [])
  * @method \Aws\Result listUsers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listUsersAsync(array $args = [])
+ * @method \Aws\Result startChatContact(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startChatContactAsync(array $args = [])
  * @method \Aws\Result startOutboundVoiceContact(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startOutboundVoiceContactAsync(array $args = [])
  * @method \Aws\Result stopContact(array $args = [])
