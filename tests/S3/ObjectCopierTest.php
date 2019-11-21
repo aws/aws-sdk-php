@@ -74,7 +74,7 @@ class ObjectCopierTest extends TestCase
         $client = $this->getTestClient('S3', [
             'region' => 'us-west-2'
         ]);
-        $client->getHandlerList()->appendBuild(Middleware::tap(
+        $client->getHandlerList()->appendSign(Middleware::tap(
             function (CommandInterface $cmd, RequestInterface $req) {
 
                 switch($cmd->getName()) {
@@ -89,8 +89,12 @@ class ObjectCopierTest extends TestCase
                             $cmd['Bucket']
                         );
                         $this->assertEquals(
-                            'arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/sourceKey',
+                            '/arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/sourceKey',
                             $cmd['CopySource']
+                        );
+                        $this->assertEquals(
+                            '/arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/sourceKey',
+                            $req->getHeader('x-amz-copy-source')[0]
                         );
                         break;
 
@@ -118,8 +122,12 @@ class ObjectCopierTest extends TestCase
                             $cmd['Bucket']
                         );
                         $this->assertEquals(
-                            'arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/sourceKey',
+                            '/arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/sourceKey',
                             $cmd['CopySource']
+                        );
+                        $this->assertEquals(
+                            '/arn:aws:s3:us-west-2:123456789012:accesspoint:mysource/sourceKey',
+                            $req->getHeader('x-amz-copy-source')[0]
                         );
                         break;
 
@@ -135,10 +143,12 @@ class ObjectCopierTest extends TestCase
                         $this->fail('Unexpected command encountered.');
 
                 }
+
+                return Promise\promise_for(new Result([]));
             }
         ));
         $this->addMockResults($client, $mockedResults);
-        $result = (new ObjectCopier(
+        (new ObjectCopier(
             $client,
             ['Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:mysource', 'Key' => 'sourceKey'],
             ['Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:mydest', 'Key' => 'destKey'],
