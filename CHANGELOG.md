@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.121.0 - 2019-11-21
 
 * `Aws\Amplify` - This release of AWS Amplify Console introduces support for backend environments. Backend environments are containers for AWS deployments. Each environment is a collection of AWS resources.
 * `Aws\AppSync` - AppSync: AWS AppSync now supports the ability to add, configure, and maintain caching for your AWS AppSync GraphQL API.
