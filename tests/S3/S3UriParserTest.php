@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Arn\Exception\InvalidArnException;
 use Aws\S3\S3UriParser;
 use PHPUnit\Framework\TestCase;
 
@@ -61,6 +62,29 @@ class S3UriParserTest extends TestCase
             ['s3://bar', ['region' => null, 'bucket' => 'bar', 'key' => null, 'path_style' => false]],
             ['s3://', [], true],
 
+            [
+                's3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/test_key',
+                [
+                    'region' => 'us-east-1',
+                    'bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess',
+                    'key' => 'test_key',
+                    'path_style' => false
+                ]
+            ],
+            [
+                's3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/test/key/with/other/components',
+                [
+                    'region' => 'us-east-1',
+                    'bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess',
+                    'key' => 'test/key/with/other/components',
+                    'path_style' => false
+                ]
+            ],
+
+            ['s-3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/test_key', [], true],
+            ['s3://arn:aws:s3:us-east-1:123456789012:some_resource:myaccess/test_key', [], true],
+            ['s3://arn:aws:ec2:us-east-1:123456789012:accesspoint:myaccess/test_key', [], true],
+
             ['/foo/bar', [], true],
         ];
     }
@@ -77,6 +101,10 @@ class S3UriParserTest extends TestCase
             ksort($actual);
             $this->assertSame($result, $actual);
         } catch (\InvalidArgumentException $e) {
+            if (!$isError) {
+                throw $e;
+            }
+        } catch (InvalidArnException $e) {
             if (!$isError) {
                 throw $e;
             }
