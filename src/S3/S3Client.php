@@ -284,6 +284,14 @@ class S3Client extends AwsClient implements S3ClientInterface
      *   individual operations by setting '@use_accelerate_endpoint' to true or
      *   false. Note: you must enable S3 Accelerate on a bucket before it can be
      *   accessed via an Accelerate endpoint.
+     * - use_arn_region: (Aws\S3\UseArnRegion\ConfigurationInterface,
+     *   Aws\CacheInterface, bool, callable) Set to true to enable the client
+     *   to use the region from a supplied ARN argument instead of the client's
+     *   region. Provide an instance of Aws\S3\UseArnRegion\ConfigurationInterface,
+     *   an instance of Aws\CacheInterface, a callable that provides a promise for
+     *   a Configuration object, or a boolean value. Defaults to false (i.e.
+     *   the SDK will not follow the ARN region if it conflicts with the client
+     *   region and instead throw an error).
      * - use_dual_stack_endpoint: (bool) Set to true to send requests to an S3
      *   Dual Stack endpoint by default, which enables IPv6 Protocol.
      *   Can be enabled or disabled on individual operations by setting
