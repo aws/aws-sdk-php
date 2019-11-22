@@ -4,6 +4,7 @@ namespace Aws\Test\S3;
 use Aws\CommandInterface;
 use Aws\Middleware;
 use Aws\S3\BucketEndpointArnMiddleware;
+use Aws\S3\Exception\S3Exception;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -350,5 +351,29 @@ class BucketEndpointArnMiddlewareTest extends TestCase
             ]
         );
         $s3->execute($command);
+    }
+
+    /**
+     * @expectedException \Aws\S3\Exception\S3Exception
+     * @expectedExceptionMessage ARN values cannot be used in the bucket field for the CreateBucket operation.
+     */
+    public function testThrowsForCreateBucketWithAccessPointArn()
+    {
+        $s3 = $this->getTestClient(
+            's3',
+            [
+                'region' => 'us-west-2',
+                's3_use_arn_region' => true,
+            ]
+        );
+        $this->addMockResults($s3, [[]]);
+        $command = $s3->getCommand(
+            'CreateBucket',
+            [
+                'Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+            ]
+        );
+        $result = $s3->execute($command);
+        var_dump($result);
     }
 }

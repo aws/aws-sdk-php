@@ -36,6 +36,9 @@ class BucketEndpointArnMiddleware
     /** @var PartitionEndpointProvider */
     private $partitionProvider;
 
+    /** @var array */
+    private $nonArnableCommands = ['CreateBucket'];
+
     /**
      * Create a middleware wrapper function.
      *
@@ -85,6 +88,15 @@ class BucketEndpointArnMiddleware
                 if (!empty($arnableKey) && ArnParser::isArn($cmd[$arnableKey])) {
 
                     try {
+                        // Throw for commands that do not support ARN inputs
+                        if (in_array($cmd->getName(), $this->nonArnableCommands)) {
+                            throw new S3Exception(
+                                'ARN values cannot be used in the bucket field for'
+                                    . ' the ' . $cmd->getName() . ' operation.',
+                                $cmd
+                            );
+                        }
+
                         $arn = ArnParser::parse($cmd[$arnableKey]);
                         $partition = $this->validateArn($arn);
 
