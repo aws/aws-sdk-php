@@ -1,6 +1,7 @@
 <?php
 namespace Aws\S3;
 
+use Aws\Arn\Exception\InvalidArnException;
 use Aws\Arn\S3\AccessPointArn;
 use Aws\Arn\ArnParser;
 use GuzzleHttp\Psr7;
@@ -33,10 +34,11 @@ class S3UriParser
      * @param string|UriInterface $uri
      *
      * @return array
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException|InvalidArnException
      */
     public function parse($uri)
     {
+        // Attempt to parse host component of uri as an ARN
         $components = $this->parseS3UrlComponents($uri);
         if (!empty($components)) {
             if (ArnParser::isArn($components['host'])) {
