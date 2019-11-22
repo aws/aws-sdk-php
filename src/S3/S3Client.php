@@ -16,7 +16,8 @@ use Aws\ResultInterface;
 use Aws\CommandInterface;
 use Aws\S3\UseArnRegion\Configuration;
 use Aws\S3\UseArnRegion\ConfigurationInterface;
-use Aws\S3\UseArnRegion\ConfigurationProvider;
+use Aws\S3\UseArnRegion\ConfigurationProvider as UseArnRegionConfigurationProvider;
+use Aws\S3\RegionalEndpoint\ConfigurationProvider;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -232,7 +233,7 @@ class S3Client extends AwsClient implements S3ClientInterface
                 'doc'     => 'Set to true to allow passed in ARNs to override'
                     . ' client region. Accepts...',
                 'fn' => [__CLASS__, '_apply_use_arn_region'],
-                'default' => [ConfigurationProvider::class, 'defaultProvider'],
+                'default' => [UseArnRegionConfigurationProvider::class, 'defaultProvider'],
             ],
             'use_accelerate_endpoint' => [
                 'type' => 'config',
@@ -279,6 +280,15 @@ class S3Client extends AwsClient implements S3ClientInterface
      *   interacting with CNAME endpoints.
      * - calculate_md5: (bool) Set to false to disable calculating an MD5
      *   for all Amazon S3 signed uploads.
+     * - s3_us_east_1_regional_endpoint:
+     *   (Aws\S3\RegionalEndpoint\ConfigurationInterface|Aws\CacheInterface\|callable|string|array)
+     *   Specifies whether to use regional or legacy endpoints for the us-east-1
+     *   region. Provide an Aws\S3\RegionalEndpoint\ConfigurationInterface object, an
+     *   instance of Aws\CacheInterface, a callable configuration provider used
+     *   to create endpoint configuration, a string value of `legacy` or
+     *   `regional`, or an associative array with the following keys:
+     *   endpoint_types: (string)  Set to `legacy` or `regional`, defaults to
+     *   `legacy`
      * - use_accelerate_endpoint: (bool) Set to true to send requests to an S3
      *   Accelerate endpoint by default. Can be enabled or disabled on
      *   individual operations by setting '@use_accelerate_endpoint' to true or
@@ -307,6 +317,11 @@ class S3Client extends AwsClient implements S3ClientInterface
      */
     public function __construct(array $args)
     {
+        if (!isset($args['s3_us_east_1_regional_endpoint'])) {
+            $args['s3_us_east_1_regional_endpoint'] = ConfigurationProvider::defaultProvider();
+        } elseif ($args['s3_us_east_1_regional_endpoint'] instanceof CacheInterface) {
+            $args['s3_us_east_1_regional_endpoint'] = ConfigurationProvider::defaultProvider($args);
+        }
         parent::__construct($args);
         $stack = $this->getHandlerList();
         $stack->appendInit(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), 's3.ssec');
@@ -382,7 +397,7 @@ class S3Client extends AwsClient implements S3ClientInterface
     public static function _apply_use_arn_region($value, array &$args, HandlerList $list)
     {
         if ($value instanceof CacheInterface) {
-            $value = ConfigurationProvider::defaultProvider($args);
+            $value = UseArnRegionConfigurationProvider::defaultProvider($args);
         }
         if (is_callable($value)) {
             $value = $value();

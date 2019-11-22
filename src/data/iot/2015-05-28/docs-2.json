@@ -16,6 +16,7 @@
     "CancelJob": "<p>Cancels a job.</p>",
     "CancelJobExecution": "<p>Cancels the execution of a job for a given thing.</p>",
     "ClearDefaultAuthorizer": "<p>Clears the default authorizer.</p>",
+    "ConfirmTopicRuleDestination": "<p>Confirms a topic rule destination. When you create a rule requiring a destination, AWS IoT sends a confirmation message to the endpoint or base address you specify. The message includes a token which you pass back when calling <code>ConfirmTopicRuleDestination</code> to confirm that you own or have access to the endpoint.</p>",
     "CreateAuthorizer": "<p>Creates an authorizer.</p>",
     "CreateBillingGroup": "<p>Creates a billing group.</p>",
     "CreateCertificateFromCsr": "<p>Creates an X.509 certificate using the specified certificate signing request.</p> <p> <b>Note:</b> The CSR must include a public key that is either an RSA key with a length of at least 2048 bits or an ECC key from NIST P-256 or NIST P-384 curves. </p> <p> <b>Note:</b> Reusing the same certificate signing request (CSR) results in a distinct certificate.</p> <p>You can create multiple certificates in a batch by creating a directory, copying multiple .csr files into that directory, and then specifying that directory on the command line. The following commands show how to create a batch of certificates given a batch of CSRs.</p> <p>Assuming a set of CSRs are located inside of the directory my-csr-directory:</p> <p>On Linux and OS X, the command is:</p> <p>$ ls my-csr-directory/ | xargs -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</p> <p>This command lists all of the CSRs in my-csr-directory and pipes each CSR file name to the aws iot create-certificate-from-csr AWS CLI command to create a certificate for the corresponding CSR.</p> <p>The aws iot create-certificate-from-csr part of the command can also be run in parallel to speed up the certificate creation process:</p> <p>$ ls my-csr-directory/ | xargs -P 10 -I {} aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/{}</p> <p>On Windows PowerShell, the command to create certificates for all CSRs in my-csr-directory is:</p> <p>&gt; ls -Name my-csr-directory | %{aws iot create-certificate-from-csr --certificate-signing-request file://my-csr-directory/$_}</p> <p>On a Windows command prompt, the command to create certificates for all CSRs in my-csr-directory is:</p> <p>&gt; forfiles /p my-csr-directory /c \"cmd /c aws iot create-certificate-from-csr --certificate-signing-request file://@path\"</p>",
@@ -29,11 +30,12 @@
     "CreateRoleAlias": "<p>Creates a role alias.</p>",
     "CreateScheduledAudit": "<p>Creates a scheduled audit that is run at a specified time interval.</p>",
     "CreateSecurityProfile": "<p>Creates a Device Defender security profile.</p>",
-    "CreateStream": "<p>Creates a stream for delivering one or more large files in chunks over MQTT. A stream transports data bytes in chunks or blocks packaged as MQTT messages from a source like S3. You can have one or more files associated with a stream. The total size of a file associated with the stream cannot exceed more than 2 MB. The stream will be created with version 0. If a stream is created with the same streamID as a stream that existed and was deleted within last 90 days, we will resurrect that old stream by incrementing the version by 1.</p>",
+    "CreateStream": "<p>Creates a stream for delivering one or more large files in chunks over MQTT. A stream transports data bytes in chunks or blocks packaged as MQTT messages from a source like S3. You can have one or more files associated with a stream.</p>",
     "CreateThing": "<p>Creates a thing record in the registry. If this call is made multiple times using the same thing name and configuration, the call will succeed. If this call is made with the same thing name but different configuration a <code>ResourceAlreadyExistsException</code> is thrown.</p> <note> <p>This is a control plane operation. See <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/authorization.html\">Authorization</a> for information about authorizing control plane actions.</p> </note>",
     "CreateThingGroup": "<p>Create a thing group.</p> <note> <p>This is a control plane operation. See <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/authorization.html\">Authorization</a> for information about authorizing control plane actions.</p> </note>",
     "CreateThingType": "<p>Creates a new thing type.</p>",
     "CreateTopicRule": "<p>Creates a rule. Creating rules is an administrator-level action. Any user who has permission to create rules will be able to access data processed by the rule.</p>",
+    "CreateTopicRuleDestination": "<p>Creates a topic rule destination. The destination must be confirmed prior to use.</p>",
     "DeleteAccountAuditConfiguration": "<p>Restores the default settings for Device Defender audits for this account. Any configuration data you entered is deleted and all audit checks are reset to disabled. </p>",
     "DeleteAuthorizer": "<p>Deletes an authorizer.</p>",
     "DeleteBillingGroup": "<p>Deletes the billing group.</p>",
@@ -55,6 +57,7 @@
     "DeleteThingGroup": "<p>Deletes a thing group.</p>",
     "DeleteThingType": "<p>Deletes the specified thing type. You cannot delete a thing type if it has things associated with it. To delete a thing type, first mark it as deprecated by calling <a>DeprecateThingType</a>, then remove any associated things by calling <a>UpdateThing</a> to change the thing type on any associated thing, and finally use <a>DeleteThingType</a> to delete the thing type.</p>",
     "DeleteTopicRule": "<p>Deletes the rule.</p>",
+    "DeleteTopicRuleDestination": "<p>Deletes a topic rule destination.</p>",
     "DeleteV2LoggingLevel": "<p>Deletes a logging level.</p>",
     "DeprecateThingType": "<p>Deprecates a thing type. You can not associate new things with deprecated thing type.</p>",
     "DescribeAccountAuditConfiguration": "<p>Gets information about the Device Defender audit settings for this account. Settings include how audit notifications are sent and which audit checks are enabled or disabled.</p>",
@@ -86,16 +89,19 @@
     "DetachThingPrincipal": "<p>Detaches the specified principal from the specified thing. A principal can be X.509 certificates, IAM users, groups, and roles, Amazon Cognito identities or federated identities.</p> <note> <p>This call is asynchronous. It might take several seconds for the detachment to propagate.</p> </note>",
     "DisableTopicRule": "<p>Disables the rule.</p>",
     "EnableTopicRule": "<p>Enables the rule.</p>",
+    "GetCardinality": "<p>Returns the approximate count of unique values that match the query.</p>",
     "GetEffectivePolicies": "<p>Gets a list of the policies that have an effect on the authorization behavior of the specified device when it connects to the AWS IoT device gateway.</p>",
     "GetIndexingConfiguration": "<p>Gets the search configuration.</p>",
     "GetJobDocument": "<p>Gets a job document.</p>",
     "GetLoggingOptions": "<p>Gets the logging options.</p> <p>NOTE: use of this command is not recommended. Use <code>GetV2LoggingOptions</code> instead.</p>",
     "GetOTAUpdate": "<p>Gets an OTA update.</p>",
+    "GetPercentiles": "<p>Groups the aggregated values that match the query into percentile groupings. The default percentile groupings are: 1,5,25,50,75,95,99, although you can specify your own when you call <code>GetPercentiles</code>. This function returns a value for each percentile group specified (or the default percentile groupings). The percentile group \"1\" contains the aggregated field value that occurs in approximately one percent of the values that match the query. The percentile group \"5\" contains the aggregated field value that occurs in approximately five percent of the values that match the query, and so on. The result is an approximation, the more values that match the query, the more accurate the percentile values.</p>",
     "GetPolicy": "<p>Gets information about the specified policy with the policy document of the default version.</p>",
     "GetPolicyVersion": "<p>Gets information about the specified policy version.</p>",
     "GetRegistrationCode": "<p>Gets a registration code used to register a CA certificate with AWS IoT.</p>",
     "GetStatistics": "<p>Gets statistics about things that match the specified query.</p>",
     "GetTopicRule": "<p>Gets information about the rule.</p>",
+    "GetTopicRuleDestination": "<p>Gets information about a topic rule destination.</p>",
     "GetV2LoggingOptions": "<p>Gets the fine grained logging options.</p>",
     "ListActiveViolations": "<p>Lists the active violations for a given Device Defender security profile.</p>",
     "ListAttachedPolicies": "<p>Lists the policies attached to the specified thing group.</p>",
@@ -137,6 +143,7 @@
     "ListThings": "<p>Lists your things. Use the <b>attributeName</b> and <b>attributeValue</b> parameters to filter your things. For example, calling <code>ListThings</code> with attributeName=Color and attributeValue=Red retrieves all things in the registry that contain an attribute <b>Color</b> with the value <b>Red</b>. </p>",
     "ListThingsInBillingGroup": "<p>Lists the things you have added to the given billing group.</p>",
     "ListThingsInThingGroup": "<p>Lists the things in the specified group.</p>",
+    "ListTopicRuleDestinations": "<p>Lists all the topic rule destinations in your AWS account.</p>",
     "ListTopicRules": "<p>Lists the rules for the specific topic.</p>",
     "ListV2LoggingLevels": "<p>Lists logging levels.</p>",
     "ListViolationEvents": "<p>Lists the Device Defender security profile violations discovered during the given time period. You can use filters to limit the results to those alerts issued for a particular security profile, behavior, or thing (device).</p>",
@@ -179,6 +186,7 @@
     "UpdateThing": "<p>Updates the data for a thing.</p>",
     "UpdateThingGroup": "<p>Update a thing group.</p>",
     "UpdateThingGroupsForThing": "<p>Updates the groups to which the thing belongs.</p>",
+    "UpdateTopicRuleDestination": "<p>Updates a topic rule destination. You use this to change the status, endpoint URL, or confirmation URL of the destination.</p>",
     "ValidateSecurityProfileBehaviors": "<p>Validates a Device Defender security profile behaviors specification.</p>"
   },
   "shapes": {
@@ -297,6 +305,8 @@
     "AggregationField": {
       "base": null,
       "refs": {
+        "GetCardinalityRequest$aggregationField": "<p>The field to aggregate.</p>",
+        "GetPercentilesRequest$aggregationField": "<p>The field to aggregate.</p>",
         "GetStatisticsRequest$aggregationField": "<p>The aggregation field name. Currently not supported.</p>"
       }
     },
@@ -761,6 +771,12 @@
         "UpdateCACertificateRequest$newAutoRegistrationStatus": "<p>The new value for the auto registration status. Valid values are: \"ENABLE\" or \"DISABLE\".</p>"
       }
     },
+    "Average": {
+      "base": null,
+      "refs": {
+        "Statistics$average": "<p>The average of the aggregated fields. If the field data type is String this value is indeterminate.</p>"
+      }
+    },
     "AwsAccountId": {
       "base": null,
       "refs": {
@@ -778,11 +794,13 @@
       "refs": {
         "CloudwatchAlarmAction$roleArn": "<p>The IAM role that allows access to the CloudWatch alarm.</p>",
         "CloudwatchMetricAction$roleArn": "<p>The IAM role that allows access to the CloudWatch metric.</p>",
+        "DeleteTopicRuleDestinationRequest$arn": "<p>The ARN of the topic rule destination to delete.</p>",
         "DynamoDBAction$roleArn": "<p>The ARN of the IAM role that grants access to the DynamoDB table.</p>",
         "DynamoDBv2Action$roleArn": "<p>The ARN of the IAM role that grants access to the DynamoDB table.</p>",
         "ElasticsearchAction$roleArn": "<p>The IAM role ARN that has access to Elasticsearch.</p>",
         "FirehoseAction$roleArn": "<p>The IAM role that grants access to the Amazon Kinesis Firehose stream.</p>",
         "GetLoggingOptionsResponse$roleArn": "<p>The ARN of the IAM role that grants access.</p>",
+        "GetTopicRuleDestinationRequest$arn": "<p>The ARN of the topic rule destination.</p>",
         "GetV2LoggingOptionsResponse$roleArn": "<p>The IAM role ARN AWS IoT uses to write to your CloudWatch logs.</p>",
         "IotAnalyticsAction$channelArn": "<p>(deprecated) The ARN of the IoT Analytics channel to which message data will be sent.</p>",
         "IotAnalyticsAction$roleArn": "<p>The ARN of the role which has a policy that grants IoT Analytics permission to send message data via IoT Analytics (iotanalytics:BatchPutMessage).</p>",
@@ -792,10 +810,14 @@
         "RepublishAction$roleArn": "<p>The ARN of the IAM role that grants access.</p>",
         "S3Action$roleArn": "<p>The ARN of the IAM role that grants access.</p>",
         "SetV2LoggingOptionsRequest$roleArn": "<p>The ARN of the role that allows IoT to write to Cloudwatch logs.</p>",
+        "SigV4Authorization$roleArn": "<p>The ARN of the signing role.</p>",
         "SnsAction$targetArn": "<p>The ARN of the SNS topic.</p>",
         "SnsAction$roleArn": "<p>The ARN of the IAM role that grants access.</p>",
         "SqsAction$roleArn": "<p>The ARN of the IAM role that grants access.</p>",
-        "StepFunctionsAction$roleArn": "<p>The ARN of the role that grants IoT permission to start execution of a state machine (\"Action\":\"states:StartExecution\").</p>"
+        "StepFunctionsAction$roleArn": "<p>The ARN of the role that grants IoT permission to start execution of a state machine (\"Action\":\"states:StartExecution\").</p>",
+        "TopicRuleDestination$arn": "<p>The topic rule destination URL.</p>",
+        "TopicRuleDestinationSummary$arn": "<p>The topic rule destination ARN.</p>",
+        "UpdateTopicRuleDestinationRequest$arn": "<p>The ARN of the topic rule destination.</p>"
       }
     },
     "AwsIotJobArn": {
@@ -1275,6 +1297,22 @@
         "EventConfigurations$value": null
       }
     },
+    "ConfirmTopicRuleDestinationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ConfirmTopicRuleDestinationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ConfirmationToken": {
+      "base": null,
+      "refs": {
+        "ConfirmTopicRuleDestinationRequest$confirmationToken": "<p>The token used to confirm ownership or access to the topic rule confirmation URL.</p>"
+      }
+    },
     "ConflictingResourceUpdateException": {
       "base": "<p>A conflicting resource update exception. This exception is thrown when two pending updates cause a conflict.</p>",
       "refs": {
@@ -1303,6 +1341,7 @@
       "refs": {
         "DescribeThingRegistrationTaskResponse$successCount": "<p>The number of things successfully provisioned.</p>",
         "DescribeThingRegistrationTaskResponse$failureCount": "<p>The number of things that failed to be provisioned.</p>",
+        "GetCardinalityResponse$cardinality": "<p>The approximate count of unique values that match the query.</p>",
         "Statistics$count": "<p>The count of things that match the query.</p>"
       }
     },
@@ -1473,6 +1512,16 @@
     },
     "CreateThingTypeResponse": {
       "base": "<p>The output of the CreateThingType operation.</p>",
+      "refs": {
+      }
+    },
+    "CreateTopicRuleDestinationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateTopicRuleDestinationResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -1788,6 +1837,16 @@
     },
     "DeleteThingTypeResponse": {
       "base": "<p>The output for the DeleteThingType operation.</p>",
+      "refs": {
+      }
+    },
+    "DeleteTopicRuleDestinationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteTopicRuleDestinationResponse": {
+      "base": null,
       "refs": {
       }
     },
@@ -2356,6 +2415,33 @@
         "JobProcessDetails$numberOfFailedThings": "<p>The number of things that failed executing the job.</p>"
       }
     },
+    "Field": {
+      "base": "<p>The field to aggregate.</p>",
+      "refs": {
+        "Fields$member": null
+      }
+    },
+    "FieldName": {
+      "base": null,
+      "refs": {
+        "Field$name": "<p>The name of the field.</p>"
+      }
+    },
+    "FieldType": {
+      "base": null,
+      "refs": {
+        "Field$type": "<p>The data type of the field.</p>"
+      }
+    },
+    "Fields": {
+      "base": null,
+      "refs": {
+        "ThingGroupIndexingConfiguration$managedFields": "<p>A list of automatically indexed thing group fields.</p>",
+        "ThingGroupIndexingConfiguration$customFields": "<p>A list of thing group fields to index. This list cannot contain any managed fields. Use the GetIndexingConfiguration API to get a list of managed fields.</p>",
+        "ThingIndexingConfiguration$managedFields": "<p>A list of automatically indexed thing fields.</p>",
+        "ThingIndexingConfiguration$customFields": "<p>A list of thing fields to index. This list cannot contain any managed fields. Use the GetIndexingConfiguration API to get a list of managed fields.</p>"
+      }
+    },
     "FileId": {
       "base": null,
       "refs": {
@@ -2444,12 +2530,6 @@
         "LambdaAction$functionArn": "<p>The ARN of the Lambda function.</p>"
       }
     },
-    "GEMaxResults": {
-      "base": null,
-      "refs": {
-        "ListTopicRulesRequest$maxResults": "<p>The maximum number of results to return.</p>"
-      }
-    },
     "GenerationId": {
       "base": null,
       "refs": {
@@ -2457,6 +2537,16 @@
         "CertificateDescription$generationId": "<p>The generation ID of the certificate.</p>",
         "GetPolicyResponse$generationId": "<p>The generation ID of the policy.</p>",
         "GetPolicyVersionResponse$generationId": "<p>The generation ID of the policy version.</p>"
+      }
+    },
+    "GetCardinalityRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCardinalityResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "GetEffectivePoliciesRequest": {
@@ -2509,6 +2599,16 @@
       "refs": {
       }
     },
+    "GetPercentilesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetPercentilesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GetPolicyRequest": {
       "base": "<p>The input for the GetPolicy operation.</p>",
       "refs": {
@@ -2545,6 +2645,16 @@
       }
     },
     "GetStatisticsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTopicRuleDestinationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTopicRuleDestinationResponse": {
       "base": null,
       "refs": {
       }
@@ -2594,6 +2704,60 @@
         "DynamoDBAction$hashKeyValue": "<p>The hash key value.</p>"
       }
     },
+    "HeaderKey": {
+      "base": null,
+      "refs": {
+        "HttpActionHeader$key": "<p>The HTTP header key.</p>"
+      }
+    },
+    "HeaderList": {
+      "base": null,
+      "refs": {
+        "HttpAction$headers": "<p>The HTTP headers to send with the message data.</p>"
+      }
+    },
+    "HeaderValue": {
+      "base": null,
+      "refs": {
+        "HttpActionHeader$value": "<p>The HTTP header value. Substitution templates are supported.</p>"
+      }
+    },
+    "HttpAction": {
+      "base": "<p>Send data to an HTTPS endpoint.</p>",
+      "refs": {
+        "Action$http": "<p>Send data to an HTTPS endpoint.</p>"
+      }
+    },
+    "HttpActionHeader": {
+      "base": "<p>The HTTP action header.</p>",
+      "refs": {
+        "HeaderList$member": null
+      }
+    },
+    "HttpAuthorization": {
+      "base": "<p>The authorization method used to send messages.</p>",
+      "refs": {
+        "HttpAction$auth": "<p>The authentication method to use when sending data to an HTTPS endpoint.</p>"
+      }
+    },
+    "HttpUrlDestinationConfiguration": {
+      "base": "<p>HTTP URL destination configuration used by the topic rule's HTTP action.</p>",
+      "refs": {
+        "TopicRuleDestinationConfiguration$httpUrlConfiguration": "<p>Configuration of the HTTP URL.</p>"
+      }
+    },
+    "HttpUrlDestinationProperties": {
+      "base": "<p>HTTP URL destination properties.</p>",
+      "refs": {
+        "TopicRuleDestination$httpUrlProperties": "<p>Properties of the HTTP URL.</p>"
+      }
+    },
+    "HttpUrlDestinationSummary": {
+      "base": "<p>Information about an HTTP URL destination.</p>",
+      "refs": {
+        "TopicRuleDestinationSummary$httpUrlSummary": "<p>Information about the HTTP URL.</p>"
+      }
+    },
     "ImplicitDeny": {
       "base": "<p>Information that implicitly denies authorization. When policy doesn't explicitly deny or allow an action on a resource it is considered an implicit deny.</p>",
       "refs": {
@@ -2632,6 +2796,8 @@
         "DescribeIndexRequest$indexName": "<p>The index name.</p>",
         "DescribeIndexResponse$indexName": "<p>The index name.</p>",
         "DescribeThingGroupResponse$indexName": "<p>The dynamic thing group index name.</p>",
+        "GetCardinalityRequest$indexName": "<p>The name of the index to search.</p>",
+        "GetPercentilesRequest$indexName": "<p>The name of the index to search.</p>",
         "GetStatisticsRequest$indexName": "<p>The name of the index to search. The default value is <code>AWS_Things</code>.</p>",
         "IndexNamesList$member": null,
         "SearchIndexRequest$indexName": "<p>The search index name.</p>",
@@ -3369,6 +3535,16 @@
       "refs": {
       }
     },
+    "ListTopicRuleDestinationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTopicRuleDestinationsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListTopicRulesRequest": {
       "base": "<p>The input for the ListTopicRules operation.</p>",
       "refs": {
@@ -3507,6 +3683,12 @@
         "ListViolationEventsRequest$maxResults": "<p>The maximum number of results to return at one time.</p>"
       }
     },
+    "Maximum": {
+      "base": null,
+      "refs": {
+        "Statistics$maximum": "<p>The maximum value of the aggregated fields. If the field data type is String this value is indeterminate.</p>"
+      }
+    },
     "MaximumPerMinute": {
       "base": null,
       "refs": {
@@ -3541,6 +3723,12 @@
         "ActiveViolation$lastViolationValue": "<p>The value of the metric (the measurement) which caused the most recent violation.</p>",
         "BehaviorCriteria$value": "<p>The value to be compared with the <code>metric</code>.</p>",
         "ViolationEvent$metricValue": "<p>The value of the metric (the measurement).</p>"
+      }
+    },
+    "Minimum": {
+      "base": null,
+      "refs": {
+        "Statistics$minimum": "<p>The minimum value of the aggregated fields. If the field data type is String this value is indeterminate.</p>"
       }
     },
     "MinimumNumberOfExecutedThings": {
@@ -3697,6 +3885,8 @@
         "ListThingsInThingGroupResponse$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListThingsRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
         "ListThingsResponse$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListTopicRuleDestinationsRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
+        "ListTopicRuleDestinationsResponse$nextToken": "<p>The token to retrieve the next set of results.</p>",
         "ListTopicRulesRequest$nextToken": "<p>A token used to retrieve the next value.</p>",
         "ListTopicRulesResponse$nextToken": "<p>A token used to retrieve the next value.</p>",
         "ListV2LoggingLevelsRequest$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
@@ -3889,10 +4079,41 @@
         "DynamoDBAction$payloadField": "<p>The action payload. This name can be customized.</p>"
       }
     },
+    "Percent": {
+      "base": null,
+      "refs": {
+        "PercentList$member": null,
+        "PercentPair$percent": "<p>The percentile.</p>"
+      }
+    },
+    "PercentList": {
+      "base": null,
+      "refs": {
+        "GetPercentilesRequest$percents": "<p>The percentile groups returned.</p>"
+      }
+    },
+    "PercentPair": {
+      "base": "<p>Describes the percentile and percentile value.</p>",
+      "refs": {
+        "Percentiles$member": null
+      }
+    },
+    "PercentValue": {
+      "base": null,
+      "refs": {
+        "PercentPair$value": "<p>The value of the percentile.</p>"
+      }
+    },
     "Percentage": {
       "base": null,
       "refs": {
         "DescribeThingRegistrationTaskResponse$percentageProgress": "<p>The progress of the bulk provisioning task expressed as a percentage.</p>"
+      }
+    },
+    "Percentiles": {
+      "base": null,
+      "refs": {
+        "GetPercentilesResponse$percentiles": "<p>The percentile values of the aggregated fields.</p>"
       }
     },
     "Platform": {
@@ -4064,7 +4285,7 @@
       "base": null,
       "refs": {
         "AttachPrincipalPolicyRequest$principal": "<p>The principal, which can be a certificate ARN (as returned from the CreateCertificate operation) or an Amazon Cognito ID.</p>",
-        "AttachThingPrincipalRequest$principal": "<p>The principal, such as a certificate or other credential.</p>",
+        "AttachThingPrincipalRequest$principal": "<p>The principal, which can be a certificate ARN (as returned from the CreateCertificate operation) or an Amazon Cognito ID.</p>",
         "DetachPrincipalPolicyRequest$principal": "<p>The principal.</p> <p>If the principal is a certificate, specify the certificate ARN. If the principal is an Amazon Cognito identity, specify the identity ID.</p>",
         "DetachThingPrincipalRequest$principal": "<p>If the principal is a certificate, this value must be ARN of the certificate. If the principal is an Amazon Cognito identity, this value must be the ID of the Amazon Cognito identity.</p>",
         "GetEffectivePoliciesRequest$principal": "<p>The principal.</p>",
@@ -4139,7 +4360,7 @@
     "Qos": {
       "base": null,
       "refs": {
-        "RepublishAction$qos": "<p>The Quality of Service (QoS) level to use when republishing messages.</p>"
+        "RepublishAction$qos": "<p>The Quality of Service (QoS) level to use when republishing messages. The default value is 0.</p>"
       }
     },
     "QueryMaxResults": {
@@ -4155,6 +4376,8 @@
         "CreateDynamicThingGroupRequest$queryString": "<p>The dynamic thing group search query string.</p> <p>See <a href=\"https://docs.aws.amazon.com/iot/latest/developerguide/query-syntax.html\">Query Syntax</a> for information about query string syntax.</p>",
         "CreateDynamicThingGroupResponse$queryString": "<p>The dynamic thing group search query string.</p>",
         "DescribeThingGroupResponse$queryString": "<p>The dynamic thing group search query string.</p>",
+        "GetCardinalityRequest$queryString": "<p>The search query.</p>",
+        "GetPercentilesRequest$queryString": "<p>The query string.</p>",
         "GetStatisticsRequest$queryString": "<p>The query used to search. You can specify \"*\" for the query string to get the count of all indexed things in your AWS account.</p>",
         "SearchIndexRequest$queryString": "<p>The search query string.</p>",
         "UpdateDynamicThingGroupRequest$queryString": "<p>The dynamic thing group search query string to update.</p>"
@@ -4166,6 +4389,8 @@
         "CreateDynamicThingGroupRequest$queryVersion": "<p>The dynamic thing group query version.</p> <note> <p>Currently one query version is supported: \"2017-09-30\". If not specified, the query version defaults to this value.</p> </note>",
         "CreateDynamicThingGroupResponse$queryVersion": "<p>The dynamic thing group query version.</p>",
         "DescribeThingGroupResponse$queryVersion": "<p>The dynamic thing group query version.</p>",
+        "GetCardinalityRequest$queryVersion": "<p>The query version.</p>",
+        "GetPercentilesRequest$queryVersion": "<p>The query version.</p>",
         "GetStatisticsRequest$queryVersion": "<p>The version of the query used to search.</p>",
         "SearchIndexRequest$queryVersion": "<p>The query version.</p>",
         "UpdateDynamicThingGroupRequest$queryVersion": "<p>The dynamic thing group query version to update.</p> <note> <p>Currently one query version is supported: \"2017-09-30\". If not specified, the query version defaults to this value.</p> </note>"
@@ -4767,6 +4992,12 @@
         "ListTargetsForSecurityProfileResponse$securityProfileTargets": "<p>The thing groups to which the security profile is attached.</p>"
       }
     },
+    "ServiceName": {
+      "base": null,
+      "refs": {
+        "SigV4Authorization$serviceName": "<p>The service name to use while signing with Sig V4.</p>"
+      }
+    },
     "ServiceUnavailableException": {
       "base": "<p>The service is temporarily unavailable.</p>",
       "refs": {
@@ -4823,6 +5054,12 @@
       "refs": {
       }
     },
+    "SigV4Authorization": {
+      "base": "<p>Use Sig V4 authorization.</p>",
+      "refs": {
+        "HttpAuthorization$sigv4": "<p>Use Sig V4 authorization. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4 Signing Process</a>.</p>"
+      }
+    },
     "Signature": {
       "base": null,
       "refs": {
@@ -4851,6 +5088,12 @@
       "base": "<p>Describes the code-signing profile.</p>",
       "refs": {
         "StartSigningJobParameter$signingProfileParameter": "<p>Describes the code-signing profile.</p>"
+      }
+    },
+    "SigningRegion": {
+      "base": null,
+      "refs": {
+        "SigV4Authorization$signingRegion": "<p>The signing region.</p>"
       }
     },
     "SkippedFindingsCount": {
@@ -4959,6 +5202,12 @@
       "refs": {
         "DescribeThingRegistrationTaskResponse$status": "<p>The status of the bulk thing provisioning task.</p>",
         "ListThingRegistrationTasksRequest$status": "<p>The status of the bulk thing provisioning task.</p>"
+      }
+    },
+    "StdDeviation": {
+      "base": null,
+      "refs": {
+        "Statistics$stdDeviation": "<p>The standard deviation of the aggregated field values.</p>"
       }
     },
     "StepFunctionsAction": {
@@ -5074,7 +5323,9 @@
         "CloudwatchMetricAction$metricTimestamp": "<p>An optional <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/cloudwatch_concepts.html#about_timestamp\">Unix timestamp</a>.</p>",
         "CreateTopicRuleRequest$tags": "<p>Metadata which can be used to manage the topic rule.</p> <note> <p>For URI Request parameters use format: ...key1=value1&amp;key2=value2...</p> <p>For the CLI command-line parameter use format: --tags \"key1=value1&amp;key2=value2...\"</p> <p>For the cli-input-json file use format: \"tags\": \"key1=value1&amp;key2=value2...\"</p> </note>",
         "StringMap$key": null,
-        "StringMap$value": null
+        "StringMap$value": null,
+        "TopicRuleDestination$statusReason": "<p>Additional details or reason why the topic rule destination is in the current status.</p>",
+        "TopicRuleDestinationSummary$statusReason": "<p>The reason the topic rule destination is in the current status.</p>"
       }
     },
     "StringMap": {
@@ -5094,6 +5345,18 @@
       "base": null,
       "refs": {
         "JobProcessDetails$numberOfSucceededThings": "<p>The number of things which successfully completed the job.</p>"
+      }
+    },
+    "Sum": {
+      "base": null,
+      "refs": {
+        "Statistics$sum": "<p>The sum of the aggregated fields. If the field data type is String this value is indeterminate.</p>"
+      }
+    },
+    "SumOfSquares": {
+      "base": null,
+      "refs": {
+        "Statistics$sumOfSquares": "<p>The sum of the squares of the aggregated field values.</p>"
       }
     },
     "TableName": {
@@ -5647,6 +5910,45 @@
         "GetTopicRuleResponse$rule": "<p>The rule.</p>"
       }
     },
+    "TopicRuleDestination": {
+      "base": "<p>A topic rule destination.</p>",
+      "refs": {
+        "CreateTopicRuleDestinationResponse$topicRuleDestination": "<p>The topic rule destination.</p>",
+        "GetTopicRuleDestinationResponse$topicRuleDestination": "<p>The topic rule destination.</p>"
+      }
+    },
+    "TopicRuleDestinationConfiguration": {
+      "base": "<p>Configuration of the topic rule destination.</p>",
+      "refs": {
+        "CreateTopicRuleDestinationRequest$destinationConfiguration": "<p>The topic rule destination configuration.</p>"
+      }
+    },
+    "TopicRuleDestinationMaxResults": {
+      "base": null,
+      "refs": {
+        "ListTopicRuleDestinationsRequest$maxResults": "<p>The maximum number of results to return at one time.</p>"
+      }
+    },
+    "TopicRuleDestinationStatus": {
+      "base": null,
+      "refs": {
+        "TopicRuleDestination$status": "<p>The status of the topic rule destination. Valid values are:</p> <dl> <dt>IN_PROGRESS</dt> <dd> <p>A topic rule destination was created but has not been confirmed. You can set <code>status</code> to <code>IN_PROGRESS</code> by calling <code>UpdateTopicRuleDestination</code>. Calling <code>UpdateTopicRuleDestination</code> causes a new confirmation challenge to be sent to your confirmation endpoint.</p> </dd> <dt>ENABLED</dt> <dd> <p>Confirmation was completed, and traffic to this destination is allowed. You can set <code>status</code> to <code>DISABLED</code> by calling <code>UpdateTopicRuleDestination</code>.</p> </dd> <dt>DISABLED</dt> <dd> <p>Confirmation was completed, and traffic to this destination is not allowed. You can set <code>status</code> to <code>ENABLED</code> by calling <code>UpdateTopicRuleDestination</code>.</p> </dd> <dt>ERROR</dt> <dd> <p>Confirmation could not be completed, for example if the confirmation timed out. You can call <code>GetTopicRuleDestination</code> for details about the error. You can set <code>status</code> to <code>IN_PROGRESS</code> by calling <code>UpdateTopicRuleDestination</code>. Calling <code>UpdateTopicRuleDestination</code> causes a new confirmation challenge to be sent to your confirmation endpoint.</p> </dd> </dl>",
+        "TopicRuleDestinationSummary$status": "<p>The status of the topic rule destination. Valid values are:</p> <dl> <dt>IN_PROGRESS</dt> <dd> <p>A topic rule destination was created but has not been confirmed. You can set <code>status</code> to <code>IN_PROGRESS</code> by calling <code>UpdateTopicRuleDestination</code>. Calling <code>UpdateTopicRuleDestination</code> causes a new confirmation challenge to be sent to your confirmation endpoint.</p> </dd> <dt>ENABLED</dt> <dd> <p>Confirmation was completed, and traffic to this destination is allowed. You can set <code>status</code> to <code>DISABLED</code> by calling <code>UpdateTopicRuleDestination</code>.</p> </dd> <dt>DISABLED</dt> <dd> <p>Confirmation was completed, and traffic to this destination is not allowed. You can set <code>status</code> to <code>ENABLED</code> by calling <code>UpdateTopicRuleDestination</code>.</p> </dd> <dt>ERROR</dt> <dd> <p>Confirmation could not be completed, for example if the confirmation timed out. You can call <code>GetTopicRuleDestination</code> for details about the error. You can set <code>status</code> to <code>IN_PROGRESS</code> by calling <code>UpdateTopicRuleDestination</code>. Calling <code>UpdateTopicRuleDestination</code> causes a new confirmation challenge to be sent to your confirmation endpoint.</p> </dd> </dl>",
+        "UpdateTopicRuleDestinationRequest$status": "<p>The status of the topic rule destination. Valid values are:</p> <dl> <dt>IN_PROGRESS</dt> <dd> <p>A topic rule destination was created but has not been confirmed. You can set <code>status</code> to <code>IN_PROGRESS</code> by calling <code>UpdateTopicRuleDestination</code>. Calling <code>UpdateTopicRuleDestination</code> causes a new confirmation challenge to be sent to your confirmation endpoint.</p> </dd> <dt>ENABLED</dt> <dd> <p>Confirmation was completed, and traffic to this destination is allowed. You can set <code>status</code> to <code>DISABLED</code> by calling <code>UpdateTopicRuleDestination</code>.</p> </dd> <dt>DISABLED</dt> <dd> <p>Confirmation was completed, and traffic to this destination is not allowed. You can set <code>status</code> to <code>ENABLED</code> by calling <code>UpdateTopicRuleDestination</code>.</p> </dd> <dt>ERROR</dt> <dd> <p>Confirmation could not be completed, for example if the confirmation timed out. You can call <code>GetTopicRuleDestination</code> for details about the error. You can set <code>status</code> to <code>IN_PROGRESS</code> by calling <code>UpdateTopicRuleDestination</code>. Calling <code>UpdateTopicRuleDestination</code> causes a new confirmation challenge to be sent to your confirmation endpoint.</p> </dd> </dl>"
+      }
+    },
+    "TopicRuleDestinationSummaries": {
+      "base": null,
+      "refs": {
+        "ListTopicRuleDestinationsResponse$destinationSummaries": "<p>Information about a topic rule destination.</p>"
+      }
+    },
+    "TopicRuleDestinationSummary": {
+      "base": "<p>Information about the topic rule destination.</p>",
+      "refs": {
+        "TopicRuleDestinationSummaries$member": null
+      }
+    },
     "TopicRuleList": {
       "base": null,
       "refs": {
@@ -5657,6 +5959,12 @@
       "base": "<p>Describes a rule.</p>",
       "refs": {
         "TopicRuleList$member": null
+      }
+    },
+    "TopicRuleMaxResults": {
+      "base": null,
+      "refs": {
+        "ListTopicRulesRequest$maxResults": "<p>The maximum number of results to return.</p>"
       }
     },
     "TopicRulePayload": {
@@ -5904,6 +6212,26 @@
       "refs": {
       }
     },
+    "UpdateTopicRuleDestinationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateTopicRuleDestinationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "Url": {
+      "base": null,
+      "refs": {
+        "HttpAction$url": "<p>The endpoint URL. If substitution templates are used in the URL, you must also specify a <code>confirmationUrl</code>. If this is a new destination, a new <code>TopicRuleDestination</code> is created if possible.</p>",
+        "HttpAction$confirmationUrl": "<p>The URL to which AWS IoT sends a confirmation message. The value of the confirmation URL must be a prefix of the endpoint URL. If you do not specify a confirmation URL AWS IoT uses the endpoint URL as the confirmation URL. If you use substitution templates in the confirmationUrl, you must create and enable topic rule destinations that match each possible value of the substituion template before traffic is allowed to your endpoint URL.</p>",
+        "HttpUrlDestinationConfiguration$confirmationUrl": "<p>The URL AWS IoT uses to confirm ownership of or access to the topic rule destination URL.</p>",
+        "HttpUrlDestinationProperties$confirmationUrl": "<p>The URL used to confirm the HTTP topic rule destination URL.</p>",
+        "HttpUrlDestinationSummary$confirmationUrl": "<p>The URL used to confirm ownership of or access to the HTTP topic rule destination URL.</p>"
+      }
+    },
     "UseBase64": {
       "base": null,
       "refs": {
@@ -5944,6 +6272,12 @@
         "AdditionalParameterMap$value": null,
         "AttributesMap$value": null,
         "Parameters$value": null
+      }
+    },
+    "Variance": {
+      "base": null,
+      "refs": {
+        "Statistics$variance": "<p>The variance of the aggregated field values.</p>"
       }
     },
     "Version": {

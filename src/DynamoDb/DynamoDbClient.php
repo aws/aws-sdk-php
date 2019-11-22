@@ -56,6 +56,8 @@ use Aws\RetryMiddleware;
  * @method \GuzzleHttp\Promise\Promise describeGlobalTableSettingsAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result describeLimits(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise describeLimitsAsync(array $args = []) (supported in versions 2012-08-10)
+ * @method \Aws\Result describeTableReplicaAutoScaling(array $args = []) (supported in versions 2012-08-10)
+ * @method \GuzzleHttp\Promise\Promise describeTableReplicaAutoScalingAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result describeTimeToLive(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise describeTimeToLiveAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result listBackups(array $args = []) (supported in versions 2012-08-10)
@@ -82,6 +84,8 @@ use Aws\RetryMiddleware;
  * @method \GuzzleHttp\Promise\Promise updateGlobalTableAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result updateGlobalTableSettings(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise updateGlobalTableSettingsAsync(array $args = []) (supported in versions 2012-08-10)
+ * @method \Aws\Result updateTableReplicaAutoScaling(array $args = []) (supported in versions 2012-08-10)
+ * @method \GuzzleHttp\Promise\Promise updateTableReplicaAutoScalingAsync(array $args = []) (supported in versions 2012-08-10)
  * @method \Aws\Result updateTimeToLive(array $args = []) (supported in versions 2012-08-10)
  * @method \GuzzleHttp\Promise\Promise updateTimeToLiveAsync(array $args = []) (supported in versions 2012-08-10)
  */

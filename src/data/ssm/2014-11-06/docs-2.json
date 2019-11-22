@@ -12,7 +12,7 @@
     "CreateMaintenanceWindow": "<p>Creates a new maintenance window.</p> <note> <p>The value you specify for <code>Duration</code> determines the specific end time for the maintenance window based on the time it begins. No maintenance window tasks are permitted to start after the resulting endtime minus the number of hours you specify for <code>Cutoff</code>. For example, if the maintenance window starts at 3 PM, the duration is three hours, and the value you specify for <code>Cutoff</code> is one hour, no maintenance window tasks can start after 5 PM.</p> </note>",
     "CreateOpsItem": "<p>Creates a new OpsItem. You must have permission in AWS Identity and Access Management (IAM) to create a new OpsItem. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-getting-started.html\">Getting Started with OpsCenter</a> in the <i>AWS Systems Manager User Guide</i>.</p> <p>Operations engineers and IT professionals use OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their AWS resources. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html\">AWS Systems Manager OpsCenter</a> in the <i>AWS Systems Manager User Guide</i>. </p>",
     "CreatePatchBaseline": "<p>Creates a patch baseline.</p> <note> <p>For information about valid key and value pairs in <code>PatchFilters</code> for each supported operating system type, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/APIReference/API_PatchFilter.html\">PatchFilter</a>.</p> </note>",
-    "CreateResourceDataSync": "<p>Creates a resource data sync configuration to a single bucket in Amazon S3. This is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data to the Amazon S3 bucket. To check the status of the sync, use the <a>ListResourceDataSync</a>.</p> <p>By default, data is not encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-inventory-datasync.html\">Configuring Resource Data Sync for Inventory</a> in the <i>AWS Systems Manager User Guide</i>.</p>",
+    "CreateResourceDataSync": "<p>A resource data sync helps you view data from multiple sources in a single location. Systems Manager offers two types of resource data sync: <code>SyncToDestination</code> and <code>SyncFromSource</code>.</p> <p>You can configure Systems Manager Inventory to use the <code>SyncToDestination</code> type to synchronize Inventory data from multiple AWS Regions to a single Amazon S3 bucket. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-inventory-datasync.html\">Configuring Resource Data Sync for Inventory</a> in the <i>AWS Systems Manager User Guide</i>.</p> <p>You can configure Systems Manager Explorer to use the <code>SyncToDestination</code> type to synchronize operational work items (OpsItems) and operational data (OpsData) from multiple AWS Regions to a single Amazon S3 bucket. You can also configure Explorer to use the <code>SyncFromSource</code> type. This type synchronizes OpsItems and OpsData from multiple AWS accounts and Regions by using AWS Organizations. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/Explorer-resource-data-sync.html\">Setting Up Explorer to Display Data from Multiple Accounts and Regions</a> in the <i>AWS Systems Manager User Guide</i>.</p> <p>A resource data sync is an asynchronous operation that returns immediately. After a successful initial sync is completed, the system continuously syncs data. To check the status of a sync, use the <a>ListResourceDataSync</a>.</p> <note> <p>By default, data is not encrypted in Amazon S3. We strongly recommend that you enable encryption in Amazon S3 to ensure secure data storage. We also recommend that you secure access to the Amazon S3 bucket by creating a restrictive bucket policy. </p> </note>",
     "DeleteActivation": "<p>Deletes an activation. You are not required to delete an activation. If you delete an activation, you can no longer use it to register additional managed instances. Deleting an activation does not de-register managed instances. You must manually de-register managed instances.</p>",
     "DeleteAssociation": "<p>Disassociates the specified Systems Manager document from the specified instance.</p> <p>When you disassociate a document from an instance, it does not change the configuration of the instance. To change the configuration state of an instance after you disassociate a document, you must create a new document with the desired configuration and associate it with the instance.</p>",
     "DeleteDocument": "<p>Deletes the Systems Manager document and all instance associations to the document.</p> <p>Before you delete the document, we recommend that you use <a>DeleteAssociation</a> to disassociate all instances that are associated with the document.</p>",
@@ -21,7 +21,7 @@
     "DeleteParameter": "<p>Delete a parameter from the system.</p>",
     "DeleteParameters": "<p>Delete a list of parameters.</p>",
     "DeletePatchBaseline": "<p>Deletes a patch baseline.</p>",
-    "DeleteResourceDataSync": "<p>Deletes a Resource Data Sync configuration. After the configuration is deleted, changes to inventory data on managed instances are no longer synced with the target Amazon S3 bucket. Deleting a sync configuration does not delete data in the target Amazon S3 bucket.</p>",
+    "DeleteResourceDataSync": "<p>Deletes a Resource Data Sync configuration. After the configuration is deleted, changes to data on managed instances are no longer synced to or from the target. Deleting a sync configuration does not delete data.</p>",
     "DeregisterManagedInstance": "<p>Removes the server or virtual machine from the list of registered servers. You can reregister the instance again at any time. If you don't plan to use Run Command on the server, we suggest uninstalling SSM Agent first.</p>",
     "DeregisterPatchBaselineForPatchGroup": "<p>Removes a patch group from a patch baseline.</p>",
     "DeregisterTargetFromMaintenanceWindow": "<p>Removes a target from a maintenance window.</p>",
@@ -52,7 +52,7 @@
     "DescribeMaintenanceWindows": "<p>Retrieves the maintenance windows in an AWS account.</p>",
     "DescribeMaintenanceWindowsForTarget": "<p>Retrieves information about the maintenance window targets or tasks that an instance is associated with.</p>",
     "DescribeOpsItems": "<p>Query a set of OpsItems. You must have permission in AWS Identity and Access Management (IAM) to query a list of OpsItems. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-getting-started.html\">Getting Started with OpsCenter</a> in the <i>AWS Systems Manager User Guide</i>.</p> <p>Operations engineers and IT professionals use OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their AWS resources. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html\">AWS Systems Manager OpsCenter</a> in the <i>AWS Systems Manager User Guide</i>. </p>",
-    "DescribeParameters": "<p>Get information about a parameter.</p> <p>Request results are returned on a best-effort basis. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of <code>MaxResults</code>. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a <code>NextToken</code>. You can specify the <code>NextToken</code> in a subsequent call to get the next set of results.</p>",
+    "DescribeParameters": "<p>Get information about a parameter.</p> <note> <p>Request results are returned on a best-effort basis. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of <code>MaxResults</code>. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a <code>NextToken</code>. You can specify the <code>NextToken</code> in a subsequent call to get the next set of results.</p> </note>",
     "DescribePatchBaselines": "<p>Lists the patch baselines in your AWS account.</p>",
     "DescribePatchGroupState": "<p>Returns high-level aggregated patch compliance state for a patch group.</p>",
     "DescribePatchGroups": "<p>Lists all patch groups that have been registered with patch baselines.</p>",
@@ -76,7 +76,7 @@
     "GetParameter": "<p>Get information about a parameter by using the parameter name. Don't confuse this API action with the <a>GetParameters</a> API action.</p>",
     "GetParameterHistory": "<p>Query a list of all parameters used by the AWS account.</p>",
     "GetParameters": "<p>Get details of a parameter. Don't confuse this API action with the <a>GetParameter</a> API action.</p>",
-    "GetParametersByPath": "<p>Retrieve parameters in a specific hierarchy. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-working.html\">Working with Systems Manager Parameters</a> in the <i>AWS Systems Manager User Guide</i>. </p> <p>Request results are returned on a best-effort basis. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of <code>MaxResults</code>. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a <code>NextToken</code>. You can specify the <code>NextToken</code> in a subsequent call to get the next set of results.</p> <note> <p>This API action doesn't support filtering by tags. </p> </note>",
+    "GetParametersByPath": "<p>Retrieve information about one or more parameters in a specific hierarchy. </p> <note> <p>Request results are returned on a best-effort basis. If you specify <code>MaxResults</code> in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of <code>MaxResults</code>. If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a <code>NextToken</code>. You can specify the <code>NextToken</code> in a subsequent call to get the next set of results.</p> </note>",
     "GetPatchBaseline": "<p>Retrieves information about a patch baseline.</p>",
     "GetPatchBaselineForPatchGroup": "<p>Retrieves the patch baseline that should be used for the specified patch group.</p>",
     "GetServiceSetting": "<p> <code>ServiceSetting</code> is an account-level setting for an AWS service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an AWS service charges money to the account based on feature or service usage, then the AWS service team might create a default setting of \"false\". This means the user can't use this feature unless they change the setting to \"true\" and intentionally opt in for a paid feature.</p> <p>Services map a <code>SettingId</code> object to a setting value. AWS services teams define the default value for a <code>SettingId</code>. You can't create a new <code>SettingId</code>, but you can overwrite the default value if you have the <code>ssm:UpdateServiceSetting</code> permission for the setting. Use the <a>UpdateServiceSetting</a> API action to change the default setting. Or use the <a>ResetServiceSetting</a> to change the value back to the original value defined by the AWS service team.</p> <p>Query the current service setting for the account. </p>",
@@ -121,6 +121,7 @@
     "UpdateManagedInstanceRole": "<p>Assigns or changes an Amazon Identity and Access Management (IAM) role for the managed instance.</p>",
     "UpdateOpsItem": "<p>Edit or change an OpsItem. You must have permission in AWS Identity and Access Management (IAM) to update an OpsItem. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-getting-started.html\">Getting Started with OpsCenter</a> in the <i>AWS Systems Manager User Guide</i>.</p> <p>Operations engineers and IT professionals use OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their AWS resources. For more information, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html\">AWS Systems Manager OpsCenter</a> in the <i>AWS Systems Manager User Guide</i>. </p>",
     "UpdatePatchBaseline": "<p>Modifies an existing patch baseline. Fields not specified in the request are left unchanged.</p> <note> <p>For information about valid key and value pairs in <code>PatchFilters</code> for each supported operating system type, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/APIReference/API_PatchFilter.html\">PatchFilter</a>.</p> </note>",
+    "UpdateResourceDataSync": "<p>Update a resource data sync. After you create a resource data sync for a Region, you can't change the account options for that sync. For example, if you create a sync in the us-east-2 (Ohio) Region and you choose the Include only the current account option, you can't edit that sync later and choose the Include all accounts from my AWS Organizations configuration option. Instead, you must delete the first resource data sync, and create a new one.</p>",
     "UpdateServiceSetting": "<p> <code>ServiceSetting</code> is an account-level setting for an AWS service. This setting defines how a user interacts with or uses a service or a feature of a service. For example, if an AWS service charges money to the account based on feature or service usage, then the AWS service team might create a default setting of \"false\". This means the user can't use this feature unless they change the setting to \"true\" and intentionally opt in for a paid feature.</p> <p>Services map a <code>SettingId</code> object to a setting value. AWS services teams define the default value for a <code>SettingId</code>. You can't create a new <code>SettingId</code>, but you can overwrite the default value if you have the <code>ssm:UpdateServiceSetting</code> permission for the setting. Use the <a>GetServiceSetting</a> API action to view the current value. Or, use the <a>ResetServiceSetting</a> to change the value back to the original value defined by the AWS service team.</p> <p>Update the service setting for the account. </p>"
   },
   "shapes": {
@@ -528,6 +529,12 @@
         "AttachmentContent$HashType": "<p>The hash algorithm used to calculate the hash value.</p>"
       }
     },
+    "AttachmentIdentifier": {
+      "base": null,
+      "refs": {
+        "AttachmentsSource$Name": "<p>The name of the document attachment file.</p>"
+      }
+    },
     "AttachmentInformation": {
       "base": "<p>An attribute of an attachment, such as the attachment name.</p>",
       "refs": {
@@ -554,7 +561,7 @@
       }
     },
     "AttachmentsSource": {
-      "base": "<p>A key and value pair that identifies the location of an attachment to a document.</p>",
+      "base": "<p>Identifying information about a document attachment, including the file name and a key-value pair that identifies the location of an attachment to a document.</p>",
       "refs": {
         "AttachmentsSourceList$member": null
       }
@@ -562,7 +569,7 @@
     "AttachmentsSourceKey": {
       "base": null,
       "refs": {
-        "AttachmentsSource$Key": "<p>The key of a key and value pair that identifies the location of an attachment to a document.</p>"
+        "AttachmentsSource$Key": "<p>The key of a key-value pair that identifies the location of an attachment to a document.</p>"
       }
     },
     "AttachmentsSourceList": {
@@ -581,7 +588,7 @@
     "AttachmentsSourceValues": {
       "base": null,
       "refs": {
-        "AttachmentsSource$Values": "<p>The URL of the location of a document attachment, such as the URL of an Amazon S3 bucket.</p>"
+        "AttachmentsSource$Values": "<p>The value of a key-value pair that identifies the location of an attachment to a document. The format is the URL of the location of a document attachment, such as the URL of an Amazon S3 bucket.</p>"
       }
     },
     "AttributeName": {
@@ -907,7 +914,7 @@
     "CommandFilterList": {
       "base": null,
       "refs": {
-        "ListCommandInvocationsRequest$Filters": "<p>(Optional) One or more filters. Use a filter to return a more specific list of results.</p>",
+        "ListCommandInvocationsRequest$Filters": "<p>(Optional) One or more filters. Use a filter to return a more specific list of results. Note that the <code>DocumentName</code> filter is not supported for ListCommandInvocations.</p>",
         "ListCommandsRequest$Filters": "<p>(Optional) One or more filters. Use a filter to return a more specific list of results. </p>"
       }
     },
@@ -1380,6 +1387,7 @@
         "InstanceInformation$LastSuccessfulAssociationExecutionDate": "<p>The last date the association was successfully run.</p>",
         "InstancePatchState$OperationStartTime": "<p>The time the most recent patching operation was started on the instance.</p>",
         "InstancePatchState$OperationEndTime": "<p>The time the most recent patching operation completed on the instance.</p>",
+        "InstancePatchState$LastNoRebootInstallOperationTime": "<p>The time of the last attempt to patch the instance with <code>NoReboot</code> specified as the reboot option.</p>",
         "MaintenanceWindowExecution$StartTime": "<p>The time the execution started.</p>",
         "MaintenanceWindowExecution$EndTime": "<p>The time the execution finished.</p>",
         "MaintenanceWindowExecutionTaskIdentity$StartTime": "<p>The time the task execution started.</p>",
@@ -2700,7 +2708,7 @@
         "ListCommandsRequest$InstanceId": "<p>(Optional) Lists commands issued against this instance ID.</p>",
         "ListInventoryEntriesRequest$InstanceId": "<p>The instance ID for which you want inventory information.</p>",
         "ListInventoryEntriesResult$InstanceId": "<p>The instance ID targeted by the request to query inventory information.</p>",
-        "PutInventoryRequest$InstanceId": "<p>One or more instance IDs where you want to add or update inventory items.</p>",
+        "PutInventoryRequest$InstanceId": "<p>An instance ID where you want to add or update inventory items.</p>",
         "UpdateAssociationStatusRequest$InstanceId": "<p>The ID of the instance.</p>"
       }
     },
@@ -2838,6 +2846,7 @@
     "InstancesCount": {
       "base": null,
       "refs": {
+        "DescribePatchGroupStateResult$InstancesWithInstalledPendingRebootPatches": "<p>The number of instances with patches installed that have not been rebooted after the patch installation. The status of these instances is NON_COMPLIANT.</p>",
         "DescribePatchGroupStateResult$InstancesWithInstalledRejectedPatches": "<p>The number of instances with patches installed that are specified in a RejectedPatches list. Patches with a status of <i>INSTALLED_REJECTED</i> were typically installed before they were added to a RejectedPatches list.</p> <note> <p>If ALLOW_AS_DEPENDENCY is the specified option for RejectedPatchesAction, the value of InstancesWithInstalledRejectedPatches will always be 0 (zero).</p> </note>"
       }
     },
@@ -4443,7 +4452,8 @@
     "OpsDataTypeName": {
       "base": null,
       "refs": {
-        "OpsAggregator$TypeName": "<p>The data type name to use for viewing counts of OpsItems.</p>"
+        "OpsAggregator$TypeName": "<p>The data type name to use for viewing counts of OpsItems.</p>",
+        "OpsResultAttribute$TypeName": "<p>Name of the data type. Valid value: AWS:OpsItem, AWS:EC2InstanceInformation, AWS:OpsItemTrendline, or AWS:ComplianceSummary.</p>"
       }
     },
     "OpsEntity": {
@@ -4462,6 +4472,12 @@
       "base": "<p>The OpsItem summaries result item.</p>",
       "refs": {
         "OpsEntityItemMap$value": null
+      }
+    },
+    "OpsEntityItemCaptureTime": {
+      "base": null,
+      "refs": {
+        "OpsEntityItem$CaptureTime": "<p>The time OpsItem data was captured.</p>"
       }
     },
     "OpsEntityItemEntry": {
@@ -4540,6 +4556,15 @@
     "OpsItemAlreadyExistsException": {
       "base": "<p>The OpsItem already exists.</p>",
       "refs": {
+      }
+    },
+    "OpsItemCategory": {
+      "base": null,
+      "refs": {
+        "CreateOpsItemRequest$Category": "<p>Specify a category to assign to an OpsItem. </p>",
+        "OpsItem$Category": "<p>An OpsItem category. Category options include: Availability, Cost, Performance, Recovery, Security.</p>",
+        "OpsItemSummary$Category": "<p>A list of OpsItems by category.</p>",
+        "UpdateOpsItemRequest$Category": "<p>Specify a new category for an OpsItem.</p>"
       }
     },
     "OpsItemDataKey": {
@@ -4685,6 +4710,15 @@
         "UpdateOpsItemRequest$Priority": "<p>The importance of this OpsItem in relation to other OpsItems in the system.</p>"
       }
     },
+    "OpsItemSeverity": {
+      "base": null,
+      "refs": {
+        "CreateOpsItemRequest$Severity": "<p>Specify a severity to assign to an OpsItem.</p>",
+        "OpsItem$Severity": "<p>The severity of the OpsItem. Severity options range from 1 to 4.</p>",
+        "OpsItemSummary$Severity": "<p>A list of OpsItems by severity.</p>",
+        "UpdateOpsItemRequest$Severity": "<p>Specify a new severity for an OpsItem.</p>"
+      }
+    },
     "OpsItemSource": {
       "base": null,
       "refs": {
@@ -4720,6 +4754,18 @@
         "OpsItem$Title": "<p>A short heading that describes the nature of the OpsItem and the impacted resource.</p>",
         "OpsItemSummary$Title": "<p>A short heading that describes the nature of the OpsItem and the impacted resource.</p>",
         "UpdateOpsItemRequest$Title": "<p>A short heading that describes the nature of the OpsItem and the impacted resource.</p>"
+      }
+    },
+    "OpsResultAttribute": {
+      "base": "<p>The OpsItem data type to return.</p>",
+      "refs": {
+        "OpsResultAttributeList$member": null
+      }
+    },
+    "OpsResultAttributeList": {
+      "base": null,
+      "refs": {
+        "GetOpsSummaryRequest$ResultAttributes": "<p>The OpsItem data type to return.</p>"
       }
     },
     "OutputSource": {
@@ -4764,7 +4810,7 @@
         "ParameterHistory$Name": "<p>The name of the parameter.</p>",
         "ParameterMetadata$Name": "<p>The parameter name.</p>",
         "ParameterNameList$member": null,
-        "PutParameterRequest$Name": "<p>The fully qualified name of the parameter that you want to add to the system. The fully qualified name includes the complete hierarchy of the parameter path and name. For example: <code>/Dev/DBServer/MySQL/db-string13</code> </p> <p>Naming Constraints:</p> <ul> <li> <p>Parameter names are case sensitive.</p> </li> <li> <p>A parameter name must be unique within an AWS Region</p> </li> <li> <p>A parameter name can't be prefixed with \"aws\" or \"ssm\" (case-insensitive).</p> </li> <li> <p>Parameter names can include only the following symbols and letters: <code>a-zA-Z0-9_.-/</code> </p> </li> <li> <p>A parameter name can't include spaces.</p> </li> <li> <p>Parameter hierarchies are limited to a maximum depth of fifteen levels.</p> </li> </ul> <p>For additional information about valid values for parameter names, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-parameter-name-constraints.html\">Requirements and Constraints for Parameter Names</a> in the <i>AWS Systems Manager User Guide</i>.</p> <note> <p>The maximum length constraint listed below includes capacity for additional system attributes that are not part of the name. The maximum length for the fully qualified parameter name is 1011 characters. </p> </note>"
+        "PutParameterRequest$Name": "<p>The fully qualified name of the parameter that you want to add to the system. The fully qualified name includes the complete hierarchy of the parameter path and name. For example: <code>/Dev/DBServer/MySQL/db-string13</code> </p> <p>Naming Constraints:</p> <ul> <li> <p>Parameter names are case sensitive.</p> </li> <li> <p>A parameter name must be unique within an AWS Region</p> </li> <li> <p>A parameter name can't be prefixed with \"aws\" or \"ssm\" (case-insensitive).</p> </li> <li> <p>Parameter names can include only the following symbols and letters: <code>a-zA-Z0-9_.-/</code> </p> </li> <li> <p>A parameter name can't include spaces.</p> </li> <li> <p>Parameter hierarchies are limited to a maximum depth of fifteen levels.</p> </li> </ul> <p>For additional information about valid values for parameter names, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-parameter-name-constraints.html\">Requirements and Constraints for Parameter Names</a> in the <i>AWS Systems Manager User Guide</i>.</p> <note> <p>The maximum length constraint listed below includes capacity for additional system attributes that are not part of the name. The maximum length for the fully qualified parameter name is 1011 characters, including the full length of the parameter ARN. For example, the following fully qualified parameter name is 65 characters, not 20 characters:</p> <p> <code>arn:aws:ssm:us-east-2:111122223333:parameter/ExampleParameterName</code> </p> </note>"
       }
     },
     "PSParameterSelector": {
@@ -4921,7 +4967,7 @@
       }
     },
     "ParameterStringFilter": {
-      "base": "<p>One or more filters. Use a filter to return a more specific list of results.</p> <note> <p>The <code>Name</code> and <code>Tier</code> filter keys can't be used with the <a>GetParametersByPath</a> API action. Also, the <code>Label</code> filter key can't be used with the <a>DescribeParameters</a> API action.</p> </note>",
+      "base": "<p>One or more filters. Use a filter to return a more specific list of results.</p> <important> <p>The <code>ParameterStringFilter</code> object is used by the <a>DescribeParameters</a> and <a>GetParametersByPath</a> API actions. However, not all of the pattern values listed for <code>Key</code> can be used with both actions.</p> <p>For <code>DescribeActions</code>, all of the listed patterns are valid, with the exception of <code>Label</code>.</p> <p>For <code>GetParametersByPath</code>, the following patterns listed for <code>Key</code> are not valid: <code>Name</code>, <code>Path</code>, and <code>Tier</code>.</p> <p>For examples of CLI commands demonstrating valid parameter filter constructions, see <a href=\"http://docs.aws.amazon.com/systems-manager/latest/userguide/parameter-search.html\">Searching for Systems Manager Parameters</a> in the <i>AWS Systems Manager User Guide</i>.</p> </important>",
       "refs": {
         "ParameterStringFilterList$member": null
       }
@@ -4936,7 +4982,7 @@
       "base": null,
       "refs": {
         "DescribeParametersRequest$ParameterFilters": "<p>Filters to limit the request results.</p>",
-        "GetParametersByPathRequest$ParameterFilters": "<p>Filters to limit the request results.</p> <note> <p>You can't filter using the parameter name.</p> </note>"
+        "GetParametersByPathRequest$ParameterFilters": "<p>Filters to limit the request results.</p>"
       }
     },
     "ParameterStringFilterValue": {
@@ -4954,7 +5000,7 @@
     "ParameterStringQueryOption": {
       "base": null,
       "refs": {
-        "ParameterStringFilter$Option": "<p>Valid options are Equals and BeginsWith. For Path filter, valid options are Recursive and OneLevel.</p>"
+        "ParameterStringFilter$Option": "<p>For all filters used with <a>DescribeParameters</a>, valid options include <code>Equals</code> and <code>BeginsWith</code>. The <code>Name</code> filter additionally supports the <code>Contains</code> option. (Exception: For filters using the key <code>Path</code>, valid options include <code>Recursive</code> and <code>OneLevel</code>.)</p> <p>For filters used with <a>GetParametersByPath</a>, valid options include <code>Equals</code> and <code>BeginsWith</code>. (Exception: For filters using the key <code>Label</code>, the only valid option is <code>Equals</code>.)</p>"
       }
     },
     "ParameterTier": {
@@ -5026,7 +5072,7 @@
     "ParametersFilterList": {
       "base": null,
       "refs": {
-        "DescribeParametersRequest$Filters": "<p>One or more filters. Use a filter to return a more specific list of results.</p>"
+        "DescribeParametersRequest$Filters": "<p>This data type is deprecated. Instead, use <code>ParameterFilters</code>.</p>"
       }
     },
     "ParametersFilterValue": {
@@ -5251,6 +5297,12 @@
       "base": null,
       "refs": {
         "InstancePatchState$InstalledOtherCount": "<p>The number of patches not specified in the patch baseline that are installed on the instance.</p>"
+      }
+    },
+    "PatchInstalledPendingRebootCount": {
+      "base": null,
+      "refs": {
+        "InstancePatchState$InstalledPendingRebootCount": "<p>The number of patches installed since the last time the instance was rebooted.</p>"
       }
     },
     "PatchInstalledRejectedCount": {
@@ -5542,6 +5594,12 @@
       "refs": {
       }
     },
+    "RebootOption": {
+      "base": null,
+      "refs": {
+        "InstancePatchState$RebootOption": "<p>Indicates the reboot option specified in the patch baseline.</p> <note> <p>Reboot options apply to <code>Install</code> operations only. Reboots are not attempted for Patch Manager <code>Scan</code> operations.</p> </note> <ul> <li> <p> <b>RebootIfNeeded</b>: Patch Manager tries to reboot the instance if it installed any patches, or if any patches are detected with a status of <code>InstalledPendingReboot</code>.</p> </li> <li> <p> <b>NoReboot</b>: Patch Manager attempts to install missing packages without trying to reboot the system. Patches installed with this option are assigned a status of <code>InstalledPendingReboot</code>. These patches might not be in effect until a reboot is performed.</p> </li> </ul>"
+      }
+    },
     "Region": {
       "base": null,
       "refs": {
@@ -5690,6 +5748,18 @@
       "refs": {
       }
     },
+    "ResourceDataSyncAwsOrganizationsSource": {
+      "base": "<p>Information about the AwsOrganizationsSource resource data sync source. A sync source of this type can synchronize data from AWS Organizations or, if an AWS Organization is not present, from multiple AWS Regions.</p>",
+      "refs": {
+        "ResourceDataSyncSource$AwsOrganizationsSource": "<p>The field name in <code>SyncSource</code> for the <code>ResourceDataSyncAwsOrganizationsSource</code> type.</p>",
+        "ResourceDataSyncSourceWithState$AwsOrganizationsSource": "<p>The field name in <code>SyncSource</code> for the <code>ResourceDataSyncAwsOrganizationsSource</code> type.</p>"
+      }
+    },
+    "ResourceDataSyncConflictException": {
+      "base": "<p>Another <code>UpdateResourceDataSync</code> request is being processed. Wait a few minutes and try again.</p>",
+      "refs": {
+      }
+    },
     "ResourceDataSyncCountExceededException": {
       "base": "<p>You have exceeded the allowed maximum sync configurations.</p>",
       "refs": {
@@ -5699,6 +5769,13 @@
       "base": null,
       "refs": {
         "ResourceDataSyncItem$SyncCreatedTime": "<p>The date and time the configuration was created (UTC).</p>"
+      }
+    },
+    "ResourceDataSyncIncludeFutureRegions": {
+      "base": null,
+      "refs": {
+        "ResourceDataSyncSource$IncludeFutureRegions": "<p>Whether to automatically synchronize and aggregate data from new AWS Regions when those Regions come online.</p>",
+        "ResourceDataSyncSourceWithState$IncludeFutureRegions": "<p>Whether to automatically synchronize and aggregate data from new AWS Regions when those Regions come online.</p>"
       }
     },
     "ResourceDataSyncInvalidConfigurationException": {
@@ -5718,19 +5795,51 @@
         "ListResourceDataSyncResult$ResourceDataSyncItems": "<p>A list of your current Resource Data Sync configurations and their statuses.</p>"
       }
     },
+    "ResourceDataSyncLastModifiedTime": {
+      "base": null,
+      "refs": {
+        "ResourceDataSyncItem$SyncLastModifiedTime": "<p>The date and time the resource data sync was changed. </p>"
+      }
+    },
     "ResourceDataSyncName": {
       "base": null,
       "refs": {
         "CreateResourceDataSyncRequest$SyncName": "<p>A name for the configuration.</p>",
         "DeleteResourceDataSyncRequest$SyncName": "<p>The name of the configuration to delete.</p>",
+        "GetOpsSummaryRequest$SyncName": "<p>Specify the name of a resource data sync to get.</p>",
         "ResourceDataSyncAlreadyExistsException$SyncName": null,
         "ResourceDataSyncItem$SyncName": "<p>The name of the Resource Data Sync.</p>",
-        "ResourceDataSyncNotFoundException$SyncName": null
+        "ResourceDataSyncNotFoundException$SyncName": null,
+        "UpdateResourceDataSyncRequest$SyncName": "<p>The name of the resource data sync you want to update.</p>"
       }
     },
     "ResourceDataSyncNotFoundException": {
       "base": "<p>The specified sync name was not found.</p>",
       "refs": {
+      }
+    },
+    "ResourceDataSyncOrganizationSourceType": {
+      "base": null,
+      "refs": {
+        "ResourceDataSyncAwsOrganizationsSource$OrganizationSourceType": "<p>If an AWS Organization is present, this is either <code>OrganizationalUnits</code> or <code>EntireOrganization</code>. For <code>OrganizationalUnits</code>, the data is aggregated from a set of organization units. For <code>EntireOrganization</code>, the data is aggregated from the entire AWS Organization. </p>"
+      }
+    },
+    "ResourceDataSyncOrganizationalUnit": {
+      "base": "<p>The AWS Organizations organizational unit data source for the sync.</p>",
+      "refs": {
+        "ResourceDataSyncOrganizationalUnitList$member": null
+      }
+    },
+    "ResourceDataSyncOrganizationalUnitId": {
+      "base": null,
+      "refs": {
+        "ResourceDataSyncOrganizationalUnit$OrganizationalUnitId": "<p>The AWS Organization unit ID data source for the sync.</p>"
+      }
+    },
+    "ResourceDataSyncOrganizationalUnitList": {
+      "base": null,
+      "refs": {
+        "ResourceDataSyncAwsOrganizationsSource$OrganizationalUnits": "<p>The AWS Organizations organization units included in the sync.</p>"
       }
     },
     "ResourceDataSyncS3BucketName": {
@@ -5762,6 +5871,56 @@
       "base": null,
       "refs": {
         "ResourceDataSyncS3Destination$Region": "<p>The AWS Region with the Amazon S3 bucket targeted by the Resource Data Sync.</p>"
+      }
+    },
+    "ResourceDataSyncSource": {
+      "base": "<p>Information about the source of the data included in the resource data sync.</p>",
+      "refs": {
+        "CreateResourceDataSyncRequest$SyncSource": "<p>Specify information about the data sources to synchronize.</p>",
+        "UpdateResourceDataSyncRequest$SyncSource": "<p>Specify information about the data sources to synchronize.</p>"
+      }
+    },
+    "ResourceDataSyncSourceRegion": {
+      "base": null,
+      "refs": {
+        "ResourceDataSyncSourceRegionList$member": null
+      }
+    },
+    "ResourceDataSyncSourceRegionList": {
+      "base": null,
+      "refs": {
+        "ResourceDataSyncSource$SourceRegions": "<p>The <code>SyncSource</code> AWS Regions included in the resource data sync.</p>",
+        "ResourceDataSyncSourceWithState$SourceRegions": "<p>The <code>SyncSource</code> AWS Regions included in the resource data sync.</p>"
+      }
+    },
+    "ResourceDataSyncSourceType": {
+      "base": null,
+      "refs": {
+        "ResourceDataSyncSource$SourceType": "<p>The type of data source for the resource data sync. <code>SourceType</code> is either <code>AwsOrganizations</code> (if an organization is present in AWS Organizations) or <code>singleAccountMultiRegions</code>.</p>",
+        "ResourceDataSyncSourceWithState$SourceType": "<p>The type of data source for the resource data sync. <code>SourceType</code> is either <code>AwsOrganizations</code> (if an organization is present in AWS Organizations) or <code>singleAccountMultiRegions</code>.</p>"
+      }
+    },
+    "ResourceDataSyncSourceWithState": {
+      "base": "<p>The data type name for including resource data sync state. There are four sync states:</p> <p> <code>OrganizationNotExists</code> (Your organization doesn't exist)</p> <p> <code>NoPermissions</code> (The system can't locate the service-linked role. This role is automatically created when a user creates a resource data sync in Explorer.)</p> <p> <code>InvalidOrganizationalUnit</code> (You specified or selected an invalid unit in the resource data sync configuration.)</p> <p> <code>TrustedAccessDisabled</code> (You disabled Systems Manager access in the organization in AWS Organizations.)</p>",
+      "refs": {
+        "ResourceDataSyncItem$SyncSource": "<p>Information about the source where the data was synchronized. </p>"
+      }
+    },
+    "ResourceDataSyncState": {
+      "base": null,
+      "refs": {
+        "ResourceDataSyncSourceWithState$State": "<p>The data type name for including resource data sync state. There are four sync states:</p> <p> <code>OrganizationNotExists</code>: Your organization doesn't exist.</p> <p> <code>NoPermissions</code>: The system can't locate the service-linked role. This role is automatically created when a user creates a resource data sync in Explorer.</p> <p> <code>InvalidOrganizationalUnit</code>: You specified or selected an invalid unit in the resource data sync configuration.</p> <p> <code>TrustedAccessDisabled</code>: You disabled Systems Manager access in the organization in AWS Organizations.</p>"
+      }
+    },
+    "ResourceDataSyncType": {
+      "base": null,
+      "refs": {
+        "CreateResourceDataSyncRequest$SyncType": "<p>Specify <code>SyncToDestination</code> to create a resource data sync that synchronizes data from multiple AWS Regions to an Amazon S3 bucket. Specify <code>SyncFromSource</code> to synchronize data from multiple AWS accounts and Regions, as listed in AWS Organizations.</p>",
+        "DeleteResourceDataSyncRequest$SyncType": "<p>Specify the type of resource data sync to delete.</p>",
+        "ListResourceDataSyncRequest$SyncType": "<p>View a list of resource data syncs according to the sync type. Specify <code>SyncToDestination</code> to view resource data syncs that synchronize data to an Amazon S3 buckets. Specify <code>SyncFromSource</code> to view resource data syncs from AWS Organizations or from multiple AWS Regions. </p>",
+        "ResourceDataSyncItem$SyncType": "<p>The type of resource data sync. If <code>SyncType</code> is <code>SyncToDestination</code>, then the resource data sync synchronizes data to an Amazon S3 bucket. If the <code>SyncType</code> is <code>SyncFromSource</code> then the resource data sync synchronizes data from AWS Organizations or from multiple AWS Regions.</p>",
+        "ResourceDataSyncNotFoundException$SyncType": null,
+        "UpdateResourceDataSyncRequest$SyncType": "<p>The type of resource data sync. If <code>SyncType</code> is <code>SyncToDestination</code>, then the resource data sync synchronizes data to an Amazon S3 bucket. If the <code>SyncType</code> is <code>SyncFromSource</code> then the resource data sync synchronizes data from AWS Organizations or from multiple AWS Regions.</p>"
       }
     },
     "ResourceId": {
@@ -6381,8 +6540,10 @@
         "ParameterVersionNotFound$message": null,
         "PoliciesLimitExceededException$message": null,
         "RelatedOpsItem$OpsItemId": "<p>The ID of an OpsItem related to the current OpsItem.</p>",
+        "ResourceDataSyncConflictException$Message": null,
         "ResourceDataSyncCountExceededException$Message": null,
         "ResourceDataSyncInvalidConfigurationException$Message": null,
+        "ResourceDataSyncNotFoundException$Message": null,
         "ResourceInUseException$Message": null,
         "ResourceLimitExceededException$Message": null,
         "ServiceSetting$LastModifiedUser": "<p>The ARN of the last modified user. This field is populated only if the setting value was overwritten.</p>",
@@ -6465,7 +6626,7 @@
       }
     },
     "Target": {
-      "base": "<p>An array of search criteria that targets instances using a Key,Value combination that you specify. </p> <p>Supported formats include the following.</p> <ul> <li> <p> <code>Key=InstanceIds,Values=<i>instance-id-1</i>,<i>instance-id-2</i>,<i>instance-id-3</i> </code> </p> </li> <li> <p> <code>Key=tag:<i>my-tag-key</i>,Values=<i>my-tag-value-1</i>,<i>my-tag-value-2</i> </code> </p> </li> <li> <p> <code>Key=tag-key,Values=<i>my-tag-key-1</i>,<i>my-tag-key-2</i> </code> </p> </li> <li> <p>(Maintenance window targets only) <code>Key=resource-groups:Name,Values=<i>resource-group-name</i> </code> </p> </li> <li> <p>(Maintenance window targets only) <code>Key=resource-groups:ResourceTypeFilters,Values=<i>resource-type-1</i>,<i>resource-type-2</i> </code> </p> </li> </ul> <p>For example:</p> <ul> <li> <p> <code>Key=InstanceIds,Values=i-02573cafcfEXAMPLE,i-0471e04240EXAMPLE,i-07782c72faEXAMPLE</code> </p> </li> <li> <p> <code>Key=tag:CostCenter,Values=CostCenter1,CostCenter2,CostCenter3</code> </p> </li> <li> <p> <code>Key=tag-key,Values=Name,Instance-Type,CostCenter</code> </p> </li> <li> <p>(Maintenance window targets only) <code>Key=resource-groups:Name,Values=ProductionResourceGroup</code> </p> </li> <li> <p>(Maintenance window targets only) <code>Key=resource-groups:ResourceTypeFilters,Values=<i>AWS::EC2::INSTANCE</i>,<i>AWS::EC2::VPC</i> </code> </p> </li> </ul> <p>For information about how to send commands that target instances using <code>Key,Value</code> parameters, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html#send-commands-targeting\">Using Targets and Rate Controls to Send Commands to a Fleet</a> in the <i>AWS Systems Manager User Guide</i>.</p>",
+      "base": "<p>An array of search criteria that targets instances using a Key,Value combination that you specify. </p> <p>Supported formats include the following.</p> <ul> <li> <p> <code>Key=InstanceIds,Values=<i>instance-id-1</i>,<i>instance-id-2</i>,<i>instance-id-3</i> </code> </p> </li> <li> <p> <code>Key=tag:<i>my-tag-key</i>,Values=<i>my-tag-value-1</i>,<i>my-tag-value-2</i> </code> </p> </li> <li> <p> <code>Key=tag-key,Values=<i>my-tag-key-1</i>,<i>my-tag-key-2</i> </code> </p> </li> <li> <p>(Maintenance window targets only) <code>Key=resource-groups:Name,Values=<i>resource-group-name</i> </code> </p> </li> <li> <p>(Maintenance window targets only) <code>Key=resource-groups:ResourceTypeFilters,Values=<i>resource-type-1</i>,<i>resource-type-2</i> </code> </p> </li> </ul> <p>For example:</p> <ul> <li> <p> <code>Key=InstanceIds,Values=i-02573cafcfEXAMPLE,i-0471e04240EXAMPLE,i-07782c72faEXAMPLE</code> </p> </li> <li> <p> <code>Key=tag:CostCenter,Values=CostCenter1,CostCenter2,CostCenter3</code> </p> </li> <li> <p> <code>Key=tag-key,Values=Name,Instance-Type,CostCenter</code> </p> </li> <li> <p>(Maintenance window targets only) <code>Key=resource-groups:Name,Values=ProductionResourceGroup</code> </p> <p>This example demonstrates how to target all resources in the resource group <b>ProductionResourceGroup</b> in your maintenance window.</p> </li> <li> <p>(Maintenance window targets only) <code>Key=resource-groups:ResourceTypeFilters,Values=<i>AWS::EC2::INSTANCE</i>,<i>AWS::EC2::VPC</i> </code> </p> <p>This example demonstrates how to target only Amazon EC2 instances and VPCs in your maintenance window.</p> </li> <li> <p>(State Manager association targets only) <code>Key=InstanceIds,Values=<i>*</i> </code> </p> <p>This example demonstrates how to target all managed instances in the AWS Region where the association was created.</p> </li> </ul> <p>For information about how to send commands that target instances using <code>Key,Value</code> parameters, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/send-commands-multiple.html#send-commands-targeting\">Using Targets and Rate Controls to Send Commands to a Fleet</a> in the <i>AWS Systems Manager User Guide</i>.</p>",
       "refs": {
         "Targets$member": null
       }
@@ -6764,6 +6925,16 @@
       }
     },
     "UpdatePatchBaselineResult": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateResourceDataSyncRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateResourceDataSyncResult": {
       "base": null,
       "refs": {
       }

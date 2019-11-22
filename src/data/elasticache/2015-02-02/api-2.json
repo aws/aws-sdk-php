@@ -80,6 +80,23 @@
         {"shape":"InvalidParameterValueException"}
       ]
     },
+    "CompleteMigration":{
+      "name":"CompleteMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CompleteMigrationMessage"},
+      "output":{
+        "shape":"CompleteMigrationResponse",
+        "resultWrapper":"CompleteMigrationResult"
+      },
+      "errors":[
+        {"shape":"ReplicationGroupNotFoundFault"},
+        {"shape":"InvalidReplicationGroupStateFault"},
+        {"shape":"ReplicationGroupNotUnderMigrationFault"}
+      ]
+    },
     "CopySnapshot":{
       "name":"CopySnapshot",
       "http":{
@@ -854,6 +871,24 @@
         {"shape":"InvalidParameterCombinationException"}
       ]
     },
+    "StartMigration":{
+      "name":"StartMigration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartMigrationMessage"},
+      "output":{
+        "shape":"StartMigrationResponse",
+        "resultWrapper":"StartMigrationResult"
+      },
+      "errors":[
+        {"shape":"ReplicationGroupNotFoundFault"},
+        {"shape":"InvalidReplicationGroupStateFault"},
+        {"shape":"ReplicationGroupAlreadyUnderMigrationFault"},
+        {"shape":"InvalidParameterValueException"}
+      ]
+    },
     "TestFailover":{
       "name":"TestFailover",
       "http":{
@@ -920,6 +955,20 @@
         "ScaleUpModifications":{"shape":"NodeTypeList"},
         "ScaleDownModifications":{"shape":"NodeTypeList"}
       }
+    },
+    "AuthTokenUpdateStatus":{
+      "type":"string",
+      "enum":[
+        "SETTING",
+        "ROTATING"
+      ]
+    },
+    "AuthTokenUpdateStrategyType":{
+      "type":"string",
+      "enum":[
+        "SET",
+        "ROTATE"
+      ]
     },
     "AuthorizationAlreadyExistsFault":{
       "type":"structure",
@@ -1032,6 +1081,7 @@
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "SnapshotWindow":{"shape":"String"},
         "AuthTokenEnabled":{"shape":"BooleanOptional"},
+        "AuthTokenLastModifiedDate":{"shape":"TStamp"},
         "TransitEncryptionEnabled":{"shape":"BooleanOptional"},
         "AtRestEncryptionEnabled":{"shape":"BooleanOptional"}
       },
@@ -1443,6 +1493,20 @@
       },
       "exception":true
     },
+    "CompleteMigrationMessage":{
+      "type":"structure",
+      "required":["ReplicationGroupId"],
+      "members":{
+        "ReplicationGroupId":{"shape":"String"},
+        "Force":{"shape":"Boolean"}
+      }
+    },
+    "CompleteMigrationResponse":{
+      "type":"structure",
+      "members":{
+        "ReplicationGroup":{"shape":"ReplicationGroup"}
+      }
+    },
     "ConfigureShard":{
       "type":"structure",
       "required":[
@@ -1623,6 +1687,17 @@
       "members":{
         "Snapshot":{"shape":"Snapshot"}
       }
+    },
+    "CustomerNodeEndpoint":{
+      "type":"structure",
+      "members":{
+        "Address":{"shape":"String"},
+        "Port":{"shape":"IntegerOptional"}
+      }
+    },
+    "CustomerNodeEndpointList":{
+      "type":"list",
+      "member":{"shape":"CustomerNodeEndpoint"}
     },
     "DecreaseReplicaCountMessage":{
       "type":"structure",
@@ -2116,7 +2191,9 @@
         "AutoMinorVersionUpgrade":{"shape":"BooleanOptional"},
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "SnapshotWindow":{"shape":"String"},
-        "CacheNodeType":{"shape":"String"}
+        "CacheNodeType":{"shape":"String"},
+        "AuthToken":{"shape":"String"},
+        "AuthTokenUpdateStrategy":{"shape":"AuthTokenUpdateStrategyType"}
       }
     },
     "ModifyCacheClusterResult":{
@@ -2160,6 +2237,10 @@
         "PrimaryClusterId":{"shape":"String"},
         "SnapshottingClusterId":{"shape":"String"},
         "AutomaticFailoverEnabled":{"shape":"BooleanOptional"},
+        "NodeGroupId":{
+          "shape":"String",
+          "deprecated":true
+        },
         "CacheSecurityGroupNames":{"shape":"CacheSecurityGroupNameList"},
         "SecurityGroupIds":{"shape":"SecurityGroupIdsList"},
         "PreferredMaintenanceWindow":{"shape":"String"},
@@ -2172,10 +2253,8 @@
         "SnapshotRetentionLimit":{"shape":"IntegerOptional"},
         "SnapshotWindow":{"shape":"String"},
         "CacheNodeType":{"shape":"String"},
-        "NodeGroupId":{
-          "shape":"String",
-          "deprecated":true
-        }
+        "AuthToken":{"shape":"String"},
+        "AuthTokenUpdateStrategy":{"shape":"AuthTokenUpdateStrategyType"}
       }
     },
     "ModifyReplicationGroupResult":{
@@ -2459,7 +2538,8 @@
         "NumCacheNodes":{"shape":"IntegerOptional"},
         "CacheNodeIdsToRemove":{"shape":"CacheNodeIdsList"},
         "EngineVersion":{"shape":"String"},
-        "CacheNodeType":{"shape":"String"}
+        "CacheNodeType":{"shape":"String"},
+        "AuthTokenStatus":{"shape":"AuthTokenUpdateStatus"}
       }
     },
     "PreferredAvailabilityZoneList":{
@@ -2571,6 +2651,7 @@
         "ClusterEnabled":{"shape":"BooleanOptional"},
         "CacheNodeType":{"shape":"String"},
         "AuthTokenEnabled":{"shape":"BooleanOptional"},
+        "AuthTokenLastModifiedDate":{"shape":"TStamp"},
         "TransitEncryptionEnabled":{"shape":"BooleanOptional"},
         "AtRestEncryptionEnabled":{"shape":"BooleanOptional"},
         "KmsKeyId":{"shape":"String"}
@@ -2583,6 +2664,17 @@
       },
       "error":{
         "code":"ReplicationGroupAlreadyExists",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "ReplicationGroupAlreadyUnderMigrationFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"ReplicationGroupAlreadyUnderMigrationFault",
         "httpStatusCode":400,
         "senderFault":true
       },
@@ -2618,12 +2710,24 @@
       },
       "exception":true
     },
+    "ReplicationGroupNotUnderMigrationFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"ReplicationGroupNotUnderMigrationFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "ReplicationGroupPendingModifiedValues":{
       "type":"structure",
       "members":{
         "PrimaryClusterId":{"shape":"String"},
         "AutomaticFailoverStatus":{"shape":"PendingAutomaticFailoverStatus"},
-        "Resharding":{"shape":"ReshardingStatus"}
+        "Resharding":{"shape":"ReshardingStatus"},
+        "AuthTokenStatus":{"shape":"AuthTokenUpdateStatus"}
       }
     },
     "ReservedCacheNode":{
@@ -2988,6 +3092,23 @@
         "cache-subnet-group",
         "replication-group"
       ]
+    },
+    "StartMigrationMessage":{
+      "type":"structure",
+      "required":[
+        "ReplicationGroupId",
+        "CustomerNodeEndpointList"
+      ],
+      "members":{
+        "ReplicationGroupId":{"shape":"String"},
+        "CustomerNodeEndpointList":{"shape":"CustomerNodeEndpointList"}
+      }
+    },
+    "StartMigrationResponse":{
+      "type":"structure",
+      "members":{
+        "ReplicationGroup":{"shape":"ReplicationGroup"}
+      }
     },
     "String":{"type":"string"},
     "Subnet":{

@@ -29,6 +29,22 @@
         {"shape":"DependentServiceFailureException"}
       ]
     },
+    "CreateBackendEnvironment":{
+      "name":"CreateBackendEnvironment",
+      "http":{
+        "method":"POST",
+        "requestUri":"/apps/{appId}/backendenvironments"
+      },
+      "input":{"shape":"CreateBackendEnvironmentRequest"},
+      "output":{"shape":"CreateBackendEnvironmentResult"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "CreateBranch":{
       "name":"CreateBranch",
       "http":{
@@ -107,6 +123,22 @@
         {"shape":"BadRequestException"},
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"DependentServiceFailureException"}
+      ]
+    },
+    "DeleteBackendEnvironment":{
+      "name":"DeleteBackendEnvironment",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/apps/{appId}/backendenvironments/{environmentName}"
+      },
+      "input":{"shape":"DeleteBackendEnvironmentRequest"},
+      "output":{"shape":"DeleteBackendEnvironmentResult"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"NotFoundException"},
         {"shape":"InternalFailureException"},
         {"shape":"DependentServiceFailureException"}
       ]
@@ -221,6 +253,21 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "GetBackendEnvironment":{
+      "name":"GetBackendEnvironment",
+      "http":{
+        "method":"GET",
+        "requestUri":"/apps/{appId}/backendenvironments/{environmentName}"
+      },
+      "input":{"shape":"GetBackendEnvironmentRequest"},
+      "output":{"shape":"GetBackendEnvironmentResult"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "GetBranch":{
       "name":"GetBranch",
       "http":{
@@ -310,6 +357,20 @@
         {"shape":"UnauthorizedException"},
         {"shape":"InternalFailureException"},
         {"shape":"LimitExceededException"}
+      ]
+    },
+    "ListBackendEnvironments":{
+      "name":"ListBackendEnvironments",
+      "http":{
+        "method":"GET",
+        "requestUri":"/apps/{appId}/backendenvironments"
+      },
+      "input":{"shape":"ListBackendEnvironmentsRequest"},
+      "output":{"shape":"ListBackendEnvironmentsResult"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "ListBranches":{
@@ -606,10 +667,6 @@
       "type":"string",
       "max":255
     },
-    "ArtifactType":{
-      "type":"string",
-      "enum":["TEST"]
-    },
     "ArtifactUrl":{
       "type":"string",
       "max":1000
@@ -641,7 +698,8 @@
         "basicAuthCredentials":{"shape":"BasicAuthCredentials"},
         "enableBasicAuth":{"shape":"EnableBasicAuth"},
         "buildSpec":{"shape":"BuildSpec"},
-        "enablePullRequestPreview":{"shape":"EnablePullRequestPreview"}
+        "enablePullRequestPreview":{"shape":"EnablePullRequestPreview"},
+        "pullRequestEnvironmentName":{"shape":"PullRequestEnvironmentName"}
       }
     },
     "AutoBranchCreationPattern":{
@@ -652,6 +710,32 @@
     "AutoBranchCreationPatterns":{
       "type":"list",
       "member":{"shape":"AutoBranchCreationPattern"}
+    },
+    "BackendEnvironment":{
+      "type":"structure",
+      "required":[
+        "backendEnvironmentArn",
+        "environmentName",
+        "createTime",
+        "updateTime"
+      ],
+      "members":{
+        "backendEnvironmentArn":{"shape":"BackendEnvironmentArn"},
+        "environmentName":{"shape":"EnvironmentName"},
+        "stackName":{"shape":"StackName"},
+        "deploymentArtifacts":{"shape":"DeploymentArtifacts"},
+        "createTime":{"shape":"CreateTime"},
+        "updateTime":{"shape":"UpdateTime"}
+      }
+    },
+    "BackendEnvironmentArn":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
+    "BackendEnvironments":{
+      "type":"list",
+      "member":{"shape":"BackendEnvironment"}
     },
     "BadRequestException":{
       "type":"structure",
@@ -709,8 +793,10 @@
         "ttl":{"shape":"TTL"},
         "associatedResources":{"shape":"AssociatedResources"},
         "enablePullRequestPreview":{"shape":"EnablePullRequestPreview"},
+        "pullRequestEnvironmentName":{"shape":"PullRequestEnvironmentName"},
         "destinationBranch":{"shape":"BranchName"},
-        "sourceBranch":{"shape":"BranchName"}
+        "sourceBranch":{"shape":"BranchName"},
+        "backendEnvironmentArn":{"shape":"BackendEnvironmentArn"}
       }
     },
     "BranchArn":{
@@ -782,6 +868,30 @@
         "app":{"shape":"App"}
       }
     },
+    "CreateBackendEnvironmentRequest":{
+      "type":"structure",
+      "required":[
+        "appId",
+        "environmentName"
+      ],
+      "members":{
+        "appId":{
+          "shape":"AppId",
+          "location":"uri",
+          "locationName":"appId"
+        },
+        "environmentName":{"shape":"EnvironmentName"},
+        "stackName":{"shape":"StackName"},
+        "deploymentArtifacts":{"shape":"DeploymentArtifacts"}
+      }
+    },
+    "CreateBackendEnvironmentResult":{
+      "type":"structure",
+      "required":["backendEnvironment"],
+      "members":{
+        "backendEnvironment":{"shape":"BackendEnvironment"}
+      }
+    },
     "CreateBranchRequest":{
       "type":"structure",
       "required":[
@@ -807,7 +917,9 @@
         "buildSpec":{"shape":"BuildSpec"},
         "ttl":{"shape":"TTL"},
         "displayName":{"shape":"DisplayName"},
-        "enablePullRequestPreview":{"shape":"EnablePullRequestPreview"}
+        "enablePullRequestPreview":{"shape":"EnablePullRequestPreview"},
+        "pullRequestEnvironmentName":{"shape":"PullRequestEnvironmentName"},
+        "backendEnvironmentArn":{"shape":"BackendEnvironmentArn"}
       }
     },
     "CreateBranchResult":{
@@ -951,6 +1063,32 @@
         "app":{"shape":"App"}
       }
     },
+    "DeleteBackendEnvironmentRequest":{
+      "type":"structure",
+      "required":[
+        "appId",
+        "environmentName"
+      ],
+      "members":{
+        "appId":{
+          "shape":"AppId",
+          "location":"uri",
+          "locationName":"appId"
+        },
+        "environmentName":{
+          "shape":"EnvironmentName",
+          "location":"uri",
+          "locationName":"environmentName"
+        }
+      }
+    },
+    "DeleteBackendEnvironmentResult":{
+      "type":"structure",
+      "required":["backendEnvironment"],
+      "members":{
+        "backendEnvironment":{"shape":"BackendEnvironment"}
+      }
+    },
     "DeleteBranchRequest":{
       "type":"structure",
       "required":[
@@ -1061,6 +1199,11 @@
       "error":{"httpStatusCode":503},
       "exception":true
     },
+    "DeploymentArtifacts":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
     "Description":{
       "type":"string",
       "max":1000
@@ -1134,6 +1277,11 @@
     "EnvValue":{
       "type":"string",
       "max":1000
+    },
+    "EnvironmentName":{
+      "type":"string",
+      "max":255,
+      "min":1
     },
     "EnvironmentVariables":{
       "type":"map",
@@ -1223,6 +1371,32 @@
       "members":{
         "artifactId":{"shape":"ArtifactId"},
         "artifactUrl":{"shape":"ArtifactUrl"}
+      }
+    },
+    "GetBackendEnvironmentRequest":{
+      "type":"structure",
+      "required":[
+        "appId",
+        "environmentName"
+      ],
+      "members":{
+        "appId":{
+          "shape":"AppId",
+          "location":"uri",
+          "locationName":"appId"
+        },
+        "environmentName":{
+          "shape":"EnvironmentName",
+          "location":"uri",
+          "locationName":"environmentName"
+        }
+      }
+    },
+    "GetBackendEnvironmentResult":{
+      "type":"structure",
+      "required":["backendEnvironment"],
+      "members":{
+        "backendEnvironment":{"shape":"BackendEnvironment"}
       }
     },
     "GetBranchRequest":{
@@ -1464,7 +1638,6 @@
           "location":"uri",
           "locationName":"jobId"
         },
-        "artifactType":{"shape":"ArtifactType"},
         "nextToken":{
           "shape":"NextToken",
           "location":"querystring",
@@ -1482,6 +1655,36 @@
       "required":["artifacts"],
       "members":{
         "artifacts":{"shape":"Artifacts"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListBackendEnvironmentsRequest":{
+      "type":"structure",
+      "required":["appId"],
+      "members":{
+        "appId":{
+          "shape":"AppId",
+          "location":"uri",
+          "locationName":"appId"
+        },
+        "environmentName":{"shape":"EnvironmentName"},
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListBackendEnvironmentsResult":{
+      "type":"structure",
+      "required":["backendEnvironments"],
+      "members":{
+        "backendEnvironments":{"shape":"BackendEnvironments"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -1673,6 +1876,10 @@
         "branchName":{"shape":"BranchName"}
       }
     },
+    "PullRequestEnvironmentName":{
+      "type":"string",
+      "max":20
+    },
     "Repository":{
       "type":"string",
       "max":1000
@@ -1712,6 +1919,11 @@
     "SourceUrl":{
       "type":"string",
       "max":1000
+    },
+    "StackName":{
+      "type":"string",
+      "max":255,
+      "min":1
     },
     "Stage":{
       "type":"string",
@@ -2054,7 +2266,9 @@
         "buildSpec":{"shape":"BuildSpec"},
         "ttl":{"shape":"TTL"},
         "displayName":{"shape":"DisplayName"},
-        "enablePullRequestPreview":{"shape":"EnablePullRequestPreview"}
+        "enablePullRequestPreview":{"shape":"EnablePullRequestPreview"},
+        "pullRequestEnvironmentName":{"shape":"PullRequestEnvironmentName"},
+        "backendEnvironmentArn":{"shape":"BackendEnvironmentArn"}
       }
     },
     "UpdateBranchResult":{

@@ -244,6 +244,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateOpsItemAsync(array $args = [])
  * @method \Aws\Result updatePatchBaseline(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updatePatchBaselineAsync(array $args = [])
+ * @method \Aws\Result updateResourceDataSync(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateResourceDataSyncAsync(array $args = [])
  * @method \Aws\Result updateServiceSetting(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateServiceSettingAsync(array $args = [])
  */

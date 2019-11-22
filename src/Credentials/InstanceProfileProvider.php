@@ -17,6 +17,7 @@ class InstanceProfileProvider
 {
     const SERVER_URI = 'http://169.254.169.254/latest/';
     const CRED_PATH = 'meta-data/iam/security-credentials/';
+    const TOKEN_PATH = 'api/token';
 
     const ENV_DISABLE = 'AWS_EC2_METADATA_DISABLED';
 
@@ -34,6 +35,9 @@ class InstanceProfileProvider
 
     /** @var float|mixed */
     private $timeout;
+
+    /** @var bool */
+    private $secureMode = true;
 
     /**
      * The constructor accepts the following options:
@@ -63,30 +67,104 @@ class InstanceProfileProvider
     public function __invoke()
     {
         return Promise\coroutine(function () {
-            if (!$this->profile) {
-                $this->profile = (yield $this->request(self::CRED_PATH));
+
+            // Retrieve token or switch out of secure mode
+            $token = null;
+            while ($this->secureMode && is_null($token)) {
+                try {
+                    $token = (yield $this->request(
+                        self::TOKEN_PATH,
+                        'PUT',
+                        [
+                            'x-aws-ec2-metadata-token-ttl-seconds' => 21600
+                        ]
+                    ));
+                } catch (RequestException $e) {
+                    if (empty($e->getResponse())
+                        || !in_array(
+                            $e->getResponse()->getStatusCode(),
+                            [400, 500, 502, 503, 504]
+                        )
+                    ) {
+                        $this->secureMode = false;
+                    } else {
+                        $this->handleRetryableException(
+                            $e,
+                            [],
+                            $this->createErrorMessage(
+                                'Error retrieving metadata token'
+                            )
+                        );
+                    }
+                }
+                $this->attempts++;
             }
+
+            // Set token header only for secure mode
+            $headers = [];
+            if ($this->secureMode) {
+                $headers = [
+                    'x-aws-ec2-metadata-token' => $token
+                ];
+            }
+
+            // Retrieve profile
+            while (!$this->profile) {
+                try {
+                    $this->profile = (yield $this->request(
+                        self::CRED_PATH,
+                        'GET',
+                        $headers
+                    ));
+                } catch (RequestException $e) {
+                    // 401 indicates insecure flow not supported, switch to
+                    // attempting secure mode for subsequent calls
+                    if (!empty($this->getExceptionStatusCode($e))
+                        && $this->getExceptionStatusCode($e) === 401
+                    ) {
+                        $this->secureMode = true;
+                    }
+                    $this->handleRetryableException(
+                        $e,
+                        [ 'blacklist' => [401, 403] ],
+                        $this->createErrorMessage($e->getMessage())
+                    );
+                }
+
+                $this->attempts++;
+            }
+
+            // Retrieve credentials
             $result = null;
             while ($result == null) {
                 try {
-                    $json = (yield $this->request(self::CRED_PATH . $this->profile));
+                    $json = (yield $this->request(
+                        self::CRED_PATH . $this->profile,
+                        'GET',
+                        $headers
+                    ));
                     $result = $this->decodeResult($json);
                 } catch (InvalidJsonException $e) {
-                    if ($this->attempts < $this->retries) {
-                        sleep(pow(1.2, $this->attempts));
-                    } else {
-                        throw new CredentialsException(
-                            'Invalid JSON Response, retries exhausted.'
-                        );
-                    }
+                    $this->handleRetryableException(
+                        $e,
+                        [ 'blacklist' => [401, 403] ],
+                        $this->createErrorMessage(
+                            'Invalid JSON response, retries exhausted'
+                        )
+                    );
                 } catch (RequestException $e) {
-                    if ($this->attempts < $this->retries) {
-                        sleep(pow(1.2, $this->attempts));
-                    } else {
-                        throw new CredentialsException(
-                            'Networking error, retries exhausted.'
-                        );
+                    // 401 indicates insecure flow not supported, switch to
+                    // attempting secure mode for subsequent calls
+                    if (!empty($this->getExceptionStatusCode($e))
+                        && $this->getExceptionStatusCode($e) === 401
+                    ) {
+                        $this->secureMode = true;
                     }
+                    $this->handleRetryableException(
+                        $e,
+                        [ 'blacklist' => [401, 403] ],
+                        $this->createErrorMessage($e->getMessage())
+                    );
                 }
                 $this->attempts++;
             }
@@ -101,10 +179,12 @@ class InstanceProfileProvider
 
     /**
      * @param string $url
+     * @param string $method
+     * @param array $headers
      * @return PromiseInterface Returns a promise that is fulfilled with the
      *                          body of the response as a string.
      */
-    private function request($url)
+    private function request($url, $method = 'GET', $headers = [])
     {
         $disabled = getenv(self::ENV_DISABLE) ?: false;
         if (strcasecmp($disabled, 'true') === 0) {
@@ -114,13 +194,16 @@ class InstanceProfileProvider
         }
 
         $fn = $this->client;
-        $request = new Request('GET', self::SERVER_URI . $url);
+        $request = new Request($method, self::SERVER_URI . $url);
         $userAgent = 'aws-sdk-php/' . Sdk::VERSION;
         if (defined('HHVM_VERSION')) {
             $userAgent .= ' HHVM/' . HHVM_VERSION;
         }
         $userAgent .= ' ' . \Aws\default_user_agent();
         $request = $request->withHeader('User-Agent', $userAgent);
+        foreach ($headers as $key => $value) {
+            $request = $request->withHeader($key, $value);
+        }
 
         return $fn($request, ['timeout' => $this->timeout])
             ->then(function (ResponseInterface $response) {
@@ -135,6 +218,35 @@ class InstanceProfileProvider
                     $this->createErrorMessage($msg)
                 );
             });
+    }
+
+    private function handleRetryableException(
+        \Exception $e,
+        $retryOptions,
+        $message
+    ) {
+        $isRetryable = true;
+        if (!empty($status = $this->getExceptionStatusCode($e))
+            && isset($retryOptions['blacklist'])
+            && in_array($status, $retryOptions['blacklist'])
+        ) {
+            $isRetryable = false;
+        }
+        if ($isRetryable && $this->attempts < $this->retries) {
+            sleep(pow(1.2, $this->attempts));
+        } else {
+            throw new CredentialsException($message);
+        }
+    }
+
+    private function getExceptionStatusCode(\Exception $e)
+    {
+        if (method_exists($e, 'getResponse')
+            && !empty($e->getResponse())
+        ) {
+            return $e->getResponse()->getStatusCode();
+        }
+        return null;
     }
 
     private function createErrorMessage($previous)
