@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.121.1 - 2019-11-22
 
 * `Aws\ACM` - This release adds support for Tag-Based IAM for AWS Certificate Manager and adding tags to certificates upon creation.
 * `Aws\ApplicationAutoScaling` - Update default endpoint for Application Auto Scaling.
