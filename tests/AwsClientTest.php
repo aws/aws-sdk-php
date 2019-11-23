@@ -393,7 +393,7 @@ class AwsClientTest extends TestCase
                     CommandInterface $command,
                     RequestInterface $request
                 ) {
-                    $this->assertContains('Credential=foo/20191108/ap-southeast-1', $request->getHeader('Authorization')[0]);
+                    $this->assertContains('ap-southeast-1', $request->getHeader('Authorization')[0]);
                     return new Result;
                 }
             ]
