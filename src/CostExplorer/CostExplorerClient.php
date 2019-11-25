@@ -5,6 +5,12 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Cost Explorer Service** service.
+ * @method \Aws\Result createCostCategoryDefinition(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createCostCategoryDefinitionAsync(array $args = [])
+ * @method \Aws\Result deleteCostCategoryDefinition(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteCostCategoryDefinitionAsync(array $args = [])
+ * @method \Aws\Result describeCostCategoryDefinition(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeCostCategoryDefinitionAsync(array $args = [])
  * @method \Aws\Result getCostAndUsage(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCostAndUsageAsync(array $args = [])
  * @method \Aws\Result getCostAndUsageWithResources(array $args = [])
@@ -33,5 +39,9 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getTagsAsync(array $args = [])
  * @method \Aws\Result getUsageForecast(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getUsageForecastAsync(array $args = [])
+ * @method \Aws\Result listCostCategoryDefinitions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listCostCategoryDefinitionsAsync(array $args = [])
+ * @method \Aws\Result updateCostCategoryDefinition(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateCostCategoryDefinitionAsync(array $args = [])
  */
 class CostExplorerClient extends AwsClient {}
