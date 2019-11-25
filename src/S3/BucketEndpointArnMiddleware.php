@@ -51,6 +51,7 @@ class BucketEndpointArnMiddleware
         Service $service,
         $region,
         array $config
+
     ) {
         return function (callable $handler) use ($service, $region, $config) {
             return new self($handler, $service, $region, $config);
@@ -108,6 +109,9 @@ class BucketEndpointArnMiddleware
                         $len = strlen($encoded) + 1;
                         if (substr($path, 0, $len) === "/{$encoded}") {
                             $path = substr($path, $len);
+                        }
+                        if (empty($path)) {
+                            $path = '';
                         }
 
                         // Set modified request
