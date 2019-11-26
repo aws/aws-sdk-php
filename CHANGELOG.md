@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.123.0 - 2019-11-26
 
 * `Aws\CognitoIdentityProvider` - This release adds a new setting for a user pool to configure which recovery methods a user can use to recover their account via the forgot password operation.
 * `Aws\DirectoryService` - This release will introduce optional encryption over LDAP network traffic using SSL certificates between customer's self-managed AD and AWS Directory Services instances. The release also provides APIs for Certificate management.
