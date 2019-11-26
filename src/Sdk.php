@@ -18,6 +18,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionApiGatewayManagementApi(array $args = [])
  * @method \Aws\ApiGatewayV2\ApiGatewayV2Client createApiGatewayV2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionApiGatewayV2(array $args = [])
+ * @method \Aws\AppConfig\AppConfigClient createAppConfig(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAppConfig(array $args = [])
  * @method \Aws\AppMesh\AppMeshClient createAppMesh(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppMesh(array $args = [])
  * @method \Aws\AppSync\AppSyncClient createAppSync(array $args = [])
@@ -140,6 +142,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionElastiCache(array $args = [])
  * @method \Aws\ElasticBeanstalk\ElasticBeanstalkClient createElasticBeanstalk(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionElasticBeanstalk(array $args = [])
+ * @method \Aws\ElasticInference\ElasticInferenceClient createElasticInference(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionElasticInference(array $args = [])
  * @method \Aws\ElasticLoadBalancing\ElasticLoadBalancingClient createElasticLoadBalancing(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionElasticLoadBalancing(array $args = [])
  * @method \Aws\ElasticLoadBalancingV2\ElasticLoadBalancingV2Client createElasticLoadBalancingV2(array $args = [])
@@ -196,6 +200,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionIoTEventsData(array $args = [])
  * @method \Aws\IoTJobsDataPlane\IoTJobsDataPlaneClient createIoTJobsDataPlane(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoTJobsDataPlane(array $args = [])
+ * @method \Aws\IoTSecureTunneling\IoTSecureTunnelingClient createIoTSecureTunneling(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionIoTSecureTunneling(array $args = [])
  * @method \Aws\IoTThingsGraph\IoTThingsGraphClient createIoTThingsGraph(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoTThingsGraph(array $args = [])
  * @method \Aws\Iot\IotClient createIot(array $args = [])
@@ -384,6 +390,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionTransfer(array $args = [])
  * @method \Aws\Translate\TranslateClient createTranslate(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTranslate(array $args = [])
+ * @method \Aws\WAFV2\WAFV2Client createWAFV2(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionWAFV2(array $args = [])
  * @method \Aws\Waf\WafClient createWaf(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionWaf(array $args = [])
  * @method \Aws\WafRegional\WafRegionalClient createWafRegional(array $args = [])
@@ -405,7 +413,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.121.1';
+    const VERSION = '3.123.0';
 
     /** @var array Arguments for creating clients */
     private $args;
