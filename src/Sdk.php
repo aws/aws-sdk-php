@@ -142,6 +142,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionElastiCache(array $args = [])
  * @method \Aws\ElasticBeanstalk\ElasticBeanstalkClient createElasticBeanstalk(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionElasticBeanstalk(array $args = [])
+ * @method \Aws\ElasticInference\ElasticInferenceClient createElasticInference(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionElasticInference(array $args = [])
  * @method \Aws\ElasticLoadBalancing\ElasticLoadBalancingClient createElasticLoadBalancing(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionElasticLoadBalancing(array $args = [])
  * @method \Aws\ElasticLoadBalancingV2\ElasticLoadBalancingV2Client createElasticLoadBalancingV2(array $args = [])
