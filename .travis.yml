@@ -30,6 +30,8 @@ install:
   - export AWS_SECRET_ACCESS_KEY=bar
   - export AWS_CSM_ENABLED=false
 
+  # Temporary check of phpenv version-name
+  - echo $(phpenv version-name)
   # Build job specific tweaks
   - >
     if [ $(phpenv version-name) == "5.5" ]; then
