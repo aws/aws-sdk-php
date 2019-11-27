@@ -42,7 +42,7 @@ install:
     fi
 
   - >
-    if { [ $(phpenv version-name) == "7.2" ] || [ $(phpenv version-name) == "7.3" ] || [$(phpenv version-name) == "7.4"]; } && [ -v COMPOSER_OPTS ]; then
+    if { [ $(phpenv version-name) == "7.2" ] || [ $(phpenv version-name) == "7.3" ] || [$(phpenv version-name) == "7.4"] || [$(phpenv version-name) == "7.4snapshot"]; } && [ -v COMPOSER_OPTS ]; then
       composer require --dev phpunit/phpunit "^5.7.11"
     fi
 
