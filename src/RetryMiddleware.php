@@ -143,7 +143,7 @@ class RetryMiddleware
         }
 
         if (!$error) {
-            return isset($statusCodes[$result['@metadata']['statusCode']]);
+            return is_array($result['@metadata']) ? isset($statusCodes[$result['@metadata']['statusCode']]) : false;
         }
 
         if (!($error instanceof AwsException)) {
