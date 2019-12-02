@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getServiceSettingsAsync(array $args = [])
  * @method \Aws\Result listAssociationsForLicenseConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAssociationsForLicenseConfigurationAsync(array $args = [])
+ * @method \Aws\Result listFailuresForLicenseConfigurationOperations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listFailuresForLicenseConfigurationOperationsAsync(array $args = [])
  * @method \Aws\Result listLicenseConfigurations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listLicenseConfigurationsAsync(array $args = [])
  * @method \Aws\Result listLicenseSpecificationsForResource(array $args = [])

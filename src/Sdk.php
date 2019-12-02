@@ -344,6 +344,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSageMakerRuntime(array $args = [])
  * @method \Aws\SavingsPlans\SavingsPlansClient createSavingsPlans(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSavingsPlans(array $args = [])
+ * @method \Aws\Schemas\SchemasClient createSchemas(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSchemas(array $args = [])
  * @method \Aws\SecretsManager\SecretsManagerClient createSecretsManager(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSecretsManager(array $args = [])
  * @method \Aws\SecurityHub\SecurityHubClient createSecurityHub(array $args = [])
@@ -408,6 +410,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionWorkSpaces(array $args = [])
  * @method \Aws\XRay\XRayClient createXRay(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionXRay(array $args = [])
+ * @method \Aws\imagebuilder\imagebuilderClient createimagebuilder(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionimagebuilder(array $args = [])
  * @method \Aws\signer\signerClient createsigner(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionsigner(array $args = [])
  */
