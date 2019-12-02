@@ -76,7 +76,7 @@ class AccessPointArnTest extends TestCase
                     'resource_id' => 'myendpoint',
                     'resource' => 'accesspoint/myendpoint',
                 ],
-                'arn:aws:foo:us-west-2:123456789012:accesspoint:myendpoint',
+                'arn:aws:foo:us-west-2:123456789012:accesspoint/myendpoint',
             ],
         ];
     }

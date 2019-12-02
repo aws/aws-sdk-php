@@ -7,6 +7,8 @@ use Aws\Arn\Exception\InvalidArnException;
  * Amazon Resource Names (ARNs) uniquely identify AWS resources. The Arn class
  * parses and stores a generic ARN object representation that can apply to any
  * service resource.
+ *
+ * @internal
  */
 class Arn implements ArnInterface
 {

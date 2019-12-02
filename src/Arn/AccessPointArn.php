@@ -3,6 +3,9 @@ namespace Aws\Arn;
 
 use Aws\Arn\Exception\InvalidArnException;
 
+/**
+ * @internal
+ */
 class AccessPointArn extends Arn implements ArnInterface
 {
     use ResourceTypeAndIdTrait;
@@ -22,24 +25,6 @@ class AccessPointArn extends Arn implements ArnInterface
     {
         $data = parent::parse($string);
         return self::parseResourceTypeAndId($data);
-    }
-
-    public function __toString()
-    {
-        if (!isset($this->string)) {
-            $components = [
-                $this->getPrefix(),
-                $this->getPartition(),
-                $this->getService(),
-                $this->getRegion(),
-                $this->getAccountId(),
-                $this->getResourceType(),
-                $this->getResourceId(),
-            ];
-
-            $this->string = implode(':', $components);
-        }
-        return $this->string;
     }
 
     /**

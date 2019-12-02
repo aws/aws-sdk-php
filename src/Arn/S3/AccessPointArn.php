@@ -5,6 +5,9 @@ use Aws\Arn\AccessPointArn as BaseAccessPointArn;
 use Aws\Arn\ArnInterface;
 use Aws\Arn\Exception\InvalidArnException;
 
+/**
+ * @internal
+ */
 class AccessPointArn extends BaseAccessPointArn implements ArnInterface
 {
     /**

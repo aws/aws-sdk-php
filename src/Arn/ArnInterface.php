@@ -12,6 +12,8 @@ namespace Aws\Arn;
  *   arn:partition:service:region:account-id:resource-type:resource-id
  *
  * Some components may be omitted, depending on the service and resource type.
+ *
+ * @internal
  */
 interface ArnInterface
 {

@@ -1,6 +1,9 @@
 <?php
 namespace Aws\Arn;
 
+/**
+ * @internal
+ */
 trait ResourceTypeAndIdTrait
 {
     public function getResourceType()
