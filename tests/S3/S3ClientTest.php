@@ -1211,7 +1211,7 @@ EOXML;
     {
         // Create cache object
         $cache = new LruArrayCache();
-        $cache->set('aws_sts_regional_endpoints_config', new Configuration('regional'));
+        $cache->set('aws_s3_us_east_1_regional_endpoint_config', new Configuration('regional'));
         // Create client using cached endpoints config
         $client = new S3Client([
             'region' => 'us-east-1',
