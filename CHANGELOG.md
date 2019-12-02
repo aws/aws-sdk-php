@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.125.0 - 2019-12-02
 
 * `Aws\AccessAnalyzer` - Introducing AWS IAM Access Analyzer, an IAM feature that makes it easy for AWS customers to ensure that their resource-based policies provide only the intended access to resources outside their AWS accounts.
 
