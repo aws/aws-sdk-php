@@ -143,6 +143,9 @@ class RetryMiddleware
         }
 
         if (!$error) {
+            if (!isset($result['@metadata']['statusCode'])) {
+                return false;
+            }
             return isset($statusCodes[$result['@metadata']['statusCode']]);
         }
 
