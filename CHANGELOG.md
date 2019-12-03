@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.126.0 - 2019-12-03
 
 * `Aws\AugmentedAIRuntime` - This release adds support for Amazon Augmented AI, which makes it easy to build workflows for human review of machine learning predictions.
 * `Aws\CodeGuruProfiler` - (New Service) Amazon CodeGuru Profiler analyzes application CPU utilization and latency characteristics to show you where you are spending the most cycles in your application. This analysis is presented in an interactive flame graph that helps you easily understand which paths consume the most resources, verify that your application is performing as expected, and uncover areas that can be optimized further.
