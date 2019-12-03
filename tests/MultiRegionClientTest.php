@@ -96,7 +96,7 @@ class MultiRegionClientTest extends TestCase
             });
         $this->mockRegionalClient->expects($this->once())
             ->method('getCommand')
-            ->with('baz', ['foo' => 'bar', '@http' => []])
+            ->with('baz', ['foo' => 'bar', '@http' => [], '@context' => []])
             ->willReturn(new Command('Baz', [], $mockHandler));
 
         $this->instance->baz(['foo' => 'bar']);

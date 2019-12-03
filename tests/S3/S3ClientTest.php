@@ -2,14 +2,16 @@
 namespace Aws\Test\S3;
 
 use Aws\Command;
-use Aws\Endpoint\PartitionEndpointProvider;
+use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\LruArrayCache;
+use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\RegionalEndpoint\Configuration;
 use Aws\S3\S3Client;
+use Aws\S3\UseArnRegion\Configuration as UseArnRegionConfiguration;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
@@ -82,6 +84,27 @@ class S3ClientTest extends TestCase
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://foo.s3.amazonaws.com/bar?', $url);
+        $this->assertContains('X-Amz-Expires=', $url);
+        $this->assertContains('X-Amz-Credential=', $url);
+        $this->assertContains('X-Amz-Signature=', $url);
+    }
+
+    public function testCreatesPresignedRequestsWithAccessPointArn()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region'      => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                'Key' => 'bar'
+            ]
+        );
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringStartsWith('https://myendpoint-123456789012.s3-accesspoint.us-east-1.amazonaws.com/bar?', $url);
         $this->assertContains('X-Amz-Expires=', $url);
         $this->assertContains('X-Amz-Credential=', $url);
         $this->assertContains('X-Amz-Signature=', $url);
@@ -1192,6 +1215,86 @@ EOXML;
             '@use_dual_stack_endpoint' => true,
             '@use_path_style_endpoint' => true,
         ]);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid configuration value provided for "use_arn_region"
+     */
+    public function testAddsUseArnRegionArgument()
+    {
+        new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'use_arn_region' => 'trigger exception'
+        ]);
+    }
+
+    public function testAddsUseArnRegionCacheArgument()
+    {
+        // Create cache object
+        $cache = new LruArrayCache();
+        $cache->set('aws_s3_use_arn_region_config', new UseArnRegionConfiguration(true));
+
+        // Create client using cached use_arn_region config
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'use_arn_region' => $cache,
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) {
+                $this->assertEquals(
+                    'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
+                    $req->getUri()->getHost()
+                );
+                $this->assertEquals(
+                    '/Bar/Baz',
+                    $req->getUri()->getPath()
+                );
+                return new Result([]);
+            },
+        ]);
+
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $client->execute($command);
+    }
+
+    public function testCopyOperationCorrectlyPopulates()
+    {
+        $client = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'handler' => function (CommandInterface $cmd, RequestInterface $req) {
+                $this->assertEquals(
+                    'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
+                    $req->getUri()->getHost()
+                );
+                $this->assertEquals(
+                    '/copied-object',
+                    $req->getUri()->getPath()
+                );
+                $this->assertEquals(
+                    'arn:aws:s3:us-west-2:1234567890123:accesspoint:my-my/finks-object',
+                    $req->getHeader('x-amz-copy-source')[0]
+                );
+                return new Result([]);
+            },
+        ]);
+
+        $command = $client->getCommand(
+            'CopyObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                'Key' => 'copied-object',
+                'CopySource' => 'arn:aws:s3:us-west-2:1234567890123:accesspoint:my-my/finks-object'
+            ]
+        );
+        $client->execute($command);
     }
 
     /**

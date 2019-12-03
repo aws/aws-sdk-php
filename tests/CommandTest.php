@@ -47,19 +47,25 @@ class CommandTest extends TestCase
     {
         $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
         $data = iterator_to_array($c);
-        $this->assertEquals(['bar' => 'baz', 'qux' => 'boo', '@http' => []], $data);
+        $this->assertEquals(
+            ['bar' => 'baz', 'qux' => 'boo', '@http' => [], '@context' => []],
+            $data
+        );
     }
 
     public function testConvertToArray()
     {
         $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
-        $this->assertEquals(['bar' => 'baz', 'qux' => 'boo', '@http' => []], $c->toArray());
+        $this->assertEquals(
+            ['bar' => 'baz', 'qux' => 'boo', '@http' => [], '@context' => []],
+            $c->toArray()
+        );
     }
 
     public function testCanCount()
     {
         $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
-        $this->assertCount(3, $c);
+        $this->assertCount(4, $c);
     }
 
     public function testCanAccessLikeArray()

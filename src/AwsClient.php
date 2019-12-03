@@ -336,6 +336,9 @@ class AwsClient implements AwsClientInterface
         $resolver = static function (
             CommandInterface $c
         ) use ($api, $provider, $name, $region, $version) {
+            if (!empty($c['@context']['signing_region'])) {
+                $region = $c['@context']['signing_region'];
+            }
             $authType = $api->getOperation($c->getName())['authtype'];
             switch ($authType){
                 case 'none':
