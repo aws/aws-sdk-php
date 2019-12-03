@@ -6,6 +6,8 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with **Amazon ECS**.
  *
+ * @method \Aws\Result createCapacityProvider(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createCapacityProviderAsync(array $args = [])
  * @method \Aws\Result createCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createClusterAsync(array $args = [])
  * @method \Aws\Result createService(array $args = [])
@@ -26,6 +28,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deregisterContainerInstanceAsync(array $args = [])
  * @method \Aws\Result deregisterTaskDefinition(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deregisterTaskDefinitionAsync(array $args = [])
+ * @method \Aws\Result describeCapacityProviders(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeCapacityProvidersAsync(array $args = [])
  * @method \Aws\Result describeClusters(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeClustersAsync(array $args = [])
  * @method \Aws\Result describeContainerInstances(array $args = [])
@@ -64,6 +68,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putAccountSettingDefaultAsync(array $args = [])
  * @method \Aws\Result putAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAttributesAsync(array $args = [])
+ * @method \Aws\Result putClusterCapacityProviders(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putClusterCapacityProvidersAsync(array $args = [])
  * @method \Aws\Result registerContainerInstance(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerContainerInstanceAsync(array $args = [])
  * @method \Aws\Result registerTaskDefinition(array $args = [])
