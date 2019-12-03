@@ -73,6 +73,15 @@ final class Partition implements ArrayAccess, PartitionInterface
         return $this->data['partition'];
     }
 
+    /**
+     * @internal
+     * @return mixed
+     */
+    public function getDnsSuffix()
+    {
+        return $this->data['dnsSuffix'];
+    }
+
     public function isRegionMatch($region, $service)
     {
         if (isset($this->data['regions'][$region])

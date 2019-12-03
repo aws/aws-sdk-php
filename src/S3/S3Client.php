@@ -14,8 +14,13 @@ use Aws\Middleware;
 use Aws\RetryMiddleware;
 use Aws\ResultInterface;
 use Aws\CommandInterface;
+use Aws\S3\UseArnRegion\Configuration;
+use Aws\S3\UseArnRegion\ConfigurationInterface;
+use Aws\S3\UseArnRegion\ConfigurationProvider as UseArnRegionConfigurationProvider;
 use Aws\S3\RegionalEndpoint\ConfigurationProvider;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\Promise;
+use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -217,6 +222,19 @@ class S3Client extends AwsClient implements S3ClientInterface
                     . 'result of injecting the bucket into the URL. This '
                     . 'option is useful for interacting with CNAME endpoints.',
             ],
+            'use_arn_region' => [
+                'type'    => 'config',
+                'valid'   => [
+                    'bool',
+                    Configuration::class,
+                    CacheInterface::class,
+                    'callable'
+                ],
+                'doc'     => 'Set to true to allow passed in ARNs to override'
+                    . ' client region. Accepts...',
+                'fn' => [__CLASS__, '_apply_use_arn_region'],
+                'default' => [UseArnRegionConfigurationProvider::class, 'defaultProvider'],
+            ],
             'use_accelerate_endpoint' => [
                 'type' => 'config',
                 'valid' => ['bool'],
@@ -276,6 +294,14 @@ class S3Client extends AwsClient implements S3ClientInterface
      *   individual operations by setting '@use_accelerate_endpoint' to true or
      *   false. Note: you must enable S3 Accelerate on a bucket before it can be
      *   accessed via an Accelerate endpoint.
+     * - use_arn_region: (Aws\S3\UseArnRegion\ConfigurationInterface,
+     *   Aws\CacheInterface, bool, callable) Set to true to enable the client
+     *   to use the region from a supplied ARN argument instead of the client's
+     *   region. Provide an instance of Aws\S3\UseArnRegion\ConfigurationInterface,
+     *   an instance of Aws\CacheInterface, a callable that provides a promise for
+     *   a Configuration object, or a boolean value. Defaults to false (i.e.
+     *   the SDK will not follow the ARN region if it conflicts with the client
+     *   region and instead throw an error).
      * - use_dual_stack_endpoint: (bool) Set to true to send requests to an S3
      *   Dual Stack endpoint by default, which enables IPv6 Protocol.
      *   Can be enabled or disabled on individual operations by setting
@@ -305,7 +331,6 @@ class S3Client extends AwsClient implements S3ClientInterface
             's3.content_type'
         );
 
-
         // Use the bucket style middleware when using a "bucket_endpoint" (for cnames)
         if ($this->getConfig('bucket_endpoint')) {
             $stack->appendBuild(BucketEndpointMiddleware::wrap(), 's3.bucket_endpoint');
@@ -323,6 +348,22 @@ class S3Client extends AwsClient implements S3ClientInterface
             );
         }
 
+        $stack->appendBuild(
+            BucketEndpointArnMiddleware::wrap(
+                $this->getApi(),
+                $this->getRegion(),
+                [
+                    'use_arn_region' => $this->getConfig('use_arn_region'),
+                    'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
+                    'accelerate' => $this->getConfig('use_accelerate_endpoint'),
+                    'path_style' => $this->getConfig('use_path_style_endpoint'),
+                    'endpoint' => isset($args['endpoint'])
+                        ? $args['endpoint']
+                        : null
+                ]
+            ),
+            's3.bucket_endpoint_arn'
+        );
         $stack->appendSign(PutObjectUrlMiddleware::wrap(), 's3.put_object_url');
         $stack->appendSign(PermanentRedirectMiddleware::wrap(), 's3.permanent_redirect');
         $stack->appendInit(Middleware::sourceFile($this->getApi()), 's3.source_file');
@@ -351,6 +392,25 @@ class S3Client extends AwsClient implements S3ClientInterface
             // Cannot look like an IP address
             !filter_var($bucket, FILTER_VALIDATE_IP) &&
             preg_match('/^[a-z0-9]([a-z0-9\-\.]*[a-z0-9])?$/', $bucket);
+    }
+
+    public static function _apply_use_arn_region($value, array &$args, HandlerList $list)
+    {
+        if ($value instanceof CacheInterface) {
+            $value = UseArnRegionConfigurationProvider::defaultProvider($args);
+        }
+        if (is_callable($value)) {
+            $value = $value();
+        }
+        if ($value instanceof PromiseInterface) {
+            $value = $value->wait();
+        }
+        if ($value instanceof ConfigurationInterface) {
+            $args['use_arn_region'] = $value;
+        } else {
+            // The Configuration class itself will validate other inputs
+            $args['use_arn_region'] = new Configuration($value);
+        }
     }
 
     public function createPresignedRequest(CommandInterface $command, $expires, array $options = [])

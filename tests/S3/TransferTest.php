@@ -2,6 +2,7 @@
 namespace Aws\Test\S3;
 
 use Aws\CommandInterface;
+use Aws\Middleware;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\S3\Transfer;
@@ -189,6 +190,48 @@ class TransferTest extends TestCase
         $this->assertContains('s3://foo/bar/../bar/a/b -> ', $output);
         $this->assertContains('s3://foo/bar/c//d -> ', $output);
         $this->assertContains('s3://foo/../bar//c/../a/b/.. -> ', $output);
+        `rm -rf $dir`;
+    }
+
+    public function testDownloadsObjectsWithAccessPointArn()
+    {
+        $s3 = $this->getTestClient('s3');
+        $s3->getHandlerList()->appendSign(Middleware::tap(
+            function (CommandInterface $cmd, RequestInterface $req) {
+                $this->assertEquals(
+                    'myaccess-123456789012.s3-accesspoint.us-east-1.amazonaws.com',
+                    $req->getUri()->getHost()
+                );
+            }
+        ));
+
+        $lso = [
+            'IsTruncated' => false,
+            'Contents' => [
+                ['Key' => 'bar/f/'],
+                ['Key' => 'bar/../bar/a/b'],
+                ['Key' => 'bar/c//d'],
+                ['Key' => '../bar//c/../a/b/..'],
+            ]
+        ];
+        $this->addMockResults($s3, [
+            new Result($lso),
+            new Result(['Body' => 'test']),
+            new Result(['Body' => '123']),
+            new Result(['Body' => 'abc']),
+        ]);
+
+        $dir = sys_get_temp_dir() . '/unittest';
+        `rm -rf $dir`;
+        mkdir($dir);
+        $res = fopen('php://temp', 'r+');
+        $t = new Transfer($s3, 's3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/test_key', $dir, ['debug' => $res]);
+        $t->transfer();
+        rewind($res);
+        $output = stream_get_contents($res);
+        $this->assertContains('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/bar/../bar/a/b -> ', $output);
+        $this->assertContains('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/bar/c//d -> ', $output);
+        $this->assertContains('s3://arn:aws:s3:us-east-1:123456789012:accesspoint:myaccess/../bar//c/../a/b/.. -> ', $output);
         `rm -rf $dir`;
     }
 
