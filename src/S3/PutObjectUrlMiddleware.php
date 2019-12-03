@@ -44,7 +44,9 @@ class PutObjectUrlMiddleware
                 switch ($name) {
                     case 'PutObject':
                     case 'CopyObject':
-                        $result['ObjectURL'] = $result['@metadata']['effectiveUri'];
+                        $result['ObjectURL'] = isset($result['@metadata']['effectiveUri'])
+                            ? $result['@metadata']['effectiveUri']
+                            : null;
                         break;
                     case 'CompleteMultipartUpload':
                         $result['ObjectURL'] = $result['Location'];
