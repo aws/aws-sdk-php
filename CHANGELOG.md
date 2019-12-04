@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.127.0 - 2019-12-04
 
 * `Aws\` - Fixes array offset null issue and test stream class for PHP 7.4.
 * `Aws\ApplicationAutoScaling` - This release supports auto scaling of provisioned concurrency for AWS Lambda.
