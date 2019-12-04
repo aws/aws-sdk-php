@@ -136,6 +136,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionDynamoDb(array $args = [])
  * @method \Aws\DynamoDbStreams\DynamoDbStreamsClient createDynamoDbStreams(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionDynamoDbStreams(array $args = [])
+ * @method \Aws\EBS\EBSClient createEBS(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionEBS(array $args = [])
  * @method \Aws\EC2InstanceConnect\EC2InstanceConnectClient createEC2InstanceConnect(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionEC2InstanceConnect(array $args = [])
  * @method \Aws\EKS\EKSClient createEKS(array $args = [])
