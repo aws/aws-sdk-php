@@ -100,7 +100,7 @@ class TransferTest extends TestCase
         );
 
         $c = [];
-        $i = \Aws\recursive_dir_iterator(__DIR__);
+        $i = \Aws\recursive_dir_iterator(__DIR__ . '/Crypto');
         $t = new Transfer($s3, $i, 's3://foo/bar', [
             'before' => function ($command) use (&$c) {
                 $c[] = $command;
