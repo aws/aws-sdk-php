@@ -53,7 +53,9 @@ class ShapeMap
 
         $definition = $shapeRef + $this->definitions[$shape];
         $definition['name'] = $definition['shape'];
-        unset($definition['shape']);
+        if (isset($definition['shape'])) {
+            unset($definition['shape']);
+        }
 
         $result = Shape::create($definition, $this);
 
