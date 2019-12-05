@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGatewayV2` - Amazon API Gateway now supports HTTP APIs (beta), enabling customers to quickly build high performance RESTful APIs that are up to 71% cheaper than REST APIs also available from API Gateway. HTTP APIs are optimized for building APIs that proxy to AWS Lambda functions or HTTP backends, making them ideal for serverless workloads. Using HTTP APIs, you can secure your APIs using OIDC and OAuth 2 out of box, quickly build web applications using a simple CORS experience, and get started immediately with automatic deployment and simple create workflows.
+* `Aws\KinesisVideo` - Introduces management of signaling channels for Kinesis Video Streams.
+* `Aws\KinesisVideoSignalingChannels` - Announcing support for WebRTC in Kinesis Video Streams, as fully managed capability. You can now use simple APIs to enable your connected devices, web, and mobile apps with real-time two-way media streaming capabilities.
+* `Aws\Test\S3` - Fixes stream reading issue in TransferTest with PHP 7.4.
+
 ## 3.127.0 - 2019-12-04
 
 * `Aws\` - Fixes array offset null issue and test stream class for PHP 7.4.
