@@ -10,7 +10,6 @@ php:
   - 7.2
   - 7.3
   - 7.4
-  - 7.4snapshot
   - hhvm
   - nightly
 env:
@@ -19,8 +18,6 @@ env:
 
 matrix:
   allow_failures:
-    - php: 7.4
-    - php: 7.4snapshot
     - php: hhvm
     - php: nightly
   fast_finish: true
@@ -45,7 +42,7 @@ install:
     fi
 
   - >
-    if { [ $(phpenv version-name) == "7.2" ] || [ $(phpenv version-name) == "7.3" ] || [$(phpenv version-name) == "7.4"] || [$(phpenv version-name) == "7.4snapshot"]; } && [ -v COMPOSER_OPTS ]; then
+    if { [ $(phpenv version-name) == "7.2" ] || [ $(phpenv version-name) == "7.3" ] || [$(phpenv version-name) == "7.4"]; } && [ -v COMPOSER_OPTS ]; then
       composer require --dev phpunit/phpunit "^5.7.11"
     fi
 
