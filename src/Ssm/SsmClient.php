@@ -120,6 +120,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeSessionsAsync(array $args = [])
  * @method \Aws\Result getAutomationExecution(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAutomationExecutionAsync(array $args = [])
+ * @method \Aws\Result getCalendarState(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCalendarStateAsync(array $args = [])
  * @method \Aws\Result getCommandInvocation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCommandInvocationAsync(array $args = [])
  * @method \Aws\Result getConnectionStatus(array $args = [])

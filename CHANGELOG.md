@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\KMS` - The Verify operation now returns KMSInvalidSignatureException on invalid signatures. The Sign and Verify operations now return KMSInvalidStateException when a request is made against a CMK pending deletion.
+* `Aws\Kafka` - AWS MSK has added support for Open Monitoring with Prometheus.
+* `Aws\QuickSight` - Documentation updates for QuickSight
+* `Aws\SSM` - Adds the SSM GetCalendarState API and ChangeCalendar SSM Document type. These features enable the forthcoming Systems Manager Change Calendar feature, which will allow you to schedule events during which actions should (or should not) be performed.
+* `Aws\Test` - Adds a test bootstrap patch for a PHPUnit class file that triggers deprecation warnings for PHP 7.4+. This is necessary because the SDK supports older versions of PHP and currently relies on older, now unsupported, versions of PHPUnit.
+
 ## 3.128.0 - 2019-12-05
 
 * `Aws\ApiGatewayV2` - Amazon API Gateway now supports HTTP APIs (beta), enabling customers to quickly build high performance RESTful APIs that are up to 71% cheaper than REST APIs also available from API Gateway. HTTP APIs are optimized for building APIs that proxy to AWS Lambda functions or HTTP backends, making them ideal for serverless workloads. Using HTTP APIs, you can secure your APIs using OIDC and OAuth 2 out of box, quickly build web applications using a simple CORS experience, and get started immediately with automatic deployment and simple create workflows.
