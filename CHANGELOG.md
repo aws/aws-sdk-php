@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.128.1 - 2019-12-09
 
 * `Aws\KMS` - The Verify operation now returns KMSInvalidSignatureException on invalid signatures. The Sign and Verify operations now return KMSInvalidStateException when a request is made against a CMK pending deletion.
 * `Aws\Kafka` - AWS MSK has added support for Open Monitoring with Prometheus.
