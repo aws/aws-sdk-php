@@ -92,6 +92,11 @@ class S3ControlEndpointMiddleware
 
     private function getAccountIdStyleHost(CommandInterface $command, $host)
     {
+        if (!\Aws\is_valid_hostname($command['AccountId'])) {
+            throw new \InvalidArgumentException(
+                "The supplied parameters result in an invalid hostname: '{$command['AccountId']}.{$host}'."
+            );
+        }
         return "{$command['AccountId']}.{$host}";
     }
 
