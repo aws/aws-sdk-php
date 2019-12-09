@@ -67,6 +67,21 @@ class S3ControlEndpointMiddlewareTest extends TestCase
         $middleware($command, $this->getRequest($command));
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testValidatesAccountIdHostCompatability()
+    {
+        $command = new Command('GetPublicLockdown', ['AccountId' => '127.0.0.1#']);
+        $middleware = new S3ControlEndpointMiddleware(
+            $this->emptyHandler($command),
+            self::REGION,
+            []
+        );
+
+        $middleware($command, $this->getRequest($command));
+    }
+
     public function includedCommandProvider()
     {
         $s3Operations = $this->getTestClient('s3control')->getApi()->getOperations();
@@ -105,6 +120,15 @@ class S3ControlEndpointMiddlewareTest extends TestCase
             $this->assertNotContains(self::ACCOUNT_ID, $req->getUri()->getPath());
             $this->assertContains(self::ACCOUNT_ID, $req->getUri()->getHost());
             $this->assertContains('key=query', $req->getUri()->getQuery());
+        };
+    }
+
+    private function emptyHandler(CommandInterface $command)
+    {
+        return function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use ($command) {
         };
     }
 }
