@@ -69,6 +69,7 @@ class S3ControlEndpointMiddlewareTest extends TestCase
 
     /**
      * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The supplied parameters result in an invalid hostname: '127.0.0.1#.s3-control.us-west-2.amazonaws.com'
      */
     public function testValidatesAccountIdHostCompatability()
     {
