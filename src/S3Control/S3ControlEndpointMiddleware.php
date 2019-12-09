@@ -56,6 +56,7 @@ class S3ControlEndpointMiddleware
         if ($this->isDualStackRequest($command, $request)) {
             $request = $this->applyDualStackEndpoint($command, $request);
         }
+        $this->validateAccountId($command);
         $request = $this->applyHostStyleEndpoint($command, $request)
             ->withoutHeader('x-amz-account-id');
         unset($command['AccountId']);
@@ -117,5 +118,19 @@ class S3ControlEndpointMiddleware
             ))
         );
         return $request;
+    }
+
+    private function validateAccountId(CommandInterface $command) {
+        $accountId = $command['AccountId'];
+        // Validate length
+        if (strlen($accountId) < 1 || strlen($accountId) > 63) {
+            throw new \InvalidArgumentException('AccountId length should be between 1 to 63 characters, inclusive.');
+        }
+
+        // Validate pattern
+        $hostPattern = '/^[a-zA-Z0-9]{1}$|^[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9]$/';
+        if (!preg_match($hostPattern, $accountId)) {
+            throw new \InvalidArgumentException('AccountId should be hostname compatible.');
+        }
     }
 }
