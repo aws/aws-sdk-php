@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3Control` - Adds AccountId validation for S3Control.
+* `Aws\kendra` - 1. Adding DocumentTitleFieldName as an optional configuration for SharePoint. 2. updating s3 object pattern to support all s3 keys.
+
 ## 3.128.1 - 2019-12-09
 
 * `Aws\KMS` - The Verify operation now returns KMSInvalidSignatureException on invalid signatures. The Sign and Verify operations now return KMSInvalidStateException when a request is made against a CMK pending deletion.
