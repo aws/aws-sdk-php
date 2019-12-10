@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.128.2 - 2019-12-10
 
 * `Aws\S3Control` - Adds AccountId validation for S3Control.
 * `Aws\kendra` - 1. Adding DocumentTitleFieldName as an optional configuration for SharePoint. 2. updating s3 object pattern to support all s3 keys.
