@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.128.3 - 2019-12-11
 
 * `Aws\EC2` - This release allows customers to attach multiple Elastic Inference Accelerators to a single EC2 instance. It adds support for a Count parameter for each Elastic Inference Accelerator type you specify on the RunInstances and LaunchTemplate APIs.
 
