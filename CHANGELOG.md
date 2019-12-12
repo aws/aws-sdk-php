@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.128.4 - 2019-12-12
 
 * `Aws\AccessAnalyzer` - This release includes improvements and fixes bugs for the IAM Access Analyzer feature.
 
