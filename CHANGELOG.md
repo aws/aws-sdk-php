@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.129.0 - 2019-12-13
 
 * `Aws\Api\Parser` - Add support for parsing XML attributes for models using XML-based protocols.
 * `Aws\CodeBuild` - CodeBuild adds support for cross account
