@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api\Parser` - Add support for parsing XML attributes for models using XML-based protocols.
+* `Aws\CodeBuild` - CodeBuild adds support for cross account
+* `Aws\Detective` - This is the initial release of Amazon Detective.
+* `Aws\SesV2` - Added the ability to use your own public-private key pair to configure DKIM authentication for a domain identity.
+
 ## 3.128.4 - 2019-12-12
 
 * `Aws\AccessAnalyzer` - This release includes improvements and fixes bugs for the IAM Access Analyzer feature.

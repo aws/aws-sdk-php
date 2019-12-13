@@ -87,6 +87,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putDeliverabilityDashboardOptionAsync(array $args = [])
  * @method \Aws\Result putEmailIdentityDkimAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putEmailIdentityDkimAttributesAsync(array $args = [])
+ * @method \Aws\Result putEmailIdentityDkimSigningAttributes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putEmailIdentityDkimSigningAttributesAsync(array $args = [])
  * @method \Aws\Result putEmailIdentityFeedbackAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putEmailIdentityFeedbackAttributesAsync(array $args = [])
  * @method \Aws\Result putEmailIdentityMailFromAttributes(array $args = [])
