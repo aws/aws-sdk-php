@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ComprehendMedical` - New Ontology linking APIs will provides medication concepts normalization and Diagnoses codes from input text. In this release we will provide two APIs - RxNorm and ICD10-CM. 
+* `Aws\EC2` - You can now configure your EC2 Fleet to preferentially use EC2 Capacity Reservations for launching On-Demand instances, enabling you to fully utilize the available (and unused) Capacity Reservations before launching On-Demand instances on net new capacity.
+* `Aws\MQ` - Amazon MQ now supports throughput-optimized message brokers, backed by Amazon EBS.
+
 ## 3.129.0 - 2019-12-13
 
 * `Aws\Api\Parser` - Add support for parsing XML attributes for models using XML-based protocols.
