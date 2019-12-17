@@ -827,7 +827,7 @@ class InstanceProfileProviderTest extends TestCase
         $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
         $responses = [new Response(200, [], Psr7\stream_for($result))];
 
-        $client = function () use (&$retries, $responses, $requestClass, $responseClass) {
+        $client = function () use (&$retries, $responses, $requestClass) {
             if (0 === $retries--) {
                 return Promise\promise_for(array_shift($responses));
             }
