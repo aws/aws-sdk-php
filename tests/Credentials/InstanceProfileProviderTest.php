@@ -819,14 +819,13 @@ class InstanceProfileProviderTest extends TestCase
     public function testRetriesEnvVarIsUsed()
     {
         $requestClass = $this->getRequestClass();
-        $responseClass = $this->getResponseClass();
 
         putenv(InstanceProfileProvider::ENV_RETRIES . '=1');
         $retries = (int) getenv(InstanceProfileProvider::ENV_RETRIES);
 
         $t = time() + 1000;
         $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
-        $responses = [new $responseClass(200, [], Psr7\stream_for($result))];
+        $responses = [new Response(200, [], Psr7\stream_for($result))];
 
         $client = function () use (&$retries, $responses, $requestClass, $responseClass) {
             if (0 === $retries--) {
@@ -837,7 +836,7 @@ class InstanceProfileProviderTest extends TestCase
                 'exception' => new RequestException(
                     '401 Unauthorized',
                     new $requestClass('GET', '/latest/meta-data/foo'),
-                    new $responseClass(401)
+                    new Response(401)
                 )
             ]);
         };
