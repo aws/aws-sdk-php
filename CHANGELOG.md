@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.129.2 - 2019-12-17
 
 * `Aws\EC2` - Documentation updates for Amazon EC2
 * `Aws\ECS` - Documentation updates for Amazon ECS.
