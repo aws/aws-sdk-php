@@ -258,6 +258,19 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "ModifyCluster":{
+      "name":"ModifyCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyClusterInput"},
+      "output":{"shape":"ModifyClusterOutput"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidRequestException"}
+      ]
+    },
     "ModifyInstanceFleet":{
       "name":"ModifyInstanceFleet",
       "http":{
@@ -396,7 +409,8 @@
       "type":"structure",
       "members":{
         "ClusterId":{"shape":"XmlStringMaxLen256"},
-        "InstanceFleetId":{"shape":"InstanceFleetId"}
+        "InstanceFleetId":{"shape":"InstanceFleetId"},
+        "ClusterArn":{"shape":"ArnType"}
       }
     },
     "AddInstanceGroupsInput":{
@@ -414,7 +428,8 @@
       "type":"structure",
       "members":{
         "JobFlowId":{"shape":"XmlStringMaxLen256"},
-        "InstanceGroupIds":{"shape":"InstanceGroupIdsList"}
+        "InstanceGroupIds":{"shape":"InstanceGroupIdsList"},
+        "ClusterArn":{"shape":"ArnType"}
       }
     },
     "AddJobFlowStepsInput":{
@@ -588,9 +603,14 @@
     },
     "CancelStepsInput":{
       "type":"structure",
+      "required":[
+        "ClusterId",
+        "StepIds"
+      ],
       "members":{
         "ClusterId":{"shape":"XmlStringMaxLen256"},
-        "StepIds":{"shape":"StepIdsList"}
+        "StepIds":{"shape":"StepIdsList"},
+        "StepCancellationOption":{"shape":"StepCancellationOption"}
       }
     },
     "CancelStepsOutput":{
@@ -653,7 +673,10 @@
         "CustomAmiId":{"shape":"XmlStringMaxLen256"},
         "EbsRootVolumeSize":{"shape":"Integer"},
         "RepoUpgradeOnBoot":{"shape":"RepoUpgradeOnBoot"},
-        "KerberosAttributes":{"shape":"KerberosAttributes"}
+        "KerberosAttributes":{"shape":"KerberosAttributes"},
+        "ClusterArn":{"shape":"ArnType"},
+        "StepConcurrencyLevel":{"shape":"Integer"},
+        "OutpostArn":{"shape":"OptionalArnType"}
       }
     },
     "ClusterId":{"type":"string"},
@@ -707,7 +730,9 @@
         "Id":{"shape":"ClusterId"},
         "Name":{"shape":"String"},
         "Status":{"shape":"ClusterStatus"},
-        "NormalizedInstanceHours":{"shape":"Integer"}
+        "NormalizedInstanceHours":{"shape":"Integer"},
+        "ClusterArn":{"shape":"ArnType"},
+        "OutpostArn":{"shape":"OptionalArnType"}
       }
     },
     "ClusterSummaryList":{
@@ -1644,6 +1669,20 @@
       "type":"list",
       "member":{"shape":"MetricDimension"}
     },
+    "ModifyClusterInput":{
+      "type":"structure",
+      "required":["ClusterId"],
+      "members":{
+        "ClusterId":{"shape":"String"},
+        "StepConcurrencyLevel":{"shape":"Integer"}
+      }
+    },
+    "ModifyClusterOutput":{
+      "type":"structure",
+      "members":{
+        "StepConcurrencyLevel":{"shape":"Integer"}
+      }
+    },
     "ModifyInstanceFleetInput":{
       "type":"structure",
       "required":[
@@ -1669,6 +1708,11 @@
     "NonNegativeDouble":{
       "type":"double",
       "min":0.0
+    },
+    "OptionalArnType":{
+      "type":"string",
+      "max":2048,
+      "min":0
     },
     "PlacementType":{
       "type":"structure",
@@ -1712,7 +1756,8 @@
       "members":{
         "ClusterId":{"shape":"ClusterId"},
         "InstanceGroupId":{"shape":"InstanceGroupId"},
-        "AutoScalingPolicy":{"shape":"AutoScalingPolicyDescription"}
+        "AutoScalingPolicy":{"shape":"AutoScalingPolicyDescription"},
+        "ClusterArn":{"shape":"ArnType"}
       }
     },
     "PutBlockPublicAccessConfigurationInput":{
@@ -1796,13 +1841,15 @@
         "CustomAmiId":{"shape":"XmlStringMaxLen256"},
         "EbsRootVolumeSize":{"shape":"Integer"},
         "RepoUpgradeOnBoot":{"shape":"RepoUpgradeOnBoot"},
-        "KerberosAttributes":{"shape":"KerberosAttributes"}
+        "KerberosAttributes":{"shape":"KerberosAttributes"},
+        "StepConcurrencyLevel":{"shape":"Integer"}
       }
     },
     "RunJobFlowOutput":{
       "type":"structure",
       "members":{
-        "JobFlowId":{"shape":"XmlStringMaxLen256"}
+        "JobFlowId":{"shape":"XmlStringMaxLen256"},
+        "ClusterArn":{"shape":"ArnType"}
       }
     },
     "ScaleDownBehavior":{
@@ -1955,6 +2002,13 @@
         "ActionOnFailure":{"shape":"ActionOnFailure"},
         "Status":{"shape":"StepStatus"}
       }
+    },
+    "StepCancellationOption":{
+      "type":"string",
+      "enum":[
+        "SEND_INTERRUPT",
+        "TERMINATE_PROCESS"
+      ]
     },
     "StepConfig":{
       "type":"structure",

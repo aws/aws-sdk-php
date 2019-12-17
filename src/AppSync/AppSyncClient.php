@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS AppSync** service.
+ * @method \Aws\Result createApiCache(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createApiCacheAsync(array $args = [])
  * @method \Aws\Result createApiKey(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createApiKeyAsync(array $args = [])
  * @method \Aws\Result createDataSource(array $args = [])
@@ -17,6 +19,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createResolverAsync(array $args = [])
  * @method \Aws\Result createType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createTypeAsync(array $args = [])
+ * @method \Aws\Result deleteApiCache(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteApiCacheAsync(array $args = [])
  * @method \Aws\Result deleteApiKey(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteApiKeyAsync(array $args = [])
  * @method \Aws\Result deleteDataSource(array $args = [])
@@ -29,6 +33,10 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteResolverAsync(array $args = [])
  * @method \Aws\Result deleteType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteTypeAsync(array $args = [])
+ * @method \Aws\Result flushApiCache(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise flushApiCacheAsync(array $args = [])
+ * @method \Aws\Result getApiCache(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getApiCacheAsync(array $args = [])
  * @method \Aws\Result getDataSource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDataSourceAsync(array $args = [])
  * @method \Aws\Result getFunction(array $args = [])
@@ -65,6 +73,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateApiCache(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateApiCacheAsync(array $args = [])
  * @method \Aws\Result updateApiKey(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateApiKeyAsync(array $args = [])
  * @method \Aws\Result updateDataSource(array $args = [])

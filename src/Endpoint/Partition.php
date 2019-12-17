@@ -4,6 +4,7 @@ namespace Aws\Endpoint;
 use ArrayAccess;
 use Aws\HasDataTrait;
 use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
+use Aws\S3\RegionalEndpoint\ConfigurationProvider as S3ConfigurationProvider;
 use InvalidArgumentException as Iae;
 
 /**
@@ -70,6 +71,15 @@ final class Partition implements ArrayAccess, PartitionInterface
     public function getName()
     {
         return $this->data['partition'];
+    }
+
+    /**
+     * @internal
+     * @return mixed
+     */
+    public function getDnsSuffix()
+    {
+        return $this->data['dnsSuffix'];
     }
 
     public function isRegionMatch($region, $service)
@@ -175,6 +185,7 @@ final class Partition implements ArrayAccess, PartitionInterface
     {
         if ($this->isServicePartitionGlobal($service)
             || $this->isStsLegacyEndpointUsed($service, $region, $options)
+            || $this->isS3LegacyEndpointUsed($service, $region, $options)
         ) {
             return $this->getPartitionEndpoint($service);
         }
@@ -205,6 +216,26 @@ final class Partition implements ArrayAccess, PartitionInterface
             && (empty($options['sts_regional_endpoints'])
                 || ConfigurationProvider::unwrap(
                     $options['sts_regional_endpoints']
+                )->getEndpointsType() !== 'regional'
+            );
+    }
+
+    /**
+     * S3 legacy us-east-1 endpoint used for valid regions unless option is explicitly
+     * set to 'regional'
+     *
+     * @param string $service
+     * @param string $region
+     * @param array $options
+     * @return bool
+     */
+    private function isS3LegacyEndpointUsed($service, $region, $options)
+    {
+        return $service === 's3'
+            && $region === 'us-east-1'
+            && (empty($options['s3_us_east_1_regional_endpoint'])
+                || S3ConfigurationProvider::unwrap(
+                    $options['s3_us_east_1_regional_endpoint']
                 )->getEndpointsType() !== 'regional'
             );
     }

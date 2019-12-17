@@ -43,5 +43,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateBrokerStorageAsync(array $args = [])
  * @method \Aws\Result updateClusterConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateClusterConfigurationAsync(array $args = [])
+ * @method \Aws\Result updateMonitoring(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateMonitoringAsync(array $args = [])
  */
 class KafkaClient extends AwsClient {}

@@ -37,7 +37,7 @@ class MultipartUploader extends AbstractUploader
      *   operations. The callback should have a function signature like
      *   `function (Aws\Command $command) {...}`.
      * - bucket: (string, required) Name of the bucket to which the object is
-     *   being uploaded.
+     *   being uploaded, or an S3 access point ARN.
      * - concurrency: (int, default=int(5)) Maximum number of concurrent
      *   `UploadPart` operations allowed during the multipart upload.
      * - key: (string, required) Key to use for the object being uploaded.

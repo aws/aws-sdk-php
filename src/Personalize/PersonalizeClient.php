@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Personalize** service.
+ * @method \Aws\Result createBatchInferenceJob(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createBatchInferenceJobAsync(array $args = [])
  * @method \Aws\Result createCampaign(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createCampaignAsync(array $args = [])
  * @method \Aws\Result createDataset(array $args = [])
@@ -35,6 +37,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteSolutionAsync(array $args = [])
  * @method \Aws\Result describeAlgorithm(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAlgorithmAsync(array $args = [])
+ * @method \Aws\Result describeBatchInferenceJob(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeBatchInferenceJobAsync(array $args = [])
  * @method \Aws\Result describeCampaign(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeCampaignAsync(array $args = [])
  * @method \Aws\Result describeDataset(array $args = [])
@@ -57,6 +61,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeSolutionVersionAsync(array $args = [])
  * @method \Aws\Result getSolutionMetrics(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSolutionMetricsAsync(array $args = [])
+ * @method \Aws\Result listBatchInferenceJobs(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listBatchInferenceJobsAsync(array $args = [])
  * @method \Aws\Result listCampaigns(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listCampaignsAsync(array $args = [])
  * @method \Aws\Result listDatasetGroups(array $args = [])

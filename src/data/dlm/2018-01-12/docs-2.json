@@ -6,9 +6,24 @@
     "DeleteLifecyclePolicy": "<p>Deletes the specified lifecycle policy and halts the automated operations that the policy specified.</p>",
     "GetLifecyclePolicies": "<p>Gets summary information about all or the specified data lifecycle policies.</p> <p>To get complete information about a policy, use <a>GetLifecyclePolicy</a>.</p>",
     "GetLifecyclePolicy": "<p>Gets detailed information about the specified lifecycle policy.</p>",
+    "ListTagsForResource": "<p>Lists the tags for the specified resource.</p>",
+    "TagResource": "<p>Adds the specified tags to the specified resource.</p>",
+    "UntagResource": "<p>Removes the specified tags from the specified resource.</p>",
     "UpdateLifecyclePolicy": "<p>Updates the specified lifecycle policy.</p>"
   },
   "shapes": {
+    "AvailabilityZone": {
+      "base": null,
+      "refs": {
+        "AvailabilityZoneList$member": null
+      }
+    },
+    "AvailabilityZoneList": {
+      "base": null,
+      "refs": {
+        "FastRestoreRule$AvailabilityZones": "<p>The Availability Zones in which to enable fast snapshot restore.</p>"
+      }
+    },
     "CopyTags": {
       "base": null,
       "refs": {
@@ -18,7 +33,8 @@
     "Count": {
       "base": null,
       "refs": {
-        "RetainRule$Count": "<p>The number of snapshots to keep for each volume, up to a maximum of 1000.</p>"
+        "FastRestoreRule$Count": "<p>The number of snapshots to be enabled with fast snapshot restore.</p>",
+        "RetainRule$Count": "<p>The number of snapshots to retain for each volume, up to a maximum of 1000.</p>"
       }
     },
     "CreateLifecyclePolicyRequest": {
@@ -79,6 +95,12 @@
         "UpdateLifecyclePolicyRequest$ExecutionRoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role used to run the operations specified by the lifecycle policy.</p>"
       }
     },
+    "FastRestoreRule": {
+      "base": "<p>Specifies a rule for enabling fast snapshot restore. You can enable fast snapshot restore based on either a count or a time interval.</p>",
+      "refs": {
+        "Schedule$FastRestoreRule": "<p>Enable fast snapshot restore.</p>"
+      }
+    },
     "GetLifecyclePoliciesRequest": {
       "base": null,
       "refs": {
@@ -115,7 +137,9 @@
     "Interval": {
       "base": null,
       "refs": {
-        "CreateRule$Interval": "<p>The interval between snapshots. The supported values are 2, 3, 4, 6, 8, 12, and 24.</p>"
+        "CreateRule$Interval": "<p>The interval between snapshots. The supported values are 2, 3, 4, 6, 8, 12, and 24.</p>",
+        "FastRestoreRule$Interval": "<p>The amount of time to enable fast snapshot restore. The maximum is 100 years. This is equivalent to 1200 months, 5200 weeks, or 36500 days.</p>",
+        "RetainRule$Interval": "<p>The amount of time to retain each snapshot. The maximum is 100 years. This is equivalent to 1200 months, 5200 weeks, or 36500 days.</p>"
       }
     },
     "IntervalUnitValues": {
@@ -152,6 +176,16 @@
       "refs": {
       }
     },
+    "ListTagsForResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTagsForResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Parameter": {
       "base": null,
       "refs": {
@@ -171,6 +205,15 @@
         "PolicyDetails$Parameters": "<p>A set of optional parameters that can be provided by the policy. </p>"
       }
     },
+    "PolicyArn": {
+      "base": null,
+      "refs": {
+        "LifecyclePolicy$PolicyArn": "<p>The Amazon Resource Name (ARN) of the policy.</p>",
+        "ListTagsForResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "TagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
+        "UntagResourceRequest$ResourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>"
+      }
+    },
     "PolicyDescription": {
       "base": null,
       "refs": {
@@ -183,9 +226,9 @@
     "PolicyDetails": {
       "base": "<p>Specifies the configuration of a lifecycle policy.</p>",
       "refs": {
-        "CreateLifecyclePolicyRequest$PolicyDetails": "<p>The configuration details of the lifecycle policy.</p> <p>Target tags cannot be re-used across lifecycle policies.</p>",
+        "CreateLifecyclePolicyRequest$PolicyDetails": "<p>The configuration details of the lifecycle policy.</p>",
         "LifecyclePolicy$PolicyDetails": "<p>The configuration of the lifecycle policy</p>",
-        "UpdateLifecyclePolicyRequest$PolicyDetails": "<p>The configuration of the lifecycle policy.</p> <p>Target tags cannot be re-used across policies.</p>"
+        "UpdateLifecyclePolicyRequest$PolicyDetails": "<p>The configuration of the lifecycle policy. You cannot update the policy type or the resource type.</p>"
       }
     },
     "PolicyId": {
@@ -232,9 +275,16 @@
       }
     },
     "RetainRule": {
-      "base": "<p>Specifies the number of snapshots to keep for each EBS volume.</p>",
+      "base": "<p>Specifies the retention rule for a lifecycle policy. You can retain snapshots based on either a count or a time interval.</p>",
       "refs": {
-        "Schedule$RetainRule": "<p>The retain rule.</p>"
+        "Schedule$RetainRule": "<p>The retention rule.</p>"
+      }
+    },
+    "RetentionIntervalUnitValues": {
+      "base": null,
+      "refs": {
+        "FastRestoreRule$IntervalUnit": "<p>The unit of time for enabling fast snapshot restore.</p>",
+        "RetainRule$IntervalUnit": "<p>The unit of time for time-based retention.</p>"
       }
     },
     "Schedule": {
@@ -262,6 +312,12 @@
         "UpdateLifecyclePolicyRequest$State": "<p>The desired activation state of the lifecycle policy after creation.</p>"
       }
     },
+    "StatusMessage": {
+      "base": null,
+      "refs": {
+        "LifecyclePolicy$StatusMessage": "<p>The description of the status.</p>"
+      }
+    },
     "String": {
       "base": null,
       "refs": {
@@ -284,6 +340,45 @@
       "refs": {
         "TagsToAddFilterList$member": null,
         "TargetTagsFilterList$member": null
+      }
+    },
+    "TagKey": {
+      "base": null,
+      "refs": {
+        "TagKeyList$member": null,
+        "TagMap$key": null
+      }
+    },
+    "TagKeyList": {
+      "base": null,
+      "refs": {
+        "UntagResourceRequest$TagKeys": "<p>The tag keys.</p>"
+      }
+    },
+    "TagMap": {
+      "base": null,
+      "refs": {
+        "CreateLifecyclePolicyRequest$Tags": "<p>The tags to apply to the lifecycle policy during creation.</p>",
+        "LifecyclePolicy$Tags": "<p>The tags.</p>",
+        "LifecyclePolicySummary$Tags": "<p>The tags.</p>",
+        "ListTagsForResourceResponse$Tags": "<p>Information about the tags.</p>",
+        "TagResourceRequest$Tags": "<p>One or more tags.</p>"
+      }
+    },
+    "TagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagResourceResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "TagValue": {
+      "base": null,
+      "refs": {
+        "TagMap$value": null
       }
     },
     "TagsToAddFilterList": {
@@ -327,6 +422,16 @@
       "refs": {
         "LifecyclePolicy$DateCreated": "<p>The local date and time when the lifecycle policy was created.</p>",
         "LifecyclePolicy$DateModified": "<p>The local date and time when the lifecycle policy was last modified.</p>"
+      }
+    },
+    "UntagResourceRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UntagResourceResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "UpdateLifecyclePolicyRequest": {

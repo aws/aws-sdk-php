@@ -466,6 +466,11 @@
           "location":"header",
           "locationName":"x-amz-lex-session-attributes"
         },
+        "sentimentResponse":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amz-lex-sentiment"
+        },
         "message":{
           "shape":"Text",
           "location":"header",
@@ -491,7 +496,12 @@
           "location":"header",
           "locationName":"x-amz-lex-input-transcript"
         },
-        "audioStream":{"shape":"BlobStream"}
+        "audioStream":{"shape":"BlobStream"},
+        "sessionId":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"x-amz-lex-session-id"
+        }
       },
       "payload":"audioStream"
     },
@@ -531,10 +541,12 @@
         "slots":{"shape":"StringMap"},
         "sessionAttributes":{"shape":"StringMap"},
         "message":{"shape":"Text"},
+        "sentimentResponse":{"shape":"SentimentResponse"},
         "messageFormat":{"shape":"MessageFormatType"},
         "dialogState":{"shape":"DialogState"},
         "slotToElicit":{"shape":"String"},
-        "responseCard":{"shape":"ResponseCard"}
+        "responseCard":{"shape":"ResponseCard"},
+        "sessionId":{"shape":"String"}
       }
     },
     "PutSessionRequest":{
@@ -640,6 +652,15 @@
         "genericAttachments":{"shape":"genericAttachmentList"}
       }
     },
+    "SentimentLabel":{"type":"string"},
+    "SentimentResponse":{
+      "type":"structure",
+      "members":{
+        "sentimentLabel":{"shape":"SentimentLabel"},
+        "sentimentScore":{"shape":"SentimentScore"}
+      }
+    },
+    "SentimentScore":{"type":"string"},
     "String":{"type":"string"},
     "StringMap":{
       "type":"map",

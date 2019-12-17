@@ -1,11 +1,14 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\CommandInterface;
+use Aws\Middleware;
 use Aws\Result;
 use Aws\S3\ObjectUploader;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\FnStream;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -48,6 +51,42 @@ class ObjectUploaderTest extends TestCase
         $result = (new ObjectUploader($client, 'bucket', 'key', $body, 'private', $options))
             ->upload();
         $this->assertEquals('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
+        $this->assertTrue($this->mockQueueEmpty());
+    }
+
+    /**
+     * @dataProvider getUploadTestCases
+     */
+    public function testDoesCorrectOperationWithAccessPointArn(
+        StreamInterface $body,
+        array $mockedResults,
+        array $options
+    ) {
+        /** @var \Aws\S3\S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region' => 'us-west-2'
+        ]);
+        $client->getHandlerList()->appendSign(Middleware::tap(
+            function(CommandInterface $cmd, RequestInterface $req) {
+                $this->assertEquals(
+                    'mydest-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
+                    $req->getUri()->getHost()
+                );
+                $this->assertEquals(
+                    '/key',
+                    $req->getUri()->getPath()
+                );
+            }
+        ));
+        $this->addMockResults($client, $mockedResults);
+        $result = (new ObjectUploader(
+                $client,
+                'arn:aws:s3:us-west-2:123456789012:accesspoint:mydest',
+                'key',
+                $body,
+                'private',
+                $options
+            ))->upload();
         $this->assertTrue($this->mockQueueEmpty());
     }
 

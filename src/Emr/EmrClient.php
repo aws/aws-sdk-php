@@ -44,6 +44,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listSecurityConfigurationsAsync(array $args = [])
  * @method \Aws\Result listSteps(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listStepsAsync(array $args = [])
+ * @method \Aws\Result modifyCluster(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise modifyClusterAsync(array $args = [])
  * @method \Aws\Result modifyInstanceFleet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyInstanceFleetAsync(array $args = [])
  * @method \Aws\Result modifyInstanceGroups(array $args = [])

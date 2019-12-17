@@ -263,7 +263,22 @@
         "hi-IN",
         "ar-SA",
         "ru-RU",
-        "zh-CN"
+        "zh-CN",
+        "nl-NL",
+        "id-ID",
+        "ta-IN",
+        "fa-IR",
+        "en-IE",
+        "en-AB",
+        "en-WL",
+        "pt-PT",
+        "te-IN",
+        "tr-TR",
+        "de-CH",
+        "he-IL",
+        "ms-MY",
+        "ja-JP",
+        "ar-AE"
       ]
     },
     "LimitExceededException":{
@@ -306,6 +321,11 @@
         "NextToken":{"shape":"NextToken"},
         "Vocabularies":{"shape":"Vocabularies"}
       }
+    },
+    "MaxAlternatives":{
+      "type":"integer",
+      "max":10,
+      "min":2
     },
     "MaxResults":{
       "type":"integer",
@@ -377,7 +397,9 @@
         "VocabularyName":{"shape":"VocabularyName"},
         "ShowSpeakerLabels":{"shape":"Boolean"},
         "MaxSpeakerLabels":{"shape":"MaxSpeakers"},
-        "ChannelIdentification":{"shape":"Boolean"}
+        "ChannelIdentification":{"shape":"Boolean"},
+        "ShowAlternatives":{"shape":"Boolean"},
+        "MaxAlternatives":{"shape":"MaxAlternatives"}
       }
     },
     "StartTranscriptionJobRequest":{

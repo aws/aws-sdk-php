@@ -253,6 +253,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/tags/{resourceArn}"
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "ListUserHierarchyGroups":{
       "name":"ListUserHierarchyGroups",
       "http":{
@@ -283,6 +299,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "StartChatContact":{
+      "name":"StartChatContact",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/contact/chat"
+      },
+      "input":{"shape":"StartChatContactRequest"},
+      "output":{"shape":"StartChatContactResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"LimitExceededException"}
       ]
     },
     "StartOutboundVoiceContact":{
@@ -317,6 +349,36 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/tags/{resourceArn}"
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/tags/{resourceArn}"
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateContactAttributes":{
@@ -428,9 +490,8 @@
     },
     "AgentUsername":{
       "type":"string",
-      "max":20,
-      "min":1,
-      "pattern":"[a-zA-Z0-9\\_\\-\\.]+"
+      "max":100,
+      "min":1
     },
     "AttributeName":{
       "type":"string",
@@ -450,12 +511,36 @@
     "AutoAccept":{"type":"boolean"},
     "Channel":{
       "type":"string",
-      "enum":["VOICE"]
+      "enum":[
+        "VOICE",
+        "CHAT"
+      ]
     },
     "Channels":{
       "type":"list",
       "member":{"shape":"Channel"},
       "max":1
+    },
+    "ChatContent":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ChatContentType":{
+      "type":"string",
+      "max":100,
+      "min":1
+    },
+    "ChatMessage":{
+      "type":"structure",
+      "required":[
+        "ContentType",
+        "Content"
+      ],
+      "members":{
+        "ContentType":{"shape":"ChatContentType"},
+        "Content":{"shape":"ChatContent"}
+      }
     },
     "ClientToken":{
       "type":"string",
@@ -537,7 +622,8 @@
           "shape":"InstanceId",
           "location":"uri",
           "locationName":"InstanceId"
-        }
+        },
+        "Tags":{"shape":"TagMap"}
       }
     },
     "CreateUserResponse":{
@@ -589,7 +675,10 @@
         "AGENTS_STAFFED",
         "CONTACTS_IN_QUEUE",
         "OLDEST_CONTACT_AGE",
-        "CONTACTS_SCHEDULED"
+        "CONTACTS_SCHEDULED",
+        "AGENTS_ON_CONTACT",
+        "SLOTS_ACTIVE",
+        "SLOTS_AVAILABLE"
       ]
     },
     "CurrentMetricResult":{
@@ -709,6 +798,11 @@
       }
     },
     "DirectoryUserId":{"type":"string"},
+    "DisplayName":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "DuplicateResourceException":{
       "type":"structure",
       "members":{
@@ -1210,6 +1304,23 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"TagMap"}
+      }
+    },
     "ListUserHierarchyGroupsRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -1287,6 +1398,23 @@
       },
       "error":{"httpStatusCode":403},
       "exception":true
+    },
+    "ParticipantDetails":{
+      "type":"structure",
+      "required":["DisplayName"],
+      "members":{
+        "DisplayName":{"shape":"DisplayName"}
+      }
+    },
+    "ParticipantId":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ParticipantToken":{
+      "type":"string",
+      "max":1000,
+      "min":1
     },
     "Password":{
       "type":"string",
@@ -1668,6 +1796,33 @@
       "type":"string",
       "sensitive":true
     },
+    "StartChatContactRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactFlowId",
+        "ParticipantDetails"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "ContactFlowId":{"shape":"ContactFlowId"},
+        "Attributes":{"shape":"Attributes"},
+        "ParticipantDetails":{"shape":"ParticipantDetails"},
+        "InitialMessage":{"shape":"ChatMessage"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartChatContactResponse":{
+      "type":"structure",
+      "members":{
+        "ContactId":{"shape":"ContactId"},
+        "ParticipantId":{"shape":"ParticipantId"},
+        "ParticipantToken":{"shape":"ParticipantToken"}
+      }
+    },
     "StartOutboundVoiceContactRequest":{
       "type":"structure",
       "required":[
@@ -1718,6 +1873,44 @@
       "members":{
       }
     },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":50,
+      "min":1
+    },
+    "TagMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"},
+      "max":50,
+      "min":1
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tags"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256
+    },
     "Threshold":{
       "type":"structure",
       "members":{
@@ -1744,6 +1937,25 @@
         "COUNT",
         "PERCENT"
       ]
+    },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"ARN",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tagKeys":{
+          "shape":"TagKeyList",
+          "location":"querystring",
+          "locationName":"tagKeys"
+        }
+      }
     },
     "UpdateContactAttributesRequest":{
       "type":"structure",
@@ -1878,7 +2090,8 @@
         "DirectoryUserId":{"shape":"DirectoryUserId"},
         "SecurityProfileIds":{"shape":"SecurityProfileIds"},
         "RoutingProfileId":{"shape":"RoutingProfileId"},
-        "HierarchyGroupId":{"shape":"HierarchyGroupId"}
+        "HierarchyGroupId":{"shape":"HierarchyGroupId"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "UserId":{"type":"string"},

@@ -33,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeAccountAsync(array $args = [])
  * @method \Aws\Result describeCreateAccountStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeCreateAccountStatusAsync(array $args = [])
+ * @method \Aws\Result describeEffectivePolicy(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeEffectivePolicyAsync(array $args = [])
  * @method \Aws\Result describeHandshake(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeHandshakeAsync(array $args = [])
  * @method \Aws\Result describeOrganization(array $args = [])

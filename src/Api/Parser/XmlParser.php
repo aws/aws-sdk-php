@@ -50,6 +50,15 @@ class XmlParser
             $node = $this->memberKey($member, $name);
             if (isset($value->{$node})) {
                 $target[$name] = $this->dispatch($member, $value->{$node});
+            } else {
+                $memberShape = $shape->getMember($name);
+                if (!empty($memberShape['xmlAttribute'])) {
+                    $target[$name] = $this->parse_xml_attribute(
+                        $shape,
+                        $memberShape,
+                        $value
+                    );
+                }
             }
         }
 
@@ -134,5 +143,22 @@ class XmlParser
             return DateTimeResult::fromEpoch((string) $value);
         }
         return new DateTimeResult($value);
+    }
+
+    private function parse_xml_attribute(Shape $shape, Shape $memberShape, $value)
+    {
+        $namespace = $shape['xmlNamespace']['uri']
+            ? $shape['xmlNamespace']['uri']
+            : '';
+        $prefix = $shape['xmlNamespace']['prefix']
+            ? $shape['xmlNamespace']['prefix']
+            : '';
+        if (!empty($prefix)) {
+            $prefix .= ':';
+        }
+        $key = str_replace($prefix, '', $memberShape['locationName']);
+
+        $attributes = $value->attributes($namespace);
+        return isset($attributes[$key]) ? (string) $attributes[$key] : null;
     }
 }

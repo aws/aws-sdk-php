@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Credentials;
 
+use Aws\Exception\AwsException;
 use Aws\Exception\CredentialsException;
 use Aws\Result;
 use Aws\Sts\StsClient;
@@ -110,7 +111,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
 
                 try {
                     $result = $client->assumeRoleWithWebIdentity($assumeParams);
-                } catch (\Exception $e) {
+                } catch (AwsException $e) {
                     if ($e->getAwsErrorCode() == 'InvalidIdentityToken') {
                         if ($this->attempts < $this->retries) {
                             sleep(pow(1.2, $this->attempts));
@@ -126,6 +127,11 @@ class AssumeRoleWithWebIdentityCredentialProvider
                             $e
                         );
                     }
+                } catch (\Exception $e) {
+                    throw new CredentialsException(
+                        "Error retrieving web identity credentials: " . $e->getMessage()
+                        . " (" . $e->getCode() . ")"
+                    );
                 }
                 $this->attempts++;
             }
