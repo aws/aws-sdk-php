@@ -816,107 +816,29 @@ class InstanceProfileProviderTest extends TestCase
         }
     }
 
-    public function testRetryInvalidJson()
-    {
-        $t = time() + 1000;
-        $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
-        $c = $this->getTestCreds(
-            '{\n "Code":"Success"}', //invalid json
-            'foo',
-            new Response(200, [], Psr7\stream_for($result))
-        )->wait();
-        $this->assertEquals('foo', $c->getAccessKeyId());
-        $this->assertEquals('baz', $c->getSecretKey());
-        $this->assertNull($c->getSecurityToken());
-        $this->assertEquals($t, $c->getExpiration());
-    }
-
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Invalid JSON Response
-     */
-    public function testThrowsExceptionOnInvalidJsonRetryExhaustion()
-    {
-        $c = $this->getTestCreds(
-            '{\n "Code":"Success"}', //invalid json
-            'foo',
-            null,
-            ['retries' => 0]
-        )->wait();
-    }
-
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Networking error
-     */
-    public function testThrowsExceptionOnNetorkRetryExhaustion()
-    {
-        $error = $this->getRequestException();
-        $client = function () use ($error) {
-            return Promise\rejection_for([
-                'exception' => $error
-            ]);
-        };
-
-        $args = [
-            'profile' => 'foo',
-            'client' => $client,
-            'retries' => 0
-        ];
-        $provider = new InstanceProfileProvider($args);
-        $c = $provider()->wait();
-    }
-
-    public function testNetworkingErrorsAreRetried()
-    {
-        $retries = 1;
-
-        $t = time() + 1000;
-        $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
-        $responses = [new Response(200, [], Psr7\stream_for($result))];
-
-        $error = $this->getRequestException();
-
-        $client = function () use (&$retries, $responses, $error) {
-            if (0 === $retries--) {
-                return Promise\promise_for(array_shift($responses));
-            }
-
-            return Promise\rejection_for([
-                'exception' => $error
-            ]);
-        };
-
-        $args = [
-            'profile' => 'foo',
-            'client' => $client
-        ];
-        $provider = new InstanceProfileProvider($args);
-        $c = $provider()->wait();
-        $this->assertEquals('foo', $c->getAccessKeyId());
-        $this->assertEquals('baz', $c->getSecretKey());
-        $this->assertNull($c->getSecurityToken());
-        $this->assertEquals($t, $c->getExpiration());
-    }
-
     public function testRetriesEnvVarIsUsed()
     {
+        $requestClass = $this->getRequestClass();
+        $responseClass = $this->getResponseClass();
+
         putenv(InstanceProfileProvider::ENV_RETRIES . '=1');
         $retries = (int) getenv(InstanceProfileProvider::ENV_RETRIES);
 
         $t = time() + 1000;
         $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
-        $responses = [new Response(200, [], Psr7\stream_for($result))];
+        $responses = [new $responseClass(200, [], Psr7\stream_for($result))];
 
-        $error = $this->getRequestException();
-
-        $client = function () use (&$retries, $responses, $error) {
+        $client = function () use (&$retries, $responses, $requestClass, $responseClass) {
             if (0 === $retries--) {
                 return Promise\promise_for(array_shift($responses));
             }
 
             return Promise\rejection_for([
-                'exception' => $error
+                'exception' => new RequestException(
+                    '401 Unauthorized',
+                    new $requestClass('GET', '/latest/meta-data/foo'),
+                    new $responseClass(401)
+                )
             ]);
         };
 
