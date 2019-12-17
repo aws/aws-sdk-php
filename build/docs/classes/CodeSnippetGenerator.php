@@ -81,7 +81,7 @@ class CodeSnippetGenerator
             case 'timestamp':
                 return "<DateTimeInterface>";
             case 'blob':
-                return "<binary string>";
+                return "&lt;BLOB&gt;";
             default:
                 return $value;
         }

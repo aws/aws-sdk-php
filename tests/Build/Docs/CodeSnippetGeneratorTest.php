@@ -134,7 +134,7 @@ EOCS
 $result = $client->putItem([
     'Item' => [
         'Key' => [
-            'B' => <binary string>,
+            'B' => &lt;BLOB&gt;,
         ],
     ],
 ]);

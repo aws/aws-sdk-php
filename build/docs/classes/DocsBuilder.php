@@ -114,6 +114,12 @@ class DocsBuilder
                     continue;
                 }
                 $examples = $this->loadExamples($name, $version);
+                if (method_exists("Aws\\{$ns}\\{$ns}Client", 'addDocExamples')) {
+                    $examples = call_user_func(
+                        "Aws\\{$ns}\\{$ns}Client::addDocExamples",
+                        $examples
+                    );
+                }
                 $this->renderService($service, $examples);
                 $services[$title][$version] = $service;
             }
