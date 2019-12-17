@@ -720,4 +720,60 @@ class S3Client extends AwsClient implements S3ClientInterface
             new DocModel($docs)
         ];
     }
+
+    /**
+     * @internal
+     * @codeCoverageIgnore
+     */
+    public static function addDocExamples($examples)
+    {
+        $getObjectExample = [
+            'input' => [
+                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myaccesspoint',
+                'Key' => 'my-key'
+            ],
+            'output' => [
+                'Body' => 'class GuzzleHttp\Psr7\Stream#208 (7) {...}',
+                'ContentLength' => '11',
+                'ContentType' => 'application/octet-stream',
+            ],
+            'comments' => [
+                'input' => '',
+                'output' => 'Simplified example output'
+            ],
+            'description' => 'The following example retrieves an object by referencing the bucket via an S3 accesss point ARN. Result output is simplified for the example.',
+            'id' => '',
+            'title' => 'To get an object via an S3 access point ARN'
+        ];
+        if (isset($examples['GetObject'])) {
+            $examples['GetObject'] []= $getObjectExample;
+        } else {
+            $examples['GetObject'] = [$getObjectExample];
+        }
+
+        $putObjectExample = [
+            'input' => [
+                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myaccesspoint',
+                'Key' => 'my-key',
+                'Body' => 'my-body',
+            ],
+            'output' => [
+                'ObjectURL' => 'https://my-bucket.s3.us-east-1.amazonaws.com/my-key'
+            ],
+            'comments' => [
+                'input' => '',
+                'output' => 'Simplified example output'
+            ],
+            'description' => 'The following example uploads an object by referencing the bucket via an S3 accesss point ARN. Result output is simplified for the example.',
+            'id' => '',
+            'title' => 'To upload an object via an S3 access point ARN'
+        ];
+        if (isset($examples['PutObject'])) {
+            $examples['PutObject'] []= $putObjectExample;
+        } else {
+            $examples['PutObject'] = [$putObjectExample];
+        }
+
+        return $examples;
+    }
 }
