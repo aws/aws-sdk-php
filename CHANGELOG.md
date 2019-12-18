@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Build\Docs` - Adds a hook for custom examples in API documentation generation.
+* `Aws\CloudFront` - Documentation updates for CloudFront
+* `Aws\EC2` - This release introduces the ability to tag Elastic Graphics accelerators. You can use tags to organize and identify your accelerators for cost allocation.
+* `Aws\OpsWorksCM` - AWS OpsWorks CM now supports tagging, and tag-based access control, of servers and backups.
+* `Aws\ResourceGroupsTaggingAPI` - Documentation updates for resourcegroupstaggingapi
+* `Aws\S3` - Updates Amazon S3 endpoints allowing you to configure your client to opt-in to using S3 with the us-east-1 regional endpoint, instead of global.
+
 ## 3.129.2 - 2019-12-17
 
 * `Aws\EC2` - Documentation updates for Amazon EC2
