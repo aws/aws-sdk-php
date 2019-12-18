@@ -68,6 +68,22 @@ class InstanceProfileProviderTest extends TestCase
         return "\GuzzleHttp\Psr7\Response";
     }
 
+    private function getRequestException()
+    {
+        $version = (string) ClientInterface::VERSION;
+        if ($version[0] === '6') {
+            return new RequestException(
+                'test',
+                new Psr7\Request('GET', 'http://www.example.com')
+            );
+        } elseif ($version[0] === '5') {
+            return new RequestException(
+                'test',
+                new \GuzzleHttp\Message\Request('GET', 'http://www.example.com')
+            );
+        }
+    }
+
     /**
      * Test client for secure data flow with metadata token requirement
      *
@@ -814,5 +830,36 @@ class InstanceProfileProviderTest extends TestCase
         } finally {
             putenv(InstanceProfileProvider::ENV_DISABLE . '=' . $flag);
         }
+    }
+
+    public function testRetriesEnvVarIsUsed()
+    {
+        putenv(InstanceProfileProvider::ENV_RETRIES . '=1');
+        $retries = (int) getenv(InstanceProfileProvider::ENV_RETRIES);
+
+        $t = time() + 1000;
+        $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
+        $responses = [new Response(200, [], Psr7\stream_for($result))];
+
+        $client = function () use (&$retries, $responses) {
+            if (0 === $retries--) {
+                return Promise\promise_for(array_shift($responses));
+            }
+
+            return Promise\rejection_for([
+                'exception' => $this->getRequestException()
+            ]);
+        };
+
+        $args = [
+            'profile' => 'foo',
+            'client' => $client
+        ];
+        $provider = new InstanceProfileProvider($args);
+        $c = $provider()->wait();
+        $this->assertEquals('foo', $c->getAccessKeyId());
+        $this->assertEquals('baz', $c->getSecretKey());
+        $this->assertNull($c->getSecurityToken());
+        $this->assertEquals($t, $c->getExpiration());
     }
 }
