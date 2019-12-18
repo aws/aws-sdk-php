@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.129.3 - 2019-12-18
 
 * `Aws\Build\Docs` - Adds a hook for custom examples in API documentation generation.
 * `Aws\CloudFront` - Documentation updates for CloudFront
