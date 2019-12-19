@@ -18,6 +18,8 @@ class S3Context implements Context, SnippetAcceptingContext
 {
     use IntegUtils;
 
+    const INTEG_LOG_BUCKET = 'aws-php-sdk-test-integ-logs';
+
     /** @var RequestInterface */
     private $presignedRequest;
 
@@ -103,7 +105,18 @@ class S3Context implements Context, SnippetAcceptingContext
         }
 
         // Delete bucket and wait until bucket is no longer available
-        $client->deleteBucket(['Bucket' => self::getResourceName()]);
+        $result = $client->deleteBucket(['Bucket' => self::getResourceName()]);
+        if (!($client->doesBucketExist(self::INTEG_LOG_BUCKET))) {
+            $client->createBucket([
+                'Bucket' => self::INTEG_LOG_BUCKET
+            ]);
+        }
+        $client->putObject([
+            'Bucket' => self::INTEG_LOG_BUCKET,
+            'Key' => self::getResourceName() . '-' . date('Y-M-d__H_i_s'),
+            'Body' => print_r($result->toArray(), true)
+        ]);
+
         $client->waitUntil('BucketNotExists', [
             'Bucket' => self::getResourceName(),
         ]);
