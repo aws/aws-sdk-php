@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Integ;
 
+use Aws\Sts\StsClient;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
@@ -17,6 +18,8 @@ use Psr\Http\Message\StreamInterface;
 class S3Context implements Context, SnippetAcceptingContext
 {
     use IntegUtils;
+
+    const INTEG_LOG_BUCKET_PREFIX = 'aws-php-sdk-test-integ-logs';
 
     /** @var RequestInterface */
     private $presignedRequest;
@@ -102,8 +105,30 @@ class S3Context implements Context, SnippetAcceptingContext
             }
         }
 
-        // Delete bucket and wait until bucket is no longer available
-        $client->deleteBucket(['Bucket' => self::getResourceName()]);
+        // Delete bucket
+        $result = $client->deleteBucket(['Bucket' => self::getResourceName()]);
+
+        // Use account number to generate a unique bucket name
+        $sts = new StsClient([
+            'version' => 'latest',
+            'region' => 'us-east-1'
+        ]);
+        $identity = $sts->getCallerIdentity([]);
+        $logBucket = self::INTEG_LOG_BUCKET_PREFIX . "-{$identity['Account']}";
+
+        // Log bucket deletion result
+        if (!($client->doesBucketExist($logBucket))) {
+            $client->createBucket([
+                'Bucket' => $logBucket
+            ]);
+        }
+        $client->putObject([
+            'Bucket' => $logBucket,
+            'Key' => self::getResourceName() . '-' . date('Y-M-d__H_i_s'),
+            'Body' => print_r($result->toArray(), true)
+        ]);
+
+        // Wait until bucket is no longer available
         $client->waitUntil('BucketNotExists', [
             'Bucket' => self::getResourceName(),
         ]);
