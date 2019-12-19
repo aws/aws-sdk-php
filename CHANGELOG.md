@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeStarconnections` - Public beta for Bitbucket Cloud support in AWS CodePipeline through integration with AWS CodeStar connections.
+* `Aws\Credentials` - Brings PHP SDK inline with Python's boto3, allowing setting instance metadata timeout and retries from environment variables
+* `Aws\DLM` - You can now copy snapshots across regions using Data Lifecycle Manager (DLM). You can enable policies which, along with create, can now also copy snapshots to one or more AWS region(s). Copies can be scheduled for up to three regions from a single policy and retention periods are set for each region separately. 
+* `Aws\EC2` - We are updating the supportedRootDevices field to supportedRootDeviceTypes for DescribeInstanceTypes API to ensure that the actual value is returned, correcting a previous error in the model.
+* `Aws\GameLift` - Amazon GameLift now supports ARNs for all key GameLift resources, tagging for GameLift resource authorization management, and updated documentation that articulates GameLift's resource authorization strategy.
+* `Aws\LexModelBuildingService` - Amazon Lex now supports conversation logs and slot obfuscation.
+* `Aws\PersonalizeRuntime` - Add context map to get-recommendations and get-personalized-ranking request objects to provide contextual metadata at inference time
+* `Aws\SSM` - This release allows customers to add tags to Automation execution, enabling them to sort and filter executions in different ways, such as by resource, purpose, owner, or environment.
+* `Aws\TranscribeService` - Amazon Transcribe supports job queuing for the StartTranscriptionJob API.
+
 ## 3.129.3 - 2019-12-18
 
 * `Aws\Build\Docs` - Adds a hook for custom examples in API documentation generation.
