@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.130.0 - 2019-12-19
 
 * `Aws\CodeStarconnections` - Public beta for Bitbucket Cloud support in AWS CodePipeline through integration with AWS CodeStar connections.
 * `Aws\Credentials` - Brings PHP SDK inline with Python's boto3, allowing setting instance metadata timeout and retries from environment variables
