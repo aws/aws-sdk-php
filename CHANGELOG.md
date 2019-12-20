@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.130.1 - 2019-12-20
 
 * `Aws\DeviceFarm` - Introduced browser testing support through AWS Device Farm
 * `Aws\EC2` - This release introduces the ability to tag key pairs, placement groups, export tasks, import image tasks, import snapshot tasks and export image tasks. You can use tags to organize and identify your resources for cost allocation. 
