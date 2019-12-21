@@ -55,7 +55,7 @@ class ResultPaginator implements \Iterator
      *
      * @param int $usec Sleep time in microseconds
      */
-    public function setSubsequentPageSleep(int $usec)
+    public function setSubsequentPageSleep($usec)
     {
         $this->apiDelayUsec = $usec;
     }
