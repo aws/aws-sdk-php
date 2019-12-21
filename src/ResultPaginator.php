@@ -29,6 +29,9 @@ class ResultPaginator implements \Iterator
     /** @var int Number of operations/requests performed. */
     private $requestCount = 0;
 
+    /** @var int Delay in microseconds between subsequent API requests */
+    private $apiDelayUsec = 0;
+
     /**
      * @param AwsClientInterface $client
      * @param string             $operation
@@ -45,6 +48,16 @@ class ResultPaginator implements \Iterator
         $this->operation = $operation;
         $this->args = $args;
         $this->config = $config;
+    }
+
+    /**
+     * Set amount of time to sleep between API requests
+     *
+     * @param int $usec Sleep time in microseconds
+     */
+    public function setSubsequentPageSleep(int $usec)
+    {
+        $this->apiDelayUsec = $usec;
     }
 
     /**
@@ -78,6 +91,8 @@ class ResultPaginator implements \Iterator
                 if ($retVal !== null) {
                     yield Promise\promise_for($retVal);
                 }
+                if ($this->apiDelayUsec !== 0)
+                    usleep($this->apiDelayUsec);
             } while ($nextToken);
         });
     }
@@ -123,6 +138,8 @@ class ResultPaginator implements \Iterator
         }
 
         if ($this->nextToken || !$this->requestCount) {
+            if ($this->requestCount > 0 && $this->apiDelayUsec !== 0)
+                usleep($this->apiDelayUsec);
             $this->result = $this->client->execute(
                 $this->createNextCommand($this->args, $this->nextToken)
             );

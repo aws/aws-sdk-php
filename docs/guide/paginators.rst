@@ -49,6 +49,11 @@ the paginator would need to do 10 requests total. When you iterate through the
 results, the first request is executed when you start iterating, the second in
 the second iteration of the loop, and so forth.
 
+Because some APIs are rate limited (e.g. Route53 ``ListResourceRecordSets``), you
+may want to add a short sleep between each page request. You can do so by
+calling ``setSubsequentPageSleep`` on the ``Aws\ResultPaginator`` instance
+returned from ``getPaginator()``.
+
 Enumerating Data from Results
 -----------------------------
 

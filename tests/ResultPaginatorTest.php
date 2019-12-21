@@ -95,6 +95,79 @@ class ResultPaginatorTest extends TestCase
         $this->assertEquals($expectedTableNames, $tables);
     }
 
+    /**
+     * @dataProvider getPaginatorIterationData
+     */
+    public function testIterationSleepWorkflow(
+        array $config,
+        array $results,
+        $expectedRequestCount,
+        array $expectedTableNames
+    ) {
+        $requestCount = 0;
+        $client = $this->getCustomClientProvider($config);
+        $this->addMockResults(
+            $client,
+            $results,
+            function () use (&$requestCount) {
+                $requestCount++;
+            }
+        );
+
+        $paginator = $client->getPaginator('ListTables');
+        $usleepTime = 250000;
+        $paginator->setSubsequentPageSleep($usleepTime);
+
+        // Iterate over the paginator and keep track of the keys and values
+        $tableNames = [];
+        $lastKey = $result = null;
+        $t1 = microtime(true);
+        $numSleeps = -1;
+        foreach ($paginator as $key => $result) {
+            $tableNames = array_merge($tableNames, $result['TableNames']);
+            $lastKey = $key;
+            $numSleeps++;
+        }
+        $t2 = microtime(true);
+
+        // Make sure the paginator yields the expected results and with proper delay
+        $this->assertInstanceOf('Aws\\Result', $result);
+        $this->assertEquals($expectedRequestCount, $requestCount);
+        $this->assertEquals($expectedRequestCount - 1, $lastKey);
+        $this->assertEquals($expectedTableNames, $tableNames);
+        $this->assertGreaterThanOrEqual($usleepTime * $numSleeps, ($t2 - $t1) * 1000000);
+    }
+
+    /**
+     * @dataProvider getPaginatorIterationData
+     */
+    public function testAsyncSleepWorkflow(
+        array $config,
+        array $results,
+        $expectedRequestCount,
+        array $expectedTableNames
+    ) {
+        $client = $this->getCustomClientProvider($config);
+        $this->addMockResults($client, $results);
+        $paginator = $client->getPaginator('ListTables', []);
+        $usleepTime = 250000;
+        $paginator->setSubsequentPageSleep($usleepTime);
+
+        $tables = [];
+        $t1 = microtime(true);
+        $numSleeps = -1;
+        $lastResult = $paginator->each(function (Result $result) use (&$tables, &$numSleeps) {
+            $tables = array_merge($tables, $result['TableNames']);
+            $numSleeps++;
+        })->wait();
+        $t2 = microtime(true);
+
+        // Make sure the paginator yields the expected results
+        $this->assertInstanceOf('Aws\\Result', $lastResult);
+        $this->assertEquals($expectedTableNames, $tables);
+        $this->assertGreaterThanOrEqual($usleepTime * $numSleeps, ($t2 - $t1) * 1000000);
+    }
+
     public function testNonIterator()
     {
         // Get test data
