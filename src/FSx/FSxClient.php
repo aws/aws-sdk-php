@@ -5,8 +5,12 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon FSx** service.
+ * @method \Aws\Result cancelDataRepositoryTask(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelDataRepositoryTaskAsync(array $args = [])
  * @method \Aws\Result createBackup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createBackupAsync(array $args = [])
+ * @method \Aws\Result createDataRepositoryTask(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createDataRepositoryTaskAsync(array $args = [])
  * @method \Aws\Result createFileSystem(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createFileSystemAsync(array $args = [])
  * @method \Aws\Result createFileSystemFromBackup(array $args = [])
@@ -17,6 +21,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteFileSystemAsync(array $args = [])
  * @method \Aws\Result describeBackups(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBackupsAsync(array $args = [])
+ * @method \Aws\Result describeDataRepositoryTasks(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeDataRepositoryTasksAsync(array $args = [])
  * @method \Aws\Result describeFileSystems(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeFileSystemsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
