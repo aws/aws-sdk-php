@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.130.2 - 2019-12-23
 
 * `Aws\Detective` - Updated the documentation for Amazon Detective.
 * `Aws\FSx` - This release adds a new family of APIs (create-data-repository-task, describe-data-repository-task, and cancel-data-repository-task) that allow users to perform operations between their file system and its linked data repository.
