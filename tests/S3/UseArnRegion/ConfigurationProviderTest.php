@@ -23,6 +23,13 @@ s3_use_arn_region = true
 s3_use_arn_region = false
 EOT;
 
+    private $altIniFile = <<<EOT
+[custom]
+s3_use_arn_region = false
+[default]
+s3_use_arn_region = true
+EOT;
+
     public static function setUpBeforeClass()
     {
         self::$originalEnv = [
@@ -35,6 +42,7 @@ EOT;
     private function clearEnv()
     {
         putenv(ConfigurationProvider::ENV_USE_ARN_REGION . '=');
+        putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -101,6 +109,21 @@ EOT;
         $result = call_user_func(ConfigurationProvider::ini(null, null))->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
+    }
+
+    public function testCreatesFromIniFileWithDifferentDefaultFilename()
+    {
+        $dir = $this->clearEnv();
+        putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' . $dir . "/alt_config");
+        $expected  = new Configuration(true);
+        file_put_contents($dir . '/config', $this->iniFile);
+        file_put_contents($dir . '/alt_config', $this->altIniFile);
+        putenv('HOME=' . dirname($dir));
+        /** @var ConfigurationInterface $result */
+        $result = call_user_func(ConfigurationProvider::ini(null, null))->wait();
+        $this->assertSame($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
+        unlink($dir . '/alt_config');
     }
 
     public function testCreatesFromIniFileWithSpecifiedProfile()
