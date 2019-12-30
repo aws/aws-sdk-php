@@ -345,7 +345,7 @@ EOT;
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')
-            ->with(ConfigurationProvider::CACHE_KEY)
+            ->with(ConfigurationProvider::$cacheKey)
             ->willReturn($expected);
 
         $provider = ConfigurationProvider::defaultProvider(['endpoint_discovery' => $cache]);

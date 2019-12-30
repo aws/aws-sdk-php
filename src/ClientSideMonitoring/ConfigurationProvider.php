@@ -4,6 +4,7 @@ namespace Aws\ClientSideMonitoring;
 use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
 use Aws\ClientSideMonitoring\Exception\ConfigurationException;
+use Aws\ConfigurationProviderInterface;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 
@@ -42,6 +43,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  * </code>
  */
 class ConfigurationProvider extends AbstractConfigurationProvider
+    implements ConfigurationProviderInterface
 {
     const DEFAULT_CLIENT_ID = '';
     const DEFAULT_ENABLED = false;
