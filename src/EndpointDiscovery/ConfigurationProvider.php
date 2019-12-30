@@ -175,7 +175,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         $filename = null,
         $cacheLimit = self::DEFAULT_CACHE_LIMIT
     ) {
-        $filename = $filename ?: (self::getHomeDir() . '/.aws/config');
+        $filename = $filename ?: (self::getDefaultConfigFilename());
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename, $cacheLimit) {
