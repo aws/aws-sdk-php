@@ -57,31 +57,6 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     protected static $exceptionClass = ConfigurationException::class;
 
     /**
-     * Creates an aggregate credentials provider that invokes the provided
-     * variadic providers one after the other until a provider returns
-     * credentials.
-     *
-     * @return callable
-     */
-    public static function chain()
-    {
-        $links = func_get_args();
-        if (empty($links)) {
-            throw new \InvalidArgumentException('No providers in chain');
-        }
-
-        return function () use ($links) {
-            /** @var callable $parent */
-            $parent = array_shift($links);
-            $promise = $parent();
-            while ($next = array_shift($links)) {
-                $promise = $promise->otherwise($next);
-            }
-            return $promise;
-        };
-    }
-
-    /**
      * Create a default config provider that first checks for environment
      * variables, then checks for a specified profile in ~/.aws/config, then
      * checks for the "default" profile in ~/.aws/config, and failing those uses
