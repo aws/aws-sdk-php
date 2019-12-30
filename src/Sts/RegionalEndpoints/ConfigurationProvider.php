@@ -1,7 +1,9 @@
 <?php
 namespace Aws\Sts\RegionalEndpoints;
 
+use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
+use Aws\ConfigurationProviderInterface;
 use Aws\Sts\RegionalEndpoints\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -40,73 +42,18 @@ use GuzzleHttp\Promise\PromiseInterface;
  * $config = $promise->wait();
  * </code>
  */
-class ConfigurationProvider
+class ConfigurationProvider extends AbstractConfigurationProvider
+    implements ConfigurationProviderInterface
 {
-    const CACHE_KEY = 'aws_sts_regional_endpoints_config';
     const DEFAULT_ENDPOINTS_TYPE = 'legacy';
     const ENV_ENDPOINTS_TYPE = 'AWS_STS_REGIONAL_ENDPOINTS';
     const ENV_PROFILE = 'AWS_PROFILE';
     const INI_ENDPOINTS_TYPE = 'sts_regional_endpoints';
 
-    /**
-     * Wraps a config provider and saves provided configuration in an
-     * instance of Aws\CacheInterface. Forwards calls when no config found
-     * in cache and updates cache with the results.
-     *
-     * @param callable $provider Configuration provider function to wrap
-     * @param CacheInterface $cache Cache to store configuration
-     * @param string|null $cacheKey (optional) Cache key to use
-     *
-     * @return callable
-     */
-    public static function cache(
-        callable $provider,
-        CacheInterface $cache,
-        $cacheKey = null
-    ) {
-        $cacheKey = $cacheKey ?: self::CACHE_KEY;
+    public static $cacheKey = 'aws_sts_regional_endpoints_config';
 
-        return function () use ($provider, $cache, $cacheKey) {
-            $found = $cache->get($cacheKey);
-            if ($found instanceof ConfigurationInterface) {
-                return Promise\promise_for($found);
-            }
-
-            return $provider()
-                ->then(function (ConfigurationInterface $config) use (
-                    $cache,
-                    $cacheKey
-                ) {
-                    $cache->set($cacheKey, $config);
-                    return $config;
-                });
-        };
-    }
-
-    /**
-     * Creates an aggregate configuration provider that invokes the provided
-     * variadic providers one after the other until a provider returns
-     * configuration.
-     *
-     * @return callable
-     */
-    public static function chain()
-    {
-        $links = func_get_args();
-        if (empty($links)) {
-            throw new \InvalidArgumentException('No providers in chain');
-        }
-
-        return function () use ($links) {
-            /** @var callable $parent */
-            $parent = array_shift($links);
-            $promise = $parent();
-            while ($next = array_shift($links)) {
-                $promise = $promise->otherwise($next);
-            }
-            return $promise;
-        };
-    }
+    protected static $interfaceClass = ConfigurationInterface::class;
+    protected static $exceptionClass = ConfigurationException::class;
 
     /**
      * Create a default config provider that first checks for environment
@@ -136,7 +83,7 @@ class ConfigurationProvider
         if (isset($config['sts_regional_endpoints'])
             && $config['sts_regional_endpoints'] instanceof CacheInterface
         ) {
-            return self::cache($memo, $config['sts_regional_endpoints'], self::CACHE_KEY);
+            return self::cache($memo, $config['sts_regional_endpoints'], self::$cacheKey);
         }
 
         return $memo;
@@ -178,25 +125,6 @@ class ConfigurationProvider
     }
 
     /**
-     * Gets the environment's HOME directory if available.
-     *
-     * @return null|string
-     */
-    private static function getHomeDir()
-    {
-        // On Linux/Unix-like systems, use the HOME environment variable
-        if ($homeDir = getenv('HOME')) {
-            return $homeDir;
-        }
-
-        // Get the HOMEDRIVE and HOMEPATH values for Windows hosts
-        $homeDrive = getenv('HOMEDRIVE');
-        $homePath = getenv('HOMEPATH');
-
-        return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
-    }
-
-    /**
      * Config provider that creates config using an ini file stored
      * in the current user's home directory.
      *
@@ -234,50 +162,6 @@ class ConfigurationProvider
                 new Configuration($data[$profile][self::INI_ENDPOINTS_TYPE])
             );
         };
-    }
-
-    /**
-     * Wraps a config provider and caches previously provided configuration.
-     *
-     * @param callable $provider Config provider function to wrap.
-     *
-     * @return callable
-     */
-    public static function memoize(callable $provider)
-    {
-        return function () use ($provider) {
-            static $result;
-            static $isConstant;
-
-            // Constant config will be returned constantly.
-            if ($isConstant) {
-                return $result;
-            }
-
-            // Create the initial promise that will be used as the cached value
-            if (null === $result) {
-                $result = $provider();
-            }
-
-            // Return config and set flag that provider is already set
-            return $result
-                ->then(function (ConfigurationInterface $config) use (&$isConstant) {
-                    $isConstant = true;
-                    return $config;
-                });
-        };
-    }
-
-
-    /**
-     * Reject promise with standardized exception.
-     *
-     * @param $msg
-     * @return Promise\RejectedPromise
-     */
-    private static function reject($msg)
-    {
-        return new Promise\RejectedPromise(new ConfigurationException($msg));
     }
 
     /**

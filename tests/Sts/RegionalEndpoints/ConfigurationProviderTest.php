@@ -297,7 +297,7 @@ EOT;
         $cache = $cacheBuilder->getMock();
         $cache->expects($this->any())
             ->method('get')
-            ->with(ConfigurationProvider::CACHE_KEY)
+            ->with(ConfigurationProvider::$cacheKey)
             ->willReturn($expected);
 
         $provider = ConfigurationProvider::defaultProvider(['sts_regional_endpoints' => $cache]);
