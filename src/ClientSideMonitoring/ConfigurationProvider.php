@@ -1,6 +1,7 @@
 <?php
 namespace Aws\ClientSideMonitoring;
 
+use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
 use Aws\ClientSideMonitoring\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
@@ -40,10 +41,8 @@ use GuzzleHttp\Promise\PromiseInterface;
  * $config = $promise->wait();
  * </code>
  */
-class ConfigurationProvider
+class ConfigurationProvider extends AbstractConfigurationProvider
 {
-
-    const CACHE_KEY = 'aws_cached_csm_config';
     const DEFAULT_CLIENT_ID = '';
     const DEFAULT_ENABLED = false;
     const DEFAULT_HOST = '127.0.0.1';
@@ -54,69 +53,10 @@ class ConfigurationProvider
     const ENV_PORT = 'AWS_CSM_PORT';
     const ENV_PROFILE = 'AWS_PROFILE';
 
-    /**
-     * Wraps a credential provider and saves provided credentials in an
-     * instance of Aws\CacheInterface. Forwards calls when no credentials found
-     * in cache and updates cache with the results.
-     *
-     * @param callable $provider Credentials provider function to wrap
-     * @param CacheInterface $cache Cache to store credentials
-     * @param string|null $cacheKey (optional) Cache key to use
-     *
-     * @return callable
-     */
-    public static function cache(
-        callable $provider,
-        CacheInterface $cache,
-        $cacheKey = null
-    ) {
-        $cacheKey = $cacheKey ?: self::CACHE_KEY;
+    public static $cacheKey = 'aws_cached_csm_config';
 
-        return function () use ($provider, $cache, $cacheKey) {
-            $found = $cache->get($cacheKey);
-            if ($found instanceof ConfigurationInterface) {
-                return Promise\promise_for($found);
-            }
-
-            return $provider()
-                ->then(function (ConfigurationInterface $config) use (
-                    $cache,
-                    $cacheKey
-                ) {
-                    $cache->set(
-                        $cacheKey,
-                        $config
-                    );
-
-                    return $config;
-                });
-        };
-    }
-
-    /**
-     * Creates an aggregate credentials provider that invokes the provided
-     * variadic providers one after the other until a provider returns
-     * credentials.
-     *
-     * @return callable
-     */
-    public static function chain()
-    {
-        $links = func_get_args();
-        if (empty($links)) {
-            throw new \InvalidArgumentException('No providers in chain');
-        }
-
-        return function () use ($links) {
-            /** @var callable $parent */
-            $parent = array_shift($links);
-            $promise = $parent();
-            while ($next = array_shift($links)) {
-                $promise = $promise->otherwise($next);
-            }
-            return $promise;
-        };
-    }
+    protected static $interfaceClass = ConfigurationInterface::class;
+    protected static $exceptionClass = ConfigurationException::class;
 
     /**
      * Create a default CSM config provider that first checks for environment
@@ -145,7 +85,7 @@ class ConfigurationProvider
         );
 
         if (isset($config['csm']) && $config['csm'] instanceof CacheInterface) {
-            return self::cache($memo, $config['csm'], self::CACHE_KEY);
+            return self::cache($memo, $config['csm'], self::$cacheKey);
         }
 
         return $memo;
@@ -195,25 +135,6 @@ class ConfigurationProvider
                 )
             );
         };
-    }
-
-    /**
-     * Gets the environment's HOME directory if available.
-     *
-     * @return null|string
-     */
-    private static function getHomeDir()
-    {
-        // On Linux/Unix-like systems, use the HOME environment variable
-        if ($homeDir = getenv('HOME')) {
-            return $homeDir;
-        }
-
-        // Get the HOMEDRIVE and HOMEPATH values for Windows hosts
-        $homeDrive = getenv('HOMEDRIVE');
-        $homePath = getenv('HOMEPATH');
-
-        return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
     }
 
     /**
@@ -272,52 +193,6 @@ class ConfigurationProvider
                 )
             );
         };
-    }
-
-    /**
-     * Wraps a CSM config provider and caches previously provided configuration.
-     *
-     * Ensures that cached configuration is refreshed when it expires.
-     *
-     * @param callable $provider CSM config provider function to wrap.
-     *
-     * @return callable
-     */
-    public static function memoize(callable $provider)
-    {
-        return function () use ($provider) {
-            static $result;
-            static $isConstant;
-
-            // Constant config will be returned constantly.
-            if ($isConstant) {
-                return $result;
-            }
-
-            // Create the initial promise that will be used as the cached value
-            // until it expires.
-            if (null === $result) {
-                $result = $provider();
-            }
-
-            // Return config and set flag that provider is already set
-            return $result
-                ->then(function (ConfigurationInterface $config) use (&$isConstant) {
-                    $isConstant = true;
-                    return $config;
-                });
-        };
-    }
-
-    /**
-     * Reject promise with standardized exception.
-     * 
-     * @param $msg
-     * @return Promise\RejectedPromise
-     */
-    private static function reject($msg)
-    {
-        return new Promise\RejectedPromise(new ConfigurationException($msg));
     }
 
     /**
