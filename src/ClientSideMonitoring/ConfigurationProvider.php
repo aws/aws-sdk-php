@@ -152,7 +152,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
      */
     public static function ini($profile = null, $filename = null)
     {
-        $filename = $filename ?: (self::getHomeDir() . '/.aws/config');
+        $filename = $filename ?: (self::getDefaultConfigFilename());
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'aws_csm');
 
         return function () use ($profile, $filename) {
