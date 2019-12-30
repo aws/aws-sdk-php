@@ -61,16 +61,17 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     protected static $exceptionClass = ConfigurationException::class;
 
     /**
-     * Create a default CSM config provider that first checks for environment
-     * variables, then checks for a specified profile in ~/.aws/config, then
-     * checks for the "aws_csm" profile in ~/.aws/config, and failing those uses
-     * a default fallback set of configuration options.
+     * Create a default config provider that first checks for environment
+     * variables, then checks for a specified profile in the environment-defined
+     * config file location (env variable is 'AWS_CONFIG_FILE', file location
+     * defaults to ~/.aws/config), then checks for the "default" profile in the
+     * environment-defined config file location, and failing those uses a default
+     * fallback set of configuration options.
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided config options.
      *
-     * @param array $config Optional array of ecs/instance profile credentials
-     *                      provider options.
+     * @param array $config
      *
      * @return callable
      */
@@ -140,13 +141,14 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     }
 
     /**
-     * CSM config provider that creates CSM config using an ini file stored
-     * in the current user's home directory.
+     * Config provider that creates config using a config file whose location
+     * is specified by an environment variable 'AWS_CONFIG_FILE', defaulting to
+     * ~/.aws/config if not specified
      *
      * @param string|null $profile  Profile to use. If not specified will use
-     *                              the "aws_csm" profile in "~/.aws/config".
+     *                              the "default" profile.
      * @param string|null $filename If provided, uses a custom filename rather
-     *                              than looking in the home directory.
+     *                              than looking in the default directory.
      *
      * @return callable
      */

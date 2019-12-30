@@ -56,9 +56,10 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     /**
      * Create a default config provider that first checks for environment
      * variables, then checks for a specified profile in the environment-defined
-     * config file location (defaults to ~/.aws/config), then checks for the
-     * "default" profile in the environment-defined config file location, and
-     * failing those uses a default fallback set of configuration options.
+     * config file location (env variable is 'AWS_CONFIG_FILE', file location
+     * defaults to ~/.aws/config), then checks for the "default" profile in the
+     * environment-defined config file location, and failing those uses a default
+     * fallback set of configuration options.
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided config options.
