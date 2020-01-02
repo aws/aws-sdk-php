@@ -317,16 +317,21 @@ function default_user_agent()
  */
 function guzzle_major_version()
 {
+    static $cache = null;
+    if (null !== $cache) {
+        return $cache;
+    }
+
     if (defined('\GuzzleHttp\ClientInterface::VERSION')) {
         $version = (string) ClientInterface::VERSION;
         if ($version[0] === '6') {
-            return 6;
+            return $cache = 6;
         }
         if ($version[0] === '5') {
-            return 5;
+            return $cache = 5;
         }
     } elseif (method_exists(Client::class, 'sendRequest')) {
-        return 7;
+        return $cache = 7;
     }
 
     throw new \RuntimeException('Unable to determine what Guzzle version is installed.');
