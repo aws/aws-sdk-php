@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.130.3 - 2020-01-02
 
 * `Aws\CostExplorer` - Documentation updates for GetReservationUtilization for the Cost Explorer API.
 * `Aws\ECR` - Adds waiters for ImageScanComplete and LifecyclePolicyPreviewComplete
