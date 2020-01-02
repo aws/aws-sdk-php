@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CostExplorer` - Documentation updates for GetReservationUtilization for the Cost Explorer API.
+* `Aws\ECR` - Adds waiters for ImageScanComplete and LifecyclePolicyPreviewComplete
+* `Aws\LexModelBuildingService` - Documentation updates for Amazon Lex.
+* `Aws\Lightsail` - This release adds support for Certificate Authority (CA) certificate identifier to managed databases in Amazon Lightsail.
+
 ## 3.130.2 - 2019-12-23
 
 * `Aws\Detective` - Updated the documentation for Amazon Detective.
