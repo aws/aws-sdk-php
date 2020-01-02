@@ -1,6 +1,7 @@
 <?php
 namespace Aws;
 
+use GuzzleHttp\Client;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Promise\FulfilledPromise;
@@ -324,7 +325,7 @@ function guzzle_major_version()
         if ($version[0] === '5') {
             return 5;
         }
-    } elseif (method_exists('\GuzzleHttp\Client', 'sendRequest')) {
+    } elseif (method_exists(Client::class, 'sendRequest')) {
         return 7;
     }
 
