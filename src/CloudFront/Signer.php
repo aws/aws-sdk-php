@@ -15,11 +15,12 @@ class Signer
      *
      * @param $keyPairId  string ID of the key pair
      * @param $privateKey string Path to the private key used for signing
+     * @param $passphrase string Passphrase to private key file, if one exists
      *
      * @throws \RuntimeException if the openssl extension is missing
      * @throws \InvalidArgumentException if the private key cannot be found.
      */
-    public function __construct($keyPairId, $privateKey)
+    public function __construct($keyPairId, $privateKey, $passphrase = "")
     {
         if (!extension_loaded('openssl')) {
             //@codeCoverageIgnoreStart
@@ -34,7 +35,7 @@ class Signer
             throw new \InvalidArgumentException("PK file not found: $privateKey");
         }
 
-        $this->pkHandle = openssl_pkey_get_private("file://$privateKey");
+        $this->pkHandle = openssl_pkey_get_private("file://$privateKey", $passphrase);
 
         if (!$this->pkHandle) {
             throw new \InvalidArgumentException(openssl_error_string());
