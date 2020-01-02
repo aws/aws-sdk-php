@@ -10,14 +10,15 @@ class SignerTest extends TestCase
     /** @var Signer */
     private $instance;
 
+    private static $testKeyFile = __DIR__ . '/fixtures/test.pem';
+
     const PASSPHRASE = "1234";
-    const TEST_KEY_FILE = __DIR__ . '/fixtures/test.pem';
 
     public function setUp()
     {
         $this->instance = new Signer(
             "test",
-            self::TEST_KEY_FILE,
+            self::$testKeyFile,
             self::PASSPHRASE
         );
     }
@@ -56,7 +57,7 @@ class SignerTest extends TestCase
      */
     public function testEnsuresExpiresIsSetWhenUsingCannedPolicy()
     {
-        $s = new Signer('a', self::TEST_KEY_FILE, self::PASSPHRASE);
+        $s = new Signer('a', self::$testKeyFile, self::PASSPHRASE);
         $s->getSignature('http://foo/bar');
     }
 
