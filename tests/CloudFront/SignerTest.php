@@ -9,19 +9,17 @@ class SignerTest extends TestCase
 {
     /** @var Signer */
     private $instance;
+    private $testKeyFile;
+
+    const PASSPHRASE = "1234";
 
     public function setUp()
     {
-        foreach (['CF_PRIVATE_KEY', 'CF_KEY_PAIR_ID'] as $k) {
-            if (!isset($_SERVER[$k]) || $_SERVER[$k] == 'change_me') {
-                $this->markTestSkipped('$_SERVER[\'' . $k . '\'] not set in '
-                    . 'phpunit.xml');
-            }
-        }
-
+        $this->testKeyFile =__DIR__ . '/fixtures/test.pem';
         $this->instance = new Signer(
-            $_SERVER['CF_KEY_PAIR_ID'],
-            $_SERVER['CF_PRIVATE_KEY']
+            "test",
+            $this->testKeyFile,
+            self::PASSPHRASE
         );
     }
 
@@ -59,7 +57,7 @@ class SignerTest extends TestCase
      */
     public function testEnsuresExpiresIsSetWhenUsingCannedPolicy()
     {
-        $s = new Signer('a', $_SERVER['CF_PRIVATE_KEY']);
+        $s = new Signer('a', $this->testKeyFile, self::PASSPHRASE);
         $s->getSignature('http://foo/bar');
     }
 
