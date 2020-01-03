@@ -51,8 +51,8 @@ class InstanceProfileProviderTest extends TestCase
     private function getRequestClass()
     {
         // Guzzle 5 vs 6 namespace differences
-        $version = (string) ClientInterface::VERSION;
-        if ($version[0] === '5') {
+        $version = \Aws\guzzle_major_version();
+        if ($version === 5) {
             return "\GuzzleHttp\Message\Request";
         }
         return "\GuzzleHttp\Psr7\Request";
@@ -61,8 +61,8 @@ class InstanceProfileProviderTest extends TestCase
     private function getResponseClass()
     {
         // Guzzle 5 vs 6 namespace differences
-        $version = (string) ClientInterface::VERSION;
-        if ($version[0] === '5') {
+        $version = \Aws\guzzle_major_version();
+        if ($version === 5) {
             return "\GuzzleHttp\Message\Response";
         }
         return "\GuzzleHttp\Psr7\Response";
@@ -70,13 +70,13 @@ class InstanceProfileProviderTest extends TestCase
 
     private function getRequestException()
     {
-        $version = (string) ClientInterface::VERSION;
-        if ($version[0] === '6') {
+        $version = \Aws\guzzle_major_version();
+        if ($version === 6 || $version === 7) {
             return new RequestException(
                 'test',
                 new Psr7\Request('GET', 'http://www.example.com')
             );
-        } elseif ($version[0] === '5') {
+        } elseif ($version === 5) {
             return new RequestException(
                 'test',
                 new \GuzzleHttp\Message\Request('GET', 'http://www.example.com')

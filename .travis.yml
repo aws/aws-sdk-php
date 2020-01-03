@@ -21,6 +21,12 @@ matrix:
     - php: hhvm
     - php: nightly
   fast_finish: true
+  include:
+    - name: "PHP: 7.3 - Guzzle 7 beta"
+      php: 7.3
+      env: COMPOSER_OPTS="--no-interaction"
+      before_install:
+        - composer require "guzzlehttp/guzzle:^7.0@beta"
 
 sudo: false
 
@@ -49,6 +55,7 @@ install:
   # Resolve dependencies
   - composer --version
   - travis_retry composer update $COMPOSER_OPTS --no-interaction --prefer-source
+  - composer show guzzlehttp/guzzle
 
 script:
   # Unit tests
