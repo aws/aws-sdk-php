@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.131.0 - 2020-01-06
 
 * `Aws\` - Add support for Guzzle7.
 * `Aws\CloudFront` - Modifies CloudFront Signer to accept a passphrase for the key file. Modifies Signer test to use a fixed test key file.
