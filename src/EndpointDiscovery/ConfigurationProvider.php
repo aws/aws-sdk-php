@@ -1,7 +1,9 @@
 <?php
 namespace Aws\EndpointDiscovery;
 
+use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
+use Aws\ConfigurationProviderInterface;
 use Aws\EndpointDiscovery\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -40,86 +42,32 @@ use GuzzleHttp\Promise\PromiseInterface;
  * $config = $promise->wait();
  * </code>
  */
-class ConfigurationProvider
+class ConfigurationProvider extends AbstractConfigurationProvider
+    implements ConfigurationProviderInterface
 {
-    const CACHE_KEY = 'aws_cached_endpoint_discovery_config';
     const DEFAULT_ENABLED = false;
     const DEFAULT_CACHE_LIMIT = 1000;
     const ENV_ENABLED = 'AWS_ENDPOINT_DISCOVERY_ENABLED';
     const ENV_ENABLED_ALT = 'AWS_ENABLE_ENDPOINT_DISCOVERY';
     const ENV_PROFILE = 'AWS_PROFILE';
 
-    /**
-     * Wraps a config provider and saves provided configuration in an
-     * instance of Aws\CacheInterface. Forwards calls when no config found
-     * in cache and updates cache with the results.
-     *
-     * @param callable $provider Configuration provider function to wrap
-     * @param CacheInterface $cache Cache to store credentials
-     * @param string|null $cacheKey (optional) Cache key to use
-     *
-     * @return callable
-     */
-    public static function cache(
-        callable $provider,
-        CacheInterface $cache,
-        $cacheKey = null
-    ) {
-        $cacheKey = $cacheKey ?: self::CACHE_KEY;
+    public static $cacheKey = 'aws_cached_endpoint_discovery_config';
 
-        return function () use ($provider, $cache, $cacheKey) {
-            $found = $cache->get($cacheKey);
-            if ($found instanceof ConfigurationInterface) {
-                return Promise\promise_for($found);
-            }
-
-            return $provider()
-                ->then(function (ConfigurationInterface $config) use (
-                    $cache,
-                    $cacheKey
-                ) {
-                    $cache->set($cacheKey, $config);
-                    return $config;
-                });
-        };
-    }
-
-    /**
-     * Creates an aggregate credentials provider that invokes the provided
-     * variadic providers one after the other until a provider returns
-     * credentials.
-     *
-     * @return callable
-     */
-    public static function chain()
-    {
-        $links = func_get_args();
-        if (empty($links)) {
-            throw new \InvalidArgumentException('No providers in chain');
-        }
-
-        return function () use ($links) {
-            /** @var callable $parent */
-            $parent = array_shift($links);
-            $promise = $parent();
-            while ($next = array_shift($links)) {
-                $promise = $promise->otherwise($next);
-            }
-            return $promise;
-        };
-    }
+    protected static $interfaceClass = ConfigurationInterface::class;
+    protected static $exceptionClass = ConfigurationException::class;
 
     /**
      * Create a default config provider that first checks for environment
-     * variables, then checks for a specified profile in ~/.aws/config, then
-     * checks for the "default" profile in ~/.aws/config, and failing those uses
-     * a default fallback set of configuration options.
+     * variables, then checks for a specified profile in the environment-defined
+     * config file location (env variable is 'AWS_CONFIG_FILE', file location
+     * defaults to ~/.aws/config), then checks for the "default" profile in the
+     * environment-defined config file location, and failing those uses a default
+     * fallback set of configuration options.
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided config options.
      *
-     * @param array $config Optional array of ecs/instance profile credentials
-     *                      provider options.
+     * @param array $config
      *
      * @return callable
      */
@@ -138,7 +86,7 @@ class ConfigurationProvider
         if (isset($config['endpoint_discovery'])
             && $config['endpoint_discovery'] instanceof CacheInterface
         ) {
-            return self::cache($memo, $config['endpoint_discovery'], self::CACHE_KEY);
+            return self::cache($memo, $config['endpoint_discovery'], self::$cacheKey);
         }
 
         return $memo;
@@ -187,33 +135,15 @@ class ConfigurationProvider
     }
 
     /**
-     * Gets the environment's HOME directory if available.
-     *
-     * @return null|string
-     */
-    private static function getHomeDir()
-    {
-        // On Linux/Unix-like systems, use the HOME environment variable
-        if ($homeDir = getenv('HOME')) {
-            return $homeDir;
-        }
-
-        // Get the HOMEDRIVE and HOMEPATH values for Windows hosts
-        $homeDrive = getenv('HOMEDRIVE');
-        $homePath = getenv('HOMEPATH');
-
-        return ($homeDrive && $homePath) ? $homeDrive . $homePath : null;
-    }
-
-    /**
-     * Config provider that creates config using an ini file stored
-     * in the current user's home directory.
+     * Config provider that creates config using a config file whose location
+     * is specified by an environment variable 'AWS_CONFIG_FILE', defaulting to
+     * ~/.aws/config if not specified
      *
      * @param string|null $profile  Profile to use. If not specified will use
-     *                              the "default" profile in "~/.aws/config".
+     *                              the "default" profile.
      * @param string|null $filename If provided, uses a custom filename rather
-     *                              than looking in the home directory.
-     * @param int $cacheLimit
+     *                              than looking in the default directory.
+     * @param int         $cacheLimit
      *
      * @return callable
      */
@@ -222,7 +152,7 @@ class ConfigurationProvider
         $filename = null,
         $cacheLimit = self::DEFAULT_CACHE_LIMIT
     ) {
-        $filename = $filename ?: (self::getHomeDir() . '/.aws/config');
+        $filename = $filename ?: (self::getDefaultConfigFilename());
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename, $cacheLimit) {
@@ -248,52 +178,6 @@ class ConfigurationProvider
                 )
             );
         };
-    }
-
-    /**
-     * Wraps a config provider and caches previously provided configuration.
-     *
-     * Ensures that cached configuration is refreshed when it expires.
-     *
-     * @param callable $provider Config provider function to wrap.
-     *
-     * @return callable
-     */
-    public static function memoize(callable $provider)
-    {
-        return function () use ($provider) {
-            static $result;
-            static $isConstant;
-
-            // Constant config will be returned constantly.
-            if ($isConstant) {
-                return $result;
-            }
-
-            // Create the initial promise that will be used as the cached value
-            // until it expires.
-            if (null === $result) {
-                $result = $provider();
-            }
-
-            // Return config and set flag that provider is already set
-            return $result
-                ->then(function (ConfigurationInterface $config) use (&$isConstant) {
-                    $isConstant = true;
-                    return $config;
-                });
-        };
-    }
-
-    /**
-     * Reject promise with standardized exception.
-     *
-     * @param $msg
-     * @return Promise\RejectedPromise
-     */
-    private static function reject($msg)
-    {
-        return new Promise\RejectedPromise(new ConfigurationException($msg));
     }
 
     /**
