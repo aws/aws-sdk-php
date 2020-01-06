@@ -792,6 +792,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise searchTransitGatewayRoutesAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result sendDiagnosticInterrupt(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise sendDiagnosticInterruptAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result startVpcEndpointServicePrivateDnsVerification(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise startVpcEndpointServicePrivateDnsVerificationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result terminateClientVpnConnections(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise terminateClientVpnConnectionsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result unassignIpv6Addresses(array $args = []) (supported in versions 2016-11-15)

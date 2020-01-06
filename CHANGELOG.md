@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Add support for Guzzle7.
+* `Aws\CloudFront` - Modifies CloudFront Signer to accept a passphrase for the key file. Modifies Signer test to use a fixed test key file.
+* `Aws\Comprehend` - Amazon Comprehend now supports Multilabel document classification
+* `Aws\EC2` - This release supports service providers configuring a private DNS name for services other than AWS services and services available in the AWS marketplace. This feature allows consumers to access the service using an existing DNS name without making changes to their applications.
+* `Aws\MediaPackage` - You can now restrict direct access to AWS Elemental MediaPackage by securing requests for live content using CDN authorization. With CDN authorization, content requests require a specific HTTP header and authorization code.
+
 ## 3.130.3 - 2020-01-02
 
 * `Aws\CostExplorer` - Documentation updates for GetReservationUtilization for the Cost Explorer API.
