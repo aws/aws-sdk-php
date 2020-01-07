@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds support for the 'AWS_CONFIG_FILE' environment variable to set the default config file location. This is implemented for all configuration provider classes extending AbstractConfigurationProvider.
+* `Aws\CodeBuild` - Add encryption key override to StartBuild API in AWS CodeBuild.
+* `Aws\MigrationHub` - ListApplicationStates API provides a list of all application migration states
+* `Aws\XRay` - Documentation updates for xray
+
 ## 3.131.0 - 2020-01-06
 
 * `Aws\` - Add support for Guzzle7.

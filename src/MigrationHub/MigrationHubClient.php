@@ -23,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise disassociateDiscoveredResourceAsync(array $args = [])
  * @method \Aws\Result importMigrationTask(array $args = [])
  * @method \GuzzleHttp\Promise\Promise importMigrationTaskAsync(array $args = [])
+ * @method \Aws\Result listApplicationStates(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listApplicationStatesAsync(array $args = [])
  * @method \Aws\Result listCreatedArtifacts(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listCreatedArtifactsAsync(array $args = [])
  * @method \Aws\Result listDiscoveredResources(array $args = [])
