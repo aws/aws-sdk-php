@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.132.0 - 2020-01-07
 
 * `Aws\` - Adds support for the 'AWS_CONFIG_FILE' environment variable to set the default config file location. This is implemented for all configuration provider classes extending AbstractConfigurationProvider.
 * `Aws\CodeBuild` - Add encryption key override to StartBuild API in AWS CodeBuild.
