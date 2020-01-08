@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.132.1 - 2020-01-08
 
 * `Aws\ApiGatewayV2` - Adds an alias 'GetApiResource' for the 'GetApi' operation to avoid a naming conflict with the generic AwsClient 'GetApi' method.
 * `Aws\CostExplorer` - Documentation updates for CreateCostCategoryDefinition and UpdateCostCategoryDefinition API
