@@ -35,18 +35,11 @@ class Signer
             if (!file_exists($privateKey)) {
                 throw new \InvalidArgumentException("PK file not found: $privateKey");
             } else {
-                $this->pkHandle = openssl_get_privatekey("file://$privateKey", $passphrase);
-
+                $this->pkHandle = openssl_pkey_get_private("file://$privateKey", $passphrase);
                 if (!$this->pkHandle) {
                     throw new \InvalidArgumentException(openssl_error_string());
                 }
             }
-        }
-
-        $this->pkHandle = openssl_pkey_get_private("file://$privateKey", $passphrase);
-
-        if (!$this->pkHandle) {
-            throw new \InvalidArgumentException(openssl_error_string());
         }
     }
 
