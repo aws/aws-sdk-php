@@ -29,9 +29,15 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listMemberAccountsAsync(array $args = [])
  * @method \Aws\Result listPolicies(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPoliciesAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putNotificationChannel(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putNotificationChannelAsync(array $args = [])
  * @method \Aws\Result putPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putPolicyAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class FMSClient extends AwsClient {}

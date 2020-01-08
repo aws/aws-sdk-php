@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGatewayV2` - Adds an alias 'GetApiResource' for the 'GetApi' operation to avoid a naming conflict with the generic AwsClient 'GetApi' method.
+* `Aws\CostExplorer` - Documentation updates for CreateCostCategoryDefinition and UpdateCostCategoryDefinition API
+* `Aws\FMS` - AWS Firewall Manager now supports tagging, and tag-based access control, of policies.
+* `Aws\Translate` - This release adds a new family of APIs for asynchronous batch translation service that provides option to translate large collection of text or HTML documents stored in Amazon S3 folder. This service accepts a batch of up to 5 GB in size per API call with each document not exceeding 1 MB size and the number of documents not exceeding 1 million per batch. See documentation for more information. 
+
 ## 3.132.0 - 2020-01-07
 
 * `Aws\` - Adds support for the 'AWS_CONFIG_FILE' environment variable to set the default config file location. This is implemented for all configuration provider classes extending AbstractConfigurationProvider.
