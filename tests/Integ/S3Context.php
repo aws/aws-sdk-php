@@ -351,11 +351,11 @@ class S3Context implements Context, SnippetAcceptingContext
      * A practical work-around for the testing workflow, given eventual
      * consistency constraints.
      *
-     * @param $client
-     * @param $command
-     * @param $args
-     * @param $retries
-     * @param $statusCodes
+     * @param S3Client $client
+     * @param string $command
+     * @param array $args
+     * @param int $retries
+     * @param array $statusCodes
      * @return mixed
      */
     private static function executeWithRetries(
