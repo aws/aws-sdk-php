@@ -67,7 +67,7 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @BeforeSuite
+     * @BeforeFeature
      */
     public static function createTestBucket()
     {
@@ -81,7 +81,7 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @AfterSuite
+     * @AfterFeature
      */
     public static function deleteTestBucket()
     {
