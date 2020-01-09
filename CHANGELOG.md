@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchLogs` - Documentation updates for logs
+* `Aws\STS` - Documentation updates for sts
+
 ## 3.132.1 - 2020-01-08
 
 * `Aws\ApiGatewayV2` - Adds an alias 'GetApiResource' for the 'GetApi' operation to avoid a naming conflict with the generic AwsClient 'GetApi' method.
