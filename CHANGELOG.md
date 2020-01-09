@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.132.2 - 2020-01-09
 
 * `Aws\CloudWatchLogs` - Documentation updates for logs
 * `Aws\STS` - Documentation updates for sts
