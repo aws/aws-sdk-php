@@ -24,7 +24,7 @@ class SignerTest extends TestCase
     }
 
     /**
-     * Assert that the key is parsed during construction
+     * Assert that the key variable contents are parsed during construction
      *
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessageRegExp /PK .*Not a real private key/
@@ -38,7 +38,7 @@ class SignerTest extends TestCase
     }
 
     /**
-     * Assert that the key is parsed during construction
+     * Assert that the key file is parsed during construction
      *
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessageRegExp /PEM .*no start line/
