@@ -24,21 +24,35 @@ class SignerTest extends TestCase
     }
 
     /**
-     * Assert that the key is parsed during construction
+     * Assert that the key variable contents are parsed during construction
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessageRegExp /PK .*Not a real private key/
+     */
+    public function testBadPrivateKeyContents() {
+        $privateKey = "Not a real private key";
+        $s = new Signer(
+            "not a real keypair id",
+            $privateKey
+        );
+    }
+
+    /**
+     * Assert that the key file is parsed during construction
      *
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessageRegExp /PEM .*no start line/
      */
-    public function testBadPrivateKey() {
+    public function testBadPrivateKeyPath() {
         $filename = tempnam(sys_get_temp_dir(), 'cloudfront-fake-key');
         file_put_contents($filename, "Not a real private key");
         try {
-           $s = new Signer(
-               "not a real keypair id",
-               $filename
-           );
+            $s = new Signer(
+                "not a real keypair id",
+                $filename
+            );
         } finally {
-           unlink($filename);
+            unlink($filename);
         }
     }
 
