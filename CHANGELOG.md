@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.132.3 - 2020-01-10
 
 * `Aws\Chime` - Add shared profile support to new and existing users
 * `Aws\CloudFront` - CloudFront Signer now accepts PEM formatted private keys stored as variables in addition to the path to a key file.
