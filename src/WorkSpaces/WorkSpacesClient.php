@@ -54,6 +54,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise importWorkspaceImageAsync(array $args = [])
  * @method \Aws\Result listAvailableManagementCidrRanges(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAvailableManagementCidrRangesAsync(array $args = [])
+ * @method \Aws\Result migrateWorkspace(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise migrateWorkspaceAsync(array $args = [])
  * @method \Aws\Result modifyAccount(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyAccountAsync(array $args = [])
  * @method \Aws\Result modifyClientProperties(array $args = [])

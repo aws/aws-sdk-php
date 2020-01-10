@@ -210,6 +210,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise failoverDBClusterAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result importInstallationMedia(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise importInstallationMediaAsync(array $args = []) (supported in versions 2014-10-31)
+ * @method \Aws\Result modifyCertificates(array $args = []) (supported in versions 2014-10-31)
+ * @method \GuzzleHttp\Promise\Promise modifyCertificatesAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result modifyCurrentDBClusterCapacity(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise modifyCurrentDBClusterCapacityAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result modifyDBCluster(array $args = []) (supported in versions 2014-10-31)

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Chime` - Add shared profile support to new and existing users
+* `Aws\CloudFront` - CloudFront Signer now accepts PEM formatted private keys stored as variables in addition to the path to a key file.
+* `Aws\EC2` - This release introduces the ability to tag egress only internet gateways, local gateways, local gateway route tables, local gateway virtual interfaces, local gateway virtual interface groups, local gateway route table VPC association and local gateway route table virtual interface group association. You can use tags to organize and identify your resources for cost allocation. 
+* `Aws\RDS` - This release adds an operation that enables users to override the system-default SSL/TLS certificate for new Amazon RDS DB instances temporarily, or remove the customer override.
+* `Aws\SageMaker` - SageMaker ListTrialComponents API filter by TrialName and ExperimentName.
+* `Aws\Transfer` - This release introduces a new endpoint type that allows you to attach Elastic IP addresses from your AWS account with your server's endpoint directly and whitelist access to your server by client's internet IP address(es) using VPC Security Groups.
+* `Aws\WorkSpaces` - Added the migrate feature to Amazon WorkSpaces.
+
 ## 3.132.2 - 2020-01-09
 
 * `Aws\CloudWatchLogs` - Documentation updates for logs
