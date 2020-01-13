@@ -188,6 +188,7 @@ class RetryMiddlewareTest extends TestCase
             [new AwsException('e', $command, ['code' => 'RequestThrottledException'])],
             [new AwsException('e', $command, ['code' => 'TooManyRequestsException'])],
             [new AwsException('e', $command, ['code' => 'IDPCommunicationError'])],
+            [new AwsException('e', $command, ['code' => 'EC2ThrottledException'])],
         ];
     }
     /**
