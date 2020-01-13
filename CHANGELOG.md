@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.132.4 - 2020-01-13
 
 * `Aws\Backup` - Cross-region backup is a new AWS Backup feature that allows enterprises to copy backups across multiple AWS services to different regions. 
 * `Aws\EC2` - Documentation updates for the StopInstances API. You can now stop and start an Amazon EBS-backed Spot Instance at will, instead of relying on the Stop interruption behavior to stop your Spot Instances when interrupted.
