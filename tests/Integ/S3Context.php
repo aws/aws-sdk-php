@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Integ;
 
+use Aws\S3\Exception\S3Exception;
 use Aws\Sts\StsClient;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
@@ -67,7 +68,7 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @BeforeSuite
+     * @BeforeFeature
      */
     public static function createTestBucket()
     {
@@ -81,14 +82,19 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @AfterSuite
+     * @AfterFeature
      */
     public static function deleteTestBucket()
     {
         $client = self::getSdk()->createS3();
-        $result = $client->listObjectsV2([
-            'Bucket' => self::getResourceName()
-        ]);
+
+        $result = self::executeWithRetries(
+            $client,
+            'listObjectsV2',
+            ['Bucket' => self::getResourceName()],
+            10,
+            [404]
+        );
 
         // Delete objects & wait until no longer available before deleting bucket
         $client->deleteMatchingObjects(self::getResourceName(), '', '//');
@@ -106,7 +112,13 @@ class S3Context implements Context, SnippetAcceptingContext
         }
 
         // Delete bucket
-        $result = $client->deleteBucket(['Bucket' => self::getResourceName()]);
+        $result = self::executeWithRetries(
+            $client,
+            'deleteBucket',
+            ['Bucket' => self::getResourceName()],
+            10,
+            [404]
+        );
 
         // Use account number to generate a unique bucket name
         $sts = new StsClient([
@@ -332,5 +344,41 @@ class S3Context implements Context, SnippetAcceptingContext
             'contents' => $this->stream,
             'filename' => 'file.ext',
         ];
+    }
+
+    /**
+     * Executes S3 client method, adding retries for specified status codes.
+     * A practical work-around for the testing workflow, given eventual
+     * consistency constraints.
+     *
+     * @param S3Client $client
+     * @param string $command
+     * @param array $args
+     * @param int $retries
+     * @param array $statusCodes
+     * @return mixed
+     */
+    private static function executeWithRetries(
+        $client,
+        $command,
+        $args,
+        $retries,
+        $statusCodes
+    ) {
+        $attempts = 0;
+
+        while (true) {
+            try {
+                return call_user_func([$client, $command], $args);
+            } catch (S3Exception $e) {
+                if (!in_array($e->getStatusCode(), $statusCodes)
+                    || $attempts >= $retries
+                ) {
+                    throw $e;
+                }
+                $attempts++;
+                sleep(pow(1.2, $attempts));
+            }
+        }
     }
 }
