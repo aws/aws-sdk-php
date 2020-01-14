@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.132.5 - 2020-01-14
 
 * `Aws\EC2` - This release adds support for partition placement groups and instance metadata option in Launch Templates
 
