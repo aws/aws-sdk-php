@@ -215,8 +215,6 @@ class CredentialProvider
      * instance of Aws\CacheInterface. Forwards calls when no credentials found
      * in cache and updates cache with the results.
      *
-     * Defaults to using a simple file-based cache when none provided.
-     *
      * @param callable $provider Credentials provider function to wrap
      * @param CacheInterface $cache Cache to store credentials
      * @param string|null $cacheKey (optional) Cache key to use
