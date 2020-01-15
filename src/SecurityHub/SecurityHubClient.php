@@ -35,6 +35,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeHubAsync(array $args = [])
  * @method \Aws\Result describeProducts(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeProductsAsync(array $args = [])
+ * @method \Aws\Result describeStandardsControls(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeStandardsControlsAsync(array $args = [])
  * @method \Aws\Result disableImportFindingsForProduct(array $args = [])
  * @method \GuzzleHttp\Promise\Promise disableImportFindingsForProductAsync(array $args = [])
  * @method \Aws\Result disableSecurityHub(array $args = [])
@@ -81,5 +83,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateFindingsAsync(array $args = [])
  * @method \Aws\Result updateInsight(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateInsightAsync(array $args = [])
+ * @method \Aws\Result updateStandardsControl(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateStandardsControlAsync(array $args = [])
  */
 class SecurityHubClient extends AwsClient {}

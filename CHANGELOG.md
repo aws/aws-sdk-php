@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Added retry for EC2ThrottledException
+* `Aws\EC2` - General Update to EC2 Docs and SDKs
+* `Aws\Organizations` - Updated description for PolicyID parameter and ConstraintViolationException.
+* `Aws\SSM` - Document updates for Patch Manager 'NoReboot' feature.
+* `Aws\SecurityHub` - Add support for DescribeStandardsControls and UpdateStandardsControl. These new Security Hub API operations are used to track and manage whether a compliance standards control is enabled.
+* `Aws\Test\Integ` - Modify S3 integration context event hooks, as well as retry logic to take into account S3 eventual consistency characteristics.
+
 ## 3.132.5 - 2020-01-14
 
 * `Aws\EC2` - This release adds support for partition placement groups and instance metadata option in Launch Templates
