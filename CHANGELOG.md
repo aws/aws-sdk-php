@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.0 - 2020-01-15
 
 * `Aws\` - Added retry for EC2ThrottledException
 * `Aws\EC2` - General Update to EC2 Docs and SDKs
