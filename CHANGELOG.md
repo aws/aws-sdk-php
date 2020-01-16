@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.1 - 2020-01-16
 
 * `Aws\DirectoryService` - To reduce the number of errors our customers are facing, we have modified the requirements of input parameters for two of Directory Service APIs.
 * `Aws\EC2` - Client VPN now supports Port Configuration for VPN Endpoints, allowing usage of either port 443 or port 1194.
