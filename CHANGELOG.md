@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DirectoryService` - To reduce the number of errors our customers are facing, we have modified the requirements of input parameters for two of Directory Service APIs.
+* `Aws\EC2` - Client VPN now supports Port Configuration for VPN Endpoints, allowing usage of either port 443 or port 1194.
+* `Aws\SageMaker` - This release adds two new APIs (UpdateWorkforce and DescribeWorkforce) to SageMaker Ground Truth service for workforce IP whitelisting.
+
 ## 3.133.0 - 2020-01-15
 
 * `Aws\` - Added retry for EC2ThrottledException

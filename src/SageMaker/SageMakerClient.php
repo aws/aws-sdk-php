@@ -149,6 +149,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeTrialComponentAsync(array $args = [])
  * @method \Aws\Result describeUserProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeUserProfileAsync(array $args = [])
+ * @method \Aws\Result describeWorkforce(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeWorkforceAsync(array $args = [])
  * @method \Aws\Result describeWorkteam(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeWorkteamAsync(array $args = [])
  * @method \Aws\Result disassociateTrialComponent(array $args = [])
@@ -265,6 +267,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateTrialComponentAsync(array $args = [])
  * @method \Aws\Result updateUserProfile(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateUserProfileAsync(array $args = [])
+ * @method \Aws\Result updateWorkforce(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateWorkforceAsync(array $args = [])
  * @method \Aws\Result updateWorkteam(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateWorkteamAsync(array $args = [])
  */
