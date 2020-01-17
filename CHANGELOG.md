@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.2 - 2020-01-17
 
 * `Aws\Batch` - This release ensures INACTIVE job definitions are permanently deleted after 180 days.
 * `Aws\CloudHSMV2` - This release introduces resource-level and tag-based access control for AWS CloudHSM resources. You can now tag CloudHSM backups, tag CloudHSM clusters on creation, and tag a backup as you copy it to another region.
