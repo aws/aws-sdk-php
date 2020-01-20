@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AlexaForBusiness` - Add support for CreatedTime and ConnectionStatusUpdatedTime in response of SearchDevices API.
+* `Aws\ApplicationInsights` - This release adds support for a list API to retrieve the configuration events logged during periodic updates to an application by Amazon CloudWatch Application Insights. 
+* `Aws\CloudWatch` - Updating DescribeAnomalyDetectors API to return AnomalyDetector Status value in response.
+* `Aws\EC2` - This release provides support for a preview of bringing your own IPv6 addresses (BYOIP for IPv6) for use in AWS.
+* `Aws\KMS` - The ConnectCustomKeyStore operation now provides new error codes (USER_LOGGED_IN and USER_NOT_FOUND) for customers to better troubleshoot if their connect custom key store operation fails. Password length validation during CreateCustomKeyStore now also occurs on the client side. 
+* `Aws\Lambda` - Added reason codes to StateReasonCode (InvalidSubnet, InvalidSecurityGroup) and LastUpdateStatusReasonCode (SubnetOutOfIPAddresses, InvalidSubnet, InvalidSecurityGroup) for functions that connect to a VPC.
+
 ## 3.133.2 - 2020-01-17
 
 * `Aws\Batch` - This release ensures INACTIVE job definitions are permanently deleted after 180 days.

@@ -37,6 +37,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listApplicationsAsync(array $args = [])
  * @method \Aws\Result listComponents(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listComponentsAsync(array $args = [])
+ * @method \Aws\Result listConfigurationHistory(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listConfigurationHistoryAsync(array $args = [])
  * @method \Aws\Result listLogPatternSets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listLogPatternSetsAsync(array $args = [])
  * @method \Aws\Result listLogPatterns(array $args = [])
