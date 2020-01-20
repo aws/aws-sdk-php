@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.3 - 2020-01-20
 
 * `Aws\AlexaForBusiness` - Add support for CreatedTime and ConnectionStatusUpdatedTime in response of SearchDevices API.
 * `Aws\ApplicationInsights` - This release adds support for a list API to retrieve the configuration events logged during periodic updates to an application by Amazon CloudWatch Application Insights. 
