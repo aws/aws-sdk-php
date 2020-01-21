@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationDiscoveryService` - Documentation updates for the AWS Application Discovery Service.
+* `Aws\CodePipeline` - AWS CodePipeline enables an ability to stop pipeline executions.
+* `Aws\EC2` - Add an enum value to the result of DescribeByoipCidrs to support CIDRs that are not publicly advertisable.
+* `Aws\IoTEvents` - Documentation updates for iotcolumbo
+* `Aws\MarketplaceCommerceAnalytics` - Remove 4 deprecated data sets, change some data sets available dates to 2017-09-15
+
 ## 3.133.3 - 2020-01-20
 
 * `Aws\AlexaForBusiness` - Add support for CreatedTime and ConnectionStatusUpdatedTime in response of SearchDevices API.

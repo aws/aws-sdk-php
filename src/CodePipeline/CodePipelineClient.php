@@ -72,6 +72,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise retryStageExecutionAsync(array $args = [])
  * @method \Aws\Result startPipelineExecution(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startPipelineExecutionAsync(array $args = [])
+ * @method \Aws\Result stopPipelineExecution(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopPipelineExecutionAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
