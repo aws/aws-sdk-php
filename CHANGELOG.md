@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.4 - 2020-01-21
 
 * `Aws\ApplicationDiscoveryService` - Documentation updates for the AWS Application Discovery Service.
 * `Aws\CodePipeline` - AWS CodePipeline enables an ability to stop pipeline executions.
