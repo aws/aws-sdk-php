@@ -1,5 +1,5 @@
 <?php
-namespace Aws\RetryConfiguration;
+namespace Aws\Retry;
 
 /**
  * Provides access to retry configuration

@@ -1,5 +1,5 @@
 <?php
-namespace Aws\RetryConfiguration;
+namespace Aws\Retry;
 
 use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
@@ -10,8 +10,8 @@ use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * A configuration provider is a function that returns a promise that is
- * fulfilled with a {@see \Aws\RetryConfiguration\ConfigurationInterface}
- * or rejected with an {@see \Aws\RetryConfiguration\Exception\ConfigurationException}.
+ * fulfilled with a {@see \Aws\Retry\ConfigurationInterface}
+ * or rejected with an {@see \Aws\Retry\Exception\ConfigurationException}.
  *
  * <code>
  * use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
@@ -23,7 +23,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  * Configuration providers can be composed to create configuration using
  * conditional logic that can create different configurations in different
  * environments. You can compose multiple providers into a single provider using
- * {@see \Aws\RetryConfiguration\ConfigurationProvider::chain}. This function
+ * {@see \Aws\Retry\ConfigurationProvider::chain}. This function
  * accepts providers as variadic arguments and returns a new function that will
  * invoke each provider until a successful configuration is returned.
  *

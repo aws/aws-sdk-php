@@ -1,7 +1,7 @@
 <?php
-namespace Aws\RetryConfiguration;
+namespace Aws\Retry;
 
-use Aws\RetryConfiguration\Exception\ConfigurationException;
+use Aws\Retry\Exception\ConfigurationException;
 
 class Configuration implements ConfigurationInterface
 {
