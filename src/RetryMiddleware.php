@@ -8,7 +8,8 @@ use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise;
 
 /**
- * @internal Middleware that retries failures.
+ * @internal Middleware that retries failures. V1 implemention that supports
+ * 'legacy' mode.
  */
 class RetryMiddleware
 {
