@@ -20,13 +20,16 @@ class Configuration implements ConfigurationInterface
             throw new ConfigurationException("'{$mode}' is not a valid mode."
                 . " The mode has to be 'legacy', 'standard', or 'adaptive'.");
         }
-        if (!is_int($maxAttempts) || $maxAttempts < 1) {
+        if (!is_numeric($maxAttempts)
+            || intval($maxAttempts) != $maxAttempts
+            || $maxAttempts < 1
+        ) {
             throw new ConfigurationException("The 'maxAttempts' parameter has"
                 . " to be an integer >= 1.");
         }
 
         $this->mode = $mode;
-        $this->maxAttempts = $maxAttempts;
+        $this->maxAttempts = intval($maxAttempts);
     }
 
     /**
