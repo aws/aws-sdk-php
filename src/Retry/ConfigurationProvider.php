@@ -4,7 +4,7 @@ namespace Aws\Retry;
 use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
 use Aws\ConfigurationProviderInterface;
-use Aws\Sts\RegionalEndpoints\Exception\ConfigurationException;
+use Aws\Retry\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 
