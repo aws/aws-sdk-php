@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.6 - 2020-01-24
 
 * `Aws\DataSync` - AWS DataSync now supports FSx for Windows File Server Locations
 * `Aws\ECS` - This release provides support for tagging Amazon ECS task sets for services using external deployment controllers.
