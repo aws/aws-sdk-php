@@ -58,7 +58,7 @@ class RetryMiddleware
     /**
      * Creates a default AWS retry decider function.
      *
-     * The optional $additionalRetryConfig parameter is an associative array
+     * The optional $extraConfig parameter is an associative array
      * that specifies additional retry conditions on top of the ones specified
      * by default by the Aws\RetryMiddleware class, with the following keys:
      *
@@ -70,12 +70,12 @@ class RetryMiddleware
      *   these should be valid Curl constants. Optional.
      *
      * @param int $maxRetries
-     * @param array $additionalRetryConfig
+     * @param array $extraConfig
      * @return callable
      */
     public static function createDefaultDecider(
         $maxRetries = 3,
-        $additionalRetryConfig = []
+        $extraConfig = []
     ) {
         $retryCurlErrors = [];
         if (extension_loaded('curl')) {
@@ -88,7 +88,7 @@ class RetryMiddleware
             RequestInterface $request,
             ResultInterface $result = null,
             $error = null
-        ) use ($maxRetries, $retryCurlErrors, $additionalRetryConfig) {
+        ) use ($maxRetries, $retryCurlErrors, $extraConfig) {
             // Allow command-level options to override this value
             $maxRetries = null !== $command['@retries'] ?
                 $command['@retries']
@@ -98,7 +98,7 @@ class RetryMiddleware
                 $result,
                 $error,
                 $retryCurlErrors,
-                $additionalRetryConfig
+                $extraConfig
             );
 
             if ($retries >= $maxRetries) {
@@ -119,30 +119,30 @@ class RetryMiddleware
         $result,
         $error,
         $retryCurlErrors,
-        $additionalRetryConfig = []
+        $extraConfig = []
     ) {
         $errorCodes = self::$retryCodes;
-        if (!empty($additionalRetryConfig['errorCodes'])
-            && is_array($additionalRetryConfig['errorCodes'])
+        if (!empty($extraConfig['errorCodes'])
+            && is_array($extraConfig['errorCodes'])
         ) {
-            foreach($additionalRetryConfig['errorCodes'] as $code) {
+            foreach($extraConfig['errorCodes'] as $code) {
                 $errorCodes[$code] = true;
             }
         }
 
         $statusCodes = self::$retryStatusCodes;
-        if (!empty($additionalRetryConfig['statusCodes'])
-            && is_array($additionalRetryConfig['statusCodes'])
+        if (!empty($extraConfig['statusCodes'])
+            && is_array($extraConfig['statusCodes'])
         ) {
-            foreach($additionalRetryConfig['statusCodes'] as $code) {
+            foreach($extraConfig['statusCodes'] as $code) {
                 $statusCodes[$code] = true;
             }
         }
 
-        if (!empty($additionalRetryConfig['curlErrors'])
-            && is_array($additionalRetryConfig['curlErrors'])
+        if (!empty($extraConfig['curlErrors'])
+            && is_array($extraConfig['curlErrors'])
         ) {
-            foreach($additionalRetryConfig['curlErrors'] as $code) {
+            foreach($extraConfig['curlErrors'] as $code) {
                 $retryCurlErrors[$code] = true;
             }
         }
