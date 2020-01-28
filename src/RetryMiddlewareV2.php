@@ -27,20 +27,20 @@ class RetryMiddlewareV2
     private $nextHandler;
     private $quotaManager;
 
-    public static function wrap($config, $decider, $delayer, $collectStats)
+    public static function wrap($config, $decider, $delayer, $extraConfig)
     {
         return function (callable $handler) use (
             $config,
             $decider,
             $delayer,
-            $collectStats
+            $extraConfig
         ) {
             return new static(
                 $config,
                 $handler,
                 $decider,
                 $delayer,
-                $collectStats
+                $extraConfig
             );
         };
     }
@@ -48,7 +48,7 @@ class RetryMiddlewareV2
     public static function createDefaultDecider(
         QuotaManager $quotaManager,
         $maxAttempts = 3,
-        $config = []
+        $extraConfig = []
     ) {
         $retryCurlErrors = [];
         if (extension_loaded('curl')) {
@@ -59,14 +59,18 @@ class RetryMiddlewareV2
             $attempts,
             CommandInterface $command,
             $result = null
-        ) use ($config, $quotaManager, $retryCurlErrors, $maxAttempts) {
+        ) use ($extraConfig, $quotaManager, $retryCurlErrors, $maxAttempts) {
             // Allow command-level option to override this value
             // # of attempts = # of retries + 1
             $maxAttempts = (null !== $command['@retries']) ?
                 $command['@retries'] + 1
                 : $maxAttempts;
 
-            $isRetryable = self::isRetryable($result, $retryCurlErrors, $config);
+            $isRetryable = self::isRetryable(
+                $result,
+                $retryCurlErrors,
+                $extraConfig
+            );
 
             if (!$quotaManager->hasRetryQuota()) {
                 return false;
@@ -91,31 +95,28 @@ class RetryMiddlewareV2
         callable $handler,
         callable $decider = null,
         callable $delayer = null,
-        $collectStats = false,
-        $additionalRetryConfig = []
+        $extraConfig = []
     ) {
-        $this->collectStats = (bool) $collectStats;
         $this->delayer = $delayer;
         $this->maxAttempts = $config->getMaxAttempts();
         $this->mode = $config->getMode();
         $this->nextHandler = $handler;
         $this->quotaManager = new QuotaManager();
-        if (is_null($decider)) {
-            $this->decider = self::createDefaultDecider(
+        $this->collectStats = isset($extraConfig['collect_stats'])
+            ? (bool) $extraConfig['collect_stats']
+            : false;
+        $this->decider = is_null($decider)
+            ? self::createDefaultDecider(
                 $this->quotaManager,
                 $this->maxAttempts,
-                $additionalRetryConfig
-            );
-        } else {
-            $this->decider = $decider;
-        }
-        if (is_null($delayer)) {
-            $this->delayer = function ($attempts) {
+                $extraConfig
+              )
+            : $decider;
+        $this->delayer = is_null($delayer)
+            ? function ($attempts) {
                 return self::exponentialDelayWithJitter($attempts);
-            };
-        } else {
-            $this->delayer = $delayer;
-        }
+              }
+            : $delayer;
     }
 
     public function __invoke(CommandInterface $cmd, RequestInterface $req)
@@ -186,30 +187,30 @@ class RetryMiddlewareV2
     private static function isRetryable(
         $result,
         $retryCurlErrors,
-        $additionalRetryConfig = []
+        $extraConfig = []
     ) {
         $errorCodes = self::$standardThrottlingErrors + self::$standardTransientErrors;
-        if (!empty($additionalRetryConfig['errorCodes'])
-            && is_array($additionalRetryConfig['errorCodes'])
+        if (!empty($extraConfig['errorCodes'])
+            && is_array($extraConfig['errorCodes'])
         ) {
-            foreach($additionalRetryConfig['errorCodes'] as $code) {
+            foreach($extraConfig['errorCodes'] as $code) {
                 $errorCodes[$code] = true;
             }
         }
 
         $statusCodes = self::$standardTransientStatusCodes;
-        if (!empty($additionalRetryConfig['statusCodes'])
-            && is_array($additionalRetryConfig['statusCodes'])
+        if (!empty($extraConfig['statusCodes'])
+            && is_array($extraConfig['statusCodes'])
         ) {
-            foreach($additionalRetryConfig['statusCodes'] as $code) {
+            foreach($extraConfig['statusCodes'] as $code) {
                 $statusCodes[$code] = true;
             }
         }
 
-        if (!empty($additionalRetryConfig['curlErrors'])
-            && is_array($additionalRetryConfig['curlErrors'])
+        if (!empty($extraConfig['curlErrors'])
+            && is_array($extraConfig['curlErrors'])
         ) {
-            foreach($additionalRetryConfig['curlErrors'] as $code) {
+            foreach($extraConfig['curlErrors'] as $code) {
                 $retryCurlErrors[$code] = true;
             }
         }
