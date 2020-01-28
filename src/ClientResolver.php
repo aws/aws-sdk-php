@@ -415,7 +415,7 @@ class ClientResolver
                     'retry'
                 );
             } else {
-                $list->appendSign(RetryMiddlewareV2::wrap($config), 'retry');
+                $list->appendSign(RetryMiddlewareV2::wrap($config, null, null, $args['stats']['retries']), 'retry');
             }
         }
     }
