@@ -58,12 +58,16 @@ class RetryMiddlewareV2
         return function(
             $attempts,
             CommandInterface $command,
-            $result = null
+            $result
         ) use ($extraConfig, $quotaManager, $retryCurlErrors, $maxAttempts) {
+
+            // Release retry tokens back to quota on a successful result
+            $quotaManager->releaseToQuota($result);
+
             // Allow command-level option to override this value
             // # of attempts = # of retries + 1
-            $maxAttempts = (null !== $command['@retries']) ?
-                $command['@retries'] + 1
+            $maxAttempts = (null !== $command['@retries'])
+                ? $command['@retries'] + 1
                 : $maxAttempts;
 
             $isRetryable = self::isRetryable(
@@ -72,18 +76,19 @@ class RetryMiddlewareV2
                 $extraConfig
             );
 
-            if (!$quotaManager->hasRetryQuota()) {
-                return false;
-            }
+            if ($isRetryable) {
 
-            if ($attempts >= $maxAttempts) {
-                if (!empty($result)
-                    && $result instanceof AwsException
-                    && $isRetryable
-                ) {
-                    $result->setMaxRetriesExceeded();
+                // Retrieve retry tokens and check if quota has been exceeded
+                if (!$quotaManager->hasRetryQuota($result)) {
+                    return false;
                 }
-                return false;
+
+                if ($attempts >= $maxAttempts) {
+                    if (!empty($result) && $result instanceof AwsException) {
+                        $result->setMaxRetriesExceeded();
+                    }
+                    return false;
+                }
             }
 
             return $isRetryable;
