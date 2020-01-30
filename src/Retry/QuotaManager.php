@@ -54,12 +54,14 @@ class QuotaManager
     public function releaseToQuota($result)
     {
         if ($result instanceof AwsException) {
-            $statusCode = $result->getStatusCode();
+            $statusCode = (int) $result->getStatusCode();
         } elseif ($result instanceof ResultInterface) {
-            $statusCode = $result['@metadata']['statusCode'];
+            $statusCode = isset($result['@metadata']['statusCode'])
+                ? (int) $result['@metadata']['statusCode']
+                : null;
         }
 
-        if (isset($statusCode) && $statusCode >= 200 && $statusCode < 300) {
+        if (!empty($statusCode) && $statusCode >= 200 && $statusCode < 300) {
             if (isset($this->capacityAmount)) {
                 $this->availableCapacity += $this->capacityAmount;
                 unset($this->capacityAmount);
