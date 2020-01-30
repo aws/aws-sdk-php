@@ -10,8 +10,10 @@ use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * @internal Middleware that retries failures. V2 implementation that supports
- * 'standard' and 'adaptive' modes.
+ * Middleware that retries failures. V2 implementation that supports 'standard'
+ * and 'adaptive' modes.
+ *
+ * @internal
  */
 class RetryMiddlewareV2
 {
