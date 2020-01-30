@@ -62,8 +62,6 @@ class QuotaManager
         if (isset($statusCode) && $statusCode >= 200 && $statusCode < 300) {
             if (isset($this->capacityAmount)) {
                 $this->availableCapacity += $this->capacityAmount;
-
-                // TBD
                 unset($this->capacityAmount);
             } else {
                 $this->availableCapacity += $this->noRetryIncrement;
