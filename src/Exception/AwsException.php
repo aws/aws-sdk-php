@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Exception;
 
+use Aws\Api\Shape;
 use Aws\CommandInterface;
 use Aws\HasDataTrait;
 use Aws\HasMonitoringEventsTrait;
@@ -192,6 +193,16 @@ class AwsException extends \RuntimeException implements
     public function getAwsErrorCode()
     {
         return $this->errorCode;
+    }
+
+    /**
+     * Get the AWS error shape.
+     *
+     * @return Shape|null Returns null if no response was received
+     */
+    public function getAwsErrorShape()
+    {
+        return $this->errorShape;
     }
 
     /**

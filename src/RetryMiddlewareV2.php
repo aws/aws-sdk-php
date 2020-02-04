@@ -4,6 +4,7 @@ namespace Aws;
 use Aws\Exception\AwsException;
 use Aws\Retry\ConfigurationInterface;
 use Aws\Retry\QuotaManager;
+use Aws\Retry\RateLimiter;
 use Aws\Retry\RetryHelperTrait;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise;
@@ -28,6 +29,7 @@ class RetryMiddlewareV2
     private $mode;
     private $nextHandler;
     private $quotaManager;
+    private $rateLimiter;
 
     public static function wrap($config, $decider, $delayer, $extraConfig)
     {
@@ -109,9 +111,11 @@ class RetryMiddlewareV2
         $this->mode = $config->getMode();
         $this->nextHandler = $handler;
         $this->quotaManager = new QuotaManager();
+
         $this->collectStats = isset($extraConfig['collect_stats'])
             ? (bool) $extraConfig['collect_stats']
             : false;
+
         $this->decider = is_null($decider)
             ? self::createDefaultDecider(
                 $this->quotaManager,
@@ -119,11 +123,16 @@ class RetryMiddlewareV2
                 $extraConfig
               )
             : $decider;
+
         $this->delayer = is_null($delayer)
             ? function ($attempts) {
                 return self::exponentialDelayWithJitter($attempts);
               }
             : $delayer;
+
+        if ($this->mode === 'adaptive') {
+            $this->rateLimiter = new RateLimiter();
+        }
     }
 
     public function __invoke(CommandInterface $cmd, RequestInterface $req)
@@ -149,6 +158,10 @@ class RetryMiddlewareV2
             &$monitoringEvents,
             &$callback
         ) {
+            if ($this->mode === 'adaptive') {
+                $this->rateLimiter->updateSendingRate($this->isThrottlingError($value));
+            }
+
             $this->updateHttpStats($value, $requestStats);
 
             if ($value instanceof MonitoringEventsInterface) {
@@ -179,8 +192,18 @@ class RetryMiddlewareV2
             // Update retry header with retry count and delayBy
             $req = $this->addRetryHeader($req, $attempts, $delayBy);
 
+            // Get token from rate limiter, which will sleep if necessary
+            if ($this->mode === 'adaptive') {
+                $this->rateLimiter->getSendToken();
+            }
+
             return $handler($cmd, $req)->then($callback, $callback);
         };
+
+        // Get token from rate limiter, which will sleep if necessary
+        if ($this->mode === 'adaptive') {
+            $this->rateLimiter->getSendToken();
+        }
 
         return $handler($cmd, $req)->then($callback, $callback);
     }
@@ -266,6 +289,24 @@ class RetryMiddlewareV2
                 if (strpos($message, 'cURL error ' . $curlError . ':') === 0) {
                     return true;
                 }
+            }
+        }
+
+        return false;
+    }
+
+    private function isThrottlingError($result)
+    {
+        if ($result instanceof AwsException) {
+            // Check pre-defined throttling errors
+            if (in_array($result->getAwsErrorCode(), self::$standardThrottlingErrors)) {
+                return true;
+            }
+
+            // Check error shape for the throttling trait
+            $definition = $result->getAwsErrorShape()->toArray();
+            if (!empty($definition['retryable']['throttling'])) {
+                return true;
             }
         }
 
