@@ -57,6 +57,7 @@ class RateLimiter
             $this->calculateTimeWindow();
             $this->lastThrottleTime = microtime(true);
             $calculatedRate = $this->cubicThrottle($rateToUse);
+            $this->enableTokenBucket();
         } else {
             $calculatedRate = $this->cubicSuccess(microtime(true));
         }
@@ -95,6 +96,11 @@ class RateLimiter
     private function cubicThrottle($rateToUse)
     {
         return $rateToUse * self::BETA;
+    }
+
+    private function enableTokenBucket()
+    {
+        $this->enabled = true;
     }
 
     private function refillTokenBucket()
