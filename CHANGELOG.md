@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.7 - 2020-02-04
 
 * `Aws\CloudFront` - Documentation updates for CloudFront
 * `Aws\EC2` - Amazon VPC Flow Logs adds support for 1-minute aggregation intervals.
