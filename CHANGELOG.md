@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Documentation updates for CloudFront
+* `Aws\EC2` - Amazon VPC Flow Logs adds support for 1-minute aggregation intervals.
+* `Aws\IoT` - Updated ThrottlingException documentation to report that the error code is 400, and not 429, to reflect actual system behaviour.
+* `Aws\Kafka` - This release enables AWS MSK customers to list Apache Kafka versions that are supported on AWS MSK clusters. Also includes changes to expose additional details of a cluster's state in DescribeCluster and ListClusters APIs.
+* `Aws\SSM` - This feature ensures that an instance is patched up to the available patches on a particular date. It can be enabled by selecting the 'ApproveUntilDate' option as the auto-approval rule while creating the patch baseline. ApproveUntilDate - The cutoff date for auto approval of released patches. Any patches released on or before this date will be installed automatically.
+* `Aws\StorageGateway` - Adding KVM as a support hypervisor
+* `Aws\WorkMail` - This release adds support for tagging Amazon WorkMail organizations.
+
 ## 3.133.6 - 2020-01-24
 
 * `Aws\DataSync` - AWS DataSync now supports FSx for Windows File Server Locations
