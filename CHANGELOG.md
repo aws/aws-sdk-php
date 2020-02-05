@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.8 - 2020-02-05
 
 * `Aws\DLM` - Updated the maximum number of tags that can be added to a snapshot using DLM to 45.
 * `Aws\EC2` - This release provides support for tagging when you create a VPC endpoint, or VPC endpoint service.
