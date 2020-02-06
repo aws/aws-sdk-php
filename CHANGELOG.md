@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.9 - 2020-02-06
 
 * `Aws\AppSync` - AWS AppSync now supports X-Ray
 * `Aws\CodeBuild` - AWS CodeBuild adds support for Amazon Elastic File Systems
