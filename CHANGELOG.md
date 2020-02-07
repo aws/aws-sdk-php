@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\RDS` - Documentation updates for RDS: when restoring a DB cluster from a snapshot, must create DB instances
+* `Aws\RoboMaker` - This release adds support for simulation job batches
+* `Aws\imagebuilder` - This version of the SDK includes bug fixes and documentation updates.
+
 ## 3.133.9 - 2020-02-06
 
 * `Aws\AppSync` - AWS AppSync now supports X-Ray
