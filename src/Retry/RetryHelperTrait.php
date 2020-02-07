@@ -20,6 +20,7 @@ trait RetryHelperTrait
         'RequestThrottled'                          => true,
         'SlowDown'                                  => true,
         'PriorRequestNotComplete'                   => true,
+        'EC2ThrottledException'                     => true,
     ];
 
     private static $standardTransientErrors = [

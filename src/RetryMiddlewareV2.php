@@ -20,11 +20,12 @@ class RetryMiddlewareV2
 {
     use RetryHelperTrait;
 
-    const MAX_BACKOFF = 20;
+    const MAX_BACKOFF = 20000;
 
     private $collectStats;
     private $decider;
     private $delayer;
+    private $extraConfig;
     private $maxAttempts;
     private $mode;
     private $nextHandler;
@@ -99,6 +100,18 @@ class RetryMiddlewareV2
         };
     }
 
+    /**
+     * Amount of milliseconds to delay as a function of attempt number
+     *
+     * @param $attempts
+     * @return mixed
+     */
+    public static function exponentialDelayWithJitter($attempts)
+    {
+        $rand = mt_rand() / mt_getrandmax();
+        return min(1000 * $rand * pow(2, $attempts) , self::MAX_BACKOFF);
+    }
+
     public function __construct(
         ConfigurationInterface $config,
         callable $handler,
@@ -107,6 +120,7 @@ class RetryMiddlewareV2
         $extraConfig = []
     ) {
         $this->delayer = $delayer;
+        $this->extraConfig = $extraConfig;
         $this->maxAttempts = $config->getMaxAttempts();
         $this->mode = $config->getMode();
         $this->nextHandler = $handler;
@@ -184,13 +198,13 @@ class RetryMiddlewareV2
             }
 
             $delayBy = $delayer($attempts++);
-            $command['@http']['delay'] = $delayBy;
+            $cmd['@http']['delay'] = $delayBy;
             if ($this->collectStats) {
-                $this->updateStats($attempts, $delayBy, $requestStats);
+                $this->updateStats($attempts - 1, $delayBy, $requestStats);
             }
 
             // Update retry header with retry count and delayBy
-            $req = $this->addRetryHeader($req, $attempts, $delayBy);
+            $req = $this->addRetryHeader($req, $attempts - 1, $delayBy);
 
             // Get token from rate limiter, which will sleep if necessary
             if ($this->mode === 'adaptive') {
@@ -206,12 +220,6 @@ class RetryMiddlewareV2
         }
 
         return $handler($cmd, $req)->then($callback, $callback);
-    }
-
-    public function exponentialDelayWithJitter($attempts)
-    {
-        $rand = mt_rand() / mt_getrandmax();
-        return min($rand * pow(2, $attempts) , self::MAX_BACKOFF);
     }
 
     private static function isRetryable(
@@ -299,7 +307,9 @@ class RetryMiddlewareV2
     {
         if ($result instanceof AwsException) {
             // Check pre-defined throttling errors
-            if (in_array($result->getAwsErrorCode(), self::$standardThrottlingErrors)) {
+            $throttlingErrors = self::$standardThrottlingErrors
+                + $this->extraConfig['throttlingErrors'];
+            if (in_array($result->getAwsErrorCode(), $throttlingErrors)) {
                 return true;
             }
 
