@@ -123,19 +123,19 @@ class RetryMiddlewareV2
             ? (bool) $options['collect_stats']
             : false;
 
-        $this->decider = empty($options['decider'])
-            ? self::createDefaultDecider(
+        $this->decider = isset($options['decider'])
+            ? $options['decider']
+            : self::createDefaultDecider(
                 $this->quotaManager,
                 $this->maxAttempts,
                 $options
-              )
-            : $options['decider'];
+            );
 
-        $this->delayer = empty($options['delayer'])
-            ? function ($attempts) {
+        $this->delayer = isset($options['delayer'])
+            ? $options['delayer']
+            : function ($attempts) {
                 return self::exponentialDelayWithJitter($attempts);
-              }
-            : $options['delayer'];
+            };
 
         if ($this->mode === 'adaptive') {
             $this->rateLimiter = new RateLimiter();
