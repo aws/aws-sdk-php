@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.10 - 2020-02-07
 
 * `Aws\RDS` - Documentation updates for RDS: when restoring a DB cluster from a snapshot, must create DB instances
 * `Aws\RoboMaker` - This release adds support for simulation job batches
