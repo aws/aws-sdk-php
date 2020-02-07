@@ -48,7 +48,6 @@ class RetryMiddlewareV2Test extends TestCase
     {
         $decider = RetryMiddlewareV2::createDefaultDecider(new QuotaManager());
         $command = new Command('foo');
-        $request = new Request('GET', 'http://www.example.com');
         $result = new Result(['@metadata' => ['statusCode' => '500']]);
         $this->assertTrue($decider(0, $command, $result));
         $result = new Result(['@metadata' => ['statusCode' => '503']]);
@@ -69,7 +68,6 @@ class RetryMiddlewareV2Test extends TestCase
     {
         $decider = RetryMiddlewareV2::createDefaultDecider(new QuotaManager());
         $command = new Command('foo');
-        $request = new Request('GET', 'http://www.example.com');
         $err = new \Exception('e');
         $this->assertFalse($decider(0, $command, $err));
     }
@@ -203,8 +201,6 @@ class RetryMiddlewareV2Test extends TestCase
     {
         $decider = RetryMiddlewareV2::createDefaultDecider(new QuotaManager());
         $command = new Command('foo');
-        $request = new Request('GET', 'http://www.example.com');
-
         $this->assertTrue($decider(0, $command, $err));
     }
 
@@ -212,7 +208,6 @@ class RetryMiddlewareV2Test extends TestCase
     {
         $decider = RetryMiddlewareV2::createDefaultDecider(new QuotaManager());
         $command = new Command('foo');
-        $request = new Request('GET', 'http://www.example.com');
         $err = new AwsException('e', $command, ['response' => new Response(500)]);
         $this->assertTrue($decider(0, $command, $err));
         $err = new AwsException('e', $command, ['response' => new Response(502)]);
@@ -312,7 +307,7 @@ class RetryMiddlewareV2Test extends TestCase
         $wrapped = new RetryMiddlewareV2(
             new Configuration('standard', 5),
             $mock,
-            RetryMiddlewareV2::createDefaultDecider(new QuotaManager())
+            ['decider' => RetryMiddlewareV2::createDefaultDecider(new QuotaManager())]
         );
 
         $result = $wrapped($command, $request)->wait();
@@ -346,7 +341,7 @@ class RetryMiddlewareV2Test extends TestCase
         $wrapped = new RetryMiddlewareV2(
             new Configuration('standard', 5),
             $mock,
-            RetryMiddlewareV2::createDefaultDecider(new QuotaManager())
+            ['decider' => RetryMiddlewareV2::createDefaultDecider(new QuotaManager())]
         );
 
         $result = $wrapped($command, $request)->wait();
@@ -374,7 +369,7 @@ class RetryMiddlewareV2Test extends TestCase
         $wrapped = new RetryMiddlewareV2(
             new Configuration('standard', 5),
             $mock,
-            RetryMiddlewareV2::createDefaultDecider(new QuotaManager())
+            ['decider' => RetryMiddlewareV2::createDefaultDecider(new QuotaManager())]
         );
 
         try {
@@ -400,7 +395,7 @@ class RetryMiddlewareV2Test extends TestCase
         $wrapped = new RetryMiddlewareV2(
             new Configuration('standard', 5),
             $mock,
-            RetryMiddlewareV2::createDefaultDecider(new QuotaManager())
+            ['decider' => RetryMiddlewareV2::createDefaultDecider(new QuotaManager())]
         );
 
         $result = $wrapped($command, $request)->wait();
@@ -432,8 +427,6 @@ class RetryMiddlewareV2Test extends TestCase
         $retryMW = new RetryMiddlewareV2(
             $config,
             $handler,
-            null,
-            null,
             ['collect_stats' => true]
         );
 
@@ -454,8 +447,6 @@ class RetryMiddlewareV2Test extends TestCase
         $retryMW = new RetryMiddlewareV2(
             $config,
             $nextHandler,
-            null,
-            null,
             ['collect_stats' => true]
         );
 
@@ -479,8 +470,6 @@ class RetryMiddlewareV2Test extends TestCase
         $retryMW = new RetryMiddlewareV2(
             $config,
             $handler,
-            null,
-            null,
             ['collect_stats' => true]
         );
 
@@ -502,8 +491,6 @@ class RetryMiddlewareV2Test extends TestCase
         $retryMW = new RetryMiddlewareV2(
             $config,
             $nextHandler,
-            null,
-            null,
             ['collect_stats' => true]
         );
 
@@ -536,8 +523,6 @@ class RetryMiddlewareV2Test extends TestCase
         $retryMW = new RetryMiddlewareV2(
             $config,
             $handler,
-            null,
-            null,
             ['collect_stats' => true]
         );
 
@@ -572,8 +557,6 @@ class RetryMiddlewareV2Test extends TestCase
         $retryMW = new RetryMiddlewareV2(
             $config,
             $handler,
-            null,
-            null,
             ['collect_stats' => true]
         );
 

@@ -418,8 +418,6 @@ class ClientResolver
                 $list->appendSign(
                     RetryMiddlewareV2::wrap(
                         $config,
-                        null,
-                        null,
                         ['collect_stats' => $args['stats']['retries']]
                     ),
                     'retry'
