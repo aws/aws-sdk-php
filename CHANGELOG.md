@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.11 - 2020-02-10
 
 * `Aws\DocDB` - Added clarifying information that Amazon DocumentDB shares operational technology with Amazon RDS and Amazon Neptune.
 * `Aws\KMS` - The ConnectCustomKeyStore API now provides a new error code (SUBNET_NOT_FOUND) for customers to better troubleshoot if their "connect-custom-key-store" operation fails.
