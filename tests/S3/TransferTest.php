@@ -193,6 +193,31 @@ class TransferTest extends TestCase
         `rm -rf $dir`;
     }
 
+    public function testDebugFalse()
+    {
+        $s3 = $this->getTestClient('s3');
+        $this->addMockResults($s3, [
+            new Result(['UploadId' => '123']),
+            new Result(['ETag' => 'a']),
+            new Result(['ETag' => 'b']),
+            new Result(['UploadId' => '123']),
+        ]);
+
+        $dir = sys_get_temp_dir() . '/unittest';
+        `rm -rf $dir`;
+        mkdir($dir);
+        $filename = $dir . '/large.txt';
+        $f = fopen($filename, 'w+');
+        fwrite($f, '...');
+        fclose($f);
+
+        $t = new Transfer($s3, $dir, 's3://foo/bar', [
+            'debug' => false
+        ]);
+
+        $this->assertNull($t->transfer());
+    }
+
     public function testDownloadsObjectsWithAccessPointArn()
     {
         $s3 = $this->getTestClient('s3');
