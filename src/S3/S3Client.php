@@ -11,6 +11,7 @@ use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\Middleware;
+use Aws\Retry\QuotaManager;
 use Aws\RetryMiddleware;
 use Aws\ResultInterface;
 use Aws\CommandInterface;
@@ -640,10 +641,40 @@ class S3Client extends AwsClient implements S3ClientInterface
                 $delay = [RetryMiddleware::class, 'exponentialDelay'];
                 $list->appendSign(Middleware::retry($decider, $delay), 'retry');
             } else {
+                $defaultDecider = RetryMiddlewareV2::createDefaultDecider(
+                    new QuotaManager()
+                );
+
                 $list->appendSign(
                     RetryMiddlewareV2::wrap(
                         $config,
-                        ['collect_stats' => $args['stats']['retries']]
+                        [
+                            'collect_stats' => $args['stats']['retries'],
+                            'decider' => function(
+                                $attempts,
+                                CommandInterface $cmd,
+                                $result
+                            ) use ($defaultDecider) {
+                                $isRetryable = $defaultDecider($attempts, $cmd, $result);
+                                if ($isRetryable
+                                    && $result instanceof AwsException
+                                ) {
+                                    if (strpos(
+                                            $result->getResponse()->getBody(),
+                                            'Your socket connection to the server'
+                                        ) !== false
+                                    ) {
+                                        $isRetryable = false;
+                                    }
+                                    if ($result->getPrevious() instanceof RequestException
+                                        && $cmd->getName() === 'CompleteMultipartUpload'
+                                    ) {
+                                        $isRetryable = false;
+                                    }
+                                }
+                                return $isRetryable;
+                            }
+                        ]
                     ),
                     'retry'
                 );
