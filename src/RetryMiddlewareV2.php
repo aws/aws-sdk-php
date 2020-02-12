@@ -221,10 +221,17 @@ class RetryMiddlewareV2
         $options = []
     ) {
         $errorCodes = self::$standardThrottlingErrors + self::$standardTransientErrors;
-        if (!empty($options['error_codes'])
-            && is_array($options['error_codes'])
+        if (!empty($options['transient_error_codes'])
+            && is_array($options['transient_error_codes'])
         ) {
-            foreach($options['error_codes'] as $code) {
+            foreach($options['transient_error_codes'] as $code) {
+                $errorCodes[$code] = true;
+            }
+        }
+        if (!empty($options['throttling_error_codes'])
+            && is_array($options['throttling_error_codes'])
+        ) {
+            foreach($options['throttling_error_codes'] as $code) {
                 $errorCodes[$code] = true;
             }
         }
@@ -301,10 +308,12 @@ class RetryMiddlewareV2
         if ($result instanceof AwsException) {
             // Check pre-defined throttling errors
             $throttlingErrors = self::$standardThrottlingErrors;
-            if (!empty($this->options['throttlingErrors'])
-                && is_array($this->options['throttlingErrors'])
+            if (!empty($this->options['throttling_error_codes'])
+                && is_array($this->options['throttling_error_codes'])
             ) {
-                $throttlingErrors += $this->options['throttlingErrors'];
+                foreach($this->options['throttling_error_codes'] as $code) {
+                    $throttlingErrors[$code] = true;
+                }
             }
             if (in_array($result->getAwsErrorCode(), $throttlingErrors)) {
                 return true;

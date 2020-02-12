@@ -152,7 +152,10 @@ class DynamoDbClient extends AwsClient
                 $list->appendSign(
                     RetryMiddlewareV2::wrap(
                         $config,
-                        ['collect_stats' => $args['stats']['retries']]
+                        [
+                            'collect_stats' => $args['stats']['retries'],
+                            'transient_error_codes' => ['TransactionInProgressException']
+                        ]
                     ),
                     'retry'
                 );

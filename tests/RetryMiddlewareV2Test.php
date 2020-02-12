@@ -225,10 +225,9 @@ class RetryMiddlewareV2Test extends TestCase
         $decider = RetryMiddlewareV2::createDefaultDecider(
             new QuotaManager(),
             3,
-            ['error_codes' => ['CustomRetryableException']]
+            ['transient_error_codes' => ['CustomRetryableException']]
         );
         $command = new Command('foo');
-        $request = new Request('GET', 'http://www.example.com');
         $err = new AwsException('e', $command, [
             'code' => 'CustomRetryableException'
         ]);
