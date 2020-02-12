@@ -29,15 +29,28 @@ class RestJsonErrorParserTest extends TestCase
         $expected
     ) {
         $response = Psr7\parse_response($response);
+        $parsed = $parser($response, $command);
         $this->assertEquals(
-            $expected,
-            $parser($response, $command)
+            count($expected),
+            count($parsed)
         );
+        foreach($parsed as $key => $value) {
+            if ($key === 'error_shape') {
+                $this->assertEquals(
+                    $expected['error_shape']->toArray(),
+                    $value->toArray()
+                );
+            } else {
+                $this->assertEquals($expected[$key], $value);
+            }
+        }
     }
 
     public function errorResponsesProvider()
     {
         $service = $this->generateTestService('rest-json');
+        $shapes = $service->getErrorShapes();
+        $errorShape = $shapes[0];
         $client = $this->generateTestClient($service);
         $command = $client->getCommand('TestOperation', []);
 
@@ -114,7 +127,8 @@ class RestJsonErrorParserTest extends TestCase
                         ],
                         'TestStatus'        => 400,
                     ],
-                    'message' => null
+                    'message' => null,
+                    'error_shape' => $errorShape
                 ]
             ],
             // Error code in header, with service, modeled exception
@@ -150,7 +164,8 @@ class RestJsonErrorParserTest extends TestCase
                         ],
                         'TestStatus'        => 400,
                     ],
-                    'message' => null
+                    'message' => null,
+                    'error_shape' => $errorShape
                 ]
             ],
             // Error code in header, with service, unmodeled code
