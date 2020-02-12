@@ -123,7 +123,7 @@ class RetryMiddlewareV2Test extends TestCase
         $decider = RetryMiddlewareV2::createDefaultDecider(
             new QuotaManager(),
             3,
-            ['curlErrors' => [CURLE_BAD_CONTENT_ENCODING]]
+            ['curl_errors' => [CURLE_BAD_CONTENT_ENCODING]]
         );
         $command = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');
@@ -225,7 +225,7 @@ class RetryMiddlewareV2Test extends TestCase
         $decider = RetryMiddlewareV2::createDefaultDecider(
             new QuotaManager(),
             3,
-            ['errorCodes' => ['CustomRetryableException']]
+            ['error_codes' => ['CustomRetryableException']]
         );
         $command = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');
@@ -244,7 +244,7 @@ class RetryMiddlewareV2Test extends TestCase
         $decider = RetryMiddlewareV2::createDefaultDecider(
             new QuotaManager(),
             3,
-            ['statusCodes' => [400]]
+            ['status_codes' => [400]]
         );
         $command = new Command('foo');
         $err = new AwsException('e', $command, ['response' => new Response(400)]);

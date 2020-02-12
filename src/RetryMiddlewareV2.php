@@ -221,27 +221,27 @@ class RetryMiddlewareV2
         $options = []
     ) {
         $errorCodes = self::$standardThrottlingErrors + self::$standardTransientErrors;
-        if (!empty($options['errorCodes'])
-            && is_array($options['errorCodes'])
+        if (!empty($options['error_codes'])
+            && is_array($options['error_codes'])
         ) {
-            foreach($options['errorCodes'] as $code) {
+            foreach($options['error_codes'] as $code) {
                 $errorCodes[$code] = true;
             }
         }
 
         $statusCodes = self::$standardTransientStatusCodes;
-        if (!empty($options['statusCodes'])
-            && is_array($options['statusCodes'])
+        if (!empty($options['status_codes'])
+            && is_array($options['status_codes'])
         ) {
-            foreach($options['statusCodes'] as $code) {
+            foreach($options['status_codes'] as $code) {
                 $statusCodes[$code] = true;
             }
         }
 
-        if (!empty($options['curlErrors'])
-            && is_array($options['curlErrors'])
+        if (!empty($options['curl_errors'])
+            && is_array($options['curl_errors'])
         ) {
-            foreach($options['curlErrors'] as $code) {
+            foreach($options['curl_errors'] as $code) {
                 $retryCurlErrors[$code] = true;
             }
         }

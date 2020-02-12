@@ -123,27 +123,27 @@ class RetryMiddleware
         $extraConfig = []
     ) {
         $errorCodes = self::$retryCodes;
-        if (!empty($extraConfig['errorCodes'])
-            && is_array($extraConfig['errorCodes'])
+        if (!empty($extraConfig['error_codes'])
+            && is_array($extraConfig['error_codes'])
         ) {
-            foreach($extraConfig['errorCodes'] as $code) {
+            foreach($extraConfig['error_codes'] as $code) {
                 $errorCodes[$code] = true;
             }
         }
 
         $statusCodes = self::$retryStatusCodes;
-        if (!empty($extraConfig['statusCodes'])
-            && is_array($extraConfig['statusCodes'])
+        if (!empty($extraConfig['status_codes'])
+            && is_array($extraConfig['status_codes'])
         ) {
-            foreach($extraConfig['statusCodes'] as $code) {
+            foreach($extraConfig['status_codes'] as $code) {
                 $statusCodes[$code] = true;
             }
         }
 
-        if (!empty($extraConfig['curlErrors'])
-            && is_array($extraConfig['curlErrors'])
+        if (!empty($extraConfig['curl_errors'])
+            && is_array($extraConfig['curl_errors'])
         ) {
-            foreach($extraConfig['curlErrors'] as $code) {
+            foreach($extraConfig['curl_errors'] as $code) {
                 $retryCurlErrors[$code] = true;
             }
         }
