@@ -14,6 +14,7 @@ use Aws\Middleware;
 use Aws\RetryMiddleware;
 use Aws\ResultInterface;
 use Aws\CommandInterface;
+use Aws\RetryMiddlewareV2;
 use Aws\S3\UseArnRegion\Configuration;
 use Aws\S3\UseArnRegion\ConfigurationInterface;
 use Aws\S3\UseArnRegion\ConfigurationProvider as UseArnRegionConfigurationProvider;
@@ -596,47 +597,58 @@ class S3Client extends AwsClient implements S3ClientInterface
     }
 
     /** @internal */
-    public static function _applyRetryConfig($value, $_, HandlerList $list)
+    public static function _applyRetryConfig($value, $args, HandlerList $list)
     {
-        if (!$value) {
-            return;
+        if ($value) {
+            $config = \Aws\Retry\ConfigurationProvider::unwrap($value);
+
+            if ($config->getMode() === 'legacy') {
+                $maxRetries = $config->getMaxAttempts() - 1;
+                $decider = RetryMiddleware::createDefaultDecider($maxRetries);
+                $decider = function ($retries, $command, $request, $result, $error) use ($decider, $maxRetries) {
+                    $maxRetries = null !== $command['@retries']
+                        ? $command['@retries']
+                        : $maxRetries;
+
+                    if ($decider($retries, $command, $request, $result, $error)) {
+                        return true;
+                    }
+
+                    if ($error instanceof AwsException
+                        && $retries < $maxRetries
+                    ) {
+                        if ($error->getResponse()
+                            && $error->getResponse()->getStatusCode() >= 400
+                        ) {
+                            return strpos(
+                                    $error->getResponse()->getBody(),
+                                    'Your socket connection to the server'
+                                ) !== false;
+                        }
+
+                        if ($error->getPrevious() instanceof RequestException) {
+                            // All commands except CompleteMultipartUpload are
+                            // idempotent and may be retried without worry if a
+                            // networking error has occurred.
+                            return $command->getName() !== 'CompleteMultipartUpload';
+                        }
+                    }
+
+                    return false;
+                };
+
+                $delay = [RetryMiddleware::class, 'exponentialDelay'];
+                $list->appendSign(Middleware::retry($decider, $delay), 'retry');
+            } else {
+                $list->appendSign(
+                    RetryMiddlewareV2::wrap(
+                        $config,
+                        ['collect_stats' => $args['stats']['retries']]
+                    ),
+                    'retry'
+                );
+            }
         }
-
-        $decider = RetryMiddleware::createDefaultDecider($value);
-        $decider = function ($retries, $command, $request, $result, $error) use ($decider, $value) {
-            $maxRetries = null !== $command['@retries']
-                ? $command['@retries']
-                : $value;
-
-            if ($decider($retries, $command, $request, $result, $error)) {
-                return true;
-            }
-
-            if ($error instanceof AwsException
-                && $retries < $maxRetries
-            ) {
-                if ($error->getResponse()
-                    && $error->getResponse()->getStatusCode() >= 400
-                ) {
-                    return strpos(
-                            $error->getResponse()->getBody(),
-                            'Your socket connection to the server'
-                        ) !== false;
-                }
-
-                if ($error->getPrevious() instanceof RequestException) {
-                    // All commands except CompleteMultipartUpload are
-                    // idempotent and may be retried without worry if a
-                    // networking error has occurred.
-                    return $command->getName() !== 'CompleteMultipartUpload';
-                }
-            }
-
-            return false;
-        };
-
-        $delay = [RetryMiddleware::class, 'exponentialDelay'];
-        $list->appendSign(Middleware::retry($decider, $delay), 'retry');
     }
 
     /** @internal */
