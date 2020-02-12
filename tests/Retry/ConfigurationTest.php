@@ -6,7 +6,7 @@ use Aws\Retry\Configuration;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Aws\EndpointDiscovery\Configuration
+ * @covers \Aws\Retry\Configuration
  */
 class ConfigurationTest extends TestCase
 {

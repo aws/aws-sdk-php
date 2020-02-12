@@ -63,10 +63,12 @@ class QuotaManager
 
         if (!empty($statusCode) && $statusCode >= 200 && $statusCode < 300) {
             if (isset($this->capacityAmount)) {
-                $this->availableCapacity += $this->capacityAmount;
+                $amount = $this->capacityAmount;
+                $this->availableCapacity += $amount;
                 unset($this->capacityAmount);
             } else {
-                $this->availableCapacity += $this->noRetryIncrement;
+                $amount = $this->noRetryIncrement;
+                $this->availableCapacity += $amount;
             }
             $this->availableCapacity = min(
                 $this->availableCapacity,
@@ -74,6 +76,6 @@ class QuotaManager
             );
         }
 
-        return true;
+        return (isset($amount) ? $amount : 0);
     }
 }
