@@ -7,18 +7,21 @@ namespace Aws\Retry;
  */
 class RateLimiter
 {
-    const BETA = 0.7;
-    const MIN_CAPACITY = 1;
-    const MIN_FILL_RATE = 0.5;
-    const SCALE_CONSTANT = 0.4;
-    const SMOOTH = 0.8;
+    // User-configurable constants
+    private $beta;
+    private $minCapacity;
+    private $minFillRate;
+    private $scaleConstant;
+    private $smooth;
 
+    // Pre-set state variables
     private $currentCapacity = 0;
     private $enabled = false;
     private $lastMaxRate = 0;
     private $measuredTxRate = 0;
     private $requestCount = 0;
 
+    // Other state variables
     private $fillRate;
     private $lastThrottleTime;
     private $lastTimestamp;
@@ -26,8 +29,24 @@ class RateLimiter
     private $maxCapacity;
     private $timeWindow;
 
-    public function __construct()
+    public function __construct($options = [])
     {
+        $this->beta = isset($options['beta'])
+            ? $options['beta']
+            : 0.7;
+        $this->minCapacity = isset($options['min_capacity'])
+            ? $options['min_capacity']
+            : 1;
+        $this->minFillRate = isset($options['min_fill_rate'])
+            ? $options['min_fill_rate']
+            : 0.5;
+        $this->scaleConstant = isset($options['scale_constant'])
+            ? $options['scale_constant']
+            : 0.4;
+        $this->smooth = isset($options['smooth'])
+            ? $options['smooth']
+            : 0.8;
+
         $this->lastTxRateBucket = floor(microtime(true));
         $this->lastThrottleTime = microtime(true);
     }
@@ -84,18 +103,18 @@ class RateLimiter
 
     private function calculateTimeWindow()
     {
-        $this->timeWindow = pow(($this->lastMaxRate * (1 - self::BETA) / self::SCALE_CONSTANT), 1/3);
+        $this->timeWindow = pow(($this->lastMaxRate * (1 - $this->beta) / $this->scaleConstant), 1/3);
     }
 
     private function cubicSuccess($timestamp)
     {
         $dt = $timestamp - $this->lastThrottleTime;
-        return self::SCALE_CONSTANT * pow($dt - $this->timeWindow, 3) + $this->lastMaxRate;
+        return $this->scaleConstant * pow($dt - $this->timeWindow, 3) + $this->lastMaxRate;
     }
 
     private function cubicThrottle($rateToUse)
     {
-        return $rateToUse * self::BETA;
+        return $rateToUse * $this->beta;
     }
 
     private function enableTokenBucket()
@@ -124,8 +143,8 @@ class RateLimiter
         $this->requestCount++;
         if ($timeBucket > $this->lastTxRateBucket) {
             $currentRate = $this->requestCount / ($timeBucket - $this->lastTxRateBucket);
-            $this->measuredTxRate = ($currentRate * self::SMOOTH)
-                + ($this->measuredTxRate * (1 - self::SMOOTH));
+            $this->measuredTxRate = ($currentRate * $this->smooth)
+                + ($this->measuredTxRate * (1 - $this->smooth));
             $this->requestCount = 0;
             $this->lastTxRateBucket = $timeBucket;
         }
@@ -134,8 +153,8 @@ class RateLimiter
     private function updateTokenBucketRate($newRps)
     {
         $this->refillTokenBucket();
-        $this->fillRate = max($newRps, self::MIN_FILL_RATE);
-        $this->maxCapacity = max($newRps, self::MIN_CAPACITY);
+        $this->fillRate = max($newRps, $this->minFillRate);
+        $this->maxCapacity = max($newRps, $this->minCapacity);
         $this->currentCapacity = min($this->currentCapacity, $this->maxCapacity);
     }
 }
