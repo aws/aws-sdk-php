@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.14 - 2020-02-13
 
 * `Aws\MediaPackageVod` - Adds support for DASH with multiple media presentation description periods triggered by presence of SCTE-35 ad markers in the manifest.Also adds optional configuration for DASH SegmentTemplateFormat to refer to segments by Number with Duration, Number with Timeline or Time with Timeline and compact the manifest by combining duplicate SegmentTemplate tags.
 
