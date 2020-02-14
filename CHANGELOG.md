@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.15 - 2020-02-14
 
 * `Aws\Build\Docs` - Adds customization in docs redirect map builder to avoid service name conflict.
 * `Aws\EC2` - You can now enable Multi-Attach on Provisioned IOPS io1 volumes through the create-volume API.
