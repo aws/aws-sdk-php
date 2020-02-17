@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.16 - 2020-02-17
 
 * `Aws\Cloud9` - AWS Cloud9 now supports the ability to tag Cloud9 development environments. 
 * `Aws\DynamoDB` - Amazon DynamoDB enables you to restore your DynamoDB backup or table data across AWS Regions such that the restored table is created in a different AWS Region from where the source table or backup resides. You can do cross-region restores between AWS commercial Regions, AWS China Regions, and AWS GovCloud (US) Regions. 
