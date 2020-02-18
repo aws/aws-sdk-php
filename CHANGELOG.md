@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.17 - 2020-02-18
 
 * `Aws\AutoScaling` - Amazon EC2 Auto Scaling now supports the ability to enable/disable target tracking, step scaling, and simple scaling policies.
 * `Aws\Chime` - Added AudioFallbackUrl to support Chime SDK client.
