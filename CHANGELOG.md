@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.18 - 2020-02-19
 
 * `Aws\AutoScaling` - Doc update for EC2 Auto Scaling: Add Enabled parameter for PutScalingPolicy
 * `Aws\Lambda` - AWS Lambda now supports Ruby 2.7
