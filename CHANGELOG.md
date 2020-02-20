@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.19 - 2020-02-20
 
 * `Aws\AppConfig` - This release adds exponential growth type support for deployment strategies.
 * `Aws\Pinpoint` - As of this release of the Amazon Pinpoint API, the Title property is optional for the CampaignEmailMessage object. 
