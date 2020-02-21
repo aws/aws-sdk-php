@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.20 - 2020-02-21
 
 * `Aws\Redshift` - Extend elastic resize to support resizing clusters to different instance types.
 * `Aws\WAFV2` - Documentation updates for AWS WAF (wafv2) to correct the guidance for associating a web ACL to a CloudFront distribution.
