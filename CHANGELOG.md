@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.21 - 2020-02-24
 
 * `Aws\CloudWatchEvents` - This release allows you to create and manage tags for event buses.
 * `Aws\DocDB` - Documentation updates for docdb
