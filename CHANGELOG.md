@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchEvents` - This release allows you to create and manage tags for event buses.
+* `Aws\DocDB` - Documentation updates for docdb
+* `Aws\EventBridge` - This release allows you to create and manage tags for event buses.
+* `Aws\FSx` - Announcing persistent file systems for Amazon FSx for Lustre that are ideal for longer-term storage and workloads, and a new generation of scratch file systems that offer higher burst throughput for spiky workloads.
+* `Aws\IoTEvents` - Documentation updates for iotcolumbo
+* `Aws\Snowball` - AWS Snowball adds a field for entering your GSTIN when creating AWS Snowball jobs in the Asia Pacific (Mumbai) region. 
+
 ## 3.133.20 - 2020-02-21
 
 * `Aws\Redshift` - Extend elastic resize to support resizing clusters to different instance types.
