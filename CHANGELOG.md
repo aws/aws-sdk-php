@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.22 - 2020-02-25
 
 * `Aws\Kafka` - Amazon MSK has added support for Broker Log delivery to CloudWatch, S3, and Firehose.
 * `Aws\Outposts` - This release adds DeleteSite and DeleteOutpost. 
