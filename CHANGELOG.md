@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kafka` - Amazon MSK has added support for Broker Log delivery to CloudWatch, S3, and Firehose.
+* `Aws\Outposts` - This release adds DeleteSite and DeleteOutpost. 
+* `Aws\SFN` - This release adds support for CloudWatch Logs for Standard Workflows.
+* `Aws\SecretsManager` - This release increases the maximum allowed size of SecretString or SecretBinary from 10KB to 64KB in the CreateSecret, UpdateSecret, PutSecretValue and GetSecretValue APIs.
+
 ## 3.133.21 - 2020-02-24
 
 * `Aws\CloudWatchEvents` - This release allows you to create and manage tags for event buses.
