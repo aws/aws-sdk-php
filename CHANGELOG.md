@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.24 - 2020-02-27
 
 * `Aws\GlobalAccelerator` - This release adds support for adding tags to accelerators and bringing your own IP address to AWS Global Accelerator (BYOIP).
 * `Aws\Lightsail` - Adds support to create notification contacts in Amazon Lightsail, and to create instance, database, and load balancer metric alarms that notify you based on the value of a metric relative to a threshold that you specify.
