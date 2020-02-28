@@ -105,6 +105,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listUsersAsync(array $args = [])
  * @method \Aws\Result registerUser(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerUserAsync(array $args = [])
+ * @method \Aws\Result searchDashboards(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchDashboardsAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
