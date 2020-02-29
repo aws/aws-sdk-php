@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.26 - 2020-02-29
 
 * `Aws\ConfigService` - Correcting list of supported resource types.
 
