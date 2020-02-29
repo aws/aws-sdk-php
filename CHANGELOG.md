@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Correcting list of supported resource types.
+
 ## 3.133.25 - 2020-02-28
 
 * `Aws\AccessAnalyzer` - This release includes improvements and fixes bugs for the IAM Access Analyzer feature.
