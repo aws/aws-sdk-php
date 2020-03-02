@@ -50,6 +50,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putAnomalyDetector(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putAnomalyDetectorAsync(array $args = [])
+ * @method \Aws\Result putCompositeAlarm(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putCompositeAlarmAsync(array $args = [])
  * @method \Aws\Result putDashboard(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putDashboardAsync(array $args = [])
  * @method \Aws\Result putInsightRule(array $args = [])
