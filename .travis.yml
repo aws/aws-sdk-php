@@ -30,6 +30,9 @@ matrix:
 
 sudo: false
 
+before_install:
+  - echo "memory_limit=3G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+
 install:
   # Setup environment variables for testing
   - export AWS_ACCESS_KEY_ID=foo
