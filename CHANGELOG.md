@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Amazon VPC Flow Logs adds support for tags and tagging on resource creation.
+
 ## 3.133.27 - 2020-03-02
 
 * `Aws\CloudWatch` - Introducing Amazon CloudWatch Composite Alarms
