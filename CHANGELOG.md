@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.28 - 2020-03-03
 
 * `Aws\EC2` - Amazon VPC Flow Logs adds support for tags and tagging on resource creation.
 
