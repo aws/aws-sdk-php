@@ -129,6 +129,8 @@ function retryUpload($client, $uploadClient, $owner, $repo, $releaseBody, $uploa
                 // Only successful uploads have a state of 'uploaded'
                 if ($asset['state'] !== 'uploaded') {
                     try {
+
+                        // Failed uploads leave behind a corrupted artifact that must be deleted
                         $response = $uploadClient->delete("/repos/{$owner}/{$repo}/releases/assets/{$asset['id']}", []);
 
                         // Currently the successful 204 will trigger an exception due to response formatting,
