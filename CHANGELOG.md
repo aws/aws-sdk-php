@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Build` - Add custom retry handling for github release artifact uploads to handle github API quirks.
+* `Aws\Pinpoint` - This release of the Amazon Pinpoint API introduces support for integrating recommender models with email, push notification, and SMS message templates. You can now use these types of templates to connect to recommender models and add personalized recommendations to messages that you send from campaigns and journeys.
+
 ## 3.133.28 - 2020-03-03
 
 * `Aws\EC2` - Amazon VPC Flow Logs adds support for tags and tagging on resource creation.
