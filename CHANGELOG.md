@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.29 - 2020-03-04
 
 * `Aws\Build` - Add custom retry handling for github release artifact uploads to handle github API quirks.
 * `Aws\Pinpoint` - This release of the Amazon Pinpoint API introduces support for integrating recommender models with email, push notification, and SMS message templates. You can now use these types of templates to connect to recommender models and add personalized recommendations to messages that you send from campaigns and journeys.
