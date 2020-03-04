@@ -30,6 +30,9 @@ matrix:
 
 sudo: false
 
+before_install:
+  - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+
 install:
   # Setup environment variables for testing
   - export AWS_ACCESS_KEY_ID=foo
@@ -66,7 +69,7 @@ script:
     test_versions=("7.1" "7.2" "7.3" "7.4");
     if [[ " ${test_versions[@]} " =~ " $(phpenv version-name) " ]] && [ -z $COMPOSER_OPTS ]; then
       composer require --dev nette/neon "^3.0"
-      composer require --dev phpstan/phpstan
+      composer require --dev phpstan/phpstan "0.12.11"
       vendor/bin/phpstan analyse src
     fi
 
