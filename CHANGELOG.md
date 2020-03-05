@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - You can now create AWS Client VPN Endpoints with a specified VPC and Security Group. Additionally, you can modify these attributes when modifying the endpoint. 
+* `Aws\EKS` - Amazon EKS now supports adding a KMS key to your cluster for envelope encryption of Kubernetes secrets.
+* `Aws\GuardDuty` - Add a new finding field for EC2 findings indicating the instance's local IP address involved in the threat.
+* `Aws\OpsWorksCM` - Updated the Tag regex pattern to align with AWS tagging APIs.
+
 ## 3.133.29 - 2020-03-04
 
 * `Aws\Build` - Add custom retry handling for github release artifact uploads to handle github API quirks.
