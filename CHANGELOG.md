@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.30 - 2020-03-05
 
 * `Aws\EC2` - You can now create AWS Client VPN Endpoints with a specified VPC and Security Group. Additionally, you can modify these attributes when modifying the endpoint. 
 * `Aws\EKS` - Amazon EKS now supports adding a KMS key to your cluster for envelope encryption of Kubernetes secrets.
