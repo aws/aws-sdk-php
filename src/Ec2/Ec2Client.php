@@ -720,6 +720,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise getTransitGatewayRouteTablePropagationsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result importClientVpnClientCertificateRevocationList(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise importClientVpnClientCertificateRevocationListAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyAvailabilityZoneGroup(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyAvailabilityZoneGroupAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyCapacityReservation(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyCapacityReservationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyClientVpnEndpoint(array $args = []) (supported in versions 2016-11-15)
