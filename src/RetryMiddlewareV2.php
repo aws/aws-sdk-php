@@ -320,9 +320,11 @@ class RetryMiddlewareV2
             }
 
             // Check error shape for the throttling trait
-            $definition = $result->getAwsErrorShape()->toArray();
-            if (!empty($definition['retryable']['throttling'])) {
-                return true;
+            if (!empty($errorShape = $result->getAwsErrorShape())) {
+                $definition = $errorShape->toArray();
+                if (!empty($definition['retryable']['throttling'])) {
+                    return true;
+                }
             }
         }
 

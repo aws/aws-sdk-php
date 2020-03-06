@@ -134,7 +134,7 @@ class DynamoDbClient extends AwsClient
                 $list->appendSign(
                     Middleware::retry(
                         RetryMiddleware::createDefaultDecider(
-                            $value,
+                            $config->getMaxAttempts() - 1,
                             ['error_codes' => ['TransactionInProgressException']]
                         ),
                         function ($retries) {
