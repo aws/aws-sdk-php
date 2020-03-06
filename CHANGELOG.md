@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.31 - 2020-03-06
 
 * `Aws\AppMesh` - App Mesh now supports sharing a Mesh with other AWS accounts. Customers can use AWS Resource Access Manager to share their Mesh with other accounts in their organization to connection applications within a single service mesh. See https://docs.aws.amazon.com/app-mesh/latest/userguide/sharing.html for details.
 * `Aws\EC2` - This release provides customers with a self-service option to enable Local Zones.
