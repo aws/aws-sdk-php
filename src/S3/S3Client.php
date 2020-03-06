@@ -642,7 +642,8 @@ class S3Client extends AwsClient implements S3ClientInterface
                 $list->appendSign(Middleware::retry($decider, $delay), 'retry');
             } else {
                 $defaultDecider = RetryMiddlewareV2::createDefaultDecider(
-                    new QuotaManager()
+                    new QuotaManager(),
+                    $config->getMaxAttempts()
                 );
 
                 $list->appendSign(
@@ -654,12 +655,14 @@ class S3Client extends AwsClient implements S3ClientInterface
                                 $attempts,
                                 CommandInterface $cmd,
                                 $result
-                            ) use ($defaultDecider) {
+                            ) use ($defaultDecider, $config) {
                                 $isRetryable = $defaultDecider($attempts, $cmd, $result);
-                                if ($isRetryable
+                                if (!$isRetryable
                                     && $result instanceof AwsException
+                                    && $attempts < $config->getMaxAttempts()
                                 ) {
-                                    if (strpos(
+                                    if (!empty($result->getResponse())
+                                        && strpos(
                                             $result->getResponse()->getBody(),
                                             'Your socket connection to the server'
                                         ) !== false
@@ -667,9 +670,9 @@ class S3Client extends AwsClient implements S3ClientInterface
                                         $isRetryable = false;
                                     }
                                     if ($result->getPrevious() instanceof RequestException
-                                        && $cmd->getName() === 'CompleteMultipartUpload'
+                                        && $cmd->getName() !== 'CompleteMultipartUpload'
                                     ) {
-                                        $isRetryable = false;
+                                        $isRetryable = true;
                                     }
                                 }
                                 return $isRetryable;

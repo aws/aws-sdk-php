@@ -490,13 +490,18 @@ class S3ClientTest extends TestCase
         ]);
     }
 
-    public function testRetriesConnectionErrors()
+    /**
+     * @dataProvider clientRetrySettingsProvider
+     *
+     * @param array $retrySettings
+     */
+    public function testRetriesConnectionErrors($retrySettings)
     {
-        $retries = 11;
+        $retries = $retrySettings['max_attempts'] - 1;
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
-            'retries' => $retries,
+            'retries' => $retrySettings,
             'http_handler' => function () use (&$retries) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response);
@@ -519,23 +524,49 @@ class S3ClientTest extends TestCase
         $this->assertEquals(0, $retries);
     }
 
+    public function clientRetrySettingsProvider()
+    {
+        return [
+            [
+                [
+                    'mode' => 'legacy',
+                    'max_attempts' => 11,
+                ],
+            ],
+            [
+                [
+                    'mode' => 'standard',
+                    'max_attempts' => 11,
+                ],
+            ],
+            [
+                [
+                    'mode' => 'adaptive',
+                    'max_attempts' => 11,
+                ],
+            ],
+        ];
+    }
+
     /**
      * @dataProvider successErrorResponseProvider
      *
      * @param Response $failingSuccess
      * @param string   $operation
      * @param array    $payload
+     * @param array    $retryOptions
      */
     public function testRetries200Errors(
         Response $failingSuccess,
         $operation,
-        array $payload
+        array $payload,
+        $retryOptions
     ) {
-        $retries = 11;
+        $retries = $retryOptions['max_attempts'];
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
-            'retries' => $retries,
+            'retries' => $retryOptions,
             'http_handler' => function () use (&$retries, $failingSuccess) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response(
@@ -565,6 +596,36 @@ class S3ClientTest extends TestCase
                     'Key' => 'bar',
                     'CopySource' => 'baz',
                 ],
+                [
+                    'mode' => 'legacy',
+                    'max_attempts' => 11
+                ],
+            ],
+            [
+                new Response(200, [], $this->getErrorXml()),
+                'copyObject',
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'CopySource' => 'baz',
+                ],
+                [
+                    'mode' => 'standard',
+                    'max_attempts' => 11
+                ],
+            ],
+            [
+                new Response(200, [], $this->getErrorXml()),
+                'copyObject',
+                [
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'CopySource' => 'baz',
+                ],
+                [
+                    'mode' => 'adaptive',
+                    'max_attempts' => 11
+                ],
             ],
             [
                 new Response(200, [], $this->getErrorXml()),
@@ -576,6 +637,40 @@ class S3ClientTest extends TestCase
                     'Key' => 'bar',
                     'CopySource' => 'baz',
                 ],
+                [
+                    'mode' => 'legacy',
+                    'max_attempts' => 11
+                ],
+            ],
+            [
+                new Response(200, [], $this->getErrorXml()),
+                'uploadPartCopy',
+                [
+                    'PartNumber' => 1,
+                    'UploadId' => PHP_INT_SIZE,
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'CopySource' => 'baz',
+                ],
+                [
+                    'mode' => 'standard',
+                    'max_attempts' => 11
+                ],
+            ],
+            [
+                new Response(200, [], $this->getErrorXml()),
+                'uploadPartCopy',
+                [
+                    'PartNumber' => 1,
+                    'UploadId' => PHP_INT_SIZE,
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                    'CopySource' => 'baz',
+                ],
+                [
+                    'mode' => 'adaptive',
+                    'max_attempts' => 11
+                ],
             ],
             [
                 new Response(200, [], $this->getErrorXml()),
@@ -585,12 +680,68 @@ class S3ClientTest extends TestCase
                     'Bucket' => 'foo',
                     'Key' => 'bar',
                 ],
+                [
+                    'mode' => 'legacy',
+                    'max_attempts' => 11
+                ],
+            ],
+            [
+                new Response(200, [], $this->getErrorXml()),
+                'completeMultipartUpload',
+                [
+                    'UploadId' => PHP_INT_SIZE,
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                ],
+                [
+                    'mode' => 'standard',
+                    'max_attempts' => 11
+                ],
+            ],
+            [
+                new Response(200, [], $this->getErrorXml()),
+                'completeMultipartUpload',
+                [
+                    'UploadId' => PHP_INT_SIZE,
+                    'Bucket' => 'foo',
+                    'Key' => 'bar',
+                ],
+                [
+                    'mode' => 'adaptive',
+                    'max_attempts' => 11
+                ],
             ],
             [
                 new Response(200, [], $this->getMalformedXml()),
                 'listObjects',
                 [
                     'Bucket' => 'foo',
+                ],
+                [
+                    'mode' => 'legacy',
+                    'max_attempts' => 11
+                ],
+            ],
+            [
+                new Response(200, [], $this->getMalformedXml()),
+                'listObjects',
+                [
+                    'Bucket' => 'foo',
+                ],
+                [
+                    'mode' => 'standard',
+                    'max_attempts' => 11
+                ],
+            ],
+            [
+                new Response(200, [], $this->getMalformedXml()),
+                'listObjects',
+                [
+                    'Bucket' => 'foo',
+                ],
+                [
+                    'mode' => 'adaptive',
+                    'max_attempts' => 11
                 ],
             ],
         ];
@@ -634,16 +785,19 @@ EOXML;
     }
 
     /**
+     * @dataProvider clientRetrySettingsProvider
+     *
+     * @param array $retrySettings
+     *
      * @expectedException \Aws\S3\Exception\S3Exception
      * @expectedExceptionMessageRegExp /Your socket connection to the server/
      */
-    public function testClientSocketTimeoutErrorsAreNotRetriedIndefinitely()
+    public function testClientSocketTimeoutErrorsAreNotRetriedIndefinitely($retrySettings)
     {
-        $retries = 11;
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
-            'retries' => $retries,
+            'retries' => $retrySettings,
             'http_handler' => function () {
                 return new RejectedPromise([
                     'connection_error' => false,
@@ -675,18 +829,23 @@ EOXML;
 EOXML;
     }
 
-    public function testNetworkingErrorsAreRetriedOnIdempotentCommands()
+    /**
+     * @dataProvider clientRetrySettingsProvider
+     *
+     * @param array $retrySettings
+     */
+    public function testNetworkingErrorsAreRetriedOnIdempotentCommands($retrySettings)
     {
         $networkingError = $this->getMockBuilder(RequestException::class)
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $retries = 11;
+        $retries = $retrySettings['max_attempts'] - 1;
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
-            'retries' => $retries,
+            'retries' => $retrySettings,
             'http_handler' => function () use (&$retries, $networkingError) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response);
@@ -709,21 +868,25 @@ EOXML;
     }
 
     /**
+     * @dataProvider clientRetrySettingsProvider
+     *
+     * @param array $retrySettings
+     *
      * @expectedException \Aws\S3\Exception\S3Exception
      * @expectedExceptionMessageRegExp /CompleteMultipartUpload/
      */
-    public function testNetworkingErrorsAreNotRetriedOnNonIdempotentCommands()
+    public function testNetworkingErrorsAreNotRetriedOnNonIdempotentCommands($retrySettings)
     {
         $networkingError = $this->getMockBuilder(RequestException::class)
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $retries = 11;
+        $retries = $retrySettings['max_attempts'];
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
-            'retries' => $retries,
+            'retries' => $retrySettings,
             'http_handler' => function () use (&$retries, $networkingError) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response);
@@ -746,18 +909,23 @@ EOXML;
         $this->assertEquals(0, $retries);
     }
 
-    public function testErrorsWithUnparseableBodiesCanBeRetried()
+    /**
+     * @dataProvider clientRetrySettingsProvider
+     *
+     * @param array $retrySettings
+     */
+    public function testErrorsWithUnparseableBodiesCanBeRetried($retrySettings)
     {
         $networkingError = $this->getMockBuilder(RequestException::class)
             ->disableOriginalConstructor()
             ->setMethods([])
             ->getMock();
 
-        $retries = 11;
+        $retries = $retrySettings['max_attempts'];
         $client = new S3Client([
             'version' => 'latest',
             'region' => 'us-west-2',
-            'retries' => $retries,
+            'retries' => $retrySettings,
             'http_handler' => function () use (&$retries, $networkingError) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response);
