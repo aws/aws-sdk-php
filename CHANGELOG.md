@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DatabaseMigrationService` - Added new settings for Kinesis target to include detailed transaction info; to capture table DDL details; to use single-line unformatted json, which can be directly queried by AWS Athena if data is streamed into S3 through AWS Kinesis Firehose. Added CdcInsertsAndUpdates in S3 target settings to allow capture ongoing insertions and updates only.
+* `Aws\EC2` - Amazon Virtual Private Cloud (VPC) NAT Gateway adds support for tagging on resource creation.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports the ability to configure the Preferred Channel Pipeline for channels contributing to a Multiplex.
+
 ## 3.133.31 - 2020-03-06
 
 * `Aws\AppMesh` - App Mesh now supports sharing a Mesh with other AWS accounts. Customers can use AWS Resource Access Manager to share their Mesh with other accounts in their organization to connection applications within a single service mesh. See https://docs.aws.amazon.com/app-mesh/latest/userguide/sharing.html for details.
