@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.32 - 2020-03-09
 
 * `Aws\DatabaseMigrationService` - Added new settings for Kinesis target to include detailed transaction info; to capture table DDL details; to use single-line unformatted json, which can be directly queried by AWS Athena if data is streamed into S3 through AWS Kinesis Firehose. Added CdcInsertsAndUpdates in S3 target settings to allow capture ongoing insertions and updates only.
 * `Aws\EC2` - Amazon Virtual Private Cloud (VPC) NAT Gateway adds support for tagging on resource creation.
