@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.33 - 2020-03-10
 
 * `Aws\EC2` - Documentation updates for EC2
 * `Aws\IoTEvents` - API update that adds a new parameter, durationExpression, to SetTimerAction, and deprecates seconds
