@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Documentation updates for EC2
+* `Aws\IoTEvents` - API update that adds a new parameter, durationExpression, to SetTimerAction, and deprecates seconds
+* `Aws\MarketplaceCommerceAnalytics` - Change the disbursement data set to look past 31 days instead until the beginning of the month.
+* `Aws\ServerlessApplicationRepository` - AWS Serverless Application Repository now supports sharing applications privately with AWS Organizations.
+* `Aws\TranscribeService` - Amazon Transcribe's Automatic Content Redaction feature enables you to automatically redact sensitive personally identifiable information (PII) from transcription results. It replaces each instance of an identified PII utterance with a [PII] tag in the transcript.
+
 ## 3.133.32 - 2020-03-09
 
 * `Aws\DatabaseMigrationService` - Added new settings for Kinesis target to include detailed transaction info; to capture table DDL details; to use single-line unformatted json, which can be directly queried by AWS Athena if data is streamed into S3 through AWS Kinesis Firehose. Added CdcInsertsAndUpdates in S3 target settings to allow capture ongoing insertions and updates only.

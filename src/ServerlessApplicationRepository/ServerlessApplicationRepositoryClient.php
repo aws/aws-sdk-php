@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listApplicationsAsync(array $args = [])
  * @method \Aws\Result putApplicationPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putApplicationPolicyAsync(array $args = [])
+ * @method \Aws\Result unshareApplication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise unshareApplicationAsync(array $args = [])
  * @method \Aws\Result updateApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateApplicationAsync(array $args = [])
  */
