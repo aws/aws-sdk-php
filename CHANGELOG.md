@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EFS` - Documentation updates for elasticfilesystem
+* `Aws\Redshift` - Amazon Redshift now supports operations to pause and resume a cluster on demand or on a schedule.
+
 ## 3.133.33 - 2020-03-10
 
 * `Aws\EC2` - Documentation updates for EC2
