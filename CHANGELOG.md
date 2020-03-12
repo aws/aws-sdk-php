@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.35 - 2020-03-12
 
 * `Aws\ApiGatewayV2` - Amazon API Gateway HTTP APIs is now generally available. HTTP APIs offer the core functionality of REST API at up to 71% lower price compared to REST API, 60% lower p99 latency, and is significantly easier to use. As part of general availability, we added new features to route requests to private backends such as private ALBs, NLBs, and IP/ports. We also brought over a set of features from REST API such as Stage Variables, and Stage/Route level throttling. Custom domain names can also now be used with both REST And HTTP APIs.
 * `Aws\EC2` - Documentation updates for EC2
