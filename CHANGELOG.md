@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.36 - 2020-03-13
 
 * `Aws\AppConfig` - This release adds S3 as a configuration source provider.
 
