@@ -20,12 +20,11 @@ class RetryMiddlewareV2
 {
     use RetryHelperTrait;
 
-    const MAX_BACKOFF = 20000;
-
     private $collectStats;
     private $decider;
     private $delayer;
     private $maxAttempts;
+    private $maxBackoff;
     private $mode;
     private $nextHandler;
     private $options;
@@ -96,18 +95,6 @@ class RetryMiddlewareV2
         };
     }
 
-    /**
-     * Amount of milliseconds to delay as a function of attempt number
-     *
-     * @param $attempts
-     * @return mixed
-     */
-    public static function exponentialDelayWithJitter($attempts)
-    {
-        $rand = mt_rand() / mt_getrandmax();
-        return min(1000 * $rand * pow(2, $attempts) , self::MAX_BACKOFF);
-    }
-
     public function __construct(
         ConfigurationInterface $config,
         callable $handler,
@@ -118,6 +105,10 @@ class RetryMiddlewareV2
         $this->mode = $config->getMode();
         $this->nextHandler = $handler;
         $this->quotaManager = new QuotaManager();
+
+        $this->maxBackoff = isset($options['max_backoff'])
+            ? $options['max_backoff']
+            : 20000;
 
         $this->collectStats = isset($options['collect_stats'])
             ? (bool) $options['collect_stats']
@@ -134,7 +125,7 @@ class RetryMiddlewareV2
         $this->delayer = isset($options['delayer'])
             ? $options['delayer']
             : function ($attempts) {
-                return self::exponentialDelayWithJitter($attempts);
+                return $this->exponentialDelayWithJitter($attempts);
             };
 
         if ($this->mode === 'adaptive') {
@@ -213,6 +204,18 @@ class RetryMiddlewareV2
         }
 
         return $handler($cmd, $req)->then($callback, $callback);
+    }
+
+    /**
+     * Amount of milliseconds to delay as a function of attempt number
+     *
+     * @param $attempts
+     * @return mixed
+     */
+    public function exponentialDelayWithJitter($attempts)
+    {
+        $rand = mt_rand() / mt_getrandmax();
+        return min(1000 * $rand * pow(2, $attempts) , $this->maxBackoff);
     }
 
     private static function isRetryable(

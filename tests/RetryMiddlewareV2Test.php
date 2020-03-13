@@ -22,6 +22,308 @@ use PHPUnit\Framework\TestCase;
  */
 class RetryMiddlewareV2Test extends TestCase
 {
+    /**
+     * @dataProvider standardModeTestCases
+     *
+     * @param CommandInterface $command
+     * @param QuotaManager $quotaManager
+     * @param array $queue
+     * @param array $options
+     * @param $expected
+     * @throws \Exception
+     */
+    public function testRetriesForStandardMode(
+        CommandInterface $command,
+        QuotaManager $quotaManager,
+        array $queue,
+        array $options,
+        $expected
+    ) {
+        $request = new Request('GET', 'http://www.example.com');
+        $attempt = 0;
+
+        // Errors within MockHandler closure get caught silently
+        $errors = [];
+        $mock = new MockHandler(
+            $queue,
+            function() use ($expected, &$attempt, $quotaManager, &$errors, $command) {
+                try {
+                    $this->assertEquals(
+                        $expected[$attempt]['quota'],
+                        $quotaManager->getAvailableCapacity()
+                    );
+                    if (!empty($expected[$attempt]['max_delay'])) {
+                        $this->assertLessThanOrEqual(
+                            $expected[$attempt]['max_delay'],
+                            $command['@http']['delay']
+                        );
+                    }
+
+                } catch (\Exception $e) {
+                    // Catch errors manually for throwing later
+                    $errors[] = $e;
+                }
+                $attempt++;
+            },
+            function() use ($expected, &$attempt, $quotaManager, &$errors, $command) {
+                try {
+                    $this->assertEquals(
+                        $expected[$attempt]['quota'],
+                        $quotaManager->getAvailableCapacity()
+                    );
+                    if (!empty($expected[$attempt]['max_delay'])) {
+                        $this->assertLessThanOrEqual(
+                            $expected[$attempt]['max_delay'],
+                            $command['@http']['delay'],
+                        );
+                    }
+                } catch (\Exception $e) {
+                    // Catch errors manually for throwing later
+                    $errors[] = $e;
+                }
+                $attempt++;
+            }
+        );
+
+        $wrapped = new RetryMiddlewareV2(
+            new Configuration('standard', $options['max_attempts']),
+            $mock,
+            [
+                'decider' => RetryMiddlewareV2::createDefaultDecider(
+                    $quotaManager,
+                    $options['max_attempts']
+                ),
+                'max_backoff' => $options['max_backoff']
+            ]
+        );
+
+        try {
+            $wrapped($command, $request)->wait();
+            if (!empty($expected[$attempt - 1]['error'])) {
+                $this->fail('This should have thrown an exception.');
+            }
+        } catch (\Exception $e) {
+            if (!empty($expected[$attempt - 1]['error'])) {
+                $this->assertEquals(
+                    $expected[$attempt - 1]['error']->getMessage(),
+                    $e->getMessage()
+                );
+                $this->assertEquals(
+                    get_class($expected[$attempt - 1]['error']),
+                    get_class($e)
+                );
+            } else {
+                throw $e;
+            }
+        }
+
+        if (!empty($errors)) {
+            throw $errors[0];
+        }
+
+        $this->assertEquals($attempt, count($queue));
+    }
+
+    function standardModeTestCases()
+    {
+        $command = new Command('foo');
+        $result200 = new Result([
+            '@metadata' => [
+                'statusCode' => 200
+            ]
+        ]);
+        $awsException500 = new AwsException(
+            'Internal server error',
+            $command,
+            [
+                'response' => new Response(500)
+            ]
+        );
+        $awsException502 = new AwsException(
+            'Bad gateway',
+            $command,
+            [
+                'response' => new Response(502)
+            ]
+        );
+
+        return [
+            // Retry eventually succeeds
+            [
+                $command,
+                new QuotaManager([
+                    'initial_retry_tokens' => 500
+                ]),
+                [ $awsException500, $awsException500, $result200 ],
+                [
+                    'max_attempts' => 3,
+                    'max_backoff' => 20000,
+                ],
+                [
+                    [
+                        'quota' => 500
+                    ],
+                    [
+                        'quota' => 495,
+                        'max_delay' => 2000
+                    ],
+                    [
+                        'quota' => 490,
+                        'max_delay' => 4000
+                    ]
+                ]
+            ],
+            // Fail due to max attempts reached
+            [
+                $command,
+                new QuotaManager([
+                    'initial_retry_tokens' => 500
+                ]),
+                [$awsException502, $awsException502, $awsException502],
+                [
+                    'max_attempts' => 3,
+                    'max_backoff' => 20000,
+                ],
+                [
+                    [
+                        'quota' => 500
+                    ],
+                    [
+                        'quota' => 495,
+                        'max_delay' => 2000
+                    ],
+                    [
+                        'quota' => 490,
+                        'max_delay' => 4000,
+                        'error' => $awsException502
+                    ]
+                ]
+            ],
+            // Retry quota reached after a single retry
+            [
+                $command,
+                new QuotaManager([
+                    'initial_retry_tokens' => 5
+                ]),
+                [$awsException500, $awsException502],
+                [
+                    'max_attempts' => 3,
+                    'max_backoff' => 20000,
+                ],
+                [
+                    [
+                        'quota' => 5
+                    ],
+                    [
+                        'quota' => 0,
+                        'max_delay' => 2000,
+                        'error' => $awsException502
+                    ],
+                ]
+            ],
+            // No retry at all if quota is 0
+            [
+                $command,
+                new QuotaManager([
+                    'initial_retry_tokens' => 0
+                ]),
+                [$awsException500],
+                [
+                    'max_attempts' => 3,
+                    'max_backoff' => 20000,
+                ],
+                [
+                    [
+                        'quota' => 0,
+                        'max_delay' => 2000,
+                        'error' => $awsException500
+                    ],
+                ]
+            ],
+            // Verify exponential backoff timing
+            [
+                $command,
+                new QuotaManager([
+                    'initial_retry_tokens' => 500
+                ]),
+                [
+                    $awsException500,
+                    $awsException500,
+                    $awsException500,
+                    $awsException500,
+                    $awsException500
+                ],
+                [
+                    'max_attempts' => 5,
+                    'max_backoff' => 20000,
+                ],
+                [
+                    [
+                        'quota' => 500
+                    ],
+                    [
+                        'quota' => 495,
+                        'max_delay' => 2000
+                    ],
+                    [
+                        'quota' => 490,
+                        'max_delay' => 4000
+                    ],
+                    [
+                        'quota' => 485,
+                        'max_delay' => 8000
+                    ],
+                    [
+                        'quota' => 480,
+                        'max_delay' => 16000,
+                        'error' => $awsException500
+                    ],
+                ],
+            ],
+            // Verify max backoff
+            [
+                $command,
+                new QuotaManager([
+                    'initial_retry_tokens' => 500
+                ]),
+                [
+                    $awsException500,
+                    $awsException500,
+                    $awsException500,
+                    $awsException500,
+                    $awsException500
+                ],
+                [
+                    'max_attempts' => 5,
+                    'max_backoff' => 3000,
+                ],
+                [
+                    [
+                        'quota' => 500
+                    ],
+                    [
+                        'quota' => 495,
+                        'max_delay' => 2000
+                    ],
+                    [
+                        'quota' => 490,
+                        'max_delay' => 3000
+                    ],
+                    [
+                        'quota' => 485,
+                        'max_delay' => 3000
+                    ],
+                    [
+                        'quota' => 480,
+                        'max_delay' => 3000,
+                        'error' => $awsException500
+                    ],
+                ],
+
+            ]
+        ];
+    }
+
     public function testAddRetryHeader()
     {
         $nextHandler = function (CommandInterface $command, RequestInterface $request) {
@@ -263,17 +565,19 @@ class RetryMiddlewareV2Test extends TestCase
 
     public function testDelaysExponentiallyWithJitter()
     {
-        $this->assertLessThanOrEqual(2000, RetryMiddlewareV2::exponentialDelayWithJitter(1));
-        $this->assertLessThanOrEqual(4000, RetryMiddlewareV2::exponentialDelayWithJitter(2));
-        $this->assertLessThanOrEqual(8000, RetryMiddlewareV2::exponentialDelayWithJitter(3));
-        $this->assertLessThanOrEqual(20000, RetryMiddlewareV2::exponentialDelayWithJitter(10));
+        $retryMiddleware = new RetryMiddlewareV2(new Configuration('standard', 3), function () {});
+        $this->assertLessThanOrEqual(2000, $retryMiddleware->exponentialDelayWithJitter(1));
+        $this->assertLessThanOrEqual(4000, $retryMiddleware->exponentialDelayWithJitter(2));
+        $this->assertLessThanOrEqual(8000, $retryMiddleware->exponentialDelayWithJitter(3));
+        $this->assertLessThanOrEqual(20000, $retryMiddleware->exponentialDelayWithJitter(10));
     }
 
     public function testDelaysWithSomeRandomness()
     {
+        $retryMiddleware = new RetryMiddlewareV2(new Configuration('standard', 3), function () {});
         $maxDelay = 1000 * pow(2, 4);
-        $values = array_map(function () {
-            return RetryMiddlewareV2::exponentialDelayWithJitter(4);
+        $values = array_map(function () use ($retryMiddleware) {
+            return $retryMiddleware->exponentialDelayWithJitter(4);
         }, range(1, 200));
 
         $this->assertGreaterThan(1, count(array_unique($values)));
@@ -568,5 +872,10 @@ class RetryMiddlewareV2Test extends TestCase
             ['baz' => 'quux'],
             ['fizz' => 'buzz'],
         ], $httpStats);
+    }
+
+    private function absDistance($target, $actual)
+    {
+        return abs($target - $actual);
     }
 }

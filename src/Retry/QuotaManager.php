@@ -78,4 +78,9 @@ class QuotaManager
 
         return (isset($amount) ? $amount : 0);
     }
+
+    public function getAvailableCapacity()
+    {
+        return $this->availableCapacity;
+    }
 }
