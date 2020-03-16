@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.37 - 2020-03-16
 
 * `Aws\CognitoIdentityProvider` - Additional response field "CompromisedCredentialsDetected" added to AdminListUserAuthEvents.
 * `Aws\ECS` - This release adds the ability to update the task placement strategy and constraints for Amazon ECS services.
