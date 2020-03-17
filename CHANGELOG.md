@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.38 - 2020-03-17
 
 * `Aws\Crypto` - This release fixes a discrepancy between the Encryption/Decryption trait implementations and AbstractCryptoClient method signature.
 * `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for: AV1 encoding in File Group MP4, DASH and CMAF DASH outputs; PCM/WAV audio output in MPEG2-TS containers; and Opus audio in Webm inputs.
