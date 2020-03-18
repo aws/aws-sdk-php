@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaConnect` - Feature adds the ability for a flow to have multiple redundant sources that provides resiliency to a source failing. The new APIs added to enable the feature are, AddFlowSources, RemoveFlowSource and UpdateFlow.
+* `Aws\Personalize` - [Personalize] Adds support for returning hyperparameter values of the best performing model in a HPO job.
+* `Aws\RDS` - Updated the MaxRecords type in DescribeExportTasks to Integer.
+
 ## 3.133.38 - 2020-03-17
 
 * `Aws\Crypto` - This release fixes a discrepancy between the Encryption/Decryption trait implementations and AbstractCryptoClient method signature.
