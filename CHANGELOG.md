@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.39 - 2020-03-18
 
 * `Aws\MediaConnect` - Feature adds the ability for a flow to have multiple redundant sources that provides resiliency to a source failing. The new APIs added to enable the feature are, AddFlowSources, RemoveFlowSource and UpdateFlow.
 * `Aws\Personalize` - [Personalize] Adds support for returning hyperparameter values of the best performing model in a HPO job.
