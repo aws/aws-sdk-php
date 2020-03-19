@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.40 - 2020-03-19
 
 * `Aws\ACM` - AWS Certificate Manager documentation updated on API calls ImportCertificate and ListCertificate. Specific updates included input constraints, private key size for import and next token size for list.
 * `Aws\Outposts` - Documentation updates for AWS Outposts.
