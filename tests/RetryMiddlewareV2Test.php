@@ -74,7 +74,7 @@ class RetryMiddlewareV2Test extends TestCase
                     if (!empty($expected[$attempt]['max_delay'])) {
                         $this->assertLessThanOrEqual(
                             $expected[$attempt]['max_delay'],
-                            $command['@http']['delay'],
+                            $command['@http']['delay']
                         );
                     }
                 } catch (\Exception $e) {
