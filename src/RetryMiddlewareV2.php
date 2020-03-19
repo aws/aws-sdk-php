@@ -129,7 +129,9 @@ class RetryMiddlewareV2
             };
 
         if ($this->mode === 'adaptive') {
-            $this->rateLimiter = new RateLimiter();
+            $this->rateLimiter = isset($options['rate_limiter'])
+                ? $options['rate_limiter']
+                : new RateLimiter();
         }
     }
 
@@ -318,7 +320,9 @@ class RetryMiddlewareV2
                     $throttlingErrors[$code] = true;
                 }
             }
-            if (in_array($result->getAwsErrorCode(), $throttlingErrors)) {
+            if (!empty($result->getAwsErrorCode())
+                && !empty($throttlingErrors[$result->getAwsErrorCode()])
+            ) {
                 return true;
             }
 

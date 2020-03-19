@@ -8,8 +8,8 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\Retry\Configuration;
 use Aws\Retry\QuotaManager;
+use Aws\Retry\RateLimiter;
 use Aws\RetryMiddlewareV2;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
@@ -117,6 +117,7 @@ class RetryMiddlewareV2Test extends TestCase
             }
         }
 
+        // Throw first silently caught error if any
         if (!empty($errors)) {
             throw $errors[0];
         }
@@ -319,9 +320,102 @@ class RetryMiddlewareV2Test extends TestCase
                         'error' => $awsException500
                     ],
                 ],
-
             ]
         ];
+    }
+
+    public function testRetriesForAdapativeMode()
+    {
+        $command = new Command('foo');
+        $request = new Request('GET', 'http://www.example.com');
+        $result200 = new Result([
+            '@metadata' => [
+                'statusCode' => 200
+            ]
+        ]);
+        $nonThrottlingException = new AwsException(
+            'Internal server error',
+            $command,
+            [
+                'response' => new Response(500),
+                'code' => 'SomeException'
+            ]
+        );
+        $throttlingException = new AwsException(
+            'ThrottlingException',
+            $command,
+            [
+                'response' => new Response(502),
+                'code' => 'ThrottlingException'
+            ]
+        );
+
+        $time = microtime(true);
+        $attempt = 0;
+        $expectedTimes = [0, 0, 0, 1.8, 3.7];
+
+        // Errors within MockHandler closure get caught silently
+        $errors = [];
+
+        $assertFunction = function() use (&$time, &$attempt, &$errors, $expectedTimes) {
+            try {
+                $this->assertLessThanOrEqual(
+                    0.1,
+                    abs($expectedTimes[$attempt] - (microtime(true) - $time))
+                );
+            } catch (\Exception $e) {
+                $errors[] = $e;
+            }
+
+            $time = microtime(true);
+            $attempt++;
+        };
+
+        $mock = new MockHandler(
+            [
+                $nonThrottlingException,
+                $nonThrottlingException,
+                $throttlingException,
+                $throttlingException,
+                $result200,
+            ],
+            $assertFunction,
+            $assertFunction
+        );
+
+        $times = [0, 0];
+        foreach ($expectedTimes as $index => $expected) {
+            for ($i = 0; $i < 4; $i++) {
+                $times[] = 0.1 * ($index + 1);
+            }
+        }
+
+        $wrapped = new RetryMiddlewareV2(
+            new Configuration('adaptive', 5),
+            $mock,
+            [
+                'rate_limiter' => new RateLimiter([
+                    'time_provider' => function() use ($times) {
+                        static $i;
+                        if (is_null($i)) {
+                            $i = 0;
+                        } else {
+                            $i++;
+                        }
+                        return $times[$i];
+                    }
+                ])
+            ]
+        );
+
+        $wrapped($command, $request)->wait();
+
+        // Throw first silently caught error if any
+        if (!empty($errors)) {
+            throw $errors[0];
+        }
+
+        $this->assertEquals(count($expectedTimes), $attempt);
     }
 
     public function testAddRetryHeader()
@@ -872,10 +966,5 @@ class RetryMiddlewareV2Test extends TestCase
             ['baz' => 'quux'],
             ['fizz' => 'buzz'],
         ], $httpStats);
-    }
-
-    private function absDistance($target, $actual)
-    {
-        return abs($target - $actual);
     }
 }
