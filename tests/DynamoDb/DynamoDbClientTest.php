@@ -197,8 +197,6 @@ class DynamoDbClientTest extends TestCase
      */
     public function testAppliesRetryStatsConfig($settings)
     {
-        echo "test";
-
         $client = new DynamoDbClient([
             'stats' => ['retries' => true],
             'version' => 'latest',
