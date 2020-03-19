@@ -14,6 +14,9 @@ class RateLimiter
     private $scaleConstant;
     private $smooth;
 
+    // Optional callable time provider
+    private $timeProvider;
+
     // Pre-set state variables
     private $currentCapacity = 0;
     private $enabled = false;
@@ -46,9 +49,12 @@ class RateLimiter
         $this->smooth = isset($options['smooth'])
             ? $options['smooth']
             : 0.8;
+        $this->timeProvider = isset($options['time_provider'])
+            ? $options['time_provider']
+            : null;
 
-        $this->lastTxRateBucket = floor(microtime(true));
-        $this->lastThrottleTime = microtime(true);
+        $this->lastTxRateBucket = floor($this->time());
+        $this->lastThrottleTime = $this->time();
     }
 
     public function isEnabled()
@@ -66,7 +72,7 @@ class RateLimiter
         $this->updateMeasuredRate();
 
         if ($isThrottled) {
-            if (!$this->enabled) {
+            if (!$this->isEnabled()) {
                 $rateToUse = $this->measuredTxRate;
             } else {
                 $rateToUse = min($this->measuredTxRate, $this->fillRate);
@@ -74,14 +80,16 @@ class RateLimiter
 
             $this->lastMaxRate = $rateToUse;
             $this->calculateTimeWindow();
-            $this->lastThrottleTime = microtime(true);
+            $this->lastThrottleTime = $this->time();
             $calculatedRate = $this->cubicThrottle($rateToUse);
             $this->enableTokenBucket();
         } else {
-            $calculatedRate = $this->cubicSuccess(microtime(true));
+            $this->calculateTimeWindow();
+            $calculatedRate = $this->cubicSuccess($this->time());
         }
-
-        $this->updateTokenBucketRate(min($calculatedRate, 2 * $this->measuredTxRate));
+        $newRate = min($calculatedRate, 2 * $this->measuredTxRate);
+        $this->updateTokenBucketRate($newRate);
+        return $newRate;
     }
 
     private function acquireToken($amount)
@@ -93,7 +101,11 @@ class RateLimiter
         $this->refillTokenBucket();
 
         if ($amount > $this->currentCapacity) {
-            usleep(($amount - $this->currentCapacity) / $this->fillRate);
+            $slept = ($amount - $this->currentCapacity) / $this->fillRate;
+//            echo "Amount slept: {$slept}\n";
+            usleep(1000000 * ($amount - $this->currentCapacity) / $this->fillRate);
+        } else {
+//            echo "Did not sleep!\n";
         }
 
         $this->currentCapacity -= $amount;
@@ -103,7 +115,7 @@ class RateLimiter
 
     private function calculateTimeWindow()
     {
-        $this->timeWindow = pow(($this->lastMaxRate * (1 - $this->beta) / $this->scaleConstant), 1/3);
+        $this->timeWindow = pow(($this->lastMaxRate * (1 - $this->beta) / $this->scaleConstant), 0.333);
     }
 
     private function cubicSuccess($timestamp)
@@ -124,22 +136,37 @@ class RateLimiter
 
     private function refillTokenBucket()
     {
-        $timestamp = microtime(true);
+        $timestamp = $this->time();
         if (!isset($this->lastTimestamp)) {
             $this->lastTimestamp = $timestamp;
+            return;
         }
         $fillAmount = ($timestamp - $this->lastTimestamp) * $this->fillRate;
-        $this->currentCapacity = min(
-            $this->maxCapacity,
-            $this->currentCapacity + $fillAmount
-        );
+        $this->currentCapacity = $this->currentCapacity + $fillAmount;
+        if (!is_null($this->maxCapacity)) {
+            $this->currentCapacity = min(
+                $this->maxCapacity,
+                $this->currentCapacity
+            );
+        }
+
         $this->lastTimestamp = $timestamp;
+    }
+
+    private function time()
+    {
+        if (is_callable($this->timeProvider)) {
+            $provider = $this->timeProvider;
+            $time = $provider();
+            return $time;
+        }
+        return microtime(true);
     }
 
     private function updateMeasuredRate()
     {
-        $timestamp = microtime(true);
-        $timeBucket = floor($timestamp * 2) / 2;
+        $timestamp = $this->time();
+        $timeBucket = floor(round($timestamp, 3) * 2) / 2;
         $this->requestCount++;
         if ($timeBucket > $this->lastTxRateBucket) {
             $currentRate = $this->requestCount / ($timeBucket - $this->lastTxRateBucket);

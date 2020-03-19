@@ -138,7 +138,123 @@ class RateLimiterTest extends TestCase
                 0.3,
                 abs($case['rate'] - $calculatedRate)
             );
-            echo "pass\n";
+        }
+    }
+
+    public function testCorrectlySleepsForThrottling()
+    {
+        $cases = [
+            ['is_throttled' => false, 'sleep_time' => 0],
+            ['is_throttled' => true, 'sleep_time' => 0],
+            ['is_throttled' => true, 'sleep_time' => 0.89],
+            ['is_throttled' => true, 'sleep_time' => 1.88],
+            ['is_throttled' => false, 'sleep_time' => 2.88],
+            ['is_throttled' => false, 'sleep_time' => 3.81],
+            ['is_throttled' => false, 'sleep_time' => 1.82],
+            ['is_throttled' => false, 'sleep_time' => 1.04],
+            ['is_throttled' => false, 'sleep_time' => 0.54],
+            ['is_throttled' => false, 'sleep_time' => 0.05],
+            ['is_throttled' => false, 'sleep_time' => 0],
+        ];
+
+        $times = [0, 0];
+        foreach ($cases as $index => $case) {
+            for ($i = 0; $i < 4; $i++) {
+                $times[] = ($index + 1);
+            }
+        }
+
+        $rateLimiter = new RateLimiter([
+            'time_provider' => function() use ($times) {
+                static $i;
+                if (is_null($i)) {
+                    $i = 0;
+                } else {
+                    $i++;
+                }
+                return $times[$i];
+            },
+        ]);
+
+        $time = microtime(true);
+
+        foreach ($cases as $case) {
+            $rateLimiter->getSendToken();
+            $rateLimiter->updateSendingRate($case['is_throttled']);
+            $this->assertLessThanOrEqual(
+                self::TEST_TIMING_BUFFER,
+                abs(microtime(true) - ($time + $case['sleep_time']))
+            );
+            $time = microtime(true);
+        }
+    }
+
+    public function testUpdatesClientSendingRatesCorrectly()
+    {
+        $times = [0, 0];
+        for ($timestamp = 0.2; $timestamp <= 3.5; $timestamp += 0.2) {
+            for ($i = 0; $i < 3; $i++) {
+                $times[] = $timestamp;
+            }
+        }
+
+        $rateLimiter = new RateLimiter([
+            'time_provider' => function() use ($times) {
+                static $i;
+                if (is_null($i)) {
+                    $i = 0;
+                } else {
+                    $i++;
+                }
+                return $times[$i];
+            }
+        ]);
+        $ref = new \ReflectionClass($rateLimiter);
+        $refLastMaxRate = $ref->getProperty('lastMaxRate');
+        $refLastMaxRate->setAccessible(true);
+        $refLastLastThrottleTime = $ref->getProperty('lastThrottleTime');
+        $refLastLastThrottleTime->setAccessible(true);
+        $refFillRate = $ref->getProperty('fillRate');
+        $refFillRate->setAccessible(true);
+        $refTxRate = $ref->getProperty('measuredTxRate');
+        $refTxRate->setAccessible(true);
+        $refCalculateTimeWindow = $ref->getMethod('calculateTimeWindow');
+        $refCalculateTimeWindow->setAccessible(true);
+        $refCubicSuccess = $ref->getMethod('cubicSuccess');
+        $refCubicSuccess->setAccessible(true);
+        $refCubicThrottle = $ref->getMethod('cubicThrottle');
+        $refCubicThrottle->setAccessible(true);
+
+        $cases = [
+            ['timestamp' => 0.2, 'measured_tx_rate' => 0, 'new_token_bucket_rate' => 0.5, 'type' => 'success'],
+            ['timestamp' => 0.4, 'measured_tx_rate' => 0, 'new_token_bucket_rate' => 0.5, 'type' => 'success'],
+            ['timestamp' => 0.6, 'measured_tx_rate' => 4.8, 'new_token_bucket_rate' => 0.5, 'type' => 'success'],
+            ['timestamp' => 0.8, 'measured_tx_rate' => 4.8, 'new_token_bucket_rate' => 0.5, 'type' => 'success'],
+            ['timestamp' => 1.0, 'measured_tx_rate' => 4.16, 'new_token_bucket_rate' => 0.5, 'type' => 'success'],
+            ['timestamp' => 1.2, 'measured_tx_rate' => 4.16, 'new_token_bucket_rate' => 0.6912, 'type' => 'success'],
+            ['timestamp' => 1.4, 'measured_tx_rate' => 4.16, 'new_token_bucket_rate' => 1.0976, 'type' => 'success'],
+            ['timestamp' => 1.6, 'measured_tx_rate' => 5.632, 'new_token_bucket_rate' => 1.6384, 'type' => 'success'],
+            ['timestamp' => 1.8, 'measured_tx_rate' => 5.632, 'new_token_bucket_rate' => 2.3328, 'type' => 'success'],
+            ['timestamp' => 2.0, 'measured_tx_rate' => 4.3264, 'new_token_bucket_rate' => 3.02848, 'type' => 'throttle'],
+            ['timestamp' => 2.2, 'measured_tx_rate' => 4.3264, 'new_token_bucket_rate' => 3.486639, 'type' => 'success'],
+            ['timestamp' => 2.4, 'measured_tx_rate' => 4.3264, 'new_token_bucket_rate' => 3.821874, 'type' => 'success'],
+            ['timestamp' => 2.6, 'measured_tx_rate' => 5.66528, 'new_token_bucket_rate' => 4.053386, 'type' => 'success'],
+            ['timestamp' => 2.8, 'measured_tx_rate' => 5.66528, 'new_token_bucket_rate' => 4.200373, 'type' => 'success'],
+            ['timestamp' => 3.0, 'measured_tx_rate' => 4.333056, 'new_token_bucket_rate' => 4.282037, 'type' => 'success'],
+            ['timestamp' => 3.2, 'measured_tx_rate' => 4.333056, 'new_token_bucket_rate' => 2.997426, 'type' => 'throttle'],
+            ['timestamp' => 3.4, 'measured_tx_rate' => 4.333056, 'new_token_bucket_rate' => 3.452226, 'type' => 'success'],
+        ];
+
+        foreach ($cases as $case) {
+            $rateLimiter->updateSendingRate($case['type'] === 'throttle');
+            $this->assertLessThanOrEqual(
+                0.1,
+                abs($case['measured_tx_rate'] - $refTxRate->getValue($rateLimiter))
+            );
+            $this->assertLessThanOrEqual(
+                0.1,
+                abs($case['new_token_bucket_rate'] - $refFillRate->getValue($rateLimiter))
+            );
         }
     }
 
