@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listConfigurationRevisionsAsync(array $args = [])
  * @method \Aws\Result listConfigurations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listConfigurationsAsync(array $args = [])
+ * @method \Aws\Result listKafkaVersions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listKafkaVersionsAsync(array $args = [])
  * @method \Aws\Result listNodes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listNodesAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])

@@ -11,7 +11,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Credential provider that provides credentials from the EC2 metadata server.
+ * Credential provider that provides credentials from the EC2 metadata service.
  */
 class InstanceProfileProvider
 {
@@ -191,7 +191,7 @@ class InstanceProfileProvider
         $disabled = getenv(self::ENV_DISABLE) ?: false;
         if (strcasecmp($disabled, 'true') === 0) {
             throw new CredentialsException(
-                $this->createErrorMessage('EC2 metadata server access disabled')
+                $this->createErrorMessage('EC2 metadata service access disabled')
             );
         }
 
@@ -254,7 +254,7 @@ class InstanceProfileProvider
     private function createErrorMessage($previous)
     {
         return "Error retrieving credentials from the instance profile "
-            . "metadata server. ({$previous})";
+            . "metadata service. ({$previous})";
     }
 
     private function decodeResult($response)

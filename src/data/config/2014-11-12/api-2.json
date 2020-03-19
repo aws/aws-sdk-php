@@ -168,7 +168,8 @@
       "output":{"shape":"DeleteRemediationConfigurationResponse"},
       "errors":[
         {"shape":"NoSuchRemediationConfigurationException"},
-        {"shape":"RemediationInProgressException"}
+        {"shape":"RemediationInProgressException"},
+        {"shape":"InsufficientPermissionsException"}
       ]
     },
     "DeleteRemediationExceptions":{
@@ -985,6 +986,21 @@
         {"shape":"MaxNumberOfRetentionConfigurationsExceededException"}
       ]
     },
+    "SelectAggregateResourceConfig":{
+      "name":"SelectAggregateResourceConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SelectAggregateResourceConfigRequest"},
+      "output":{"shape":"SelectAggregateResourceConfigResponse"},
+      "errors":[
+        {"shape":"InvalidExpressionException"},
+        {"shape":"NoSuchConfigurationAggregatorException"},
+        {"shape":"InvalidLimitException"},
+        {"shape":"InvalidNextTokenException"}
+      ]
+    },
     "SelectResourceConfig":{
       "name":"SelectResourceConfig",
       "http":{
@@ -1216,7 +1232,7 @@
     "AllSupported":{"type":"boolean"},
     "AmazonResourceName":{
       "type":"string",
-      "max":256,
+      "max":1000,
       "min":1
     },
     "Annotation":{
@@ -1407,9 +1423,9 @@
       "type":"structure",
       "required":["Source"],
       "members":{
-        "ConfigRuleName":{"shape":"StringWithCharLimit64"},
-        "ConfigRuleArn":{"shape":"String"},
-        "ConfigRuleId":{"shape":"String"},
+        "ConfigRuleName":{"shape":"ConfigRuleName"},
+        "ConfigRuleArn":{"shape":"StringWithCharLimit256"},
+        "ConfigRuleId":{"shape":"StringWithCharLimit64"},
         "Description":{"shape":"EmptiableStringWithCharLimit256"},
         "Scope":{"shape":"Scope"},
         "Source":{"shape":"Source"},
@@ -1445,7 +1461,7 @@
     "ConfigRuleEvaluationStatus":{
       "type":"structure",
       "members":{
-        "ConfigRuleName":{"shape":"StringWithCharLimit64"},
+        "ConfigRuleName":{"shape":"ConfigRuleName"},
         "ConfigRuleArn":{"shape":"String"},
         "ConfigRuleId":{"shape":"String"},
         "LastSuccessfulInvocationTime":{"shape":"Date"},
@@ -1453,6 +1469,7 @@
         "LastSuccessfulEvaluationTime":{"shape":"Date"},
         "LastFailedEvaluationTime":{"shape":"Date"},
         "FirstActivatedTime":{"shape":"Date"},
+        "LastDeactivatedTime":{"shape":"Date"},
         "LastErrorCode":{"shape":"String"},
         "LastErrorMessage":{"shape":"String"},
         "FirstEvaluationStarted":{"shape":"Boolean"}
@@ -1833,7 +1850,7 @@
       "type":"structure",
       "required":["ConfigRuleName"],
       "members":{
-        "ConfigRuleName":{"shape":"StringWithCharLimit64"}
+        "ConfigRuleName":{"shape":"ConfigRuleName"}
       }
     },
     "DeleteConfigurationAggregatorRequest":{
@@ -2427,7 +2444,7 @@
     "EvaluationResultQualifier":{
       "type":"structure",
       "members":{
-        "ConfigRuleName":{"shape":"StringWithCharLimit64"},
+        "ConfigRuleName":{"shape":"ConfigRuleName"},
         "ResourceType":{"shape":"StringWithCharLimit256"},
         "ResourceId":{"shape":"BaseResourceId"}
       }
@@ -3645,7 +3662,7 @@
     },
     "ReevaluateConfigRuleNames":{
       "type":"list",
-      "member":{"shape":"StringWithCharLimit64"},
+      "member":{"shape":"ConfigRuleName"},
       "max":25,
       "min":1
     },
@@ -3926,6 +3943,7 @@
         "AWS::EC2::VPCEndpointService",
         "AWS::EC2::FlowLog",
         "AWS::EC2::VPCPeeringConnection",
+        "AWS::Elasticsearch::Domain",
         "AWS::IAM::Group",
         "AWS::IAM::Policy",
         "AWS::IAM::Role",
@@ -3933,13 +3951,10 @@
         "AWS::ElasticLoadBalancingV2::LoadBalancer",
         "AWS::ACM::Certificate",
         "AWS::RDS::DBInstance",
-        "AWS::RDS::DBParameterGroup",
-        "AWS::RDS::DBOptionGroup",
         "AWS::RDS::DBSubnetGroup",
         "AWS::RDS::DBSecurityGroup",
         "AWS::RDS::DBSnapshot",
         "AWS::RDS::DBCluster",
-        "AWS::RDS::DBClusterParameterGroup",
         "AWS::RDS::DBClusterSnapshot",
         "AWS::RDS::EventSubscription",
         "AWS::S3::Bucket",
@@ -3970,30 +3985,32 @@
         "AWS::WAFRegional::WebACL",
         "AWS::CloudFront::Distribution",
         "AWS::CloudFront::StreamingDistribution",
-        "AWS::Lambda::Alias",
         "AWS::Lambda::Function",
         "AWS::ElasticBeanstalk::Application",
         "AWS::ElasticBeanstalk::ApplicationVersion",
         "AWS::ElasticBeanstalk::Environment",
-        "AWS::MobileHub::Project",
+        "AWS::WAFv2::WebACL",
+        "AWS::WAFv2::RuleGroup",
+        "AWS::WAFv2::IPSet",
+        "AWS::WAFv2::RegexPatternSet",
+        "AWS::WAFv2::ManagedRuleSet",
         "AWS::XRay::EncryptionConfig",
         "AWS::SSM::AssociationCompliance",
         "AWS::SSM::PatchCompliance",
         "AWS::Shield::Protection",
         "AWS::ShieldRegional::Protection",
         "AWS::Config::ResourceCompliance",
-        "AWS::LicenseManager::LicenseConfiguration",
-        "AWS::ApiGateway::DomainName",
-        "AWS::ApiGateway::Method",
         "AWS::ApiGateway::Stage",
         "AWS::ApiGateway::RestApi",
-        "AWS::ApiGatewayV2::DomainName",
         "AWS::ApiGatewayV2::Stage",
         "AWS::ApiGatewayV2::Api",
         "AWS::CodePipeline::Pipeline",
         "AWS::ServiceCatalog::CloudFormationProvisionedProduct",
         "AWS::ServiceCatalog::CloudFormationProduct",
-        "AWS::ServiceCatalog::Portfolio"
+        "AWS::ServiceCatalog::Portfolio",
+        "AWS::SQS::Queue",
+        "AWS::KMS::Key",
+        "AWS::QLDB::Ledger"
       ]
     },
     "ResourceTypeList":{
@@ -4082,6 +4099,28 @@
         "TagKey":{"shape":"StringWithCharLimit128"},
         "TagValue":{"shape":"StringWithCharLimit256"},
         "ComplianceResourceId":{"shape":"BaseResourceId"}
+      }
+    },
+    "SelectAggregateResourceConfigRequest":{
+      "type":"structure",
+      "required":[
+        "Expression",
+        "ConfigurationAggregatorName"
+      ],
+      "members":{
+        "Expression":{"shape":"Expression"},
+        "ConfigurationAggregatorName":{"shape":"ConfigurationAggregatorName"},
+        "Limit":{"shape":"Limit"},
+        "MaxResults":{"shape":"Limit"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "SelectAggregateResourceConfigResponse":{
+      "type":"structure",
+      "members":{
+        "Results":{"shape":"Results"},
+        "QueryInfo":{"shape":"QueryInfo"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "SelectResourceConfigRequest":{

@@ -7507,15 +7507,16 @@
     },
     "PatchRule":{
       "type":"structure",
-      "required":[
-        "PatchFilterGroup",
-        "ApproveAfterDays"
-      ],
+      "required":["PatchFilterGroup"],
       "members":{
         "PatchFilterGroup":{"shape":"PatchFilterGroup"},
         "ComplianceLevel":{"shape":"PatchComplianceLevel"},
         "ApproveAfterDays":{
           "shape":"ApproveAfterDays",
+          "box":true
+        },
+        "ApproveUntilDate":{
+          "shape":"PatchStringDateTime",
           "box":true
         },
         "EnableNonSecurity":{
@@ -7592,6 +7593,11 @@
         "ComplianceLevel":{"shape":"PatchComplianceLevel"},
         "ApprovalDate":{"shape":"DateTime"}
       }
+    },
+    "PatchStringDateTime":{
+      "type":"string",
+      "max":10,
+      "min":1
     },
     "PatchTitle":{"type":"string"},
     "PatchUnreportedNotApplicableCount":{"type":"integer"},
@@ -7929,6 +7935,17 @@
       "exception":true
     },
     "ResourceDataSyncCreatedTime":{"type":"timestamp"},
+    "ResourceDataSyncDestinationDataSharing":{
+      "type":"structure",
+      "members":{
+        "DestinationDataSharingType":{"shape":"ResourceDataSyncDestinationDataSharingType"}
+      }
+    },
+    "ResourceDataSyncDestinationDataSharingType":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "ResourceDataSyncIncludeFutureRegions":{"type":"boolean"},
     "ResourceDataSyncInvalidConfigurationException":{
       "type":"structure",
@@ -8011,7 +8028,8 @@
         "Prefix":{"shape":"ResourceDataSyncS3Prefix"},
         "SyncFormat":{"shape":"ResourceDataSyncS3Format"},
         "Region":{"shape":"ResourceDataSyncS3Region"},
-        "AWSKMSKeyARN":{"shape":"ResourceDataSyncAWSKMSKeyARN"}
+        "AWSKMSKeyARN":{"shape":"ResourceDataSyncAWSKMSKeyARN"},
+        "DestinationDataSharing":{"shape":"ResourceDataSyncDestinationDataSharing"}
       }
     },
     "ResourceDataSyncS3Format":{

@@ -183,6 +183,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listDevEndpointsAsync(array $args = [])
  * @method \Aws\Result listJobs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listJobsAsync(array $args = [])
+ * @method \Aws\Result listMLTransforms(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listMLTransformsAsync(array $args = [])
  * @method \Aws\Result listTriggers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTriggersAsync(array $args = [])
  * @method \Aws\Result listWorkflows(array $args = [])

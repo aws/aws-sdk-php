@@ -48,7 +48,7 @@ trait EncryptionTrait
      *
      * @internal
      */
-    protected function encrypt(
+    public function encrypt(
         Stream $plaintext,
         array $cipherOptions,
         MaterialsProvider $provider,

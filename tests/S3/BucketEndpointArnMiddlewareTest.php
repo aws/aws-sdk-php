@@ -3,9 +3,12 @@ namespace Aws\Test\S3;
 
 use Aws\CommandInterface;
 use Aws\Middleware;
+use Aws\Result;
 use Aws\S3\BucketEndpointArnMiddleware;
 use Aws\S3\Exception\S3Exception;
+use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -375,5 +378,34 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         );
         $result = $s3->execute($command);
         var_dump($result);
+    }
+
+    public function testCorrectlyHandlesCopyObject()
+    {
+        $s3 = new S3Client([
+            'version' => 'latest',
+            'region' => 'us-west-2',
+            's3_use_arn_region' => true,
+            'handler' => function(CommandInterface $cmd, RequestInterface $req) {
+                $this->assertEquals(
+                    'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
+                    $req->getUri()->getHost()
+                );
+                $this->assertEquals(
+                    'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint/myobject',
+                    $req->getHeader('x-amz-copy-source')[0]
+                );
+                return Promise\promise_for(new Result([]));
+            }
+        ]);
+        $command = $s3->getCommand(
+            'CopyObject',
+            [
+                'Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                'CopySource' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint/myobject',
+                'Key' => 'mykey'
+            ]
+        );
+        $s3->execute($command);
     }
 }

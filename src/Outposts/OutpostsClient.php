@@ -7,6 +7,10 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWS Outposts** service.
  * @method \Aws\Result createOutpost(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createOutpostAsync(array $args = [])
+ * @method \Aws\Result deleteOutpost(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteOutpostAsync(array $args = [])
+ * @method \Aws\Result deleteSite(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteSiteAsync(array $args = [])
  * @method \Aws\Result getOutpost(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getOutpostAsync(array $args = [])
  * @method \Aws\Result getOutpostInstanceTypes(array $args = [])

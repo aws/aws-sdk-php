@@ -91,6 +91,7 @@
     "ListCrawlers": "<p>Retrieves the names of all crawler resources in this AWS account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListDevEndpoints": "<p>Retrieves the names of all <code>DevEndpoint</code> resources in this AWS account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListJobs": "<p>Retrieves the names of all job resources in this AWS account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
+    "ListMLTransforms": "<p> Retrieves a sortable, filterable list of existing AWS Glue machine learning transforms in this AWS account, or the resources with the specified tag. This operation takes the optional <code>Tags</code> field, which you can use as a filter of the responses so that tagged resources can be retrieved as a group. If you choose to use tag filtering, only resources with the tags are retrieved. </p>",
     "ListTriggers": "<p>Retrieves the names of all trigger resources in this AWS account, or the resources with the specified tag. This operation allows you to see which resources are available in your account, and their names.</p> <p>This operation takes the optional <code>Tags</code> field, which you can use as a filter on the response so that tagged resources can be retrieved as a group. If you choose to use tags filtering, only resources with the tag are retrieved.</p>",
     "ListWorkflows": "<p>Lists names of workflows created in the account.</p>",
     "PutDataCatalogEncryptionSettings": "<p>Sets the security configuration for a specified catalog. After the configuration has been set, the specified encryption is applied to every catalog write thereafter.</p>",
@@ -1476,9 +1477,12 @@
       "refs": {
         "Action$Arguments": "<p>The job arguments used when this trigger fires. For this job run, they replace the default arguments set in the job definition itself.</p> <p>You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes.</p> <p>For information about how to specify and consume your own Job arguments, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html\">Calling AWS Glue APIs in Python</a> topic in the developer guide.</p> <p>For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Special Parameters Used by AWS Glue</a> topic in the developer guide.</p>",
         "CreateJobRequest$DefaultArguments": "<p>The default arguments for this job.</p> <p>You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes.</p> <p>For information about how to specify and consume your own Job arguments, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html\">Calling AWS Glue APIs in Python</a> topic in the developer guide.</p> <p>For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Special Parameters Used by AWS Glue</a> topic in the developer guide.</p>",
+        "CreateJobRequest$NonOverridableArguments": "<p>Non-overridable arguments for this job, specified as name-value pairs.</p>",
         "Job$DefaultArguments": "<p>The default arguments for this job, specified as name-value pairs.</p> <p>You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes.</p> <p>For information about how to specify and consume your own Job arguments, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html\">Calling AWS Glue APIs in Python</a> topic in the developer guide.</p> <p>For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Special Parameters Used by AWS Glue</a> topic in the developer guide.</p>",
+        "Job$NonOverridableArguments": "<p>Non-overridable arguments for this job, specified as name-value pairs.</p>",
         "JobRun$Arguments": "<p>The job arguments associated with this run. For this job run, they replace the default arguments set in the job definition itself.</p> <p>You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes.</p> <p>For information about how to specify and consume your own job arguments, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html\">Calling AWS Glue APIs in Python</a> topic in the developer guide.</p> <p>For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Special Parameters Used by AWS Glue</a> topic in the developer guide.</p>",
         "JobUpdate$DefaultArguments": "<p>The default arguments for this job.</p> <p>You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes.</p> <p>For information about how to specify and consume your own Job arguments, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html\">Calling AWS Glue APIs in Python</a> topic in the developer guide.</p> <p>For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Special Parameters Used by AWS Glue</a> topic in the developer guide.</p>",
+        "JobUpdate$NonOverridableArguments": "<p>Non-overridable arguments for this job, specified as name-value pairs.</p>",
         "StartJobRunRequest$Arguments": "<p>The job arguments specifically for this run. For this job run, they replace the default arguments set in the job definition itself.</p> <p>You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes.</p> <p>For information about how to specify and consume your own Job arguments, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html\">Calling AWS Glue APIs in Python</a> topic in the developer guide.</p> <p>For information about the key-value pairs that AWS Glue consumes to set up your job, see the <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-glue-arguments.html\">Special Parameters Used by AWS Glue</a> topic in the developer guide.</p>"
       }
     },
@@ -2095,6 +2099,7 @@
         "StartMLLabelingSetGenerationTaskRunResponse$TaskRunId": "<p>The unique run identifier that is associated with this task run.</p>",
         "TaskRun$TransformId": "<p>The unique identifier for the transform.</p>",
         "TaskRun$TaskRunId": "<p>The unique identifier for this task run.</p>",
+        "TransformIdList$member": null,
         "UpdateMLTransformRequest$TransformId": "<p>A unique identifier that was generated when the transform was created.</p>",
         "UpdateMLTransformResponse$TransformId": "<p>The unique identifier for the transform that was updated.</p>"
       }
@@ -2382,6 +2387,16 @@
       }
     },
     "ListJobsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListMLTransformsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListMLTransformsResponse": {
       "base": null,
       "refs": {
       }
@@ -2913,6 +2928,7 @@
         "ListCrawlersRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListDevEndpointsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListJobsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
+        "ListMLTransformsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListTriggersRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "ListWorkflowsRequest$MaxResults": "<p>The maximum size of a list to return.</p>",
         "SearchTablesRequest$MaxResults": "<p>The maximum number of tables to return in a single response.</p>"
@@ -2924,7 +2940,9 @@
         "GetMLTaskRunsRequest$NextToken": "<p>A token for pagination of the results. The default is empty.</p>",
         "GetMLTaskRunsResponse$NextToken": "<p>A pagination token, if more results are available.</p>",
         "GetMLTransformsRequest$NextToken": "<p>A paginated token to offset the results.</p>",
-        "GetMLTransformsResponse$NextToken": "<p>A pagination token, if more results are available.</p>"
+        "GetMLTransformsResponse$NextToken": "<p>A pagination token, if more results are available.</p>",
+        "ListMLTransformsRequest$NextToken": "<p>A continuation token, if this is a continuation request.</p>",
+        "ListMLTransformsResponse$NextToken": "<p>A continuation token, if the returned list does not contain the last metric available.</p>"
       }
     },
     "ParametersMap": {
@@ -3654,12 +3672,14 @@
         "CreateCrawlerRequest$Tags": "<p>The tags to use with this crawler request. You can use tags to limit access to the crawler. For more information, see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">AWS Tags in AWS Glue</a>.</p>",
         "CreateDevEndpointRequest$Tags": "<p>The tags to use with this DevEndpoint. You may use tags to limit access to the DevEndpoint. For more information about tags in AWS Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">AWS Tags in AWS Glue</a> in the developer guide.</p>",
         "CreateJobRequest$Tags": "<p>The tags to use with this job. You may use tags to limit access to the job. For more information about tags in AWS Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">AWS Tags in AWS Glue</a> in the developer guide.</p>",
+        "CreateMLTransformRequest$Tags": "<p>The tags to use with this machine learning transform. You may use tags to limit access to the machine learning transform. For more information about tags in AWS Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">AWS Tags in AWS Glue</a> in the developer guide.</p>",
         "CreateTriggerRequest$Tags": "<p>The tags to use with this trigger. You may use tags to limit access to the trigger. For more information about tags in AWS Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">AWS Tags in AWS Glue</a> in the developer guide. </p>",
         "CreateWorkflowRequest$Tags": "<p>The tags to be used with this workflow.</p>",
         "GetTagsResponse$Tags": "<p>The requested tags.</p>",
         "ListCrawlersRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
         "ListDevEndpointsRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
         "ListJobsRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
+        "ListMLTransformsRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
         "ListTriggersRequest$Tags": "<p>Specifies to return only these tagged resources.</p>",
         "TagResourceRequest$TagsToAdd": "<p>Tags to add to this resource.</p>"
       }
@@ -3839,7 +3859,14 @@
     "TransformFilterCriteria": {
       "base": "<p>The criteria used to filter the machine learning transforms.</p>",
       "refs": {
-        "GetMLTransformsRequest$Filter": "<p>The filter transformation criteria.</p>"
+        "GetMLTransformsRequest$Filter": "<p>The filter transformation criteria.</p>",
+        "ListMLTransformsRequest$Filter": "<p>A <code>TransformFilterCriteria</code> used to filter the machine learning transforms.</p>"
+      }
+    },
+    "TransformIdList": {
+      "base": null,
+      "refs": {
+        "ListMLTransformsResponse$TransformIds": "<p>The identifiers of all the machine learning transforms in the account, or the machine learning transforms with the specified tags.</p>"
       }
     },
     "TransformList": {
@@ -3874,7 +3901,8 @@
     "TransformSortCriteria": {
       "base": "<p>The sorting criteria that are associated with the machine learning transform.</p>",
       "refs": {
-        "GetMLTransformsRequest$Sort": "<p>The sorting criteria.</p>"
+        "GetMLTransformsRequest$Sort": "<p>The sorting criteria.</p>",
+        "ListMLTransformsRequest$Sort": "<p>A <code>TransformSortCriteria</code> used to sort the machine learning transforms.</p>"
       }
     },
     "TransformStatusType": {

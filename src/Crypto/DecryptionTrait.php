@@ -53,7 +53,7 @@ trait DecryptionTrait
      *
      * @internal
      */
-    protected function decrypt(
+    public function decrypt(
         $cipherText,
         MaterialsProvider $provider,
         MetadataEnvelope $envelope,

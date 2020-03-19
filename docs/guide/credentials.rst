@@ -59,7 +59,7 @@ almost no work on your part.
 
 If you do not explicitly provide credentials to the client object and no
 environment variable credentials are available, the SDK attempts to retrieve
-instance profile credentials from an Amazon EC2 instance metadata server. These
+instance profile credentials from an Amazon EC2 instance metadata service. These
 credentials are available only when running on Amazon EC2 instances that have
 been configured with an IAM role.
 

@@ -518,7 +518,7 @@ class InstanceProfileProviderTest extends TestCase
                 ),
                 new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata server. (401 Unathorized)'
+                    . 'metadata service. (401 Unathorized)'
                 )
             ],
 
@@ -532,7 +532,7 @@ class InstanceProfileProviderTest extends TestCase
                 ),
                 new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata server. (401 Unathorized)'
+                    . 'metadata service. (401 Unathorized)'
                 )
             ],
 
@@ -546,7 +546,7 @@ class InstanceProfileProviderTest extends TestCase
                 ),
                 new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata server. (401 Unathorized)'
+                    . 'metadata service. (401 Unathorized)'
                 )
             ],
 
@@ -560,7 +560,7 @@ class InstanceProfileProviderTest extends TestCase
                 ),
                 new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata server. (401 Unathorized)'
+                    . 'metadata service. (401 Unathorized)'
                 )
             ],
 
@@ -578,7 +578,7 @@ class InstanceProfileProviderTest extends TestCase
                 ),
                 new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata server. (Error retrieving metadata token)'
+                    . 'metadata service. (Error retrieving metadata token)'
                 )
             ],
 
@@ -596,7 +596,7 @@ class InstanceProfileProviderTest extends TestCase
                 ),
                 new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata server. (503 ThrottlingException)'
+                    . 'metadata service. (503 ThrottlingException)'
                 )
             ],
 
@@ -614,7 +614,7 @@ class InstanceProfileProviderTest extends TestCase
                 ),
                 new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata server. (503 ThrottlingException)'
+                    . 'metadata service. (503 ThrottlingException)'
                 )
             ],
 
@@ -632,7 +632,7 @@ class InstanceProfileProviderTest extends TestCase
                 ),
                 new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata server. (503 ThrottlingException)'
+                    . 'metadata service. (503 ThrottlingException)'
                 )
             ],
 
@@ -650,7 +650,7 @@ class InstanceProfileProviderTest extends TestCase
                 ),
                 new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata server. (503 ThrottlingException)'
+                    . 'metadata service. (503 ThrottlingException)'
                 )
             ],
 
@@ -668,7 +668,7 @@ class InstanceProfileProviderTest extends TestCase
                 ),
                 new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata server. (Invalid JSON response, retries exhausted)'
+                    . 'metadata service. (Invalid JSON response, retries exhausted)'
                 )
             ],
 
@@ -686,7 +686,7 @@ class InstanceProfileProviderTest extends TestCase
                 ),
                 new CredentialsException(
                     'Error retrieving credentials from the instance profile '
-                    . 'metadata server. (Invalid JSON response, retries exhausted)'
+                    . 'metadata service. (Invalid JSON response, retries exhausted)'
                 )
             ],
         ];
@@ -694,7 +694,7 @@ class InstanceProfileProviderTest extends TestCase
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata server. (999 Expected Exception)
+     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata service. (999 Expected Exception)
      */
     public function testSwitchesBackToSecureModeOn401()
     {
@@ -823,7 +823,7 @@ class InstanceProfileProviderTest extends TestCase
             )->wait();
             $this->fail('Did not throw expected CredentialException.');
         } catch (CredentialsException $e) {
-            if (strstr($e->getMessage(), 'EC2 metadata server access disabled') === false) {
+            if (strstr($e->getMessage(), 'EC2 metadata service access disabled') === false) {
                 $this->fail('Did not throw expected CredentialException when '
                     . 'provider is disabled.');
             }

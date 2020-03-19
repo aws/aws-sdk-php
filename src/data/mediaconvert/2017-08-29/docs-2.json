@@ -148,9 +148,9 @@
       }
     },
     "AlphaBehavior": {
-      "base": "Ignore this setting unless this input is a QuickTime animation. Specify which part of this input MediaConvert uses for your outputs. Leave this setting set to DISCARD in order to delete the alpha channel and preserve the video. Use REMAP_TO_LUMA for this setting to delete the video and map the alpha channel to the luma channel of your outputs.",
+      "base": "Ignore this setting unless this input is a QuickTime animation with an alpha channel. Use this setting to create separate Key and Fill outputs. In each output, specify which part of the input MediaConvert uses. Leave this setting at the default value DISCARD to delete the alpha channel and preserve the video. Set it to REMAP_TO_LUMA to delete the video and map the alpha channel to the luma channel of your outputs.",
       "refs": {
-        "VideoSelector$AlphaBehavior": "Ignore this setting unless this input is a QuickTime animation. Specify which part of this input MediaConvert uses for your outputs. Leave this setting set to DISCARD in order to delete the alpha channel and preserve the video. Use REMAP_TO_LUMA for this setting to delete the video and map the alpha channel to the luma channel of your outputs."
+        "VideoSelector$AlphaBehavior": "Ignore this setting unless this input is a QuickTime animation with an alpha channel. Use this setting to create separate Key and Fill outputs. In each output, specify which part of the input MediaConvert uses. Leave this setting at the default value DISCARD to delete the alpha channel and preserve the video. Set it to REMAP_TO_LUMA to delete the video and map the alpha channel to the luma channel of your outputs."
       }
     },
     "AncillaryConvert608To708": {
@@ -194,9 +194,9 @@
       }
     },
     "AudioCodecSettings": {
-      "base": "Audio codec settings (CodecSettings) under (AudioDescriptions) contains the group of settings related to audio encoding. The settings in this group vary depending on the value that you choose for Audio codec (Codec). For each codec enum that you choose, define the corresponding settings object. The following lists the codec enum, settings object pairs. * AAC, AacSettings * MP2, Mp2Settings * WAV, WavSettings * AIFF, AiffSettings * AC3, Ac3Settings * EAC3, Eac3Settings * EAC3_ATMOS, Eac3AtmosSettings",
+      "base": "Audio codec settings (CodecSettings) under (AudioDescriptions) contains the group of settings related to audio encoding. The settings in this group vary depending on the value that you choose for Audio codec (Codec). For each codec enum that you choose, define the corresponding settings object. The following lists the codec enum, settings object pairs. * AAC, AacSettings * MP2, Mp2Settings * MP3, Mp3Settings * WAV, WavSettings * AIFF, AiffSettings * AC3, Ac3Settings * EAC3, Eac3Settings * EAC3_ATMOS, Eac3AtmosSettings",
       "refs": {
-        "AudioDescription$CodecSettings": "Audio codec settings (CodecSettings) under (AudioDescriptions) contains the group of settings related to audio encoding. The settings in this group vary depending on the value that you choose for Audio codec (Codec). For each codec enum that you choose, define the corresponding settings object. The following lists the codec enum, settings object pairs. * AAC, AacSettings * MP2, Mp2Settings * WAV, WavSettings * AIFF, AiffSettings * AC3, Ac3Settings * EAC3, Eac3Settings * EAC3_ATMOS, Eac3AtmosSettings"
+        "AudioDescription$CodecSettings": "Audio codec settings (CodecSettings) under (AudioDescriptions) contains the group of settings related to audio encoding. The settings in this group vary depending on the value that you choose for Audio codec (Codec). For each codec enum that you choose, define the corresponding settings object. The following lists the codec enum, settings object pairs. * AAC, AacSettings * MP2, Mp2Settings * MP3, Mp3Settings * WAV, WavSettings * AIFF, AiffSettings * AC3, Ac3Settings * EAC3, Eac3Settings * EAC3_ATMOS, Eac3AtmosSettings"
       }
     },
     "AudioDefaultSelection": {
@@ -269,6 +269,48 @@
       "base": "When set to FOLLOW_INPUT, if the input contains an ISO 639 audio_type, then that value is passed through to the output. If the input contains no ISO 639 audio_type, the value in Audio Type is included in the output. Otherwise the value in Audio Type is included in the output. Note that this field and audioType are both ignored if audioDescriptionBroadcasterMix is set to BROADCASTER_MIXED_AD.",
       "refs": {
         "AudioDescription$AudioTypeControl": "When set to FOLLOW_INPUT, if the input contains an ISO 639 audio_type, then that value is passed through to the output. If the input contains no ISO 639 audio_type, the value in Audio Type is included in the output. Otherwise the value in Audio Type is included in the output. Note that this field and audioType are both ignored if audioDescriptionBroadcasterMix is set to BROADCASTER_MIXED_AD."
+      }
+    },
+    "Av1AdaptiveQuantization": {
+      "base": "Adaptive quantization. Allows intra-frame quantizers to vary to improve visual quality.",
+      "refs": {
+        "Av1Settings$AdaptiveQuantization": "Adaptive quantization. Allows intra-frame quantizers to vary to improve visual quality."
+      }
+    },
+    "Av1FramerateControl": {
+      "base": "If you are using the console, use the Framerate setting to specify the frame rate for this output. If you want to keep the same frame rate as the input video, choose Follow source. If you want to do frame rate conversion, choose a frame rate from the dropdown list or choose Custom. The framerates shown in the dropdown list are decimal approximations of fractions. If you choose Custom, specify your frame rate as a fraction. If you are creating your transcoding job specification as a JSON file without the console, use FramerateControl to specify which value the service uses for the frame rate for this output. Choose INITIALIZE_FROM_SOURCE if you want the service to use the frame rate from the input. Choose SPECIFIED if you want the service to use the frame rate you specify in the settings FramerateNumerator and FramerateDenominator.",
+      "refs": {
+        "Av1Settings$FramerateControl": "If you are using the console, use the Framerate setting to specify the frame rate for this output. If you want to keep the same frame rate as the input video, choose Follow source. If you want to do frame rate conversion, choose a frame rate from the dropdown list or choose Custom. The framerates shown in the dropdown list are decimal approximations of fractions. If you choose Custom, specify your frame rate as a fraction. If you are creating your transcoding job specification as a JSON file without the console, use FramerateControl to specify which value the service uses for the frame rate for this output. Choose INITIALIZE_FROM_SOURCE if you want the service to use the frame rate from the input. Choose SPECIFIED if you want the service to use the frame rate you specify in the settings FramerateNumerator and FramerateDenominator."
+      }
+    },
+    "Av1FramerateConversionAlgorithm": {
+      "base": "When set to INTERPOLATE, produces smoother motion during frame rate conversion.",
+      "refs": {
+        "Av1Settings$FramerateConversionAlgorithm": "When set to INTERPOLATE, produces smoother motion during frame rate conversion."
+      }
+    },
+    "Av1QvbrSettings": {
+      "base": "Settings for quality-defined variable bitrate encoding with the AV1 codec. Required when you set Rate control mode to QVBR. Not valid when you set Rate control mode to a value other than QVBR, or when you don't define Rate control mode.",
+      "refs": {
+        "Av1Settings$QvbrSettings": "Settings for quality-defined variable bitrate encoding with the AV1 codec. Required when you set Rate control mode to QVBR. Not valid when you set Rate control mode to a value other than QVBR, or when you don't define Rate control mode."
+      }
+    },
+    "Av1RateControlMode": {
+      "base": "'With AV1 outputs, for rate control mode, MediaConvert supports only quality-defined variable bitrate (QVBR). You can''t use CBR or VBR.'",
+      "refs": {
+        "Av1Settings$RateControlMode": "'With AV1 outputs, for rate control mode, MediaConvert supports only quality-defined variable bitrate (QVBR). You can''t use CBR or VBR.'"
+      }
+    },
+    "Av1Settings": {
+      "base": "Required when you set Codec, under VideoDescription>CodecSettings to the value AV1.",
+      "refs": {
+        "VideoCodecSettings$Av1Settings": "Required when you set Codec, under VideoDescription>CodecSettings to the value AV1."
+      }
+    },
+    "Av1SpatialAdaptiveQuantization": {
+      "base": "Adjust quantization within each frame based on spatial variation of content complexity.",
+      "refs": {
+        "Av1Settings$SpatialAdaptiveQuantization": "Adjust quantization within each frame based on spatial variation of content complexity."
       }
     },
     "AvailBlanking": {
@@ -481,6 +523,30 @@
         "CmafGroupSettings$WriteHlsManifest": "When set to ENABLED, an Apple HLS manifest will be generated for this output."
       }
     },
+    "CmafWriteSegmentTimelineInRepresentation": {
+      "base": "When you enable Precise segment duration in DASH manifests (writeSegmentTimelineInRepresentation), your DASH manifest shows precise segment durations. The segment duration information appears inside the SegmentTimeline element, inside SegmentTemplate at the Representation level. When this feature isn't enabled, the segment durations in your DASH manifest are approximate. The segment duration information appears in the duration attribute of the SegmentTemplate element.",
+      "refs": {
+        "CmafGroupSettings$WriteSegmentTimelineInRepresentation": "When you enable Precise segment duration in DASH manifests (writeSegmentTimelineInRepresentation), your DASH manifest shows precise segment durations. The segment duration information appears inside the SegmentTimeline element, inside SegmentTemplate at the Representation level. When this feature isn't enabled, the segment durations in your DASH manifest are approximate. The segment duration information appears in the duration attribute of the SegmentTemplate element."
+      }
+    },
+    "CmfcScte35Esam": {
+      "base": "Use this setting only when you specify SCTE-35 markers from ESAM. Choose INSERT to put SCTE-35 markers in this output at the insertion points that you specify in an ESAM XML document. Provide the document in the setting SCC XML (sccXml).",
+      "refs": {
+        "CmfcSettings$Scte35Esam": "Use this setting only when you specify SCTE-35 markers from ESAM. Choose INSERT to put SCTE-35 markers in this output at the insertion points that you specify in an ESAM XML document. Provide the document in the setting SCC XML (sccXml)."
+      }
+    },
+    "CmfcScte35Source": {
+      "base": "Ignore this setting unless you have SCTE-35 markers in your input video file. Choose Passthrough (PASSTHROUGH) if you want SCTE-35 markers that appear in your input to also appear in this output. Choose None (NONE) if you don't want those SCTE-35 markers in this output.",
+      "refs": {
+        "CmfcSettings$Scte35Source": "Ignore this setting unless you have SCTE-35 markers in your input video file. Choose Passthrough (PASSTHROUGH) if you want SCTE-35 markers that appear in your input to also appear in this output. Choose None (NONE) if you don't want those SCTE-35 markers in this output."
+      }
+    },
+    "CmfcSettings": {
+      "base": "Settings for MP4 segments in CMAF",
+      "refs": {
+        "ContainerSettings$CmfcSettings": "Settings for MP4 segments in CMAF"
+      }
+    },
     "ColorCorrector": {
       "base": "Settings for color correction.",
       "refs": {
@@ -500,9 +566,9 @@
       }
     },
     "ColorSpaceConversion": {
-      "base": "Specify the color space you want for this output. The service supports conversion between HDR formats, between SDR formats, and from SDR to HDR. The service doesn't support conversion from HDR to SDR. SDR to HDR conversion doesn't upgrade the dynamic range. The converted video has an HDR format, but visually appears the same as an unconverted output.",
+      "base": "Specify the color space you want for this output. The service supports conversion between HDR formats, between SDR formats, from SDR to HDR, and from HDR to SDR. SDR to HDR conversion doesn't upgrade the dynamic range. The converted video has an HDR format, but visually appears the same as an unconverted output. HDR to SDR conversion uses Elemental tone mapping technology to approximate the outcome of manually regrading from HDR to SDR.",
       "refs": {
-        "ColorCorrector$ColorSpaceConversion": "Specify the color space you want for this output. The service supports conversion between HDR formats, between SDR formats, and from SDR to HDR. The service doesn't support conversion from HDR to SDR. SDR to HDR conversion doesn't upgrade the dynamic range. The converted video has an HDR format, but visually appears the same as an unconverted output."
+        "ColorCorrector$ColorSpaceConversion": "Specify the color space you want for this output. The service supports conversion between HDR formats, between SDR formats, from SDR to HDR, and from HDR to SDR. SDR to HDR conversion doesn't upgrade the dynamic range. The converted video has an HDR format, but visually appears the same as an unconverted output. HDR to SDR conversion uses Elemental tone mapping technology to approximate the outcome of manually regrading from HDR to SDR."
       }
     },
     "ColorSpaceUsage": {
@@ -1966,6 +2032,18 @@
         "AudioCodecSettings$Mp2Settings": "Required when you set (Codec) under (AudioDescriptions)>(CodecSettings) to the value MP2."
       }
     },
+    "Mp3RateControlMode": {
+      "base": "Specify whether the service encodes this MP3 audio output with a constant bitrate (CBR) or a variable bitrate (VBR).",
+      "refs": {
+        "Mp3Settings$RateControlMode": "Specify whether the service encodes this MP3 audio output with a constant bitrate (CBR) or a variable bitrate (VBR)."
+      }
+    },
+    "Mp3Settings": {
+      "base": "Required when you set Codec, under AudioDescriptions>CodecSettings, to the value MP3.",
+      "refs": {
+        "AudioCodecSettings$Mp3Settings": "Required when you set Codec, under AudioDescriptions>CodecSettings, to the value MP3."
+      }
+    },
     "Mp4CslgAtom": {
       "base": "When enabled, file composition times will start at zero, composition times in the 'ctts' (composition time to sample) box for B-frames will be negative, and a 'cslg' (composition shift least greatest) box will be included per 14496-1 amendment 1. This improves compatibility with Apple players and tools.",
       "refs": {
@@ -2656,9 +2734,9 @@
       }
     },
     "VideoCodecSettings": {
-      "base": "Video codec settings, (CodecSettings) under (VideoDescription), contains the group of settings related to video encoding. The settings in this group vary depending on the value that you choose for Video codec (Codec). For each codec enum that you choose, define the corresponding settings object. The following lists the codec enum, settings object pairs. * H_264, H264Settings * H_265, H265Settings * MPEG2, Mpeg2Settings * PRORES, ProresSettings * FRAME_CAPTURE, FrameCaptureSettings",
+      "base": "Video codec settings, (CodecSettings) under (VideoDescription), contains the group of settings related to video encoding. The settings in this group vary depending on the value that you choose for Video codec (Codec). For each codec enum that you choose, define the corresponding settings object. The following lists the codec enum, settings object pairs. * FRAME_CAPTURE, FrameCaptureSettings * AV1, Av1Settings * H_264, H264Settings * H_265, H265Settings * MPEG2, Mpeg2Settings * PRORES, ProresSettings",
       "refs": {
-        "VideoDescription$CodecSettings": "Video codec settings, (CodecSettings) under (VideoDescription), contains the group of settings related to video encoding. The settings in this group vary depending on the value that you choose for Video codec (Codec). For each codec enum that you choose, define the corresponding settings object. The following lists the codec enum, settings object pairs. * H_264, H264Settings * H_265, H265Settings * MPEG2, Mpeg2Settings * PRORES, ProresSettings * FRAME_CAPTURE, FrameCaptureSettings"
+        "VideoDescription$CodecSettings": "Video codec settings, (CodecSettings) under (VideoDescription), contains the group of settings related to video encoding. The settings in this group vary depending on the value that you choose for Video codec (Codec). For each codec enum that you choose, define the corresponding settings object. The following lists the codec enum, settings object pairs. * FRAME_CAPTURE, FrameCaptureSettings * AV1, Av1Settings * H_264, H264Settings * H_265, H265Settings * MPEG2, Mpeg2Settings * PRORES, ProresSettings"
       }
     },
     "VideoDescription": {
@@ -2708,12 +2786,21 @@
     "__doubleMin0": {
       "base": null,
       "refs": {
+        "Av1Settings$GopSize": "Specify the GOP length (keyframe interval) in frames. With AV1, MediaConvert doesn't support GOP length in seconds. This value must be greater than zero and preferably equal to 1 + ((numberBFrames + 1) * x), where x is an integer value.",
         "H264Settings$GopSize": "GOP Length (keyframe interval) in frames or seconds. Must be greater than zero.",
         "H265Settings$GopSize": "GOP Length (keyframe interval) in frames or seconds. Must be greater than zero.",
         "M2tsSettings$FragmentTime": "The length, in seconds, of each fragment. Only used with EBP markers.",
         "M2tsSettings$NullPacketBitrate": "Value in bits per second of extra null packets to insert into the transport stream. This can be used if a downstream encryption system requires periodic null packets.",
         "M2tsSettings$SegmentationTime": "Specify the length, in seconds, of each segment. Required unless markers is set to _none_.",
         "Mpeg2Settings$GopSize": "GOP Length (keyframe interval) in frames or seconds. Must be greater than zero."
+      }
+    },
+    "__doubleMin0Max1": {
+      "base": null,
+      "refs": {
+        "Av1QvbrSettings$QvbrQualityLevelFineTune": "Optional. Specify a value here to set the QVBR quality to a level that is between whole numbers. For example, if you want your QVBR quality level to be 7.33, set qvbrQualityLevel to 7 and set qvbrQualityLevelFineTune to .33. MediaConvert rounds your QVBR quality level to the nearest third of a whole number. For example, if you set qvbrQualityLevel to 7 and you set qvbrQualityLevelFineTune to .25, your actual QVBR quality level is 7.33.",
+        "H264QvbrSettings$QvbrQualityLevelFineTune": "Optional. Specify a value here to set the QVBR quality to a level that is between whole numbers. For example, if you want your QVBR quality level to be 7.33, set qvbrQualityLevel to 7 and set qvbrQualityLevelFineTune to .33. MediaConvert rounds your QVBR quality level to the nearest third of a whole number. For example, if you set qvbrQualityLevel to 7 and you set qvbrQualityLevelFineTune to .25, your actual QVBR quality level is 7.33.",
+        "H265QvbrSettings$QvbrQualityLevelFineTune": "Optional. Specify a value here to set the QVBR quality to a level that is between whole numbers. For example, if you want your QVBR quality level to be 7.33, set qvbrQualityLevel to 7 and set qvbrQualityLevelFineTune to .33. MediaConvert rounds your QVBR quality level to the nearest third of a whole number. For example, if you set qvbrQualityLevel to 7 and you set qvbrQualityLevelFineTune to .25, your actual QVBR quality level is 7.33."
       }
     },
     "__doubleMin0Max2147483647": {
@@ -2772,6 +2859,12 @@
       "base": null,
       "refs": {
         "NielsenConfiguration$BreakoutCode": "Nielsen has discontinued the use of breakout code functionality. If you must include this property, set the value to zero."
+      }
+    },
+    "__integerMin0Max1": {
+      "base": null,
+      "refs": {
+        "Mp4Settings$CttsVersion": "Ignore this setting unless compliance to the CTTS box version specification matters in your workflow. Specify a value of 1 to set your CTTS box version to 1 and make your output compliant with the specification. When you specify a value of 1, you must also set CSLG atom (cslgAtom) to the value INCLUDE. Keep the default value 0 to set your CTTS box version to 0. This can provide backward compatibility for some players and packagers."
       }
     },
     "__integerMin0Max10": {
@@ -2967,6 +3060,12 @@
         "AudioSelector$ProgramSelection": "Use this setting for input streams that contain Dolby E, to have the service extract specific program data from the track. To select multiple programs, create multiple selectors with the same Track and different Program numbers. In the console, this setting is visible when you set Selector type to Track. Choose the program number from the dropdown list. If you are sending a JSON file, provide the program ID, which is part of the audio metadata. If your input file has incorrect metadata, you can choose All channels instead of a program number to have the service ignore the program IDs and include all the programs in the track."
       }
     },
+    "__integerMin0Max9": {
+      "base": null,
+      "refs": {
+        "Mp3Settings$VbrQuality": "Required when you set Bitrate control mode (rateControlMode) to VBR. Specify the audio quality of this MP3 output from 0 (highest quality) to 9 (lowest quality)."
+      }
+    },
     "__integerMin0Max96": {
       "base": null,
       "refs": {
@@ -2983,6 +3082,7 @@
     "__integerMin1000Max1152000000": {
       "base": null,
       "refs": {
+        "Av1Settings$MaxBitrate": "Maximum bitrate in bits/second. For example, enter five megabits per second as 5000000. Required when Rate control mode is QVBR.",
         "H264QvbrSettings$MaxAverageBitrate": "Use this setting only when Rate control mode is QVBR and Quality tuning level is Multi-pass HQ. For Max average bitrate values suited to the complexity of your input video, the service limits the average bitrate of the video part of this output to the value that you choose. That is, the total size of the video element is less than or equal to the value you set multiplied by the number of seconds of encoded output.",
         "H264Settings$Bitrate": "Specify the average bitrate in bits per second. Required for VBR and CBR. For MS Smooth outputs, bitrates must be unique when rounded down to the nearest multiple of 1000.",
         "H264Settings$MaxBitrate": "Maximum bitrate in bits/second. For example, enter five megabits per second as 5000000. Required when Rate control mode is QVBR."
@@ -3020,6 +3120,12 @@
         "TimecodeBurnin$FontSize": "Use Font Size (FontSize) to set the font size of any burned-in timecode. Valid values are 10, 16, 32, 48."
       }
     },
+    "__integerMin16000Max320000": {
+      "base": null,
+      "refs": {
+        "Mp3Settings$Bitrate": "Specify the average bitrate in bits per second."
+      }
+    },
     "__integerMin16Max24": {
       "base": null,
       "refs": {
@@ -3036,8 +3142,9 @@
     "__integerMin1Max10": {
       "base": null,
       "refs": {
-        "H264QvbrSettings$QvbrQualityLevel": "Required when you use QVBR rate control mode. That is, when you specify qvbrSettings within h264Settings. Specify the target quality level for this output, from 1 to 10. Use higher numbers for greater quality. Level 10 results in nearly lossless compression. The quality level for most broadcast-quality transcodes is between 6 and 9.",
-        "H265QvbrSettings$QvbrQualityLevel": "Required when you use QVBR rate control mode. That is, when you specify qvbrSettings within h265Settings. Specify the target quality level for this output, from 1 to 10. Use higher numbers for greater quality. Level 10 results in nearly lossless compression. The quality level for most broadcast-quality transcodes is between 6 and 9."
+        "Av1QvbrSettings$QvbrQualityLevel": "Required when you use QVBR rate control mode. That is, when you specify qvbrSettings within av1Settings. Specify the general target quality level for this output, from 1 to 10. Use higher numbers for greater quality. Level 10 results in nearly lossless compression. The quality level for most broadcast-quality transcodes is between 6 and 9. Optionally, to specify a value between whole numbers, also provide a value for the setting qvbrQualityLevelFineTune. For example, if you want your QVBR quality level to be 7.33, set qvbrQualityLevel to 7 and set qvbrQualityLevelFineTune to .33.",
+        "H264QvbrSettings$QvbrQualityLevel": "Required when you use QVBR rate control mode. That is, when you specify qvbrSettings within h264Settings. Specify the general target quality level for this output, from 1 to 10. Use higher numbers for greater quality. Level 10 results in nearly lossless compression. The quality level for most broadcast-quality transcodes is between 6 and 9. Optionally, to specify a value between whole numbers, also provide a value for the setting qvbrQualityLevelFineTune. For example, if you want your QVBR quality level to be 7.33, set qvbrQualityLevel to 7 and set qvbrQualityLevelFineTune to .33.",
+        "H265QvbrSettings$QvbrQualityLevel": "Required when you use QVBR rate control mode. That is, when you specify qvbrSettings within h265Settings. Specify the general target quality level for this output, from 1 to 10. Use higher numbers for greater quality. Level 10 results in nearly lossless compression. The quality level for most broadcast-quality transcodes is between 6 and 9. Optionally, to specify a value between whole numbers, also provide a value for the setting qvbrQualityLevelFineTune. For example, if you want your QVBR quality level to be 7.33, set qvbrQualityLevel to 7 and set qvbrQualityLevelFineTune to .33."
       }
     },
     "__integerMin1Max100": {
@@ -3071,7 +3178,8 @@
     "__integerMin1Max2": {
       "base": null,
       "refs": {
-        "Mp2Settings$Channels": "Set Channels to specify the number of channels in this output audio track. Choosing Mono in the console will give you 1 output channel; choosing Stereo will give you 2. In the API, valid values are 1 and 2."
+        "Mp2Settings$Channels": "Set Channels to specify the number of channels in this output audio track. Choosing Mono in the console will give you 1 output channel; choosing Stereo will give you 2. In the API, valid values are 1 and 2.",
+        "Mp3Settings$Channels": "Specify the number of channels in this output audio track. Choosing Mono on the console gives you 1 output channel; choosing Stereo gives you 2. In the API, valid values are 1 and 2."
       }
     },
     "__integerMin1Max20": {
@@ -3092,6 +3200,8 @@
     "__integerMin1Max2147483647": {
       "base": null,
       "refs": {
+        "Av1Settings$FramerateDenominator": "When you use the API for transcode jobs that use frame rate conversion, specify the frame rate as a fraction. For example,  24000 / 1001 = 23.976 fps. Use FramerateDenominator to specify the denominator of this fraction. In this example, use 1001 for the value of FramerateDenominator. When you use the console for transcode jobs that use frame rate conversion, provide the value as a decimal number for Framerate. In this example, specify 23.976.",
+        "Av1Settings$FramerateNumerator": "When you use the API for transcode jobs that use frame rate conversion, specify the frame rate as a fraction. For example,  24000 / 1001 = 23.976 fps. Use FramerateNumerator to specify the numerator of this fraction. In this example, use 24000 for the value of FramerateNumerator. When you use the console for transcode jobs that use frame rate conversion, provide the value as a decimal number for Framerate. In this example, specify 23.976.",
         "CmafGroupSettings$FragmentLength": "Length of fragments to generate (in seconds). Fragment length must be compatible with GOP size and Framerate. Note that fragments will end on the next keyframe after this number of seconds, so actual fragment length may be longer. When Emit Single File is checked, the fragmentation is internal to a single output file and it does not cause the creation of many output files as in other output types.",
         "CmafGroupSettings$SegmentLength": "Use this setting to specify the length, in seconds, of each individual CMAF segment. This value applies to the whole package; that is, to every output in the output group. Note that segments end on the first keyframe after this number of seconds, so the actual segment length might be slightly longer. If you set Segment control (CmafSegmentControl) to single file, the service puts the content of each output in a single file that has metadata that marks these segments. If you set it to segmented files, the service creates multiple files for each output, each with the content of one segment.",
         "DashIsoGroupSettings$FragmentLength": "Length of fragments to generate (in seconds). Fragment length must be compatible with GOP size and Framerate. Note that fragments will end on the next keyframe after this number of seconds, so actual fragment length may be longer. When Emit Single File is checked, the fragmentation is internal to a single output file and it does not cause the creation of many output files as in other output types.",
@@ -3133,6 +3243,7 @@
     "__integerMin1Max32": {
       "base": null,
       "refs": {
+        "Av1Settings$Slices": "Specify the number of slices per picture. This value must be 1, 2, 4, 8, 16, or 32. For progressive pictures, this value must be less than or equal to the number of macroblock rows. For interlaced pictures, this value must be less than or equal to half the number of macroblock rows.",
         "H264Settings$Slices": "Number of slices per picture. Must be less than or equal to the number of macroblock rows for progressive pictures, and less than or equal to half the number of macroblock rows for interlaced pictures.",
         "H265Settings$Slices": "Number of slices per picture. Must be less than or equal to the number of macroblock rows for progressive pictures, and less than or equal to half the number of macroblock rows for interlaced pictures."
       }
@@ -3160,6 +3271,12 @@
         "RemixSettings$ChannelsIn": "Specify the number of audio channels from your input that you want to use in your output. With remixing, you might combine or split the data in these channels, so the number of channels in your final output might be different.",
         "RemixSettings$ChannelsOut": "Specify the number of channels in this output after remixing. Valid values: 1, 2, 4, 6, 8... 64. (1 and even numbers to 64.)",
         "WavSettings$Channels": "Specify the number of channels in this output audio track. Valid values are 1 and even numbers up to 64. For example, 1, 2, 4, 6, and so on, up to 64."
+      }
+    },
+    "__integerMin22050Max48000": {
+      "base": null,
+      "refs": {
+        "Mp3Settings$SampleRate": "Sample rate in hz."
       }
     },
     "__integerMin24Max60000": {
@@ -3253,6 +3370,12 @@
         "Eac3Settings$Bitrate": "Specify the average bitrate in bits per second. Valid bitrates depend on the coding mode."
       }
     },
+    "__integerMin7Max15": {
+      "base": null,
+      "refs": {
+        "Av1Settings$NumberBFramesBetweenReferenceFrames": "Specify the number of B-frames. With AV1, MediaConvert supports only 7 or 15."
+      }
+    },
     "__integerMin8000Max192000": {
       "base": null,
       "refs": {
@@ -3339,7 +3462,7 @@
     "__integerMinNegative70Max0": {
       "base": null,
       "refs": {
-        "AudioNormalizationSettings$CorrectionGateLevel": "Content measuring above this level will be corrected to the target level. Content measuring below this level will not be corrected. Gating only applies when not using real_time_correction."
+        "AudioNormalizationSettings$CorrectionGateLevel": "Content measuring above this level will be corrected to the target level. Content measuring below this level will not be corrected."
       }
     },
     "__listOfAudioDescription": {
@@ -3626,7 +3749,7 @@
         "HlsGroupSettings$BaseUrl": "A partial URI prefix that will be prepended to each output in the media .m3u8 file. Can be used if base manifest is delivered from a different URL than the main .m3u8 file.",
         "HlsSettings$AudioGroupId": "Specifies the group to which the audio Rendition belongs.",
         "HlsSettings$AudioRenditionSets": "List all the audio groups that are used with the video output stream. Input all the audio GROUP-IDs that are associated to the video, separate by ','.",
-        "HlsSettings$SegmentModifier": "String concatenated to end of segment filenames. Accepts \"Format Identifiers\":#format_identifier_parameters.",
+        "HlsSettings$SegmentModifier": "Use this setting to add an identifying string to the filename of each segment. The service adds this string between the name modifier and segment index number. You can use format identifiers in the string. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/using-variables-in-your-job-settings.html",
         "Job$Arn": "An identifier for this resource that is unique within all of AWS.",
         "Job$ErrorMessage": "Error message of Job",
         "Job$Id": "A portion of the job's ARN, unique within your AWS Elemental MediaConvert resources",
@@ -3706,25 +3829,25 @@
         "MotionImageInserter$StartTime": "Specify when the motion overlay begins. Use timecode format (HH:MM:SS:FF or HH:MM:SS;FF). Make sure that the timecode you provide here takes into account how you have set up your timecode configuration under both job settings and input settings. The simplest way to do that is to set both to start at 0. If you need to set up your job to follow timecodes embedded in your source that don't start at zero, make sure that you specify a start time that is after the first embedded timecode. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/setting-up-timecode.html Find job-wide and input timecode configuration settings in your JSON job settings specification at settings>timecodeConfig>source and settings>inputs>timecodeSource."
       }
     },
-    "__stringMin14Max1285PatternHttpHttpsS3Mov09Png": {
+    "__stringMin14Max1285PatternS3Mov09PngHttpsMov09Png": {
       "base": null,
       "refs": {
         "MotionImageInserter$Input": "Specify the .mov file or series of .png files that you want to overlay on your video. For .png files, provide the file name of the first file in the series. Make sure that the names of the .png files end with sequential numbers that specify the order that they are played in. For example, overlay_000.png, overlay_001.png, overlay_002.png, and so on. The sequence must start at zero, and each image file name must have the same number of digits. Pad your initial file names with enough zeros to complete the sequence. For example, if the first image is overlay_0.png, there can be only 10 images in the sequence, with the last image being overlay_9.png. But if the first image is overlay_00.png, there can be 100 images in the sequence."
       }
     },
-    "__stringMin14PatternHttpHttpsS3BmpBMPPngPNG": {
+    "__stringMin14PatternS3BmpBMPPngPNGHttpsBmpBMPPngPNG": {
       "base": null,
       "refs": {
         "AvailBlanking$AvailBlankingImage": "Blanking image to be used. Leave empty for solid black. Only bmp and png images are supported."
       }
     },
-    "__stringMin14PatternHttpHttpsS3BmpBMPPngPNGTgaTGA": {
+    "__stringMin14PatternS3BmpBMPPngPNGTgaTGAHttpsBmpBMPPngPNGTgaTGA": {
       "base": null,
       "refs": {
         "InsertableImage$ImageInserterInput": "Specify the HTTP, HTTPS, or Amazon S3 location of the image that you want to overlay on the video. Use a PNG or TGA file."
       }
     },
-    "__stringMin14PatternHttpHttpsS3SccSCCTtmlTTMLDfxpDFXPStlSTLSrtSRTXmlXMLSmiSMI": {
+    "__stringMin14PatternS3SccSCCTtmlTTMLDfxpDFXPStlSTLSrtSRTXmlXMLSmiSMIHttpsSccSCCTtmlTTMLDfxpDFXPStlSTLSrtSRTXmlXMLSmiSMI": {
       "base": null,
       "refs": {
         "FileSourceSettings$SourceFile": "External caption file used for loading captions. Accepted file extensions are 'scc', 'ttml', 'dfxp', 'stl', 'srt', 'xml', and 'smi'."
@@ -3857,18 +3980,6 @@
         "StaticKeyProvider$KeyFormatVersions": "Relates to DRM implementation. Either a single positive integer version value or a slash delimited list of version values (1/2/3)."
       }
     },
-    "__stringPatternHttpHttpsS3MM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMOOVVMMTTSSMM2TTWWMMVVAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8LLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMAAAACCAAIIFFFFMMPP2AACC3EECC3DDTTSSEE": {
-      "base": null,
-      "refs": {
-        "AudioSelector$ExternalAudioFileInput": "Specifies audio data from an external file source."
-      }
-    },
-    "__stringPatternHttpHttpsS3MM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMOOVVMMTTSSMM2TTWWMMVVAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8WWEEBBMMLLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMXXMMLL": {
-      "base": null,
-      "refs": {
-        "Input$FileInput": "Specify the source file for your transcoding job. You can use multiple inputs in a single job. The service concatenates these inputs, in the order that you specify them in the job, to create the outputs. If your input format is IMF, specify your input by providing the path to your CPL. For example, \"s3://bucket/vf/cpl.xml\". If the CPL is in an incomplete IMP, make sure to use *Supplemental IMPs* (SupplementalImps) to specify any supplemental IMPs that contain assets referenced by the CPL."
-      }
-    },
     "__stringPatternHttps": {
       "base": null,
       "refs": {
@@ -3896,6 +4007,18 @@
       "base": null,
       "refs": {
         "__listOf__stringPatternS3ASSETMAPXml$member": null
+      }
+    },
+    "__stringPatternS3MM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMOOVVMMTTSSMM2TTWWMMVVAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8LLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMAAAACCAAIIFFFFMMPP2AACC3EECC3DDTTSSEEHttpsMM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMOOVVMMTTSSMM2TTWWMMVVAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8LLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMAAAACCAAIIFFFFMMPP2AACC3EECC3DDTTSSEE": {
+      "base": null,
+      "refs": {
+        "AudioSelector$ExternalAudioFileInput": "Specifies audio data from an external file source."
+      }
+    },
+    "__stringPatternS3MM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMOOVVMMTTSSMM2TTWWMMVVAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8WWEEBBMMLLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMXXMMLLHttpsMM2VVMMPPEEGGMMPP3AAVVIIMMPP4FFLLVVMMPPTTMMPPGGMM4VVTTRRPPFF4VVMM2TTSSTTSS264HH264MMKKVVMMOOVVMMTTSSMM2TTWWMMVVAASSFFVVOOBB3GGPP3GGPPPPMMXXFFDDIIVVXXXXVVIIDDRRAAWWDDVVGGXXFFMM1VV3GG2VVMMFFMM3UU8WWEEBBMMLLCCHHGGXXFFMMPPEEGG2MMXXFFMMPPEEGG2MMXXFFHHDDWWAAVVYY4MMXXMMLL": {
+      "base": null,
+      "refs": {
+        "Input$FileInput": "Specify the source file for your transcoding job. You can use multiple inputs in a single job. The service concatenates these inputs, in the order that you specify them in the job, to create the outputs. If your input format is IMF, specify your input by providing the path to your CPL. For example, \"s3://bucket/vf/cpl.xml\". If the CPL is in an incomplete IMP, make sure to use *Supplemental IMPs* (SupplementalImps) to specify any supplemental IMPs that contain assets referenced by the CPL."
       }
     },
     "__stringPatternSNManifestConfirmConditionNotificationNS": {

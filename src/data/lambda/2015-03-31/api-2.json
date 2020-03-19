@@ -721,7 +721,8 @@
         {"shape":"ServiceException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceConflictException"}
       ]
     },
     "UntagResource":{
@@ -736,7 +737,8 @@
         {"shape":"ServiceException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceConflictException"}
       ]
     },
     "UpdateAlias":{
@@ -1841,7 +1843,10 @@
         "EniLimitExceeded",
         "InsufficientRolePermissions",
         "InvalidConfiguration",
-        "InternalError"
+        "InternalError",
+        "SubnetOutOfIPAddresses",
+        "InvalidSubnet",
+        "InvalidSecurityGroup"
       ]
     },
     "Layer":{
@@ -2608,6 +2613,7 @@
         "nodejs4.3-edge",
         "go1.x",
         "ruby2.5",
+        "ruby2.7",
         "provided"
       ]
     },
@@ -2670,7 +2676,9 @@
         "InsufficientRolePermissions",
         "InvalidConfiguration",
         "InternalError",
-        "SubnetOutOfIPAddresses"
+        "SubnetOutOfIPAddresses",
+        "InvalidSubnet",
+        "InvalidSecurityGroup"
       ]
     },
     "StatementId":{

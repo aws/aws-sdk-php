@@ -324,6 +324,17 @@ class S3EndpointMiddlewareTest extends TestCase
         $middleware($command, $this->getPathStyleRequest($command));
     }
 
+    public function testIncompatibleHostStyleIpAddressFallback()
+    {
+        $command = new Command('CreateBucket', ['Bucket' => 'abc']);
+        $middleware = new S3EndpointMiddleware(
+            $this->ipAddressPathStyleFallbackAssertingHandler($command),
+            'us-west-2',
+            []
+        );
+        $middleware($command, $this->getIpAddressPathStyleRequest($command));
+    }
+
     public function excludedCommandProvider()
     {
         return array_map(function ($commandName) {
@@ -354,6 +365,11 @@ class S3EndpointMiddlewareTest extends TestCase
     private function getPathStyleRequest(CommandInterface $command)
     {
         return new Request('GET', "https://s3.amazonaws.com/{$command['Bucket']}?key=query");
+    }
+
+    private function getIpAddressPathStyleRequest(CommandInterface $command)
+    {
+        return new Request('GET', "https://127.250.250.250/{$command['Bucket']}?key=query");
     }
 
     private function noAcceleratePatternAssertingHandler(CommandInterface $command, $pattern)
@@ -434,6 +450,21 @@ class S3EndpointMiddlewareTest extends TestCase
         ) use ($command) {
             $this->assertNotContains('s3.dualstack', (string) $req->getUri());
             $this->assertContains($command['Bucket'], $req->getUri()->getHost());
+            $this->assertContains('key=query', $req->getUri()->getQuery());
+        };
+    }
+
+    private function ipAddressPathStyleFallbackAssertingHandler(CommandInterface $command)
+    {
+        return function (
+            CommandInterface $cmd,
+            RequestInterface $req
+        ) use ($command) {
+            $this->assertSame(
+                "127.250.250.250",
+                $req->getUri()->getHost()
+            );
+            $this->assertContains($command['Bucket'], $req->getUri()->getPath());
             $this->assertContains('key=query', $req->getUri()->getQuery());
         };
     }
