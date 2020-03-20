@@ -299,6 +299,7 @@ class ClientSideMonitoringContext extends \PHPUnit_Framework_Assert
             $params['service'] = $service->getEndpointPrefix();
             $params['api_provider'] = $this->testApiProvider;
             $params += $this->sharedConfig;
+            $params += ['retries' => 3];
             return new AwsClient($params);
         }
 
