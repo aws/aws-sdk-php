@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.41 - 2020-03-20
 
 * `Aws\ServiceCatalog` - Added "productId" and "portfolioId" to responses from CreateConstraint, UpdateConstraint, ListConstraintsForPortfolio, and DescribeConstraint APIs
 
