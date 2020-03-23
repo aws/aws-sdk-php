@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGatewayV2` - Documentation updates to reflect that the default timeout for integrations is now 30 seconds for HTTP APIs.
+* `Aws\EKS` - Adding new error code IamLimitExceeded for Nodegroups in EKS
+* `Aws\Route53` - Documentation updates for Route 53.
+
 ## 3.133.41 - 2020-03-20
 
 * `Aws\ServiceCatalog` - Added "productId" and "portfolioId" to responses from CreateConstraint, UpdateConstraint, ListConstraintsForPortfolio, and DescribeConstraint APIs
