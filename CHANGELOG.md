@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.42 - 2020-03-23
 
 * `Aws\ApiGatewayV2` - Documentation updates to reflect that the default timeout for integrations is now 30 seconds for HTTP APIs.
 * `Aws\EKS` - Adding new error code IamLimitExceeded for Nodegroups in EKS
