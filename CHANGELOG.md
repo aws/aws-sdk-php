@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 3.133.43 - 2020-03-24
+
+* `Aws\Athena` - Documentation updates for Athena, including QueryExecutionStatus QUEUED and RUNNING states. QUEUED now indicates that the query has been submitted to the service. RUNNING indicates that the query is in execution phase.
+* `Aws\EKS` - Adding new error codes: Ec2SubnetInvalidConfiguration and NodeCreationFailure for Nodegroups in EKS
+* `Aws\Organizations` - Introduces actions for giving a member account administrative Organizations permissions for an AWS service. You can run this action only for AWS services that support this feature.
+* `Aws\RDSDataService` - Documentation updates for rds-data
+
+## 3.133.42 - 2020-03-23
+
+* `Aws\ApiGatewayV2` - Documentation updates to reflect that the default timeout for integrations is now 30 seconds for HTTP APIs.
+* `Aws\EKS` - Adding new error code IamLimitExceeded for Nodegroups in EKS
+* `Aws\Route53` - Documentation updates for Route 53.
+
+## 3.133.41 - 2020-03-20
+
+* `Aws\ServiceCatalog` - Added "productId" and "portfolioId" to responses from CreateConstraint, UpdateConstraint, ListConstraintsForPortfolio, and DescribeConstraint APIs
+
 ## 3.133.40 - 2020-03-19
 
 * `Aws\ACM` - AWS Certificate Manager documentation updated on API calls ImportCertificate and ListCertificate. Specific updates included input constraints, private key size for import and next token size for list.
