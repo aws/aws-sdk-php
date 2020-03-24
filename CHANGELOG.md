@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Athena` - Documentation updates for Athena, including QueryExecutionStatus QUEUED and RUNNING states. QUEUED now indicates that the query has been submitted to the service. RUNNING indicates that the query is in execution phase.
+* `Aws\EKS` - Adding new error codes: Ec2SubnetInvalidConfiguration and NodeCreationFailure for Nodegroups in EKS
+* `Aws\Organizations` - Introduces actions for giving a member account administrative Organizations permissions for an AWS service. You can run this action only for AWS services that support this feature.
+* `Aws\RDSDataService` - Documentation updates for rds-data
+
 ## 3.133.42 - 2020-03-23
 
 * `Aws\ApiGatewayV2` - Documentation updates to reflect that the default timeout for integrations is now 30 seconds for HTTP APIs.
