@@ -151,6 +151,12 @@ class AwsClient implements AwsClientInterface
      *   array, callable) Configures the retry mode and maximum number of
      *   allowed retries for a client (pass 0 to disable retries). Provide an
      *   integer for 'legacy' mode with the specified number of retries.
+     *   Otherwise provide an instance of Aws\Retry\ConfigurationInterface, an
+     *   instance of  Aws\CacheInterface, a callable function, or an array with
+     *   the following keys: mode: (string) Set to 'legacy', 'standard' (uses
+     *   retry quota management), or 'adapative' (an experimental mode, like
+     *   standard, but also uses client-side rate limiting); max_attempts:
+     *   (int) The maximum number of attempts for a given request.
      * - scheme: (string, default=string(5) "https") URI scheme to use when
      *   connecting connect. The SDK will utilize "https" endpoints (i.e.,
      *   utilize SSL/TLS connections) by default. You can attempt to connect to
