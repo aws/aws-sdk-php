@@ -305,6 +305,14 @@ class RetryMiddlewareV2
             }
         }
 
+        // Check error shape for the retryable trait
+        if (!empty($errorShape = $result->getAwsErrorShape())) {
+            $definition = $errorShape->toArray();
+            if (!empty($definition['retryable'])) {
+                return true;
+            }
+        }
+
         return false;
     }
 
