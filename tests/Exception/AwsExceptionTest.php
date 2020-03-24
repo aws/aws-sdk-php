@@ -1,7 +1,11 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Api\ApiProvider;
+use Aws\Api\Service;
+use Aws\Api\StructureShape;
 use Aws\Command;
+use Aws\Ec2\Ec2Client;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use GuzzleHttp\Psr7\Request;
@@ -130,6 +134,28 @@ class AwsExceptionTest extends TestCase
         $this->assertTrue($e->hasKey('c'));
         $this->assertFalse($e->hasKey('f'));
         $this->assertEquals('b', $e->search('a'));
+    }
+
+    public function testProvidesErrorShape()
+    {
+        $command = new Command('foo');
+        $response = new Response();
+
+        $provider = ApiProvider::filesystem(__DIR__ . '/../fixtures/aws_exception_test');
+        $definition = $provider('api', 'ec2', 'latest');
+        $service = new Service($definition, $provider);
+        $shapes = $service->getErrorShapes();
+        $errorShape = $shapes[0];
+
+        $e = new AwsException(
+            'Foo',
+            $command,
+            [
+                'response' => $response,
+                'error_shape' => $errorShape
+            ]
+        );
+        $this->assertSame($errorShape->toArray(), $e->getAwsErrorShape()->toArray());
     }
 
     public function testCanIndirectlyModifyLikeAnArray()
