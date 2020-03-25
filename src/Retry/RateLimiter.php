@@ -101,15 +101,10 @@ class RateLimiter
         $this->refillTokenBucket();
 
         if ($amount > $this->currentCapacity) {
-            $slept = ($amount - $this->currentCapacity) / $this->fillRate;
-//            echo "Amount slept: {$slept}\n";
             usleep(1000000 * ($amount - $this->currentCapacity) / $this->fillRate);
-        } else {
-//            echo "Did not sleep!\n";
         }
 
         $this->currentCapacity -= $amount;
-
         return true;
     }
 

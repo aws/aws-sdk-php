@@ -6,35 +6,6 @@ use Aws\ResultInterface;
 
 trait RetryHelperTrait
 {
-    private static $standardThrottlingErrors = [
-        'Throttling'                                => true,
-        'ThrottlingException'                       => true,
-        'ThrottledException'                        => true,
-        'RequestThrottledException'                 => true,
-        'TooManyRequestsException'                  => true,
-        'ProvisionedThroughputExceededException'    => true,
-        'TransactionInProgressException'            => true,
-        'RequestLimitExceeded'                      => true,
-        'BandwidthLimitExceeded'                    => true,
-        'LimitExceededException'                    => true,
-        'RequestThrottled'                          => true,
-        'SlowDown'                                  => true,
-        'PriorRequestNotComplete'                   => true,
-        'EC2ThrottledException'                     => true,
-    ];
-
-    private static $standardTransientErrors = [
-        'RequestTimeout'            => true,
-        'RequestTimeoutException'   => true,
-    ];
-
-    private static $standardTransientStatusCodes = [
-        500 => true,
-        502 => true,
-        503 => true,
-        504 => true,
-    ];
-
     private function addRetryHeader($request, $retries, $delayBy)
     {
         return $request->withHeader('aws-sdk-retry', "{$retries}/{$delayBy}");
