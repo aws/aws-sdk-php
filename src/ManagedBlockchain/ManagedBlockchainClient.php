@@ -39,6 +39,10 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listProposalsAsync(array $args = [])
  * @method \Aws\Result rejectInvitation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rejectInvitationAsync(array $args = [])
+ * @method \Aws\Result updateMember(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateMemberAsync(array $args = [])
+ * @method \Aws\Result updateNode(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateNodeAsync(array $args = [])
  * @method \Aws\Result voteOnProposal(array $args = [])
  * @method \GuzzleHttp\Promise\Promise voteOnProposalAsync(array $args = [])
  */
