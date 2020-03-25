@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.44 - 2020-03-25
 
 * `Aws\ApplicationInsights` - Amazon CloudWatch Application Insights for .NET and SQL Server now integrates with Amazon CloudWatch Events (AWS CodeDeploy, AWS Health and Amazon EC2 state changes). This feature enables customers to view events related to problems detected by CloudWatch Application Insights, and reduce mean-time-to-resolution (MTTR).
 * `Aws\CostExplorer` - Customers can now receive Savings Plans recommendations at the member (linked) account level.
