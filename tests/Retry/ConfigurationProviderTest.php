@@ -339,4 +339,55 @@ EOT;
         $this->assertInstanceOf(Configuration::class, $result);
         $this->assertSame($expected->toArray(), $result->toArray());
     }
+
+    public function getSuccessfulUnwrapData()
+    {
+        $expected = new Configuration('standard', 30);
+        return [
+            [
+                function () use ($expected) {
+                    return $expected;
+                },
+                $expected
+            ],
+            [
+                Promise\promise_for($expected),
+                $expected
+            ],
+            [
+                $expected,
+                $expected
+            ],
+            [
+                [
+                    'mode' => 'standard',
+                    'max_attempts' => 30
+                ],
+                $expected
+            ],
+            [
+                [
+                    'mode' => 'standard',
+                ],
+                new Configuration('standard', 3)
+            ],
+            [
+                15,
+                new Configuration('legacy', 16)
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider getSuccessfulUnwrapData
+     * @param $toUnwrap
+     * @param ConfigurationInterface $expected
+     */
+    public function testSuccessfulUnwraps($toUnwrap, ConfigurationInterface $expected)
+    {
+        $this->assertSame(
+            $expected->toArray(),
+            ConfigurationProvider::unwrap($toUnwrap)->toArray()
+        );
+    }
 }
