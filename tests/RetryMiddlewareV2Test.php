@@ -353,6 +353,14 @@ class RetryMiddlewareV2Test extends TestCase
                 'code' => 'ThrottlingException',
             ]
         );
+        $customThrottlingException = new AwsException(
+            'CustomThrottlingException',
+            $command,
+            [
+                'response' => new Response(502),
+                'code' => 'CustomThrottlingException',
+            ]
+        );
 
         $provider = ApiProvider::filesystem(__DIR__ . '/fixtures/aws_exception_test');
         $definition = $provider('api', 'ec2', 'latest');
@@ -378,7 +386,7 @@ class RetryMiddlewareV2Test extends TestCase
 
         $time = microtime(true);
         $attempt = 0;
-        $expectedTimes = [0, 0, 0, 1.8, 3.7];
+        $expectedTimes = [0, 0, 0, 1.9, 3.8, 5.7];
 
         // Errors within MockHandler closure get caught silently
         $errors = [];
@@ -402,6 +410,7 @@ class RetryMiddlewareV2Test extends TestCase
                 $nonThrottlingException,
                 $nonThrottlingException,
                 $throttlingException,
+                $customThrottlingException,
                 $throttlingErrorShapeException,
                 $result200,
             ],
@@ -411,13 +420,13 @@ class RetryMiddlewareV2Test extends TestCase
 
         $times = [0, 0];
         foreach ($expectedTimes as $index => $expected) {
-            for ($i = 0; $i < 4; $i++) {
+            for ($i = 0; $i < 5; $i++) {
                 $times[] = 0.1 * ($index + 1);
             }
         }
 
         $wrapped = new RetryMiddlewareV2(
-            new Configuration('adaptive', 5),
+            new Configuration('adaptive', 6),
             $mock,
             [
                 'rate_limiter' => new RateLimiter([
@@ -430,7 +439,8 @@ class RetryMiddlewareV2Test extends TestCase
                         }
                         return $times[$i];
                     }
-                ])
+                ]),
+                'throttling_error_codes' => ['CustomThrottlingException']
             ]
         );
 
