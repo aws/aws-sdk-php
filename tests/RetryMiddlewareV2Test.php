@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Api\ApiProvider;
+use Aws\Api\Service;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
@@ -22,6 +24,8 @@ use PHPUnit\Framework\TestCase;
  */
 class RetryMiddlewareV2Test extends TestCase
 {
+    use UsesServiceTrait;
+
     /**
      * @dataProvider standardModeTestCases
      *
@@ -338,7 +342,7 @@ class RetryMiddlewareV2Test extends TestCase
             $command,
             [
                 'response' => new Response(500),
-                'code' => 'SomeException'
+                'code' => 'SomeException',
             ]
         );
         $throttlingException = new AwsException(
@@ -346,7 +350,29 @@ class RetryMiddlewareV2Test extends TestCase
             $command,
             [
                 'response' => new Response(502),
-                'code' => 'ThrottlingException'
+                'code' => 'ThrottlingException',
+            ]
+        );
+
+        $provider = ApiProvider::filesystem(__DIR__ . '/fixtures/aws_exception_test');
+        $definition = $provider('api', 'ec2', 'latest');
+        $service = new Service($definition, $provider);
+        $shapes = $service->getErrorShapes();
+        $errorShape = null;
+        foreach ($shapes as $shape) {
+            $definition = $shape->toArray();
+            if (!empty($definition['retryable']['throttling'])) {
+                $errorShape = $shape;
+                break;
+            }
+        }
+        $throttlingErrorShapeException = new AwsException(
+            'ThrottlingErrorShape',
+            $command,
+            [
+                'response' => new Response(400),
+                'code' => 'ThrottlingErrorShape',
+                'error_shape' => $errorShape,
             ]
         );
 
@@ -376,7 +402,7 @@ class RetryMiddlewareV2Test extends TestCase
                 $nonThrottlingException,
                 $nonThrottlingException,
                 $throttlingException,
-                $throttlingException,
+                $throttlingErrorShapeException,
                 $result200,
             ],
             $assertFunction,
@@ -614,6 +640,33 @@ class RetryMiddlewareV2Test extends TestCase
         $this->assertTrue($decider(0, $command, $err));
         $err = new AwsException('e', $command, ['response' => new Response(403)]);
         $this->assertFalse($decider(0, $command, $err));
+    }
+
+    public function testDeciderRetriesForRetryableTrait()
+    {
+        $decider = RetryMiddlewareV2::createDefaultDecider(new QuotaManager());
+        $provider = ApiProvider::filesystem(__DIR__ . '/fixtures/aws_exception_test');
+        $definition = $provider('api', 'ec2', 'latest');
+        $service = new Service($definition, $provider);
+        $shapes = $service->getErrorShapes();
+        $errorShape = null;
+        foreach ($shapes as $shape) {
+            $definition = $shape->toArray();
+            if (!empty($definition['retryable'])) {
+                $errorShape = $shape;
+                break;
+            }
+        }
+        $command = new Command('foo');
+        $err = new AwsException(
+            'e',
+            $command,
+            [
+                'response' => new Response(400),
+                'error_shape' => $errorShape
+            ]
+        );
+        $this->assertTrue($decider(0, $command, $err));
     }
 
     public function testDeciderRetriesForCustomErrorCodes()
