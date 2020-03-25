@@ -674,11 +674,18 @@ class RetryMiddlewareV2Test extends TestCase
         $decider = RetryMiddlewareV2::createDefaultDecider(
             new QuotaManager(),
             3,
-            ['transient_error_codes' => ['CustomRetryableException']]
+            [
+                'transient_error_codes' => ['CustomRetryableException'],
+                'throttling_error_codes' => ['CustomThrottlingException'],
+            ]
         );
         $command = new Command('foo');
         $err = new AwsException('e', $command, [
             'code' => 'CustomRetryableException'
+        ]);
+        $this->assertTrue($decider(0, $command, $err));
+        $err = new AwsException('e', $command, [
+            'code' => 'CustomThrottlingException'
         ]);
         $this->assertTrue($decider(0, $command, $err));
         $err = new AwsException('e', $command, [
