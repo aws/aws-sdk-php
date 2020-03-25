@@ -282,6 +282,20 @@ class ClientResolverTest extends TestCase
         ], new HandlerList());
     }
 
+    public function testCanEnableRetriesV2()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $r->resolve([
+            'service'      => 's3',
+            'region'       => 'baz',
+            'version'      => 'latest',
+            'retries'      => [
+                'mode' => 'standard',
+                'max_attempts' => 10,
+            ]
+        ], new HandlerList());
+    }
+
     public function testCanCreateNullCredentials()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
