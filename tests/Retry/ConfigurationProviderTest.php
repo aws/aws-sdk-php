@@ -390,4 +390,13 @@ EOT;
             ConfigurationProvider::unwrap($toUnwrap)->toArray()
         );
     }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Not a valid retry configuration argument
+     */
+    public function testThrowsForInvalidUnwrapArgument()
+    {
+        ConfigurationProvider::unwrap('some_string');
+    }
 }
