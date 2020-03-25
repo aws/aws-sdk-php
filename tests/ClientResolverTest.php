@@ -282,7 +282,7 @@ class ClientResolverTest extends TestCase
         ], new HandlerList());
     }
 
-    public function testCanEnableRetriesV2()
+    public function testCanEnableRetriesStandardMode()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([
@@ -291,6 +291,20 @@ class ClientResolverTest extends TestCase
             'version'      => 'latest',
             'retries'      => [
                 'mode' => 'standard',
+                'max_attempts' => 10,
+            ]
+        ], new HandlerList());
+    }
+
+    public function testCanEnableRetriesAdaptivedMode()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $r->resolve([
+            'service'      => 's3',
+            'region'       => 'baz',
+            'version'      => 'latest',
+            'retries'      => [
+                'mode' => 'adaptive',
                 'max_attempts' => 10,
             ]
         ], new HandlerList());

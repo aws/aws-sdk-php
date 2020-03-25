@@ -710,6 +710,47 @@ class RetryMiddlewareV2Test extends TestCase
         $this->assertFalse($decider(3, $command, $err));
     }
 
+    public function testUsesCustomDelayer()
+    {
+        $command = new Command('foo');
+        $request = new Request('GET', 'http://www.example.com');
+        $attempts = 0;
+        $handler = function ($command, $request) use (&$attempts) {
+            if ($attempts > 0) {
+                $this->assertEquals(9999, $command['@http']['delay']);
+            }
+            $attempts++;
+            return \GuzzleHttp\Promise\rejection_for(
+                new AwsException(
+                    'foo',
+                    $command,
+                    [
+                        'response' => new Response(502)
+                    ]
+                )
+            );
+        };
+
+        $wrapped = new RetryMiddlewareV2(
+            new Configuration('standard', 3),
+            $handler,
+            [
+                'decider' => RetryMiddlewareV2::createDefaultDecider(new QuotaManager()),
+                'delayer' => function () {
+                    return 9999;
+                }
+            ]
+        );
+
+        try {
+            $wrapped($command, $request)->wait();
+            $this->fail();
+        } catch (AwsException $e) {
+            $this->assertEquals(3, $attempts);
+            $this->assertContains('foo', $e->getMessage());
+        }
+    }
+
     public function testDelaysExponentiallyWithJitter()
     {
         $retryMiddleware = new RetryMiddlewareV2(new Configuration('standard', 3), function () {});
