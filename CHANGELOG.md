@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.45 - 2020-03-26
 
 * `Aws\FSx` - This release includes two changes: a new lower-cost, storage type called HDD (Hard Disk Drive), and a new generation of the Single-AZ deployment type called Single AZ 2. The HDD storage type can be selected on Multi AZ 1 and Single AZ 2 deployment types.
 * `Aws\SageMaker` - This release updates Amazon Augmented AI CreateFlowDefinition API and DescribeFlowDefinition response.
