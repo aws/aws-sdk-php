@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.46 - 2020-03-27
 
 * `Aws\GlobalAccelerator` - This update adds an event history to the ListByoipCidr API call. This enables you to see the changes that you've made for an IP address range that you bring to AWS Global Accelerator through bring your own IP address (BYOIP).
 * `Aws\ServiceCatalog` - Added "LocalRoleName" as an acceptable Parameter for Launch type in CreateConstraint and UpdateConstraint APIs
