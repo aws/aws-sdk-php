@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.133.47 - 2020-03-30
 
 * `Aws\AccessAnalyzer` - This release adds support for the creation and management of IAM Access Analyzer analyzers with type organization. An analyzer with type organization continuously monitors all supported resources within the AWS organization and reports findings when they allow access from outside the organization.
 
