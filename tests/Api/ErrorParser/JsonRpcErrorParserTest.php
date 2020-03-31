@@ -3,7 +3,9 @@ namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\JsonRpcErrorParser;
 use Aws\Api\ErrorParser\RestJsonErrorParser;
+use Aws\Api\StructureShape;
 use Aws\Test\TestServiceTrait;
+use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 
@@ -30,15 +32,28 @@ class JsonRpcErrorParserTest extends TestCase
         $expected
     ) {
         $response = Psr7\parse_response($response);
+        $parsed = $parser($response, $command);
         $this->assertEquals(
-            $expected,
-            $parser($response, $command)
+            count($expected),
+            count($parsed)
         );
+        foreach($parsed as $key => $value) {
+            if ($key === 'error_shape') {
+                $this->assertEquals(
+                    $expected['error_shape']->toArray(),
+                    $value->toArray()
+                );
+            } else {
+                $this->assertEquals($expected[$key], $value);
+            }
+        }
     }
 
     public function errorResponsesProvider()
     {
         $service = $this->generateTestService('json');
+        $shapes = $service->getErrorShapes();
+        $errorShape = $shapes[0];
         $client = $this->generateTestClient($service);
         $command = $client->getCommand('TestOperation', []);
 
@@ -93,7 +108,8 @@ class JsonRpcErrorParserTest extends TestCase
                         ],
                         'TestStatus'        => 400,
                     ],
-                    'message' => 'Test Message'
+                    'message' => 'Test Message',
+                    'error_shape' => $errorShape
                 ]
             ],
             // Unmodeled shape, with service

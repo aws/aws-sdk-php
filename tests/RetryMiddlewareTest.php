@@ -122,7 +122,7 @@ class RetryMiddlewareTest extends TestCase
         }
         $decider = RetryMiddleware::createDefaultDecider(
             3,
-            ['curlErrors' => [CURLE_BAD_CONTENT_ENCODING]]
+            ['curl_errors' => [CURLE_BAD_CONTENT_ENCODING]]
         );
         $command = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');
@@ -226,7 +226,7 @@ class RetryMiddlewareTest extends TestCase
     {
         $decider = RetryMiddleware::createDefaultDecider(
             3,
-            ['errorCodes' => ['CustomRetryableException']]
+            ['error_codes' => ['CustomRetryableException']]
         );
         $command = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');
@@ -244,7 +244,7 @@ class RetryMiddlewareTest extends TestCase
     {
         $decider = RetryMiddleware::createDefaultDecider(
             3,
-            ['statusCodes' => [400]]
+            ['status_codes' => [400]]
         );
         $command = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');

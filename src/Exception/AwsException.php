@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Exception;
 
+use Aws\Api\Shape;
 use Aws\CommandInterface;
 use Aws\HasDataTrait;
 use Aws\HasMonitoringEventsTrait;
@@ -30,6 +31,7 @@ class AwsException extends \RuntimeException implements
     private $requestId;
     private $errorType;
     private $errorCode;
+    private $errorShape;
     private $connectionError;
     private $transferInfo;
     private $errorMessage;
@@ -57,6 +59,7 @@ class AwsException extends \RuntimeException implements
             : null;
         $this->errorType = isset($context['type']) ? $context['type'] : null;
         $this->errorCode = isset($context['code']) ? $context['code'] : null;
+        $this->errorShape = isset($context['error_shape']) ? $context['error_shape'] : null;
         $this->connectionError = !empty($context['connection_error']);
         $this->result = isset($context['result']) ? $context['result'] : null;
         $this->transferInfo = isset($context['transfer_stats'])
@@ -190,6 +193,16 @@ class AwsException extends \RuntimeException implements
     public function getAwsErrorCode()
     {
         return $this->errorCode;
+    }
+
+    /**
+     * Get the AWS error shape.
+     *
+     * @return Shape|null Returns null if no response was received
+     */
+    public function getAwsErrorShape()
+    {
+        return $this->errorShape;
     }
 
     /**

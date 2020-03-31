@@ -147,8 +147,16 @@ class AwsClient implements AwsClientInterface
      * - region: (string, required) Region to connect to. See
      *   http://docs.aws.amazon.com/general/latest/gr/rande.html for a list of
      *   available regions.
-     * - retries: (int, default=int(3)) Configures the maximum number of
-     *   allowed retries for a client (pass 0 to disable retries).
+     * - retries: (int, Aws\Retry\ConfigurationInterface, Aws\CacheInterface,
+     *   array, callable) Configures the retry mode and maximum number of
+     *   allowed retries for a client (pass 0 to disable retries). Provide an
+     *   integer for 'legacy' mode with the specified number of retries.
+     *   Otherwise provide an instance of Aws\Retry\ConfigurationInterface, an
+     *   instance of  Aws\CacheInterface, a callable function, or an array with
+     *   the following keys: mode: (string) Set to 'legacy', 'standard' (uses
+     *   retry quota management), or 'adapative' (an experimental mode that adds
+     *   client-side rate limiting to standard mode); max_attempts (int) The
+     *   maximum number of attempts for a given request.
      * - scheme: (string, default=string(5) "https") URI scheme to use when
      *   connecting connect. The SDK will utilize "https" endpoints (i.e.,
      *   utilize SSL/TLS connections) by default. You can attempt to connect to

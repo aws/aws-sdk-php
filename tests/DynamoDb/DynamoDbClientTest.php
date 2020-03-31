@@ -15,12 +15,14 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \Aws\DynamoDb\DynamoDbClient
- * @runTestsInSeparateProcesses
  */
 class DynamoDbClientTest extends TestCase
 {
     use UsesServiceTrait;
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testRegisterSessionHandlerReturnsHandler()
     {
         $client = $this->getTestSdk()->createDynamoDb();
@@ -84,7 +86,10 @@ class DynamoDbClientTest extends TestCase
         ];
     }
 
-    public function testRetriesOnDynamoSpecificRetryableException()
+    /**
+     * @dataProvider dataProviderRetrySettings
+     */
+    public function testRetriesOnDynamoSpecificRetryableException($settings)
     {
         $params = [
             'TableName' => 'foo',
@@ -117,7 +122,8 @@ class DynamoDbClientTest extends TestCase
 
         $client = new DynamoDbClient([
             'region'       => 'us-east-1',
-            'version'      => 'latest'
+            'version'      => 'latest',
+            'retries'      => $settings,
         ]);
 
         $list = $client->getHandlerList();
@@ -131,6 +137,27 @@ class DynamoDbClientTest extends TestCase
         }
 
         $this->assertEquals(3, $attemptCount);
+    }
+
+    public function dataProviderRetrySettings()
+    {
+        return [
+            [
+                [
+                    'mode' => 'legacy'
+                ]
+            ],
+            [
+                [
+                    'mode' => 'standard'
+                ]
+            ],
+            [
+                [
+                    'mode' => 'adaptive'
+                ]
+            ],
+        ];
     }
 
     public function testValidatesAndRetriesCrc32()
@@ -152,7 +179,7 @@ class DynamoDbClientTest extends TestCase
         $client = new DynamoDbClient([
             'region'       => 'us-east-1',
             'version'      => 'latest',
-            'http_handler' => $handler
+            'http_handler' => $handler,
         ]);
 
         $client->getItem([
@@ -163,7 +190,12 @@ class DynamoDbClientTest extends TestCase
         $this->assertEmpty($queue);
     }
 
-    public function testAppliesRetryStatsConfig()
+    /**
+     * @dataProvider dataProviderRetrySettings
+     *
+     * @param $settings
+     */
+    public function testAppliesRetryStatsConfig($settings)
     {
         $client = new DynamoDbClient([
             'stats' => ['retries' => true],
@@ -176,6 +208,7 @@ class DynamoDbClientTest extends TestCase
                     ])
                 );
             },
+            'retries' => $settings
         ]);
 
         try {

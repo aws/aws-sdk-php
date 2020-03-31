@@ -8,6 +8,7 @@ use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\RetryMiddleware;
+use Aws\RetryMiddlewareV2;
 
 /**
  * This client is used to interact with the **Amazon DynamoDB** service.
@@ -126,27 +127,40 @@ class DynamoDbClient extends AwsClient
     /** @internal */
     public static function _applyRetryConfig($value, array &$args, HandlerList $list)
     {
-        if (!$value) {
-            return;
-        }
+        if ($value) {
+            $config = \Aws\Retry\ConfigurationProvider::unwrap($value);
 
-        $list->appendSign(
-            Middleware::retry(
-                RetryMiddleware::createDefaultDecider(
-                    $value,
-                    ['errorCodes' => ['TransactionInProgressException']]
-                ),
-                function ($retries) {
-                    return $retries
-                        ? RetryMiddleware::exponentialDelay($retries) / 2
-                        : 0;
-                },
-                isset($args['stats']['retries'])
-                    ? (bool) $args['stats']['retries']
-                    : false
-            ),
-            'retry'
-        );
+            if ($config->getMode() === 'legacy') {
+                $list->appendSign(
+                    Middleware::retry(
+                        RetryMiddleware::createDefaultDecider(
+                            $config->getMaxAttempts() - 1,
+                            ['error_codes' => ['TransactionInProgressException']]
+                        ),
+                        function ($retries) {
+                            return $retries
+                                ? RetryMiddleware::exponentialDelay($retries) / 2
+                                : 0;
+                        },
+                        isset($args['stats']['retries'])
+                            ? (bool)$args['stats']['retries']
+                            : false
+                    ),
+                    'retry'
+                );
+            } else {
+                $list->appendSign(
+                    RetryMiddlewareV2::wrap(
+                        $config,
+                        [
+                            'collect_stats' => $args['stats']['retries'],
+                            'transient_error_codes' => ['TransactionInProgressException']
+                        ]
+                    ),
+                    'retry'
+                );
+            }
+        }
     }
 
     /** @internal */
