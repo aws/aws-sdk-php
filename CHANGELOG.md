@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds support for standard and adaptive retry modes. Standard mode adds a retry quota system, while the experimental adaptive mode adds a client-side rate limiting feature on top of standard mode.
+* `Aws\AppConfig` - This release adds an event log to deployments. In the case of a deployment rollback, the event log details the rollback reason.
+* `Aws\Detective` - Removing the notes that Detective is in preview, in preparation for the Detective GA release.
+* `Aws\ElasticInference` - This release includes improvements for the Amazon Elastic Inference service.
+* `Aws\FMS` - This release contains FMS wafv2 support.
+* `Aws\Glue` - Add two enums for MongoDB connection: Added "CONNECTION_URL" to "ConnectionPropertyKey" and added "MONGODB" to "ConnectionType"
+* `Aws\Lambda` - AWS Lambda now supports .NET Core 3.1
+* `Aws\MediaStore` - This release adds support for CloudWatch Metrics. You can now set a policy on your container to dictate which metrics MediaStore sends to CloudWatch.
+* `Aws\OpsWorksCM` - Documentation updates for OpsWorks-CM CreateServer values.
+* `Aws\Organizations` - Documentation updates for AWS Organizations
+* `Aws\Pinpoint` - This release of the Amazon Pinpoint API introduces MMS support for SMS messages.
+* `Aws\Rekognition` - This release adds DeleteProject and DeleteProjectVersion APIs to Amazon Rekognition Custom Labels.
+* `Aws\StorageGateway` - Adding audit logging support for SMB File Shares
+* `Aws\WAFV2` - Added support for AWS Firewall Manager for WAFv2 and PermissionPolicy APIs for WAFv2.
+
 ## 3.133.47 - 2020-03-30
 
 * `Aws\AccessAnalyzer` - This release adds support for the creation and management of IAM Access Analyzer analyzers with type organization. An analyzer with type organization continuously monitors all supported resources within the AWS organization and reports findings when they allow access from outside the organization.
