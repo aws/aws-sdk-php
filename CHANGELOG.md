@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.134.0 - 2020-03-31
 
 * `Aws\` - Adds support for standard and adaptive retry modes. Standard mode adds a retry quota system, while the experimental adaptive mode adds a client-side rate limiting feature on top of standard mode.
 * `Aws\AppConfig` - This release adds an event log to deployments. In the case of a deployment rollback, the event log details the rollback reason.
