@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoT` - This release introduces Dimensions for AWS IoT Device Defender. Dimensions can be used in Security Profiles to collect and monitor fine-grained metrics.
+* `Aws\MediaConnect` - You can now send content from your virtual private cloud (VPC) to your MediaConnect flow without going over the public internet.
+
 ## 3.134.0 - 2020-03-31
 
 * `Aws\` - Adds support for standard and adaptive retry modes. Standard mode adds a retry quota system, while the experimental adaptive mode adds a client-side rate limiting feature on top of standard mode.
