@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.134.1 - 2020-04-01
 
 * `Aws\IoT` - This release introduces Dimensions for AWS IoT Device Defender. Dimensions can be used in Security Profiles to collect and monitor fine-grained metrics.
 * `Aws\MediaConnect` - You can now send content from your virtual private cloud (VPC) to your MediaConnect flow without going over the public internet.
