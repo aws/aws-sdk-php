@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PersonalizeRuntime` - Amazon Personalize: Add new response field "score" to each item returned by GetRecommendations and GetPersonalizedRanking (HRNN-based recipes only)
+* `Aws\RoboMaker` - Added support for limiting simulation unit usage, giving more predictable control over simulation cost
+
 ## 3.134.2 - 2020-04-02
 
 * `Aws\CloudWatch` - Amazon CloudWatch Contributor Insights adds support for tags and tagging on resource creation. 
