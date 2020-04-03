@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.134.3 - 2020-04-03
 
 * `Aws\PersonalizeRuntime` - Amazon Personalize: Add new response field "score" to each item returned by GetRecommendations and GetPersonalizedRanking (HRNN-based recipes only)
 * `Aws\RoboMaker` - Added support for limiting simulation unit usage, giving more predictable control over simulation cost
