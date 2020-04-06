@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Chime` - Amazon Chime proxy phone sessions let you provide two users with a shared phone number to communicate via voice or text for up to 12 hours without revealing personal phone numbers. When users call or message the provided phone number, they are connected to the other party and their private phone numbers are replaced with the shared number in Caller ID.
+* `Aws\ElasticBeanstalk` - This release adds a new action, ListPlatformBranches, and updates two actions, ListPlatformVersions and DescribePlatformVersion, to support the concept of Elastic Beanstalk platform branches.
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+* `Aws\TranscribeService` - This release adds support for batch transcription jobs within Amazon Transcribe Medical.
+
 ## 3.134.3 - 2020-04-03
 
 * `Aws\PersonalizeRuntime` - Amazon Personalize: Add new response field "score" to each item returned by GetRecommendations and GetPersonalizedRanking (HRNN-based recipes only)

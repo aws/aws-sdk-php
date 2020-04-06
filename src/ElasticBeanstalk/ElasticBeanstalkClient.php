@@ -64,6 +64,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describePlatformVersionAsync(array $args = [])
  * @method \Aws\Result listAvailableSolutionStacks(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAvailableSolutionStacksAsync(array $args = [])
+ * @method \Aws\Result listPlatformBranches(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listPlatformBranchesAsync(array $args = [])
  * @method \Aws\Result listPlatformVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPlatformVersionsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
