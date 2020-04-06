@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.134.4 - 2020-04-06
 
 * `Aws\Chime` - Amazon Chime proxy phone sessions let you provide two users with a shared phone number to communicate via voice or text for up to 12 hours without revealing personal phone numbers. When users call or message the provided phone number, they are connected to the other party and their private phone numbers are replaced with the shared number in Caller ID.
 * `Aws\ElasticBeanstalk` - This release adds a new action, ListPlatformBranches, and updates two actions, ListPlatformVersions and DescribePlatformVersion, to support the concept of Elastic Beanstalk platform branches.
