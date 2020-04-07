@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.134.5 - 2020-04-07
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway.
 * `Aws\CodeGuruReviewer` - API updates for CodeGuruReviewer 
