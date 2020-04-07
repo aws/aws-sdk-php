@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway.
+* `Aws\CodeGuruReviewer` - API updates for CodeGuruReviewer 
+* `Aws\MediaConnect` - You can now send content from your MediaConnect flow to your virtual private cloud (VPC) without going over the public internet.
+
 ## 3.134.4 - 2020-04-06
 
 * `Aws\Chime` - Amazon Chime proxy phone sessions let you provide two users with a shared phone number to communicate via voice or text for up to 12 hours without revealing personal phone numbers. When users call or message the provided phone number, they are connected to the other party and their private phone numbers are replaced with the shared number in Caller ID.
