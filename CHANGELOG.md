@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Chime` - feature: Chime: This release introduces the ability to tag Amazon Chime SDK meeting resources. You can use tags to organize and identify your resources for cost allocation. 
+* `Aws\CloudFormation` - The OrganizationalUnitIds parameter on StackSet and the OrganizationalUnitId parameter on StackInstance, StackInstanceSummary, and StackSetOperationResultSummary are now reserved for internal use. No data is returned for this parameter.
+* `Aws\CodeGuruProfiler` - CodeGuruProfiler adds support for resource based authorization to submit profile data.
+* `Aws\EC2` - This release provides the ability to include tags in EC2 event notifications. 
+* `Aws\ECS` - This release provides native support for specifying Amazon EFS file systems as volumes in your Amazon ECS task definitions.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK adds support for queue hopping. Jobs can now hop from their original queue to a specified alternate queue, based on the maximum wait time that you specify in the job settings.
+* `Aws\MigrationHubConfig` - Adding ThrottlingException
+
 ## 3.134.5 - 2020-04-07
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway.
