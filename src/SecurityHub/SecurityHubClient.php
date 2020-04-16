@@ -13,6 +13,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchEnableStandardsAsync(array $args = [])
  * @method \Aws\Result batchImportFindings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchImportFindingsAsync(array $args = [])
+ * @method \Aws\Result batchUpdateFindings(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchUpdateFindingsAsync(array $args = [])
  * @method \Aws\Result createActionTarget(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createActionTargetAsync(array $args = [])
  * @method \Aws\Result createInsight(array $args = [])

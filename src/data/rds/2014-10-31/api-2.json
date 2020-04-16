@@ -65,8 +65,10 @@
       "input":{"shape":"AddTagsToResourceMessage"},
       "errors":[
         {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBClusterNotFoundFault"},
         {"shape":"DBSnapshotNotFoundFault"},
-        {"shape":"DBClusterNotFoundFault"}
+        {"shape":"DBProxyNotFoundFault"},
+        {"shape":"DBProxyTargetGroupNotFoundFault"}
       ]
     },
     "ApplyPendingMaintenanceAction":{
@@ -1428,7 +1430,9 @@
       "errors":[
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"DBSnapshotNotFoundFault"},
-        {"shape":"DBClusterNotFoundFault"}
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"DBProxyNotFoundFault"},
+        {"shape":"DBProxyTargetGroupNotFoundFault"}
       ]
     },
     "ModifyCertificates":{
@@ -1881,7 +1885,9 @@
       "errors":[
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"DBSnapshotNotFoundFault"},
-        {"shape":"DBClusterNotFoundFault"}
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"DBProxyNotFoundFault"},
+        {"shape":"DBProxyTargetGroupNotFoundFault"}
       ]
     },
     "ResetDBClusterParameterGroup":{
@@ -3991,7 +3997,10 @@
         "incompatible-network",
         "insufficient-resource-limits",
         "creating",
-        "deleting"
+        "deleting",
+        "suspended",
+        "suspending",
+        "reactivating"
       ]
     },
     "DBProxyTarget":{
@@ -4002,7 +4011,8 @@
         "TrackedClusterId":{"shape":"String"},
         "RdsResourceId":{"shape":"String"},
         "Port":{"shape":"Integer"},
-        "Type":{"shape":"TargetType"}
+        "Type":{"shape":"TargetType"},
+        "TargetHealth":{"shape":"TargetHealth"}
       }
     },
     "DBProxyTargetAlreadyRegisteredFault":{
@@ -5097,7 +5107,10 @@
     },
     "EngineFamily":{
       "type":"string",
-      "enum":["MYSQL"]
+      "enum":[
+        "MYSQL",
+        "POSTGRESQL"
+      ]
     },
     "EngineModeList":{
       "type":"list",
@@ -7543,9 +7556,34 @@
       "type":"list",
       "member":{"shape":"DBProxyTargetGroup"}
     },
+    "TargetHealth":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"TargetState"},
+        "Reason":{"shape":"TargetHealthReason"},
+        "Description":{"shape":"String"}
+      }
+    },
+    "TargetHealthReason":{
+      "type":"string",
+      "enum":[
+        "UNREACHABLE",
+        "CONNECTION_FAILED",
+        "AUTH_FAILURE",
+        "PENDING_PROXY_CAPACITY"
+      ]
+    },
     "TargetList":{
       "type":"list",
       "member":{"shape":"DBProxyTarget"}
+    },
+    "TargetState":{
+      "type":"string",
+      "enum":[
+        "REGISTERING",
+        "AVAILABLE",
+        "UNAVAILABLE"
+      ]
     },
     "TargetType":{
       "type":"string",
