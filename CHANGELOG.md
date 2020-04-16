@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.134.7 - 2020-04-16
 
 * `Aws\AugmentedAIRuntime` - This release updates Amazon Augmented AI ListHumanLoops and StartHumanLoop APIs.
 * `Aws\EC2` - Amazon EC2 now supports adding AWS resource tags for placement groups and key pairs, at creation time. The CreatePlacementGroup API will now return placement group information when created successfully. The DeleteKeyPair API now supports deletion by resource ID.
