@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\FraudDetector` - Added support for a new rule engine execution mode. Customers will be able to configure their detector versions to evaluate all rules and return outcomes from all 'matched' rules in the GetPrediction API response. Added support for deleting Detectors (DeleteDetector) and Rule Versions (DeleteRuleVersion).
+* `Aws\OpsWorksCM` - Documentation updates for opsworkscm
+
 ## 3.134.7 - 2020-04-16
 
 * `Aws\AugmentedAIRuntime` - This release updates Amazon Augmented AI ListHumanLoops and StartHumanLoop APIs.
