@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.134.8 - 2020-04-17
 
 * `Aws\FraudDetector` - Added support for a new rule engine execution mode. Customers will be able to configure their detector versions to evaluate all rules and return outcomes from all 'matched' rules in the GetPrediction API response. Added support for deleting Detectors (DeleteDetector) and Rule Versions (DeleteRuleVersion).
 * `Aws\OpsWorksCM` - Documentation updates for opsworkscm
