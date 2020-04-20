@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.135.0 - 2020-04-20
 
 * `Aws\ApiGatewayV2` - You can now export an OpenAPI 3.0 compliant API definition file for Amazon API Gateway HTTP APIs using the Export API.
 * `Aws\CostExplorer` - Cost Categories API is now General Available with new dimensions and operations support. You can map costs by account name, service, and charge type dimensions as well as use contains, starts with, and ends with operations. Cost Categories can also be used in RI and SP coverage reports.
