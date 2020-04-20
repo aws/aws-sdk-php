@@ -408,6 +408,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSupport(array $args = [])
  * @method \Aws\Swf\SwfClient createSwf(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSwf(array $args = [])
+ * @method \Aws\Synthetics\SyntheticsClient createSynthetics(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSynthetics(array $args = [])
  * @method \Aws\Textract\TextractClient createTextract(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTextract(array $args = [])
  * @method \Aws\TranscribeService\TranscribeServiceClient createTranscribeService(array $args = [])

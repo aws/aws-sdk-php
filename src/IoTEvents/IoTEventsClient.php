@@ -37,5 +37,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateDetectorModelAsync(array $args = [])
  * @method \Aws\Result updateInput(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateInputAsync(array $args = [])
+ * @method \Aws\Result verifyResourcesExistForTagris(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise verifyResourcesExistForTagrisAsync(array $args = [])
  */
 class IoTEventsClient extends AwsClient {}
