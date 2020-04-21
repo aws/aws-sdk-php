@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CostExplorer` - Cost Explorer Rightsizing Recommendations integrates with Compute Optimizer and begins offering across instance family rightsizing recommendations, adding to existing support for within instance family rightsizing recommendations. 
+* `Aws\EMR` - Amazon EMR adds support for configuring a managed scaling policy for an Amazon EMR cluster. This enables automatic resizing of a cluster to optimize for job execution speed and reduced cluster cost.
+* `Aws\GuardDuty` - AWS GuardDuty now supports using AWS Organizations delegated administrators to create and manage GuardDuty master and member accounts. The feature also allows GuardDuty to be automatically enabled on associated organization accounts.
+* `Aws\Route53Domains` - You can now programmatically transfer domains between AWS accounts without having to contact AWS Support
+
 ## 3.135.0 - 2020-04-20
 
 * `Aws\ApiGatewayV2` - You can now export an OpenAPI 3.0 compliant API definition file for Amazon API Gateway HTTP APIs using the Export API.
