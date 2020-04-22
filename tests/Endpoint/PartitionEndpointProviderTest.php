@@ -242,7 +242,7 @@ class PartitionEndpointProviderTest extends TestCase
     {
         $prefixData = [
             "prefix-groups" => [
-                "ec2" => ["ec2_old", "ec2_deprecated"],
+                "ec2" => ["ec2_old", "ec2_deprecated", "ec2-hyphen"],
                 "s3" => ["s3_old"],
             ],
         ];
