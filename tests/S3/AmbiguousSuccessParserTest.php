@@ -71,6 +71,7 @@ class AmbiguousSuccessParserTest extends TestCase
     {
         return [
             ['CopyObject'],
+            ['UploadPart'],
             ['UploadPartCopy'],
             ['CompleteMultipartUpload'],
         ];

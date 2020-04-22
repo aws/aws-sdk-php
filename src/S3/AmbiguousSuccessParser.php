@@ -16,6 +16,7 @@ use Psr\Http\Message\StreamInterface;
 class AmbiguousSuccessParser extends AbstractParser
 {
     private static $ambiguousSuccesses = [
+        'UploadPart' => true,
         'UploadPartCopy' => true,
         'CopyObject' => true,
         'CompleteMultipartUpload' => true,
