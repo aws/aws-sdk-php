@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeGuruReviewer` - Add support for code review and recommendation feedback APIs.
+* `Aws\ElasticsearchService` - This change adds a new field 'OptionalDeployment' to ServiceSoftwareOptions to indicate whether a service software update is optional or mandatory. If True, it indicates that the update is optional, and the service software is not automatically updated. If False, the service software is automatically updated after AutomatedUpdateDate.
+* `Aws\FMS` - This release is to support AWS Firewall Manager policy with Organizational Unit scope. 
+* `Aws\Redshift` - Amazon Redshift support for usage limits
+* `Aws\TranscribeStreamingService` - Adding ServiceUnavailableException as one of the expected exceptions
+
 ## 3.135.1 - 2020-04-21
 
 * `Aws\CostExplorer` - Cost Explorer Rightsizing Recommendations integrates with Compute Optimizer and begins offering across instance family rightsizing recommendations, adding to existing support for within instance family rightsizing recommendations. 
