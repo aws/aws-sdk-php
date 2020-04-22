@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.135.2 - 2020-04-22
 
 * `Aws\CodeGuruReviewer` - Add support for code review and recommendation feedback APIs.
 * `Aws\ElasticsearchService` - This change adds a new field 'OptionalDeployment' to ServiceSoftwareOptions to indicate whether a service software update is optional or mandatory. If True, it indicates that the update is optional, and the service software is not automatically updated. If False, the service software is automatically updated after AutomatedUpdateDate.
