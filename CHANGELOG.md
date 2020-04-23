@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.135.3 - 2020-04-23
 
 * `Aws\ApplicationAutoScaling` - This release supports Auto Scaling in Amazon Keyspaces for Apache Cassandra.
 * `Aws\Endpoint` - Fix for partition endpoint history logic for keys with hyphens.
