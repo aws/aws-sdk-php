@@ -114,10 +114,10 @@ class PartitionEndpointProvider
 
         foreach ($data["partitions"] as $index => $partition) {
             foreach ($prefixGroups as $current => $old) {
-                $serviceData = Env::search("services.{$current}", $partition);
+                $serviceData = Env::search("services.\"{$current}\"", $partition);
                 if (!empty($serviceData)) {
                     foreach ($old as $prefix) {
-                        if (empty(Env::search("services.{$prefix}", $partition))) {
+                        if (empty(Env::search("services.\"{$prefix}\"", $partition))) {
                             $data["partitions"][$index]["services"][$prefix] = $serviceData;
                         }
                     }
