@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.135.4 - 2020-04-24
 
 * `Aws\DLM` - Enable 1hour frequency in the schedule creation for Data LifeCycle Manager.
 * `Aws\ElasticInference` - This feature allows customers to describe the accelerator types and offerings on any region where Elastic Inference is available.
