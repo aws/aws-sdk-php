@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DLM` - Enable 1hour frequency in the schedule creation for Data LifeCycle Manager.
+* `Aws\ElasticInference` - This feature allows customers to describe the accelerator types and offerings on any region where Elastic Inference is available.
+* `Aws\IoT` - This release adds a new exception type to the AWS IoT SetV2LoggingLevel API.
+
 ## 3.135.3 - 2020-04-23
 
 * `Aws\ApplicationAutoScaling` - This release supports Auto Scaling in Amazon Keyspaces for Apache Cassandra.
