@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.135.5 - 2020-04-27
 
 * `Aws\AccessAnalyzer` - This release adds support for inclusion of S3 Access Point policies in IAM Access Analyzer evaluation of S3 bucket access. IAM Access Analyzer now reports findings for buckets shared through access points and identifies the access point that permits access.
 * `Aws\DataExchange` - This release introduces AWS Data Exchange support for configurable encryption parameters when exporting data sets to Amazon S3. 
