@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.135.6 - 2020-04-28
 
 * `Aws\ECR` - This release adds support for multi-architecture images also known as a manifest list
 * `Aws\KinesisVideo` - Add "GET_CLIP" to the list of supported API names for the GetDataEndpoint API.
