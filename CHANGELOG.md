@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ECR` - This release adds support for multi-architecture images also known as a manifest list
+* `Aws\KinesisVideo` - Add "GET_CLIP" to the list of supported API names for the GetDataEndpoint API.
+* `Aws\KinesisVideoArchivedMedia` - Add support for the GetClip API for retrieving media from a video stream in the MP4 format.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports several new features: enhanced VQ for H.264 (AVC) output encodes; passthrough of timed metadata and of Nielsen ID3 metadata in fMP4 containers in HLS outputs; the ability to generate a SCTE-35 sparse track without additional segmentation, in Microsoft Smooth outputs; the ability to select the audio from a TS input by specifying the audio track; and conversion of HDR colorspace in the input to an SDR colorspace in the output.
+* `Aws\Route53` - Amazon Route 53 now supports the Africa (Cape Town) Region (af-south-1) for latency records, geoproximity records, and private DNS for Amazon VPCs in that region.
+* `Aws\SSM` - SSM State Manager support for adding list association filter for Resource Group and manual mode of managing compliance for an association. 
+
 ## 3.135.5 - 2020-04-27
 
 * `Aws\AccessAnalyzer` - This release adds support for inclusion of S3 Access Point policies in IAM Access Analyzer evaluation of S3 bucket access. IAM Access Analyzer now reports findings for buckets shared through access points and identifies the access point that permits access.
