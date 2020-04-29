@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.136.0 - 2020-04-29
 
 * `Aws\IoTSiteWise` - AWS IoT SiteWise is a managed service that makes it easy to collect, store, organize and monitor data from industrial equipment at scale. You can use AWS IoT SiteWise to model your physical assets, processes and facilities, quickly compute common industrial performance metrics, and create fully managed web applications to help analyze industrial equipment data, prevent costly equipment issues, and reduce production inefficiencies.
 * `Aws\ServiceDiscovery` - Documentation updates for servicediscovery
