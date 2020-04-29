@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTSiteWise` - AWS IoT SiteWise is a managed service that makes it easy to collect, store, organize and monitor data from industrial equipment at scale. You can use AWS IoT SiteWise to model your physical assets, processes and facilities, quickly compute common industrial performance metrics, and create fully managed web applications to help analyze industrial equipment data, prevent costly equipment issues, and reduce production inefficiencies.
+* `Aws\ServiceDiscovery` - Documentation updates for servicediscovery
+* `Aws\TranscribeService` - With this release, you can now use Amazon Transcribe to create medical custom vocabularies and use them in both medical real-time streaming and medical batch transcription jobs.
+* `Aws\WAF` - This release add migration API for AWS WAF Classic ("waf" and "waf-regional"). The migration API will parse through your web ACL and generate a CloudFormation template into your S3 bucket. Deploying this template will create equivalent web ACL under new AWS WAF ("wafv2").
+* `Aws\WAFRegional` - This release add migration API for AWS WAF Classic ("waf" and "waf-regional"). The migration API will parse through your web ACL and generate a CloudFormation template into your S3 bucket. Deploying this template will create equivalent web ACL under new AWS WAF ("wafv2").
+
 ## 3.135.6 - 2020-04-28
 
 * `Aws\ECR` - This release adds support for multi-architecture images also known as a manifest list
