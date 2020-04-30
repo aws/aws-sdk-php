@@ -3,7 +3,9 @@ namespace Aws\Test\S3;
 
 use Aws\S3\MultipartUploader;
 use Aws\Result;
+use Aws\S3\S3Client;
 use Aws\Test\UsesServiceTrait;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use PHPUnit\Framework\TestCase;
@@ -261,5 +263,46 @@ class MultipartUploaderTest extends TestCase
 
         $this->assertTrue($uploader->getState()->isCompleted());
         $this->assertEquals($url, $result['ObjectURL']);
+    }
+
+    /**
+     * @expectedException \Aws\S3\Exception\S3MultipartUploadException
+     * @expectedExceptionMessage An exception occurred while uploading parts to a multipart upload
+     */
+    public function testAppliesAmbiguousSuccessParsing()
+    {
+        $counter = 0;
+
+        $httpHandler = function ($request, array $options) use (&$counter) {
+            if ($counter < 1) {
+                $body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><OperationNameResponse><UploadId>baz</UploadId></OperationNameResponse>";
+            } else {
+                $body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n\n";
+            }
+            $counter++;
+
+            return Promise\promise_for(
+                new Psr7\Response(200, [], $body)
+            );
+        };
+
+        $s3 = new S3Client([
+            'version'     => 'latest',
+            'region'      => 'us-east-1',
+            'http_handler' => $httpHandler
+        ]);
+
+        $data = str_repeat('.', 12 * 1048576);
+        $source = Psr7\stream_for($data);
+
+        $uploader = new MultipartUploader(
+            $s3,
+            $source,
+            [
+                'bucket' => 'test-bucket',
+                'key' => 'test-key'
+            ]
+        );
+        $uploader->upload();
     }
 }
