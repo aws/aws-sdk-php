@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.137.1 - 2020-05-01
 
 * `Aws\EFS` - Change the TagKeys argument for UntagResource to a URL parameter to address an issue with the Java and .NET SDKs.
 * `Aws\SSM` - Added TimeoutSeconds as part of ListCommands API response.
