@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.137.2 - 2020-05-04
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway
 * `Aws\EC2` - With this release, you can include enriched metadata in Amazon Virtual Private Cloud (Amazon VPC) flow logs published to Amazon CloudWatch Logs or Amazon Simple Storage Service (S3). Prior to this, custom format VPC flow logs enriched with additional metadata could be published only to S3. With this launch, we are also adding additional metadata fields that provide insights about the location such as AWS Region, AWS Availability Zone, AWS Local Zone, AWS Wavelength Zone, or AWS Outpost where the network interface where flow logs are captured exists. 
