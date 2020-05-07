@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.137.5 - 2020-05-07
 
 * `Aws\AppConfig` - The description of the AWS AppConfig GetConfiguration API action was amended to include important information about calling ClientConfigurationVersion when you configure clients to call GetConfiguration.
 * `Aws\CloudWatchLogs` - Amazon CloudWatch Logs now offers the ability to interact with Logs Insights queries via the new PutQueryDefinition, DescribeQueryDefinitions, and DeleteQueryDefinition APIs.
