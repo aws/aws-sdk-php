@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GuardDuty` - Documentation updates for GuardDuty
+* `Aws\ResourceGroupsTaggingAPI` - Documentation updates for resourcegroupstaggingapi
+* `Aws\SageMaker` - This release adds a new parameter (EnableInterContainerTrafficEncryption) to CreateProcessingJob API to allow for enabling inter-container traffic encryption on processing jobs.
+
 ## 3.137.5 - 2020-05-07
 
 * `Aws\AppConfig` - The description of the AWS AppConfig GetConfiguration API action was amended to include important information about calling ClientConfigurationVersion when you configure clients to call GetConfiguration.
