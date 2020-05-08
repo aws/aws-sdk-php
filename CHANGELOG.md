@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.137.6 - 2020-05-08
 
 * `Aws\GuardDuty` - Documentation updates for GuardDuty
 * `Aws\ResourceGroupsTaggingAPI` - Documentation updates for resourcegroupstaggingapi
