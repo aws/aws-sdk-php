@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeGuruReviewer` - Add Bitbucket integration APIs
+* `Aws\EC2` - M6g instances are our next-generation general purpose instances powered by AWS Graviton2 processors
+* `Aws\kendra` - Amazon Kendra is now generally available. As part of general availability, we are launching * Developer edition * Ability to scale your Amazon Kendra index with capacity units * Support for new connectors * Support for new tagging API's * Support for Deleting data source * Metrics for data source sync operations * Metrics for query & storage utilization
+
 ## 3.137.6 - 2020-05-08
 
 * `Aws\GuardDuty` - Documentation updates for GuardDuty
