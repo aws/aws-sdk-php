@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.137.7 - 2020-05-11
 
 * `Aws\CodeGuruReviewer` - Add Bitbucket integration APIs
 * `Aws\EC2` - M6g instances are our next-generation general purpose instances powered by AWS Graviton2 processors
