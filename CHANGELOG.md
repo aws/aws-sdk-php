@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTSiteWise` - Documentation updates for iot-bifrost
+* `Aws\WorkMail` - Minor API fixes and updates to the documentation.
+
 ## 3.137.7 - 2020-05-11
 
 * `Aws\CodeGuruReviewer` - Add Bitbucket integration APIs
