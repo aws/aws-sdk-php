@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.137.8 - 2020-05-12
 
 * `Aws\IoTSiteWise` - Documentation updates for iot-bifrost
 * `Aws\WorkMail` - Minor API fixes and updates to the documentation.
