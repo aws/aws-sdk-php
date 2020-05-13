@@ -28,6 +28,7 @@ $burgomaster->recursiveCopy('vendor/guzzlehttp/guzzle/src', 'GuzzleHttp');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/psr7/src', 'GuzzleHttp/Psr7');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/promises/src', 'GuzzleHttp/Promise');
 $burgomaster->recursiveCopy('vendor/psr/http-message/src', 'Psr/Http/Message');
+$burgomaster->recursiveCopy('vendor/symfony/polyfill-intl-idn', 'Symfony/Polyfill/IntlIdn');
 
 $burgomaster->createAutoloader([
     'Aws/functions.php',
@@ -35,6 +36,7 @@ $burgomaster->createAutoloader([
     'GuzzleHttp/Psr7/functions_include.php',
     'GuzzleHttp/Promise/functions_include.php',
     'JmesPath/JmesPath.php',
+    'Symfony/Polyfill/IntlIdn/bootstrap.php'
 ], $autoloaderFilename);
 
 $burgomaster->createZip(__DIR__ . "/artifacts/aws.zip");
