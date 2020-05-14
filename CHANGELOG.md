@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.138.1 - 2020-05-14
 
 * `Aws\EC2` - Amazon EC2 now supports adding AWS resource tags for associations between VPCs and local gateways, at creation time.
 * `Aws\imagebuilder` - This release adds a new parameter (SupportedOsVersions) to the Components API. This parameter lists the OS versions supported by a component.
