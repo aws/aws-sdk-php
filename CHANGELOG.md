@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Amazon EC2 now supports adding AWS resource tags for associations between VPCs and local gateways, at creation time.
+* `Aws\imagebuilder` - This release adds a new parameter (SupportedOsVersions) to the Components API. This parameter lists the OS versions supported by a component.
+
 ## 3.138.0 - 2020-05-13
 
 * `Aws\ElastiCache` - Amazon ElastiCache now supports auto-update of ElastiCache clusters after the "recommended apply by date" of service update has passed. ElastiCache will use your maintenance window to schedule the auto-update of applicable clusters. For more information, see https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/Self-Service-Updates.html and https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Self-Service-Updates.html
