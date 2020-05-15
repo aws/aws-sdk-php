@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.138.2 - 2020-05-15
 
 * `Aws\CloudFormation` - This release adds support for the following features: 1. DescribeType and ListTypeVersions APIs now output a field IsDefaultVersion, indicating if a version is the default version for its type; 2. Add StackRollbackComplete waiter feature to wait until stack status is UPDATE_ROLLBACK_COMPLETE; 3. Add paginators in DescribeAccountLimits, ListChangeSets, ListStackInstances, ListStackSetOperationResults, ListStackSetOperations, ListStackSets APIs.
 * `Aws\ECR` - This release adds support for specifying an image manifest media type when pushing a manifest to Amazon ECR.
