@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.138.3 - 2020-05-18
 
 * `Aws\Chime` - Amazon Chime now supports redacting chat messages.
 * `Aws\DynamoDB` - Documentation updates for dynamodb 
