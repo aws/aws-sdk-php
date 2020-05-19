@@ -212,8 +212,9 @@ class S3EndpointMiddleware
 
     private function getDualStackHost()
     {
-        $partition = $this->endpointProvider->getPartition($this->region, 's3');
-        $dnsSuffix = $partition->getDnsSuffix();
+        $dnsSuffix = $this->endpointProvider
+            ->getPartition($this->region, 's3')
+            ->getDnsSuffix();
         return "s3.dualstack.{$this->region}.{$dnsSuffix}";
     }
 
@@ -235,8 +236,9 @@ class S3EndpointMiddleware
 
     private function getAccelerateHost(CommandInterface $command, $pattern)
     {
-        $partition = $this->endpointProvider->getPartition($this->region, 's3');
-        $dnsSuffix = $partition->getDnsSuffix();
+        $dnsSuffix = $this->endpointProvider
+            ->getPartition($this->region, 's3')
+            ->getDnsSuffix();
         return "{$command['Bucket']}.{$pattern}.{$dnsSuffix}";
     }
 
