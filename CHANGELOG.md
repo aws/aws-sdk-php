@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Chime` - You can now receive Voice Connector call events through SNS or SQS.
+* `Aws\EC2` - This release adds support for Federated Authentication via SAML-2.0 in AWS ClientVPN.
+* `Aws\Health` - Feature: Health: AWS Health added a new field to differentiate Public events from Account-Specific events in the API request and response. Visit https://docs.aws.amazon.com/health/latest/APIReference/API_Event.html to learn more.
+* `Aws\TranscribeService` - Documentation updates for Amazon Transcribe.
+
 ## 3.138.3 - 2020-05-18
 
 * `Aws\Chime` - Amazon Chime now supports redacting chat messages.
