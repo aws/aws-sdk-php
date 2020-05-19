@@ -39,10 +39,11 @@ class AuthTokenGenerator
      *                         (e.g., host:port)
      * @param string $region The region where the database is located
      * @param string $username The username to login as
+     * @param int $lifetime The lifetime of the token in minutes 
      *
      * @return string Token generated
      */
-    public function createToken($endpoint, $region, $username)
+    public function createToken($endpoint, $region, $username, $lifetime = 15)
     {
         $uri = new Uri($endpoint);
         $uri = $uri->withPath('/');
@@ -55,7 +56,7 @@ class AuthTokenGenerator
         $url = (string) $signer->presign(
             $request,
             $provider()->wait(),
-            '+15 minutes'
+            '+' . $lifetime . ' minutes'
         )->getUri();
 
         // Remove 2 extra slash from the presigned url result
