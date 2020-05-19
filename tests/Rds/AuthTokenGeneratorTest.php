@@ -55,4 +55,24 @@ class AuthTokenGeneratorTest extends TestCase
         $this->assertContains('DBUser=myDBUser', $token);
         $this->assertContains('Action=connect', $token);
     }
+
+    public function testCanCreateAuthTokenWthNonDefaultLifetime()
+    {
+        $creds = new Credentials('foo', 'bar', 'baz');
+        $connect = new AuthTokenGenerator($creds);
+        $token = $connect->createToken(
+            'prod-instance.us-east-1.rds.amazonaws.com:3306',
+            'us-west-2',
+            'myDBUser',
+            2
+        );
+
+        $this->assertContains('prod-instance.us-east-1.rds.amazonaws.com:3306', $token);
+        $this->assertContains('us-west-2', $token);
+        $this->assertContains('X-Amz-Credential=foo', $token);
+        $this->assertContains('X-Amz-Expires=120', $token);
+        $this->assertContains('X-Amz-SignedHeaders=host', $token);
+        $this->assertContains('DBUser=myDBUser', $token);
+        $this->assertContains('Action=connect', $token);
+    }
 }
