@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.138.4 - 2020-05-19
 
 * `Aws\Chime` - You can now receive Voice Connector call events through SNS or SQS.
 * `Aws\EC2` - This release adds support for Federated Authentication via SAML-2.0 in AWS ClientVPN.
