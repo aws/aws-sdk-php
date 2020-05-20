@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.138.5 - 2020-05-20
 
 * `Aws\AppMesh` - List APIs for all resources now contain additional information: when a resource was created, last updated, and its current version number.
 * `Aws\ApplicationAutoScaling` - Documentation updates for Application Auto Scaling
