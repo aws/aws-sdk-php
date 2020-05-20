@@ -2,6 +2,8 @@
 namespace Aws\S3;
 
 use Aws\CommandInterface;
+use Aws\Endpoint\EndpointProvider;
+use Aws\Endpoint\PartitionEndpointProvider;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -38,27 +40,31 @@ class S3EndpointMiddleware
     /** @var string */
     private $region;
     /** @var callable */
+    private $endpointProvider;
+    /** @var callable */
     private $nextHandler;
 
     /**
      * Create a middleware wrapper function
      *
      * @param string $region
+     * @param EndpointProvider $endpointProvider
      * @param array  $options
      *
      * @return callable
      */
-    public static function wrap($region, array $options)
+    public static function wrap($region, $endpointProvider, array $options)
     {
-        return function (callable $handler) use ($region, $options) {
-            return new self($handler, $region, $options);
+        return function (callable $handler) use ($region, $endpointProvider, $options) {
+            return new self($handler, $region, $options, $endpointProvider);
         };
     }
 
     public function __construct(
         callable $nextHandler,
         $region,
-        array $options
+        array $options,
+        $endpointProvider = null
     ) {
         $this->pathStyleByDefault = isset($options['path_style'])
             ? (bool) $options['path_style'] : false;
@@ -67,6 +73,9 @@ class S3EndpointMiddleware
         $this->accelerateByDefault = isset($options['accelerate'])
             ? (bool) $options['accelerate'] : false;
         $this->region = (string) $region;
+        $this->endpointProvider = is_null($endpointProvider)
+            ? PartitionEndpointProvider::defaultProvider()
+            : $endpointProvider;
         $this->nextHandler = $nextHandler;
     }
 
@@ -189,9 +198,9 @@ class S3EndpointMiddleware
         RequestInterface $request
     ) {
         $request = $request->withUri(
-            $request->getUri()
-                ->withHost($this->getDualStackHost())
+            $request->getUri()->withHost($this->getDualStackHost())
         );
+
         if (empty($command['@use_path_style_endpoint'])
             && !$this->pathStyleByDefault
             && self::isRequestHostStyleCompatible($command, $request)
@@ -203,7 +212,10 @@ class S3EndpointMiddleware
 
     private function getDualStackHost()
     {
-        return "s3.dualstack.{$this->region}.amazonaws.com";
+        $dnsSuffix = $this->endpointProvider
+            ->getPartition($this->region, 's3')
+            ->getDnsSuffix();
+        return "s3.dualstack.{$this->region}.{$dnsSuffix}";
     }
 
     private function applyAccelerateEndpoint(
@@ -224,7 +236,10 @@ class S3EndpointMiddleware
 
     private function getAccelerateHost(CommandInterface $command, $pattern)
     {
-        return "{$command['Bucket']}.{$pattern}.amazonaws.com";
+        $dnsSuffix = $this->endpointProvider
+            ->getPartition($this->region, 's3')
+            ->getDnsSuffix();
+        return "{$command['Bucket']}.{$pattern}.{$dnsSuffix}";
     }
 
     private function getBucketlessPath($path, CommandInterface $command)

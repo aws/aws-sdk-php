@@ -340,6 +340,7 @@ class S3Client extends AwsClient implements S3ClientInterface
             $stack->appendBuild(
                 S3EndpointMiddleware::wrap(
                     $this->getRegion(),
+                    $this->getConfig('endpoint_provider'),
                     [
                         'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
                         'accelerate' => $this->getConfig('use_accelerate_endpoint'),
