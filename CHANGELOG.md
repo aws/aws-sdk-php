@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeBuild` - CodeBuild adds support for tagging with report groups
+* `Aws\EC2` - From this release onwards ProvisionByoipCidr publicly supports IPv6. Updated ProvisionByoipCidr API to support tags for public IPv4 and IPv6 pools. Added NetworkBorderGroup to the DescribePublicIpv4Pools response.
+* `Aws\S3` - Deprecates unusable input members bound to Content-MD5 header. Updates example and documentation.
+* `Aws\Synthetics` - AWS CloudWatch Synthetics now supports configuration of allocated memory for a canary.
+
 ## 3.138.5 - 2020-05-20
 
 * `Aws\AppMesh` - List APIs for all resources now contain additional information: when a resource was created, last updated, and its current version number.
