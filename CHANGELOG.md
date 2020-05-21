@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.138.6 - 2020-05-21
 
 * `Aws\CodeBuild` - CodeBuild adds support for tagging with report groups
 * `Aws\EC2` - From this release onwards ProvisionByoipCidr publicly supports IPv6. Updated ProvisionByoipCidr API to support tags for public IPv4 and IPv6 pools. Added NetworkBorderGroup to the DescribePublicIpv4Pools response.
