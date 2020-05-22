@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.138.7 - 2020-05-22
 
 * `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling
 * `Aws\IoTSiteWise` - This release adds support for the standard deviation auto-computed aggregate and improved support for portal logo images in SiteWise.
