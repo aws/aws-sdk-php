@@ -42,7 +42,6 @@ if (file_exists($projectRoot . 'vendor/symfony/polyfill-intl-idn')) {
     array_push($autoloaderContents, 'Symfony/Polyfill/IntlIdn/bootstrap.php');
 }
 
-
 $burgomaster->createAutoloader($autoloaderContents, $autoloaderFilename);
 
 $burgomaster->createZip(__DIR__ . "/artifacts/aws.zip");
