@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.138.8 - 2020-05-26
 
 * `Aws\DLM` - Allowing cron expression in the DLM policy creation schedule. 
 * `Aws\EC2` - ebsOptimizedInfo, efaSupported and supportedVirtualizationTypes added to DescribeInstanceTypes API
