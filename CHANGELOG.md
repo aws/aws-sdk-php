@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElasticLoadBalancingv2` - This release added support for HTTP/2 ALPN preference lists for Network Load Balancers
+* `Aws\GuardDuty` - Documentation updates for GuardDuty
+* `Aws\build/packager` - Adds package symfony/polyfill-intl-idn to .zip and .phar releases if the package exists in vendor directory.
+
 ## 3.138.8 - 2020-05-26
 
 * `Aws\DLM` - Allowing cron expression in the DLM policy creation schedule. 
