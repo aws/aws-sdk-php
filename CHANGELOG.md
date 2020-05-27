@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.138.9 - 2020-05-27
 
 * `Aws\ElasticLoadBalancingv2` - This release added support for HTTP/2 ALPN preference lists for Network Load Balancers
 * `Aws\GuardDuty` - Documentation updates for GuardDuty
