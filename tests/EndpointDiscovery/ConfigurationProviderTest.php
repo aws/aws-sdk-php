@@ -134,7 +134,7 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
-    public function testCreatesDefaultFromFallbackWithOptionaldModel()
+    public function testCreatesDefaultFromFallbackWithOptionalModel()
     {
         $this->clearEnv();
         $expected  = new Configuration(false, 1000);
