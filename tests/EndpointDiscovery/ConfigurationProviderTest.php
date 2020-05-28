@@ -2,6 +2,7 @@
 
 namespace Aws\Test\EndpointDiscovery;
 
+use Aws\Api\ApiProvider;
 use Aws\EndpointDiscovery\Configuration;
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
@@ -115,6 +116,36 @@ EOT;
         $expected  = new Configuration(false, 1000);
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::fallback())->wait();
+        $this->assertSame($expected->toArray(), $result->toArray());
+    }
+
+    public function testCreatesDefaultFromFallbackWithRequiredModel()
+    {
+        $this->clearEnv();
+        $expected  = new Configuration(true, 1000);
+        $config = [
+            'api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures'),
+            'version' => 'latest',
+            'service' => 'ed_required'
+        ];
+
+        /** @var ConfigurationInterface $result */
+        $result = call_user_func(ConfigurationProvider::fallback($config))->wait();
+        $this->assertSame($expected->toArray(), $result->toArray());
+    }
+
+    public function testCreatesDefaultFromFallbackWithOptionalModel()
+    {
+        $this->clearEnv();
+        $expected  = new Configuration(false, 1000);
+        $config = [
+            'api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures'),
+            'version' => 'latest',
+            'service' => 'ed_optional'
+        ];
+
+        /** @var ConfigurationInterface $result */
+        $result = call_user_func(ConfigurationProvider::fallback($config))->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
