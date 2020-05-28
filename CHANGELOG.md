@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.138.10 - 2020-05-28
 
 * `Aws\Kafka` - New APIs for upgrading the Apache Kafka version of a cluster and to find out compatible upgrade paths
 * `Aws\MarketplaceCatalog` - AWS Marketplace Catalog now supports accessing initial change payloads with DescribeChangeSet operation.
