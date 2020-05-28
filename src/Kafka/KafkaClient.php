@@ -21,6 +21,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeConfigurationRevisionAsync(array $args = [])
  * @method \Aws\Result getBootstrapBrokers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBootstrapBrokersAsync(array $args = [])
+ * @method \Aws\Result getCompatibleKafkaVersions(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCompatibleKafkaVersionsAsync(array $args = [])
  * @method \Aws\Result listClusterOperations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listClusterOperationsAsync(array $args = [])
  * @method \Aws\Result listClusters(array $args = [])
@@ -45,6 +47,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateBrokerStorageAsync(array $args = [])
  * @method \Aws\Result updateClusterConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateClusterConfigurationAsync(array $args = [])
+ * @method \Aws\Result updateClusterKafkaVersion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateClusterKafkaVersionAsync(array $args = [])
  * @method \Aws\Result updateMonitoring(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateMonitoringAsync(array $args = [])
  */

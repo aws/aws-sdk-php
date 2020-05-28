@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kafka` - New APIs for upgrading the Apache Kafka version of a cluster and to find out compatible upgrade paths
+* `Aws\MarketplaceCatalog` - AWS Marketplace Catalog now supports accessing initial change payloads with DescribeChangeSet operation.
+* `Aws\QLDBSession` - Documentation updates for Amazon QLDB Session
+* `Aws\WorkMail` - This release adds support for Amazon WorkMail organization-level retention policies.
+
 ## 3.138.9 - 2020-05-27
 
 * `Aws\ElasticLoadBalancingv2` - This release added support for HTTP/2 ALPN preference lists for Network Load Balancers
