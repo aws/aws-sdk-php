@@ -113,20 +113,10 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
                 ),
             ],
 
-            // Discovery optional, no configuration provided
+            // Discovery optional, service contains required, no config provided
             [
                 ['TestDiscoveryOptional', []],
                 [
-                ],
-                new Result([]),
-                $baseRequest,
-            ],
-
-            // Discovery required, disabled by user
-            [
-                ['TestDiscoveryRequired', []],
-                [
-                    'endpoint_discovery' => ['enabled' => false],
                 ],
                 new Result([
                     'Endpoints' => [
@@ -754,6 +744,25 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
             );
             $this->assertInstanceOf(UnresolvedEndpointException::class, $e);
         }
+    }
+
+    /**
+     * @backupStaticAttributes enabled
+     * @expectedException \Aws\Exception\UnresolvedEndpointException
+     * @expectedExceptionMessage This operation requires the use of endpoint discovery, but this has been disabled
+     */
+    public function testThrowsExceptionForRequiredOpWhenDisabled()
+    {
+        $client = $this->generateTestClient(
+            $this->generateTestService(),
+            [
+                'endpoint_discovery' => new Configuration(false)
+            ]
+        );
+        $command = $client->getCommand('TestDiscoveryRequired', []);
+        $list = $client->getHandlerList();
+        $handler = $list->resolve();
+        $handler($command, new Request('POST', 'https://foo.com'));
     }
 
     /**

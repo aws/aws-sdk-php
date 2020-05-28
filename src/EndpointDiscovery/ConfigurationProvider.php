@@ -135,9 +135,11 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         ) {
             $provider = $config['api_provider'];
             $apiData = $provider('api', $config['service'], $config['version']);
-            foreach ($apiData['operations'] as $operation) {
-                if (!empty($operation['endpointdiscovery']['required'])) {
-                    $enabled = true;
+            if (!empty($apiData['operations'])) {
+                foreach ($apiData['operations'] as $operation) {
+                    if (!empty($operation['endpointdiscovery']['required'])) {
+                        $enabled = true;
+                    }
                 }
             }
         }
