@@ -30,6 +30,11 @@ class AesGcmEncryptingStreamTest extends TestCase
         StreamInterface $plainText,
         $keySize
     ) {
+        if (version_compare(PHP_VERSION, '7.1', '<')) {
+            $this->markTestSkipped(
+                'AES-GCM decryption is only supported in PHP 7.1 or greater'
+            );
+        }
         $plainText->rewind();
         $key = 'foo';
         $iv = random_bytes(openssl_cipher_iv_length('aes-256-gcm'));
