@@ -55,7 +55,7 @@ class RedirectMapBuilder
                 }
             }
             // Fall back to service client main page if version not found
-            if (in_array($service->name, $this->customizations['service_fallbacks_use_uid'])) {
+            if (!empty($service->uid)) {
                 $servicePrefix = $service->uid;
             } else {
                 $servicePrefix = $service->name;
