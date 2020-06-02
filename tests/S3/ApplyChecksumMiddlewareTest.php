@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Api\ApiProvider;
 use Aws\Middleware;
 use Aws\Test\UsesServiceTrait;
 use Psr\Http\Message\RequestInterface;
@@ -16,9 +17,12 @@ class ApplyChecksumMiddlewareTest extends TestCase
     /**
      * @dataProvider getContentMd5UseCases
      */
-    public function testAddsContentMd5AsAppropriate($options, $operation, $args, $md5Added, $md5Value)
+    public function testAddsContentMd5AsAppropriate($operation, $args, $md5Added, $md5Value)
     {
-        $s3 = $this->getTestClient('s3', $options);
+        $s3 = $this->getTestClient(
+            's3',
+            ['api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')]
+        );
         $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand($operation, $args);
         $command->getHandlerList()->appendBuild(
@@ -32,28 +36,32 @@ class ApplyChecksumMiddlewareTest extends TestCase
 
     public function getContentMd5UseCases()
     {
-        $md5 = '/12roh/ATpPMcGD9Rj4ZlQ==';
-
         return [
-            // Do nothing if Content MD5 was explicitly provided.
+            // Test that explicitly proviced Content MD5 is passed through
             [
-                [],
+                'PutBucketLogging',
+                [
+                    'Bucket' => 'foo',
+                    'BucketLoggingStatus' => [
+                        'LoggingEnabled' => [
+                            'TargetBucket' => 'bar',
+                            'TargetPrefix' => 'baz'
+                        ]
+                    ],
+                    'ContentMD5' => 'custommd5'
+                ],
+                true,
+                'custommd5'
+            ],
+            // Test MD5 added for operations that require it
+            [
                 'DeleteObjects',
                 ['Bucket' => 'foo', 'Delete' => ['Objects' => [['Key' => 'bar']]]],
                 true,
-                $md5
+                '/12roh/ATpPMcGD9Rj4ZlQ=='
             ],
-            // Gets added for operations that require it
+            // Test MD5 not added for operations that do not require it
             [
-                [],
-                'DeleteObjects',
-                ['Bucket' => 'foo', 'Delete' => ['Objects' => [['Key' => 'bar']]]],
-                true,
-                $md5
-            ],
-            // Not added for operations that does not require it
-            [
-                [],
                 'GetObject',
                 ['Bucket' => 'foo', 'Key' => 'bar'],
                 false,
