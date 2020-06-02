@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.139.1 - 2020-06-02
 
 * `Aws\GuardDuty` - Amazon GuardDuty findings now include S3 bucket details under the resource section if an S3 Bucket was one of the affected resources
 
