@@ -16,10 +16,6 @@ class RedirectMapBuilder
     /** @var ApiProvider */
     private $apiProvider;
 
-    private $customizations = [
-        'service_fallbacks_use_uid' => ['pi']
-    ];
-
     public function __construct(ApiProvider $provider, $outputDir)
     {
         $this->apiProvider = $provider;
