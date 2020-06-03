@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.140.0 - 2020-06-03
 
 * `Aws\Build\Docs` - Tweak docs redirect logic to use uid if possible.
 * `Aws\DirectConnect` - This release supports the virtual interface failover test, which allows you to verify that traffic routes over redundant virtual interfaces when you bring your primary virtual interface out of service.
