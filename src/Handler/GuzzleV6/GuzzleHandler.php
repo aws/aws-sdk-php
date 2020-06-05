@@ -42,7 +42,7 @@ class GuzzleHandler
 
         return $this->client->sendAsync($request, $this->parseOptions($options))
             ->otherwise(
-                static function (\Exception $e) {
+                static function (\Throwable $e) {
                     $error = [
                         'exception'        => $e,
                         'connection_error' => $e instanceof ConnectException,
