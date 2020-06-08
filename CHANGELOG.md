@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ServiceDiscovery` - Added support for tagging Service and Namespace type resources in Cloud Map
+* `Aws\Shield` - This release adds the option for customers to identify a contact name and method that the DDoS Response Team can proactively engage when a Route 53 Health Check that is associated with a Shield protected resource fails.
+
 ## 3.140.2 - 2020-06-05
 
 * `Aws\APIGateway` - Amazon API Gateway now allows customers of REST APIs to skip trust chain validation for backend server certificates for HTTP and VPC Link Integration. This feature enables customers to configure their REST APIs to integrate with backends that are secured with certificates vended from private certificate authorities (CA) or certificates that are self-signed.
