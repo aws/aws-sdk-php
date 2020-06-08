@@ -41,7 +41,7 @@ class MarshalerTest extends TestCase
             // "S"
             ['S', ['S' => 'S']],
             ['3', ['S' => '3']],
-            ['', ['NULL' => true], ['nullify_invalid' => true]],
+            ['', ['S' => '']],
 
             // "N"
             [1, ['N' => '1']],
@@ -329,7 +329,7 @@ JSON;
         $m = new Marshaler(['ignore_invalid' => true]);
         $result = $m->marshalItem([
             'foo' => 'bar',
-            'bar' => '',
+            'bar' => new SetValue([]),
             'baz' => new \SplFileInfo(__FILE__)
         ]);
         $this->assertSame(['foo' => ['S' => 'bar']], $result);
