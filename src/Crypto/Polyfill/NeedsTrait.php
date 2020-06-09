@@ -19,11 +19,11 @@ trait NeedsTrait
      *
      * Instead of constructions like
      *     if (!(GOOD CONDITION)) {
-     *         throw new \Exception('condition not true')p
+     *         throw new \Exception('condition not true');
      *     }
      *
      * you can write:
-     *     needs(GOOD CONDITION, 'condition not true')l
+     *     needs(GOOD CONDITION, 'condition not true');
      * @param $condition
      * @param $errorMessage
      * @param null $exceptionClass

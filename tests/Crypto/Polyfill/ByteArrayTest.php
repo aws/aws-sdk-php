@@ -54,6 +54,7 @@ class ByteArrayTest extends TestCase
             [65, 109, 97, 122, 111, 110, 32, 87, 101, 98, 32, 83, 101, 114, 118, 105, 99, 101, 115]
         );
         $this->assertSame('Amazon Web Services', $buf->toString());
+        $this->assertSame('', (new ByteArray())->toString());
     }
 
     public function testEquals()

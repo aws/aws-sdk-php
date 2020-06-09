@@ -4,6 +4,8 @@
 namespace Aws\Crypto\Polyfill;
 
 use Aws\Exception\CryptoPolyfillException;
+use InvalidArgumentException;
+use RangeException;
 
 /**
  * Class AesGcm
@@ -36,17 +38,23 @@ class AesGcm
      * @param Key $aesKey
      * @param int $keySize
      * @param int $blockSize
+     *
+     * @throws CryptoPolyfillException
+     * @throws InvalidArgumentException
+     * @throws RangeException
      */
     public function __construct(Key $aesKey, $keySize = 256, $blockSize = 8192)
     {
         /* Preconditions: */
         self::needs(
             \in_array($keySize, [128, 192, 256], true),
-            "Key size must be 128, 192, or 256 bits; {$keySize} given"
+            "Key size must be 128, 192, or 256 bits; {$keySize} given",
+            InvalidArgumentException::class
         );
         self::needs(
             \is_int($blockSize) && $blockSize > 0 && $blockSize <= PHP_INT_MAX,
-            'Block size must be a positive integer.'
+            'Block size must be a positive integer.',
+            RangeException::class
         );
         self::needs(
             $aesKey->length() << 3 === $keySize,
@@ -67,6 +75,7 @@ class AesGcm
      * @param int $keySize       Key size (bits)
      * @param int $blockSize     Block size (bytes) -- How much memory to buffer
      * @return string
+     * @throws InvalidArgumentException
      */
     public static function encrypt(
         $plaintext,
@@ -79,7 +88,8 @@ class AesGcm
     ) {
         self::needs(
             self::strlen($nonce) === 12,
-            'Nonce must be exactly 12 bytes'
+            'Nonce must be exactly 12 bytes',
+            InvalidArgumentException::class
         );
 
         $encryptor = new AesGcm($key, $keySize, $blockSize);
@@ -114,7 +124,9 @@ class AesGcm
      * @param int $keySize       Key size (bits)
      * @param int $blockSize     Block size (bytes) -- How much memory to buffer
      * @return string            Plaintext
+     *
      * @throws CryptoPolyfillException
+     * @throws InvalidArgumentException
      */
     public static function decrypt(
         $ciphertext,
@@ -128,7 +140,8 @@ class AesGcm
         /* Precondition: */
         self::needs(
             self::strlen($nonce) === 12,
-            'Nonce must be exactly 12 bytes'
+            'Nonce must be exactly 12 bytes',
+            InvalidArgumentException::class
         );
 
         $encryptor = new AesGcm($key, $keySize, $blockSize);
@@ -159,7 +172,7 @@ class AesGcm
     /**
      * Initialize a Gmac object with the nonce and this object's key.
      *
-     * @param string $nonce
+     * @param string $nonce     Must be exactly 12 bytes long.
      * @param string|null $aad
      * @return array
      */
