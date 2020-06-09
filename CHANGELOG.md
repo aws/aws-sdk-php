@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Transfer` - This release updates the API so customers can test use of Source IP to allow, deny or limit access to data in their S3 buckets after integrating their identity provider.
+
 ## 3.140.3 - 2020-06-08
 
 * `Aws\ServiceDiscovery` - Added support for tagging Service and Namespace type resources in Cloud Map
