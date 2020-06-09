@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.140.4 - 2020-06-09
 
 * `Aws\Transfer` - This release updates the API so customers can test use of Source IP to allow, deny or limit access to data in their S3 buckets after integrating their identity provider.
 
