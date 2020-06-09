@@ -29,6 +29,20 @@ class ByteArrayTest extends TestCase
         $this->assertSame(19, $c->count(), 'Array produced incorrect size');
 
         $this->assertEquals($b->toArray(), $c->toArray(), 'String serialization error');
+
+        $d = new ByteArray($c);
+        $this->assertEquals($d->toArray(), $c->toArray(), 'Passing a ByteArray should return a clone');
+    }
+
+    public function testConstructorInvalidType()
+    {
+        $thrown = false;
+        try {
+            new ByteArray(false);
+        } catch (\InvalidArgumentException $ex) {
+            $thrown = true;
+        }
+        $this->assertTrue($thrown, 'Expected an exception to be thrown');
     }
 
     /**
@@ -40,6 +54,22 @@ class ByteArrayTest extends TestCase
             [65, 109, 97, 122, 111, 110, 32, 87, 101, 98, 32, 83, 101, 114, 118, 105, 99, 101, 115]
         );
         $this->assertSame('Amazon Web Services', $buf->toString());
+    }
+
+    public function testEquals()
+    {
+        $buf1 = new ByteArray(
+            [65, 109, 97, 122, 111, 110, 32, 87, 101, 98, 32, 83, 101, 114, 118, 105, 99, 101, 115]
+        );
+        $buf2 = new ByteArray('Amazon Web Services');
+        $this->assertTrue($buf1->equals($buf2), 'Equal ByteArrays should return true');
+
+        $buf3 = new ByteArray(
+            [65, 109, 97, 122, 111, 110, 32, 87, 101, 98, 32, 83, 101, 114, 118, 105, 99, 101, 116]
+        );
+        $this->assertFalse($buf1->equals($buf3), 'Non-equal ByteArrays should return false');
+
+        $this->assertFalse($buf1->equals(new ByteArray()), 'Mismatched ByteArray lengths should never be equal');
     }
 
     /**

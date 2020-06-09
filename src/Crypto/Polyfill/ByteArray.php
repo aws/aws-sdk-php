@@ -18,6 +18,7 @@ class ByteArray extends \SplFixedArray
      *     If you pass in an integer, it creates a ByteArray of that size.
      *     If you pass in a string or array, it converts it to an array of
      *       integers between 0 and 255.
+     * @throws \InvalidArgumentException
      */
     public function __construct($size = 0)
     {
@@ -141,12 +142,7 @@ class ByteArray extends \SplFixedArray
      */
     public function offsetSet($index, $newval)
     {
-        try {
-            parent::offsetSet($index, $newval & 0xff);
-        } catch (\Exception $ex) {
-            var_dump([$index, $newval]);
-            throw $ex;
-        }
+        parent::offsetSet($index, $newval & 0xff);
     }
 
     /**
@@ -237,7 +233,6 @@ class ByteArray extends \SplFixedArray
      * Mutates the current state and sets all values to zero.
      *
      * @return void
-     * @throws \Exception
      */
     public function zeroize()
     {
