@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.141.0 - 2020-06-10
 
 * `Aws\` - Made the getSignatureProvider method public.
 * `Aws\AppConfig` - This release allows customers to choose from a list of predefined deployment strategies while starting deployments.
