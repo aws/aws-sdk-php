@@ -136,10 +136,6 @@ class Marshaler
 
         // Handle string values.
         if ($type === 'string') {
-            if ($value === '') {
-                return $this->handleInvalid('empty strings are invalid');
-            }
-
             return ['S' => $value];
         }
 
