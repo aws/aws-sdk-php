@@ -4,6 +4,7 @@ namespace Aws\Api\Parser;
 use Aws\Api\DateTimeResult;
 use Aws\Api\ListShape;
 use Aws\Api\MapShape;
+use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Shape;
 use Aws\Api\StructureShape;
 
@@ -138,11 +139,10 @@ class XmlParser
 
     private function parse_timestamp(Shape $shape, $value)
     {
-        if (!empty($shape['timestampFormat'])
-            && $shape['timestampFormat'] === 'unixTimestamp') {
-            return DateTimeResult::fromEpoch((string) $value);
+        if(is_string($value) || is_int($value) || (is_object($value) && method_exists($value, '__toString'))){
+            return DateTimeResult::fromTimestamp((string)$value);
         }
-        return new DateTimeResult($value);
+        throw new ParserException('Invalid timestamp value passed');
     }
 
     private function parse_xml_attribute(Shape $shape, Shape $memberShape, $value)

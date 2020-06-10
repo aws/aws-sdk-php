@@ -491,3 +491,21 @@ function boolean_value($input)
     }
     return null;
 }
+
+/**
+ *
+ * Checks if an input is a valid epoch time
+ *
+ * @param $input
+ * @return bool
+ */
+function is_valid_epoch($input)
+{
+    if(is_string($input) || is_int($input)) {
+        if (is_string($input) && preg_replace("/[^-0-9]/", "", $input) !== $input) {
+            return false;
+        }
+        return is_numeric($input) && intval($input) > PHP_INT_MIN && intval($input < PHP_INT_MAX);
+    }
+    return false;
+}

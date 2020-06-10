@@ -2,7 +2,10 @@
 namespace Aws\Api\Parser;
 
 use Aws\Api\DateTimeResult;
+use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Shape;
+use Aws\EndpointParameterMiddleware;
+use Aws\HandlerList;
 
 /**
  * @internal Implements standard JSON parsing.
@@ -43,14 +46,7 @@ class JsonParser
                 return $target;
 
             case 'timestamp':
-                if (!empty($shape['timestampFormat'])
-                    && $shape['timestampFormat'] !== 'unixTimestamp') {
-                    return new DateTimeResult($value);
-                }
-                // The Unix epoch (or Unix time or POSIX time or Unix
-                // timestamp) is the number of seconds that have elapsed since
-                // January 1, 1970 (midnight UTC/GMT).
-                return DateTimeResult::fromEpoch($value);
+                    return DateTimeResult::fromTimestamp($value);
 
             case 'blob':
                 return base64_decode($value);
@@ -59,4 +55,6 @@ class JsonParser
                 return $value;
         }
     }
+
+
 }
