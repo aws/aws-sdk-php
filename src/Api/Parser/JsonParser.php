@@ -2,10 +2,7 @@
 namespace Aws\Api\Parser;
 
 use Aws\Api\DateTimeResult;
-use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Shape;
-use Aws\EndpointParameterMiddleware;
-use Aws\HandlerList;
 
 /**
  * @internal Implements standard JSON parsing.
@@ -55,6 +52,5 @@ class JsonParser
                 return $value;
         }
     }
-
-
 }
+
