@@ -493,7 +493,6 @@ function boolean_value($input)
 }
 
 /**
- *
  * Checks if an input is a valid epoch time
  *
  * @param $input
