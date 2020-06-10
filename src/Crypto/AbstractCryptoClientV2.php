@@ -105,7 +105,7 @@ abstract class AbstractCryptoClientV2
      */
     abstract public function decrypt(
         $cipherText,
-        MaterialsProvider $provider,
+        MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope,
         array $cipherOptions = []
     );

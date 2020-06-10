@@ -36,14 +36,19 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2
             $envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER],
             true
         );
-        if (empty($materialsDescription['kms_cmk_id'])) {
-            throw new \RuntimeException('Not able to detect kms_cmk_id from kms'
-                . ' materials description.');
+
+        if (empty($materialsDescription['kms_cmk_id'])
+            && empty($materialsDescription['aws:x-amz-cek-alg'])) {
+            throw new \RuntimeException('Not able to detect kms_cmk_id (legacy'
+                . ' implementation) or aws:x-amz-cek-alg (current implementation)'
+                . ' from kms materials description.');
         }
 
-        return new KmsMaterialsProvider(
+        return new self(
             $this->kmsClient,
-            $materialsDescription['kms_cmk_id']
+            isset($materialsDescription['kms_cmk_id'])
+                ? $materialsDescription['kms_cmk_id']
+                : null
         );
     }
 
@@ -111,9 +116,7 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2
         $result = $this->kmsClient->generateDataKey([
             'KeyId' => $this->kmsKeyId,
             'KeySpec' => "AES_{$keySize}",
-            'EncryptionContext' => [
-                'aws:x-amz-cek-alg' => $context['x-amz-cek-alg']
-            ]
+            'EncryptionContext' => $context
         ]);
         return [
             'Plaintext' => $result['Plaintext'],

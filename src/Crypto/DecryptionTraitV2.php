@@ -55,7 +55,7 @@ trait DecryptionTraitV2
      */
     public function decrypt(
         $cipherText,
-        MaterialsProvider $provider,
+        MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope,
         array $cipherOptions = []
     ) {
