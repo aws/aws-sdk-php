@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Made the getSignatureProvider method public.
+* `Aws\AppConfig` - This release allows customers to choose from a list of predefined deployment strategies while starting deployments.
+* `Aws\CodeArtifact` - Added support for AWS CodeArtifact.
+* `Aws\ComputeOptimizer` - Compute Optimizer supports exporting recommendations to Amazon S3.
+* `Aws\DLM` - Reducing the schedule name of DLM Lifecycle policy from 500 to 120 characters. 
+* `Aws\EC2` - New C6g instances powered by AWS Graviton2 processors and ideal for running advanced, compute-intensive workloads; New R6g instances powered by AWS Graviton2 processors and ideal for running memory-intensive workloads.
+* `Aws\Lightsail` - Documentation updates for lightsail
+* `Aws\Macie2` - This release of the Amazon Macie API removes support for the ArchiveFindings and UnarchiveFindings operations. This release also adds UNKNOWN as an encryption type for S3 bucket metadata.
+* `Aws\ServiceCatalog` - Service Catalog Documentation Update for Integration with AWS Organizations Delegated Administrator feature
+* `Aws\Shield` - Corrections to the supported format for contact phone numbers and to the description for the create subscription action.
+
 ## 3.140.4 - 2020-06-09
 
 * `Aws\Transfer` - This release updates the API so customers can test use of Source IP to allow, deny or limit access to data in their S3 buckets after integrating their identity provider.

@@ -7,8 +7,6 @@ use Aws\AwsClient;
  * This client is used to interact with the **Amazon Macie 2** service.
  * @method \Aws\Result acceptInvitation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise acceptInvitationAsync(array $args = [])
- * @method \Aws\Result archiveFindings(array $args = [])
- * @method \GuzzleHttp\Promise\Promise archiveFindingsAsync(array $args = [])
  * @method \Aws\Result batchGetCustomDataIdentifiers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchGetCustomDataIdentifiersAsync(array $args = [])
  * @method \Aws\Result createClassificationJob(array $args = [])
@@ -97,8 +95,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result testCustomDataIdentifier(array $args = [])
  * @method \GuzzleHttp\Promise\Promise testCustomDataIdentifierAsync(array $args = [])
- * @method \Aws\Result unarchiveFindings(array $args = [])
- * @method \GuzzleHttp\Promise\Promise unarchiveFindingsAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateClassificationJob(array $args = [])
