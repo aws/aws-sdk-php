@@ -394,7 +394,7 @@ class RetryMiddlewareV2Test extends TestCase
         $assertFunction = function() use (&$time, &$attempt, &$errors, $expectedTimes) {
             try {
                 $this->assertLessThanOrEqual(
-                    0.1,
+                    0.5,
                     abs($expectedTimes[$attempt] - (microtime(true) - $time))
                 );
             } catch (\Exception $e) {

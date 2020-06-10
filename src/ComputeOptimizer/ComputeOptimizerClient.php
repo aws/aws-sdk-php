@@ -5,6 +5,12 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Compute Optimizer** service.
+ * @method \Aws\Result describeRecommendationExportJobs(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeRecommendationExportJobsAsync(array $args = [])
+ * @method \Aws\Result exportAutoScalingGroupRecommendations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise exportAutoScalingGroupRecommendationsAsync(array $args = [])
+ * @method \Aws\Result exportEC2InstanceRecommendations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise exportEC2InstanceRecommendationsAsync(array $args = [])
  * @method \Aws\Result getAutoScalingGroupRecommendations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAutoScalingGroupRecommendationsAsync(array $args = [])
  * @method \Aws\Result getEC2InstanceRecommendations(array $args = [])

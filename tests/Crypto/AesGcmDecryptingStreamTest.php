@@ -10,16 +10,6 @@ class AesGcmDecryptingStreamTest extends TestCase
 {
     use AesEncryptionStreamTestTrait;
 
-    protected function setUp()
-    {
-        if (version_compare(PHP_VERSION, '7.1', '<')) {
-            $this->markTestSkipped(
-                'AES-GCM decryption is only supported in PHP 7.1 or greater'
-            );
-        }
-        parent::setUp();
-    }
-
     /**
      * @dataProvider cartesianJoinInputKeySizeProvider
      *
@@ -30,6 +20,11 @@ class AesGcmDecryptingStreamTest extends TestCase
         StreamInterface $plainText,
         $keySize
     ) {
+        if (version_compare(PHP_VERSION, '7.1', '<')) {
+            $this->markTestSkipped(
+                'AES-GCM decryption is only supported in PHP 7.1 or greater'
+            );
+        }
         $plainText->rewind();
         $plainText = (string) $plainText;
         $key = 'foo';
@@ -62,6 +57,39 @@ class AesGcmDecryptingStreamTest extends TestCase
             $decryptingStream->getAesName()
         );
         $this->assertSame((string) $decryptingStream, $plainText);
+    }
+
+
+    public function testStreamLegacyPHP()
+    {
+        if (version_compare(PHP_VERSION, '7.1', '>=')) {
+            $this->markTestSkipped(
+                'Test is unnecessary on PHP 7.1 and newer'
+            );
+            return;
+        }
+        $knownAnswerTest = [
+            'KEY' => "foo\0\0\0\0\0\0\0\0\0\0\0\0\0",
+            'KeySize' => 128,
+            'TagLength' => 16,
+            'CT' => hex2bin('cbb92a00adfaa91fbee308603a1c21b87f12c30246dc01097b0f000dc1a2f872748bd6b41a37a2d7d89b9cfd'),
+            'PT' => hex2bin('546865207261696e20696e20537061696e2066616c6c73206d61696e6c79206f6e2074686520706c61696e2e'),
+            'IV' => hex2bin('43a29bcfb3322d134a4ef364'),
+            'AAD' => json_encode(['foo' => 'bar']),
+            'Tag' => hex2bin('cba38431a0c28712778de8e8c6ec4594')
+        ];
+        $stream = new AesGcmDecryptingStream(
+            Psr7\stream_for($knownAnswerTest['CT']),
+            $knownAnswerTest['KEY'],
+            $knownAnswerTest['IV'],
+            $knownAnswerTest['Tag'],
+            $knownAnswerTest['AAD'],
+            $knownAnswerTest['TagLength'],
+            $knownAnswerTest['KeySize']
+        );
+        $cipherText = (string) $stream;
+
+        $this->assertEquals($cipherText, $knownAnswerTest['PT']);
     }
 
     public function testIsNotWritable()

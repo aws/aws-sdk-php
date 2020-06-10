@@ -1,5 +1,38 @@
 # CHANGELOG
 
+## 3.141.0 - 2020-06-10
+
+* `Aws\` - Made the getSignatureProvider method public.
+* `Aws\AppConfig` - This release allows customers to choose from a list of predefined deployment strategies while starting deployments.
+* `Aws\CodeArtifact` - Added support for AWS CodeArtifact.
+* `Aws\ComputeOptimizer` - Compute Optimizer supports exporting recommendations to Amazon S3.
+* `Aws\DLM` - Reducing the schedule name of DLM Lifecycle policy from 500 to 120 characters. 
+* `Aws\EC2` - New C6g instances powered by AWS Graviton2 processors and ideal for running advanced, compute-intensive workloads; New R6g instances powered by AWS Graviton2 processors and ideal for running memory-intensive workloads.
+* `Aws\Lightsail` - Documentation updates for lightsail
+* `Aws\Macie2` - This release of the Amazon Macie API removes support for the ArchiveFindings and UnarchiveFindings operations. This release also adds UNKNOWN as an encryption type for S3 bucket metadata.
+* `Aws\ServiceCatalog` - Service Catalog Documentation Update for Integration with AWS Organizations Delegated Administrator feature
+* `Aws\Shield` - Corrections to the supported format for contact phone numbers and to the description for the create subscription action.
+
+## 3.140.4 - 2020-06-09
+
+* `Aws\Transfer` - This release updates the API so customers can test use of Source IP to allow, deny or limit access to data in their S3 buckets after integrating their identity provider.
+
+## 3.140.3 - 2020-06-08
+
+* `Aws\ServiceDiscovery` - Added support for tagging Service and Namespace type resources in Cloud Map
+* `Aws\Shield` - This release adds the option for customers to identify a contact name and method that the DDoS Response Team can proactively engage when a Route 53 Health Check that is associated with a Shield protected resource fails.
+
+## 3.140.2 - 2020-06-05
+
+* `Aws\APIGateway` - Amazon API Gateway now allows customers of REST APIs to skip trust chain validation for backend server certificates for HTTP and VPC Link Integration. This feature enables customers to configure their REST APIs to integrate with backends that are secured with certificates vended from private certificate authorities (CA) or certificates that are self-signed.
+* `Aws\CloudFront` - Amazon CloudFront adds support for configurable origin connection attempts and origin connection timeout.
+* `Aws\ElasticBeanstalk` - These API changes enable an IAM user to associate an operations role with an Elastic Beanstalk environment, so that the IAM user can call Elastic Beanstalk actions without having access to underlying downstream AWS services that these actions call.
+* `Aws\Personalize` - [Personalize] Adds ability to create and apply filters.
+* `Aws\PersonalizeRuntime` - [Personalize] Adds ability to apply filter to real-time recommendations
+* `Aws\Pinpoint` - This release enables additional functionality for the Amazon Pinpoint journeys feature. With this release, you can send messages through additional channels, including SMS, push notifications, and custom channels.
+* `Aws\SageMakerRuntime` - You can now specify the production variant to send the inference request to, when invoking a SageMaker Endpoint that is running two or more variants.
+* `Aws\ServiceCatalog` - This release adds support for DescribeProduct and DescribeProductAsAdmin by product name, DescribeProvisioningArtifact by product name or provisioning artifact name, returning launch paths as part of DescribeProduct output and adds maximum length for provisioning artifact name and provisioning artifact description.
+
 ## 3.140.1 - 2020-06-04
 
 * `Aws\EC2` - New C5a instances, the latest generation of EC2's compute-optimized instances featuring AMD's 2nd Generation EPYC processors. C5a instances offer up to 96 vCPUs, 192 GiB of instance memory, 20 Gbps in Network bandwidth; New G4dn.metal bare metal instance with 8 NVIDIA T4 GPUs.
