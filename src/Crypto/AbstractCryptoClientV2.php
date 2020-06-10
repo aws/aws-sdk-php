@@ -83,7 +83,7 @@ abstract class AbstractCryptoClientV2
     abstract public function encrypt(
         Stream $plaintext,
         array $cipherOptions,
-        MaterialsProvider $provider,
+        MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope
     );
 

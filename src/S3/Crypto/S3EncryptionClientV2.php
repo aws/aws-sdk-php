@@ -4,7 +4,7 @@ namespace Aws\S3\Crypto;
 use Aws\HashingStream;
 use Aws\PhpHash;
 use Aws\Crypto\AbstractCryptoClientV2;
-use Aws\Crypto\DecryptionTrait;
+use Aws\Crypto\DecryptionTraitV2;
 use Aws\Crypto\EncryptionTraitV2;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\Crypto\MaterialsProvider;
@@ -20,7 +20,7 @@ use GuzzleHttp\Psr7;
  */
 class S3EncryptionClientV2 extends AbstractCryptoClientV2
 {
-    use EncryptionTraitV2, DecryptionTrait, CipherBuilderTrait, CryptoParamsTrait;
+    use EncryptionTraitV2, DecryptionTraitV2, CipherBuilderTrait, CryptoParamsTraitV2;
 
     private $client;
     private $instructionFileSuffix;

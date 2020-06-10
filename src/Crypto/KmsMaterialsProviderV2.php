@@ -6,7 +6,7 @@ use Aws\Kms\KmsClient;
 /**
  * Uses KMS to supply materials for encrypting and decrypting data.
  */
-class KmsMaterialsProviderV2 extends MaterialsProvider
+class KmsMaterialsProviderV2 extends MaterialsProviderV2
 {
     private $kmsClient;
     private $kmsKeyId;
@@ -104,5 +104,20 @@ class KmsMaterialsProviderV2 extends MaterialsProvider
         ]);
 
         return $result['Plaintext'];
+    }
+
+    public function generateCek($keySize, $context)
+    {
+        $result = $this->kmsClient->generateDataKey([
+            'KeyId' => $this->kmsKeyId,
+            'KeySpec' => "AES_{$keySize}",
+            'EncryptionContext' => [
+                'aws:x-amz-cek-alg' => $context['x-amz-cek-alg']
+            ]
+        ]);
+        return [
+            'Plaintext' => $result['Plaintext'],
+            'Ciphertext' => base64_encode($result['CiphertextBlob'])
+        ];
     }
 }

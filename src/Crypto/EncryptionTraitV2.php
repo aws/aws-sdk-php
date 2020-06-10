@@ -13,6 +13,10 @@ trait EncryptionTraitV2
         'Aad' => true,
     ];
 
+    private static $encryptClasses = [
+        'gcm' => AesGcmEncryptingStream::class
+    ];
+
     /**
      * Dependency to generate a CipherMethod from a set of inputs for loading
      * in to an AesEncryptingStream.
@@ -51,7 +55,7 @@ trait EncryptionTraitV2
     public function encrypt(
         Stream $plaintext,
         array $cipherOptions,
-        MaterialsProvider $provider,
+        MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope
     ) {
         $materialsDescription = $provider->getMaterialsDescription();
@@ -79,7 +83,7 @@ trait EncryptionTraitV2
                 . ' an integer.');
         }
 
-        if (!MaterialsProvider::isSupportedKeySize(
+        if (!MaterialsProviderV2::isSupportedKeySize(
             $cipherOptions['KeySize']
         )) {
             throw new \InvalidArgumentException('The cipher "KeySize" requested'
@@ -93,21 +97,22 @@ trait EncryptionTraitV2
             )
         );
 
-        $cek = $provider->generateCek($cipherOptions['KeySize']);
+        $keys = $provider->generateCek(
+            $cipherOptions['KeySize'],
+            [
+                'x-amz-cek-alg' => self::$encryptClasses[$cipherOptions['Cipher']]::getStaticAesName()
+            ]
+        );
 
         list($encryptingStream, $aesName) = $this->getEncryptingStream(
             $plaintext,
-            $cek,
+            $keys['Plaintext'],
             $cipherOptions
         );
 
         // Populate envelope data
-        $envelope[MetadataEnvelope::CONTENT_KEY_V2_HEADER] =
-            $provider->encryptCek(
-                $cek,
-                $materialsDescription
-            );
-        unset($cek);
+        $envelope[MetadataEnvelope::CONTENT_KEY_V2_HEADER] = $keys['Ciphertext'];
+        unset($keys);
 
         $envelope[MetadataEnvelope::IV_HEADER] =
             base64_encode($cipherOptions['Iv']);
@@ -148,7 +153,7 @@ trait EncryptionTraitV2
     ) {
         switch ($cipherOptions['Cipher']) {
             // Only 'gcm' is supported for encryption currently
-            default:
+            case 'gcm':
                 $cipherOptions['TagLength'] = 16;
 
                 $cipherTextStream = new AesGcmEncryptingStream(

@@ -28,6 +28,17 @@ class AesGcmEncryptingStream implements AesStreamInterface
     private $tagLength;
 
     /**
+     * Same as non-static 'getAesName' method, allowing calls in a static
+     * context.
+     *
+     * @return string
+     */
+    public static function getStaticAesName()
+    {
+        return 'AES/GCM/NoPadding';
+    }
+
+    /**
      * @param StreamInterface $plaintext
      * @param string $key
      * @param string $initializationVector
@@ -62,9 +73,14 @@ class AesGcmEncryptingStream implements AesStreamInterface
         return "aes-{$this->keySize}-gcm";
     }
 
+    /**
+     * Same as static method and retained for backwards compatibility
+     *
+     * @return string
+     */
     public function getAesName()
     {
-        return 'AES/GCM/NoPadding';
+        return self::getStaticAesName();
     }
 
     public function getCurrentIv()
