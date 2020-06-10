@@ -35,6 +35,28 @@ class Key
     }
 
     /**
+     * Defense in depth:
+     *
+     * PHP 7.2 includes the Sodium cryptography library, which (among other things)
+     * exposes a function called sodium_memzero() that we can use to zero-fill strings
+     * to minimize the risk of sensitive cryptographic materials persisting in memory.
+     *
+     * If this function is not available, we XOR the string in-place with itself as a
+     * best-effort attempt.
+     */
+    public function __destruct()
+    {
+        if (extension_loaded('sodium') && function_exists('sodium_memzero')) {
+            try {
+                \sodium_memzero($this->internalString);
+            } catch (\SodiumException $ex) {
+                // This is a best effort, but does not provide the same guarantees as sodium_memzero():
+                $this->internalString ^= $this->internalString;
+            }
+        }
+    }
+
+    /**
      * @return string
      */
     public function get()
