@@ -10,6 +10,11 @@ use PHPUnit\Framework\TestCase;
  * This class tests the PHP specific functionality of the JsonParser;
  * cross-SDK testing is done in ComplianceTest.php
  */
+
+/**
+ * @covers \Aws\Api\Parser\JsonRpcParser
+ * @covers \Aws\Api\Parser\JsonParser
+ */
 class JsonParserTest extends TestCase
 {
 
