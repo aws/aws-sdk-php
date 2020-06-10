@@ -222,5 +222,6 @@ class XmlParserTest extends TestCase
     <Marker/>
     <timestamp>{$timestamp}</timestamp>
 </ParseXmlResponse>
-XML;}
+XML;
+    }
 }
