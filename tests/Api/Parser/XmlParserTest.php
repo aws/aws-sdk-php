@@ -75,18 +75,6 @@ class XmlParserTest extends TestCase
         self::assertEquals("2002-05-30T09:30:10+00:00", $result);
     }
 
-
-    public function testEmptyStringReturnedFromGetDomainName()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => ""]);
-        $command = $client->getCommand('ParseXml');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
-
     public function testStringReturnedFromGetDomainName()
     {
         $service = $this->generateTestService();
@@ -97,17 +85,7 @@ class XmlParserTest extends TestCase
         $this->setExpectedException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
-
-    public function testFalseReturnedFromGetDomainName()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => false]);
-        $command = $client->getCommand('ParseXml');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
+    
 
     public function testFalseStringReturnedFromGetDomainName()
     {

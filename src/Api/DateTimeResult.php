@@ -37,7 +37,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
     public static function fromTimestamp($timestamp)
     {
         try {
-            if (!empty($timestamp) && (is_string($timestamp) || is_int($timestamp))) {
+            if (($timestamp == null || !empty($timestamp)) && (is_string($timestamp) || is_int($timestamp))) {
                 if (\Aws\is_valid_epoch($timestamp)) {
                     return self::fromEpoch(intval($timestamp));
                 }

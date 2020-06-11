@@ -62,17 +62,6 @@ class JsonParserTest extends TestCase
         self::assertEquals("1969-09-07T06:13:20+00:00", $result);
     }
 
-    public function testEmptyStringReturnedFromService()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => ""]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
-
     public function testStringReturnedFromService()
     {
         $service = $this->generateTestService();
