@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.142.0 - 2020-06-11
 
 * `Aws\Crypto` - This implements a pure-PHP implementation of GMAC, which, when combined with OpenSSL's AES implementations (both AES-ECB and AES-CTR) allows the support of AES-GCM on PHP versions older than 7.1.
 * `Aws\DynamoDb` - Marshal empty strings.
