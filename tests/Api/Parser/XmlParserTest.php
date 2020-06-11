@@ -8,116 +8,54 @@ use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
-/*
- * This class tests the PHP specific functionality of the XmlParser;
- * cross-SDK testing is done in ComplianceTest.php
- */
-
 /**
+ * This class tests the custom functionality of the XmlParser;
+ * generic testing is done in ComplianceTest.php
  * @covers \Aws\Api\Parser\RestXmlParser
  * @covers \Aws\Api\Parser\XmlParser
  */
 class XmlParserTest extends TestCase
 {
-
-    public function testUnixTimestampReturnedFromGetDomainName()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => 932169600]);
-        $command = $client->getCommand('ParseXml');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $result = $handler($command)->wait()['timestamp']->__toString();
-
-        self::assertEquals("1999-07-17T00:00:00+00:00", $result);
-    }
-    public function testTextDateReturnedFromGetDomainName()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "July 17th, 1999"]);
-        $command = $client->getCommand('ParseXml');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $result = $handler($command)->wait()['timestamp']->__toString();
-        self::assertEquals("1999-07-17T00:00:00+00:00", $result);
+    static $timestampFormats = ['iso8601', 'unixTimestamp'];
+    public function timeStampModelProvider(){
+        return [
+            [932169600, "1999-07-17T00:00:00+00:00", null, null],
+            [-10000000, "1969-09-07T06:13:20+00:00", null, null],
+            ["-10000000", "1969-09-07T06:13:20+00:00", null, null],
+            ["July 17th, 1999", "1999-07-17T00:00:00+00:00", null, null],
+            ["1999-07-17T00:00:00", "1999-07-17T00:00:00+00:00", null, null],
+            ["2002-05-30T09:30:10.5", "2002-05-30T09:30:10+00:00", null, null],
+            ["this text is not a date", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["false", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["true", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["932169600abc", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [";", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["[]", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [acos(1.01), null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [false, null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [null, null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+        ];
     }
 
-    public function testISOTimestampReturnedFromGetDomainName()
+    /**
+     * @dataProvider timeStampModelProvider
+     */
+    public function testTimeStamps($timestamp, $expectedValue, $expectedException, $expectedMessage)
     {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "1999-07-17T00:00:00"]);
-        $command = $client->getCommand('ParseXml');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $result = $handler($command)->wait()['timestamp']->__toString();
-        self::assertEquals("1999-07-17T00:00:00+00:00", $result);
-    }
-
-    public function testNegativeNumberReturnedFromGetDomainName()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => -10000000]);
-        $command = $client->getCommand('ParseXml');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $result = $handler($command)->wait()['timestamp']->__toString();
-        self::assertEquals("1969-09-07T06:13:20+00:00", $result);
-    }
-
-    public function testDateTimeReturnedFromGetDomainName()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "2002-05-30T09:30:10.5"]);
-        $command = $client->getCommand('ParseXml');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $result = $handler($command)->wait()['timestamp']->__toString();
-        self::assertEquals("2002-05-30T09:30:10+00:00", $result);
-    }
-
-    public function testStringReturnedFromGetDomainName()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "this text is not a date"]);
-        $command = $client->getCommand('ParseXml');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
-    
-
-    public function testFalseStringReturnedFromGetDomainName()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "false"]);
-        $command = $client->getCommand('ParseXml');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
-
-    public function testTrueStringReturnedFromGetDomainName()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "true"]);
-        $command = $client->getCommand('ParseXml');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
-
-    public function testMixedStringReturnedFromGetDomainName()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "932169600abc"]);
-        $command = $client->getCommand('ParseXml');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
+        foreach (self::$timestampFormats as $expectedFormat) {
+            $service = $this->generateTestService($expectedFormat);
+            $client = $this->generateTestClient($service, ['Timestamp' => $timestamp]);
+            $command = $client->getCommand('ParseXml');
+            $list = $client->getHandlerList();
+            $handler = $list->resolve();
+            if (!empty($expectedValue)) {
+                $result = $handler($command)->wait()['Timestamp']->__toString();
+                self::assertEquals($expectedValue, $result);
+            } else {
+                $this->setExpectedException($expectedException, $expectedMessage);
+                $handler($command)->wait();
+            }
+        }
     }
 
     private function generateTestClient(Service $service, $args = [])
@@ -133,7 +71,7 @@ class XmlParserTest extends TestCase
                     'region'       => 'us-east-1',
                     'version'      => 'latest',
                     'http_handler' => function () use ($args) {
-                        return new FulfilledPromise(new Response(200, [], self::generateXml($args['timestamp'])));
+                        return new FulfilledPromise(new Response(200, [], self::generateXml($args['Timestamp'])));
                     }
                 ],
                 $args
@@ -141,7 +79,7 @@ class XmlParserTest extends TestCase
         );
     }
 
-    private function generateTestService()
+    private function generateTestService($timestampFormat)
     {
         return new Service(
             [
@@ -164,14 +102,14 @@ class XmlParserTest extends TestCase
                     "ParseXmlResponse" => [
                         "type" => "structure",
                         "members" => [
-                            'timestamp' => ['shape' => 'timestamp']
+                            'Timestamp' => ['shape' => 'Timestamp']
                         ],
                         'xmlNamespace' => ['uri' => 'http://cloudfront.amazonaws.com/doc/2017-03-25/', 'prefix'=>""],
                     ]
                     ,
-                    "timestamp" => [
+                    "Timestamp" => [
                         "type" => "timestamp",
-                        "timestampFormat" => "iso8601",
+                        "timestampFormat" => "{$timestampFormat}",
                     ]
                 ],
                 'operations' => [
@@ -199,7 +137,7 @@ class XmlParserTest extends TestCase
     <Name>test-xmlParse</Name>
     <Prefix/>
     <Marker/>
-    <timestamp>{$timestamp}</timestamp>
+    <Timestamp>{$timestamp}</Timestamp>
 </ParseXmlResponse>
 XML;
     }

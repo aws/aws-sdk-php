@@ -500,11 +500,11 @@ function boolean_value($input)
  */
 function is_valid_epoch($input)
 {
-    if(is_string($input) || is_int($input)) {
-        if (is_string($input) && preg_replace("/[^-0-9]/", "", $input) !== $input) {
+    if (is_string($input) || is_int($input)) {
+        if (is_string($input) && !preg_match("/^-?[0-9]+$/", $input)) {
             return false;
         }
-        return is_numeric($input) && intval($input) > PHP_INT_MIN && intval($input < PHP_INT_MAX);
+        return intval($input) > PHP_INT_MIN && intval($input < PHP_INT_MAX);
     }
     return false;
 }

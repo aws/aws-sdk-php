@@ -7,137 +7,58 @@ use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
-/*
- * This class tests the PHP specific functionality of the JsonParser;
- * cross-SDK testing is done in ComplianceTest.php
- */
-
 /**
+ * This class tests the custom functionality of the JsonParser;
+ * generic testing is done in ComplianceTest.php
  * @covers \Aws\Api\Parser\JsonRpcParser
  * @covers \Aws\Api\Parser\JsonParser
  */
 class JsonParserTest extends TestCase
 {
-    public function testUnixTimestampReturnedFromService()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => 932169600]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $result = $handler($command)->wait()['timestamp']->__toString();
-
-        self::assertEquals("1999-07-17T00:00:00+00:00", $result);
-    }
-    public function testTextDateReturnedFromService()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "July 17th, 1999"]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $result = $handler($command)->wait()['timestamp']->__toString();
-        self::assertEquals("1999-07-17T00:00:00+00:00", $result);
-    }
-
-    public function testISOTimestampReturnedFromService()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "1999-07-17T00:00:00"]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $result = $handler($command)->wait()['timestamp']->__toString();
-        self::assertEquals("1999-07-17T00:00:00+00:00", $result);
+    static $timestampFormats = ['iso8601', 'unixTimestamp'];
+    public function timeStampModelProvider(){
+        return [
+            [932169600, "1999-07-17T00:00:00+00:00", null, null],
+            [-10000000, "1969-09-07T06:13:20+00:00", null, null],
+            ["-10000000", "1969-09-07T06:13:20+00:00", null, null],
+            ["July 17th, 1999", "1999-07-17T00:00:00+00:00", null, null],
+            ["1999-07-17T00:00:00", "1999-07-17T00:00:00+00:00", null, null],
+            ["2002-05-30T09:30:10.5", "2002-05-30T09:30:10+00:00", null, null],
+            ["this text is not a date", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["false", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["true", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["932169600abc", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [[932169600], null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [";", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["[]", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [false, null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["null", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [[], null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [true, null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+        ];
     }
 
-    public function testNegativeNumberReturnedFromService()
+    /**
+     * @dataProvider timeStampModelProvider
+     */
+    public function testTimeStamps($timestamp, $expectedValue, $expectedException, $expectedMessage)
     {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "-10000000"]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $result = $handler($command)->wait()['timestamp']->__toString();
-        self::assertEquals("1969-09-07T06:13:20+00:00", $result);
+        foreach (self::$timestampFormats as $expectedFormat) {
+            $service = $this->generateTestService($expectedFormat);
+            $client = $this->generateTestClient($service, ['Timestamp' => $timestamp]);
+            $command = $client->getCommand('ParseJson');
+            $list = $client->getHandlerList();
+            $handler = $list->resolve();
+            if (!empty($expectedValue)) {
+                $result = $handler($command)->wait()['Timestamp']->__toString();
+                self::assertEquals($expectedValue, $result);
+            } else {
+                $this->setExpectedException($expectedException, $expectedMessage);
+                $handler($command)->wait();
+            }
+        }
     }
 
-    public function testStringReturnedFromService()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "this text is not a date"]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
-
-    public function testTrueReturnedFromService()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => true]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
-
-    public function testFalseReturnedFromService()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => false]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
-
-    public function testEmptyArrayReturnedFromService()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => []]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
-    public function testEpochArrayReturnedFromService()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => [932169600]]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
-
-    public function testMixedStringReturnedFromService()
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => "932169600abc"]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
-
-    public function testDateTimeReturnedFromService()
-    {
-        $datetime = new DateTime();
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['timestamp' => $datetime]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException(ParserException::class);
-        $handler($command)->wait()['timestamp']->__toString();
-    }
 
     private function generateTestClient(Service $service, $args = [])
     {
@@ -159,7 +80,7 @@ class JsonParserTest extends TestCase
         );
     }
 
-    private function generateTestService()
+    private function generateTestService($expectedFormat)
     {
         return new Service(
             [
@@ -171,7 +92,7 @@ class JsonParserTest extends TestCase
                     "ParseJsonRequest" => [
                         "type" => "structure",
                         "members" => [
-                            "timestamp" =>[
+                            "Timestamp" =>[
                                 "shape" => "__timestampIso8601",
                             ]
                         ],
@@ -180,7 +101,7 @@ class JsonParserTest extends TestCase
                     "ParseJsonResponse" => [
                         "type" => "structure",
                         "members" => [
-                            "timestamp" =>[
+                            "Timestamp" =>[
                                 "shape" => "__timestampIso8601",
                             ]
                         ]
@@ -188,7 +109,7 @@ class JsonParserTest extends TestCase
                     ,
                     "__timestampIso8601" => [
                         "type" => "timestamp",
-                        "timestampFormat" => "iso8601"
+                        "timestampFormat" => "{$expectedFormat}"
                     ]
                 ],
                 'operations' => [
