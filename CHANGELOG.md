@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Crypto` - This implements a pure-PHP implementation of GMAC, which, when combined with OpenSSL's AES implementations (both AES-ECB and AES-CTR) allows the support of AES-GCM on PHP versions older than 7.1.
+* `Aws\DynamoDb` - Marshal empty strings.
+* `Aws\ECS` - This release adds support for deleting capacity providers.
+* `Aws\IoTDataPlane` - As part of this release, we are introducing a new feature called named shadow, which extends the capability of AWS IoT Device Shadow to support multiple shadows for a single IoT device. With this release, customers can store different device state data into different shadows, and as a result access only the required state data when needed and reduce individual shadow size.
+* `Aws\LexModelBuildingService` - This change adds the built-in AMAZON.KendraSearchIntent that enables integration with Amazon Kendra.
+* `Aws\imagebuilder` - EC2 Image Builder now supports specifying a custom working directory for your build and test workflows. In addition, Image Builder now supports defining tags that are applied to ephemeral resources created by EC2 Image Builder as part of the image creation workflow. 
+
 ## 3.141.0 - 2020-06-10
 
 * `Aws\` - Made the getSignatureProvider method public.
