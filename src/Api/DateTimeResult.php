@@ -33,7 +33,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      */
     public static function fromISO8601($iso8601Timestamp)
     {
-        if(is_numeric($iso8601Timestamp) || !is_string($iso8601Timestamp)){
+        if (is_numeric($iso8601Timestamp) || !is_string($iso8601Timestamp)) {
             throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromISO8601');
         }
         return new DateTimeResult($iso8601Timestamp);
@@ -53,15 +53,15 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
                 throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromTimestamp');
             }
             try {
-                if(!empty($expectedFormat)){
-                    if($expectedFormat == 'iso8601'){
+                if (!empty($expectedFormat)) {
+                    if ($expectedFormat == 'iso8601') {
                         try{
                             return self::fromISO8601($timestamp);
                         }
                         catch (Exception $exception){
                             return self::fromEpoch($timestamp);
                         }
-                    } else if ($expectedFormat == 'unixTimestamp'){
+                    } else if ($expectedFormat == 'unixTimestamp') {
                         try{
                             return self::fromEpoch($timestamp);
                         }
