@@ -1,5 +1,6 @@
 <?php
 
+use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Serializer\RestXmlSerializer;
 use Aws\Api\Service;
 use Aws\AwsClient;
@@ -18,6 +19,14 @@ use PHPUnit\Framework\TestCase;
  */
 class XmlParserTest extends TestCase
 {
+
+    private function expectsException($exception){
+        if (!method_exists($this, 'expectException')) {
+            $this->expectException($exception);
+        } else {
+            $this->setExpectedException($exception);
+        }
+    }
 
     public function testUnixTimestampReturnedFromGetDomainName()
     {
@@ -82,7 +91,7 @@ class XmlParserTest extends TestCase
         $command = $client->getCommand('ParseXml');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 
@@ -93,7 +102,7 @@ class XmlParserTest extends TestCase
         $command = $client->getCommand('ParseXml');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 
@@ -104,7 +113,7 @@ class XmlParserTest extends TestCase
         $command = $client->getCommand('ParseXml');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 
@@ -115,7 +124,7 @@ class XmlParserTest extends TestCase
         $command = $client->getCommand('ParseXml');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 
@@ -126,7 +135,7 @@ class XmlParserTest extends TestCase
         $command = $client->getCommand('ParseXml');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 
@@ -137,7 +146,7 @@ class XmlParserTest extends TestCase
         $command = $client->getCommand('ParseXml');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use Aws\Api\Parser\Exception\ParserException;
 use Aws\Api\Service;
 use Aws\AwsClient;
 use GuzzleHttp\Promise\FulfilledPromise;
@@ -17,6 +18,14 @@ use PHPUnit\Framework\TestCase;
  */
 class JsonParserTest extends TestCase
 {
+   
+    private function expectsException($exception){
+        if (!method_exists($this, 'expectException')) {
+            $this->expectException($exception);
+        } else {
+            $this->setExpectedException($exception);
+        }
+    }
 
     public function testUnixTimestampReturnedFromService()
     {
@@ -69,7 +78,7 @@ class JsonParserTest extends TestCase
         $command = $client->getCommand('ParseJson');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 
@@ -80,7 +89,7 @@ class JsonParserTest extends TestCase
         $command = $client->getCommand('ParseJson');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 
@@ -91,7 +100,7 @@ class JsonParserTest extends TestCase
         $command = $client->getCommand('ParseJson');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 
@@ -102,7 +111,7 @@ class JsonParserTest extends TestCase
         $command = $client->getCommand('ParseJson');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 
@@ -113,7 +122,7 @@ class JsonParserTest extends TestCase
         $command = $client->getCommand('ParseJson');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
     public function testEpochArrayReturnedFromService()
@@ -123,7 +132,7 @@ class JsonParserTest extends TestCase
         $command = $client->getCommand('ParseJson');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 
@@ -134,7 +143,7 @@ class JsonParserTest extends TestCase
         $command = $client->getCommand('ParseJson');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 
@@ -146,7 +155,7 @@ class JsonParserTest extends TestCase
         $command = $client->getCommand('ParseJson');
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->expectException(Exception::class);
+        $this->expectsException(ParserException::class);
         $handler($command)->wait()['timestamp']->__toString();
     }
 

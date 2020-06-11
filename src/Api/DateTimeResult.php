@@ -1,4 +1,5 @@
 <?php
+
 namespace Aws\Api;
 
 use Aws\Api\Parser\Exception\ParserException;
@@ -35,13 +36,17 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      */
     public static function fromTimestamp($timestamp)
     {
-        if (!empty($timestamp) && (is_string($timestamp) || is_int($timestamp))) {
-            if (\Aws\is_valid_epoch($timestamp)){
-                return self::fromEpoch(intval($timestamp));
+        try {
+            if (!empty($timestamp) && (is_string($timestamp) || is_int($timestamp))) {
+                if (\Aws\is_valid_epoch($timestamp)) {
+                    return self::fromEpoch(intval($timestamp));
+                }
+                return new DateTimeResult($timestamp);
             }
-            return new DateTimeResult($timestamp);
+            throw new ParserException('Invalid timestamp value passed');
+        } catch (Exception $exception) {
+            throw new ParserException('Invalid timestamp value passed');
         }
-        throw new ParserException('Invalid timestamp value passed');
     }
 
     /**
@@ -61,7 +66,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        return (string) $this;
+        return (string)$this;
     }
 }
 
