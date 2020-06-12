@@ -24,33 +24,11 @@ interface MaterialsProviderInterface
     public function fromDecryptionEnvelope(MetadataEnvelope $envelope);
 
     /**
-     * Returns the material description for this Provider so it can be verified
-     * by encryption mechanisms.
-     *
-     * @return string
-     */
-    public function getMaterialsDescription();
-
-    /**
      * Returns the wrap algorithm name for this Provider.
      *
      * @return string
      */
     public function getWrapAlgorithmName();
-
-    /**
-     * Takes a content encryption key (CEK) and description to return an
-     * encrypted key according to the Provider's specifications.
-     *
-     * @param string $unencryptedCek Key for use in encrypting other data
-     *                               that itself needs to be encrypted by the
-     *                               Provider.
-     * @param string $materialDescription Material Description for use in
-     *                                    encrypting the $cek.
-     *
-     * @return string
-     */
-    public function encryptCek($unencryptedCek, $materialDescription);
 
     /**
      * Takes an encrypted content encryption key (CEK) and material description

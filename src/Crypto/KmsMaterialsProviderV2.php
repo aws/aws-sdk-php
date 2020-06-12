@@ -52,42 +52,9 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
         );
     }
 
-    /**
-     * The KMS key id for use in matching this Provider to its keys,
-     * consistently with other SDKs as 'kms_cmk_id'.
-     *
-     * @return array
-     */
-    public function getMaterialsDescription()
-    {
-        return ['kms_cmk_id' => $this->kmsKeyId];
-    }
-
     public function getWrapAlgorithmName()
     {
         return 'kms';
-    }
-
-    /**
-     * Takes a content encryption key (CEK) and description to return an encrypted
-     * key by using KMS' Encrypt API.
-     *
-     * @param string $unencryptedCek Key for use in encrypting other data
-     *                               that itself needs to be encrypted by the
-     *                               Provider.
-     * @param string $materialDescription Material Description for use in
-     *                                    encrypting the $cek.
-     *
-     * @return string
-     */
-    public function encryptCek($unencryptedCek, $materialDescription)
-    {
-        $encryptedDataKey = $this->kmsClient->encrypt([
-            'Plaintext' => $unencryptedCek,
-            'KeyId' => $this->kmsKeyId,
-            'EncryptionContext' => $materialDescription
-        ]);
-        return base64_encode($encryptedDataKey['CiphertextBlob']);
     }
 
     /**
