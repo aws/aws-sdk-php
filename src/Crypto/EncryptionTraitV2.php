@@ -85,7 +85,7 @@ trait EncryptionTraitV2
             $cipherOptions['KeySize']
         )) {
             throw new \InvalidArgumentException('The cipher "KeySize" requested'
-                . ' is not supported by AES (128, 192, or 256).');
+                . ' is not supported by AES (128 or 256).');
         }
 
         $cipherOptions['Iv'] = $provider->generateIv(
