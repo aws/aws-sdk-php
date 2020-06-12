@@ -9,7 +9,7 @@ use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Aws\Crypto\KmsMaterialsProviderV2
+ * @covers \Aws\Crypto\KmsMaterialsProviderV2
  */
 class KmsMaterialsProviderV2Test extends TestCase
 {
