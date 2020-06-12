@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway
+* `Aws\CloudFormation` - The following parameters now return the organization root ID or organizational unit (OU) IDs that you specified for DeploymentTargets: the OrganizationalUnitIds parameter on StackSet and the OrganizationalUnitId parameter on StackInstance, StackInstanceSummary, and StackSetOperationResultSummary
+* `Aws\Glue` - You can now choose to crawl the entire table or just a sample of records in DynamoDB when using AWS Glue crawlers. Additionally, you can also specify a scanning rate for crawling DynamoDB tables.
+* `Aws\StorageGateway` - Display EndpointType in DescribeGatewayInformation
+
 ## 3.142.0 - 2020-06-11
 
 * `Aws\Crypto` - This implements a pure-PHP implementation of GMAC, which, when combined with OpenSSL's AES implementations (both AES-ECB and AES-CTR) allows the support of AES-GCM on PHP versions older than 7.1.
