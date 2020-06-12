@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.142.1 - 2020-06-12
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway
 * `Aws\CloudFormation` - The following parameters now return the organization root ID or organizational unit (OU) IDs that you specified for DeploymentTargets: the OrganizationalUnitIds parameter on StackSet and the OrganizationalUnitId parameter on StackInstance, StackInstanceSummary, and StackSetOperationResultSummary
