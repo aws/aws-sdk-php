@@ -1,12 +1,14 @@
 <?php
 namespace Aws\Test\S3\Crypto;
 
+use Aws\Crypto\MaterialsProviderInterface;
 use Aws\Result;
 use Aws\HashingStream;
 use Aws\Crypto\MaterialsProvider;
 use Aws\Crypto\AesDecryptingStream;
 use Aws\Crypto\AesGcmDecryptingStream;
 use Aws\Crypto\KmsMaterialsProvider;
+use Aws\Crypto\KmsMaterialsProviderV2;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\S3\S3Client;
 use Aws\S3\Crypto\HeadersMetadataStrategy;
@@ -136,7 +138,7 @@ class S3EncryptionClientV2Test extends TestCase
 
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
@@ -168,7 +170,7 @@ class S3EncryptionClientV2Test extends TestCase
 
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
 
         $client = new S3EncryptionClientV2($s3);
         $client->putObject([
@@ -193,7 +195,7 @@ class S3EncryptionClientV2Test extends TestCase
 
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
@@ -224,7 +226,7 @@ class S3EncryptionClientV2Test extends TestCase
 
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
@@ -268,7 +270,7 @@ class S3EncryptionClientV2Test extends TestCase
 
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
@@ -310,7 +312,7 @@ class S3EncryptionClientV2Test extends TestCase
 
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
@@ -355,7 +357,7 @@ EOXML;
 
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
@@ -399,7 +401,7 @@ EOXML;
 
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
             new Result(['CiphertextBlob' => 'encrypted'])
         ]);
@@ -417,7 +419,7 @@ EOXML;
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    private function getInvalidCipherMetadataFields(MaterialsProvider $provider)
+    private function getInvalidCipherMetadataFields(MaterialsProviderInterface $provider)
     {
         $fields = [];
         $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
@@ -436,7 +438,7 @@ EOXML;
         return $fields;
     }
 
-    private function getValidCbcMetadataFields(MaterialsProvider $provider)
+    private function getValidCbcMetadataFields(MaterialsProviderInterface $provider)
     {
         $fields = [];
         $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
@@ -455,7 +457,7 @@ EOXML;
         return $fields;
     }
 
-    private function getValidGcmMetadataFields(MaterialsProvider $provider)
+    private function getValidGcmMetadataFields(MaterialsProviderInterface $provider)
     {
         $fields = [];
         $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
@@ -481,7 +483,7 @@ EOXML;
     public function testGetObjectThrowsOnInvalidCipher()
     {
         $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProvider($kms);
+        $provider = new KmsMaterialsProviderV2($kms);
         $this->addMockResults($kms, [
             new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
         ]);
@@ -517,7 +519,7 @@ EOXML;
     {
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $strategy = new HeadersMetadataStrategy();
         $envelope = $strategy->load([]);
         $provider->fromDecryptionEnvelope($envelope);
@@ -525,13 +527,13 @@ EOXML;
 
     /**
      * @expectedException        RuntimeException
-     * @expectedExceptionMessage Not able to detect kms_cmk_id from kms materials description.
+     * @expectedExceptionMessage Not able to detect kms_cmk_id (legacy implementation) or aws:x-amz-cek-alg (current implementation)
      */
     public function testFromDecryptionEnvelopeInvalidKmsMaterialException()
     {
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $strategy = new HeadersMetadataStrategy();
         $args['Metadata'][MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER] = 'foo';
         $envelope = $strategy->load($args);
@@ -541,7 +543,7 @@ EOXML;
     public function testGetObjectWithMetadataStrategy()
     {
         $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProvider($kms);
+        $provider = new KmsMaterialsProviderV2($kms);
         $this->addMockResults($kms, [
             new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
         ]);
@@ -572,7 +574,7 @@ EOXML;
     public function testGetObjectWithClientInstructionFileSuffix()
     {
         $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProvider($kms);
+        $provider = new KmsMaterialsProviderV2($kms);
         $this->addMockResults($kms, [
             new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
         ]);
@@ -619,7 +621,7 @@ EOXML;
     public function testGetObjectWithOperationInstructionFileSuffix()
     {
         $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProvider($kms);
+        $provider = new KmsMaterialsProviderV2($kms);
         $this->addMockResults($kms, [
             new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
         ]);
@@ -671,7 +673,7 @@ EOXML;
         }
 
         $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProvider($kms);
+        $provider = new KmsMaterialsProviderV2($kms);
         $this->addMockResults($kms, [
             new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
         ]);
@@ -703,7 +705,7 @@ EOXML;
     {
         $file = sys_get_temp_dir() . '/CSE_Save_Test.txt';
         $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProvider($kms);
+        $provider = new KmsMaterialsProviderV2($kms);
         $this->addMockResults($kms, [
             new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
         ]);

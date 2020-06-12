@@ -58,10 +58,6 @@ trait EncryptionTraitV2
         MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope
     ) {
-        $materialsDescription = [
-            'aws:x-amz-cek-alg' => self::$encryptClasses[$cipherOptions['Cipher']]::getStaticAesName()
-        ];
-
         $cipherOptions = array_intersect_key(
             $cipherOptions,
             self::$allowedOptions
@@ -98,6 +94,10 @@ trait EncryptionTraitV2
                 $cipherOptions['KeySize']
             )
         );
+
+        $materialsDescription = [
+            'aws:x-amz-cek-alg' => self::$encryptClasses[$cipherOptions['Cipher']]::getStaticAesName()
+        ];
 
         $keys = $provider->generateCek(
             $cipherOptions['KeySize'],

@@ -1,7 +1,7 @@
 <?php
 namespace Aws\S3\Crypto;
 
-use Aws\Crypto\MaterialsProviderV2;
+use Aws\Crypto\MaterialsProviderInterface;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\Crypto\MetadataStrategyInterface;
 
@@ -9,7 +9,7 @@ trait CryptoParamsTraitV2
 {
     protected function getMaterialsProvider(array $args)
     {
-        if ($args['@MaterialsProvider'] instanceof MaterialsProviderV2) {
+        if ($args['@MaterialsProvider'] instanceof MaterialsProviderInterface) {
             return $args['@MaterialsProvider'];
         }
 

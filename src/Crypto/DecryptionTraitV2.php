@@ -40,8 +40,8 @@ trait DecryptionTraitV2
      *
      * @param string $cipherText Plain-text data to be encrypted using the
      *                           materials, algorithm, and data provided.
-     * @param MaterialsProvider $provider A provider to supply and encrypt
-     *                                    materials used in encryption.
+     * @param MaterialsProviderInterface $provider A provider to supply and encrypt
+     *                                             materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
      * @param array $cipherOptions Additional verification options.
@@ -55,7 +55,7 @@ trait DecryptionTraitV2
      */
     public function decrypt(
         $cipherText,
-        MaterialsProviderV2 $provider,
+        MaterialsProviderInterface $provider,
         MetadataEnvelope $envelope,
         array $cipherOptions = []
     ) {
