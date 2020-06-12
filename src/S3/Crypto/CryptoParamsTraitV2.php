@@ -13,7 +13,7 @@ trait CryptoParamsTraitV2
             return $args['@MaterialsProvider'];
         }
 
-        throw new \InvalidArgumentException('An instance of MaterialsProvider'
+        throw new \InvalidArgumentException('An instance of MaterialsProviderInterface'
             . ' must be passed in the "MaterialsProvider" field.');
     }
 

@@ -10,6 +10,21 @@ trait UsesCryptoParamsTraitV2
 {
     use UsesCryptoParamsTrait;
 
+    public function getInvalidMaterialsProviders()
+    {
+
+        return [
+            [
+                new \stdClass(),
+                [
+                    'InvalidArgumentException',
+                    'An instance of MaterialsProviderInterface'
+                    . ' must be passed in the "MaterialsProvider" field.'
+                ]
+            ]
+        ];
+    }
+
     public function getValidMaterialsProviders()
     {
         $kms = $this->getKmsClient();
@@ -28,9 +43,6 @@ trait UsesCryptoParamsTraitV2
             [
                 'gcm',
                 null,
-                function () {
-                    return version_compare(PHP_VERSION, '7.1', '<');
-                }
             ],
             [
                 'unsupported',
@@ -65,7 +77,7 @@ trait UsesCryptoParamsTraitV2
                 [
                     'InvalidArgumentException',
                     'The cipher "KeySize" requested'
-                    . ' is not supported by AES (128, 192, or 256).'
+                    . ' is not supported by AES (128 or 256).'
                 ]
             ]
         ];
