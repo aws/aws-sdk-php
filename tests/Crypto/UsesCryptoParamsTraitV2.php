@@ -73,7 +73,15 @@ trait UsesCryptoParamsTraitV2
                 ]
             ],
             [
-                512,
+                192,
+                [
+                    'InvalidArgumentException',
+                    'The cipher "KeySize" requested'
+                    . ' is not supported by AES (128 or 256).'
+                ]
+            ],
+            [
+            512,
                 [
                     'InvalidArgumentException',
                     'The cipher "KeySize" requested'

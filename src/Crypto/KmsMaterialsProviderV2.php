@@ -28,8 +28,7 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
     public function fromDecryptionEnvelope(MetadataEnvelope $envelope)
     {
         if (empty($envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER])) {
-            throw new \RuntimeException('Not able to detect kms_cmk_id from an'
-                . ' empty materials description.');
+            throw new \RuntimeException('Not able to detect the materials description.');
         }
 
         $materialsDescription = json_decode(

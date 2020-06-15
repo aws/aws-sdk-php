@@ -85,7 +85,6 @@ class S3EncryptionClientV2Test extends TestCase
             '@MaterialsProvider' => $provider,
             '@CipherOptions' => [
                 'Cipher' => 'gcm',
-
             ]
         ]);
         $this->assertTrue($this->mockQueueEmpty());
@@ -250,15 +249,8 @@ class S3EncryptionClientV2Test extends TestCase
      */
     public function testPutObjectValidatesCipher(
         $cipher,
-        $exception = null,
-        callable $skipCheck = null
+        $exception = null
     ) {
-        if ($skipCheck && $skipCheck()) {
-            $this->markTestSkipped(
-                'AES-GCM decryption is only supported in PHP 7.1 or greater'
-            );
-        }
-
         if ($exception) {
             $this->setupProvidedExpectedException($exception);
         }
@@ -337,52 +329,8 @@ class S3EncryptionClientV2Test extends TestCase
 EOXML;
     }
 
-    public function testPutObjectWrapsBodyInAesEncryptingStream()
-    {
-        $s3 = new S3Client([
-            'region' => 'us-west-2',
-            'version' => 'latest',
-            'http_handler' => function (RequestInterface $request) {
-                $this->assertNotEmpty($request->getHeader(
-                    'x-amz-meta-' . MetadataEnvelope::CONTENT_KEY_V2_HEADER
-                ));
-                $this->assertInstanceOf(HashingStream::class, $request->getBody());
-                return new FulfilledPromise(new Response(
-                    200,
-                    [],
-                    $this->getSuccessfulPutObjectResponse()
-                ));
-            },
-        ]);
-
-        $kms = $this->getKmsClient();
-        $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProviderV2($kms, $keyId);
-        $this->addMockResults($kms, [
-            new Result(['CiphertextBlob' => 'encrypted'])
-        ]);
-
-        $client = new S3EncryptionClientV2($s3);
-        $client->putObject([
-            'Bucket' => 'foo',
-            'Key' => 'bar',
-            'Body' => 'test',
-            '@MaterialsProvider' => $provider,
-            '@CipherOptions' => [
-                'Cipher' => 'gcm'
-            ]
-        ]);
-        $this->assertTrue($this->mockQueueEmpty());
-    }
-
     public function testPutObjectWrapsBodyInAesGcmEncryptingStream()
     {
-        if (version_compare(PHP_VERSION, '7.1', '<')) {
-            $this->markTestSkipped(
-                'AES-GCM decryption is only supported in PHP 7.1 or greater'
-            );
-        }
-
         $s3 = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
@@ -513,7 +461,7 @@ EOXML;
 
     /**
      * @expectedException        RuntimeException
-     * @expectedExceptionMessage Not able to detect kms_cmk_id from an empty materials description.
+     * @expectedExceptionMessage Not able to detect the materials description.
      */
     public function testFromDecryptionEnvelopeEmptyKmsMaterialException()
     {
@@ -666,12 +614,6 @@ EOXML;
 
     public function testGetObjectWrapsBodyInAesGcmDecryptingStream()
     {
-        if (version_compare(PHP_VERSION, '7.1', '<')) {
-            $this->markTestSkipped(
-                'AES-GCM decryption is only supported in PHP 7.1 or greater'
-            );
-        }
-
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProviderV2($kms);
         $this->addMockResults($kms, [
