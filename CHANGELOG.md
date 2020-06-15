@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.142.2 - 2020-06-15
 
 * `Aws\AlexaForBusiness` - Adding support for optional tags in CreateBusinessReportSchedule, CreateProfile and CreateSkillGroup APIs
 * `Aws\AppConfig` - This release adds a hosted configuration source provider. Customers can now store their application configurations directly in AppConfig, without the need for an external configuration source.
