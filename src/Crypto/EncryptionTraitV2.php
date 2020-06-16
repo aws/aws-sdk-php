@@ -95,8 +95,9 @@ trait EncryptionTraitV2
             )
         );
 
+        $encryptClass = self::$encryptClasses[$cipherOptions['Cipher']];
         $materialsDescription = [
-            'aws:x-amz-cek-alg' => self::$encryptClasses[$cipherOptions['Cipher']]::getStaticAesName()
+            'aws:x-amz-cek-alg' => $encryptClass::getStaticAesName()
         ];
 
         $keys = $provider->generateCek(
