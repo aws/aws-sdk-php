@@ -35,6 +35,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createBotAsync(array $args = [])
  * @method \Aws\Result createMeeting(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createMeetingAsync(array $args = [])
+ * @method \Aws\Result createMeetingWithAttendees(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createMeetingWithAttendeesAsync(array $args = [])
  * @method \Aws\Result createPhoneNumberOrder(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createPhoneNumberOrderAsync(array $args = [])
  * @method \Aws\Result createProxySession(array $args = [])

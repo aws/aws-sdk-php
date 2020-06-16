@@ -1,5 +1,38 @@
 # CHANGELOG
 
+## 3.142.3 - 2020-06-16
+
+* `Aws\AutoScaling` - Introducing instance refresh, a feature that helps you update all instances in an Auto Scaling group in a rolling fashion (for example, to apply a new AMI or instance type). You can control the pace of the refresh by defining the percentage of the group that must remain running/healthy during the replacement process and the time for new instances to warm up between replacements.
+* `Aws\CloudFront` - Documentation updates for CloudFront
+* `Aws\DataExchange` - This release fixes a bug in the AWS Data Exchange Python and NodeJS SDKs. The 'KmsKeyArn' field in the create-job API was configured to be required instead of optional. We updated this field to be optional in this release.
+* `Aws\Lambda` - Adds support for using Amazon Elastic File System (persistent storage) with AWS Lambda. This enables customers to share data across function invocations, read large reference data files, and write function output to a persistent and shared store.
+* `Aws\Polly` - Amazon Polly adds new US English child voice - Kevin. Kevin is available as Neural voice only.
+* `Aws\QLDB` - Documentation updates for Amazon QLDB
+
+## 3.142.2 - 2020-06-15
+
+* `Aws\AlexaForBusiness` - Adding support for optional tags in CreateBusinessReportSchedule, CreateProfile and CreateSkillGroup APIs
+* `Aws\AppConfig` - This release adds a hosted configuration source provider. Customers can now store their application configurations directly in AppConfig, without the need for an external configuration source.
+* `Aws\Chime` - feature: Chime: This release introduces the ability to create an AWS Chime SDK meeting with attendees.
+* `Aws\CognitoIdentityProvider` - Updated all AuthParameters to be sensitive.
+* `Aws\IoT` - Added support for job executions rollout configuration, job abort configuration, and job executions timeout configuration for AWS IoT Over-the-Air (OTA) Update Feature.
+
+## 3.142.1 - 2020-06-12
+
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway
+* `Aws\CloudFormation` - The following parameters now return the organization root ID or organizational unit (OU) IDs that you specified for DeploymentTargets: the OrganizationalUnitIds parameter on StackSet and the OrganizationalUnitId parameter on StackInstance, StackInstanceSummary, and StackSetOperationResultSummary
+* `Aws\Glue` - You can now choose to crawl the entire table or just a sample of records in DynamoDB when using AWS Glue crawlers. Additionally, you can also specify a scanning rate for crawling DynamoDB tables.
+* `Aws\StorageGateway` - Display EndpointType in DescribeGatewayInformation
+
+## 3.142.0 - 2020-06-11
+
+* `Aws\Crypto` - This implements a pure-PHP implementation of GMAC, which, when combined with OpenSSL's AES implementations (both AES-ECB and AES-CTR) allows the support of AES-GCM on PHP versions older than 7.1.
+* `Aws\DynamoDb` - Marshal empty strings.
+* `Aws\ECS` - This release adds support for deleting capacity providers.
+* `Aws\IoTDataPlane` - As part of this release, we are introducing a new feature called named shadow, which extends the capability of AWS IoT Device Shadow to support multiple shadows for a single IoT device. With this release, customers can store different device state data into different shadows, and as a result access only the required state data when needed and reduce individual shadow size.
+* `Aws\LexModelBuildingService` - This change adds the built-in AMAZON.KendraSearchIntent that enables integration with Amazon Kendra.
+* `Aws\imagebuilder` - EC2 Image Builder now supports specifying a custom working directory for your build and test workflows. In addition, Image Builder now supports defining tags that are applied to ephemeral resources created by EC2 Image Builder as part of the image creation workflow. 
+
 ## 3.141.0 - 2020-06-10
 
 * `Aws\` - Made the getSignatureProvider method public.

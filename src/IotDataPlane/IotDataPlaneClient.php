@@ -10,6 +10,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteThingShadowAsync(array $args = [])
  * @method \Aws\Result getThingShadow(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getThingShadowAsync(array $args = [])
+ * @method \Aws\Result listNamedShadowsForThing(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listNamedShadowsForThingAsync(array $args = [])
  * @method \Aws\Result publish(array $args = [])
  * @method \GuzzleHttp\Promise\Promise publishAsync(array $args = [])
  * @method \Aws\Result updateThingShadow(array $args = [])
