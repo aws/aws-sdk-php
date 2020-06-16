@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.142.3 - 2020-06-16
 
 * `Aws\AutoScaling` - Introducing instance refresh, a feature that helps you update all instances in an Auto Scaling group in a rolling fashion (for example, to apply a new AMI or instance type). You can control the pace of the refresh by defining the percentage of the group that must remain running/healthy during the replacement process and the time for new instances to warm up between replacements.
 * `Aws\CloudFront` - Documentation updates for CloudFront
