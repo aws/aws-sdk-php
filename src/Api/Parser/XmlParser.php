@@ -139,10 +139,15 @@ class XmlParser
 
     private function parse_timestamp(Shape $shape, $value)
     {
-        if (is_string($value) || is_int($value)
-            || (is_object($value) && method_exists($value, '__toString'))) {
-            return DateTimeResult::fromTimestamp((string)$value,
-                !empty($shape['timestampFormat']) ? $shape['timestampFormat'] : null);
+        if (is_string($value)
+            || is_int($value)
+            || (is_object($value)
+                && method_exists($value, '__toString'))
+        ) {
+            return DateTimeResult::fromTimestamp(
+                (string) $value,
+                !empty($shape['timestampFormat']) ? $shape['timestampFormat'] : null
+            );
         }
         throw new ParserException('Invalid timestamp value passed to XmlParser::parse_timestamp');
     }

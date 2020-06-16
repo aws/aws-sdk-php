@@ -17,30 +17,36 @@ use PHPUnit\Framework\TestCase;
 class XmlParserTest extends TestCase
 {
     static $timestampFormats = ['iso8601', 'unixTimestamp'];
+
     public function timeStampModelProvider(){
         return [
-            [932169600, "1999-07-17T00:00:00+00:00", null, null],
-            [-10000000, "1969-09-07T06:13:20+00:00", null, null],
-            ["-10000000", "1969-09-07T06:13:20+00:00", null, null],
-            ["July 17th, 1999", "1999-07-17T00:00:00+00:00", null, null],
-            ["1999-07-17T00:00:00", "1999-07-17T00:00:00+00:00", null, null],
-            ["2002-05-30T09:30:10.5", "2002-05-30T09:30:10+00:00", null, null],
-            ["this text is not a date", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["false", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["true", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["932169600abc", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [";", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["[]", null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [acos(1.01), null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [false, null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [null, null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [932169600, "1999-07-17T00:00:00+00:00"],
+            [-10000000, "1969-09-07T06:13:20+00:00"],
+            ["-10000000", "1969-09-07T06:13:20+00:00"],
+            ["July 17th, 1999", "1999-07-17T00:00:00+00:00"],
+            ["1999-07-17T00:00:00", "1999-07-17T00:00:00+00:00"],
+            ["2002-05-30T09:30:10.5", "2002-05-30T09:30:10+00:00"],
+        ];
+    }
+
+    public function timeStampExceptionModelProvider(){
+        return [
+            ["this text is not a date", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["false", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["true", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["932169600abc", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [";", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["[]", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [acos(1.01), ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [false, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
         ];
     }
 
     /**
      * @dataProvider timeStampModelProvider
      */
-    public function testTimeStamps($timestamp, $expectedValue, $expectedException, $expectedMessage)
+    public function testTimeStamps($timestamp, $expectedValue)
     {
         foreach (self::$timestampFormats as $expectedFormat) {
             $service = $this->generateTestService($expectedFormat);
@@ -48,13 +54,24 @@ class XmlParserTest extends TestCase
             $command = $client->getCommand('ParseXml');
             $list = $client->getHandlerList();
             $handler = $list->resolve();
-            if (!empty($expectedValue)) {
-                $result = $handler($command)->wait()['Timestamp']->__toString();
-                self::assertEquals($expectedValue, $result);
-            } else {
-                $this->setExpectedException($expectedException, $expectedMessage);
-                $handler($command)->wait();
-            }
+            $result = $handler($command)->wait()['Timestamp']->__toString();
+            self::assertEquals($expectedValue, $result);
+        }
+    }
+
+    /**
+     * @dataProvider timeStampExceptionModelProvider
+     */
+    public function testExceptionTimeStamps($timestamp, $expectedException, $expectedMessage)
+    {
+        foreach (self::$timestampFormats as $expectedFormat) {
+            $service = $this->generateTestService($expectedFormat);
+            $client = $this->generateTestClient($service, ['Timestamp' => $timestamp]);
+            $command = $client->getCommand('ParseXml');
+            $list = $client->getHandlerList();
+            $handler = $list->resolve();
+            $this->setExpectedException($expectedException, $expectedMessage);
+            $handler($command)->wait();
         }
     }
 

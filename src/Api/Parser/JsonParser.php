@@ -43,8 +43,10 @@ class JsonParser
                 return $target;
 
             case 'timestamp':
-                return DateTimeResult::fromTimestamp($value,
-                    !empty($shape['timestampFormat']) ? $shape['timestampFormat'] : null);
+                return DateTimeResult::fromTimestamp(
+                    $value,
+                    !empty($shape['timestampFormat']) ? $shape['timestampFormat'] : null
+                );
 
             case 'blob':
                 return base64_decode($value);

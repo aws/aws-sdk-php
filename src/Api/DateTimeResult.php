@@ -53,30 +53,29 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
                 throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromTimestamp');
             }
             try {
-                if (!empty($expectedFormat)) {
-                    if ($expectedFormat == 'iso8601') {
-                        try{
-                            return self::fromISO8601($timestamp);
-                        }
-                        catch (Exception $exception){
-                            return self::fromEpoch($timestamp);
-                        }
-                    } else if ($expectedFormat == 'unixTimestamp') {
-                        try{
-                            return self::fromEpoch($timestamp);
-                        }
-                        catch (Exception $exception){
-                            return self::fromISO8601($timestamp);
-                        }
+                if ($expectedFormat == 'iso8601') {
+                    try {
+                        return self::fromISO8601($timestamp);
+                    }
+                    catch (Exception $exception) {
+                        return self::fromEpoch($timestamp);
+                    }
+                } else if ($expectedFormat == 'unixTimestamp') {
+                    try {
+                        return self::fromEpoch($timestamp);
+                    }
+                    catch (Exception $exception) {
+                        return self::fromISO8601($timestamp);
                     }
                 }
+
                 else if (\Aws\is_valid_epoch($timestamp)) {
                     return self::fromEpoch($timestamp);
                 }
                 return self::fromISO8601($timestamp);
 
         } catch (Exception $exception) {
-                throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromTimestamp');
+            throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromTimestamp');
         }
     }
 

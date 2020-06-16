@@ -34,8 +34,10 @@ trait MetadataParserTrait
                 break;
             case 'timestamp':
                 try {
-                    $value = DateTimeResult::fromTimestamp($value,
-                        !empty($shape['timestampFormat']) ? $shape['timestampFormat'] : null);
+                    $value = DateTimeResult::fromTimestamp(
+                        $value,
+                        !empty($shape['timestampFormat']) ? $shape['timestampFormat'] : null
+                    );
                     break;
                 } catch (\Exception $e) {
                     // If the value cannot be parsed, then do not add it to the
