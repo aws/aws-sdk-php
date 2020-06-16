@@ -76,7 +76,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
                 return self::fromISO8601($timestamp);
 
         } catch (Exception $exception) {
-            throw $exception;
+                throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromTimestamp');
         }
     }
 
