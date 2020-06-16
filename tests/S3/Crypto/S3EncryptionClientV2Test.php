@@ -2,13 +2,10 @@
 namespace Aws\Test\S3\Crypto;
 
 use Aws\Crypto\MaterialsProviderInterface;
-use Aws\Kms\KmsClient;
 use Aws\Result;
 use Aws\HashingStream;
-use Aws\Crypto\MaterialsProvider;
 use Aws\Crypto\AesDecryptingStream;
 use Aws\Crypto\AesGcmDecryptingStream;
-use Aws\Crypto\KmsMaterialsProvider;
 use Aws\Crypto\KmsMaterialsProviderV2;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\S3\S3Client;
