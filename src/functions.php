@@ -504,7 +504,7 @@ function is_valid_epoch($input)
         if (is_string($input) && !preg_match("/^-?[0-9]+$/", $input)) {
             return false;
         }
-        return intval($input) > PHP_INT_MIN && intval($input < PHP_INT_MAX);
+        return true;
     }
     return false;
 }
