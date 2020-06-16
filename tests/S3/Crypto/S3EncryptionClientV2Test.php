@@ -2,6 +2,7 @@
 namespace Aws\Test\S3\Crypto;
 
 use Aws\Crypto\MaterialsProviderInterface;
+use Aws\Kms\KmsClient;
 use Aws\Result;
 use Aws\HashingStream;
 use Aws\Crypto\MaterialsProvider;
@@ -17,6 +18,7 @@ use Aws\S3\Crypto\S3EncryptionClientV2;
 use Aws\Test\Crypto\UsesCryptoParamsTraitV2;
 use Aws\Test\UsesServiceTrait;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -417,6 +419,25 @@ EOXML;
         $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
             = base64_encode('cek');
         $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
+            = json_encode(['aws:x-amz-cek-alg' => 'AES/GCM/NoPadding']);
+        $fields[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
+            = 'AES/GCM/NoPadding';
+
+        return $fields;
+    }
+
+    private function getValidLegacysGcmMetadataFields(MaterialsProviderInterface $provider)
+    {
+        $fields = [];
+        $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
+            = $provider->getWrapAlgorithmName();
+        $fields[MetadataEnvelope::IV_HEADER]
+            = base64_encode($provider->generateIv('aes-256-gcm'));
+        $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
+            = 0;
+        $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
+            = base64_encode('cek');
+        $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
             = json_encode(['kms_cmk_id' => '11111111-2222-3333-4444-555555555555']);
         $fields[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
             = 'AES/GCM/NoPadding';
@@ -488,13 +509,24 @@ EOXML;
         $provider->fromDecryptionEnvelope($envelope);
     }
 
-    public function testGetObjectWithMetadataStrategy()
+    public function testGetObjectWithLegacyCbcMetadata()
     {
         $kms = $this->getKmsClient();
+        $list = $kms->getHandlerList();
+        $list->setHandler(function($cmd, $req) {
+            // Verify decryption command has correct parameters
+            $this->assertEquals('cek', $cmd['CiphertextBlob']);
+            $this->assertEquals(
+                [
+                    'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'
+                ],
+                $cmd['EncryptionContext']
+            );
+            return Promise\promise_for(
+                new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
+            );
+        });
         $provider = new KmsMaterialsProviderV2($kms);
-        $this->addMockResults($kms, [
-            new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
-        ]);
 
         $s3 = new S3Client([
             'region' => 'us-west-2',
@@ -517,6 +549,90 @@ EOXML;
             '@MaterialsProvider' => $provider
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
+    }
+
+    public function testGetObjectWithLegacyGcmMetadata()
+    {
+        $kms = $this->getKmsClient();
+        $list = $kms->getHandlerList();
+        $list->setHandler(function($cmd, $req) {
+            // Verify decryption command has correct parameters
+            $this->assertEquals('cek', $cmd['CiphertextBlob']);
+            $this->assertEquals(
+                [
+                    'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'
+                ],
+                $cmd['EncryptionContext']
+            );
+            return Promise\promise_for(
+                new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
+            );
+        });
+        $provider = new KmsMaterialsProviderV2($kms);
+
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function () use ($provider) {
+                return new FulfilledPromise(new Response(
+                    200,
+                    $this->getFieldsAsMetaHeaders(
+                        $this->getValidLegacysGcmMetadataFields($provider)
+                    ),
+                    'test'
+                ));
+            },
+        ]);
+
+        $client = new S3EncryptionClientV2($s3);
+        $result = $client->getObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            '@MaterialsProvider' => $provider
+        ]);
+        $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
+    }
+
+    public function testGetObjectWithV2GcmMetadata()
+    {
+        $kms = $this->getKmsClient();
+        $list = $kms->getHandlerList();
+        $list->setHandler(function($cmd, $req) {
+            // Verify decryption command has correct parameters
+            $this->assertEquals('cek', $cmd['CiphertextBlob']);
+            $this->assertEquals(
+                [
+                    'aws:x-amz-cek-alg' => 'AES/GCM/NoPadding'
+                ],
+                $cmd['EncryptionContext']
+            );
+            return Promise\promise_for(
+                new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
+            );
+        });
+        $provider = new KmsMaterialsProviderV2($kms);
+
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function () use ($provider) {
+                return new FulfilledPromise(new Response(
+                    200,
+                    $this->getFieldsAsMetaHeaders(
+                        $this->getValidGcmMetadataFields($provider)
+                    ),
+                    'test'
+                ));
+            },
+        ]);
+
+        $client = new S3EncryptionClientV2($s3);
+        $result = $client->getObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            '@MaterialsProvider' => $provider
+        ]);
+        $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
     }
 
     public function testGetObjectWithClientInstructionFileSuffix()
@@ -610,37 +726,6 @@ EOXML;
                 InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
-    }
-
-    public function testGetObjectWrapsBodyInAesGcmDecryptingStream()
-    {
-        $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProviderV2($kms);
-        $this->addMockResults($kms, [
-            new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
-        ]);
-
-        $s3 = new S3Client([
-            'region' => 'us-west-2',
-            'version' => 'latest',
-            'http_handler' => function () use ($provider) {
-                return new FulfilledPromise(new Response(
-                    200,
-                    $this->getFieldsAsMetaHeaders(
-                        $this->getValidGcmMetadataFields($provider)
-                    ),
-                    'test'
-                ));
-            },
-        ]);
-
-        $client = new S3EncryptionClientV2($s3);
-        $result = $client->getObject([
-            'Bucket' => 'foo',
-            'Key' => 'bar',
-            '@MaterialsProvider' => $provider
-        ]);
-        $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
     }
 
     public function testGetObjectSavesFile()

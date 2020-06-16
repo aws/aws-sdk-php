@@ -45,6 +45,13 @@ trait UsesCryptoParamsTraitV2
                 null,
             ],
             [
+                'cbc',
+                [
+                    'InvalidArgumentException',
+                    'The cipher requested is not supported by the SDK.'
+                ]
+            ],
+            [
                 'unsupported',
                 [
                     'InvalidArgumentException',
@@ -81,7 +88,7 @@ trait UsesCryptoParamsTraitV2
                 ]
             ],
             [
-            512,
+                512,
                 [
                     'InvalidArgumentException',
                     'The cipher "KeySize" requested'
