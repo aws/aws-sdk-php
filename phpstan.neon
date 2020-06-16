@@ -2,9 +2,13 @@ parameters:
 
   level: 0
 
+  parallel:
+    processTimeout: 300.0
+
   excludes_analyse:
     # Guzzle V5 classes & interfaces changed in V6
     - %rootDir%/../../../src/Handler/GuzzleV5/*
+    - %rootDir%/../../../src/Crypto/Polyfill/*
 
   ignoreErrors:
     # Intentional
