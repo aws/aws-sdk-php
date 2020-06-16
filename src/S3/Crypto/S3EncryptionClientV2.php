@@ -55,13 +55,13 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *
      * The required configuration arguments are as follows:
      *
-     * - @MaterialsProvider: (MaterialsProvider) Provides Cek, Iv, and Cek
+     * - @MaterialsProvider: (MaterialsProviderV2) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for encryption metadata.
      * - @CipherOptions: (array) Cipher options for encrypting data. Only the
      *   Cipher option is required. Accepts the following:
-     *       - Cipher: (string) cbc|gcm
-     *            See also: AbstractCryptoClient::$supportedCiphers
-     *       - KeySize: (int) 128|192|256
+     *       - Cipher: (string) gcm
+     *            See also: AbstractCryptoClientV2::$supportedCiphers
+     *       - KeySize: (int) 128|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
@@ -149,9 +149,9 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *   encrypting/decrypting for encryption metadata.
      * - @CipherOptions: (array) Cipher options for encrypting data. A Cipher
      *   is required. Accepts the following options:
-     *       - Cipher: (string) cbc|gcm
-     *            See also: AbstractCryptoClient::$supportedCiphers
-     *       - KeySize: (int) 128|192|256
+     *       - Cipher: (string) gcm
+     *            See also: AbstractCryptoClientV2::$supportedCiphers
+     *       - KeySize: (int) 128|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
@@ -188,7 +188,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *
      * The required configuration argument is as follows:
      *
-     * - @MaterialsProvider: (MaterialsProvider) Provides Cek, Iv, and Cek
+     * - @MaterialsProvider: (MaterialsProviderInterface) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for decryption metadata. May have data loaded
      *   from the MetadataEnvelope upon decryption.
      *
@@ -286,7 +286,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *
      * The required configuration argument is as follows:
      *
-     * - @MaterialsProvider: (MaterialsProvider) Provides Cek, Iv, and Cek
+     * - @MaterialsProvider: (MaterialsProviderInterface) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for decryption metadata. May have data loaded
      *   from the MetadataEnvelope upon decryption.
      *

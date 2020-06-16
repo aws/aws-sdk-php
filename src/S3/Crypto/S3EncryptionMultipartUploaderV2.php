@@ -37,17 +37,16 @@ class S3EncryptionMultipartUploaderV2 extends MultipartUploader
      *
      * The required configuration options are as follows:
      *
-     * - @MaterialsProvider: (MaterialsProvider) Provides Cek, Iv, and Cek
+     * - @MaterialsProvider: (MaterialsProviderV2) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for encryption metadata.
      * - @CipherOptions: (array) Cipher options for encrypting data. A Cipher
      *   is required. Accepts the following options:
-     *       - Cipher: (string) cbc|gcm
-     *            See also: AbstractCryptoClient::$supportedCiphers
-     *       - KeySize: (int) 128|192|256
+     *       - Cipher: (string) gcm
+     *            See also: AbstractCryptoClientV2::$supportedCiphers
+     *       - KeySize: (int) 128|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
-     *            passed directly to OpenSSL when using gcm. It is ignored when
-     *            using cbc.
+     *            passed directly to OpenSSL when using gcm.
      * - bucket: (string) Name of the bucket to which the object is
      *   being uploaded.
      * - key: (string) Key to use for the object being uploaded.
