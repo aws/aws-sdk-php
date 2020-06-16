@@ -36,7 +36,8 @@ trait DecryptionTraitV2
 
     /**
      * Builds an AesStreamInterface using cipher options loaded from the
-     * MetadataEnvelope and MaterialsProvider.
+     * MetadataEnvelope and MaterialsProvider. Can decrypt data from both the
+     * legacy and V2 encryption client workflows.
      *
      * @param string $cipherText Plain-text data to be encrypted using the
      *                           materials, algorithm, and data provided.

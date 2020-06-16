@@ -25,6 +25,9 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
         $this->kmsKeyId = $kmsKeyId;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function fromDecryptionEnvelope(MetadataEnvelope $envelope)
     {
         if (empty($envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER])) {
@@ -51,21 +54,16 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
         );
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getWrapAlgorithmName()
     {
         return 'kms';
     }
 
     /**
-     * Takes an encrypted content encryption key (CEK) and material description
-     * for use decrypting the key by using KMS' Decrypt API.
-     *
-     * @param string $encryptedCek Encrypted key to be decrypted by the Provider
-     *                             for use decrypting other data.
-     * @param string $materialDescription Material Description for use in
-     *                                    encrypting the $cek.
-     *
-     * @return string
+     * @inheritDoc
      */
     public function decryptCek($encryptedCek, $materialDescription)
     {
@@ -77,6 +75,9 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
         return $result['Plaintext'];
     }
 
+    /**
+     * @inheritDoc
+     */
     public function generateCek($keySize, $context)
     {
         $result = $this->kmsClient->generateDataKey([

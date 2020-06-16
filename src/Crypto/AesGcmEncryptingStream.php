@@ -11,7 +11,7 @@ use \RuntimeException;
 /**
  * @internal Represents a stream of data to be gcm encrypted.
  */
-class AesGcmEncryptingStream implements AesStreamInterface
+class AesGcmEncryptingStream implements AesStreamInterface, AesStreamInterfaceV2
 {
     use StreamDecoratorTrait;
 

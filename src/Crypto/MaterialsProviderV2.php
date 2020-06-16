@@ -27,7 +27,7 @@ abstract class MaterialsProviderV2 implements MaterialsProviderInterface
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
      *
-     * @return MaterialsProvider
+     * @return MaterialsProviderV2
      *
      * @throws \RuntimeException Thrown when there is an empty or improperly
      *                           formed materials description in the envelope.

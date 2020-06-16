@@ -71,8 +71,8 @@ abstract class AbstractCryptoClientV2
      *                          materials, algorithm, and data provided.
      * @param array $cipherOptions Options for use in determining the cipher to
      *                             be used for encrypting data.
-     * @param MaterialsProvider $provider A provider to supply and encrypt
-     *                                    materials used in encryption.
+     * @param MaterialsProviderV2 $provider A provider to supply and encrypt
+     *                                      materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be added to.
      *
@@ -93,8 +93,8 @@ abstract class AbstractCryptoClientV2
      *
      * @param string $cipherText Plain-text data to be decrypted using the
      *                           materials, algorithm, and data provided.
-     * @param MaterialsProvider $provider A provider to supply and encrypt
-     *                                    materials used in encryption.
+     * @param MaterialsProviderInterface $provider A provider to supply and encrypt
+     *                                             materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
      * @param array $cipherOptions Additional verification options.
@@ -105,7 +105,7 @@ abstract class AbstractCryptoClientV2
      */
     abstract public function decrypt(
         $cipherText,
-        MaterialsProviderV2 $provider,
+        MaterialsProviderInterface $provider,
         MetadataEnvelope $envelope,
         array $cipherOptions = []
     );

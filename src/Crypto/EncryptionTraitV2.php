@@ -4,6 +4,7 @@ namespace Aws\Crypto;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\AppendStream;
 use GuzzleHttp\Psr7\Stream;
+use Psr\Http\Message\StreamInterface;
 
 trait EncryptionTraitV2
 {
@@ -40,12 +41,12 @@ trait EncryptionTraitV2
      *                          materials, algorithm, and data provided.
      * @param array $cipherOptions Options for use in determining the cipher to
      *                             be used for encrypting data.
-     * @param MaterialsProvider $provider A provider to supply and encrypt
+     * @param MaterialsProviderV2 $provider A provider to supply and encrypt
      *                                    materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be added to.
      *
-     * @return AesStreamInterface
+     * @return StreamInterface
      *
      * @throws \InvalidArgumentException Thrown when a value in $cipherOptions
      *                                   is not valid.
@@ -96,16 +97,15 @@ trait EncryptionTraitV2
         );
 
         $encryptClass = self::$encryptClasses[$cipherOptions['Cipher']];
-        $materialsDescription = [
-            'aws:x-amz-cek-alg' => $encryptClass::getStaticAesName()
-        ];
+        $aesName = $encryptClass::getStaticAesName();
+        $materialsDescription = ['aws:x-amz-cek-alg' => $aesName];
 
         $keys = $provider->generateCek(
             $cipherOptions['KeySize'],
             $materialsDescription
         );
 
-        list($encryptingStream, $aesName) = $this->getEncryptingStream(
+        $encryptingStream = $this->getEncryptingStream(
             $plaintext,
             $keys['Plaintext'],
             $cipherOptions
@@ -156,8 +156,8 @@ trait EncryptionTraitV2
             // Only 'gcm' is supported for encryption currently
             case 'gcm':
                 $cipherOptions['TagLength'] = 16;
-
-                $cipherTextStream = new AesGcmEncryptingStream(
+                $encryptClass = self::$encryptClasses['gcm'];
+                $cipherTextStream = new $encryptClass(
                     $plaintext,
                     $cek,
                     $cipherOptions['Iv'],
@@ -173,7 +173,7 @@ trait EncryptionTraitV2
                 ]);
                 $cipherOptions['Tag'] = $cipherTextStream->getTag();
                 $appendStream->addStream(Psr7\stream_for($cipherOptions['Tag']));
-                return [$appendStream, $cipherTextStream->getAesName()];
+                return $appendStream;
         }
     }
 }
