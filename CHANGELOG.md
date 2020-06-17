@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.142.4 - 2020-06-17
 
 * `Aws\AppMesh` - Adds support for route and virtual node listener timeouts.
 * `Aws\EC2` - nvmeSupport added to DescribeInstanceTypes API
