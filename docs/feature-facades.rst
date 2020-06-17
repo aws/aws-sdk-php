@@ -167,4 +167,4 @@ showing how this is done:
     }
 
 Alternatively, if you are specifically only mocking responses from clients, you might consider using the `Guzzle Mock
-Plugin <http://guzzlephp.org/plugins/mock-plugin.html>`_.
+Plugin <https://guzzle3.readthedocs.io/plugins/mock-plugin.html>`_.
