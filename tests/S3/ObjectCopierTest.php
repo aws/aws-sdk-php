@@ -392,7 +392,7 @@ class ObjectCopierTest extends TestCase
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    public function testS3ObjectCopierDoesTransformsUnicodeKeyToURL()
+    public function testS3ObjectCopierDoesTransformUnicodeKeyToEncodedURL()
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
@@ -417,7 +417,7 @@ class ObjectCopierTest extends TestCase
         $this->assertEquals($url, $result['ObjectURL']);
     }
 
-    public function testS3ObjectCopierMultipartDoesTransformsUnicodeKeyToURL()
+    public function testS3ObjectCopierMultipartDoesTransformUnicodeKeyEncodedToURL()
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
