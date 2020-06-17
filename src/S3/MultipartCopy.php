@@ -127,7 +127,8 @@ class MultipartCopy extends AbstractUploadManager
             $data[$k] = $v;
         }
 
-        $data['CopySource'] = $this->source;
+        list($bucket, $key) = explode('/', ltrim($this->source, '/'), 2);
+        $data['CopySource'] = '/' . $bucket . '/' . rawurlencode($key);
         $data['PartNumber'] = $partNumber;
 
         $defaultPartSize = $this->determinePartSize();
