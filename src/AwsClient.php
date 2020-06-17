@@ -277,7 +277,7 @@ class AwsClient implements AwsClientInterface
      *
      * @return callable
      */
-    final private function getSignatureProvider()
+    final protected function getSignatureProvider()
     {
         return $this->signatureProvider;
     }

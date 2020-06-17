@@ -398,7 +398,7 @@ class ObjectCopierTest extends TestCase
         $client = $this->getTestClient('s3');
         $chinese = "中文";
         $url = 'https://bucket.s3.amazonaws.com/' . rawurlencode($chinese);
-        
+
         $this->addMockResults(
             $client,
             $this->getSmallPutObjectMockResult()
