@@ -11,6 +11,11 @@ use GuzzleHttp\Promise;
 
 /**
  * Encapsulates the execution of a multipart upload of an encrypted object to S3.
+ *
+ * Note that for PHP versions of < 7.1, this class uses an AES-GCM polyfill
+ * for encryption since there is no native PHP support. The performance for large
+ * inputs will be a lot slower than for PHP 7.1+, so upgrading older PHP version
+ * environments may be necessary to use this effectively.
  */
 class S3EncryptionMultipartUploaderV2 extends MultipartUploader
 {
@@ -34,6 +39,11 @@ class S3EncryptionMultipartUploaderV2 extends MultipartUploader
 
     /**
      * Creates a multipart upload for an S3 object after encrypting it.
+     *
+     * Note that for PHP versions of < 7.1, this class uses an AES-GCM polyfill
+     * for encryption since there is no native PHP support. The performance for
+     * large inputs will be a lot slower than for PHP 7.1+, so upgrading older
+     * PHP version environments may be necessary to use this effectively.
      *
      * The required configuration options are as follows:
      *

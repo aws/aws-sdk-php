@@ -17,6 +17,11 @@ use GuzzleHttp\Psr7;
 /**
  * Provides a wrapper for an S3Client that supplies functionality to encrypt
  * data on putObject[Async] calls and decrypt data on getObject[Async] calls.
+ *
+ * Note that for PHP versions of < 7.1, this class uses an AES-GCM polyfill
+ * for encryption since there is no native PHP support. The performance for large
+ * inputs will be a lot slower than for PHP 7.1+, so upgrading older PHP version
+ * environments may be necessary to use this effectively.
  */
 class S3EncryptionClientV2 extends AbstractCryptoClientV2
 {
@@ -49,6 +54,12 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
     /**
      * Encrypts the data in the 'Body' field of $args and promises to upload it
      * to the specified location on S3.
+     *
+     * Note that for PHP versions of < 7.1, this operation uses an AES-GCM
+     * polyfill for encryption since there is no native PHP support. The
+     * performance for large inputs will be a lot slower than for PHP 7.1+, so
+     * upgrading older PHP version environments may be necessary to use this
+     * effectively.
      *
      * @param array $args Arguments for encrypting an object and uploading it
      *                    to S3 via PutObject.
@@ -139,6 +150,12 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
     /**
      * Encrypts the data in the 'Body' field of $args and uploads it to the
      * specified location on S3.
+     *
+     * Note that for PHP versions of < 7.1, this operation uses an AES-GCM
+     * polyfill for encryption since there is no native PHP support. The
+     * performance for large inputs will be a lot slower than for PHP 7.1+, so
+     * upgrading older PHP version environments may be necessary to use this
+     * effectively.
      *
      * @param array $args Arguments for encrypting an object and uploading it
      *                    to S3 via PutObject.
