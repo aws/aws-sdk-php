@@ -70,7 +70,10 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
         $kms = $this->getKmsClient();
         $this->addMockResults($kms, [
-            new Result(['CiphertextBlob' => 'encrypted']),
+            new Result([
+                'CiphertextBlob' => 'encrypted',
+                'Plaintext' => openssl_random_pseudo_bytes(32),
+            ]),
         ]);
 
         $uploader = new S3EncryptionMultipartUploaderV2(
@@ -149,7 +152,10 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
-            new Result(['CiphertextBlob' => 'encrypted']),
+            new Result([
+                'CiphertextBlob' => 'encrypted',
+                'Plaintext' => openssl_random_pseudo_bytes(32),
+            ]),
         ]);
 
         $uploader = new S3EncryptionMultipartUploaderV2(
@@ -221,7 +227,10 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
-            new Result(['CiphertextBlob' => 'encrypted']),
+            new Result([
+                'CiphertextBlob' => 'encrypted',
+                'Plaintext' => openssl_random_pseudo_bytes(32),
+            ]),
         ]);
 
         $uploader = new S3EncryptionMultipartUploaderV2(
@@ -268,7 +277,10 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
-            new Result(['CiphertextBlob' => 'encrypted']),
+            new Result([
+                'CiphertextBlob' => 'encrypted',
+                'Plaintext' => openssl_random_pseudo_bytes(32),
+            ]),
         ]);
 
         $uploader = new S3EncryptionMultipartUploaderV2(
@@ -321,7 +333,10 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
-            new Result(['CiphertextBlob' => 'encrypted']),
+            new Result([
+                'CiphertextBlob' => 'encrypted',
+                'Plaintext' => openssl_random_pseudo_bytes($keySize / 8),
+            ]),
         ]);
 
         $uploader = new S3EncryptionMultipartUploaderV2(
@@ -356,7 +371,10 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
-            new Result(['CiphertextBlob' => 'encrypted'])
+            new Result([
+                'CiphertextBlob' => 'encrypted',
+                'Plaintext' => openssl_random_pseudo_bytes(32),
+            ])
         ]);
 
         $uploader = new S3EncryptionMultipartUploaderV2(
@@ -403,7 +421,10 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProviderV2($kms, $keyId);
         $this->addMockResults($kms, [
-            new Result(['CiphertextBlob' => 'encrypted'])
+            new Result([
+                'CiphertextBlob' => 'encrypted',
+                'Plaintext' => openssl_random_pseudo_bytes(32),
+            ])
         ]);
 
         $state = S3EncryptionMultipartUploaderV2::getStateFromService(
