@@ -398,8 +398,7 @@ class ObjectCopierTest extends TestCase
         $client = $this->getTestClient('s3');
         $chinese = "中文";
         $url = 'https://bucket.s3.amazonaws.com/' . rawurlencode($chinese);
-
-
+        
         $this->addMockResults(
             $client,
             $this->getSmallPutObjectMockResult()
@@ -413,7 +412,6 @@ class ObjectCopierTest extends TestCase
         );
 
         $this->assertFalse($this->mockQueueEmpty());
-
         $result = $uploader->copy();
 
         $this->assertEquals($url, $result['ObjectURL']);
@@ -425,7 +423,6 @@ class ObjectCopierTest extends TestCase
         $client = $this->getTestClient('s3');
         $chinese = "中文";
         $url = 'https://bucket.s3.amazonaws.com/' . rawurlencode($chinese);
-
 
         $this->addMockResults(
             $client,
@@ -440,7 +437,6 @@ class ObjectCopierTest extends TestCase
         );
 
         $this->assertFalse($this->mockQueueEmpty());
-
         $result = $uploader->copy();
 
         $this->assertEquals($url, $result['ObjectURL']);
