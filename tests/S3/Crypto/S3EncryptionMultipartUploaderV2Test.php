@@ -72,7 +72,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ]),
         ]);
 
@@ -154,7 +154,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ]),
         ]);
 
@@ -229,7 +229,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ]),
         ]);
 
@@ -279,7 +279,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ]),
         ]);
 
@@ -332,10 +332,16 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProviderV2($kms, $keyId);
+        if (is_int($keySize)) {
+            $bytes = $keySize / 8;
+        } else {
+            // Placeholder, client should throw for non-int key size
+            $bytes = 1;
+        }
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes($keySize / 8),
+                'Plaintext' => random_bytes($bytes),
             ]),
         ]);
 
@@ -373,7 +379,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ])
         ]);
 
@@ -423,7 +429,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ])
         ]);
 

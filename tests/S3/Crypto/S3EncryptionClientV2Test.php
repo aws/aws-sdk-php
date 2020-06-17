@@ -75,7 +75,7 @@ class S3EncryptionClientV2Test extends TestCase
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ])
         ]);
 
@@ -143,7 +143,7 @@ class S3EncryptionClientV2Test extends TestCase
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ])
         ]);
 
@@ -203,7 +203,7 @@ class S3EncryptionClientV2Test extends TestCase
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ])
         ]);
 
@@ -237,7 +237,7 @@ class S3EncryptionClientV2Test extends TestCase
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ])
         ]);
 
@@ -277,7 +277,7 @@ class S3EncryptionClientV2Test extends TestCase
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ])
         ]);
 
@@ -319,10 +319,16 @@ class S3EncryptionClientV2Test extends TestCase
         $kms = $this->getKmsClient();
         $keyId = '11111111-2222-3333-4444-555555555555';
         $provider = new KmsMaterialsProviderV2($kms, $keyId);
+        if (is_int($keySize)) {
+            $bytes = $keySize / 8;
+        } else {
+            // Placeholder, client should throw for non-int key size
+            $bytes = 1;
+        }
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes($keySize / 8),
+                'Plaintext' => random_bytes($bytes),
             ])
         ]);
 
@@ -370,7 +376,7 @@ EOXML;
         $this->addMockResults($kms, [
             new Result([
                 'CiphertextBlob' => 'encrypted',
-                'Plaintext' => openssl_random_pseudo_bytes(32),
+                'Plaintext' => random_bytes(32),
             ])
         ]);
 
@@ -472,7 +478,7 @@ EOXML;
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProviderV2($kms);
         $this->addMockResults($kms, [
-            new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
+            new Result(['Plaintext' => random_bytes(32)])
         ]);
 
         $s3 = new S3Client([
@@ -541,7 +547,7 @@ EOXML;
                 $cmd['EncryptionContext']
             );
             return Promise\promise_for(
-                new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
+                new Result(['Plaintext' => random_bytes(32)])
             );
         });
         $provider = new KmsMaterialsProviderV2($kms);
@@ -583,7 +589,7 @@ EOXML;
                 $cmd['EncryptionContext']
             );
             return Promise\promise_for(
-                new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
+                new Result(['Plaintext' => random_bytes(32)])
             );
         });
         $provider = new KmsMaterialsProviderV2($kms);
@@ -625,7 +631,7 @@ EOXML;
                 $cmd['EncryptionContext']
             );
             return Promise\promise_for(
-                new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
+                new Result(['Plaintext' => random_bytes(32)])
             );
         });
         $provider = new KmsMaterialsProviderV2($kms);
@@ -658,7 +664,7 @@ EOXML;
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProviderV2($kms);
         $this->addMockResults($kms, [
-            new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
+            new Result(['Plaintext' => random_bytes(32)])
         ]);
 
         $responded = false;
@@ -705,7 +711,7 @@ EOXML;
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProviderV2($kms);
         $this->addMockResults($kms, [
-            new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
+            new Result(['Plaintext' => random_bytes(32)])
         ]);
 
         $responded = false;
@@ -752,7 +758,7 @@ EOXML;
         $kms = $this->getKmsClient();
         $provider = new KmsMaterialsProviderV2($kms);
         $this->addMockResults($kms, [
-            new Result(['Plaintext' => openssl_random_pseudo_bytes(32)])
+            new Result(['Plaintext' => random_bytes(32)])
         ]);
 
         $s3 = new S3Client([

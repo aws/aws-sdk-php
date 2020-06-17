@@ -20,7 +20,7 @@ abstract class AbstractCryptoClientV2
      */
     public static function isSupportedCipher($cipherName)
     {
-        return in_array($cipherName, self::$supportedCiphers);
+        return in_array($cipherName, self::$supportedCiphers, true);
     }
 
     /**
