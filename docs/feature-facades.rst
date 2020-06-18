@@ -166,5 +166,5 @@ showing how this is done:
         }
     }
 
-Alternatively, if you are specifically only mocking responses from clients, you might consider using the `Guzzle Mock
-Plugin <https://guzzle3.readthedocs.io/plugins/mock-plugin.html>`_.
+Alternatively, if you are specifically only mocking responses from clients, you might consider using the `Guzzle 3 Mock
+Plugin <https://guzzle3.readthedocs.io/plugins/mock-plugin.html>`_, the `Guzzle 5 Mock Subscriber <http://docs.guzzlephp.org/en/5.3/testing.html#mock-subscriber>`_, or the `Guzzle 6 Mock Handler <http://docs.guzzlephp.org/en/stable/testing.html#mock-handler>`_.
