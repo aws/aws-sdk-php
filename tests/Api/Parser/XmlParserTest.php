@@ -16,63 +16,88 @@ use PHPUnit\Framework\TestCase;
  */
 class XmlParserTest extends TestCase
 {
-    static $timestampFormats = ['iso8601', 'unixTimestamp'];
-
     public function timeStampModelProvider(){
         return [
-            [932169600, "1999-07-17T00:00:00+00:00"],
-            [-10000000, "1969-09-07T06:13:20+00:00"],
-            ["-10000000", "1969-09-07T06:13:20+00:00"],
-            ["July 17th, 1999", "1999-07-17T00:00:00+00:00"],
-            ["1999-07-17T00:00:00", "1999-07-17T00:00:00+00:00"],
-            ["2002-05-30T09:30:10.5", "2002-05-30T09:30:10+00:00"],
+            [932169600, "ParseXmlIso8601", "1999-07-17T00:00:00+00:00"],
+            [932169600, "ParseXmlUnix", "1999-07-17T00:00:00+00:00"],
+            [932169600, "ParseXmlUnknown", "1999-07-17T00:00:00+00:00"],
+            [-10000000, "ParseXmlIso8601", "1969-09-07T06:13:20+00:00"],
+            [-10000000, "ParseXmlUnix", "1969-09-07T06:13:20+00:00"],
+            [-10000000, "ParseXmlUnknown", "1969-09-07T06:13:20+00:00"],
+            ["-10000000", "ParseXmlIso8601", "1969-09-07T06:13:20+00:00"],
+            ["-10000000", "ParseXmlUnix", "1969-09-07T06:13:20+00:00"],
+            ["-10000000", "ParseXmlUnknown", "1969-09-07T06:13:20+00:00"],
+            ["July 17th, 1999", "ParseXmlIso8601", "1999-07-17T00:00:00+00:00"],
+            ["July 17th, 1999", "ParseXmlUnix", "1999-07-17T00:00:00+00:00"],
+            ["July 17th, 1999", "ParseXmlUnknown", "1999-07-17T00:00:00+00:00"],
+            ["1999-07-17T00:00:00", "ParseXmlIso8601", "1999-07-17T00:00:00+00:00"],
+            ["1999-07-17T00:00:00", "ParseXmlUnix", "1999-07-17T00:00:00+00:00"],
+            ["1999-07-17T00:00:00", "ParseXmlUnknown", "1999-07-17T00:00:00+00:00"],
+            ["2002-05-30T09:30:10.5", "ParseXmlIso8601", "2002-05-30T09:30:10+00:00"],
+            ["2002-05-30T09:30:10.5", "ParseXmlUnix", "2002-05-30T09:30:10+00:00"],
+            ["2002-05-30T09:30:10.5", "ParseXmlUnknown", "2002-05-30T09:30:10+00:00"],
         ];
     }
 
     public function timeStampExceptionModelProvider(){
         return [
-            ["this text is not a date", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["false", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["true", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["932169600abc", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [";", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["[]", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [acos(1.01), ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [false, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [null, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["this text is not a date", "ParseXmlIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["this text is not a date", "ParseXmlUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["this text is not a date", "ParseXmlUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["false", "ParseXmlIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["false", "ParseXmlUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["false", "ParseXmlUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["true", "ParseXmlIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["true", "ParseXmlUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["true", "ParseXmlUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["932169600abc", "ParseXmlIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["932169600abc", "ParseXmlUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["932169600abc", "ParseXmlUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [";", "ParseXmlIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [";", "ParseXmlUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [";", "ParseXmlUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["[]", "ParseXmlIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["[]", "ParseXmlUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["[]", "ParseXmlUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [acos(1.01), "ParseXmlIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [acos(1.01), "ParseXmlUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [acos(1.01), "ParseXmlUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [false, "ParseXmlIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [false, "ParseXmlUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [false, "ParseXmlUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [null, "ParseXmlIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [null, "ParseXmlUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [null, "ParseXmlUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
         ];
     }
 
     /**
      * @dataProvider timeStampModelProvider
      */
-    public function testTimeStamps($timestamp, $expectedValue)
+    public function testTimeStamps($timestamp, $commandName, $expectedValue)
     {
-        foreach (self::$timestampFormats as $expectedFormat) {
-            $service = $this->generateTestService($expectedFormat);
-            $client = $this->generateTestClient($service, ['Timestamp' => $timestamp]);
-            $command = $client->getCommand('ParseXml');
-            $list = $client->getHandlerList();
-            $handler = $list->resolve();
-            $result = $handler($command)->wait()['Timestamp']->__toString();
-            self::assertEquals($expectedValue, $result);
-        }
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service, ['Timestamp' => $timestamp]);
+        $command = $client->getCommand($commandName);
+        $list = $client->getHandlerList();
+        $handler = $list->resolve();
+        $result = $handler($command)->wait()['Timestamp']->__toString();
+        self::assertEquals($expectedValue, $result);
     }
+
 
     /**
      * @dataProvider timeStampExceptionModelProvider
      */
-    public function testExceptionTimeStamps($timestamp, $expectedException, $expectedMessage)
+    public function testExceptionTimeStamps($timestamp, $commandName, $expectedException, $expectedMessage)
     {
-        foreach (self::$timestampFormats as $expectedFormat) {
-            $service = $this->generateTestService($expectedFormat);
-            $client = $this->generateTestClient($service, ['Timestamp' => $timestamp]);
-            $command = $client->getCommand('ParseXml');
-            $list = $client->getHandlerList();
-            $handler = $list->resolve();
-            $this->setExpectedException($expectedException, $expectedMessage);
-            $handler($command)->wait();
-        }
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service, ['Timestamp' => $timestamp]);
+        $command = $client->getCommand($commandName);
+        $list = $client->getHandlerList();
+        $handler = $list->resolve();
+        $this->setExpectedException($expectedException, $expectedMessage);
+        $handler($command)->wait();
     }
 
     private function generateTestClient(Service $service, $args = [])
@@ -96,7 +121,7 @@ class XmlParserTest extends TestCase
         );
     }
 
-    private function generateTestService($timestampFormat)
+    private function generateTestService()
     {
         return new Service(
             [
@@ -105,43 +130,73 @@ class XmlParserTest extends TestCase
                     "apiVersion" => "2014-01-01"
                 ],
                 'shapes' => [
-                    "ParseXmlRequest" => [
+                    "ParseXmlIso8601Response" => [
                         "type" => "structure",
                         "members" => [
-                            "timestamp" =>[
-                                "shape" => "__timestampIso8601",
-                                "locationName" => "timestamp",
-                                'xmlNamespace' => ['uri' => 'http://cloudfront.amazonaws.com/doc/2017-03-25/']
-                            ],
-                        ],
-                        "required" => [ "timestamp" ]
-                    ],
-                    "ParseXmlResponse" => [
-                        "type" => "structure",
-                        "members" => [
-                            'Timestamp' => ['shape' => 'Timestamp']
+                            'Timestamp' => ['shape' => 'Iso8601Timestamp']
                         ],
                         'xmlNamespace' => ['uri' => 'http://cloudfront.amazonaws.com/doc/2017-03-25/', 'prefix'=>""],
-                    ]
-                    ,
-                    "Timestamp" => [
+                    ],
+                    "ParseXmlUnixResponse" => [
+                        "type" => "structure",
+                        "members" => [
+                            'Timestamp' => ['shape' => 'UnixTimestamp']
+                        ],
+                        'xmlNamespace' => ['uri' => 'http://cloudfront.amazonaws.com/doc/2017-03-25/', 'prefix'=>""],
+                    ],
+                    "ParseXmlUnknownResponse" => [
+                        "type" => "structure",
+                        "members" => [
+                            'Timestamp' => ['shape' => 'UnknownTimestamp']
+                        ],
+                        'xmlNamespace' => ['uri' => 'http://cloudfront.amazonaws.com/doc/2017-03-25/', 'prefix'=>""],
+                    ],
+                    "Iso8601Timestamp" => [
                         "type" => "timestamp",
-                        "timestampFormat" => "{$timestampFormat}",
-                    ]
+                        "timestampFormat" => "iso8601",
+                    ],
+                    "UnixTimestamp" => [
+                        "type" => "timestamp",
+                        "timestampFormat" => "unixTimestamp",
+                    ],
+                    "UnknownTimestamp" => [
+                        "type" => "timestamp",
+                    ],
                 ],
                 'operations' => [
-                    "ParseXml" => [
-                        "name" => "ParseXml",
+                    "ParseXmlIso8601" => [
+                        "name" => "ParseXmlIso8601",
                         "http" => [
                             "method" => "GET",
                             "requestUri" => "/",
                             "responseCode" => 200
                         ],
                         "output" => [
-                            "shape" => "ParseXmlResponse"
+                            "shape" => "ParseXmlIso8601Response"
                         ]
-                    ]
-
+                    ],
+                    "ParseXmlUnix" => [
+                        "name" => "ParseXmlUnix",
+                        "http" => [
+                            "method" => "GET",
+                            "requestUri" => "/",
+                            "responseCode" => 200
+                        ],
+                        "output" => [
+                            "shape" => "ParseXmlUnixResponse"
+                        ]
+                    ],
+                    "ParseXmlUnknown" => [
+                        "name" => "ParseXmlUnknown",
+                        "http" => [
+                            "method" => "GET",
+                            "requestUri" => "/",
+                            "responseCode" => 200
+                        ],
+                        "output" => [
+                            "shape" => "ParseXmlUnknownResponse"
+                        ]
+                    ],
                 ],
             ],
             function () { return []; }

@@ -15,116 +15,96 @@ use PHPUnit\Framework\TestCase;
  */
 class JsonParserTest extends TestCase
 {
+
     public function timeStampModelProvider(){
         return [
-            [932169600, "1999-07-17T00:00:00+00:00"],
-            [-10000000, "1969-09-07T06:13:20+00:00"],
-            ["-10000000", "1969-09-07T06:13:20+00:00"],
-            ["July 17th, 1999", "1999-07-17T00:00:00+00:00"],
-            ["1999-07-17T00:00:00", "1999-07-17T00:00:00+00:00"],
-            ["2002-05-30T09:30:10.5", "2002-05-30T09:30:10+00:00"],
+            [932169600, "ParseJsonIso8601", "1999-07-17T00:00:00+00:00"],
+            [932169600, "ParseJsonUnix", "1999-07-17T00:00:00+00:00"],
+            [932169600, "ParseJsonUnknown", "1999-07-17T00:00:00+00:00"],
+            [-10000000, "ParseJsonIso8601", "1969-09-07T06:13:20+00:00"],
+            [-10000000, "ParseJsonUnix", "1969-09-07T06:13:20+00:00"],
+            [-10000000, "ParseJsonUnknown", "1969-09-07T06:13:20+00:00"],
+            ["-10000000", "ParseJsonUnix", "1969-09-07T06:13:20+00:00"],
+            ["-10000000", "ParseJsonIso8601", "1969-09-07T06:13:20+00:00"],
+            ["-10000000", "ParseJsonUnknown", "1969-09-07T06:13:20+00:00"],
+            ["July 17th, 1999", "ParseJsonIso8601", "1999-07-17T00:00:00+00:00"],
+            ["July 17th, 1999", "ParseJsonUnix", "1999-07-17T00:00:00+00:00"],
+            ["July 17th, 1999", "ParseJsonUnknown", "1999-07-17T00:00:00+00:00"],
+            ["1999-07-17T00:00:00", "ParseJsonIso8601", "1999-07-17T00:00:00+00:00"],
+            ["1999-07-17T00:00:00", "ParseJsonUnix", "1999-07-17T00:00:00+00:00"],
+            ["1999-07-17T00:00:00", "ParseJsonUnknown", "1999-07-17T00:00:00+00:00"],
+            ["1999-07-17T00:00:00.5", "ParseJsonIso8601", "1999-07-17T00:00:00+00:00"],
+            ["1999-07-17T00:00:00.5", "ParseJsonUnix", "1999-07-17T00:00:00+00:00"],
+            ["1999-07-17T00:00:00.5", "ParseJsonUnknown", "1999-07-17T00:00:00+00:00"],
         ];
     }
 
     public function timeStampExceptionModelProvider(){
         return [
-            ["this text is not a date", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["false", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["true", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["932169600abc", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [[932169600], ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [";", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["[]", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [false, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            ["null", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [[], ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [true, ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-        ];
+            ["this text is not a date", "ParseJsonIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["this text is not a date", "ParseJsonUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["this text is not a date", "ParseJsonUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["false", "ParseJsonIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["false", "ParseJsonUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["false", "ParseJsonUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["true", "ParseJsonIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["true", "ParseJsonUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["true", "ParseJsonUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["932169600abc", "ParseJsonIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["932169600abc", "ParseJsonUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["932169600abc", "ParseJsonUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [[932169600], "ParseJsonIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [[932169600], "ParseJsonUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [[932169600], "ParseJsonUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [";", "ParseJsonIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [";", "ParseJsonUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [";", "ParseJsonUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["[]", "ParseJsonIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["[]", "ParseJsonUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["[]", "ParseJsonUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [false, "ParseJsonIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [false, "ParseJsonUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [false, "ParseJsonUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["null", "ParseJsonIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["null", "ParseJsonUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            ["null", "ParseJsonUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [[], "ParseJsonIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [[], "ParseJsonUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [[], "ParseJsonUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [true, "ParseJsonIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [true, "ParseJsonUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+            [true, "ParseJsonUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
+       ];
     }
 
     /**
      * @dataProvider timeStampModelProvider
      */
-    public function testHandlesTimeStampsWhenIso8601Expected($timestamp, $expectedValue)
+    public function testHandlesTimeStampsWhenIso8601Expected($timestamp, $commandName, $expectedValue)
     {
         $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['Iso8601Timestamp' => $timestamp]);
-        $command = $client->getCommand('ParseJson');
+        $client = $this->generateTestClient($service, ['Timestamp' => $timestamp]);
+        $command = $client->getCommand($commandName);
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $result = $handler($command)->wait()['Iso8601Timestamp']->__toString();
-        self::assertEquals($expectedValue, $result);
-    }
-
-    /**
-     * @dataProvider timeStampModelProvider
-     */
-    public function testHandlesTimeStampsWhenUnixExpected($timestamp, $expectedValue)
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['UnixTimestamp' => $timestamp]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $result = $handler($command)->wait()['UnixTimestamp']->__toString();
-        self::assertEquals($expectedValue, $result);
-    }
-
-    /**
-     * @dataProvider timeStampModelProvider
-     */
-    public function testHandlesTimeStampsWhenUnknownType($timestamp, $expectedValue)
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['UnknownTimestamp' => $timestamp]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $result = $handler($command)->wait()['UnknownTimestamp']->__toString();
+        $result = $handler($command)->wait()['Timestamp']->__toString();
         self::assertEquals($expectedValue, $result);
     }
 
     /**
      * @dataProvider timeStampExceptionModelProvider
      */
-    public function testHandlesTimeStampWhenIso8601ExpectedThrowsException($timestamp, $expectedException, $expectedMessage)
+    public function testTimeStampExceptions($timestamp, $commandName, $expectedException, $expectedMessage)
     {
         $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['Iso8601Timestamp' => $timestamp]);
-        $command = $client->getCommand('ParseJson');
+        $client = $this->generateTestClient($service, ['Timestamp' => $timestamp]);
+        $command = $client->getCommand($commandName);
         $list = $client->getHandlerList();
         $handler = $list->resolve();
         $this->setExpectedException($expectedException, $expectedMessage);
         $handler($command)->wait();
     }
 
-    /**
-     * @dataProvider timeStampExceptionModelProvider
-     */
-    public function testHandlesTimeStampWhenUnixExpectedThrowsException($timestamp, $expectedException, $expectedMessage)
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['UnixTimestamp' => $timestamp]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException($expectedException, $expectedMessage);
-        $handler($command)->wait();
-    }
-
-    /**
-     * @dataProvider timeStampExceptionModelProvider
-     */
-    public function testHandlesTimeStampWhenUnknownTypeThrowsException($timestamp, $expectedException, $expectedMessage)
-    {
-        $service = $this->generateTestService();
-        $client = $this->generateTestClient($service, ['UnknownTimestamp' => $timestamp]);
-        $command = $client->getCommand('ParseJson');
-        $list = $client->getHandlerList();
-        $handler = $list->resolve();
-        $this->setExpectedException($expectedException, $expectedMessage);
-        $handler($command)->wait();
-    }
 
     private function generateTestClient(Service $service, $args = [])
     {
@@ -156,35 +136,30 @@ class JsonParserTest extends TestCase
                     "apiVersion" => "2014-01-01"
                 ],
                 'shapes' => [
-                    "ParseJsonRequest" => [
+                    "ParseJsonIso8601Response" => [
                         "type" => "structure",
                         "members" => [
-                            "Iso8601Timestamp" => [
+                            "Timestamp" =>[
                                 "shape" => "__timestampIso8601",
-                            ],
-                            "UnixTimestamp" => [
+                            ]
+                        ]
+                    ],
+                    "ParseJsonUnixResponse" => [
+                        "type" => "structure",
+                        "members" => [
+                            "Timestamp" =>[
                                 "shape" => "__timestampUnix",
-                            ],
-                            "UnknownTimestamp" => [
+                            ]
+                        ]
+                    ],
+                    "ParseJsonUnknownResponse" => [
+                        "type" => "structure",
+                        "members" => [
+                            "Timestamp" =>[
                                 "shape" => "__timestampUnknown",
                             ]
                         ]
                     ],
-                    "ParseJsonResponse" => [
-                        "type" => "structure",
-                        "members" => [
-                            "Iso8601Timestamp" => [
-                                "shape" => "__timestampIso8601",
-                            ],
-                            "UnixTimestamp" => [
-                                "shape" => "__timestampUnix",
-                            ],
-                            "UnknownTimestamp" => [
-                                "shape" => "__timestampUnknown",
-                            ]
-                        ]
-                    ]
-                    ,
                     "__timestampIso8601" => [
                         "type" => "timestamp",
                         "timestampFormat" => "iso8601"
@@ -195,21 +170,42 @@ class JsonParserTest extends TestCase
                     ],
                     "__timestampUnknown" => [
                         "type" => "timestamp",
-                    ]
+                    ],
                 ],
                 'operations' => [
-                    "ParseJson" => [
-                        "name" => "ParseJson",
+                    "ParseJsonIso8601" => [
+                        "name" => "ParseJsonIso8601",
                         "http" => [
                             "method" => "GET",
                             "requestUri" => "/",
                             "responseCode" => 200
                         ],
                         "output" => [
-                            "shape" => "ParseJsonResponse"
+                            "shape" => "ParseJsonIso8601Response"
                         ]
-                    ]
-
+                    ],
+                    "ParseJsonUnix" => [
+                        "name" => "ParseJsonUnix",
+                        "http" => [
+                            "method" => "GET",
+                            "requestUri" => "/",
+                            "responseCode" => 200
+                        ],
+                        "output" => [
+                            "shape" => "ParseJsonUnixResponse"
+                        ]
+                    ],
+                    "ParseJsonUnknown" => [
+                        "name" => "ParseJsonUnknown",
+                        "http" => [
+                            "method" => "GET",
+                            "requestUri" => "/",
+                            "responseCode" => 200
+                        ],
+                        "output" => [
+                            "shape" => "ParseJsonUnknownResponse"
+                        ]
+                    ],
                 ],
             ],
             function () { return []; }
