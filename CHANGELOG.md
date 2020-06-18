@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.142.5 - 2020-06-18
 
 * `Aws\MarketplaceMetering` - Documentation updates for meteringmarketplace
 * `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for NexGuard FileMarker SDK, which allows NexGuard partners to watermark proprietary content in mezzanine and OTT streaming contexts.
