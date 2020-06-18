@@ -67,9 +67,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
                     catch (Exception $exception) {
                         return self::fromISO8601($timestamp);
                     }
-                }
-
-                else if (\Aws\is_valid_epoch($timestamp)) {
+                } else if (\Aws\is_valid_epoch($timestamp)) {
                     return self::fromEpoch($timestamp);
                 }
                 return self::fromISO8601($timestamp);

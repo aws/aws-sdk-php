@@ -15,8 +15,6 @@ use PHPUnit\Framework\TestCase;
  */
 class JsonParserTest extends TestCase
 {
-    static $timestampFormats = ['iso8601', 'unixTimestamp'];
-
     public function timeStampModelProvider(){
         return [
             [932169600, "1999-07-17T00:00:00+00:00"],
@@ -47,36 +45,86 @@ class JsonParserTest extends TestCase
     /**
      * @dataProvider timeStampModelProvider
      */
-    public function testTimeStamps($timestamp, $expectedValue)
+    public function testHandlesTimeStampsWhenIso8601Expected($timestamp, $expectedValue)
     {
-        foreach (self::$timestampFormats as $expectedFormat) {
-            $service = $this->generateTestService($expectedFormat);
-            $client = $this->generateTestClient($service, ['Timestamp' => $timestamp]);
-            $command = $client->getCommand('ParseJson');
-            $list = $client->getHandlerList();
-            $handler = $list->resolve();
-            $result = $handler($command)->wait()['Timestamp']->__toString();
-            self::assertEquals($expectedValue, $result);
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service, ['Iso8601Timestamp' => $timestamp]);
+        $command = $client->getCommand('ParseJson');
+        $list = $client->getHandlerList();
+        $handler = $list->resolve();
+        $result = $handler($command)->wait()['Iso8601Timestamp']->__toString();
+        self::assertEquals($expectedValue, $result);
+    }
 
-        }
+    /**
+     * @dataProvider timeStampModelProvider
+     */
+    public function testHandlesTimeStampsWhenUnixExpected($timestamp, $expectedValue)
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service, ['UnixTimestamp' => $timestamp]);
+        $command = $client->getCommand('ParseJson');
+        $list = $client->getHandlerList();
+        $handler = $list->resolve();
+        $result = $handler($command)->wait()['UnixTimestamp']->__toString();
+        self::assertEquals($expectedValue, $result);
+    }
+
+    /**
+     * @dataProvider timeStampModelProvider
+     */
+    public function testHandlesTimeStampsWhenUnknownType($timestamp, $expectedValue)
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service, ['UnknownTimestamp' => $timestamp]);
+        $command = $client->getCommand('ParseJson');
+        $list = $client->getHandlerList();
+        $handler = $list->resolve();
+        $result = $handler($command)->wait()['UnknownTimestamp']->__toString();
+        self::assertEquals($expectedValue, $result);
     }
 
     /**
      * @dataProvider timeStampExceptionModelProvider
      */
-    public function testTimeStampExceptions($timestamp, $expectedException, $expectedMessage)
+    public function testHandlesTimeStampWhenIso8601ExpectedThrowsException($timestamp, $expectedException, $expectedMessage)
     {
-        foreach (self::$timestampFormats as $expectedFormat) {
-            $service = $this->generateTestService($expectedFormat);
-            $client = $this->generateTestClient($service, ['Timestamp' => $timestamp]);
-            $command = $client->getCommand('ParseJson');
-            $list = $client->getHandlerList();
-            $handler = $list->resolve();
-            $this->setExpectedException($expectedException, $expectedMessage);
-            $handler($command)->wait();
-        }
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service, ['Iso8601Timestamp' => $timestamp]);
+        $command = $client->getCommand('ParseJson');
+        $list = $client->getHandlerList();
+        $handler = $list->resolve();
+        $this->setExpectedException($expectedException, $expectedMessage);
+        $handler($command)->wait();
     }
 
+    /**
+     * @dataProvider timeStampExceptionModelProvider
+     */
+    public function testHandlesTimeStampWhenUnixExpectedThrowsException($timestamp, $expectedException, $expectedMessage)
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service, ['UnixTimestamp' => $timestamp]);
+        $command = $client->getCommand('ParseJson');
+        $list = $client->getHandlerList();
+        $handler = $list->resolve();
+        $this->setExpectedException($expectedException, $expectedMessage);
+        $handler($command)->wait();
+    }
+
+    /**
+     * @dataProvider timeStampExceptionModelProvider
+     */
+    public function testHandlesTimeStampWhenUnknownTypeThrowsException($timestamp, $expectedException, $expectedMessage)
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service, ['UnknownTimestamp' => $timestamp]);
+        $command = $client->getCommand('ParseJson');
+        $list = $client->getHandlerList();
+        $handler = $list->resolve();
+        $this->setExpectedException($expectedException, $expectedMessage);
+        $handler($command)->wait();
+    }
 
     private function generateTestClient(Service $service, $args = [])
     {
@@ -87,6 +135,7 @@ class JsonParserTest extends TestCase
                     'api_provider' => function () use ($service) {
                         return $service->toArray();
                     },
+                    'validate' => false,
                     'region'       => 'us-east-1',
                     'version'      => 'latest',
                     'http_handler' => function () use ($args) {
@@ -98,7 +147,7 @@ class JsonParserTest extends TestCase
         );
     }
 
-    private function generateTestService($expectedFormat)
+    private function generateTestService()
     {
         return new Service(
             [
@@ -110,24 +159,42 @@ class JsonParserTest extends TestCase
                     "ParseJsonRequest" => [
                         "type" => "structure",
                         "members" => [
-                            "Timestamp" =>[
+                            "Iso8601Timestamp" => [
                                 "shape" => "__timestampIso8601",
+                            ],
+                            "UnixTimestamp" => [
+                                "shape" => "__timestampUnix",
+                            ],
+                            "UnknownTimestamp" => [
+                                "shape" => "__timestampUnknown",
                             ]
-                        ],
-                        "required" => [ "timestamp" ]
+                        ]
                     ],
                     "ParseJsonResponse" => [
                         "type" => "structure",
                         "members" => [
-                            "Timestamp" =>[
+                            "Iso8601Timestamp" => [
                                 "shape" => "__timestampIso8601",
+                            ],
+                            "UnixTimestamp" => [
+                                "shape" => "__timestampUnix",
+                            ],
+                            "UnknownTimestamp" => [
+                                "shape" => "__timestampUnknown",
                             ]
                         ]
                     ]
                     ,
                     "__timestampIso8601" => [
                         "type" => "timestamp",
-                        "timestampFormat" => "{$expectedFormat}"
+                        "timestampFormat" => "iso8601"
+                    ],
+                    "__timestampUnix" => [
+                        "type" => "timestamp",
+                        "timestampFormat" => "unixTimestamp"
+                    ],
+                    "__timestampUnknown" => [
+                        "type" => "timestamp",
                     ]
                 ],
                 'operations' => [
