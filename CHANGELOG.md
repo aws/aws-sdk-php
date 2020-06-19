@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Adds support to tag elastic-gpu on the RunInstances api
+* `Aws\ElastiCache` - Documentation updates for elasticache
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports Input Prepare schedule actions. This feature improves existing input switching by allowing users to prepare an input prior to switching to it.
+* `Aws\OpsWorksCM` - Documentation updates for AWS OpsWorks CM.
+
 ## 3.142.5 - 2020-06-18
 
 * `Aws\MarketplaceMetering` - Documentation updates for meteringmarketplace
