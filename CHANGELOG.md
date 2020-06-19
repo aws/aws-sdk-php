@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.142.6 - 2020-06-19
 
 * `Aws\EC2` - Adds support to tag elastic-gpu on the RunInstances api
 * `Aws\ElastiCache` - Documentation updates for elasticache
