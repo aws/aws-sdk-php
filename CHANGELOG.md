@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.142.7 - 2020-06-22
 
 * `Aws\EC2` - This release adds Tag On Create feature support for the ImportImage, ImportSnapshot, ExportImage and CreateInstanceExportTask APIs.
 * `Aws\EMR` - Adding support for MaximumCoreCapacityUnits parameter for EMR Managed Scaling. It allows users to control how many units/nodes are added to the CORE group/fleet. Remaining units/nodes are added to the TASK groups/fleet in the cluster.
