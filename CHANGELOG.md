@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaTailor` - AWS Elemental MediaTailor SDK now allows configuration of Bumper.
+* `Aws\Organizations` - Added a new error message to support the requirement for a Business License on AWS accounts in China to create an organization.
+
 ## 3.142.7 - 2020-06-22
 
 * `Aws\EC2` - This release adds Tag On Create feature support for the ImportImage, ImportSnapshot, ExportImage and CreateInstanceExportTask APIs.
