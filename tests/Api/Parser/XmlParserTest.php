@@ -3,7 +3,9 @@
 require_once __DIR__ . '/ParserTestTrait.php';
 
 use Aws\Api\Parser\Exception\ParserException;
-use PHPUnit\Framework\TestCase;;
+use PHPUnit\Framework\TestCase;
+
+;
 
 /**
  * This class tests the custom functionality of the XmlParser;
@@ -15,7 +17,8 @@ class XmlParserTest extends TestCase
 {
     use ParserTestTrait;
 
-    public function timeStampModelProvider(){
+    public function timeStampModelProvider()
+    {
         return [
             [932169600, "ParseIso8601", "1999-07-17T00:00:00+00:00"],
             [932169600, "ParseUnix", "1999-07-17T00:00:00+00:00"],
@@ -38,7 +41,8 @@ class XmlParserTest extends TestCase
         ];
     }
 
-    public function timeStampExceptionModelProvider(){
+    public function timeStampExceptionModelProvider()
+    {
         return [
             ["this text is not a date", "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             ["this text is not a date", "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
@@ -97,7 +101,8 @@ class XmlParserTest extends TestCase
         $commandName,
         $expectedException,
         $expectedMessage
-    ){
+    )
+    {
         $service = $this->generateTestService('rest-xml');
         $client = $this->generateTestClient(
             $service,
@@ -111,7 +116,8 @@ class XmlParserTest extends TestCase
         $handler($command)->wait();
     }
 
-    private static function generateXml($timestamp){
+    private static function generateXml($timestamp)
+    {
         return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <ParseXmlResponse xmlns="http://s3.amazonaws.com/doc/2006-03-01/">

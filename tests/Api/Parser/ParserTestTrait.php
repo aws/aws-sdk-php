@@ -24,12 +24,12 @@ trait ParserTestTrait
         return new AwsClient(
             array_merge(
                 [
-                    'service'      => 'foo',
+                    'service' => 'foo',
                     'api_provider' => function () use ($service) {
                         return $service->toArray();
                     },
-                    'region'       => 'us-east-1',
-                    'version'      => 'latest',
+                    'region' => 'us-east-1',
+                    'version' => 'latest',
                     'http_handler' => function () use ($content) {
                         return new FulfilledPromise(new Response(200, [], $content));
                     }
@@ -57,7 +57,7 @@ trait ParserTestTrait
                     "ParseIso8601Response" => [
                         "type" => "structure",
                         "members" => [
-                            "Timestamp" =>[
+                            "Timestamp" => [
                                 "shape" => "__timestampIso8601",
                             ]
                         ]
@@ -65,7 +65,7 @@ trait ParserTestTrait
                     "ParseUnixResponse" => [
                         "type" => "structure",
                         "members" => [
-                            "Timestamp" =>[
+                            "Timestamp" => [
                                 "shape" => "__timestampUnix",
                             ]
                         ]
@@ -73,7 +73,7 @@ trait ParserTestTrait
                     "ParseUnknownResponse" => [
                         "type" => "structure",
                         "members" => [
-                            "Timestamp" =>[
+                            "Timestamp" => [
                                 "shape" => "__timestampUnknown",
                             ]
                         ]
@@ -126,7 +126,9 @@ trait ParserTestTrait
                     ],
                 ],
             ],
-            function () { return []; }
+            function () {
+                return [];
+            }
         );
     }
 

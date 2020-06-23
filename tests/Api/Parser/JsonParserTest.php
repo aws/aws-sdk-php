@@ -15,7 +15,8 @@ class JsonParserTest extends TestCase
 {
     use ParserTestTrait;
 
-    public function timeStampModelProvider(){
+    public function timeStampModelProvider()
+    {
         return [
             [932169600, "ParseIso8601", "1999-07-17T00:00:00+00:00"],
             [932169600, "ParseUnix", "1999-07-17T00:00:00+00:00"],
@@ -38,7 +39,8 @@ class JsonParserTest extends TestCase
         ];
     }
 
-    public function timeStampExceptionModelProvider(){
+    public function timeStampExceptionModelProvider()
+    {
         return [
             ["this text is not a date", "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             ["this text is not a date", "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
@@ -73,7 +75,7 @@ class JsonParserTest extends TestCase
             [true, "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             [true, "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             [true, "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-       ];
+        ];
     }
 
     /**
@@ -83,7 +85,8 @@ class JsonParserTest extends TestCase
         $timestamp,
         $commandName,
         $expectedValue
-    ){
+    )
+    {
         $service = $this->generateTestService('json');
         $client = $this->generateTestClient(
             $service,
@@ -104,7 +107,8 @@ class JsonParserTest extends TestCase
         $commandName,
         $expectedException,
         $expectedMessage
-    ){
+    )
+    {
         $service = $this->generateTestService('json');
         $client = $this->generateTestClient(
             $service,
