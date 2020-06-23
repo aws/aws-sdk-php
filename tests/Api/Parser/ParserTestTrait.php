@@ -14,7 +14,7 @@ trait ParserTestTrait
     /**
      * Creates a service for the test
      *
-     * @param Aws\Api\Service $protocol
+     * @param Service $service
      * @param $content
      *
      * @return AwsClient
