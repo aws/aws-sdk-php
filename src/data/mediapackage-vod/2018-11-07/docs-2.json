@@ -13,7 +13,11 @@
     "DescribePackagingGroup" : "Returns a description of a MediaPackage VOD PackagingGroup resource.",
     "ListAssets" : "Returns a collection of MediaPackage VOD Asset resources.",
     "ListPackagingConfigurations" : "Returns a collection of MediaPackage VOD PackagingConfiguration resources.",
-    "ListPackagingGroups" : "Returns a collection of MediaPackage VOD PackagingGroup resources."
+    "ListPackagingGroups" : "Returns a collection of MediaPackage VOD PackagingGroup resources.",
+    "ListTagsForResource" : "Returns a list of the tags assigned to the specified resource.",
+    "TagResource" : "Adds tags to the specified resource. You can specify one or more tags to add.",
+    "UntagResource" : "Removes tags from the specified resource. You can specify one or more tags to remove.",
+    "UpdatePackagingGroup" : "Updates a specific packaging group. You can't change the id attribute or any other system-generated attributes."
   },
   "shapes" : {
     "AdMarkers" : {
@@ -38,6 +42,14 @@
       "base" : "A MediaPackage VOD Asset resource.",
       "refs" : {
         "__listOfAssetShallow$member" : null
+      }
+    },
+    "Authorization" : {
+      "base" : "CDN Authorization credentials",
+      "refs" : {
+        "PackagingGroup$Authorization" : null,
+        "PackagingGroupCreateParameters$Authorization" : null,
+        "PackagingGroupUpdateParameters$Authorization" : null
       }
     },
     "CmafEncryption" : {
@@ -156,6 +168,10 @@
       "base" : "A collection of MediaPackage VOD PackagingGroup resources.",
       "refs" : { }
     },
+    "PackagingGroupUpdateParameters" : {
+      "base" : "Parameters used to update a MediaPackage packaging group.",
+      "refs" : { }
+    },
     "Profile" : {
       "base" : null,
       "refs" : {
@@ -190,6 +206,22 @@
         "HlsManifest$StreamSelection" : null,
         "MssManifest$StreamSelection" : null
       }
+    },
+    "Tags" : {
+      "base" : "A collection of tags associated with a resource",
+      "refs" : {
+        "Asset$Tags" : null,
+        "AssetCreateParameters$Tags" : null,
+        "AssetShallow$Tags" : null,
+        "PackagingConfiguration$Tags" : null,
+        "PackagingConfigurationCreateParameters$Tags" : null,
+        "PackagingGroup$Tags" : null,
+        "PackagingGroupCreateParameters$Tags" : null
+      }
+    },
+    "TagsModel" : {
+      "base" : null,
+      "refs" : { }
     },
     "__PeriodTriggersElement" : {
       "base" : null,
@@ -273,6 +305,12 @@
         "SpekeKeyProvider$SystemIds" : "The system IDs to include in key requests."
       }
     },
+    "__mapOf__string" : {
+      "base" : null,
+      "refs" : {
+        "TagsModel$Tags" : "A collection of tags associated with a resource"
+      }
+    },
     "__string" : {
       "base" : null,
       "refs" : {
@@ -296,6 +334,8 @@
         "AssetShallow$ResourceId" : "The resource ID to include in SPEKE key requests.",
         "AssetShallow$SourceArn" : "ARN of the source object in S3.",
         "AssetShallow$SourceRoleArn" : "The IAM role ARN used to access the source S3 bucket.",
+        "Authorization$CdnIdentifierSecret" : "The Amazon Resource Name (ARN) for the secret in AWS Secrets Manager that is used for CDN authorization.",
+        "Authorization$SecretsRoleArn" : "The Amazon Resource Name (ARN) for the IAM role that allows MediaPackage to communicate with AWS Secrets Manager.",
         "DashManifest$ManifestName" : "An optional string to include in the name of the manifest.",
         "EgressEndpoint$PackagingConfigurationId" : "The ID of the PackagingConfiguration being applied to the Asset.",
         "EgressEndpoint$Url" : "The URL of the parent manifest for the repackaged Asset.",
@@ -315,7 +355,9 @@
         "PackagingGroupList$NextToken" : "A token that can be used to resume pagination from the end of the collection.",
         "SpekeKeyProvider$RoleArn" : "An Amazon Resource Name (ARN) of an IAM role that AWS Elemental\nMediaPackage will assume when accessing the key provider service.\n",
         "SpekeKeyProvider$Url" : "The URL of the external key provider service.",
-        "__listOf__string$member" : null
+        "Tags$member" : null,
+        "__listOf__string$member" : null,
+        "__mapOf__string$member" : null
       }
     }
   }

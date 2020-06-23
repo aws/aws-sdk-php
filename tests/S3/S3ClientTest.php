@@ -1602,4 +1602,59 @@ EOXML;
             ],
         ];
     }
+
+    /**
+     * @expectedException \Aws\S3\Exception\S3Exception
+     * @expectedExceptionMessage An error connecting to the service occurred while performing the CopyObject operation
+     */
+    public function testAppliesAmbiguousSuccessParsing()
+    {
+        $httpHandler = function ($request, array $options) {
+            return Promise\promise_for(
+                new Psr7\Response(200, [], "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n\n")
+            );
+        };
+
+        $s3 = new S3Client([
+            'version'     => 'latest',
+            'region'      => 'us-east-1',
+            'http_handler' => $httpHandler
+        ]);
+
+        $s3->copyObject([
+            'Bucket' => 'test-dest',
+            'Key' => 'test-key',
+            'CopySource' => 'test-source/key'
+        ]);
+    }
+
+    public function testRetriesAmbiguousSuccesses()
+    {
+        $counter = 0;
+        $httpHandler = function ($request, array $options) use (&$counter) {
+            if ($counter < 2) {
+                $body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n\n";
+            } else {
+                $body = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><OperationNameResponse><UploadId>baz</UploadId></OperationNameResponse>";
+            }
+            $counter++;
+
+            return Promise\promise_for(
+                new Psr7\Response(200, [], $body)
+            );
+        };
+
+        $s3 = new S3Client([
+            'version'     => 'latest',
+            'region'      => 'us-east-1',
+            'http_handler' => $httpHandler
+        ]);
+        $s3->copyObject([
+            'Bucket' => 'test-dest',
+            'Key' => 'test-key',
+            'CopySource' => 'test-source/key'
+        ]);
+
+        $this->assertEquals(3, $counter);
+    }
 }

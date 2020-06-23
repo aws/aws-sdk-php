@@ -1284,6 +1284,7 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"InvalidRequestException"},
         {"shape":"UnauthorizedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InternalFailureException"}
@@ -2649,6 +2650,25 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "RegisterCertificateWithoutCA":{
+      "name":"RegisterCertificateWithoutCA",
+      "http":{
+        "method":"POST",
+        "requestUri":"/certificate/register-no-ca"
+      },
+      "input":{"shape":"RegisterCertificateWithoutCARequest"},
+      "output":{"shape":"RegisterCertificateWithoutCAResponse"},
+      "errors":[
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"CertificateStateException"},
+        {"shape":"CertificateValidationException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "RegisterThing":{
       "name":"RegisterThing",
       "http":{
@@ -3924,6 +3944,7 @@
     },
     "AuthInfo":{
       "type":"structure",
+      "required":["resources"],
       "members":{
         "actionType":{"shape":"ActionType"},
         "resources":{"shape":"Resources"}
@@ -4017,10 +4038,72 @@
     "AwsIotJobArn":{"type":"string"},
     "AwsIotJobId":{"type":"string"},
     "AwsIotSqlVersion":{"type":"string"},
+    "AwsJobAbortConfig":{
+      "type":"structure",
+      "required":["abortCriteriaList"],
+      "members":{
+        "abortCriteriaList":{"shape":"AwsJobAbortCriteriaList"}
+      }
+    },
+    "AwsJobAbortCriteria":{
+      "type":"structure",
+      "required":[
+        "failureType",
+        "action",
+        "thresholdPercentage",
+        "minNumberOfExecutedThings"
+      ],
+      "members":{
+        "failureType":{"shape":"AwsJobAbortCriteriaFailureType"},
+        "action":{"shape":"AwsJobAbortCriteriaAbortAction"},
+        "thresholdPercentage":{"shape":"AwsJobAbortCriteriaAbortThresholdPercentage"},
+        "minNumberOfExecutedThings":{"shape":"AwsJobAbortCriteriaMinimumNumberOfExecutedThings"}
+      }
+    },
+    "AwsJobAbortCriteriaAbortAction":{
+      "type":"string",
+      "enum":["CANCEL"]
+    },
+    "AwsJobAbortCriteriaAbortThresholdPercentage":{
+      "type":"double",
+      "max":100
+    },
+    "AwsJobAbortCriteriaFailureType":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "REJECTED",
+        "TIMED_OUT",
+        "ALL"
+      ]
+    },
+    "AwsJobAbortCriteriaList":{
+      "type":"list",
+      "member":{"shape":"AwsJobAbortCriteria"},
+      "min":1
+    },
+    "AwsJobAbortCriteriaMinimumNumberOfExecutedThings":{
+      "type":"integer",
+      "min":1
+    },
     "AwsJobExecutionsRolloutConfig":{
       "type":"structure",
       "members":{
-        "maximumPerMinute":{"shape":"MaximumPerMinute"}
+        "maximumPerMinute":{"shape":"MaximumPerMinute"},
+        "exponentialRate":{"shape":"AwsJobExponentialRolloutRate"}
+      }
+    },
+    "AwsJobExponentialRolloutRate":{
+      "type":"structure",
+      "required":[
+        "baseRatePerMinute",
+        "incrementFactor",
+        "rateIncreaseCriteria"
+      ],
+      "members":{
+        "baseRatePerMinute":{"shape":"AwsJobRolloutRatePerMinute"},
+        "incrementFactor":{"shape":"AwsJobRolloutIncrementFactor"},
+        "rateIncreaseCriteria":{"shape":"AwsJobRateIncreaseCriteria"}
       }
     },
     "AwsJobPresignedUrlConfig":{
@@ -4029,6 +4112,30 @@
         "expiresInSec":{"shape":"ExpiresInSeconds"}
       }
     },
+    "AwsJobRateIncreaseCriteria":{
+      "type":"structure",
+      "members":{
+        "numberOfNotifiedThings":{"shape":"AwsJobRateIncreaseCriteriaNumberOfThings"},
+        "numberOfSucceededThings":{"shape":"AwsJobRateIncreaseCriteriaNumberOfThings"}
+      }
+    },
+    "AwsJobRateIncreaseCriteriaNumberOfThings":{
+      "type":"integer",
+      "min":1
+    },
+    "AwsJobRolloutIncrementFactor":{"type":"double"},
+    "AwsJobRolloutRatePerMinute":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "AwsJobTimeoutConfig":{
+      "type":"structure",
+      "members":{
+        "inProgressTimeoutInMinutes":{"shape":"AwsJobTimeoutInProgressTimeoutInMinutes"}
+      }
+    },
+    "AwsJobTimeoutInProgressTimeoutInMinutes":{"type":"long"},
     "Behavior":{
       "type":"structure",
       "required":["name"],
@@ -4256,6 +4363,7 @@
         "certificateArn":{"shape":"CertificateArn"},
         "certificateId":{"shape":"CertificateId"},
         "status":{"shape":"CertificateStatus"},
+        "certificateMode":{"shape":"CertificateMode"},
         "creationDate":{"shape":"DateType"}
       }
     },
@@ -4283,7 +4391,8 @@
         "customerVersion":{"shape":"CustomerVersion"},
         "transferData":{"shape":"TransferData"},
         "generationId":{"shape":"GenerationId"},
-        "validity":{"shape":"CertificateValidity"}
+        "validity":{"shape":"CertificateValidity"},
+        "certificateMode":{"shape":"CertificateMode"}
       }
     },
     "CertificateId":{
@@ -4291,6 +4400,13 @@
       "max":64,
       "min":64,
       "pattern":"(0x)?[a-fA-F0-9]+"
+    },
+    "CertificateMode":{
+      "type":"string",
+      "enum":[
+        "DEFAULT",
+        "SNI_ONLY"
+      ]
     },
     "CertificateName":{"type":"string"},
     "CertificatePathOnDevice":{"type":"string"},
@@ -4519,6 +4635,7 @@
         "tokenKeyName":{"shape":"TokenKeyName"},
         "tokenSigningPublicKeys":{"shape":"PublicKeyMap"},
         "status":{"shape":"AuthorizerStatus"},
+        "tags":{"shape":"TagList"},
         "signingDisabled":{"shape":"BooleanKey"}
       }
     },
@@ -4613,7 +4730,8 @@
         "serverCertificateArns":{"shape":"ServerCertificateArns"},
         "validationCertificateArn":{"shape":"AcmCertificateArn"},
         "authorizerConfig":{"shape":"AuthorizerConfig"},
-        "serviceType":{"shape":"ServiceType"}
+        "serviceType":{"shape":"ServiceType"},
+        "tags":{"shape":"TagList"}
       }
     },
     "CreateDomainConfigurationResponse":{
@@ -4749,6 +4867,8 @@
         "targetSelection":{"shape":"TargetSelection"},
         "awsJobExecutionsRolloutConfig":{"shape":"AwsJobExecutionsRolloutConfig"},
         "awsJobPresignedUrlConfig":{"shape":"AwsJobPresignedUrlConfig"},
+        "awsJobAbortConfig":{"shape":"AwsJobAbortConfig"},
+        "awsJobTimeoutConfig":{"shape":"AwsJobTimeoutConfig"},
         "files":{"shape":"OTAUpdateFiles"},
         "roleArn":{"shape":"RoleArn"},
         "additionalParameters":{"shape":"AdditionalParameterMap"},
@@ -4777,7 +4897,8 @@
           "location":"uri",
           "locationName":"policyName"
         },
-        "policyDocument":{"shape":"PolicyDocument"}
+        "policyDocument":{"shape":"PolicyDocument"},
+        "tags":{"shape":"TagList"}
       }
     },
     "CreatePolicyResponse":{
@@ -4851,6 +4972,7 @@
         "templateBody":{"shape":"TemplateBody"},
         "enabled":{"shape":"Enabled"},
         "provisioningRoleArn":{"shape":"RoleArn"},
+        "preProvisioningHook":{"shape":"ProvisioningHook"},
         "tags":{"shape":"TagList"}
       }
     },
@@ -4904,7 +5026,8 @@
           "locationName":"roleAlias"
         },
         "roleArn":{"shape":"RoleArn"},
-        "credentialDurationSeconds":{"shape":"CredentialDurationSeconds"}
+        "credentialDurationSeconds":{"shape":"CredentialDurationSeconds"},
+        "tags":{"shape":"TagList"}
       }
     },
     "CreateRoleAliasResponse":{
@@ -5997,7 +6120,8 @@
         "defaultVersionId":{"shape":"TemplateVersionId"},
         "templateBody":{"shape":"TemplateBody"},
         "enabled":{"shape":"Enabled"},
-        "provisioningRoleArn":{"shape":"RoleArn"}
+        "provisioningRoleArn":{"shape":"RoleArn"},
+        "preProvisioningHook":{"shape":"ProvisioningHook"}
       }
     },
     "DescribeProvisioningTemplateVersionRequest":{
@@ -8846,6 +8970,7 @@
     },
     "MaxJobExecutionsPerMin":{
       "type":"integer",
+      "max":1000,
       "min":1
     },
     "MaxResults":{
@@ -9116,6 +9241,12 @@
     },
     "PartitionKey":{"type":"string"},
     "PayloadField":{"type":"string"},
+    "PayloadVersion":{
+      "type":"string",
+      "max":32,
+      "min":10,
+      "pattern":"^[0-9-]+$"
+    },
     "Percent":{
       "type":"double",
       "max":100,
@@ -9254,6 +9385,14 @@
       "max":2,
       "min":1
     },
+    "ProvisioningHook":{
+      "type":"structure",
+      "required":["targetArn"],
+      "members":{
+        "payloadVersion":{"shape":"PayloadVersion"},
+        "targetArn":{"shape":"TargetArn"}
+      }
+    },
     "ProvisioningTemplateListing":{
       "type":"list",
       "member":{"shape":"ProvisioningTemplateSummary"}
@@ -9380,7 +9519,8 @@
           "location":"querystring",
           "locationName":"allowAutoRegistration"
         },
-        "registrationConfig":{"shape":"RegistrationConfig"}
+        "registrationConfig":{"shape":"RegistrationConfig"},
+        "tags":{"shape":"TagList"}
       }
     },
     "RegisterCACertificateResponse":{
@@ -9406,6 +9546,21 @@
       }
     },
     "RegisterCertificateResponse":{
+      "type":"structure",
+      "members":{
+        "certificateArn":{"shape":"CertificateArn"},
+        "certificateId":{"shape":"CertificateId"}
+      }
+    },
+    "RegisterCertificateWithoutCARequest":{
+      "type":"structure",
+      "required":["certificatePem"],
+      "members":{
+        "certificatePem":{"shape":"CertificatePem"},
+        "status":{"shape":"CertificateStatus"}
+      }
+    },
+    "RegisterCertificateWithoutCAResponse":{
       "type":"structure",
       "members":{
         "certificateArn":{"shape":"CertificateArn"},
@@ -9492,6 +9647,7 @@
     },
     "RemoveAuthorizerConfig":{"type":"boolean"},
     "RemoveAutoRegistration":{"type":"boolean"},
+    "RemoveHook":{"type":"boolean"},
     "RemoveThingFromBillingGroupRequest":{
       "type":"structure",
       "members":{
@@ -10249,12 +10405,18 @@
     "TableName":{"type":"string"},
     "Tag":{
       "type":"structure",
+      "required":["Key"],
       "members":{
         "Key":{"shape":"TagKey"},
         "Value":{"shape":"TagValue"}
       }
     },
-    "TagKey":{"type":"string"},
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
+    },
     "TagKeyList":{
       "type":"list",
       "member":{"shape":"TagKey"}
@@ -10279,9 +10441,16 @@
       "members":{
       }
     },
-    "TagValue":{"type":"string"},
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "Target":{"type":"string"},
-    "TargetArn":{"type":"string"},
+    "TargetArn":{
+      "type":"string",
+      "max":2048
+    },
     "TargetAuditCheckNames":{
       "type":"list",
       "member":{"shape":"AuditCheckName"}
@@ -11065,7 +11234,9 @@
         "description":{"shape":"TemplateDescription"},
         "enabled":{"shape":"Enabled"},
         "defaultVersionId":{"shape":"TemplateVersionId"},
-        "provisioningRoleArn":{"shape":"RoleArn"}
+        "provisioningRoleArn":{"shape":"RoleArn"},
+        "preProvisioningHook":{"shape":"ProvisioningHook"},
+        "removePreProvisioningHook":{"shape":"RemoveHook"}
       }
     },
     "UpdateProvisioningTemplateResponse":{

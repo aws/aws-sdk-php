@@ -4566,6 +4566,9 @@
     "Activity": {
       "type": "structure",
       "members": {
+        "CUSTOM": {
+          "shape": "CustomMessageActivity"
+        },
         "ConditionalSplit": {
           "shape": "ConditionalSplitActivity"
         },
@@ -4581,8 +4584,14 @@
         "MultiCondition": {
           "shape": "MultiConditionalSplitActivity"
         },
+        "PUSH": {
+          "shape": "PushMessageActivity"
+        },
         "RandomSplit": {
           "shape": "RandomSplitActivity"
+        },
+        "SMS": {
+          "shape": "SMSMessageActivity"
         },
         "Wait": {
           "shape": "WaitActivity"
@@ -4952,6 +4961,14 @@
         "Rows"
       ]
     },
+    "CampaignCustomMessage": {
+      "type": "structure",
+      "members": {
+        "Data": {
+          "shape": "__string"
+        }
+      }
+    },
     "CampaignDateRangeKpiResponse": {
       "type": "structure",
       "members": {
@@ -5063,6 +5080,9 @@
         },
         "CreationDate": {
           "shape": "__string"
+        },
+        "CustomDeliveryConfiguration": {
+          "shape": "CustomDeliveryConfiguration"
         },
         "DefaultState": {
           "shape": "CampaignState"
@@ -5215,6 +5235,7 @@
     "ChannelType": {
       "type": "string",
       "enum": [
+        "PUSH",
         "GCM",
         "APNS",
         "APNS_SANDBOX",
@@ -5649,6 +5670,43 @@
         "CreateTemplateMessageBody"
       ],
       "payload": "CreateTemplateMessageBody"
+    },
+    "CustomDeliveryConfiguration": {
+      "type": "structure",
+      "members": {
+        "DeliveryUri": {
+          "shape": "__string"
+        },
+        "EndpointTypes": {
+          "shape": "ListOf__EndpointTypesElement"
+        }
+      },
+      "required": [
+        "DeliveryUri"
+      ]
+    },
+    "CustomMessageActivity": {
+      "type": "structure",
+      "members": {
+        "DeliveryUri": {
+          "shape": "__string"
+        },
+        "EndpointTypes": {
+          "shape": "ListOf__EndpointTypesElement"
+        },
+        "MessageConfig": {
+          "shape": "JourneyCustomMessage"
+        },
+        "NextActivity": {
+          "shape": "__string"
+        },
+        "TemplateName": {
+          "shape": "__string"
+        },
+        "TemplateVersion": {
+          "shape": "__string"
+        }
+      }
     },
     "DefaultMessage": {
       "type": "structure",
@@ -8900,6 +8958,14 @@
         "FAILED"
       ]
     },
+    "JourneyCustomMessage": {
+      "type": "structure",
+      "members": {
+        "Data": {
+          "shape": "__string"
+        }
+      }
+    },
     "JourneyDateRangeKpiResponse": {
       "type": "structure",
       "members": {
@@ -9010,6 +9076,14 @@
         }
       }
     },
+    "JourneyPushMessage": {
+      "type": "structure",
+      "members": {
+        "TimeToLive": {
+          "shape": "__string"
+        }
+      }
+    },
     "JourneyResponse": {
       "type": "structure",
       "members": {
@@ -9065,6 +9139,17 @@
         "Id",
         "ApplicationId"
       ]
+    },
+    "JourneySMSMessage": {
+      "type": "structure",
+      "members": {
+        "MessageType": {
+          "shape": "MessageType"
+        },
+        "SenderId": {
+          "shape": "__string"
+        }
+      }
     },
     "JourneySchedule": {
       "type": "structure",
@@ -9317,6 +9402,9 @@
         },
         "BaiduMessage": {
           "shape": "Message"
+        },
+        "CustomMessage": {
+          "shape": "CampaignCustomMessage"
         },
         "DefaultMessage": {
           "shape": "Message"
@@ -9625,6 +9713,23 @@
         },
         "User": {
           "shape": "EndpointUser"
+        }
+      }
+    },
+    "PushMessageActivity": {
+      "type": "structure",
+      "members": {
+        "MessageConfig": {
+          "shape": "JourneyPushMessage"
+        },
+        "NextActivity": {
+          "shape": "__string"
+        },
+        "TemplateName": {
+          "shape": "__string"
+        },
+        "TemplateVersion": {
+          "shape": "__string"
         }
       }
     },
@@ -10046,6 +10151,23 @@
         },
         "Substitutions": {
           "shape": "MapOfListOf__string"
+        }
+      }
+    },
+    "SMSMessageActivity": {
+      "type": "structure",
+      "members": {
+        "MessageConfig": {
+          "shape": "JourneySMSMessage"
+        },
+        "NextActivity": {
+          "shape": "__string"
+        },
+        "TemplateName": {
+          "shape": "__string"
+        },
+        "TemplateVersion": {
+          "shape": "__string"
         }
       }
     },
@@ -10765,6 +10887,9 @@
     "TreatmentResource": {
       "type": "structure",
       "members": {
+        "CustomDeliveryConfiguration": {
+          "shape": "CustomDeliveryConfiguration"
+        },
         "Id": {
           "shape": "__string"
         },
@@ -11815,6 +11940,9 @@
         "AdditionalTreatments": {
           "shape": "ListOfWriteTreatmentResource"
         },
+        "CustomDeliveryConfiguration": {
+          "shape": "CustomDeliveryConfiguration"
+        },
         "Description": {
           "shape": "__string"
         },
@@ -11940,6 +12068,9 @@
     "WriteTreatmentResource": {
       "type": "structure",
       "members": {
+        "CustomDeliveryConfiguration": {
+          "shape": "CustomDeliveryConfiguration"
+        },
         "MessageConfiguration": {
           "shape": "MessageConfiguration"
         },
@@ -11961,6 +12092,23 @@
       },
       "required": [
         "SizePercent"
+      ]
+    },
+    "__EndpointTypesElement": {
+      "type": "string",
+      "enum": [
+        "PUSH",
+        "GCM",
+        "APNS",
+        "APNS_SANDBOX",
+        "APNS_VOIP",
+        "APNS_VOIP_SANDBOX",
+        "ADM",
+        "SMS",
+        "VOICE",
+        "EMAIL",
+        "BAIDU",
+        "CUSTOM"
       ]
     },
     "__boolean": {
@@ -12102,6 +12250,12 @@
       "type": "list",
       "member": {
         "shape": "WriteTreatmentResource"
+      }
+    },
+    "ListOf__EndpointTypesElement": {
+      "type": "list",
+      "member": {
+        "shape": "__EndpointTypesElement"
       }
     },
     "ListOf__string": {

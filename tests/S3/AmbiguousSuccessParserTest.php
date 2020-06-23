@@ -2,9 +2,12 @@
 namespace Aws\Test\S3;
 
 use Aws\Api\ApiProvider;
+use Aws\Api\ErrorParser\XmlErrorParser;
+use Aws\Command;
 use Aws\CommandInterface;
 use Aws\S3\AmbiguousSuccessParser;
 use Aws\S3\Exception\S3Exception;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -67,10 +70,32 @@ class AmbiguousSuccessParserTest extends TestCase
         $instance($command, $response);
     }
 
+    /**
+     * @dataProvider opsWithAmbiguousSuccessesProvider
+     *
+     * @expectedException \Aws\S3\Exception\S3Exception
+     * @expectedExceptionMessage An error connecting to the service occurred while performing the
+     */
+    public function testThrowsConnectionErrorForEmptyBody($operation)
+    {
+        $parser = function() {};
+        $errorParser = new XmlErrorParser();
+        $instance = new AmbiguousSuccessParser(
+            $parser,
+            $errorParser,
+            S3Exception::class
+        );
+
+        $command = new Command($operation);
+        $response = new Response(200, [], "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n\n");
+        $instance($command, $response);
+    }
+
     public function opsWithAmbiguousSuccessesProvider()
     {
         return [
             ['CopyObject'],
+            ['UploadPart'],
             ['UploadPartCopy'],
             ['CompleteMultipartUpload'],
         ];

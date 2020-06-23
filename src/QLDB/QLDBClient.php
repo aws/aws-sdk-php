@@ -5,10 +5,14 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon QLDB** service.
+ * @method \Aws\Result cancelJournalKinesisStream(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelJournalKinesisStreamAsync(array $args = [])
  * @method \Aws\Result createLedger(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createLedgerAsync(array $args = [])
  * @method \Aws\Result deleteLedger(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteLedgerAsync(array $args = [])
+ * @method \Aws\Result describeJournalKinesisStream(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeJournalKinesisStreamAsync(array $args = [])
  * @method \Aws\Result describeJournalS3Export(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeJournalS3ExportAsync(array $args = [])
  * @method \Aws\Result describeLedger(array $args = [])
@@ -21,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDigestAsync(array $args = [])
  * @method \Aws\Result getRevision(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRevisionAsync(array $args = [])
+ * @method \Aws\Result listJournalKinesisStreamsForLedger(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listJournalKinesisStreamsForLedgerAsync(array $args = [])
  * @method \Aws\Result listJournalS3Exports(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listJournalS3ExportsAsync(array $args = [])
  * @method \Aws\Result listJournalS3ExportsForLedger(array $args = [])
@@ -29,6 +35,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listLedgersAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result streamJournalToKinesis(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise streamJournalToKinesisAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

@@ -112,9 +112,9 @@ class AwsClient implements AwsClientInterface
      *   Provide an instance of Aws\EndpointDiscovery\ConfigurationInterface,
      *   an instance Aws\CacheInterface, a callable that provides a promise for
      *   a Configuration object, or an associative array with the following
-     *   keys: enabled: (bool) Set to true to enable endpoint discovery,
-     *   defaults to false; cache_limit: (int) The maximum number of keys in the
-     *   endpoints cache, defaults to 1000.
+     *   keys: enabled: (bool) Set to true to enable endpoint discovery, false
+     *   to explicitly disable it, defaults to false; cache_limit: (int) The
+     *   maximum number of keys in the endpoints cache, defaults to 1000.
      * - endpoint_provider: (callable) An optional PHP callable that
      *   accepts a hash of options including a "service" and "region" key and
      *   returns NULL or a hash of endpoint data, of which the "endpoint" key
@@ -277,7 +277,7 @@ class AwsClient implements AwsClientInterface
      *
      * @return callable
      */
-    final protected function getSignatureProvider()
+    final public function getSignatureProvider()
     {
         return $this->signatureProvider;
     }

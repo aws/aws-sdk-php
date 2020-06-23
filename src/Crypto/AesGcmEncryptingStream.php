@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Crypto;
 
+use Aws\Crypto\Polyfill\AesGcm;
+use Aws\Crypto\Polyfill\Key;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\StreamDecoratorTrait;
 use Psr\Http\Message\StreamInterface;
@@ -43,11 +45,6 @@ class AesGcmEncryptingStream implements AesStreamInterface
         $tagLength = 16,
         $keySize = 256
     ) {
-        if (version_compare(PHP_VERSION, '7.1', '<')) {
-            throw new RuntimeException(
-                'AES-GCM decryption is only supported in PHP 7.1 or greater'
-            );
-        }
 
         $this->plaintext = $plaintext;
         $this->key = $key;
@@ -74,16 +71,27 @@ class AesGcmEncryptingStream implements AesStreamInterface
 
     public function createStream()
     {
-        return Psr7\stream_for(openssl_encrypt(
-            (string) $this->plaintext,
-            $this->getOpenSslName(),
-            $this->key,
-            OPENSSL_RAW_DATA,
-            $this->initializationVector,
-            $this->tag,
-            $this->aad,
-            $this->tagLength
-        ));
+        if (version_compare(PHP_VERSION, '7.1', '<')) {
+            return Psr7\stream_for(AesGcm::encrypt(
+                (string) $this->plaintext,
+                $this->initializationVector,
+                new Key($this->key),
+                $this->aad,
+                $this->tag,
+                $this->keySize
+            ));
+        } else {
+            return Psr7\stream_for(\openssl_encrypt(
+                (string)$this->plaintext,
+                $this->getOpenSslName(),
+                $this->key,
+                OPENSSL_RAW_DATA,
+                $this->initializationVector,
+                $this->tag,
+                $this->aad,
+                $this->tagLength
+            ));
+        }
     }
 
     /**

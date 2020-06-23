@@ -312,6 +312,7 @@
         {"shape":"RepositoryNotFoundException"},
         {"shape":"ImageAlreadyExistsException"},
         {"shape":"LayersNotFoundException"},
+        {"shape":"ReferencedImagesNotFoundException"},
         {"shape":"LimitExceededException"},
         {"shape":"ImageTagAlreadyExistsException"}
       ]
@@ -383,6 +384,8 @@
       "errors":[
         {"shape":"ServerException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"UnsupportedImageTypeException"},
+        {"shape":"LimitExceededException"},
         {"shape":"RepositoryNotFoundException"},
         {"shape":"ImageNotFoundException"}
       ]
@@ -847,7 +850,8 @@
         "registryId":{"shape":"RegistryId"},
         "repositoryName":{"shape":"RepositoryName"},
         "imageId":{"shape":"ImageIdentifier"},
-        "imageManifest":{"shape":"ImageManifest"}
+        "imageManifest":{"shape":"ImageManifest"},
+        "imageManifestMediaType":{"shape":"MediaType"}
       }
     },
     "ImageActionType":{
@@ -898,7 +902,8 @@
         "InvalidImageTag",
         "ImageTagDoesNotMatchDigest",
         "ImageNotFound",
-        "MissingDigestAndTag"
+        "MissingDigestAndTag",
+        "ImageReferencedByManifestList"
       ]
     },
     "ImageFailureList":{
@@ -1283,6 +1288,7 @@
         "registryId":{"shape":"RegistryId"},
         "repositoryName":{"shape":"RepositoryName"},
         "imageManifest":{"shape":"ImageManifest"},
+        "imageManifestMediaType":{"shape":"MediaType"},
         "imageTag":{"shape":"ImageTag"}
       }
     },
@@ -1351,6 +1357,13 @@
         "repositoryName":{"shape":"RepositoryName"},
         "lifecyclePolicyText":{"shape":"LifecyclePolicyText"}
       }
+    },
+    "ReferencedImagesNotFoundException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
     },
     "RegistryId":{
       "type":"string",
@@ -1549,6 +1562,13 @@
     },
     "TagValue":{"type":"string"},
     "TooManyTagsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ExceptionMessage"}
+      },
+      "exception":true
+    },
+    "UnsupportedImageTypeException":{
       "type":"structure",
       "members":{
         "message":{"shape":"ExceptionMessage"}

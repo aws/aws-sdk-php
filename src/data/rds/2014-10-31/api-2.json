@@ -65,8 +65,10 @@
       "input":{"shape":"AddTagsToResourceMessage"},
       "errors":[
         {"shape":"DBInstanceNotFoundFault"},
+        {"shape":"DBClusterNotFoundFault"},
         {"shape":"DBSnapshotNotFoundFault"},
-        {"shape":"DBClusterNotFoundFault"}
+        {"shape":"DBProxyNotFoundFault"},
+        {"shape":"DBProxyTargetGroupNotFoundFault"}
       ]
     },
     "ApplyPendingMaintenanceAction":{
@@ -1428,7 +1430,9 @@
       "errors":[
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"DBSnapshotNotFoundFault"},
-        {"shape":"DBClusterNotFoundFault"}
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"DBProxyNotFoundFault"},
+        {"shape":"DBProxyTargetGroupNotFoundFault"}
       ]
     },
     "ModifyCertificates":{
@@ -1881,7 +1885,9 @@
       "errors":[
         {"shape":"DBInstanceNotFoundFault"},
         {"shape":"DBSnapshotNotFoundFault"},
-        {"shape":"DBClusterNotFoundFault"}
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"DBProxyNotFoundFault"},
+        {"shape":"DBProxyTargetGroupNotFoundFault"}
       ]
     },
     "ResetDBClusterParameterGroup":{
@@ -2767,7 +2773,8 @@
         "EnableHttpEndpoint":{"shape":"BooleanOptional"},
         "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
         "Domain":{"shape":"String"},
-        "DomainIAMRoleName":{"shape":"String"}
+        "DomainIAMRoleName":{"shape":"String"},
+        "EnableGlobalWriteForwarding":{"shape":"BooleanOptional"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -3199,7 +3206,9 @@
         "ActivityStreamKinesisStreamName":{"shape":"String"},
         "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
         "CrossAccountClone":{"shape":"BooleanOptional"},
-        "DomainMemberships":{"shape":"DomainMembershipList"}
+        "DomainMemberships":{"shape":"DomainMembershipList"},
+        "GlobalWriteForwardingStatus":{"shape":"WriteForwardingStatus"},
+        "GlobalWriteForwardingRequested":{"shape":"BooleanOptional"}
       },
       "wrapper":true
     },
@@ -3991,7 +4000,10 @@
         "incompatible-network",
         "insufficient-resource-limits",
         "creating",
-        "deleting"
+        "deleting",
+        "suspended",
+        "suspending",
+        "reactivating"
       ]
     },
     "DBProxyTarget":{
@@ -4002,7 +4014,8 @@
         "TrackedClusterId":{"shape":"String"},
         "RdsResourceId":{"shape":"String"},
         "Port":{"shape":"Integer"},
-        "Type":{"shape":"TargetType"}
+        "Type":{"shape":"TargetType"},
+        "TargetHealth":{"shape":"TargetHealth"}
       }
     },
     "DBProxyTargetAlreadyRegisteredFault":{
@@ -4931,6 +4944,7 @@
         "EngineVersion":{"shape":"String"},
         "DBInstanceClass":{"shape":"String"},
         "LicenseModel":{"shape":"String"},
+        "AvailabilityZoneGroup":{"shape":"String"},
         "Vpc":{"shape":"BooleanOptional"},
         "Filters":{"shape":"FilterList"},
         "MaxRecords":{"shape":"IntegerOptional"},
@@ -5097,7 +5111,10 @@
     },
     "EngineFamily":{
       "type":"string",
-      "enum":["MYSQL"]
+      "enum":[
+        "MYSQL",
+        "POSTGRESQL"
+      ]
     },
     "EngineModeList":{
       "type":"list",
@@ -5335,7 +5352,8 @@
       "members":{
         "DBClusterArn":{"shape":"String"},
         "Readers":{"shape":"ReadersArnList"},
-        "IsWriter":{"shape":"Boolean"}
+        "IsWriter":{"shape":"Boolean"},
+        "GlobalWriteForwardingStatus":{"shape":"WriteForwardingStatus"}
       },
       "wrapper":true
     },
@@ -5896,7 +5914,8 @@
         "ScalingConfiguration":{"shape":"ScalingConfiguration"},
         "DeletionProtection":{"shape":"BooleanOptional"},
         "EnableHttpEndpoint":{"shape":"BooleanOptional"},
-        "CopyTagsToSnapshot":{"shape":"BooleanOptional"}
+        "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
+        "EnableGlobalWriteForwarding":{"shape":"BooleanOptional"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -6375,6 +6394,7 @@
         "EngineVersion":{"shape":"String"},
         "DBInstanceClass":{"shape":"String"},
         "LicenseModel":{"shape":"String"},
+        "AvailabilityZoneGroup":{"shape":"String"},
         "AvailabilityZones":{"shape":"AvailabilityZoneList"},
         "MultiAZCapable":{"shape":"Boolean"},
         "ReadReplicaCapable":{"shape":"Boolean"},
@@ -7543,9 +7563,34 @@
       "type":"list",
       "member":{"shape":"DBProxyTargetGroup"}
     },
+    "TargetHealth":{
+      "type":"structure",
+      "members":{
+        "State":{"shape":"TargetState"},
+        "Reason":{"shape":"TargetHealthReason"},
+        "Description":{"shape":"String"}
+      }
+    },
+    "TargetHealthReason":{
+      "type":"string",
+      "enum":[
+        "UNREACHABLE",
+        "CONNECTION_FAILED",
+        "AUTH_FAILURE",
+        "PENDING_PROXY_CAPACITY"
+      ]
+    },
     "TargetList":{
       "type":"list",
       "member":{"shape":"DBProxyTarget"}
+    },
+    "TargetState":{
+      "type":"string",
+      "enum":[
+        "REGISTERING",
+        "AVAILABLE",
+        "UNAVAILABLE"
+      ]
     },
     "TargetType":{
       "type":"string",
@@ -7662,6 +7707,16 @@
         "VpnName":{"shape":"String"},
         "VpnState":{"shape":"String"}
       }
+    },
+    "WriteForwardingStatus":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled",
+        "enabling",
+        "disabling",
+        "unknown"
+      ]
     }
   }
 }

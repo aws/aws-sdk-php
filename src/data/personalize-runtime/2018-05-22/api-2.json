@@ -92,7 +92,8 @@
         "itemId":{"shape":"ItemID"},
         "userId":{"shape":"UserID"},
         "numResults":{"shape":"NumResults"},
-        "context":{"shape":"Context"}
+        "context":{"shape":"Context"},
+        "filterArn":{"shape":"Arn"}
       }
     },
     "GetRecommendationsResponse":{
@@ -128,7 +129,8 @@
     "PredictedItem":{
       "type":"structure",
       "members":{
-        "itemId":{"shape":"ItemID"}
+        "itemId":{"shape":"ItemID"},
+        "score":{"shape":"Score"}
       }
     },
     "ResourceNotFoundException":{
@@ -139,6 +141,7 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "Score":{"type":"double"},
     "UserID":{
       "type":"string",
       "max":256

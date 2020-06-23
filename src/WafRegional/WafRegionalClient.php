@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createSqlInjectionMatchSetAsync(array $args = [])
  * @method \Aws\Result createWebACL(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createWebACLAsync(array $args = [])
+ * @method \Aws\Result createWebACLMigrationStack(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createWebACLMigrationStackAsync(array $args = [])
  * @method \Aws\Result createXssMatchSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createXssMatchSetAsync(array $args = [])
  * @method \Aws\Result deleteByteMatchSet(array $args = [])

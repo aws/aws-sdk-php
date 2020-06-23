@@ -125,6 +125,17 @@
         }
     }, 
     "shapes": {
+        "AvailSuppression": {
+          "type": "structure",
+          "members": {
+            "Mode": {
+              "shape": "Mode"
+            },
+            "Value": {
+              "shape": "__string"
+            }
+          }
+        },
         "BadRequestException": {
             "error": {
                 "httpStatusCode": 400
@@ -137,6 +148,17 @@
             }, 
             "type": "structure"
         }, 
+        "Bumper": {
+            "type": "structure",
+            "members": {
+                "EndUrl": {
+                    "shape": "__string"
+                },
+                "StartUrl": {
+                    "shape": "__string"
+                }
+            }
+        },
         "CdnConfiguration": {
             "members": {
                 "AdSegmentUrlPrefix": {
@@ -207,7 +229,13 @@
             "members": {
                 "AdDecisionServerUrl": {
                     "shape": "__string"
-                }, 
+                },
+                "AvailSuppression": {
+                  "shape": "AvailSuppression"
+                },
+                "Bumper": {
+                    "shape": "Bumper"
+                },
                 "CdnConfiguration": {
                     "shape": "CdnConfiguration"
                 },
@@ -237,7 +265,7 @@
                 }, 
                 "SlateAdUrl": {
                     "shape": "__string"
-                }, 
+                },
                 "Tags": {
                     "locationName": "tags", 
                     "shape": "__mapOf__string"
@@ -314,11 +342,18 @@
             ], 
             "type": "string"
         }, 
+        "Mode": {
+          "enum": [
+            "OFF",
+            "BEHIND_LIVE_EDGE"
+          ],
+          "type": "string"
+        },
         "PlaybackConfiguration": {
             "members": {
                 "AdDecisionServerUrl": {
                     "shape": "__string"
-                }, 
+                },
                 "CdnConfiguration": {
                     "shape": "CdnConfiguration"
                 },
@@ -374,7 +409,13 @@
             "members": {
                 "AdDecisionServerUrl": {
                     "shape": "__string"
-                }, 
+                },
+                "AvailSuppression": {
+                  "shape": "AvailSuppression"
+                },
+                "Bumper": {
+                    "shape": "Bumper"
+                },
                 "CdnConfiguration": {
                     "shape": "CdnConfiguration"
                 },
@@ -392,7 +433,7 @@
                 }, 
                 "SlateAdUrl": {
                     "shape": "__string"
-                }, 
+                },
                 "Tags": {
                     "locationName": "tags", 
                     "shape": "__mapOf__string"
@@ -410,13 +451,19 @@
             "members": {
                 "AdDecisionServerUrl": {
                     "shape": "__string"
-                }, 
+                },
+                "AvailSuppression": {
+                  "shape": "AvailSuppression"
+                },
+                "Bumper": {
+                    "shape": "Bumper"
+                },
                 "CdnConfiguration": {
                     "shape": "CdnConfiguration"
                 }, 
                 "DashConfiguration": {
                     "shape": "DashConfiguration"
-                }, 
+                },
                 "HlsConfiguration": {
                     "shape": "HlsConfiguration"
                 },

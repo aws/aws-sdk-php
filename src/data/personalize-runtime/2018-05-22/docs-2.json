@@ -10,7 +10,8 @@
       "base": null,
       "refs": {
         "GetPersonalizedRankingRequest$campaignArn": "<p>The Amazon Resource Name (ARN) of the campaign to use for generating the personalized ranking.</p>",
-        "GetRecommendationsRequest$campaignArn": "<p>The Amazon Resource Name (ARN) of the campaign to use for getting recommendations.</p>"
+        "GetRecommendationsRequest$campaignArn": "<p>The Amazon Resource Name (ARN) of the campaign to use for getting recommendations.</p>",
+        "GetRecommendationsRequest$filterArn": "<p>The ARN of the filter to apply to the returned recommendations. For more information, see Using Filters with Amazon Personalize.</p>"
       }
     },
     "AttributeName": {
@@ -28,8 +29,8 @@
     "Context": {
       "base": null,
       "refs": {
-        "GetPersonalizedRankingRequest$context": "<p>The contextual metadata to use when getting recommendations. Contextual metadata includes any interaction information that might be relevant when getting a user's recommendations, such as the user's current location or device type. For more information, see Contextual Metadata.</p>",
-        "GetRecommendationsRequest$context": "<p>The contextual metadata to use when getting recommendations. Contextual metadata includes any interaction information that might be relevant when getting a user's recommendations, such as the user's current location or device type. For more information, see Contextual Metadata.</p>"
+        "GetPersonalizedRankingRequest$context": "<p>The contextual metadata to use when getting recommendations. Contextual metadata includes any interaction information that might be relevant when getting a user's recommendations, such as the user's current location or device type.</p>",
+        "GetRecommendationsRequest$context": "<p>The contextual metadata to use when getting recommendations. Contextual metadata includes any interaction information that might be relevant when getting a user's recommendations, such as the user's current location or device type.</p>"
       }
     },
     "ErrorMessage": {
@@ -100,6 +101,12 @@
     "ResourceNotFoundException": {
       "base": "<p>The specified resource does not exist.</p>",
       "refs": {
+      }
+    },
+    "Score": {
+      "base": null,
+      "refs": {
+        "PredictedItem$score": "<p>A numeric representation of the model's certainty that the item will be the next user selection. For more information on scoring logic, see <a>how-scores-work</a>.</p>"
       }
     },
     "UserID": {

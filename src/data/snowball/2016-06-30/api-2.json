@@ -450,7 +450,8 @@
         "ClusterId":{"shape":"ClusterId"},
         "SnowballType":{"shape":"SnowballType"},
         "ForwardingAddressId":{"shape":"AddressId"},
-        "TaxDocuments":{"shape":"TaxDocuments"}
+        "TaxDocuments":{"shape":"TaxDocuments"},
+        "DeviceConfiguration":{"shape":"DeviceConfiguration"}
       }
     },
     "CreateJobResult":{
@@ -520,6 +521,12 @@
       "members":{
         "JobMetadata":{"shape":"JobMetadata"},
         "SubJobMetadata":{"shape":"JobMetadataList"}
+      }
+    },
+    "DeviceConfiguration":{
+      "type":"structure",
+      "members":{
+        "SnowconeDeviceConfiguration":{"shape":"SnowconeDeviceConfiguration"}
       }
     },
     "Ec2AmiResource":{
@@ -699,7 +706,8 @@
         "JobLogInfo":{"shape":"JobLogs"},
         "ClusterId":{"shape":"String"},
         "ForwardingAddressId":{"shape":"AddressId"},
-        "TaxDocuments":{"shape":"TaxDocuments"}
+        "TaxDocuments":{"shape":"TaxDocuments"},
+        "DeviceConfiguration":{"shape":"DeviceConfiguration"}
       }
     },
     "JobMetadataList":{
@@ -897,6 +905,8 @@
         "T80",
         "T100",
         "T42",
+        "T98",
+        "T8",
         "NoPreference"
       ]
     },
@@ -906,8 +916,16 @@
         "STANDARD",
         "EDGE",
         "EDGE_C",
-        "EDGE_CG"
+        "EDGE_CG",
+        "EDGE_S",
+        "SNC1_HDD"
       ]
+    },
+    "SnowconeDeviceConfiguration":{
+      "type":"structure",
+      "members":{
+        "WirelessConnection":{"shape":"WirelessConnection"}
+      }
     },
     "SnsTopicARN":{
       "type":"string",
@@ -969,6 +987,12 @@
     "UpdateJobResult":{
       "type":"structure",
       "members":{
+      }
+    },
+    "WirelessConnection":{
+      "type":"structure",
+      "members":{
+        "IsWifiEnabled":{"shape":"Boolean"}
       }
     }
   }

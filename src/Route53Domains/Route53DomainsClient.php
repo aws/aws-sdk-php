@@ -6,6 +6,10 @@ use Aws\AwsClient;
 /**
  * This client is used to interact with the **Amazon Route 53 Domains** service.
  *
+ * @method \Aws\Result acceptDomainTransferFromAnotherAwsAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise acceptDomainTransferFromAnotherAwsAccountAsync(array $args = [])
+ * @method \Aws\Result cancelDomainTransferToAnotherAwsAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise cancelDomainTransferToAnotherAwsAccountAsync(array $args = [])
  * @method \Aws\Result checkDomainAvailability(array $args = [])
  * @method \GuzzleHttp\Promise\Promise checkDomainAvailabilityAsync(array $args = [])
  * @method \Aws\Result checkDomainTransferability(array $args = [])
@@ -36,6 +40,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listTagsForDomainAsync(array $args = [])
  * @method \Aws\Result registerDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerDomainAsync(array $args = [])
+ * @method \Aws\Result rejectDomainTransferFromAnotherAwsAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise rejectDomainTransferFromAnotherAwsAccountAsync(array $args = [])
  * @method \Aws\Result renewDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise renewDomainAsync(array $args = [])
  * @method \Aws\Result resendContactReachabilityEmail(array $args = [])
@@ -44,6 +50,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise retrieveDomainAuthCodeAsync(array $args = [])
  * @method \Aws\Result transferDomain(array $args = [])
  * @method \GuzzleHttp\Promise\Promise transferDomainAsync(array $args = [])
+ * @method \Aws\Result transferDomainToAnotherAwsAccount(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise transferDomainToAnotherAwsAccountAsync(array $args = [])
  * @method \Aws\Result updateDomainContact(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateDomainContactAsync(array $args = [])
  * @method \Aws\Result updateDomainContactPrivacy(array $args = [])

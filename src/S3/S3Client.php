@@ -327,7 +327,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         parent::__construct($args);
         $stack = $this->getHandlerList();
         $stack->appendInit(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), 's3.ssec');
-        $stack->appendBuild(ApplyChecksumMiddleware::wrap(), 's3.checksum');
+        $stack->appendBuild(ApplyChecksumMiddleware::wrap($this->getApi()), 's3.checksum');
         $stack->appendBuild(
             Middleware::contentType(['PutObject', 'UploadPart']),
             's3.content_type'
@@ -340,6 +340,7 @@ class S3Client extends AwsClient implements S3ClientInterface
             $stack->appendBuild(
                 S3EndpointMiddleware::wrap(
                     $this->getRegion(),
+                    $this->getConfig('endpoint_provider'),
                     [
                         'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
                         'accelerate' => $this->getConfig('use_accelerate_endpoint'),

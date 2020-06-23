@@ -18,6 +18,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteAccountSettingAsync(array $args = [])
  * @method \Aws\Result deleteAttributes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteAttributesAsync(array $args = [])
+ * @method \Aws\Result deleteCapacityProvider(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteCapacityProviderAsync(array $args = [])
  * @method \Aws\Result deleteCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteClusterAsync(array $args = [])
  * @method \Aws\Result deleteService(array $args = [])

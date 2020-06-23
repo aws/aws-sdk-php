@@ -111,6 +111,7 @@
     "StopCrawler": "<p>If the specified crawler is running, stops the crawl.</p>",
     "StopCrawlerSchedule": "<p>Sets the schedule state of the specified crawler to <code>NOT_SCHEDULED</code>, but does not stop the crawler if it is already running.</p>",
     "StopTrigger": "<p>Stops a specified trigger.</p>",
+    "StopWorkflowRun": "<p>Stops the execution of the specified workflow run.</p>",
     "TagResource": "<p>Adds tags to a resource. A tag is a label you can assign to an AWS resource. In AWS Glue, you can tag only certain resources. For information about what resources you can tag, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">AWS Tags in AWS Glue</a>.</p>",
     "UntagResource": "<p>Removes tags from a resource.</p>",
     "UpdateClassifier": "<p>Modifies an existing classifier (a <code>GrokClassifier</code>, an <code>XMLClassifier</code>, a <code>JsonClassifier</code>, or a <code>CsvClassifier</code>, depending on which field is present).</p>",
@@ -686,7 +687,7 @@
     "ConnectionProperties": {
       "base": null,
       "refs": {
-        "Connection$ConnectionProperties": "<p>These key-value pairs define parameters for the connection:</p> <ul> <li> <p> <code>HOST</code> - The host URI: either the fully qualified domain name (FQDN) or the IPv4 address of the database host.</p> </li> <li> <p> <code>PORT</code> - The port number, between 1024 and 65535, of the port on which the database host is listening for database connections.</p> </li> <li> <p> <code>USER_NAME</code> - The name under which to log in to the database. The value string for <code>USER_NAME</code> is \"<code>USERNAME</code>\".</p> </li> <li> <p> <code>PASSWORD</code> - A password, if one is used, for the user name.</p> </li> <li> <p> <code>ENCRYPTED_PASSWORD</code> - When you enable connection password protection by setting <code>ConnectionPasswordEncryption</code> in the Data Catalog encryption settings, this field stores the encrypted password.</p> </li> <li> <p> <code>JDBC_DRIVER_JAR_URI</code> - The Amazon Simple Storage Service (Amazon S3) path of the JAR file that contains the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_DRIVER_CLASS_NAME</code> - The class name of the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_ENGINE</code> - The name of the JDBC engine to use.</p> </li> <li> <p> <code>JDBC_ENGINE_VERSION</code> - The version of the JDBC engine to use.</p> </li> <li> <p> <code>CONFIG_FILES</code> - (Reserved for future use.)</p> </li> <li> <p> <code>INSTANCE_ID</code> - The instance ID to use.</p> </li> <li> <p> <code>JDBC_CONNECTION_URL</code> - The URL for connecting to a JDBC data source.</p> </li> <li> <p> <code>JDBC_ENFORCE_SSL</code> - A Boolean string (true, false) specifying whether Secure Sockets Layer (SSL) with hostname matching is enforced for the JDBC connection on the client. The default is false.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT</code> - An Amazon S3 location specifying the customer's root certificate. AWS Glue uses this root certificate to validate the customer’s certificate when connecting to the customer database. AWS Glue only handles X.509 certificates. The certificate provided must be DER-encoded and supplied in Base64 encoding PEM format.</p> </li> <li> <p> <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code> - By default, this is <code>false</code>. AWS Glue validates the Signature algorithm and Subject Public Key Algorithm for the customer certificate. The only permitted algorithms for the Signature algorithm are SHA256withRSA, SHA384withRSA or SHA512withRSA. For the Subject Public Key Algorithm, the key length must be at least 2048. You can set the value of this property to <code>true</code> to skip AWS Glue’s validation of the customer certificate.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT_STRING</code> - A custom JDBC certificate string which is used for domain match or distinguished name match to prevent a man-in-the-middle attack. In Oracle database, this is used as the <code>SSL_SERVER_CERT_DN</code>; in Microsoft SQL Server, this is used as the <code>hostNameInCertificate</code>.</p> </li> <li> <p> <code>CONNECTION_URL</code> - The URL for connecting to a general (non-JDBC) data source.</p> </li> </ul>",
+        "Connection$ConnectionProperties": "<p>These key-value pairs define parameters for the connection:</p> <ul> <li> <p> <code>HOST</code> - The host URI: either the fully qualified domain name (FQDN) or the IPv4 address of the database host.</p> </li> <li> <p> <code>PORT</code> - The port number, between 1024 and 65535, of the port on which the database host is listening for database connections.</p> </li> <li> <p> <code>USER_NAME</code> - The name under which to log in to the database. The value string for <code>USER_NAME</code> is \"<code>USERNAME</code>\".</p> </li> <li> <p> <code>PASSWORD</code> - A password, if one is used, for the user name.</p> </li> <li> <p> <code>ENCRYPTED_PASSWORD</code> - When you enable connection password protection by setting <code>ConnectionPasswordEncryption</code> in the Data Catalog encryption settings, this field stores the encrypted password.</p> </li> <li> <p> <code>JDBC_DRIVER_JAR_URI</code> - The Amazon Simple Storage Service (Amazon S3) path of the JAR file that contains the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_DRIVER_CLASS_NAME</code> - The class name of the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_ENGINE</code> - The name of the JDBC engine to use.</p> </li> <li> <p> <code>JDBC_ENGINE_VERSION</code> - The version of the JDBC engine to use.</p> </li> <li> <p> <code>CONFIG_FILES</code> - (Reserved for future use.)</p> </li> <li> <p> <code>INSTANCE_ID</code> - The instance ID to use.</p> </li> <li> <p> <code>JDBC_CONNECTION_URL</code> - The URL for connecting to a JDBC data source.</p> </li> <li> <p> <code>JDBC_ENFORCE_SSL</code> - A Boolean string (true, false) specifying whether Secure Sockets Layer (SSL) with hostname matching is enforced for the JDBC connection on the client. The default is false.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT</code> - An Amazon S3 location specifying the customer's root certificate. AWS Glue uses this root certificate to validate the customer’s certificate when connecting to the customer database. AWS Glue only handles X.509 certificates. The certificate provided must be DER-encoded and supplied in Base64 encoding PEM format.</p> </li> <li> <p> <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code> - By default, this is <code>false</code>. AWS Glue validates the Signature algorithm and Subject Public Key Algorithm for the customer certificate. The only permitted algorithms for the Signature algorithm are SHA256withRSA, SHA384withRSA or SHA512withRSA. For the Subject Public Key Algorithm, the key length must be at least 2048. You can set the value of this property to <code>true</code> to skip AWS Glue’s validation of the customer certificate.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT_STRING</code> - A custom JDBC certificate string which is used for domain match or distinguished name match to prevent a man-in-the-middle attack. In Oracle database, this is used as the <code>SSL_SERVER_CERT_DN</code>; in Microsoft SQL Server, this is used as the <code>hostNameInCertificate</code>.</p> </li> <li> <p> <code>CONNECTION_URL</code> - The URL for connecting to a general (non-JDBC) data source.</p> </li> <li> <p> <code>KAFKA_BOOTSTRAP_SERVERS</code> - A comma-separated list of host and port pairs that are the addresses of the Apache Kafka brokers in a Kafka cluster to which a Kafka client will connect to and bootstrap itself.</p> </li> </ul>",
         "ConnectionInput$ConnectionProperties": "<p>These key-value pairs define parameters for the connection.</p>"
       }
     },
@@ -700,7 +701,7 @@
       "base": null,
       "refs": {
         "Connection$ConnectionType": "<p>The type of the connection. Currently, only JDBC is supported; SFTP is not supported.</p>",
-        "ConnectionInput$ConnectionType": "<p>The type of the connection. Currently, these types are supported:</p> <ul> <li> <p> <code>JDBC</code> - Designates a connection to a database through Java Database Connectivity (JDBC).</p> </li> <li> <p> <code>MONGODB</code> - Designates a connection to a MongoDB document database.</p> </li> </ul> <p>SFTP is not supported.</p>",
+        "ConnectionInput$ConnectionType": "<p>The type of the connection. Currently, these types are supported:</p> <ul> <li> <p> <code>JDBC</code> - Designates a connection to a database through Java Database Connectivity (JDBC).</p> </li> <li> <p> <code>KAFKA</code> - Designates a connection to an Apache Kafka streaming platform.</p> </li> <li> <p> <code>MONGODB</code> - Designates a connection to a MongoDB document database.</p> </li> </ul> <p>SFTP is not supported.</p>",
         "GetConnectionsFilter$ConnectionType": "<p>The type of connections to return. Currently, only JDBC is supported; SFTP is not supported.</p>"
       }
     },
@@ -741,9 +742,9 @@
     "CrawlerConfiguration": {
       "base": null,
       "refs": {
-        "Crawler$Configuration": "<p>Crawler configuration information. This versioned JSON string allows users to specify aspects of a crawler's behavior. For more information, see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html\">Configuring a Crawler</a>.</p>",
-        "CreateCrawlerRequest$Configuration": "<p>The crawler configuration information. This versioned JSON string allows users to specify aspects of a crawler's behavior. For more information, see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html\">Configuring a Crawler</a>.</p>",
-        "UpdateCrawlerRequest$Configuration": "<p>The crawler configuration information. This versioned JSON string allows users to specify aspects of a crawler's behavior. For more information, see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html\">Configuring a Crawler</a>.</p>"
+        "Crawler$Configuration": "<p>Crawler configuration information. This versioned JSON string allows users to specify aspects of a crawler's behavior. For more information, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html\">Configuring a Crawler</a>.</p>",
+        "CreateCrawlerRequest$Configuration": "<p>Crawler configuration information. This versioned JSON string allows users to specify aspects of a crawler's behavior. For more information, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html\">Configuring a Crawler</a>.</p>",
+        "UpdateCrawlerRequest$Configuration": "<p>Crawler configuration information. This versioned JSON string allows users to specify aspects of a crawler's behavior. For more information, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/crawler-configuration.html\">Configuring a Crawler</a>.</p>"
       }
     },
     "CrawlerList": {
@@ -984,10 +985,10 @@
     "CronExpression": {
       "base": null,
       "refs": {
-        "CreateCrawlerRequest$Schedule": "<p>A <code>cron</code> expression used to specify the schedule. For more information, see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, specify <code>cron(15 12 * * ? *)</code>.</p>",
-        "Schedule$ScheduleExpression": "<p>A <code>cron</code> expression used to specify the schedule. For more information, see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, specify <code>cron(15 12 * * ? *)</code>.</p>",
-        "UpdateCrawlerRequest$Schedule": "<p>A <code>cron</code> expression used to specify the schedule. For more information, see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, specify <code>cron(15 12 * * ? *)</code>.</p>",
-        "UpdateCrawlerScheduleRequest$Schedule": "<p>The updated <code>cron</code> expression used to specify the schedule. For more information, see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, specify <code>cron(15 12 * * ? *)</code>.</p>"
+        "CreateCrawlerRequest$Schedule": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
+        "Schedule$ScheduleExpression": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
+        "UpdateCrawlerRequest$Schedule": "<p>A <code>cron</code> expression used to specify the schedule (see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>",
+        "UpdateCrawlerScheduleRequest$Schedule": "<p>The updated <code>cron</code> expression used to specify the schedule (see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html\">Time-Based Schedules for Jobs and Crawlers</a>. For example, to run something every day at 12:15 UTC, you would specify: <code>cron(15 12 * * ? *)</code>.</p>"
       }
     },
     "CsvClassifier": {
@@ -1032,7 +1033,7 @@
       "base": null,
       "refs": {
         "CreateGrokClassifierRequest$CustomPatterns": "<p>Optional custom grok patterns used by this classifier.</p>",
-        "GrokClassifier$CustomPatterns": "<p>Optional custom grok patterns defined by this classifier. For more information, see custom patterns in <a href=\"http://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html\">Writing Custom Classifiers</a>.</p>",
+        "GrokClassifier$CustomPatterns": "<p>Optional custom grok patterns defined by this classifier. For more information, see custom patterns in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html\">Writing Custom Classifiers</a>.</p>",
         "UpdateGrokClassifierRequest$CustomPatterns": "<p>Optional custom grok patterns used by this classifier.</p>"
       }
     },
@@ -2061,7 +2062,7 @@
       "base": null,
       "refs": {
         "CreateGrokClassifierRequest$GrokPattern": "<p>The grok pattern used by this classifier.</p>",
-        "GrokClassifier$GrokPattern": "<p>The grok pattern applied to a data store by this classifier. For more information, see built-in patterns in <a href=\"http://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html\">Writing Custom Classifiers</a>.</p>",
+        "GrokClassifier$GrokPattern": "<p>The grok pattern applied to a data store by this classifier. For more information, see built-in patterns in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html\">Writing Custom Classifiers</a>.</p>",
         "UpdateGrokClassifierRequest$GrokPattern": "<p>The grok pattern used by this classifier.</p>"
       }
     },
@@ -2120,6 +2121,7 @@
         "StartJobRunRequest$JobRunId": "<p>The ID of a previous <code>JobRun</code> to retry.</p>",
         "StartJobRunResponse$JobRunId": "<p>The ID assigned to this job run.</p>",
         "StartWorkflowRunResponse$RunId": "<p>An Id for the new run.</p>",
+        "StopWorkflowRunRequest$RunId": "<p>The ID of the workflow run to stop.</p>",
         "Trigger$Id": "<p>Reserved for future use.</p>",
         "WorkflowRun$WorkflowRunId": "<p>The ID of this workflow run.</p>",
         "WorkflowRunProperties$key": null
@@ -2127,6 +2129,11 @@
     },
     "IdempotentParameterMismatchException": {
       "base": "<p>The same unique identifier was associated with two different records.</p>",
+      "refs": {
+      }
+    },
+    "IllegalWorkflowStateException": {
+      "base": "<p>The workflow is in an invalid state to perform a requested operation.</p>",
       "refs": {
       }
     },
@@ -2285,8 +2292,8 @@
     "JobRunState": {
       "base": null,
       "refs": {
-        "Condition$State": "<p>The condition state. Currently, the values supported are <code>SUCCEEDED</code>, <code>STOPPED</code>, <code>TIMEOUT</code>, and <code>FAILED</code>.</p>",
-        "JobRun$JobRunState": "<p>The current state of the job run.</p>"
+        "Condition$State": "<p>The condition state. Currently, the only job states that a trigger can listen for are <code>SUCCEEDED</code>, <code>STOPPED</code>, <code>FAILED</code>, and <code>TIMEOUT</code>. The only crawler states that a trigger can listen for are <code>SUCCEEDED</code>, <code>FAILED</code>, and <code>CANCELLED</code>.</p>",
+        "JobRun$JobRunState": "<p>The current state of the job run. For more information about the statuses of jobs that have terminated abnormally, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/job-run-statuses.html\">AWS Glue Job Run Statuses</a>.</p>"
       }
     },
     "JobUpdate": {
@@ -2304,9 +2311,9 @@
     "JsonPath": {
       "base": null,
       "refs": {
-        "CreateJsonClassifierRequest$JsonPath": "<p>A <code>JsonPath</code> string defining the JSON data for the classifier to classify. AWS Glue supports a subset of <code>JsonPath</code>, as described in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html#custom-classifier-json\">Writing JsonPath Custom Classifiers</a>.</p>",
-        "JsonClassifier$JsonPath": "<p>A <code>JsonPath</code> string defining the JSON data for the classifier to classify. AWS Glue supports a subset of <code>JsonPath</code>, as described in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html#custom-classifier-json\">Writing JsonPath Custom Classifiers</a>.</p>",
-        "UpdateJsonClassifierRequest$JsonPath": "<p>A <code>JsonPath</code> string defining the JSON data for the classifier to classify. AWS Glue supports a subset of <code>JsonPath</code>, as described in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html#custom-classifier-json\">Writing JsonPath Custom Classifiers</a>.</p>"
+        "CreateJsonClassifierRequest$JsonPath": "<p>A <code>JsonPath</code> string defining the JSON data for the classifier to classify. AWS Glue supports a subset of JsonPath, as described in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html#custom-classifier-json\">Writing JsonPath Custom Classifiers</a>.</p>",
+        "JsonClassifier$JsonPath": "<p>A <code>JsonPath</code> string defining the JSON data for the classifier to classify. AWS Glue supports a subset of JsonPath, as described in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html#custom-classifier-json\">Writing JsonPath Custom Classifiers</a>.</p>",
+        "UpdateJsonClassifierRequest$JsonPath": "<p>A <code>JsonPath</code> string defining the JSON data for the classifier to classify. AWS Glue supports a subset of JsonPath, as described in <a href=\"https://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html#custom-classifier-json\">Writing JsonPath Custom Classifiers</a>.</p>"
       }
     },
     "JsonValue": {
@@ -2541,6 +2548,7 @@
         "EntityNotFoundException$Message": "<p>A message describing the problem.</p>",
         "GlueEncryptionException$Message": "<p>A message describing the problem.</p>",
         "IdempotentParameterMismatchException$Message": "<p>A message describing the problem.</p>",
+        "IllegalWorkflowStateException$Message": "<p>A message describing the problem.</p>",
         "InternalServiceException$Message": "<p>A message describing the problem.</p>",
         "InvalidInputException$Message": "<p>A message describing the problem.</p>",
         "MLTransformNotReadyException$Message": "<p>A message describing the problem.</p>",
@@ -2673,7 +2681,7 @@
         "GetTriggersRequest$DependentJobName": "<p>The name of the job to retrieve triggers for. The trigger that can start this job is returned, and if there is no such trigger, all triggers are returned.</p>",
         "GetUserDefinedFunctionRequest$DatabaseName": "<p>The name of the catalog database where the function is located.</p>",
         "GetUserDefinedFunctionRequest$FunctionName": "<p>The name of the function.</p>",
-        "GetUserDefinedFunctionsRequest$DatabaseName": "<p>The name of the catalog database where the functions are located.</p>",
+        "GetUserDefinedFunctionsRequest$DatabaseName": "<p>The name of the catalog database where the functions are located. If none is provided, functions from all the databases across the catalog will be returned.</p>",
         "GetUserDefinedFunctionsRequest$Pattern": "<p>An optional function-name pattern string that filters the function definitions returned.</p>",
         "GetWorkflowRequest$Name": "<p>The name of the workflow to retrieve.</p>",
         "GetWorkflowRunPropertiesRequest$Name": "<p>Name of the workflow which was run.</p>",
@@ -2720,6 +2728,7 @@
         "StopCrawlerScheduleRequest$CrawlerName": "<p>Name of the crawler whose schedule state to set.</p>",
         "StopTriggerRequest$Name": "<p>The name of the trigger to stop.</p>",
         "StopTriggerResponse$Name": "<p>The name of the trigger that was stopped.</p>",
+        "StopWorkflowRunRequest$Name": "<p>The name of the workflow to stop.</p>",
         "Table$Name": "<p>The table name. For Hive compatibility, this must be entirely lowercase.</p>",
         "Table$DatabaseName": "<p>The name of the database where the table metadata resides. For Hive compatibility, this must be all lowercase.</p>",
         "Table$Owner": "<p>The owner of the table.</p>",
@@ -2753,6 +2762,7 @@
         "UpdateWorkflowResponse$Name": "<p>The name of the workflow which was specified in input.</p>",
         "UpdateXMLClassifierRequest$Name": "<p>The name of the classifier.</p>",
         "UserDefinedFunction$FunctionName": "<p>The name of the function.</p>",
+        "UserDefinedFunction$DatabaseName": "<p>The name of the database where the function resides.</p>",
         "UserDefinedFunction$ClassName": "<p>The Java class that contains the function code.</p>",
         "UserDefinedFunction$OwnerName": "<p>The owner of the function.</p>",
         "UserDefinedFunctionInput$FunctionName": "<p>The name of the function.</p>",
@@ -2839,6 +2849,7 @@
         "CreateCsvClassifierRequest$AllowSingleColumn": "<p>Enables the processing of files that contain only one column.</p>",
         "CsvClassifier$DisableValueTrimming": "<p>Specifies not to trim values before identifying the type of column values. The default value is <code>true</code>.</p>",
         "CsvClassifier$AllowSingleColumn": "<p>Enables the processing of files that contain only one column.</p>",
+        "DynamoDBTarget$scanAll": "<p>Indicates whether to scan all the records, or to sample rows from the table. Scanning all the records can take a long time when the table is not a high throughput table.</p> <p>A value of <code>true</code> means to scan all records, while a value of <code>false</code> means to sample the records. If no value is specified, the value defaults to <code>true</code>.</p>",
         "FindMatchesParameters$EnforceProvidedLabels": "<p>The value to switch on or off to force the output to match the provided labels from users. If the value is <code>True</code>, the <code>find matches</code> transform forces the output to match the provided labels. The results override the normal conflation results. If the value is <code>False</code>, the <code>find matches</code> transform does not ensure all the labels provided are respected, and the results rely on the trained model.</p> <p>Note that setting this value to true may increase the conflation execution time.</p>",
         "GetWorkflowRequest$IncludeGraph": "<p>Specifies whether to include a graph when returning the workflow resource metadata.</p>",
         "GetWorkflowRunRequest$IncludeGraph": "<p>Specifies whether to include the workflow graph in response or not.</p>",
@@ -2852,6 +2863,7 @@
       "refs": {
         "CreateJobRequest$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "CreateMLTransformRequest$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>. </p> <p> <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p> <ul> <li> <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p> </li> <li> <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p> </li> <li> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p> </li> <li> <p> <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p> </li> </ul> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
+        "DynamoDBTarget$scanRate": "<p>The percentage of the configured read capacity units to use by the AWS Glue crawler. Read capacity units is a term defined by DynamoDB, and is a numeric value that acts as rate limiter for the number of reads that can be performed on that table per second.</p> <p>The valid values are null or a value between 0.1 to 1.5. A null value is used when user does not provide a value, and defaults to 0.5 of the configured Read Capacity Unit (for provisioned tables), or 0.25 of the max configured Read Capacity Unit (for tables using on-demand mode).</p>",
         "GetMLTransformResponse$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>. </p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
         "Job$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "JobRun$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://docs.aws.amazon.com/https:/aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
@@ -3025,8 +3037,8 @@
     "PathList": {
       "base": null,
       "refs": {
-        "JdbcTarget$Exclusions": "<p>A list of glob patterns used to exclude from the crawl. For more information, see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/add-crawler.html\">Catalog Tables with a Crawler</a>.</p>",
-        "S3Target$Exclusions": "<p>A list of glob patterns used to exclude from the crawl. For more information, see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/add-crawler.html\">Catalog Tables with a Crawler</a>.</p>"
+        "JdbcTarget$Exclusions": "<p>A list of glob patterns used to exclude from the crawl. For more information, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/add-crawler.html\">Catalog Tables with a Crawler</a>.</p>",
+        "S3Target$Exclusions": "<p>A list of glob patterns used to exclude from the crawl. For more information, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/add-crawler.html\">Catalog Tables with a Crawler</a>.</p>"
       }
     },
     "Permission": {
@@ -3544,6 +3556,16 @@
       "refs": {
       }
     },
+    "StopWorkflowRunRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StopWorkflowRunResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "StorageDescriptor": {
       "base": "<p>Describes the physical storage of table data.</p>",
       "refs": {
@@ -3669,7 +3691,7 @@
     "TagsMap": {
       "base": null,
       "refs": {
-        "CreateCrawlerRequest$Tags": "<p>The tags to use with this crawler request. You can use tags to limit access to the crawler. For more information, see <a href=\"http://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">AWS Tags in AWS Glue</a>.</p>",
+        "CreateCrawlerRequest$Tags": "<p>The tags to use with this crawler request. You may use tags to limit access to the crawler. For more information about tags in AWS Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">AWS Tags in AWS Glue</a> in the developer guide.</p>",
         "CreateDevEndpointRequest$Tags": "<p>The tags to use with this DevEndpoint. You may use tags to limit access to the DevEndpoint. For more information about tags in AWS Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">AWS Tags in AWS Glue</a> in the developer guide.</p>",
         "CreateJobRequest$Tags": "<p>The tags to use with this job. You may use tags to limit access to the job. For more information about tags in AWS Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">AWS Tags in AWS Glue</a> in the developer guide.</p>",
         "CreateMLTransformRequest$Tags": "<p>The tags to use with this machine learning transform. You may use tags to limit access to the machine learning transform. For more information about tags in AWS Glue, see <a href=\"https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html\">AWS Tags in AWS Glue</a> in the developer guide.</p>",

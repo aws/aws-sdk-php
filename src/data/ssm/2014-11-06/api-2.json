@@ -1895,6 +1895,7 @@
       },
       "exception":true
     },
+    "ApplyOnlyAtCronInterval":{"type":"boolean"},
     "ApproveAfterDays":{
       "type":"integer",
       "max":100,
@@ -1959,7 +1960,9 @@
         "AssociationName":{"shape":"AssociationName"},
         "MaxErrors":{"shape":"MaxErrors"},
         "MaxConcurrency":{"shape":"MaxConcurrency"},
-        "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"}
+        "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"},
+        "SyncCompliance":{"shape":"AssociationSyncCompliance"},
+        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"}
       }
     },
     "AssociationDescriptionList":{
@@ -2097,7 +2100,8 @@
         "AssociationStatusName",
         "LastExecutedBefore",
         "LastExecutedAfter",
-        "AssociationName"
+        "AssociationName",
+        "ResourceGroupName"
       ]
     },
     "AssociationFilterList":{
@@ -2186,6 +2190,13 @@
         "Failed"
       ]
     },
+    "AssociationSyncCompliance":{
+      "type":"string",
+      "enum":[
+        "AUTO",
+        "MANUAL"
+      ]
+    },
     "AssociationVersion":{
       "type":"string",
       "pattern":"([$]LATEST)|([1-9][0-9]*)"
@@ -2205,7 +2216,9 @@
         "AssociationName":{"shape":"AssociationName"},
         "MaxErrors":{"shape":"MaxErrors"},
         "MaxConcurrency":{"shape":"MaxConcurrency"},
-        "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"}
+        "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"},
+        "SyncCompliance":{"shape":"AssociationSyncCompliance"},
+        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"}
       }
     },
     "AssociationVersionLimitExceeded":{
@@ -2602,7 +2615,8 @@
         "DeliveryTimedOutCount":{"shape":"DeliveryTimedOutCount"},
         "ServiceRole":{"shape":"ServiceRole"},
         "NotificationConfig":{"shape":"NotificationConfig"},
-        "CloudWatchOutputConfig":{"shape":"CloudWatchOutputConfig"}
+        "CloudWatchOutputConfig":{"shape":"CloudWatchOutputConfig"},
+        "TimeoutSeconds":{"shape":"TimeoutSeconds"}
       }
     },
     "CommandFilter":{
@@ -2913,6 +2927,13 @@
       "min":1,
       "pattern":"[A-Za-z0-9_\\-]\\w+|Custom:[a-zA-Z0-9_\\-]\\w+"
     },
+    "ComplianceUploadType":{
+      "type":"string",
+      "enum":[
+        "COMPLETE",
+        "PARTIAL"
+      ]
+    },
     "CompliantSummary":{
       "type":"structure",
       "members":{
@@ -2982,7 +3003,9 @@
         "AssociationName":{"shape":"AssociationName"},
         "MaxErrors":{"shape":"MaxErrors"},
         "MaxConcurrency":{"shape":"MaxConcurrency"},
-        "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"}
+        "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"},
+        "SyncCompliance":{"shape":"AssociationSyncCompliance"},
+        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"}
       }
     },
     "CreateAssociationBatchResult":{
@@ -3007,7 +3030,9 @@
         "AutomationTargetParameterName":{"shape":"AutomationTargetParameterName"},
         "MaxErrors":{"shape":"MaxErrors"},
         "MaxConcurrency":{"shape":"MaxConcurrency"},
-        "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"}
+        "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"},
+        "SyncCompliance":{"shape":"AssociationSyncCompliance"},
+        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"}
       }
     },
     "CreateAssociationResult":{
@@ -3056,6 +3081,10 @@
         "EndDate":{"shape":"MaintenanceWindowStringDateTime"},
         "Schedule":{"shape":"MaintenanceWindowSchedule"},
         "ScheduleTimezone":{"shape":"MaintenanceWindowTimezone"},
+        "ScheduleOffset":{
+          "shape":"MaintenanceWindowOffset",
+          "box":true
+        },
         "Duration":{"shape":"MaintenanceWindowDurationHours"},
         "Cutoff":{"shape":"MaintenanceWindowCutoff"},
         "AllowUnassociatedTargets":{"shape":"MaintenanceWindowAllowUnassociatedTargets"},
@@ -4651,6 +4680,10 @@
         "EndDate":{"shape":"MaintenanceWindowStringDateTime"},
         "Schedule":{"shape":"MaintenanceWindowSchedule"},
         "ScheduleTimezone":{"shape":"MaintenanceWindowTimezone"},
+        "ScheduleOffset":{
+          "shape":"MaintenanceWindowOffset",
+          "box":true
+        },
         "NextExecutionTime":{"shape":"MaintenanceWindowStringDateTime"},
         "Duration":{"shape":"MaintenanceWindowDurationHours"},
         "Cutoff":{"shape":"MaintenanceWindowCutoff"},
@@ -6278,6 +6311,10 @@
         "Cutoff":{"shape":"MaintenanceWindowCutoff"},
         "Schedule":{"shape":"MaintenanceWindowSchedule"},
         "ScheduleTimezone":{"shape":"MaintenanceWindowTimezone"},
+        "ScheduleOffset":{
+          "shape":"MaintenanceWindowOffset",
+          "box":true
+        },
         "EndDate":{"shape":"MaintenanceWindowStringDateTime"},
         "StartDate":{"shape":"MaintenanceWindowStringDateTime"},
         "NextExecutionTime":{"shape":"MaintenanceWindowStringDateTime"}
@@ -6327,6 +6364,11 @@
       "max":128,
       "min":3,
       "pattern":"^[a-zA-Z0-9_\\-.]{3,128}$"
+    },
+    "MaintenanceWindowOffset":{
+      "type":"integer",
+      "max":6,
+      "min":1
     },
     "MaintenanceWindowResourceType":{
       "type":"string",
@@ -6606,7 +6648,9 @@
         "UBUNTU",
         "REDHAT_ENTERPRISE_LINUX",
         "SUSE",
-        "CENTOS"
+        "CENTOS",
+        "ORACLE_LINUX",
+        "DEBIAN"
       ]
     },
     "OpsAggregator":{
@@ -6965,7 +7009,6 @@
     "OpsResultAttributeList":{
       "type":"list",
       "member":{"shape":"OpsResultAttribute"},
-      "max":1,
       "min":1
     },
     "OutputSource":{
@@ -7009,7 +7052,8 @@
         "Selector":{"shape":"PSParameterSelector"},
         "SourceResult":{"shape":"String"},
         "LastModifiedDate":{"shape":"DateTime"},
-        "ARN":{"shape":"String"}
+        "ARN":{"shape":"String"},
+        "DataType":{"shape":"ParameterDataType"}
       }
     },
     "ParameterAlreadyExists":{
@@ -7018,6 +7062,11 @@
         "message":{"shape":"String"}
       },
       "exception":true
+    },
+    "ParameterDataType":{
+      "type":"string",
+      "max":128,
+      "min":0
     },
     "ParameterDescription":{
       "type":"string",
@@ -7038,7 +7087,8 @@
         "Version":{"shape":"PSParameterVersion"},
         "Labels":{"shape":"ParameterLabelList"},
         "Tier":{"shape":"ParameterTier"},
-        "Policies":{"shape":"ParameterPolicyList"}
+        "Policies":{"shape":"ParameterPolicyList"},
+        "DataType":{"shape":"ParameterDataType"}
       }
     },
     "ParameterHistoryList":{
@@ -7100,7 +7150,8 @@
         "AllowedPattern":{"shape":"AllowedPattern"},
         "Version":{"shape":"PSParameterVersion"},
         "Tier":{"shape":"ParameterTier"},
-        "Policies":{"shape":"ParameterPolicyList"}
+        "Policies":{"shape":"ParameterPolicyList"},
+        "DataType":{"shape":"ParameterDataType"}
       }
     },
     "ParameterMetadataList":{
@@ -7150,7 +7201,7 @@
       "type":"string",
       "max":132,
       "min":1,
-      "pattern":"tag:.+|Name|Type|KeyId|Path|Label|Tier"
+      "pattern":"tag:.+|Name|Type|KeyId|Path|Label|Tier|DataType"
     },
     "ParameterStringFilterList":{
       "type":"list",
@@ -7654,7 +7705,11 @@
         "ComplianceType":{"shape":"ComplianceTypeName"},
         "ExecutionSummary":{"shape":"ComplianceExecutionSummary"},
         "Items":{"shape":"ComplianceItemEntryList"},
-        "ItemContentHash":{"shape":"ComplianceItemContentHash"}
+        "ItemContentHash":{"shape":"ComplianceItemContentHash"},
+        "UploadType":{
+          "shape":"ComplianceUploadType",
+          "box":true
+        }
       }
     },
     "PutComplianceItemsResult":{
@@ -7684,8 +7739,7 @@
       "type":"structure",
       "required":[
         "Name",
-        "Value",
-        "Type"
+        "Value"
       ],
       "members":{
         "Name":{"shape":"PSParameterName"},
@@ -7700,7 +7754,8 @@
         "AllowedPattern":{"shape":"AllowedPattern"},
         "Tags":{"shape":"TagList"},
         "Tier":{"shape":"ParameterTier"},
-        "Policies":{"shape":"ParameterPolicies"}
+        "Policies":{"shape":"ParameterPolicies"},
+        "DataType":{"shape":"ParameterDataType"}
       }
     },
     "PutParameterResult":{
@@ -8899,7 +8954,9 @@
         "AutomationTargetParameterName":{"shape":"AutomationTargetParameterName"},
         "MaxErrors":{"shape":"MaxErrors"},
         "MaxConcurrency":{"shape":"MaxConcurrency"},
-        "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"}
+        "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"},
+        "SyncCompliance":{"shape":"AssociationSyncCompliance"},
+        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"}
       }
     },
     "UpdateAssociationResult":{
@@ -8977,6 +9034,10 @@
         "EndDate":{"shape":"MaintenanceWindowStringDateTime"},
         "Schedule":{"shape":"MaintenanceWindowSchedule"},
         "ScheduleTimezone":{"shape":"MaintenanceWindowTimezone"},
+        "ScheduleOffset":{
+          "shape":"MaintenanceWindowOffset",
+          "box":true
+        },
         "Duration":{
           "shape":"MaintenanceWindowDurationHours",
           "box":true
@@ -9009,6 +9070,10 @@
         "EndDate":{"shape":"MaintenanceWindowStringDateTime"},
         "Schedule":{"shape":"MaintenanceWindowSchedule"},
         "ScheduleTimezone":{"shape":"MaintenanceWindowTimezone"},
+        "ScheduleOffset":{
+          "shape":"MaintenanceWindowOffset",
+          "box":true
+        },
         "Duration":{"shape":"MaintenanceWindowDurationHours"},
         "Cutoff":{"shape":"MaintenanceWindowCutoff"},
         "AllowUnassociatedTargets":{"shape":"MaintenanceWindowAllowUnassociatedTargets"},

@@ -301,6 +301,25 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "CreateMeetingWithAttendees":{
+      "name":"CreateMeetingWithAttendees",
+      "http":{
+        "method":"POST",
+        "requestUri":"/meetings?operation=create-attendees",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateMeetingWithAttendeesRequest"},
+      "output":{"shape":"CreateMeetingWithAttendeesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "CreatePhoneNumberOrder":{
       "name":"CreatePhoneNumberOrder",
       "http":{
@@ -317,6 +336,25 @@
         {"shape":"UnauthorizedClientException"},
         {"shape":"ThrottledClientException"},
         {"shape":"ResourceLimitExceededException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "CreateProxySession":{
+      "name":"CreateProxySession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/voice-connectors/{voiceConnectorId}/proxy-sessions",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateProxySessionRequest"},
+      "output":{"shape":"CreateProxySessionResponse"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -513,6 +551,24 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "DeleteProxySession":{
+      "name":"DeleteProxySession",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/voice-connectors/{voiceConnectorId}/proxy-sessions/{proxySessionId}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteProxySessionRequest"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "DeleteRoom":{
       "name":"DeleteRoom",
       "http":{
@@ -595,6 +651,24 @@
         "responseCode":204
       },
       "input":{"shape":"DeleteVoiceConnectorOriginationRequest"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "DeleteVoiceConnectorProxy":{
+      "name":"DeleteVoiceConnectorProxy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/voice-connectors/{voiceConnectorId}/programmable-numbers/proxy",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteVoiceConnectorProxyRequest"},
       "errors":[
         {"shape":"UnauthorizedClientException"},
         {"shape":"NotFoundException"},
@@ -918,6 +992,43 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "GetProxySession":{
+      "name":"GetProxySession",
+      "http":{
+        "method":"GET",
+        "requestUri":"/voice-connectors/{voiceConnectorId}/proxy-sessions/{proxySessionId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetProxySessionRequest"},
+      "output":{"shape":"GetProxySessionResponse"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "GetRetentionSettings":{
+      "name":"GetRetentionSettings",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{accountId}/retention-settings"
+      },
+      "input":{"shape":"GetRetentionSettingsRequest"},
+      "output":{"shape":"GetRetentionSettingsResponse"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "GetRoom":{
       "name":"GetRoom",
       "http":{
@@ -1051,6 +1162,25 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "GetVoiceConnectorProxy":{
+      "name":"GetVoiceConnectorProxy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/voice-connectors/{voiceConnectorId}/programmable-numbers/proxy",
+        "responseCode":200
+      },
+      "input":{"shape":"GetVoiceConnectorProxyRequest"},
+      "output":{"shape":"GetVoiceConnectorProxyResponse"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "GetVoiceConnectorStreamingConfiguration":{
       "name":"GetVoiceConnectorStreamingConfiguration",
       "http":{
@@ -1145,6 +1275,25 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "ListAttendeeTags":{
+      "name":"ListAttendeeTags",
+      "http":{
+        "method":"GET",
+        "requestUri":"/meetings/{meetingId}/attendees/{attendeeId}/tags",
+        "responseCode":200
+      },
+      "input":{"shape":"ListAttendeeTagsRequest"},
+      "output":{"shape":"ListAttendeeTagsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "ListAttendees":{
       "name":"ListAttendees",
       "http":{
@@ -1181,6 +1330,25 @@
         {"shape":"BadRequestException"},
         {"shape":"NotFoundException"},
         {"shape":"ThrottledClientException"}
+      ]
+    },
+    "ListMeetingTags":{
+      "name":"ListMeetingTags",
+      "http":{
+        "method":"GET",
+        "requestUri":"/meetings/{meetingId}/tags",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMeetingTagsRequest"},
+      "output":{"shape":"ListMeetingTagsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
       ]
     },
     "ListMeetings":{
@@ -1236,6 +1404,25 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "ListProxySessions":{
+      "name":"ListProxySessions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/voice-connectors/{voiceConnectorId}/proxy-sessions",
+        "responseCode":200
+      },
+      "input":{"shape":"ListProxySessionsRequest"},
+      "output":{"shape":"ListProxySessionsResponse"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "ListRoomMemberships":{
       "name":"ListRoomMemberships",
       "http":{
@@ -1270,6 +1457,23 @@
         {"shape":"ForbiddenException"},
         {"shape":"UnauthorizedClientException"},
         {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/tags"
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedClientException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -1386,6 +1590,26 @@
         {"shape":"NotFoundException"}
       ]
     },
+    "PutRetentionSettings":{
+      "name":"PutRetentionSettings",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{accountId}/retention-settings",
+        "responseCode":204
+      },
+      "input":{"shape":"PutRetentionSettingsRequest"},
+      "output":{"shape":"PutRetentionSettingsResponse"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "PutVoiceConnectorLoggingConfiguration":{
       "name":"PutVoiceConnectorLoggingConfiguration",
       "http":{
@@ -1416,6 +1640,25 @@
       "output":{"shape":"PutVoiceConnectorOriginationResponse"},
       "errors":[
         {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "PutVoiceConnectorProxy":{
+      "name":"PutVoiceConnectorProxy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/voice-connectors/{voiceConnectorId}/programmable-numbers/proxy"
+      },
+      "input":{"shape":"PutVoiceConnectorProxyRequest"},
+      "output":{"shape":"PutVoiceConnectorProxyResponse"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"NotFoundException"},
         {"shape":"ForbiddenException"},
         {"shape":"BadRequestException"},
@@ -1477,6 +1720,44 @@
         {"shape":"ForbiddenException"},
         {"shape":"BadRequestException"},
         {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "RedactConversationMessage":{
+      "name":"RedactConversationMessage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{accountId}/conversations/{conversationId}/messages/{messageId}?operation=redact",
+        "responseCode":200
+      },
+      "input":{"shape":"RedactConversationMessageRequest"},
+      "output":{"shape":"RedactConversationMessageResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "RedactRoomMessage":{
+      "name":"RedactRoomMessage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{accountId}/rooms/{roomId}/messages/{messageId}?operation=redact",
+        "responseCode":200
+      },
+      "input":{"shape":"RedactRoomMessageRequest"},
+      "output":{"shape":"RedactRoomMessageResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"BadRequestException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -1553,6 +1834,114 @@
         {"shape":"AccessDeniedException"},
         {"shape":"UnauthorizedClientException"},
         {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "TagAttendee":{
+      "name":"TagAttendee",
+      "http":{
+        "method":"POST",
+        "requestUri":"/meetings/{meetingId}/attendees/{attendeeId}/tags?operation=add",
+        "responseCode":204
+      },
+      "input":{"shape":"TagAttendeeRequest"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "TagMeeting":{
+      "name":"TagMeeting",
+      "http":{
+        "method":"POST",
+        "requestUri":"/meetings/{meetingId}/tags?operation=add",
+        "responseCode":204
+      },
+      "input":{"shape":"TagMeetingRequest"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/tags?operation=tag-resource",
+        "responseCode":204
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "UntagAttendee":{
+      "name":"UntagAttendee",
+      "http":{
+        "method":"POST",
+        "requestUri":"/meetings/{meetingId}/attendees/{attendeeId}/tags?operation=delete",
+        "responseCode":204
+      },
+      "input":{"shape":"UntagAttendeeRequest"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "UntagMeeting":{
+      "name":"UntagMeeting",
+      "http":{
+        "method":"POST",
+        "requestUri":"/meetings/{meetingId}/tags?operation=delete",
+        "responseCode":204
+      },
+      "input":{"shape":"UntagMeetingRequest"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/tags?operation=untag-resource",
+        "responseCode":204
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedClientException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -1661,6 +2050,25 @@
       "input":{"shape":"UpdatePhoneNumberSettingsRequest"},
       "errors":[
         {"shape":"UnauthorizedClientException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "UpdateProxySession":{
+      "name":"UpdateProxySession",
+      "http":{
+        "method":"POST",
+        "requestUri":"/voice-connectors/{voiceConnectorId}/proxy-sessions/{proxySessionId}",
+        "responseCode":201
+      },
+      "input":{"shape":"UpdateProxySessionRequest"},
+      "output":{"shape":"UpdateProxySessionResponse"},
+      "errors":[
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"NotFoundException"},
         {"shape":"ForbiddenException"},
         {"shape":"BadRequestException"},
         {"shape":"ThrottledClientException"},
@@ -1844,6 +2252,10 @@
         "AlexaForBusinessRoomArn":{"shape":"SensitiveString"}
       }
     },
+    "AreaCode":{
+      "type":"string",
+      "pattern":"^$|^[0-9]{3,3}$"
+    },
     "Arn":{
       "type":"string",
       "max":1024,
@@ -1946,6 +2358,18 @@
     "AttendeeList":{
       "type":"list",
       "member":{"shape":"Attendee"}
+    },
+    "AttendeeTagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":10,
+      "min":1
+    },
+    "AttendeeTagList":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":10,
+      "min":1
     },
     "BadRequestException":{
       "type":"structure",
@@ -2149,6 +2573,17 @@
       "type":"list",
       "member":{"shape":"CallingRegion"}
     },
+    "Capability":{
+      "type":"string",
+      "enum":[
+        "Voice",
+        "SMS"
+      ]
+    },
+    "CapabilityList":{
+      "type":"list",
+      "member":{"shape":"Capability"}
+    },
     "ClientRequestToken":{
       "type":"string",
       "max":64,
@@ -2164,6 +2599,22 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "ConversationRetentionSettings":{
+      "type":"structure",
+      "members":{
+        "RetentionDays":{"shape":"RetentionDays"}
+      }
+    },
+    "Country":{
+      "type":"string",
+      "pattern":"^$|^[A-Z]{2,2}$"
+    },
+    "CountryList":{
+      "type":"list",
+      "member":{"shape":"Country"},
+      "max":100,
+      "min":1
     },
     "CpsLimit":{
       "type":"integer",
@@ -2202,14 +2653,16 @@
           "location":"uri",
           "locationName":"meetingId"
         },
-        "ExternalUserId":{"shape":"ExternalUserIdType"}
+        "ExternalUserId":{"shape":"ExternalUserIdType"},
+        "Tags":{"shape":"AttendeeTagList"}
       }
     },
     "CreateAttendeeRequestItem":{
       "type":"structure",
       "required":["ExternalUserId"],
       "members":{
-        "ExternalUserId":{"shape":"ExternalUserIdType"}
+        "ExternalUserId":{"shape":"ExternalUserIdType"},
+        "Tags":{"shape":"AttendeeTagList"}
       }
     },
     "CreateAttendeeRequestItemList":{
@@ -2252,8 +2705,10 @@
           "shape":"ClientRequestToken",
           "idempotencyToken":true
         },
+        "ExternalMeetingId":{"shape":"ExternalMeetingIdType"},
         "MeetingHostId":{"shape":"ExternalUserIdType"},
         "MediaRegion":{"shape":"String"},
+        "Tags":{"shape":"MeetingTagList"},
         "NotificationsConfiguration":{"shape":"MeetingNotificationConfiguration"}
       }
     },
@@ -2261,6 +2716,36 @@
       "type":"structure",
       "members":{
         "Meeting":{"shape":"Meeting"}
+      }
+    },
+    "CreateMeetingWithAttendeesRequest":{
+      "type":"structure",
+      "required":["ClientRequestToken"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "ExternalMeetingId":{"shape":"ExternalMeetingIdType"},
+        "MeetingHostId":{"shape":"ExternalUserIdType"},
+        "MediaRegion":{"shape":"String"},
+        "Tags":{"shape":"MeetingTagList"},
+        "NotificationsConfiguration":{"shape":"MeetingNotificationConfiguration"},
+        "Attendees":{"shape":"CreateMeetingWithAttendeesRequestItemList"}
+      }
+    },
+    "CreateMeetingWithAttendeesRequestItemList":{
+      "type":"list",
+      "member":{"shape":"CreateAttendeeRequestItem"},
+      "max":5,
+      "min":1
+    },
+    "CreateMeetingWithAttendeesResponse":{
+      "type":"structure",
+      "members":{
+        "Meeting":{"shape":"Meeting"},
+        "Attendees":{"shape":"AttendeeList"},
+        "Errors":{"shape":"BatchCreateAttendeeErrorList"}
       }
     },
     "CreatePhoneNumberOrderRequest":{
@@ -2278,6 +2763,34 @@
       "type":"structure",
       "members":{
         "PhoneNumberOrder":{"shape":"PhoneNumberOrder"}
+      }
+    },
+    "CreateProxySessionRequest":{
+      "type":"structure",
+      "required":[
+        "ParticipantPhoneNumbers",
+        "Capabilities",
+        "VoiceConnectorId"
+      ],
+      "members":{
+        "VoiceConnectorId":{
+          "shape":"NonEmptyString128",
+          "location":"uri",
+          "locationName":"voiceConnectorId"
+        },
+        "ParticipantPhoneNumbers":{"shape":"ParticipantPhoneNumberList"},
+        "Name":{"shape":"ProxySessionNameString"},
+        "ExpiryMinutes":{"shape":"PositiveInteger"},
+        "Capabilities":{"shape":"CapabilityList"},
+        "NumberSelectionBehavior":{"shape":"NumberSelectionBehavior"},
+        "GeoMatchLevel":{"shape":"GeoMatchLevel"},
+        "GeoMatchParams":{"shape":"GeoMatchParams"}
+      }
+    },
+    "CreateProxySessionResponse":{
+      "type":"structure",
+      "members":{
+        "ProxySession":{"shape":"ProxySession"}
       }
     },
     "CreateRoomMembershipRequest":{
@@ -2476,6 +2989,25 @@
         }
       }
     },
+    "DeleteProxySessionRequest":{
+      "type":"structure",
+      "required":[
+        "VoiceConnectorId",
+        "ProxySessionId"
+      ],
+      "members":{
+        "VoiceConnectorId":{
+          "shape":"NonEmptyString128",
+          "location":"uri",
+          "locationName":"voiceConnectorId"
+        },
+        "ProxySessionId":{
+          "shape":"NonEmptyString128",
+          "location":"uri",
+          "locationName":"proxySessionId"
+        }
+      }
+    },
     "DeleteRoomMembershipRequest":{
       "type":"structure",
       "required":[
@@ -2537,6 +3069,17 @@
       "members":{
         "VoiceConnectorId":{
           "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"voiceConnectorId"
+        }
+      }
+    },
+    "DeleteVoiceConnectorProxyRequest":{
+      "type":"structure",
+      "required":["VoiceConnectorId"],
+      "members":{
+        "VoiceConnectorId":{
+          "shape":"NonEmptyString128",
           "location":"uri",
           "locationName":"voiceConnectorId"
         }
@@ -2716,6 +3259,12 @@
         "LambdaFunctionArn":{"shape":"SensitiveString"}
       }
     },
+    "ExternalMeetingIdType":{
+      "type":"string",
+      "max":64,
+      "min":2,
+      "sensitive":true
+    },
     "ExternalUserIdType":{
       "type":"string",
       "max":64,
@@ -2730,6 +3279,24 @@
       },
       "error":{"httpStatusCode":403},
       "exception":true
+    },
+    "GeoMatchLevel":{
+      "type":"string",
+      "enum":[
+        "Country",
+        "AreaCode"
+      ]
+    },
+    "GeoMatchParams":{
+      "type":"structure",
+      "required":[
+        "Country",
+        "AreaCode"
+      ],
+      "members":{
+        "Country":{"shape":"Country"},
+        "AreaCode":{"shape":"AreaCode"}
+      }
     },
     "GetAccountRequest":{
       "type":"structure",
@@ -2905,6 +3472,49 @@
         "CallingNameUpdatedTimestamp":{"shape":"Iso8601Timestamp"}
       }
     },
+    "GetProxySessionRequest":{
+      "type":"structure",
+      "required":[
+        "VoiceConnectorId",
+        "ProxySessionId"
+      ],
+      "members":{
+        "VoiceConnectorId":{
+          "shape":"NonEmptyString128",
+          "location":"uri",
+          "locationName":"voiceConnectorId"
+        },
+        "ProxySessionId":{
+          "shape":"NonEmptyString128",
+          "location":"uri",
+          "locationName":"proxySessionId"
+        }
+      }
+    },
+    "GetProxySessionResponse":{
+      "type":"structure",
+      "members":{
+        "ProxySession":{"shape":"ProxySession"}
+      }
+    },
+    "GetRetentionSettingsRequest":{
+      "type":"structure",
+      "required":["AccountId"],
+      "members":{
+        "AccountId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"accountId"
+        }
+      }
+    },
+    "GetRetentionSettingsResponse":{
+      "type":"structure",
+      "members":{
+        "RetentionSettings":{"shape":"RetentionSettings"},
+        "InitiateDeletionTimestamp":{"shape":"Iso8601Timestamp"}
+      }
+    },
     "GetRoomRequest":{
       "type":"structure",
       "required":[
@@ -3031,6 +3641,23 @@
         "Origination":{"shape":"Origination"}
       }
     },
+    "GetVoiceConnectorProxyRequest":{
+      "type":"structure",
+      "required":["VoiceConnectorId"],
+      "members":{
+        "VoiceConnectorId":{
+          "shape":"NonEmptyString128",
+          "location":"uri",
+          "locationName":"voiceConnectorId"
+        }
+      }
+    },
+    "GetVoiceConnectorProxyResponse":{
+      "type":"structure",
+      "members":{
+        "Proxy":{"shape":"Proxy"}
+      }
+    },
     "GetVoiceConnectorRequest":{
       "type":"structure",
       "required":["VoiceConnectorId"],
@@ -3103,6 +3730,7 @@
       "type":"string",
       "pattern":"[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}"
     },
+    "Integer":{"type":"integer"},
     "Invite":{
       "type":"structure",
       "members":{
@@ -3201,6 +3829,31 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "ListAttendeeTagsRequest":{
+      "type":"structure",
+      "required":[
+        "MeetingId",
+        "AttendeeId"
+      ],
+      "members":{
+        "MeetingId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"meetingId"
+        },
+        "AttendeeId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"attendeeId"
+        }
+      }
+    },
+    "ListAttendeeTagsResponse":{
+      "type":"structure",
+      "members":{
+        "Tags":{"shape":"TagList"}
+      }
+    },
     "ListAttendeesRequest":{
       "type":"structure",
       "required":["MeetingId"],
@@ -3255,6 +3908,23 @@
       "members":{
         "Bots":{"shape":"BotList"},
         "NextToken":{"shape":"String"}
+      }
+    },
+    "ListMeetingTagsRequest":{
+      "type":"structure",
+      "required":["MeetingId"],
+      "members":{
+        "MeetingId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"meetingId"
+        }
+      }
+    },
+    "ListMeetingTagsResponse":{
+      "type":"structure",
+      "members":{
+        "Tags":{"shape":"TagList"}
       }
     },
     "ListMeetingsRequest":{
@@ -3343,6 +4013,39 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "ListProxySessionsRequest":{
+      "type":"structure",
+      "required":["VoiceConnectorId"],
+      "members":{
+        "VoiceConnectorId":{
+          "shape":"NonEmptyString128",
+          "location":"uri",
+          "locationName":"voiceConnectorId"
+        },
+        "Status":{
+          "shape":"ProxySessionStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
+        "NextToken":{
+          "shape":"NextTokenString",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"ResultMax",
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListProxySessionsResponse":{
+      "type":"structure",
+      "members":{
+        "ProxySessions":{"shape":"ProxySessions"},
+        "NextToken":{"shape":"NextTokenString"}
+      }
+    },
     "ListRoomMembershipsRequest":{
       "type":"structure",
       "required":[
@@ -3410,6 +4113,23 @@
       "members":{
         "Rooms":{"shape":"RoomList"},
         "NextToken":{"shape":"String"}
+      }
+    },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["ResourceARN"],
+      "members":{
+        "ResourceARN":{
+          "shape":"Arn",
+          "location":"querystring",
+          "locationName":"arn"
+        }
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "Tags":{"shape":"TagList"}
       }
     },
     "ListUsersRequest":{
@@ -3557,6 +4277,7 @@
       "type":"structure",
       "members":{
         "MeetingId":{"shape":"GuidString"},
+        "ExternalMeetingId":{"shape":"ExternalMeetingIdType"},
         "MediaPlacement":{"shape":"MediaPlacement"},
         "MediaRegion":{"shape":"String"}
       }
@@ -3571,6 +4292,18 @@
         "SnsTopicArn":{"shape":"Arn"},
         "SqsQueueArn":{"shape":"Arn"}
       }
+    },
+    "MeetingTagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":50,
+      "min":1
+    },
+    "MeetingTagList":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":50,
+      "min":1
     },
     "Member":{
       "type":"structure",
@@ -3614,8 +4347,18 @@
       "member":{"shape":"MembershipItem"},
       "max":50
     },
+    "NextTokenString":{
+      "type":"string",
+      "max":65535
+    },
     "NonEmptyString":{
       "type":"string",
+      "pattern":".*\\S.*"
+    },
+    "NonEmptyString128":{
+      "type":"string",
+      "max":128,
+      "min":1,
       "pattern":".*\\S.*"
     },
     "NonEmptyStringList":{
@@ -3632,7 +4375,22 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "NotificationTarget":{
+      "type":"string",
+      "enum":[
+        "EventBridge",
+        "SNS",
+        "SQS"
+      ]
+    },
     "NullableBoolean":{"type":"boolean"},
+    "NumberSelectionBehavior":{
+      "type":"string",
+      "enum":[
+        "PreferSticky",
+        "AvoidSticky"
+      ]
+    },
     "OrderedPhoneNumber":{
       "type":"structure",
       "members":{
@@ -3689,6 +4447,23 @@
       "type":"integer",
       "max":100,
       "min":1
+    },
+    "Participant":{
+      "type":"structure",
+      "members":{
+        "PhoneNumber":{"shape":"E164PhoneNumber"},
+        "ProxyPhoneNumber":{"shape":"E164PhoneNumber"}
+      }
+    },
+    "ParticipantPhoneNumberList":{
+      "type":"list",
+      "member":{"shape":"E164PhoneNumber"},
+      "max":2,
+      "min":2
+    },
+    "Participants":{
+      "type":"list",
+      "member":{"shape":"Participant"}
     },
     "PhoneNumber":{
       "type":"structure",
@@ -3816,10 +4591,58 @@
       "max":65535,
       "min":0
     },
+    "PositiveInteger":{
+      "type":"integer",
+      "min":1
+    },
     "ProfileServiceMaxResults":{
       "type":"integer",
       "max":200,
       "min":1
+    },
+    "Proxy":{
+      "type":"structure",
+      "members":{
+        "DefaultSessionExpiryMinutes":{"shape":"Integer"},
+        "Disabled":{"shape":"Boolean"},
+        "FallBackPhoneNumber":{"shape":"E164PhoneNumber"},
+        "PhoneNumberCountries":{"shape":"StringList"}
+      }
+    },
+    "ProxySession":{
+      "type":"structure",
+      "members":{
+        "VoiceConnectorId":{"shape":"NonEmptyString128"},
+        "ProxySessionId":{"shape":"NonEmptyString128"},
+        "Name":{"shape":"String128"},
+        "Status":{"shape":"ProxySessionStatus"},
+        "ExpiryMinutes":{"shape":"PositiveInteger"},
+        "Capabilities":{"shape":"CapabilityList"},
+        "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
+        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
+        "EndedTimestamp":{"shape":"Iso8601Timestamp"},
+        "Participants":{"shape":"Participants"},
+        "NumberSelectionBehavior":{"shape":"NumberSelectionBehavior"},
+        "GeoMatchLevel":{"shape":"GeoMatchLevel"},
+        "GeoMatchParams":{"shape":"GeoMatchParams"}
+      }
+    },
+    "ProxySessionNameString":{
+      "type":"string",
+      "pattern":"^$|^[a-zA-Z0-9 ]{0,30}$",
+      "sensitive":true
+    },
+    "ProxySessionStatus":{
+      "type":"string",
+      "enum":[
+        "Open",
+        "InProgress",
+        "Closed"
+      ]
+    },
+    "ProxySessions":{
+      "type":"list",
+      "member":{"shape":"ProxySession"}
     },
     "PutEventsConfigurationRequest":{
       "type":"structure",
@@ -3846,6 +4669,28 @@
       "type":"structure",
       "members":{
         "EventsConfiguration":{"shape":"EventsConfiguration"}
+      }
+    },
+    "PutRetentionSettingsRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "RetentionSettings"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "RetentionSettings":{"shape":"RetentionSettings"}
+      }
+    },
+    "PutRetentionSettingsResponse":{
+      "type":"structure",
+      "members":{
+        "RetentionSettings":{"shape":"RetentionSettings"},
+        "InitiateDeletionTimestamp":{"shape":"Iso8601Timestamp"}
       }
     },
     "PutVoiceConnectorLoggingConfigurationRequest":{
@@ -3888,6 +4733,31 @@
       "type":"structure",
       "members":{
         "Origination":{"shape":"Origination"}
+      }
+    },
+    "PutVoiceConnectorProxyRequest":{
+      "type":"structure",
+      "required":[
+        "DefaultSessionExpiryMinutes",
+        "PhoneNumberPoolCountries",
+        "VoiceConnectorId"
+      ],
+      "members":{
+        "VoiceConnectorId":{
+          "shape":"NonEmptyString128",
+          "location":"uri",
+          "locationName":"voiceConnectorId"
+        },
+        "DefaultSessionExpiryMinutes":{"shape":"Integer"},
+        "PhoneNumberPoolCountries":{"shape":"CountryList"},
+        "FallBackPhoneNumber":{"shape":"E164PhoneNumber"},
+        "Disabled":{"shape":"Boolean"}
+      }
+    },
+    "PutVoiceConnectorProxyResponse":{
+      "type":"structure",
+      "members":{
+        "Proxy":{"shape":"Proxy"}
       }
     },
     "PutVoiceConnectorStreamingConfigurationRequest":{
@@ -3942,6 +4812,66 @@
       "type":"structure",
       "members":{
         "Termination":{"shape":"Termination"}
+      }
+    },
+    "RedactConversationMessageRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "ConversationId",
+        "MessageId"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "ConversationId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"conversationId"
+        },
+        "MessageId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"messageId"
+        }
+      }
+    },
+    "RedactConversationMessageResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "RedactRoomMessageRequest":{
+      "type":"structure",
+      "required":[
+        "AccountId",
+        "RoomId",
+        "MessageId"
+      ],
+      "members":{
+        "AccountId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"accountId"
+        },
+        "RoomId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"roomId"
+        },
+        "MessageId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"messageId"
+        }
+      }
+    },
+    "RedactRoomMessageResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "RegenerateSecurityTokenRequest":{
@@ -4033,6 +4963,18 @@
       "max":99,
       "min":1
     },
+    "RetentionDays":{
+      "type":"integer",
+      "max":5475,
+      "min":1
+    },
+    "RetentionSettings":{
+      "type":"structure",
+      "members":{
+        "RoomRetentionSettings":{"shape":"RoomRetentionSettings"},
+        "ConversationRetentionSettings":{"shape":"ConversationRetentionSettings"}
+      }
+    },
     "Room":{
       "type":"structure",
       "members":{
@@ -4068,6 +5010,12 @@
         "Administrator",
         "Member"
       ]
+    },
+    "RoomRetentionSettings":{
+      "type":"structure",
+      "members":{
+        "RetentionDays":{"shape":"RetentionDays"}
+      }
     },
     "SearchAvailablePhoneNumbersRequest":{
       "type":"structure",
@@ -4158,13 +5106,113 @@
       "required":["DataRetentionInHours"],
       "members":{
         "DataRetentionInHours":{"shape":"DataRetentionInHours"},
-        "Disabled":{"shape":"Boolean"}
+        "Disabled":{"shape":"Boolean"},
+        "StreamingNotificationTargets":{"shape":"StreamingNotificationTargetList"}
       }
     },
+    "StreamingNotificationTarget":{
+      "type":"structure",
+      "required":["NotificationTarget"],
+      "members":{
+        "NotificationTarget":{"shape":"NotificationTarget"}
+      }
+    },
+    "StreamingNotificationTargetList":{
+      "type":"list",
+      "member":{"shape":"StreamingNotificationTarget"},
+      "max":3,
+      "min":1
+    },
     "String":{"type":"string"},
+    "String128":{
+      "type":"string",
+      "max":128
+    },
     "StringList":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "Tag":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Key":{"shape":"TagKey"},
+        "Value":{"shape":"TagValue"}
+      }
+    },
+    "TagAttendeeRequest":{
+      "type":"structure",
+      "required":[
+        "MeetingId",
+        "AttendeeId",
+        "Tags"
+      ],
+      "members":{
+        "MeetingId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"meetingId"
+        },
+        "AttendeeId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"attendeeId"
+        },
+        "Tags":{"shape":"AttendeeTagList"}
+      }
+    },
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "sensitive":true
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":50,
+      "min":1
+    },
+    "TagList":{
+      "type":"list",
+      "member":{"shape":"Tag"},
+      "max":50,
+      "min":1
+    },
+    "TagMeetingRequest":{
+      "type":"structure",
+      "required":[
+        "MeetingId",
+        "Tags"
+      ],
+      "members":{
+        "MeetingId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"meetingId"
+        },
+        "Tags":{"shape":"MeetingTagList"}
+      }
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceARN",
+        "Tags"
+      ],
+      "members":{
+        "ResourceARN":{"shape":"Arn"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "sensitive":true
     },
     "TelephonySettings":{
       "type":"structure",
@@ -4228,6 +5276,53 @@
       },
       "error":{"httpStatusCode":422},
       "exception":true
+    },
+    "UntagAttendeeRequest":{
+      "type":"structure",
+      "required":[
+        "MeetingId",
+        "TagKeys",
+        "AttendeeId"
+      ],
+      "members":{
+        "MeetingId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"meetingId"
+        },
+        "AttendeeId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"attendeeId"
+        },
+        "TagKeys":{"shape":"AttendeeTagKeyList"}
+      }
+    },
+    "UntagMeetingRequest":{
+      "type":"structure",
+      "required":[
+        "MeetingId",
+        "TagKeys"
+      ],
+      "members":{
+        "MeetingId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"meetingId"
+        },
+        "TagKeys":{"shape":"MeetingTagKeyList"}
+      }
+    },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceARN",
+        "TagKeys"
+      ],
+      "members":{
+        "ResourceARN":{"shape":"Arn"},
+        "TagKeys":{"shape":"TagKeyList"}
+      }
     },
     "UpdateAccountRequest":{
       "type":"structure",
@@ -4341,6 +5436,34 @@
       "required":["CallingName"],
       "members":{
         "CallingName":{"shape":"CallingName"}
+      }
+    },
+    "UpdateProxySessionRequest":{
+      "type":"structure",
+      "required":[
+        "Capabilities",
+        "VoiceConnectorId",
+        "ProxySessionId"
+      ],
+      "members":{
+        "VoiceConnectorId":{
+          "shape":"NonEmptyString128",
+          "location":"uri",
+          "locationName":"voiceConnectorId"
+        },
+        "ProxySessionId":{
+          "shape":"NonEmptyString128",
+          "location":"uri",
+          "locationName":"proxySessionId"
+        },
+        "Capabilities":{"shape":"CapabilityList"},
+        "ExpiryMinutes":{"shape":"PositiveInteger"}
+      }
+    },
+    "UpdateProxySessionResponse":{
+      "type":"structure",
+      "members":{
+        "ProxySession":{"shape":"ProxySession"}
       }
     },
     "UpdateRoomMembershipRequest":{

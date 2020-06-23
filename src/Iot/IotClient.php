@@ -334,6 +334,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise registerCACertificateAsync(array $args = [])
  * @method \Aws\Result registerCertificate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerCertificateAsync(array $args = [])
+ * @method \Aws\Result registerCertificateWithoutCA(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise registerCertificateWithoutCAAsync(array $args = [])
  * @method \Aws\Result registerThing(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerThingAsync(array $args = [])
  * @method \Aws\Result rejectCertificateTransfer(array $args = [])

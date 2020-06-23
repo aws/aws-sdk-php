@@ -1665,6 +1665,22 @@
         {"shape":"ConcurrentModificationException"}
       ]
     },
+    "StopWorkflowRun":{
+      "name":"StopWorkflowRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopWorkflowRunRequest"},
+      "output":{"shape":"StopWorkflowRunResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"IllegalWorkflowStateException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -2521,7 +2537,8 @@
         "CUSTOM_JDBC_CERT",
         "SKIP_CUSTOM_JDBC_CERT_VALIDATION",
         "CUSTOM_JDBC_CERT_STRING",
-        "CONNECTION_URL"
+        "CONNECTION_URL",
+        "KAFKA_BOOTSTRAP_SERVERS"
       ]
     },
     "ConnectionType":{
@@ -2529,7 +2546,8 @@
       "enum":[
         "JDBC",
         "SFTP",
-        "MONGODB"
+        "MONGODB",
+        "KAFKA"
       ]
     },
     "ConnectionsList":{
@@ -2557,8 +2575,9 @@
       "type":"string",
       "enum":[
         "RUNNING",
-        "SUCCEEDED",
+        "CANCELLING",
         "CANCELLED",
+        "SUCCEEDED",
         "FAILED"
       ]
     },
@@ -3411,7 +3430,9 @@
     "DynamoDBTarget":{
       "type":"structure",
       "members":{
-        "Path":{"shape":"Path"}
+        "Path":{"shape":"Path"},
+        "scanAll":{"shape":"NullableBoolean"},
+        "scanRate":{"shape":"NullableDouble"}
       }
     },
     "DynamoDBTargetList":{
@@ -4175,10 +4196,7 @@
     },
     "GetUserDefinedFunctionsRequest":{
       "type":"structure",
-      "required":[
-        "DatabaseName",
-        "Pattern"
-      ],
+      "required":["Pattern"],
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
@@ -4334,6 +4352,13 @@
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
     "IdempotentParameterMismatchException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
+    },
+    "IllegalWorkflowStateException":{
       "type":"structure",
       "members":{
         "Message":{"shape":"MessageString"}
@@ -5521,6 +5546,22 @@
         "Name":{"shape":"NameString"}
       }
     },
+    "StopWorkflowRunRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "RunId"
+      ],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "RunId":{"shape":"IdString"}
+      }
+    },
+    "StopWorkflowRunResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "StorageDescriptor":{
       "type":"structure",
       "members":{
@@ -6191,6 +6232,7 @@
       "type":"structure",
       "members":{
         "FunctionName":{"shape":"NameString"},
+        "DatabaseName":{"shape":"NameString"},
         "ClassName":{"shape":"NameString"},
         "OwnerName":{"shape":"NameString"},
         "OwnerType":{"shape":"PrincipalType"},
@@ -6311,7 +6353,9 @@
       "type":"string",
       "enum":[
         "RUNNING",
-        "COMPLETED"
+        "COMPLETED",
+        "STOPPING",
+        "STOPPED"
       ]
     },
     "WorkflowRuns":{

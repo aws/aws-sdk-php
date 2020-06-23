@@ -250,6 +250,20 @@
         {"shape":"InternalServerErrorException"}
       ]
     },
+    "DescribeOrganizationConfiguration":{
+      "name":"DescribeOrganizationConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/detector/{detectorId}/admin",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeOrganizationConfigurationRequest"},
+      "output":{"shape":"DescribeOrganizationConfigurationResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerErrorException"}
+      ]
+    },
     "DescribePublishingDestination":{
       "name":"DescribePublishingDestination",
       "http":{
@@ -259,6 +273,20 @@
       },
       "input":{"shape":"DescribePublishingDestinationRequest"},
       "output":{"shape":"DescribePublishingDestinationResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerErrorException"}
+      ]
+    },
+    "DisableOrganizationAdminAccount":{
+      "name":"DisableOrganizationAdminAccount",
+      "http":{
+        "method":"POST",
+        "requestUri":"/admin/disable",
+        "responseCode":200
+      },
+      "input":{"shape":"DisableOrganizationAdminAccountRequest"},
+      "output":{"shape":"DisableOrganizationAdminAccountResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"InternalServerErrorException"}
@@ -287,6 +315,20 @@
       },
       "input":{"shape":"DisassociateMembersRequest"},
       "output":{"shape":"DisassociateMembersResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerErrorException"}
+      ]
+    },
+    "EnableOrganizationAdminAccount":{
+      "name":"EnableOrganizationAdminAccount",
+      "http":{
+        "method":"POST",
+        "requestUri":"/admin/enable",
+        "responseCode":200
+      },
+      "input":{"shape":"EnableOrganizationAdminAccountRequest"},
+      "output":{"shape":"EnableOrganizationAdminAccountResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"InternalServerErrorException"}
@@ -516,6 +558,20 @@
         {"shape":"InternalServerErrorException"}
       ]
     },
+    "ListOrganizationAdminAccounts":{
+      "name":"ListOrganizationAdminAccounts",
+      "http":{
+        "method":"GET",
+        "requestUri":"/admin",
+        "responseCode":200
+      },
+      "input":{"shape":"ListOrganizationAdminAccountsRequest"},
+      "output":{"shape":"ListOrganizationAdminAccountsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerErrorException"}
+      ]
+    },
     "ListPublishingDestinations":{
       "name":"ListPublishingDestinations",
       "http":{
@@ -684,6 +740,20 @@
         {"shape":"InternalServerErrorException"}
       ]
     },
+    "UpdateOrganizationConfiguration":{
+      "name":"UpdateOrganizationConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/detector/{detectorId}/admin",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateOrganizationConfigurationRequest"},
+      "output":{"shape":"UpdateOrganizationConfigurationResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"InternalServerErrorException"}
+      ]
+    },
     "UpdatePublishingDestination":{
       "name":"UpdatePublishingDestination",
       "http":{
@@ -742,6 +812,19 @@
       "members":{
       }
     },
+    "AccessControlList":{
+      "type":"structure",
+      "members":{
+        "AllowsPublicReadAccess":{
+          "shape":"Boolean",
+          "locationName":"allowsPublicReadAccess"
+        },
+        "AllowsPublicWriteAccess":{
+          "shape":"Boolean",
+          "locationName":"allowsPublicWriteAccess"
+        }
+      }
+    },
     "AccessKeyDetails":{
       "type":"structure",
       "members":{
@@ -797,6 +880,15 @@
       "max":50,
       "min":1
     },
+    "AccountLevelPermissions":{
+      "type":"structure",
+      "members":{
+        "BlockPublicAccess":{
+          "shape":"BlockPublicAccess",
+          "locationName":"blockPublicAccess"
+        }
+      }
+    },
     "Action":{
       "type":"structure",
       "members":{
@@ -821,6 +913,34 @@
           "locationName":"portProbeAction"
         }
       }
+    },
+    "AdminAccount":{
+      "type":"structure",
+      "members":{
+        "AdminAccountId":{
+          "shape":"String",
+          "locationName":"adminAccountId"
+        },
+        "AdminStatus":{
+          "shape":"AdminStatus",
+          "locationName":"adminStatus"
+        }
+      }
+    },
+    "AdminAccounts":{
+      "type":"list",
+      "member":{"shape":"AdminAccount"},
+      "max":1,
+      "min":0
+    },
+    "AdminStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLE_IN_PROGRESS"
+      ],
+      "max":300,
+      "min":1
     },
     "ArchiveFindingsRequest":{
       "type":"structure",
@@ -885,7 +1005,58 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "BlockPublicAccess":{
+      "type":"structure",
+      "members":{
+        "IgnorePublicAcls":{
+          "shape":"Boolean",
+          "locationName":"ignorePublicAcls"
+        },
+        "RestrictPublicBuckets":{
+          "shape":"Boolean",
+          "locationName":"restrictPublicBuckets"
+        },
+        "BlockPublicAcls":{
+          "shape":"Boolean",
+          "locationName":"blockPublicAcls"
+        },
+        "BlockPublicPolicy":{
+          "shape":"Boolean",
+          "locationName":"blockPublicPolicy"
+        }
+      }
+    },
     "Boolean":{"type":"boolean"},
+    "BucketLevelPermissions":{
+      "type":"structure",
+      "members":{
+        "AccessControlList":{
+          "shape":"AccessControlList",
+          "locationName":"accessControlList"
+        },
+        "BucketPolicy":{
+          "shape":"BucketPolicy",
+          "locationName":"bucketPolicy"
+        },
+        "BlockPublicAccess":{
+          "shape":"BlockPublicAccess",
+          "locationName":"blockPublicAccess"
+        }
+      }
+    },
+    "BucketPolicy":{
+      "type":"structure",
+      "members":{
+        "AllowsPublicReadAccess":{
+          "shape":"Boolean",
+          "locationName":"allowsPublicReadAccess"
+        },
+        "AllowsPublicWriteAccess":{
+          "shape":"Boolean",
+          "locationName":"allowsPublicWriteAccess"
+        }
+      }
+    },
     "City":{
       "type":"structure",
       "members":{
@@ -1278,6 +1449,19 @@
         }
       }
     },
+    "DefaultServerSideEncryption":{
+      "type":"structure",
+      "members":{
+        "EncryptionType":{
+          "shape":"String",
+          "locationName":"encryptionType"
+        },
+        "KmsMasterKeyArn":{
+          "shape":"String",
+          "locationName":"kmsMasterKeyArn"
+        }
+      }
+    },
     "DeleteDetectorRequest":{
       "type":"structure",
       "required":["DetectorId"],
@@ -1438,6 +1622,34 @@
       "members":{
       }
     },
+    "DescribeOrganizationConfigurationRequest":{
+      "type":"structure",
+      "required":["DetectorId"],
+      "members":{
+        "DetectorId":{
+          "shape":"DetectorId",
+          "location":"uri",
+          "locationName":"detectorId"
+        }
+      }
+    },
+    "DescribeOrganizationConfigurationResponse":{
+      "type":"structure",
+      "required":[
+        "AutoEnable",
+        "MemberAccountLimitReached"
+      ],
+      "members":{
+        "AutoEnable":{
+          "shape":"Boolean",
+          "locationName":"autoEnable"
+        },
+        "MemberAccountLimitReached":{
+          "shape":"Boolean",
+          "locationName":"memberAccountLimitReached"
+        }
+      }
+    },
     "DescribePublishingDestinationRequest":{
       "type":"structure",
       "required":[
@@ -1554,6 +1766,21 @@
       "max":300,
       "min":1
     },
+    "DisableOrganizationAdminAccountRequest":{
+      "type":"structure",
+      "required":["AdminAccountId"],
+      "members":{
+        "AdminAccountId":{
+          "shape":"String",
+          "locationName":"adminAccountId"
+        }
+      }
+    },
+    "DisableOrganizationAdminAccountResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DisassociateFromMasterAccountRequest":{
       "type":"structure",
       "required":["DetectorId"],
@@ -1621,6 +1848,21 @@
       "type":"string",
       "max":64,
       "min":1
+    },
+    "EnableOrganizationAdminAccountRequest":{
+      "type":"structure",
+      "required":["AdminAccountId"],
+      "members":{
+        "AdminAccountId":{
+          "shape":"String",
+          "locationName":"adminAccountId"
+        }
+      }
+    },
+    "EnableOrganizationAdminAccountResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "Eq":{
       "type":"list",
@@ -2558,6 +2800,34 @@
         }
       }
     },
+    "ListOrganizationAdminAccountsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListOrganizationAdminAccountsResponse":{
+      "type":"structure",
+      "members":{
+        "AdminAccounts":{
+          "shape":"AdminAccounts",
+          "locationName":"adminAccounts"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "ListPublishingDestinationsRequest":{
       "type":"structure",
       "required":["DetectorId"],
@@ -2871,6 +3141,28 @@
         }
       }
     },
+    "Owner":{
+      "type":"structure",
+      "members":{
+        "Id":{
+          "shape":"String",
+          "locationName":"id"
+        }
+      }
+    },
+    "PermissionConfiguration":{
+      "type":"structure",
+      "members":{
+        "BucketLevelPermissions":{
+          "shape":"BucketLevelPermissions",
+          "locationName":"bucketLevelPermissions"
+        },
+        "AccountLevelPermissions":{
+          "shape":"AccountLevelPermissions",
+          "locationName":"accountLevelPermissions"
+        }
+      }
+    },
     "PortProbeAction":{
       "type":"structure",
       "members":{
@@ -2939,6 +3231,19 @@
       "type":"list",
       "member":{"shape":"ProductCode"}
     },
+    "PublicAccess":{
+      "type":"structure",
+      "members":{
+        "PermissionConfiguration":{
+          "shape":"PermissionConfiguration",
+          "locationName":"permissionConfiguration"
+        },
+        "EffectivePermission":{
+          "shape":"String",
+          "locationName":"effectivePermission"
+        }
+      }
+    },
     "PublishingStatus":{
       "type":"string",
       "enum":[
@@ -2995,6 +3300,10 @@
           "shape":"AccessKeyDetails",
           "locationName":"accessKeyDetails"
         },
+        "S3BucketDetails":{
+          "shape":"S3BucketDetails",
+          "locationName":"s3BucketDetails"
+        },
         "InstanceDetails":{
           "shape":"InstanceDetails",
           "locationName":"instanceDetails"
@@ -3004,6 +3313,47 @@
           "locationName":"resourceType"
         }
       }
+    },
+    "S3BucketDetail":{
+      "type":"structure",
+      "members":{
+        "Arn":{
+          "shape":"String",
+          "locationName":"arn"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
+        },
+        "Type":{
+          "shape":"String",
+          "locationName":"type"
+        },
+        "CreatedAt":{
+          "shape":"Timestamp",
+          "locationName":"createdAt"
+        },
+        "Owner":{
+          "shape":"Owner",
+          "locationName":"owner"
+        },
+        "Tags":{
+          "shape":"Tags",
+          "locationName":"tags"
+        },
+        "DefaultServerSideEncryption":{
+          "shape":"DefaultServerSideEncryption",
+          "locationName":"defaultServerSideEncryption"
+        },
+        "PublicAccess":{
+          "shape":"PublicAccess",
+          "locationName":"publicAccess"
+        }
+      }
+    },
+    "S3BucketDetails":{
+      "type":"list",
+      "member":{"shape":"S3BucketDetail"}
     },
     "SecurityGroup":{
       "type":"structure",
@@ -3254,6 +3604,7 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "Timestamp":{"type":"timestamp"},
     "UnarchiveFindingsRequest":{
       "type":"structure",
       "required":[
@@ -3457,6 +3808,29 @@
       }
     },
     "UpdateIPSetResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateOrganizationConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "DetectorId",
+        "AutoEnable"
+      ],
+      "members":{
+        "DetectorId":{
+          "shape":"DetectorId",
+          "location":"uri",
+          "locationName":"detectorId"
+        },
+        "AutoEnable":{
+          "shape":"Boolean",
+          "locationName":"autoEnable"
+        }
+      }
+    },
+    "UpdateOrganizationConfigurationResponse":{
       "type":"structure",
       "members":{
       }

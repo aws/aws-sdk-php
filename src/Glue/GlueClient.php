@@ -223,6 +223,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise stopCrawlerScheduleAsync(array $args = [])
  * @method \Aws\Result stopTrigger(array $args = [])
  * @method \GuzzleHttp\Promise\Promise stopTriggerAsync(array $args = [])
+ * @method \Aws\Result stopWorkflowRun(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopWorkflowRunAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

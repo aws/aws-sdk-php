@@ -63,14 +63,14 @@ install:
 
 script:
   # Unit tests
-  - make test
+  - travis_wait 60 make test
 
   # Static analysis
   - >
     test_versions=("7.1" "7.2" "7.3" "7.4");
     if [[ " ${test_versions[@]} " =~ " $(phpenv version-name) " ]] && [ -z $COMPOSER_OPTS ]; then
       composer require --dev nette/neon "^3.0"
-      composer require --dev phpstan/phpstan "0.12.11"
+      composer require --dev phpstan/phpstan "^0.12.11"
       vendor/bin/phpstan analyse src
     fi
 
