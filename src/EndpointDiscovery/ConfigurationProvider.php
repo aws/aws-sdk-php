@@ -73,11 +73,13 @@ class ConfigurationProvider extends AbstractConfigurationProvider
      */
     public static function defaultProvider(array $config = [])
     {
-        $configProviders = [
-            self::env(),
-            self::ini(),
-            self::fallback($config)
-        ];
+        $configProviders = [];
+        array_push($configProviders, self::env());
+        if (!isset($config['use_aws_config_file']) ||
+            $config['use_aws_config_file'] !== false) {
+            array_push($configProviders, self::ini());
+        }
+        array_push($configProviders, self::fallback($config));
 
         $memo = self::memoize(
             call_user_func_array('self::chain', $configProviders)
