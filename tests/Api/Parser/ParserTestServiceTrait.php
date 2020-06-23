@@ -8,7 +8,7 @@ use GuzzleHttp\Psr7\Response;
 /**
  * @internal
  */
-trait ParserTestTrait
+trait ParserTestServiceTrait
 {
 
     /**

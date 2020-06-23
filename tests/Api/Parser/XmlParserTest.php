@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/ParserTestTrait.php';
+require_once __DIR__ . '/ParserTestServiceTrait.php';
 
 use Aws\Api\Parser\Exception\ParserException;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  */
 class XmlParserTest extends TestCase
 {
-    use ParserTestTrait;
+    use ParserTestServiceTrait;
 
     public function timeStampModelProvider()
     {
