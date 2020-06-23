@@ -417,12 +417,21 @@ class ObjectCopierTest extends TestCase
         $this->assertEquals($url, $result['ObjectURL']);
     }
 
-    public function testS3ObjectCopierMultipartDoesTransformUnicodeKeyEncodedToURL()
+    public function MultipartCopierProvider(){
+        return [
+            ["中文", "%E4%B8%AD%E6%96%87"],
+            ["文件夹/文件", "%E6%96%87%E4%BB%B6%E5%A4%B9/%E6%96%87%E4%BB%B6"],
+            ["first-folder/second-folder/key", "first-folder/second-folder/key"],
+        ];
+    }
+
+    /**
+     * @dataProvider MultipartCopierProvider
+     */
+    public function testS3ObjectMultipartCopier($input, $expectedOutput)
     {
         /** @var \Aws\S3\S3Client $client */
         $client = $this->getTestClient('s3');
-        $chinese = "中文";
-        $url = 'https://bucket.s3.amazonaws.com/' . rawurlencode($chinese);
 
         $this->addMockResults(
             $client,
@@ -431,14 +440,14 @@ class ObjectCopierTest extends TestCase
 
         $uploader = new ObjectCopier(
             $client,
-            ['Bucket' => 'sourceBucket', 'Key' => $chinese],
-            ['Bucket' => 'bucket', 'Key' => $chinese],
+            ['Bucket' => 'sourceBucket', 'Key' => $input],
+            ['Bucket' => 'bucket', 'Key' => $input],
             'private'
         );
 
         $this->assertFalse($this->mockQueueEmpty());
         $result = $uploader->copy();
 
-        $this->assertEquals($url, $result['ObjectURL']);
+        $this->assertEquals($result['ObjectURL'], "https://bucket.s3.amazonaws.com/".$expectedOutput);
     }
 }
