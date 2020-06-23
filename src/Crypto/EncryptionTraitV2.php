@@ -69,6 +69,8 @@ trait EncryptionTraitV2
                 . ' specified in the "cipher_options".');
         }
 
+        $cipherOptions['Cipher'] = strtolower($cipherOptions['Cipher']);
+
         if (!self::isSupportedCipher($cipherOptions['Cipher'])) {
             throw new \InvalidArgumentException('The cipher requested is not'
                 . ' supported by the SDK.');
