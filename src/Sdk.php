@@ -202,6 +202,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionGuardDuty(array $args = [])
  * @method \Aws\Health\HealthClient createHealth(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionHealth(array $args = [])
+ * @method \Aws\Honeycode\HoneycodeClient createHoneycode(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionHoneycode(array $args = [])
  * @method \Aws\Iam\IamClient createIam(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIam(array $args = [])
  * @method \Aws\ImportExport\ImportExportClient createImportExport(array $args = [])
