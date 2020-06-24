@@ -1,10 +1,25 @@
 <?php
 namespace Aws\Arn\S3;
 
+use Aws\Arn\AccessPointArn;
+use Aws\Arn\Arn;
 use Aws\Arn\ArnInterface;
 use Aws\Arn\Exception\InvalidArnException;
 
 /**
+ * This class represents an S3 Outposts access point ARN, which is in the
+ * following format:
+ *
+ * arn:{partition}:s3-outposts:{region}:{accountId}:outpost/{outpostId}/accesspoint/{accesspointName}
+ *
+ * In relation to a normal access point ARN, the resource type must be 'outpost',
+ * and the resource ID must be in the following format:
+ *
+ * {outpostId}/accesspoint/{accesspointName}
+ *
+ * ':' and '/' can be used interchangeably as delimiters within the resource type
+ * and resource ID.
+ *
  * @internal
  */
 class OutpostsAccessPointArn extends AccessPointArn implements ArnInterface
@@ -12,30 +27,47 @@ class OutpostsAccessPointArn extends AccessPointArn implements ArnInterface
     public static function parse($string)
     {
         $data = parent::parse($string);
-        return self::parseOutposts($data);
+        return self::parseOutpostData($data);
     }
 
-    private static function parseOutposts(array $data)
+    public function getOutpostId()
     {
-        $outpostsData = explode(':', $data['resource_id']);
+        return $this->data['outpost_id'];
+    }
 
-        if (isset($outpostsData[0])) {
-            $data['outpost_id'] = $outpostsData[0];
+    public function getAccesspointId()
+    {
+        return $this->data['accesspoint_id'];
+    }
+
+    private static function parseOutpostData(array $data)
+    {
+        $resourceData = preg_split("/[\/:]/", $data['resource_id']);
+
+        if (isset($resourceData[0])) {
+            $data['outpost_id'] = $resourceData[0];
         }
-        if (isset($outpostsData[1])) {
-            $data['access_point_name'] = $outpostsData[1];
+        if (isset($resourceData[1])) {
+            $data['accesspoint_type'] = $resourceData[1];
+        }
+        if (isset($resourceData[2])) {
+            $data['accesspoint_id'] = $resourceData[2];
         }
 
         return $data;
     }
 
     /**
-     * Validation specific to OutpostsAccessPointArn
+     * Validation specific to OutpostsAccessPointArn. Note this uses the base Arn
+     * class validation instead of the direct parent due to it having slightly
+     * differing requirements from its parent.
      *
      * @param array $data
      */
     protected static function validate(array $data)
     {
+        Arn::validate($data);
+
         if (empty($data['region'])) {
             throw new InvalidArnException("The 4th component of an access point ARN"
                 . " represents the region and must not be empty.");
@@ -50,40 +82,27 @@ class OutpostsAccessPointArn extends AccessPointArn implements ArnInterface
                 . " must be a valid host label value.");
         }
 
-        if (($data['resource_type'] !== 'outposts-accesspoint')) {
-            throw new InvalidArnException("The 6th component of an S3 Outposts access point ARN"
-                . " represents the resource type and must be 'outposts-accesspoint'.");
+        if (($data['resource_type'] !== 'outpost')) {
+            throw new InvalidArnException("The 6th component of an S3 Outposts"
+                . " access point ARN represents the resource type and must be"
+                . " 'outpost'.");
         }
 
-        if (empty($data['outpost_id'])) {
-            throw new InvalidArnException("The 7th component of an S3 Outposts access point ARN"
-                . " represents the outpost ID and must not be empty.");
+        if (!self::isValidHostLabel($data['outpost_id'])) {
+            throw new InvalidArnException("The 7th component of an S3 Outposts"
+                . " access point ARN is required, represents the outpost ID, and"
+                . " must be a valid host label.");
         }
 
-        if (empty($data['access_point_name'])) {
-            throw new InvalidArnException("The 8th component of an S3 Outposts access point ARN"
-                . " represents the access point name and must not be empty.");
+        if ($data['accesspoint_type'] !== 'accesspoint') {
+            throw new InvalidArnException("The 8th component of an S3 Outposts"
+                . " access point ARN must be 'accesspoint'");
         }
 
-        if (!self::isValidOutpostId($data['outpost_id'])) {
-            throw new InvalidArnException("The 7th component of an S3 Outposts access point ARN"
-                . " represents the outpost ID and must fit this pattern: `op-[0-9a-fA-F]{17}`");
+        if (!self::isValidHostLabel($data['accesspoint_id'])) {
+            throw new InvalidArnException("The 9th component of an S3 Outposts"
+                . " access point ARN is required, represents the accesspoint ID,"
+                . " and must be a valid host label.");
         }
-
-        if (!self::isValidAccessPointName($data['access_point_name'])) {
-            throw new InvalidArnException("The 8th component of an S3 Outposts access point ARN"
-                . " represents the access point name and must fit this pattern:"
-                . " `[0-9a-zA-Z-]{3,50}`");
-        }
-    }
-
-    private static function isValidOutpostId($id)
-    {
-        return true;
-    }
-
-    private static function isValidAccessPointName($name)
-    {
-        return true;
     }
 }

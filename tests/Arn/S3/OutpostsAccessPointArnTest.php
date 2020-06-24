@@ -28,41 +28,33 @@ class OutpostsAccessPointArnTest extends TestCase
         $this->assertEquals($expected['region'], $arn->getRegion());
         $this->assertEquals($expected['account_id'], $arn->getAccountId());
         $this->assertEquals($expected['resource'], $arn->getResource());
+        $this->assertEquals($expected['resource_id'], $arn->getResourceId());
+        $this->assertEquals($expected['resource_type'], $arn->getResourceType());
+        $this->assertEquals($expected['outpost_id'], $arn->getOutpostId());
+        $this->assertEquals($expected['accesspoint_id'], $arn->getAccesspointId());
         $this->assertEquals($expectedString, (string) $arn);
     }
 
     public function parsedArnProvider()
     {
         return [
-            // All components
+
             [
-                'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
                 [
                     'arn' => 'arn',
                     'partition' => 'aws',
-                    'service' => 's3',
+                    'service' => 's3-outposts',
                     'region' => 'us-west-2',
-                    'account_id' => 123456789012,
-                    'resource_type' => 'accesspoint',
-                    'resource_id' => 'myendpoint',
-                    'resource' => 'accesspoint:myendpoint',
+                    'account_id' => '123456789012',
+                    'resource_type' => 'outpost',
+                    'resource_id' => 'op-01234567890123456:accesspoint:myaccesspoint',
+                    'resource' => 'outpost:op-01234567890123456:accesspoint:myaccesspoint',
+                    'outpost_id' => 'op-01234567890123456',
+                    'accesspoint_type' => 'accesspoint',
+                    'accesspoint_id' => 'myaccesspoint',
                 ],
-                'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
-            ],
-            // Alternate partition
-            [
-                'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
-                [
-                    'arn' => 'arn',
-                    'partition' => 'aws-cn',
-                    'service' => 's3',
-                    'region' => 'cn-north-1',
-                    'account_id' => 123456789012,
-                    'resource_type' => 'accesspoint',
-                    'resource_id' => 'myendpoint',
-                    'resource' => 'accesspoint:myendpoint',
-                ],
-                'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
             ],
         ];
     }
