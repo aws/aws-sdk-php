@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.143.0 - 2020-06-24
 
 * `Aws\Amplify` - This release of AWS Amplify Console introduces support for automatically creating custom subdomains for branches based on user-defined glob patterns, as well as automatically cleaning up Amplify branches when their corresponding git branches are deleted.
 * `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling.
