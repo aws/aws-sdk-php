@@ -68,6 +68,12 @@ class OutpostsAccessPointArn extends AccessPointArn implements ArnInterface
     {
         Arn::validate($data);
 
+        if (($data['service'] !== 's3-outposts')) {
+            throw new InvalidArnException("The 3rd component of an S3 Outposts"
+                . " access point ARN represents the service and must be"
+                . " 's3-outposts'.");
+        }
+
         if (empty($data['region'])) {
             throw new InvalidArnException("The 4th component of an access point ARN"
                 . " represents the region and must not be empty.");

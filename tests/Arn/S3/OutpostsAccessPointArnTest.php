@@ -38,7 +38,7 @@ class OutpostsAccessPointArnTest extends TestCase
     public function parsedArnProvider()
     {
         return [
-
+            // Colon delimiters
             [
                 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
                 [
@@ -55,6 +55,60 @@ class OutpostsAccessPointArnTest extends TestCase
                     'accesspoint_id' => 'myaccesspoint',
                 ],
                 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
+            ],
+            // Slash delimiters
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost/op-01234567890123456/accesspoint/myaccesspoint',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 's3-outposts',
+                    'region' => 'us-west-2',
+                    'account_id' => '123456789012',
+                    'resource_type' => 'outpost',
+                    'resource_id' => 'op-01234567890123456/accesspoint/myaccesspoint',
+                    'resource' => 'outpost/op-01234567890123456/accesspoint/myaccesspoint',
+                    'outpost_id' => 'op-01234567890123456',
+                    'accesspoint_type' => 'accesspoint',
+                    'accesspoint_id' => 'myaccesspoint',
+                ],
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost/op-01234567890123456/accesspoint/myaccesspoint',
+            ],
+            // Mixed colon and slash delimiters
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost/op-01234567890123456:accesspoint/myaccesspoint',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 's3-outposts',
+                    'region' => 'us-west-2',
+                    'account_id' => '123456789012',
+                    'resource_type' => 'outpost',
+                    'resource_id' => 'op-01234567890123456:accesspoint/myaccesspoint',
+                    'resource' => 'outpost/op-01234567890123456:accesspoint/myaccesspoint',
+                    'outpost_id' => 'op-01234567890123456',
+                    'accesspoint_type' => 'accesspoint',
+                    'accesspoint_id' => 'myaccesspoint',
+                ],
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost/op-01234567890123456:accesspoint/myaccesspoint',
+            ],
+            // Minimum inputs
+            [
+                'arn:aws:s3-outposts:us-west-2:1:outpost:a:accesspoint:b',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 's3-outposts',
+                    'region' => 'us-west-2',
+                    'account_id' => '1',
+                    'resource_type' => 'outpost',
+                    'resource_id' => 'a:accesspoint:b',
+                    'resource' => 'outpost:a:accesspoint:b',
+                    'outpost_id' => 'a',
+                    'accesspoint_type' => 'accesspoint',
+                    'accesspoint_id' => 'b',
+                ],
+                'arn:aws:s3-outposts:us-west-2:1:outpost:a:accesspoint:b',
             ],
         ];
     }
