@@ -117,10 +117,11 @@ abstract class AbstractRestParser extends AbstractParser
                 break;
             case 'timestamp':
                 try {
-                    $value = DateTimeResult::fromTimestamp(
-                        $value,
-                        !empty($shape['timestampFormat']) ? $shape['timestampFormat'] : null
-                    );
+                    if (!empty($shape['timestampFormat'])
+                        && $shape['timestampFormat'] === 'unixTimestamp') {
+                        $value = DateTimeResult::fromEpoch($value);
+                    }
+                    $value = new DateTimeResult($value);
                     break;
                 } catch (\Exception $e) {
                     // If the value cannot be parsed, then do not add it to the
