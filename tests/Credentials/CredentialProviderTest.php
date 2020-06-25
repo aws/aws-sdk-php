@@ -248,7 +248,10 @@ EOT;
 
     }
 
-    public function testIgnoresIniWithUseAwsConfigFileFalse()
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata service
+     */    public function testIgnoresIniWithUseAwsConfigFileFalse()
     {
         $dir = $this->clearEnv();
         file_put_contents($dir . '/credentials', self::$standardIni);
@@ -258,10 +261,6 @@ EOT;
             "token" =>null,
             "expires" =>null,
         ];
-
-        putenv(CredentialProvider::ENV_KEY . '=foo');
-        putenv(CredentialProvider::ENV_SECRET . '=bar');
-        putenv(CredentialProvider::ENV_PROFILE . '=baz');
 
         putenv('HOME=' . dirname($dir));
         $creds = call_user_func(

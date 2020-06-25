@@ -416,7 +416,6 @@ EOT;
         $expected = new Configuration(true, 1000);
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
-        putenv(ConfigurationProvider::ENV_PROFILE . '=default');
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>true]))->wait();
         $this->assertEquals($expected->toArray(), $result->toArray());
@@ -429,7 +428,6 @@ EOT;
         $expected = new Configuration(false, 1000);
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
-        putenv(ConfigurationProvider::ENV_PROFILE . '=default');
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>false]))->wait();
         $this->assertEquals($expected->toArray(), $result->toArray());

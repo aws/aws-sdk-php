@@ -143,6 +143,36 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
+    public function testUsesIniWithUseAwsConfigFileTrue()
+    {
+        $dir = $this->clearEnv();
+        $expected  = new Configuration(true, '123.4.5.6', 555, 'DefaultIniApp');
+        file_put_contents($dir . '/config', $this->iniFile);
+        putenv(ConfigurationProvider::ENV_ENABLED);
+        putenv('HOME=' . dirname($dir));
+        /** @var ConfigurationInterface $result */
+        $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>true]))->wait();
+        $this->assertSame($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
+    }
+
+    public function testIgnoresIniWithUseAwsConfigFileFalse()
+    {
+        $dir = $this->clearEnv();
+        $expected = new Configuration(
+            false,
+            ConfigurationProvider::DEFAULT_HOST,
+            ConfigurationProvider::DEFAULT_PORT,
+            ''
+        );
+        file_put_contents($dir . '/config', $this->altIniFile);
+        putenv('HOME=' . dirname($dir));
+        /** @var ConfigurationInterface $result */
+        $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>false]))->wait();
+        $this->assertEquals($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
+    }
+
     public function testCreatesFromIniFileWithDefaultProfile()
     {
         $dir = $this->clearEnv();
@@ -197,42 +227,6 @@ EOT;
         putenv(ConfigurationProvider::ENV_PROFILE . '=enabled');
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::ini())->wait();
-        $this->assertEquals($expected->toArray(), $result->toArray());
-        unlink($dir . '/config');
-    }
-
-    public function testUsesIniWithUseAwsConfigFileTrue()
-    {
-        $dir = $this->clearEnv();
-        $expected = new Configuration(
-            false,
-            ConfigurationProvider::DEFAULT_HOST,
-            ConfigurationProvider::DEFAULT_PORT,
-            ''
-        );
-        file_put_contents($dir . '/config', $this->iniFile);
-        putenv('HOME=' . dirname($dir));
-        putenv(ConfigurationProvider::ENV_PROFILE . '=enabled');
-        /** @var ConfigurationInterface $result */
-        $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>true]))->wait();
-        $this->assertEquals($expected->toArray(), $result->toArray());
-        unlink($dir . '/config');
-    }
-
-    public function testIgnoresIniWithUseAwsConfigFileFalse()
-    {
-        $dir = $this->clearEnv();
-        $expected = new Configuration(
-            false,
-            ConfigurationProvider::DEFAULT_HOST,
-            ConfigurationProvider::DEFAULT_PORT,
-            ''
-        );
-        file_put_contents($dir . '/config', $this->iniFile);
-        putenv('HOME=' . dirname($dir));
-        putenv(ConfigurationProvider::ENV_PROFILE . '=enabled');
-        /** @var ConfigurationInterface $result */
-        $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>false]))->wait();
         $this->assertEquals($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
     }
