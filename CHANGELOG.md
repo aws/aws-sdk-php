@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.143.1 - 2020-06-25
 
 * `Aws\EC2` - Added support for tag-on-create for Host Reservations in Dedicated Hosts. You can now specify tags when you create a Host Reservation for a Dedicated Host. For more information about tagging, see AWS Tagging Strategies.
 * `Aws\Glue` - This release adds new APIs to support column level statistics in AWS Glue Data Catalog
