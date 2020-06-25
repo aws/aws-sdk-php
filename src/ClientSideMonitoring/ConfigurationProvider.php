@@ -79,8 +79,10 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     {
         $configProviders = [];
         array_push($configProviders, self::env());
-        if (!isset($config['use_aws_config_file'])
-            || $config['use_aws_config_file'] != false) {
+        if (
+            !isset($config['use_aws_config_file'])
+            || $config['use_aws_config_file'] != false
+        ) {
             array_push($configProviders, self::ini());
         }
         array_push($configProviders, self::fallback());
