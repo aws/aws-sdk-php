@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Added support for tag-on-create for Host Reservations in Dedicated Hosts. You can now specify tags when you create a Host Reservation for a Dedicated Host. For more information about tagging, see AWS Tagging Strategies.
+* `Aws\Glue` - This release adds new APIs to support column level statistics in AWS Glue Data Catalog
+
 ## 3.143.0 - 2020-06-24
 
 * `Aws\Amplify` - This release of AWS Amplify Console introduces support for automatically creating custom subdomains for branches based on user-defined glob patterns, as well as automatically cleaning up Amplify branches when their corresponding git branches are deleted.
