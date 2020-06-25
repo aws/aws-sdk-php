@@ -87,9 +87,11 @@ class CredentialProvider
         if (!isset($config['use_aws_config_file']) ||
             $config['use_aws_config_file'] !== false) {
             $defaultChain['ini'] = self::ini();
-            $defaultChain['ini_config'] = self::ini('profile default', self::getHomeDir() . '/.aws/config');
+            $defaultChain['ini_config'] = self::ini(
+                'profile default',
+                self::getHomeDir() . '/.aws/config'
+            );
         }
-
 
         if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
             $defaultChain['ecs'] = self::ecsCredentials($config);

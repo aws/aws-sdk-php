@@ -151,7 +151,9 @@ EOT;
         putenv(ConfigurationProvider::ENV_ENABLED);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
-        $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>true]))->wait();
+        $result = call_user_func(
+            ConfigurationProvider::defaultProvider(['use_aws_config_file'=>true])
+        )->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
     }
@@ -168,7 +170,9 @@ EOT;
         file_put_contents($dir . '/config', $this->altIniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
-        $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>false]))->wait();
+        $result = call_user_func(
+            ConfigurationProvider::defaultProvider(['use_aws_config_file'=>false])
+        )->wait();
         $this->assertEquals($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
     }
@@ -230,7 +234,6 @@ EOT;
         $this->assertEquals($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
     }
-
 
     /**
      * @expectedException \Aws\ClientSideMonitoring\Exception\ConfigurationException

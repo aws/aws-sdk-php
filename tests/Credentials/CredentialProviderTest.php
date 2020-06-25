@@ -241,8 +241,9 @@ EOT;
             "expires" => null
         ];
         putenv('HOME=' . dirname($dir));
-        $creds = call_user_func(CredentialProvider::defaultProvider(['use_aws_config_file'=>true]))
-            ->wait();
+        $creds = call_user_func(
+            CredentialProvider::defaultProvider(['use_aws_config_file'=>true])
+        )->wait();
         $this->assertEquals($expectedCreds, $creds->toArray());
         unlink($dir . '/credentials');
 
@@ -1280,4 +1281,3 @@ EOT;
         $this->assertEquals('configFoo', $creds->getAccessKeyId());
     }
 }
-
