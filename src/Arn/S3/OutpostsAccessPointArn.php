@@ -53,6 +53,9 @@ class OutpostsAccessPointArn extends AccessPointArn implements ArnInterface
         $data['accesspoint_id'] = isset($resourceData[2])
             ? $resourceData[2]
             : null;
+        if (isset($resourceData[3])) {
+            $data['resource_extra'] = implode(':', array_slice($resourceData, 3));
+        }
 
         return $data;
     }
@@ -106,6 +109,12 @@ class OutpostsAccessPointArn extends AccessPointArn implements ArnInterface
             throw new InvalidArnException("The 9th component of an S3 Outposts"
                 . " access point ARN is required, represents the accesspoint ID,"
                 . " and must be a valid host label.");
+        }
+
+        if (!empty($data['resource_extra'])) {
+            throw new InvalidArnException("An S3 Outposts access point ARN"
+                . " should only have 9 components. '{$data['resource_extra']}'"
+                . " was found after the 9th component.");
         }
     }
 }

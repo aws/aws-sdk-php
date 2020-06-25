@@ -112,4 +112,76 @@ class OutpostsAccessPointArnTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * @dataProvider badArnProvider
+     *
+     * @param $string
+     * @param \Exception $expected
+     */
+    public function testThrowsForBadArn($string, \Exception $expected)
+    {
+        try {
+            $arn = new OutpostsAccessPointArn($string);
+            $this->fail('This was expected to fail with: ' . $expected->getMessage());
+        } catch (\Exception $e) {
+            $this->assertTrue($e instanceof $expected);
+            $this->assertEquals(
+                $expected->getMessage(),
+                $e->getMessage()
+            );
+        }
+    }
+
+    public function badArnProvider()
+    {
+        return [
+            [
+                'arn:aws:s3:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
+                new InvalidArnException("The 3rd component of an S3 Outposts"
+                    . " access point ARN represents the service and must be"
+                    . " 's3-outposts'.")
+            ],
+            [
+                'arn:aws:s3-outposts::123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
+                new InvalidArnException("The 4th component of an access point ARN"
+                    . " represents the region and must not be empty.")
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:invalid!!:outpost:op-01234567890123456:accesspoint:myaccesspoint',
+                new InvalidArnException("The 5th component of an S3 Outposts"
+                    . " access point ARN is required, represents the account ID, and"
+                    . " must be a valid host label.")
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:notoutpost:op-01234567890123456:accesspoint:myaccesspoint',
+                new InvalidArnException("The 6th component of an S3 Outposts"
+                    . " access point ARN represents the resource type and must be"
+                    . " 'outpost'.")
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:invalid,:accesspoint:myaccesspoint',
+                new InvalidArnException("The 7th component of an S3 Outposts"
+                    . " access point ARN is required, represents the outpost ID, and"
+                    . " must be a valid host label.")
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:notaccesspoint:myaccesspoint',
+                new InvalidArnException("The 8th component of an S3 Outposts"
+                    . " access point ARN must be 'accesspoint'")
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:..invalid',
+                new InvalidArnException("The 9th component of an S3 Outposts"
+                    . " access point ARN is required, represents the accesspoint ID,"
+                    . " and must be a valid host label.")
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:accesspoint:extra:components',
+                new InvalidArnException("An S3 Outposts access point ARN"
+                    . " should only have 9 components. 'extra:components'"
+                    . " was found after the 9th component.")
+            ],
+        ];
+    }
 }
