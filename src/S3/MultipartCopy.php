@@ -60,17 +60,17 @@ class MultipartCopy extends AbstractUploadManager
         S3ClientInterface $client,
         $source,
         array $config = []
-    )
-    {
+    ) {
         if (ArnParser::isArn($source)) {
             $this->source = '';
         } else {
             $this->source = "/";
         }
         $this->source .= ltrim($source, '/');
-        parent::__construct($client, array_change_key_case($config) + [
-                'source_metadata' => null
-            ]);
+        parent::__construct(
+            $client,
+            array_change_key_case($config) + ['source_metadata' => null]
+        );
     }
 
     /**
@@ -109,8 +109,7 @@ class MultipartCopy extends AbstractUploadManager
             if (!$this->state->hasPartBeenUploaded($partNumber)) {
                 $command = $this->client->getCommand(
                     $this->info['command']['upload'],
-                    $this->createPart($partNumber, $parts)
-                    + $this->getState()->getId()
+                    $this->createPart($partNumber, $parts) + $this->getState()->getId()
                 );
                 $command->getHandlerList()->appendSign($resultHandler, 'mup');
                 yield $command;

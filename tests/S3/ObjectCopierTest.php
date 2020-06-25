@@ -448,6 +448,9 @@ class ObjectCopierTest extends TestCase
         $this->assertFalse($this->mockQueueEmpty());
         $result = $uploader->copy();
 
-        $this->assertEquals($result['ObjectURL'], "https://bucket.s3.amazonaws.com/".$expectedOutput);
+        $this->assertEquals(
+            $result['ObjectURL'],
+            "https://bucket.s3.amazonaws.com/{$expectedOutput}"
+        );
     }
 }
