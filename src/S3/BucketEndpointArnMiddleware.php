@@ -5,7 +5,9 @@ use Aws\Api\Service;
 use Aws\Arn\ArnInterface;
 use Aws\Arn\ArnParser;
 use Aws\Arn\Exception\InvalidArnException;
+use Aws\Arn\AccessPointArn as BaseAccessPointArn;
 use Aws\Arn\S3\AccessPointArn;
+use Aws\Arn\S3\OutpostsAccessPointArn;
 use Aws\CommandInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\InvalidRegionException;
@@ -149,21 +151,32 @@ class BucketEndpointArnMiddleware
     }
 
     private function generateAccessPointHost(
-        AccessPointArn $arn,
+        BaseAccessPointArn $arn,
         RequestInterface $req
     ) {
-        $host = $arn->getResourceId() . '-' . $arn->getAccountId()
-            . '.s3-accesspoint';
-        if (!empty($this->config['dual_stack'])) {
-            $host .= '.dualstack';
+        if ($arn instanceof OutpostsAccessPointArn) {
+            $accesspointName = $arn->getAccesspointName();
+        } else {
+            $accesspointName = $arn->getResourceId();
         }
+
+        $host = "{$accesspointName}-" . $arn->getAccountId();
+
+        if ($arn instanceof OutpostsAccessPointArn) {
+            $host .= '.' . $arn->getOutpostId() . '.s3-outposts';
+        } else {
+            $host .= '.s3-accesspoint';
+            if (!empty($this->config['dual_stack'])) {
+                $host .= '.dualstack';
+            }
+        }
+
         if (!empty($this->config['use_arn_region']->isUseArnRegion())) {
             $region = $arn->getRegion();
         } else {
             $region = $this->region;
         }
         $host .= '.' . $region . '.' . $this->getPartitionSuffix($arn);
-
         return $host;
     }
 
@@ -213,7 +226,9 @@ class BucketEndpointArnMiddleware
      */
     private function validateArn($arn)
     {
-        if ($arn instanceof AccessPointArn) {
+        if ($arn instanceof AccessPointArn
+            || $arn instanceof OutpostsAccessPointArn
+        ) {
             // Accelerate is not supported with access points
             if (!empty($this->config['accelerate'])) {
                 throw new UnresolvedEndpointException(
@@ -283,7 +298,7 @@ class BucketEndpointArnMiddleware
             return $arnPart;
         }
 
-        throw new InvalidArnException('Provided ARN was not'
-            . ' a valid S3 access point ARN');
+        throw new InvalidArnException('Provided ARN was not a valid S3 access'
+            . ' point ARN or S3 Outposts access point ARN.');
     }
 }
