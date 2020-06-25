@@ -146,13 +146,13 @@ EOT;
     public function testUsesIniWithUseAwsConfigFileTrue()
     {
         $dir = $this->clearEnv();
-        $expected  = new Configuration(true, '123.4.5.6', 555, 'DefaultIniApp');
+        $expected = new Configuration(true, '123.4.5.6', 555, 'DefaultIniApp');
         file_put_contents($dir . '/config', $this->iniFile);
         putenv(ConfigurationProvider::ENV_ENABLED);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
         $result = call_user_func(
-            ConfigurationProvider::defaultProvider(['use_aws_config_file'=>true])
+            ConfigurationProvider::defaultProvider(['use_aws_config_file' => true])
         )->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
@@ -171,7 +171,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
         $result = call_user_func(
-            ConfigurationProvider::defaultProvider(['use_aws_config_file'=>false])
+            ConfigurationProvider::defaultProvider(['use_aws_config_file' => false])
         )->wait();
         $this->assertEquals($expected->toArray(), $result->toArray());
         unlink($dir . '/config');

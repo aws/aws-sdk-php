@@ -4,6 +4,7 @@ namespace Aws\Test\Credentials;
 use Aws\Api\DateTimeResult;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
+use Aws\Exception\CredentialsException;
 use Aws\History;
 use Aws\LruArrayCache;
 use Aws\Middleware;
@@ -223,6 +224,7 @@ EOT;
             [$standardWithEqualsQuotedIni, $credentialsWithEquals],
         ];
     }
+
     private static $standardIni = <<<EOT
 [default]
 aws_access_key_id = foo
@@ -236,13 +238,13 @@ EOT;
         file_put_contents($dir . '/credentials', self::$standardIni);
         $expectedCreds = [
             "key" => "foo",
-            "secret" =>"bar",
+            "secret" => "bar",
             "token" => "baz",
             "expires" => null
         ];
         putenv('HOME=' . dirname($dir));
         $creds = call_user_func(
-            CredentialProvider::defaultProvider(['use_aws_config_file'=>true])
+            CredentialProvider::defaultProvider(['use_aws_config_file' => true])
         )->wait();
         $this->assertEquals($expectedCreds, $creds->toArray());
         unlink($dir . '/credentials');
@@ -250,29 +252,30 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata service
-     */    public function testIgnoresIniWithUseAwsConfigFileFalse()
+     */
+    public function testIgnoresIniWithUseAwsConfigFileFalse()
     {
         $dir = $this->clearEnv();
         file_put_contents($dir . '/credentials', self::$standardIni);
         $expectedCreds = [
             "key" => "foo",
-            "secret" =>"bar",
-            "token" =>null,
-            "expires" =>null,
+            "secret" => "bar",
+            "token" => null,
+            "expires" => null,
         ];
 
         putenv('HOME=' . dirname($dir));
         $creds = call_user_func(
-            CredentialProvider::defaultProvider(['use_aws_config_file'=>false])
+            CredentialProvider::defaultProvider(['use_aws_config_file' => false])
         )->wait();
         $this->assertEquals($expectedCreds, $creds->toArray());
         unlink($dir . '/credentials');
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage Invalid credentials file:
      */
     public function testEnsuresIniFileIsValid()
@@ -290,7 +293,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      */
     public function testEnsuresIniFileExists()
     {
@@ -300,7 +303,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      */
     public function testEnsuresProfileIsNotEmpty()
     {
@@ -319,7 +322,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage 'foo' not found in
      */
     public function testEnsuresFileIsNotEmpty()
@@ -389,7 +392,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage No credential_process present in INI profile
      */
     public function testEnsuresProcessCredentialIsPresent()
@@ -413,7 +416,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage credential_process does not return Version == 1
      */
     public function testEnsuresProcessCredentialVersion()
@@ -436,7 +439,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage credential_process returned expired credentials
      */
     public function testEnsuresProcessCredentialsAreCurrent()
@@ -459,7 +462,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage credential_process returned invalid expiration
      */
     public function testEnsuresProcessCredentialsExpirationIsValid()
@@ -601,7 +604,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage Role assumption profiles are disabled. Failed to load profile assume
      */
     public function testEnsuresAssumeRoleCanBeDisabled()
@@ -637,7 +640,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage source_profile is not set using profile assume
      */
     public function testEnsuresSourceProfileIsSpecified()
@@ -664,7 +667,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage source_profile default using profile assume does not exist
      */
     public function testEnsuresSourceProfileConfigIsSpecified()
@@ -689,7 +692,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage No credentials present in INI profile 'default'
      */
     public function testEnsuresSourceProfileHasCredentials()
@@ -1080,7 +1083,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage Unknown profile: fooProfile
      */
     public function testEnsuresAssumeRoleWebIdentityProfileIsPresent()
@@ -1107,7 +1110,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedException CredentialsException
      * @expectedExceptionMessage Unknown profile: fooProfile
      */
     public function testEnsuresAssumeRoleWebIdentityProfileInDefaultFiles()

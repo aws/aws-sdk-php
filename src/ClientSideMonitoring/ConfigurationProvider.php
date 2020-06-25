@@ -85,7 +85,6 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         }
         array_push($configProviders, self::fallback());
 
-
         $memo = self::memoize(
             call_user_func_array('self::chain', $configProviders)
         );

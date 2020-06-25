@@ -113,7 +113,7 @@ class CredentialProvider
                         $config['credentials'],
                         'aws_cached_' . $provider . '_credentials'
                     );
-                };
+                }
             }
         }
 

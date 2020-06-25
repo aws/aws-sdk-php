@@ -103,28 +103,28 @@ EOT;
     {
         $dir = $this->clearEnv();
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' . $dir . "/alt_config");
-        $expected  = new Configuration(true);
+        $expected = new Configuration(true);
         file_put_contents($dir . '/config', $this->iniFile);
         file_put_contents($dir . '/alt_config', $this->altIniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
         $result = call_user_func(
-            ConfigurationProvider::defaultProvider(['use_aws_config_file'=>true])
+            ConfigurationProvider::defaultProvider(['use_aws_config_file' => true])
         )->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
-        unlink($dir . '/alt_config');;
+        unlink($dir . '/alt_config');
     }
 
     public function testIgnoresIniWithUseAwsConfigFileFalse()
     {
         $dir = $this->clearEnv();
-        $expected  = new Configuration(false);
+        $expected = new Configuration(false);
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
         $result = call_user_func(
-            ConfigurationProvider::defaultProvider(['use_aws_config_file'=>false])
+            ConfigurationProvider::defaultProvider(['use_aws_config_file' => false])
         )->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
