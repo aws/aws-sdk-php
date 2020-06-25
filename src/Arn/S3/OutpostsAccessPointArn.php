@@ -10,15 +10,10 @@ use Aws\Arn\Exception\InvalidArnException;
  * This class represents an S3 Outposts access point ARN, which is in the
  * following format:
  *
- * arn:{partition}:s3-outposts:{region}:{accountId}:outpost/{outpostId}/accesspoint/{accesspointName}
+ * arn:{partition}:s3-outposts:{region}:{accountId}:outpost:{outpostId}:accesspoint:{accesspointName}
  *
- * In relation to a normal access point ARN, the resource type must be 'outpost',
- * and the resource ID must be in the following format:
- *
- * {outpostId}/accesspoint/{accesspointName}
- *
- * ':' and '/' can be used interchangeably as delimiters within the resource type
- * and resource ID.
+ * ':' and '/' can be used interchangeably as delimiters for components after
+ * the account ID.
  *
  * @internal
  */
