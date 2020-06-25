@@ -49,7 +49,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      */
     public static function fromTimestamp($timestamp, $expectedFormat = null)
     {
-            if (empty($timestamp) || !(is_string($timestamp) || is_int($timestamp))) {
+            if (empty($timestamp) || !(is_string($timestamp) || is_numeric($timestamp))) {
                 throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromTimestamp');
             }
             try {
