@@ -4,7 +4,6 @@ namespace Aws\Test\Credentials;
 use Aws\Api\DateTimeResult;
 use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
-use Aws\Exception\CredentialsException;
 use Aws\History;
 use Aws\LruArrayCache;
 use Aws\Middleware;
@@ -252,7 +251,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata service
      */
     public function testIgnoresIniWithUseAwsConfigFileFalse()
@@ -275,7 +274,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Invalid credentials file:
      */
     public function testEnsuresIniFileIsValid()
@@ -293,7 +292,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      */
     public function testEnsuresIniFileExists()
     {
@@ -303,7 +302,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      */
     public function testEnsuresProfileIsNotEmpty()
     {
@@ -322,7 +321,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage 'foo' not found in
      */
     public function testEnsuresFileIsNotEmpty()
@@ -392,7 +391,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage No credential_process present in INI profile
      */
     public function testEnsuresProcessCredentialIsPresent()
@@ -416,7 +415,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage credential_process does not return Version == 1
      */
     public function testEnsuresProcessCredentialVersion()
@@ -439,7 +438,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage credential_process returned expired credentials
      */
     public function testEnsuresProcessCredentialsAreCurrent()
@@ -462,7 +461,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage credential_process returned invalid expiration
      */
     public function testEnsuresProcessCredentialsExpirationIsValid()
@@ -604,7 +603,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Role assumption profiles are disabled. Failed to load profile assume
      */
     public function testEnsuresAssumeRoleCanBeDisabled()
@@ -640,7 +639,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage source_profile is not set using profile assume
      */
     public function testEnsuresSourceProfileIsSpecified()
@@ -667,7 +666,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage source_profile default using profile assume does not exist
      */
     public function testEnsuresSourceProfileConfigIsSpecified()
@@ -692,7 +691,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage No credentials present in INI profile 'default'
      */
     public function testEnsuresSourceProfileHasCredentials()
@@ -1083,7 +1082,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Unknown profile: fooProfile
      */
     public function testEnsuresAssumeRoleWebIdentityProfileIsPresent()
@@ -1110,7 +1109,7 @@ EOT;
     }
 
     /**
-     * @expectedException CredentialsException
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Unknown profile: fooProfile
      */
     public function testEnsuresAssumeRoleWebIdentityProfileInDefaultFiles()
