@@ -30,9 +30,9 @@ class OutpostsAccessPointArn extends AccessPointArn implements ArnInterface
         return $this->data['outpost_id'];
     }
 
-    public function getAccesspointId()
+    public function getAccesspointName()
     {
-        return $this->data['accesspoint_id'];
+        return $this->data['accesspoint_name'];
     }
 
     private static function parseOutpostData(array $data)
@@ -45,7 +45,7 @@ class OutpostsAccessPointArn extends AccessPointArn implements ArnInterface
         $data['accesspoint_type'] = isset($resourceData[1])
             ? $resourceData[1]
             : null;
-        $data['accesspoint_id'] = isset($resourceData[2])
+        $data['accesspoint_name'] = isset($resourceData[2])
             ? $resourceData[2]
             : null;
         if (isset($resourceData[3])) {
@@ -100,9 +100,9 @@ class OutpostsAccessPointArn extends AccessPointArn implements ArnInterface
                 . " access point ARN must be 'accesspoint'");
         }
 
-        if (!self::isValidHostLabel($data['accesspoint_id'])) {
+        if (!self::isValidHostLabel($data['accesspoint_name'])) {
             throw new InvalidArnException("The 9th component of an S3 Outposts"
-                . " access point ARN is required, represents the accesspoint ID,"
+                . " access point ARN is required, represents the accesspoint name,"
                 . " and must be a valid host label.");
         }
 
