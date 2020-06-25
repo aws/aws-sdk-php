@@ -44,15 +44,15 @@ class OutpostsAccessPointArn extends AccessPointArn implements ArnInterface
     {
         $resourceData = preg_split("/[\/:]/", $data['resource_id']);
 
-        if (isset($resourceData[0])) {
-            $data['outpost_id'] = $resourceData[0];
-        }
-        if (isset($resourceData[1])) {
-            $data['accesspoint_type'] = $resourceData[1];
-        }
-        if (isset($resourceData[2])) {
-            $data['accesspoint_id'] = $resourceData[2];
-        }
+        $data['outpost_id'] = isset($resourceData[0])
+            ? $resourceData[0]
+            : null;
+        $data['accesspoint_type'] = isset($resourceData[1])
+            ? $resourceData[1]
+            : null;
+        $data['accesspoint_id'] = isset($resourceData[2])
+            ? $resourceData[2]
+            : null;
 
         return $data;
     }
@@ -79,13 +79,10 @@ class OutpostsAccessPointArn extends AccessPointArn implements ArnInterface
                 . " represents the region and must not be empty.");
         }
 
-        if (empty($data['account_id'])) {
-            throw new InvalidArnException("The 5th component of an access point ARN"
-                . " represents the account ID and must not be empty.");
-        }
         if (!self::isValidHostLabel($data['account_id'])) {
-            throw new InvalidArnException("The account ID in an access point ARN"
-                . " must be a valid host label value.");
+            throw new InvalidArnException("The 5th component of an S3 Outposts"
+                . " access point ARN is required, represents the account ID, and"
+                . " must be a valid host label.");
         }
 
         if (($data['resource_type'] !== 'outpost')) {

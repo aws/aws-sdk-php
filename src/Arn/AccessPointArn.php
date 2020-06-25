@@ -70,8 +70,7 @@ class AccessPointArn extends Arn implements ArnInterface
 
     protected static function isValidHostLabel($string)
     {
-        $length = strlen($string);
-        if ($length < 1 || $length > 63) {
+        if (empty($string) || strlen($string) > 63) {
             return false;
         }
         if ($value = preg_match("/^[a-zA-Z0-9-]+$/", $string)) {
