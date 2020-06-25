@@ -176,7 +176,6 @@ EOT;
         unlink($dir . '/config');
     }
 
-
     /**
      * @expectedException \Aws\Retry\Exception\ConfigurationException
      */

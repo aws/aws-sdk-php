@@ -438,7 +438,6 @@ EOT;
         unlink($dir . '/config');
     }
 
-
     public function getSuccessfulUnwrapData()
     {
         $expected = new Configuration(true, 4000);

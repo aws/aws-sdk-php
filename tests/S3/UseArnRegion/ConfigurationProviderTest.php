@@ -359,6 +359,5 @@ EOT;
         $this->assertInstanceOf(Configuration::class, $result);
         $this->assertSame($expected->toArray(), $result->toArray());
     }
-
-
 }
+

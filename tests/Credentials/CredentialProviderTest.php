@@ -247,7 +247,6 @@ EOT;
         )->wait();
         $this->assertEquals($expectedCreds, $creds->toArray());
         unlink($dir . '/credentials');
-
     }
 
     /**

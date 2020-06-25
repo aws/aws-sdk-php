@@ -114,7 +114,6 @@ EOT;
         unlink($dir . '/config');
     }
 
-
     public function testIgnoresIniWithUseAwsConfigFileFalse()
     {
         $dir = $this->clearEnv();
