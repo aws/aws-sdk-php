@@ -99,6 +99,31 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
+    public function testUsesIniWithUseAwsConfigFileTrue()
+    {
+        $dir = $this->clearEnv();
+        $expected  = new Configuration(false);
+        file_put_contents($dir . '/config', $this->iniFile);
+        putenv('HOME=' . dirname($dir));
+        /** @var ConfigurationInterface $result */
+        $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>true]))->wait();
+        $this->assertSame($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
+    }
+
+    public function testIgnoresIniWithUseAwsConfigFileFalse()
+    {
+        $dir = $this->clearEnv();
+        $expected  = new Configuration(true);
+        file_put_contents($dir . '/config', $this->iniFile);
+        putenv('HOME=' . dirname($dir));
+        putenv(ConfigurationProvider::ENV_USE_ARN_REGION . '=true');
+        /** @var ConfigurationInterface $result */
+        $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>false]))->wait();
+        $this->assertSame($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
+    }
+
     public function testCreatesFromIniFileWithDefaultProfile()
     {
         $dir = $this->clearEnv();
@@ -328,4 +353,6 @@ EOT;
         $this->assertInstanceOf(Configuration::class, $result);
         $this->assertSame($expected->toArray(), $result->toArray());
     }
+
+
 }

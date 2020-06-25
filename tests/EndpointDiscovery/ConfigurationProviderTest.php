@@ -409,6 +409,34 @@ EOT;
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
+
+    public function testUsesIniWithUseAwsConfigFileTrue()
+    {
+        $dir = $this->clearEnv();
+        $expected = new Configuration(true, 1000);
+        file_put_contents($dir . '/config', $this->iniFile);
+        putenv('HOME=' . dirname($dir));
+        putenv(ConfigurationProvider::ENV_PROFILE . '=default');
+        /** @var ConfigurationInterface $result */
+        $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>true]))->wait();
+        $this->assertEquals($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
+    }
+
+    public function testIgnoresIniWithUseAwsConfigFileFalse()
+    {
+        $dir = $this->clearEnv();
+        $expected = new Configuration(false, 1000);
+        file_put_contents($dir . '/config', $this->iniFile);
+        putenv('HOME=' . dirname($dir));
+        putenv(ConfigurationProvider::ENV_PROFILE . '=default');
+        /** @var ConfigurationInterface $result */
+        $result = call_user_func(ConfigurationProvider::defaultProvider(['use_aws_config_file'=>false]))->wait();
+        $this->assertEquals($expected->toArray(), $result->toArray());
+        unlink($dir . '/config');
+    }
+
+
     public function getSuccessfulUnwrapData()
     {
         $expected = new Configuration(true, 4000);

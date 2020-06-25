@@ -223,6 +223,53 @@ EOT;
             [$standardWithEqualsQuotedIni, $credentialsWithEquals],
         ];
     }
+    private static $standardIni = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = bar
+aws_session_token = baz
+EOT;
+
+    public function testUsesIniWithUseAwsConfigFileTrue()
+    {
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/credentials', self::$standardIni);
+        $expectedCreds = [
+            "key" => "foo",
+            "secret" =>"bar",
+            "token" => "baz",
+            "expires" => null
+        ];
+        putenv('HOME=' . dirname($dir));
+        $creds = call_user_func(CredentialProvider::defaultProvider(['use_aws_config_file'=>true]))
+            ->wait();
+        $this->assertEquals($expectedCreds, $creds->toArray());
+        unlink($dir . '/credentials');
+
+    }
+
+    public function testIgnoresIniWithUseAwsConfigFileFalse()
+    {
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/credentials', self::$standardIni);
+        $expectedCreds = [
+            "key" => "foo",
+            "secret" =>"bar",
+            "token" =>null,
+            "expires" =>null,
+        ];
+
+        putenv(CredentialProvider::ENV_KEY . '=foo');
+        putenv(CredentialProvider::ENV_SECRET . '=bar');
+        putenv(CredentialProvider::ENV_PROFILE . '=baz');
+
+        putenv('HOME=' . dirname($dir));
+        $creds = call_user_func(
+            CredentialProvider::defaultProvider(['use_aws_config_file'=>false])
+        )->wait();
+        $this->assertEquals($expectedCreds, $creds->toArray());
+        unlink($dir . '/credentials');
+    }
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
@@ -1234,3 +1281,4 @@ EOT;
         $this->assertEquals('configFoo', $creds->getAccessKeyId());
     }
 }
+

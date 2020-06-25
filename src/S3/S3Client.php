@@ -319,8 +319,9 @@ class S3Client extends AwsClient implements S3ClientInterface
      */
     public function __construct(array $args)
     {
-        $args['s3_us_east_1_regional_endpoint'] = ConfigurationProvider::defaultProvider($args);
-
+        if (!isset($args['s3_us_east_1_regional_endpoint']) || $args['s3_us_east_1_regional_endpoint'] instanceof CacheInterface) {
+            $args['s3_us_east_1_regional_endpoint'] = ConfigurationProvider::defaultProvider($args);
+        }
         parent::__construct($args);
         $stack = $this->getHandlerList();
         $stack->appendInit(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), 's3.ssec');
