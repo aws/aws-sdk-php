@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - ListStackInstances and DescribeStackInstance now return a new `StackInstanceStatus` object that contains `DetailedStatus` values: a disambiguation of the more generic `Status` value. ListStackInstances output can now be filtered on `DetailedStatus` using the new `Filters` parameter.
+* `Aws\CognitoIdentityProvider` - Don't require Authorization for InitiateAuth and RespondToAuthChallenge.
+* `Aws\DatabaseMigrationService` - This release contains miscellaneous API documentation updates for AWS DMS in response to several customer reported issues.
+* `Aws\QuickSight` - Added support for cross-region DataSource credentials copying.
+* `Aws\SageMaker` - The new 'ModelClientConfig' parameter being added for CreateTransformJob and DescribeTransformJob api actions enable customers to configure model invocation related parameters such as timeout and retry.
+
 ## 3.143.1 - 2020-06-25
 
 * `Aws\EC2` - Added support for tag-on-create for Host Reservations in Dedicated Hosts. You can now specify tags when you create a Host Reservation for a Dedicated Host. For more information about tagging, see AWS Tagging Strategies.
