@@ -501,7 +501,7 @@ function boolean_value($input)
 function is_valid_epoch($input)
 {
     if (is_string($input) || is_numeric($input)) {
-        if (is_string($input) && !preg_match("/^-?[0-9]+$/", $input)) {
+        if (is_string($input) && !preg_match("/^-?[0-9]+\.?[0-9]*$/", $input)) {
             return false;
         }
         return true;
