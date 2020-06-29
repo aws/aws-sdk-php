@@ -1,7 +1,10 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Command;
 use Aws\CommandInterface;
+use Aws\Exception\InvalidRegionException;
+use Aws\Exception\UnresolvedEndpointException;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\S3\BucketEndpointArnMiddleware;
@@ -186,198 +189,184 @@ class BucketEndpointArnMiddlewareTest extends TestCase
     }
 
     /**
-     * @expectedException \Aws\Exception\InvalidRegionException
-     * @expectedExceptionMessage The region specified in the ARN (us-east-1) does not match the client region (us-west-2)
+     * @dataProvider badUsageProvider
+     *
+     * @param CommandInterface $command
+     * @param array $config
+     * @param \Exception $expected
      */
-    public function testThrowsInvalidRegionException()
+    public function testThrowsForIncorrectArnUsage($command, $config, \Exception $expected)
     {
-        $s3 = $this->getTestClient('s3', ['region' => 'us-west-2']);
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand(
-            'GetObject',
-            [
-                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
-                'Key' => 'Bar/Baz',
-            ]
-        );
-        $s3->execute($command);
+        try {
+            $s3 = $this->getTestClient('s3', $config);
+            $this->addMockResults($s3, [[]]);
+            $command = $s3->getCommand(
+                $command->getName(),
+                $command->toArray()
+            );
+            $s3->execute($command);
+            $this->fail('This was expected to fail with: ' . $expected->getMessage());
+        } catch (\Exception $e) {
+            $this->assertTrue($e instanceof $expected);
+            $this->assertEquals(
+                $expected->getMessage(),
+                $e->getMessage()
+            );
+        }
     }
 
-    /**
-     * @expectedException \Aws\Exception\UnresolvedEndpointException
-     * @expectedExceptionMessage Accelerate is currently not supported with access points.
-     */
-    public function testThrowsForAccelerate()
+    public function badUsageProvider()
     {
-        $s3 = $this->getTestClient(
-            's3',
+        return [
+            // Non-matching regions
             [
-                'region' => 'us-west-2',
-                'use_accelerate_endpoint' => true,
-            ]
-        );
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand(
-            'GetObject',
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                ['region' => 'us-west-2'],
+                new InvalidRegionException('The region specified in the ARN'
+                    . ' (us-east-1) does not match the client region (us-west-2).')
+            ],
+            // Accelerate with access point ARN
             [
-                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
-                'Key' => 'Bar/Baz',
-            ]
-        );
-        $s3->execute($command);
-    }
-
-    /**
-     * @expectedException \Aws\Exception\UnresolvedEndpointException
-     * @expectedExceptionMessage Path-style addressing is currently not supported with access points.
-     */
-    public function testThrowsForPathStyle()
-    {
-        $s3 = $this->getTestClient(
-            's3',
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                [
+                    'region' => 'us-west-2',
+                    'use_accelerate_endpoint' => true,
+                ],
+                new UnresolvedEndpointException('Accelerate is currently not'
+                    . ' supported with access points. Please disable accelerate'
+                    . ' or do not supply an access point ARN.')
+            ],
+            // Path-style with access point ARN
             [
-                'region' => 'us-west-2',
-                'use_path_style_endpoint' => true,
-            ]
-        );
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand(
-            'GetObject',
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                [
+                    'region' => 'us-west-2',
+                    'use_path_style_endpoint' => true,
+                ],
+                new UnresolvedEndpointException('Path-style addressing is'
+                    . ' currently not supported with access points. Please'
+                    . ' disable path-style or do not supply an access point ARN.')
+            ],
+            // Wrong ARN type
             [
-                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
-                'Key' => 'Bar/Baz',
-            ]
-        );
-        $s3->execute($command);
-    }
-
-    /**
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessage Bucket parameter parsed as ARN and failed with: Provided ARN was not a valid S3 access point ARN
-     */
-    public function testThrowsForWrongArnType()
-    {
-        $s3 = $this->getTestClient('s3', ['region' => 'us-west-2']);
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand(
-            'GetObject',
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:aws:s3:us-east-1:123456789012:some_type:myendpoint',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                ['region' => 'us-west-2'],
+                new S3Exception(
+                    'Bucket parameter parsed as ARN and failed with: Provided'
+                        . ' ARN was not a valid S3 access point ARN or S3'
+                        . ' Outposts access point ARN.',
+                    new Command([])
+                )
+            ],
+            // Invalid ARN
             [
-                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:some_type:myendpoint',
-                'Key' => 'Bar/Baz',
-            ]
-        );
-        $s3->execute($command);
-    }
-
-    /**
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessage Bucket parameter parsed as ARN and failed with: The 6th component of an ARN
-     */
-    public function testThrowsForInvalidArn()
-    {
-        $s3 = $this->getTestClient('s3', ['region' => 'us-west-2']);
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand(
-            'GetObject',
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:not:valid',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                ['region' => 'us-west-2'],
+                new S3Exception(
+                    'Bucket parameter parsed as ARN and failed with: The 6th'
+                        . ' component of an ARN represents the resource'
+                        . ' information and must not be empty. Individual'
+                        . ' service ARNs may include additional delimiters to'
+                        . ' further qualify resources.',
+                    new Command([])
+                )
+            ],
+            // Endpoint and ARN both set
             [
-                'Bucket' => 'arn:not:valid',
-                'Key' => 'Bar/Baz',
-            ]
-        );
-        $s3->execute($command);
-    }
-
-    /**
-     * @expectedException \Aws\Exception\UnresolvedEndpointException
-     * @expectedExceptionMessage A custom endpoint has been supplied along with an access point ARN
-     */
-    public function testThrowsForEndpointAndArnSet()
-    {
-        $s3 = $this->getTestClient(
-            's3',
-            ['region' => 'us-west-2', 'endpoint' => 'https://foo.com']
-        );
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand(
-            'GetObject',
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                ['region' => 'us-west-2', 'endpoint' => 'https://foo.com'],
+                new UnresolvedEndpointException('A custom endpoint has been'
+                    . ' supplied along with an access point ARN, and these are'
+                    . ' not compatible with each other. Please only use one or'
+                    . ' the other.')
+            ],
+            // Non-matching partition
             [
-                'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
-                'Key' => 'Bar/Baz',
-            ]
-        );
-        $s3->execute($command);
-    }
-
-    /**
-     * @expectedException \Aws\Exception\InvalidRegionException
-     * @expectedExceptionMessage The supplied ARN partition does not match the client's partition
-     */
-    public function testThrowsForNonmatchingPartition()
-    {
-        $s3 = $this->getTestClient(
-            's3',
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                [
+                    'region' => 'us-west-2',
+                    's3_use_arn_region' => true,
+                ],
+                new InvalidRegionException('The supplied ARN partition does not'
+                    . " match the client's partition.")
+            ],
+            // Non-matching calculated partition
             [
-                'region' => 'us-west-2',
-                's3_use_arn_region' => true,
-            ]
-        );
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand(
-            'GetObject',
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:aws:s3:cn-north-1:123456789012:accesspoint:myendpoint',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                [
+                    'region' => 'us-east-1',
+                    's3_use_arn_region' => true,
+                ],
+                new InvalidRegionException('The corresponding partition for the'
+                    . " supplied ARN region does not match the client's partition.")
+            ],
+            // CreateBucket operation with access point ARN
             [
-                'Bucket' => 'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
-                'Key' => 'Bar/Baz',
-            ]
-        );
-        $s3->execute($command);
-    }
-
-    /**
-     * @expectedException \Aws\Exception\InvalidRegionException
-     * @expectedExceptionMessage The corresponding partition for the supplied ARN region does not match the client's partition
-     */
-    public function testThrowsForNonmatchingCalculatedPartition()
-    {
-        $s3 = $this->getTestClient(
-            's3',
-            [
-                'region' => 'us-east-1',
-                's3_use_arn_region' => true,
-            ]
-        );
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand(
-            'GetObject',
-            [
-                'Bucket' => 'arn:aws:s3:cn-north-1:123456789012:accesspoint:myendpoint',
-                'Key' => 'Bar/Baz',
-            ]
-        );
-        $s3->execute($command);
-    }
-
-    /**
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessage ARN values cannot be used in the bucket field for the CreateBucket operation.
-     */
-    public function testThrowsForCreateBucketWithAccessPointArn()
-    {
-        $s3 = $this->getTestClient(
-            's3',
-            [
-                'region' => 'us-west-2',
-                's3_use_arn_region' => true,
-            ]
-        );
-        $this->addMockResults($s3, [[]]);
-        $command = $s3->getCommand(
-            'CreateBucket',
-            [
-                'Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
-            ]
-        );
-        $result = $s3->execute($command);
-        var_dump($result);
+                new Command(
+                    'CreateBucket',
+                    [
+                        'Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                    ]
+                ),
+                [
+                    'region' => 'us-west-2',
+                    's3_use_arn_region' => true,
+                ],
+                new S3Exception(
+                    'ARN values cannot be used in the bucket field for the'
+                        . ' CreateBucket operation.',
+                    new Command([])
+                )
+            ],
+        ];
     }
 
     public function testCorrectlyHandlesCopyObject()
