@@ -18,7 +18,7 @@ class SignatureV4 implements SignatureInterface
     const AMZ_CONTENT_SHA256_HEADER = 'X-Amz-Content-Sha256';
 
     /** @var string */
-    private $service;
+    protected $service;
 
     /** @var string */
     private $region;

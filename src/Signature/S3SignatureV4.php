@@ -9,13 +9,25 @@ use Psr\Http\Message\RequestInterface;
  */
 class S3SignatureV4 extends SignatureV4
 {
+
     /**
-     * Always add a x-amz-content-sha-256 for data integrity.
+     * S3-specific signing logic
+     *
+     * @param RequestInterface $request
+     * @param CredentialsInterface $credentials
+     * @return \GuzzleHttp\Psr7\Request|RequestInterface
      */
     public function signRequest(
         RequestInterface $request,
         CredentialsInterface $credentials
     ) {
+        // Signing name is changed for redirected outposts endpoints
+        $host = $request->getUri()->getHost();
+        if (strpos($host, '.s3-outposts.') !== false) {
+            $this->service = 's3-outposts';
+        }
+
+        // Always add a x-amz-content-sha-256 for data integrity
         if (!$request->hasHeader('x-amz-content-sha256')) {
             $request = $request->withHeader(
                 'X-Amz-Content-Sha256',
