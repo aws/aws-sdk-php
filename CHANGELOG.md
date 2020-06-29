@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.144.0 - 2020-06-29
 
 * `Aws\Api` - Added defensive parsing of timestamps so it can take epoch or ISO8601 without knowing the type.
 * `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling.
