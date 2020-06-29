@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Added defensive parsing of timestamps so it can take epoch or ISO8601 without knowing the type.
+* `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling.
+* `Aws\CodeGuruProfiler` - Amazon CodeGuru Profiler is now generally available. The Profiler helps developers to optimize their software, troubleshoot issues in production, and identify their most expensive lines of code. As part of general availability, we are launching: Profiling of AWS Lambda functions, Anomaly detection in CPU profiles, Color My Code on flame graphs, Expanding presence to 10 AWS regions.
+* `Aws\CodeStarconnections` - Updated and new APIs in support of hosts for connections to installed provider types. New integration with the GitHub Enterprise Server provider type.
+* `Aws\EC2` - Virtual Private Cloud (VPC) customers can now create and manage their own Prefix Lists to simplify VPC configurations.
+* `Aws\S3` - Allows for unicode character keys in multipart copy.
+
 ## 3.143.2 - 2020-06-26
 
 * `Aws\CloudFormation` - ListStackInstances and DescribeStackInstance now return a new `StackInstanceStatus` object that contains `DetailedStatus` values: a disambiguation of the more generic `Status` value. ListStackInstances output can now be filtered on `DetailedStatus` using the new `Filters` parameter.
