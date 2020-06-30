@@ -24,4 +24,7 @@ parameters:
     # Guzzle V5 classes & interfaces changed in V6
     - '#Call to an undefined static method GuzzleHttp\\Client::getDefaultUserAgent\(\)\.#'
 
+    # Known PHPStan issue https://github.com/phpstan/phpstan/issues/2971
+    - '#Access to undefined constant GuzzleHttp\\ClientInterface::VERSION#'
+    - '#Access to undefined constant GuzzleHttp\\ClientInterface::MAJOR_VERSION#'
   reportUnmatchedIgnoredErrors: false
