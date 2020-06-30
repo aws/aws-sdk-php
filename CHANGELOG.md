@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeGuruReviewer` - Release GitHub Enterprise Server source provider integration
+* `Aws\ComprehendMedical` - This release adds the relationships between MedicalCondition and Anatomy in DetectEntitiesV2 API.
+* `Aws\EC2` - Added support for tag-on-create for CreateVpc, CreateEgressOnlyInternetGateway, CreateSecurityGroup, CreateSubnet, CreateNetworkInterface, CreateNetworkAcl, CreateDhcpOptions and CreateInternetGateway. You can now specify tags when creating any of these resources. For more information about tagging, see AWS Tagging Strategies.
+* `Aws\ECR` - Add a new parameter (ImageDigest) and a new exception (ImageDigestDoesNotMatchException) to PutImage API to support pushing image by digest.
+* `Aws\RDS` - Documentation updates for rds
+
 ## 3.144.0 - 2020-06-29
 
 * `Aws\Api` - Added defensive parsing of timestamps so it can take epoch or ISO8601 without knowing the type.
