@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.144.1 - 2020-06-30
 
 * `Aws\CodeGuruReviewer` - Release GitHub Enterprise Server source provider integration
 * `Aws\ComprehendMedical` - This release adds the relationships between MedicalCondition and Anatomy in DetectEntitiesV2 API.
