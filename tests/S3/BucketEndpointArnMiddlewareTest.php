@@ -75,6 +75,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
     public function accessPointArnCases()
     {
         return [
+            // Standard case
             [
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
                 [
@@ -84,6 +85,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'Bar/Baz',
                 'us-west-2',
             ],
+            // Different regions, use_arn_region set to true
             [
                 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
                 [
@@ -94,6 +96,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'Bar/Baz',
                 'us-east-1',
             ],
+            // s3-external, use_arn_region set to true
             [
                 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
                 [
@@ -104,6 +107,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'Bar/Baz',
                 'us-east-1',
             ],
+            // s3-external, use_arn_region set to false
             [
                 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
                 [
@@ -114,6 +118,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'Bar/Baz',
                 'us-east-1',
             ],
+            // With dual-stack endpoint
             [
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
                 [
@@ -124,6 +129,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'Bar/Baz',
                 'us-west-2',
             ],
+            // Non-aws partition, use_arn_region set to true
             [
                 'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
                 [
@@ -134,6 +140,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'Bar/Baz',
                 'cn-north-1',
             ],
+            // Non-aws partition, use_arn_region set to false
             [
                 'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
                 [
@@ -144,6 +151,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'Bar/Baz',
                 'cn-north-1',
             ],
+            // Non-aws partition, differing regions
             [
                 'arn:aws-cn:s3:cn-northwest-1:123456789012:accesspoint:myendpoint',
                 [
@@ -154,6 +162,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'Bar/Baz',
                 'cn-northwest-1',
             ],
+            // Gov region, use_arn_region set to trues
             [
                 'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
                 [
@@ -164,6 +173,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'Bar/Baz',
                 'us-gov-east-1',
             ],
+            // Fips region, use_arn_region set to true
             [
                 'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
                 [
@@ -174,6 +184,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'Bar/Baz',
                 'us-gov-east-1',
             ],
+            // Fips region with dualstack
             [
                 'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
                 [
@@ -189,7 +200,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
     }
 
     /**
-     * @dataProvider badUsageProvider
+     * @dataProvider incorrectUsageProvider
      *
      * @param CommandInterface $command
      * @param array $config
@@ -215,7 +226,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         }
     }
 
-    public function badUsageProvider()
+    public function incorrectUsageProvider()
     {
         return [
             // Non-matching regions
