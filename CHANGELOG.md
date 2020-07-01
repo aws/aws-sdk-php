@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.144.2 - 2020-07-01
 
 * `Aws\AppSync` - AWS AppSync supports new 12xlarge instance for server-side API caching
 * `Aws\Chime` - This release supports third party emergency call routing configuration for Amazon Chime Voice Connectors.
