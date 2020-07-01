@@ -20,7 +20,6 @@ Aws\DynamoDb\DynamoDbClient::factory($conf);
 
 // React autoloader
 $checks = [
-    'GuzzleHttp\\uri_template',
     'GuzzleHttp\\Psr7\\stream_for',
     'GuzzleHttp\\Promise\\inspect',
     'JmesPath\\search',
@@ -29,7 +28,7 @@ $checks = [
 
 foreach ($checks as $check) {
     if (!function_exists($check)) {
-        echo $checks . ' not found';
+        echo $check . ' not found';
         exit(1);
     }
 }

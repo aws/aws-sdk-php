@@ -1,5 +1,94 @@
 # CHANGELOG
 
+## 3.144.2 - 2020-07-01
+
+* `Aws\AppSync` - AWS AppSync supports new 12xlarge instance for server-side API caching
+* `Aws\Chime` - This release supports third party emergency call routing configuration for Amazon Chime Voice Connectors.
+* `Aws\CodeBuild` - Support build status config in project source
+* `Aws\RDS` - This release adds the exceptions KMSKeyNotAccessibleFault and InvalidDBClusterStateFault to the Amazon RDS ModifyDBInstance API.
+* `Aws\SecurityHub` - This release adds additional details for findings. There are now finding details for auto scaling groups, EC2 volumes, and EC2 VPCs. You can identify detected vulnerabilities and provide related network paths.
+* `Aws\imagebuilder` - EC2 Image Builder adds support for encrypted AMI distribution.
+
+## 3.144.1 - 2020-06-30
+
+* `Aws\CodeGuruReviewer` - Release GitHub Enterprise Server source provider integration
+* `Aws\ComprehendMedical` - This release adds the relationships between MedicalCondition and Anatomy in DetectEntitiesV2 API.
+* `Aws\EC2` - Added support for tag-on-create for CreateVpc, CreateEgressOnlyInternetGateway, CreateSecurityGroup, CreateSubnet, CreateNetworkInterface, CreateNetworkAcl, CreateDhcpOptions and CreateInternetGateway. You can now specify tags when creating any of these resources. For more information about tagging, see AWS Tagging Strategies.
+* `Aws\ECR` - Add a new parameter (ImageDigest) and a new exception (ImageDigestDoesNotMatchException) to PutImage API to support pushing image by digest.
+* `Aws\RDS` - Documentation updates for rds
+
+## 3.144.0 - 2020-06-29
+
+* `Aws\Api` - Added defensive parsing of timestamps so it can take epoch or ISO8601 without knowing the type.
+* `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling.
+* `Aws\CodeGuruProfiler` - Amazon CodeGuru Profiler is now generally available. The Profiler helps developers to optimize their software, troubleshoot issues in production, and identify their most expensive lines of code. As part of general availability, we are launching: Profiling of AWS Lambda functions, Anomaly detection in CPU profiles, Color My Code on flame graphs, Expanding presence to 10 AWS regions.
+* `Aws\CodeStarconnections` - Updated and new APIs in support of hosts for connections to installed provider types. New integration with the GitHub Enterprise Server provider type.
+* `Aws\EC2` - Virtual Private Cloud (VPC) customers can now create and manage their own Prefix Lists to simplify VPC configurations.
+* `Aws\S3` - Allows for unicode character keys in multipart copy.
+
+## 3.143.2 - 2020-06-26
+
+* `Aws\CloudFormation` - ListStackInstances and DescribeStackInstance now return a new `StackInstanceStatus` object that contains `DetailedStatus` values: a disambiguation of the more generic `Status` value. ListStackInstances output can now be filtered on `DetailedStatus` using the new `Filters` parameter.
+* `Aws\CognitoIdentityProvider` - Don't require Authorization for InitiateAuth and RespondToAuthChallenge.
+* `Aws\DatabaseMigrationService` - This release contains miscellaneous API documentation updates for AWS DMS in response to several customer reported issues.
+* `Aws\QuickSight` - Added support for cross-region DataSource credentials copying.
+* `Aws\SageMaker` - The new 'ModelClientConfig' parameter being added for CreateTransformJob and DescribeTransformJob api actions enable customers to configure model invocation related parameters such as timeout and retry.
+
+## 3.143.1 - 2020-06-25
+
+* `Aws\EC2` - Added support for tag-on-create for Host Reservations in Dedicated Hosts. You can now specify tags when you create a Host Reservation for a Dedicated Host. For more information about tagging, see AWS Tagging Strategies.
+* `Aws\Glue` - This release adds new APIs to support column level statistics in AWS Glue Data Catalog
+
+## 3.143.0 - 2020-06-24
+
+* `Aws\Amplify` - This release of AWS Amplify Console introduces support for automatically creating custom subdomains for branches based on user-defined glob patterns, as well as automatically cleaning up Amplify branches when their corresponding git branches are deleted.
+* `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling.
+* `Aws\Backup` - Customers can now manage and monitor their backups in a policied manner across their AWS accounts, via an integration between AWS Backup and AWS Organizations
+* `Aws\CodeCommit` - This release introduces support for reactions to CodeCommit comments. Users will be able to select from a pre-defined list of emojis to express their reaction to any comments.
+* `Aws\EMR` - Amazon EMR customers can now set allocation strategies for On-Demand and Spot instances in their EMR clusters with instance fleets. These allocation strategies use real-time capacity insights to provision clusters faster and make the most efficient use of available spare capacity to allocate Spot instances to reduce interruptions. 
+* `Aws\FSx` - This release adds the capability to take highly-durable, incremental backups of your FSx for Lustre persistent file systems. This capability makes it easy to further protect your file system data and to meet business and regulatory compliance requirements.
+* `Aws\Honeycode` - Introducing Amazon Honeycode - a fully managed service that allows you to quickly build mobile and web apps for teams without programming.
+* `Aws\IAM` - Documentation updates for iam
+* `Aws\Organizations` - This release adds support for a new backup policy type for AWS Organizations.
+
+## 3.142.8 - 2020-06-23
+
+* `Aws\MediaTailor` - AWS Elemental MediaTailor SDK now allows configuration of Bumper.
+* `Aws\Organizations` - Added a new error message to support the requirement for a Business License on AWS accounts in China to create an organization.
+
+## 3.142.7 - 2020-06-22
+
+* `Aws\EC2` - This release adds Tag On Create feature support for the ImportImage, ImportSnapshot, ExportImage and CreateInstanceExportTask APIs.
+* `Aws\EMR` - Adding support for MaximumCoreCapacityUnits parameter for EMR Managed Scaling. It allows users to control how many units/nodes are added to the CORE group/fleet. Remaining units/nodes are added to the TASK groups/fleet in the cluster.
+* `Aws\RDS` - Added paginators for various APIs.
+* `Aws\Rekognition` - This update adds the ability to detect black frames, end credits, shots, and color bars in stored videos
+* `Aws\SQS` - AWS SQS adds pagination support for ListQueues and ListDeadLetterSourceQueues APIs
+
+## 3.142.6 - 2020-06-19
+
+* `Aws\EC2` - Adds support to tag elastic-gpu on the RunInstances api
+* `Aws\ElastiCache` - Documentation updates for elasticache
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports Input Prepare schedule actions. This feature improves existing input switching by allowing users to prepare an input prior to switching to it.
+* `Aws\OpsWorksCM` - Documentation updates for AWS OpsWorks CM.
+
+## 3.142.5 - 2020-06-18
+
+* `Aws\MarketplaceMetering` - Documentation updates for meteringmarketplace
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for NexGuard FileMarker SDK, which allows NexGuard partners to watermark proprietary content in mezzanine and OTT streaming contexts.
+* `Aws\RDS` - Adding support for global write forwarding on secondary clusters in an Aurora global database.
+* `Aws\Route53` - Added a new ListHostedZonesByVPC API for customers to list all the private hosted zones that a specified VPC is associated with.
+* `Aws\SSM` - Added offset support for specifying the number of days to wait after the date and time specified by a CRON expression before running the maintenance window.
+* `Aws\SesV2` - You can now configure Amazon SES to send event notifications when the delivery of an email is delayed because of a temporary issue. For example, you can receive a notification if the recipient's inbox is full, or if there's a temporary problem with the receiving email server.
+* `Aws\Support` - Documentation updates for support
+
+## 3.142.4 - 2020-06-17
+
+* `Aws\AppMesh` - Adds support for route and virtual node listener timeouts.
+* `Aws\EC2` - nvmeSupport added to DescribeInstanceTypes API
+* `Aws\Macie2` - This is a documentation-only update to the Amazon Macie API. This update contains miscellaneous editorial improvements to various API descriptions.
+* `Aws\Route53` - Add PriorRequestNotComplete exception to AssociateVPCWithHostedZone API
+* `Aws\Snowball` - AWS Snowcone is a portable, rugged and secure device for edge computing and data transfer. You can use Snowcone to collect, process, and move data to AWS, either offline by shipping the device to AWS or online by using AWS DataSync. With 2 CPUs and 4 GB RAM of compute and 8 TB of storage, Snowcone can run edge computing workloads and store data securely. Snowcone's small size (8.94" x 5.85" x 3.25" / 227 mm x 148.6 mm x 82.65 mm) allows you to set it next to machinery in a factory. Snowcone weighs about 4.5 lbs. (2 kg), so you can carry one in a backpack, use it with battery-based operation, and use the Wi-Fi interface to gather sensor data. Snowcone supports a file interface with NFS support. 
+
 ## 3.142.3 - 2020-06-16
 
 * `Aws\AutoScaling` - Introducing instance refresh, a feature that helps you update all instances in an Auto Scaling group in a rolling fashion (for example, to apply a new AMI or instance type). You can control the pace of the refresh by defining the percentage of the group that must remain running/healthy during the replacement process and the time for new instances to warm up between replacements.
