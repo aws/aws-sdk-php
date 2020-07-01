@@ -28,7 +28,6 @@ $burgomaster->recursiveCopy('vendor/guzzlehttp/guzzle/src', 'GuzzleHttp');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/psr7/src', 'GuzzleHttp/Psr7');
 $burgomaster->recursiveCopy('vendor/guzzlehttp/promises/src', 'GuzzleHttp/Promise');
 $burgomaster->recursiveCopy('vendor/psr/http-message/src', 'Psr/Http/Message');
-$burgomaster->recursiveCopy('vendor/psr/http-client/src', 'Psr/Http/Client');
 
 $autoloaderContents = [
     'Aws/functions.php',
@@ -41,6 +40,10 @@ $autoloaderContents = [
 if (file_exists($projectRoot . 'vendor/symfony/polyfill-intl-idn')) {
     $burgomaster->recursiveCopy($projectRoot . 'vendor/symfony/polyfill-intl-idn', 'Symfony/Polyfill/IntlIdn');
     array_push($autoloaderContents, 'Symfony/Polyfill/IntlIdn/bootstrap.php');
+}
+
+if (file_exists($projectRoot . 'vendor/psr/http-client/src')) {
+    $burgomaster->recursiveCopy($projectRoot . 'vendor/psr/http-client/src', 'Psr/Http/Client');
 }
 
 $burgomaster->createAutoloader($autoloaderContents, $autoloaderFilename);
