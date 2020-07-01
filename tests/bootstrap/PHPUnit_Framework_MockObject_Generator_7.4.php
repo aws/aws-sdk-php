@@ -1004,7 +1004,7 @@ class PHPUnit_Framework_MockObject_Generator
         }
 
         if ($this->hasReturnType($method)) {
-            $returnType = (string) $method->getReturnType();
+            $returnType = $method->getReturnType()->getName();
         } else {
             $returnType = '';
         }
