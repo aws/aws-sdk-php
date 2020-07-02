@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.145.0 - 2020-07-02
 
 * `Aws\Api` - Fixed bug with marshalling empty strings from dynamodb
 * `Aws\Build` - Updated packager code to work with Guzzle 7.
