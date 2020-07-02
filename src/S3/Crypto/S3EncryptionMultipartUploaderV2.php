@@ -1,8 +1,8 @@
 <?php
 namespace Aws\S3\Crypto;
 
-use Aws\Crypto\AbstractCryptoClient;
-use Aws\Crypto\EncryptionTrait;
+use Aws\Crypto\AbstractCryptoClientV2;
+use Aws\Crypto\EncryptionTraitV2;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\Crypto\Cipher\CipherBuilderTrait;
 use Aws\S3\MultipartUploader;
@@ -12,14 +12,14 @@ use GuzzleHttp\Promise;
 /**
  * Encapsulates the execution of a multipart upload of an encrypted object to S3.
  *
- * Legacy implementation using older encryption workflow. Use
- * S3EncryptionMultipartUploaderV2 if possible.
- *
- * @deprecated
+ * Note that for PHP versions of < 7.1, this class uses an AES-GCM polyfill
+ * for encryption since there is no native PHP support. The performance for large
+ * inputs will be a lot slower than for PHP 7.1+, so upgrading older PHP version
+ * environments may be necessary to use this effectively.
  */
-class S3EncryptionMultipartUploader extends MultipartUploader
+class S3EncryptionMultipartUploaderV2 extends MultipartUploader
 {
-    use EncryptionTrait, CipherBuilderTrait, CryptoParamsTrait;
+    use EncryptionTraitV2, CipherBuilderTrait, CryptoParamsTraitV2;
 
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
@@ -30,7 +30,7 @@ class S3EncryptionMultipartUploader extends MultipartUploader
      */
     public static function isSupportedCipher($cipherName)
     {
-        return in_array($cipherName, AbstractCryptoClient::$supportedCiphers);
+        return in_array($cipherName, AbstractCryptoClientV2::$supportedCiphers);
     }
 
     private $provider;
@@ -40,19 +40,23 @@ class S3EncryptionMultipartUploader extends MultipartUploader
     /**
      * Creates a multipart upload for an S3 object after encrypting it.
      *
+     * Note that for PHP versions of < 7.1, this class uses an AES-GCM polyfill
+     * for encryption since there is no native PHP support. The performance for
+     * large inputs will be a lot slower than for PHP 7.1+, so upgrading older
+     * PHP version environments may be necessary to use this effectively.
+     *
      * The required configuration options are as follows:
      *
-     * - @MaterialsProvider: (MaterialsProvider) Provides Cek, Iv, and Cek
+     * - @MaterialsProvider: (MaterialsProviderV2) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for encryption metadata.
      * - @CipherOptions: (array) Cipher options for encrypting data. A Cipher
      *   is required. Accepts the following options:
-     *       - Cipher: (string) cbc|gcm
-     *            See also: AbstractCryptoClient::$supportedCiphers
-     *       - KeySize: (int) 128|192|256
+     *       - Cipher: (string) gcm
+     *            See also: AbstractCryptoClientV2::$supportedCiphers
+     *       - KeySize: (int) 128|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
-     *            passed directly to OpenSSL when using gcm. It is ignored when
-     *            using cbc.
+     *            passed directly to OpenSSL when using gcm.
      * - bucket: (string) Name of the bucket to which the object is
      *   being uploaded.
      * - key: (string) Key to use for the object being uploaded.

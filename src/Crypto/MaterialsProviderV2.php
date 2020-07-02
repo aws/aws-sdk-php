@@ -1,11 +1,10 @@
 <?php
 namespace Aws\Crypto;
 
-abstract class MaterialsProvider implements MaterialsProviderInterface
+abstract class MaterialsProviderV2 implements MaterialsProviderInterface
 {
     private static $supportedKeySizes = [
         128 => true,
-        192 => true,
         256 => true,
     ];
 
@@ -28,7 +27,7 @@ abstract class MaterialsProvider implements MaterialsProviderInterface
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
      *
-     * @return MaterialsProvider
+     * @return MaterialsProviderV2
      *
      * @throws \RuntimeException Thrown when there is an empty or improperly
      *                           formed materials description in the envelope.
@@ -38,33 +37,11 @@ abstract class MaterialsProvider implements MaterialsProviderInterface
     abstract public function fromDecryptionEnvelope(MetadataEnvelope $envelope);
 
     /**
-     * Returns the material description for this Provider so it can be verified
-     * by encryption mechanisms.
-     *
-     * @return string
-     */
-    abstract public function getMaterialsDescription();
-
-    /**
      * Returns the wrap algorithm name for this Provider.
      *
      * @return string
      */
     abstract public function getWrapAlgorithmName();
-
-    /**
-     * Takes a content encryption key (CEK) and description to return an
-     * encrypted key according to the Provider's specifications.
-     *
-     * @param string $unencryptedCek Key for use in encrypting other data
-     *                               that itself needs to be encrypted by the
-     *                               Provider.
-     * @param string $materialDescription Material Description for use in
-     *                                    encrypting the $cek.
-     *
-     * @return string
-     */
-    abstract public function encryptCek($unencryptedCek, $materialDescription);
 
     /**
      * Takes an encrypted content encryption key (CEK) and material description
@@ -82,13 +59,11 @@ abstract class MaterialsProvider implements MaterialsProviderInterface
     /**
      * @param string $keySize Length of a cipher key in bits for generating a
      *                        random content encryption key (CEK).
+     * @param array $context Context map needed for key encryption
      *
-     * @return string
+     * @return array
      */
-    public function generateCek($keySize)
-    {
-        return openssl_random_pseudo_bytes($keySize / 8);
-    }
+    abstract public function generateCek($keySize, $context);
 
     /**
      * @param string $openSslName Cipher OpenSSL name to use for generating

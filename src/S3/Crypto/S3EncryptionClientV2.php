@@ -3,9 +3,9 @@ namespace Aws\S3\Crypto;
 
 use Aws\HashingStream;
 use Aws\PhpHash;
-use Aws\Crypto\AbstractCryptoClient;
-use Aws\Crypto\EncryptionTrait;
-use Aws\Crypto\DecryptionTrait;
+use Aws\Crypto\AbstractCryptoClientV2;
+use Aws\Crypto\DecryptionTraitV2;
+use Aws\Crypto\EncryptionTraitV2;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\Crypto\MaterialsProvider;
 use Aws\Crypto\Cipher\CipherBuilderTrait;
@@ -18,14 +18,14 @@ use GuzzleHttp\Psr7;
  * Provides a wrapper for an S3Client that supplies functionality to encrypt
  * data on putObject[Async] calls and decrypt data on getObject[Async] calls.
  *
- * Legacy implementation using older encryption workflow. Use
- * S3EncryptionClientV2 if possible.
- *
- * @deprecated
+ * Note that for PHP versions of < 7.1, this class uses an AES-GCM polyfill
+ * for encryption since there is no native PHP support. The performance for large
+ * inputs will be a lot slower than for PHP 7.1+, so upgrading older PHP version
+ * environments may be necessary to use this effectively.
  */
-class S3EncryptionClient extends AbstractCryptoClient
+class S3EncryptionClientV2 extends AbstractCryptoClientV2
 {
-    use EncryptionTrait, DecryptionTrait, CipherBuilderTrait, CryptoParamsTrait;
+    use EncryptionTraitV2, DecryptionTraitV2, CipherBuilderTrait, CryptoParamsTraitV2;
 
     private $client;
     private $instructionFileSuffix;
@@ -55,18 +55,24 @@ class S3EncryptionClient extends AbstractCryptoClient
      * Encrypts the data in the 'Body' field of $args and promises to upload it
      * to the specified location on S3.
      *
+     * Note that for PHP versions of < 7.1, this operation uses an AES-GCM
+     * polyfill for encryption since there is no native PHP support. The
+     * performance for large inputs will be a lot slower than for PHP 7.1+, so
+     * upgrading older PHP version environments may be necessary to use this
+     * effectively.
+     *
      * @param array $args Arguments for encrypting an object and uploading it
      *                    to S3 via PutObject.
      *
      * The required configuration arguments are as follows:
      *
-     * - @MaterialsProvider: (MaterialsProvider) Provides Cek, Iv, and Cek
+     * - @MaterialsProvider: (MaterialsProviderV2) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for encryption metadata.
      * - @CipherOptions: (array) Cipher options for encrypting data. Only the
      *   Cipher option is required. Accepts the following:
-     *       - Cipher: (string) cbc|gcm
-     *            See also: AbstractCryptoClient::$supportedCiphers
-     *       - KeySize: (int) 128|192|256
+     *       - Cipher: (string) gcm
+     *            See also: AbstractCryptoClientV2::$supportedCiphers
+     *       - KeySize: (int) 128|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
@@ -145,6 +151,12 @@ class S3EncryptionClient extends AbstractCryptoClient
      * Encrypts the data in the 'Body' field of $args and uploads it to the
      * specified location on S3.
      *
+     * Note that for PHP versions of < 7.1, this operation uses an AES-GCM
+     * polyfill for encryption since there is no native PHP support. The
+     * performance for large inputs will be a lot slower than for PHP 7.1+, so
+     * upgrading older PHP version environments may be necessary to use this
+     * effectively.
+     *
      * @param array $args Arguments for encrypting an object and uploading it
      *                    to S3 via PutObject.
      *
@@ -154,9 +166,9 @@ class S3EncryptionClient extends AbstractCryptoClient
      *   encrypting/decrypting for encryption metadata.
      * - @CipherOptions: (array) Cipher options for encrypting data. A Cipher
      *   is required. Accepts the following options:
-     *       - Cipher: (string) cbc|gcm
-     *            See also: AbstractCryptoClient::$supportedCiphers
-     *       - KeySize: (int) 128|192|256
+     *       - Cipher: (string) gcm
+     *            See also: AbstractCryptoClientV2::$supportedCiphers
+     *       - KeySize: (int) 128|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
@@ -193,7 +205,7 @@ class S3EncryptionClient extends AbstractCryptoClient
      *
      * The required configuration argument is as follows:
      *
-     * - @MaterialsProvider: (MaterialsProvider) Provides Cek, Iv, and Cek
+     * - @MaterialsProvider: (MaterialsProviderInterface) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for decryption metadata. May have data loaded
      *   from the MetadataEnvelope upon decryption.
      *
@@ -291,7 +303,7 @@ class S3EncryptionClient extends AbstractCryptoClient
      *
      * The required configuration argument is as follows:
      *
-     * - @MaterialsProvider: (MaterialsProvider) Provides Cek, Iv, and Cek
+     * - @MaterialsProvider: (MaterialsProviderInterface) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for decryption metadata. May have data loaded
      *   from the MetadataEnvelope upon decryption.
      *

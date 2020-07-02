@@ -2,19 +2,14 @@
 namespace Aws\Crypto;
 
 use Aws\Crypto\Cipher\CipherMethod;
-use Aws\Crypto\Cipher\Cbc;
 use GuzzleHttp\Psr7\Stream;
 
 /**
- * Legacy abstract encryption client. New workflows should use
- * AbstractCryptoClientV2.
- *
- * @deprecated
  * @internal
  */
-abstract class AbstractCryptoClient
+abstract class AbstractCryptoClientV2
 {
-    public static $supportedCiphers = ['cbc', 'gcm'];
+    public static $supportedCiphers = ['gcm'];
 
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
@@ -25,12 +20,12 @@ abstract class AbstractCryptoClient
      */
     public static function isSupportedCipher($cipherName)
     {
-        return in_array($cipherName, self::$supportedCiphers);
+        return in_array($cipherName, self::$supportedCiphers, true);
     }
 
     /**
      * Returns an identifier recognizable by `openssl_*` functions, such as
-     * `aes-256-cbc` or `aes-128-ctr`.
+     * `aes-256-gcm`
      *
      * @param string $cipherName Name of the cipher being used for encrypting
      *                           or decrypting.
@@ -76,8 +71,8 @@ abstract class AbstractCryptoClient
      *                          materials, algorithm, and data provided.
      * @param array $cipherOptions Options for use in determining the cipher to
      *                             be used for encrypting data.
-     * @param MaterialsProvider $provider A provider to supply and encrypt
-     *                                    materials used in encryption.
+     * @param MaterialsProviderV2 $provider A provider to supply and encrypt
+     *                                      materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be added to.
      *
@@ -88,7 +83,7 @@ abstract class AbstractCryptoClient
     abstract public function encrypt(
         Stream $plaintext,
         array $cipherOptions,
-        MaterialsProvider $provider,
+        MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope
     );
 
@@ -98,8 +93,8 @@ abstract class AbstractCryptoClient
      *
      * @param string $cipherText Plain-text data to be decrypted using the
      *                           materials, algorithm, and data provided.
-     * @param MaterialsProvider $provider A provider to supply and encrypt
-     *                                    materials used in encryption.
+     * @param MaterialsProviderInterface $provider A provider to supply and encrypt
+     *                                             materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
      * @param array $cipherOptions Additional verification options.
@@ -110,7 +105,7 @@ abstract class AbstractCryptoClient
      */
     abstract public function decrypt(
         $cipherText,
-        MaterialsProvider $provider,
+        MaterialsProviderInterface $provider,
         MetadataEnvelope $envelope,
         array $cipherOptions = []
     );
