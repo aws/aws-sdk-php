@@ -199,9 +199,14 @@ class BucketEndpointArnMiddleware
         return $region;
     }
 
+    private function isFipsPseudoRegion($region)
+    {
+        return strpos($region, 'fips-') !== false || strpos($region, '-fips') !== false;
+    }
+
     private function isMatchingSigningRegion($arnRegion, $clientRegion)
     {
-        $arnRegion = strtolower($arnRegion);
+        $arnRegion = $this->stripPseudoRegions(strtolower($arnRegion));
         $clientRegion = $this->stripPseudoRegions(strtolower($clientRegion));
         if ($arnRegion === $clientRegion) {
             return true;
@@ -229,6 +234,17 @@ class BucketEndpointArnMiddleware
         if ($arn instanceof AccessPointArn
             || $arn instanceof OutpostsAccessPointArn
         ) {
+
+            // Dualstack is not supported with Outposts access points
+            if ($arn instanceof OutpostsAccessPointArn
+                && !empty($this->config['dual_stack'])
+            ) {
+                throw new UnresolvedEndpointException(
+                    'Dualstack is currently not supported with S3 Outposts access'
+                    . ' points. Please disable dualstack or do not supply an'
+                    . ' access point ARN.');
+            }
+
             // Accelerate is not supported with access points
             if (!empty($this->config['accelerate'])) {
                 throw new UnresolvedEndpointException(
@@ -292,6 +308,24 @@ class BucketEndpointArnMiddleware
                         . " specified in the ARN (" . $arn->getRegion()
                         . ") does not match the client region ("
                         . "{$this->region}).");
+                }
+            }
+
+            // Ensure it is not resolved to fips pseudo-region for S3 Outposts
+            if ($arn instanceof OutpostsAccessPointArn) {
+                if (empty($this->config['use_arn_region'])
+                    || !($this->config['use_arn_region']->isUseArnRegion())
+                ) {
+                    $region = $this->region;
+                } else {
+                    $region = $arn->getRegion();
+                }
+
+                if ($this->isFipsPseudoRegion($region)) {
+                    throw new InvalidRegionException(
+                        'Fips is currently not supported with S3 Outposts access'
+                        . ' points. Please provide a non-fips region or do not supply an'
+                        . ' access point ARN.');
                 }
             }
 
