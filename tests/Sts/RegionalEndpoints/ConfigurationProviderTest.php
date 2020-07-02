@@ -108,7 +108,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
         $result = call_user_func(
-            ConfigurationProvider::defaultProvider(['use_aws_config_file' => true])
+            ConfigurationProvider::defaultProvider(['use_aws_shared_files' => true])
         )->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
@@ -122,7 +122,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::defaultProvider(
-            ['use_aws_config_file' => false])
+            ['use_aws_shared_files' => false])
         )->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');

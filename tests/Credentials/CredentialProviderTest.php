@@ -21,6 +21,13 @@ class CredentialProviderTest extends TestCase
 {
     private $home, $homedrive, $homepath, $key, $secret, $profile;
 
+    private static $standardIni = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = bar
+aws_session_token = baz
+EOT;
+
     use UsesServiceTrait;
 
     private function clearEnv()
@@ -224,13 +231,6 @@ EOT;
         ];
     }
 
-    private static $standardIni = <<<EOT
-[default]
-aws_access_key_id = foo
-aws_secret_access_key = bar
-aws_session_token = baz
-EOT;
-
     public function testUsesIniWithUseAwsConfigFileTrue()
     {
         $dir = $this->clearEnv();
@@ -243,7 +243,7 @@ EOT;
         ];
         putenv('HOME=' . dirname($dir));
         $creds = call_user_func(
-            CredentialProvider::defaultProvider(['use_aws_config_file' => true])
+            CredentialProvider::defaultProvider(['use_aws_shared_files' => true])
         )->wait();
         $this->assertEquals($expectedCreds, $creds->toArray());
         unlink($dir . '/credentials');
@@ -266,7 +266,7 @@ EOT;
 
         putenv('HOME=' . dirname($dir));
         $creds = call_user_func(
-            CredentialProvider::defaultProvider(['use_aws_config_file' => false])
+            CredentialProvider::defaultProvider(['use_aws_shared_files' => false])
         )->wait();
         $this->assertEquals($expectedCreds, $creds->toArray());
         unlink($dir . '/credentials');

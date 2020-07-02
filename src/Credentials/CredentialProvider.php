@@ -85,8 +85,8 @@ class CredentialProvider
             'web_identity' => self::assumeRoleWithWebIdentityCredentialProvider($config),
         ];
         if (
-            !isset($config['use_aws_config_file'])
-            || $config['use_aws_config_file'] !== false
+            !isset($config['use_aws_shared_files'])
+            || $config['use_aws_shared_files'] !== false
         ) {
             $defaultChain['ini'] = self::ini();
             $defaultChain['ini_config'] = self::ini(

@@ -217,10 +217,10 @@ class ClientResolver
             'default'   => true,
             'fn'        => [__CLASS__, '_apply_idempotency_auto_fill']
         ],
-        'use_aws_config_file' => [
+        'use_aws_shared_files' => [
             'type'      => 'value',
             'valid'     => ['bool'],
-            'doc'       => 'Set to false to disable checking for an aws config file usually located in \'~/.aws/config\'.',
+            'doc'       => 'Set to false to disable checking for a shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.',
             'default'   => true,
         ],
     ];

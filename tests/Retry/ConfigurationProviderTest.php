@@ -128,7 +128,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
         $result = call_user_func(
-            ConfigurationProvider::defaultProvider(['use_aws_config_file' => true])
+            ConfigurationProvider::defaultProvider(['use_aws_shared_files' => true])
         )->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
@@ -139,10 +139,10 @@ EOT;
         $dir = $this->clearEnv();
         $expected = new Configuration('legacy', 3);
         file_put_contents($dir . '/config', $this->iniFile);
-        putenv('HOME=' . dirname($dir));
+        putenv('HOME=' . dirname("garbageDirectory"));
         /** @var ConfigurationInterface $result */
         $result = call_user_func(
-            ConfigurationProvider::defaultProvider(['use_aws_config_file' => false])
+            ConfigurationProvider::defaultProvider(['use_aws_shared_files' => false])
         )->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
