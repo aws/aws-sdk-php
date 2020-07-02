@@ -41,6 +41,15 @@ class XmlParserTest extends TestCase
             ["2002-05-30T09:30:10.5", "ParseIso8601", "2002-05-30T09:30:10+00:00"],
             ["2002-05-30T09:30:10.5", "ParseUnix", "2002-05-30T09:30:10+00:00"],
             ["2002-05-30T09:30:10.5", "ParseUnknown", "2002-05-30T09:30:10+00:00"],
+            [null, "ParseIso8601", "1970-01-01T00:00:00+00:00"],
+            [null, "ParseUnix", "1970-01-01T00:00:00+00:00"],
+            [null, "ParseUnknown", '1970-01-01T00:00:00+00:00'],
+            [false, "ParseIso8601", "1970-01-01T00:00:00+00:00"],
+            [false, "ParseUnix", "1970-01-01T00:00:00+00:00"],
+            [false, "ParseUnknown", '1970-01-01T00:00:00+00:00'],
+            [(float) 0, "ParseIso8601", "1970-01-01T00:00:00+00:00"],
+            [(float) 0, "ParseUnix", "1970-01-01T00:00:00+00:00"],
+            [(float) 0, "ParseUnknown", '1970-01-01T00:00:00+00:00'],
         ];
     }
 
@@ -68,12 +77,6 @@ class XmlParserTest extends TestCase
             [acos(1.01), "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             [acos(1.01), "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             [acos(1.01), "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [false, "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [false, "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [false, "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [null, "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [null, "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [null, "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
         ];
     }
 
