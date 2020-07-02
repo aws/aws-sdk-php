@@ -49,7 +49,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      */
     public static function fromTimestamp($timestamp, $expectedFormat = null)
     {
-        if (empty($timestamp)){
+        if (empty($timestamp)) {
             return self::fromEpoch(0);
         }
 
