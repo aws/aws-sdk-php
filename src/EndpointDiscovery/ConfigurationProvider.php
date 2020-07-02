@@ -80,7 +80,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         ) {
             $configProviders [] = self::ini();
         }
-        $configProviders [] = self::fallback();
+        $configProviders [] = self::fallback($config);
 
         $memo = self::memoize(
             call_user_func_array('self::chain', $configProviders)
