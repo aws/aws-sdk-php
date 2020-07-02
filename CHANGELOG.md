@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Fixed bug with marshalling empty strings from dynamodb
+* `Aws\Build` - Updated packager code to work with Guzzle 7.
+* `Aws\Connect` - Documentation updates for Amazon Connect.
+* `Aws\ElastiCache` - Documentation updates for elasticache
+* `Aws\S3` - Adds a V2 implementation for the S3 encryption client, which has an updated encryption workflow and should be used over the original encryption client when possible.
+
 ## 3.144.2 - 2020-07-01
 
 * `Aws\AppSync` - AWS AppSync supports new 12xlarge instance for server-side API caching
