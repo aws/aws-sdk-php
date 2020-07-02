@@ -220,7 +220,7 @@ class ClientResolver
         'use_aws_shared_files' => [
             'type'      => 'value',
             'valid'     => ['bool'],
-            'doc'       => 'Set to false to disable checking for a shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.',
+            'doc'       => 'Set to false to disable checking for shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.',
             'default'   => true,
         ],
     ];

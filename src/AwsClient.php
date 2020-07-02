@@ -173,7 +173,7 @@ class AwsClient implements AwsClientInterface
      *   version.
      * - use_aws_shared_files: (bool, default=bool(true)) Set to false to
      *   disable checking for shared config file in '~/.aws/config' and
-     *   '~/.aws/credentials'.  This will also override the AWS_CONFIG_FILE
+     *   '~/.aws/credentials'.  This will override the AWS_CONFIG_FILE
      *   environment variable
      * - validate: (bool, default=bool(true)) Set to false to disable
      *   client-side parameter validation.
