@@ -19,9 +19,6 @@ trait ResourceTypeAndIdTrait
     private static function parseResourceTypeAndId(array $data)
     {
         $resourceData = preg_split("/[\/:]/", $data['resource'], 2);
-        $data['resource_type'] = null;
-        $data['resource_id'] = null;
-
         $data['resource_type'] = isset($resourceData[0])
             ? $resourceData[0]
             : null;
