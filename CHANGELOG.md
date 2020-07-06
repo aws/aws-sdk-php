@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTSiteWise` - This release supports optional start date and end date parameters for the GetAssetPropertyValueHistory API.
+* `Aws\QuickSight` - Add Theme APIs and update Dashboard APIs to support theme overrides.
+* `Aws\RDS` - Adds support for Amazon RDS on AWS Outposts.
+
 ## 3.145.0 - 2020-07-02
 
 * `Aws\Api` - Fixed bug with marshalling empty strings from dynamodb
