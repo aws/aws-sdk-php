@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.145.1 - 2020-07-06
 
 * `Aws\IoTSiteWise` - This release supports optional start date and end date parameters for the GetAssetPropertyValueHistory API.
 * `Aws\QuickSight` - Add Theme APIs and update Dashboard APIs to support theme overrides.
