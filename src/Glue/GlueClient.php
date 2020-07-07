@@ -151,6 +151,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getPartitionsAsync(array $args = [])
  * @method \Aws\Result getPlan(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getPlanAsync(array $args = [])
+ * @method \Aws\Result getResourcePolicies(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getResourcePoliciesAsync(array $args = [])
  * @method \Aws\Result getResourcePolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getResourcePolicyAsync(array $args = [])
  * @method \Aws\Result getSecurityConfiguration(array $args = [])
