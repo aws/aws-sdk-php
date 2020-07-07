@@ -33,12 +33,8 @@ trait UsesMetadataEnvelopeTrait
                 6
             ],
             [
-                MetadataEnvelope::UNENCRYPTED_CONTENT_MD5_HEADER,
-                7
-            ],
-            [
                 MetadataEnvelope::UNENCRYPTED_CONTENT_LENGTH_HEADER,
-                8
+                7
             ],
         ];
     }

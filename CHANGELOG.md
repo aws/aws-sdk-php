@@ -1,5 +1,67 @@
 # CHANGELOG
 
+## 3.145.2 - 2020-07-07
+
+* `Aws\CloudFront` - Amazon CloudFront adds support for a new security policy, TLSv1.2_2019.
+* `Aws\EC2` - DescribeAvailabilityZones now returns additional data about Availability Zones and Local Zones.
+* `Aws\EFS` - This release adds support for automatic backups of Amazon EFS file systems to further simplify backup management. 
+* `Aws\Glue` - AWS Glue Data Catalog supports cross account sharing of tables through AWS Lake Formation
+* `Aws\LakeFormation` -  AWS Lake Formation supports sharing tables with other AWS accounts and organizations
+* `Aws\StorageGateway` - Adding support for file-system driven directory refresh, Case Sensitivity toggle for SMB File Shares, and S3 Prefixes and custom File Share names
+
+## 3.145.1 - 2020-07-06
+
+* `Aws\IoTSiteWise` - This release supports optional start date and end date parameters for the GetAssetPropertyValueHistory API.
+* `Aws\QuickSight` - Add Theme APIs and update Dashboard APIs to support theme overrides.
+* `Aws\RDS` - Adds support for Amazon RDS on AWS Outposts.
+
+## 3.145.0 - 2020-07-02
+
+* `Aws\Api` - Fixed bug with marshalling empty strings from dynamodb
+* `Aws\Build` - Updated packager code to work with Guzzle 7.
+* `Aws\Connect` - Documentation updates for Amazon Connect.
+* `Aws\ElastiCache` - Documentation updates for elasticache
+* `Aws\S3` - Adds a V2 implementation for the S3 encryption client, which has an updated encryption workflow and should be used over the original encryption client when possible.
+
+## 3.144.2 - 2020-07-01
+
+* `Aws\AppSync` - AWS AppSync supports new 12xlarge instance for server-side API caching
+* `Aws\Chime` - This release supports third party emergency call routing configuration for Amazon Chime Voice Connectors.
+* `Aws\CodeBuild` - Support build status config in project source
+* `Aws\RDS` - This release adds the exceptions KMSKeyNotAccessibleFault and InvalidDBClusterStateFault to the Amazon RDS ModifyDBInstance API.
+* `Aws\SecurityHub` - This release adds additional details for findings. There are now finding details for auto scaling groups, EC2 volumes, and EC2 VPCs. You can identify detected vulnerabilities and provide related network paths.
+* `Aws\imagebuilder` - EC2 Image Builder adds support for encrypted AMI distribution.
+
+## 3.144.1 - 2020-06-30
+
+* `Aws\CodeGuruReviewer` - Release GitHub Enterprise Server source provider integration
+* `Aws\ComprehendMedical` - This release adds the relationships between MedicalCondition and Anatomy in DetectEntitiesV2 API.
+* `Aws\EC2` - Added support for tag-on-create for CreateVpc, CreateEgressOnlyInternetGateway, CreateSecurityGroup, CreateSubnet, CreateNetworkInterface, CreateNetworkAcl, CreateDhcpOptions and CreateInternetGateway. You can now specify tags when creating any of these resources. For more information about tagging, see AWS Tagging Strategies.
+* `Aws\ECR` - Add a new parameter (ImageDigest) and a new exception (ImageDigestDoesNotMatchException) to PutImage API to support pushing image by digest.
+* `Aws\RDS` - Documentation updates for rds
+
+## 3.144.0 - 2020-06-29
+
+* `Aws\Api` - Added defensive parsing of timestamps so it can take epoch or ISO8601 without knowing the type.
+* `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling.
+* `Aws\CodeGuruProfiler` - Amazon CodeGuru Profiler is now generally available. The Profiler helps developers to optimize their software, troubleshoot issues in production, and identify their most expensive lines of code. As part of general availability, we are launching: Profiling of AWS Lambda functions, Anomaly detection in CPU profiles, Color My Code on flame graphs, Expanding presence to 10 AWS regions.
+* `Aws\CodeStarconnections` - Updated and new APIs in support of hosts for connections to installed provider types. New integration with the GitHub Enterprise Server provider type.
+* `Aws\EC2` - Virtual Private Cloud (VPC) customers can now create and manage their own Prefix Lists to simplify VPC configurations.
+* `Aws\S3` - Allows for unicode character keys in multipart copy.
+
+## 3.143.2 - 2020-06-26
+
+* `Aws\CloudFormation` - ListStackInstances and DescribeStackInstance now return a new `StackInstanceStatus` object that contains `DetailedStatus` values: a disambiguation of the more generic `Status` value. ListStackInstances output can now be filtered on `DetailedStatus` using the new `Filters` parameter.
+* `Aws\CognitoIdentityProvider` - Don't require Authorization for InitiateAuth and RespondToAuthChallenge.
+* `Aws\DatabaseMigrationService` - This release contains miscellaneous API documentation updates for AWS DMS in response to several customer reported issues.
+* `Aws\QuickSight` - Added support for cross-region DataSource credentials copying.
+* `Aws\SageMaker` - The new 'ModelClientConfig' parameter being added for CreateTransformJob and DescribeTransformJob api actions enable customers to configure model invocation related parameters such as timeout and retry.
+
+## 3.143.1 - 2020-06-25
+
+* `Aws\EC2` - Added support for tag-on-create for Host Reservations in Dedicated Hosts. You can now specify tags when you create a Host Reservation for a Dedicated Host. For more information about tagging, see AWS Tagging Strategies.
+* `Aws\Glue` - This release adds new APIs to support column level statistics in AWS Glue Data Catalog
+
 ## 3.143.0 - 2020-06-24
 
 * `Aws\Amplify` - This release of AWS Amplify Console introduces support for automatically creating custom subdomains for branches based on user-defined glob patterns, as well as automatically cleaning up Amplify branches when their corresponding git branches are deleted.
