@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.145.2 - 2020-07-07
 
 * `Aws\CloudFront` - Amazon CloudFront adds support for a new security policy, TLSv1.2_2019.
 * `Aws\EC2` - DescribeAvailabilityZones now returns additional data about Availability Zones and Local Zones.
