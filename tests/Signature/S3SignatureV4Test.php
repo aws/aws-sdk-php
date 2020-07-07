@@ -48,22 +48,6 @@ class S3SignatureV4Test extends TestCase
         );
     }
 
-    public function testModifiesSigningServiceForS3Outposts()
-    {
-        $request = new Request('PUT', 'https://myaccesspoint-123456789012.op-01234567890123456.s3-outposts.us-west-2.amazonaws.com', [], 'foo');
-        $credentials = new Credentials('foo', 'bar');
-        $signature = new S3SignatureV4('service', 'region');
-        $result = $signature->signRequest($request, $credentials);
-        $this->assertContains(
-            'region/s3-outposts',
-            $result->getHeaderLine('Authorization')
-        );
-        $this->assertContains(
-            'Signature=ef5d6608e15d7ecec13aef6ac4ab582afc0fb5f7aa70059bfb061e1b4152b5a5',
-            $result->getHeaderLine('Authorization')
-        );
-    }
-
     public function testDoesNotRemoveDotSegments()
     {
         list($request, $credentials, $signature) = $this->getFixtures();

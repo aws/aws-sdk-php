@@ -133,6 +133,11 @@ class BucketEndpointArnMiddleware
                         ]);
                         $cmd['@context']['signing_region'] = $endpointData['signingRegion'];
 
+                        // Update signing service for Outposts ARNs
+                        if ($arn instanceof OutpostsAccessPointArn) {
+                            $cmd['@context']['signing_service'] = $arn->getService();
+                        }
+
                     } catch (InvalidArnException $e) {
                         // Add context to ARN exception
                         throw new S3Exception(

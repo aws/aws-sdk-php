@@ -21,12 +21,6 @@ class S3SignatureV4 extends SignatureV4
         RequestInterface $request,
         CredentialsInterface $credentials
     ) {
-        // Signing name is changed for redirected outposts endpoints
-        $host = $request->getUri()->getHost();
-        if (strpos($host, '.s3-outposts.') !== false) {
-            $this->service = 's3-outposts';
-        }
-
         // Always add a x-amz-content-sha-256 for data integrity
         if (!$request->hasHeader('x-amz-content-sha256')) {
             $request = $request->withHeader(
