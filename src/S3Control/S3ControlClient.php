@@ -2,6 +2,9 @@
 namespace Aws\S3Control;
 
 use Aws\AwsClient;
+use Aws\CacheInterface;
+use Aws\S3\UseArnRegion\Configuration;
+use Aws\S3\UseArnRegion\ConfigurationProvider as UseArnRegionConfigurationProvider;
 
 /**
  * This client is used to interact with the **AWS S3 Control** service.
@@ -59,6 +62,19 @@ class S3ControlClient extends AwsClient
                     . ' \'@use_dual_stack_endpoint\' to true or false.',
                 'default' => false,
             ],
+            'use_arn_region' => [
+                'type'    => 'config',
+                'valid'   => [
+                    'bool',
+                    Configuration::class,
+                    CacheInterface::class,
+                    'callable'
+                ],
+                'doc'     => 'Set to true to allow passed in ARNs to override'
+                    . ' client region. Accepts...',
+                'fn' => [__CLASS__, '_apply_use_arn_region'],
+                'default' => [UseArnRegionConfigurationProvider::class, 'defaultProvider'],
+            ],
         ];
     }
 
@@ -89,6 +105,20 @@ class S3ControlClient extends AwsClient
                 ]
             ),
             's3control.endpoint_middleware'
+        );
+        $stack->appendBuild(
+            BucketEndpointArnMiddleware::wrap(
+                $this->getApi(),
+                $this->getRegion(),
+                [
+                    'use_arn_region' => $this->getConfig('use_arn_region'),
+                    'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
+                    'endpoint' => isset($args['endpoint'])
+                        ? $args['endpoint']
+                        : null
+                ]
+            ),
+            's3control.bucket_endpoint_arn'
         );
     }
 }
