@@ -913,22 +913,21 @@ class StreamWrapperTest extends TestCase
             new Result([
                 'Body' => new Psr7\NoSeekStream(new Psr7\Stream($stream))
             ]),
+            new Result([
+                'Body' => new Psr7\NoSeekStream(new Psr7\Stream($stream))
+            ])
         ]);
 
         $this->assertEmpty($this->cache->get('foo://bucket/key'));
 
         $objectStream = fopen('foo://bucket/key', 'w');
-
         stat('foo://bucket/key');
-
         $this->assertNotNull($this->cache->get('foo://bucket/key'));
 
         fwrite($objectStream, 'bar');
-
         fflush($objectStream);
-
         $this->assertEmpty($this->cache->get('foo://bucket/key'));
-
+        
         stream_wrapper_unregister('foo');
     }
 }
