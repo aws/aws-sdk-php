@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.145.3 - 2020-07-08
 
 * `Aws\CostExplorer` - Customers can now see Instance Name alongside each rightsizing recommendation.
 * `Aws\EC2` - EC2 Spot now enables customers to tag their Spot Instances Requests on creation.
