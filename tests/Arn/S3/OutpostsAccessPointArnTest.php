@@ -179,8 +179,9 @@ class OutpostsAccessPointArnTest extends TestCase
             [
                 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:accesspoint:extra:components',
                 new InvalidArnException("An S3 Outposts access point ARN"
-                    . " should only have 9 components. 'extra:components'"
-                    . " was found after the 9th component.")
+                    . " should only have 9 components, delimited by the characters"
+                    . " ':' and '/'. 'extra:components' was found after the 9th"
+                    . " component.")
             ],
         ];
     }

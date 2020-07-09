@@ -24,7 +24,7 @@ class S3SignatureV4 extends SignatureV4
         // Always add a x-amz-content-sha-256 for data integrity
         if (!$request->hasHeader('x-amz-content-sha256')) {
             $request = $request->withHeader(
-                'X-Amz-Content-Sha256',
+                'x-amz-content-sha256',
                 $this->getPayload($request)
             );
         }

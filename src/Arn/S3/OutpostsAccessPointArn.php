@@ -109,7 +109,7 @@ class OutpostsAccessPointArn extends BaseAccessPointArn implements ArnInterface
         if (!empty($data['resource_extra'])) {
             throw new InvalidArnException("An S3 Outposts access point ARN"
                 . " should only have 9 components, delimited by the characters"
-                . " ':' and '/'. {$data['resource_extra']}' was found after the"
+                . " ':' and '/'. '{$data['resource_extra']}' was found after the"
                 . " 9th component.");
         }
     }
