@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.145.4 - 2020-07-09
 
 * `Aws\AlexaForBusiness` - Added support for registering an AVS device directly to a room using RegisterAVSDevice with a room ARN
 * `Aws\Amplify` - Documentation update to the introduction text to specify that this is the Amplify Console API.
