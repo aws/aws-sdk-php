@@ -533,6 +533,94 @@ class RetryMiddlewareTest extends TestCase
         ], $httpStats);
     }
 
+    public function testReportsHttpStatsForEachException()
+    {
+        $command = new Command('TestCommand');
+        $response = new Response(500);
+
+        $handler = new MockHandler([
+            new AwsException(
+                'Test Exception',
+                $command,
+                [
+                    'response' => $response,
+                    'transfer_stats' => [
+                        'starttransfer_time' => 5,
+                        'appconnect_time' => 4
+                    ]
+                ]
+            ),
+            new AwsException(
+                'Test Exception',
+                $command,
+                [
+                    'response' => $response,
+                    'transfer_stats' => [
+                        'starttransfer_time' => 10,
+                        'appconnect_time' => 8
+                    ]
+                ]
+            ),
+            new AwsException(
+                'Test Exception',
+                $command,
+                [
+                    'response' => $response,
+                    'transfer_stats' => [
+                        'starttransfer_time' => 15,
+                        'appconnect_time' => 12
+                    ]
+                ]
+            ),
+            new AwsException(
+                'Test Exception',
+                $command,
+                [
+                    'response' => $response,
+                    'transfer_stats' => [
+                        'starttransfer_time' => 20,
+                        'appconnect_time' => 16
+                    ]
+                ]
+            )
+        ]);
+        $retryMW = new RetryMiddleware(
+            RetryMiddleware::createDefaultDecider($retries = 3),
+            [RetryMiddleware::class, 'exponentialDelay'],
+            $handler,
+            true
+        );
+
+        try {
+            $retryMW(new Command('SomeCommand'), new Request('GET', ''))
+                ->wait();
+            $this->fail('This command should have produced an AwsException.');
+        } catch (AwsException $e) {
+            $stats= $e->getTransferInfo();
+            $this->assertEquals(
+                [
+                    [
+                        'starttransfer_time' => 5,
+                        'appconnect_time' => 4
+                    ],
+                    [
+                        'starttransfer_time' => 10,
+                        'appconnect_time' => 8
+                    ],
+                    [
+                        'starttransfer_time' => 15,
+                        'appconnect_time' => 12
+                    ],
+                    [
+                        'starttransfer_time' => 20,
+                        'appconnect_time' => 16
+                    ],
+                ],
+                $stats['http']
+            );
+        }
+    }
+
     public function testReportsHttpStatsForEachRequestEvenIfRetryStatsDisabled()
     {
         $handler = new MockHandler([
