@@ -67,15 +67,4 @@ class AccessPointArn extends Arn implements ArnInterface
                 . " must be a valid host label value.");
         }
     }
-
-    protected static function isValidHostLabel($string)
-    {
-        if (empty($string) || strlen($string) > 63) {
-            return false;
-        }
-        if ($value = preg_match("/^[a-zA-Z0-9-]+$/", $string)) {
-            return true;
-        }
-        return false;
-    }
 }

@@ -151,4 +151,21 @@ class Arn implements ArnInterface
                 . " to further qualify resources.");
         }
     }
+
+    /**
+     * Validates whether a string component is a valid host label
+     *
+     * @param $string
+     * @return bool
+     */
+    protected static function isValidHostLabel($string)
+    {
+        if (empty($string) || strlen($string) > 63) {
+            return false;
+        }
+        if ($value = preg_match("/^[a-zA-Z0-9-]+$/", $string)) {
+            return true;
+        }
+        return false;
+    }
 }

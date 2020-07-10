@@ -2,7 +2,7 @@
 namespace Aws\Arn;
 
 use Aws\Arn\S3\AccessPointArn as S3AccessPointArn;
-use Aws\Arn\S3\BucketArn;
+use Aws\Arn\S3\RegionalBucketArn;
 use Aws\Arn\S3\OutpostsAccessPointArn;
 
 /**
