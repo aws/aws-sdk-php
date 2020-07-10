@@ -30,6 +30,16 @@ class OutpostsBucketArn extends Arn implements ArnInterface
         return self::parseOutpostData($data);
     }
 
+    public function getBucketName()
+    {
+        return $this->data['bucket_name'];
+    }
+
+    public function getOutpostId()
+    {
+        return $this->data['outpost_id'];
+    }
+
     private static function parseOutpostData(array $data)
     {
         $resourceData = preg_split("/[\/:]/", $data['resource_id'], 3);
