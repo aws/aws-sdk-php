@@ -2,6 +2,7 @@
 namespace Aws\Arn;
 
 use Aws\Arn\S3\AccessPointArn as S3AccessPointArn;
+use Aws\Arn\S3\OutpostsBucketArn;
 use Aws\Arn\S3\RegionalBucketArn;
 use Aws\Arn\S3\OutpostsAccessPointArn;
 
@@ -30,16 +31,30 @@ class ArnParser
     public static function parse($string)
     {
         $data = Arn::parse($string);
-        if (substr($data['resource'], 0, 7) === 'outpost') {
-            return new OutpostsAccessPointArn($string);
+        $resource = self::explodeResourceComponent($data['resource']);
+        if ($resource[0] === 'outpost') {
+            if ($resource[2] === 'bucket') {
+                return new OutpostsBucketArn($string);
+            }
+            if ($resource[2] === 'accesspoint') {
+                return new OutpostsAccessPointArn($string);
+            }
         }
-        if (substr($data['resource'], 0, 11) === 'accesspoint') {
+        if ($resource[0] === 'accesspoint') {
             if ($data['service'] === 's3') {
                 return new S3AccessPointArn($string);
             }
             return new AccessPointArn($string);
         }
+        if ($data['service'] === 's3' && $resource[0] === 'bucket') {
+            return new RegionalBucketArn($string);
+        }
 
         return new Arn($data);
+    }
+
+    private static function explodeResourceComponent($resource)
+    {
+        return preg_split("/[\/:]/", $resource);
     }
 }
