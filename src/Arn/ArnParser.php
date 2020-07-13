@@ -33,10 +33,10 @@ class ArnParser
         $data = Arn::parse($string);
         $resource = self::explodeResourceComponent($data['resource']);
         if ($resource[0] === 'outpost') {
-            if ($resource[2] === 'bucket') {
+            if (isset($resource[2]) && $resource[2] === 'bucket') {
                 return new OutpostsBucketArn($string);
             }
-            if ($resource[2] === 'accesspoint') {
+            if (isset($resource[2]) && $resource[2] === 'accesspoint') {
                 return new OutpostsAccessPointArn($string);
             }
         }

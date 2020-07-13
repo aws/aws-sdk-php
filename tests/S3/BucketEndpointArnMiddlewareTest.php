@@ -565,9 +565,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ),
                 ['region' => 'us-west-2'],
                 new S3Exception(
-                    'Bucket parameter parsed as ARN and failed with: The 7th'
-                    . ' component of an S3 Outposts access point ARN is required,'
-                    . ' represents the outpost ID, and must be a valid host label.',
+                    'Bucket parameter parsed as ARN and failed with: Provided'
+                    . ' ARN was not a valid S3 access point ARN or S3 Outposts'
+                    . ' access point ARN.',
                     new Command([])
                 )
             ],

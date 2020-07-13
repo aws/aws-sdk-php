@@ -67,7 +67,7 @@ class Arn implements ArnInterface
                 . ' array as an argument.');
         }
 
-        self::validate($this->data);
+        static::validate($this->data);
     }
 
     public function __toString()

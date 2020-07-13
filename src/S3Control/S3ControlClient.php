@@ -3,8 +3,11 @@ namespace Aws\S3Control;
 
 use Aws\AwsClient;
 use Aws\CacheInterface;
+use Aws\HandlerList;
 use Aws\S3\UseArnRegion\Configuration;
+use Aws\S3\UseArnRegion\ConfigurationInterface;
 use Aws\S3\UseArnRegion\ConfigurationProvider as UseArnRegionConfigurationProvider;
+use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * This client is used to interact with the **AWS S3 Control** service.
@@ -76,6 +79,25 @@ class S3ControlClient extends AwsClient
                 'default' => [UseArnRegionConfigurationProvider::class, 'defaultProvider'],
             ],
         ];
+    }
+
+    public static function _apply_use_arn_region($value, array &$args, HandlerList $list)
+    {
+        if ($value instanceof CacheInterface) {
+            $value = UseArnRegionConfigurationProvider::defaultProvider($args);
+        }
+        if (is_callable($value)) {
+            $value = $value();
+        }
+        if ($value instanceof PromiseInterface) {
+            $value = $value->wait();
+        }
+        if ($value instanceof ConfigurationInterface) {
+            $args['use_arn_region'] = $value;
+        } else {
+            // The Configuration class itself will validate other inputs
+            $args['use_arn_region'] = new Configuration($value);
+        }
     }
 
     /**

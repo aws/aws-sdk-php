@@ -39,8 +39,77 @@ class OutpostsBucketArnTest extends TestCase
     public function parsedArnProvider()
     {
         return [
+            // Colon delimiters
             [
-
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:bucket:mybucket',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 's3-outposts',
+                    'region' => 'us-west-2',
+                    'account_id' => '123456789012',
+                    'resource_type' => 'outpost',
+                    'resource_id' => 'op-01234567890123456:bucket:mybucket',
+                    'resource' => 'outpost:op-01234567890123456:bucket:mybucket',
+                    'outpost_id' => 'op-01234567890123456',
+                    'bucket_name' => 'mybucket',
+                    'bucket_label' => 'bucket'
+                ],
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:bucket:mybucket',
+            ],
+            // Slash delimiters
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost/op-01234567890123456/bucket/mybucket',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 's3-outposts',
+                    'region' => 'us-west-2',
+                    'account_id' => '123456789012',
+                    'resource_type' => 'outpost',
+                    'resource_id' => 'op-01234567890123456/bucket/mybucket',
+                    'resource' => 'outpost/op-01234567890123456/bucket/mybucket',
+                    'outpost_id' => 'op-01234567890123456',
+                    'bucket_name' => 'mybucket',
+                    'bucket_label' => 'bucket'
+                ],
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost/op-01234567890123456/bucket/mybucket',
+            ],
+            // Mixed colon & slash delimiters
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost/op-01234567890123456:bucket/mybucket',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 's3-outposts',
+                    'region' => 'us-west-2',
+                    'account_id' => '123456789012',
+                    'resource_type' => 'outpost',
+                    'resource_id' => 'op-01234567890123456:bucket/mybucket',
+                    'resource' => 'outpost/op-01234567890123456:bucket/mybucket',
+                    'outpost_id' => 'op-01234567890123456',
+                    'bucket_name' => 'mybucket',
+                    'bucket_label' => 'bucket'
+                ],
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost/op-01234567890123456:bucket/mybucket',
+            ],
+            // Minimum inputs
+            [
+                'arn:aws:s3-outposts:us-west-2:1:outpost:2:bucket:3',
+                [
+                    'arn' => 'arn',
+                    'partition' => 'aws',
+                    'service' => 's3-outposts',
+                    'region' => 'us-west-2',
+                    'account_id' => '1',
+                    'resource_type' => 'outpost',
+                    'resource_id' => '2:bucket:3',
+                    'resource' => 'outpost:2:bucket:3',
+                    'outpost_id' => '2',
+                    'bucket_name' => '3',
+                    'bucket_label' => 'bucket'
+                ],
+                'arn:aws:s3-outposts:us-west-2:1:outpost:2:bucket:3',
             ],
         ];
     }
@@ -69,6 +138,42 @@ class OutpostsBucketArnTest extends TestCase
     {
         return [
             [
+                'arn:aws:s3:us-west-2:123456789012:outpost:op-01234567890123456:bucket:mybucket',
+                new InvalidArnException("The 3rd component of an S3 Outposts"
+                    . " bucket ARN represents the service and must be 's3-outposts'.")
+            ],
+            [
+                'arn:aws:s3-outposts::123456789012:outpost:op-01234567890123456:bucket:mybucket',
+                new InvalidArnException("The 4th component of an S3 Outposts"
+                . " bucket ARN represents the region and must not be empty.")
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:%$#:outpost:op-01234567890123456:bucket:mybucket',
+                new InvalidArnException("The 5th component of an S3 Outposts"
+                    . " bucket ARN is required, represents the account ID, and"
+                    . " must be a valid host label.")
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:someresource:op-01234567890123456:bucket:mybucket',
+                new InvalidArnException("The 6th component of an S3 Outposts"
+                    . " bucket ARN represents the resource type and must be"
+                    . " 'outpost'.")
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:!!!:bucket:mybucket',
+                new InvalidArnException("The 7th component of an S3 Outposts"
+                    . " bucket ARN is required, represents the outpost ID, and"
+                    . " must be a valid host label.")
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:foo:mybucket',
+                new InvalidArnException("The 8th component of an S3 Outposts"
+                    . " bucket ARN must be 'bucket'")
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:bucket:',
+                new InvalidArnException("The 9th component of an S3 Outposts"
+                    . " bucket ARN represents the bucket name and must not be empty.")
             ],
         ];
     }
