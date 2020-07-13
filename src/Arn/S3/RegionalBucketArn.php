@@ -61,7 +61,7 @@ class RegionalBucketArn extends Arn implements ArnInterface
         Arn::validate($data);
 
         if (($data['service'] !== 's3')) {
-            throw new InvalidArnException("The 3rd component of an S3 regional"
+            throw new InvalidArnException("The 3rd component of an S3"
                 . " bucket ARN represents the service and must be 's3'.");
         }
 
@@ -71,19 +71,19 @@ class RegionalBucketArn extends Arn implements ArnInterface
         }
 
         if (!self::isValidHostLabel($data['account_id'])) {
-            throw new InvalidArnException("The 5th component of an S3 regional"
+            throw new InvalidArnException("The 5th component of an S3"
                 . " bucket ARN is required, represents the account ID, and"
                 . " must be a valid host label.");
         }
 
         if (($data['resource_type'] !== 'bucket')) {
-            throw new InvalidArnException("The 6th component of an S3 regional"
+            throw new InvalidArnException("The 6th component of an S3"
                 . " bucket ARN represents the resource type and must be"
                 . " 'bucket'.");
         }
 
         if (empty($data['bucket_name'])) {
-            throw new InvalidArnException("The 7th component of an S3 regional"
+            throw new InvalidArnException("The 7th component of an S3"
                 . " bucket ARN represents the bucket name and must not be empty.");
         }
     }
