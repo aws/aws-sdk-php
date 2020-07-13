@@ -217,7 +217,7 @@ class ClientResolver
             'default'   => true,
             'fn'        => [__CLASS__, '_apply_idempotency_auto_fill']
         ],
-        'use_aws_shared_files' => [
+        'use_aws_shared_config_files' => [
             'type'      => 'value',
             'valid'     => ['bool'],
             'doc'       => 'Set to false to disable checking for shared aws config files usually located in \'~/.aws/config\' and \'~/.aws/credentials\'.',

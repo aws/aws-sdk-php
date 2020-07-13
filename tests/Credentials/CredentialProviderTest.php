@@ -243,7 +243,7 @@ EOT;
         ];
         putenv('HOME=' . dirname($dir));
         $creds = call_user_func(
-            CredentialProvider::defaultProvider(['use_aws_shared_files' => true])
+            CredentialProvider::defaultProvider(['use_aws_shared_config_files' => true])
         )->wait();
         $this->assertEquals($expectedCreds, $creds->toArray());
         unlink($dir . '/credentials');
@@ -266,7 +266,7 @@ EOT;
 
         putenv('HOME=' . dirname($dir));
         $creds = call_user_func(
-            CredentialProvider::defaultProvider(['use_aws_shared_files' => false])
+            CredentialProvider::defaultProvider(['use_aws_shared_config_files' => false])
         )->wait();
         $this->assertEquals($expectedCreds, $creds->toArray());
         unlink($dir . '/credentials');

@@ -104,15 +104,13 @@ EOT;
         $dir = $this->clearEnv();
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' . $dir . "/alt_config");
         $expected = new Configuration(true);
-        file_put_contents($dir . '/config', $this->iniFile);
         file_put_contents($dir . '/alt_config', $this->altIniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
         $result = call_user_func(
-            ConfigurationProvider::defaultProvider(['use_aws_shared_files' => true])
+            ConfigurationProvider::defaultProvider(['use_aws_shared_config_files' => true])
         )->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
-        unlink($dir . '/config');
         unlink($dir . '/alt_config');
     }
 
@@ -124,7 +122,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
         $result = call_user_func(
-            ConfigurationProvider::defaultProvider(['use_aws_shared_files' => false])
+            ConfigurationProvider::defaultProvider(['use_aws_shared_config_files' => false])
         )->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
         unlink($dir . '/config');

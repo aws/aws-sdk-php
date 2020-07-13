@@ -72,12 +72,12 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     {
         $configProviders = [self::env()];
         if (
-            !isset($config['use_aws_shared_files'])
-            || $config['use_aws_shared_files'] != false
+            !isset($config['use_aws_shared_config_files'])
+            || $config['use_aws_shared_config_files'] != false
         ) {
-            $configProviders [] = self::ini();
+            $configProviders[] = self::ini();
         }
-        $configProviders [] = self::fallback();
+        $configProviders[] = self::fallback();
 
         $memo = self::memoize(
             call_user_func_array('self::chain', $configProviders)

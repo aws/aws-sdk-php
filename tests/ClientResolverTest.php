@@ -120,10 +120,10 @@ class ClientResolverTest extends TestCase
         $conf = $r->resolve([
             'service'      => 'dynamodb',
             'region'       => 'x',
-            'use_aws_shared_files' => false,
+            'use_aws_shared_config_files' => false,
             'version'      => 'latest'
         ], new HandlerList());
-        $this->assertSame($conf['use_aws_shared_files'], false);
+        $this->assertSame($conf['use_aws_shared_config_files'], false);
     }
 
     public function testPrefersApiProviderNameToPartitionName()
