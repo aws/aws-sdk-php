@@ -23,6 +23,8 @@ use Psr\Http\Message\RequestInterface;
  */
 class BucketEndpointArnMiddleware
 {
+    use EndpointRegionHelperTrait;
+
     /** @var Service */
     private $service;
 
@@ -181,50 +183,8 @@ class BucketEndpointArnMiddleware
         } else {
             $region = $this->region;
         }
-        $host .= '.' . $region . '.' . $this->getPartitionSuffix($arn);
+        $host .= '.' . $region . '.' . $this->getPartitionSuffix($arn, $this->partitionProvider);
         return $host;
-    }
-
-    private function getPartitionSuffix(ArnInterface $arn)
-    {
-        $partition = $this->partitionProvider->getPartition(
-            $arn->getRegion(),
-            $arn->getService()
-        );
-        return $partition->getDnsSuffix();
-    }
-
-    private function getSigningRegion($region)
-    {
-        $partition = PartitionEndpointProvider::defaultProvider()->getPartition($region, 's3');
-        $data = $partition->toArray();
-        if (isset($data['services']['s3']['endpoints'][$region]['credentialScope']['region'])) {
-            return $data['services']['s3']['endpoints'][$region]['credentialScope']['region'];
-        }
-        return $region;
-    }
-
-    private function isFipsPseudoRegion($region)
-    {
-        return strpos($region, 'fips-') !== false || strpos($region, '-fips') !== false;
-    }
-
-    private function isMatchingSigningRegion($arnRegion, $clientRegion)
-    {
-        $arnRegion = $this->stripPseudoRegions(strtolower($arnRegion));
-        $clientRegion = $this->stripPseudoRegions(strtolower($clientRegion));
-        if ($arnRegion === $clientRegion) {
-            return true;
-        }
-        if ($this->getSigningRegion($clientRegion) === $arnRegion) {
-            return true;
-        }
-        return false;
-    }
-
-    private function stripPseudoRegions($region)
-    {
-        return str_replace(['fips-', '-fips'], ['', ''], $region);
     }
 
     /**
@@ -305,7 +265,12 @@ class BucketEndpointArnMiddleware
 
             // Ensure ARN region matches client region unless
             // configured for using ARN region over client region
-            if (!($this->isMatchingSigningRegion($arn->getRegion(), $this->region))) {
+            if (!($this->isMatchingSigningRegion(
+                $arn->getRegion(),
+                $this->region,
+                $this->service->getEndpointPrefix(),
+                $this->partitionProvider)
+            )) {
                 if (empty($this->config['use_arn_region'])
                     || !($this->config['use_arn_region']->isUseArnRegion())
                 ) {
