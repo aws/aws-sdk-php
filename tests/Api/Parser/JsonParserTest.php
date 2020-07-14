@@ -39,6 +39,12 @@ class JsonParserTest extends TestCase
             ["1999-07-17T00:00:00.5", "ParseIso8601", "1999-07-17T00:00:00+00:00"],
             ["1999-07-17T00:00:00.5", "ParseUnix", "1999-07-17T00:00:00+00:00"],
             ["1999-07-17T00:00:00.5", "ParseUnknown", "1999-07-17T00:00:00+00:00"],
+            [[], "ParseIso8601", "1970-01-01T00:00:00+00:00"],
+            [[], "ParseUnix", "1970-01-01T00:00:00+00:00"],
+            [[], "ParseUnknown", '1970-01-01T00:00:00+00:00'],
+            [(float) 0, "ParseIso8601", "1970-01-01T00:00:00+00:00"],
+            [(float) 0, "ParseUnix", "1970-01-01T00:00:00+00:00"],
+            [(float) 0, "ParseUnknown", '1970-01-01T00:00:00+00:00'],
         ];
     }
 
@@ -66,15 +72,9 @@ class JsonParserTest extends TestCase
             ["[]", "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             ["[]", "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             ["[]", "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [false, "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [false, "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [false, "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             ["null", "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             ["null", "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             ["null", "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [[], "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [[], "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
-            [[], "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             [true, "ParseIso8601", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             [true, "ParseUnix", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
             [true, "ParseUnknown", ParserException::class, "Invalid timestamp value passed to DateTimeResult::fromTimestamp"],
@@ -84,7 +84,7 @@ class JsonParserTest extends TestCase
     /**
      * @dataProvider timeStampModelProvider
      */
-    public function testHandlesTimeStampsWhenIso8601Expected(
+    public function testHandlesTimeStamps(
         $timestamp,
         $commandName,
         $expectedValue
