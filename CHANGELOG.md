@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fixes issue with transfer stats not being populated for calls with retried exceptions.
+* `Aws\IVS` - Introducing Amazon Interactive Video Service - a managed live streaming solution that is quick and easy to set up, and ideal for creating interactive video experiences.
+
 ## 3.145.4 - 2020-07-09
 
 * `Aws\AlexaForBusiness` - Added support for registering an AVS device directly to a room using RegisterAVSDevice with a room ARN
