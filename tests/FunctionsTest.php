@@ -375,6 +375,39 @@ class FunctionsTest extends TestCase
     }
 
     /**
+     * @covers Aws\is_valid_hostlabel()
+     * @dataProvider getHostlabelTestCases
+     * @param string $label
+     * @param bool $expected
+     */
+    public function testValidatesHostlabels($label, $expected)
+    {
+        $this->assertEquals($expected, Aws\is_valid_hostlabel($label));
+    }
+
+    public function getHostlabelTestCases()
+    {
+        return [
+            ['a', true],
+            ['a.', false],
+            ['0', true],
+            ['a-b', true],
+            ['a-b.c-d', false],
+            ['a--b', true],
+            ['a b', false],
+            ['<a', false],
+            ['(a', false],
+            ['a>', false],
+            ['a)', false],
+            [' ', false],
+            ['-', false],
+            ['', false],
+            [str_repeat('a', 63), true],
+            [str_repeat('a', 64), false],
+        ];
+    }
+
+    /**
      * @covers Aws\parse_ini_file()
      * @dataProvider getIniFileTestCases
      */
