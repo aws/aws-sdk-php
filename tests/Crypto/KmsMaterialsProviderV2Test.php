@@ -22,7 +22,7 @@ class KmsMaterialsProviderV2Test extends TestCase
         $keyId = '11111111-2222-3333-4444-555555555555';
 
         $provider = new KmsMaterialsProviderV2($client, $keyId);
-        $this->assertEquals('kms', $provider->getWrapAlgorithmName());
+        $this->assertEquals('kms+context', $provider->getWrapAlgorithmName());
     }
 
     public function testGeneratesCek()

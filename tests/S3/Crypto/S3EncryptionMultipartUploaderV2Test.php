@@ -413,7 +413,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                     $this->assertEquals('foo', $command['Bucket']);
                     $this->assertEquals('bar', $command['Key']);
                     $this->assertEquals(
-                        'kms',
+                        'kms+context',
                         $command['Metadata']['x-amz-wrap-alg']
                     );
                 },
