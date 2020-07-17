@@ -2,7 +2,6 @@
 namespace Aws\Arn\S3;
 
 use Aws\Arn\Arn;
-use Aws\Arn\ArnInterface;
 use Aws\Arn\Exception\InvalidArnException;
 use Aws\Arn\ResourceTypeAndIdTrait;
 
@@ -12,7 +11,9 @@ use Aws\Arn\ResourceTypeAndIdTrait;
  *
  * @internal
  */
-class OutpostsBucketArn extends Arn implements BucketArnInterface
+class OutpostsBucketArn extends Arn implements
+    BucketArnInterface,
+    OutpostsArnInterface
 {
     use ResourceTypeAndIdTrait;
 
