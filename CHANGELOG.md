@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Added the use_aws_shared_config_files client constructor option to not attempt to access shared config files.
+* `Aws\AppSync` - Documentation update to Cachingconfig.cachingKeys to include $context.source as a valid value.
+* `Aws\ApplicationAutoScaling` - Documentation updates for Application Auto Scaling
+* `Aws\Connect` - This release adds a set of Amazon Connect APIs to programmatically control call recording with start, stop, pause and resume functions.
+* `Aws\Crypto` - Tweaks the wrap algorithm name for KmsMaterialsProviderV2 for the sake of cross-SDK consistency.
+* `Aws\EC2` - Documentation updates for EC2
+* `Aws\ElasticBeanstalk` - Add waiters for `EnvironmentExists`, `EnvironmentUpdated`, and `EnvironmentTerminated`. Add paginators for `DescribeEnvironmentManagedActionHistory` and `ListPlatformVersions`.
+* `Aws\Macie2` - This release of the Amazon Macie API includes miscellaneous updates and improvements to the documentation.
+
 ## 3.146.0 - 2020-07-15
 
 * `Aws\` - Fixes issue with transfer stats not being populated for calls with retried exceptions.
