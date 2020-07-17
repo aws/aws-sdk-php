@@ -440,8 +440,7 @@ function is_valid_hostname($hostname)
  */
 function is_valid_hostlabel($label)
 {
-    return preg_match("/^([a-z\d](-*[a-z\d])*)$/", $label)
-        && preg_match("/^.{1,63}$/", $label);
+    return preg_match("/^(?!-)[a-zA-Z0-9-]{1,63}(?<!-)$/", $label);
 }
 
 /**
