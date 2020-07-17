@@ -17,7 +17,7 @@ use Aws\Arn\ResourceTypeAndIdTrait;
  *
  * @internal
  */
-class RegionalBucketArn extends Arn implements ArnInterface
+class RegionalBucketArn extends Arn implements BucketArnInterface
 {
     use ResourceTypeAndIdTrait;
 

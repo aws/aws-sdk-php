@@ -6,7 +6,7 @@ use Aws\Arn\Exception\InvalidArnException;
 /**
  * @internal
  */
-class AccessPointArn extends Arn implements ArnInterface
+class AccessPointArn extends Arn implements AccessPointArnInterface
 {
     use ResourceTypeAndIdTrait;
 
@@ -24,7 +24,14 @@ class AccessPointArn extends Arn implements ArnInterface
     public static function parse($string)
     {
         $data = parent::parse($string);
-        return self::parseResourceTypeAndId($data);
+        $data = self::parseResourceTypeAndId($data);
+        $data['accesspoint_name'] = $data['resource_id'];
+        return $data;
+    }
+
+    public function getAccessPointName()
+    {
+        return $this->data['accesspoint_name'];
     }
 
     /**

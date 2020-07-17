@@ -12,7 +12,7 @@ use Aws\Arn\ResourceTypeAndIdTrait;
  *
  * @internal
  */
-class OutpostsBucketArn extends Arn implements ArnInterface
+class OutpostsBucketArn extends Arn implements BucketArnInterface
 {
     use ResourceTypeAndIdTrait;
 
