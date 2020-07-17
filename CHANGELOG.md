@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.0 - 2020-07-17
 
 * `Aws\` - Added the use_aws_shared_config_files client constructor option to not attempt to access shared config files.
 * `Aws\AppSync` - Documentation update to Cachingconfig.cachingKeys to include $context.source as a valid value.
