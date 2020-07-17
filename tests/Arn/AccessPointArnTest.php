@@ -27,6 +27,7 @@ class AccessPointArnTest extends TestCase
         $this->assertEquals($expected['region'], $arn->getRegion());
         $this->assertEquals($expected['account_id'], $arn->getAccountId());
         $this->assertEquals($expected['resource'], $arn->getResource());
+        $this->assertEquals($expected['accesspoint_name'], $arn->getAccessPointName());
         $this->assertEquals($expectedString, (string) $arn);
     }
 
@@ -45,6 +46,7 @@ class AccessPointArnTest extends TestCase
                     'resource_type' => 'accesspoint',
                     'resource_id' => 'myendpoint',
                     'resource' => 'accesspoint:myendpoint',
+                    'accesspoint_name' => 'myendpoint',
                 ],
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
             ],
@@ -60,6 +62,7 @@ class AccessPointArnTest extends TestCase
                     'resource_type' => 'accesspoint',
                     'resource_id' => 'myendpoint',
                     'resource' => 'accesspoint:myendpoint',
+                    'accesspoint_name' => 'myendpoint',
                 ],
                 'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
             ],
@@ -75,6 +78,7 @@ class AccessPointArnTest extends TestCase
                     'resource_type' => 'accesspoint',
                     'resource_id' => 'myendpoint',
                     'resource' => 'accesspoint/myendpoint',
+                    'accesspoint_name' => 'myendpoint',
                 ],
                 'arn:aws:foo:us-west-2:123456789012:accesspoint/myendpoint',
             ],
