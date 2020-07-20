@@ -114,6 +114,18 @@ class ClientResolverTest extends TestCase
         $this->assertSame($conf['config']['signing_name'], $signingName);
     }
 
+    public function testAppliesUseAwsSharedFilesTOConfig()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service'      => 'dynamodb',
+            'region'       => 'x',
+            'use_aws_shared_config_files' => false,
+            'version'      => 'latest'
+        ], new HandlerList());
+        $this->assertSame($conf['use_aws_shared_config_files'], false);
+    }
+
     public function testPrefersApiProviderNameToPartitionName()
     {
         $signingName = 'foo';

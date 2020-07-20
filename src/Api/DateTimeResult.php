@@ -49,26 +49,31 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      */
     public static function fromTimestamp($timestamp, $expectedFormat = null)
     {
-            if (empty($timestamp) || !(is_string($timestamp) || is_numeric($timestamp))) {
-                throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromTimestamp');
-            }
-            try {
-                if ($expectedFormat == 'iso8601') {
-                    try {
-                        return self::fromISO8601($timestamp);
-                    } catch (Exception $exception) {
-                        return self::fromEpoch($timestamp);
-                    }
-                } else if ($expectedFormat == 'unixTimestamp') {
-                    try {
-                        return self::fromEpoch($timestamp);
-                    } catch (Exception $exception) {
-                        return self::fromISO8601($timestamp);
-                    }
-                } else if (\Aws\is_valid_epoch($timestamp)) {
+        if (empty($timestamp)) {
+            return self::fromEpoch(0);
+        }
+
+        if (!(is_string($timestamp) || is_numeric($timestamp))) {
+            throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromTimestamp');
+        }
+
+        try {
+            if ($expectedFormat == 'iso8601') {
+                try {
+                    return self::fromISO8601($timestamp);
+                } catch (Exception $exception) {
                     return self::fromEpoch($timestamp);
                 }
-                return self::fromISO8601($timestamp);
+            } else if ($expectedFormat == 'unixTimestamp') {
+                try {
+                    return self::fromEpoch($timestamp);
+                } catch (Exception $exception) {
+                    return self::fromISO8601($timestamp);
+                }
+            } else if (\Aws\is_valid_epoch($timestamp)) {
+                return self::fromEpoch($timestamp);
+            }
+            return self::fromISO8601($timestamp);
         } catch (Exception $exception) {
             throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromTimestamp');
         }

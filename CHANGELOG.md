@@ -1,5 +1,66 @@
 # CHANGELOG
 
+## 3.147.0 - 2020-07-17
+
+* `Aws\` - Added the use_aws_shared_config_files client constructor option to not attempt to access shared config files.
+* `Aws\AppSync` - Documentation update to Cachingconfig.cachingKeys to include $context.source as a valid value.
+* `Aws\ApplicationAutoScaling` - Documentation updates for Application Auto Scaling
+* `Aws\Connect` - This release adds a set of Amazon Connect APIs to programmatically control call recording with start, stop, pause and resume functions.
+* `Aws\Crypto` - Tweaks the wrap algorithm name for KmsMaterialsProviderV2 for the sake of cross-SDK consistency.
+* `Aws\EC2` - Documentation updates for EC2
+* `Aws\ElasticBeanstalk` - Add waiters for `EnvironmentExists`, `EnvironmentUpdated`, and `EnvironmentTerminated`. Add paginators for `DescribeEnvironmentManagedActionHistory` and `ListPlatformVersions`.
+* `Aws\Macie2` - This release of the Amazon Macie API includes miscellaneous updates and improvements to the documentation.
+
+## 3.146.0 - 2020-07-15
+
+* `Aws\` - Fixes issue with transfer stats not being populated for calls with retried exceptions.
+* `Aws\IVS` - Introducing Amazon Interactive Video Service - a managed live streaming solution that is quick and easy to set up, and ideal for creating interactive video experiences.
+
+## 3.145.4 - 2020-07-09
+
+* `Aws\AlexaForBusiness` - Added support for registering an AVS device directly to a room using RegisterAVSDevice with a room ARN
+* `Aws\Amplify` - Documentation update to the introduction text to specify that this is the Amplify Console API.
+* `Aws\AppMesh` - AppMesh now supports Ingress which allows resources outside a mesh to communicate to resources that are inside the mesh. See https://docs.aws.amazon.com/app-mesh/latest/userguide/virtual_gateways.html
+* `Aws\CloudHSMV2` - Documentation updates for cloudhsmv2
+* `Aws\CloudWatchEvents` - Amazon CloudWatch Events/EventBridge adds support for API Gateway as a target.
+* `Aws\Comprehend` - AWS Comprehend now supports Real-time Analysis with Custom Entity Recognition. 
+* `Aws\EBS` - This release introduces the following set of actions for the EBS direct APIs: 1. StartSnapshot, which creates a new Amazon EBS snapshot. 2. PutSnapshotBlock, which writes a block of data to a snapshot. 3. CompleteSnapshot, which seals and completes a snapshot after blocks of data have been written to it.
+* `Aws\EventBridge` - Amazon EventBridge adds support for API Gateway as a target.
+* `Aws\SNS` - This release adds support for SMS origination number as an attribute in the MessageAttributes parameter for the SNS Publish API.
+* `Aws\SageMaker` - This release adds the DeleteHumanTaskUi API to Amazon Augmented AI
+* `Aws\SecretsManager` - Adds support for filters on the ListSecrets API to allow filtering results by name, tag key, tag value, or description. Adds support for the BlockPublicPolicy option on the PutResourcePolicy API to block resource policies which grant a wide range of IAM principals access to secrets. Adds support for the ValidateResourcePolicy API to validate resource policies for syntax and prevent lockout error scenarios and wide access to secrets. 
+* `Aws\WAFV2` - Added the option to use IP addresses from an HTTP header that you specify, instead of using the web request origin. Available for IP set matching, geo matching, and rate-based rule count aggregation.
+
+## 3.145.3 - 2020-07-08
+
+* `Aws\CostExplorer` - Customers can now see Instance Name alongside each rightsizing recommendation.
+* `Aws\EC2` - EC2 Spot now enables customers to tag their Spot Instances Requests on creation.
+* `Aws\ForecastService` - With this release, Amazon Forecast now supports the ability to add a tag to any resource via the launch of three new APIs: TagResouce, UntagResource and ListTagsForResource. A tag is a simple label consisting of a customer-defined key and an optional value allowing for easier resource management.
+* `Aws\Organizations` - We have launched a self-service option to make it easier for customers to manage the use of their content by AI services. Certain AI services (Amazon CodeGuru Profiler, Amazon Comprehend, Amazon Lex, Amazon Polly, Amazon Rekognition, Amazon Textract, Amazon Transcribe, and Amazon Translate) may use content to improve the service. Customers have been able to opt out of this use by contacting AWS Support, and now they can opt out on a self-service basis by setting an Organizations policy for all or an individual AI service listed above. Please refer to the technical documentation in the online AWS Organizations User Guide for more details.
+
+## 3.145.2 - 2020-07-07
+
+* `Aws\CloudFront` - Amazon CloudFront adds support for a new security policy, TLSv1.2_2019.
+* `Aws\EC2` - DescribeAvailabilityZones now returns additional data about Availability Zones and Local Zones.
+* `Aws\EFS` - This release adds support for automatic backups of Amazon EFS file systems to further simplify backup management. 
+* `Aws\Glue` - AWS Glue Data Catalog supports cross account sharing of tables through AWS Lake Formation
+* `Aws\LakeFormation` -  AWS Lake Formation supports sharing tables with other AWS accounts and organizations
+* `Aws\StorageGateway` - Adding support for file-system driven directory refresh, Case Sensitivity toggle for SMB File Shares, and S3 Prefixes and custom File Share names
+
+## 3.145.1 - 2020-07-06
+
+* `Aws\IoTSiteWise` - This release supports optional start date and end date parameters for the GetAssetPropertyValueHistory API.
+* `Aws\QuickSight` - Add Theme APIs and update Dashboard APIs to support theme overrides.
+* `Aws\RDS` - Adds support for Amazon RDS on AWS Outposts.
+
+## 3.145.0 - 2020-07-02
+
+* `Aws\Api` - Fixed bug with marshalling empty strings from dynamodb
+* `Aws\Build` - Updated packager code to work with Guzzle 7.
+* `Aws\Connect` - Documentation updates for Amazon Connect.
+* `Aws\ElastiCache` - Documentation updates for elasticache
+* `Aws\S3` - Adds a V2 implementation for the S3 encryption client, which has an updated encryption workflow and should be used over the original encryption client when possible.
+
 ## 3.144.2 - 2020-07-01
 
 * `Aws\AppSync` - AWS AppSync supports new 12xlarge instance for server-side API caching
