@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeGuruProfiler` - Amazon CodeGuru Profiler now supports resource tagging APIs, tags-on-create and tag-based access control features. You can now tag profiling groups for better resource and access control management.
+
 ## 3.147.1 - 2020-07-20
 
 * `Aws\CloudFront` - CloudFront adds support for cache policies and origin request policies. With these new policies, you can now more granularly control the query string, header, and cookie values that are included in the cache key and in requests that CloudFront sends to your origin.
