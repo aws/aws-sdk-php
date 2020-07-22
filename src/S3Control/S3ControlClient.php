@@ -129,7 +129,7 @@ class S3ControlClient extends AwsClient
             's3control.endpoint_middleware'
         );
         $stack->appendBuild(
-            BucketEndpointArnMiddleware::wrap(
+            EndpointArnMiddleware::wrap(
                 $this->getApi(),
                 $this->getRegion(),
                 [
@@ -140,7 +140,7 @@ class S3ControlClient extends AwsClient
                         : null
                 ]
             ),
-            's3control.bucket_endpoint_arn'
+            's3control.endpoint_arn_middleware'
         );
     }
 }
