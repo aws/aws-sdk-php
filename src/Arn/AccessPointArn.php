@@ -29,7 +29,7 @@ class AccessPointArn extends Arn implements AccessPointArnInterface
         return $data;
     }
 
-    public function getAccessPointName()
+    public function getAccesspointName()
     {
         return $this->data['accesspoint_name'];
     }

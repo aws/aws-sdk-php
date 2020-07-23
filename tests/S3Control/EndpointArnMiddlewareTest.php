@@ -90,7 +90,7 @@ class EndpointArnMiddlewareTest extends TestCase
                     'region' => 'us-west-2',
                 ],
                 '123456789012.s3-control.us-west-2.amazonaws.com',
-                'v20180820/accesspoint/arn%3Aaws%3As3%3Aus-west-2%3A123456789012%3Aaccesspoint%3Amyendpoint',
+                'v20180820/accesspoint/myendpoint',
                 'us-west-2',
                 null,
             ],

@@ -122,24 +122,13 @@ class EndpointArnMiddleware
                     }
                 }
 
-                $path = $req->getUri()->getPath();
-
+                // Determine if appropriate member contains ARN value
                 if (!is_null($bucketNameMember)
                     && !empty($cmd[$bucketNameMember])
                     && ArnParser::isArn($cmd[$bucketNameMember])
                 ) {
                     $arn = ArnParser::parse($cmd[$bucketNameMember]);
                     $partition = $this->validateBucketArn($arn);
-
-                    // Remove encoded bucket string from path
-                    $encoded = rawurlencode($cmd[$bucketNameMember]);
-                    $len = strlen($encoded) + 1;
-                    if (substr($path, 0, $len) === "/{$encoded}") {
-                        $path = substr($path, $len);
-                    }
-                    if (empty($path)) {
-                        $path = '';
-                    }
                 } elseif (!is_null($accesspointNameMember)
                     && !empty($cmd[$accesspointNameMember])
                     && ArnParser::isArn($cmd[$accesspointNameMember])
@@ -148,32 +137,60 @@ class EndpointArnMiddleware
                     $partition = $this->validateAccessPointArn($arn);
                 }
 
-                if ($arn instanceof OutpostsArnInterface) {
-                    $host = $this->generateOutpostsArnHost($arn, $req);
-                } else {
-                    $host = $this->generateNonOutpostsArnHost($arn, $req);
-                }
+                // Process only an appropriate member contains an ARN value
+                if (!empty($arn)) {
+                    // Generate host based on ARN
+                    if ($arn instanceof OutpostsArnInterface) {
+                        $host = $this->generateOutpostsArnHost($arn, $req);
+                        $req = $req->withHeader('x-amz-outpost-id', $arn->getOutpostId());
+                    } else {
+                        $host = $this->generateNonOutpostsArnHost($arn, $req);
+                    }
 
-                // Set modified request
-                $req = $req->withUri(
-                    $req->getUri()->withHost($host)->withPath($path)
-                );
+                    // Modify path based on ARN
+                    $path = $req->getUri()->getPath();
+                    if ($arn instanceof AccessPointArnInterface) {
 
-                // Update signing region based on ARN data if configured to do so
-                if ($this->config['use_arn_region']->isUseArnRegion()) {
-                    $region = $arn->getRegion();
-                } else {
-                    $region = $this->region;
-                }
-                $endpointData = $partition([
-                    'region' => $region,
-                    'service' => $arn->getService()
-                ]);
-                $cmd['@context']['signing_region'] = $endpointData['signingRegion'];
+                        // Replace ARN with access point name
+                        $path = str_replace(
+                            urlencode($cmd[$accesspointNameMember]),
+                            $arn->getAccesspointName(),
+                            $path
+                        );
+                    } elseif ($arn instanceof BucketArnInterface) {
 
-                // Update signing service for Outposts ARNs
-                if ($arn instanceof OutpostsAccessPointArn) {
-                    $cmd['@context']['signing_service'] = $arn->getService();
+                        // Remove encoded bucket string from path
+                        $encoded = rawurlencode($cmd[$bucketNameMember]);
+                        $len = strlen($encoded) + 1;
+                        if (substr($path, 0, $len) === "/{$encoded}") {
+                            $path = substr($path, $len);
+                        }
+                        if (empty($path)) {
+                            $path = '';
+                        }
+                    }
+
+                    // Set modified request
+                    $req = $req
+                        ->withUri($req->getUri()->withHost($host)->withPath($path))
+                        ->withHeader('x-amz-account-id', $arn->getAccountId());
+
+                    // Update signing region based on ARN data if configured to do so
+                    if ($this->config['use_arn_region']->isUseArnRegion()) {
+                        $region = $arn->getRegion();
+                    } else {
+                        $region = $this->region;
+                    }
+                    $endpointData = $partition([
+                        'region' => $region,
+                        'service' => $arn->getService()
+                    ]);
+                    $cmd['@context']['signing_region'] = $endpointData['signingRegion'];
+
+                    // Update signing service for Outposts ARNs
+                    if ($arn instanceof OutpostsAccessPointArn) {
+                        $cmd['@context']['signing_service'] = $arn->getService();
+                    }
                 }
             }
         }

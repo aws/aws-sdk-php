@@ -27,7 +27,7 @@ class AccessPointArnTest extends TestCase
         $this->assertEquals($expected['region'], $arn->getRegion());
         $this->assertEquals($expected['account_id'], $arn->getAccountId());
         $this->assertEquals($expected['resource'], $arn->getResource());
-        $this->assertEquals($expected['accesspoint_name'], $arn->getAccessPointName());
+        $this->assertEquals($expected['accesspoint_name'], $arn->getAccesspointName());
         $this->assertEquals($expectedString, (string) $arn);
     }
 
