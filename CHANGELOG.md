@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.4 - 2020-07-23
 
 * `Aws\ConfigService` - Adding service linked configuration aggregation support along with new enums for config resource coverage
 * `Aws\DirectConnect` - Documentation updates for AWS Direct Connect
