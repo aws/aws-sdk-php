@@ -23,7 +23,10 @@ use PHPUnit\Framework\TestCase;
 
 class S3EncryptionClientV2Test extends TestCase
 {
-    use UsesServiceTrait, UsesMetadataEnvelopeTrait, UsesCryptoParamsTraitV2;
+    use S3EncryptionClientTestingTrait;
+    use UsesCryptoParamsTraitV2;
+    use UsesMetadataEnvelopeTrait;
+    use UsesServiceTrait;
 
     protected function getS3Client()
     {
@@ -393,82 +396,6 @@ EOXML;
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    private function getInvalidCipherMetadataFields(MaterialsProviderInterface $provider)
-    {
-        $fields = [];
-        $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
-            = $provider->getWrapAlgorithmName();
-        $fields[MetadataEnvelope::IV_HEADER]
-            = base64_encode($provider->generateIv('aes-256-cbc'));
-        $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
-        $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
-            = base64_encode('cek');
-        $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
-            = json_encode(['kms_cmk_id' => '11111111-2222-3333-4444-555555555555']);
-        $fields[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
-            = 'Not a cipher';
-
-        return $fields;
-    }
-
-    private function getValidCbcMetadataFields(MaterialsProviderInterface $provider)
-    {
-        $fields = [];
-        $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
-            = $provider->getWrapAlgorithmName();
-        $fields[MetadataEnvelope::IV_HEADER]
-            = base64_encode($provider->generateIv('aes-256-cbc'));
-        $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
-        $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
-            = base64_encode('cek');
-        $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
-            = json_encode(['kms_cmk_id' => '11111111-2222-3333-4444-555555555555']);
-        $fields[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
-            = 'AES/CBC/PKCS5Padding';
-
-        return $fields;
-    }
-
-    private function getValidGcmMetadataFields(MaterialsProviderInterface $provider)
-    {
-        $fields = [];
-        $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
-            = $provider->getWrapAlgorithmName();
-        $fields[MetadataEnvelope::IV_HEADER]
-            = base64_encode($provider->generateIv('aes-256-gcm'));
-        $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
-        $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
-            = base64_encode('cek');
-        $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
-            = json_encode(['aws:x-amz-cek-alg' => 'AES/GCM/NoPadding']);
-        $fields[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
-            = 'AES/GCM/NoPadding';
-
-        return $fields;
-    }
-
-    private function getValidLegacysGcmMetadataFields(MaterialsProviderInterface $provider)
-    {
-        $fields = [];
-        $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
-            = $provider->getWrapAlgorithmName();
-        $fields[MetadataEnvelope::IV_HEADER]
-            = base64_encode($provider->generateIv('aes-256-gcm'));
-        $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
-        $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
-            = base64_encode('cek');
-        $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
-            = json_encode(['kms_cmk_id' => '11111111-2222-3333-4444-555555555555']);
-        $fields[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
-            = 'AES/GCM/NoPadding';
-
-        return $fields;
-    }
-
     /**
      * @expectedException RuntimeException
      * @expectedExceptionMessage Unrecognized or unsupported AESName for reverse lookup.
@@ -559,7 +486,7 @@ EOXML;
                 return new FulfilledPromise(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
-                        $this->getValidCbcMetadataFields($provider)
+                        $this->getValidV1CbcMetadataFields($provider)
                     ),
                     'test'
                 ));
@@ -601,7 +528,7 @@ EOXML;
                 return new FulfilledPromise(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
-                        $this->getValidLegacysGcmMetadataFields($provider)
+                        $this->getValidV1GcmMetadataFields($provider)
                     ),
                     'test'
                 ));
@@ -643,7 +570,7 @@ EOXML;
                 return new FulfilledPromise(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
-                        $this->getValidGcmMetadataFields($provider)
+                        $this->getValidV2GcmMetadataFields($provider)
                     ),
                     'test'
                 ));
@@ -680,7 +607,7 @@ EOXML;
                         200,
                         [],
                         json_encode(
-                            $this->getValidCbcMetadataFields($provider)
+                            $this->getValidV1CbcMetadataFields($provider)
                         )
                     ));
                 }
@@ -727,7 +654,7 @@ EOXML;
                         200,
                         [],
                         json_encode(
-                            $this->getValidCbcMetadataFields($provider)
+                            $this->getValidV1CbcMetadataFields($provider)
                         )
                     ));
                 }
@@ -768,7 +695,7 @@ EOXML;
                 return new FulfilledPromise(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
-                        $this->getValidCbcMetadataFields($provider)
+                        $this->getValidV1CbcMetadataFields($provider)
                     ),
                     'test'
                 ));
