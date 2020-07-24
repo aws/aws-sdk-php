@@ -53,8 +53,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getModelsAsync(array $args = [])
  * @method \Aws\Result getOutcomes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getOutcomesAsync(array $args = [])
- * @method \Aws\Result getPrediction(array $args = [])
- * @method \GuzzleHttp\Promise\Promise getPredictionAsync(array $args = [])
  * @method \Aws\Result getRules(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRulesAsync(array $args = [])
  * @method \Aws\Result getVariables(array $args = [])
