@@ -433,6 +433,17 @@ function is_valid_hostname($hostname)
 }
 
 /**
+ * Checks if supplied parameter is a valid host label
+ *
+ * @param $label
+ * @return bool
+ */
+function is_valid_hostlabel($label)
+{
+    return preg_match("/^(?!-)[a-zA-Z0-9-]{1,63}(?<!-)$/", $label);
+}
+
+/**
  * Ignores '#' full line comments, which parse_ini_file no longer does
  * in PHP 7+.
  *

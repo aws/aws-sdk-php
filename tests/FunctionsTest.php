@@ -375,6 +375,43 @@ class FunctionsTest extends TestCase
     }
 
     /**
+     * @covers Aws\is_valid_hostlabel()
+     * @dataProvider getHostlabelTestCases
+     * @param string $label
+     * @param bool $expected
+     */
+    public function testValidatesHostlabels($label, $expected)
+    {
+        $this->assertEquals($expected, Aws\is_valid_hostlabel($label));
+    }
+
+    public function getHostlabelTestCases()
+    {
+        return [
+            ['us-west-2', true],
+            ['a', true],
+            ['a.b', false],
+            ['2-us-west', true],
+            ['1-us-west-2', true],
+            ['42', true],
+            ['us_west_2', false],
+            ['-west-2', false],
+            ['@uncoolwebsite.com', false],
+            ['a-b.c-d', false],
+            ['a--b', true],
+            ['a b', false],
+            ['<a', false],
+            ['a>', false],
+            [' ', false],
+            ['-', false],
+            ['', false],
+            [str_repeat('a', 63), true],
+            [str_repeat('a', 64), false],
+            ['us-west-2-certainly-this-label-must-be-longer-than-63-characters-by-now', false],
+        ];
+    }
+
+    /**
      * @covers Aws\parse_ini_file()
      * @dataProvider getIniFileTestCases
      */
