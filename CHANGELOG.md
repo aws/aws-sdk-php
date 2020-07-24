@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.5 - 2020-07-24
 
 * `Aws\` - Adds region validation as a valid host label when region is being used to construct an endpoint. Note this does not take effect when a custom endpoint is supplied.
 * `Aws\CloudWatch` - AWS CloudWatch ListMetrics now supports an optional parameter (RecentlyActive) to filter results by only metrics that have received new datapoints in the past 3 hours. This enables more targeted metric data retrieval through the Get APIs
