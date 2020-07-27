@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.6 - 2020-07-27
 
 * `Aws\DataSync` - Today AWS DataSync releases support for self-managed object storage Locations and the new TransferMode Option.
 * `Aws\DatabaseMigrationService` - Basic endpoint settings for relational databases, Preflight validation API.
