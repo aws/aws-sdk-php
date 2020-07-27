@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataSync` - Today AWS DataSync releases support for self-managed object storage Locations and the new TransferMode Option.
+* `Aws\DatabaseMigrationService` - Basic endpoint settings for relational databases, Preflight validation API.
+* `Aws\EC2` - m6gd, c6gd, r6gd instances are powered by AWS Graviton2 processors and support local NVMe instance storage
+* `Aws\FraudDetector` - Moved the eventTypeName attribute for PutExternalModel API to inputConfiguration. Model ID's no longer allow hyphens.
+* `Aws\Glue` - Add ability to manually resume workflows in AWS Glue providing customers further control over the orchestration of ETL workloads.
+* `Aws\SSM` - Assorted doc ticket-fix updates for Systems Manager.
+
 ## 3.147.5 - 2020-07-24
 
 * `Aws\` - Adds region validation as a valid host label when region is being used to construct an endpoint. Note this does not take effect when a custom endpoint is supplied.
