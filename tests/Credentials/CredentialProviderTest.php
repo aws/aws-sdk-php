@@ -639,7 +639,7 @@ EOT;
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage source_profile is not set using profile assume
+     * @expectedExceptionMessage Either source_profile or credential_source must be set using profile assume, but not both
      */
     public function testEnsuresSourceProfileIsSpecified()
     {
@@ -867,6 +867,90 @@ EOT;
         } finally {
             unlink($dir . '/credentials');
             unlink($dir . '/config');
+        }
+    }
+
+    public function testAssumeRoleInConfigFromCredentialsSourceEnvironment()
+    {
+        $dir = $this->clearEnv();
+        putenv(CredentialProvider::ENV_KEY . '=abc');
+        putenv(CredentialProvider::ENV_SECRET . '=123');
+        putenv(CredentialProvider::ENV_SESSION . '');
+
+        $credentials = <<<EOT
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+credential_source = Environment
+EOT;
+        file_put_contents($dir . '/credentials', $credentials);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            $creds = call_user_func(CredentialProvider::getAssumeRoleCredentials(
+                'assume',
+                'assume',
+                $dir . '/credentials',
+                []
+            ))->wait();
+            $this->assertEquals('abc', $creds->getAccessKeyId());
+            $this->assertEquals('123', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    public function testAssumeRoleInConfigFromCredentialsSourceEc2InstanceMetadata()
+    {
+        $dir = $this->clearEnv();
+
+        $credentials = <<<EOT
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+credential_source = Ec2InstanceMetadata
+EOT;
+        file_put_contents($dir . '/credentials', $credentials);
+        putenv('HOME=' . dirname($dir));
+        try {
+            $provider = CredentialProvider::getAssumeRoleCredentials(
+                'assume',
+                'assume',
+                $dir . '/credentials',
+                []
+            );
+            $this->assertInstanceOf('Aws\Credentials\InstanceProfileProvider', $provider);
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    public function testAssumeRoleInConfigFromCredentialsSourceEcsContainer()
+    {
+        $dir = $this->clearEnv();
+
+        $credentials = <<<EOT
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+credential_source = EcsContainer
+EOT;
+        file_put_contents($dir . '/credentials', $credentials);
+        putenv('HOME=' . dirname($dir));
+        try {
+            $provider = CredentialProvider::getAssumeRoleCredentials(
+                'assume',
+                'assume',
+                $dir . '/credentials',
+                []
+            );
+            $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $provider);
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
         }
     }
 
