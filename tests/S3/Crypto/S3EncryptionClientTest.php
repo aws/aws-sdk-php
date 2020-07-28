@@ -722,4 +722,35 @@ EOXML;
         ]);
         $this->assertStringEqualsFile($file, (string)$result['Body']);
     }
+
+    public function testAddsCryptoUserAgent()
+    {
+        $kms = $this->getKmsClient();
+        $provider = new KmsMaterialsProvider($kms);
+        $this->addMockResults($kms, [
+            new Result(['Plaintext' => random_bytes(32)])
+        ]);
+
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function (RequestInterface $req) use ($provider) {
+                $this->assertContains('S3CryptoV1n', $req->getHeaderLine('User-Agent'));
+                return Promise\promise_for(new Response(
+                    200,
+                    $this->getFieldsAsMetaHeaders(
+                        $this->getValidV2GcmMetadataFields($provider)
+                    ),
+                    'test'
+                ));
+            },
+        ]);
+
+        $client = new S3EncryptionClient($s3);
+        $client->getObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            '@MaterialsProvider' => $provider
+        ]);
+    }
 }

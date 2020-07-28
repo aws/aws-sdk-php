@@ -27,7 +27,11 @@ use Psr\Http\Message\RequestInterface;
  */
 class S3EncryptionClientV2 extends AbstractCryptoClientV2
 {
-    use EncryptionTraitV2, DecryptionTrait, CipherBuilderTrait, CryptoParamsTraitV2;
+    use CipherBuilderTrait;
+    use CryptoParamsTraitV2;
+    use DecryptionTrait;
+    use EncryptionTraitV2;
+    use UserAgentTrait;
 
     private $client;
     private $instructionFileSuffix;
@@ -44,21 +48,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         S3Client $client,
         $instructionFileSuffix = null
     ) {
-        $list = $client->getHandlerList();
-        $list->appendBuild(Middleware::mapRequest(
-            function(RequestInterface $req) {
-                if (!empty($req->getHeader('User-Agent'))
-                    && !empty($req->getHeader('User-Agent')[0])
-                ) {
-                    $userAgent = $req->getHeader('User-Agent')[0] . ' S3CryptoV2';
-                } else {
-                    $userAgent = 'S3CryptoV2';
-                }
-
-                $req =  $req->withHeader('User-Agent', $userAgent);
-                return $req;
-            }
-        ));
+        $this->appendUserAgent($client, 'S3CryptoV2');
         $this->client = $client;
         $this->instructionFileSuffix = $instructionFileSuffix;
     }
