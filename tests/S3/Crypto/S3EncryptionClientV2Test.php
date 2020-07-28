@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3\Crypto;
 
+use Aws\Crypto\KmsMaterialsProvider;
 use Aws\Crypto\MaterialsProviderInterface;
 use Aws\Result;
 use Aws\HashingStream;
@@ -477,16 +478,17 @@ EOXML;
                 new Result(['Plaintext' => random_bytes(32)])
             );
         });
-        $provider = new KmsMaterialsProviderV2($kms);
+        $providerV1 = new KmsMaterialsProvider($kms);
+        $providerV2 = new KmsMaterialsProviderV2($kms);
 
         $s3 = new S3Client([
             'region' => 'us-west-2',
             'version' => 'latest',
-            'http_handler' => function () use ($provider) {
+            'http_handler' => function () use ($providerV1) {
                 return new FulfilledPromise(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
-                        $this->getValidV1CbcMetadataFields($provider)
+                        $this->getValidV1CbcMetadataFields($providerV1)
                     ),
                     'test'
                 ));
@@ -497,7 +499,7 @@ EOXML;
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
-            '@MaterialsProvider' => $provider
+            '@MaterialsProvider' => $providerV2
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
     }
