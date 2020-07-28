@@ -2,7 +2,6 @@
 namespace Aws\S3\Crypto;
 
 use Aws\HashingStream;
-use Aws\Middleware;
 use Aws\PhpHash;
 use Aws\Crypto\AbstractCryptoClientV2;
 use Aws\Crypto\DecryptionTrait;
@@ -14,7 +13,6 @@ use Aws\S3\S3Client;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * Provides a wrapper for an S3Client that supplies functionality to encrypt
