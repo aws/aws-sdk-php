@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.7 - 2020-07-28
 
 * `Aws\AutoScaling` - Now you can enable Instance Metadata Service Version 2 (IMDSv2) or disable the instance metadata endpoint with Launch Configurations.
 * `Aws\EC2` - Introduces support for tag-on-create capability for the following APIs: CreateVpnConnection, CreateVpnGateway, and CreateCustomerGateway. A user can now add tags while creating these resources. For further detail, please see AWS Tagging Strategies.
