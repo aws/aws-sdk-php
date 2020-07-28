@@ -2,6 +2,7 @@
 namespace Aws\S3\Crypto;
 
 use Aws\HashingStream;
+use Aws\Middleware;
 use Aws\PhpHash;
 use Aws\Crypto\AbstractCryptoClientV2;
 use Aws\Crypto\DecryptionTrait;
@@ -13,6 +14,7 @@ use Aws\S3\S3Client;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Provides a wrapper for an S3Client that supplies functionality to encrypt
@@ -42,6 +44,21 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         S3Client $client,
         $instructionFileSuffix = null
     ) {
+        $list = $client->getHandlerList();
+        $list->appendBuild(Middleware::mapRequest(
+            function(RequestInterface $req) {
+                if (!empty($req->getHeader('User-Agent'))
+                    && !empty($req->getHeader('User-Agent')[0])
+                ) {
+                    $userAgent = $req->getHeader('User-Agent')[0] . ' S3CryptoV2';
+                } else {
+                    $userAgent = 'S3CryptoV2';
+                }
+
+                $req =  $req->withHeader('User-Agent', $userAgent);
+                return $req;
+            }
+        ));
         $this->client = $client;
         $this->instructionFileSuffix = $instructionFileSuffix;
     }
