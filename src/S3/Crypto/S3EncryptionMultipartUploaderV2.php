@@ -24,7 +24,7 @@ class S3EncryptionMultipartUploaderV2 extends MultipartUploader
     use EncryptionTraitV2;
     use UserAgentTrait;
 
-        /**
+    /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
      *
      * @param string $cipherName The name of a cipher to verify is registered.
