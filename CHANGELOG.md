@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Now you can enable Instance Metadata Service Version 2 (IMDSv2) or disable the instance metadata endpoint with Launch Configurations.
+* `Aws\EC2` - Introduces support for tag-on-create capability for the following APIs: CreateVpnConnection, CreateVpnGateway, and CreateCustomerGateway. A user can now add tags while creating these resources. For further detail, please see AWS Tagging Strategies.
+* `Aws\IVS` - Added a new error code, PendingVerification, to differentiate between errors caused by insufficient IAM permissions and errors caused by account verification.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports several new features: EBU-TT-D captions in Microsoft Smooth outputs; interlaced video in HEVC outputs; video noise reduction (using temporal filtering) in HEVC outputs.
+* `Aws\RDS` - Adds reporting of manual cluster snapshot quota to DescribeAccountAttributes API
+* `Aws\SecurityHub` - Added UpdateSecurityHubConfiguration API. Security Hub now allows customers to choose whether to automatically enable new controls that are added to an existing standard that the customer enabled. For example, if you enabled Foundational Security Best Practices for an account, you can automatically enable new controls as we add them to that standard. By default, new controls are enabled.
+* `Aws\imagebuilder` - This release updates distribution configurations to allow periods in AMI names.
+
 ## 3.147.6 - 2020-07-27
 
 * `Aws\DataSync` - Today AWS DataSync releases support for self-managed object storage Locations and the new TransferMode Option.
