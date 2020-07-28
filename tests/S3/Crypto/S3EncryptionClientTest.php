@@ -739,7 +739,7 @@ EOXML;
                 return Promise\promise_for(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
-                        $this->getValidV2GcmMetadataFields($provider)
+                        $this->getValidV1GcmMetadataFields($provider)
                     ),
                     'test'
                 ));
