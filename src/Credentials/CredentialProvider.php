@@ -460,7 +460,6 @@ class CredentialProvider
                         "Role assumption profiles are disabled. "
                         . "Failed to load profile " . $profile);
                 }
-
                 return self::loadRoleProfile(
                     $data,
                     $profile,
@@ -479,8 +478,8 @@ class CredentialProvider
             if (empty($data[$profile]['aws_session_token'])) {
                 $data[$profile]['aws_session_token']
                     = isset($data[$profile]['aws_security_token'])
-                    ? $data[$profile]['aws_security_token']
-                    : null;
+                        ? $data[$profile]['aws_security_token']
+                        : null;
             }
 
             return Promise\promise_for(
@@ -489,7 +488,8 @@ class CredentialProvider
                     $data[$profile]['aws_secret_access_key'],
                     $data[$profile]['aws_session_token']
                 )
-            );        };
+            );
+        };
     }
 
     /**
@@ -523,7 +523,6 @@ class CredentialProvider
                 return self::reject("No credential_process present in INI profile "
                     . "'$profile' ($filename)");
             }
-
 
             $credentialProcess = $data[$profile]['credential_process'];
             $json = shell_exec($credentialProcess);
@@ -587,18 +586,16 @@ class CredentialProvider
             : 'aws-sdk-php-' . round(microtime(true) * 1000);
 
 
-        if (
-            empty($profiles[$profileName]['source_profile']) ==
-            empty($profiles[$profileName]['credential_source'])
+        if (empty($profiles[$profileName]['source_profile'])
+            == empty($profiles[$profileName]['credential_source'])
         ) {
             return self::reject("Either source_profile or credential_source must be set " .
                 "using profile " . $profileName . ", but not both"
             );
         }
 
-        if (
-            !empty($profiles[$profileName]['source_profile']) ||
-            !empty($profiles[$profileName]['credential_source'])
+        if (!empty($profiles[$profileName]['source_profile'])
+            || !empty($profiles[$profileName]['credential_source'])
         ) {
             $sourceProfileName = "";
             if (!empty($profiles[$profileName]['source_profile'])) {
