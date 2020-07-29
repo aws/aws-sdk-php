@@ -19,7 +19,12 @@ use GuzzleHttp\Promise;
  */
 class S3EncryptionMultipartUploaderV2 extends MultipartUploader
 {
-    use EncryptionTraitV2, CipherBuilderTrait, CryptoParamsTraitV2;
+    use CipherBuilderTrait;
+    use CryptoParamsTraitV2;
+    use EncryptionTraitV2;
+    use UserAgentTrait;
+
+    CONST CRYPTO_VERSION = '2.0';
 
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
@@ -105,6 +110,7 @@ class S3EncryptionMultipartUploaderV2 extends MultipartUploader
         $source,
         array $config = []
     ) {
+        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->client = $client;
         $config['params'] = [];
         if (!empty($config['bucket'])) {

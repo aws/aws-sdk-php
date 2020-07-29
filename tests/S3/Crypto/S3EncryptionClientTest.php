@@ -15,6 +15,7 @@ use Aws\S3\Crypto\InstructionFileMetadataStrategy;
 use Aws\Test\Crypto\UsesCryptoParamsTrait;
 use Aws\Test\UsesServiceTrait;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -729,5 +730,39 @@ EOXML;
             'SaveAs' => $file
         ]);
         $this->assertStringEqualsFile($file, (string)$result['Body']);
+    }
+
+    public function testAddsCryptoUserAgent()
+    {
+        $kms = $this->getKmsClient();
+        $provider = new KmsMaterialsProvider($kms);
+        $this->addMockResults($kms, [
+            new Result(['Plaintext' => random_bytes(32)])
+        ]);
+
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function (RequestInterface $req) use ($provider) {
+                $this->assertContains(
+                    'S3CryptoV' . S3EncryptionClient::CRYPTO_VERSION,
+                    $req->getHeaderLine('User-Agent')
+                );
+                return Promise\promise_for(new Response(
+                    200,
+                    $this->getFieldsAsMetaHeaders(
+                        $this->getValidGcmMetadataFields($provider)
+                    ),
+                    'test'
+                ));
+            },
+        ]);
+
+        $client = new S3EncryptionClient($s3);
+        $client->getObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            '@MaterialsProvider' => $provider
+        ]);
     }
 }

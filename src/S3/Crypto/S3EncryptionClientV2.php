@@ -25,7 +25,13 @@ use GuzzleHttp\Psr7;
  */
 class S3EncryptionClientV2 extends AbstractCryptoClientV2
 {
-    use EncryptionTraitV2, DecryptionTraitV2, CipherBuilderTrait, CryptoParamsTraitV2;
+    use CipherBuilderTrait;
+    use CryptoParamsTraitV2;
+    use DecryptionTraitV2;
+    use EncryptionTraitV2;
+    use UserAgentTrait;
+
+    const CRYPTO_VERSION = '2.0';
 
     private $client;
     private $instructionFileSuffix;
@@ -43,6 +49,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         $instructionFileSuffix = null
     ) {
         $this->client = $client;
+        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->instructionFileSuffix = $instructionFileSuffix;
     }
 
