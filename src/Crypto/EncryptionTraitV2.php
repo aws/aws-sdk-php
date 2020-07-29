@@ -39,8 +39,8 @@ trait EncryptionTraitV2
      *
      * @param Stream $plaintext Plain-text data to be encrypted using the
      *                          materials, algorithm, and data provided.
-     * @param array $cipherOptions Options for use in determining the cipher to
-     *                             be used for encrypting data.
+     * @param array $options    Options for use in encryption, including cipher
+     *                          options, and encryption context.
      * @param MaterialsProviderV2 $provider A provider to supply and encrypt
      *                                    materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
@@ -48,19 +48,20 @@ trait EncryptionTraitV2
      *
      * @return StreamInterface
      *
-     * @throws \InvalidArgumentException Thrown when a value in $cipherOptions
+     * @throws \InvalidArgumentException Thrown when a value in $options['@CipherOptions']
      *                                   is not valid.
-     *
+     *s
      * @internal
      */
     public function encrypt(
         Stream $plaintext,
-        array $cipherOptions,
+        array $options,
         MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope
     ) {
+        $options = array_change_key_case($options);
         $cipherOptions = array_intersect_key(
-            $cipherOptions,
+            $options['@cipheroptions'],
             self::$allowedOptions
         );
 
@@ -104,7 +105,8 @@ trait EncryptionTraitV2
 
         $keys = $provider->generateCek(
             $cipherOptions['KeySize'],
-            $materialsDescription
+            $materialsDescription,
+            $options
         );
 
         $encryptingStream = $this->getEncryptingStream(

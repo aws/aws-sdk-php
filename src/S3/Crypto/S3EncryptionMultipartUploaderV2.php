@@ -150,7 +150,7 @@ class S3EncryptionMultipartUploaderV2 extends MultipartUploader
 
             list($this->source, $params) = Promise\promise_for($this->encrypt(
                 $this->source,
-                $this->config['@cipheroptions'] ?: [],
+                $this->config ?: [],
                 $this->provider,
                 $envelope
             ))->then(

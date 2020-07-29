@@ -89,6 +89,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                 '@CipherOptions' => [
                     'Cipher' => 'gcm',
                 ],
+                '@KmsEncryptionContext' => [],
             ]
         );
         $result = $uploader->upload();
@@ -123,6 +124,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                 '@CipherOptions' => [
                     'Cipher' => 'gcm',
                 ],
+                '@KmsEncryptionContext' => [],
             ]
         );
         $uploader->upload();
@@ -176,6 +178,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                 '@CipherOptions' => [
                     'Cipher' => 'gcm',
                 ],
+                '@KmsEncryptionContext' => [],
             ]
         );
         $result = $uploader->upload();
@@ -215,6 +218,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                 '@CipherOptions' => [
                     'Cipher' => 'gcm',
                 ],
+                '@KmsEncryptionContext' => [],
             ]
         );
         $uploader->upload();
@@ -255,6 +259,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                 '@CipherOptions' => [
                     'Cipher' => 'gcm',
                 ],
+                '@KmsEncryptionContext' => [],
             ]
         );
         $result = $uploader->upload();
@@ -306,6 +311,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                 '@CipherOptions' => [
                     'Cipher' => $cipher,
                 ],
+                '@KmsEncryptionContext' => [],
             ]
         );
         $result = $uploader->upload();
@@ -368,6 +374,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                 'key'    => 'bar',
                 '@MaterialsProvider' => $provider,
                 '@CipherOptions' => $cipherOptions,
+                '@KmsEncryptionContext' => [],
             ]
         );
         $result = $uploader->upload();
@@ -410,6 +417,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                 '@CipherOptions' => [
                     'Cipher' => 'gcm',
                 ],
+                '@KmsEncryptionContext' => [],
                 'before_initiate' => function($command) {
                     $this->assertEquals('foo', $command['Bucket']);
                     $this->assertEquals('bar', $command['Key']);
@@ -467,6 +475,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                 '@CipherOptions' => [
                     'Cipher' => 'gcm',
                 ],
+                '@KmsEncryptionContext' => [],
                 'state' => $state
             ]
         );
@@ -514,6 +523,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                 '@CipherOptions' => [
                     'Cipher' => 'gcm',
                 ],
+                '@KmsEncryptionContext' => [],
             ]
         );
         $uploader->upload();

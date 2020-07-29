@@ -82,6 +82,10 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
      *            using cbc.
+     * - @KmsEncryptionContext: (array) Only required if using
+     *   KmsMaterialsProviderV2. An associative array of key-value
+     *   pairs to be added to the encryption context for KMS key encryption. An
+     *   empty array may be passed if no additional context is desired.
      *
      * The optional configuration arguments are as follows:
      *
@@ -113,7 +117,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
 
         return Promise\promise_for($this->encrypt(
             Psr7\stream_for($args['Body']),
-            $args['@CipherOptions'] ?: [],
+            $args,
             $provider,
             $envelope
         ))->then(
@@ -178,6 +182,10 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
      *            using cbc.
+     * - @KmsEncryptionContext: (array) Only required if using
+     *   KmsMaterialsProviderV2. An associative array of key-value
+     *   pairs to be added to the encryption context for KMS key encryption. An
+     *   empty array may be passed if no additional context is desired.
      *
      * The optional configuration arguments are as follows:
      *

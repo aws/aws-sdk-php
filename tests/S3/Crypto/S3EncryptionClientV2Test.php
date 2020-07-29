@@ -91,7 +91,8 @@ class S3EncryptionClientV2Test extends TestCase
             '@MaterialsProvider' => $provider,
             '@CipherOptions' => [
                 'Cipher' => 'gcm',
-            ]
+            ],
+            '@KmsEncryptionContext' => [],
         ]);
         $this->assertTrue($this->mockQueueEmpty());
     }
@@ -117,7 +118,8 @@ class S3EncryptionClientV2Test extends TestCase
             '@MaterialsProvider' => $provider,
             '@CipherOptions' => [
                 'Cipher' => 'gcm'
-            ]
+            ],
+            '@KmsEncryptionContext' => [],
         ]);
     }
 
@@ -160,7 +162,8 @@ class S3EncryptionClientV2Test extends TestCase
             '@MetadataStrategy' => $strategy,
             '@CipherOptions' => [
                 'Cipher' => 'gcm'
-            ]
+            ],
+            '@KmsEncryptionContext' => [],
         ]);
         $this->assertTrue($this->mockQueueEmpty());
     }
@@ -189,7 +192,8 @@ class S3EncryptionClientV2Test extends TestCase
             '@MetadataStrategy' => $strategy,
             '@CipherOptions' => [
                 'Cipher' => 'gcm'
-            ]
+            ],
+            '@KmsEncryptionContext' => [],
         ]);
     }
 
@@ -222,7 +226,8 @@ class S3EncryptionClientV2Test extends TestCase
             '@MaterialsProvider' => $provider,
             '@CipherOptions' => [
                 'Cipher' => 'gcm'
-            ]
+            ],
+            '@KmsEncryptionContext' => [],
         ]);
         $this->assertTrue($this->mockQueueEmpty());
     }
@@ -254,7 +259,8 @@ class S3EncryptionClientV2Test extends TestCase
             '@InstructionFileSuffix' => InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX,
             '@CipherOptions' => [
                 'Cipher' => 'gcm'
-            ]
+            ],
+            '@KmsEncryptionContext' => [],
         ]);
         $this->assertTrue($this->mockQueueEmpty());
     }
@@ -293,7 +299,8 @@ class S3EncryptionClientV2Test extends TestCase
             '@MaterialsProvider' => $provider,
             '@CipherOptions' => [
                 'Cipher' => $cipher
-            ]
+            ],
+            '@KmsEncryptionContext' => [],
         ]);
     }
 
@@ -342,7 +349,8 @@ class S3EncryptionClientV2Test extends TestCase
             'Key' => 'bar',
             'Body' => 'test',
             '@MaterialsProvider' => $provider,
-            '@CipherOptions' => $cipherOptions
+            '@CipherOptions' => $cipherOptions,
+            '@KmsEncryptionContext' => [],
         ]);
     }
 
@@ -392,7 +400,8 @@ EOXML;
             '@MaterialsProvider' => $provider,
             '@CipherOptions' => [
                 'Cipher' => 'gcm'
-            ]
+            ],
+            '@KmsEncryptionContext' => [],
         ]);
         $this->assertTrue($this->mockQueueEmpty());
     }

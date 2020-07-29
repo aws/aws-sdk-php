@@ -68,6 +68,9 @@ class KmsMaterialsProviderV2Test extends TestCase
                 256,
                 [
                     'my_material' => 'material_value'
+                ],
+                [
+                    '@KmsEncryptionContext' => []
                 ]
             )
         );
