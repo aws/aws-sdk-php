@@ -735,7 +735,10 @@ EOXML;
             'region' => 'us-west-2',
             'version' => 'latest',
             'http_handler' => function (RequestInterface $req) use ($provider) {
-                $this->assertContains('S3CryptoV1n', $req->getHeaderLine('User-Agent'));
+                $this->assertContains(
+                    'S3CryptoV' . S3EncryptionClient::CRYPTO_VERSION,
+                    $req->getHeaderLine('User-Agent')
+                );
                 return Promise\promise_for(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
