@@ -31,6 +31,8 @@ class S3EncryptionClient extends AbstractCryptoClient
     use EncryptionTrait;
     use UserAgentTrait;
 
+    const VERSION = '1';
+
     private $client;
     private $instructionFileSuffix;
 
@@ -47,7 +49,7 @@ class S3EncryptionClient extends AbstractCryptoClient
         $instructionFileSuffix = null
     ) {
         $this->client = $client;
-        $this->appendUserAgent($client, 'S3CryptoV1');
+        $this->appendUserAgent($client, 'S3CryptoV' . self::VERSION);
         $this->instructionFileSuffix = $instructionFileSuffix;
     }
 

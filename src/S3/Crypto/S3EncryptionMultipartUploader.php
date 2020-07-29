@@ -24,6 +24,8 @@ class S3EncryptionMultipartUploader extends MultipartUploader
     use EncryptionTrait;
     use UserAgentTrait;
 
+    const VERSION = '1';
+
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
      *
@@ -104,7 +106,7 @@ class S3EncryptionMultipartUploader extends MultipartUploader
         $source,
         array $config = []
     ) {
-        $this->appendUserAgent($client, 'S3CryptoV1');
+        $this->appendUserAgent($client, 'S3CryptoV' . self::VERSION);
         $this->client = $client;
         $config['params'] = [];
         if (!empty($config['bucket'])) {
