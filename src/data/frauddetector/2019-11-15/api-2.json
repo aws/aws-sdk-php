@@ -379,22 +379,6 @@
         {"shape":"AccessDeniedException"}
       ]
     },
-    "GetPrediction":{
-      "name":"GetPrediction",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"GetPredictionRequest"},
-      "output":{"shape":"GetPredictionResult"},
-      "errors":[
-        {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServerException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"AccessDeniedException"}
-      ]
-    },
     "GetRules":{
       "name":"GetRules",
       "http":{
@@ -813,7 +797,7 @@
         "eventTypeName"
       ],
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "description":{"shape":"description"},
         "eventTypeName":{"shape":"string"},
@@ -834,7 +818,7 @@
         "trainingDataSchema"
       ],
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "trainingDataSource":{"shape":"TrainingDataSourceEnum"},
         "trainingDataSchema":{"shape":"TrainingDataSchema"},
@@ -845,7 +829,7 @@
     "CreateModelVersionResult":{
       "type":"structure",
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "modelVersionNumber":{"shape":"nonEmptyString"},
         "status":{"shape":"string"}
@@ -1005,7 +989,7 @@
     "DescribeModelVersionsRequest":{
       "type":"structure",
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelVersionNumber":{"shape":"floatVersionString"},
         "modelType":{"shape":"ModelTypeEnum"},
         "nextToken":{"shape":"string"},
@@ -1069,6 +1053,10 @@
     },
     "Entity":{
       "type":"structure",
+      "required":[
+        "entityType",
+        "entityId"
+      ],
       "members":{
         "entityType":{"shape":"string"},
         "entityId":{"shape":"identifier"}
@@ -1083,11 +1071,6 @@
         "createdTime":{"shape":"time"},
         "arn":{"shape":"fraudDetectorArn"}
       }
-    },
-    "EventAttributeMap":{
-      "type":"map",
-      "key":{"shape":"attributeKey"},
-      "value":{"shape":"attributeValue"}
     },
     "EventType":{
       "type":"structure",
@@ -1123,9 +1106,8 @@
       "type":"structure",
       "members":{
         "modelEndpoint":{"shape":"string"},
-        "eventTypeName":{"shape":"identifier"},
         "modelSource":{"shape":"ModelSource"},
-        "role":{"shape":"Role"},
+        "invokeModelEndpointRoleArn":{"shape":"string"},
         "inputConfiguration":{"shape":"ModelInputConfiguration"},
         "outputConfiguration":{"shape":"ModelOutputConfiguration"},
         "modelEndpointStatus":{"shape":"ModelEndpointStatus"},
@@ -1237,7 +1219,7 @@
       ],
       "members":{
         "detectorId":{"shape":"string"},
-        "detectorVersionId":{"shape":"string"},
+        "detectorVersionId":{"shape":"wholeNumberVersionString"},
         "eventId":{"shape":"string"},
         "eventTypeName":{"shape":"string"},
         "entities":{"shape":"listOfEntities"},
@@ -1312,7 +1294,7 @@
         "modelVersionNumber"
       ],
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "modelVersionNumber":{"shape":"floatVersionString"}
       }
@@ -1320,7 +1302,7 @@
     "GetModelVersionResult":{
       "type":"structure",
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "modelVersionNumber":{"shape":"floatVersionString"},
         "trainingDataSource":{"shape":"TrainingDataSourceEnum"},
@@ -1333,7 +1315,7 @@
     "GetModelsRequest":{
       "type":"structure",
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "nextToken":{"shape":"string"},
         "maxResults":{"shape":"modelsMaxPageSize"}
@@ -1359,28 +1341,6 @@
       "members":{
         "outcomes":{"shape":"OutcomeList"},
         "nextToken":{"shape":"string"}
-      }
-    },
-    "GetPredictionRequest":{
-      "type":"structure",
-      "required":[
-        "detectorId",
-        "eventId"
-      ],
-      "members":{
-        "detectorId":{"shape":"string"},
-        "detectorVersionId":{"shape":"string"},
-        "eventId":{"shape":"string"},
-        "eventAttributes":{"shape":"EventAttributeMap"},
-        "externalModelEndpointDataBlobs":{"shape":"ExternalModelEndpointDataBlobMap"}
-      }
-    },
-    "GetPredictionResult":{
-      "type":"structure",
-      "members":{
-        "outcomes":{"shape":"ListOfStrings"},
-        "modelScores":{"shape":"ListOfModelScores"},
-        "ruleResults":{"shape":"ListOfRuleResults"}
       }
     },
     "GetRulesRequest":{
@@ -1507,7 +1467,7 @@
     "Model":{
       "type":"structure",
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "description":{"shape":"description"},
         "eventTypeName":{"shape":"string"},
@@ -1534,6 +1494,7 @@
       "type":"structure",
       "required":["useEventVariables"],
       "members":{
+        "eventTypeName":{"shape":"identifier"},
         "format":{"shape":"ModelInputDataFormat"},
         "useEventVariables":{"shape":"UseEventVariables"},
         "jsonInputTemplate":{"shape":"string"},
@@ -1591,7 +1552,7 @@
         "modelVersionNumber"
       ],
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "modelVersionNumber":{"shape":"nonEmptyString"},
         "arn":{"shape":"fraudDetectorArn"}
@@ -1600,7 +1561,7 @@
     "ModelVersionDetail":{
       "type":"structure",
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "modelVersionNumber":{"shape":"floatVersionString"},
         "status":{"shape":"string"},
@@ -1616,16 +1577,8 @@
     "ModelVersionStatus":{
       "type":"string",
       "enum":[
-        "TRAINING_IN_PROGRESS",
-        "TRAINING_COMPLETE",
-        "ACTIVATE_REQUESTED",
-        "ACTIVATE_IN_PROGRESS",
         "ACTIVE",
-        "INACTIVATE_IN_PROGRESS",
-        "INACTIVE",
-        "DELETE_REQUESTED",
-        "DELETE_IN_PROGRESS",
-        "ERROR"
+        "INACTIVE"
       ]
     },
     "NameList":{
@@ -1717,16 +1670,15 @@
       "required":[
         "modelEndpoint",
         "modelSource",
-        "role",
+        "invokeModelEndpointRoleArn",
         "inputConfiguration",
         "outputConfiguration",
         "modelEndpointStatus"
       ],
       "members":{
         "modelEndpoint":{"shape":"sageMakerEndpointIdentifier"},
-        "eventTypeName":{"shape":"identifier"},
         "modelSource":{"shape":"ModelSource"},
-        "role":{"shape":"Role"},
+        "invokeModelEndpointRoleArn":{"shape":"string"},
         "inputConfiguration":{"shape":"ModelInputConfiguration"},
         "outputConfiguration":{"shape":"ModelOutputConfiguration"},
         "modelEndpointStatus":{"shape":"ModelEndpointStatus"},
@@ -1785,17 +1737,6 @@
         "message":{"shape":"string"}
       },
       "exception":true
-    },
-    "Role":{
-      "type":"structure",
-      "required":[
-        "arn",
-        "name"
-      ],
-      "members":{
-        "arn":{"shape":"string"},
-        "name":{"shape":"string"}
-      }
     },
     "Rule":{
       "type":"structure",
@@ -2005,7 +1946,7 @@
         "modelType"
       ],
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "description":{"shape":"description"}
       }
@@ -2023,7 +1964,7 @@
         "majorVersionNumber"
       ],
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "majorVersionNumber":{"shape":"wholeNumberVersionString"},
         "externalEventsDetail":{"shape":"ExternalEventsDetail"},
@@ -2033,7 +1974,7 @@
     "UpdateModelVersionResult":{
       "type":"structure",
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "modelVersionNumber":{"shape":"floatVersionString"},
         "status":{"shape":"string"}
@@ -2048,7 +1989,7 @@
         "status"
       ],
       "members":{
-        "modelId":{"shape":"identifier"},
+        "modelId":{"shape":"modelIdentifier"},
         "modelType":{"shape":"ModelTypeEnum"},
         "modelVersionNumber":{"shape":"floatVersionString"},
         "status":{"shape":"ModelVersionStatus"}
@@ -2163,17 +2104,6 @@
       "max":100,
       "min":50
     },
-    "attributeKey":{
-      "type":"string",
-      "max":64,
-      "min":1
-    },
-    "attributeValue":{
-      "type":"string",
-      "max":256,
-      "min":1,
-      "sensitive":true
-    },
     "blob":{"type":"blob"},
     "contentType":{
       "type":"string",
@@ -2216,6 +2146,8 @@
     "float":{"type":"float"},
     "floatVersionString":{
       "type":"string",
+      "max":7,
+      "min":3,
       "pattern":"^[1-9][0-9]{0,3}\\.[0-9]{1,2}$"
     },
     "fraudDetectorArn":{
@@ -2259,6 +2191,12 @@
     "metricDataPointsList":{
       "type":"list",
       "member":{"shape":"MetricDataPoint"}
+    },
+    "modelIdentifier":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[0-9a-z_]+$"
     },
     "modelList":{
       "type":"list",
@@ -2334,6 +2272,8 @@
     },
     "wholeNumberVersionString":{
       "type":"string",
+      "max":5,
+      "min":1,
       "pattern":"^([1-9][0-9]*)$"
     }
   }

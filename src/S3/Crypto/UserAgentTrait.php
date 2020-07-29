@@ -1,13 +1,13 @@
 <?php
 namespace Aws\S3\Crypto;
 
-use Aws\AwsClient;
+use Aws\AwsClientInterface;
 use Aws\Middleware;
 use Psr\Http\Message\RequestInterface;
 
 trait UserAgentTrait
 {
-    private function appendUserAgent(AwsClient $client, $agentString)
+    private function appendUserAgent(AwsClientInterface $client, $agentString)
     {
         $list = $client->getHandlerList();
         $list->appendBuild(Middleware::mapRequest(
@@ -15,7 +15,10 @@ trait UserAgentTrait
                 if (!empty($req->getHeader('User-Agent'))
                     && !empty($req->getHeader('User-Agent')[0])
                 ) {
-                    $userAgent = $req->getHeader('User-Agent')[0] . " {$agentString}";
+                    $userAgent = $req->getHeader('User-Agent')[0];
+                    if (strpos($userAgent, $agentString) === false) {
+                        $userAgent .= " {$agentString}";
+                    };
                 } else {
                     $userAgent = $agentString;
                 }
