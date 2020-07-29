@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Crypto;
 
+use Aws\Exception\CryptoException;
 use Aws\Kms\KmsClient;
 
 /**
@@ -31,7 +32,7 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
     public function fromDecryptionEnvelope(MetadataEnvelope $envelope)
     {
         if (empty($envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER])) {
-            throw new \RuntimeException('Not able to detect the materials description.');
+            throw new CryptoException('Not able to detect the materials description.');
         }
 
         $materialsDescription = json_decode(
@@ -41,7 +42,7 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
 
         if (empty($materialsDescription['kms_cmk_id'])
             && empty($materialsDescription['aws:x-amz-cek-alg'])) {
-            throw new \RuntimeException('Not able to detect kms_cmk_id (legacy'
+            throw new CryptoException('Not able to detect kms_cmk_id (legacy'
                 . ' implementation) or aws:x-amz-cek-alg (current implementation)'
                 . ' from kms materials description.');
         }
@@ -50,7 +51,7 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
             $this->kmsClient,
             isset($materialsDescription['kms_cmk_id'])
                 ? $materialsDescription['kms_cmk_id']
-                : null
+                : $this->kmsKeyId
         );
     }
 
@@ -67,11 +68,20 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
      */
     public function decryptCek($encryptedCek, $materialDescription, $options)
     {
-        $result = $this->kmsClient->decrypt([
+        $params = [
             'CiphertextBlob' => $encryptedCek,
             'EncryptionContext' => $materialDescription
-        ]);
+        ];
+        if (empty($options['@KmsAllowDecryptWithAnyCmk'])) {
+            if (empty($this->kmsKeyId)) {
+                throw new CryptoException('Decryption with KMS materials'
+                    . ' provider requires the KMS key ID to be supplied, or'
+                    . ' the @KmsAllowDecryptWithAnyCmk option to be set to true.');
+            }
+            $params['KeyId'] = $this->kmsKeyId;
+        }
 
+        $result = $this->kmsClient->decrypt($params);
         return $result['Plaintext'];
     }
 
@@ -84,12 +94,12 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
         if (!isset($options['@kmsencryptioncontext'])
             || !is_array($options['@kmsencryptioncontext'])
         ) {
-            throw new \InvalidArgumentException("'@KmsEncryptionContext' is a"
+            throw new CryptoException("'@KmsEncryptionContext' is a"
                 . " required argument when using KmsMaterialsProviderV2, and"
                 . " must be an associative array (or empty array).");
         }
         if (isset($options['@kmsencryptioncontext']['aws:x-amz-cek-alg'])) {
-            throw new \InvalidArgumentException("'@KmsEncryptionContext' must not"
+            throw new CryptoException("'@KmsEncryptionContext' must not"
                 . " set a value for 'aws:x-amz-cek-alg', as this is already being"
                 . " used.");
         }

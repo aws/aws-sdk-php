@@ -572,7 +572,7 @@ EOXML;
                 new Result(['Plaintext' => random_bytes(32)])
             );
         });
-        $provider = new KmsMaterialsProviderV2($kms);
+        $provider = new KmsMaterialsProviderV2($kms, 'foo');
 
         $s3 = new S3Client([
             'region' => 'us-west-2',
@@ -726,7 +726,7 @@ EOXML;
     public function testAddsCryptoUserAgent()
     {
         $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProviderV2($kms);
+        $provider = new KmsMaterialsProviderV2($kms, 'foo');
         $this->addMockResults($kms, [
             new Result(['Plaintext' => random_bytes(32)])
         ]);
