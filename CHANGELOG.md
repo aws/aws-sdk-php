@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Adding support to target EC2 On-Demand Capacity Reservations within an AWS Resource Group to launch EC2 instances.
+* `Aws\ECR` - This release adds support for encrypting the contents of your Amazon ECR repository with customer master keys (CMKs) stored in AWS Key Management Service.
+* `Aws\Firehose` - This release includes a new Kinesis Data Firehose feature that supports data delivery to Https endpoint and to partners. You can now use Kinesis Data Firehose to ingest real-time data and deliver to Https endpoint and partners in a serverless, reliable, and salable manner.
+* `Aws\GuardDuty` - GuardDuty now supports S3 Data Events as a configurable data source type. This feature expands GuardDuty's monitoring scope to include S3 data plane operations, such as GetObject and PutObject. This data source is optional and can be enabled or disabled at anytime. Accounts already using GuardDuty must first enable the new feature to use it; new accounts will be enabled by default. GuardDuty masters can configure this data source for individual member accounts and GuardDuty masters associated through AWS Organizations can automatically enable the data source in member accounts.
+* `Aws\ResourceGroups` - Resource Groups released a new feature that enables you to create a group with an associated configuration that specifies how other AWS services interact with the group. There are two new operations `GroupResources` and `UngroupResources` to work on a group with a configuration. In this release, you can associate EC2 Capacity Reservations with a resource group. Resource Groups also added a new request parameter `Group` to replace `GroupName` for all existing operations.
+* `Aws\S3\Crypto` - Add crypto-specific user-agent string to encryption clients.
+* `Aws\ServiceDiscovery` - Added new attribute AWS_EC2_INSTANCE_ID for RegisterInstance API 
+
 ## 3.147.7 - 2020-07-28
 
 * `Aws\AutoScaling` - Now you can enable Instance Metadata Service Version 2 (IMDSv2) or disable the instance metadata endpoint with Launch Configurations.
