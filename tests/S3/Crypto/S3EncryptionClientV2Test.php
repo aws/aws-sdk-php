@@ -798,7 +798,7 @@ EOXML;
             'version' => 'latest',
             'http_handler' => function (RequestInterface $req) use ($provider) {
                 $this->assertContains(
-                    'S3CryptoV' . S3EncryptionClientV2::VERSION,
+                    'S3CryptoV' . S3EncryptionClientV2::CRYPTO_VERSION,
                     $req->getHeaderLine('User-Agent')
                 );
                 return Promise\promise_for(new Response(
