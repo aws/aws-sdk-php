@@ -24,7 +24,7 @@ class S3EncryptionMultipartUploaderV2 extends MultipartUploader
     use EncryptionTraitV2;
     use UserAgentTrait;
 
-    CONST CRYPTO_VERSION = '2.0';
+    CONST CRYPTO_VERSION = '2.1';
 
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.

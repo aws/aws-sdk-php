@@ -24,7 +24,7 @@ class S3EncryptionMultipartUploader extends MultipartUploader
     use EncryptionTrait;
     use UserAgentTrait;
 
-    const CRYPTO_VERSION = '1';
+    const CRYPTO_VERSION = '1n';
 
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.

@@ -31,7 +31,7 @@ class S3EncryptionClient extends AbstractCryptoClient
     use EncryptionTrait;
     use UserAgentTrait;
 
-    const CRYPTO_VERSION = '1';
+    const CRYPTO_VERSION = '1n';
 
     private $client;
     private $instructionFileSuffix;

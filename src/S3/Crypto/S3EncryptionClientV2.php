@@ -31,7 +31,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
     use EncryptionTraitV2;
     use UserAgentTrait;
 
-    const CRYPTO_VERSION = '2.0';
+    const CRYPTO_VERSION = '2.1';
 
     private $client;
     private $instructionFileSuffix;
