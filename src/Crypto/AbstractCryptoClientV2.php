@@ -69,8 +69,7 @@ abstract class AbstractCryptoClientV2
      *
      * @param Stream $plaintext Plain-text data to be encrypted using the
      *                          materials, algorithm, and data provided.
-     * @param array $cipherOptions Options for use in determining the cipher to
-     *                             be used for encrypting data.
+     * @param array $options Options for use in encryption.
      * @param MaterialsProviderV2 $provider A provider to supply and encrypt
      *                                      materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
@@ -82,7 +81,7 @@ abstract class AbstractCryptoClientV2
      */
     abstract public function encrypt(
         Stream $plaintext,
-        array $cipherOptions,
+        array $options,
         MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope
     );
@@ -97,7 +96,7 @@ abstract class AbstractCryptoClientV2
      *                                             materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
-     * @param array $cipherOptions Additional verification options.
+     * @param array $options Options used for decryption.
      *
      * @return AesStreamInterface
      *
@@ -105,8 +104,8 @@ abstract class AbstractCryptoClientV2
      */
     abstract public function decrypt(
         $cipherText,
-        MaterialsProviderInterface $provider,
+        MaterialsProviderInterfaceV2 $provider,
         MetadataEnvelope $envelope,
-        array $cipherOptions = []
+        array $options = []
     );
 }

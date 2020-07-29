@@ -6,7 +6,7 @@ use Aws\Crypto\MetadataEnvelope;
 
 trait S3EncryptionClientTestingTrait
 {
-    private function getInvalidCipherMetadataFields(MaterialsProviderInterface $provider)
+    private function getInvalidCipherMetadataFields($provider)
     {
         $fields = [];
         $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
@@ -25,7 +25,7 @@ trait S3EncryptionClientTestingTrait
         return $fields;
     }
 
-    private function getValidV1CbcMetadataFields(MaterialsProviderInterface $provider)
+    private function getValidV1CbcMetadataFields($provider)
     {
         $fields = [];
         $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
@@ -44,7 +44,7 @@ trait S3EncryptionClientTestingTrait
         return $fields;
     }
 
-    private function getValidV2GcmMetadataFields(MaterialsProviderInterface $provider)
+    private function getValidV2GcmMetadataFields($provider)
     {
         $fields = [];
         $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
@@ -63,7 +63,7 @@ trait S3EncryptionClientTestingTrait
         return $fields;
     }
 
-    private function getValidV1GcmMetadataFields(MaterialsProviderInterface $provider)
+    private function getValidV1GcmMetadataFields($provider)
     {
         $fields = [];
         $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]

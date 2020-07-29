@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Crypto;
 
-abstract class MaterialsProviderV2 implements MaterialsProviderInterface
+abstract class MaterialsProviderV2 implements MaterialsProviderInterfaceV2
 {
     private static $supportedKeySizes = [
         128 => true,
@@ -50,11 +50,12 @@ abstract class MaterialsProviderV2 implements MaterialsProviderInterface
      * @param string $encryptedCek Encrypted key to be decrypted by the Provider
      *                             for use decrypting other data.
      * @param string $materialDescription Material Description for use in
-     *                                    encrypting the $cek.
+     *                                    decrypting the CEK.
+     * @param string $options Options for use in decrypting the CEK.
      *
      * @return string
      */
-    abstract public function decryptCek($encryptedCek, $materialDescription);
+    abstract public function decryptCek($encryptedCek, $materialDescription, $options);
 
     /**
      * @param string $keySize Length of a cipher key in bits for generating a

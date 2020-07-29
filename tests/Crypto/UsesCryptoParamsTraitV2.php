@@ -18,7 +18,7 @@ trait UsesCryptoParamsTraitV2
                 new \stdClass(),
                 [
                     'InvalidArgumentException',
-                    'An instance of MaterialsProviderInterface'
+                    'An instance of MaterialsProviderInterfaceV2'
                     . ' must be passed in the "MaterialsProvider" field.'
                 ]
             ]

@@ -1,10 +1,10 @@
 <?php
 namespace Aws\S3\Crypto;
 
+use Aws\Crypto\DecryptionTraitV2;
 use Aws\HashingStream;
 use Aws\PhpHash;
 use Aws\Crypto\AbstractCryptoClientV2;
-use Aws\Crypto\DecryptionTrait;
 use Aws\Crypto\EncryptionTraitV2;
 use Aws\Crypto\MetadataEnvelope;
 use Aws\Crypto\MaterialsProvider;
@@ -27,7 +27,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
 {
     use CipherBuilderTrait;
     use CryptoParamsTraitV2;
-    use DecryptionTrait;
+    use DecryptionTraitV2;
     use EncryptionTraitV2;
     use UserAgentTrait;
 
@@ -241,6 +241,10 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
      *            using cbc.
+     * - @KmsAllowDecryptWithAnyCmk: (bool) This allows decryption with
+     *   KMS materials for any KMS key ID included in the materials description,
+     *   instead of needing the KMS key ID to be specified. Ignored for non-KMS
+     *   materials providers. Defaults to false.
      *
      * @return PromiseInterface
      *
@@ -334,6 +338,10 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
      *            using cbc.
+     * - @KmsAllowDecryptWithAnyCmk: (bool) This allows decryption with
+     *   KMS materials for any KMS key ID included in the materials description,
+     *   instead of needing the KMS key ID to be specified. Ignored for non-KMS
+     *   materials providers. Defaults to false.
      *
      * @return \Aws\Result GetObject call result with the 'Body' field
      *                     wrapped in a decryption stream with its metadata

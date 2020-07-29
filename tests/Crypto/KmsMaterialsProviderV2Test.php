@@ -107,7 +107,8 @@ class KmsMaterialsProviderV2Test extends TestCase
                 'encrypted',
                 [
                     'my_material' => 'material_value'
-                ]
+                ],
+                []
             )
         );
     }

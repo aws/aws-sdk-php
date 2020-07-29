@@ -6,27 +6,23 @@ use Aws\Kms\KmsClient;
 /**
  * Uses KMS to supply materials for encrypting and decrypting data.
  */
-class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsProviderInterface
+class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsProviderInterfaceV2
 {
     private $kmsClient;
     private $kmsKeyId;
-    private $options;
 
     /**
      * @param KmsClient $kmsClient A KMS Client for use encrypting and
      *                             decrypting keys.
      * @param string $kmsKeyId The private KMS key id to be used for encrypting
      *                         and decrypting keys.
-     * @param array $options Options for encryption/decryption behavior
      */
     public function __construct(
         KmsClient $kmsClient,
-        $kmsKeyId = null,
-        $options = []
+        $kmsKeyId = null
     ) {
         $this->kmsClient = $kmsClient;
         $this->kmsKeyId = $kmsKeyId;
-        $this->options = $options;
     }
 
     /**
@@ -69,7 +65,7 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
     /**
      * @inheritDoc
      */
-    public function decryptCek($encryptedCek, $materialDescription)
+    public function decryptCek($encryptedCek, $materialDescription, $options)
     {
         $result = $this->kmsClient->decrypt([
             'CiphertextBlob' => $encryptedCek,
