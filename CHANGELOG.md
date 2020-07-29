@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.8 - 2020-07-29
 
 * `Aws\EC2` - Adding support to target EC2 On-Demand Capacity Reservations within an AWS Resource Group to launch EC2 instances.
 * `Aws\ECR` - This release adds support for encrypting the contents of your Amazon ECR repository with customer master keys (CMKs) stored in AWS Key Management Service.
