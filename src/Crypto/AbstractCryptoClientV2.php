@@ -17,6 +17,8 @@ abstract class AbstractCryptoClientV2
 
     public static $supportedSecurityProfiles = ['V2', 'V2_AND_LEGACY'];
 
+    public static $legacySecurityProfiles = ['V2_AND_LEGACY'];
+
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
      *

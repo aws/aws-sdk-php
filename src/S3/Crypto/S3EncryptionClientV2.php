@@ -36,6 +36,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
 
     private $client;
     private $instructionFileSuffix;
+    private $legacyWarningCount;
 
     /**
      * @param S3Client $client The S3Client to be used for true uploading and
@@ -53,6 +54,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         $this->client = $client;
         $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->instructionFileSuffix = $instructionFileSuffix;
+        $this->legacyWarningCount = 0;
     }
 
     private static function getDefaultStrategy()
@@ -278,6 +280,20 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         if (!in_array($args['@SecurityProfile'], self::$supportedSecurityProfiles)) {
             throw new CryptoException("@SecurityProfile must be 'V2' or"
                 . "'V2_AND_LEGACY'");
+        }
+
+        // Only throw this legacy warning once per client
+        if (in_array($args['@SecurityProfile'], self::$legacySecurityProfiles)
+            && $this->legacyWarningCount < 1
+        ) {
+            $this->legacyWarningCount++;
+            trigger_error(
+                "This S3 Encryption Client operation is configured to"
+                    . " read encrypted data with legacy encryption modes. If you"
+                    . " don't have objects encrypted with these legacy modes,"
+                    . " you should disable support for them to enhance security. ",
+                E_USER_WARNING
+            );
         }
 
         $saveAs = null;

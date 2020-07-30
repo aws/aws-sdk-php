@@ -553,7 +553,10 @@ EOXML;
         ]);
 
         $client = new S3EncryptionClientV2($s3);
-        $result = $client->getObject([
+
+        // Suppressing known warning for 'V2_AND_LEGACY' security profile warning
+        // Necessary to test decrypting with legacy metadata
+        $result = @$client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $providerV2,
@@ -649,7 +652,7 @@ EOXML;
     public function testGetObjectWithClientInstructionFileSuffix()
     {
         $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProviderV2($kms);
+        $provider = new KmsMaterialsProviderV2($kms, 'foo');
         $this->addMockResults($kms, [
             new Result(['Plaintext' => random_bytes(32)])
         ]);
@@ -667,7 +670,7 @@ EOXML;
                         200,
                         [],
                         json_encode(
-                            $this->getValidV1CbcMetadataFields($provider)
+                            $this->getValidV2GcmMetadataFields($provider)
                         )
                     ));
                 }
@@ -689,15 +692,15 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
-            '@SecurityProfile' => 'V2_AND_LEGACY',
+            '@SecurityProfile' => 'V2',
         ]);
-        $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
+        $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
     }
 
     public function testGetObjectWithOperationInstructionFileSuffix()
     {
         $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProviderV2($kms);
+        $provider = new KmsMaterialsProviderV2($kms, 'foo');
         $this->addMockResults($kms, [
             new Result(['Plaintext' => random_bytes(32)])
         ]);
@@ -715,7 +718,7 @@ EOXML;
                         200,
                         [],
                         json_encode(
-                            $this->getValidV1CbcMetadataFields($provider)
+                            $this->getValidV2GcmMetadataFields($provider)
                         )
                     ));
                 }
@@ -734,18 +737,18 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
-            '@SecurityProfile' => 'V2_AND_LEGACY',
+            '@SecurityProfile' => 'V2',
             '@InstructionFileSuffix' =>
                 InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         ]);
-        $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
+        $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
     }
 
     public function testGetObjectSavesFile()
     {
         $file = sys_get_temp_dir() . '/CSE_Save_Test.txt';
         $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProviderV2($kms);
+        $provider = new KmsMaterialsProviderV2($kms, 'foo');
         $this->addMockResults($kms, [
             new Result(['Plaintext' => random_bytes(32)])
         ]);
@@ -757,7 +760,7 @@ EOXML;
                 return new FulfilledPromise(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
-                        $this->getValidV1CbcMetadataFields($provider)
+                        $this->getValidV2GcmMetadataFields($provider)
                     ),
                     'test'
                 ));
@@ -769,10 +772,61 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
-            '@SecurityProfile' => 'V2_AND_LEGACY',
+            '@SecurityProfile' => 'V2',
             'SaveAs' => $file
         ]);
         $this->assertStringEqualsFile($file, (string)$result['Body']);
+    }
+
+    /**
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage This S3 Encryption Client operation is configured to read encrypted data with legacy encryption modes
+     */
+    public function testEmitsWarningForLegacySecurityProfile()
+    {
+        $kms = $this->getKmsClient();
+        $list = $kms->getHandlerList();
+        $list->setHandler(function($cmd, $req) {
+            // Verify decryption command has correct parameters
+            $this->assertEquals('cek', $cmd['CiphertextBlob']);
+            $this->assertEquals(
+                [
+                    'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'
+                ],
+                $cmd['EncryptionContext']
+            );
+            return Promise\promise_for(
+                new Result(['Plaintext' => random_bytes(32)])
+            );
+        });
+        $providerV1 = new KmsMaterialsProvider($kms);
+        $providerV2 = new KmsMaterialsProviderV2($kms);
+
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function () use ($providerV1) {
+                return new FulfilledPromise(new Response(
+                    200,
+                    $this->getFieldsAsMetaHeaders(
+                        $this->getValidV1CbcMetadataFields($providerV1)
+                    ),
+                    'test'
+                ));
+            },
+        ]);
+
+        $client = new S3EncryptionClientV2($s3);
+
+        // Suppressing known warning for 'V2_AND_LEGACY' security profile warning
+        // Necessary to test decrypting with legacy metadata
+        $result = $client->getObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            '@MaterialsProvider' => $providerV2,
+            '@SecurityProfile' => 'V2_AND_LEGACY',
+        ]);
+        $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
     }
 
     public function testAddsCryptoUserAgent()
