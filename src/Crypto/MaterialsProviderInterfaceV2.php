@@ -13,17 +13,6 @@ interface MaterialsProviderInterfaceV2
     public static function isSupportedKeySize($keySize);
 
     /**
-     * Performs further initialization of the MaterialsProvider based on the
-     * data inside the MetadataEnvelope.
-     *
-     * @param MetadataEnvelope $envelope A storage envelope for encryption
-     *                                   metadata to be read from.
-     *
-     * @internal
-     */
-    public function fromDecryptionEnvelope(MetadataEnvelope $envelope);
-
-    /**
      * Returns the wrap algorithm name for this Provider.
      *
      * @return string

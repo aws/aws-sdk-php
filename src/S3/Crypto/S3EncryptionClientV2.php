@@ -320,8 +320,6 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
                         'Metadata' => $result['Metadata']
                     ]);
 
-                    $provider = $provider->fromDecryptionEnvelope($envelope);
-
                     $result['Body'] = $this->decrypt(
                         $result['Body'],
                         $provider,

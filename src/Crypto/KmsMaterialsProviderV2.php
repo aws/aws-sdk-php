@@ -31,35 +31,6 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
     /**
      * @inheritDoc
      */
-    public function fromDecryptionEnvelope(MetadataEnvelope $envelope)
-    {
-        if (empty($envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER])) {
-            throw new CryptoException('Not able to detect the materials description.');
-        }
-
-        $materialsDescription = json_decode(
-            $envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER],
-            true
-        );
-
-        if (empty($materialsDescription['kms_cmk_id'])
-            && empty($materialsDescription['aws:x-amz-cek-alg'])) {
-            throw new CryptoException('Not able to detect kms_cmk_id (legacy'
-                . ' implementation) or aws:x-amz-cek-alg (current implementation)'
-                . ' from kms materials description.');
-        }
-
-        return new self(
-            $this->kmsClient,
-            isset($materialsDescription['kms_cmk_id'])
-                ? $materialsDescription['kms_cmk_id']
-                : $this->kmsKeyId
-        );
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getWrapAlgorithmName()
     {
         return self::WRAP_ALGORITHM_NAME;

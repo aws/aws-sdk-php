@@ -461,7 +461,7 @@ EOXML;
     public function testGetObjectThrowsOnInvalidCipher()
     {
         $kms = $this->getKmsClient();
-        $provider = new KmsMaterialsProviderV2($kms);
+        $provider = new KmsMaterialsProviderV2($kms, 'foo');
         $this->addMockResults($kms, [
             new Result(['Plaintext' => random_bytes(32)])
         ]);
@@ -487,35 +487,6 @@ EOXML;
             '@MaterialsProvider' => $provider
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
-    }
-
-    /**
-     * @expectedException        RuntimeException
-     * @expectedExceptionMessage Not able to detect the materials description.
-     */
-    public function testFromDecryptionEnvelopeEmptyKmsMaterialException()
-    {
-        $kms = $this->getKmsClient();
-        $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProviderV2($kms, $keyId);
-        $strategy = new HeadersMetadataStrategy();
-        $envelope = $strategy->load([]);
-        $provider->fromDecryptionEnvelope($envelope);
-    }
-
-    /**
-     * @expectedException        RuntimeException
-     * @expectedExceptionMessage Not able to detect kms_cmk_id (legacy implementation) or aws:x-amz-cek-alg (current implementation)
-     */
-    public function testFromDecryptionEnvelopeInvalidKmsMaterialException()
-    {
-        $kms = $this->getKmsClient();
-        $keyId = '11111111-2222-3333-4444-555555555555';
-        $provider = new KmsMaterialsProviderV2($kms, $keyId);
-        $strategy = new HeadersMetadataStrategy();
-        $args['Metadata'][MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER] = 'foo';
-        $envelope = $strategy->load($args);
-        $provider->fromDecryptionEnvelope($envelope);
     }
 
     public function testGetObjectWithLegacyCbcMetadata()
@@ -561,6 +532,7 @@ EOXML;
             'Key' => 'bar',
             '@MaterialsProvider' => $providerV2,
             '@SecurityProfile' => 'V2_AND_LEGACY',
+            '@KmsAllowDecryptWithAnyCmk' => true,
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
     }
@@ -602,7 +574,8 @@ EOXML;
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
-            '@MaterialsProvider' => $provider
+            '@MaterialsProvider' => $provider,
+            '@KmsAllowDecryptWithAnyCmk' => true,
         ]);
         $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
     }
