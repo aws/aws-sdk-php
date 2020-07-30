@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Crypto;
 
+use Aws\Exception\CryptoException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LimitStream;
 use Psr\Http\Message\StreamInterface;
@@ -84,6 +85,34 @@ trait DecryptionTraitV2
         $cipherOptions['Cipher'] = $this->getCipherFromAesName(
             $envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
         );
+
+        $allowedCiphers = AbstractCryptoClientV2::$supportedCiphers;
+        $allowedKeywraps = AbstractCryptoClientV2::$supportedKeyWraps;
+        if ($options['@SecurityProfile'] == 'V2_AND_LEGACY') {
+            $allowedCiphers = array_unique(array_merge(
+                $allowedCiphers,
+                AbstractCryptoClient::$supportedCiphers
+            ));
+            $allowedKeywraps = array_unique(array_merge(
+                $allowedKeywraps,
+                AbstractCryptoClient::$supportedKeyWraps
+            ));
+        }
+
+        if (!in_array($cipherOptions['Cipher'], $allowedCiphers)) {
+            throw new CryptoException("The cipher '{$cipherOptions['Cipher']}'"
+                . " is not supported for decryption with the current security"
+                . " profile.");
+        }
+        if (!in_array(
+            $envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER],
+            $allowedKeywraps
+        )) {
+            throw new CryptoException("The keywrap schema"
+                . " '{$envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]}'"
+                . " is not supported for decryption with the current security"
+                . " profile.");
+        }
 
         $decryptionSteam = $this->getDecryptingStream(
             $cipherText,

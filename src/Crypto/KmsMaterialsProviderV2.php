@@ -9,6 +9,8 @@ use Aws\Kms\KmsClient;
  */
 class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsProviderInterfaceV2
 {
+    const WRAP_ALGORITHM_NAME = 'kms+context';
+
     private $kmsClient;
     private $kmsKeyId;
 
@@ -60,7 +62,7 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
      */
     public function getWrapAlgorithmName()
     {
-        return 'kms+context';
+        return self::WRAP_ALGORITHM_NAME;
     }
 
     /**

@@ -2,6 +2,7 @@
 namespace Aws\S3\Crypto;
 
 use Aws\Crypto\DecryptionTraitV2;
+use Aws\Exception\CryptoException;
 use Aws\HashingStream;
 use Aws\PhpHash;
 use Aws\Crypto\AbstractCryptoClientV2;
@@ -242,9 +243,16 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *            passed directly to OpenSSL when using gcm. It is ignored when
      *            using cbc.
      * - @KmsAllowDecryptWithAnyCmk: (bool) This allows decryption with
-     *   KMS materials for any KMS key ID included in the materials description,
-     *   instead of needing the KMS key ID to be specified. Ignored for non-KMS
+     *   KMS materials for any KMS key ID, instead of needing the KMS key ID to
+     *   be specified and provided to the decrypt operation. Ignored for non-KMS
      *   materials providers. Defaults to false.
+     * - @SecurityProfile: (string) Must be set to 'V2' or 'V2_AND_LEGACY'.
+     *   Defaults to 'V2'.
+     *      - 'V2' indicates that only objects encrypted with S3EncryptionClientV2
+     *        content encryption and key wrap schemas are able to be decrypted.
+     *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
+     *        S3EncryptionClientV2 and older legacy encryption clients are able
+     *        to be decrypted.
      *
      * @return PromiseInterface
      *
@@ -261,6 +269,15 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
 
         $strategy = $this->getMetadataStrategy($args, $instructionFileSuffix);
         unset($args['@MetadataStrategy']);
+
+        if (empty($args['@SecurityProfile'])) {
+            $args['@SecurityProfile'] = 'V2';
+        }
+
+        if (!in_array($args['@SecurityProfile'], self::$supportedSecurityProfiles)) {
+            throw new CryptoException("@SecurityProfile must be 'V2' or"
+                . "'V2_AND_LEGACY'");
+        }
 
         $saveAs = null;
         if (!empty($args['SaveAs'])) {
@@ -292,9 +309,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
                         $result['Body'],
                         $provider,
                         $envelope,
-                        isset($args['@CipherOptions'])
-                            ? $args['@CipherOptions']
-                            : []
+                        $args
                     );
                     return $result;
                 }
@@ -339,9 +354,16 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *            passed directly to OpenSSL when using gcm. It is ignored when
      *            using cbc.
      * - @KmsAllowDecryptWithAnyCmk: (bool) This allows decryption with
-     *   KMS materials for any KMS key ID included in the materials description,
-     *   instead of needing the KMS key ID to be specified. Ignored for non-KMS
+     *   KMS materials for any KMS key ID, instead of needing the KMS key ID to
+     *   be specified and provided to the decrypt operation. Ignored for non-KMS
      *   materials providers. Defaults to false.
+     * - @SecurityProfile: (string) Must be set to 'V2' or 'V2_AND_LEGACY'.
+     *   Defaults to 'V2'.
+     *      - 'V2' indicates that only objects encrypted with S3EncryptionClientV2
+     *        content encryption and key wrap schemas are able to be decrypted.
+     *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
+     *        S3EncryptionClientV2 and older legacy encryption clients are able
+     *        to be decrypted.
      *
      * @return \Aws\Result GetObject call result with the 'Body' field
      *                     wrapped in a decryption stream with its metadata

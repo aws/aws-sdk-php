@@ -11,6 +11,12 @@ abstract class AbstractCryptoClientV2
 {
     public static $supportedCiphers = ['gcm'];
 
+    public static $supportedKeyWraps = [
+        KmsMaterialsProviderV2::WRAP_ALGORITHM_NAME
+    ];
+
+    public static $supportedSecurityProfiles = ['V2', 'V2_AND_LEGACY'];
+
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
      *

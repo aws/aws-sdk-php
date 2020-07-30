@@ -508,7 +508,8 @@ EOXML;
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
-            '@MaterialsProvider' => $providerV2
+            '@MaterialsProvider' => $providerV2,
+            '@SecurityProfile' => 'V2_AND_LEGACY',
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
     }
@@ -639,7 +640,8 @@ EOXML;
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
-            '@MaterialsProvider' => $provider
+            '@MaterialsProvider' => $provider,
+            '@SecurityProfile' => 'V2_AND_LEGACY',
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
     }
@@ -684,6 +686,7 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@SecurityProfile' => 'V2_AND_LEGACY',
             '@InstructionFileSuffix' =>
                 InstructionFileMetadataStrategy::DEFAULT_FILE_SUFFIX
         ]);
@@ -718,6 +721,7 @@ EOXML;
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
+            '@SecurityProfile' => 'V2_AND_LEGACY',
             'SaveAs' => $file
         ]);
         $this->assertStringEqualsFile($file, (string)$result['Body']);

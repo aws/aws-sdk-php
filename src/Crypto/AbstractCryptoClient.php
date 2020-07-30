@@ -16,6 +16,10 @@ abstract class AbstractCryptoClient
 {
     public static $supportedCiphers = ['cbc', 'gcm'];
 
+    public static $supportedKeyWraps = [
+        KmsMaterialsProvider::WRAP_ALGORITHM_NAME
+    ];
+
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
      *
