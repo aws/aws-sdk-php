@@ -76,9 +76,11 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
         ];
         if (empty($options['@KmsAllowDecryptWithAnyCmk'])) {
             if (empty($this->kmsKeyId)) {
-                throw new CryptoException('Decryption with KMS materials'
-                    . ' provider requires the KMS key ID to be supplied, or'
-                    . ' the @KmsAllowDecryptWithAnyCmk option to be set to true.');
+                throw new CryptoException('KMS CMK ID was not specified and the'
+                    . ' operation is not opted-in to attempting to use any valid'
+                    . ' CMK it discovers. Please specify a CMK ID, or explicitly'
+                    . ' enable attempts to use any valid KMS CMK with the'
+                    . ' @KmsAllowDecryptWithAnyCmk option.');
             }
             $params['KeyId'] = $this->kmsKeyId;
         }
@@ -101,9 +103,9 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
                 . " must be an associative array (or empty array).");
         }
         if (isset($options['@kmsencryptioncontext']['aws:x-amz-cek-alg'])) {
-            throw new CryptoException("'@KmsEncryptionContext' must not"
-                . " set a value for 'aws:x-amz-cek-alg', as this is already being"
-                . " used.");
+            throw new CryptoException("Conflict in reserved @KmsEncryptionContext"
+                . " key aws:x-amz-cek-alg. This value is reserved for the S3"
+                . " Encryption Client and cannot be set by the user.");
         }
         $context = array_merge($options['@kmsencryptioncontext'], $context);
         $result = $this->kmsClient->generateDataKey([

@@ -61,14 +61,14 @@ trait DecryptionTraitV2
         MetadataEnvelope $envelope,
         array $options = []
     ) {
-        $cipherOptions = !empty($options['@CipherOptions'])
+        $options['@CipherOptions'] = !empty($options['@CipherOptions'])
             ? $options['@CipherOptions']
             : [];
-        $cipherOptions['Iv'] = base64_decode(
+        $options['@CipherOptions']['Iv'] = base64_decode(
             $envelope[MetadataEnvelope::IV_HEADER]
         );
 
-        $cipherOptions['TagLength'] =
+        $options['@CipherOptions']['TagLength'] =
             $envelope[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER] / 8;
 
         $cek = $provider->decryptCek(
@@ -81,43 +81,17 @@ trait DecryptionTraitV2
             ),
             $options
         );
-        $cipherOptions['KeySize'] = strlen($cek) * 8;
-        $cipherOptions['Cipher'] = $this->getCipherFromAesName(
+        $options['@CipherOptions']['KeySize'] = strlen($cek) * 8;
+        $options['@CipherOptions']['Cipher'] = $this->getCipherFromAesName(
             $envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
         );
 
-        $allowedCiphers = AbstractCryptoClientV2::$supportedCiphers;
-        $allowedKeywraps = AbstractCryptoClientV2::$supportedKeyWraps;
-        if ($options['@SecurityProfile'] == 'V2_AND_LEGACY') {
-            $allowedCiphers = array_unique(array_merge(
-                $allowedCiphers,
-                AbstractCryptoClient::$supportedCiphers
-            ));
-            $allowedKeywraps = array_unique(array_merge(
-                $allowedKeywraps,
-                AbstractCryptoClient::$supportedKeyWraps
-            ));
-        }
-
-        if (!in_array($cipherOptions['Cipher'], $allowedCiphers)) {
-            throw new CryptoException("The cipher '{$cipherOptions['Cipher']}'"
-                . " is not supported for decryption with the current security"
-                . " profile.");
-        }
-        if (!in_array(
-            $envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER],
-            $allowedKeywraps
-        )) {
-            throw new CryptoException("The keywrap schema"
-                . " '{$envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]}'"
-                . " is not supported for decryption with the current security"
-                . " profile.");
-        }
+        $this->validateOptionsAndEnvelope($options, $envelope);
 
         $decryptionSteam = $this->getDecryptingStream(
             $cipherText,
             $cek,
-            $cipherOptions
+            $options['@CipherOptions']
         );
         unset($cek);
 
@@ -154,6 +128,51 @@ trait DecryptionTraitV2
             $cipherTextSize - $tagLength,
             0
         );
+    }
+
+    private function validateOptionsAndEnvelope($options, $envelope)
+    {
+        $allowedCiphers = AbstractCryptoClientV2::$supportedCiphers;
+        $allowedKeywraps = AbstractCryptoClientV2::$supportedKeyWraps;
+        if ($options['@SecurityProfile'] == 'V2_AND_LEGACY') {
+            $allowedCiphers = array_unique(array_merge(
+                $allowedCiphers,
+                AbstractCryptoClient::$supportedCiphers
+            ));
+            $allowedKeywraps = array_unique(array_merge(
+                $allowedKeywraps,
+                AbstractCryptoClient::$supportedKeyWraps
+            ));
+        }
+
+        $v1SchemaException = new CryptoException("The requested object is encrypted"
+            . " with V1 encryption schemas that have been disabled by"
+            . " client configuration @SecurityProfile=V2. Retry with"
+            . " V2_AND_LEGACY enabled or reencrypt the object.");
+
+        if (!in_array($options['@CipherOptions']['Cipher'], $allowedCiphers)) {
+            if (in_array($options['@CipherOptions']['Cipher'], AbstractCryptoClient::$supportedCiphers)) {
+                throw $v1SchemaException;
+            }
+            throw new CryptoException("The requested object is encrypted with"
+                . " the cipher '{$options['@CipherOptions']['Cipher']}', which is not"
+                . " supported for decryption with the current security profile.");
+        }
+        if (!in_array(
+            $envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER],
+            $allowedKeywraps
+        )) {
+            if (in_array(
+                $envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER],
+                AbstractCryptoClient::$supportedKeyWraps)
+            ) {
+                throw $v1SchemaException;
+            }
+            throw new CryptoException("The requested object is encrypted with"
+                . " the keywrap schema '{$envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]}',"
+                . " which is not supported for decryption with the current security"
+                . " profile.");
+        }
     }
 
     /**
