@@ -62,7 +62,7 @@ trait DecryptionTraitV2
         array $options = []
     ) {
         $cipherOptions = !empty($options['@CipherOptions'])
-            ? $options['@@CipherOptions']
+            ? $options['@CipherOptions']
             : [];
         $cipherOptions['Iv'] = base64_decode(
             $envelope[MetadataEnvelope::IV_HEADER]
