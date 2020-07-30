@@ -791,8 +791,6 @@ EOXML;
 
         $client = new S3EncryptionClientV2($s3);
 
-        // Suppressing known warning for 'V2_AND_LEGACY' security profile warning
-        // Necessary to test decrypting with legacy metadata
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
