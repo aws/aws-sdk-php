@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Documentation updates for CloudFront
+* `Aws\CodeBuild` - Adding support for BuildBatch, and CodeCoverage APIs. BuildBatch allows you to model your project environment in source, and helps start multiple builds with a single API call. CodeCoverage allows you to track your code coverage using AWS CodeBuild. 
+* `Aws\EC2` - EC2 On-Demand Capacity Reservations now adds support to bring your own licenses (BYOL) of Windows operating system to launch EC2 instances. 
+* `Aws\GuardDuty` - GuardDuty can now provide detailed cost metrics broken down by account, data source, and S3 resources, based on the past 30 days of usage. This new feature also supports viewing cost metrics for all member accounts as a GuardDuty master.
+* `Aws\Kafka` - Amazon MSK has added a new API that allows you to reboot brokers within a cluster. 
+* `Aws\Organizations` - Documentation updates for AWS Organizations
+* `Aws\ResourceGroups` - Improved documentation for Resource Groups API operations.
+* `Aws\ServiceCatalog` - This release adds support for ProvisionProduct, UpdateProvisionedProduct & DescribeProvisioningParameters by product name, provisioning artifact name and path name. In addition DescribeProvisioningParameters now returns a list of provisioning artifact outputs.
+* `Aws\SesV2` - This release makes more API operations available to customers in version 2 of the Amazon SES API. With these additions, customers can now access sending authorization, custom verification email, and template API operations. With this release, Amazon SES is also providing new and updated APIs to allow customers to request production access.
+
 ## 3.147.8 - 2020-07-29
 
 * `Aws\EC2` - Adding support to target EC2 On-Demand Capacity Reservations within an AWS Resource Group to launch EC2 instances.

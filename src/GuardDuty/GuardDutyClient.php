@@ -71,6 +71,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getMembersAsync(array $args = [])
  * @method \Aws\Result getThreatIntelSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getThreatIntelSetAsync(array $args = [])
+ * @method \Aws\Result getUsageStatistics(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getUsageStatisticsAsync(array $args = [])
  * @method \Aws\Result inviteMembers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise inviteMembersAsync(array $args = [])
  * @method \Aws\Result listDetectors(array $args = [])
