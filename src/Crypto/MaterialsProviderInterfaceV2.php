@@ -45,6 +45,16 @@ interface MaterialsProviderInterfaceV2
     public function decryptCek($encryptedCek, $materialDescription, $options);
 
     /**
+     * @param string $keySize Length of a cipher key in bits for generating a
+     *                        random content encryption key (CEK).
+     * @param array $context Context map needed for key encryption
+     * @param array $options Additional options to be used in Cek generation
+     *
+     * @return array
+     */
+    public function generateCek($keySize, $context, $options);
+
+    /**
      * @param string $openSslName Cipher OpenSSL name to use for generating
      *                            an initialization vector.
      *
