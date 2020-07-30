@@ -50,7 +50,6 @@ class S3EncryptionClient extends AbstractCryptoClient
     ) {
         $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->client = $client;
-        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->instructionFileSuffix = $instructionFileSuffix;
     }
 

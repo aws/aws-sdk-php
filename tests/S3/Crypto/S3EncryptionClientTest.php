@@ -723,6 +723,52 @@ EOXML;
         $this->assertStringEqualsFile($file, (string)$result['Body']);
     }
 
+    /**
+     * Note that outside of PHPUnit, normal code execution will continue through
+     * this warning unless configured otherwise. PHPUnit throws it as an
+     * exception here for testing.
+     *
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage 'Aad' has been supplied for content encryption with AES/GCM/NoPadding
+     */
+    public function testTriggersWarningForGcmEncryptionWithAad()
+    {
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function (RequestInterface $request) {
+                return new FulfilledPromise(new Response(
+                    200,
+                    [],
+                    $this->getSuccessfulPutObjectResponse()
+                ));
+            },
+        ]);
+
+        $kms = $this->getKmsClient();
+        $keyId = '11111111-2222-3333-4444-555555555555';
+        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $this->addMockResults($kms, [
+            new Result([
+                'CiphertextBlob' => 'encrypted',
+                'Plaintext' => random_bytes(32),
+            ])
+        ]);
+
+        $client = new S3EncryptionClient($s3);
+        $client->putObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            'Body' => 'test',
+            '@MaterialsProvider' => $provider,
+            '@CipherOptions' => [
+                'Cipher' => 'gcm',
+                'Aad' => 'test'
+            ],
+        ]);
+        $this->assertTrue($this->mockQueueEmpty());
+    }
+
     public function testAddsCryptoUserAgent()
     {
         $kms = $this->getKmsClient();
