@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.9 - 2020-07-30
 
 * `Aws\CloudFront` - Documentation updates for CloudFront
 * `Aws\CodeBuild` - Adding support for BuildBatch, and CodeCoverage APIs. BuildBatch allows you to model your project environment in source, and helps start multiple builds with a single API call. CodeCoverage allows you to track your code coverage using AWS CodeBuild. 
