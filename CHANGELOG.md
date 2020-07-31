@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.10 - 2020-07-31
 
 * `Aws\Chime` - This release increases the CreateMeetingWithAttendee max attendee limit to 10.
 * `Aws\PersonalizeRuntime` - Adds support to use filters with Personalized Ranking recipe
