@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Chime` - This release increases the CreateMeetingWithAttendee max attendee limit to 10.
+* `Aws\PersonalizeRuntime` - Adds support to use filters with Personalized Ranking recipe
+* `Aws\ResourceGroupsTaggingAPI` - Updates to the list of services supported by this API.
+* `Aws\StorageGateway` - Add support for gateway VM deprecation dates
+* `Aws\WAFV2` - Add ManagedByFirewallManager flag to the logging configuration, which indicates whether AWS Firewall Manager controls the configuration.
+
 ## 3.147.9 - 2020-07-30
 
 * `Aws\CloudFront` - Documentation updates for CloudFront
