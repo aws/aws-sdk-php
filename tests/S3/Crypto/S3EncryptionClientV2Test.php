@@ -454,6 +454,57 @@ EOXML;
         $this->assertTrue($this->mockQueueEmpty());
     }
 
+    public function testAddsEncryptionContextForKms()
+    {
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function (RequestInterface $request) {
+                $this->assertEquals(
+                    [
+                        'aws:x-amz-cek-alg' => 'AES/GCM/NoPadding',
+                        'marco' => 'polo'
+                    ],
+                    json_decode(
+                        $request->getHeaderLine('x-amz-meta-x-amz-matdesc'),
+                        true
+                    )
+                );
+
+                return new FulfilledPromise(new Response(
+                    200,
+                    [],
+                    $this->getSuccessfulPutObjectResponse()
+                ));
+            },
+        ]);
+
+        $kms = $this->getKmsClient();
+        $keyId = '11111111-2222-3333-4444-555555555555';
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
+        $this->addMockResults($kms, [
+            new Result([
+                'CiphertextBlob' => 'encrypted',
+                'Plaintext' => random_bytes(32),
+            ])
+        ]);
+
+        $client = new S3EncryptionClientV2($s3);
+        $client->putObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            'Body' => 'test',
+            '@MaterialsProvider' => $provider,
+            '@CipherOptions' => [
+                'Cipher' => 'gcm',
+            ],
+            '@KmsEncryptionContext' => [
+                'marco' => 'polo'
+            ],
+        ]);
+        $this->assertTrue($this->mockQueueEmpty());
+    }
+
     /**
      * @expectedException RuntimeException
      * @expectedExceptionMessage Unrecognized or unsupported AESName for reverse lookup.

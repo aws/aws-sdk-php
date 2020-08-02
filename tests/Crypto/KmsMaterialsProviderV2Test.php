@@ -36,7 +36,8 @@ class KmsMaterialsProviderV2Test extends TestCase
             // Test that command is populated correctly
             $this->assertEquals(
                 [
-                    'my_material' => 'material_value'
+                    'my_material' => 'material_value',
+                    'kms_specific' => 'kms_value'
                 ],
                 $cmd['EncryptionContext']
             );
@@ -62,7 +63,11 @@ class KmsMaterialsProviderV2Test extends TestCase
         $this->assertEquals(
             [
                 'Ciphertext' => base64_encode('encryptedkey'),
-                'Plaintext' => 'plaintextkey'
+                'Plaintext' => 'plaintextkey',
+                'UpdatedContext' => [
+                    'my_material' => 'material_value',
+                    'kms_specific' => 'kms_value'
+                ]
             ],
             $provider->generateCek(
                 256,
@@ -70,7 +75,9 @@ class KmsMaterialsProviderV2Test extends TestCase
                     'my_material' => 'material_value'
                 ],
                 [
-                    '@KmsEncryptionContext' => []
+                    '@KmsEncryptionContext' => [
+                        'kms_specific' => 'kms_value'
+                    ]
                 ]
             )
         );

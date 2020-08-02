@@ -86,7 +86,8 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
         ]);
         return [
             'Plaintext' => $result['Plaintext'],
-            'Ciphertext' => base64_encode($result['CiphertextBlob'])
+            'Ciphertext' => base64_encode($result['CiphertextBlob']),
+            'UpdatedContext' => $context
         ];
     }
 }

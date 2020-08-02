@@ -109,6 +109,11 @@ trait EncryptionTraitV2
             $options
         );
 
+        // Some providers modify materials description based on options
+        if (isset($keys['UpdatedContext'])) {
+            $materialsDescription = $keys['UpdatedContext'];
+        }
+
         $encryptingStream = $this->getEncryptingStream(
             $plaintext,
             $keys['Plaintext'],
