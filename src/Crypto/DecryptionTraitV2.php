@@ -173,6 +173,20 @@ trait DecryptionTraitV2
                 . " which is not supported for decryption with the current security"
                 . " profile.");
         }
+
+        $matdesc = json_decode(
+            $envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER],
+            true
+        );
+        if (isset($matdesc['aws:x-amz-cek-alg'])
+            && $envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER] !=
+                $matdesc['aws:x-amz-cek-alg']
+        ) {
+            throw new CryptoException("There is a mismatch in specified content"
+                . " encryption algrithm between the materials description value"
+                . " and the metadata envelope value: {$matdesc['aws:x-amz-cek-alg']}"
+                . " vs. {$envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]}.");
+        }
     }
 
     /**
