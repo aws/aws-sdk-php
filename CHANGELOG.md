@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Updates docs to comply with GDPR laws
+* `Aws\SSM` - Adds a waiter for CommandExecuted and paginators for various other APIs.
+
 ## 3.147.10 - 2020-07-31
 
 * `Aws\Chime` - This release increases the CreateMeetingWithAttendee max attendee limit to 10.
