@@ -65,6 +65,11 @@ class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsPro
      */
     public function generateCek($keySize, $context, $options)
     {
+        if (empty($this->kmsKeyId)) {
+            throw new CryptoException('A KMS key id is required for encryption'
+                . ' with KMS keywrap. Use a KmsMaterialsProviderV2 that has been'
+                . ' instantiated with a KMS key id.');
+        }
         $options = array_change_key_case($options);
         if (!isset($options['@kmsencryptioncontext'])
             || !is_array($options['@kmsencryptioncontext'])
