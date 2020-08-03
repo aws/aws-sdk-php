@@ -5,6 +5,8 @@ use Aws\Kms\KmsClient;
 
 /**
  * Uses KMS to supply materials for encrypting and decrypting data.
+ *
+ * @deprecated
  */
 class KmsMaterialsProvider extends MaterialsProvider implements MaterialsProviderInterface
 {
