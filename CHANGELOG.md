@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.11 - 2020-08-03
 
 * `Aws\` - Updates docs to comply with GDPR laws
 * `Aws\SSM` - Adds a waiter for CommandExecuted and paginators for various other APIs.
