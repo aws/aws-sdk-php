@@ -86,8 +86,9 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *       - KeySize: (int) 128|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
-     *            passed directly to OpenSSL when using gcm. It is ignored when
-     *            using cbc.
+     *            passed directly to OpenSSL when using gcm. Note if you pass in
+     *            Aad, the PHP SDK will be able to decrypt the resulting object,
+     *            but other AWS SDKs may not be able to do so.
      * - @KmsEncryptionContext: (array) Only required if using
      *   KmsMaterialsProviderV2. An associative array of key-value
      *   pairs to be added to the encryption context for KMS key encryption. An
@@ -186,8 +187,9 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *       - KeySize: (int) 128|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
-     *            passed directly to OpenSSL when using gcm. It is ignored when
-     *            using cbc.
+     *            passed directly to OpenSSL when using gcm. Note if you pass in
+     *            Aad, the PHP SDK will be able to decrypt the resulting object,
+     *            but other AWS SDKs may not be able to do so.
      * - @KmsEncryptionContext: (array) Only required if using
      *   KmsMaterialsProviderV2. An associative array of key-value
      *   pairs to be added to the encryption context for KMS key encryption. An

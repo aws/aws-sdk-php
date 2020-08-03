@@ -78,7 +78,9 @@ class S3EncryptionClient extends AbstractCryptoClient
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
-     *            using cbc.
+     *            using cbc. Note if you pass in Aad for gcm encryption, the
+     *            PHP SDK will be able to decrypt the resulting object, but other
+     *            AWS SDKs may not be able to do so.
      *
      * The optional configuration arguments are as follows:
      *
@@ -169,7 +171,9 @@ class S3EncryptionClient extends AbstractCryptoClient
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm. It is ignored when
-     *            using cbc.
+     *            using cbc. Note if you pass in Aad for gcm encryption, the
+     *            PHP SDK will be able to decrypt the resulting object, but other
+     *            AWS SDKs may not be able to do so.
      *
      * The optional configuration arguments are as follows:
      *
