@@ -6,6 +6,11 @@ use Aws\Kms\KmsClient;
 /**
  * Uses KMS to supply materials for encrypting and decrypting data.
  *
+ * Legacy implementation that supports legacy S3EncryptionClient and
+ * S3EncryptionMultipartUploader, which use an older encryption workflow. Use
+ * KmsMaterialsProviderV2 with S3EncryptionClientV2 or
+ * S3EncryptionMultipartUploaderV2 if possible.
+ *
  * @deprecated
  */
 class KmsMaterialsProvider extends MaterialsProvider implements MaterialsProviderInterface
