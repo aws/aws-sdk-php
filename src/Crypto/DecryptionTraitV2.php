@@ -179,7 +179,7 @@ trait DecryptionTraitV2
             true
         );
         if (isset($matdesc['aws:x-amz-cek-alg'])
-            && $envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER] !=
+            && $envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER] !==
                 $matdesc['aws:x-amz-cek-alg']
         ) {
             throw new CryptoException("There is a mismatch in specified content"

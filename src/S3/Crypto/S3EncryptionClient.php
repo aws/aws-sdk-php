@@ -72,7 +72,8 @@ class S3EncryptionClient extends AbstractCryptoClient
      * - @CipherOptions: (array) Cipher options for encrypting data. Only the
      *   Cipher option is required. Accepts the following:
      *       - Cipher: (string) cbc|gcm
-     *            See also: AbstractCryptoClient::$supportedCiphers
+     *            See also: AbstractCryptoClient::$supportedCiphers. Note that
+     *            cbc is deprecated and gcm should be used when possible.
      *       - KeySize: (int) 128|192|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
@@ -162,7 +163,8 @@ class S3EncryptionClient extends AbstractCryptoClient
      * - @CipherOptions: (array) Cipher options for encrypting data. A Cipher
      *   is required. Accepts the following options:
      *       - Cipher: (string) cbc|gcm
-     *            See also: AbstractCryptoClient::$supportedCiphers
+     *            See also: AbstractCryptoClient::$supportedCiphers. Note that
+     *            cbc is deprecated and gcm should be used when possible.
      *       - KeySize: (int) 128|192|256
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is

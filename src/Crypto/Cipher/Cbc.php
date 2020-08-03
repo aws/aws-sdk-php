@@ -7,6 +7,8 @@ use \LogicException;
 /**
  * An implementation of the CBC cipher for use with an AesEncryptingStream or
  * AesDecrypting stream.
+ *
+ * @deprecated
  */
 class Cbc implements CipherMethod
 {
