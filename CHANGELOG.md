@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.12 - 2020-08-04
 
 * `Aws\Health` - Documentation updates for health
 
