@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3\Crypto;
 
+use Aws\CommandInterface;
 use Aws\Middleware;
 use Aws\S3\Crypto\S3EncryptionMultipartUploaderV2;
 use Aws\Result;
@@ -11,6 +12,7 @@ use Aws\Test\UsesServiceTrait;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 class S3EncryptionMultipartUploaderV2Test extends TestCase
 {
@@ -527,6 +529,66 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
                     'Cipher' => 'gcm',
                 ],
                 '@KmsEncryptionContext' => [],
+            ]
+        );
+        $uploader->upload();
+    }
+
+    public function testAddsUpdatedEncryptionContext()
+    {
+        $this->skipTestForPolyfillPhpVersions();
+
+        $s3 = $this->getS3Client();
+        $this->addMockResults($s3, [
+            new Result(['UploadId' => 'baz']),
+            new Result(['ETag' => 'A']),
+            new Result(['ETag' => 'B']),
+            new Result(['ETag' => 'C']),
+            new Result(['Location' => self::TEST_URL]),
+        ]);
+        $list = $s3->getHandlerList();
+        $list->appendSign(Middleware::tap(function(
+                CommandInterface $cmd,
+                RequestInterface $req
+            ) {
+                if ($cmd->getName() === 'CreateMultipartUpload') {
+                    $this->assertEquals(
+                        [
+                            'aws:x-amz-cek-alg' => 'AES/GCM/NoPadding',
+                            'marco' => 'polo'
+                        ],
+                        json_decode(
+                            $req->getHeaderLine('x-amz-meta-x-amz-matdesc'),
+                            true
+                        )
+                    );
+                }
+            }
+        ));
+
+        $kms = $this->getKmsClient();
+        $keyId = '11111111-2222-3333-4444-555555555555';
+        $provider = new KmsMaterialsProviderV2($kms, $keyId);
+        $this->addMockResults($kms, [
+            new Result([
+                'CiphertextBlob' => 'encrypted',
+                'Plaintext' => random_bytes(32),
+            ])
+        ]);
+
+        $uploader = new S3EncryptionMultipartUploaderV2(
+            $s3,
+            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            [
+                'bucket' => 'foo',
+                'key'    => 'bar',
+                '@MaterialsProvider' => $provider,
+                '@CipherOptions' => [
+                    'Cipher' => 'gcm',
+                ],
+                '@KmsEncryptionContext' => [
+                    'marco' => 'polo'
+                ],
             ]
         );
         $uploader->upload();
