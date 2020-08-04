@@ -23,6 +23,55 @@ use GuzzleHttp\Psr7;
  * for encryption since there is no native PHP support. The performance for large
  * inputs will be a lot slower than for PHP 7.1+, so upgrading older PHP version
  * environments may be necessary to use this effectively.
+ *
+ * Example write path:
+ *
+ * <code>
+ * use Aws\Crypto\KmsMaterialsProviderV2;
+ * use Aws\S3\Crypto\S3EncryptionClientV2;
+ * use Aws\S3\S3Client;
+ *
+ * $encryptionClient = new S3EncryptionClientV2(
+ *     new S3Client([
+ *         'region' => 'us-west-2',
+ *         'version' => 'latest'
+ *     ])
+ * );
+ * $materialsProvider = new KmsMaterialsProviderV2(
+ *     new KmsClient([
+ *         'profile' => 'default',
+ *         'region' => 'us-east-1',
+ *         'version' => 'latest',
+ *     ],
+ *    'your-kms-key-id'
+ * );
+ *
+ * $encryptionClient->putObject([
+ *     '@MaterialsProvider' => $materialsProvider,
+ *     '@CipherOptions' => [
+ *         'Cipher' => 'gcm',
+ *         'KeySize' => 256,
+ *     ],
+ *     '@KmsEncryptionContext' => ['foo' => 'bar'],
+ *     'Bucket' => 'your-bucket',
+ *     'Key' => 'your-key',
+ *     'Body' => 'your-encrypted-data',
+ * ]);
+ * </code>
+ *
+ * Example read call (using objects from previous example):
+ *
+ * <code>
+ * $encryptionClient->getObject([
+ *     '@MaterialsProvider' => $materialsProvider,
+ *     '@CipherOptions' => [
+ *         'Cipher' => 'gcm',
+ *         'KeySize' => 256,
+ *     ],
+ *     'Bucket' => 'your-bucket',
+ *     'Key' => 'your-key',
+ * ]);
+ * </code>
  */
 class S3EncryptionClientV2 extends AbstractCryptoClientV2
 {
