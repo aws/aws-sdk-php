@@ -278,6 +278,12 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * - @MaterialsProvider: (MaterialsProviderInterface) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for decryption metadata. May have data loaded
      *   from the MetadataEnvelope upon decryption.
+     * - @SecurityProfile: (string) Must be set to 'V2' or 'V2_AND_LEGACY'.
+     *      - 'V2' indicates that only objects encrypted with S3EncryptionClientV2
+     *        content encryption and key wrap schemas are able to be decrypted.
+     *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
+     *        S3EncryptionClientV2 and older legacy encryption clients are able
+     *        to be decrypted.
      *
      * The optional configuration arguments are as follows:
      *
@@ -300,13 +306,6 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *   KMS materials for any KMS key ID, instead of needing the KMS key ID to
      *   be specified and provided to the decrypt operation. Ignored for non-KMS
      *   materials providers. Defaults to false.
-     * - @SecurityProfile: (string) Must be set to 'V2' or 'V2_AND_LEGACY'.
-     *   Defaults to 'V2'.
-     *      - 'V2' indicates that only objects encrypted with S3EncryptionClientV2
-     *        content encryption and key wrap schemas are able to be decrypted.
-     *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
-     *        S3EncryptionClientV2 and older legacy encryption clients are able
-     *        to be decrypted.
      *
      * @return PromiseInterface
      *
@@ -324,13 +323,11 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
         $strategy = $this->getMetadataStrategy($args, $instructionFileSuffix);
         unset($args['@MetadataStrategy']);
 
-        if (empty($args['@SecurityProfile'])) {
-            $args['@SecurityProfile'] = 'V2';
-        }
-
-        if (!in_array($args['@SecurityProfile'], self::$supportedSecurityProfiles)) {
-            throw new CryptoException("@SecurityProfile must be 'V2' or"
-                . "'V2_AND_LEGACY'");
+        if (!isset($args['@SecurityProfile'])
+            || !in_array($args['@SecurityProfile'], self::$supportedSecurityProfiles)
+        ) {
+            throw new CryptoException("@SecurityProfile is required and must be"
+                . " set to 'V2' or 'V2_AND_LEGACY'");
         }
 
         // Only throw this legacy warning once per client
@@ -406,6 +403,12 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      * - @MaterialsProvider: (MaterialsProviderInterface) Provides Cek, Iv, and Cek
      *   encrypting/decrypting for decryption metadata. May have data loaded
      *   from the MetadataEnvelope upon decryption.
+     * - @SecurityProfile: (string) Must be set to 'V2' or 'V2_AND_LEGACY'.
+     *      - 'V2' indicates that only objects encrypted with S3EncryptionClientV2
+     *        content encryption and key wrap schemas are able to be decrypted.
+     *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
+     *        S3EncryptionClientV2 and older legacy encryption clients are able
+     *        to be decrypted.
      *
      * The optional configuration arguments are as follows:
      *
@@ -423,13 +426,6 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
      *   KMS materials for any KMS key ID, instead of needing the KMS key ID to
      *   be specified and provided to the decrypt operation. Ignored for non-KMS
      *   materials providers. Defaults to false.
-     * - @SecurityProfile: (string) Must be set to 'V2' or 'V2_AND_LEGACY'.
-     *   Defaults to 'V2'.
-     *      - 'V2' indicates that only objects encrypted with S3EncryptionClientV2
-     *        content encryption and key wrap schemas are able to be decrypted.
-     *      - 'V2_AND_LEGACY' indicates that objects encrypted with both
-     *        S3EncryptionClientV2 and older legacy encryption clients are able
-     *        to be decrypted.
      *
      * @return \Aws\Result GetObject call result with the 'Body' field
      *                     wrapped in a decryption stream with its metadata

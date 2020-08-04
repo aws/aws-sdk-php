@@ -535,7 +535,8 @@ EOXML;
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
-            '@MaterialsProvider' => $provider
+            '@MaterialsProvider' => $provider,
+            '@SecurityProfile' => 'V2',
         ]);
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
     }
@@ -627,6 +628,7 @@ EOXML;
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
             '@KmsAllowDecryptWithAnyCmk' => true,
+            '@SecurityProfile' => 'V2',
         ]);
         $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
     }
@@ -668,7 +670,8 @@ EOXML;
         $result = $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
-            '@MaterialsProvider' => $provider
+            '@MaterialsProvider' => $provider,
+            '@SecurityProfile' => 'V2',
         ]);
         $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
     }
@@ -881,7 +884,8 @@ EOXML;
         $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
-            '@MaterialsProvider' => $provider
+            '@MaterialsProvider' => $provider,
+            '@SecurityProfile' => 'V2',
         ]);
     }
 }
