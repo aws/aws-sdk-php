@@ -62,6 +62,10 @@ class S3EncryptionMultipartUploaderV2 extends MultipartUploader
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm.
+     * - @KmsEncryptionContext: (array) Only required if using
+     *   KmsMaterialsProviderV2. An associative array of key-value
+     *   pairs to be added to the encryption context for KMS key encryption. An
+     *   empty array may be passed if no additional context is desired.
      * - bucket: (string) Name of the bucket to which the object is
      *   being uploaded.
      * - key: (string) Key to use for the object being uploaded.
