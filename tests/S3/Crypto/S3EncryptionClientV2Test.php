@@ -844,14 +844,55 @@ EOXML;
         ]);
 
         $client = new S3EncryptionClientV2($s3);
-
-        $result = $client->getObject([
+        $client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $providerV2,
             '@SecurityProfile' => 'V2_AND_LEGACY',
         ]);
-        $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CryptoException
+     * @expectedExceptionMessage @SecurityProfile is required and must be set to 'V2' or 'V2_AND_LEGACY'
+     */
+    public function testThrowsForNoSecurityProfile()
+    {
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+        ]);
+
+        $client = new S3EncryptionClientV2($s3);
+        $client->getObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            '@MaterialsProvider' => new KmsMaterialsProviderV2(
+                $this->getKmsClient()
+            ),
+        ]);
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CryptoException
+     * @expectedExceptionMessage @SecurityProfile is required and must be set to 'V2' or 'V2_AND_LEGACY'
+     */
+    public function testThrowsForIncorrectSecurityProfile()
+    {
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+        ]);
+
+        $client = new S3EncryptionClientV2($s3);
+        $client->getObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            '@MaterialsProvider' => new KmsMaterialsProviderV2(
+                $this->getKmsClient()
+            ),
+            '@SecurityProfile' => 'AcmeSecurity'
+        ]);
     }
 
     public function testAddsCryptoUserAgent()

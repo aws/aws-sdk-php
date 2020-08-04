@@ -101,7 +101,6 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
     ) {
         $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->client = $client;
-        $this->appendUserAgent($client, 'S3CryptoV' . self::CRYPTO_VERSION);
         $this->instructionFileSuffix = $instructionFileSuffix;
         $this->legacyWarningCount = 0;
     }

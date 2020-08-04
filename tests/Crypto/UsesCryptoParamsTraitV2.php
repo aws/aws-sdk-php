@@ -57,7 +57,14 @@ trait UsesCryptoParamsTraitV2
                     'InvalidArgumentException',
                     'The cipher requested is not supported by the SDK.'
                 ]
-            ]
+            ],
+            [
+                null,
+                [
+                    'InvalidArgumentException',
+                    'An encryption cipher must be specified in the "cipher_options".'
+                ]
+            ],
         ];
     }
 
