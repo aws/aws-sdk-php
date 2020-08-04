@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Health` - Documentation updates for health
+
 ## 3.147.11 - 2020-08-03
 
 * `Aws\` - Updates docs to comply with GDPR laws
