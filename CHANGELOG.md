@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.13 - 2020-08-05
 
 * `Aws\AppSync` - AWS AppSync releases support for Direct Lambda Resolvers.
 * `Aws\FSx` - Documentation updates for StorageCapacity input value format.
