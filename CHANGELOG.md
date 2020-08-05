@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## 3.147.13 - 2020-08-05
+
+* `Aws\AppSync` - AWS AppSync releases support for Direct Lambda Resolvers.
+* `Aws\FSx` - Documentation updates for StorageCapacity input value format.
+* `Aws\ResourceGroupsTaggingAPI` - Documentation updates for the Resource Group Tagging API namespace.
+* `Aws\SNS` - Documentation updates for SNS.
+* `Aws\TranscribeService` - Amazon Transcribe now supports custom language models, which can improve transcription accuracy for your specific use case.
+
+## 3.147.12 - 2020-08-04
+
+* `Aws\Health` - Documentation updates for health
+
+## 3.147.11 - 2020-08-03
+
+* `Aws\` - Updates docs to comply with GDPR laws
+* `Aws\SSM` - Adds a waiter for CommandExecuted and paginators for various other APIs.
+
+## 3.147.10 - 2020-07-31
+
+* `Aws\Chime` - This release increases the CreateMeetingWithAttendee max attendee limit to 10.
+* `Aws\PersonalizeRuntime` - Adds support to use filters with Personalized Ranking recipe
+* `Aws\ResourceGroupsTaggingAPI` - Updates to the list of services supported by this API.
+* `Aws\StorageGateway` - Add support for gateway VM deprecation dates
+* `Aws\WAFV2` - Add ManagedByFirewallManager flag to the logging configuration, which indicates whether AWS Firewall Manager controls the configuration.
+
 ## 3.147.9 - 2020-07-30
 
 * `Aws\CloudFront` - Documentation updates for CloudFront
