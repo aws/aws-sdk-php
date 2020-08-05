@@ -890,7 +890,7 @@ EOXML;
                 return new FulfilledPromise(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
-                        $this->getValidV2GcmMetadataFields($provider)
+                        $this->getValidV1CbcMetadataFields($provider)
                     ),
                     'test'
                 ));
@@ -898,11 +898,11 @@ EOXML;
         ]);
 
         $client = new S3EncryptionClientV2($s3);
-        $result = $client->getObject([
+        $result = @$client->getObject([
             'Bucket' => 'foo',
             'Key' => 'bar',
             '@MaterialsProvider' => $provider,
-            '@SecurityProfile' => 'V2',
+            '@SecurityProfile' => 'V2_AND_LEGACY',
             'SaveAs' => $file
         ]);
         $this->assertStringEqualsFile($file, (string)$result['Body']);
