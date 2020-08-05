@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppSync` - AWS AppSync releases support for Direct Lambda Resolvers.
+* `Aws\FSx` - Documentation updates for StorageCapacity input value format.
+* `Aws\ResourceGroupsTaggingAPI` - Documentation updates for the Resource Group Tagging API namespace.
+* `Aws\SNS` - Documentation updates for SNS.
+* `Aws\TranscribeService` - Amazon Transcribe now supports custom language models, which can improve transcription accuracy for your specific use case.
+
 ## 3.147.12 - 2020-08-04
 
 * `Aws\Health` - Documentation updates for health
