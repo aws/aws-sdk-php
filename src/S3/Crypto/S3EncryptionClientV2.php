@@ -19,6 +19,12 @@ use GuzzleHttp\Psr7;
  * Provides a wrapper for an S3Client that supplies functionality to encrypt
  * data on putObject[Async] calls and decrypt data on getObject[Async] calls.
  *
+ * AWS strongly recommends the upgrade to the S3EncryptionClientV2 (over the
+ * S3EncryptionClient), as it offers updated data security best practices to our
+ * customers who upgrade. S3EncryptionClientV2 contains breaking changes, so this
+ * will require planning by engineering teams to migrate. New workflows should
+ * just start with S3EncryptionClientV2.
+ *
  * Note that for PHP versions of < 7.1, this class uses an AES-GCM polyfill
  * for encryption since there is no native PHP support. The performance for large
  * inputs will be a lot slower than for PHP 7.1+, so upgrading older PHP version

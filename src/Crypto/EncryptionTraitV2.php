@@ -42,7 +42,7 @@ trait EncryptionTraitV2
      * @param array $options    Options for use in encryption, including cipher
      *                          options, and encryption context.
      * @param MaterialsProviderV2 $provider A provider to supply and encrypt
-     *                                    materials used in encryption.
+     *                                      materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be added to.
      *
@@ -67,7 +67,7 @@ trait EncryptionTraitV2
 
         if (empty($cipherOptions['Cipher'])) {
             throw new \InvalidArgumentException('An encryption cipher must be'
-                . ' specified in the "cipher_options".');
+                . ' specified in @CipherOptions["Cipher"].');
         }
 
         $cipherOptions['Cipher'] = strtolower($cipherOptions['Cipher']);

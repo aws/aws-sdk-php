@@ -5,7 +5,9 @@ use Aws\Exception\CryptoException;
 use Aws\Kms\KmsClient;
 
 /**
- * Uses KMS to supply materials for encrypting and decrypting data.
+ * Uses KMS to supply materials for encrypting and decrypting data. This
+ * V2 implementation should be used with the V2 encryption clients (i.e.
+ * S3EncryptionClientV2).
  */
 class KmsMaterialsProviderV2 extends MaterialsProviderV2 implements MaterialsProviderInterfaceV2
 {

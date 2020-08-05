@@ -156,7 +156,9 @@ trait DecryptionTraitV2
             }
             throw new CryptoException("The requested object is encrypted with"
                 . " the cipher '{$options['@CipherOptions']['Cipher']}', which is not"
-                . " supported for decryption with the current security profile.");
+                . " supported for decryption with the selected security profile."
+                . " This profile allows decryption with: "
+                . implode(", ", $allowedCiphers));
         }
         if (!in_array(
             $envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER],

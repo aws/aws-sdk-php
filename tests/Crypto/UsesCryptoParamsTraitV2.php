@@ -62,7 +62,7 @@ trait UsesCryptoParamsTraitV2
                 null,
                 [
                     'InvalidArgumentException',
-                    'An encryption cipher must be specified in the "cipher_options".'
+                    'An encryption cipher must be specified in @CipherOptions["Cipher"].'
                 ]
             ],
         ];
