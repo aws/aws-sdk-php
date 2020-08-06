@@ -59,6 +59,51 @@ class AesGcmDecryptingStreamTest extends TestCase
         $this->assertSame((string) $decryptingStream, $plainText);
     }
 
+    /**
+     * @dataProvider cartesianJoinInputKeySizeProvider
+     * @expectedException \Aws\Exception\CryptoException
+     * @expectedExceptionMessage The requested object could not be decrypted due to an invalid authentication tag
+     *
+     * @param StreamInterface $plainText
+     * @param int $keySize
+     */
+    public function testThrowsForInvalidTag(
+        StreamInterface $plainText,
+        $keySize
+    ) {
+        if (version_compare(PHP_VERSION, '7.1', '<')) {
+            $this->markTestSkipped(
+                'AES-GCM decryption is only supported in PHP 7.1 or greater'
+            );
+        }
+        $plainText->rewind();
+        $plainText = (string) $plainText;
+        $key = 'foo';
+        $iv = random_bytes(openssl_cipher_iv_length('aes-256-gcm'));
+        $additionalData = json_encode(['foo' => 'bar']);
+        $tag = null;
+        $cipherText = openssl_encrypt(
+            $plainText,
+            "aes-{$keySize}-gcm",
+            $key,
+            OPENSSL_RAW_DATA,
+            $iv,
+            $tag,
+            $additionalData,
+            16
+        );
+
+        $decryptingStream = new AesGcmDecryptingStream(
+            Psr7\stream_for($cipherText),
+            $key,
+            $iv,
+            'invalid_tag',
+            $additionalData,
+            16,
+            $keySize
+        );
+        $decryptingStream->getContents();
+    }
 
     public function testStreamLegacyPHP()
     {
