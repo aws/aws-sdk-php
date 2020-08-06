@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.147.14 - 2020-08-06
 
 * `Aws\EC2` - This release supports Wavelength resources, including carrier gateways, and carrier IP addresses.
 * `Aws\LexModelBuildingService` - Amazon Lex supports the option to enable accuracy improvements and specify an intent classification confidence score threshold.
