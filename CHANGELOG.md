@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - This release supports Wavelength resources, including carrier gateways, and carrier IP addresses.
+* `Aws\LexModelBuildingService` - Amazon Lex supports the option to enable accuracy improvements and specify an intent classification confidence score threshold.
+* `Aws\LexRuntimeService` - Amazon Lex supports intent classification confidence scores along with a list of the top five intents.
+* `Aws\Personalize` - Add 'exploration' functionality
+* `Aws\PersonalizeEvents` - Adds support implicit and explicit impression input
+* `Aws\PersonalizeRuntime` - Adds support for implicit impressions
+
 ## 3.147.13 - 2020-08-05
 
 * `Aws\AppSync` - AWS AppSync releases support for Direct Lambda Resolvers.
