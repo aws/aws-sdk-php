@@ -36,7 +36,8 @@ class KmsMaterialsProviderV2Test extends TestCase
             // Test that command is populated correctly
             $this->assertEquals(
                 [
-                    'my_material' => 'material_value'
+                    'my_material' => 'material_value',
+                    'kms_specific' => 'kms_value'
                 ],
                 $cmd['EncryptionContext']
             );
@@ -62,14 +63,85 @@ class KmsMaterialsProviderV2Test extends TestCase
         $this->assertEquals(
             [
                 'Ciphertext' => base64_encode('encryptedkey'),
-                'Plaintext' => 'plaintextkey'
+                'Plaintext' => 'plaintextkey',
+                'UpdatedContext' => [
+                    'my_material' => 'material_value',
+                    'kms_specific' => 'kms_value'
+                ]
             ],
             $provider->generateCek(
                 256,
                 [
                     'my_material' => 'material_value'
+                ],
+                [
+                    '@KmsEncryptionContext' => [
+                        'kms_specific' => 'kms_value'
+                    ]
                 ]
             )
+        );
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CryptoException
+     * @expectedExceptionMessage A KMS key id is required for encryption with KMS keywrap
+     */
+    public function testGenerateThrowsForNoKmsId()
+    {
+        /** @var KmsClient $client */
+        $client = $this->getTestClient('Kms', []);
+        $provider = new KmsMaterialsProviderV2($client);
+        $provider->generateCek(
+            256,
+            [
+                'my_material' => 'material_value'
+            ],
+            [
+                '@KmsEncryptionContext' => [
+                    'kms_specific' => 'kms_value'
+                ]
+            ]
+        );
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CryptoException
+     * @expectedExceptionMessage '@KmsEncryptionContext' is a required argument when using KmsMaterialsProviderV2
+     */
+    public function testGenerateThrowsForNoEncryptionContext()
+    {
+        /** @var KmsClient $client */
+        $client = $this->getTestClient('Kms', []);
+        $provider = new KmsMaterialsProviderV2($client, 'foo');
+        $provider->generateCek(
+            256,
+            [
+                'my_material' => 'material_value'
+            ],
+            []
+        );
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CryptoException
+     * @expectedExceptionMessage Conflict in reserved @KmsEncryptionContext key aws:x-amz-cek-alg
+     */
+    public function testGenerateThrowsForContextConflict()
+    {
+        /** @var KmsClient $client */
+        $client = $this->getTestClient('Kms', []);
+        $provider = new KmsMaterialsProviderV2($client, 'foo');
+        $provider->generateCek(
+            256,
+            [
+                'aws:x-amz-cek-alg' => 'bar_alg'
+            ],
+            [
+                '@KmsEncryptionContext' => [
+                    'aws:x-amz-cek-alg' => 'custom_alg'
+                ]
+            ]
         );
     }
 
@@ -104,6 +176,63 @@ class KmsMaterialsProviderV2Test extends TestCase
                 'encrypted',
                 [
                     'my_material' => 'material_value'
+                ],
+                []
+            )
+        );
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CryptoException
+     * @expectedExceptionMessage KMS CMK ID was not specified and the operation is not opted-in to attempting to use any valid CMK
+     */
+    public function testDecryptCekThrowsForNoKmsId()
+    {
+        /** @var KmsClient $client */
+        $client = $this->getTestClient('Kms', []);
+        $provider = new KmsMaterialsProviderV2($client);
+        $provider->decryptCek(
+            'encrypted',
+            [
+                'my_material' => 'material_value'
+            ],
+            []
+        );
+    }
+
+    public function testDecryptWithAnyCmk()
+    {
+        /** @var KmsClient $client */
+        $client = $this->getTestClient('Kms', []);
+        $list = $client->getHandlerList();
+        $list->appendSign(Middleware::tap(function($cmd, $req) {
+            // Test that command is populated correctly
+            $this->assertEquals(
+                [
+                    'my_material' => 'material_value'
+                ],
+                $cmd['EncryptionContext']
+            );
+            $this->assertEquals(
+                'encrypted',
+                $cmd['CiphertextBlob']
+            );
+        }));
+
+        $this->addMockResults($client, [
+            new Result(['Plaintext' => 'plaintext'])
+        ]);
+
+        $provider = new KmsMaterialsProviderV2($client);
+        $this->assertEquals(
+            'plaintext',
+            $provider->decryptCek(
+                'encrypted',
+                [
+                    'my_material' => 'material_value'
+                ],
+                [
+                    '@KmsAllowDecryptWithAnyCmk' => true
                 ]
             )
         );

@@ -1,7 +1,6 @@
 <?php
 namespace Aws\S3\Crypto;
 
-use Aws\AwsClient;
 use Aws\AwsClientInterface;
 use Aws\Middleware;
 use Psr\Http\Message\RequestInterface;

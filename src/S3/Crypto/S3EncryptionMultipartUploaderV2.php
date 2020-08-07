@@ -24,7 +24,7 @@ class S3EncryptionMultipartUploaderV2 extends MultipartUploader
     use EncryptionTraitV2;
     use UserAgentTrait;
 
-    CONST CRYPTO_VERSION = '2.0';
+    CONST CRYPTO_VERSION = '2.1';
 
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
@@ -62,6 +62,10 @@ class S3EncryptionMultipartUploaderV2 extends MultipartUploader
      *            See also: MaterialsProvider::$supportedKeySizes
      *       - Aad: (string) Additional authentication data. This option is
      *            passed directly to OpenSSL when using gcm.
+     * - @KmsEncryptionContext: (array) Only required if using
+     *   KmsMaterialsProviderV2. An associative array of key-value
+     *   pairs to be added to the encryption context for KMS key encryption. An
+     *   empty array may be passed if no additional context is desired.
      * - bucket: (string) Name of the bucket to which the object is
      *   being uploaded.
      * - key: (string) Key to use for the object being uploaded.
@@ -152,7 +156,7 @@ class S3EncryptionMultipartUploaderV2 extends MultipartUploader
 
             list($this->source, $params) = Promise\promise_for($this->encrypt(
                 $this->source,
-                $this->config['@cipheroptions'] ?: [],
+                $this->config ?: [],
                 $this->provider,
                 $envelope
             ))->then(
