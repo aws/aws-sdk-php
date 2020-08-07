@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - AWS Glue now adds support for Network connection type enabling you to access resources inside your VPC using Glue crawlers and Glue ETL jobs.
+* `Aws\Organizations` - Documentation updates for some new error reasons.
+* `Aws\S3` - Updates Amazon S3 API reference documentation. 
+* `Aws\S3\Crypto` - This change includes fixes for issues that were reported by Sophie Schmieg from the Google ISE team, and for issues that were discovered by AWS Cryptography.
+* `Aws\SMS` - In this release, AWS Server Migration Service (SMS) has added new features: 1. APIs to work with application and instance level validation 2. Import application catalog from AWS Application Discovery Service 3. For an application you can start on-demand replication
+
 ## 3.147.14 - 2020-08-06
 
 * `Aws\EC2` - This release supports Wavelength resources, including carrier gateways, and carrier IP addresses.
