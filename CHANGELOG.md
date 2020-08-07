@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.148.0 - 2020-08-07
 
 * `Aws\Glue` - AWS Glue now adds support for Network connection type enabling you to access resources inside your VPC using Glue crawlers and Glue ETL jobs.
 * `Aws\Organizations` - Documentation updates for some new error reasons.
