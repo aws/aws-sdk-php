@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Remove CoIP Auto-Assign feature references.
+* `Aws\Glue` - Starting today, you can further control orchestration of your ETL workloads in AWS Glue by specifying the maximum number of concurrent runs for a Glue workflow.
+* `Aws\SavingsPlans` - Updates to the list of services supported by this API.
+
 ## 3.148.0 - 2020-08-07
 
 * `Aws\Glue` - AWS Glue now adds support for Network connection type enabling you to access resources inside your VPC using Glue crawlers and Glue ETL jobs.
