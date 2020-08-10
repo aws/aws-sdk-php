@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.148.1 - 2020-08-10
 
 * `Aws\EC2` - Remove CoIP Auto-Assign feature references.
 * `Aws\Glue` - Starting today, you can further control orchestration of your ETL workloads in AWS Glue by specifying the maximum number of concurrent runs for a Glue workflow.
