@@ -103,16 +103,17 @@ class EndpointArnMiddleware
     {
         $nextHandler = $this->nextHandler;
 
-        // Stores member name that targets 'BucketName' shape
-        $bucketNameMember = null;
-
-        // Stores member name that targets 'AccessPointName' shape
-        $accesspointNameMember = null;
-
         $op = $this->service->getOperation($cmd->getName())->toArray();
         if (!empty($op['input']['shape'])) {
             $service = $this->service->toArray();
             if (!empty($input = $service['shapes'][$op['input']['shape']])) {
+
+                // Stores member name that targets 'BucketName' shape
+                $bucketNameMember = null;
+
+                // Stores member name that targets 'AccessPointName' shape
+                $accesspointNameMember = null;
+
                 foreach ($input['members'] as $key => $member) {
                     if ($member['shape'] === 'BucketName') {
                         $bucketNameMember = $key;
@@ -137,7 +138,7 @@ class EndpointArnMiddleware
                     $partition = $this->validateAccessPointArn($arn);
                 }
 
-                // Process only an appropriate member contains an ARN value
+                // Process only if an appropriate member contains an ARN value
                 if (!empty($arn)) {
                     // Generate host based on ARN
                     if ($arn instanceof OutpostsArnInterface) {
@@ -168,6 +169,18 @@ class EndpointArnMiddleware
                         if (empty($path)) {
                             $path = '';
                         }
+                    }
+
+                    // Validate or set account ID in command
+                    if (isset($cmd['AccountId'])) {
+                        if ($cmd['AccountId'] !== $arn->getAccountId()) {
+                            throw new \InvalidArgumentException("The account ID"
+                                . " supplied in the command ({$cmd['AccountId']})"
+                                . " does not match the account ID supplied in the"
+                                . " ARN (" . $arn->getAccountId() . ").");
+                        }
+                    } else {
+                        $cmd['AccountId'] = $arn->getAccountId();
                     }
 
                     // Set modified request

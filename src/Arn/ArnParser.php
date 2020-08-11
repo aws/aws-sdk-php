@@ -7,6 +7,10 @@ use Aws\Arn\S3\RegionalBucketArn;
 use Aws\Arn\S3\OutpostsAccessPointArn;
 
 /**
+ * This class provides functionality to parse ARN strings and return a
+ * corresponding ARN object. ARN-parsing logic may be subject to change in the
+ * future, so this should not be relied upon for external customer usage.
+ *
  * @internal
  */
 class ArnParser
