@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.148.2 - 2020-08-11
 
 * `Aws\Build\Docs` - Moves cookie consent into footer
 * `Aws\EC2` - This release rolls back the EC2 On-Demand Capacity Reservations (ODCRs) release 1.11.831 published on 2020-07-30, which was deployed in error.
