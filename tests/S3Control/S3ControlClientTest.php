@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3Control;
 
+use Aws\Api\ApiProvider;
 use Aws\CommandInterface;
 use Aws\Middleware;
 use Aws\S3Control\S3ControlClient;
@@ -16,7 +17,7 @@ class S3ControlClientTest extends TestCase
 {
     public function testAppliesS3ControlEndpointMiddleware()
     {
-        // test applies dualstack
+        // test applies the hostprefix trait for account id
         $handler = function (RequestInterface $req) {
             $this->assertSame(
                 '111222333444.s3-control.us-west-2.amazonaws.com',
@@ -25,9 +26,7 @@ class S3ControlClientTest extends TestCase
             return Promise\promise_for(new Response);
         };
 
-        $client = new S3ControlClient([
-            'version' => '2018-08-20',
-            'region' => 'us-west-2',
+        $client = $this->getTestClient([
             'http_handler' => $handler,
         ]);
         $client->deletePublicAccessBlock([
@@ -46,19 +45,15 @@ class S3ControlClientTest extends TestCase
             return Promise\promise_for(new Response);
         };
 
-        $dualStackClient = new S3ControlClient([
-            'version' => '2018-08-20',
-            'region' => 'us-west-2',
-            'use_dual_stack_endpoint' => true,
+        $dualStackClient = $this->getTestClient([
             'http_handler' => $handler,
+            'use_dual_stack_endpoint' => true,
         ]);
         $dualStackClient->deletePublicAccessBlock([
             'AccountId' => '111222333444',
         ]);
 
-        $client = new S3ControlClient([
-            'version' => '2018-08-20',
-            'region' => 'us-west-2',
+        $client = $this->getTestClient([
             'http_handler' => $handler,
         ]);
         $client->deletePublicAccessBlock([
@@ -67,27 +62,21 @@ class S3ControlClientTest extends TestCase
         ]);
     }
 
-    public function testRemovesAccountIdFromHeaderAndCommand()
+    /**
+     * Returns a test client that uses model fixtures to not be dependent on
+     * the current live model files
+     *
+     * @param array $args
+     * @return S3ControlClient
+     */
+    private function getTestClient(array $args)
     {
-        $handler = function (RequestInterface $req) {
-            $this->assertEmpty($req->getHeader('x-amz-account-id'));
-            return Promise\promise_for(new Response);
-        };
-
-        $client = new S3ControlClient([
+        $params = [
             'version' => '2018-08-20',
             'region' => 'us-west-2',
-            'http_handler' => $handler,
-        ]);
+            'api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')
+        ];
 
-        $handlerList = $client->getHandlerList();
-        $tap = Middleware::tap(function(CommandInterface $cmd, RequestInterface $req) {
-            $this->assertEmpty($cmd->offsetGet('AccountId'));
-        });
-        $handlerList->prependSign($tap, "tap");
-
-        $client->deletePublicAccessBlock([
-            'AccountId' => '111222333444',
-        ]);
+        return new S3ControlClient(array_merge($params, $args));
     }
 }
