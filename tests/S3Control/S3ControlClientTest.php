@@ -2,8 +2,6 @@
 namespace Aws\Test\S3Control;
 
 use Aws\Api\ApiProvider;
-use Aws\CommandInterface;
-use Aws\Middleware;
 use Aws\S3Control\S3ControlClient;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
