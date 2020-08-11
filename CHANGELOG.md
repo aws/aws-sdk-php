@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Build\Docs` - Moves cookie consent into footer
+* `Aws\EC2` - This release rolls back the EC2 On-Demand Capacity Reservations (ODCRs) release 1.11.831 published on 2020-07-30, which was deployed in error.
+* `Aws\Lambda` - Support Managed Streaming for Kafka as an Event Source. Support retry until record expiration for Kinesis and Dynamodb streams event source mappings.
+* `Aws\Organizations` - Minor documentation update for AWS Organizations
+* `Aws\S3` - Add support for in-region CopyObject and UploadPartCopy through S3 Access Points
+* `Aws\S3` - Change cache clearing in StreamWrapper to account for custom protocol use.
+
 ## 3.148.1 - 2020-08-10
 
 * `Aws\EC2` - Remove CoIP Auto-Assign feature references.
