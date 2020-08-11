@@ -994,4 +994,36 @@ class StreamWrapperTest extends TestCase
         $s = fopen('foo://bucket/key', 'r');
         $this->assertEquals('bar', fread($s, 4));
     }
+
+    public function testStatDataIsClearedOnWriteUsingCustomProtocol()
+    {
+        StreamWrapper::register($this->client, 'foo', $this->cache);
+        $stream = fopen('php://temp', 'r+');
+        fwrite($stream, 'bar');
+        fseek($stream, 0);
+
+        $this->addMockResults($this->client, [
+            new Result([
+                'Body' => new Psr7\NoSeekStream(new Psr7\Stream($stream))
+            ]),
+            new Result([
+                'Body' => new Psr7\NoSeekStream(new Psr7\Stream($stream))
+            ]),
+            new Result([
+                'Body' => new Psr7\NoSeekStream(new Psr7\Stream($stream))
+            ])
+        ]);
+
+        $this->assertEmpty($this->cache->get('foo://bucket/key'));
+
+        $objectStream = fopen('foo://bucket/key', 'w');
+        stat('foo://bucket/key');
+        $this->assertNotNull($this->cache->get('foo://bucket/key'));
+
+        fwrite($objectStream, 'bar');
+        fflush($objectStream);
+        $this->assertEmpty($this->cache->get('foo://bucket/key'));
+        
+        stream_wrapper_unregister('foo');
+    }
 }
