@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Cloud9` - Add ConnectionType input parameter to CreateEnvironmentEC2 endpoint. New parameter enables creation of environments with SSM connection.
+* `Aws\Comprehend` - Amazon Comprehend Custom Entity Recognition now supports Spanish, German, French, Italian and Portuguese and up to 25 entity types per model.
+* `Aws\EC2` - Introduces support for IPv6-in-IPv4 IPsec tunnels. A user can now send traffic from their on-premise IPv6 network to AWS VPCs that have IPv6 support enabled.
+* `Aws\FSx` - This release adds the capability to create persistent file systems for throughput-intensive workloads using Hard Disk Drive (HDD) storage and an optional read-only Solid-State Drive (SSD) cache.
+* `Aws\IoT` - Audit finding suppressions: Device Defender enables customers to turn off non-compliant findings for specific resources on a per check basis.
+* `Aws\Lambda` - Support for creating Lambda Functions using 'java8.al2' and 'provided.al2'
+* `Aws\Transfer` - Adds security policies to control cryptographic algorithms advertised by your server, additional characters in usernames and length increase, and FIPS compliant endpoints in the US and Canada regions.
+* `Aws\WorkSpaces` - Adds optional EnableWorkDocs property to WorkspaceCreationProperties in the ModifyWorkspaceCreationProperties API
+
 ## 3.148.2 - 2020-08-11
 
 * `Aws\Build\Docs` - Moves cookie consent into footer
