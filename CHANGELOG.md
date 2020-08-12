@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.148.3 - 2020-08-12
 
 * `Aws\Cloud9` - Add ConnectionType input parameter to CreateEnvironmentEC2 endpoint. New parameter enables creation of environments with SSM connection.
 * `Aws\Comprehend` - Amazon Comprehend Custom Entity Recognition now supports Spanish, German, French, Italian and Portuguese and up to 25 entity types per model.
