@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.149.0 - 2020-08-13
 
 * `Aws\AppSync` - Documentation update for AWS AppSync support for Direct Lambda Resolvers.
 * `Aws\Braket` - Amazon Braket general availability with Device and Quantum Task operations.
