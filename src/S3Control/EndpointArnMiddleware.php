@@ -157,17 +157,16 @@ class EndpointArnMiddleware
                             $arn->getAccesspointName(),
                             $path
                         );
+                        $cmd[$accesspointNameMember] = $arn->getAccesspointName();
                     } elseif ($arn instanceof BucketArnInterface) {
 
-                        // Remove encoded bucket string from path
-                        $encoded = rawurlencode($cmd[$bucketNameMember]);
-                        $len = strlen($encoded) + 1;
-                        if (substr($path, 0, $len) === "/{$encoded}") {
-                            $path = substr($path, $len);
-                        }
-                        if (empty($path)) {
-                            $path = '';
-                        }
+                        // Replace ARN with bucket name
+                        $path = str_replace(
+                            urlencode($cmd[$bucketNameMember]),
+                            $arn->getBucketName(),
+                            $path
+                        );
+                        $cmd[$bucketNameMember] = $arn->getBucketName();
                     }
 
                     // Validate or set account ID in command
