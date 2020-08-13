@@ -1,8 +1,6 @@
 <?php
 namespace Aws\Test\S3Control;
 
-use Aws\Api\ApiProvider;
-use Aws\S3Control\S3ControlClient;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -13,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class S3ControlClientTest extends TestCase
 {
+    use S3ControlTestingTrait;
+
     public function testAppliesS3ControlEndpointMiddleware()
     {
         // test applies the hostprefix trait for account id
@@ -58,23 +58,5 @@ class S3ControlClientTest extends TestCase
             'AccountId' => '111222333444',
             '@use_dual_stack_endpoint' => true,
         ]);
-    }
-
-    /**
-     * Returns a test client that uses model fixtures to not be dependent on
-     * the current live model files
-     *
-     * @param array $args
-     * @return S3ControlClient
-     */
-    private function getTestClient(array $args)
-    {
-        $params = [
-            'version' => '2018-08-20',
-            'region' => 'us-west-2',
-            'api_provider' => ApiProvider::filesystem(__DIR__ . '/fixtures')
-        ];
-
-        return new S3ControlClient(array_merge($params, $args));
     }
 }
