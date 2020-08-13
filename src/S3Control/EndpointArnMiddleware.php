@@ -301,9 +301,8 @@ class EndpointArnMiddleware
         }
 
         // Get partitions for ARN and client region
-        $arnPart = $this->partitionProvider->getPartition(
-            $arn->getRegion(),
-            's3'
+        $arnPart = $this->partitionProvider->getPartitionByName(
+            $arn->getPartition()
         );
         $clientPart = $this->partitionProvider->getPartition(
             $this->region,
