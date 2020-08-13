@@ -22,13 +22,14 @@ class EndpointArnMiddlewareTest extends TestCase
     use UsesServiceTrait;
 
     /**
-     * @dataProvider providedArnCases
+     * @dataProvider providedSuccessCases
      *
      * @param $cmdName
      * @param $cmdParams
      * @param $options
      * @param $endpoint
-     * @param $key
+     * @param $target
+     * @param $headers
      * @param $signingRegion
      * @param $signingService
      * @throws \Exception
@@ -38,7 +39,8 @@ class EndpointArnMiddlewareTest extends TestCase
         $cmdParams,
         $options,
         $endpoint,
-        $key,
+        $target,
+        $headers,
         $signingRegion,
         $signingService
     ) {
@@ -50,12 +52,12 @@ class EndpointArnMiddlewareTest extends TestCase
             Middleware::tap(function (
                 CommandInterface $cmd,
                 RequestInterface $req
-            ) use ($endpoint, $key, $signingRegion, $signingService) {
+            ) use ($endpoint, $target, $headers, $signingRegion, $signingService) {
                 $this->assertEquals(
                     $endpoint,
                     $req->getUri()->getHost()
                 );
-                $this->assertEquals("/{$key}", $req->getRequestTarget());
+                $this->assertEquals("/{$target}", $req->getRequestTarget());
                 $this->assertEquals(
                     $signingRegion,
                     $cmd['@context']['signing_region']
@@ -66,17 +68,19 @@ class EndpointArnMiddlewareTest extends TestCase
                         $cmd['@context']['signing_service']
                     );
                 }
-
                 $this->assertContains(
                     "/{$signingRegion}/s3",
                     $req->getHeader('Authorization')[0]
                 );
+                foreach ($headers as $key => $value) {
+                    $this->assertEquals($value, $req->getHeaderLine($key));
+                }
             })
         );
         $s3control->execute($command);
     }
 
-    public function providedArnCases()
+    public function providedSuccessCases()
     {
         return [
             // S3 accesspoint ARN
@@ -91,6 +95,9 @@ class EndpointArnMiddlewareTest extends TestCase
                 ],
                 '123456789012.s3-control.us-west-2.amazonaws.com',
                 'v20180820/accesspoint/myendpoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
                 'us-west-2',
                 null,
             ],
