@@ -30,6 +30,25 @@ class EndpointArnMiddleware
 {
     use EndpointRegionHelperTrait;
 
+    /**
+     * Commands which do not do ARN expansion for relevant members
+     * @var array
+     */
+    private static $nonArnableCommands = [
+        'CreateBucket',
+        'ListRegionalBuckets',
+    ];
+
+    /**
+     * Commands which trigger endpoint and signer redirection based on presence
+     * of OutpostId
+     * @var array
+     */
+    private static $outpostIdRedirectCommands = [
+        'CreateBucket',
+        'ListRegionalBuckets',
+    ];
+
     /** @var Service */
     private $service;
 
@@ -44,28 +63,6 @@ class EndpointArnMiddleware
 
     /** @var PartitionEndpointProvider */
     private $partitionProvider;
-
-    /** @var array */
-    private $nonArnableCommands = ['CreateBucket'];
-
-//    /** @var array */
-//    private static $acceptedArns = [
-//        AccessPointArn::class,
-//        OutpostsAccessPointArn::class,
-//        OutpostsBucketArn::class,
-//        RegionalBucketArn::class,
-//    ];
-//
-//    /** @var array */
-//    private static $outpostsArns = [
-//        OutpostsAccessPointArn::class,
-//        OutpostsBucketArn::class,
-//    ];
-//
-//    private static $bucketArns = [
-//        RegionalBucketArn::class,
-//        OutpostsBucketArn::class,
-//    ];
 
     /**
      * Create a middleware wrapper function.
@@ -104,7 +101,9 @@ class EndpointArnMiddleware
         $nextHandler = $this->nextHandler;
 
         $op = $this->service->getOperation($cmd->getName())->toArray();
-        if (!empty($op['input']['shape'])) {
+        if (!empty($op['input']['shape'])
+            && !in_array($cmd->getName(), self::$nonArnableCommands)
+        ) {
             $service = $this->service->toArray();
             if (!empty($input = $service['shapes'][$op['input']['shape']])) {
 
@@ -208,6 +207,18 @@ class EndpointArnMiddleware
             }
         }
 
+        // For operations that redirect endpoint & signing service based on
+        // presence of OutpostId member. These operations will likely not
+        // overlap with operations that perform ARN expansion.
+        if (in_array($cmd->getName(), self::$outpostIdRedirectCommands)
+            && !empty($cmd['OutpostId'])
+        ) {
+            $req = $req->withUri(
+                $req->getUri()->withHost($this->generateOutpostIdHost())
+            );
+            $cmd['@context']['signing_service'] = 's3-outposts';
+        }
+
         return $nextHandler($cmd, $req);
     }
 
@@ -239,6 +250,16 @@ class EndpointArnMiddleware
         }
         $suffix = $this->getPartitionSuffix($arn, $this->partitionProvider);
         return "{$host}.{$region}.{$suffix}";
+    }
+
+    private function generateOutpostIdHost()
+    {
+        $region = $this->region;
+        $suffix = $this->partitionProvider->getPartition(
+            $region,
+            $this->service->getEndpointPrefix()
+        );
+        return "s3-outposts.{$region}.{$suffix}";
     }
 
     private function validateBucketArn(ArnInterface $arn)
