@@ -24,7 +24,8 @@ class EndpointArnMiddlewareTest extends TestCase
     /**
      * @dataProvider providedArnCases
      *
-     * @param $arn
+     * @param $cmdName
+     * @param $cmdParams
      * @param $options
      * @param $endpoint
      * @param $key
@@ -32,8 +33,9 @@ class EndpointArnMiddlewareTest extends TestCase
      * @param $signingService
      * @throws \Exception
      */
-    public function testCorrectlyModifiesUriForAccessPointArns(
-        $arn,
+    public function testCorrectlyModifiesRequestAndCommand(
+        $cmdName,
+        $cmdParams,
         $options,
         $endpoint,
         $key,
@@ -42,13 +44,7 @@ class EndpointArnMiddlewareTest extends TestCase
     ) {
         $s3control = $this->getTestClient('s3control', $options);
         $this->addMockResults($s3control, [[]]);
-        $command = $s3control->getCommand(
-            'GetAccessPoint',
-            [
-                'AccountId' => 123,
-                'Name' => $arn
-            ]
-        );
+        $command = $s3control->getCommand($cmdName, $cmdParams);
 
         $command->getHandlerList()->appendSign(
             Middleware::tap(function (
@@ -83,9 +79,13 @@ class EndpointArnMiddlewareTest extends TestCase
     public function providedArnCases()
     {
         return [
-            // Standard case
+            // S3 accesspoint ARN
             [
-                'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint'
+                ],
                 [
                     'region' => 'us-west-2',
                 ],
