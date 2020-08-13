@@ -6,19 +6,14 @@ use Aws\Arn\AccessPointArnInterface;
 use Aws\Arn\ArnInterface;
 use Aws\Arn\ArnParser;
 use Aws\Arn\Exception\InvalidArnException;
-use Aws\Arn\S3\AccessPointArn;
 use Aws\Arn\S3\BucketArnInterface;
-use Aws\Arn\S3\OutpostsAccessPointArn;
 use Aws\Arn\S3\OutpostsArnInterface;
-use Aws\Arn\S3\OutpostsBucketArn;
-use Aws\Arn\S3\RegionalBucketArn;
 use Aws\CommandInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\S3\EndpointRegionHelperTrait;
 use Psr\Http\Message\RequestInterface;
-use function Aws\is_instance_of;
 
 /**
  * Checks for access point ARN in members targeting BucketName, modifying
@@ -199,7 +194,7 @@ class EndpointArnMiddleware
                     $cmd['@context']['signing_region'] = $endpointData['signingRegion'];
 
                     // Update signing service for Outposts ARNs
-                    if ($arn instanceof OutpostsAccessPointArn) {
+                    if ($arn instanceof OutpostsArnInterface) {
                         $cmd['@context']['signing_service'] = $arn->getService();
                     }
                 }

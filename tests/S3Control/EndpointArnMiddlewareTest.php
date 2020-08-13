@@ -236,7 +236,7 @@ class EndpointArnMiddlewareTest extends TestCase
                     'x-amz-outpost-id' => 'op-01234567890123456',
                 ],
                 'us-west-2',
-                null,
+                's3-outposts',
             ],
             // Bucket ARN
             [
@@ -273,7 +273,7 @@ class EndpointArnMiddlewareTest extends TestCase
                     'x-amz-outpost-id' => 'op-01234567890123456',
                 ],
                 'us-west-2',
-                null,
+                's3-outposts',
             ],
         ];
     }
