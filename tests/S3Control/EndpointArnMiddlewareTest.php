@@ -9,8 +9,10 @@ use Aws\Middleware;
 use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
+use Aws\Test\S3Control\S3ControlTestingTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -19,7 +21,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class EndpointArnMiddlewareTest extends TestCase
 {
-    use UsesServiceTrait;
+    use S3ControlTestingTrait;
 
     /**
      * @dataProvider providedSuccessCases
@@ -44,8 +46,10 @@ class EndpointArnMiddlewareTest extends TestCase
         $signingRegion,
         $signingService
     ) {
-        $s3control = $this->getTestClient('s3control', $options);
-        $this->addMockResults($s3control, [[]]);
+        $options['http_handler'] = function($req) {
+            return Promise\promise_for(new Response());
+        };
+        $s3control = $this->getTestClient($options);
         $command = $s3control->getCommand($cmdName, $cmdParams);
 
         $command->getHandlerList()->appendSign(
@@ -83,7 +87,7 @@ class EndpointArnMiddlewareTest extends TestCase
     public function providedSuccessCases()
     {
         return [
-            // S3 accesspoint ARN
+            // Accesspoint ARN
             [
                 'GetAccessPoint',
                 [
@@ -101,7 +105,176 @@ class EndpointArnMiddlewareTest extends TestCase
                 'us-west-2',
                 null,
             ],
+            // Accesspoint ARN, different region, use_arn_region true
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint'
+                ],
+                [
+                    'region' => 'us-west-2',
+                    'use_arn_region' => true
+                ],
+                '123456789012.s3-control.us-east-1.amazonaws.com',
+                'v20180820/accesspoint/myendpoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-east-1',
+                null,
+            ],
+            // Accesspoint ARN, aws-us-gov
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint'
+                ],
+                [
+                    'region' => 'us-gov-east-1',
+                    'use_arn_region' => false
+                ],
+                '123456789012.s3-control.us-gov-east-1.amazonaws.com',
+                'v20180820/accesspoint/myendpoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-gov-east-1',
+                null,
+            ],
+            // Accesspoint ARN, aws-us-gov, fips
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => false
+                ],
+                '123456789012.s3-control.fips-us-gov-east-1.amazonaws.com',
+                'v20180820/accesspoint/myendpoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'fips-us-gov-east-1',
+                null,
+            ],
+            // Accesspoint ARN, aws-us-gov, fips, use_arn_region true
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws-us-gov:s3:fips-us-gov-east-1:123456789012:accesspoint:myendpoint'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true
+                ],
+                '123456789012.s3-control.fips-us-gov-east-1.amazonaws.com',
+                'v20180820/accesspoint/myendpoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'fips-us-gov-east-1',
+                null,
+            ],
+            // Accesspoint ARN, aws-us-gov, fips, non-fips arn, use_arn_region true
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true
+                ],
+                '123456789012.s3-control.us-gov-east-1.amazonaws.com',
+                'v20180820/accesspoint/myendpoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-gov-east-1',
+                null,
+            ],
+            // Accesspoint ARN, dualstack
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint'
+                ],
+                [
+                    'region' => 'us-west-2',
+                    'use_dual_stack_endpoint' => true
+                ],
+                '123456789012.s3-control.dualstack.us-west-2.amazonaws.com',
+                'v20180820/accesspoint/myendpoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-west-2',
+                null,
+            ],
+            // Outposts accesspoint ARN
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                's3-outposts.us-west-2.amazonaws.com',
+                'v20180820/accesspoint/myaccesspoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-west-2',
+                null,
+            ],
+            // Bucket ARN
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws:s3:us-west-2:123456789012:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                '123456789012.s3-control.us-west-2.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-west-2',
+                null,
+            ],
+            // Outposts bucket ARN
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                's3-outposts.us-west-2.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-west-2',
+                null,
+            ],
         ];
     }
-
 }
