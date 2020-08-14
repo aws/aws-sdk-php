@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.149.1 - 2020-08-14
 
 * `Aws\AppStream` - Adds support for the Desktop View feature
 * `Aws\Braket` - Fixing bug in our SDK model where device status and device type had been flipped.
