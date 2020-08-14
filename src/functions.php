@@ -330,8 +330,8 @@ function guzzle_major_version()
         if ($version[0] === '5') {
             return $cache = 5;
         }
-    } elseif (method_exists(Client::class, 'sendRequest')) {
-        return $cache = 7;
+    } elseif (defined('\GuzzleHttp\ClientInterface::MAJOR_VERSION')) {
+        return $cache = ClientInterface::MAJOR_VERSION;
     }
 
     throw new \RuntimeException('Unable to determine what Guzzle version is installed.');
