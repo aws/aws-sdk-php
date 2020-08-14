@@ -122,7 +122,7 @@ class CredentialProvider
         return self::memoize(
             call_user_func_array(
                 'self::chain',
-                $defaultChain
+                array_values($defaultChain)
             )
         );
     }
