@@ -13,6 +13,7 @@ use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\S3\EndpointRegionHelperTrait;
+use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -142,7 +143,7 @@ class EndpointArnMiddleware
                         $host = $this->generateNonOutpostsArnHost($arn, $req);
                     }
 
-                    // Modify path based on ARN
+                    // ARN replacement
                     $path = $req->getUri()->getPath();
                     if ($arn instanceof AccessPointArnInterface) {
 
@@ -152,15 +153,36 @@ class EndpointArnMiddleware
                             $arn->getAccesspointName(),
                             $path
                         );
+
+                        // Replace ARN in the payload
+                        $req->getBody()->seek(0);
+                        $body = Psr7\stream_for(str_replace(
+                            $cmd[$accesspointNameMember],
+                            $arn->getAccesspointName(),
+                            $req->getBody()->getContents()
+                        ));
+
+                        // Replace ARN in the command
                         $cmd[$accesspointNameMember] = $arn->getAccesspointName();
                     } elseif ($arn instanceof BucketArnInterface) {
 
-                        // Replace ARN with bucket name
+                        // Replace ARN in the path
                         $path = str_replace(
                             urlencode($cmd[$bucketNameMember]),
                             $arn->getBucketName(),
                             $path
                         );
+
+                        // Replace ARN in the payload
+                        $req->getBody()->seek(0);
+                        $newBody = str_replace(
+                            $cmd[$bucketNameMember],
+                            $arn->getBucketName(),
+                            $req->getBody()->getContents()
+                        );
+                        $body = Psr7\stream_for($newBody);
+
+                        // Replace ARN in the command
                         $cmd[$bucketNameMember] = $arn->getBucketName();
                     }
 
@@ -180,6 +202,9 @@ class EndpointArnMiddleware
                     $req = $req
                         ->withUri($req->getUri()->withHost($host)->withPath($path))
                         ->withHeader('x-amz-account-id', $arn->getAccountId());
+                    if (isset($body)) {
+                        $req = $req->withBody($body);
+                    }
 
                     // Update signing region based on ARN data if configured to do so
                     if ($this->config['use_arn_region']->isUseArnRegion()) {
@@ -248,12 +273,12 @@ class EndpointArnMiddleware
 
     private function generateOutpostIdHost()
     {
-        $region = $this->region;
-        $suffix = $this->partitionProvider->getPartition(
-            $region,
+        $partition = $this->partitionProvider->getPartition(
+            $this->region,
             $this->service->getEndpointPrefix()
         );
-        return "s3-outposts.{$region}.{$suffix}";
+        $suffix = $partition->getDnsSuffix();
+        return "s3-outposts.{$this->region}.{$suffix}";
     }
 
     private function validateBucketArn(ArnInterface $arn)
