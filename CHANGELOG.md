@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Adds support for the Desktop View feature
+* `Aws\Braket` - Fixing bug in our SDK model where device status and device type had been flipped.
+* `Aws\EC2` - New C5ad instances featuring AMD's 2nd Generation EPYC processors, offering up to 96 vCPUs, 192 GiB of instance memory, 3.8 TB of NVMe based SSD instance storage, and 20 Gbps in Network bandwidth
+* `Aws\LicenseManager` - This release includes ability to enforce license assignment rules with EC2 Dedicated Hosts.
+* `Aws\SageMaker` - Amazon SageMaker now supports 1) creating real-time inference endpoints using model container images from Docker registries in customers' VPC 2) AUC(Area under the curve) as AutoPilot objective metric
+
 ## 3.149.0 - 2020-08-13
 
 * `Aws\AppSync` - Documentation update for AWS AppSync support for Direct Lambda Resolvers.
