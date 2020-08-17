@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.149.2 - 2020-08-17
 
 * `Aws\ACM` - ACM provides support for the new Private CA feature Cross-account CA sharing. ACM users can issue certificates signed by a private CA belonging to another account where the CA was shared with them.
 * `Aws\ACMPCA` - ACM Private CA is launching cross-account support. This allows customers to share their private CAs with other accounts, AWS Organizations, and organizational units to issue end-entity certificates.
