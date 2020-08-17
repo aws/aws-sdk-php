@@ -5,18 +5,9 @@ use Aws\Kms\KmsClient;
 
 /**
  * Uses KMS to supply materials for encrypting and decrypting data.
- *
- * Legacy implementation that supports legacy S3EncryptionClient and
- * S3EncryptionMultipartUploader, which use an older encryption workflow. Use
- * KmsMaterialsProviderV2 with S3EncryptionClientV2 or
- * S3EncryptionMultipartUploaderV2 if possible.
- *
- * @deprecated
  */
 class KmsMaterialsProvider extends MaterialsProvider implements MaterialsProviderInterface
 {
-    const WRAP_ALGORITHM_NAME = 'kms';
-
     private $kmsClient;
     private $kmsKeyId;
 
@@ -37,26 +28,22 @@ class KmsMaterialsProvider extends MaterialsProvider implements MaterialsProvide
     public function fromDecryptionEnvelope(MetadataEnvelope $envelope)
     {
         if (empty($envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER])) {
-            throw new \RuntimeException('Not able to detect the materials description.');
+            throw new \RuntimeException('Not able to detect kms_cmk_id from an'
+                . ' empty materials description.');
         }
 
         $materialsDescription = json_decode(
             $envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER],
             true
         );
-
-        if (empty($materialsDescription['kms_cmk_id'])
-            && empty($materialsDescription['aws:x-amz-cek-alg'])) {
-            throw new \RuntimeException('Not able to detect kms_cmk_id (legacy'
-                . ' implementation) or aws:x-amz-cek-alg (current implementation)'
-                . ' from kms materials description.');
+        if (empty($materialsDescription['kms_cmk_id'])) {
+            throw new \RuntimeException('Not able to detect kms_cmk_id from kms'
+                . ' materials description.');
         }
 
-        return new self(
+        return new KmsMaterialsProvider(
             $this->kmsClient,
-            isset($materialsDescription['kms_cmk_id'])
-                ? $materialsDescription['kms_cmk_id']
-                : null
+            $materialsDescription['kms_cmk_id']
         );
     }
 
@@ -73,7 +60,7 @@ class KmsMaterialsProvider extends MaterialsProvider implements MaterialsProvide
 
     public function getWrapAlgorithmName()
     {
-        return self::WRAP_ALGORITHM_NAME;
+        return 'kms';
     }
 
     /**

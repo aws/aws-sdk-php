@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Crypto;
 
-use Aws\Exception\CryptoException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\LimitStream;
 use Psr\Http\Message\StreamInterface;
@@ -42,11 +41,11 @@ trait DecryptionTraitV2
      *
      * @param string $cipherText Plain-text data to be encrypted using the
      *                           materials, algorithm, and data provided.
-     * @param MaterialsProviderInterfaceV2 $provider A provider to supply and encrypt
+     * @param MaterialsProviderInterface $provider A provider to supply and encrypt
      *                                             materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
-     * @param array $options Options used for decryption.
+     * @param array $cipherOptions Additional verification options.
      *
      * @return AesStreamInterface
      *
@@ -57,18 +56,15 @@ trait DecryptionTraitV2
      */
     public function decrypt(
         $cipherText,
-        MaterialsProviderInterfaceV2 $provider,
+        MaterialsProviderInterface $provider,
         MetadataEnvelope $envelope,
-        array $options = []
+        array $cipherOptions = []
     ) {
-        $options['@CipherOptions'] = !empty($options['@CipherOptions'])
-            ? $options['@CipherOptions']
-            : [];
-        $options['@CipherOptions']['Iv'] = base64_decode(
+        $cipherOptions['Iv'] = base64_decode(
             $envelope[MetadataEnvelope::IV_HEADER]
         );
 
-        $options['@CipherOptions']['TagLength'] =
+        $cipherOptions['TagLength'] =
             $envelope[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER] / 8;
 
         $cek = $provider->decryptCek(
@@ -78,20 +74,17 @@ trait DecryptionTraitV2
             json_decode(
                 $envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER],
                 true
-            ),
-            $options
+            )
         );
-        $options['@CipherOptions']['KeySize'] = strlen($cek) * 8;
-        $options['@CipherOptions']['Cipher'] = $this->getCipherFromAesName(
+        $cipherOptions['KeySize'] = strlen($cek) * 8;
+        $cipherOptions['Cipher'] = $this->getCipherFromAesName(
             $envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
         );
-
-        $this->validateOptionsAndEnvelope($options, $envelope);
 
         $decryptionSteam = $this->getDecryptingStream(
             $cipherText,
             $cek,
-            $options['@CipherOptions']
+            $cipherOptions
         );
         unset($cek);
 
@@ -128,67 +121,6 @@ trait DecryptionTraitV2
             $cipherTextSize - $tagLength,
             0
         );
-    }
-
-    private function validateOptionsAndEnvelope($options, $envelope)
-    {
-        $allowedCiphers = AbstractCryptoClientV2::$supportedCiphers;
-        $allowedKeywraps = AbstractCryptoClientV2::$supportedKeyWraps;
-        if ($options['@SecurityProfile'] == 'V2_AND_LEGACY') {
-            $allowedCiphers = array_unique(array_merge(
-                $allowedCiphers,
-                AbstractCryptoClient::$supportedCiphers
-            ));
-            $allowedKeywraps = array_unique(array_merge(
-                $allowedKeywraps,
-                AbstractCryptoClient::$supportedKeyWraps
-            ));
-        }
-
-        $v1SchemaException = new CryptoException("The requested object is encrypted"
-            . " with V1 encryption schemas that have been disabled by"
-            . " client configuration @SecurityProfile=V2. Retry with"
-            . " V2_AND_LEGACY enabled or reencrypt the object.");
-
-        if (!in_array($options['@CipherOptions']['Cipher'], $allowedCiphers)) {
-            if (in_array($options['@CipherOptions']['Cipher'], AbstractCryptoClient::$supportedCiphers)) {
-                throw $v1SchemaException;
-            }
-            throw new CryptoException("The requested object is encrypted with"
-                . " the cipher '{$options['@CipherOptions']['Cipher']}', which is not"
-                . " supported for decryption with the selected security profile."
-                . " This profile allows decryption with: "
-                . implode(", ", $allowedCiphers));
-        }
-        if (!in_array(
-            $envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER],
-            $allowedKeywraps
-        )) {
-            if (in_array(
-                $envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER],
-                AbstractCryptoClient::$supportedKeyWraps)
-            ) {
-                throw $v1SchemaException;
-            }
-            throw new CryptoException("The requested object is encrypted with"
-                . " the keywrap schema '{$envelope[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]}',"
-                . " which is not supported for decryption with the current security"
-                . " profile.");
-        }
-
-        $matdesc = json_decode(
-            $envelope[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER],
-            true
-        );
-        if (isset($matdesc['aws:x-amz-cek-alg'])
-            && $envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER] !==
-                $matdesc['aws:x-amz-cek-alg']
-        ) {
-            throw new CryptoException("There is a mismatch in specified content"
-                . " encryption algrithm between the materials description value"
-                . " and the metadata envelope value: {$matdesc['aws:x-amz-cek-alg']}"
-                . " vs. {$envelope[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]}.");
-        }
     }
 
     /**

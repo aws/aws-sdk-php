@@ -349,8 +349,7 @@
       "type":"string",
       "enum":[
         "AL2_x86_64",
-        "AL2_x86_64_GPU",
-        "AL2_ARM_64"
+        "AL2_x86_64_GPU"
       ]
     },
     "AutoScalingGroup":{
@@ -522,7 +521,6 @@
           "shape":"String",
           "idempotencyToken":true
         },
-        "launchTemplate":{"shape":"LaunchTemplateSpecification"},
         "version":{"shape":"String"},
         "releaseVersion":{"shape":"String"}
       }
@@ -822,14 +820,6 @@
       "type":"list",
       "member":{"shape":"Issue"}
     },
-    "LaunchTemplateSpecification":{
-      "type":"structure",
-      "members":{
-        "name":{"shape":"String"},
-        "version":{"shape":"String"},
-        "id":{"shape":"String"}
-      }
-    },
     "ListClustersRequest":{
       "type":"structure",
       "members":{
@@ -1028,7 +1018,6 @@
         "resources":{"shape":"NodegroupResources"},
         "diskSize":{"shape":"BoxedInteger"},
         "health":{"shape":"NodegroupHealth"},
-        "launchTemplate":{"shape":"LaunchTemplateSpecification"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -1364,7 +1353,6 @@
         },
         "version":{"shape":"String"},
         "releaseVersion":{"shape":"String"},
-        "launchTemplate":{"shape":"LaunchTemplateSpecification"},
         "force":{"shape":"Boolean"},
         "clientRequestToken":{
           "shape":"String",

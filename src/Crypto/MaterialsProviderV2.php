@@ -1,7 +1,7 @@
 <?php
 namespace Aws\Crypto;
 
-abstract class MaterialsProviderV2 implements MaterialsProviderInterfaceV2
+abstract class MaterialsProviderV2 implements MaterialsProviderInterface
 {
     private static $supportedKeySizes = [
         128 => true,
@@ -21,6 +21,22 @@ abstract class MaterialsProviderV2 implements MaterialsProviderInterfaceV2
     }
 
     /**
+     * Performs further initialization of the MaterialsProvider based on the
+     * data inside the MetadataEnvelope.
+     *
+     * @param MetadataEnvelope $envelope A storage envelope for encryption
+     *                                   metadata to be read from.
+     *
+     * @return MaterialsProviderV2
+     *
+     * @throws \RuntimeException Thrown when there is an empty or improperly
+     *                           formed materials description in the envelope.
+     *
+     * @internal
+     */
+    abstract public function fromDecryptionEnvelope(MetadataEnvelope $envelope);
+
+    /**
      * Returns the wrap algorithm name for this Provider.
      *
      * @return string
@@ -34,22 +50,20 @@ abstract class MaterialsProviderV2 implements MaterialsProviderInterfaceV2
      * @param string $encryptedCek Encrypted key to be decrypted by the Provider
      *                             for use decrypting other data.
      * @param string $materialDescription Material Description for use in
-     *                                    decrypting the CEK.
-     * @param string $options Options for use in decrypting the CEK.
+     *                                    encrypting the $cek.
      *
      * @return string
      */
-    abstract public function decryptCek($encryptedCek, $materialDescription, $options);
+    abstract public function decryptCek($encryptedCek, $materialDescription);
 
     /**
      * @param string $keySize Length of a cipher key in bits for generating a
      *                        random content encryption key (CEK).
      * @param array $context Context map needed for key encryption
-     * @param array $options Additional options to be used in CEK generation
      *
      * @return array
      */
-    abstract public function generateCek($keySize, $context, $options);
+    abstract public function generateCek($keySize, $context);
 
     /**
      * @param string $openSslName Cipher OpenSSL name to use for generating

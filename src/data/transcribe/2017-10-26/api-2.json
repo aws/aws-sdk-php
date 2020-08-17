@@ -13,21 +13,6 @@
     "uid":"transcribe-2017-10-26"
   },
   "operations":{
-    "CreateLanguageModel":{
-      "name":"CreateLanguageModel",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"CreateLanguageModelRequest"},
-      "output":{"shape":"CreateLanguageModelResponse"},
-      "errors":[
-        {"shape":"BadRequestException"},
-        {"shape":"LimitExceededException"},
-        {"shape":"InternalFailureException"},
-        {"shape":"ConflictException"}
-      ]
-    },
     "CreateMedicalVocabulary":{
       "name":"CreateMedicalVocabulary",
       "http":{
@@ -71,19 +56,6 @@
         {"shape":"LimitExceededException"},
         {"shape":"InternalFailureException"},
         {"shape":"ConflictException"}
-      ]
-    },
-    "DeleteLanguageModel":{
-      "name":"DeleteLanguageModel",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"DeleteLanguageModelRequest"},
-      "errors":[
-        {"shape":"BadRequestException"},
-        {"shape":"LimitExceededException"},
-        {"shape":"InternalFailureException"}
       ]
     },
     "DeleteMedicalTranscriptionJob":{
@@ -152,21 +124,6 @@
         {"shape":"LimitExceededException"},
         {"shape":"BadRequestException"},
         {"shape":"InternalFailureException"}
-      ]
-    },
-    "DescribeLanguageModel":{
-      "name":"DescribeLanguageModel",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"DescribeLanguageModelRequest"},
-      "output":{"shape":"DescribeLanguageModelResponse"},
-      "errors":[
-        {"shape":"BadRequestException"},
-        {"shape":"LimitExceededException"},
-        {"shape":"InternalFailureException"},
-        {"shape":"NotFoundException"}
       ]
     },
     "GetMedicalTranscriptionJob":{
@@ -242,20 +199,6 @@
         {"shape":"LimitExceededException"},
         {"shape":"InternalFailureException"},
         {"shape":"BadRequestException"}
-      ]
-    },
-    "ListLanguageModels":{
-      "name":"ListLanguageModels",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"ListLanguageModelsRequest"},
-      "output":{"shape":"ListLanguageModelsResponse"},
-      "errors":[
-        {"shape":"BadRequestException"},
-        {"shape":"LimitExceededException"},
-        {"shape":"InternalFailureException"}
       ]
     },
     "ListMedicalTranscriptionJobs":{
@@ -414,18 +357,7 @@
       },
       "exception":true
     },
-    "BaseModelName":{
-      "type":"string",
-      "enum":[
-        "NarrowBand",
-        "WideBand"
-      ]
-    },
     "Boolean":{"type":"boolean"},
-    "CLMLanguageCode":{
-      "type":"string",
-      "enum":["en-US"]
-    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -442,31 +374,6 @@
       "members":{
         "RedactionType":{"shape":"RedactionType"},
         "RedactionOutput":{"shape":"RedactionOutput"}
-      }
-    },
-    "CreateLanguageModelRequest":{
-      "type":"structure",
-      "required":[
-        "LanguageCode",
-        "BaseModelName",
-        "ModelName",
-        "InputDataConfig"
-      ],
-      "members":{
-        "LanguageCode":{"shape":"CLMLanguageCode"},
-        "BaseModelName":{"shape":"BaseModelName"},
-        "ModelName":{"shape":"ModelName"},
-        "InputDataConfig":{"shape":"InputDataConfig"}
-      }
-    },
-    "CreateLanguageModelResponse":{
-      "type":"structure",
-      "members":{
-        "LanguageCode":{"shape":"CLMLanguageCode"},
-        "BaseModelName":{"shape":"BaseModelName"},
-        "ModelName":{"shape":"ModelName"},
-        "InputDataConfig":{"shape":"InputDataConfig"},
-        "ModelStatus":{"shape":"ModelStatus"}
       }
     },
     "CreateMedicalVocabularyRequest":{
@@ -538,18 +445,9 @@
     },
     "DataAccessRoleArn":{
       "type":"string",
-      "max":2048,
-      "min":20,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov|aws-iso-{0,1}[a-z]{0,1}):iam::[0-9]{0,63}:role/[A-Za-z0-9:_/+=,@.-]{0,1024}$"
+      "pattern":"^arn:aws:iam::[0-9]{0,63}:role/[A-Za-z0-9:_/+=,@.-]{0,1023}$"
     },
     "DateTime":{"type":"timestamp"},
-    "DeleteLanguageModelRequest":{
-      "type":"structure",
-      "required":["ModelName"],
-      "members":{
-        "ModelName":{"shape":"ModelName"}
-      }
-    },
     "DeleteMedicalTranscriptionJobRequest":{
       "type":"structure",
       "required":["MedicalTranscriptionJobName"],
@@ -583,19 +481,6 @@
       "required":["VocabularyName"],
       "members":{
         "VocabularyName":{"shape":"VocabularyName"}
-      }
-    },
-    "DescribeLanguageModelRequest":{
-      "type":"structure",
-      "required":["ModelName"],
-      "members":{
-        "ModelName":{"shape":"ModelName"}
-      }
-    },
-    "DescribeLanguageModelResponse":{
-      "type":"structure",
-      "members":{
-        "LanguageModel":{"shape":"LanguageModel"}
       }
     },
     "FailureReason":{"type":"string"},
@@ -677,18 +562,6 @@
         "DownloadUri":{"shape":"Uri"}
       }
     },
-    "InputDataConfig":{
-      "type":"structure",
-      "required":[
-        "S3Uri",
-        "DataAccessRoleArn"
-      ],
-      "members":{
-        "S3Uri":{"shape":"Uri"},
-        "TuningDataS3Uri":{"shape":"Uri"},
-        "DataAccessRoleArn":{"shape":"DataAccessRoleArn"}
-      }
-    },
     "InternalFailureException":{
       "type":"structure",
       "members":{
@@ -713,57 +586,38 @@
     "LanguageCode":{
       "type":"string",
       "enum":[
-        "af-ZA",
-        "ar-AE",
-        "ar-SA",
-        "cy-GB",
-        "da-DK",
-        "de-CH",
-        "de-DE",
-        "en-AB",
-        "en-AU",
-        "en-GB",
-        "en-IE",
-        "en-IN",
         "en-US",
-        "en-WL",
-        "es-ES",
         "es-US",
-        "fa-IR",
+        "en-AU",
         "fr-CA",
-        "fr-FR",
-        "ga-IE",
-        "gd-GB",
-        "he-IL",
-        "hi-IN",
-        "id-ID",
-        "it-IT",
-        "ja-JP",
-        "ko-KR",
-        "ms-MY",
-        "nl-NL",
+        "en-GB",
+        "de-DE",
         "pt-BR",
-        "pt-PT",
+        "fr-FR",
+        "it-IT",
+        "ko-KR",
+        "es-ES",
+        "en-IN",
+        "hi-IN",
+        "ar-SA",
         "ru-RU",
+        "zh-CN",
+        "nl-NL",
+        "id-ID",
         "ta-IN",
+        "fa-IR",
+        "en-IE",
+        "en-AB",
+        "en-WL",
+        "pt-PT",
         "te-IN",
         "tr-TR",
-        "zh-CN"
+        "de-CH",
+        "he-IL",
+        "ms-MY",
+        "ja-JP",
+        "ar-AE"
       ]
-    },
-    "LanguageModel":{
-      "type":"structure",
-      "members":{
-        "ModelName":{"shape":"ModelName"},
-        "CreateTime":{"shape":"DateTime"},
-        "LastModifiedTime":{"shape":"DateTime"},
-        "LanguageCode":{"shape":"CLMLanguageCode"},
-        "BaseModelName":{"shape":"BaseModelName"},
-        "ModelStatus":{"shape":"ModelStatus"},
-        "UpgradeAvailability":{"shape":"Boolean"},
-        "FailureReason":{"shape":"FailureReason"},
-        "InputDataConfig":{"shape":"InputDataConfig"}
-      }
     },
     "LimitExceededException":{
       "type":"structure",
@@ -771,22 +625,6 @@
         "Message":{"shape":"String"}
       },
       "exception":true
-    },
-    "ListLanguageModelsRequest":{
-      "type":"structure",
-      "members":{
-        "StatusEquals":{"shape":"ModelStatus"},
-        "NameContains":{"shape":"ModelName"},
-        "NextToken":{"shape":"NextToken"},
-        "MaxResults":{"shape":"MaxResults"}
-      }
-    },
-    "ListLanguageModelsResponse":{
-      "type":"structure",
-      "members":{
-        "NextToken":{"shape":"NextToken"},
-        "Models":{"shape":"Models"}
-      }
     },
     "ListMedicalTranscriptionJobsRequest":{
       "type":"structure",
@@ -961,30 +799,6 @@
         "VocabularyName":{"shape":"VocabularyName"}
       }
     },
-    "ModelName":{
-      "type":"string",
-      "max":200,
-      "min":1,
-      "pattern":"^[0-9a-zA-Z._-]+"
-    },
-    "ModelSettings":{
-      "type":"structure",
-      "members":{
-        "LanguageModelName":{"shape":"ModelName"}
-      }
-    },
-    "ModelStatus":{
-      "type":"string",
-      "enum":[
-        "IN_PROGRESS",
-        "FAILED",
-        "COMPLETED"
-      ]
-    },
-    "Models":{
-      "type":"list",
-      "member":{"shape":"LanguageModel"}
-    },
     "NextToken":{
       "type":"string",
       "max":8192,
@@ -1092,7 +906,6 @@
         "OutputBucketName":{"shape":"OutputBucketName"},
         "OutputEncryptionKMSKeyId":{"shape":"KMSKeyId"},
         "Settings":{"shape":"Settings"},
-        "ModelSettings":{"shape":"ModelSettings"},
         "JobExecutionSettings":{"shape":"JobExecutionSettings"},
         "ContentRedaction":{"shape":"ContentRedaction"}
       }
@@ -1126,7 +939,6 @@
         "CompletionTime":{"shape":"DateTime"},
         "FailureReason":{"shape":"FailureReason"},
         "Settings":{"shape":"Settings"},
-        "ModelSettings":{"shape":"ModelSettings"},
         "JobExecutionSettings":{"shape":"JobExecutionSettings"},
         "ContentRedaction":{"shape":"ContentRedaction"}
       }
@@ -1161,8 +973,7 @@
         "TranscriptionJobStatus":{"shape":"TranscriptionJobStatus"},
         "FailureReason":{"shape":"FailureReason"},
         "OutputLocationType":{"shape":"OutputLocationType"},
-        "ContentRedaction":{"shape":"ContentRedaction"},
-        "ModelSettings":{"shape":"ModelSettings"}
+        "ContentRedaction":{"shape":"ContentRedaction"}
       }
     },
     "Type":{

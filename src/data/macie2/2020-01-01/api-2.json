@@ -3313,10 +3313,6 @@
     "FindingsFilterListItem": {
       "type": "structure",
       "members": {
-        "action": {
-          "shape": "FindingsFilterAction",
-          "locationName": "action"
-        },
         "arn": {
           "shape": "__string",
           "locationName": "arn"
@@ -4418,9 +4414,7 @@
         "Removed",
         "Resigned",
         "EmailVerificationInProgress",
-        "EmailVerificationFailed",
-        "RegionDisabled",
-        "AccountSuspended"
+        "EmailVerificationFailed"
       ]
     },
     "ReplicationDetails": {
@@ -5177,10 +5171,6 @@
     "UsageStatisticsFilter": {
       "type": "structure",
       "members": {
-        "comparator": {
-          "shape": "UsageStatisticsFilterComparator",
-          "locationName": "comparator"
-        },
         "key": {
           "shape": "UsageStatisticsFilterKey",
           "locationName": "key"
@@ -5191,25 +5181,10 @@
         }
       }
     },
-    "UsageStatisticsFilterComparator": {
-      "type": "string",
-      "enum": [
-        "GT",
-        "GTE",
-        "LT",
-        "LTE",
-        "EQ",
-        "NE",
-        "CONTAINS"
-      ]
-    },
     "UsageStatisticsFilterKey": {
       "type": "string",
       "enum": [
-        "accountId",
-        "serviceLimit",
-        "freeTrialStartDate",
-        "total"
+        "accountId"
       ]
     },
     "UsageStatisticsSortBy": {
@@ -5229,9 +5204,7 @@
       "type": "string",
       "enum": [
         "accountId",
-        "total",
-        "serviceLimitValue",
-        "freeTrialStartDate"
+        "total"
       ]
     },
     "UsageTotal": {

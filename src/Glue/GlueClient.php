@@ -207,8 +207,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putWorkflowRunPropertiesAsync(array $args = [])
  * @method \Aws\Result resetJobBookmark(array $args = [])
  * @method \GuzzleHttp\Promise\Promise resetJobBookmarkAsync(array $args = [])
- * @method \Aws\Result resumeWorkflowRun(array $args = [])
- * @method \GuzzleHttp\Promise\Promise resumeWorkflowRunAsync(array $args = [])
  * @method \Aws\Result searchTables(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchTablesAsync(array $args = [])
  * @method \Aws\Result startCrawler(array $args = [])

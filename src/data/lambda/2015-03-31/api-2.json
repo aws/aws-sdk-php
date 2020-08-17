@@ -1043,8 +1043,7 @@
         "DestinationConfig":{"shape":"DestinationConfig"},
         "MaximumRecordAgeInSeconds":{"shape":"MaximumRecordAgeInSeconds"},
         "BisectBatchOnFunctionError":{"shape":"BisectBatchOnFunctionError"},
-        "MaximumRetryAttempts":{"shape":"MaximumRetryAttemptsEventSourceMapping"},
-        "Topics":{"shape":"Topics"}
+        "MaximumRetryAttempts":{"shape":"MaximumRetryAttemptsEventSourceMapping"}
       }
     },
     "CreateFunctionRequest":{
@@ -1335,7 +1334,6 @@
         "State":{"shape":"String"},
         "StateTransitionReason":{"shape":"String"},
         "DestinationConfig":{"shape":"DestinationConfig"},
-        "Topics":{"shape":"Topics"},
         "MaximumRecordAgeInSeconds":{"shape":"MaximumRecordAgeInSeconds"},
         "BisectBatchOnFunctionError":{"shape":"BisectBatchOnFunctionError"},
         "MaximumRetryAttempts":{"shape":"MaximumRetryAttemptsEventSourceMapping"}
@@ -2312,7 +2310,7 @@
     "MaximumRecordAgeInSeconds":{
       "type":"integer",
       "max":604800,
-      "min":-1
+      "min":60
     },
     "MaximumRetryAttempts":{
       "type":"integer",
@@ -2322,7 +2320,7 @@
     "MaximumRetryAttemptsEventSourceMapping":{
       "type":"integer",
       "max":10000,
-      "min":-1
+      "min":0
     },
     "MemorySize":{
       "type":"integer",
@@ -2672,7 +2670,6 @@
         "nodejs10.x",
         "nodejs12.x",
         "java8",
-        "java8.al2",
         "java11",
         "python2.7",
         "python3.6",
@@ -2686,8 +2683,7 @@
         "go1.x",
         "ruby2.5",
         "ruby2.7",
-        "provided",
-        "provided.al2"
+        "provided"
       ]
     },
     "S3Bucket":{
@@ -2831,18 +2827,6 @@
       },
       "error":{"httpStatusCode":429},
       "exception":true
-    },
-    "Topic":{
-      "type":"string",
-      "max":249,
-      "min":1,
-      "pattern":"^[^.]([a-zA-Z0-9\\-_.]+)"
-    },
-    "Topics":{
-      "type":"list",
-      "member":{"shape":"Topic"},
-      "max":1,
-      "min":1
     },
     "TracingConfig":{
       "type":"structure",

@@ -515,10 +515,6 @@
     }
   },
   "shapes" : {
-    "AuthenticationStrategy" : {
-      "type" : "string",
-      "enum" : [ "SIMPLE", "LDAP" ]
-    },
     "AvailabilityZone" : {
       "type" : "structure",
       "members" : {
@@ -690,10 +686,6 @@
           "shape" : "__string",
           "locationName" : "arn"
         },
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "Created" : {
           "shape" : "__timestampIso8601",
           "locationName" : "created"
@@ -795,10 +787,6 @@
     "CreateBrokerInput" : {
       "type" : "structure",
       "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -835,10 +823,6 @@
         "HostInstanceType" : {
           "shape" : "__string",
           "locationName" : "hostInstanceType"
-        },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataInput",
-          "locationName" : "ldapServerMetadata"
         },
         "Logs" : {
           "shape" : "Logs",
@@ -890,10 +874,6 @@
     "CreateBrokerRequest" : {
       "type" : "structure",
       "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -930,10 +910,6 @@
         "HostInstanceType" : {
           "shape" : "__string",
           "locationName" : "hostInstanceType"
-        },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataInput",
-          "locationName" : "ldapServerMetadata"
         },
         "Logs" : {
           "shape" : "Logs",
@@ -985,10 +961,6 @@
     "CreateConfigurationInput" : {
       "type" : "structure",
       "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "EngineType" : {
           "shape" : "EngineType",
           "locationName" : "engineType"
@@ -1014,10 +986,6 @@
           "shape" : "__string",
           "locationName" : "arn"
         },
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "Created" : {
           "shape" : "__timestampIso8601",
           "locationName" : "created"
@@ -1039,10 +1007,6 @@
     "CreateConfigurationRequest" : {
       "type" : "structure",
       "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "EngineType" : {
           "shape" : "EngineType",
           "locationName" : "engineType"
@@ -1067,10 +1031,6 @@
         "Arn" : {
           "shape" : "__string",
           "locationName" : "arn"
-        },
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
         },
         "Created" : {
           "shape" : "__timestampIso8601",
@@ -1314,10 +1274,6 @@
     "DescribeBrokerOutput" : {
       "type" : "structure",
       "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -1370,10 +1326,6 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "ldapServerMetadata"
-        },
         "Logs" : {
           "shape" : "LogsSummary",
           "locationName" : "logs"
@@ -1382,10 +1334,6 @@
           "shape" : "WeeklyStartTime",
           "locationName" : "maintenanceWindowStartTime"
         },
-        "PendingAuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "pendingAuthenticationStrategy"
-        },
         "PendingEngineVersion" : {
           "shape" : "__string",
           "locationName" : "pendingEngineVersion"
@@ -1393,10 +1341,6 @@
         "PendingHostInstanceType" : {
           "shape" : "__string",
           "locationName" : "pendingHostInstanceType"
-        },
-        "PendingLdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "pendingLdapServerMetadata"
         },
         "PendingSecurityGroups" : {
           "shape" : "__listOf__string",
@@ -1442,10 +1386,6 @@
     "DescribeBrokerResponse" : {
       "type" : "structure",
       "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -1498,10 +1438,6 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "ldapServerMetadata"
-        },
         "Logs" : {
           "shape" : "LogsSummary",
           "locationName" : "logs"
@@ -1510,10 +1446,6 @@
           "shape" : "WeeklyStartTime",
           "locationName" : "maintenanceWindowStartTime"
         },
-        "PendingAuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "pendingAuthenticationStrategy"
-        },
         "PendingEngineVersion" : {
           "shape" : "__string",
           "locationName" : "pendingEngineVersion"
@@ -1521,10 +1453,6 @@
         "PendingHostInstanceType" : {
           "shape" : "__string",
           "locationName" : "pendingHostInstanceType"
-        },
-        "PendingLdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "pendingLdapServerMetadata"
         },
         "PendingSecurityGroups" : {
           "shape" : "__listOf__string",
@@ -1573,10 +1501,6 @@
         "Arn" : {
           "shape" : "__string",
           "locationName" : "arn"
-        },
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
         },
         "Created" : {
           "shape" : "__timestampIso8601",
@@ -1808,100 +1732,6 @@
       "exception" : true,
       "error" : {
         "httpStatusCode" : 500
-      }
-    },
-    "LdapServerMetadataInput" : {
-      "type" : "structure",
-      "members" : {
-        "Hosts" : {
-          "shape" : "__listOf__string",
-          "locationName" : "hosts"
-        },
-        "RoleBase" : {
-          "shape" : "__string",
-          "locationName" : "roleBase"
-        },
-        "RoleName" : {
-          "shape" : "__string",
-          "locationName" : "roleName"
-        },
-        "RoleSearchMatching" : {
-          "shape" : "__string",
-          "locationName" : "roleSearchMatching"
-        },
-        "RoleSearchSubtree" : {
-          "shape" : "__boolean",
-          "locationName" : "roleSearchSubtree"
-        },
-        "ServiceAccountPassword" : {
-          "shape" : "__string",
-          "locationName" : "serviceAccountPassword"
-        },
-        "ServiceAccountUsername" : {
-          "shape" : "__string",
-          "locationName" : "serviceAccountUsername"
-        },
-        "UserBase" : {
-          "shape" : "__string",
-          "locationName" : "userBase"
-        },
-        "UserRoleName" : {
-          "shape" : "__string",
-          "locationName" : "userRoleName"
-        },
-        "UserSearchMatching" : {
-          "shape" : "__string",
-          "locationName" : "userSearchMatching"
-        },
-        "UserSearchSubtree" : {
-          "shape" : "__boolean",
-          "locationName" : "userSearchSubtree"
-        }
-      }
-    },
-    "LdapServerMetadataOutput" : {
-      "type" : "structure",
-      "members" : {
-        "Hosts" : {
-          "shape" : "__listOf__string",
-          "locationName" : "hosts"
-        },
-        "RoleBase" : {
-          "shape" : "__string",
-          "locationName" : "roleBase"
-        },
-        "RoleName" : {
-          "shape" : "__string",
-          "locationName" : "roleName"
-        },
-        "RoleSearchMatching" : {
-          "shape" : "__string",
-          "locationName" : "roleSearchMatching"
-        },
-        "RoleSearchSubtree" : {
-          "shape" : "__boolean",
-          "locationName" : "roleSearchSubtree"
-        },
-        "ServiceAccountUsername" : {
-          "shape" : "__string",
-          "locationName" : "serviceAccountUsername"
-        },
-        "UserBase" : {
-          "shape" : "__string",
-          "locationName" : "userBase"
-        },
-        "UserRoleName" : {
-          "shape" : "__string",
-          "locationName" : "userRoleName"
-        },
-        "UserSearchMatching" : {
-          "shape" : "__string",
-          "locationName" : "userSearchMatching"
-        },
-        "UserSearchSubtree" : {
-          "shape" : "__boolean",
-          "locationName" : "userSearchSubtree"
-        }
       }
     },
     "ListBrokersOutput" : {
@@ -2278,10 +2108,6 @@
     "UpdateBrokerInput" : {
       "type" : "structure",
       "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -2298,10 +2124,6 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataInput",
-          "locationName" : "ldapServerMetadata"
-        },
         "Logs" : {
           "shape" : "Logs",
           "locationName" : "logs"
@@ -2315,10 +2137,6 @@
     "UpdateBrokerOutput" : {
       "type" : "structure",
       "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -2339,10 +2157,6 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "ldapServerMetadata"
-        },
         "Logs" : {
           "shape" : "Logs",
           "locationName" : "logs"
@@ -2356,10 +2170,6 @@
     "UpdateBrokerRequest" : {
       "type" : "structure",
       "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -2381,10 +2191,6 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataInput",
-          "locationName" : "ldapServerMetadata"
-        },
         "Logs" : {
           "shape" : "Logs",
           "locationName" : "logs"
@@ -2399,10 +2205,6 @@
     "UpdateBrokerResponse" : {
       "type" : "structure",
       "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -2422,10 +2224,6 @@
         "HostInstanceType" : {
           "shape" : "__string",
           "locationName" : "hostInstanceType"
-        },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "ldapServerMetadata"
         },
         "Logs" : {
           "shape" : "Logs",

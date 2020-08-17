@@ -36,13 +36,12 @@ trait DecryptionTrait
 
     /**
      * Builds an AesStreamInterface using cipher options loaded from the
-     * MetadataEnvelope and MaterialsProvider. Can decrypt data from both the
-     * legacy and V2 encryption client workflows.
+     * MetadataEnvelope and MaterialsProvider.
      *
      * @param string $cipherText Plain-text data to be encrypted using the
      *                           materials, algorithm, and data provided.
-     * @param MaterialsProviderInterface $provider A provider to supply and encrypt
-     *                                             materials used in encryption.
+     * @param MaterialsProvider $provider A provider to supply and encrypt
+     *                                    materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
      * @param array $cipherOptions Additional verification options.
@@ -56,7 +55,7 @@ trait DecryptionTrait
      */
     public function decrypt(
         $cipherText,
-        MaterialsProviderInterface $provider,
+        MaterialsProvider $provider,
         MetadataEnvelope $envelope,
         array $cipherOptions = []
     ) {

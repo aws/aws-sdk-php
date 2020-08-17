@@ -11,14 +11,6 @@ abstract class AbstractCryptoClientV2
 {
     public static $supportedCiphers = ['gcm'];
 
-    public static $supportedKeyWraps = [
-        KmsMaterialsProviderV2::WRAP_ALGORITHM_NAME
-    ];
-
-    public static $supportedSecurityProfiles = ['V2', 'V2_AND_LEGACY'];
-
-    public static $legacySecurityProfiles = ['V2_AND_LEGACY'];
-
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
      *
@@ -77,7 +69,8 @@ abstract class AbstractCryptoClientV2
      *
      * @param Stream $plaintext Plain-text data to be encrypted using the
      *                          materials, algorithm, and data provided.
-     * @param array $options Options for use in encryption.
+     * @param array $cipherOptions Options for use in determining the cipher to
+     *                             be used for encrypting data.
      * @param MaterialsProviderV2 $provider A provider to supply and encrypt
      *                                      materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
@@ -89,7 +82,7 @@ abstract class AbstractCryptoClientV2
      */
     abstract public function encrypt(
         Stream $plaintext,
-        array $options,
+        array $cipherOptions,
         MaterialsProviderV2 $provider,
         MetadataEnvelope $envelope
     );
@@ -104,7 +97,7 @@ abstract class AbstractCryptoClientV2
      *                                             materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
-     * @param array $options Options used for decryption.
+     * @param array $cipherOptions Additional verification options.
      *
      * @return AesStreamInterface
      *
@@ -112,8 +105,8 @@ abstract class AbstractCryptoClientV2
      */
     abstract public function decrypt(
         $cipherText,
-        MaterialsProviderInterfaceV2 $provider,
+        MaterialsProviderInterface $provider,
         MetadataEnvelope $envelope,
-        array $options = []
+        array $cipherOptions = []
     );
 }

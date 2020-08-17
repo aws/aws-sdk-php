@@ -1,7 +1,7 @@
 <?php
 namespace Aws\S3\Crypto;
 
-use Aws\Crypto\MaterialsProviderInterfaceV2;
+use Aws\Crypto\MaterialsProviderInterface;
 
 trait CryptoParamsTraitV2
 {
@@ -9,11 +9,11 @@ trait CryptoParamsTraitV2
 
     protected function getMaterialsProvider(array $args)
     {
-        if ($args['@MaterialsProvider'] instanceof MaterialsProviderInterfaceV2) {
+        if ($args['@MaterialsProvider'] instanceof MaterialsProviderInterface) {
             return $args['@MaterialsProvider'];
         }
 
-        throw new \InvalidArgumentException('An instance of MaterialsProviderInterfaceV2'
+        throw new \InvalidArgumentException('An instance of MaterialsProviderInterface'
             . ' must be passed in the "MaterialsProvider" field.');
     }
 }

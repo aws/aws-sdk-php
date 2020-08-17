@@ -185,8 +185,7 @@
       "errors":[
         {"shape":"NotFoundException"},
         {"shape":"InternalServerErrorException"},
-        {"shape":"BadRequestException"},
-        {"shape":"ConcurrentAccessException"}
+        {"shape":"BadRequestException"}
       ]
     },
     "UntagResource":{
@@ -200,8 +199,7 @@
       "errors":[
         {"shape":"NotFoundException"},
         {"shape":"InternalServerErrorException"},
-        {"shape":"BadRequestException"},
-        {"shape":"ConcurrentAccessException"}
+        {"shape":"BadRequestException"}
       ]
     },
     "UpdateEnvironment":{
@@ -265,24 +263,11 @@
       "type":"string",
       "pattern":"[\\x20-\\x7E]{10,128}"
     },
-    "ConcurrentAccessException":{
-      "type":"structure",
-      "members":{
-      },
-      "exception":true
-    },
     "ConflictException":{
       "type":"structure",
       "members":{
       },
       "exception":true
-    },
-    "ConnectionType":{
-      "type":"string",
-      "enum":[
-        "CONNECT_SSH",
-        "CONNECT_SSM"
-      ]
     },
     "CreateEnvironmentEC2Request":{
       "type":"structure",
@@ -298,8 +283,7 @@
         "subnetId":{"shape":"SubnetId"},
         "automaticStopTimeMinutes":{"shape":"AutomaticStopTimeMinutes"},
         "ownerArn":{"shape":"UserArn"},
-        "tags":{"shape":"TagList"},
-        "connectionType":{"shape":"ConnectionType"}
+        "tags":{"shape":"TagList"}
       }
     },
     "CreateEnvironmentEC2Result":{
@@ -406,7 +390,6 @@
         "name":{"shape":"EnvironmentName"},
         "description":{"shape":"EnvironmentDescription"},
         "type":{"shape":"EnvironmentType"},
-        "connectionType":{"shape":"ConnectionType"},
         "arn":{"shape":"String"},
         "ownerArn":{"shape":"String"},
         "lifecycle":{"shape":"EnvironmentLifecycle"}

@@ -254,22 +254,6 @@
         {"shape":"ConflictingResourceUpdateException"}
       ]
     },
-    "CreateAuditSuppression":{
-      "name":"CreateAuditSuppression",
-      "http":{
-        "method":"POST",
-        "requestUri":"/audit/suppressions/create"
-      },
-      "input":{"shape":"CreateAuditSuppressionRequest"},
-      "output":{"shape":"CreateAuditSuppressionResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"ResourceAlreadyExistsException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalFailureException"},
-        {"shape":"LimitExceededException"}
-      ]
-    },
     "CreateAuthorizer":{
       "name":"CreateAuthorizer",
       "http":{
@@ -690,20 +674,6 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalFailureException"}
-      ]
-    },
-    "DeleteAuditSuppression":{
-      "name":"DeleteAuditSuppression",
-      "http":{
-        "method":"POST",
-        "requestUri":"/audit/suppressions/delete"
-      },
-      "input":{"shape":"DeleteAuditSuppressionRequest"},
-      "output":{"shape":"DeleteAuditSuppressionResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"}
       ]
@@ -1183,21 +1153,6 @@
       },
       "input":{"shape":"DescribeAuditMitigationActionsTaskRequest"},
       "output":{"shape":"DescribeAuditMitigationActionsTaskResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalFailureException"}
-      ]
-    },
-    "DescribeAuditSuppression":{
-      "name":"DescribeAuditSuppression",
-      "http":{
-        "method":"POST",
-        "requestUri":"/audit/suppressions/describe"
-      },
-      "input":{"shape":"DescribeAuditSuppressionRequest"},
-      "output":{"shape":"DescribeAuditSuppressionResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
@@ -1984,20 +1939,6 @@
       },
       "input":{"shape":"ListAuditMitigationActionsTasksRequest"},
       "output":{"shape":"ListAuditMitigationActionsTasksResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalFailureException"}
-      ]
-    },
-    "ListAuditSuppressions":{
-      "name":"ListAuditSuppressions",
-      "http":{
-        "method":"POST",
-        "requestUri":"/audit/suppressions/list"
-      },
-      "input":{"shape":"ListAuditSuppressionsRequest"},
-      "output":{"shape":"ListAuditSuppressionsResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ThrottlingException"},
@@ -3064,21 +3005,6 @@
         {"shape":"InternalFailureException"}
       ]
     },
-    "UpdateAuditSuppression":{
-      "name":"UpdateAuditSuppression",
-      "http":{
-        "method":"PATCH",
-        "requestUri":"/audit/suppressions/update"
-      },
-      "input":{"shape":"UpdateAuditSuppressionRequest"},
-      "output":{"shape":"UpdateAuditSuppressionResponse"},
-      "errors":[
-        {"shape":"InvalidRequestException"},
-        {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"},
-        {"shape":"InternalFailureException"}
-      ]
-    },
     "UpdateAuthorizer":{
       "name":"UpdateAuthorizer",
       "http":{
@@ -3820,7 +3746,6 @@
         "checkCompliant":{"shape":"CheckCompliant"},
         "totalResourcesCount":{"shape":"TotalResourcesCount"},
         "nonCompliantResourcesCount":{"shape":"NonCompliantResourcesCount"},
-        "suppressedNonCompliantResourcesCount":{"shape":"SuppressedNonCompliantResourcesCount"},
         "errorCode":{"shape":"ErrorCode"},
         "message":{"shape":"ErrorMessage"}
       }
@@ -3847,11 +3772,6 @@
       "key":{"shape":"AuditCheckName"},
       "value":{"shape":"ReasonForNonComplianceCodes"}
     },
-    "AuditDescription":{
-      "type":"string",
-      "max":1000,
-      "pattern":"[\\p{Graph}\\x20]*"
-    },
     "AuditDetails":{
       "type":"map",
       "key":{"shape":"AuditCheckName"},
@@ -3869,8 +3789,7 @@
         "nonCompliantResource":{"shape":"NonCompliantResource"},
         "relatedResources":{"shape":"RelatedResources"},
         "reasonForNonCompliance":{"shape":"ReasonForNonCompliance"},
-        "reasonForNonComplianceCode":{"shape":"ReasonForNonComplianceCode"},
-        "isSuppressed":{"shape":"IsSuppressed"}
+        "reasonForNonComplianceCode":{"shape":"ReasonForNonComplianceCode"}
       }
     },
     "AuditFindingSeverity":{
@@ -3980,24 +3899,6 @@
     "AuditNotificationType":{
       "type":"string",
       "enum":["SNS"]
-    },
-    "AuditSuppression":{
-      "type":"structure",
-      "required":[
-        "checkName",
-        "resourceIdentifier"
-      ],
-      "members":{
-        "checkName":{"shape":"AuditCheckName"},
-        "resourceIdentifier":{"shape":"ResourceIdentifier"},
-        "expirationDate":{"shape":"Timestamp"},
-        "suppressIndefinitely":{"shape":"SuppressIndefinitely"},
-        "description":{"shape":"AuditDescription"}
-      }
-    },
-    "AuditSuppressionList":{
-      "type":"list",
-      "member":{"shape":"AuditSuppression"}
     },
     "AuditTaskId":{
       "type":"string",
@@ -4718,30 +4619,6 @@
       "min":1
     },
     "Count":{"type":"integer"},
-    "CreateAuditSuppressionRequest":{
-      "type":"structure",
-      "required":[
-        "checkName",
-        "resourceIdentifier",
-        "clientRequestToken"
-      ],
-      "members":{
-        "checkName":{"shape":"AuditCheckName"},
-        "resourceIdentifier":{"shape":"ResourceIdentifier"},
-        "expirationDate":{"shape":"Timestamp"},
-        "suppressIndefinitely":{"shape":"SuppressIndefinitely"},
-        "description":{"shape":"AuditDescription"},
-        "clientRequestToken":{
-          "shape":"ClientRequestToken",
-          "idempotencyToken":true
-        }
-      }
-    },
-    "CreateAuditSuppressionResponse":{
-      "type":"structure",
-      "members":{
-      }
-    },
     "CreateAuthorizerRequest":{
       "type":"structure",
       "required":[
@@ -5395,22 +5272,6 @@
     },
     "DeleteAdditionalMetricsToRetain":{"type":"boolean"},
     "DeleteAlertTargets":{"type":"boolean"},
-    "DeleteAuditSuppressionRequest":{
-      "type":"structure",
-      "required":[
-        "checkName",
-        "resourceIdentifier"
-      ],
-      "members":{
-        "checkName":{"shape":"AuditCheckName"},
-        "resourceIdentifier":{"shape":"ResourceIdentifier"}
-      }
-    },
-    "DeleteAuditSuppressionResponse":{
-      "type":"structure",
-      "members":{
-      }
-    },
     "DeleteAuthorizerRequest":{
       "type":"structure",
       "required":["authorizerName"],
@@ -5962,27 +5823,6 @@
         "target":{"shape":"AuditMitigationActionsTaskTarget"},
         "auditCheckToActionsMapping":{"shape":"AuditCheckToActionsMapping"},
         "actionsDefinition":{"shape":"MitigationActionList"}
-      }
-    },
-    "DescribeAuditSuppressionRequest":{
-      "type":"structure",
-      "required":[
-        "checkName",
-        "resourceIdentifier"
-      ],
-      "members":{
-        "checkName":{"shape":"AuditCheckName"},
-        "resourceIdentifier":{"shape":"ResourceIdentifier"}
-      }
-    },
-    "DescribeAuditSuppressionResponse":{
-      "type":"structure",
-      "members":{
-        "checkName":{"shape":"AuditCheckName"},
-        "resourceIdentifier":{"shape":"ResourceIdentifier"},
-        "expirationDate":{"shape":"Timestamp"},
-        "suppressIndefinitely":{"shape":"SuppressIndefinitely"},
-        "description":{"shape":"AuditDescription"}
       }
     },
     "DescribeAuditTaskRequest":{
@@ -7418,7 +7258,6 @@
     "IsAuthenticated":{"type":"boolean"},
     "IsDefaultVersion":{"type":"boolean"},
     "IsDisabled":{"type":"boolean"},
-    "IsSuppressed":{"type":"boolean"},
     "Job":{
       "type":"structure",
       "members":{
@@ -7716,8 +7555,7 @@
         "maxResults":{"shape":"MaxResults"},
         "nextToken":{"shape":"NextToken"},
         "startTime":{"shape":"Timestamp"},
-        "endTime":{"shape":"Timestamp"},
-        "listSuppressedFindings":{"shape":"ListSuppressedFindings"}
+        "endTime":{"shape":"Timestamp"}
       }
     },
     "ListAuditFindingsResponse":{
@@ -7816,23 +7654,6 @@
       "type":"structure",
       "members":{
         "tasks":{"shape":"AuditMitigationActionsTaskMetadataList"},
-        "nextToken":{"shape":"NextToken"}
-      }
-    },
-    "ListAuditSuppressionsRequest":{
-      "type":"structure",
-      "members":{
-        "checkName":{"shape":"AuditCheckName"},
-        "resourceIdentifier":{"shape":"ResourceIdentifier"},
-        "ascendingOrder":{"shape":"AscendingOrder"},
-        "nextToken":{"shape":"NextToken"},
-        "maxResults":{"shape":"MaxResults"}
-      }
-    },
-    "ListAuditSuppressionsResponse":{
-      "type":"structure",
-      "members":{
-        "suppressions":{"shape":"AuditSuppressionList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -8612,7 +8433,6 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
-    "ListSuppressedFindings":{"type":"boolean"},
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -10582,8 +10402,6 @@
     "SucceededThings":{"type":"integer"},
     "Sum":{"type":"double"},
     "SumOfSquares":{"type":"double"},
-    "SuppressIndefinitely":{"type":"boolean"},
-    "SuppressedNonCompliantResourcesCount":{"type":"long"},
     "TableName":{"type":"string"},
     "Tag":{
       "type":"structure",
@@ -11169,25 +10987,6 @@
       }
     },
     "UpdateAccountAuditConfigurationResponse":{
-      "type":"structure",
-      "members":{
-      }
-    },
-    "UpdateAuditSuppressionRequest":{
-      "type":"structure",
-      "required":[
-        "checkName",
-        "resourceIdentifier"
-      ],
-      "members":{
-        "checkName":{"shape":"AuditCheckName"},
-        "resourceIdentifier":{"shape":"ResourceIdentifier"},
-        "expirationDate":{"shape":"Timestamp"},
-        "suppressIndefinitely":{"shape":"SuppressIndefinitely"},
-        "description":{"shape":"AuditDescription"}
-      }
-    },
-    "UpdateAuditSuppressionResponse":{
       "type":"structure",
       "members":{
       }

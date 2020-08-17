@@ -16,10 +16,6 @@ abstract class AbstractCryptoClient
 {
     public static $supportedCiphers = ['cbc', 'gcm'];
 
-    public static $supportedKeyWraps = [
-        KmsMaterialsProvider::WRAP_ALGORITHM_NAME
-    ];
-
     /**
      * Returns if the passed cipher name is supported for encryption by the SDK.
      *
@@ -102,8 +98,8 @@ abstract class AbstractCryptoClient
      *
      * @param string $cipherText Plain-text data to be decrypted using the
      *                           materials, algorithm, and data provided.
-     * @param MaterialsProviderInterface $provider A provider to supply and encrypt
-     *                                             materials used in encryption.
+     * @param MaterialsProvider $provider A provider to supply and encrypt
+     *                                    materials used in encryption.
      * @param MetadataEnvelope $envelope A storage envelope for encryption
      *                                   metadata to be read from.
      * @param array $cipherOptions Additional verification options.
@@ -114,7 +110,7 @@ abstract class AbstractCryptoClient
      */
     abstract public function decrypt(
         $cipherText,
-        MaterialsProviderInterface $provider,
+        MaterialsProvider $provider,
         MetadataEnvelope $envelope,
         array $cipherOptions = []
     );
