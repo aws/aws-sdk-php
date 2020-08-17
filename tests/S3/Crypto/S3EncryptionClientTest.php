@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3\Crypto;
 
+use Aws\Crypto\KmsMaterialsProviderV2;
 use Aws\S3\Crypto\S3EncryptionClient;
 use Aws\Result;
 use Aws\HashingStream;
@@ -9,12 +10,14 @@ use Aws\Crypto\AesDecryptingStream;
 use Aws\Crypto\AesGcmDecryptingStream;
 use Aws\Crypto\KmsMaterialsProvider;
 use Aws\Crypto\MetadataEnvelope;
+use Aws\S3\Crypto\S3EncryptionClientV2;
 use Aws\S3\S3Client;
 use Aws\S3\Crypto\HeadersMetadataStrategy;
 use Aws\S3\Crypto\InstructionFileMetadataStrategy;
 use Aws\Test\Crypto\UsesCryptoParamsTrait;
 use Aws\Test\UsesServiceTrait;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -22,7 +25,10 @@ use PHPUnit\Framework\TestCase;
 
 class S3EncryptionClientTest extends TestCase
 {
-    use UsesServiceTrait, UsesMetadataEnvelopeTrait, UsesCryptoParamsTrait;
+    use S3EncryptionClientTestingTrait;
+    use UsesCryptoParamsTrait;
+    use UsesMetadataEnvelopeTrait;
+    use UsesServiceTrait;
 
     protected function getS3Client()
     {
@@ -416,63 +422,6 @@ EOXML;
         $this->assertTrue($this->mockQueueEmpty());
     }
 
-    private function getInvalidCipherMetadataFields(MaterialsProvider $provider)
-    {
-        $fields = [];
-        $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
-            = $provider->getWrapAlgorithmName();
-        $fields[MetadataEnvelope::IV_HEADER]
-            = base64_encode($provider->generateIv('aes-256-cbc'));
-        $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
-        $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
-            = base64_encode('cek');
-        $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
-            = json_encode(['kms_cmk_id' => '11111111-2222-3333-4444-555555555555']);
-        $fields[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
-            = 'Not a cipher';
-
-        return $fields;
-    }
-
-    private function getValidCbcMetadataFields(MaterialsProvider $provider)
-    {
-        $fields = [];
-        $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
-            = $provider->getWrapAlgorithmName();
-        $fields[MetadataEnvelope::IV_HEADER]
-            = base64_encode($provider->generateIv('aes-256-cbc'));
-        $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
-        $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
-            = base64_encode('cek');
-        $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
-            = json_encode(['kms_cmk_id' => '11111111-2222-3333-4444-555555555555']);
-        $fields[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
-            = 'AES/CBC/PKCS5Padding';
-
-        return $fields;
-    }
-
-    private function getValidGcmMetadataFields(MaterialsProvider $provider)
-    {
-        $fields = [];
-        $fields[MetadataEnvelope::KEY_WRAP_ALGORITHM_HEADER]
-            = $provider->getWrapAlgorithmName();
-        $fields[MetadataEnvelope::IV_HEADER]
-            = base64_encode($provider->generateIv('aes-256-gcm'));
-        $fields[MetadataEnvelope::CRYPTO_TAG_LENGTH_HEADER]
-            = 0;
-        $fields[MetadataEnvelope::CONTENT_KEY_V2_HEADER]
-            = base64_encode('cek');
-        $fields[MetadataEnvelope::MATERIALS_DESCRIPTION_HEADER]
-            = json_encode(['kms_cmk_id' => '11111111-2222-3333-4444-555555555555']);
-        $fields[MetadataEnvelope::CONTENT_CRYPTO_SCHEME_HEADER]
-            = 'AES/GCM/NoPadding';
-
-        return $fields;
-    }
-
     /**
      * @expectedException RuntimeException
      * @expectedExceptionMessage Unrecognized or unsupported AESName for reverse lookup.
@@ -510,7 +459,7 @@ EOXML;
 
     /**
      * @expectedException        RuntimeException
-     * @expectedExceptionMessage Not able to detect kms_cmk_id from an empty materials description.
+     * @expectedExceptionMessage Not able to detect the materials description.
      */
     public function testFromDecryptionEnvelopeEmptyKmsMaterialException()
     {
@@ -524,7 +473,7 @@ EOXML;
 
     /**
      * @expectedException        RuntimeException
-     * @expectedExceptionMessage Not able to detect kms_cmk_id from kms materials description.
+     * @expectedExceptionMessage Not able to detect kms_cmk_id (legacy implementation)
      */
     public function testFromDecryptionEnvelopeInvalidKmsMaterialException()
     {
@@ -552,7 +501,7 @@ EOXML;
                 return new FulfilledPromise(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
-                        $this->getValidCbcMetadataFields($provider)
+                        $this->getValidV1CbcMetadataFields($provider)
                     ),
                     'test'
                 ));
@@ -589,7 +538,7 @@ EOXML;
                         200,
                         [],
                         json_encode(
-                            $this->getValidCbcMetadataFields($provider)
+                            $this->getValidV1CbcMetadataFields($provider)
                         )
                     ));
                 }
@@ -636,7 +585,7 @@ EOXML;
                         200,
                         [],
                         json_encode(
-                            $this->getValidCbcMetadataFields($provider)
+                            $this->getValidV1CbcMetadataFields($provider)
                         )
                     ));
                 }
@@ -661,6 +610,49 @@ EOXML;
         $this->assertInstanceOf(AesDecryptingStream::class, $result['Body']);
     }
 
+    public function testGetObjectWithV2GcmMetadata()
+    {
+        $kms = $this->getKmsClient();
+        $list = $kms->getHandlerList();
+        $list->setHandler(function($cmd, $req) {
+            // Verify decryption command has correct parameters
+            $this->assertEquals('cek', $cmd['CiphertextBlob']);
+            $this->assertEquals(
+                [
+                    'aws:x-amz-cek-alg' => 'AES/GCM/NoPadding'
+                ],
+                $cmd['EncryptionContext']
+            );
+            return Promise\promise_for(
+                new Result(['Plaintext' => random_bytes(32)])
+            );
+        });
+
+        $handlerProvider = new KmsMaterialsProviderV2($kms);
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function () use ($handlerProvider) {
+                return new FulfilledPromise(new Response(
+                    200,
+                    $this->getFieldsAsMetaHeaders(
+                        $this->getValidV2GcmMetadataFields($handlerProvider)
+                    ),
+                    'test'
+                ));
+            },
+        ]);
+
+        $provider = new KmsMaterialsProvider($kms);
+        $client = new S3EncryptionClient($s3);
+        $result = $client->getObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            '@MaterialsProvider' => $provider
+        ]);
+        $this->assertInstanceOf(AesGcmDecryptingStream::class, $result['Body']);
+    }
+
     public function testGetObjectWrapsBodyInAesGcmDecryptingStream()
     {
         if (version_compare(PHP_VERSION, '7.1', '<')) {
@@ -682,7 +674,7 @@ EOXML;
                 return new FulfilledPromise(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
-                        $this->getValidGcmMetadataFields($provider)
+                        $this->getValidV1GcmMetadataFields($provider)
                     ),
                     'test'
                 ));
@@ -714,7 +706,7 @@ EOXML;
                 return new FulfilledPromise(new Response(
                     200,
                     $this->getFieldsAsMetaHeaders(
-                        $this->getValidCbcMetadataFields($provider)
+                        $this->getValidV1CbcMetadataFields($provider)
                     ),
                     'test'
                 ));
@@ -729,5 +721,85 @@ EOXML;
             'SaveAs' => $file
         ]);
         $this->assertStringEqualsFile($file, (string)$result['Body']);
+    }
+
+    /**
+     * Note that outside of PHPUnit, normal code execution will continue through
+     * this warning unless configured otherwise. PHPUnit throws it as an
+     * exception here for testing.
+     *
+     * @expectedException PHPUnit_Framework_Error_Warning
+     * @expectedExceptionMessage 'Aad' has been supplied for content encryption with AES/GCM/NoPadding
+     */
+    public function testTriggersWarningForGcmEncryptionWithAad()
+    {
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function (RequestInterface $request) {
+                return new FulfilledPromise(new Response(
+                    200,
+                    [],
+                    $this->getSuccessfulPutObjectResponse()
+                ));
+            },
+        ]);
+
+        $kms = $this->getKmsClient();
+        $keyId = '11111111-2222-3333-4444-555555555555';
+        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $this->addMockResults($kms, [
+            new Result([
+                'CiphertextBlob' => 'encrypted',
+                'Plaintext' => random_bytes(32),
+            ])
+        ]);
+
+        $client = new S3EncryptionClient($s3);
+        $client->putObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            'Body' => 'test',
+            '@MaterialsProvider' => $provider,
+            '@CipherOptions' => [
+                'Cipher' => 'gcm',
+                'Aad' => 'test'
+            ],
+        ]);
+        $this->assertTrue($this->mockQueueEmpty());
+    }
+
+    public function testAddsCryptoUserAgent()
+    {
+        $kms = $this->getKmsClient();
+        $provider = new KmsMaterialsProvider($kms);
+        $this->addMockResults($kms, [
+            new Result(['Plaintext' => random_bytes(32)])
+        ]);
+
+        $s3 = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'http_handler' => function (RequestInterface $req) use ($provider) {
+                $this->assertContains(
+                    'S3CryptoV' . S3EncryptionClient::CRYPTO_VERSION,
+                    $req->getHeaderLine('User-Agent')
+                );
+                return Promise\promise_for(new Response(
+                    200,
+                    $this->getFieldsAsMetaHeaders(
+                        $this->getValidV1GcmMetadataFields($provider)
+                    ),
+                    'test'
+                ));
+            },
+        ]);
+
+        $client = new S3EncryptionClient($s3);
+        $client->getObject([
+            'Bucket' => 'foo',
+            'Key' => 'bar',
+            '@MaterialsProvider' => $provider
+        ]);
     }
 }

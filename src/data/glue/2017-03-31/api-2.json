@@ -1539,6 +1539,23 @@
         {"shape":"OperationTimeoutException"}
       ]
     },
+    "ResumeWorkflowRun":{
+      "name":"ResumeWorkflowRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ResumeWorkflowRunRequest"},
+      "output":{"shape":"ResumeWorkflowRunResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"ConcurrentRunsExceededException"},
+        {"shape":"IllegalWorkflowStateException"}
+      ]
+    },
     "SearchTables":{
       "name":"SearchTables",
       "http":{
@@ -2743,7 +2760,10 @@
         "SKIP_CUSTOM_JDBC_CERT_VALIDATION",
         "CUSTOM_JDBC_CERT_STRING",
         "CONNECTION_URL",
-        "KAFKA_BOOTSTRAP_SERVERS"
+        "KAFKA_BOOTSTRAP_SERVERS",
+        "KAFKA_SSL_ENABLED",
+        "KAFKA_CUSTOM_CERT",
+        "KAFKA_SKIP_CUSTOM_CERT_VALIDATION"
       ]
     },
     "ConnectionType":{
@@ -2752,7 +2772,8 @@
         "JDBC",
         "SFTP",
         "MONGODB",
-        "KAFKA"
+        "KAFKA",
+        "NETWORK"
       ]
     },
     "ConnectionsList":{
@@ -3224,7 +3245,8 @@
         "Name":{"shape":"NameString"},
         "Description":{"shape":"GenericString"},
         "DefaultRunProperties":{"shape":"WorkflowRunProperties"},
-        "Tags":{"shape":"TagsMap"}
+        "Tags":{"shape":"TagsMap"},
+        "MaxConcurrentRuns":{"shape":"NullableInteger"}
       }
     },
     "CreateWorkflowResponse":{
@@ -5264,6 +5286,10 @@
         "CrawlerDetails":{"shape":"CrawlerNodeDetails"}
       }
     },
+    "NodeIdList":{
+      "type":"list",
+      "member":{"shape":"NameString"}
+    },
     "NodeList":{
       "type":"list",
       "member":{"shape":"Node"}
@@ -5604,6 +5630,26 @@
       "max":1000,
       "min":0
     },
+    "ResumeWorkflowRunRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "RunId",
+        "NodeIds"
+      ],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "RunId":{"shape":"IdString"},
+        "NodeIds":{"shape":"NodeIdList"}
+      }
+    },
+    "ResumeWorkflowRunResponse":{
+      "type":"structure",
+      "members":{
+        "RunId":{"shape":"IdString"},
+        "NodeIds":{"shape":"NodeIdList"}
+      }
+    },
     "Role":{"type":"string"},
     "RoleArn":{
       "type":"string",
@@ -5635,7 +5681,8 @@
       "type":"structure",
       "members":{
         "Path":{"shape":"Path"},
-        "Exclusions":{"shape":"PathList"}
+        "Exclusions":{"shape":"PathList"},
+        "ConnectionName":{"shape":"ConnectionName"}
       }
     },
     "S3TargetList":{
@@ -6711,7 +6758,8 @@
       "members":{
         "Name":{"shape":"NameString"},
         "Description":{"shape":"GenericString"},
-        "DefaultRunProperties":{"shape":"WorkflowRunProperties"}
+        "DefaultRunProperties":{"shape":"WorkflowRunProperties"},
+        "MaxConcurrentRuns":{"shape":"NullableInteger"}
       }
     },
     "UpdateWorkflowResponse":{
@@ -6807,7 +6855,8 @@
         "CreatedOn":{"shape":"TimestampValue"},
         "LastModifiedOn":{"shape":"TimestampValue"},
         "LastRun":{"shape":"WorkflowRun"},
-        "Graph":{"shape":"WorkflowGraph"}
+        "Graph":{"shape":"WorkflowGraph"},
+        "MaxConcurrentRuns":{"shape":"NullableInteger"}
       }
     },
     "WorkflowGraph":{
@@ -6828,10 +6877,12 @@
       "members":{
         "Name":{"shape":"NameString"},
         "WorkflowRunId":{"shape":"IdString"},
+        "PreviousRunId":{"shape":"IdString"},
         "WorkflowRunProperties":{"shape":"WorkflowRunProperties"},
         "StartedOn":{"shape":"TimestampValue"},
         "CompletedOn":{"shape":"TimestampValue"},
         "Status":{"shape":"WorkflowRunStatus"},
+        "ErrorMessage":{"shape":"ErrorString"},
         "Statistics":{"shape":"WorkflowRunStatistics"},
         "Graph":{"shape":"WorkflowGraph"}
       }
@@ -6858,7 +6909,8 @@
         "RUNNING",
         "COMPLETED",
         "STOPPING",
-        "STOPPED"
+        "STOPPED",
+        "ERROR"
       ]
     },
     "WorkflowRuns":{

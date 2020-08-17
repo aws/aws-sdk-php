@@ -10,6 +10,7 @@ use Aws\Credentials\CredentialProvider;
 use Aws\Credentials\Credentials;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Endpoint\Partition;
+use Aws\Exception\InvalidRegionException;
 use Aws\LruArrayCache;
 use Aws\S3\S3Client;
 use Aws\HandlerList;
@@ -112,6 +113,18 @@ class ClientResolverTest extends TestCase
             'version'      => 'latest'
         ], new HandlerList());
         $this->assertSame($conf['config']['signing_name'], $signingName);
+    }
+
+    public function testAppliesUseAwsSharedFilesTOConfig()
+    {
+        $r = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $r->resolve([
+            'service'      => 'dynamodb',
+            'region'       => 'x',
+            'use_aws_shared_config_files' => false,
+            'version'      => 'latest'
+        ], new HandlerList());
+        $this->assertSame($conf['use_aws_shared_config_files'], false);
     }
 
     public function testPrefersApiProviderNameToPartitionName()
@@ -925,6 +938,57 @@ EOT;
             ['truthy', false],
             ['openssl_random_pseudo_bytes', true],
             [function ($length) { return 'foo'; }, true],
+        ];
+    }
+
+    /**
+     * @dataProvider validateRegionProvider
+     *
+     * @param $region
+     * @param $expected
+     */
+    public function testValidatesRegion($region, $expected)
+    {
+        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
+        try {
+            $result = $resolver->resolve(
+                [
+                    'service' => 's3',
+                    'version' => 'latest',
+                    'region' => $region
+                ],
+                new HandlerList()
+            );
+
+            if ($expected instanceof \Exception) {
+                $this->fail('Expected an exception with: ' . $expected->getMessage());
+            }
+            $this->assertEquals($expected, $result['region']);
+
+        } catch (InvalidRegionException $e) {
+            $this->assertEquals($expected->getMessage(), $e->getMessage());
+        }
+    }
+
+    public function validateRegionProvider()
+    {
+        return [
+            [
+                'us-west-2',
+                'us-west-2',
+            ],
+            [
+                'x',
+                'x',
+            ],
+            [
+                '',
+                new InvalidRegionException('Region must be a valid RFC host label.'),
+            ],
+            [
+                'hosthijack.com/',
+                new InvalidRegionException('Region must be a valid RFC host label.'),
+            ],
         ];
     }
 }

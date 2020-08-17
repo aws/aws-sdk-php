@@ -75,7 +75,7 @@
     "GetPartition": "<p>Retrieves information about a specified partition.</p>",
     "GetPartitions": "<p>Retrieves information about the partitions in a table.</p>",
     "GetPlan": "<p>Gets code to perform a specified mapping.</p>",
-    "GetResourcePolicies": "<p>Retrieves the security configurations for the resource policies set on individual resources, and also the account-level policy.</p>",
+    "GetResourcePolicies": "<p>Retrieves the security configurations for the resource policies set on individual resources, and also the account-level policy.</p> <p>This operation also returns the Data Catalog resource policy. However, if you enabled metadata encryption in Data Catalog settings, and you do not have permission on the AWS KMS key, the operation can't return the Data Catalog resource policy.</p>",
     "GetResourcePolicy": "<p>Retrieves a specified resource policy.</p>",
     "GetSecurityConfiguration": "<p>Retrieves a specified security configuration.</p>",
     "GetSecurityConfigurations": "<p>Retrieves a list of all security configurations.</p>",
@@ -103,6 +103,7 @@
     "PutResourcePolicy": "<p>Sets the Data Catalog resource policy for access control.</p>",
     "PutWorkflowRunProperties": "<p>Puts the specified workflow run properties for the given workflow run. If a property already exists for the specified run, then it overrides the value otherwise adds the property to existing properties.</p>",
     "ResetJobBookmark": "<p>Resets a bookmark entry.</p>",
+    "ResumeWorkflowRun": "<p>Restarts selected nodes of a previous partially completed workflow run and resumes the workflow run. The selected nodes and all nodes that are downstream from the selected nodes are run.</p>",
     "SearchTables": "<p>Searches a set of tables based on properties in the table metadata as well as on the parent database. You can search against text or filter conditions. </p> <p>You can only get tables that you have access to based on the security policies defined in Lake Formation. You need at least a read-only access to the table for it to be returned. If you do not have access to all the columns in the table, these columns will not be searched against when returning the list of tables back to you. If you have access to the columns but not the data in the columns, those columns and the associated metadata for those columns will be included in the search. </p>",
     "StartCrawler": "<p>Starts a crawl using the specified crawler, regardless of what is scheduled. If the crawler is already running, returns a <a href=\"https://docs.aws.amazon.com/glue/latest/dg/aws-glue-api-exceptions.html#aws-glue-api-exceptions-CrawlerRunningException\">CrawlerRunningException</a>.</p>",
     "StartCrawlerSchedule": "<p>Changes the schedule state of the specified crawler to <code>SCHEDULED</code>, unless the crawler is already running or the schedule state is already <code>SCHEDULED</code>.</p>",
@@ -390,7 +391,7 @@
     "BoundedPartitionValueList": {
       "base": null,
       "refs": {
-        "UpdatePartitionRequest$PartitionValueList": "<p>A list of the values defining the partition.</p>"
+        "UpdatePartitionRequest$PartitionValueList": "<p>List of partition key values that define the partition to update.</p>"
       }
     },
     "CancelMLTaskRunRequest": {
@@ -467,7 +468,7 @@
         "ImportCatalogToGlueRequest$CatalogId": "<p>The ID of the catalog to import. Currently, this should be the AWS account ID.</p>",
         "Partition$CatalogId": "<p>The ID of the Data Catalog in which the partition resides.</p>",
         "PutDataCatalogEncryptionSettingsRequest$CatalogId": "<p>The ID of the Data Catalog to set the security configuration for. If none is provided, the AWS account ID is used by default.</p>",
-        "SearchTablesRequest$CatalogId": "<p>A unique identifier, consisting of <code> <i>account_id</i>/datalake</code>.</p>",
+        "SearchTablesRequest$CatalogId": "<p>A unique identifier, consisting of <code> <i>account_id</i> </code>.</p>",
         "Table$CatalogId": "<p>The ID of the Data Catalog in which the table resides.</p>",
         "TableIdentifier$CatalogId": "<p>The ID of the Data Catalog in which the table resides.</p>",
         "UpdateColumnStatisticsForPartitionRequest$CatalogId": "<p>The ID of the Data Catalog where the partitions in question reside. If none is supplied, the AWS account ID is used by default.</p>",
@@ -765,7 +766,8 @@
     "ConnectionName": {
       "base": null,
       "refs": {
-        "JdbcTarget$ConnectionName": "<p>The name of the connection to use to connect to the JDBC target.</p>"
+        "JdbcTarget$ConnectionName": "<p>The name of the connection to use to connect to the JDBC target.</p>",
+        "S3Target$ConnectionName": "<p>The name of a connection which allows a job or crawler to access data in Amazon S3 within an Amazon Virtual Private Cloud environment (Amazon VPC).</p>"
       }
     },
     "ConnectionPasswordEncryption": {
@@ -777,7 +779,7 @@
     "ConnectionProperties": {
       "base": null,
       "refs": {
-        "Connection$ConnectionProperties": "<p>These key-value pairs define parameters for the connection:</p> <ul> <li> <p> <code>HOST</code> - The host URI: either the fully qualified domain name (FQDN) or the IPv4 address of the database host.</p> </li> <li> <p> <code>PORT</code> - The port number, between 1024 and 65535, of the port on which the database host is listening for database connections.</p> </li> <li> <p> <code>USER_NAME</code> - The name under which to log in to the database. The value string for <code>USER_NAME</code> is \"<code>USERNAME</code>\".</p> </li> <li> <p> <code>PASSWORD</code> - A password, if one is used, for the user name.</p> </li> <li> <p> <code>ENCRYPTED_PASSWORD</code> - When you enable connection password protection by setting <code>ConnectionPasswordEncryption</code> in the Data Catalog encryption settings, this field stores the encrypted password.</p> </li> <li> <p> <code>JDBC_DRIVER_JAR_URI</code> - The Amazon Simple Storage Service (Amazon S3) path of the JAR file that contains the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_DRIVER_CLASS_NAME</code> - The class name of the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_ENGINE</code> - The name of the JDBC engine to use.</p> </li> <li> <p> <code>JDBC_ENGINE_VERSION</code> - The version of the JDBC engine to use.</p> </li> <li> <p> <code>CONFIG_FILES</code> - (Reserved for future use.)</p> </li> <li> <p> <code>INSTANCE_ID</code> - The instance ID to use.</p> </li> <li> <p> <code>JDBC_CONNECTION_URL</code> - The URL for connecting to a JDBC data source.</p> </li> <li> <p> <code>JDBC_ENFORCE_SSL</code> - A Boolean string (true, false) specifying whether Secure Sockets Layer (SSL) with hostname matching is enforced for the JDBC connection on the client. The default is false.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT</code> - An Amazon S3 location specifying the customer's root certificate. AWS Glue uses this root certificate to validate the customer’s certificate when connecting to the customer database. AWS Glue only handles X.509 certificates. The certificate provided must be DER-encoded and supplied in Base64 encoding PEM format.</p> </li> <li> <p> <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code> - By default, this is <code>false</code>. AWS Glue validates the Signature algorithm and Subject Public Key Algorithm for the customer certificate. The only permitted algorithms for the Signature algorithm are SHA256withRSA, SHA384withRSA or SHA512withRSA. For the Subject Public Key Algorithm, the key length must be at least 2048. You can set the value of this property to <code>true</code> to skip AWS Glue’s validation of the customer certificate.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT_STRING</code> - A custom JDBC certificate string which is used for domain match or distinguished name match to prevent a man-in-the-middle attack. In Oracle database, this is used as the <code>SSL_SERVER_CERT_DN</code>; in Microsoft SQL Server, this is used as the <code>hostNameInCertificate</code>.</p> </li> <li> <p> <code>CONNECTION_URL</code> - The URL for connecting to a general (non-JDBC) data source.</p> </li> <li> <p> <code>KAFKA_BOOTSTRAP_SERVERS</code> - A comma-separated list of host and port pairs that are the addresses of the Apache Kafka brokers in a Kafka cluster to which a Kafka client will connect to and bootstrap itself.</p> </li> </ul>",
+        "Connection$ConnectionProperties": "<p>These key-value pairs define parameters for the connection:</p> <ul> <li> <p> <code>HOST</code> - The host URI: either the fully qualified domain name (FQDN) or the IPv4 address of the database host.</p> </li> <li> <p> <code>PORT</code> - The port number, between 1024 and 65535, of the port on which the database host is listening for database connections.</p> </li> <li> <p> <code>USER_NAME</code> - The name under which to log in to the database. The value string for <code>USER_NAME</code> is \"<code>USERNAME</code>\".</p> </li> <li> <p> <code>PASSWORD</code> - A password, if one is used, for the user name.</p> </li> <li> <p> <code>ENCRYPTED_PASSWORD</code> - When you enable connection password protection by setting <code>ConnectionPasswordEncryption</code> in the Data Catalog encryption settings, this field stores the encrypted password.</p> </li> <li> <p> <code>JDBC_DRIVER_JAR_URI</code> - The Amazon Simple Storage Service (Amazon S3) path of the JAR file that contains the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_DRIVER_CLASS_NAME</code> - The class name of the JDBC driver to use.</p> </li> <li> <p> <code>JDBC_ENGINE</code> - The name of the JDBC engine to use.</p> </li> <li> <p> <code>JDBC_ENGINE_VERSION</code> - The version of the JDBC engine to use.</p> </li> <li> <p> <code>CONFIG_FILES</code> - (Reserved for future use.)</p> </li> <li> <p> <code>INSTANCE_ID</code> - The instance ID to use.</p> </li> <li> <p> <code>JDBC_CONNECTION_URL</code> - The URL for connecting to a JDBC data source.</p> </li> <li> <p> <code>JDBC_ENFORCE_SSL</code> - A Boolean string (true, false) specifying whether Secure Sockets Layer (SSL) with hostname matching is enforced for the JDBC connection on the client. The default is false.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT</code> - An Amazon S3 location specifying the customer's root certificate. AWS Glue uses this root certificate to validate the customer’s certificate when connecting to the customer database. AWS Glue only handles X.509 certificates. The certificate provided must be DER-encoded and supplied in Base64 encoding PEM format.</p> </li> <li> <p> <code>SKIP_CUSTOM_JDBC_CERT_VALIDATION</code> - By default, this is <code>false</code>. AWS Glue validates the Signature algorithm and Subject Public Key Algorithm for the customer certificate. The only permitted algorithms for the Signature algorithm are SHA256withRSA, SHA384withRSA or SHA512withRSA. For the Subject Public Key Algorithm, the key length must be at least 2048. You can set the value of this property to <code>true</code> to skip AWS Glue’s validation of the customer certificate.</p> </li> <li> <p> <code>CUSTOM_JDBC_CERT_STRING</code> - A custom JDBC certificate string which is used for domain match or distinguished name match to prevent a man-in-the-middle attack. In Oracle database, this is used as the <code>SSL_SERVER_CERT_DN</code>; in Microsoft SQL Server, this is used as the <code>hostNameInCertificate</code>.</p> </li> <li> <p> <code>CONNECTION_URL</code> - The URL for connecting to a general (non-JDBC) data source.</p> </li> <li> <p> <code>KAFKA_BOOTSTRAP_SERVERS</code> - A comma-separated list of host and port pairs that are the addresses of the Apache Kafka brokers in a Kafka cluster to which a Kafka client will connect to and bootstrap itself.</p> </li> <li> <p> <code>KAFKA_SSL_ENABLED</code> - Whether to enable or disable SSL on an Apache Kafka connection. Default value is \"true\".</p> </li> <li> <p> <code>KAFKA_CUSTOM_CERT</code> - The Amazon S3 URL for the private CA cert file (.pem format). The default is an empty string.</p> </li> <li> <p> <code>KAFKA_SKIP_CUSTOM_CERT_VALIDATION</code> - Whether to skip the validation of the CA cert file or not. AWS Glue validates for three algorithms: SHA256withRSA, SHA384withRSA and SHA512withRSA. Default value is \"false\".</p> </li> </ul>",
         "ConnectionInput$ConnectionProperties": "<p>These key-value pairs define parameters for the connection.</p>"
       }
     },
@@ -791,7 +793,7 @@
       "base": null,
       "refs": {
         "Connection$ConnectionType": "<p>The type of the connection. Currently, SFTP is not supported.</p>",
-        "ConnectionInput$ConnectionType": "<p>The type of the connection. Currently, these types are supported:</p> <ul> <li> <p> <code>JDBC</code> - Designates a connection to a database through Java Database Connectivity (JDBC).</p> </li> <li> <p> <code>KAFKA</code> - Designates a connection to an Apache Kafka streaming platform.</p> </li> <li> <p> <code>MONGODB</code> - Designates a connection to a MongoDB document database.</p> </li> </ul> <p>SFTP is not supported.</p>",
+        "ConnectionInput$ConnectionType": "<p>The type of the connection. Currently, these types are supported:</p> <ul> <li> <p> <code>JDBC</code> - Designates a connection to a database through Java Database Connectivity (JDBC).</p> </li> <li> <p> <code>KAFKA</code> - Designates a connection to an Apache Kafka streaming platform.</p> </li> <li> <p> <code>MONGODB</code> - Designates a connection to a MongoDB document database.</p> </li> <li> <p> <code>NETWORK</code> - Designates a network connection to a data source within an Amazon Virtual Private Cloud environment (Amazon VPC).</p> </li> </ul> <p>SFTP is not supported.</p>",
         "GetConnectionsFilter$ConnectionType": "<p>The type of connections to return. Currently, SFTP is not supported.</p>"
       }
     },
@@ -1487,7 +1489,7 @@
       }
     },
     "Edge": {
-      "base": "<p>An edge represents a directed connection between two AWS Glue components which are part of the workflow the edge belongs to.</p>",
+      "base": "<p>An edge represents a directed connection between two AWS Glue components that are part of the workflow the edge belongs to.</p>",
       "refs": {
         "EdgeList$member": null
       }
@@ -1543,7 +1545,8 @@
     "ErrorString": {
       "base": null,
       "refs": {
-        "JobRun$ErrorMessage": "<p>An error message associated with this job run.</p>"
+        "JobRun$ErrorMessage": "<p>An error message associated with this job run.</p>",
+        "WorkflowRun$ErrorMessage": "<p>This error message describes any error that may have occurred in starting the workflow run. Currently the only error message is \"Concurrent runs exceeded for workflow: <code>foo</code>.\"</p>"
       }
     },
     "EvaluationMetrics": {
@@ -1697,7 +1700,7 @@
         "GetTriggersResponse$NextToken": "<p>A continuation token, if not all the requested triggers have yet been returned.</p>",
         "GetWorkflowRunsRequest$NextToken": "<p>The maximum size of the response.</p>",
         "GetWorkflowRunsResponse$NextToken": "<p>A continuation token, if not all requested workflow runs have been returned.</p>",
-        "JobCommand$Name": "<p>The name of the job command. For an Apache Spark ETL job, this must be <code>glueetl</code>. For a Python shell job, it must be <code>pythonshell</code>.</p>",
+        "JobCommand$Name": "<p>The name of the job command. For an Apache Spark ETL job, this must be <code>glueetl</code>. For a Python shell job, it must be <code>pythonshell</code>. For an Apache Spark streaming ETL job, this must be <code>gluestreaming</code>.</p>",
         "JobRun$LogGroupName": "<p>The name of the log group for secure logging that can be server-side encrypted in Amazon CloudWatch using AWS KMS. This name can be <code>/aws-glue/jobs/</code>, in which case the default encryption is <code>NONE</code>. If you add a role name and <code>SecurityConfiguration</code> name (in other words, <code>/aws-glue/jobs-yourRoleName-yourSecurityConfigurationName/</code>), then that security configuration is used to encrypt the log group.</p>",
         "ListDevEndpointsRequest$NextToken": "<p>A continuation token, if this is a continuation request.</p>",
         "ListDevEndpointsResponse$NextToken": "<p>A continuation token, if the returned list does not contain the last metric available.</p>",
@@ -2328,12 +2331,15 @@
         "JobRun$PreviousRunId": "<p>The ID of the previous run of this job. For example, the <code>JobRunId</code> specified in the <code>StartJobRun</code> action.</p>",
         "Predecessor$RunId": "<p>The job-run ID of the predecessor job run.</p>",
         "PutWorkflowRunPropertiesRequest$RunId": "<p>The ID of the workflow run for which the run properties should be updated.</p>",
+        "ResumeWorkflowRunRequest$RunId": "<p>The ID of the workflow run to resume.</p>",
+        "ResumeWorkflowRunResponse$RunId": "<p>The new ID assigned to the resumed workflow run. Each resume of a workflow run will have a new run ID.</p>",
         "StartJobRunRequest$JobRunId": "<p>The ID of a previous <code>JobRun</code> to retry.</p>",
         "StartJobRunResponse$JobRunId": "<p>The ID assigned to this job run.</p>",
         "StartWorkflowRunResponse$RunId": "<p>An Id for the new run.</p>",
         "StopWorkflowRunRequest$RunId": "<p>The ID of the workflow run to stop.</p>",
         "Trigger$Id": "<p>Reserved for future use.</p>",
         "WorkflowRun$WorkflowRunId": "<p>The ID of this workflow run.</p>",
+        "WorkflowRun$PreviousRunId": "<p>The ID of the previous workflow run.</p>",
         "WorkflowRunProperties$key": null
       }
     },
@@ -2394,10 +2400,10 @@
         "JobUpdate$AllocatedCapacity": "<p>This field is deprecated. Use <code>MaxCapacity</code> instead.</p> <p>The number of AWS Glue data processing units (DPUs) to allocate to this job. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p>",
         "StartJobRunRequest$AllocatedCapacity": "<p>This field is deprecated. Use <code>MaxCapacity</code> instead.</p> <p>The number of AWS Glue data processing units (DPUs) to allocate to this JobRun. From 2 to 100 DPUs can be allocated; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://docs.aws.amazon.com/https:/aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p>",
         "WorkflowRunStatistics$TotalActions": "<p>Total number of Actions in the workflow run.</p>",
-        "WorkflowRunStatistics$TimeoutActions": "<p>Total number of Actions which timed out.</p>",
-        "WorkflowRunStatistics$FailedActions": "<p>Total number of Actions which have failed.</p>",
-        "WorkflowRunStatistics$StoppedActions": "<p>Total number of Actions which have stopped.</p>",
-        "WorkflowRunStatistics$SucceededActions": "<p>Total number of Actions which have succeeded.</p>",
+        "WorkflowRunStatistics$TimeoutActions": "<p>Total number of Actions that timed out.</p>",
+        "WorkflowRunStatistics$FailedActions": "<p>Total number of Actions that have failed.</p>",
+        "WorkflowRunStatistics$StoppedActions": "<p>Total number of Actions that have stopped.</p>",
+        "WorkflowRunStatistics$SucceededActions": "<p>Total number of Actions that have succeeded.</p>",
         "WorkflowRunStatistics$RunningActions": "<p>Total number Actions in running state.</p>"
       }
     },
@@ -2944,6 +2950,7 @@
         "NameStringList$member": null,
         "Node$Name": "<p>The name of the AWS Glue component represented by the node.</p>",
         "Node$UniqueId": "<p>The unique Id assigned to the node within the workflow.</p>",
+        "NodeIdList$member": null,
         "Order$Column": "<p>The name of the column.</p>",
         "Partition$DatabaseName": "<p>The name of the catalog database in which to create the partition.</p>",
         "Partition$TableName": "<p>The name of the database table in which to create the partition.</p>",
@@ -2951,6 +2958,7 @@
         "PhysicalConnectionRequirements$AvailabilityZone": "<p>The connection's Availability Zone. This field is redundant because the specified subnet implies the Availability Zone to be used. Currently the field must be populated, but it will be deprecated in the future.</p>",
         "Predecessor$JobName": "<p>The name of the job definition used by the predecessor job run.</p>",
         "PutWorkflowRunPropertiesRequest$Name": "<p>Name of the workflow which was run.</p>",
+        "ResumeWorkflowRunRequest$Name": "<p>The name of the workflow to resume.</p>",
         "SecurityConfiguration$Name": "<p>The name of the security configuration.</p>",
         "SecurityGroupIdList$member": null,
         "SerDeInfo$Name": "<p>Name of the SerDe.</p>",
@@ -3014,7 +3022,7 @@
         "UserDefinedFunctionInput$OwnerName": "<p>The owner of the function.</p>",
         "Workflow$Name": "<p>The name of the workflow representing the flow.</p>",
         "WorkflowNames$member": null,
-        "WorkflowRun$Name": "<p>Name of the workflow which was executed.</p>",
+        "WorkflowRun$Name": "<p>Name of the workflow that was executed.</p>",
         "XMLClassifier$Name": "<p>The name of the classifier.</p>"
       }
     },
@@ -3032,9 +3040,16 @@
       }
     },
     "Node": {
-      "base": "<p>A node represents an AWS Glue component like Trigger, Job etc. which is part of a workflow.</p>",
+      "base": "<p>A node represents an AWS Glue component such as a trigger, or job, etc., that is part of a workflow.</p>",
       "refs": {
         "NodeList$member": null
+      }
+    },
+    "NodeIdList": {
+      "base": null,
+      "refs": {
+        "ResumeWorkflowRunRequest$NodeIds": "<p>A list of the node IDs for the nodes you want to restart. The nodes that are to be restarted must have a run attempt in the original run.</p>",
+        "ResumeWorkflowRunResponse$NodeIds": "<p>A list of the node IDs for the nodes that were actually restarted.</p>"
       }
     },
     "NodeList": {
@@ -3128,13 +3143,13 @@
     "NullableDouble": {
       "base": null,
       "refs": {
-        "CreateJobRequest$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
+        "CreateJobRequest$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "CreateMLTransformRequest$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>. </p> <p> <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p> <ul> <li> <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p> </li> <li> <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p> </li> <li> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p> </li> <li> <p> <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p> </li> </ul> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
         "DynamoDBTarget$scanRate": "<p>The percentage of the configured read capacity units to use by the AWS Glue crawler. Read capacity units is a term defined by DynamoDB, and is a numeric value that acts as rate limiter for the number of reads that can be performed on that table per second.</p> <p>The valid values are null or a value between 0.1 to 1.5. A null value is used when user does not provide a value, and defaults to 0.5 of the configured Read Capacity Unit (for provisioned tables), or 0.25 of the max configured Read Capacity Unit (for tables using on-demand mode).</p>",
         "GetMLTransformResponse$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>. </p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
-        "Job$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
+        "Job$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job, an Apache Spark ETL job, or an Apache Spark streaming ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "JobRun$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://docs.aws.amazon.com/https:/aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
-        "JobUpdate$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
+        "JobUpdate$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\") or Apache Spark streaming ETL job (<code>JobCommand.Name</code>=\"gluestreaming\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "MLTransform$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"http://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>. </p> <p> <code>MaxCapacity</code> is a mutually exclusive option with <code>NumberOfWorkers</code> and <code>WorkerType</code>.</p> <ul> <li> <p>If either <code>NumberOfWorkers</code> or <code>WorkerType</code> is set, then <code>MaxCapacity</code> cannot be set.</p> </li> <li> <p>If <code>MaxCapacity</code> is set then neither <code>NumberOfWorkers</code> or <code>WorkerType</code> can be set.</p> </li> <li> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p> </li> <li> <p> <code>MaxCapacity</code> and <code>NumberOfWorkers</code> must both be at least 1.</p> </li> </ul> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>",
         "StartJobRunRequest$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that can be allocated when this job runs. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://docs.aws.amazon.com/https:/aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>.</p> <p>Do not set <code>Max Capacity</code> if using <code>WorkerType</code> and <code>NumberOfWorkers</code>.</p> <p>The value that can be allocated for <code>MaxCapacity</code> depends on whether you are running a Python shell job, or an Apache Spark ETL job:</p> <ul> <li> <p>When you specify a Python shell job (<code>JobCommand.Name</code>=\"pythonshell\"), you can allocate either 0.0625 or 1 DPU. The default is 0.0625 DPU.</p> </li> <li> <p>When you specify an Apache Spark ETL job (<code>JobCommand.Name</code>=\"glueetl\"), you can allocate from 2 to 100 DPUs. The default is 10 DPUs. This job type cannot have a fractional DPU allocation.</p> </li> </ul>",
         "UpdateMLTransformRequest$MaxCapacity": "<p>The number of AWS Glue data processing units (DPUs) that are allocated to task runs for this transform. You can allocate from 2 to 100 DPUs; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <a href=\"https://aws.amazon.com/glue/pricing/\">AWS Glue pricing page</a>. </p> <p>When the <code>WorkerType</code> field is set to a value other than <code>Standard</code>, the <code>MaxCapacity</code> field is set automatically and becomes read-only.</p>"
@@ -3148,6 +3163,7 @@
         "CreateJobRequest$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when a job runs.</p> <p>The maximum number of workers you can define are 299 for <code>G.1X</code>, and 149 for <code>G.2X</code>. </p>",
         "CreateMLTransformRequest$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when this task runs.</p> <p>If <code>WorkerType</code> is set, then <code>NumberOfWorkers</code> is required (and vice versa).</p>",
         "CreateMLTransformRequest$MaxRetries": "<p>The maximum number of times to retry a task for this transform after a task run fails.</p>",
+        "CreateWorkflowRequest$MaxConcurrentRuns": "<p>You can use this parameter to prevent unwanted multiple updates to data, to control costs, or in some cases, to prevent exceeding the maximum number of concurrent runs of any of the component jobs. If you leave this parameter blank, there is no limit to the number of concurrent workflow runs.</p>",
         "DevEndpoint$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated to the development endpoint.</p> <p>The maximum number of workers you can define are 299 for <code>G.1X</code>, and 149 for <code>G.2X</code>. </p>",
         "GetMLTransformResponse$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when this task runs.</p>",
         "GetMLTransformResponse$MaxRetries": "<p>The maximum number of times to retry a task for this transform after a task run fails.</p>",
@@ -3158,7 +3174,9 @@
         "MLTransform$MaxRetries": "<p>The maximum number of times to retry after an <code>MLTaskRun</code> of the machine learning transform fails.</p>",
         "StartJobRunRequest$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when a job runs.</p> <p>The maximum number of workers you can define are 299 for <code>G.1X</code>, and 149 for <code>G.2X</code>. </p>",
         "UpdateMLTransformRequest$NumberOfWorkers": "<p>The number of workers of a defined <code>workerType</code> that are allocated when this task runs.</p>",
-        "UpdateMLTransformRequest$MaxRetries": "<p>The maximum number of times to retry a task for this transform after a task run fails.</p>"
+        "UpdateMLTransformRequest$MaxRetries": "<p>The maximum number of times to retry a task for this transform after a task run fails.</p>",
+        "UpdateWorkflowRequest$MaxConcurrentRuns": "<p>You can use this parameter to prevent unwanted multiple updates to data, to control costs, or in some cases, to prevent exceeding the maximum number of concurrent runs of any of the component jobs. If you leave this parameter blank, there is no limit to the number of concurrent workflow runs.</p>",
+        "Workflow$MaxConcurrentRuns": "<p>You can use this parameter to prevent unwanted multiple updates to data, to control costs, or in some cases, to prevent exceeding the maximum number of concurrent runs of any of the component jobs. If you leave this parameter blank, there is no limit to the number of concurrent workflow runs.</p>"
       }
     },
     "OperationTimeoutException": {
@@ -3270,7 +3288,7 @@
       "refs": {
         "CreatePartitionRequest$PartitionInput": "<p>A <code>PartitionInput</code> structure defining the partition to be created.</p>",
         "PartitionInputList$member": null,
-        "UpdatePartitionRequest$PartitionInput": "<p>The new partition object to update the partition to.</p>"
+        "UpdatePartitionRequest$PartitionInput": "<p>The new partition object to update the partition to.</p> <p>The <code>Values</code> property can't be changed. If you want to change the partition key values for a partition, delete and recreate the partition.</p>"
       }
     },
     "PartitionInputList": {
@@ -3498,6 +3516,16 @@
         "UserDefinedFunctionInput$ResourceUris": "<p>The resource URIs for the function.</p>"
       }
     },
+    "ResumeWorkflowRunRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ResumeWorkflowRunResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "Role": {
       "base": null,
       "refs": {
@@ -3637,7 +3665,7 @@
     "SearchPropertyPredicates": {
       "base": null,
       "refs": {
-        "SearchTablesRequest$Filters": "<p>A list of key-value pairs, and a comparator used to filter the search results. Returns all entities matching the predicate.</p>"
+        "SearchTablesRequest$Filters": "<p>A list of key-value pairs, and a comparator used to filter the search results. Returns all entities matching the predicate.</p> <p>The <code>Comparator</code> member of the <code>PropertyPredicate</code> struct is used only for time fields, and can be omitted for other field types. Also, when comparing string values, such as when <code>Key=Name</code>, a fuzzy match algorithm is used. The <code>Key</code> field (for example, the value of the <code>Name</code> field) is split on certain punctuation characters, for example, -, :, #, etc. into tokens. Then each token is exact-match compared with the <code>Value</code> member of <code>PropertyPredicate</code>. For example, if <code>Key=Name</code> and <code>Value=link</code>, tables named <code>customer-link</code> and <code>xx-link-yy</code> are returned, but <code>xxlinkyy</code> is not returned.</p>"
       }
     },
     "SearchTablesRequest": {

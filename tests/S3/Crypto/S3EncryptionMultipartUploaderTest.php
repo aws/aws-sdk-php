@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3\Crypto;
 
+use Aws\Middleware;
 use Aws\S3\Crypto\S3EncryptionMultipartUploader;
 use Aws\Result;
 use Aws\Crypto\KmsMaterialsProvider;
@@ -436,5 +437,45 @@ class S3EncryptionMultipartUploaderTest extends TestCase
         $this->assertTrue($uploader->getState()->isCompleted());
         $this->assertEquals(4 * self::MB, $uploader->getState()->getPartSize());
         $this->assertEquals($url, $result['ObjectURL']);
+    }
+
+    public function testAddsCryptoUserAgent()
+    {
+        $s3 = $this->getS3Client();
+        $this->addMockResults($s3, [
+            new Result(['UploadId' => 'baz']),
+            new Result(['ETag' => 'A']),
+            new Result(['ETag' => 'B']),
+            new Result(['ETag' => 'C']),
+            new Result(['Location' => self::TEST_URL]),
+        ]);
+        $list = $s3->getHandlerList();
+        $list->appendSign(Middleware::tap(function($cmd, $req) {
+            $this->assertContains(
+                'S3CryptoV' . S3EncryptionMultipartUploader::CRYPTO_VERSION,
+                $req->getHeaderLine('User-Agent')
+            );
+        }));
+
+        $kms = $this->getKmsClient();
+        $keyId = '11111111-2222-3333-4444-555555555555';
+        $provider = new KmsMaterialsProvider($kms, $keyId);
+        $this->addMockResults($kms, [
+            new Result(['CiphertextBlob' => 'encrypted'])
+        ]);
+
+        $uploader = new S3EncryptionMultipartUploader(
+            $s3,
+            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            [
+                'bucket' => 'foo',
+                'key'    => 'bar',
+                '@MaterialsProvider' => $provider,
+                '@CipherOptions' => [
+                    'Cipher' => 'cbc',
+                ],
+            ]
+        );
+        $uploader->upload();
     }
 }

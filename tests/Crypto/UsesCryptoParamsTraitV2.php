@@ -18,7 +18,7 @@ trait UsesCryptoParamsTraitV2
                 new \stdClass(),
                 [
                     'InvalidArgumentException',
-                    'An instance of MaterialsProviderInterface'
+                    'An instance of MaterialsProviderInterfaceV2'
                     . ' must be passed in the "MaterialsProvider" field.'
                 ]
             ]
@@ -57,7 +57,14 @@ trait UsesCryptoParamsTraitV2
                     'InvalidArgumentException',
                     'The cipher requested is not supported by the SDK.'
                 ]
-            ]
+            ],
+            [
+                null,
+                [
+                    'InvalidArgumentException',
+                    'An encryption cipher must be specified in @CipherOptions["Cipher"].'
+                ]
+            ],
         ];
     }
 

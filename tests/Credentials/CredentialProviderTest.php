@@ -21,6 +21,13 @@ class CredentialProviderTest extends TestCase
 {
     private $home, $homedrive, $homepath, $key, $secret, $profile;
 
+    private static $standardIni = <<<EOT
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = bar
+aws_session_token = baz
+EOT;
+
     use UsesServiceTrait;
 
     private function clearEnv()
@@ -222,6 +229,47 @@ EOT;
             [$standardWithEqualsIni, $credentialsWithEquals],
             [$standardWithEqualsQuotedIni, $credentialsWithEquals],
         ];
+    }
+
+    public function testUsesIniWithUseAwsConfigFileTrue()
+    {
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/credentials', self::$standardIni);
+        $expectedCreds = [
+            "key" => "foo",
+            "secret" => "bar",
+            "token" => "baz",
+            "expires" => null
+        ];
+        putenv('HOME=' . dirname($dir));
+        $creds = call_user_func(
+            CredentialProvider::defaultProvider(['use_aws_shared_config_files' => true])
+        )->wait();
+        $this->assertEquals($expectedCreds, $creds->toArray());
+        unlink($dir . '/credentials');
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata service
+     */
+    public function testIgnoresIniWithUseAwsConfigFileFalse()
+    {
+        $dir = $this->clearEnv();
+        file_put_contents($dir . '/credentials', self::$standardIni);
+        $expectedCreds = [
+            "key" => "foo",
+            "secret" => "bar",
+            "token" => null,
+            "expires" => null,
+        ];
+
+        putenv('HOME=' . dirname($dir));
+        $creds = call_user_func(
+            CredentialProvider::defaultProvider(['use_aws_shared_config_files' => false])
+        )->wait();
+        $this->assertEquals($expectedCreds, $creds->toArray());
+        unlink($dir . '/credentials');
     }
 
     /**
