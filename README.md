@@ -145,6 +145,7 @@ We work hard to provide a high-quality and useful SDK for our AWS services, and 
 * For Version 2 of the SDK (deprecated):
   * [User Guide][docs-guide-v2]
   * [API Docs][docs-api-v2]
+* [The serverless-LAMP-stack]: https://github.com/aws-samples/php-examples-for-aws-lambda  
 * Other [AWS SDKs & Tools][aws-tools] (e.g., js, cli, ruby, python, java, etc.)
 
 [sdk-website]: http://aws.amazon.com/sdkforphp
