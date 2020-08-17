@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - ACM provides support for the new Private CA feature Cross-account CA sharing. ACM users can issue certificates signed by a private CA belonging to another account where the CA was shared with them.
+* `Aws\ACMPCA` - ACM Private CA is launching cross-account support. This allows customers to share their private CAs with other accounts, AWS Organizations, and organizational units to issue end-entity certificates.
+* `Aws\ECR` - This feature adds support for pushing and pulling Open Container Initiative (OCI) artifacts.
+* `Aws\ElasticLoadBalancing` - Adds support for HTTP Desync Mitigation in Classic Load Balancers.
+* `Aws\ElasticLoadBalancingv2` - Adds support for HTTP Desync Mitigation in Application Load Balancers.
+* `Aws\Kinesis` - Introducing ShardFilter for ListShards API to filter the shards using a position in the stream, and ChildShards support for GetRecords and SubscribeToShard API to discover children shards on shard end
+* `Aws\QuickSight` - Amazon QuickSight now supports programmatic creation and management of analyses with new APIs.
+* `Aws\RoboMaker` - This release introduces RoboMaker Simulation WorldForge, a capability that automatically generates one or more simulation worlds.
+
 ## 3.149.1 - 2020-08-14
 
 * `Aws\AppStream` - Adds support for the Desktop View feature
