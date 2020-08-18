@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeBuild` - Documentation updates for codebuild
+* `Aws\CognitoIdentityProvider` - Adding the option to use a service linked role to publish events to Pinpoint.
+* `Aws\DataSync` - DataSync support for filters as input arguments to the ListTasks and ListLocations API calls.
+* `Aws\IdentityStore` - AWS Single Sign-On (SSO) Identity Store service provides an interface to retrieve all of your users and groups. It enables entitlement management per user or group for AWS SSO and other IDPs.
+* `Aws\SecurityHub` - New details for DynamoDB tables, Elastic IP addresses, IAM policies and users, RDS DB clusters and snapshots, and Secrets Manager secrets. Added details for AWS KMS keys and RDS DB instances.
+* `Aws\SesV2` - This release includes new APIs to allow customers to add or remove email addresses from their account-level suppression list in bulk.
+
 ## 3.149.2 - 2020-08-17
 
 * `Aws\ACM` - ACM provides support for the new Private CA feature Cross-account CA sharing. ACM users can issue certificates signed by a private CA belonging to another account where the CA was shared with them.

@@ -210,6 +210,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionIVS(array $args = [])
  * @method \Aws\Iam\IamClient createIam(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIam(array $args = [])
+ * @method \Aws\IdentityStore\IdentityStoreClient createIdentityStore(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionIdentityStore(array $args = [])
  * @method \Aws\ImportExport\ImportExportClient createImportExport(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionImportExport(array $args = [])
  * @method \Aws\Inspector\InspectorClient createInspector(array $args = [])
