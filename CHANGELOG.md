@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.150.0 - 2020-08-18
 
 * `Aws\CodeBuild` - Documentation updates for codebuild
 * `Aws\CognitoIdentityProvider` - Adding the option to use a service linked role to publish events to Pinpoint.
