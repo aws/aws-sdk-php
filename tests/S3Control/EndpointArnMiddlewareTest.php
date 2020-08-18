@@ -62,18 +62,8 @@ class EndpointArnMiddlewareTest extends TestCase
                     $req->getUri()->getHost()
                 );
                 $this->assertEquals("/{$target}", $req->getRequestTarget());
-                $this->assertEquals(
-                    $signingRegion,
-                    $cmd['@context']['signing_region']
-                );
-                if (!empty($signingService)) {
-                    $this->assertEquals(
-                        $signingService,
-                        $cmd['@context']['signing_service']
-                    );
-                }
                 $this->assertContains(
-                    "/{$signingRegion}/s3",
+                    "/{$signingRegion}/{$signingService}",
                     $req->getHeader('Authorization')[0]
                 );
                 foreach ($headers as $key => $value) {
@@ -171,7 +161,7 @@ class EndpointArnMiddlewareTest extends TestCase
                 ],
                 [
                     'region' => 'fips-us-gov-east-1',
-                    'use_arn_region' => true
+                    'use_arn_region' => true,
                 ],
                 '123456789012.s3-control.fips-us-gov-east-1.amazonaws.com',
                 'v20180820/accesspoint/myendpoint',
@@ -238,6 +228,85 @@ class EndpointArnMiddlewareTest extends TestCase
                 'us-west-2',
                 's3-outposts',
             ],
+            // Outposts accesspoint ARN, different region, use_arn_region true
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws:s3-outposts:us-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                ],
+                [
+                    'region' => 'us-west-2',
+                    'use_arn_region' => true,
+                ],
+                's3-outposts.us-east-1.amazonaws.com',
+                'v20180820/accesspoint/myaccesspoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-east-1',
+                's3-outposts',
+            ],
+            // Outposts accesspoint ARN, aws-us-gov
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                ],
+                [
+                    'region' => 'us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                's3-outposts.us-gov-east-1.amazonaws.com',
+                'v20180820/accesspoint/myaccesspoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-gov-east-1',
+                's3-outposts',
+            ],
+            // Outposts accesspoint ARN, aws-us-gov, fips
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                's3-outposts.us-gov-east-1.amazonaws.com',
+                'v20180820/accesspoint/myaccesspoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-gov-east-1',
+                's3-outposts',
+            ],
+            // Outposts accesspoint name
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'myaccesspoint'
+                ],
+                [
+                    'region' => 'us-west-2',
+                    'use_arn_region' => true,
+                ],
+                '123456789012.s3-control.us-west-2.amazonaws.com',
+                'v20180820/accesspoint/myaccesspoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-west-2',
+                's3',
+            ],
             // Bucket ARN
             [
                 'DeleteBucket',
@@ -254,7 +323,120 @@ class EndpointArnMiddlewareTest extends TestCase
                     'x-amz-account-id' => '123456789012',
                 ],
                 'us-west-2',
-                null,
+                's3',
+            ],
+            // Bucket ARN, different region
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws:s3:us-east-1:123456789012:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                    'use_arn_region' => true,
+                ],
+                '123456789012.s3-control.us-east-1.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-east-1',
+                's3',
+            ],
+            // Bucket ARN, aws-us-gov
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-us-gov:s3:us-gov-east-1:123456789012:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                '123456789012.s3-control.us-gov-east-1.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-gov-east-1',
+                's3',
+            ],
+            // Bucket ARN, aws-us-gov, fips
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-us-gov:s3:us-gov-east-1:123456789012:bucket:mybucket'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                ],
+                '123456789012.s3-control.fips-us-gov-east-1.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'fips-us-gov-east-1',
+                's3',
+            ],
+            // Bucket ARN, aws-us-gov, fips, use_arn_region true
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-us-gov:s3:fips-us-gov-east-1:123456789012:bucket:mybucket'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                '123456789012.s3-control.fips-us-gov-east-1.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'fips-us-gov-east-1',
+                's3',
+            ],
+            // Bucket ARN, aws-us-gov, fips, use_arn_region true, different region
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-us-gov:s3:us-gov-east-1:123456789012:bucket:mybucket'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                '123456789012.s3-control.us-gov-east-1.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-gov-east-1',
+                's3',
+            ],
+            // Bucket ARN, dualstack
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws:s3:us-west-2:123456789012:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                    'use_dual_stack_endpoint' => true,
+                ],
+                '123456789012.s3-control.dualstack.us-west-2.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-west-2',
+                's3',
             ],
             // Outposts bucket ARN
             [
@@ -273,6 +455,66 @@ class EndpointArnMiddlewareTest extends TestCase
                     'x-amz-outpost-id' => 'op-01234567890123456',
                 ],
                 'us-west-2',
+                's3-outposts',
+            ],
+            // Outposts bucket ARN, different region
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws:s3-outposts:us-east-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                    'use_arn_region' => true,
+                ],
+                's3-outposts.us-east-1.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-east-1',
+                's3-outposts',
+            ],
+            // Outposts bucket ARN, aws-us-gov
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                's3-outposts.us-gov-east-1.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-gov-east-1',
+                's3-outposts',
+            ],
+            // Outposts bucket ARN, aws-us-gov, fips
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                's3-outposts.us-gov-east-1.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-gov-east-1',
                 's3-outposts',
             ],
         ];
