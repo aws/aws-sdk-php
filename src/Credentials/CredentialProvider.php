@@ -584,34 +584,48 @@ class CredentialProvider
             ? $roleProfile['role_session_name']
             : 'aws-sdk-php-' . round(microtime(true) * 1000);
 
-        if (empty($profiles[$profileName]['source_profile'])) {
-            return self::reject("source_profile is not set using profile " .
-                $profileName
+        if (
+            empty($profiles[$profileName]['source_profile'])
+            == empty($profiles[$profileName]['credential_source'])
+        ) {
+            return self::reject("Either source_profile or credential_source must be set " .
+                "using profile " . $profileName . ", but not both"
             );
         }
 
-        $sourceProfileName = $roleProfile['source_profile'];
-        if (!isset($profiles[$sourceProfileName])) {
-            return self::reject("source_profile " . $sourceProfileName
-                . " using profile " . $profileName . " does not exist"
-            );
-        }
-        $sourceRegion = isset($profiles[$sourceProfileName]['region'])
-            ? $profiles[$sourceProfileName]['region']
-            : 'us-east-1';
+        if (
+            !empty($profiles[$profileName]['source_profile'])
+            || !empty($profiles[$profileName]['credential_source'])
+        ) {
+            $sourceProfileName = "";
+            if (!empty($profiles[$profileName]['source_profile'])) {
+                $sourceProfileName = $roleProfile['source_profile'];
+                if (!isset($profiles[$sourceProfileName])) {
+                    return self::reject("source_profile " . $sourceProfileName
+                        . " using profile " . $profileName . " does not exist"
+                    );
+                }
+            }
+            $sourceRegion = isset($profiles[$sourceProfileName]['region'])
+                ? $profiles[$sourceProfileName]['region']
+                : 'us-east-1';
 
-        if (empty($stsClient)) {
-            $config = [
-                'preferStaticCredentials' => true
-            ];
-            $sourceCredentials = call_user_func(
-                CredentialProvider::ini($sourceProfileName, $filename, $config)
-            )->wait();
-            $stsClient = new StsClient([
-                'credentials' => $sourceCredentials,
-                'region' => $sourceRegion,
-                'version' => '2011-06-15',
-            ]);
+            if (empty($stsClient)) {
+                $config = [
+                    'preferStaticCredentials' => true
+                ];
+                $sourceCredentials = self::getAssumeRoleCredentials(
+                    $sourceProfileName,
+                    $profileName,
+                    $filename,
+                    $config
+                );
+                $stsClient = new StsClient([
+                    'credentials' => $sourceCredentials,
+                    'region' => $sourceRegion,
+                    'version' => '2011-06-15',
+                ]);
+            }
         }
 
         $result = $stsClient->assumeRole([
@@ -619,8 +633,8 @@ class CredentialProvider
             'RoleSessionName' => $roleSessionName
         ]);
 
-        $creds = $stsClient->createCredentials($result);
-        return Promise\promise_for($creds);
+        $credentials = $stsClient->createCredentials($result);
+        return Promise\promise_for($credentials);
     }
 
     /**
@@ -690,6 +704,35 @@ class CredentialProvider
         }
 
         return $profiles;
+    }
+
+    public static function getAssumeRoleCredentials(
+        $sourceProfileName = '',
+        $profileName = '',
+        $filename = '',
+        $config = []
+    )
+    {
+        $data = self::loadProfiles($filename);
+        $credentialSource = !empty($data[$profileName]['credential_source']) ? $data[$profileName]['credential_source'] : null;
+        if (isset($credentialSource) && is_string($credentialSource)) {
+            switch ($credentialSource) {
+                case 'Environment':
+                    return self::env();
+                case 'Ec2InstanceMetadata':
+                    return self::instanceProfile();
+                case 'EcsContainer':
+                    return self::ecsCredentials();
+                default:
+                    throw new CredentialsException(
+                        "Invalid credential_source found in config file: {$credentialSource}. Valid inputs "
+                        . "include Environment, Ec2InstanceMetadata, and EcsContainer."
+                    );
+            }
+        }
+        return call_user_func(
+            CredentialProvider::ini($sourceProfileName, $filename, $config)
+        )->wait();
     }
 
     private static function reject($msg)
