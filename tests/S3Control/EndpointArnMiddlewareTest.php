@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Arn\Exception\InvalidArnException;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\InvalidRegionException;
@@ -516,6 +517,275 @@ class EndpointArnMiddlewareTest extends TestCase
                 ],
                 'us-gov-east-1',
                 's3-outposts',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider providedFailureCases
+     *
+     * @param $cmdName
+     * @param $cmdParams
+     * @param $options
+     * @param $expectedException
+     * @throws \Exception
+     */
+    public function testCorrectlyThrowsForBadInputsOrConfig(
+        $cmdName,
+        $cmdParams,
+        $options,
+        \Exception $expectedException
+    ) {
+        $options['http_handler'] = function($req) {
+            return Promise\promise_for(new Response());
+        };
+        $s3control = $this->getTestClient($options);
+        $command = $s3control->getCommand($cmdName, $cmdParams);
+
+        try {
+            $s3control->execute($command);
+            $this->fail('This test case should have failed with: '
+                . $expectedException->getMessage());
+        } catch (\Exception $e) {
+            $this->assertEquals(get_class($expectedException), get_class($e));
+            $this->assertEquals($expectedException->getMessage(), $e->getMessage());
+        }
+    }
+
+    public function providedFailureCases()
+    {
+        return [
+            // Accesspoint ARN, different region
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                new InvalidRegionException("The region specified in the ARN"
+                    . " (us-east-1) does not match the client region (us-west-2)."),
+            ],
+            // Accesspoint ARN, invalid ARN
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws:sqs:us-west-2:123456789012:someresource'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                new InvalidArnException("Provided ARN was not a valid S3 access"
+                    . " point ARN."),
+            ],
+            // Outposts accesspoint ARN, different region
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws:s3-outposts:us-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                new InvalidRegionException("The region specified in the ARN"
+                    . " (us-east-1) does not match the client region (us-west-2)."),
+            ],
+            // Outposts accesspoint ARN, different partition
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws-cn:s3-outposts:cn-north-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                ],
+                [
+                    'region' => 'us-west-2',
+                    'use_arn_region' => true,
+                ],
+                new InvalidRegionException("The supplied ARN partition does not"
+                    . " match the client's partition."),
+            ],
+            // Outposts accesspoint ARN, fips
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                ],
+                new InvalidRegionException("Fips is currently not supported with"
+                    . " S3 Outposts access points. Please provide a non-fips"
+                    . " region or do not supply an access point ARN."),
+            ],
+            // Outposts accesspoint ARN, fips, use_arn_region true
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws-us-gov:s3-outposts:fips-us-gov-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                new InvalidRegionException("Fips is currently not supported with"
+                    . " S3 Outposts access points. Please provide a non-fips"
+                    . " region or do not supply an access point ARN."),
+            ],
+            // Outposts accesspoint ARN, dualstack
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'
+                ],
+                [
+                    'region' => 'us-west-2',
+                    'use_dual_stack_endpoint' => true,
+                ],
+                new UnresolvedEndpointException("Dualstack is currently not"
+                    . " supported with S3 Outposts ARNs. Please disable"
+                    . " dualstack or do not supply an Outposts ARN."),
+            ],
+            // Outposts accesspoint ARN, invalid ARN
+            [
+                'GetAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                new InvalidArnException("Provided ARN was not a valid S3 access"
+                    . " point ARN."),
+            ],
+            // Bucket ARN, different region
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws:s3:us-east-1:123456789012:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                new InvalidRegionException("The region specified in the ARN"
+                    . " (us-east-1) does not match the client region (us-west-2)."),
+            ],
+            // Bucket ARN, different partition
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-cn:s3:cn-north-1:123456789012:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                new InvalidRegionException("The supplied ARN partition does not"
+                    . " match the client's partition."),
+            ],
+            // Bucket ARN, invalid ARN
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws:s3:us-west-2:123456789012:bucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                new InvalidArnException("The 7th component of an S3 bucket ARN"
+                    . " represents the bucket name and must not be empty."),
+            ],
+            // Outposts bucket ARN, different region
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws:s3-outposts:us-east-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                new InvalidRegionException("The region specified in the ARN"
+                    . " (us-east-1) does not match the client region (us-west-2)."),
+            ],
+            // Outposts bucket ARN, different partition
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-cn:s3-outposts:cn-north-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                new InvalidRegionException("The supplied ARN partition does not"
+                    . " match the client's partition."),
+            ],
+            // Outposts bucket ARN, fips
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-us-gov:s3-outposts:us-gov-east-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                ],
+                new InvalidRegionException("Fips is currently not supported with"
+                    . " S3 Outposts access points. Please provide a non-fips"
+                    . " region or do not supply an access point ARN."),
+            ],
+            // Outposts bucket ARN, fips, use_arn_region true
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-us-gov:s3-outposts:fips-us-gov-east-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true
+                ],
+                new InvalidRegionException("Fips is currently not supported with"
+                    . " S3 Outposts access points. Please provide a non-fips"
+                    . " region or do not supply an access point ARN."),
+            ],
+            // Outposts bucket ARN, dualstack
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                    'use_dual_stack_endpoint' => true,
+                ],
+                new UnresolvedEndpointException("Dualstack is currently not"
+                    . " supported with S3 Outposts ARNs. Please disable dualstack"
+                    . " or do not supply an Outposts ARN."),
+            ],
+            // Outposts bucket ARN, invalid ARN
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                new InvalidArnException("Provided ARN was not a valid S3 bucket"
+                    . " ARN."),
             ],
         ];
     }
