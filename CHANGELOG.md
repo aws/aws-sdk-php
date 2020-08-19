@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IVS` - Amazon Interactive Video Service (IVS) now offers customers the ability to create private channels, allowing customers to restrict their streams by channel or viewer.
+* `Aws\LakeFormation` - Adding additional field in ListPermissions API response to return RAM resource share ARN if a resource were shared through AWS RAM service.
+* `Aws\Organizations` - Minor documentation updates for AWS Organizations
+* `Aws\ServiceCatalog` - Enhance SearchProvisionedProducts API to allow queries using productName and provisioningArtifactName. Added lastProvisioningRecordId and lastSuccessfulRecordId to Read ProvisionedProduct APIs
+* `Aws\StorageGateway` - Added WORM, tape retention lock, and custom pool features for virtual tapes.
+* `Aws\TranscribeStreamingService` - Amazon Transcribe and Amazon Transcribe Medical now enable you to identify different speakers in your real-time streams with speaker identification.
+
 ## 3.150.0 - 2020-08-18
 
 * `Aws\CodeBuild` - Documentation updates for codebuild
