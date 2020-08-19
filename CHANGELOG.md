@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.150.1 - 2020-08-19
 
 * `Aws\IVS` - Amazon Interactive Video Service (IVS) now offers customers the ability to create private channels, allowing customers to restrict their streams by channel or viewer.
 * `Aws\LakeFormation` - Adding additional field in ListPermissions API response to return RAM resource share ARN if a resource were shared through AWS RAM service.
