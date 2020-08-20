@@ -27,10 +27,21 @@ class EndpointArnMiddleware
     use EndpointRegionHelperTrait;
 
     /**
-     * Commands which do not do ARN expansion for relevant members
+     * Commands which do not do ARN expansion for a specific given shape name
      * @var array
      */
-    private static $nonArnableCommands = [
+    private static $selectiveNonArnableCmds = [
+        'AccessPointName' => [
+            'CreateAccessPoint',
+        ],
+        'BucketName' => [],
+    ];
+
+    /**
+     * Commands which do not do ARN expansion at all for relevant members
+     * @var array
+     */
+    private static $nonArnableCmds = [
         'CreateBucket',
         'ListRegionalBuckets',
     ];
@@ -40,7 +51,7 @@ class EndpointArnMiddleware
      * of OutpostId
      * @var array
      */
-    private static $outpostIdRedirectCommands = [
+    private static $outpostIdRedirectCmds = [
         'CreateBucket',
         'ListRegionalBuckets',
     ];
@@ -98,7 +109,7 @@ class EndpointArnMiddleware
 
         $op = $this->service->getOperation($cmd->getName())->toArray();
         if (!empty($op['input']['shape'])
-            && !in_array($cmd->getName(), self::$nonArnableCommands)
+            && !in_array($cmd->getName(), self::$nonArnableCmds)
         ) {
             $service = $this->service->toArray();
             if (!empty($input = $service['shapes'][$op['input']['shape']])) {
@@ -118,15 +129,18 @@ class EndpointArnMiddleware
                     }
                 }
 
-                // Determine if appropriate member contains ARN value
+                // Determine if appropriate member contains ARN value and is
+                // eligible for ARN expansion
                 if (!is_null($bucketNameMember)
                     && !empty($cmd[$bucketNameMember])
+                    && !in_array($cmd->getName(), self::$selectiveNonArnableCmds['BucketName'])
                     && ArnParser::isArn($cmd[$bucketNameMember])
                 ) {
                     $arn = ArnParser::parse($cmd[$bucketNameMember]);
                     $partition = $this->validateBucketArn($arn);
                 } elseif (!is_null($accesspointNameMember)
                     && !empty($cmd[$accesspointNameMember])
+                    && !in_array($cmd->getName(), self::$selectiveNonArnableCmds['AccessPointName'])
                     && ArnParser::isArn($cmd[$accesspointNameMember])
                 ) {
                     $arn = ArnParser::parse($cmd[$accesspointNameMember]);
@@ -229,7 +243,7 @@ class EndpointArnMiddleware
         // For operations that redirect endpoint & signing service based on
         // presence of OutpostId member. These operations will likely not
         // overlap with operations that perform ARN expansion.
-        if (in_array($cmd->getName(), self::$outpostIdRedirectCommands)
+        if (in_array($cmd->getName(), self::$outpostIdRedirectCmds)
             && !empty($cmd['OutpostId'])
         ) {
             $req = $req->withUri(
