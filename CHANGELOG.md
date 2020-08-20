@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.150.2 - 2020-08-20
 
 * `Aws\ApiGatewayV2` - Customers can now create Amazon API Gateway HTTP APIs that route requests to AWS AppConfig, Amazon EventBridge, Amazon Kinesis Data Streams, Amazon SQS, and AWS Step Functions.
 * `Aws\Chime` - Documentation updates for chime
