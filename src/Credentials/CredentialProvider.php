@@ -593,40 +593,36 @@ class CredentialProvider
             );
         }
 
-        if (
-            !empty($profiles[$profileName]['source_profile'])
-            || !empty($profiles[$profileName]['credential_source'])
-        ) {
-            $sourceProfileName = "";
-            if (!empty($profiles[$profileName]['source_profile'])) {
-                $sourceProfileName = $roleProfile['source_profile'];
-                if (!isset($profiles[$sourceProfileName])) {
-                    return self::reject("source_profile " . $sourceProfileName
-                        . " using profile " . $profileName . " does not exist"
-                    );
-                }
-            }
-            $sourceRegion = isset($profiles[$sourceProfileName]['region'])
-                ? $profiles[$sourceProfileName]['region']
-                : 'us-east-1';
-
-            if (empty($stsClient)) {
-                $config = [
-                    'preferStaticCredentials' => true
-                ];
-                $sourceCredentials = self::getAssumeRoleCredentials(
-                    $sourceProfileName,
-                    $profileName,
-                    $filename,
-                    $config
+        $sourceProfileName = "";
+        if (!empty($profiles[$profileName]['source_profile'])) {
+            $sourceProfileName = $roleProfile['source_profile'];
+            if (!isset($profiles[$sourceProfileName])) {
+                return self::reject("source_profile " . $sourceProfileName
+                    . " using profile " . $profileName . " does not exist"
                 );
-                $stsClient = new StsClient([
-                    'credentials' => $sourceCredentials,
-                    'region' => $sourceRegion,
-                    'version' => '2011-06-15',
-                ]);
             }
         }
+        $sourceRegion = isset($profiles[$sourceProfileName]['region'])
+            ? $profiles[$sourceProfileName]['region']
+            : 'us-east-1';
+
+        if (empty($stsClient)) {
+            $config = [
+                'preferStaticCredentials' => true
+            ];
+            $sourceCredentials = self::getAssumeRoleCredentials(
+                $sourceProfileName,
+                $profileName,
+                $filename,
+                $config
+            );
+            $stsClient = new StsClient([
+                'credentials' => $sourceCredentials,
+                'region' => $sourceRegion,
+                'version' => '2011-06-15',
+            ]);
+        }
+
 
         $result = $stsClient->assumeRole([
             'RoleArn' => $roleArn,
@@ -715,7 +711,7 @@ class CredentialProvider
     {
         $data = self::loadProfiles($filename);
         $credentialSource = !empty($data[$profileName]['credential_source']) ? $data[$profileName]['credential_source'] : null;
-        if (isset($credentialSource) && is_string($credentialSource)) {
+        if (isset($credentialSource)) {
             switch ($credentialSource) {
                 case 'Environment':
                     return self::env();
