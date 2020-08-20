@@ -6,6 +6,8 @@ use Aws\Arn\Arn;
 use Aws\Arn\ArnParser;
 use Aws\Arn\S3\AccessPointArn as S3AccessPointArn;
 use Aws\Arn\S3\OutpostsAccessPointArn;
+use Aws\Arn\S3\OutpostsBucketArn;
+use Aws\Arn\S3\RegionalBucketArn;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -86,8 +88,12 @@ class ArnParserTest extends TestCase
                 OutpostsAccessPointArn::class
             ],
             [
-                'arn:aws:foo:us-west-2:123456789012:bucket_name:baz-id',
-                Arn::class
+                'arn:aws:s3:us-east-1:123456789012:bucket:mybucket',
+                RegionalBucketArn::class,
+            ],
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:bucket:mybucket',
+                OutpostsBucketArn::class,
             ],
         ];
     }
