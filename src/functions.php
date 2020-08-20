@@ -508,25 +508,3 @@ function is_valid_epoch($input)
     }
     return false;
 }
-
-/**
- * Returns true if object is instance of a class name or one of an array of
- * class names, false otherwise.
- *
- * @param object $object
- * @param string|array $names
- * @return bool
- */
-function is_instance_of($object, $names) {
-    if (is_array($names)) {
-        foreach ($names as $name) {
-            if ($object instanceof $name) {
-                return true;
-            }
-        }
-    }
-    if ($object instanceof $names) {
-        return true;
-    }
-    return false;
-}
