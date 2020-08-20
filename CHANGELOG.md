@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGatewayV2` - Customers can now create Amazon API Gateway HTTP APIs that route requests to AWS AppConfig, Amazon EventBridge, Amazon Kinesis Data Streams, Amazon SQS, and AWS Step Functions.
+* `Aws\Chime` - Documentation updates for chime
+* `Aws\FSx` - Documentation updates for Amazon FSx
+
 ## 3.150.1 - 2020-08-19
 
 * `Aws\IVS` - Amazon Interactive Video Service (IVS) now offers customers the ability to create private channels, allowing customers to restrict their streams by channel or viewer.
