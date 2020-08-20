@@ -2,16 +2,11 @@
 namespace Aws\Test\S3;
 
 use Aws\Arn\Exception\InvalidArnException;
-use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\InvalidRegionException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\Middleware;
-use Aws\Result;
-use Aws\S3\Exception\S3Exception;
-use Aws\S3\S3Client;
 use Aws\Test\S3Control\S3ControlTestingTrait;
-use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
@@ -517,6 +512,151 @@ class EndpointArnMiddlewareTest extends TestCase
                 ],
                 'us-gov-east-1',
                 's3-outposts',
+            ],
+            // Special case: CreateBucket, normal parameter
+            [
+                'CreateBucket',
+                [
+                    'Bucket' => 'mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                's3-control.us-west-2.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [],
+                'us-west-2',
+                's3',
+            ],
+            // Special case: CreateBucket, with Outpost ID
+            [
+                'CreateBucket',
+                [
+                    'Bucket' => 'mybucket',
+                    'OutpostId' => 'op-01234567890123456'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                's3-outposts.us-west-2.amazonaws.com',
+                'v20180820/bucket/mybucket',
+                [
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-west-2',
+                's3-outposts',
+            ],
+            // Special case: ListRegionalBuckets, normal parameter
+            [
+                'ListRegionalBuckets',
+                [
+                    'AccountId' => '123456789012'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                '123456789012.s3-control.us-west-2.amazonaws.com',
+                'v20180820/bucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-west-2',
+                's3',
+            ],
+            // Special case: ListRegionalBuckets, Outpost ID
+            [
+                'ListRegionalBuckets',
+                [
+                    'AccountId' => '123456789012',
+                    'OutpostId' => 'op-01234567890123456'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                's3-outposts.us-west-2.amazonaws.com',
+                'v20180820/bucket',
+                [
+                    'x-amz-account-id' => '123456789012',
+                    'x-amz-outpost-id' => 'op-01234567890123456',
+                ],
+                'us-west-2',
+                's3',
+            ],
+            // Special case: CreateAccessPoint, normal parameters
+            [
+                'CreateAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'myaccesspoint',
+                    'Bucket' => 'mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                '123456789012.s3-control.us-west-2.amazonaws.com',
+                'v20180820/accesspoint/myaccesspoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-west-2',
+                's3',
+            ],
+            // Special case: CreateAccessPoint, ARN in Name (should not trigger ARN expansion)
+            [
+                'CreateAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
+                    'Bucket' => 'mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                '123456789012.s3-control.us-west-2.amazonaws.com',
+                'v20180820/accesspoint/arn%3Aaws%3As3%3Aus-west-2%3A123456789012%3Aaccesspoint%3Amyendpoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-west-2',
+                's3',
+            ],
+            // Special case: CreateAccessPoint, bucket ARN
+            [
+                'CreateAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'myaccesspoint',
+                    'Bucket' => 'arn:aws:s3:us-west-2:123456789012:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                '123456789012.s3-control.us-west-2.amazonaws.com',
+                'v20180820/accesspoint/myaccesspoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-west-2',
+                's3',
+            ],
+            // Special case: CreateAccessPoint, Outposts bucket ARN
+            [
+                'CreateAccessPoint',
+                [
+                    'AccountId' => '123456789012',
+                    'Name' => 'myaccesspoint',
+                    'Bucket' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'us-west-2',
+                ],
+                's3-outposts.us-west-2.amazonaws.com',
+                'v20180820/accesspoint/myaccesspoint',
+                [
+                    'x-amz-account-id' => '123456789012',
+                ],
+                'us-west-2',
+                's3',
             ],
         ];
     }
