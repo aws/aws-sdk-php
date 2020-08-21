@@ -712,6 +712,15 @@ class S3Client extends AwsClient implements S3ClientInterface
         $b64 = '<div class="alert alert-info">This value will be base64 encoded on your behalf.</div>';
         $opt = '<div class="alert alert-info">This value will be computed for you it is not supplied.</div>';
 
+        // Add a note on the CopyObject docs
+        $docs['operations']['CopyObject'] .= "<p>Additional info on response behavior: if there is"
+            . " an internal error in S3 but the request is successful, you will receive a 200 response"
+            . " with an <code>S3Exception</code> which will still be caught and retried by "
+            . "<code>RetryMiddleware.</code></p>";
+
+
+
+
         // Add the SourceFile parameter.
         $docs['shapes']['SourceFile']['base'] = 'The path to a file on disk to use instead of the Body parameter.';
         $api['shapes']['SourceFile'] = ['type' => 'string'];
