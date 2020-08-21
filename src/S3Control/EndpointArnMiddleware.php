@@ -65,7 +65,7 @@ class EndpointArnMiddleware
     /** @var string */
     private $region;
 
-    /** @var $config */
+    /** @var array */
     private $config;
 
     /** @var PartitionEndpointProvider */
@@ -363,39 +363,10 @@ class EndpointArnMiddleware
 
         // Ensure ARN region matches client region unless
         // configured for using ARN region over client region
-        if (!($this->isMatchingSigningRegion(
-            $arn->getRegion(),
-            $this->region,
-            $this->service->getEndpointPrefix(),
-            $this->partitionProvider
-        ))) {
-            if (empty($this->config['use_arn_region'])
-                || !($this->config['use_arn_region']->isUseArnRegion())
-            ) {
-                throw new InvalidRegionException('The region'
-                    . " specified in the ARN (" . $arn->getRegion()
-                    . ") does not match the client region ("
-                    . "{$this->region}).");
-            }
-        }
+        $this->validateMatchingRegion($arn);
 
         // Ensure it is not resolved to fips pseudo-region for S3 Outposts
-        if ($arn instanceof OutpostsArnInterface) {
-            if (empty($this->config['use_arn_region'])
-                || !($this->config['use_arn_region']->isUseArnRegion())
-            ) {
-                $region = $this->region;
-            } else {
-                $region = $arn->getRegion();
-            }
-
-            if ($this->isFipsPseudoRegion($region)) {
-                throw new InvalidRegionException(
-                    'Fips is currently not supported with S3 Outposts access'
-                    . ' points. Please provide a non-fips region or do not supply an'
-                    . ' access point ARN.');
-            }
-        }
+        $this->validateFipsNotUsedWithOutposts($arn);
 
         return $arnPart;
     }

@@ -1,14 +1,29 @@
 <?php
 namespace Aws\S3;
 
+use Aws\Api\Service;
 use Aws\Arn\ArnInterface;
+use Aws\Arn\S3\OutpostsArnInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
+use Aws\Exception\InvalidRegionException;
 
 /**
  * @internal
  */
 trait EndpointRegionHelperTrait
 {
+    /** @var array */
+    private $config;
+
+    /** @var PartitionEndpointProvider */
+    private $partitionProvider;
+
+    /** @var string */
+    private $region;
+
+    /** @var Service */
+    private $service;
+
     private function getPartitionSuffix(
         ArnInterface $arn,
         PartitionEndpointProvider $provider
@@ -58,5 +73,44 @@ trait EndpointRegionHelperTrait
     private function stripPseudoRegions($region)
     {
         return str_replace(['fips-', '-fips'], ['', ''], $region);
+    }
+
+    private function validateFipsNotUsedWithOutposts(ArnInterface $arn)
+    {
+        if ($arn instanceof OutpostsArnInterface) {
+            if (empty($this->config['use_arn_region'])
+                || !($this->config['use_arn_region']->isUseArnRegion())
+            ) {
+                $region = $this->region;
+            } else {
+                $region = $arn->getRegion();
+            }
+
+            if ($this->isFipsPseudoRegion($region)) {
+                throw new InvalidRegionException(
+                    'Fips is currently not supported with S3 Outposts access'
+                    . ' points. Please provide a non-fips region or do not supply an'
+                    . ' access point ARN.');
+            }
+        }
+    }
+
+    private function validateMatchingRegion(ArnInterface $arn)
+    {
+        if (!($this->isMatchingSigningRegion(
+            $arn->getRegion(),
+            $this->region,
+            $this->service->getEndpointPrefix(),
+            $this->partitionProvider)
+        )) {
+            if (empty($this->config['use_arn_region'])
+                || !($this->config['use_arn_region']->isUseArnRegion())
+            ) {
+                throw new InvalidRegionException('The region'
+                    . " specified in the ARN (" . $arn->getRegion()
+                    . ") does not match the client region ("
+                    . "{$this->region}).");
+            }
+        }
     }
 }
