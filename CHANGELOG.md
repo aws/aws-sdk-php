@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchLogs` - Documentation updates for CloudWatch Logs
+* `Aws\DatabaseMigrationService` - Added new endpoint settings to include columns with Null and Empty value when using Kinesis and Kafka as target. Added a new endpoint setting to set maximum message size when using Kafka as target.
+* `Aws\EC2` - This release enables customers to use VPC prefix lists in their transit gateway route tables, and it adds support for Provisioned IOPS SSD (io2) EBS volumes.
+* `Aws\IoTSiteWise` - Add traversalDirection to ListAssociatedAssetsRequest and add portal status to ListPortalsResponse
+* `Aws\Kafka` - Add UpdateConfiguration and DeleteConfiguration operations.
+* `Aws\SSM` - Add string length constraints to OpsDataAttributeName and OpsFilterValue.
+* `Aws\XRay` - AWS X-Ray now supports tagging on sampling rules and groups.
+
 ## 3.150.2 - 2020-08-20
 
 * `Aws\ApiGatewayV2` - Customers can now create Amazon API Gateway HTTP APIs that route requests to AWS AppConfig, Amazon EventBridge, Amazon Kinesis Data Streams, Amazon SQS, and AWS Step Functions.
