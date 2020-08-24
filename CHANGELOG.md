@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.150.3 - 2020-08-24
 
 * `Aws\CloudWatchLogs` - Documentation updates for CloudWatch Logs
 * `Aws\DatabaseMigrationService` - Added new endpoint settings to include columns with Null and Empty value when using Kinesis and Kafka as target. Added a new endpoint setting to set maximum message size when using Kafka as target.
