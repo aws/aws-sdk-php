@@ -713,13 +713,16 @@ class S3Client extends AwsClient implements S3ClientInterface
         $opt = '<div class="alert alert-info">This value will be computed for you it is not supplied.</div>';
 
         // Add a note on the CopyObject docs
-        $docs['operations']['CopyObject'] .= "<p>Additional info on response behavior: if there is"
-            . " an internal error in S3 but the request is successful, you will receive a 200 response"
-            . " with an <code>S3Exception</code> which will still be caught and retried by "
-            . "<code>RetryMiddleware.</code></p>";
+         $s3ExceptionRetryMessage = "<p>Additional info on response behavior: if there is"
+            . " an internal error in S3 after the request was successfully recieved,"
+            . " a 200 response will be returned with an <code>S3Exception</code> embedded"
+            . " in it; this will still be caught and retried by"
+            . " <code>RetryMiddleware.</code></p>";
 
-
-
+        $docs['operations']['CopyObject'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['CompleteMultipartUpload'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['UploadPartCopy'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['UploadPart'] .=  $s3ExceptionRetryMessage;
 
         // Add the SourceFile parameter.
         $docs['shapes']['SourceFile']['base'] = 'The path to a file on disk to use instead of the Body parameter.';
