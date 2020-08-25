@@ -719,10 +719,10 @@ class S3Client extends AwsClient implements S3ClientInterface
             . " in it; this will still be caught and retried by"
             . " <code>RetryMiddleware.</code></p>";
 
-        $api['operations']['CopyObject'] .=  $s3ExceptionRetryMessage;
-        $api['operations']['CompleteMultipartUpload'] .=  $s3ExceptionRetryMessage;
-        $api['operations']['UploadPartCopy'] .=  $s3ExceptionRetryMessage;
-        $api['operations']['UploadPart'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['CopyObject'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['CompleteMultipartUpload'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['UploadPartCopy'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['UploadPart'] .=  $s3ExceptionRetryMessage;
 
         // Add the SourceFile parameter.
         $docs['shapes']['SourceFile']['base'] = 'The path to a file on disk to use instead of the Body parameter.';
