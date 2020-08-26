@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Appflow` - Amazon AppFlow is a fully managed integration service that securely transfers data between AWS services and SaaS applications. This update releases the first version of Amazon AppFlow APIs and SDK.
+* `Aws\Route53Resolver` - Route 53 Resolver adds support for resolver query logs
+* `Aws\S3` - Documentation updates for S3 methods with ambiguous success
+
 ## 3.150.3 - 2020-08-24
 
 * `Aws\CloudWatchLogs` - Documentation updates for CloudWatch Logs
