@@ -477,8 +477,8 @@ class CredentialProvider
             if (empty($data[$profile]['aws_session_token'])) {
                 $data[$profile]['aws_session_token']
                     = isset($data[$profile]['aws_security_token'])
-                        ? $data[$profile]['aws_security_token']
-                        : null;
+                    ? $data[$profile]['aws_security_token']
+                    : null;
             }
 
             return Promise\promise_for(
@@ -711,20 +711,37 @@ class CredentialProvider
     {
         $data = self::loadProfiles($filename);
         $credentialSource = !empty($data[$profileName]['credential_source']) ? $data[$profileName]['credential_source'] : null;
+        $credentialsPromise = null;
         if (isset($credentialSource)) {
             switch ($credentialSource) {
                 case 'Environment':
-                    return self::env();
+                    $credentialsPromise = self::env()();
+                    break;
                 case 'Ec2InstanceMetadata':
-                    return self::instanceProfile();
+                    $credentialsPromise = self::instanceProfile()();
+                    break;
                 case 'EcsContainer':
-                    return self::ecsCredentials();
+                    $credentialsPromise = self::ecsCredentials()();
+                    break;
                 default:
                     throw new CredentialsException(
                         "Invalid credential_source found in config file: {$credentialSource}. Valid inputs "
                         . "include Environment, Ec2InstanceMetadata, and EcsContainer."
                     );
             }
+            $credentialsResult = null;
+            try{
+                $credentialsResult = $credentialsPromise->wait();
+            } catch (\Exception $reason){
+                return self::reject(
+                    "Unable to successfully retrieve credentials from the source specified in the"
+                    . " credentials file: {$credentialSource}; failure message was: "
+                    . $reason->getMessage()
+                );
+            }
+            return function () use ($credentialsResult) {
+                return Promise\promise_for($credentialsResult);
+            };
         }
         return call_user_func(
             CredentialProvider::ini($sourceProfileName, $filename, $config)

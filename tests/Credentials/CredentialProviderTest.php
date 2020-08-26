@@ -664,6 +664,32 @@ EOT;
         }
     }
 
+    public function testAssumeRoleInConfigFromCredentialsSourceFails()
+    {
+        $dir = $this->clearEnv();
+        putenv(CredentialProvider::ENV_KEY . '=abc');
+        putenv(CredentialProvider::ENV_SESSION . '');
+
+        $credentials = <<<EOT
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+credential_source = Environment
+EOT;
+        file_put_contents($dir . '/credentials', $credentials);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            $result = CredentialProvider::getAssumeRoleCredentials(
+                'assume',
+                'assume',
+                $dir . '/credentials',
+                []
+            );
+            self::assertInstanceOf('GuzzleHttp\Promise\RejectedPromise', $result);
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
 
     public function testAssumeRoleInConfigFromCredentialsSourceEnvironment()
     {
@@ -709,15 +735,21 @@ EOT;
         file_put_contents($dir . '/credentials', $credentials);
         putenv('HOME=' . dirname($dir));
         try {
-            $provider = CredentialProvider::getAssumeRoleCredentials(
+            $result = CredentialProvider::getAssumeRoleCredentials(
                 'assume',
                 'assume',
                 $dir . '/credentials',
                 []
             );
-            $this->assertInstanceOf('Aws\Credentials\InstanceProfileProvider', $provider);
-        } catch (\Exception $e) {
-            throw $e;
+            self::assertInstanceOf('GuzzleHttp\Promise\RejectedPromise', $result);
+            try{
+                $result->wait();
+            }
+            catch (\Exception $exception){
+                self::assertContains(
+                    'Error retrieving credentials from the instance profile metadata service'
+                    ,$exception->getMessage());
+            }
         } finally {
             unlink($dir . '/credentials');
         }
@@ -735,13 +767,57 @@ EOT;
         file_put_contents($dir . '/credentials', $credentials);
         putenv('HOME=' . dirname($dir));
         try {
-            $provider = CredentialProvider::getAssumeRoleCredentials(
+            $result = CredentialProvider::getAssumeRoleCredentials(
                 'assume',
                 'assume',
                 $dir . '/credentials',
                 []
             );
-            $this->assertInstanceOf('Aws\Credentials\EcsCredentialProvider', $provider);
+            self::assertInstanceOf('GuzzleHttp\Promise\RejectedPromise', $result);
+            try{
+                $result->wait();
+            }
+            catch (\Exception $exception){
+                self::assertContains(
+                    ' Error retrieving credential from ECS'
+                    ,$exception->getMessage());
+            }
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Invalid credential_source found in config file: InvalidSource. Valid inputs include Environment, Ec2InstanceMetadata, and EcsContainer.
+     */
+    public function testAssumeRoleInConfigFromCredentialsSourceInvalid()
+    {
+        $dir = $this->clearEnv();
+
+        $credentials = <<<EOT
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+credential_source = InvalidSource
+EOT;
+        file_put_contents($dir . '/credentials', $credentials);
+        putenv('HOME=' . dirname($dir));
+        try {
+            $result = CredentialProvider::getAssumeRoleCredentials(
+                'assume',
+                'assume',
+                $dir . '/credentials',
+                []
+            );
+            self::assertInstanceOf('GuzzleHttp\Promise\RejectedPromise', $result);
+            try{
+                $result->wait();
+            }
+            catch (\Exception $exception){
+                self::assertContains(
+                    ' Error retrieving credential from ECS'
+                    ,$exception->getMessage());
+            }
         } catch (\Exception $e) {
             throw $e;
         } finally {
