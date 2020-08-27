@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Introduces support to initiate Internet Key Exchange (IKE) negotiations for VPN connections from AWS. A user can now send the initial IKE message to their Customer Gateway (CGW) from VPN endpoints.
+* `Aws\GameLift` - GameLift FleetIQ as a standalone feature is now generally available. FleetIQ makes low-cost Spot instances viable for game hosting. Use GameLift FleetIQ with your EC2 Auto Scaling groups.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for WebM DASH outputs as well as H.264 4:2:2 10-bit output in MOV and MP4.
+* `Aws\Redshift` - Documentation updates for Amazon Redshift.
+
 ## 3.151.0 - 2020-08-26
 
 * `Aws\Appflow` - Amazon AppFlow is a fully managed integration service that securely transfers data between AWS services and SaaS applications. This update releases the first version of Amazon AppFlow APIs and SDK.
