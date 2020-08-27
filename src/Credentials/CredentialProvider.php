@@ -715,13 +715,13 @@ class CredentialProvider
         if (isset($credentialSource)) {
             switch ($credentialSource) {
                 case 'Environment':
-                    $credentialsPromise = self::env()();
+                    $credentialsPromise = self::env();
                     break;
                 case 'Ec2InstanceMetadata':
-                    $credentialsPromise = self::instanceProfile()();
+                    $credentialsPromise = self::instanceProfile();
                     break;
                 case 'EcsContainer':
-                    $credentialsPromise = self::ecsCredentials()();
+                    $credentialsPromise = self::ecsCredentials();
                     break;
                 default:
                     throw new CredentialsException(
@@ -731,7 +731,7 @@ class CredentialProvider
             }
             $credentialsResult = null;
             try{
-                $credentialsResult = $credentialsPromise->wait();
+                $credentialsResult = $credentialsPromise()->wait();
             } catch (\Exception $reason){
                 return self::reject(
                     "Unable to successfully retrieve credentials from the source specified in the"
