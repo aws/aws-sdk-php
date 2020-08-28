@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.151.2 - 2020-08-28
 
 * `Aws\CloudFront` - You can now manage CloudFront's additional, real-time metrics with the CloudFront API.
 * `Aws\CostandUsageReportService` - This release add MONTHLY as the new supported TimeUnit for ReportDefinition.
