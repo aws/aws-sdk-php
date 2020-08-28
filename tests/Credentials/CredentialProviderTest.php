@@ -822,6 +822,32 @@ EOT;
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Either source_profile or credential_source must be set using profile assume, but not both
+     */
+    public function testAssumeRoleInConfigFromCredentialsSourceAndSourceProfile()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[assume]
+role_arn = arn:aws:iam::012345678910:role/role_name
+credential_source = Environment
+source_profile = default
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+        putenv('AWS_PROFILE=assume');
+
+        try {
+            call_user_func(CredentialProvider::ini())->wait();
+        } catch (\Exception $e) {
+            throw $e;
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage source_profile default using profile assume does not exist
      */
     public function testEnsuresSourceProfileConfigIsSpecified()
