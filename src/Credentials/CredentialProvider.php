@@ -589,7 +589,7 @@ class CredentialProvider
             == empty($profiles[$profileName]['credential_source'])
         ) {
             return self::reject("Either source_profile or credential_source must be set " .
-                "using profile " . $profileName . ", but not both"
+                "using profile " . $profileName . ", but not both."
             );
         }
 
@@ -610,12 +610,18 @@ class CredentialProvider
             $config = [
                 'preferStaticCredentials' => true
             ];
-            $sourceCredentials = self::getAssumeRoleCredentials(
-                $sourceProfileName,
-                $profileName,
-                $filename,
-                $config
-            );
+            $sourceCredentials = null;
+            if ($profiles[$profileName]['source_profile']){
+                $sourceCredentials = call_user_func(
+                    CredentialProvider::ini($sourceProfileName, $filename, $config)
+                )->wait();
+            }
+            else {
+                $sourceCredentials = self::getCredentialsFromSource(
+                    $profileName,
+                    $filename
+                );
+            }
             $stsClient = new StsClient([
                 'credentials' => $sourceCredentials,
                 'region' => $sourceRegion,
@@ -702,50 +708,46 @@ class CredentialProvider
         return $profiles;
     }
 
-    public static function getAssumeRoleCredentials(
-        $sourceProfileName = '',
+    public static function getCredentialsFromSource(
         $profileName = '',
         $filename = '',
         $config = []
-    )
-    {
+    ){
         $data = self::loadProfiles($filename);
         $credentialSource = !empty($data[$profileName]['credential_source']) ? $data[$profileName]['credential_source'] : null;
         $credentialsPromise = null;
-        if (isset($credentialSource)) {
-            switch ($credentialSource) {
-                case 'Environment':
-                    $credentialsPromise = self::env();
-                    break;
-                case 'Ec2InstanceMetadata':
-                    $credentialsPromise = self::instanceProfile();
-                    break;
-                case 'EcsContainer':
-                    $credentialsPromise = self::ecsCredentials();
-                    break;
-                default:
-                    throw new CredentialsException(
-                        "Invalid credential_source found in config file: {$credentialSource}. Valid inputs "
-                        . "include Environment, Ec2InstanceMetadata, and EcsContainer."
-                    );
-            }
-            $credentialsResult = null;
-            try{
-                $credentialsResult = $credentialsPromise()->wait();
-            } catch (\Exception $reason){
-                return self::reject(
-                    "Unable to successfully retrieve credentials from the source specified in the"
-                    . " credentials file: {$credentialSource}; failure message was: "
-                    . $reason->getMessage()
+
+        switch ($credentialSource) {
+            case 'Environment':
+                $credentialsPromise = self::env();
+                break;
+            case 'Ec2InstanceMetadata':
+                $credentialsPromise = self::instanceProfile($config);
+                break;
+            case 'EcsContainer':
+                $credentialsPromise = self::ecsCredentials($config);
+                break;
+            default:
+                throw new CredentialsException(
+                    "Invalid credential_source found in config file: {$credentialSource}. Valid inputs "
+                    . "include Environment, Ec2InstanceMetadata, and EcsContainer."
                 );
-            }
-            return function () use ($credentialsResult) {
-                return Promise\promise_for($credentialsResult);
-            };
         }
-        return call_user_func(
-            CredentialProvider::ini($sourceProfileName, $filename, $config)
-        )->wait();
+
+        $credentialsResult = null;
+        try {
+            $credentialsResult = $credentialsPromise()->wait();
+        } catch (\Exception $reason){
+            return self::reject(
+                "Unable to successfully retrieve credentials from the source specified in the"
+                . " credentials file: {$credentialSource}; failure message was: "
+                . $reason->getMessage()
+            );
+        }
+
+        return function () use ($credentialsResult) {
+            return Promise\promise_for($credentialsResult);
+        };
     }
 
     private static function reject($msg)

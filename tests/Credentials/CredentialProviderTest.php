@@ -664,7 +664,11 @@ EOT;
         }
     }
 
-    public function testAssumeRoleInConfigFromCredentialsSourceFails()
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Could not find environment variable credentials in AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY
+     */
+    public function testAssumeRoleInConfigFromFailingCredentialsSource()
     {
         $dir = $this->clearEnv();
         putenv(CredentialProvider::ENV_KEY . '=abc');
@@ -679,14 +683,16 @@ EOT;
         putenv('HOME=' . dirname($dir));
 
         try {
-            $result = CredentialProvider::getAssumeRoleCredentials(
-                'assume',
+            $result = CredentialProvider::getCredentialsFromSource(
                 'assume',
                 $dir . '/credentials',
                 []
             );
             self::assertInstanceOf('GuzzleHttp\Promise\RejectedPromise', $result);
-        } finally {
+            $result->wait();
+        } catch (\Exception $exception) {
+            throw $exception;
+        }finally {
             unlink($dir . '/credentials');
         }
     }
@@ -707,8 +713,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
 
         try {
-            $creds = call_user_func(CredentialProvider::getAssumeRoleCredentials(
-                'assume',
+            $creds = call_user_func(CredentialProvider::getCredentialsFromSource(
                 'assume',
                 $dir . '/credentials',
                 []
@@ -723,6 +728,10 @@ EOT;
         }
     }
 
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata service
+     */
     public function testAssumeRoleInConfigFromCredentialsSourceEc2InstanceMetadata()
     {
         $dir = $this->clearEnv();
@@ -734,27 +743,26 @@ credential_source = Ec2InstanceMetadata
 EOT;
         file_put_contents($dir . '/credentials', $credentials);
         putenv('HOME=' . dirname($dir));
+
         try {
-            $result = CredentialProvider::getAssumeRoleCredentials(
-                'assume',
+            $result = CredentialProvider::getCredentialsFromSource(
                 'assume',
                 $dir . '/credentials',
                 []
             );
             self::assertInstanceOf('GuzzleHttp\Promise\RejectedPromise', $result);
-            try{
-                $result->wait();
-            }
-            catch (\Exception $exception){
-                self::assertContains(
-                    'Error retrieving credentials from the instance profile metadata service'
-                    ,$exception->getMessage());
-            }
+            $result->wait();
+        } catch (\Exception $exception) {
+            throw $exception;
         } finally {
             unlink($dir . '/credentials');
         }
     }
 
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Error retrieving credential from ECS
+     */
     public function testAssumeRoleInConfigFromCredentialsSourceEcsContainer()
     {
         $dir = $this->clearEnv();
@@ -766,22 +774,17 @@ credential_source = EcsContainer
 EOT;
         file_put_contents($dir . '/credentials', $credentials);
         putenv('HOME=' . dirname($dir));
+
         try {
-            $result = CredentialProvider::getAssumeRoleCredentials(
-                'assume',
+            $result = CredentialProvider::getCredentialsFromSource(
                 'assume',
                 $dir . '/credentials',
                 []
             );
             self::assertInstanceOf('GuzzleHttp\Promise\RejectedPromise', $result);
-            try{
-                $result->wait();
-            }
-            catch (\Exception $exception){
-                self::assertContains(
-                    ' Error retrieving credential from ECS'
-                    ,$exception->getMessage());
-            }
+            $result->wait();
+        } catch (\Exception $exception) {
+            throw $exception;
         } finally {
             unlink($dir . '/credentials');
         }
@@ -791,7 +794,7 @@ EOT;
      * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Invalid credential_source found in config file: InvalidSource. Valid inputs include Environment, Ec2InstanceMetadata, and EcsContainer.
      */
-    public function testAssumeRoleInConfigFromCredentialsSourceInvalid()
+    public function testAssumeRoleInConfigFromInvalidCredentialsSource()
     {
         $dir = $this->clearEnv();
 
@@ -803,23 +806,15 @@ EOT;
         file_put_contents($dir . '/credentials', $credentials);
         putenv('HOME=' . dirname($dir));
         try {
-            $result = CredentialProvider::getAssumeRoleCredentials(
-                'assume',
+            $result = CredentialProvider::getCredentialsFromSource(
                 'assume',
                 $dir . '/credentials',
                 []
             );
             self::assertInstanceOf('GuzzleHttp\Promise\RejectedPromise', $result);
-            try{
-                $result->wait();
-            }
-            catch (\Exception $exception){
-                self::assertContains(
-                    ' Error retrieving credential from ECS'
-                    ,$exception->getMessage());
-            }
-        } catch (\Exception $e) {
-            throw $e;
+            $result->wait();
+        } catch (\Exception $exception) {
+            throw $exception;
         } finally {
             unlink($dir . '/credentials');
         }
