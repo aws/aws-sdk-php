@@ -629,7 +629,6 @@ class CredentialProvider
             ]);
         }
 
-
         $result = $stsClient->assumeRole([
             'RoleArn' => $roleArn,
             'RoleSessionName' => $roleSessionName
