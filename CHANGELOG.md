@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - You can now manage CloudFront's additional, real-time metrics with the CloudFront API.
+* `Aws\CostandUsageReportService` - This release add MONTHLY as the new supported TimeUnit for ReportDefinition.
+* `Aws\EMR` - Amazon EMR adds support for ICMP, port -1, in Block Public Access Exceptions and API access for EMR Notebooks execution. You can now non-interactively execute EMR Notebooks and pass input parameters.
+* `Aws\Route53` - Documentation updates for Route 53
+
 ## 3.151.1 - 2020-08-27
 
 * `Aws\EC2` - Introduces support to initiate Internet Key Exchange (IKE) negotiations for VPN connections from AWS. A user can now send the initial IKE message to their Customer Gateway (CGW) from VPN endpoints.
