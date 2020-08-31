@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.151.3 - 2020-08-31
 
 * `Aws\Backup` - Documentation updates for Cryo
 * `Aws\CloudFront` - CloudFront now supports real-time logging for CloudFront distributions. CloudFront real-time logs are more detailed, configurable, and are available in real time.
