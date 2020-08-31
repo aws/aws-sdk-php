@@ -692,7 +692,7 @@ EOT;
             $result->wait();
         } catch (\Exception $exception) {
             throw $exception;
-        }finally {
+        } finally {
             unlink($dir . '/credentials');
         }
     }

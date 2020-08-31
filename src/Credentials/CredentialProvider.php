@@ -615,8 +615,7 @@ class CredentialProvider
                 $sourceCredentials = call_user_func(
                     CredentialProvider::ini($sourceProfileName, $filename, $config)
                 )->wait();
-            }
-            else {
+            } else {
                 $sourceCredentials = self::getCredentialsFromSource(
                     $profileName,
                     $filename
