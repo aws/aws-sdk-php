@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Backup` - Documentation updates for Cryo
+* `Aws\CloudFront` - CloudFront now supports real-time logging for CloudFront distributions. CloudFront real-time logs are more detailed, configurable, and are available in real time.
+* `Aws\EC2` - Amazon EC2 and Spot Fleet now support modification of launch template configs for a running fleet enabling instance type, instance weight, AZ, and AMI updates without losing the current fleet ID.
+* `Aws\SQS` - Documentation updates for SQS.
+
 ## 3.151.2 - 2020-08-28
 
 * `Aws\CloudFront` - You can now manage CloudFront's additional, real-time metrics with the CloudFront API.
