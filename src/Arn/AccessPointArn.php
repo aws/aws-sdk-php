@@ -41,19 +41,8 @@ class AccessPointArn extends Arn implements AccessPointArnInterface
      */
     protected static function validate(array $data)
     {
-        if (empty($data['region'])) {
-            throw new InvalidArnException("The 4th component of an access point ARN"
-                . " represents the region and must not be empty.");
-        }
-
-        if (empty($data['account_id'])) {
-            throw new InvalidArnException("The 5th component of an access point ARN"
-                . " represents the account ID and must not be empty.");
-        }
-        if (!self::isValidHostLabel($data['account_id'])) {
-            throw new InvalidArnException("The account ID in an access point ARN"
-                . " must be a valid host label value.");
-        }
+        self::validateRegion($data, 'access point ARN');
+        self::validateAccountId($data, 'access point ARN');
 
         if ($data['resource_type'] !== 'accesspoint') {
             throw new InvalidArnException("The 6th component of an access point ARN"

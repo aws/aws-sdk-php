@@ -65,16 +65,8 @@ class RegionalBucketArn extends Arn implements BucketArnInterface
                 . " bucket ARN represents the service and must be 's3'.");
         }
 
-        if (empty($data['region'])) {
-            throw new InvalidArnException("The 4th component of an S3 regional"
-                . " bucket ARN represents the region and must not be empty.");
-        }
-
-        if (!self::isValidHostLabel($data['account_id'])) {
-            throw new InvalidArnException("The 5th component of an S3"
-                . " bucket ARN is required, represents the account ID, and"
-                . " must be a valid host label.");
-        }
+        self::validateRegion($data, 'S3 regional bucket ARN');
+        self::validateAccountId($data, 'S3 regional bucket ARN');
 
         if (($data['resource_type'] !== 'bucket')) {
             throw new InvalidArnException("The 6th component of an S3"

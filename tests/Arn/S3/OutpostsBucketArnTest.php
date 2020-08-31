@@ -144,12 +144,12 @@ class OutpostsBucketArnTest extends TestCase
             ],
             [
                 'arn:aws:s3-outposts::123456789012:outpost:op-01234567890123456:bucket:mybucket',
-                new InvalidArnException("The 4th component of an S3 Outposts"
+                new InvalidArnException("The 4th component of a S3 Outposts"
                 . " bucket ARN represents the region and must not be empty.")
             ],
             [
                 'arn:aws:s3-outposts:us-west-2:%$#:outpost:op-01234567890123456:bucket:mybucket',
-                new InvalidArnException("The 5th component of an S3 Outposts"
+                new InvalidArnException("The 5th component of a S3 Outposts"
                     . " bucket ARN is required, represents the account ID, and"
                     . " must be a valid host label.")
             ],

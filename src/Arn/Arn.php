@@ -152,6 +152,23 @@ class Arn implements ArnInterface
         }
     }
 
+    protected static function validateAccountId($data, $arnName)
+    {
+        if (!self::isValidHostLabel($data['account_id'])) {
+            throw new InvalidArnException("The 5th component of a {$arnName}"
+                . " is required, represents the account ID, and"
+                . " must be a valid host label.");
+        }
+    }
+
+    protected static function validateRegion($data, $arnName)
+    {
+        if (empty($data['region'])) {
+            throw new InvalidArnException("The 4th component of a {$arnName}"
+                . " represents the region and must not be empty.");
+        }
+    }
+
     /**
      * Validates whether a string component is a valid host label
      *

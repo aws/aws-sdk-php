@@ -117,12 +117,12 @@ class RegionalBucketArnTest extends TestCase
             ],
             [
                 'arn:aws:s3::123456789012:bucket:mybucket',
-                new InvalidArnException("The 4th component of an S3 regional"
+                new InvalidArnException("The 4th component of a S3 regional"
                     . " bucket ARN represents the region and must not be empty.")
             ],
             [
                 'arn:aws:s3:us-west-2:*#$:bucket:mybucket',
-                new InvalidArnException("The 5th component of an S3"
+                new InvalidArnException("The 5th component of a S3 regional"
                     . " bucket ARN is required, represents the account ID, and"
                     . " must be a valid host label.")
             ],

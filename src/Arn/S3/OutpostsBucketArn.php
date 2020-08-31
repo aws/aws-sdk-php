@@ -71,16 +71,8 @@ class OutpostsBucketArn extends Arn implements
                 . " bucket ARN represents the service and must be 's3-outposts'.");
         }
 
-        if (empty($data['region'])) {
-            throw new InvalidArnException("The 4th component of an S3 Outposts"
-                . " bucket ARN represents the region and must not be empty.");
-        }
-
-        if (!self::isValidHostLabel($data['account_id'])) {
-            throw new InvalidArnException("The 5th component of an S3 Outposts"
-                . " bucket ARN is required, represents the account ID, and"
-                . " must be a valid host label.");
-        }
+        self::validateRegion($data, 'S3 Outposts bucket ARN');
+        self::validateAccountId($data, 'S3 Outposts bucket ARN');
 
         if (($data['resource_type'] !== 'outpost')) {
             throw new InvalidArnException("The 6th component of an S3 Outposts"
