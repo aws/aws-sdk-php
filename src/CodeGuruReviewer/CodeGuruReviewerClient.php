@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **Amazon CodeGuru Reviewer** service.
  * @method \Aws\Result associateRepository(array $args = [])
  * @method \GuzzleHttp\Promise\Promise associateRepositoryAsync(array $args = [])
+ * @method \Aws\Result createCodeReview(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createCodeReviewAsync(array $args = [])
  * @method \Aws\Result describeCodeReview(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeCodeReviewAsync(array $args = [])
  * @method \Aws\Result describeRecommendationFeedback(array $args = [])

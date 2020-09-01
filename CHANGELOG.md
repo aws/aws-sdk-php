@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeGuruReviewer` - Add support for repository analysis based code reviews
+* `Aws\S3` - Fixes an issue where a stream would be created that uploaded a file name instead of the file for a multipart upload
+* `Aws\SecurityHub` - Added a PatchSummary object for security findings. The PatchSummary object provides details about the patch compliance status of an instance.
+
 ## 3.151.3 - 2020-08-31
 
 * `Aws\Backup` - Documentation updates for Cryo
