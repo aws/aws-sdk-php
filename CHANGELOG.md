@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.151.4 - 2020-09-01
 
 * `Aws\CodeGuruReviewer` - Add support for repository analysis based code reviews
 * `Aws\S3` - Fixes an issue where a stream would be created that uploaded a file name instead of the file for a multipart upload
