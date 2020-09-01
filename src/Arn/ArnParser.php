@@ -50,9 +50,6 @@ class ArnParser
             }
             return new AccessPointArn($string);
         }
-        if ($data['service'] === 's3' && $resource[0] === 'bucket') {
-            return new RegionalBucketArn($string);
-        }
 
         return new Arn($data);
     }

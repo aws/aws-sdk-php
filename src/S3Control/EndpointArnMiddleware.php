@@ -148,14 +148,11 @@ class EndpointArnMiddleware
                 }
 
                 // Process only if an appropriate member contains an ARN value
-                if (!empty($arn)) {
+                // and is an Outposts ARN
+                if (!empty($arn) && $arn instanceof OutpostsArnInterface) {
                     // Generate host based on ARN
-                    if ($arn instanceof OutpostsArnInterface) {
-                        $host = $this->generateOutpostsArnHost($arn, $req);
-                        $req = $req->withHeader('x-amz-outpost-id', $arn->getOutpostId());
-                    } else {
-                        $host = $this->generateNonOutpostsArnHost($arn, $req);
-                    }
+                    $host = $this->generateOutpostsArnHost($arn, $req);
+                    $req = $req->withHeader('x-amz-outpost-id', $arn->getOutpostId());
 
                     // ARN replacement
                     $path = $req->getUri()->getPath();
@@ -266,23 +263,6 @@ class EndpointArnMiddleware
         }
         $suffix = $this->getPartitionSuffix($arn, $this->partitionProvider);
         return "s3-outposts.{$region}.{$suffix}";
-    }
-
-    private function generateNonOutpostsArnHost(
-        ArnInterface $arn,
-        RequestInterface $req
-    ) {
-        $host = $arn->getAccountId() . '.s3-control';
-        if (!empty($this->config['dual_stack'])) {
-            $host .= '.dualstack';
-        }
-        if (!empty($this->config['use_arn_region']->isUseArnRegion())) {
-            $region = $arn->getRegion();
-        } else {
-            $region = $this->region;
-        }
-        $suffix = $this->getPartitionSuffix($arn, $this->partitionProvider);
-        return "{$host}.{$region}.{$suffix}";
     }
 
     private function generateOutpostIdHost()
