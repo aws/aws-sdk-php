@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Web identity credential provider now clears cached path for web identity token if token file fails to load.
+* `Aws\EC2` - This release adds a new transit gateway attachment state and resource type.
+* `Aws\Macie2` - This release of the Amazon Macie API introduces additional statistics for the size and count of Amazon S3 objects that Macie can analyze as part of a classification job.
+
 ## 3.151.4 - 2020-09-01
 
 * `Aws\CodeGuruReviewer` - Add support for repository analysis based code reviews
