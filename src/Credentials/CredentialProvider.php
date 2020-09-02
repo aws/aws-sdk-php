@@ -586,8 +586,8 @@ class CredentialProvider
             : 'aws-sdk-php-' . round(microtime(true) * 1000);
 
         if (
-            empty($profiles[$profileName]['source_profile'])
-            == empty($profiles[$profileName]['credential_source'])
+            empty($roleProfile['source_profile'])
+            == empty($roleProfile['credential_source'])
         ) {
             return self::reject("Either source_profile or credential_source must be set " .
                 "using profile " . $profileName . ", but not both."
@@ -595,7 +595,7 @@ class CredentialProvider
         }
 
         $sourceProfileName = "";
-        if (!empty($profiles[$profileName]['source_profile'])) {
+        if (!empty($roleProfile['source_profile'])) {
             $sourceProfileName = $roleProfile['source_profile'];
             if (!isset($profiles[$sourceProfileName])) {
                 return self::reject("source_profile " . $sourceProfileName
@@ -612,7 +612,7 @@ class CredentialProvider
                 'preferStaticCredentials' => true
             ];
             $sourceCredentials = null;
-            if ($profiles[$profileName]['source_profile']){
+            if ($roleProfile['source_profile']){
                 $sourceCredentials = call_user_func(
                     CredentialProvider::ini($sourceProfileName, $filename, $config)
                 )->wait();
