@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.151.5 - 2020-09-02
 
 * `Aws\Credentials` - Web identity credential provider now clears cached path for web identity token if token file fails to load.
 * `Aws\EC2` - This release adds a new transit gateway attachment state and resource type.
