@@ -396,8 +396,8 @@ class CredentialProvider
 
     /**
      * Credentials provider that creates credentials using an ini file stored
-     * in the current user's home directory.  Another source can be provided
-     * in this file using the 'credential_source' option.
+     * in the current user's home directory.  A source can be provided
+     * in this file for assuming a role using the credential_source config option.
      *
      * @param string|null $profile  Profile to use. If not specified will use
      *                              the "default" profile in "~/.aws/credentials".
