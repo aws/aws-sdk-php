@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GuardDuty` - GuardDuty findings triggered by failed events now include the error code name within the AwsApiCallAction section.
+* `Aws\MediaPackage` - Enables inserting a UTCTiming XML tag in the output manifest of a DASH endpoint which a media player will use to help with time synchronization.
+* `Aws\SFN` - This release of the AWS Step Functions SDK introduces support for payloads up to 256KB for Standard and Express workflows
+* `Aws\kendra` - Amazon Kendra now returns confidence scores for both 'answer' and 'question and answer' query responses.
+
 ## 3.151.5 - 2020-09-02
 
 * `Aws\Credentials` - Web identity credential provider now clears cached path for web identity token if token file fails to load.
