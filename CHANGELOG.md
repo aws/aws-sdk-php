@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.151.6 - 2020-09-03
 
 * `Aws\GuardDuty` - GuardDuty findings triggered by failed events now include the error code name within the AwsApiCallAction section.
 * `Aws\MediaPackage` - Enables inserting a UTCTiming XML tag in the output manifest of a DASH endpoint which a media player will use to help with time synchronization.
