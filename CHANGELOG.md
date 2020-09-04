@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - This change adds support for the credential_source option in the credential file.
+* `Aws\SSM` - Documentation-only updates for AWS Systems Manager
+* `Aws\WorkSpaces` - Adding support for Microsoft Office 2016 and Microsoft Office 2019 in BYOL Images
+* `Aws\XRay` - Enhancing CreateGroup, UpdateGroup, GetGroup and GetGroups APIs to support configuring X-Ray Insights
+
 ## 3.151.6 - 2020-09-03
 
 * `Aws\GuardDuty` - GuardDuty findings triggered by failed events now include the error code name within the AwsApiCallAction section.
