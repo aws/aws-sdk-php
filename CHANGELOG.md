@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.152.0 - 2020-09-04
 
 * `Aws\Credentials` - This change adds support for the credential_source option in the credential file.
 * `Aws\SSM` - Documentation-only updates for AWS Systems Manager
