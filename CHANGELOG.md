@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.152.1 - 2020-09-08
 
 * `Aws\ApiGatewayV2` - You can now secure HTTP APIs using Lambda authorizers and IAM authorizers. These options enable you to make flexible auth decisions using a Lambda function, or using IAM policies, respectively.
 * `Aws\CodeBuild` - AWS CodeBuild - Support keyword search for test cases in DecribeTestCases API . Allow deletion of reports in the report group, before deletion of report group using the deleteReports flag.
