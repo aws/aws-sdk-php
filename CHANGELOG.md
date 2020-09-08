@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApiGatewayV2` - You can now secure HTTP APIs using Lambda authorizers and IAM authorizers. These options enable you to make flexible auth decisions using a Lambda function, or using IAM policies, respectively.
+* `Aws\CodeBuild` - AWS CodeBuild - Support keyword search for test cases in DecribeTestCases API . Allow deletion of reports in the report group, before deletion of report group using the deleteReports flag.
+* `Aws\ElasticLoadBalancingv2` - Adds support for Application Load Balancers on Outposts.
+* `Aws\LexModelBuildingService` - Amazon Lex supports en-AU locale
+* `Aws\QuickSight` - Adds tagging support for QuickSight customization resources. A user can now specify a list of tags when creating a customization resource and use a customization ARN in QuickSight's tagging APIs.
+
 ## 3.152.0 - 2020-09-04
 
 * `Aws\Credentials` - This change adds support for the credential_source option in the credential file.
