@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.153.0 - 2020-09-09
 
 * `Aws\Glue` - Adding support for partitionIndexes to improve GetPartitions performance.
 * `Aws\KinesisAnalyticsV2` - Kinesis Data Analytics is adding new AUTOSCALING application status for applications during auto scaling and also adding FlinkRunConfigurationDescription in the ApplicationDetails.
