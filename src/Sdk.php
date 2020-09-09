@@ -356,6 +356,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionRds(array $args = [])
  * @method \Aws\Redshift\RedshiftClient createRedshift(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionRedshift(array $args = [])
+ * @method \Aws\RedshiftDataAPIService\RedshiftDataAPIServiceClient createRedshiftDataAPIService(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionRedshiftDataAPIService(array $args = [])
  * @method \Aws\Rekognition\RekognitionClient createRekognition(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionRekognition(array $args = [])
  * @method \Aws\ResourceGroups\ResourceGroupsClient createResourceGroups(array $args = [])

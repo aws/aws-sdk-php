@@ -147,6 +147,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getMappingAsync(array $args = [])
  * @method \Aws\Result getPartition(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getPartitionAsync(array $args = [])
+ * @method \Aws\Result getPartitionIndexes(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPartitionIndexesAsync(array $args = [])
  * @method \Aws\Result getPartitions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getPartitionsAsync(array $args = [])
  * @method \Aws\Result getPlan(array $args = [])

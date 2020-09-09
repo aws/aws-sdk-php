@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - Adding support for partitionIndexes to improve GetPartitions performance.
+* `Aws\KinesisAnalyticsV2` - Kinesis Data Analytics is adding new AUTOSCALING application status for applications during auto scaling and also adding FlinkRunConfigurationDescription in the ApplicationDetails.
+* `Aws\RedshiftDataAPIService` - The Amazon Redshift Data API is generally available. This release enables querying Amazon Redshift data and listing various database objects.
+
 ## 3.152.1 - 2020-09-08
 
 * `Aws\ApiGatewayV2` - You can now secure HTTP APIs using Lambda authorizers and IAM authorizers. These options enable you to make flexible auth decisions using a Lambda function, or using IAM policies, respectively.
