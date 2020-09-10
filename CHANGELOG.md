@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - Cloudfront adds support for Brotli. You can enable brotli caching and compression support by enabling it in your Cache Policy.
+* `Aws\EBS` - Documentation updates for Amazon EBS direct APIs.
+* `Aws\Pinpoint` - Update SMS message model description to clearly indicate that the MediaUrl field is reserved for future use and is not supported by Pinpoint as of today.
+* `Aws\S3` - Bucket owner verification feature added. This feature introduces the x-amz-expected-bucket-owner and x-amz-source-expected-bucket-owner headers.
+* `Aws\SSOAdmin` - This is an initial release of AWS Single Sign-On (SSO) Access Management APIs. This release adds support for SSO operations which could be used for managing access to AWS accounts.
+
 ## 3.153.0 - 2020-09-09
 
 * `Aws\Glue` - Adding support for partitionIndexes to improve GetPartitions performance.
