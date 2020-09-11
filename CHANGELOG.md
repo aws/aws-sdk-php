@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.154.1 - 2020-09-11
 
 * `Aws\WorkSpaces` - Adds API support for WorkSpaces Cross-Region Redirection feature.
 
