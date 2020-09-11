@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\WorkSpaces` - Adds API support for WorkSpaces Cross-Region Redirection feature.
+
 ## 3.154.0 - 2020-09-10
 
 * `Aws\CloudFront` - Cloudfront adds support for Brotli. You can enable brotli caching and compression support by enabling it in your Cache Policy.
