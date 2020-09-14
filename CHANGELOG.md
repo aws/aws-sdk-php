@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.154.2 - 2020-09-14
 
 * `Aws\DocDB` - Updated API documentation and added paginators for DescribeCertificates, DescribeDBClusterParameterGroups, DescribeDBClusterParameters, DescribeDBClusterSnapshots and DescribePendingMaintenanceActions
 * `Aws\EC2` - This release adds support for the T4G instance family to the EC2 ModifyDefaultCreditSpecification and GetDefaultCreditSpecification APIs.
