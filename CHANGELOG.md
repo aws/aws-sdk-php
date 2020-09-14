@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DocDB` - Updated API documentation and added paginators for DescribeCertificates, DescribeDBClusterParameterGroups, DescribeDBClusterParameters, DescribeDBClusterSnapshots and DescribePendingMaintenanceActions
+* `Aws\EC2` - This release adds support for the T4G instance family to the EC2 ModifyDefaultCreditSpecification and GetDefaultCreditSpecification APIs.
+* `Aws\ManagedBlockchain` - Introducing support for Hyperledger Fabric 1.4. When using framework version 1.4, the state database may optionally be specified when creating peer nodes (defaults to CouchDB).
+* `Aws\SFN` - This release of the AWS Step Functions SDK introduces support for AWS X-Ray.
+* `Aws\Test` - Tweaks test for PartitionEndpointProvider to accomodate changed S3 endpoint.
+
 ## 3.154.1 - 2020-09-11
 
 * `Aws\WorkSpaces` - Adds API support for WorkSpaces Cross-Region Redirection feature.
