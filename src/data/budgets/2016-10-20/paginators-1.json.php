@@ -1,3 +1,3 @@
 <?php
 // This file was auto-generated from sdk-root/src/data/budgets/2016-10-20/paginators-1.json
-return [ 'pagination' => [],];
+return [ 'pagination' => [ 'DescribeBudgetPerformanceHistory' => [ 'input_token' => 'NextToken', 'limit_key' => 'MaxResults', 'output_token' => 'NextToken', 'result_key' => 'BudgetPerformanceHistory', ], 'DescribeBudgets' => [ 'input_token' => 'NextToken', 'limit_key' => 'MaxResults', 'output_token' => 'NextToken', 'result_key' => 'Budgets', ], 'DescribeNotificationsForBudget' => [ 'input_token' => 'NextToken', 'limit_key' => 'MaxResults', 'output_token' => 'NextToken', 'result_key' => 'Notifications', ], 'DescribeSubscribersForNotification' => [ 'input_token' => 'NextToken', 'limit_key' => 'MaxResults', 'output_token' => 'NextToken', 'result_key' => 'Subscribers', ], ],];

@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Managed Streaming for Kafka** service.
+ * @method \Aws\Result batchAssociateScramSecret(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchAssociateScramSecretAsync(array $args = [])
  * @method \Aws\Result createCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createClusterAsync(array $args = [])
  * @method \Aws\Result createConfiguration(array $args = [])
@@ -21,6 +23,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeConfigurationAsync(array $args = [])
  * @method \Aws\Result describeConfigurationRevision(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeConfigurationRevisionAsync(array $args = [])
+ * @method \Aws\Result batchDisassociateScramSecret(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDisassociateScramSecretAsync(array $args = [])
  * @method \Aws\Result getBootstrapBrokers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBootstrapBrokersAsync(array $args = [])
  * @method \Aws\Result getCompatibleKafkaVersions(array $args = [])
@@ -37,6 +41,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listKafkaVersionsAsync(array $args = [])
  * @method \Aws\Result listNodes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listNodesAsync(array $args = [])
+ * @method \Aws\Result listScramSecrets(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listScramSecretsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result rebootBroker(array $args = [])
