@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.154.3 - 2020-09-15
 
 * `Aws\Budgets` - Documentation updates for Daily Cost and Usage budgets
 * `Aws\EC2` - T4g instances are powered by AWS Graviton2 processors
