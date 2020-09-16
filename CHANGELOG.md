@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - This release adds support for contact flows and routing profiles. For details, see the Release Notes in the Amazon Connect Administrator Guide.
+* `Aws\DLM` - Customers can now provide multiple schedules within a single Data Lifecycle Manager (DLM) policy. Each schedule supports tagging, Fast Snapshot Restore (FSR) and cross region copy individually.
+* `Aws\Greengrass` - This release includes the ability to set run-time configuration for a Greengrass core. The Telemetry feature, also included in this release, can be configured via run-time configuration per core.
+* `Aws\SSM` - The ComplianceItemEntry Status description was updated to address Windows patches that aren't applicable.
+* `Aws\ServiceCatalog` - Enhance DescribeProvisionedProduct API to allow useProvisionedProduct Name as Input, so customer can provide ProvisionedProduct Name instead of ProvisionedProduct Id to describe a ProvisionedProduct.
+
 ## 3.154.3 - 2020-09-15
 
 * `Aws\Budgets` - Documentation updates for Daily Cost and Usage budgets
