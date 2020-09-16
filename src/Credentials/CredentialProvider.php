@@ -74,6 +74,7 @@ class CredentialProvider
     {
         $cacheable = [
             'web_identity',
+            'sso',
             'ecs',
             'process_credentials',
             'process_config',
@@ -88,6 +89,11 @@ class CredentialProvider
             !isset($config['use_aws_shared_config_files'])
             || $config['use_aws_shared_config_files'] !== false
         ) {
+            $defaultChain['sso'] = self::sso(
+                'profile default',
+                self::getHomeDir() . '/.aws/config',
+                $config
+            );
             $defaultChain['ini'] = self::ini();
             $defaultChain['ini_config'] = self::ini(
                 'profile default',
@@ -297,6 +303,82 @@ class CredentialProvider
     }
 
     /**
+     * Credential provider that retrieves cached SSO credentials from the CLI
+     *
+     * @return callable
+     */
+    public static function sso($ssoProfileName, $filename = null, $config = [])
+    {
+        $filename = $filename ?: (self::getHomeDir() . '/.aws/config');
+
+        return function () use ($ssoProfileName, $filename, $config) {
+            if (!is_readable($filename)) {
+                return self::reject("Cannot read credentials from $filename");
+            }
+            $data = self::loadProfiles($filename);
+            $ssoProfile = $data[$ssoProfileName];
+            if (empty($ssoProfile['sso_start_url'])
+                || empty($ssoProfile['sso_region'])
+                || empty($ssoProfile['sso_account_id'])
+                || empty($ssoProfile['sso_role_name'])
+            ) {
+                return self::reject(
+                    "profile {$ssoProfileName} in {$filename} must contain the following keys: "
+                    . 'sso_start_url, sso_region, sso_account_id, and sso_role_name'
+                );
+            }
+
+            $tokenLocation = self::getHomeDir()
+                . '/.aws/sso/cache/'
+                . utf8_encode(sha1($ssoProfile['sso_start_url']))
+                . ".json";
+
+            if (!is_readable($tokenLocation)) {
+                return self::reject("Unable to read token file at $tokenLocation");
+            }
+
+            $tokenData = json_decode(file_get_contents($tokenLocation), true);
+            if (!empty($tokenData['accessToken']) && !empty($tokenData['expiresAt'])) {
+                try {
+                    $expiration = new DateTimeResult($tokenData['expiresAt']);
+                } catch (\Exception $e) {
+                    return self::reject("Cached SSO credentials returned an invalid expiration");
+                }
+                $now = new DateTimeResult();
+                if ($expiration < $now) {
+                    return self::reject("Cached SSO credentials returned expired credentials");
+                }
+            }
+
+            $ssoClient = null;
+            if(empty($config['ssoClient'])) {
+                $ssoClient = new Aws\SSO\SSOClient([
+                    'region' => $ssoProfile['sso_region'],
+                    'version' => '2019-06-10',
+                    'credentials' => false
+                ]);
+            } else {
+                $ssoClient = $config['ssoClient'];
+            }
+            $ssoResponse = $ssoClient->getRoleCredentials([
+                'accessToken' => $tokenData['accessToken'],
+                'accountId' => $ssoProfile['sso_account_id'],
+                'roleName' => $ssoProfile['sso_role_name']
+            ]);
+
+            $ssoCredentials = $ssoResponse['roleCredentials'];
+            return Promise\promise_for(
+                new Credentials(
+                    $ssoCredentials['accessKeyId'],
+                    $ssoCredentials['secretAccessKey'],
+                    $ssoCredentials['sessionToken'],
+                    $ssoCredentials['expiration']
+                )
+            );
+        };
+    }
+
+    /**
      * Credential provider that creates credentials using
      * ecs credentials by a GET request, whose uri is specified
      * by environment variable
@@ -478,8 +560,8 @@ class CredentialProvider
             if (empty($data[$profile]['aws_session_token'])) {
                 $data[$profile]['aws_session_token']
                     = isset($data[$profile]['aws_security_token'])
-                        ? $data[$profile]['aws_security_token']
-                        : null;
+                    ? $data[$profile]['aws_security_token']
+                    : null;
             }
 
             return Promise\promise_for(
@@ -694,7 +776,7 @@ class CredentialProvider
         }
 
         if (file_exists($configFile)) {
-        $configProfileData = \Aws\parse_ini_file($configFile, true, INI_SCANNER_RAW);
+            $configProfileData = \Aws\parse_ini_file($configFile, true, INI_SCANNER_RAW);
             foreach ($configProfileData as $name => $profile) {
                 // standardize config profile names
                 $name = str_replace('profile ', '', $name);
