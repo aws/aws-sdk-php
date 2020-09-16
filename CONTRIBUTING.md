@@ -88,6 +88,7 @@ we ask the same of all community contributions as well:
    The [PHP CS Fixer][cs-fixer] tool can be helpful for formatting your code.
 3. We maintain a high percentage of code coverage in our unit tests. If you make
    changes to the code, please add, update, and/or remove tests as appropriate.
+   Tests are run via `make test` command.
 4. Static code analysis with [PHPStan][phpstan] is automatically run on the `src` 
    directory for submitted pull requests. If there is a case that needs to be
    ignored by static analysis, please update the `ignoreErrors` section in the
