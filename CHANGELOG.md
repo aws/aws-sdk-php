@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.154.4 - 2020-09-16
 
 * `Aws\Connect` - This release adds support for contact flows and routing profiles. For details, see the Release Notes in the Amazon Connect Administrator Guide.
 * `Aws\DLM` - Customers can now provide multiple schedules within a single Data Lifecycle Manager (DLM) policy. Each schedule supports tagging, Fast Snapshot Restore (FSR) and cross region copy individually.
