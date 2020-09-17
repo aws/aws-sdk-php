@@ -913,17 +913,19 @@ EOT;
 {"startUrl" : "url.com", "accessToken" : "token", "expiresAt": "$expiration" }
 EOT;
 
-        $filename = $dir . '/config';
-        file_put_contents($filename, $ini);
-        if (!is_dir($dir . "/sso/cache/")) {
-            mkdir($dir, 0777, true);
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+
+        $tokenFileDirectory = $dir . "/sso/cache/";
+        if (!is_dir($tokenFileDirectory)) {
+            mkdir($tokenFileDirectory, 0777, true);
         }
-        $tokenFileName = $dir . "/sso/cache/" . sha1("url.co.uk") . '.json';
+        $tokenFileName = $tokenFileDirectory . sha1("url.co.uk") . '.json';
         file_put_contents(
             $tokenFileName, $tokenFile
         );
         putenv('HOME=' . dirname($dir));
-        $filename = $dir . '/config';
+        $configFilename = $dir . '/config';
         putenv('HOME=' . dirname($dir));
 
         $result = [
@@ -943,7 +945,7 @@ EOT;
         try {
             $creds = call_user_func(CredentialProvider::sso(
                 'default',
-                $filename,
+                $configFilename,
                 ['ssoClient' => $sso]
             ))->wait();
             $this->assertEquals('foo', $creds->getAccessKeyId());
@@ -958,6 +960,8 @@ EOT;
         } finally {
             unlink($dir . '/config');
             unlink($tokenFileName);
+            rmdir($tokenFileDirectory);
+            rmdir($dir . "/sso/");
         }
     }
 
@@ -965,7 +969,6 @@ EOT;
     public function testSsoProfileProviderAddedToDefaultChain()
     {
         $dir = $this->clearEnv();
-        $defaultChain = CredentialProvider::defaultProvider();
         $expiration = DateTimeResult::fromEpoch(time() + 1000);
         $ini = <<<EOT
 [profile default]
@@ -978,17 +981,19 @@ EOT;
 {"startUrl" : "url.com", "accessToken" : "token", "expiresAt": "$expiration" }
 EOT;
 
-        $filename = $dir . '/config';
-        file_put_contents($filename, $ini);
-        if (!is_dir($dir . "/sso/cache/")) {
-            mkdir($dir, 0777, true);
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+
+        $tokenFileDirectory = $dir . "/sso/cache/";
+        if (!is_dir($tokenFileDirectory)) {
+            mkdir($tokenFileDirectory, 0777, true);
         }
-        $tokenFileName = $dir . "/sso/cache/" . sha1("url.co.uk") . '.json';
+        $tokenFileName = $tokenFileDirectory . sha1("url.co.uk") . '.json';
         file_put_contents(
             $tokenFileName, $tokenFile
         );
         putenv('HOME=' . dirname($dir));
-        $filename = $dir . '/config';
+        $configFilename = $dir . '/config';
         putenv('HOME=' . dirname($dir));
 
         $result = [
@@ -1021,6 +1026,8 @@ EOT;
         } finally {
             unlink($dir . '/config');
             unlink($tokenFileName);
+            rmdir($tokenFileDirectory);
+            rmdir($dir . "/sso/");
         }
     }
 
@@ -1042,17 +1049,19 @@ EOT;
 {"startUrl" : "url.com", "accessToken" : "token"}
 EOT;
 
-        $filename = $dir . '/config';
-        file_put_contents($filename, $ini);
-        if (!is_dir($dir . "/sso/cache/")) {
-            mkdir($dir, 0777, true);
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+
+        $tokenFileDirectory = $dir . "/sso/cache/";
+        if (!is_dir($tokenFileDirectory)) {
+            mkdir($tokenFileDirectory, 0777, true);
         }
-        $tokenFileName = $dir . "/sso/cache/" . sha1("url.co.uk") . '.json';
+        $tokenFileName = $tokenFileDirectory . sha1("url.co.uk") . '.json';
         file_put_contents(
             $tokenFileName, $tokenFile
         );
         putenv('HOME=' . dirname($dir));
-        $filename = $dir . '/config';
+        $configFilename = $dir . '/config';
         putenv('HOME=' . dirname($dir));
 
         $result = [
@@ -1072,7 +1081,7 @@ EOT;
         try {
             $creds = call_user_func(CredentialProvider::sso(
                 'default',
-                $filename,
+                $configFilename,
                 ['ssoClient' => $sso]
             ))->wait();
             $this->assertEquals('foo', $creds->getAccessKeyId());
@@ -1085,6 +1094,8 @@ EOT;
         } finally {
             unlink($dir . '/config');
             unlink($tokenFileName);
+            rmdir($tokenFileDirectory);
+            rmdir($dir . "/sso/");
         }
     }
 
