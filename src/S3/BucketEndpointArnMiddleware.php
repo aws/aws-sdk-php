@@ -25,17 +25,8 @@ class BucketEndpointArnMiddleware
 {
     use EndpointRegionHelperTrait;
 
-    /** @var Service */
-    private $service;
-
     /** @var callable */
     private $nextHandler;
-
-    /** @var string */
-    private $region;
-
-    /** @var PartitionEndpointProvider */
-    private $partitionProvider;
 
     /** @var array */
     private $nonArnableCommands = ['CreateBucket'];

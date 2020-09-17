@@ -56,17 +56,8 @@ class EndpointArnMiddleware
         'ListRegionalBuckets',
     ];
 
-    /** @var Service */
-    private $service;
-
     /** @var callable */
     private $nextHandler;
-
-    /** @var string */
-    private $region;
-
-    /** @var PartitionEndpointProvider */
-    private $partitionProvider;
 
     /**
      * Create a middleware wrapper function.
