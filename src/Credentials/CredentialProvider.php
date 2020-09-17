@@ -353,7 +353,6 @@ class CredentialProvider
                 return self::reject("Cached SSO credentials returned expired credentials");
             }
 
-
             $ssoClient = null;
             if (empty($config['ssoClient'])) {
                 $ssoClient = new Aws\SSO\SSOClient([
