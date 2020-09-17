@@ -323,7 +323,7 @@ class CredentialProvider
                 || empty($ssoProfile['sso_role_name'])
             ) {
                 return self::reject(
-                    "profile {$ssoProfileName} in {$filename} must contain the following keys: "
+                    "Profile {$ssoProfileName} in {$filename} must contain the following keys: "
                     . 'sso_start_url, sso_region, sso_account_id, and sso_role_name'
                 );
             }
@@ -338,20 +338,24 @@ class CredentialProvider
             }
 
             $tokenData = json_decode(file_get_contents($tokenLocation), true);
-            if (!empty($tokenData['accessToken']) && !empty($tokenData['expiresAt'])) {
-                try {
-                    $expiration = new DateTimeResult($tokenData['expiresAt']);
-                } catch (\Exception $e) {
-                    return self::reject("Cached SSO credentials returned an invalid expiration");
-                }
-                $now = new DateTimeResult();
-                if ($expiration < $now) {
-                    return self::reject("Cached SSO credentials returned expired credentials");
-                }
+            if (empty($tokenData['accessToken']) || empty($tokenData['expiresAt'])) {
+                return self::reject(
+                    "Token file at {$tokenLocation} must contain an access token and an expiration"
+                );
+            }
+            try {
+                $expiration = (new DateTimeResult($tokenData['expiresAt']))->getTimestamp();
+            } catch (\Exception $e) {
+                return self::reject("Cached SSO credentials returned an invalid expiration");
+            }
+            $now = time();
+            if ($expiration < $now) {
+                return self::reject("Cached SSO credentials returned expired credentials");
             }
 
+
             $ssoClient = null;
-            if(empty($config['ssoClient'])) {
+            if (empty($config['ssoClient'])) {
                 $ssoClient = new Aws\SSO\SSOClient([
                     'region' => $ssoProfile['sso_region'],
                     'version' => '2019-06-10',
@@ -372,7 +376,7 @@ class CredentialProvider
                     $ssoCredentials['accessKeyId'],
                     $ssoCredentials['secretAccessKey'],
                     $ssoCredentials['sessionToken'],
-                    $ssoCredentials['expiration']
+                    $expiration
                 )
             );
         };
@@ -560,8 +564,8 @@ class CredentialProvider
             if (empty($data[$profile]['aws_session_token'])) {
                 $data[$profile]['aws_session_token']
                     = isset($data[$profile]['aws_security_token'])
-                    ? $data[$profile]['aws_security_token']
-                    : null;
+                        ? $data[$profile]['aws_security_token']
+                        : null;
             }
 
             return Promise\promise_for(
