@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Adds support for mutual TLS authentication for public regional REST Apis
+* `Aws\ApiGatewayV2` - Adds support for mutual TLS authentication and disableAPIExecuteEndpoint for public regional HTTP Apis
+* `Aws\CloudFront` - Documentation updates for CloudFront
+* `Aws\Comprehend` - Amazon Comprehend now supports detecting Personally Identifiable Information (PII) entities in a document.
+* `Aws\ElasticsearchService` - Adds support for data plane audit logging in Amazon Elasticsearch Service.
+* `Aws\TranscribeStreamingService` - Amazon Transcribe now supports channel identification in real-time streaming, which enables you to transcribe multi-channel streaming audio.
+* `Aws\kendra` - Amazon Kendra now supports additional file formats and metadata for FAQs.
+
 ## 3.154.4 - 2020-09-16
 
 * `Aws\Connect` - This release adds support for contact flows and routing profiles. For details, see the Release Notes in the Amazon Connect Administrator Guide.
