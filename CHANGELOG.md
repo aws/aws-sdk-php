@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.154.5 - 2020-09-17
 
 * `Aws\APIGateway` - Adds support for mutual TLS authentication for public regional REST Apis
 * `Aws\ApiGatewayV2` - Adds support for mutual TLS authentication and disableAPIExecuteEndpoint for public regional HTTP Apis
