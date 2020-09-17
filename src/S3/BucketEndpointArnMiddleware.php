@@ -34,9 +34,6 @@ class BucketEndpointArnMiddleware
     /** @var string */
     private $region;
 
-    /** @var array */
-    private $config;
-
     /** @var PartitionEndpointProvider */
     private $partitionProvider;
 
