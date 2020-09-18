@@ -955,8 +955,6 @@ EOT;
                 DateTimeResult::fromEpoch(time())->getTimestamp(),
                 $creds->getExpiration()
             );
-        } catch (\Exception $e) {
-            throw $e;
         } finally {
             unlink($dir . '/config');
             unlink($tokenFileName);
