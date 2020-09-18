@@ -5,6 +5,12 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Elemental MediaLive** service.
+ * @method \Aws\Result batchDelete(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchDeleteAsync(array $args = [])
+ * @method \Aws\Result batchStart(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchStartAsync(array $args = [])
+ * @method \Aws\Result batchStop(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchStopAsync(array $args = [])
  * @method \Aws\Result batchUpdateSchedule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchUpdateScheduleAsync(array $args = [])
  * @method \Aws\Result createChannel(array $args = [])

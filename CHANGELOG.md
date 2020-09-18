@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeStarconnections` - New integration with the GitHub provider type.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports batch operations, which allow users to start, stop, and delete multiple MediaLive resources with a single request.
+* `Aws\SSOAdmin` - Documentation updates for AWS SSO APIs.
+
 ## 3.154.5 - 2020-09-17
 
 * `Aws\APIGateway` - Adds support for mutual TLS authentication for public regional REST Apis
