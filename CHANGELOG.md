@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.154.6 - 2020-09-18
 
 * `Aws\CodeStarconnections` - New integration with the GitHub provider type.
 * `Aws\MediaLive` - AWS Elemental MediaLive now supports batch operations, which allow users to start, stop, and delete multiple MediaLive resources with a single request.
