@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise batchGetWorkflowsAsync(array $args = [])
  * @method \Aws\Result batchStopJobRun(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchStopJobRunAsync(array $args = [])
+ * @method \Aws\Result batchUpdatePartition(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchUpdatePartitionAsync(array $args = [])
  * @method \Aws\Result cancelMLTaskRun(array $args = [])
  * @method \GuzzleHttp\Promise\Promise cancelMLTaskRunAsync(array $args = [])
  * @method \Aws\Result createClassifier(array $args = [])

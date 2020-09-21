@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchEvents` - Add support for Redshift Data API Targets
+* `Aws\EventBridge` - Add support for Redshift Data API Targets
+* `Aws\Glue` - Adding support to update multiple partitions of a table in a single request
+* `Aws\IoTSiteWise` - This release supports IAM mode for SiteWise Monitor portals
+* `Aws\RDS` - Documentation updates for the RDS DescribeExportTasks API
+* `Aws\ResourceGroups` - Documentation updates and corrections for Resource Groups API Reference and SDKs.
+* `Aws\ResourceGroupsTaggingAPI` - Documentation updates for the Resource Groups Tagging API.
+
 ## 3.154.6 - 2020-09-18
 
 * `Aws\CodeStarconnections` - New integration with the GitHub provider type.
