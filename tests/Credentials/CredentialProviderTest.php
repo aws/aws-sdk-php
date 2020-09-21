@@ -897,6 +897,241 @@ EOT;
         }
     }
 
+
+    public function testSsoProfileProvider()
+    {
+        $dir = $this->clearEnv();
+        $expiration = DateTimeResult::fromEpoch(time() + 1000);
+        $ini = <<<EOT
+[default]
+sso_start_url = url.co.uk
+sso_region = us-west-2
+sso_account_id = 12345
+sso_role_name = roleName
+EOT;
+        $tokenFile = <<<EOT
+{"startUrl" : "url.com", "accessToken" : "token", "expiresAt": "$expiration" }
+EOT;
+
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+
+        $tokenFileDirectory = $dir . "/sso/cache/";
+        if (!is_dir($tokenFileDirectory)) {
+            mkdir($tokenFileDirectory, 0777, true);
+        }
+        $tokenFileName = $tokenFileDirectory . sha1("url.co.uk") . '.json';
+        file_put_contents(
+            $tokenFileName, $tokenFile
+        );
+        putenv('HOME=' . dirname($dir));
+        $configFilename = $dir . '/config';
+        putenv('HOME=' . dirname($dir));
+
+        $result = [
+            'roleCredentials' => [
+                'accessKeyId'     => 'foo',
+                'secretAccessKey' => 'assumedSecret',
+                'sessionToken'    => null,
+                'expiration'      => $expiration
+            ],
+        ];
+
+        $sso = $this->getTestClient('Sso', ['credentials' => false]);
+        $this->addMockResults($sso, [
+            new Result($result)
+        ]);
+
+        try {
+            $creds = call_user_func(CredentialProvider::sso(
+                'default',
+                $configFilename,
+                ['ssoClient' => $sso]
+            ))->wait();
+            $this->assertEquals('foo', $creds->getAccessKeyId());
+            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertGreaterThan(
+                DateTimeResult::fromEpoch(time())->getTimestamp(),
+                $creds->getExpiration()
+            );
+        } finally {
+            unlink($dir . '/config');
+            unlink($tokenFileName);
+            rmdir($tokenFileDirectory);
+            rmdir($dir . "/sso/");
+        }
+    }
+
+
+    public function testSsoProfileProviderAddedToDefaultChain()
+    {
+        $dir = $this->clearEnv();
+        $expiration = DateTimeResult::fromEpoch(time() + 1000);
+        $ini = <<<EOT
+[profile default]
+sso_start_url = url.co.uk
+sso_region = us-west-2
+sso_account_id = 12345
+sso_role_name = roleName
+EOT;
+        $tokenFile = <<<EOT
+{"startUrl" : "url.com", "accessToken" : "token", "expiresAt": "$expiration" }
+EOT;
+
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+
+        $tokenFileDirectory = $dir . "/sso/cache/";
+        if (!is_dir($tokenFileDirectory)) {
+            mkdir($tokenFileDirectory, 0777, true);
+        }
+        $tokenFileName = $tokenFileDirectory . sha1("url.co.uk") . '.json';
+        file_put_contents(
+            $tokenFileName, $tokenFile
+        );
+        putenv('HOME=' . dirname($dir));
+        $configFilename = $dir . '/config';
+        putenv('HOME=' . dirname($dir));
+
+        $result = [
+            'roleCredentials' => [
+                'accessKeyId'     => 'foo',
+                'secretAccessKey' => 'assumedSecret',
+                'sessionToken'    => null,
+                'expiration'      => $expiration
+            ],
+        ];
+
+        $sso = $this->getTestClient('Sso', ['credentials' => false]);
+        $this->addMockResults($sso, [
+            new Result($result)
+        ]);
+
+        try {
+            $creds = call_user_func(CredentialProvider::defaultProvider(
+                ['ssoClient' => $sso]
+            ))->wait();
+            $this->assertEquals('foo', $creds->getAccessKeyId());
+            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertGreaterThan(
+                DateTimeResult::fromEpoch(time())->getTimestamp(),
+                $creds->getExpiration()
+            );
+        } finally {
+            unlink($dir . '/config');
+            unlink($tokenFileName);
+            rmdir($tokenFileDirectory);
+            rmdir($dir . "/sso/");
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage must contain an access token and an expiration
+     */
+    public function testSsoProfileProviderMissingTokenData()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+sso_start_url = url.co.uk
+sso_region = us-west-2
+sso_account_id = 12345
+sso_role_name = roleName
+EOT;
+        $tokenFile = <<<EOT
+{"startUrl" : "url.com", "accessToken" : "token"}
+EOT;
+
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+
+        $tokenFileDirectory = $dir . "/sso/cache/";
+        if (!is_dir($tokenFileDirectory)) {
+            mkdir($tokenFileDirectory, 0777, true);
+        }
+        $tokenFileName = $tokenFileDirectory . sha1("url.co.uk") . '.json';
+        file_put_contents(
+            $tokenFileName, $tokenFile
+        );
+        putenv('HOME=' . dirname($dir));
+        $configFilename = $dir . '/config';
+        putenv('HOME=' . dirname($dir));
+
+        $result = [
+            'roleCredentials' => [
+                'accessKeyId'     => 'foo',
+                'secretAccessKey' => 'assumedSecret',
+                'sessionToken'    => null,
+                'expiration'      => DateTimeResult::fromEpoch(time() + 1000)
+            ],
+        ];
+
+        $sso = $this->getTestClient('Sso', ['credentials' => false]);
+        $this->addMockResults($sso, [
+            new Result($result)
+        ]);
+
+        try {
+            $creds = call_user_func(CredentialProvider::sso(
+                'default',
+                $configFilename,
+                ['ssoClient' => $sso]
+            ))->wait();
+            $this->assertEquals('foo', $creds->getAccessKeyId());
+            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertNull($creds->getSecurityToken());
+            $this->assertGreaterThan(
+                DateTimeResult::fromEpoch(time())->getTimestamp(),
+                $creds->getExpiration()->getTimestamp()
+            );
+        } finally {
+            unlink($dir . '/config');
+            unlink($tokenFileName);
+            rmdir($tokenFileDirectory);
+            rmdir($dir . "/sso/");
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage  Cannot read credentials from
+     */
+    public function testSsoProfileProviderBadFile()
+    {
+        $dir = $this->clearEnv();
+
+        $filename = $dir . '/config';
+        putenv('HOME=' . dirname($dir));
+
+        call_user_func(CredentialProvider::sso('default', $filename))->wait();
+
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage  must contain the following keys: sso_start_url, sso_region, sso_account_id, and sso_role_name
+     */
+    public function testSsoProfileProviderMissingData()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+sso_start_url = https://url.co.uk
+EOT;
+        $filename = $dir . '/config';
+        file_put_contents($filename, $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            call_user_func(CredentialProvider::sso('default', $filename))->wait();
+        } finally {
+            unlink($dir . '/config');
+        }
+    }
+
     public function testPreferRoleArnToStaticCredentialsInBaseProfile()
     {
         $dir = $this->clearEnv();
@@ -1374,6 +1609,7 @@ EOT;
             'ecs',
             'process_credentials',
             'process_config',
+            'sso',
             'instance'
         ];
 
