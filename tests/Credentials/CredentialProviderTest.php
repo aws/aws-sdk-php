@@ -1019,8 +1019,6 @@ EOT;
                 DateTimeResult::fromEpoch(time())->getTimestamp(),
                 $creds->getExpiration()
             );
-        } catch (\Exception $e) {
-            throw $e;
         } finally {
             unlink($dir . '/config');
             unlink($tokenFileName);
@@ -1108,11 +1106,8 @@ EOT;
         $filename = $dir . '/config';
         putenv('HOME=' . dirname($dir));
 
-        try {
-            call_user_func(CredentialProvider::sso('default', $filename))->wait();
-        } catch (\Exception $e) {
-            throw $e;
-        }
+        call_user_func(CredentialProvider::sso('default', $filename))->wait();
+
     }
 
     /**
