@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.154.7 - 2020-09-21
 
 * `Aws\CloudWatchEvents` - Add support for Redshift Data API Targets
 * `Aws\EventBridge` - Add support for Redshift Data API Targets
