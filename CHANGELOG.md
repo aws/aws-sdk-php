@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.155.0 - 2020-09-22
 
 * `Aws\Comprehend` - Amazon Comprehend integrates with Amazon SageMaker GroundTruth to allow its customers to annotate their datasets using GroundTruth and train their models using Comprehend Custom APIs.
 * `Aws\Credentials` - Added credential provider which retrieves cached SSO credentials from the CLI
