@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Comprehend` - Amazon Comprehend integrates with Amazon SageMaker GroundTruth to allow its customers to annotate their datasets using GroundTruth and train their models using Comprehend Custom APIs.
+* `Aws\Credentials` - Added credential provider which retrieves cached SSO credentials from the CLI
+* `Aws\Credentials` - Fixes a crash in PHP 8.0 by calling array_values on the default chain array passed into self::chain
+* `Aws\DynamoDBStreams` - Documentation updates for streams.dynamodb
+* `Aws\LexModelBuildingService` - Lex now supports es-US locales
+* `Aws\WorkMail` - Adding support for Mailbox Export APIs
+
 ## 3.154.7 - 2020-09-21
 
 * `Aws\CloudWatchEvents` - Add support for Redshift Data API Targets
