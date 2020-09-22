@@ -811,7 +811,7 @@ class CredentialProvider
         $credentialSource = !empty($data[$profileName]['credential_source']) ? $data[$profileName]['credential_source'] : null;
         $credentialsPromise = null;
 
-        if ($credentialSource == null && empty($data[$profileName]['role_arn'])) {
+        if (!isEmpty($credentialSource) && empty($data[$profileName]['role_arn'])) {
             return self::reject(
                 "A role_arn must be provided with credential_source in " .
                 "file {$filename} under profile {$profileName} "
