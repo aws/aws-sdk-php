@@ -94,12 +94,16 @@ class AssumeRoleWithWebIdentityCredentialProvider
             $result = null;
             while ($result == null) {
                 try {
-                    $token = file_get_contents($this->tokenFile);
+                    $token = is_readable($this->tokenFile)
+                        ? file_get_contents($this->tokenFile)
+                        : false;
                     if (false === $token) {
                         clearstatcache(true, dirname($this->tokenFile) . "/" . readlink($this->tokenFile));
                         clearstatcache(true, dirname($this->tokenFile) . "/" . dirname(readlink($this->tokenFile)));
                         clearstatcache(true, $this->tokenFile);
-                        $token = file_get_contents($this->tokenFile);   
+                        $token = is_readable($this->tokenFile)
+                            ? file_get_contents($this->tokenFile)
+                            : false;
                     }
                 } catch (\Exception $exception) {
                     throw new CredentialsException(
