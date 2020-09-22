@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## 3.154.7 - 2020-09-21
+
+* `Aws\CloudWatchEvents` - Add support for Redshift Data API Targets
+* `Aws\EventBridge` - Add support for Redshift Data API Targets
+* `Aws\Glue` - Adding support to update multiple partitions of a table in a single request
+* `Aws\IoTSiteWise` - This release supports IAM mode for SiteWise Monitor portals
+* `Aws\RDS` - Documentation updates for the RDS DescribeExportTasks API
+* `Aws\ResourceGroups` - Documentation updates and corrections for Resource Groups API Reference and SDKs.
+* `Aws\ResourceGroupsTaggingAPI` - Documentation updates for the Resource Groups Tagging API.
+
+## 3.154.6 - 2020-09-18
+
+* `Aws\CodeStarconnections` - New integration with the GitHub provider type.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports batch operations, which allow users to start, stop, and delete multiple MediaLive resources with a single request.
+* `Aws\SSOAdmin` - Documentation updates for AWS SSO APIs.
+
+## 3.154.5 - 2020-09-17
+
+* `Aws\APIGateway` - Adds support for mutual TLS authentication for public regional REST Apis
+* `Aws\ApiGatewayV2` - Adds support for mutual TLS authentication and disableAPIExecuteEndpoint for public regional HTTP Apis
+* `Aws\CloudFront` - Documentation updates for CloudFront
+* `Aws\Comprehend` - Amazon Comprehend now supports detecting Personally Identifiable Information (PII) entities in a document.
+* `Aws\ElasticsearchService` - Adds support for data plane audit logging in Amazon Elasticsearch Service.
+* `Aws\TranscribeStreamingService` - Amazon Transcribe now supports channel identification in real-time streaming, which enables you to transcribe multi-channel streaming audio.
+* `Aws\kendra` - Amazon Kendra now supports additional file formats and metadata for FAQs.
+
 ## 3.154.4 - 2020-09-16
 
 * `Aws\Connect` - This release adds support for contact flows and routing profiles. For details, see the Release Notes in the Amazon Connect Administrator Guide.
