@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.155.1 - 2020-09-23
 
 * `Aws\Backup` - This release allows customers to enable or disable advanced backup settings in backup plan. As part of this feature AWS Backup added support for Windows VSS backup option for EC2 resources.
 * `Aws\CostExplorer` - This release provides access to Cost Anomaly Detection Public Preview APIs. Cost Anomaly Detection finds cost anomalies based on your historical cost and usage using Machine Learning models.
