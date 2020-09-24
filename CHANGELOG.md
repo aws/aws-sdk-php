@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.155.2 - 2020-09-24
 
 * `Aws\Amplify` - Allow Oauth Token in CreateApp call to be a maximum of 1000 characters instead of 100
 * `Aws\EKS` - Amazon EKS now supports configuring your cluster's service CIDR during cluster creation.
