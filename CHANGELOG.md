@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.155.3 - 2020-09-25
 
 * `Aws\Batch` - Support custom logging, executionRole, secrets, and linuxParameters (initProcessEnabled, maxSwap, swappiness, sharedMemorySize, and tmpfs). Also, add new context keys for awslogs.
 * `Aws\ConfigService` - Make the delivery-s3-bucket as an optional parameter for conformance packs and organizational conformance packs
