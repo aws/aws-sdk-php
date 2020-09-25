@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - Support custom logging, executionRole, secrets, and linuxParameters (initProcessEnabled, maxSwap, swappiness, sharedMemorySize, and tmpfs). Also, add new context keys for awslogs.
+* `Aws\ConfigService` - Make the delivery-s3-bucket as an optional parameter for conformance packs and organizational conformance packs
+* `Aws\DocDB` - Documentation updates for docdb
+* `Aws\EC2` - This release supports returning additional information about local gateway resources, such as the local gateway route table.
+* `Aws\FraudDetector` - Increased maximum length of eventVariables values for GetEventPrediction from 256 to 1024.
+* `Aws\STS` - Documentation update for AssumeRole error
+
 ## 3.155.2 - 2020-09-24
 
 * `Aws\Amplify` - Allow Oauth Token in CreateApp call to be a maximum of 1000 characters instead of 100
