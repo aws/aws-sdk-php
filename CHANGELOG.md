@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.155.4 - 2020-09-28
 
 * `Aws\ApplicationAutoScaling` - This release extends Application Auto Scaling support to AWS Comprehend Entity Recognizer endpoint, allowing automatic updates to provisioned Inference Units to maintain targeted utilization level.
 * `Aws\RDS` - This release adds the InsufficientAvailableIPsInSubnetFault error for RDS Proxy.
