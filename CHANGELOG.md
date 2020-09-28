@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - This release extends Application Auto Scaling support to AWS Comprehend Entity Recognizer endpoint, allowing automatic updates to provisioned Inference Units to maintain targeted utilization level.
+* `Aws\RDS` - This release adds the InsufficientAvailableIPsInSubnetFault error for RDS Proxy.
+* `Aws\S3` - Corrected urlencoding of CopySource key for MultipartCopy
+
 ## 3.155.3 - 2020-09-25
 
 * `Aws\Batch` - Support custom logging, executionRole, secrets, and linuxParameters (initProcessEnabled, maxSwap, swappiness, sharedMemorySize, and tmpfs). Also, add new context keys for awslogs.
