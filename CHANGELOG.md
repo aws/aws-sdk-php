@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.156.0 - 2020-09-29
 
 * `Aws\Connect` - Update TagResource API documentation to include Contact Flows and Routing Profiles as supported resources.
 * `Aws\EC2` - This release adds support for Client to Client routing for AWS Client VPN.
