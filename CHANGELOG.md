@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - Update TagResource API documentation to include Contact Flows and Routing Profiles as supported resources.
+* `Aws\EC2` - This release adds support for Client to Client routing for AWS Client VPN.
+* `Aws\SSM` - Simple update to description of ComplianceItemStatus.
+* `Aws\Schemas` - Added support for schemas of type JSONSchemaDraft4. Added ExportSchema API that converts schemas in AWS Events registry and Discovered schemas from OpenApi3 to JSONSchemaDraft4.
+* `Aws\TimestreamQuery` - (New Service) Amazon Timestream is a fast, scalable, fully managed, purpose-built time series database that makes it easy to store and analyze trillions of time series data points per day.
+* `Aws\TimestreamWrite` - (New Service) Amazon Timestream is a fast, scalable, fully managed, purpose-built time series database that makes it easy to store and analyze trillions of time series data points per day.
+
 ## 3.155.4 - 2020-09-28
 
 * `Aws\ApplicationAutoScaling` - This release extends Application Auto Scaling support to AWS Comprehend Entity Recognizer endpoint, allowing automatic updates to provisioned Inference Units to maintain targeted utilization level.
