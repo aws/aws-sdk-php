@@ -38,8 +38,8 @@ $autoloaderContents = [
 ];
 
 if (file_exists($projectRoot . 'vendor/symfony/polyfill-intl-idn')) {
-    $burgomaster->recursiveCopy($projectRoot . 'vendor/symfony/polyfill-intl-idn', 'Symfony/Polyfill/IntlIdn');
-    array_push($autoloaderContents, 'Symfony/Polyfill/IntlIdn/bootstrap.php');
+    $burgomaster->recursiveCopy($projectRoot . 'vendor/symfony/polyfill-intl-idn', 'Symfony/Polyfill/Intl/Idn');
+    array_push($autoloaderContents, 'Symfony/Polyfill/Intl/Idn/bootstrap.php');
 }
 
 if (file_exists($projectRoot . 'vendor/psr/http-client/src')) {
