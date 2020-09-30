@@ -817,7 +817,7 @@ class CredentialProvider
         $data = self::loadProfiles($filename);
         $credentialSource = !empty($data[$profileName]['credential_source']) ? $data[$profileName]['credential_source'] : null;
         $credentialsPromise = null;
-        
+
         switch ($credentialSource) {
             case 'Environment':
                 $credentialsPromise = self::env();
