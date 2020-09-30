@@ -101,9 +101,12 @@ class AssumeRoleWithWebIdentityCredentialProvider
                         clearstatcache(true, dirname($this->tokenFile) . "/" . readlink($this->tokenFile));
                         clearstatcache(true, dirname($this->tokenFile) . "/" . dirname(readlink($this->tokenFile)));
                         clearstatcache(true, $this->tokenFile);
-                        $token = is_readable($this->tokenFile)
-                            ? file_get_contents($this->tokenFile)
-                            : false;
+                        if (!is_readable($this->tokenFile)){
+                            throw new CredentialsException(
+                                "Unreadable tokenfile at location {$this->tokenFile}"
+                            );
+                        }
+                        $token = file_get_contents($this->tokenFile);
                     }
                 } catch (\Exception $exception) {
                     throw new CredentialsException(
