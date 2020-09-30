@@ -157,13 +157,14 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
         $provider()->wait();
     }
-    
+
     /**
      * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Error reading WebIdentityTokenFile from
      */
     public function testNoWarningIsThrownOnInaccessibleFile()
     {
+        $formerErrorLevel = error_reporting();
         error_reporting(E_ERROR | E_WARNING | E_PARSE);
         $dir = $this->clearEnv();
         $sts = new StsClient([
@@ -194,7 +195,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         } finally {
             chmod($tokenPath, 755);
             unlink($tokenPath);
-            error_reporting(0);
+            error_reporting($formerErrorLevel);
         }
     }
 
