@@ -697,6 +697,35 @@ EOT;
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage A role_arn must be provided with credential_source in
+     */
+    public function testAssumeRoleInConfigFromCredentialSourceNoRoleArn()
+    {
+        $dir = $this->clearEnv();
+        putenv(CredentialProvider::ENV_KEY . '=abc');
+        putenv(CredentialProvider::ENV_SESSION . '');
+
+        $credentials = <<<EOT
+[assume]
+credential_source = Environment
+role_arn = 
+EOT;
+        file_put_contents($dir . '/credentials', $credentials);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            call_user_func(CredentialProvider::ini(
+                'assume',
+                $dir . '/credentials',
+                []
+            ))->wait();
+        }  finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Could not find environment variable credentials in AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY
      */
     public function testAssumeRoleInConfigFromFailingCredentialsSource()

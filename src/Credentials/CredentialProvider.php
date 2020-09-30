@@ -714,7 +714,7 @@ class CredentialProvider
                 : 'us-east-1';
             $config['preferStaticCredentials'] = true;
             $sourceCredentials = null;
-            if ($roleProfile['source_profile']){
+            if (!empty($roleProfile['source_profile'])){
                 $sourceCredentials = call_user_func(
                     CredentialProvider::ini($sourceProfileName, $filename, $config)
                 )->wait();
