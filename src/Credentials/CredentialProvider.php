@@ -699,6 +699,13 @@ class CredentialProvider
                 return self::reject("Circular source_profile reference found.");
             }
             $config['visited_profiles'] [] = $roleProfile['source_profile'];
+        } else {
+            if (empty($roleArn)) {
+                return self::reject(
+                    "A role_arn must be provided with credential_source in " .
+                    "file {$filename} under profile {$profileName} "
+                );
+            }
         }
         $sourceRegion = isset($profiles[$sourceProfileName]['region'])
             ? $profiles[$sourceProfileName]['region']
@@ -810,13 +817,6 @@ class CredentialProvider
         $data = self::loadProfiles($filename);
         $credentialSource = !empty($data[$profileName]['credential_source']) ? $data[$profileName]['credential_source'] : null;
         $credentialsPromise = null;
-
-        if (!isEmpty($credentialSource) && empty($data[$profileName]['role_arn'])) {
-            return self::reject(
-                "A role_arn must be provided with credential_source in " .
-                "file {$filename} under profile {$profileName} "
-            );
-        }
         
         switch ($credentialSource) {
             case 'Environment':
