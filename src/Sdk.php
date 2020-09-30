@@ -376,6 +376,8 @@ namespace Aws;
  * @method \Aws\S3\S3MultiRegionClient createMultiRegionS3(array $args = [])
  * @method \Aws\S3Control\S3ControlClient createS3Control(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionS3Control(array $args = [])
+ * @method \Aws\S3Outposts\S3OutpostsClient createS3Outposts(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionS3Outposts(array $args = [])
  * @method \Aws\SSO\SSOClient createSSO(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSSO(array $args = [])
  * @method \Aws\SSOAdmin\SSOAdminClient createSSOAdmin(array $args = [])

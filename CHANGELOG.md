@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationAutoScaling` - This release extends Auto Scaling support for cluster storage of Managed Streaming for Kafka. Auto Scaling monitors and automatically expands storage capacity when a critical usage threshold is met.
+* `Aws\Credentials` - Fix credentialprovider error with undefined index source_profile when using credential_source
+* `Aws\DataSync` - This release enables customers to create s3 location for S3 bucket's located on an AWS Outpost.
+* `Aws\DirectConnect` - Documentation updates for AWS Direct Connect.
+* `Aws\EMR` - Amazon EMR customers can now use EC2 placement group to influence the placement of master nodes in a high-availability (HA) cluster across distinct underlying hardware to improve cluster availability.
+* `Aws\IoT` - AWS IoT Rules Engine adds Timestream action. The Timestream rule action lets you stream time-series data from IoT sensors and applications to Amazon Timestream databases for time series analysis.
+* `Aws\MediaConnect` - MediaConnect now supports reservations to provide a discounted rate for a specific outbound bandwidth over a period of time.
+* `Aws\Pinpoint` - Amazon Pinpoint - Features - Customers can start a journey based on an event being triggered by an endpoint or user.
+* `Aws\S3` - Amazon S3 on Outposts expands object storage to on-premises AWS Outposts environments, enabling you to store and retrieve objects using S3 APIs and features.
+* `Aws\S3Control` - Amazon S3 on Outposts expands object storage to on-premises AWS Outposts environments, enabling you to store and retrieve objects using S3 APIs and features.
+* `Aws\S3Outposts` - Amazon S3 on Outposts expands object storage to on-premises AWS Outposts environments, enabling you to store and retrieve objects using S3 APIs and features.
+* `Aws\SecurityHub` - Added several new resource details objects. Added additional details for CloudFront distributions, IAM roles, and IAM access keys. Added a new ResourceRole attribute for resources.
+* `Aws\imagebuilder` - EC2 Image Builder adds support for copying AMIs created by Image Builder to accounts specific to each Region.
+
 ## 3.156.0 - 2020-09-29
 
 * `Aws\Connect` - Update TagResource API documentation to include Contact Flows and Routing Profiles as supported resources.
