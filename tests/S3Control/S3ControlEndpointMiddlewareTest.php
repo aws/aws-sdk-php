@@ -67,22 +67,6 @@ class S3ControlEndpointMiddlewareTest extends TestCase
         $middleware($command, $this->getRequest($command));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The supplied parameters result in an invalid hostname: '127.0.0.1#.s3-control.us-west-2.amazonaws.com'
-     */
-    public function testValidatesAccountIdHostCompatability()
-    {
-        $command = new Command('GetPublicLockdown', ['AccountId' => '127.0.0.1#']);
-        $middleware = new S3ControlEndpointMiddleware(
-            $this->emptyHandler($command),
-            self::REGION,
-            []
-        );
-
-        $middleware($command, $this->getRequest($command));
-    }
-
     public function includedCommandProvider()
     {
         $s3Operations = $this->getTestClient('s3control')->getApi()->getOperations();
@@ -105,8 +89,6 @@ class S3ControlEndpointMiddlewareTest extends TestCase
             RequestInterface $req
         ) use ($command) {
             $this->assertContains('.dualstack.', (string) $req->getUri());
-            $this->assertNotContains(self::ACCOUNT_ID, $req->getUri()->getPath());
-            $this->assertContains(self::ACCOUNT_ID, $req->getUri()->getHost());
             $this->assertContains('key=query', $req->getUri()->getQuery());
         };
     }
@@ -118,8 +100,6 @@ class S3ControlEndpointMiddlewareTest extends TestCase
             RequestInterface $req
         ) use ($command) {
             $this->assertNotContains('.dualstack.', (string) $req->getUri());
-            $this->assertNotContains(self::ACCOUNT_ID, $req->getUri()->getPath());
-            $this->assertContains(self::ACCOUNT_ID, $req->getUri()->getHost());
             $this->assertContains('key=query', $req->getUri()->getQuery());
         };
     }

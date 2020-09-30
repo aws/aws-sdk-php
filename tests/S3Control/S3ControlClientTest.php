@@ -1,9 +1,6 @@
 <?php
 namespace Aws\Test\S3Control;
 
-use Aws\CommandInterface;
-use Aws\Middleware;
-use Aws\S3Control\S3ControlClient;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -14,9 +11,11 @@ use PHPUnit\Framework\TestCase;
  */
 class S3ControlClientTest extends TestCase
 {
+    use S3ControlTestingTrait;
+
     public function testAppliesS3ControlEndpointMiddleware()
     {
-        // test applies dualstack
+        // test applies the hostprefix trait for account id
         $handler = function (RequestInterface $req) {
             $this->assertSame(
                 '111222333444.s3-control.us-west-2.amazonaws.com',
@@ -25,9 +24,7 @@ class S3ControlClientTest extends TestCase
             return Promise\promise_for(new Response);
         };
 
-        $client = new S3ControlClient([
-            'version' => '2018-08-20',
-            'region' => 'us-west-2',
+        $client = $this->getTestClient([
             'http_handler' => $handler,
         ]);
         $client->deletePublicAccessBlock([
@@ -46,48 +43,20 @@ class S3ControlClientTest extends TestCase
             return Promise\promise_for(new Response);
         };
 
-        $dualStackClient = new S3ControlClient([
-            'version' => '2018-08-20',
-            'region' => 'us-west-2',
-            'use_dual_stack_endpoint' => true,
+        $dualStackClient = $this->getTestClient([
             'http_handler' => $handler,
+            'use_dual_stack_endpoint' => true,
         ]);
         $dualStackClient->deletePublicAccessBlock([
             'AccountId' => '111222333444',
         ]);
 
-        $client = new S3ControlClient([
-            'version' => '2018-08-20',
-            'region' => 'us-west-2',
+        $client = $this->getTestClient([
             'http_handler' => $handler,
         ]);
         $client->deletePublicAccessBlock([
             'AccountId' => '111222333444',
             '@use_dual_stack_endpoint' => true,
-        ]);
-    }
-
-    public function testRemovesAccountIdFromHeaderAndCommand()
-    {
-        $handler = function (RequestInterface $req) {
-            $this->assertEmpty($req->getHeader('x-amz-account-id'));
-            return Promise\promise_for(new Response);
-        };
-
-        $client = new S3ControlClient([
-            'version' => '2018-08-20',
-            'region' => 'us-west-2',
-            'http_handler' => $handler,
-        ]);
-
-        $handlerList = $client->getHandlerList();
-        $tap = Middleware::tap(function(CommandInterface $cmd, RequestInterface $req) {
-            $this->assertEmpty($cmd->offsetGet('AccountId'));
-        });
-        $handlerList->prependSign($tap, "tap");
-
-        $client->deletePublicAccessBlock([
-            'AccountId' => '111222333444',
         ]);
     }
 }

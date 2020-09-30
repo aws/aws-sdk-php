@@ -27,6 +27,7 @@ class AccessPointArnTest extends TestCase
         $this->assertEquals($expected['region'], $arn->getRegion());
         $this->assertEquals($expected['account_id'], $arn->getAccountId());
         $this->assertEquals($expected['resource'], $arn->getResource());
+        $this->assertEquals($expected['accesspoint_name'], $arn->getAccesspointName());
         $this->assertEquals($expectedString, (string) $arn);
     }
 
@@ -45,6 +46,7 @@ class AccessPointArnTest extends TestCase
                     'resource_type' => 'accesspoint',
                     'resource_id' => 'myendpoint',
                     'resource' => 'accesspoint:myendpoint',
+                    'accesspoint_name' => 'myendpoint',
                 ],
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
             ],
@@ -60,6 +62,7 @@ class AccessPointArnTest extends TestCase
                     'resource_type' => 'accesspoint',
                     'resource_id' => 'myendpoint',
                     'resource' => 'accesspoint:myendpoint',
+                    'accesspoint_name' => 'myendpoint',
                 ],
                 'arn:aws-cn:s3:cn-north-1:123456789012:accesspoint:myendpoint',
             ],
@@ -75,6 +78,7 @@ class AccessPointArnTest extends TestCase
                     'resource_type' => 'accesspoint',
                     'resource_id' => 'myendpoint',
                     'resource' => 'accesspoint/myendpoint',
+                    'accesspoint_name' => 'myendpoint',
                 ],
                 'arn:aws:foo:us-west-2:123456789012:accesspoint/myendpoint',
             ],
@@ -102,23 +106,23 @@ class AccessPointArnTest extends TestCase
         return [
             [
                 'arn:bar:baz::com:po:nents',
-                "The 4th component of an access point ARN represents the region and"
-                . " must not be empty.",
+                "The 4th component of a access point ARN represents the region and"
+                    . " must not be empty.",
             ],
             [
                 'arn:bar:baz:seven::po:nents',
-                "The 5th component of an access point ARN represents the account ID"
-                . " and must not be empty.",
+                "The 5th component of a access point ARN is required, represents"
+                    . " the account ID, and must be a valid host label.",
             ],
             [
                 'arn:bar:baz:seven:com:po:nents',
                 "The 6th component of an access point ARN represents the resource"
-                . " type and must be 'accesspoint'.",
+                    . " type and must be 'accesspoint'.",
             ],
             [
                 'arn:bar:baz:seven:com:accesspoint:',
                 "The 7th component of an access point ARN represents the resource"
-                . " ID and must not be empty.",
+                    . " ID and must not be empty.",
             ],
             [
                 'arn:aws:foo:us-west-2:123456789012:accesspoint:myendpoint:more:cmps',
@@ -127,28 +131,28 @@ class AccessPointArnTest extends TestCase
             ],
             [
                 'arn:aws:foo:us-west-2:1!:accesspoint:myendpoint',
-                "The account ID in an access point ARN must be a valid host"
-                    . " label value.",
+                "The 5th component of a access point ARN is required, represents"
+                    . " the account ID, and must be a valid host label.",
             ],
             [
                 'arn:aws:foo:us-west-2:1!:accesspoint:myendpoint',
-                "The account ID in an access point ARN must be a valid host"
-                . " label value.",
+                "The 5th component of a access point ARN is required, represents"
+                    . " the account ID, and must be a valid host label.",
             ],
             [
                 'arn:aws:foo:us-west-2:' . str_repeat('1', 64) . ':accesspoint:myendpoint',
-                "The account ID in an access point ARN must be a valid host"
-                . " label value.",
+                "The 5th component of a access point ARN is required, represents"
+                    . " the account ID, and must be a valid host label.",
             ],
             [
                 'arn:aws:foo:us-west-2:123456789012:accesspoint:endpoint@',
                 "The resource ID in an access point ARN must be a valid host"
-                . " label value.",
+                    . " label value.",
             ],
             [
                 'arn:aws:foo:us-west-2:123456789012:accesspoint:' . str_repeat('1', 64),
                 "The resource ID in an access point ARN must be a valid host"
-                . " label value.",
+                    . " label value.",
             ],
         ];
     }

@@ -374,7 +374,7 @@ class AwsClientTest extends TestCase
         $client->bar();
     }
 
-    public function testUsesCommandContextSigningRegion()
+    public function testUsesCommandContextSigningRegionAndService()
     {
         $client = $this->createHttpsEndpointClient(
             [
@@ -393,7 +393,7 @@ class AwsClientTest extends TestCase
                     CommandInterface $command,
                     RequestInterface $request
                 ) {
-                    $this->assertContains('ap-southeast-1', $request->getHeader('Authorization')[0]);
+                    $this->assertContains('ap-southeast-1/custom-service', $request->getHeader('Authorization')[0]);
                     return new Result;
                 }
             ]
@@ -404,6 +404,7 @@ class AwsClientTest extends TestCase
                 use ($handler)
             {
                 $cmd['@context']['signing_region'] = 'ap-southeast-1';
+                $cmd['@context']['signing_service'] = 'custom-service';
                 return $handler($cmd, $req);
             };
         });
