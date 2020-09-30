@@ -707,11 +707,11 @@ class CredentialProvider
                 );
             }
         }
-        $sourceRegion = isset($profiles[$sourceProfileName]['region'])
-            ? $profiles[$sourceProfileName]['region']
-            : 'us-east-1';
 
         if (empty($stsClient)) {
+            $sourceRegion = isset($profiles[$sourceProfileName]['region'])
+                ? $profiles[$sourceProfileName]['region']
+                : 'us-east-1';
             $config['preferStaticCredentials'] = true;
             $sourceCredentials = null;
             if ($roleProfile['source_profile']){
@@ -815,7 +815,9 @@ class CredentialProvider
         $config = []
     ) {
         $data = self::loadProfiles($filename);
-        $credentialSource = !empty($data[$profileName]['credential_source']) ? $data[$profileName]['credential_source'] : null;
+        $credentialSource = !empty($data[$profileName]['credential_source'])
+            ? $data[$profileName]['credential_source']
+            : null;
         $credentialsPromise = null;
 
         switch ($credentialSource) {
