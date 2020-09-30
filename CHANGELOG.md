@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.157.0 - 2020-09-30
 
 * `Aws\ApplicationAutoScaling` - This release extends Auto Scaling support for cluster storage of Managed Streaming for Kafka. Auto Scaling monitors and automatically expands storage capacity when a critical usage threshold is met.
 * `Aws\Credentials` - Fix credentialprovider error with undefined index source_profile when using credential_source
