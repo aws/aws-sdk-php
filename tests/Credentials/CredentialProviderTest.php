@@ -1075,18 +1075,72 @@ EOT;
         ]);
 
         try {
-            $creds = call_user_func(CredentialProvider::sso(
+            call_user_func(CredentialProvider::sso(
                 'default',
                 $configFilename,
                 ['ssoClient' => $sso]
             ))->wait();
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('assumedSecret', $creds->getSecretKey());
-            $this->assertNull($creds->getSecurityToken());
-            $this->assertGreaterThan(
-                DateTimeResult::fromEpoch(time())->getTimestamp(),
-                $creds->getExpiration()->getTimestamp()
-            );
+        } finally {
+            unlink($dir . '/config');
+            unlink($tokenFileName);
+            rmdir($tokenFileDirectory);
+            rmdir($dir . "/sso/");
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Profile nonExistingProfile does not exist in
+     */
+    public function testSsoProfileProviderMissingProfile()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[default]
+sso_start_url = url.co.uk
+sso_region = us-west-2
+sso_account_id = 12345
+sso_role_name = roleName
+EOT;
+        $tokenFile = <<<EOT
+{"startUrl" : "url.com", "accessToken" : "token"}
+EOT;
+
+        $configFilename = $dir . '/config';
+        file_put_contents($configFilename, $ini);
+
+        $tokenFileDirectory = $dir . "/sso/cache/";
+        if (!is_dir($tokenFileDirectory)) {
+            mkdir($tokenFileDirectory, 0777, true);
+        }
+        $tokenFileName = $tokenFileDirectory . sha1("url.co.uk") . '.json';
+        file_put_contents(
+            $tokenFileName, $tokenFile
+        );
+        putenv('HOME=' . dirname($dir));
+        $configFilename = $dir . '/config';
+        putenv('HOME=' . dirname($dir));
+
+        $result = [
+            'roleCredentials' => [
+                'accessKeyId'     => 'foo',
+                'secretAccessKey' => 'assumedSecret',
+                'sessionToken'    => null,
+                'expiration'      => DateTimeResult::fromEpoch(time() + 1000)
+            ],
+        ];
+
+        $sso = $this->getTestClient('Sso', ['credentials' => false]);
+        $this->addMockResults($sso, [
+            new Result($result)
+        ]);
+
+        try {
+            call_user_func(CredentialProvider::sso(
+                'nonExistingProfile',
+                $configFilename,
+                ['ssoClient' => $sso]
+            ))->wait();
         } finally {
             unlink($dir . '/config');
             unlink($tokenFileName);

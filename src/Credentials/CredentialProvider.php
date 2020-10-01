@@ -316,6 +316,9 @@ class CredentialProvider
                 return self::reject("Cannot read credentials from $filename");
             }
             $data = self::loadProfiles($filename);
+            if (empty($data[$ssoProfileName])) {
+                return self::reject("Profile {$ssoProfileName} does not exist in {$filename}.");
+            }
             $ssoProfile = $data[$ssoProfileName];
             if (empty($ssoProfile['sso_start_url'])
                 || empty($ssoProfile['sso_region'])
@@ -324,7 +327,7 @@ class CredentialProvider
             ) {
                 return self::reject(
                     "Profile {$ssoProfileName} in {$filename} must contain the following keys: "
-                    . 'sso_start_url, sso_region, sso_account_id, and sso_role_name'
+                    . "sso_start_url, sso_region, sso_account_id, and sso_role_name."
                 );
             }
 
