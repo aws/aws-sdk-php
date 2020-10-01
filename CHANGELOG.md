@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppSync` - Exposes the wafWebAclArn field on GraphQL api records. The wafWebAclArn field contains the amazon resource name of a WAF Web ACL if the AWS AppSync API is associated with one.
+* `Aws\EMR` - Documentation updates for elasticmapreduce
+* `Aws\Glue` - Adding additional optional map parameter to get-plan api
+* `Aws\Kafka` - Added support for Enabling Zookeeper Encryption in Transit for AWS MSK.
+* `Aws\QuickSight` - QuickSight now supports connecting to AWS Timestream data source
+* `Aws\S3` - Adds support to S3 and S3 Control clients for managing resources stored on S3 Outposts via Outposts-specific ARNs and endpoints.
+* `Aws\WAFV2` - AWS WAF is now available for AWS AppSync GraphQL APIs. AWS WAF protects against malicious attacks with AWS Managed Rules or your own custom rules. For more information see the AWS WAF Developer Guide.
+
 ## 3.157.0 - 2020-09-30
 
 * `Aws\ApplicationAutoScaling` - This release extends Auto Scaling support for cluster storage of Managed Streaming for Kafka. Auto Scaling monitors and automatically expands storage capacity when a critical usage threshold is met.
