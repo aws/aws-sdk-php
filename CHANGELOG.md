@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.0 - 2020-10-01
 
 * `Aws\AppSync` - Exposes the wafWebAclArn field on GraphQL api records. The wafWebAclArn field contains the amazon resource name of a WAF Web ACL if the AWS AppSync API is associated with one.
 * `Aws\EMR` - Documentation updates for elasticmapreduce
