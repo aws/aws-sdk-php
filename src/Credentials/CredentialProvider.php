@@ -812,7 +812,7 @@ class CredentialProvider
                 $credentialsPromise = self::ecsCredentials($config);
                 break;
             default:
-                throw new CredentialsException (
+                throw new CredentialsException(
                     "Invalid credential_source found in config file: {$credentialSource}. Valid inputs "
                     . "include Environment, Ec2InstanceMetadata, and EcsContainer."
                 );
