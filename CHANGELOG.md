@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.1 - 2020-10-02
 
 * `Aws\Batch` - Support tagging for Batch resources (compute environment, job queue, job definition and job) and tag based access control on Batch APIs
 * `Aws\Credentials` - Throws a more informative error when trying to read SSO from non existing profile
