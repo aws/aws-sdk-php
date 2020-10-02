@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - Support tagging for Batch resources (compute environment, job queue, job definition and job) and tag based access control on Batch APIs
+* `Aws\Credentials` - Throws a more informative error when trying to read SSO from non existing profile
+* `Aws\ElasticLoadBalancingv2` - This release adds support for tagging listeners, rules, and target groups on creation. This release also supported tagging operations through tagging api's for listeners and rules.
+* `Aws\PersonalizeEvents` - Adds new APIs to write item and user records to Datasets.
+* `Aws\RDS` - Adds the NCHAR Character Set ID parameter to the CreateDbInstance API for RDS Oracle.
+* `Aws\S3` - Amazon S3 Object Ownership is a new S3 feature that enables bucket owners to automatically assume ownership of objects that are uploaded to their buckets by other AWS Accounts.
+* `Aws\ServiceDiscovery` - Added support for optional parameters for DiscoverInstances API in AWS Cloud Map
+
 ## 3.158.0 - 2020-10-01
 
 * `Aws\AppSync` - Exposes the wafWebAclArn field on GraphQL api records. The wafWebAclArn field contains the amazon resource name of a WAF Web ACL if the AWS AppSync API is associated with one.
