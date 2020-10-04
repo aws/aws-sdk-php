@@ -160,6 +160,47 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
 
     /**
      * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Error reading WebIdentityTokenFile from
+     */
+    public function testNoWarningIsThrownOnInaccessibleFile()
+    {
+        $formerErrorLevel = error_reporting();
+        error_reporting(E_ERROR | E_WARNING | E_PARSE);
+        $dir = $this->clearEnv();
+        $sts = new StsClient([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => false,
+            'http_handler' => function () {
+                return new RejectedPromise([
+                    'connection_error' => false,
+                    'exception' => $this->getMockBuilder(AwsException::class)
+                        ->disableOriginalConstructor()
+                        ->getMock(),
+                    'result' => null,
+                ]);
+            }
+        ]);
+
+        $tokenPath = $dir . '/my-token.jwt';
+        file_put_contents($tokenPath, 'token');
+        chmod($tokenPath, 011);
+
+        $args['client'] = $sts;
+        $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
+        $args['WebIdentityTokenFile'] = $tokenPath;
+        $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
+        try {
+            $provider()->wait();
+        } finally {
+            chmod($tokenPath, 755);
+            unlink($tokenPath);
+            error_reporting($formerErrorLevel);
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Error assuming role from web identity credentials
      */
     public function testThrowsExceptionWhenRetrievingAssumeRoleCredentialFails()
