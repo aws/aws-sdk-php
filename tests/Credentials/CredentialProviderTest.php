@@ -549,6 +549,37 @@ EOT;
             unlink($dir . '/credentials');
         }
     }
+    
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage Circular source_profile reference found.
+     */
+    public function testCreatesFromRoleArnCatchesCircular()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[assume1]
+role_arn = arn:aws:iam::012345678910:role/role_name1
+source_profile = assume2
+role_session_name = foobar1
+[assume2]
+role_arn = arn:aws:iam::012345678910:role/role_name2
+source_profile = assume1
+role_session_name = foobar2
+EOT;
+        file_put_contents($dir . '/credentials', $ini);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            call_user_func(CredentialProvider::ini(
+                'assume2',
+                null,
+                []
+            ))->wait();
+        } finally {
+            unlink($dir . '/credentials');
+        }
+    }
 
     public function testSetsRoleSessionNameToDefault()
     {
@@ -660,6 +691,35 @@ EOT;
         } catch (\Exception $e) {
             throw $e;
         } finally {
+            unlink($dir . '/credentials');
+        }
+    }
+
+    /**
+     * @expectedException \Aws\Exception\CredentialsException
+     * @expectedExceptionMessage A role_arn must be provided with credential_source in
+     */
+    public function testAssumeRoleInConfigFromCredentialSourceNoRoleArn()
+    {
+        $dir = $this->clearEnv();
+        putenv(CredentialProvider::ENV_KEY . '=abc');
+        putenv(CredentialProvider::ENV_SESSION . '');
+
+        $credentials = <<<EOT
+[assume]
+credential_source = Environment
+role_arn = 
+EOT;
+        file_put_contents($dir . '/credentials', $credentials);
+        putenv('HOME=' . dirname($dir));
+
+        try {
+            call_user_func(CredentialProvider::ini(
+                'assume',
+                $dir . '/credentials',
+                []
+            ))->wait();
+        }  finally {
             unlink($dir . '/credentials');
         }
     }

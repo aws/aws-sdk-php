@@ -552,7 +552,8 @@ class CredentialProvider
                     $data,
                     $profile,
                     $filename,
-                    $stsClient
+                    $stsClient,
+                    $config
                 );
             }
 
@@ -665,8 +666,13 @@ class CredentialProvider
      *
      * @return callable
      */
-    private static function loadRoleProfile($profiles, $profileName, $filename, $stsClient)
-    {
+    private static function loadRoleProfile(
+        $profiles,
+        $profileName,
+        $filename,
+        $stsClient,
+        $config = []
+    ) {
         $roleProfile = $profiles[$profileName];
         $roleArn = isset($roleProfile['role_arn']) ? $roleProfile['role_arn'] : '';
         $roleSessionName = isset($roleProfile['role_session_name'])
@@ -690,15 +696,26 @@ class CredentialProvider
                     . " using profile " . $profileName . " does not exist"
                 );
             }
+            if (isset($config['visited_profiles']) &&
+                in_array($roleProfile['source_profile'], $config['visited_profiles'])
+            ) {
+                return self::reject("Circular source_profile reference found.");
+            }
+            $config['visited_profiles'] [] = $roleProfile['source_profile'];
+        } else {
+            if (empty($roleArn)) {
+                return self::reject(
+                    "A role_arn must be provided with credential_source in " .
+                    "file {$filename} under profile {$profileName} "
+                );
+            }
         }
-        $sourceRegion = isset($profiles[$sourceProfileName]['region'])
-            ? $profiles[$sourceProfileName]['region']
-            : 'us-east-1';
 
         if (empty($stsClient)) {
-            $config = [
-                'preferStaticCredentials' => true
-            ];
+            $sourceRegion = isset($profiles[$sourceProfileName]['region'])
+                ? $profiles[$sourceProfileName]['region']
+                : 'us-east-1';
+            $config['preferStaticCredentials'] = true;
             $sourceCredentials = null;
             if (!empty($roleProfile['source_profile'])){
                 $sourceCredentials = call_user_func(
@@ -801,7 +818,9 @@ class CredentialProvider
         $config = []
     ) {
         $data = self::loadProfiles($filename);
-        $credentialSource = !empty($data[$profileName]['credential_source']) ? $data[$profileName]['credential_source'] : null;
+        $credentialSource = !empty($data[$profileName]['credential_source'])
+            ? $data[$profileName]['credential_source']
+            : null;
         $credentialsPromise = null;
 
         switch ($credentialSource) {
