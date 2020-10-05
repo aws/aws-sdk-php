@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Added circular reference check on assume_role
+* `Aws\DynamoDB` - This release adds a new ReplicaStatus REGION DISABLED for the Table description. This state indicates that the AWS Region for the replica is inaccessible because the AWS Region is disabled.
+* `Aws\DynamoDBStreams` - Documentation updates for streams.dynamodb
+* `Aws\Glue` - AWS Glue crawlers now support Amazon DocumentDB (with MongoDB compatibility) and MongoDB collections. You can choose to crawl the entire data set or only a small sample to reduce crawl time.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for AVC-I and VC3 encoding in the MXF OP1a container, Nielsen non-linear watermarking, and InSync FrameFormer frame rate conversion.
+* `Aws\SageMaker` - This release adds support for launching Amazon SageMaker Studio in your VPC. Use AppNetworkAccessType in CreateDomain API to disable access to public internet and restrict the network traffic to VPC.
+
 ## 3.158.1 - 2020-10-02
 
 * `Aws\Batch` - Support tagging for Batch resources (compute environment, job queue, job definition and job) and tag based access control on Batch APIs
