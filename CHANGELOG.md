@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.2 - 2020-10-05
 
 * `Aws\Credentials` - Added circular reference check on assume_role
 * `Aws\DynamoDB` - This release adds a new ReplicaStatus REGION DISABLED for the Table description. This state indicates that the AWS Region for the replica is inaccessible because the AWS Region is disabled.
