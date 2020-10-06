@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DatabaseMigrationService` - Added new S3 endpoint settings to allow partitioning CDC data by date for S3 as target. Exposed some Extra Connection Attributes as endpoint settings for relational databases as target.
+* `Aws\EC2` - This release supports returning additional information about local gateway virtual interfaces, and virtual interface groups.
+* `Aws\KinesisAnalyticsV2` - Amazon Kinesis Analytics now supports StopApplication with 'force' option
+* `Aws\MarketplaceCatalog` - AWS Marketplace Catalog now supports FailureCode for change workflows to help differentiate client errors and server faults.
+
 ## 3.158.2 - 2020-10-05
 
 * `Aws\Credentials` - Added circular reference check on assume_role
