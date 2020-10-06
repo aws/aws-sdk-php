@@ -83,7 +83,8 @@ class InstanceProfileProvider
                         ]
                     ));
                 } catch (TransferException $e) {
-                    if (empty($e->getResponse())
+                    if (!method_exists($e, 'getResponse')
+                        || empty($e->getResponse())
                         || !in_array(
                             $e->getResponse()->getStatusCode(),
                             [400, 500, 502, 503, 504]
