@@ -4,7 +4,7 @@ namespace Aws\Credentials;
 use Aws\Exception\CredentialsException;
 use Aws\Exception\InvalidJsonException;
 use Aws\Sdk;
-use Aws\Transfer\Exception\TransferException;
+use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
