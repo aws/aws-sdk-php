@@ -213,7 +213,7 @@ class InstanceProfileProvider
                 return (string) $response->getBody();
             })->otherwise(function (array $reason) {
                 $reason = $reason['exception'];
-                if ($reason instanceof \GuzzleHttp\Exception\RequestException) {
+                if ($reason instanceof TransferException) {
                     throw $reason;
                 }
                 $msg = $reason->getMessage();
