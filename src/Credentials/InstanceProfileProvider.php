@@ -4,6 +4,7 @@ namespace Aws\Credentials;
 use Aws\Exception\CredentialsException;
 use Aws\Exception\InvalidJsonException;
 use Aws\Sdk;
+use Aws\Transfer\Exception\TransferException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
@@ -81,7 +82,7 @@ class InstanceProfileProvider
                             'x-aws-ec2-metadata-token-ttl-seconds' => 21600
                         ]
                     ));
-                } catch (RequestException $e) {
+                } catch (TransferException $e) {
                     if (empty($e->getResponse())
                         || !in_array(
                             $e->getResponse()->getStatusCode(),
@@ -118,7 +119,7 @@ class InstanceProfileProvider
                         'GET',
                         $headers
                     ));
-                } catch (RequestException $e) {
+                } catch (TransferException $e) {
                     // 401 indicates insecure flow not supported, switch to
                     // attempting secure mode for subsequent calls
                     if (!empty($this->getExceptionStatusCode($e))
@@ -154,7 +155,7 @@ class InstanceProfileProvider
                             'Invalid JSON response, retries exhausted'
                         )
                     );
-                } catch (RequestException $e) {
+                } catch (TransferException $e) {
                     // 401 indicates insecure flow not supported, switch to
                     // attempting secure mode for subsequent calls
                     if (!empty($this->getExceptionStatusCode($e))
