@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.3 - 2020-10-06
 
 * `Aws\DatabaseMigrationService` - Added new S3 endpoint settings to allow partitioning CDC data by date for S3 as target. Exposed some Extra Connection Attributes as endpoint settings for relational databases as target.
 * `Aws\EC2` - This release supports returning additional information about local gateway virtual interfaces, and virtual interface groups.
