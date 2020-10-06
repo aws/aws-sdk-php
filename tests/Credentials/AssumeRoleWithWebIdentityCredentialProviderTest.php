@@ -157,7 +157,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
         $provider()->wait();
     }
-    
+
     /**
      * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Error assuming role from web identity credentials
