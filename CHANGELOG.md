@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.4 - 2020-10-07
 
 * `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze EC2 instance-level EBS read and write operations, and throughput when generating recommendations for your EC2 instances and Auto Scaling groups.
 * `Aws\CostExplorer` - Enables Rightsizing Recommendations to analyze and present EC2 instance-level EBS metrics when generating recommendations. Returns AccessDeniedException if the account is not opted into Rightsizing
