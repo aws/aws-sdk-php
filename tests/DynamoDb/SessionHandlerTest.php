@@ -7,13 +7,14 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\DynamoDb\SessionHandler
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
  */
 class SessionHandlerTest extends TestCase
 {
     use UsesServiceTrait;
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testCanCreateSessionHandler()
     {
         $client = $this->getTestSdk()->createDynamoDb();
@@ -30,6 +31,9 @@ class SessionHandlerTest extends TestCase
         );
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testHandlerFunctions()
     {
         $data = ['fizz' => 'buzz'];
@@ -69,6 +73,9 @@ class SessionHandlerTest extends TestCase
         $this->assertTrue($sh->close());
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testHandlerWhenNothingWritten()
     {
         $connection = $this->getMockForAbstractClass(
@@ -85,6 +92,9 @@ class SessionHandlerTest extends TestCase
         $this->assertTrue($sh->close());
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testSessionDataCanBeWrittenToNewIdWithNoChanges()
     {
         $data = 'serializedData';
