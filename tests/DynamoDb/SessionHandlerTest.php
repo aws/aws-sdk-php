@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers Aws\DynamoDb\SessionHandler
  * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
  */
 class SessionHandlerTest extends TestCase
 {
