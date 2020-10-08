@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.5 - 2020-10-08
 
 * `Aws\CloudWatchEvents` - Amazon EventBridge (formerly called CloudWatch Events) adds support for target Dead-letter Queues and custom retry policies.
 * `Aws\CostExplorer` - You can now create hierarchical cost categories by choosing "Cost Category" as a dimension. You can also track the status of your cost category updates to your cost and usage information.
