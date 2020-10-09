@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.6 - 2020-10-09
 
 * `Aws\Amplify` - Performance mode optimizes for faster hosting performance by keeping content cached at the edge for a longer interval - enabling can make code changes can take up to 10 minutes to roll out.
 * `Aws\EKS` - This release introduces a new Amazon EKS error code: "ClusterUnreachable"
