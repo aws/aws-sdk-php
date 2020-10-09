@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Amplify` - Performance mode optimizes for faster hosting performance by keeping content cached at the edge for a longer interval - enabling can make code changes can take up to 10 minutes to roll out.
+* `Aws\EKS` - This release introduces a new Amazon EKS error code: "ClusterUnreachable"
+* `Aws\MediaLive` - WAV audio output. Extracting ancillary captions in MP4 file inputs. Priority on channels feeding a multiplex (higher priority channels will tend to have higher video quality).
+* `Aws\ServiceCatalog` - This new API takes either a ProvisonedProductId or a ProvisionedProductName, along with a list of 1 or more output keys and responds with the (key,value) pairs of those outputs.
+* `Aws\Snowball` - We added new APIs to allow customers to better manage their device shipping. You can check if your shipping label expired, generate a new label, and tell us that you received or shipped your job.
+
 ## 3.158.5 - 2020-10-08
 
 * `Aws\CloudWatchEvents` - Amazon EventBridge (formerly called CloudWatch Events) adds support for target Dead-letter Queues and custom retry policies.
