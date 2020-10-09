@@ -82,7 +82,6 @@ class SessionHandlerTest extends TestCase
             ->willReturn(true);
 
         session_id('test');
-
         $sh = new SessionHandler($connection);
         $sh->open('', 'name');
         $this->assertTrue($sh->close());

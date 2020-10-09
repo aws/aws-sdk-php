@@ -22,7 +22,6 @@ class DynamoDbClientTest extends TestCase
 
     /**
      * @runInSeparateProcess
-     * @preserveGlobalState disabled
      */
     public function testRegisterSessionHandlerReturnsHandler()
     {
