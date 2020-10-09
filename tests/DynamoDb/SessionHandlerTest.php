@@ -12,9 +12,6 @@ class SessionHandlerTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testCanCreateSessionHandler()
     {
         $client = $this->getTestSdk()->createDynamoDb();
@@ -31,9 +28,6 @@ class SessionHandlerTest extends TestCase
         );
     }
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testHandlerFunctions()
     {
         $data = ['fizz' => 'buzz'];
@@ -66,7 +60,7 @@ class SessionHandlerTest extends TestCase
             ->willReturn(true);
 
         $sh = new SessionHandler($connection);
-        session_id('test');
+
         $this->assertTrue($sh->open('foo', 'bar'));
         $this->assertEquals('', $sh->read('test'));
         $this->assertFalse($sh->write('test', serialize($data)));
@@ -75,6 +69,7 @@ class SessionHandlerTest extends TestCase
 
     /**
      * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testHandlerWhenNothingWritten()
     {
@@ -86,14 +81,15 @@ class SessionHandlerTest extends TestCase
             ->with('name_test', '', false)
             ->willReturn(true);
 
-        $sh = new SessionHandler($connection);
         session_id('test');
+        $sh = new SessionHandler($connection);
         $sh->open('', 'name');
         $this->assertTrue($sh->close());
     }
 
     /**
      * @runInSeparateProcess
+     * @preserveGlobalState disabled
      */
     public function testSessionDataCanBeWrittenToNewIdWithNoChanges()
     {
