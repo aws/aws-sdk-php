@@ -81,6 +81,8 @@ class SessionHandlerTest extends TestCase
             ->with('name_test', '', false)
             ->willReturn(true);
 
+        session_id('test');
+
         $sh = new SessionHandler($connection);
         $sh->open('', 'name');
         $this->assertTrue($sh->close());
