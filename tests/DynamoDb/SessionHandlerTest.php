@@ -4,7 +4,6 @@ namespace Aws\Test\DynamoDb;
 use Aws\DynamoDb\SessionHandler;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
-use Aws\Test\TestSessionHandler;
 
 /**
  * @covers Aws\DynamoDb\SessionHandler
