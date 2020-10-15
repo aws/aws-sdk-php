@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.7 - 2020-10-15
 
 * `Aws\AccessAnalyzer` - This release adds support for the ApplyArchiveRule api in IAM Access Analyzer. The ApplyArchiveRule api allows users to apply an archive rule retroactively to existing findings in an analyzer.
 * `Aws\Budgets` - This release introduces AWS Budgets Actions, allowing you to define an explicit response(or set of responses) to take when your budget exceeds it's action threshold.
