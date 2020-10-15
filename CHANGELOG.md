@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AccessAnalyzer` - This release adds support for the ApplyArchiveRule api in IAM Access Analyzer. The ApplyArchiveRule api allows users to apply an archive rule retroactively to existing findings in an analyzer.
+* `Aws\Budgets` - This release introduces AWS Budgets Actions, allowing you to define an explicit response(or set of responses) to take when your budget exceeds it's action threshold.
+* `Aws\CostExplorer` - This release improves email validation for subscriptions on the SDK endpoints.
+* `Aws\DatabaseMigrationService` - When creating Endpoints, Replication Instances, and Replication Tasks, the feature provides you the option to specify friendly name to the resources.
+* `Aws\Glue` - API Documentation updates for Glue Get-Plan API
+* `Aws\GroundStation` - Adds error message attribute to DescribeContact DataflowDetails
+* `Aws\IoT` - Add new variable, lastStatusChangeDate, to DescribeDomainConfiguration API
+* `Aws\Macie2` - This release of the Amazon Macie API adds support for pausing and resuming classification jobs. Also, sensitive data findings now include location data for up to 15 occurrences of sensitive data.
+* `Aws\RDS` - Return tags for all resources in the output of DescribeDBInstances, DescribeDBSnapshots, DescribeDBClusters, and DescribeDBClusterSnapshots API operations.
+* `Aws\Rekognition` - This SDK Release introduces new API (DetectProtectiveEquipment) for Amazon Rekognition. This release also adds ServiceQuotaExceeded exception to Amazon Rekognition IndexFaces API.
+* `Aws\SSM` - This Patch Manager release now supports searching for available packages from Amazon Linux and Amazon Linux 2 via the DescribeAvailablePatches API.
+* `Aws\Transfer` - Add support to associate VPC Security Groups at server creation.
+* `Aws\WorkMail` - Add CreateOrganization and DeleteOrganization API operations.
+* `Aws\WorkSpaces` - Documentation updates for WorkSpaces
+* `Aws\XRay` - Enhancing CreateGroup, UpdateGroup, GetGroup and GetGroups APIs to support configuring X-Ray Insights Notifications. Adding TraceLimit information into X-Ray BatchGetTraces API response.
+
 ## 3.158.6 - 2020-10-09
 
 * `Aws\Amplify` - Performance mode optimizes for faster hosting performance by keeping content cached at the edge for a longer interval - enabling can make code changes can take up to 10 minutes to roll out.
