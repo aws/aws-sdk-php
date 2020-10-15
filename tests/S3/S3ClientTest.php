@@ -40,7 +40,7 @@ class S3ClientTest extends TestCase
             'endpoint'        => 'http://test.domain.com',
             'bucket_endpoint' => true
         ]);
-        $this->assertEquals(
+        $this->assertSame(
             'http://test.domain.com/key',
             $c->getObjectUrl('test', 'key')
         );
@@ -193,7 +193,7 @@ class S3ClientTest extends TestCase
             'Key'    => '+%.a'
         ]);
         $url = $client->createPresignedRequest($command, 1342138769)->getUri();
-        $this->assertEquals('/foobar.test.abc/%2B%25.a', $url->getPath());
+        $this->assertSame('/foobar.test.abc/%2B%25.a', $url->getPath());
         $query = Psr7\parse_query($url->getQuery());
         $this->assertArrayHasKey('X-Amz-Credential', $query);
         $this->assertArrayHasKey('X-Amz-Signature', $query);
@@ -212,7 +212,7 @@ class S3ClientTest extends TestCase
             'Key'    => '+%.a'
         ]);
         $url = $client->createPresignedRequest($command, 1342138769)->getUri();
-        $this->assertEquals('/foobar.test.abc/%2B%25.a', $url->getPath());
+        $this->assertSame('/foobar.test.abc/%2B%25.a', $url->getPath());
         $query = Psr7\parse_query($url->getQuery());
         $this->assertArrayHasKey('X-Amz-Credential', $query);
         $this->assertArrayHasKey('X-Amz-Signature', $query);
@@ -264,7 +264,7 @@ class S3ClientTest extends TestCase
                 $this->assertSame($exists, $s3->doesBucketExist($bucket));
             }
         } catch (\Exception $e) {
-            $this->assertEquals(-1, $exists);
+            $this->assertSame(-1, $exists);
         }
     }
 
@@ -274,7 +274,7 @@ class S3ClientTest extends TestCase
             'region'      => 'us-east-1',
             'credentials' => false
         ]);
-        $this->assertEquals('https://foo.s3.amazonaws.com/bar', $s3->getObjectUrl('foo', 'bar'));
+        $this->assertSame('https://foo.s3.amazonaws.com/bar', $s3->getObjectUrl('foo', 'bar'));
     }
 
     public function testReturnsObjectUrlWithPathStyleFallback()
@@ -283,7 +283,7 @@ class S3ClientTest extends TestCase
             'region'      => 'us-east-1',
             'credentials' => false,
         ]);
-        $this->assertEquals('https://s3.amazonaws.com/foo.baz/bar', $s3->getObjectUrl('foo.baz', 'bar'));
+        $this->assertSame('https://s3.amazonaws.com/foo.baz/bar', $s3->getObjectUrl('foo.baz', 'bar'));
     }
 
     public function testReturnsObjectUrlWithPathStyle()
@@ -293,7 +293,7 @@ class S3ClientTest extends TestCase
             'credentials' => false,
             'use_path_style_endpoint' => true
         ]);
-        $this->assertEquals('https://s3.amazonaws.com/foo/bar', $s3->getObjectUrl('foo', 'bar'));
+        $this->assertSame('https://s3.amazonaws.com/foo/bar', $s3->getObjectUrl('foo', 'bar'));
     }
 
     public function testReturnsObjectUrlViaPath()
@@ -303,7 +303,7 @@ class S3ClientTest extends TestCase
             'region'      => 'us-east-1',
             'credentials' => false
         ]);
-        $this->assertEquals(
+        $this->assertSame(
             'https://foo.s3.amazonaws.com/bar',
             $s3->getObjectUrl('foo', 'bar')
         );
@@ -316,7 +316,7 @@ class S3ClientTest extends TestCase
             'region'      => 'us-east-1',
             'credentials' => false
         ]);
-        $this->assertEquals(
+        $this->assertSame(
             'https://s3.amazonaws.com/foo.baz/bar',
             $s3->getObjectUrl('foo.baz', 'bar')
         );
@@ -330,7 +330,7 @@ class S3ClientTest extends TestCase
             'credentials' => false,
             'use_path_style_endpoint' => true
         ]);
-        $this->assertEquals(
+        $this->assertSame(
             'https://s3.amazonaws.com/foo.baz/bar',
             $s3->getObjectUrl('foo.baz', 'bar')
         );
@@ -351,7 +351,7 @@ class S3ClientTest extends TestCase
         /** @var S3Client $client */
         $client = $this->getTestClient('S3');
         $client->getHandlerList()->setHandler(function ($c, $r) {
-            $this->assertEquals('bucket', $c['Bucket']);
+            $this->assertSame('bucket', $c['Bucket']);
             return Promise\promise_for(new Result([
                 'IsTruncated' => false,
                 'Marker' => '',
@@ -467,7 +467,7 @@ class S3ClientTest extends TestCase
             'SaveAs' => 'baz',
         ]);
 
-        $this->assertEquals('sink=baz', (string) $result['Body']);
+        $this->assertSame('sink=baz', (string) $result['Body']);
     }
 
     public function testRequestSucceedsWithColon()
@@ -521,7 +521,7 @@ class S3ClientTest extends TestCase
             'Bucket' => 'bucket',
         ]);
 
-        $this->assertEquals(0, $retries);
+        $this->assertSame(0, $retries);
     }
 
     public function clientRetrySettingsProvider()
@@ -582,7 +582,7 @@ class S3ClientTest extends TestCase
 
         $client->{$operation}($payload);
 
-        $this->assertEquals(0, $retries);
+        $this->assertSame(0, $retries);
     }
 
     public function successErrorResponseProvider()
@@ -864,7 +864,7 @@ EOXML;
             'Key' => 'key',
         ]);
 
-        $this->assertEquals(0, $retries);
+        $this->assertSame(0, $retries);
     }
 
     /**
@@ -906,7 +906,7 @@ EOXML;
             'UploadId' => 1,
         ]);
 
-        $this->assertEquals(0, $retries);
+        $this->assertSame(0, $retries);
     }
 
     /**
@@ -944,7 +944,7 @@ EOXML;
             'Key' => 'key',
         ]);
 
-        $this->assertEquals(0, $retries);
+        $this->assertSame(0, $retries);
     }
 
     public function testListObjectsAppliesUrlEncodingWhenNoneSupplied()
@@ -1410,11 +1410,11 @@ EOXML;
             'version' => 'latest',
             'use_arn_region' => $cache,
             'handler' => function (CommandInterface $cmd, RequestInterface $req) {
-                $this->assertEquals(
+                $this->assertSame(
                     'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                     $req->getUri()->getHost()
                 );
-                $this->assertEquals(
+                $this->assertSame(
                     '/Bar/Baz',
                     $req->getUri()->getPath()
                 );
@@ -1438,15 +1438,15 @@ EOXML;
             'region' => 'us-west-2',
             'version' => 'latest',
             'handler' => function (CommandInterface $cmd, RequestInterface $req) {
-                $this->assertEquals(
+                $this->assertSame(
                     'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                     $req->getUri()->getHost()
                 );
-                $this->assertEquals(
+                $this->assertSame(
                     '/copied-object',
                     $req->getUri()->getPath()
                 );
-                $this->assertEquals(
+                $this->assertSame(
                     'arn:aws:s3:us-west-2:1234567890123:accesspoint:my-my/finks-object',
                     $req->getHeader('x-amz-copy-source')[0]
                 );
@@ -1498,7 +1498,7 @@ EOXML;
             'region' => 'us-east-1',
         ]);
         $uri = new Uri($endpoint['endpoint']);
-        $this->assertEquals($uri->getHost(), $client->getEndpoint()->getHost());
+        $this->assertSame($uri->getHost(), $client->getEndpoint()->getHost());
     }
 
     /**
@@ -1655,6 +1655,6 @@ EOXML;
             'CopySource' => 'test-source/key'
         ]);
 
-        $this->assertEquals(3, $counter);
+        $this->assertSame(3, $counter);
     }
 }

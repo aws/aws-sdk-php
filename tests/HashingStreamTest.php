@@ -16,7 +16,7 @@ class HashingStreamTest extends TestCase
         $source = Psr7\stream_for('foobar');
         $hash = new PhpHash('md5');
         (new HashingStream($source, $hash))->getContents();
-        $this->assertEquals(md5('foobar'), bin2hex($hash->complete()));
+        $this->assertSame(md5('foobar'), bin2hex($hash->complete()));
     }
 
     public function testCallbackTriggeredWhenComplete()
@@ -39,12 +39,12 @@ class HashingStreamTest extends TestCase
 
         // Reading works fine
         $bytes = $stream->read(3);
-        $this->assertEquals('foo', $bytes);
+        $this->assertSame('foo', $bytes);
 
         // Seeking to 0 is fine
         $stream->seek(0);
         $stream->getContents();
-        $this->assertEquals(md5('foobar'), bin2hex($hash->complete()));
+        $this->assertSame(md5('foobar'), bin2hex($hash->complete()));
 
         // Seeking arbitrarily is not fine
         $stream->seek(3);

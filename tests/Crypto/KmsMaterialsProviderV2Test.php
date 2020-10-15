@@ -22,7 +22,7 @@ class KmsMaterialsProviderV2Test extends TestCase
         $keyId = '11111111-2222-3333-4444-555555555555';
 
         $provider = new KmsMaterialsProviderV2($client, $keyId);
-        $this->assertEquals('kms+context', $provider->getWrapAlgorithmName());
+        $this->assertSame('kms+context', $provider->getWrapAlgorithmName());
     }
 
     public function testGeneratesCek()
@@ -41,11 +41,11 @@ class KmsMaterialsProviderV2Test extends TestCase
                 ],
                 $cmd['EncryptionContext']
             );
-            $this->assertEquals(
+            $this->assertSame(
                 'AES_256',
                 $cmd['KeySpec']
             );
-            $this->assertEquals(
+            $this->assertSame(
                 $keyId,
                 $cmd['KeyId']
             );
@@ -158,7 +158,7 @@ class KmsMaterialsProviderV2Test extends TestCase
                 ],
                 $cmd['EncryptionContext']
             );
-            $this->assertEquals(
+            $this->assertSame(
                 'encrypted',
                 $cmd['CiphertextBlob']
             );
@@ -170,7 +170,7 @@ class KmsMaterialsProviderV2Test extends TestCase
         ]);
 
         $provider = new KmsMaterialsProviderV2($client, $keyId);
-        $this->assertEquals(
+        $this->assertSame(
             'plaintext',
             $provider->decryptCek(
                 'encrypted',
@@ -213,7 +213,7 @@ class KmsMaterialsProviderV2Test extends TestCase
                 ],
                 $cmd['EncryptionContext']
             );
-            $this->assertEquals(
+            $this->assertSame(
                 'encrypted',
                 $cmd['CiphertextBlob']
             );
@@ -224,7 +224,7 @@ class KmsMaterialsProviderV2Test extends TestCase
         ]);
 
         $provider = new KmsMaterialsProviderV2($client);
-        $this->assertEquals(
+        $this->assertSame(
             'plaintext',
             $provider->decryptCek(
                 'encrypted',

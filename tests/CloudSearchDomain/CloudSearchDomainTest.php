@@ -29,7 +29,7 @@ class CloudSearchDomainTest extends TestCase
             'signature' => 'v4',
             'version'   => 'latest'
         ]);
-        $this->assertEquals('us-west-2', $client->getRegion());
+        $this->assertSame('us-west-2', $client->getRegion());
     }
 
     public function testConvertGetToPost()
@@ -41,10 +41,10 @@ class CloudSearchDomainTest extends TestCase
             ''
         );
         $request = CloudSearchDomainClient::convertGetToPost($request);
-        $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('application/x-www-form-urlencoded', $request->getHeaderLine('Content-Type'));
-        $this->assertEquals(7, $request->getHeaderLine('Content-Length'));
-        $this->assertEquals('foo=bar', $request->getBody());
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('application/x-www-form-urlencoded', $request->getHeaderLine('Content-Type'));
+        $this->assertSame('7', $request->getHeaderLine('Content-Length'));
+        $this->assertSame('foo=bar', (string)$request->getBody());
         $this->assertSame('', $request->getUri()->getQuery());
     }
 }

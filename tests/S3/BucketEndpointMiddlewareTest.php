@@ -19,8 +19,8 @@ class BucketEndpointMiddlewareTest extends TestCase
         $command = $s3->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'Bar/Baz']);
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) {
-                $this->assertEquals('foo.s3.amazonaws.com', $req->getUri()->getHost());
-                $this->assertEquals('/Bar/Baz', $req->getRequestTarget());
+                $this->assertSame('foo.s3.amazonaws.com', $req->getUri()->getHost());
+                $this->assertSame('/Bar/Baz', $req->getRequestTarget());
             })
         );
         $s3->execute($command);
@@ -35,8 +35,8 @@ class BucketEndpointMiddlewareTest extends TestCase
         $command = $s3->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'Bar/Baz']);
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) {
-                $this->assertEquals('s3.amazonaws.com', $req->getUri()->getHost());
-                $this->assertEquals('/foo/Bar/Baz', $req->getRequestTarget());
+                $this->assertSame('s3.amazonaws.com', $req->getUri()->getHost());
+                $this->assertSame('/foo/Bar/Baz', $req->getRequestTarget());
             })
         );
         $s3->execute($command);
@@ -49,8 +49,8 @@ class BucketEndpointMiddlewareTest extends TestCase
         $command = $s3->getCommand('GetBucketLocation', ['Bucket' => 'foo']);
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) {
-                $this->assertEquals('foo.s3.amazonaws.com', $req->getUri()->getHost());
-                $this->assertEquals('/?location', $req->getRequestTarget());
+                $this->assertSame('foo.s3.amazonaws.com', $req->getUri()->getHost());
+                $this->assertSame('/?location', $req->getRequestTarget());
             })
         );
         $s3->execute($command);
@@ -65,8 +65,8 @@ class BucketEndpointMiddlewareTest extends TestCase
         $command = $s3->getCommand('GetBucketLocation', ['Bucket' => 'foo']);
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) {
-                $this->assertEquals('s3.amazonaws.com', $req->getUri()->getHost());
-                $this->assertEquals('/foo?location', $req->getRequestTarget());
+                $this->assertSame('s3.amazonaws.com', $req->getUri()->getHost());
+                $this->assertSame('/foo?location', $req->getRequestTarget());
             })
         );
         $s3->execute($command);
@@ -85,8 +85,8 @@ class BucketEndpointMiddlewareTest extends TestCase
         ]);
         $command->getHandlerList()->appendSign(
             Middleware::tap(function ($cmd, $req) {
-                $this->assertEquals('test.domain.com', $req->getUri()->getHost());
-                $this->assertEquals('/key', $req->getRequestTarget());
+                $this->assertSame('test.domain.com', $req->getUri()->getHost());
+                $this->assertSame('/key', $req->getRequestTarget());
             })
         );
         $s3->execute($command);

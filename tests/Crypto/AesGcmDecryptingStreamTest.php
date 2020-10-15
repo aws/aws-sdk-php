@@ -52,7 +52,7 @@ class AesGcmDecryptingStreamTest extends TestCase
             $keySize
         );
         $this->assertSame($iv, $decryptingStream->getCurrentIv());
-        $this->assertEquals(
+        $this->assertSame(
             'AES/GCM/NoPadding',
             $decryptingStream->getAesName()
         );
@@ -134,7 +134,7 @@ class AesGcmDecryptingStreamTest extends TestCase
         );
         $cipherText = (string) $stream;
 
-        $this->assertEquals($cipherText, $knownAnswerTest['PT']);
+        $this->assertSame($cipherText, $knownAnswerTest['PT']);
     }
 
     public function testIsNotWritable()

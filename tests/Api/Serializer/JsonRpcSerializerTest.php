@@ -40,13 +40,13 @@ class JsonRpcSerializerTest extends TestCase
         $j = new JsonRpcSerializer($service, 'http://foo.com');
         $cmd = new Command('foo', ['baz' => 'bam']);
         $request = $j($cmd);
-        $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com', (string) $request->getUri());
-        $this->assertEquals(
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com', (string) $request->getUri());
+        $this->assertSame(
             'application/x-amz-json-1.1',
             $request->getHeaderLine('Content-Type')
         );
-        $this->assertEquals('test.foo', $request->getHeaderLine('X-Amz-Target'));
-        $this->assertEquals('{"baz":"bam"}', (string) $request->getBody());
+        $this->assertSame('test.foo', $request->getHeaderLine('X-Amz-Target'));
+        $this->assertSame('{"baz":"bam"}', (string) $request->getBody());
     }
 }

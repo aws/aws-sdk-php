@@ -1,6 +1,7 @@
 <?php
-namespace Aws\Test;
+namespace Aws\Test\Exception;
 
+use Aws\Test\UsesServiceTrait;
 use Aws\Api\ApiProvider;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
@@ -29,9 +30,9 @@ class AwsExceptionTest extends TestCase
 
         $command = new Command('foo');
         $e = new AwsException('Foo', $command, $ctx);
-        $this->assertEquals('10', $e->getAwsRequestId());
-        $this->assertEquals('mytype', $e->getAwsErrorType());
-        $this->assertEquals('mycode', $e->getAwsErrorCode());
+        $this->assertSame('10', $e->getAwsRequestId());
+        $this->assertSame('mytype', $e->getAwsErrorType());
+        $this->assertSame('mycode', $e->getAwsErrorCode());
         $this->assertSame($command, $e->getCommand());
         $this->assertNull($e->getResult());
     }
@@ -41,7 +42,7 @@ class AwsExceptionTest extends TestCase
         $ctx = ['response' => new Response(400)];
         $command = new Command('foo');
         $e = new AwsException('Foo', $command, $ctx);
-        $this->assertEquals(400, $e->getStatusCode());
+        $this->assertSame(400, $e->getStatusCode());
     }
 
     public function testSetsMaxRetriesExceeded()
@@ -128,12 +129,12 @@ class AwsExceptionTest extends TestCase
             new Command('bar'),
             ['body' => ['a' => 'b', 'c' => 'd']]
         );
-        $this->assertEquals('b', $e['a']);
-        $this->assertEquals('d', $e['c']);
-        $this->assertEquals('d', $e->get('c'));
+        $this->assertSame('b', $e['a']);
+        $this->assertSame('d', $e['c']);
+        $this->assertSame('d', $e->get('c'));
         $this->assertTrue($e->hasKey('c'));
         $this->assertFalse($e->hasKey('f'));
-        $this->assertEquals('b', $e->search('a'));
+        $this->assertSame('b', $e->search('a'));
     }
 
     public function testProvidesErrorShape()

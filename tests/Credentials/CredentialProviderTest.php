@@ -86,8 +86,8 @@ EOT;
         )
             ->wait();
 
-        $this->assertEquals($saved->getAccessKeyId(), $found->getAccessKeyId());
-        $this->assertEquals($saved->getSecretKey(), $found->getSecretKey());
+        $this->assertSame($saved->getAccessKeyId(), $found->getAccessKeyId());
+        $this->assertSame($saved->getSecretKey(), $found->getSecretKey());
         $this->assertEquals($saved->getSecurityToken(), $found->getSecurityToken());
         $this->assertEquals($saved->getExpiration(), $found->getExpiration());
     }
@@ -110,7 +110,7 @@ EOT;
         )
             ->wait();
 
-        $this->assertEquals(1, $timesCalled);
+        $this->assertSame(1, $timesCalled);
     }
 
     public function testPersistsToCache()
@@ -137,10 +137,10 @@ EOT;
                 ->wait();
         }
 
-        $this->assertEquals(1, $timesCalled);
+        $this->assertSame(1, $timesCalled);
         $this->assertCount(1, $cache);
-        $this->assertEquals($creds->getAccessKeyId(), $found->getAccessKeyId());
-        $this->assertEquals($creds->getSecretKey(), $found->getSecretKey());
+        $this->assertSame($creds->getAccessKeyId(), $found->getAccessKeyId());
+        $this->assertSame($creds->getSecretKey(), $found->getSecretKey());
         $this->assertEquals($creds->getSecurityToken(), $found->getSecurityToken());
         $this->assertEquals($creds->getExpiration(), $found->getExpiration());
     }
@@ -152,9 +152,9 @@ EOT;
         putenv(CredentialProvider::ENV_SECRET . '=123');
         putenv(CredentialProvider::ENV_SESSION . '=456');
         $creds = call_user_func(CredentialProvider::env())->wait();
-        $this->assertEquals('abc', $creds->getAccessKeyId());
-        $this->assertEquals('123', $creds->getSecretKey());
-        $this->assertEquals('456', $creds->getSecurityToken());
+        $this->assertSame('abc', $creds->getAccessKeyId());
+        $this->assertSame('123', $creds->getSecretKey());
+        $this->assertSame('456', $creds->getSecurityToken());
     }
 
     public function testCreatesFromEnvironmentVariablesNullToken()
@@ -164,8 +164,8 @@ EOT;
         putenv(CredentialProvider::ENV_SECRET . '=123');
         putenv(CredentialProvider::ENV_SESSION . '');
         $creds = call_user_func(CredentialProvider::env())->wait();
-        $this->assertEquals('abc', $creds->getAccessKeyId());
-        $this->assertEquals('123', $creds->getSecretKey());
+        $this->assertSame('abc', $creds->getAccessKeyId());
+        $this->assertSame('123', $creds->getSecretKey());
         $this->assertNull($creds->getSecurityToken());
     }
 
@@ -349,8 +349,8 @@ EOT;
 
         $creds = call_user_func(CredentialProvider::process('foo'))->wait();
         unlink($dir . '/credentials');
-        $this->assertEquals('foo', $creds->getAccessKeyId());
-        $this->assertEquals('bar', $creds->getSecretKey());
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('bar', $creds->getSecretKey());
     }
 
     public function testCreatesFromProcessCredentialWithFilename()
@@ -365,8 +365,8 @@ EOT;
 
         $creds = call_user_func(CredentialProvider::process('baz', $dir . '/mycreds'))->wait();
         unlink($dir . '/mycreds');
-        $this->assertEquals('foo', $creds->getAccessKeyId());
-        $this->assertEquals('bar', $creds->getSecretKey());
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('bar', $creds->getSecretKey());
     }
 
     public function testCreatesTemporaryFromProcessCredential()
@@ -383,10 +383,10 @@ EOT;
 
         $creds = call_user_func(CredentialProvider::process('foo'))->wait();
         unlink($dir . '/credentials');
-        $this->assertEquals('foo', $creds->getAccessKeyId());
-        $this->assertEquals('bar', $creds->getSecretKey());
-        $this->assertEquals('baz', $creds->getSecurityToken());
-        $this->assertEquals($expires, $creds->getExpiration());
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('bar', $creds->getSecretKey());
+        $this->assertSame('baz', $creds->getSecurityToken());
+        $this->assertSame($expires, $creds->getExpiration());
     }
 
     /**
@@ -538,8 +538,8 @@ EOT;
 
             $body = (string) $history->getLastRequest()->getBody();
             $this->assertContains('RoleSessionName=foobar', $body);
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertInternalType('int', $creds->getExpiration());
             $this->assertFalse($creds->isExpired());
@@ -778,8 +778,8 @@ EOT;
                 $dir . '/credentials',
                 []
             ))->wait();
-            $this->assertEquals('abc', $creds->getAccessKeyId());
-            $this->assertEquals('123', $creds->getSecretKey());
+            $this->assertSame('abc', $creds->getAccessKeyId());
+            $this->assertSame('123', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
         } catch (\Exception $e) {
             throw $e;
@@ -1008,8 +1008,8 @@ EOT;
                 $configFilename,
                 ['ssoClient' => $sso]
             ))->wait();
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertGreaterThan(
                 DateTimeResult::fromEpoch(time())->getTimestamp(),
@@ -1072,8 +1072,8 @@ EOT;
             $creds = call_user_func(CredentialProvider::defaultProvider(
                 ['ssoClient' => $sso]
             ))->wait();
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertGreaterThan(
                 DateTimeResult::fromEpoch(time())->getTimestamp(),
@@ -1285,8 +1285,8 @@ EOT;
                 null,
                 $config
             ))->wait();
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertInternalType('int', $creds->getExpiration());
             $this->assertFalse($creds->isExpired());
@@ -1338,8 +1338,8 @@ EOT;
                 null,
                 $config
             ))->wait();
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertInternalType('int', $creds->getExpiration());
             $this->assertFalse($creds->isExpired());
@@ -1388,8 +1388,8 @@ EOT;
                 null,
                 $config
             ))->wait();
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertInternalType('int', $creds->getExpiration());
             $this->assertFalse($creds->isExpired());
@@ -1430,7 +1430,7 @@ EOT;
         $sts = $this->getTestClient('Sts', ['credentials' => false]);
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
-                $this->assertEquals('fooEnv', $c->toArray()['RoleSessionName']);
+                $this->assertSame('fooEnv', $c->toArray()['RoleSessionName']);
                 return Promise\promise_for(new Result($result));
             }
         );
@@ -1442,8 +1442,8 @@ EOT;
             $creds = call_user_func(CredentialProvider::assumeRoleWithWebIdentityCredentialProvider(
                 $config
             ))->wait();
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertInternalType('int', $creds->getExpiration());
             $this->assertFalse($creds->isExpired());
@@ -1482,7 +1482,7 @@ EOT;
         $sts = $this->getTestClient('Sts', ['credentials' => false]);
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
-                $this->assertEquals('fooCreds', $c->toArray()['RoleSessionName']);
+                $this->assertSame('fooCreds', $c->toArray()['RoleSessionName']);
                 return Promise\promise_for(new Result($result));
             }
         );
@@ -1494,8 +1494,8 @@ EOT;
             $creds = call_user_func(CredentialProvider::assumeRoleWithWebIdentityCredentialProvider(
                 $config
             ))->wait();
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertInternalType('int', $creds->getExpiration());
             $this->assertFalse($creds->isExpired());
@@ -1534,7 +1534,7 @@ EOT;
         $sts = $this->getTestClient('Sts', ['credentials' => false]);
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
-                $this->assertEquals('fooConfig', $c->toArray()['RoleSessionName']);
+                $this->assertSame('fooConfig', $c->toArray()['RoleSessionName']);
                 return Promise\promise_for(new Result($result));
             }
         );
@@ -1546,8 +1546,8 @@ EOT;
             $creds = call_user_func(CredentialProvider::assumeRoleWithWebIdentityCredentialProvider(
                 $config
             ))->wait();
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertInternalType('int', $creds->getExpiration());
             $this->assertFalse($creds->isExpired());
@@ -1585,7 +1585,7 @@ EOT;
         $sts = $this->getTestClient('Sts', ['credentials' => false]);
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
-                $this->assertEquals('fooRole', $c->toArray()['RoleSessionName']);
+                $this->assertSame('fooRole', $c->toArray()['RoleSessionName']);
                 return Promise\promise_for(new Result($result));
             }
         );
@@ -1598,8 +1598,8 @@ EOT;
             $creds = call_user_func(CredentialProvider::assumeRoleWithWebIdentityCredentialProvider(
                 $config
             ))->wait();
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('assumedSecret', $creds->getSecretKey());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('assumedSecret', $creds->getSecretKey());
             $this->assertNull($creds->getSecurityToken());
             $this->assertInternalType('int', $creds->getExpiration());
             $this->assertFalse($creds->isExpired());
@@ -1669,7 +1669,7 @@ EOT;
         $ref = new \ReflectionClass('Aws\Credentials\CredentialProvider');
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
-        $this->assertEquals('C:\\Michael\\Home', $meth->invoke(null));
+        $this->assertSame('C:\\Michael\\Home', $meth->invoke(null));
     }
 
     public function testMemoizes()
@@ -1682,9 +1682,9 @@ EOT;
         };
         $p = CredentialProvider::memoize($f);
         $this->assertSame($creds, $p()->wait());
-        $this->assertEquals(1, $called);
+        $this->assertSame(1, $called);
         $this->assertSame($creds, $p()->wait());
-        $this->assertEquals(1, $called);
+        $this->assertSame(1, $called);
     }
 
     public function testMemoizesCleansUpOnError()
@@ -1697,7 +1697,7 @@ EOT;
         $p = CredentialProvider::memoize($f);
         $p()->wait(false);
         $p()->wait(false);
-        $this->assertEquals(2, $called);
+        $this->assertSame(2, $called);
     }
 
     public function testCallsDefaultsCreds()
@@ -1710,8 +1710,8 @@ EOT;
         $creds = $provider()->wait();
         putenv(CredentialProvider::ENV_KEY . "={$k}");
         putenv(CredentialProvider::ENV_SECRET . "={$s}");
-        $this->assertEquals('abc', $creds->getAccessKeyId());
-        $this->assertEquals('123', $creds->getSecretKey());
+        $this->assertSame('abc', $creds->getAccessKeyId());
+        $this->assertSame('123', $creds->getSecretKey());
     }
 
     public function testCachesCacheableInDefaultChain()
@@ -1735,8 +1735,8 @@ EOT;
                 'credentials' => $cache,
             ]))
                 ->wait();
-            $this->assertEquals($credsForCache->getAccessKeyId(), $credentials->getAccessKeyId());
-            $this->assertEquals($credsForCache->getSecretKey(), $credentials->getSecretKey());
+            $this->assertSame($credsForCache->getAccessKeyId(), $credentials->getAccessKeyId());
+            $this->assertSame($credsForCache->getSecretKey(), $credentials->getSecretKey());
         }
     }
 
@@ -1755,16 +1755,16 @@ EOT;
             'credentials' => $cache,
         ]))
             ->wait();
-        $this->assertEquals($instanceCredential->getAccessKeyId(), $credentials->getAccessKeyId());
-        $this->assertEquals($instanceCredential->getSecretKey(), $credentials->getSecretKey());
+        $this->assertSame($instanceCredential->getAccessKeyId(), $credentials->getAccessKeyId());
+        $this->assertSame($instanceCredential->getSecretKey(), $credentials->getSecretKey());
 
         putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
         $credentials = call_user_func(CredentialProvider::defaultProvider([
             'credentials' => $cache,
         ]))
             ->wait();
-        $this->assertEquals($ecsCredential->getAccessKeyId(), $credentials->getAccessKeyId());
-        $this->assertEquals($ecsCredential->getSecretKey(), $credentials->getSecretKey());
+        $this->assertSame($ecsCredential->getAccessKeyId(), $credentials->getAccessKeyId());
+        $this->assertSame($ecsCredential->getSecretKey(), $credentials->getSecretKey());
     }
 
     public function testChainsCredentials()
@@ -1779,8 +1779,8 @@ EOT;
         $c = function () { $this->fail('Should not have called'); };
         $provider = CredentialProvider::chain($a, $b, $c);
         $creds = $provider()->wait();
-        $this->assertEquals('foo', $creds->getAccessKeyId());
-        $this->assertEquals('baz', $creds->getSecretKey());
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('baz', $creds->getSecretKey());
     }
 
     public function testProcessCredentialDefaultChain()
@@ -1795,7 +1795,7 @@ EOT;
         $provider = CredentialProvider::defaultProvider();
         $creds = $provider()->wait();
         unlink($dir . '/credentials');
-        $this->assertEquals('credentialsFoo', $creds->getAccessKeyId());
+        $this->assertSame('credentialsFoo', $creds->getAccessKeyId());
     }
 
     public function testProcessCredentialConfigDefaultChain()
@@ -1811,6 +1811,6 @@ EOT;
         $provider = CredentialProvider::defaultProvider();
         $creds = $provider()->wait();
         unlink($dir . '/config');
-        $this->assertEquals('configFoo', $creds->getAccessKeyId());
+        $this->assertSame('configFoo', $creds->getAccessKeyId());
     }
 }

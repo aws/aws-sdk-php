@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test;
+namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\Partition;
 use Aws\Endpoint\PartitionInterface;
@@ -18,7 +18,7 @@ class PartitionTest extends TestCase
     public function testAcceptsValidDefinitions(array $definition)
     {
         $this->assertInstanceOf(
-            PartitionInterface::class, 
+            PartitionInterface::class,
             new Partition($definition)
         );
     }

@@ -56,7 +56,7 @@ class AesEncryptingStreamTest extends TestCase
         $key = 'foo';
         $cipherText = new AesEncryptingStream($plainText, $key, $iv);
 
-        $this->assertEquals(
+        $this->assertSame(
             $iv->getOpenSslName(),
             $cipherText->getOpenSslName()
         );
@@ -76,7 +76,7 @@ class AesEncryptingStreamTest extends TestCase
         $key = 'foo';
         $cipherText = new AesEncryptingStream($plainText, $key, $iv);
 
-        $this->assertEquals(
+        $this->assertSame(
             $iv->getCurrentIv(),
             $cipherText->getCurrentIv()
         );

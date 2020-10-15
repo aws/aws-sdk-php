@@ -210,7 +210,7 @@ class ResultPaginatorTest extends TestCase
             $tableNames[] = $table;
         }
 
-        $this->assertEquals(4, $requestCount);
+        $this->assertSame(4, $requestCount);
         $this->assertEquals(['b2', 'a1', 'c3', 'd4'], $tableNames);
     }
 
@@ -276,12 +276,12 @@ class ResultPaginatorTest extends TestCase
 
         $promise->wait();
         $this->assertCount(4, $cmds);
-        $this->assertEquals('ListObjects', $cmds[0]->getName());
-        $this->assertEquals('HeadObject', $cmds[1]->getName());
-        $this->assertEquals('ListObjects', $cmds[2]->getName());
-        $this->assertEquals('HeadObject', $cmds[3]->getName());
-        $this->assertEquals('0.1', $cmds[1]['Key']);
-        $this->assertEquals('2.3', $cmds[3]['Key']);
+        $this->assertSame('ListObjects', $cmds[0]->getName());
+        $this->assertSame('HeadObject', $cmds[1]->getName());
+        $this->assertSame('ListObjects', $cmds[2]->getName());
+        $this->assertSame('HeadObject', $cmds[3]->getName());
+        $this->assertSame('0.1', $cmds[1]['Key']);
+        $this->assertSame('2.3', $cmds[3]['Key']);
     }
 
     public function testMarkerUpdated()
@@ -335,12 +335,12 @@ class ResultPaginatorTest extends TestCase
 
         $promise->wait();
         $this->assertCount(4, $cmds);
-        $this->assertEquals('ListObjects', $cmds[0]->getName());
-        $this->assertEquals('HeadObject', $cmds[1]->getName());
-        $this->assertEquals('ListObjects', $cmds[2]->getName());
-        $this->assertEquals('HeadObject', $cmds[3]->getName());
-        $this->assertEquals('2.3', $cmds[1]['Key']);
-        $this->assertEquals('4', $cmds[3]['Key']);
+        $this->assertSame('ListObjects', $cmds[0]->getName());
+        $this->assertSame('HeadObject', $cmds[1]->getName());
+        $this->assertSame('ListObjects', $cmds[2]->getName());
+        $this->assertSame('HeadObject', $cmds[3]->getName());
+        $this->assertSame('2.3', $cmds[1]['Key']);
+        $this->assertSame('4', $cmds[3]['Key']);
     }
 
     public function testDoesNotInsertMissingOutputTokensIntoNextRequest()

@@ -138,8 +138,8 @@ class WaiterTest extends TestCase
             ]
         );
 
-        $this->assertEquals(4, $iteration, 'Did not execute enough requests.');
-        $this->assertEquals(6000, $waitTime, 'Did not delay long enough.');
+        $this->assertSame(4, $iteration, 'Did not execute enough requests.');
+        $this->assertSame(6000, $waitTime, 'Did not delay long enough.');
     }
 
     /**
@@ -170,7 +170,7 @@ class WaiterTest extends TestCase
             $actualException = $e->getMessage();
         }
 
-        $this->assertEquals(count($results), $actualAttempt);
+        $this->assertCount($actualAttempt, $results);
         $this->assertEquals($expectedException, $actualException);
     }
 

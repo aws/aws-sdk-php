@@ -17,7 +17,7 @@ class ShapeTest extends TestCase
         $this->assertSame(['foo' => 'bar'], $s['metadata']);
         $this->assertNull($s['missing']);
         $s['abc'] = '123';
-        $this->assertEquals('123', $s['abc']);
+        $this->assertSame('123', $s['abc']);
         $this->assertArrayHasKey('abc', $s);
         $this->assertEquals(
             ['metadata' => ['foo' => 'bar'], 'abc' => '123'],
@@ -56,7 +56,7 @@ class ShapeTest extends TestCase
         $m->setAccessible(true);
         $result = $m->invoke($s, 'foo');
         $this->assertInstanceOf('Aws\Api\Shape', $result);
-        $this->assertEquals('string', $result->getType());
+        $this->assertSame('string', $result->getType());
     }
 
     public function testCreatesNestedShapeReferences()
@@ -66,7 +66,7 @@ class ShapeTest extends TestCase
             new ShapeMap(['bar' => ['type' => 'float']])
         );
         $this->assertInstanceOf('Aws\Api\Shape', $s);
-        $this->assertEquals('float', $s->getType());
+        $this->assertSame('float', $s->getType());
     }
 
     /**

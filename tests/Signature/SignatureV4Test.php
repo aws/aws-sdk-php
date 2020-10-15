@@ -27,8 +27,8 @@ class SignatureV4Test extends TestCase
     public function testReturnsRegionAndService()
     {
         $s = new SignatureV4('foo', 'bar');
-        $this->assertEquals('foo', $this->readAttribute($s, 'service'));
-        $this->assertEquals('bar', $this->readAttribute($s, 'region'));
+        $this->assertSame('foo', $this->readAttribute($s, 'service'));
+        $this->assertSame('bar', $this->readAttribute($s, 'region'));
     }
 
     public function testAddsSecurityTokenIfPresent()
@@ -37,7 +37,7 @@ class SignatureV4Test extends TestCase
         $c = new Credentials('a', 'b', 'AddMe!');
         $r = new Request('GET', 'http://httpbin.org');
         $signed = $s->signRequest($r, $c);
-        $this->assertEquals('AddMe!', $signed->getHeaderLine('X-Amz-Security-Token'));
+        $this->assertSame('AddMe!', $signed->getHeaderLine('X-Amz-Security-Token'));
     }
 
     public function testSignsRequestsWithMultiValuedHeaders()
@@ -50,8 +50,8 @@ class SignatureV4Test extends TestCase
         $methB = new \ReflectionMethod($s, 'createContext');
         $methB->setAccessible(true);
         $result = $methB->invoke($s, $reqArray, '123');
-        $this->assertEquals('host;x-amz-foo', $result['headers']);
-        $this->assertEquals("GET\n/\n\nhost:httpbin.org\nx-amz-foo:bar,baz\n\nhost;x-amz-foo\n123", $result['creq']);
+        $this->assertSame('host;x-amz-foo', $result['headers']);
+        $this->assertSame("GET\n/\n\nhost:httpbin.org\nx-amz-foo:bar,baz\n\nhost;x-amz-foo\n123", $result['creq']);
     }
 
     public function testUsesExistingSha256HashIfPresent()
@@ -250,8 +250,8 @@ class SignatureV4Test extends TestCase
             'foo=bar&baz=bam'
         );
         $request = SignatureV4::convertPostToGet($request);
-        $this->assertEquals('GET', $request->getMethod());
-        $this->assertEquals('foo=bar&baz=bam', $request->getUri()->getQuery());
+        $this->assertSame('GET', $request->getMethod());
+        $this->assertSame('foo=bar&baz=bam', $request->getUri()->getQuery());
     }
 
     /**
@@ -404,7 +404,7 @@ class SignatureV4Test extends TestCase
         $payloadFn = new \ReflectionMethod($signature, 'getPayload');
         $payloadFn->setAccessible(true);
         $payload = $payloadFn->invoke($signature, $request);
-        $this->assertEquals('UNSIGNED-PAYLOAD',$payload);
+        $this->assertSame('UNSIGNED-PAYLOAD',$payload);
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
         $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));

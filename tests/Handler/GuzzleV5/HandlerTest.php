@@ -45,9 +45,9 @@ class HandlerTest extends TestCase
         /** @var $response PsrResponse */
         $response = $promise->wait();
         $this->assertInstanceOf(PsrResponse::class, $response);
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('foo', $response->getBody()->getContents());
-        $this->assertEquals('foo', (string) $sink);
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('foo', $response->getBody()->getContents());
+        $this->assertSame('foo', (string) $sink);
     }
 
     public function testHandlerWorksWithFailedRequest()
@@ -75,7 +75,7 @@ class HandlerTest extends TestCase
             $this->assertInstanceOf(ConnectException::class, $error['exception']);
             $this->assertTrue($error['connection_error']);
             $this->assertInstanceOf(PsrResponse::class, $error['response']);
-            $this->assertEquals(500, $error['response']->getStatusCode());
+            $this->assertSame(500, $error['response']->getStatusCode());
         }
 
         $this->assertTrue($wasRejected, 'Reject callback was not triggered.');
@@ -126,7 +126,7 @@ EOXML;
             $this->assertInstanceOf(RequestException::class, $error['exception']);
             $this->assertFalse($error['connection_error']);
             $this->assertInstanceOf(PsrResponse::class, $error['response']);
-            $this->assertEquals(404, $error['response']->getStatusCode());
+            $this->assertSame(404, $error['response']->getStatusCode());
             $this->assertEquals($xml, $error['response']->getBody());
             $this->assertStringEqualsFile($sink, $xml);
             unlink($sink);
@@ -165,7 +165,7 @@ EOXML;
             $this->assertInstanceOf(RequestException::class, $error['exception']);
             $this->assertFalse($error['connection_error']);
             $this->assertInstanceOf(PsrResponse::class, $error['response']);
-            $this->assertEquals(404, $error['response']->getStatusCode());
+            $this->assertSame(404, $error['response']->getStatusCode());
             $this->assertEquals($xml, (string)$error['response']->getBody());
             $this->assertEquals($xml, (string)$sink);
         }

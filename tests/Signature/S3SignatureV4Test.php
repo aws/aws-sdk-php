@@ -30,7 +30,7 @@ class S3SignatureV4Test extends TestCase
     {
         list($request, $credentials, $signature) = $this->getFixtures();
         $result = $signature->signRequest($request, $credentials);
-        $this->assertEquals(
+        $this->assertSame(
             hash('sha256', ''),
             $result->getHeaderLine('x-amz-content-sha256')
         );
@@ -42,7 +42,7 @@ class S3SignatureV4Test extends TestCase
         $credentials = new Credentials('foo', 'bar');
         $signature = new S3SignatureV4('service', 'region');
         $result = $signature->signRequest($request, $credentials);
-        $this->assertEquals(
+        $this->assertSame(
             hash('sha256', 'foo'),
             $result->getHeaderLine('x-amz-content-sha256')
         );

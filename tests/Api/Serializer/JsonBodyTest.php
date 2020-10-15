@@ -18,7 +18,7 @@ class JsonBodyTest extends TestCase
     public function testUsesEmptyHashByDefault()
     {
         $j = new JsonBody(new Service([], function() { return []; }));
-        $this->assertEquals(
+        $this->assertSame(
             '{}',
             $j->build(new Shape([], new ShapeMap([])), [])
         );

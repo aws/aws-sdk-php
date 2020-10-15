@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test\EncryptionStreams;
+namespace Aws\Test\Crypto\Cipher;
 
 use Aws\Crypto\Cipher\Cbc;
 use PHPUnit\Framework\TestCase;

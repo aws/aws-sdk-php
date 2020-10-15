@@ -650,7 +650,7 @@ EOXML;
         $list = $kms->getHandlerList();
         $list->setHandler(function($cmd, $req) {
             // Verify decryption command has correct parameters
-            $this->assertEquals('cek', $cmd['CiphertextBlob']);
+            $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(
                 [
                     'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'
@@ -698,7 +698,7 @@ EOXML;
         $list = $kms->getHandlerList();
         $list->setHandler(function($cmd, $req) {
             // Verify decryption command has correct parameters
-            $this->assertEquals('cek', $cmd['CiphertextBlob']);
+            $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(
                 [
                     'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'
@@ -742,7 +742,7 @@ EOXML;
         $list = $kms->getHandlerList();
         $list->setHandler(function($cmd, $req) {
             // Verify decryption command has correct parameters
-            $this->assertEquals('cek', $cmd['CiphertextBlob']);
+            $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(
                 [
                     'aws:x-amz-cek-alg' => 'AES/GCM/NoPadding'
@@ -918,7 +918,7 @@ EOXML;
         $list = $kms->getHandlerList();
         $list->setHandler(function($cmd, $req) {
             // Verify decryption command has correct parameters
-            $this->assertEquals('cek', $cmd['CiphertextBlob']);
+            $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(
                 [
                     'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'
@@ -965,7 +965,7 @@ EOXML;
         $list = $kms->getHandlerList();
         $list->setHandler(function($cmd, $req) {
             // Verify decryption command has correct parameters
-            $this->assertEquals('cek', $cmd['CiphertextBlob']);
+            $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(
                 [
                     'kms_cmk_id' => '11111111-2222-3333-4444-555555555555'

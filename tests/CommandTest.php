@@ -14,7 +14,7 @@ class CommandTest extends TestCase
     public function testHasName()
     {
         $c = new Command('foo');
-        $this->assertEquals('foo', $c->getName());
+        $this->assertSame('foo', $c->getName());
     }
 
     public function testHasParam()
@@ -40,7 +40,7 @@ class CommandTest extends TestCase
     public function testHasGetMethod()
     {
         $c = new Command('foo', ['bar' => 'baz']);
-        $this->assertEquals('baz', $c->get('bar'));
+        $this->assertSame('baz', $c->get('bar'));
     }
 
     public function testIsIterable()
@@ -71,15 +71,15 @@ class CommandTest extends TestCase
     public function testCanAccessLikeArray()
     {
         $c = new Command('foo', ['bar' => 'baz', 'qux' => 'boo']);
-        $this->assertEquals('baz', $c['bar']);
+        $this->assertSame('baz', $c['bar']);
         $this->assertNull($c['boo']);
-        $this->assertEquals('boo', $c['qux']);
+        $this->assertSame('boo', $c['qux']);
         $this->assertArrayHasKey('qux', $c);
         $this->assertArrayNotHasKey('boo', $c);
 
         $c['boo'] = 'hi!';
         $this->assertArrayHasKey('boo', $c);
-        $this->assertEquals('hi!', $c['boo']);
+        $this->assertSame('hi!', $c['boo']);
 
         unset($c['boo']);
         $this->assertArrayNotHasKey('boo', $c);

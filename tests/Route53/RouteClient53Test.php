@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers Aws\Route53\Route53Client
  */
-class Route53ClientTest extends TestCase
+class RouteClient53Test extends TestCase
 {
     public function testCleansIds()
     {

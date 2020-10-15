@@ -56,7 +56,7 @@ class AwsClientTest extends TestCase
         $this->assertSame($config['handler'], $this->readAttribute($client->getHandlerList(), 'handler'));
         $this->assertSame($config['credentials'], $client->getCredentials()->wait());
         $this->assertSame($config['region'], $client->getRegion());
-        $this->assertEquals('foo', $client->getApi()->getEndpointPrefix());
+        $this->assertSame('foo', $client->getApi()->getEndpointPrefix());
     }
 
     /**
@@ -238,15 +238,15 @@ class AwsClientTest extends TestCase
             'version' => 'latest'
         ]);
         $this->assertInstanceOf('Aws\Sts\StsClient', $client);
-        $this->assertEquals('us-west-2', $client->getRegion());
+        $this->assertSame('us-west-2', $client->getRegion());
     }
 
     public function testCanGetEndpoint()
     {
         $client = $this->createClient();
-        $this->assertEquals(
+        $this->assertSame(
             'http://us-east-1.foo.amazonaws.com',
-            $client->getEndpoint()
+            (string)$client->getEndpoint()
         );
     }
 
@@ -366,7 +366,7 @@ class AwsClientTest extends TestCase
                     foreach (['Authorization','X-Amz-Content-Sha256', 'X-Amz-Date'] as $signatureHeader) {
                         $this->assertTrue($request->hasHeader($signatureHeader));
                     }
-                    $this->assertEquals('UNSIGNED-PAYLOAD', $request->getHeader('X-Amz-Content-Sha256')[0]);
+                    $this->assertSame('UNSIGNED-PAYLOAD', $request->getHeader('X-Amz-Content-Sha256')[0]);
                     return new Result;
                 }
             ]

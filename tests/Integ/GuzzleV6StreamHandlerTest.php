@@ -66,6 +66,6 @@ class GuzzleV6StreamHandlerTest extends TestCase
             });
         /** @var \Aws\Result $result */
         $result = $promise->wait();
-        $this->assertEquals(204, $result['@metadata']['statusCode']);
+        $this->assertSame(204, $result['@metadata']['statusCode']);
     }
 }

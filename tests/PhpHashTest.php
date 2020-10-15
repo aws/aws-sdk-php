@@ -15,7 +15,7 @@ class PhpHashTest extends TestCase
         $hash->update('foo');
         $hash->update('bar');
         $result = $hash->complete();
-        $this->assertEquals(md5('foobar', true), $result);
+        $this->assertSame(md5('foobar', true), $result);
     }
 
     public function testHashesDataAndBase64Encodes()
@@ -24,7 +24,7 @@ class PhpHashTest extends TestCase
         $hash->update('foo');
         $hash->update('bar');
         $result = $hash->complete();
-        $this->assertEquals(base64_encode(md5('foobar', true)), $result);
+        $this->assertSame(base64_encode(md5('foobar', true)), $result);
     }
 
     public function testCreatesNewHash()
@@ -35,7 +35,7 @@ class PhpHashTest extends TestCase
         $hash->update('foo');
         $hash->update('bar');
         $result = $hash->complete();
-        $this->assertEquals(base64_encode(md5('foobar', true)), $result);
+        $this->assertSame(base64_encode(md5('foobar', true)), $result);
         $this->assertSame($result, $hash->complete());
     }
 
@@ -45,6 +45,6 @@ class PhpHashTest extends TestCase
         $hash->update('foo');
         $hash->reset();
         $hash->update('bar');
-        $this->assertEquals(md5('bar'), bin2hex($hash->complete()));
+        $this->assertSame(md5('bar'), bin2hex($hash->complete()));
     }
 }

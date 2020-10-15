@@ -90,7 +90,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
 
         $this->assertTrue($this->mockQueueEmpty());
         $this->assertTrue($uploader->getState()->isCompleted());
-        $this->assertEquals(self::TEST_URL, $result['ObjectURL']);
+        $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
     /**
@@ -170,7 +170,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
 
         $this->assertTrue($this->mockQueueEmpty());
         $this->assertTrue($uploader->getState()->isCompleted());
-        $this->assertEquals(self::TEST_URL, $result['ObjectURL']);
+        $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
     /**
@@ -242,7 +242,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
 
         $this->assertTrue($this->mockQueueEmpty());
         $this->assertTrue($uploader->getState()->isCompleted());
-        $this->assertEquals(self::TEST_URL, $result['ObjectURL']);
+        $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
     /**
@@ -295,7 +295,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
 
         $this->assertTrue($this->mockQueueEmpty());
         $this->assertTrue($uploader->getState()->isCompleted());
-        $this->assertEquals(self::TEST_URL, $result['ObjectURL']);
+        $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
     /**
@@ -346,7 +346,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
 
         $this->assertTrue($this->mockQueueEmpty());
         $this->assertTrue($uploader->getState()->isCompleted());
-        $this->assertEquals(self::TEST_URL, $result['ObjectURL']);
+        $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
     public function testPutObjectAppliesParams()
@@ -378,9 +378,9 @@ class S3EncryptionMultipartUploaderTest extends TestCase
                     'Cipher' => 'cbc',
                 ],
                 'before_initiate' => function($command) {
-                    $this->assertEquals('foo', $command['Bucket']);
-                    $this->assertEquals('bar', $command['Key']);
-                    $this->assertEquals(
+                    $this->assertSame('foo', $command['Bucket']);
+                    $this->assertSame('bar', $command['Key']);
+                    $this->assertSame(
                         'kms',
                         $command['Metadata']['x-amz-wrap-alg']
                     );
@@ -391,7 +391,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
 
         $this->assertTrue($this->mockQueueEmpty());
         $this->assertTrue($uploader->getState()->isCompleted());
-        $this->assertEquals(self::TEST_URL, $result['ObjectURL']);
+        $this->assertSame(self::TEST_URL, $result['ObjectURL']);
     }
 
     public function testCanLoadStateFromService()
@@ -435,8 +435,8 @@ class S3EncryptionMultipartUploaderTest extends TestCase
         $result = $uploader->upload();
 
         $this->assertTrue($uploader->getState()->isCompleted());
-        $this->assertEquals(4 * self::MB, $uploader->getState()->getPartSize());
-        $this->assertEquals($url, $result['ObjectURL']);
+        $this->assertSame(4 * self::MB, $uploader->getState()->getPartSize());
+        $this->assertSame($url, $result['ObjectURL']);
     }
 
     public function testAddsCryptoUserAgent()

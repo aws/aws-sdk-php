@@ -13,7 +13,7 @@ class DateTimeResultTest extends TestCase
     {
         $t = time();
         $d = DateTimeResult::fromEpoch($t);
-        $this->assertEquals($t, $d->format('U'));
+        $this->assertSame((string)$t, $d->format('U'));
     }
 
     public function testCastToIso8601String()

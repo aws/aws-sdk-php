@@ -56,7 +56,7 @@ class MultipartUploaderTest extends TestCase
         $result = $uploader->upload();
 
         $this->assertTrue($uploader->getState()->isCompleted());
-        $this->assertEquals($url, $result['ObjectURL']);
+        $this->assertSame($url, $result['ObjectURL']);
     }
 
     public function getTestCases()
@@ -113,8 +113,8 @@ class MultipartUploaderTest extends TestCase
         $result = $uploader->upload();
 
         $this->assertTrue($uploader->getState()->isCompleted());
-        $this->assertEquals(4 * self::MB, $uploader->getState()->getPartSize());
-        $this->assertEquals($url, $result['ObjectURL']);
+        $this->assertSame(4 * self::MB, $uploader->getState()->getPartSize());
+        $this->assertSame($url, $result['ObjectURL']);
     }
 
     public function testCanUseCaseInsensitiveConfigKeys()
@@ -169,14 +169,14 @@ class MultipartUploaderTest extends TestCase
                 'ContentLength' => $size
             ],
             'before_initiate' => function($command) {
-                $this->assertEquals('test', $command['RequestPayer']);
+                $this->assertSame('test', $command['RequestPayer']);
             },
             'before_upload'   => function($command) use ($size) {
                 $this->assertLessThan($size, $command['ContentLength']);
-                $this->assertEquals('test', $command['RequestPayer']);
+                $this->assertSame('test', $command['RequestPayer']);
             },
             'before_complete' => function($command) {
-                $this->assertEquals('test', $command['RequestPayer']);
+                $this->assertSame('test', $command['RequestPayer']);
             }
         ];
         $url = 'http://foo.s3.amazonaws.com/bar';
@@ -193,7 +193,7 @@ class MultipartUploaderTest extends TestCase
         $result = $uploader->upload();
 
         $this->assertTrue($uploader->getState()->isCompleted());
-        $this->assertEquals($url, $result['ObjectURL']);
+        $this->assertSame($url, $result['ObjectURL']);
     }
 
     public function getContentTypeSettingTests()
@@ -262,7 +262,7 @@ class MultipartUploaderTest extends TestCase
         $result = $uploader->upload();
 
         $this->assertTrue($uploader->getState()->isCompleted());
-        $this->assertEquals($url, $result['ObjectURL']);
+        $this->assertSame($url, $result['ObjectURL']);
     }
 
     /**

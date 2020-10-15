@@ -306,11 +306,11 @@ class InstanceProfileProviderTest extends TestCase
 
         /** @var CredentialsInterface $credentials */
         $credentials = $provider()->wait();
-        $this->assertEquals(
+        $this->assertSame(
             $expected->getAccessKeyId(),
             $credentials->getAccessKeyId()
         );
-        $this->assertEquals(
+        $this->assertSame(
             $expected->getSecretKey(),
             $credentials->getSecretKey()
         );
@@ -525,8 +525,8 @@ class InstanceProfileProviderTest extends TestCase
             $provider()->wait();
             $this->fail('Provider should have thrown an exception.');
         } catch (\Exception $e) {
-            $this->assertEquals(get_class($expected), get_class($e));
-            $this->assertEquals($expected->getMessage(), $e->getMessage());
+            $this->assertInstanceOf(get_class($expected), $e);
+            $this->assertSame($expected->getMessage(), $e->getMessage());
         }
     }
 
@@ -872,7 +872,7 @@ class InstanceProfileProviderTest extends TestCase
     {
         $response = new Response(200, [], Psr7\stream_for('test'));
         $client = function (RequestInterface $request) use ($response) {
-            $this->assertEquals(
+            $this->assertSame(
                 'aws-sdk-php/' . Sdk::VERSION . ' ' . \Aws\default_user_agent(),
                 $request->getHeader('User-Agent')[0]
             );
@@ -890,10 +890,10 @@ class InstanceProfileProviderTest extends TestCase
             ['foo', 'baz', null, "@{$t}"],
             'foo'
         )->wait();
-        $this->assertEquals('foo', $c->getAccessKeyId());
-        $this->assertEquals('baz', $c->getSecretKey());
+        $this->assertSame('foo', $c->getAccessKeyId());
+        $this->assertSame('baz', $c->getSecretKey());
         $this->assertNull($c->getSecurityToken());
-        $this->assertEquals($t, $c->getExpiration());
+        $this->assertSame($t, $c->getExpiration());
     }
 
     /**
@@ -959,9 +959,9 @@ class InstanceProfileProviderTest extends TestCase
         ];
         $provider = new InstanceProfileProvider($args);
         $c = $provider()->wait();
-        $this->assertEquals('foo', $c->getAccessKeyId());
-        $this->assertEquals('baz', $c->getSecretKey());
+        $this->assertSame('foo', $c->getAccessKeyId());
+        $this->assertSame('baz', $c->getSecretKey());
         $this->assertNull($c->getSecurityToken());
-        $this->assertEquals($t, $c->getExpiration());
+        $this->assertSame($t, $c->getExpiration());
     }
 }

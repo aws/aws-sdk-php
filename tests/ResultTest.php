@@ -12,12 +12,12 @@ class ResultTest extends TestCase
     public function testHasData()
     {
         $c = new Result(['a' => 'b', 'c' => 'd']);
-        $this->assertEquals('b', $c['a']);
-        $this->assertEquals('d', $c['c']);
-        $this->assertEquals('d', $c->get('c'));
+        $this->assertSame('b', $c['a']);
+        $this->assertSame('d', $c['c']);
+        $this->assertSame('d', $c->get('c'));
         $this->assertTrue($c->hasKey('c'));
         $this->assertFalse($c->hasKey('f'));
-        $this->assertEquals('b', $c->search('a'));
+        $this->assertSame('b', $c->search('a'));
         $this->assertContains('Model Data', (string) $c);
     }
 
@@ -41,6 +41,6 @@ class ResultTest extends TestCase
     public function testCanGetByPath()
     {
         $r = new Result(['bar' => ['baz' => 'qux']]);
-        $this->assertEquals('qux', $r->getPath('bar/baz'));
+        $this->assertSame('qux', $r->getPath('bar/baz'));
     }
 }
