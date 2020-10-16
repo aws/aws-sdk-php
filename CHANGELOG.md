@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaLive` - The AWS Elemental MediaLive APIs and SDKs now support the ability to transfer the ownership of MediaLive Link devices across AWS accounts.
+* `Aws\Organizations` - Documentation updates for AWS Organizations.
+
 ## 3.158.7 - 2020-10-15
 
 * `Aws\AccessAnalyzer` - This release adds support for the ApplyArchiveRule api in IAM Access Analyzer. The ApplyArchiveRule api allows users to apply an archive rule retroactively to existing findings in an analyzer.
