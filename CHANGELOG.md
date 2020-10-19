@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fixed issue with polyfill referencing to wrong IDN folder structure in generated zip file
+* `Aws\Backup` - Documentation updates for Cryo
+* `Aws\CloudFront` - Amazon CloudFront adds support for Origin Shield.
+* `Aws\Credentials` - Suppressed a file access warning in AssumeRoleWithWebIdentityCredentialProvider
+* `Aws\DocDB` - Documentation updates for docdb
+* `Aws\SSM` - This Patch Manager release now supports Common Vulnerabilities and Exposure (CVE) Ids for missing packages via the DescribeInstancePatches API.
+* `Aws\ServiceCatalog` - An Admin can now update the launch role associated with a Provisioned Product. Admins and End Users can now view the launch role associated with a Provisioned Product.
+
 ## 3.158.8 - 2020-10-16
 
 * `Aws\MediaLive` - The AWS Elemental MediaLive APIs and SDKs now support the ability to transfer the ownership of MediaLive Link devices across AWS accounts.
