@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.9 - 2020-10-19
 
 * `Aws\` - Fixed issue with polyfill referencing to wrong IDN folder structure in generated zip file
 * `Aws\Backup` - Documentation updates for Cryo
