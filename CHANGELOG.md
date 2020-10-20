@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppSync` - Documentation updates to AppSync to correct several typos.
+* `Aws\Batch` - Adding evaluateOnExit to job retry strategies.
+* `Aws\ElasticBeanstalk` - EnvironmentStatus enum update to include Aborting, LinkingFrom and LinkingTo
+
 ## 3.158.9 - 2020-10-19
 
 * `Aws\` - Fixed issue with polyfill referencing to wrong IDN folder structure in generated zip file
