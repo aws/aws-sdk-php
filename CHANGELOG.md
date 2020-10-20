@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.10 - 2020-10-20
 
 * `Aws\AppSync` - Documentation updates to AppSync to correct several typos.
 * `Aws\Batch` - Adding evaluateOnExit to job retry strategies.
