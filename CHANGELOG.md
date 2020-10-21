@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.11 - 2020-10-21
 
 * `Aws\CloudFront` - CloudFront adds support for managing the public keys for signed URLs and signed cookies directly in CloudFront (it no longer requires the AWS root account).
 * `Aws\EC2` - instance-storage-info nvmeSupport added to DescribeInstanceTypes API
