@@ -58,13 +58,15 @@ class InputValidationMiddlewareTest extends TestCase
         $service = $this->generateTestService();
         $client = $this->generateTestClient($service);
         $command = $client->getCommand('RequiredOp', ['InputParameter' => $input]);
+        $mandatoryInputList = ['InputParameter'];
 
         $list = new HandlerList();
         $list->setHandler(function ($command) {
             return;
         });
-        $list->appendBuild(InputValidationMiddleware::wrap($service));
-
+        $list->appendValidate(
+            InputValidationMiddleware::wrap($service, $mandatoryInputList)
+        );
         $handler = $list->resolve();
 
         try {
@@ -79,6 +81,30 @@ class InputValidationMiddlewareTest extends TestCase
     }
 
     /**
+     * @dataProvider getInvalidEndpointExceptions
+     *
+     * @param $input
+     */
+    public function testNoValidationWithoutInputLIst($input)
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service);
+        $command = $client->getCommand('RequiredOp', ['InputParameter' => $input]);
+        $mandatoryInputList = [];
+        $list = new HandlerList();
+        $list->setHandler(function ($command) {
+            return;
+        });
+        $list->appendValidate(
+            InputValidationMiddleware::wrap($service, $mandatoryInputList)
+        );
+        $handler = $list->resolve();
+
+        $handler($command, new Request('POST', 'https://foo.com'));
+        self::assertTrue(true);
+    }
+
+    /**
      * @dataProvider getValidInputs
      *
      * @param $input
@@ -88,12 +114,15 @@ class InputValidationMiddlewareTest extends TestCase
         $service = $this->generateTestService();
         $client = $this->generateTestClient($service);
         $command = $client->getCommand('RequiredOp', ['InputParameter' => $input]);
+        $mandatoryInputList = ['InputParameter'];
 
         $list = new HandlerList();
         $list->setHandler(function ($command) {
             return;
         });
-        $list->appendValidate(InputValidationMiddleware::wrap($service));
+        $list->appendValidate(
+            InputValidationMiddleware::wrap($service, $mandatoryInputList)
+        );
 
         $handler = $list->resolve();
 

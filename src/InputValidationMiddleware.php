@@ -14,23 +14,39 @@ class InputValidationMiddleware
     /** @var callable */
     private $nextHandler;
 
+    /** @var array */
+    private $mandatoryAttributeList;
+
+    /** @var Service */
+    private $service;
+
     /**
      * Create a middleware wrapper function.
      *
      * @param Service $service
-     */
-    public static function wrap(Service $service) {
-        return function (callable $handler) use ($service) {
-            return new self($handler, $service);
+     * @param array $mandatoryAttributeList
+     * @return callable     */
+    public static function wrap(Service $service, $mandatoryAttributeList) {
+        if (!is_array($mandatoryAttributeList) ||
+            array_filter($mandatoryAttributeList, 'is_string') !== $mandatoryAttributeList
+        ) {
+            throw new \InvalidArgumentException(
+                "The mandatory attribute list must be an array of strings"
+            );
+        }
+        return function (callable $handler) use ($service, $mandatoryAttributeList) {
+            return new self($handler, $service, $mandatoryAttributeList);
         };
     }
 
     public function __construct(
         callable $nextHandler,
-        Service $service
+        Service $service,
+        $mandatoryAttributeList
     ) {
         $this->service = $service;
         $this->nextHandler = $nextHandler;
+        $this->mandatoryAttributeList = $mandatoryAttributeList;
     }
 
     public function __invoke(CommandInterface $cmd) {
@@ -41,9 +57,12 @@ class InputValidationMiddleware
             if (!empty($input = $service['shapes'][$op['input']['shape']])) {
                 if (!empty($input['required'])) {
                     foreach ($input['required'] as $key => $member) {
+                        if (!in_array($member, $this->mandatoryAttributeList))
+                            continue;
                         if (isset($cmd[$member])) {
                             $argument = is_string($cmd[$member]) ?  trim($cmd[$member]) : $cmd[$member];
-                            if ($argument !== '') continue;
+                            if ($argument !== '')
+                                continue;
                         }
                         $commandName = $cmd->getName();
                         throw new \InvalidArgumentException(

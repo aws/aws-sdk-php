@@ -216,6 +216,9 @@ class S3Client extends AwsClient implements S3ClientInterface
 {
     use S3ClientTrait;
 
+    /** @var array */
+    private static $mandatoryAttributes = ['Bucket', 'Key'];
+
     public static function getArguments()
     {
         $args = parent::getArguments();
@@ -377,7 +380,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         );
 
         $stack->appendValidate(
-            InputValidationMiddleware::wrap($this->getApi()),
+            InputValidationMiddleware::wrap($this->getApi(), self::$mandatoryAttributes),
             's3.bucket_endpoint_validation'
         );
         $stack->appendSign(PutObjectUrlMiddleware::wrap(), 's3.put_object_url');
