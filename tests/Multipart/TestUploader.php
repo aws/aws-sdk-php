@@ -65,6 +65,7 @@ class TestUploader extends AbstractUploader
         return [
             'PartNumber' => $number,
             'Body'       => $body,
+            'UploadId' => 'baz'
         ];
     }
 
@@ -81,7 +82,8 @@ class TestUploader extends AbstractUploader
         return [
             'MultipartUpload' => [
                 'Parts' => $this->state->getUploadedParts()
-            ]
+            ],
+            'UploadId' => 'baz'
         ];
     }
 }
