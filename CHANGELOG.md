@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - CloudFront adds support for managing the public keys for signed URLs and signed cookies directly in CloudFront (it no longer requires the AWS root account).
+* `Aws\EC2` - instance-storage-info nvmeSupport added to DescribeInstanceTypes API
+* `Aws\GlobalAccelerator` - This release adds support for specifying port overrides on AWS Global Accelerator endpoint groups.
+* `Aws\Glue` - AWS Glue crawlers now support incremental crawls for the Amazon Simple Storage Service (Amazon S3) data source.
+* `Aws\Organizations` - AWS Organizations renamed the 'master account' to 'management account'.
+* `Aws\kendra` - This release adds custom data sources: a new data source type that gives you full control of the documents added, modified or deleted during a data source sync while providing run history metrics.
+
 ## 3.158.10 - 2020-10-20
 
 * `Aws\AppSync` - Documentation updates to AppSync to correct several typos.
