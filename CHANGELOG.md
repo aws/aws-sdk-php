@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AccessAnalyzer` - API Documentation updates for IAM Access Analyzer.
+* `Aws\Appflow` - Salesforce connector creation with customer provided client id and client secret, incremental pull configuration, salesforce upsert write operations and execution ID when on-demand flows are executed.
+* `Aws\SNS` - SNS now supports a new class of topics: FIFO (First-In-First-Out). FIFO topics provide strictly-ordered, deduplicated, filterable, encryptable, many-to-many messaging at scale.
+* `Aws\ServiceCatalog` - Documentation updates for servicecatalog
+
 ## 3.158.11 - 2020-10-21
 
 * `Aws\CloudFront` - CloudFront adds support for managing the public keys for signed URLs and signed cookies directly in CloudFront (it no longer requires the AWS root account).
