@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.12 - 2020-10-22
 
 * `Aws\AccessAnalyzer` - API Documentation updates for IAM Access Analyzer.
 * `Aws\Appflow` - Salesforce connector creation with customer provided client id and client secret, incremental pull configuration, salesforce upsert write operations and execution ID when on-demand flows are executed.
