@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.13 - 2020-10-23
 
 * `Aws\Macie2` - This release of the Amazon Macie API includes miscellaneous updates and improvements to the documentation.
 * `Aws\MediaTailor` - MediaTailor now supports ad marker passthrough for HLS. Use AdMarkerPassthrough to pass EXT-X-CUE-IN, EXT-X-CUE-OUT, and EXT-X-SPLICEPOINT-SCTE35 from origin manifests into personalized manifests.
