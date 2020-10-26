@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Neptune` - This feature enables custom endpoints for Amazon Neptune clusters. Custom endpoints simplify connection management when clusters contain instances with different capacities and configuration settings.
+* `Aws\SageMaker` - This release enables customers to bring custom images for use with SageMaker Studio notebooks.
+* `Aws\kendra` - Amazon Kendra now supports indexing data from Confluence Server.
+
 ## 3.158.13 - 2020-10-23
 
 * `Aws\Macie2` - This release of the Amazon Macie API includes miscellaneous updates and improvements to the documentation.
