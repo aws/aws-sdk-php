@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.14 - 2020-10-26
 
 * `Aws\Neptune` - This feature enables custom endpoints for Amazon Neptune clusters. Custom endpoints simplify connection management when clusters contain instances with different capacities and configuration settings.
 * `Aws\SageMaker` - This release enables customers to bring custom images for use with SageMaker Studio notebooks.
