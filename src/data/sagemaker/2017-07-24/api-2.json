@@ -1702,13 +1702,6 @@
       "max":63,
       "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
-    "AppNetworkAccessType":{
-      "type":"string",
-      "enum":[
-        "PublicInternetOnly",
-        "VpcOnly"
-      ]
-    },
     "AppSortKey":{
       "type":"string",
       "enum":["CreationTime"]
@@ -2697,8 +2690,7 @@
         "SubnetIds":{"shape":"Subnets"},
         "VpcId":{"shape":"VpcId"},
         "Tags":{"shape":"TagList"},
-        "HomeEfsFileSystemKmsKeyId":{"shape":"KmsKeyId"},
-        "AppNetworkAccessType":{"shape":"AppNetworkAccessType"}
+        "HomeEfsFileSystemKmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "CreateDomainResponse":{
@@ -3719,8 +3711,7 @@
         "HomeEfsFileSystemKmsKeyId":{"shape":"KmsKeyId"},
         "SubnetIds":{"shape":"Subnets"},
         "Url":{"shape":"String1024"},
-        "VpcId":{"shape":"VpcId"},
-        "AppNetworkAccessType":{"shape":"AppNetworkAccessType"}
+        "VpcId":{"shape":"VpcId"}
       }
     },
     "DescribeEndpointConfigInput":{
@@ -8408,8 +8399,7 @@
         "sitara_am57x",
         "amba_cv22",
         "x86_win32",
-        "x86_win64",
-        "coreml"
+        "x86_win64"
       ]
     },
     "TargetObjectiveMetricValue":{"type":"float"},

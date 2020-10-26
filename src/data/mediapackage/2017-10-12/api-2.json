@@ -12,40 +12,6 @@
     "uid": "mediapackage-2017-10-12"
   },
   "operations": {
-    "ConfigureLogs": {
-      "errors": [
-        {
-          "shape": "UnprocessableEntityException"
-        },
-        {
-          "shape": "InternalServerErrorException"
-        },
-        {
-          "shape": "ForbiddenException"
-        },
-        {
-          "shape": "NotFoundException"
-        },
-        {
-          "shape": "ServiceUnavailableException"
-        },
-        {
-          "shape": "TooManyRequestsException"
-        }
-      ],
-      "http": {
-        "method": "PUT",
-        "requestUri": "/channels/{id}/configure_logs",
-        "responseCode": 200
-      },
-      "input": {
-        "shape": "ConfigureLogsRequest"
-      },
-      "name": "ConfigureLogs",
-      "output": {
-        "shape": "ConfigureLogsResponse"
-      }
-    },
     "CreateChannel": {
       "errors": [
         {
@@ -650,10 +616,6 @@
           "locationName": "description",
           "shape": "__string"
         },
-        "EgressAccessLogs": {
-          "locationName": "egressAccessLogs",
-          "shape": "EgressAccessLogs"
-        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -661,10 +623,6 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
-        },
-        "IngressAccessLogs": {
-          "locationName": "ingressAccessLogs",
-          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",
@@ -781,73 +739,6 @@
       },
       "type": "structure"
     },
-    "ConfigureLogsParameters": {
-      "members": {
-        "EgressAccessLogs": {
-          "locationName": "egressAccessLogs",
-          "shape": "EgressAccessLogs"
-        },
-        "IngressAccessLogs": {
-          "locationName": "ingressAccessLogs",
-          "shape": "IngressAccessLogs"
-        }
-      },
-      "type": "structure"
-    },
-    "ConfigureLogsRequest": {
-      "members": {
-        "EgressAccessLogs": {
-          "locationName": "egressAccessLogs",
-          "shape": "EgressAccessLogs"
-        },
-        "Id": {
-          "location": "uri",
-          "locationName": "id",
-          "shape": "__string"
-        },
-        "IngressAccessLogs": {
-          "locationName": "ingressAccessLogs",
-          "shape": "IngressAccessLogs"
-        }
-      },
-      "required": [
-        "Id"
-      ],
-      "type": "structure"
-    },
-    "ConfigureLogsResponse": {
-      "members": {
-        "Arn": {
-          "locationName": "arn",
-          "shape": "__string"
-        },
-        "Description": {
-          "locationName": "description",
-          "shape": "__string"
-        },
-        "EgressAccessLogs": {
-          "locationName": "egressAccessLogs",
-          "shape": "EgressAccessLogs"
-        },
-        "HlsIngest": {
-          "locationName": "hlsIngest",
-          "shape": "HlsIngest"
-        },
-        "Id": {
-          "locationName": "id",
-          "shape": "__string"
-        },
-        "IngressAccessLogs": {
-          "locationName": "ingressAccessLogs",
-          "shape": "IngressAccessLogs"
-        },
-        "Tags": {
-          "locationName": "tags",
-          "shape": "Tags"
-        }
-      },
-      "type": "structure"
-    },
     "CreateChannelRequest": {
       "members": {
         "Description": {
@@ -878,10 +769,6 @@
           "locationName": "description",
           "shape": "__string"
         },
-        "EgressAccessLogs": {
-          "locationName": "egressAccessLogs",
-          "shape": "EgressAccessLogs"
-        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -889,10 +776,6 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
-        },
-        "IngressAccessLogs": {
-          "locationName": "ingressAccessLogs",
-          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",
@@ -1246,10 +1129,6 @@
           "locationName": "description",
           "shape": "__string"
         },
-        "EgressAccessLogs": {
-          "locationName": "egressAccessLogs",
-          "shape": "EgressAccessLogs"
-        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -1257,10 +1136,6 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
-        },
-        "IngressAccessLogs": {
-          "locationName": "ingressAccessLogs",
-          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",
@@ -1401,15 +1276,6 @@
         "Whitelist": {
           "locationName": "whitelist",
           "shape": "__listOf__string"
-        }
-      },
-      "type": "structure"
-    },
-    "EgressAccessLogs": {
-      "members": {
-        "LogGroupName": {
-          "locationName": "logGroupName",
-          "shape": "__string"
         }
       },
       "type": "structure"
@@ -1706,15 +1572,6 @@
         },
         "Username": {
           "locationName": "username",
-          "shape": "__string"
-        }
-      },
-      "type": "structure"
-    },
-    "IngressAccessLogs": {
-      "members": {
-        "LogGroupName": {
-          "locationName": "logGroupName",
           "shape": "__string"
         }
       },
@@ -2155,10 +2012,6 @@
           "locationName": "description",
           "shape": "__string"
         },
-        "EgressAccessLogs": {
-          "locationName": "egressAccessLogs",
-          "shape": "EgressAccessLogs"
-        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -2166,10 +2019,6 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
-        },
-        "IngressAccessLogs": {
-          "locationName": "ingressAccessLogs",
-          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",
@@ -2207,10 +2056,6 @@
           "locationName": "description",
           "shape": "__string"
         },
-        "EgressAccessLogs": {
-          "locationName": "egressAccessLogs",
-          "shape": "EgressAccessLogs"
-        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -2218,10 +2063,6 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
-        },
-        "IngressAccessLogs": {
-          "locationName": "ingressAccessLogs",
-          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",
@@ -2448,10 +2289,6 @@
           "locationName": "description",
           "shape": "__string"
         },
-        "EgressAccessLogs": {
-          "locationName": "egressAccessLogs",
-          "shape": "EgressAccessLogs"
-        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -2459,10 +2296,6 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
-        },
-        "IngressAccessLogs": {
-          "locationName": "ingressAccessLogs",
-          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",

@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\DynamoDb\SessionHandler
+ * @runTestsInSeparateProcesses
  */
 class SessionHandlerTest extends TestCase
 {
@@ -60,6 +61,7 @@ class SessionHandlerTest extends TestCase
             ->willReturn(true);
 
         $sh = new SessionHandler($connection);
+        session_id('test');
         $this->assertTrue($sh->open('foo', 'bar'));
         $this->assertEquals('', $sh->read('test'));
         $this->assertFalse($sh->write('test', serialize($data)));
@@ -69,28 +71,16 @@ class SessionHandlerTest extends TestCase
     public function testHandlerWhenNothingWritten()
     {
         $connection = $this->getMockForAbstractClass(
-            'Aws\DynamoDb\SessionConnectionInterface',
-            array(),
-            '',
-            true,
-            true,
-            true,
-            array('getDataAttribute', 'getSessionLifetimeAttribute')
+            'Aws\DynamoDb\SessionConnectionInterface'
         );
-        $connection->expects($this->any())
-            ->method('write')
-            ->willReturn( true);
         $connection->expects($this->once())
-            ->method('read')
-            ->withAnyParameters('test')
-            ->willReturn('test');
-        $connection->expects($this->any())
-            ->method('getDataAttribute')
-            ->willReturn('data');
+            ->method('write')
+            ->with('name_test', '', false)
+            ->willReturn(true);
 
         $sh = new SessionHandler($connection);
+        session_id('test');
         $sh->open('', 'name');
-        $sh->read('test');
         $this->assertTrue($sh->close());
     }
 
@@ -112,18 +102,23 @@ class SessionHandlerTest extends TestCase
         $connection->expects($this->any())
             ->method('getSessionLifetimeAttribute')
             ->willReturn('expires');
-        $connection->expects($this->any())
-            ->method('write')
-            ->willReturn( true);
-        $connection->expects($this->any())
+        $connection->expects($this->once())
             ->method('read')
-            ->willReturn( ['expires' => time() + 1000, 'data' => 'serializedData']);
-        $sh = new SessionHandler($connection);
-        $sh->write(session_id(), $data);
+            ->with('name_test1')
+            ->willReturn([
+                'expires' => time() + 1000,
+                'data' => $data,
+            ]);
+        $connection->expects($this->once())
+            ->method('write')
+            ->with('name_test2', $data, true)
+            ->willReturn(true);
 
+        $sh = new SessionHandler($connection);
+        session_id('test1');
         $this->assertTrue($sh->open('', 'name'));
         $this->assertSame($data, $sh->read(session_id()));
-        $sh->write('test2', $data);
+        session_id('test2');
         $this->assertTrue($sh->write(session_id(), $data));
     }
 }

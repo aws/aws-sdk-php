@@ -934,7 +934,6 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"DeleteConflictException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ConflictingResourceUpdateException"},
         {"shape":"UnauthorizedException"}
       ]
     },
@@ -952,7 +951,6 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"ConflictingResourceUpdateException"},
         {"shape":"DeleteConflictException"}
       ]
     },
@@ -3475,7 +3473,7 @@
       "type":"string",
       "max":2048,
       "min":1,
-      "pattern":"arn:aws(-cn|-us-gov|-iso-b|-iso)?:acm:[a-z]{2}-(gov-|iso-|isob-)?[a-z]{4,9}-\\d{1}:\\d{12}:certificate/[a-zA-Z0-9/-]+"
+      "pattern":"arn:aws:acm:[a-z]{2}-(gov-)?[a-z]{4,9}-\\d{1}:\\d{12}:certificate/?[a-zA-Z0-9/-]+"
     },
     "Action":{
       "type":"structure",
@@ -4072,10 +4070,7 @@
       "type":"list",
       "member":{"shape":"AuthResult"}
     },
-    "AuthorizerArn":{
-      "type":"string",
-      "max":2048
-    },
+    "AuthorizerArn":{"type":"string"},
     "AuthorizerConfig":{
       "type":"structure",
       "members":{
@@ -4100,10 +4095,7 @@
         "signingDisabled":{"shape":"BooleanKey"}
       }
     },
-    "AuthorizerFunctionArn":{
-      "type":"string",
-      "max":2048
-    },
+    "AuthorizerFunctionArn":{"type":"string"},
     "AuthorizerName":{
       "type":"string",
       "max":128,
@@ -6144,8 +6136,7 @@
         "authorizerConfig":{"shape":"AuthorizerConfig"},
         "domainConfigurationStatus":{"shape":"DomainConfigurationStatus"},
         "serviceType":{"shape":"ServiceType"},
-        "domainType":{"shape":"DomainType"},
-        "lastStatusChangeDate":{"shape":"DateType"}
+        "domainType":{"shape":"DomainType"}
       }
     },
     "DescribeEndpointRequest":{
@@ -9156,7 +9147,6 @@
     },
     "Marker":{
       "type":"string",
-      "max":1024,
       "pattern":"[A-Za-z0-9+/]+={0,2}"
     },
     "MaxJobExecutionsPerMin":{
@@ -9917,10 +9907,7 @@
       "min":1,
       "pattern":"[\\w.:-]+"
     },
-    "Resource":{
-      "type":"string",
-      "max":2048
-    },
+    "Resource":{"type":"string"},
     "ResourceAlreadyExistsException":{
       "type":"structure",
       "members":{

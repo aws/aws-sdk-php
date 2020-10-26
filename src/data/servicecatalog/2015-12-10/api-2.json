@@ -687,19 +687,6 @@
         {"shape":"OperationNotSupportedException"}
       ]
     },
-    "GetProvisionedProductOutputs":{
-      "name":"GetProvisionedProductOutputs",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"GetProvisionedProductOutputsInput"},
-      "output":{"shape":"GetProvisionedProductOutputsOutput"},
-      "errors":[
-        {"shape":"InvalidParametersException"},
-        {"shape":"ResourceNotFoundException"}
-      ]
-    },
     "ListAcceptedPortfolioShares":{
       "name":"ListAcceptedPortfolioShares",
       "http":{
@@ -2236,24 +2223,6 @@
         "AccessStatus":{"shape":"AccessStatus"}
       }
     },
-    "GetProvisionedProductOutputsInput":{
-      "type":"structure",
-      "members":{
-        "AcceptLanguage":{"shape":"AcceptLanguage"},
-        "ProvisionedProductId":{"shape":"Id"},
-        "ProvisionedProductName":{"shape":"ProvisionedProductName"},
-        "OutputKeys":{"shape":"OutputKeys"},
-        "PageSize":{"shape":"PageSize"},
-        "PageToken":{"shape":"PageToken"}
-      }
-    },
-    "GetProvisionedProductOutputsOutput":{
-      "type":"structure",
-      "members":{
-        "Outputs":{"shape":"RecordOutputs"},
-        "NextPageToken":{"shape":"PageToken"}
-      }
-    },
     "HasDefaultPath":{"type":"boolean"},
     "Id":{
       "type":"string",
@@ -2687,11 +2656,6 @@
       "max":1024
     },
     "OutputKey":{"type":"string"},
-    "OutputKeys":{
-      "type":"list",
-      "member":{"shape":"OutputKey"},
-      "max":60
-    },
     "OutputValue":{"type":"string"},
     "PageSize":{
       "type":"integer",
@@ -2889,10 +2853,7 @@
     },
     "PropertyKey":{
       "type":"string",
-      "enum":[
-        "OWNER",
-        "LAUNCH_ROLE"
-      ],
+      "enum":["OWNER"],
       "max":128,
       "min":1
     },
@@ -2981,8 +2942,7 @@
         "LastProvisioningRecordId":{"shape":"Id"},
         "LastSuccessfulProvisioningRecordId":{"shape":"Id"},
         "ProductId":{"shape":"Id"},
-        "ProvisioningArtifactId":{"shape":"Id"},
-        "LaunchRoleArn":{"shape":"RoleArn"}
+        "ProvisioningArtifactId":{"shape":"Id"}
       }
     },
     "ProvisionedProductDetails":{
@@ -3268,8 +3228,7 @@
         "ProvisioningArtifactId":{"shape":"Id"},
         "PathId":{"shape":"Id"},
         "RecordErrors":{"shape":"RecordErrors"},
-        "RecordTags":{"shape":"RecordTags"},
-        "LaunchRoleArn":{"shape":"RoleArn"}
+        "RecordTags":{"shape":"RecordTags"}
       }
     },
     "RecordDetails":{
@@ -3450,12 +3409,6 @@
       }
     },
     "ResourceType":{"type":"string"},
-    "RoleArn":{
-      "type":"string",
-      "max":1224,
-      "min":1,
-      "pattern":"arn:[a-z0-9-\\.]{1,63}:iam::[a-z0-9-\\.]{0,63}:role\\/.{0,1023}"
-    },
     "ScanProvisionedProductsInput":{
       "type":"structure",
       "members":{

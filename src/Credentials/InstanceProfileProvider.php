@@ -4,7 +4,6 @@ namespace Aws\Credentials;
 use Aws\Exception\CredentialsException;
 use Aws\Exception\InvalidJsonException;
 use Aws\Sdk;
-use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
@@ -82,9 +81,8 @@ class InstanceProfileProvider
                             'x-aws-ec2-metadata-token-ttl-seconds' => 21600
                         ]
                     ));
-                } catch (TransferException $e) {
-                    if (!method_exists($e, 'getResponse')
-                        || empty($e->getResponse())
+                } catch (RequestException $e) {
+                    if (empty($e->getResponse())
                         || !in_array(
                             $e->getResponse()->getStatusCode(),
                             [400, 500, 502, 503, 504]
@@ -120,7 +118,7 @@ class InstanceProfileProvider
                         'GET',
                         $headers
                     ));
-                } catch (TransferException $e) {
+                } catch (RequestException $e) {
                     // 401 indicates insecure flow not supported, switch to
                     // attempting secure mode for subsequent calls
                     if (!empty($this->getExceptionStatusCode($e))
@@ -156,7 +154,7 @@ class InstanceProfileProvider
                             'Invalid JSON response, retries exhausted'
                         )
                     );
-                } catch (TransferException $e) {
+                } catch (RequestException $e) {
                     // 401 indicates insecure flow not supported, switch to
                     // attempting secure mode for subsequent calls
                     if (!empty($this->getExceptionStatusCode($e))
@@ -214,7 +212,7 @@ class InstanceProfileProvider
                 return (string) $response->getBody();
             })->otherwise(function (array $reason) {
                 $reason = $reason['exception'];
-                if ($reason instanceof TransferException) {
+                if ($reason instanceof \GuzzleHttp\Exception\RequestException) {
                     throw $reason;
                 }
                 $msg = $reason->getMessage();

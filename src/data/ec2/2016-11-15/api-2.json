@@ -3571,8 +3571,7 @@
         "method":"POST",
         "requestUri":"/"
       },
-      "input":{"shape":"RevokeSecurityGroupEgressRequest"},
-      "output":{"shape":"RevokeSecurityGroupEgressResult"}
+      "input":{"shape":"RevokeSecurityGroupEgressRequest"}
     },
     "RevokeSecurityGroupIngress":{
       "name":"RevokeSecurityGroupIngress",
@@ -3580,8 +3579,7 @@
         "method":"POST",
         "requestUri":"/"
       },
-      "input":{"shape":"RevokeSecurityGroupIngressRequest"},
-      "output":{"shape":"RevokeSecurityGroupIngressResult"}
+      "input":{"shape":"RevokeSecurityGroupIngressRequest"}
     },
     "RunInstances":{
       "name":"RunInstances",
@@ -20576,10 +20574,6 @@
           "shape":"Integer",
           "locationName":"peerBgpAsn"
         },
-        "OwnerId":{
-          "shape":"String",
-          "locationName":"ownerId"
-        },
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
@@ -20600,10 +20594,6 @@
         "LocalGatewayId":{
           "shape":"String",
           "locationName":"localGatewayId"
-        },
-        "OwnerId":{
-          "shape":"String",
-          "locationName":"ownerId"
         },
         "Tags":{
           "shape":"TagList",
@@ -25462,19 +25452,6 @@
         }
       }
     },
-    "RevokeSecurityGroupEgressResult":{
-      "type":"structure",
-      "members":{
-        "Return":{
-          "shape":"Boolean",
-          "locationName":"return"
-        },
-        "UnknownIpPermissions":{
-          "shape":"IpPermissionList",
-          "locationName":"unknownIpPermissionSet"
-        }
-      }
-    },
     "RevokeSecurityGroupIngressRequest":{
       "type":"structure",
       "members":{
@@ -25490,19 +25467,6 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
-        }
-      }
-    },
-    "RevokeSecurityGroupIngressResult":{
-      "type":"structure",
-      "members":{
-        "Return":{
-          "shape":"Boolean",
-          "locationName":"return"
-        },
-        "UnknownIpPermissions":{
-          "shape":"IpPermissionList",
-          "locationName":"unknownIpPermissionSet"
         }
       }
     },

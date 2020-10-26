@@ -582,12 +582,6 @@
         "Name":{"shape":"EventSourceName"}
       }
     },
-    "DeadLetterConfig":{
-      "type":"structure",
-      "members":{
-        "Arn":{"shape":"ResourceArn"}
-      }
-    },
     "DeleteEventBusRequest":{
       "type":"structure",
       "required":["Name"],
@@ -996,16 +990,6 @@
       },
       "exception":true
     },
-    "MaximumEventAgeInSeconds":{
-      "type":"integer",
-      "max":86400,
-      "min":60
-    },
-    "MaximumRetryAttempts":{
-      "type":"integer",
-      "max":185,
-      "min":0
-    },
     "MessageGroupId":{"type":"string"},
     "NetworkConfiguration":{
       "type":"structure",
@@ -1313,23 +1297,11 @@
       },
       "exception":true
     },
-    "ResourceArn":{
-      "type":"string",
-      "max":1600,
-      "min":1
-    },
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
       },
       "exception":true
-    },
-    "RetryPolicy":{
-      "type":"structure",
-      "members":{
-        "MaximumRetryAttempts":{"shape":"MaximumRetryAttempts"},
-        "MaximumEventAgeInSeconds":{"shape":"MaximumEventAgeInSeconds"}
-      }
     },
     "RoleArn":{
       "type":"string",
@@ -1516,9 +1488,7 @@
         "BatchParameters":{"shape":"BatchParameters"},
         "SqsParameters":{"shape":"SqsParameters"},
         "HttpParameters":{"shape":"HttpParameters"},
-        "RedshiftDataParameters":{"shape":"RedshiftDataParameters"},
-        "DeadLetterConfig":{"shape":"DeadLetterConfig"},
-        "RetryPolicy":{"shape":"RetryPolicy"}
+        "RedshiftDataParameters":{"shape":"RedshiftDataParameters"}
       }
     },
     "TargetArn":{

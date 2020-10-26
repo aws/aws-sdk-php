@@ -340,25 +340,6 @@
         {"shape":"HumanLoopQuotaExceededException"}
       ]
     },
-    "DetectProtectiveEquipment":{
-      "name":"DetectProtectiveEquipment",
-      "http":{
-        "method":"POST",
-        "requestUri":"/"
-      },
-      "input":{"shape":"DetectProtectiveEquipmentRequest"},
-      "output":{"shape":"DetectProtectiveEquipmentResponse"},
-      "errors":[
-        {"shape":"InvalidS3ObjectException"},
-        {"shape":"InvalidParameterException"},
-        {"shape":"ImageTooLargeException"},
-        {"shape":"AccessDeniedException"},
-        {"shape":"InternalServerError"},
-        {"shape":"ThrottlingException"},
-        {"shape":"ProvisionedThroughputExceededException"},
-        {"shape":"InvalidImageFormatException"}
-      ]
-    },
     "DetectText":{
       "name":"DetectText",
       "http":{
@@ -556,8 +537,7 @@
         {"shape":"ThrottlingException"},
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InvalidImageFormatException"},
-        {"shape":"ServiceQuotaExceededException"}
+        {"shape":"InvalidImageFormatException"}
       ]
     },
     "ListCollections":{
@@ -968,19 +948,6 @@
         "Confidence":{"shape":"Percent"}
       }
     },
-    "BodyPart":{
-      "type":"string",
-      "enum":[
-        "FACE",
-        "HEAD",
-        "LEFT_HAND",
-        "RIGHT_HAND"
-      ]
-    },
-    "BodyParts":{
-      "type":"list",
-      "member":{"shape":"ProtectiveEquipmentBodyPart"}
-    },
     "Boolean":{"type":"boolean"},
     "BoundingBox":{
       "type":"structure",
@@ -1148,13 +1115,6 @@
         "NAME",
         "TIMESTAMP"
       ]
-    },
-    "CoversBodyPart":{
-      "type":"structure",
-      "members":{
-        "Confidence":{"shape":"Percent"},
-        "Value":{"shape":"Boolean"}
-      }
     },
     "CreateCollectionRequest":{
       "type":"structure",
@@ -1453,22 +1413,6 @@
         "HumanLoopActivationOutput":{"shape":"HumanLoopActivationOutput"}
       }
     },
-    "DetectProtectiveEquipmentRequest":{
-      "type":"structure",
-      "required":["Image"],
-      "members":{
-        "Image":{"shape":"Image"},
-        "SummarizationAttributes":{"shape":"ProtectiveEquipmentSummarizationAttributes"}
-      }
-    },
-    "DetectProtectiveEquipmentResponse":{
-      "type":"structure",
-      "members":{
-        "ProtectiveEquipmentModelVersion":{"shape":"String"},
-        "Persons":{"shape":"ProtectiveEquipmentPersons"},
-        "Summary":{"shape":"ProtectiveEquipmentSummary"}
-      }
-    },
     "DetectTextFilters":{
       "type":"structure",
       "members":{
@@ -1523,19 +1467,6 @@
     "Emotions":{
       "type":"list",
       "member":{"shape":"Emotion"}
-    },
-    "EquipmentDetection":{
-      "type":"structure",
-      "members":{
-        "BoundingBox":{"shape":"BoundingBox"},
-        "Confidence":{"shape":"Percent"},
-        "Type":{"shape":"ProtectiveEquipmentType"},
-        "CoversBodyPart":{"shape":"CoversBodyPart"}
-      }
-    },
-    "EquipmentDetections":{
-      "type":"list",
-      "member":{"shape":"EquipmentDetection"}
     },
     "EvaluationResult":{
       "type":"structure",
@@ -2406,8 +2337,7 @@
         "OutputConfig":{"shape":"OutputConfig"},
         "TrainingDataResult":{"shape":"TrainingDataResult"},
         "TestingDataResult":{"shape":"TestingDataResult"},
-        "EvaluationResult":{"shape":"EvaluationResult"},
-        "ManifestSummary":{"shape":"GroundTruthManifest"}
+        "EvaluationResult":{"shape":"EvaluationResult"}
       }
     },
     "ProjectVersionDescriptions":{
@@ -2437,62 +2367,6 @@
       "type":"integer",
       "max":100,
       "min":1
-    },
-    "ProtectiveEquipmentBodyPart":{
-      "type":"structure",
-      "members":{
-        "Name":{"shape":"BodyPart"},
-        "Confidence":{"shape":"Percent"},
-        "EquipmentDetections":{"shape":"EquipmentDetections"}
-      }
-    },
-    "ProtectiveEquipmentPerson":{
-      "type":"structure",
-      "members":{
-        "BodyParts":{"shape":"BodyParts"},
-        "BoundingBox":{"shape":"BoundingBox"},
-        "Confidence":{"shape":"Percent"},
-        "Id":{"shape":"UInteger"}
-      }
-    },
-    "ProtectiveEquipmentPersonIds":{
-      "type":"list",
-      "member":{"shape":"UInteger"}
-    },
-    "ProtectiveEquipmentPersons":{
-      "type":"list",
-      "member":{"shape":"ProtectiveEquipmentPerson"}
-    },
-    "ProtectiveEquipmentSummarizationAttributes":{
-      "type":"structure",
-      "required":[
-        "MinConfidence",
-        "RequiredEquipmentTypes"
-      ],
-      "members":{
-        "MinConfidence":{"shape":"Percent"},
-        "RequiredEquipmentTypes":{"shape":"ProtectiveEquipmentTypes"}
-      }
-    },
-    "ProtectiveEquipmentSummary":{
-      "type":"structure",
-      "members":{
-        "PersonsWithRequiredEquipment":{"shape":"ProtectiveEquipmentPersonIds"},
-        "PersonsWithoutRequiredEquipment":{"shape":"ProtectiveEquipmentPersonIds"},
-        "PersonsIndeterminate":{"shape":"ProtectiveEquipmentPersonIds"}
-      }
-    },
-    "ProtectiveEquipmentType":{
-      "type":"string",
-      "enum":[
-        "FACE_COVER",
-        "HAND_COVER",
-        "HEAD_COVER"
-      ]
-    },
-    "ProtectiveEquipmentTypes":{
-      "type":"list",
-      "member":{"shape":"ProtectiveEquipmentType"}
     },
     "ProvisionedThroughputExceededException":{
       "type":"structure",
@@ -2706,12 +2580,6 @@
     "SegmentTypesInfo":{
       "type":"list",
       "member":{"shape":"SegmentTypeInfo"}
-    },
-    "ServiceQuotaExceededException":{
-      "type":"structure",
-      "members":{
-      },
-      "exception":true
     },
     "ShotSegment":{
       "type":"structure",
@@ -3039,8 +2907,7 @@
       "type":"structure",
       "members":{
         "Input":{"shape":"TestingData"},
-        "Output":{"shape":"TestingData"},
-        "Validation":{"shape":"ValidationData"}
+        "Output":{"shape":"TestingData"}
       }
     },
     "TextDetection":{
@@ -3095,8 +2962,7 @@
       "type":"structure",
       "members":{
         "Input":{"shape":"TrainingData"},
-        "Output":{"shape":"TrainingData"},
-        "Validation":{"shape":"ValidationData"}
+        "Output":{"shape":"TrainingData"}
       }
     },
     "UInteger":{
@@ -3122,12 +2988,6 @@
     "Urls":{
       "type":"list",
       "member":{"shape":"Url"}
-    },
-    "ValidationData":{
-      "type":"structure",
-      "members":{
-        "Assets":{"shape":"Assets"}
-      }
     },
     "VersionName":{
       "type":"string",
