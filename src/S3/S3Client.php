@@ -381,7 +381,7 @@ class S3Client extends AwsClient implements S3ClientInterface
 
         $stack->appendValidate(
             InputValidationMiddleware::wrap($this->getApi(), self::$mandatoryAttributes),
-            's3.bucket_endpoint_validation'
+            'input_validation_middleware'
         );
         $stack->appendSign(PutObjectUrlMiddleware::wrap(), 's3.put_object_url');
         $stack->appendSign(PermanentRedirectMiddleware::wrap(), 's3.permanent_redirect');

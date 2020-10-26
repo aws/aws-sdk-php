@@ -12,7 +12,7 @@ use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Aws\EndpointParameterMiddleware
+ * @covers \Aws\InputValidationMiddleware
  */
 class InputValidationMiddlewareTest extends TestCase
 {
@@ -85,7 +85,7 @@ class InputValidationMiddlewareTest extends TestCase
      *
      * @param $input
      */
-    public function testNoValidationWithoutInputLIst($input)
+    public function testNoValidationWithoutInputList($input)
     {
         $service = $this->generateTestService();
         $client = $this->generateTestClient($service);
@@ -93,15 +93,14 @@ class InputValidationMiddlewareTest extends TestCase
         $mandatoryInputList = [];
         $list = new HandlerList();
         $list->setHandler(function ($command) {
-            return;
+            return "success";
         });
         $list->appendValidate(
             InputValidationMiddleware::wrap($service, $mandatoryInputList)
         );
         $handler = $list->resolve();
-
-        $handler($command, new Request('POST', 'https://foo.com'));
-        self::assertTrue(true);
+        $result = $handler($command, new Request('POST', 'https://foo.com'));
+        self::assertSame($result, "success");
     }
 
     /**
@@ -118,7 +117,7 @@ class InputValidationMiddlewareTest extends TestCase
 
         $list = new HandlerList();
         $list->setHandler(function ($command) {
-            return;
+            return "success";
         });
         $list->appendValidate(
             InputValidationMiddleware::wrap($service, $mandatoryInputList)
@@ -126,8 +125,8 @@ class InputValidationMiddlewareTest extends TestCase
 
         $handler = $list->resolve();
 
-        $handler($command, new Request('POST', 'https://foo.com'));
-        self::assertTrue(true);
+        $result = $handler($command, new Request('POST', 'https://foo.com'));
+        self::assertSame($result, "success");
     }
 
     private function generateTestClient(Service $service, $args = [])

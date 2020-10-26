@@ -57,17 +57,15 @@ class InputValidationMiddleware
             if (!empty($input = $service['shapes'][$op['input']['shape']])) {
                 if (!empty($input['required'])) {
                     foreach ($input['required'] as $key => $member) {
-                        if (!in_array($member, $this->mandatoryAttributeList))
-                            continue;
-                        if (isset($cmd[$member])) {
+                        if (in_array($member, $this->mandatoryAttributeList)) {
                             $argument = is_string($cmd[$member]) ?  trim($cmd[$member]) : $cmd[$member];
-                            if ($argument !== '')
-                                continue;
+                            if ($argument === '' || $argument === null) {
+                                $commandName = $cmd->getName();
+                                throw new \InvalidArgumentException(
+                                    "The {$commandName} operation requires non-empty parameter: {$member}"
+                                );
+                            }
                         }
-                        $commandName = $cmd->getName();
-                        throw new \InvalidArgumentException(
-                        "The {$commandName} operation requires non-empty parameter: {$member}"
-                        );
                     }
                 }
             }
