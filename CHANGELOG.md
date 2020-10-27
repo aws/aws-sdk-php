@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.15 - 2020-10-27
 
 * `Aws\Glue` - AWS Glue machine learning transforms now support encryption-at-rest for labels and trained models.
 * `Aws\S3` - Added validation that required S3 parameters are non empty
