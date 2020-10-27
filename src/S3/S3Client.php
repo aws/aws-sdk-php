@@ -10,6 +10,7 @@ use Aws\ClientResolver;
 use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
+use Aws\InputValidationMiddleware;
 use Aws\Middleware;
 use Aws\Retry\QuotaManager;
 use Aws\RetryMiddleware;
@@ -215,6 +216,9 @@ class S3Client extends AwsClient implements S3ClientInterface
 {
     use S3ClientTrait;
 
+    /** @var array */
+    private static $mandatoryAttributes = ['Bucket', 'Key'];
+
     public static function getArguments()
     {
         $args = parent::getArguments();
@@ -373,6 +377,11 @@ class S3Client extends AwsClient implements S3ClientInterface
                 ]
             ),
             's3.bucket_endpoint_arn'
+        );
+
+        $stack->appendValidate(
+            InputValidationMiddleware::wrap($this->getApi(), self::$mandatoryAttributes),
+            'input_validation_middleware'
         );
         $stack->appendSign(PutObjectUrlMiddleware::wrap(), 's3.put_object_url');
         $stack->appendSign(PermanentRedirectMiddleware::wrap(), 's3.permanent_redirect');

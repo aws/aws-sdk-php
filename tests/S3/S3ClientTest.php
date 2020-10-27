@@ -337,6 +337,20 @@ class S3ClientTest extends TestCase
     }
 
     /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The DeleteObject operation requires non-empty parameter: Bucket
+     */
+    public function testEnsuresMandatoryInputVariables()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3');
+        $client->deleteObject([
+            'Bucket' => "",
+            'Key' => "key"]
+        );
+    }
+
+    /**
      * @expectedException \RuntimeException
      */
     public function testEnsuresPrefixOrRegexSuppliedForDeleteMatchingObjects()

@@ -490,6 +490,7 @@ class S3EndpointMiddlewareTest extends TestCase
         $useDualstack,
         $useS3Accelerate
     ) {
+        $key = 'key';
         $client = new S3Client([
             'region' => $region,
             'version' => 'latest',
@@ -500,15 +501,15 @@ class S3EndpointMiddlewareTest extends TestCase
             'handler' => function (
                 CommandInterface $cmd,
                 RequestInterface $req
-            ) use ($expectedUri) {
-                $this->assertEquals($expectedUri, trim($req->getUri(), '/'));
+            ) use ($key, $expectedUri) {
+                $this->assertEquals($expectedUri . '/' . $key, trim($req->getUri(), '/'));
                 return Promise\promise_for(new Result());
             },
         ]);
 
         $client->getObject([
             'Bucket' => $bucket,
-            'Key' => '',
+            'Key' => $key,
         ]);
     }
 }
