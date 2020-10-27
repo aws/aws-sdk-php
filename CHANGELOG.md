@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - AWS Glue machine learning transforms now support encryption-at-rest for labels and trained models.
+* `Aws\S3` - Added validation that required S3 parameters are non empty
+
 ## 3.158.14 - 2020-10-26
 
 * `Aws\Neptune` - This feature enables custom endpoints for Amazon Neptune clusters. Custom endpoints simplify connection management when clusters contain instances with different capacities and configuration settings.
