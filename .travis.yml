@@ -94,7 +94,7 @@ install:
   - >
     phpunit5_versions=("7.2" "7.3" "7.4" "8.0" "8.0snapshot");
     if [[ " ${phpunit5_versions[@]} " =~ " $(phpenv version-name) " ]] && [ -z $COMPOSER_OPTS ]; then
-      composer require --dev --ignore-platform-req=php phpunit/phpunit "^5.7.11"
+      composer require --dev --ignore-platform-reqs phpunit/phpunit "^5.7.11"
     fi
 
   # Resolve dependencies
