@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - AWS Nitro Enclaves general availability. Added support to RunInstances for creating enclave-enabled EC2 instances. New APIs to associate an ACM certificate with an IAM role, for enclave consumption.
+* `Aws\IoT` - This release adds support for GG-Managed Job Namespace
+* `Aws\WorkMail` - Documentation update for Amazon WorkMail
+
 ## 3.158.15 - 2020-10-27
 
 * `Aws\Glue` - AWS Glue machine learning transforms now support encryption-at-rest for labels and trained models.
