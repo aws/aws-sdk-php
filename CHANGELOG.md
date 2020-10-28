@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.16 - 2020-10-28
 
 * `Aws\EC2` - AWS Nitro Enclaves general availability. Added support to RunInstances for creating enclave-enabled EC2 instances. New APIs to associate an ACM certificate with an IAM role, for enclave consumption.
 * `Aws\IoT` - This release adds support for GG-Managed Job Namespace
