@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.17 - 2020-10-29
 
 * `Aws\APIGateway` - Support disabling the default execute-api endpoint for REST APIs.
 * `Aws\CodeArtifact` - Add support for tagging of CodeArtifact domain and repository resources.
