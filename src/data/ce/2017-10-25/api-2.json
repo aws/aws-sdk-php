@@ -568,7 +568,8 @@
         "EffectiveEnd":{"shape":"ZonedDateTime"},
         "Name":{"shape":"CostCategoryName"},
         "RuleVersion":{"shape":"CostCategoryRuleVersion"},
-        "Rules":{"shape":"CostCategoryRulesList"}
+        "Rules":{"shape":"CostCategoryRulesList"},
+        "ProcessingStatus":{"shape":"CostCategoryProcessingStatusList"}
       }
     },
     "CostCategoryMaxResults":{
@@ -582,6 +583,17 @@
       "min":1,
       "pattern":"^(?! )[\\p{L}\\p{N}\\p{Z}-_]*(?<! )$"
     },
+    "CostCategoryProcessingStatus":{
+      "type":"structure",
+      "members":{
+        "Component":{"shape":"CostCategoryStatusComponent"},
+        "Status":{"shape":"CostCategoryStatus"}
+      }
+    },
+    "CostCategoryProcessingStatusList":{
+      "type":"list",
+      "member":{"shape":"CostCategoryProcessingStatus"}
+    },
     "CostCategoryReference":{
       "type":"structure",
       "members":{
@@ -589,7 +601,9 @@
         "Name":{"shape":"CostCategoryName"},
         "EffectiveStart":{"shape":"ZonedDateTime"},
         "EffectiveEnd":{"shape":"ZonedDateTime"},
-        "NumberOfRules":{"shape":"NonNegativeInteger"}
+        "NumberOfRules":{"shape":"NonNegativeInteger"},
+        "ProcessingStatus":{"shape":"CostCategoryProcessingStatusList"},
+        "Values":{"shape":"CostCategoryValuesList"}
       }
     },
     "CostCategoryReferencesList":{
@@ -617,6 +631,17 @@
       "max":500,
       "min":1
     },
+    "CostCategoryStatus":{
+      "type":"string",
+      "enum":[
+        "PROCESSING",
+        "APPLIED"
+      ]
+    },
+    "CostCategoryStatusComponent":{
+      "type":"string",
+      "enum":["COST_EXPLORER"]
+    },
     "CostCategoryValue":{
       "type":"string",
       "max":255,
@@ -627,8 +652,13 @@
       "type":"structure",
       "members":{
         "Key":{"shape":"CostCategoryName"},
-        "Values":{"shape":"Values"}
+        "Values":{"shape":"Values"},
+        "MatchOptions":{"shape":"MatchOptions"}
       }
+    },
+    "CostCategoryValuesList":{
+      "type":"list",
+      "member":{"shape":"CostCategoryValue"}
     },
     "Coverage":{
       "type":"structure",
@@ -863,6 +893,15 @@
       "type":"list",
       "member":{"shape":"DimensionValuesWithAttributes"}
     },
+    "EBSResourceUtilization":{
+      "type":"structure",
+      "members":{
+        "EbsReadOpsPerSecond":{"shape":"GenericString"},
+        "EbsWriteOpsPerSecond":{"shape":"GenericString"},
+        "EbsReadBytesPerSecond":{"shape":"GenericString"},
+        "EbsWriteBytesPerSecond":{"shape":"GenericString"}
+      }
+    },
     "EC2InstanceDetails":{
       "type":"structure",
       "members":{
@@ -895,7 +934,8 @@
       "members":{
         "MaxCpuUtilizationPercentage":{"shape":"GenericString"},
         "MaxMemoryUtilizationPercentage":{"shape":"GenericString"},
-        "MaxStorageUtilizationPercentage":{"shape":"GenericString"}
+        "MaxStorageUtilizationPercentage":{"shape":"GenericString"},
+        "EBSResourceUtilization":{"shape":"EBSResourceUtilization"}
       }
     },
     "EC2Specification":{
@@ -2014,7 +2054,7 @@
       "type":"string",
       "max":302,
       "min":6,
-      "pattern":"(^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$)|(^arn:(aws[a-zA-Z-]*):sns:[a-zA-Z0-9-]+:[0-9]{12}:[a-zA-Z0-9_-]+$)"
+      "pattern":"(^[a-zA-Z0-9.!#$%&'*+=?^_‘{|}~-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$)|(^arn:(aws[a-zA-Z-]*):sns:[a-zA-Z0-9-]+:[0-9]{12}:[a-zA-Z0-9_-]+$)"
     },
     "SubscriberStatus":{
       "type":"string",
