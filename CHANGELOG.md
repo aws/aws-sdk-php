@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Support disabling the default execute-api endpoint for REST APIs.
+* `Aws\CodeArtifact` - Add support for tagging of CodeArtifact domain and repository resources.
+* `Aws\EC2` - Support for Appliance mode on Transit Gateway that simplifies deployment of stateful network appliances. Added support for AWS Client VPN Self-Service Portal.
+* `Aws\ElasticLoadBalancingv2` - Application Load Balancer (ALB) now supports the gRPC protocol-version. With this release, customers can use ALB to route and load balance gRPC traffic between gRPC enabled clients and microservices.
+* `Aws\MarketplaceCommerceAnalytics` - Documentation updates for marketplacecommerceanalytics to specify four data sets which are deprecated.
+* `Aws\SesV2` - This release enables customers to manage their own contact lists and end-user subscription preferences.
+* `Aws\StorageGateway` - Adding support for access based enumeration on SMB file shares, file share visibility on SMB file shares, and file upload notifications for all file shares
+
 ## 3.158.16 - 2020-10-28
 
 * `Aws\EC2` - AWS Nitro Enclaves general availability. Added support to RunInstances for creating enclave-enabled EC2 instances. New APIs to associate an ACM certificate with an IAM role, for enclave consumption.
