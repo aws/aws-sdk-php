@@ -106,6 +106,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
                                 "Unreadable tokenfile at location {$this->tokenFile}"
                             );
                         }
+                        $token = file_get_contents($this->tokenFile);
                     }
                 } catch (\Exception $exception) {
                     throw new CredentialsException(
