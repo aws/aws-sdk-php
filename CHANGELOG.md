@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.18 - 2020-10-30
 
 * `Aws\Braket` - This release supports tagging for Amazon Braket quantum-task resources. It also supports tag-based access control for quantum-task APIs.
 * `Aws\DatabaseMigrationService` - Adding DocDbSettings to support DocumentDB as a source.
