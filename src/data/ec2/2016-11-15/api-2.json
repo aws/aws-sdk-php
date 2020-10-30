@@ -137,6 +137,15 @@
       },
       "input":{"shape":"AssociateDhcpOptionsRequest"}
     },
+    "AssociateEnclaveCertificateIamRole":{
+      "name":"AssociateEnclaveCertificateIamRole",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateEnclaveCertificateIamRoleRequest"},
+      "output":{"shape":"AssociateEnclaveCertificateIamRoleResult"}
+    },
     "AssociateIamInstanceProfile":{
       "name":"AssociateIamInstanceProfile",
       "http":{
@@ -2497,6 +2506,15 @@
       "input":{"shape":"DisassociateClientVpnTargetNetworkRequest"},
       "output":{"shape":"DisassociateClientVpnTargetNetworkResult"}
     },
+    "DisassociateEnclaveCertificateIamRole":{
+      "name":"DisassociateEnclaveCertificateIamRole",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateEnclaveCertificateIamRoleRequest"},
+      "output":{"shape":"DisassociateEnclaveCertificateIamRoleResult"}
+    },
     "DisassociateIamInstanceProfile":{
       "name":"DisassociateIamInstanceProfile",
       "http":{
@@ -2646,6 +2664,15 @@
       },
       "input":{"shape":"ExportTransitGatewayRoutesRequest"},
       "output":{"shape":"ExportTransitGatewayRoutesResult"}
+    },
+    "GetAssociatedEnclaveCertificateIamRoles":{
+      "name":"GetAssociatedEnclaveCertificateIamRoles",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAssociatedEnclaveCertificateIamRolesRequest"},
+      "output":{"shape":"GetAssociatedEnclaveCertificateIamRolesResult"}
     },
     "GetAssociatedIpv6PoolCidrs":{
       "name":"GetAssociatedIpv6PoolCidrs",
@@ -4180,6 +4207,13 @@
         "off"
       ]
     },
+    "ApplianceModeSupportValue":{
+      "type":"string",
+      "enum":[
+        "enable",
+        "disable"
+      ]
+    },
     "ApplySecurityGroupsToClientVpnTargetNetworkRequest":{
       "type":"structure",
       "required":[
@@ -4388,6 +4422,31 @@
         }
       }
     },
+    "AssociateEnclaveCertificateIamRoleRequest":{
+      "type":"structure",
+      "members":{
+        "CertificateArn":{"shape":"ResourceArn"},
+        "RoleArn":{"shape":"ResourceArn"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "AssociateEnclaveCertificateIamRoleResult":{
+      "type":"structure",
+      "members":{
+        "CertificateS3BucketName":{
+          "shape":"String",
+          "locationName":"certificateS3BucketName"
+        },
+        "CertificateS3ObjectKey":{
+          "shape":"String",
+          "locationName":"certificateS3ObjectKey"
+        },
+        "EncryptionKmsKeyId":{
+          "shape":"String",
+          "locationName":"encryptionKmsKeyId"
+        }
+      }
+    },
     "AssociateIamInstanceProfileRequest":{
       "type":"structure",
       "required":[
@@ -4547,6 +4606,34 @@
     "AssociatedNetworkType":{
       "type":"string",
       "enum":["vpc"]
+    },
+    "AssociatedRole":{
+      "type":"structure",
+      "members":{
+        "AssociatedRoleArn":{
+          "shape":"ResourceArn",
+          "locationName":"associatedRoleArn"
+        },
+        "CertificateS3BucketName":{
+          "shape":"String",
+          "locationName":"certificateS3BucketName"
+        },
+        "CertificateS3ObjectKey":{
+          "shape":"String",
+          "locationName":"certificateS3ObjectKey"
+        },
+        "EncryptionKmsKeyId":{
+          "shape":"String",
+          "locationName":"encryptionKmsKeyId"
+        }
+      }
+    },
+    "AssociatedRolesList":{
+      "type":"list",
+      "member":{
+        "shape":"AssociatedRole",
+        "locationName":"item"
+      }
     },
     "AssociatedTargetNetwork":{
       "type":"structure",
@@ -6128,6 +6215,10 @@
         "VpcId":{
           "shape":"VpcId",
           "locationName":"vpcId"
+        },
+        "SelfServicePortalUrl":{
+          "shape":"String",
+          "locationName":"selfServicePortalUrl"
         }
       }
     },
@@ -6693,7 +6784,8 @@
           "shape":"ClientVpnSecurityGroupIdSet",
           "locationName":"SecurityGroupId"
         },
-        "VpcId":{"shape":"VpcId"}
+        "VpcId":{"shape":"VpcId"},
+        "SelfServicePortal":{"shape":"SelfServicePortal"}
       }
     },
     "CreateClientVpnEndpointResult":{
@@ -8083,7 +8175,8 @@
       "type":"structure",
       "members":{
         "DnsSupport":{"shape":"DnsSupportValue"},
-        "Ipv6Support":{"shape":"Ipv6SupportValue"}
+        "Ipv6Support":{"shape":"Ipv6SupportValue"},
+        "ApplianceModeSupport":{"shape":"ApplianceModeSupportValue"}
       }
     },
     "CreateTransitGatewayVpcAttachmentResult":{
@@ -13718,6 +13811,23 @@
         }
       }
     },
+    "DisassociateEnclaveCertificateIamRoleRequest":{
+      "type":"structure",
+      "members":{
+        "CertificateArn":{"shape":"ResourceArn"},
+        "RoleArn":{"shape":"ResourceArn"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DisassociateEnclaveCertificateIamRoleResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        }
+      }
+    },
     "DisassociateIamInstanceProfileRequest":{
       "type":"structure",
       "required":["AssociationId"],
@@ -14595,6 +14705,21 @@
         }
       }
     },
+    "EnclaveOptions":{
+      "type":"structure",
+      "members":{
+        "Enabled":{
+          "shape":"Boolean",
+          "locationName":"enabled"
+        }
+      }
+    },
+    "EnclaveOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
     "EndDateType":{
       "type":"string",
       "enum":[
@@ -14608,6 +14733,14 @@
         "shape":"ClientVpnEndpoint",
         "locationName":"item"
       }
+    },
+    "EphemeralNvmeSupport":{
+      "type":"string",
+      "enum":[
+        "unsupported",
+        "supported",
+        "required"
+      ]
     },
     "ErrorSet":{
       "type":"list",
@@ -15015,13 +15148,18 @@
         "SamlProviderArn":{
           "shape":"String",
           "locationName":"samlProviderArn"
+        },
+        "SelfServiceSamlProviderArn":{
+          "shape":"String",
+          "locationName":"selfServiceSamlProviderArn"
         }
       }
     },
     "FederatedAuthenticationRequest":{
       "type":"structure",
       "members":{
-        "SAMLProviderArn":{"shape":"String"}
+        "SAMLProviderArn":{"shape":"String"},
+        "SelfServiceSAMLProviderArn":{"shape":"String"}
       }
     },
     "Filter":{
@@ -15599,6 +15737,22 @@
     "GatewayType":{
       "type":"string",
       "enum":["ipsec.1"]
+    },
+    "GetAssociatedEnclaveCertificateIamRolesRequest":{
+      "type":"structure",
+      "members":{
+        "CertificateArn":{"shape":"ResourceArn"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetAssociatedEnclaveCertificateIamRolesResult":{
+      "type":"structure",
+      "members":{
+        "AssociatedRoles":{
+          "shape":"AssociatedRolesList",
+          "locationName":"associatedRoleSet"
+        }
+      }
     },
     "GetAssociatedIpv6PoolCidrsRequest":{
       "type":"structure",
@@ -17705,6 +17859,10 @@
         "MetadataOptions":{
           "shape":"InstanceMetadataOptionsResponse",
           "locationName":"metadataOptions"
+        },
+        "EnclaveOptions":{
+          "shape":"EnclaveOptions",
+          "locationName":"enclaveOptions"
         }
       }
     },
@@ -17726,6 +17884,10 @@
         "EnaSupport":{
           "shape":"AttributeBooleanValue",
           "locationName":"enaSupport"
+        },
+        "EnclaveOptions":{
+          "shape":"EnclaveOptions",
+          "locationName":"enclaveOptions"
         },
         "EbsOptimized":{
           "shape":"AttributeBooleanValue",
@@ -17789,7 +17951,8 @@
         "groupSet",
         "ebsOptimized",
         "sriovNetSupport",
-        "enaSupport"
+        "enaSupport",
+        "enclaveOptions"
       ]
     },
     "InstanceBlockDeviceMapping":{
@@ -18495,6 +18658,10 @@
         "Disks":{
           "shape":"DiskInfoList",
           "locationName":"disks"
+        },
+        "NvmeSupport":{
+          "shape":"EphemeralNvmeSupport",
+          "locationName":"nvmeSupport"
         }
       }
     },
@@ -19693,6 +19860,21 @@
         "locationName":"item"
       }
     },
+    "LaunchTemplateEnclaveOptions":{
+      "type":"structure",
+      "members":{
+        "Enabled":{
+          "shape":"Boolean",
+          "locationName":"enabled"
+        }
+      }
+    },
+    "LaunchTemplateEnclaveOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"}
+      }
+    },
     "LaunchTemplateErrorCode":{
       "type":"string",
       "enum":[
@@ -20793,7 +20975,8 @@
           "shape":"ClientVpnSecurityGroupIdSet",
           "locationName":"SecurityGroupId"
         },
-        "VpcId":{"shape":"VpcId"}
+        "VpcId":{"shape":"VpcId"},
+        "SelfServicePortal":{"shape":"SelfServicePortal"}
       }
     },
     "ModifyClientVpnEndpointResult":{
@@ -21516,7 +21699,8 @@
       "type":"structure",
       "members":{
         "DnsSupport":{"shape":"DnsSupportValue"},
-        "Ipv6Support":{"shape":"Ipv6SupportValue"}
+        "Ipv6Support":{"shape":"Ipv6SupportValue"},
+        "ApplianceModeSupport":{"shape":"ApplianceModeSupportValue"}
       }
     },
     "ModifyTransitGatewayVpcAttachmentResult":{
@@ -24398,7 +24582,8 @@
           "locationName":"LicenseSpecification"
         },
         "HibernationOptions":{"shape":"LaunchTemplateHibernationOptionsRequest"},
-        "MetadataOptions":{"shape":"LaunchTemplateInstanceMetadataOptionsRequest"}
+        "MetadataOptions":{"shape":"LaunchTemplateInstanceMetadataOptionsRequest"},
+        "EnclaveOptions":{"shape":"LaunchTemplateEnclaveOptionsRequest"}
       }
     },
     "RequestSpotFleetRequest":{
@@ -25330,6 +25515,10 @@
         "MetadataOptions":{
           "shape":"LaunchTemplateInstanceMetadataOptions",
           "locationName":"metadataOptions"
+        },
+        "EnclaveOptions":{
+          "shape":"LaunchTemplateEnclaveOptions",
+          "locationName":"enclaveOptions"
         }
       }
     },
@@ -25788,7 +25977,8 @@
           "shape":"LicenseSpecificationListRequest",
           "locationName":"LicenseSpecification"
         },
-        "MetadataOptions":{"shape":"InstanceMetadataOptionsRequest"}
+        "MetadataOptions":{"shape":"InstanceMetadataOptionsRequest"},
+        "EnclaveOptions":{"shape":"EnclaveOptionsRequest"}
       }
     },
     "RunScheduledInstancesRequest":{
@@ -26338,6 +26528,13 @@
         "shape":"SecurityGroupName",
         "locationName":"SecurityGroup"
       }
+    },
+    "SelfServicePortal":{
+      "type":"string",
+      "enum":[
+        "enabled",
+        "disabled"
+      ]
     },
     "SendDiagnosticInterruptRequest":{
       "type":"structure",
@@ -29237,6 +29434,10 @@
         "Ipv6Support":{
           "shape":"Ipv6SupportValue",
           "locationName":"ipv6Support"
+        },
+        "ApplianceModeSupport":{
+          "shape":"ApplianceModeSupportValue",
+          "locationName":"applianceModeSupport"
         }
       }
     },

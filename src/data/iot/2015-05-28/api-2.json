@@ -3682,7 +3682,12 @@
           "location":"uri",
           "locationName":"jobId"
         },
-        "comment":{"shape":"Comment"}
+        "comment":{"shape":"Comment"},
+        "namespaceId":{
+          "shape":"NamespaceId",
+          "location":"querystring",
+          "locationName":"namespaceId"
+        }
       }
     },
     "AssociateTargetsWithJobResponse":{
@@ -4916,7 +4921,8 @@
         "jobExecutionsRolloutConfig":{"shape":"JobExecutionsRolloutConfig"},
         "abortConfig":{"shape":"AbortConfig"},
         "timeoutConfig":{"shape":"TimeoutConfig"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "namespaceId":{"shape":"NamespaceId"}
       }
     },
     "CreateJobResponse":{
@@ -5570,6 +5576,11 @@
           "shape":"ForceFlag",
           "location":"querystring",
           "locationName":"force"
+        },
+        "namespaceId":{
+          "shape":"NamespaceId",
+          "location":"querystring",
+          "locationName":"namespaceId"
         }
       }
     },
@@ -5586,6 +5597,11 @@
           "shape":"ForceFlag",
           "location":"querystring",
           "locationName":"force"
+        },
+        "namespaceId":{
+          "shape":"NamespaceId",
+          "location":"querystring",
+          "locationName":"namespaceId"
         }
       }
     },
@@ -6600,9 +6616,8 @@
     },
     "DetailsValue":{
       "type":"string",
-      "max":1024,
       "min":1,
-      "pattern":"[^\\p{C}]*+"
+      "pattern":"[^\\p{C}]+"
     },
     "DeviceCertificateUpdateAction":{
       "type":"string",
@@ -7439,7 +7454,8 @@
         "lastUpdatedAt":{"shape":"DateType"},
         "completedAt":{"shape":"DateType"},
         "jobProcessDetails":{"shape":"JobProcessDetails"},
-        "timeoutConfig":{"shape":"TimeoutConfig"}
+        "timeoutConfig":{"shape":"TimeoutConfig"},
+        "namespaceId":{"shape":"NamespaceId"}
       }
     },
     "JobArn":{"type":"string"},
@@ -8147,6 +8163,11 @@
           "location":"querystring",
           "locationName":"status"
         },
+        "namespaceId":{
+          "shape":"NamespaceId",
+          "location":"querystring",
+          "locationName":"namespaceId"
+        },
         "maxResults":{
           "shape":"LaserMaxResults",
           "location":"querystring",
@@ -8198,6 +8219,11 @@
           "shape":"ThingGroupId",
           "location":"querystring",
           "locationName":"thingGroupId"
+        },
+        "namespaceId":{
+          "shape":"NamespaceId",
+          "location":"querystring",
+          "locationName":"namespaceId"
         }
       }
     },
@@ -9296,6 +9322,12 @@
       "type":"string",
       "max":65535,
       "min":1
+    },
+    "NamespaceId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
     },
     "NextToken":{"type":"string"},
     "NonCompliantChecksCount":{"type":"integer"},
@@ -11451,7 +11483,12 @@
         "presignedUrlConfig":{"shape":"PresignedUrlConfig"},
         "jobExecutionsRolloutConfig":{"shape":"JobExecutionsRolloutConfig"},
         "abortConfig":{"shape":"AbortConfig"},
-        "timeoutConfig":{"shape":"TimeoutConfig"}
+        "timeoutConfig":{"shape":"TimeoutConfig"},
+        "namespaceId":{
+          "shape":"NamespaceId",
+          "location":"querystring",
+          "locationName":"namespaceId"
+        }
       }
     },
     "UpdateMitigationActionRequest":{

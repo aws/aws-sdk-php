@@ -1,5 +1,136 @@
 # CHANGELOG
 
+## 3.158.17 - 2020-10-29
+
+* `Aws\APIGateway` - Support disabling the default execute-api endpoint for REST APIs.
+* `Aws\CodeArtifact` - Add support for tagging of CodeArtifact domain and repository resources.
+* `Aws\EC2` - Support for Appliance mode on Transit Gateway that simplifies deployment of stateful network appliances. Added support for AWS Client VPN Self-Service Portal.
+* `Aws\ElasticLoadBalancingv2` - Application Load Balancer (ALB) now supports the gRPC protocol-version. With this release, customers can use ALB to route and load balance gRPC traffic between gRPC enabled clients and microservices.
+* `Aws\MarketplaceCommerceAnalytics` - Documentation updates for marketplacecommerceanalytics to specify four data sets which are deprecated.
+* `Aws\SesV2` - This release enables customers to manage their own contact lists and end-user subscription preferences.
+* `Aws\StorageGateway` - Adding support for access based enumeration on SMB file shares, file share visibility on SMB file shares, and file upload notifications for all file shares
+
+## 3.158.16 - 2020-10-28
+
+* `Aws\EC2` - AWS Nitro Enclaves general availability. Added support to RunInstances for creating enclave-enabled EC2 instances. New APIs to associate an ACM certificate with an IAM role, for enclave consumption.
+* `Aws\IoT` - This release adds support for GG-Managed Job Namespace
+* `Aws\WorkMail` - Documentation update for Amazon WorkMail
+
+## 3.158.15 - 2020-10-27
+
+* `Aws\Glue` - AWS Glue machine learning transforms now support encryption-at-rest for labels and trained models.
+* `Aws\S3` - Added validation that required S3 parameters are non empty
+
+## 3.158.14 - 2020-10-26
+
+* `Aws\Neptune` - This feature enables custom endpoints for Amazon Neptune clusters. Custom endpoints simplify connection management when clusters contain instances with different capacities and configuration settings.
+* `Aws\SageMaker` - This release enables customers to bring custom images for use with SageMaker Studio notebooks.
+* `Aws\kendra` - Amazon Kendra now supports indexing data from Confluence Server.
+
+## 3.158.13 - 2020-10-23
+
+* `Aws\Macie2` - This release of the Amazon Macie API includes miscellaneous updates and improvements to the documentation.
+* `Aws\MediaTailor` - MediaTailor now supports ad marker passthrough for HLS. Use AdMarkerPassthrough to pass EXT-X-CUE-IN, EXT-X-CUE-OUT, and EXT-X-SPLICEPOINT-SCTE35 from origin manifests into personalized manifests.
+* `Aws\QuickSight` - Support description on columns.
+
+## 3.158.12 - 2020-10-22
+
+* `Aws\AccessAnalyzer` - API Documentation updates for IAM Access Analyzer.
+* `Aws\Appflow` - Salesforce connector creation with customer provided client id and client secret, incremental pull configuration, salesforce upsert write operations and execution ID when on-demand flows are executed.
+* `Aws\SNS` - SNS now supports a new class of topics: FIFO (First-In-First-Out). FIFO topics provide strictly-ordered, deduplicated, filterable, encryptable, many-to-many messaging at scale.
+* `Aws\ServiceCatalog` - Documentation updates for servicecatalog
+
+## 3.158.11 - 2020-10-21
+
+* `Aws\CloudFront` - CloudFront adds support for managing the public keys for signed URLs and signed cookies directly in CloudFront (it no longer requires the AWS root account).
+* `Aws\EC2` - instance-storage-info nvmeSupport added to DescribeInstanceTypes API
+* `Aws\GlobalAccelerator` - This release adds support for specifying port overrides on AWS Global Accelerator endpoint groups.
+* `Aws\Glue` - AWS Glue crawlers now support incremental crawls for the Amazon Simple Storage Service (Amazon S3) data source.
+* `Aws\Organizations` - AWS Organizations renamed the 'master account' to 'management account'.
+* `Aws\kendra` - This release adds custom data sources: a new data source type that gives you full control of the documents added, modified or deleted during a data source sync while providing run history metrics.
+
+## 3.158.10 - 2020-10-20
+
+* `Aws\AppSync` - Documentation updates to AppSync to correct several typos.
+* `Aws\Batch` - Adding evaluateOnExit to job retry strategies.
+* `Aws\ElasticBeanstalk` - EnvironmentStatus enum update to include Aborting, LinkingFrom and LinkingTo
+
+## 3.158.9 - 2020-10-19
+
+* `Aws\` - Fixed issue with polyfill referencing to wrong IDN folder structure in generated zip file
+* `Aws\Backup` - Documentation updates for Cryo
+* `Aws\CloudFront` - Amazon CloudFront adds support for Origin Shield.
+* `Aws\Credentials` - Suppressed a file access warning in AssumeRoleWithWebIdentityCredentialProvider
+* `Aws\DocDB` - Documentation updates for docdb
+* `Aws\SSM` - This Patch Manager release now supports Common Vulnerabilities and Exposure (CVE) Ids for missing packages via the DescribeInstancePatches API.
+* `Aws\ServiceCatalog` - An Admin can now update the launch role associated with a Provisioned Product. Admins and End Users can now view the launch role associated with a Provisioned Product.
+
+## 3.158.8 - 2020-10-16
+
+* `Aws\MediaLive` - The AWS Elemental MediaLive APIs and SDKs now support the ability to transfer the ownership of MediaLive Link devices across AWS accounts.
+* `Aws\Organizations` - Documentation updates for AWS Organizations.
+
+## 3.158.7 - 2020-10-15
+
+* `Aws\AccessAnalyzer` - This release adds support for the ApplyArchiveRule api in IAM Access Analyzer. The ApplyArchiveRule api allows users to apply an archive rule retroactively to existing findings in an analyzer.
+* `Aws\Budgets` - This release introduces AWS Budgets Actions, allowing you to define an explicit response(or set of responses) to take when your budget exceeds it's action threshold.
+* `Aws\CostExplorer` - This release improves email validation for subscriptions on the SDK endpoints.
+* `Aws\DatabaseMigrationService` - When creating Endpoints, Replication Instances, and Replication Tasks, the feature provides you the option to specify friendly name to the resources.
+* `Aws\Glue` - API Documentation updates for Glue Get-Plan API
+* `Aws\GroundStation` - Adds error message attribute to DescribeContact DataflowDetails
+* `Aws\IoT` - Add new variable, lastStatusChangeDate, to DescribeDomainConfiguration API
+* `Aws\Macie2` - This release of the Amazon Macie API adds support for pausing and resuming classification jobs. Also, sensitive data findings now include location data for up to 15 occurrences of sensitive data.
+* `Aws\RDS` - Return tags for all resources in the output of DescribeDBInstances, DescribeDBSnapshots, DescribeDBClusters, and DescribeDBClusterSnapshots API operations.
+* `Aws\Rekognition` - This SDK Release introduces new API (DetectProtectiveEquipment) for Amazon Rekognition. This release also adds ServiceQuotaExceeded exception to Amazon Rekognition IndexFaces API.
+* `Aws\SSM` - This Patch Manager release now supports searching for available packages from Amazon Linux and Amazon Linux 2 via the DescribeAvailablePatches API.
+* `Aws\Transfer` - Add support to associate VPC Security Groups at server creation.
+* `Aws\WorkMail` - Add CreateOrganization and DeleteOrganization API operations.
+* `Aws\WorkSpaces` - Documentation updates for WorkSpaces
+* `Aws\XRay` - Enhancing CreateGroup, UpdateGroup, GetGroup and GetGroups APIs to support configuring X-Ray Insights Notifications. Adding TraceLimit information into X-Ray BatchGetTraces API response.
+
+## 3.158.6 - 2020-10-09
+
+* `Aws\Amplify` - Performance mode optimizes for faster hosting performance by keeping content cached at the edge for a longer interval - enabling can make code changes can take up to 10 minutes to roll out.
+* `Aws\EKS` - This release introduces a new Amazon EKS error code: "ClusterUnreachable"
+* `Aws\MediaLive` - WAV audio output. Extracting ancillary captions in MP4 file inputs. Priority on channels feeding a multiplex (higher priority channels will tend to have higher video quality).
+* `Aws\ServiceCatalog` - This new API takes either a ProvisonedProductId or a ProvisionedProductName, along with a list of 1 or more output keys and responds with the (key,value) pairs of those outputs.
+* `Aws\Snowball` - We added new APIs to allow customers to better manage their device shipping. You can check if your shipping label expired, generate a new label, and tell us that you received or shipped your job.
+
+## 3.158.5 - 2020-10-08
+
+* `Aws\CloudWatchEvents` - Amazon EventBridge (formerly called CloudWatch Events) adds support for target Dead-letter Queues and custom retry policies.
+* `Aws\CostExplorer` - You can now create hierarchical cost categories by choosing "Cost Category" as a dimension. You can also track the status of your cost category updates to your cost and usage information.
+* `Aws\Credentials` - Fixes an issue involving outdated exceptions in Guzzle 7 with the InstanceProfileProvider workflow.
+* `Aws\EC2` - AWS EC2 RevokeSecurityGroupIngress and RevokeSecurityGroupEgress APIs will return IpPermissions which do not match with any existing IpPermissions for security groups in default VPC and EC2-Classic.
+* `Aws\EventBridge` - Amazon EventBridge adds support for target Dead Letter Queues (DLQs) and custom retry policies.
+* `Aws\RDS` - Supports a new parameter to set the max allocated storage in gigabytes for restore database instance from S3 and restore database instance to a point in time APIs.
+* `Aws\Rekognition` - This release provides location information for the manifest validation files.
+* `Aws\SNS` - Documentation updates for SNS.
+* `Aws\SageMaker` - This release enables Sagemaker customers to convert Tensorflow and PyTorch models to CoreML (ML Model) format.
+
+## 3.158.4 - 2020-10-07
+
+* `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze EC2 instance-level EBS read and write operations, and throughput when generating recommendations for your EC2 instances and Auto Scaling groups.
+* `Aws\CostExplorer` - Enables Rightsizing Recommendations to analyze and present EC2 instance-level EBS metrics when generating recommendations. Returns AccessDeniedException if the account is not opted into Rightsizing
+* `Aws\ElastiCache` - This release introduces User and UserGroup to allow customers to have access control list of the Redis resources for AWS ElastiCache. This release also adds support for Outposts for AWS ElastiCache.
+* `Aws\MediaPackage` - AWS Elemental MediaPackage provides access logs that capture detailed information about requests sent to a customer's MediaPackage channel.
+
+## 3.158.3 - 2020-10-06
+
+* `Aws\DatabaseMigrationService` - Added new S3 endpoint settings to allow partitioning CDC data by date for S3 as target. Exposed some Extra Connection Attributes as endpoint settings for relational databases as target.
+* `Aws\EC2` - This release supports returning additional information about local gateway virtual interfaces, and virtual interface groups.
+* `Aws\KinesisAnalyticsV2` - Amazon Kinesis Analytics now supports StopApplication with 'force' option
+* `Aws\MarketplaceCatalog` - AWS Marketplace Catalog now supports FailureCode for change workflows to help differentiate client errors and server faults.
+
+## 3.158.2 - 2020-10-05
+
+* `Aws\Credentials` - Added circular reference check on assume_role
+* `Aws\DynamoDB` - This release adds a new ReplicaStatus REGION DISABLED for the Table description. This state indicates that the AWS Region for the replica is inaccessible because the AWS Region is disabled.
+* `Aws\DynamoDBStreams` - Documentation updates for streams.dynamodb
+* `Aws\Glue` - AWS Glue crawlers now support Amazon DocumentDB (with MongoDB compatibility) and MongoDB collections. You can choose to crawl the entire data set or only a small sample to reduce crawl time.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for AVC-I and VC3 encoding in the MXF OP1a container, Nielsen non-linear watermarking, and InSync FrameFormer frame rate conversion.
+* `Aws\SageMaker` - This release adds support for launching Amazon SageMaker Studio in your VPC. Use AppNetworkAccessType in CreateDomain API to disable access to public internet and restrict the network traffic to VPC.
+
 ## 3.158.1 - 2020-10-02
 
 * `Aws\Batch` - Support tagging for Batch resources (compute environment, job queue, job definition and job) and tag based access control on Batch APIs

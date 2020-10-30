@@ -148,7 +148,7 @@ class BatchDeleteTest extends TestCase
         $this->assertEquals('foo', $last['Bucket']);
     }
 
-    public function testDeletesYieldedCommadnsWhenEachCallbackReturns()
+    public function testDeletesYieldedCommandsWhenEachCallbackReturns()
     {
         $client = $this->getTestClient('s3');
         $this->addMockResults($client, [
