@@ -211,7 +211,7 @@ class MiddlewareTest extends TestCase
         $list->appendBuild(Middleware::contentType(['Foo']));
         $list->appendSign(Middleware::history($h));
         $handler = $list->resolve();
-        $payload = Psr7\stream_for(fopen(__DIR__ . '/../docs/_static/logo.png', 'r'));
+        $payload = Psr7\stream_for(fopen(__DIR__ . '/static/test.png', 'r'));
         $request = new Request('PUT', 'http://exmaple.com', [], $payload);
         $handler(new Command('Foo'), $request);
 
