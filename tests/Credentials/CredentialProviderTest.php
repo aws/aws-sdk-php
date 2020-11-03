@@ -381,7 +381,6 @@ EOT;
         putenv('HOME=' . dirname($dir));
         putenv("AWS_SHARED_CREDENTIALS_FILE={$dir}/badfilename");
 
-
         $creds = call_user_func(
             CredentialProvider::process('baz', $dir . '/mycreds')
         )->wait();
@@ -400,7 +399,6 @@ EOT;
         file_put_contents($dir . '/mycreds', $ini);
         putenv('HOME=' . dirname($dir));
         putenv("AWS_SHARED_CREDENTIALS_FILE={$dir}/mycreds");
-
 
         $creds = call_user_func(
             CredentialProvider::process('baz')
@@ -423,9 +421,29 @@ EOT;
         putenv('HOME=' . dirname($dir));
         putenv("AWS_SHARED_CREDENTIALS_FILE={$dir}/mycreds");
 
-
         $creds = call_user_func(
             CredentialProvider::ini('default')
+        )->wait();
+        unlink($dir . '/mycreds');
+        $this->assertEquals('foo', $creds->getAccessKeyId());
+        $this->assertEquals('bar', $creds->getSecretKey());
+    }
+
+    public function testCreatesFromIniCredentialWithDefaultProvider()
+    {
+        $dir = $this->clearEnv();
+        $ini = <<<EOT
+[baz]
+[default]
+aws_access_key_id = foo
+aws_secret_access_key = bar
+EOT;
+        file_put_contents($dir . '/mycreds', $ini);
+        putenv('HOME=' . dirname($dir));
+        putenv("AWS_SHARED_CREDENTIALS_FILE={$dir}/mycreds");
+
+        $creds = call_user_func(
+            CredentialProvider::defaultProvider([])
         )->wait();
         unlink($dir . '/mycreds');
         $this->assertEquals('foo', $creds->getAccessKeyId());
