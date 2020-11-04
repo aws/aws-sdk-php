@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Capacity Rebalance helps you manage and maintain workload availability during Spot interruptions by proactively augmenting your Auto Scaling group with a new instance before interrupting an old one.
+* `Aws\CloudWatch` - Documentation updates for monitoring
+* `Aws\EC2` - Added support for Client Connect Handler for AWS Client VPN. Fleet supports launching replacement instances in response to Capacity Rebalance recommendation.
+* `Aws\ElasticsearchService` - Amazon Elasticsearch Service now supports native SAML authentication that seamlessly integrates with the customers' existing SAML 2.0 Identity Provider (IdP).
+* `Aws\IoT` - Updated API documentation and added paginator for AWS Iot Registry ListThingPrincipals API.
+* `Aws\MQ` - Amazon MQ introduces support for RabbitMQ, a popular message-broker with native support for AMQP 0.9.1. You can now create fully-managed RabbitMQ brokers in the cloud.
+* `Aws\MarketplaceMetering` - Adding Vendor Tagging Support in MeterUsage and BatchMeterUsage API.
+* `Aws\ServiceCatalog` - Service Catalog API ListPortfolioAccess can now support a maximum PageSize of 100.
+* `Aws\TranscribeStreamingService` - With this release, Amazon Transcribe now supports real-time transcription from audio sources in Italian (it-IT) and German(de-DE).
+* `Aws\XRay` - Releasing new APIs GetInsightSummaries, GetInsightEvents, GetInsight, GetInsightImpactGraph and updating GetTimeSeriesServiceStatistics API for AWS X-Ray Insights feature
+
 ## 3.158.19 - 2020-11-02
 
 * `Aws\EC2` - This release adds support for the following features: 1. P4d instances based on NVIDIA A100 GPUs. 2. NetworkCardIndex attribute to support multiple network cards.
