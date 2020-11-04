@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.20 - 2020-11-04
 
 * `Aws\AutoScaling` - Capacity Rebalance helps you manage and maintain workload availability during Spot interruptions by proactively augmenting your Auto Scaling group with a new instance before interrupting an old one.
 * `Aws\CloudWatch` - Documentation updates for monitoring
