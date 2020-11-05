@@ -325,7 +325,9 @@ class TraceMiddleware
      */
     private function getRedactedArray(CommandInterface $cmd)
     {
-        if (!isset($this->service["shapes"])) return $cmd->toArray();
+        if (!isset($this->service["shapes"])) {
+            return $cmd->toArray();
+        }
         $shapes = $this->service["shapes"];
         $cmdArray = $cmd->toArray();
         $iterator = new RecursiveIteratorIterator(
@@ -342,10 +344,11 @@ class TraceMiddleware
                    $subIterator = $iterator->getSubIterator($subDepth);
                    $subIterator->offsetSet(
                        $subIterator->key(),
-                       ($subDepth === $currentDepth ?
-                           $redactedValue :
-                           $iterator->getSubIterator(($subDepth+1))->getArrayCopy())
-                        );
+                       ($subDepth === $currentDepth
+                           ? $redactedValue
+                           : $iterator->getSubIterator(($subDepth+1))->getArrayCopy()
+                       )
+                   );
                }
            }
         }
