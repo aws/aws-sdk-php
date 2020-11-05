@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppMesh` - This release adds circuit breaking capabilities to your mesh with connection pooling and outlier detection support.
+* `Aws\CloudWatchEvents` - With this release, customers can now reprocess past events by storing the events published on event bus in an encrypted archive.
+* `Aws\DynamoDB` - This release adds a new ReplicaStatus INACCESSIBLE_ENCRYPTION_CREDENTIALS for the Table description, indicating when a key used to encrypt a regional replica table is not accessible.
+* `Aws\EC2` - Documentation updates for EC2.
+* `Aws\ElasticsearchService` - Amazon Elasticsearch Service now provides the ability to define a custom endpoint for your domain and link an SSL certificate from ACM, making it easier to refer to Kibana and the domain endpoint.
+* `Aws\EventBridge` - With this release, customers can now reprocess past events by storing the events published on event bus in an encrypted archive.
+* `Aws\FraudDetector` - Added support for deleting resources like Variables, ExternalModels, Outcomes, Models, ModelVersions, Labels, EventTypes and EntityTypes. Updated DeleteEvent operation to catch missing exceptions.
+* `Aws\Lambda` - Support Amazon MQ as an Event Source.
+* `Aws\RDS` - Supports a new parameter to set the max allocated storage in gigabytes for the CreateDBInstanceReadReplica API.
+* `Aws\kendra` - Amazon Kendra now supports providing user context in your query requests, Tokens can be JSON or JWT format. This release also introduces support for Confluence cloud datasources.
+
 ## 3.158.20 - 2020-11-04
 
 * `Aws\AutoScaling` - Capacity Rebalance helps you manage and maintain workload availability during Spot interruptions by proactively augmenting your Auto Scaling group with a new instance before interrupting an old one.
