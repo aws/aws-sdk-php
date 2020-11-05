@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.158.21 - 2020-11-05
 
 * `Aws\AppMesh` - This release adds circuit breaking capabilities to your mesh with connection pooling and outlier detection support.
 * `Aws\CloudWatchEvents` - With this release, customers can now reprocess past events by storing the events published on event bus in an encrypted archive.
