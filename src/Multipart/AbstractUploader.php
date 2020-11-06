@@ -2,6 +2,8 @@
 namespace Aws\Multipart;
 
 use Aws\AwsClientInterface as Client;
+use Aws\Middleware;
+use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\StreamInterface as Stream;
@@ -58,6 +60,15 @@ abstract class AbstractUploader extends AbstractUploadManager
                     $data + $this->state->getId()
                 );
                 $command->getHandlerList()->appendSign($resultHandler, 'mup');
+                $numberOfParts = $this->getNumberOfParts($this->state->getPartSize());
+                if (isset($numberOfParts) && $partNumber > $numberOfParts) {
+                    throw new S3Exception(
+                        "Maximum part number for this job exceeded, file has likely been corrupted." .
+                        "  Please restart this upload.",
+                        $command
+                    );
+                }
+
                 yield $command;
                 if ($this->source->tell() > $partStartPos) {
                     continue;
@@ -96,9 +107,7 @@ abstract class AbstractUploader extends AbstractUploadManager
      */
     private function isEof($seekable)
     {
-        return $seekable
-            ? $this->source->tell() < $this->source->getSize()
-            : !$this->source->eof();
+        return true;
     }
 
     /**
@@ -126,4 +135,13 @@ abstract class AbstractUploader extends AbstractUploadManager
 
         return $stream;
     }
+
+    protected function getNumberOfParts($partSize)
+    {
+        if ($sourceSize = $this->source->getSize()) {
+            return ceil($sourceSize/$partSize);
+        }
+        return null;
+    }
+
 }
