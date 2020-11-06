@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DLM` - Amazon Data Lifecycle Manager now supports the creation and retention of EBS-backed Amazon Machine Images
+* `Aws\EC2` - Network card support with four new attributes: NetworkCardIndex, NetworkPerformance, DefaultNetworkCardIndex, and MaximumNetworkInterfaces, added to the DescribeInstanceTypes API.
+* `Aws\IoTSiteWise` - Remove the CreatePresignedPortalUrl API
+* `Aws\MediaLive` - Support for SCTE35 ad markers in OnCuePoint style in RTMP outputs.
+* `Aws\SSM` - Documentation updates for Systems Manager
+
 ## 3.158.21 - 2020-11-05
 
 * `Aws\AppMesh` - This release adds circuit breaking capabilities to your mesh with connection pooling and outlier detection support.
