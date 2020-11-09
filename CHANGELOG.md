@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Removes sensitive data from debug logs
+* `Aws\DataSync` - DataSync now enables customers to adjust the network bandwidth used by a running AWS DataSync task.
+* `Aws\DynamoDB` - This release adds supports for exporting Amazon DynamoDB table data to Amazon S3 to perform analytics at any scale.
+* `Aws\ECS` - This release provides native support for specifying Amazon FSx for Windows File Server file systems as volumes in your Amazon ECS task definitions.
+* `Aws\ElasticsearchService` - Adding support for package versioning in Amazon Elasticsearch Service
+* `Aws\FSx` - This release adds support for creating DNS aliases for Amazon FSx for Windows File Server, and using AWS Backup to automate scheduled, policy-driven backup plans for Amazon FSx file systems.
+* `Aws\IoTAnalytics` - AWS IoT Analytics now supports Late Data Notifications for datasets, dataset content creation using previous version IDs, and includes the LastMessageArrivalTime attribute for channels and datastores.
+* `Aws\Macie2` - Sensitive data findings in Amazon Macie now include enhanced location data for Apache Avro object containers and Apache Parquet files.
+* `Aws\S3` - S3 Intelligent-Tiering adds support for Archive and Deep Archive Access tiers; S3 Replication adds replication metrics and failure notifications, brings feature parity for delete marker replication
+* `Aws\SSM` - add a new filter to allow customer to filter automation executions by using resource-group which used for execute automation
+* `Aws\StorageGateway` - Added bandwidth rate limit schedule for Tape and Volume Gateways
+
 ## 3.158.22 - 2020-11-06
 
 * `Aws\DLM` - Amazon Data Lifecycle Manager now supports the creation and retention of EBS-backed Amazon Machine Images
