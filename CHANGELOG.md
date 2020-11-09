@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.159.0 - 2020-11-09
 
 * `Aws\` - Removes sensitive data from debug logs
 * `Aws\DataSync` - DataSync now enables customers to adjust the network bandwidth used by a running AWS DataSync task.
