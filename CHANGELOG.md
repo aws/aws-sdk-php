@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.159.1 - 2020-11-10
 
 * `Aws\AutoScaling` - Documentation updates and corrections for Amazon EC2 Auto Scaling API Reference and SDKs.
 * `Aws\EC2` - This release adds support for Gateway Load Balancer VPC endpoints and VPC endpoint services
