@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Documentation updates and corrections for Amazon EC2 Auto Scaling API Reference and SDKs.
+* `Aws\EC2` - This release adds support for Gateway Load Balancer VPC endpoints and VPC endpoint services
+* `Aws\ElasticLoadBalancingv2` - Added support for Gateway Load Balancers, which make it easy to deploy, scale, and run third-party virtual networking appliances.
+* `Aws\SSM` - Add SessionId as a filter for DescribeSessions API
+
 ## 3.159.0 - 2020-11-09
 
 * `Aws\` - Removes sensitive data from debug logs
