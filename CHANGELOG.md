@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.160.0 - 2020-11-11
 
 * `Aws\Amplify` - Whereas previously custom headers were set via the app's buildspec, custom headers can now be set directly on the Amplify app for both ci/cd and manual deploy apps.
 * `Aws\ForecastService` - Providing support of custom quantiles in CreatePredictor API.
