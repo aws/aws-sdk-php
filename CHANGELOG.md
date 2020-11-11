@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Amplify` - Whereas previously custom headers were set via the app's buildspec, custom headers can now be set directly on the Amplify app for both ci/cd and manual deploy apps.
+* `Aws\ForecastService` - Providing support of custom quantiles in CreatePredictor API.
+* `Aws\GlueDataBrew` - This is the initial SDK release for AWS Glue DataBrew. DataBrew is a visual data preparation tool that enables users to clean and normalize data without writing any code.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for Automated ABR encoding and improved the reliability of embedded captions in accelerated outputs.
+* `Aws\QuickSight` - QuickSight now supports Column-level security and connecting to Oracle data source.
+* `Aws\ServiceCatalog` - Adding support to remove a Provisioned Product launch role via UpdateProvisionedProductProperties
+
 ## 3.159.1 - 2020-11-10
 
 * `Aws\AutoScaling` - Documentation updates and corrections for Amazon EC2 Auto Scaling API Reference and SDKs.

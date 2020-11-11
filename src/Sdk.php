@@ -198,6 +198,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionGlobalAccelerator(array $args = [])
  * @method \Aws\Glue\GlueClient createGlue(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGlue(array $args = [])
+ * @method \Aws\GlueDataBrew\GlueDataBrewClient createGlueDataBrew(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionGlueDataBrew(array $args = [])
  * @method \Aws\Greengrass\GreengrassClient createGreengrass(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGreengrass(array $args = [])
  * @method \Aws\GroundStation\GroundStationClient createGroundStation(array $args = [])
