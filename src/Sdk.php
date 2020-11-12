@@ -24,6 +24,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAppConfig(array $args = [])
  * @method \Aws\AppMesh\AppMeshClient createAppMesh(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppMesh(array $args = [])
+ * @method \Aws\AppRegistry\AppRegistryClient createAppRegistry(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAppRegistry(array $args = [])
  * @method \Aws\AppSync\AppSyncClient createAppSync(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppSync(array $args = [])
  * @method \Aws\Appflow\AppflowClient createAppflow(array $args = [])
