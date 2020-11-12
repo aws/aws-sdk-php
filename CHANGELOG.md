@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.161.0 - 2020-11-12
 
 * `Aws\AppRegistry` - AWS Service Catalog AppRegistry provides a repository of your applications, their resources, and the application metadata that you use within your enterprise.
 * `Aws\IoT` - This release adds a batchMode parameter to the IotEvents, IotAnalytics, and Firehose actions which allows customers to send an array of messages to the corresponding services
