@@ -107,6 +107,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getAWSOrganizationsAccessStatusAsync(array $args = [])
  * @method \Aws\Result getProvisionedProductOutputs(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getProvisionedProductOutputsAsync(array $args = [])
+ * @method \Aws\Result importAsProvisionedProduct(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise importAsProvisionedProductAsync(array $args = [])
  * @method \Aws\Result listAcceptedPortfolioShares(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAcceptedPortfolioSharesAsync(array $args = [])
  * @method \Aws\Result listBudgetsForResource(array $args = [])
