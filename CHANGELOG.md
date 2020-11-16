@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.161.2 - 2020-11-16
 
 * `Aws\CodePipeline` - We show details about inbound executions and id of action executions in GetPipelineState API. We also add ConflictException to StartPipelineExecution, RetryStageExecution, StopPipelineExecution APIs.
 * `Aws\DatabaseMigrationService` - Adding MoveReplicationTask feature to move replication tasks between instances
