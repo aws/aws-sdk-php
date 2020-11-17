@@ -318,6 +318,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMobile(array $args = [])
  * @method \Aws\Neptune\NeptuneClient createNeptune(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNeptune(array $args = [])
+ * @method \Aws\NetworkFirewall\NetworkFirewallClient createNetworkFirewall(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionNetworkFirewall(array $args = [])
  * @method \Aws\NetworkManager\NetworkManagerClient createNetworkManager(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNetworkManager(array $args = [])
  * @method \Aws\OpsWorks\OpsWorksClient createOpsWorks(array $args = [])

@@ -208,7 +208,8 @@
         {"shape":"DBSnapshotNotFoundFault"},
         {"shape":"InvalidDBSnapshotStateFault"},
         {"shape":"SnapshotQuotaExceededFault"},
-        {"shape":"KMSKeyNotAccessibleFault"}
+        {"shape":"KMSKeyNotAccessibleFault"},
+        {"shape":"CustomAvailabilityZoneNotFoundFault"}
       ]
     },
     "CopyOptionGroup":{
@@ -2676,7 +2677,8 @@
         "CopyTags":{"shape":"BooleanOptional"},
         "PreSignedUrl":{"shape":"String"},
         "DestinationRegion":{"shape":"String"},
-        "OptionGroupName":{"shape":"String"}
+        "OptionGroupName":{"shape":"String"},
+        "TargetCustomAvailabilityZone":{"shape":"String"}
       }
     },
     "CopyDBSnapshotResult":{
