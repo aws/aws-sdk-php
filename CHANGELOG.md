@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.162.0 - 2020-11-17
 
 * `Aws\Chime` - This release adds CRUD APIs for Amazon Chime SipMediaApplications and SipRules. It also adds the API for creating outbound PSTN calls for Amazon Chime meetings.
 * `Aws\Connect` - This release adds support for user hierarchy group and user hierarchy structure. For details, see the Release Notes in the Amazon Connect Administrator Guide.
