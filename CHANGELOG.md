@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.163.0 - 2020-11-18
 
 * `Aws\Backup` - AWS Backup now supports cross-account backup, enabling AWS customers to securely copy their backups across their AWS accounts within their AWS organizations.
 * `Aws\CloudFormation` - This release adds ChangeSets support for Nested Stacks. ChangeSets offer a preview of how proposed changes to a stack might impact existing resources or create new ones.
