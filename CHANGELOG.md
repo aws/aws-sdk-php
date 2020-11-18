@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Backup` - AWS Backup now supports cross-account backup, enabling AWS customers to securely copy their backups across their AWS accounts within their AWS organizations.
+* `Aws\CloudFormation` - This release adds ChangeSets support for Nested Stacks. ChangeSets offer a preview of how proposed changes to a stack might impact existing resources or create new ones.
+* `Aws\CodeBuild` - AWS CodeBuild - Adding Status field for Report Group
+* `Aws\Credentials` - Implements the AWS_SHARED_CREDENTIALS_FILE environment variable for specifying a file to retrieve credentials from
+* `Aws\EC2` - EC2 Fleet adds support of DeleteFleets API for instant type fleets. Now you can delete an instant type fleet and terminate all associated instances with a single API call.
+* `Aws\ElastiCache` - Adding Memcached 1.6 to parameter family
+* `Aws\Outposts` - Mark the Name parameter in CreateOutpost as required.
+* `Aws\S3Control` - AWS S3 Storage Lens provides visibility into your storage usage and activity trends at the organization or account level, with aggregations by Region, storage class, bucket, and prefix.
+
 ## 3.162.0 - 2020-11-17
 
 * `Aws\Chime` - This release adds CRUD APIs for Amazon Chime SipMediaApplications and SipRules. It also adds the API for creating outbound PSTN calls for Amazon Chime meetings.
