@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.163.1 - 2020-11-19
 
 * `Aws\AutoScaling` - You can now create Auto Scaling groups with multiple launch templates using a mixed instances policy, making it easy to deploy an AMI with an architecture that is different from the rest of the group.
 * `Aws\CloudWatchEvents` - EventBridge now supports Resource-based policy authorization on event buses. This enables cross-account PutEvents API calls, creating cross-account rules, and simplifies permission management.
