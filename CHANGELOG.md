@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppMesh` - This release makes tag value a required attribute of the tag's key-value pair.
+* `Aws\AppRegistry` - AWS Service Catalog AppRegistry Documentation update
+* `Aws\Chime` - The Amazon Chime SDK for messaging provides the building blocks needed to build chat and other real-time collaboration features.
+* `Aws\CloudHSMV2` - Added managed backup retention, a feature that enables customers to retain backups for a configurable period after which CloudHSM service will automatically delete them.
+* `Aws\CodeGuruReviewer` - This release supports tagging repository association resources in Amazon CodeGuru Reviewer.
+* `Aws\CognitoIdentity` - Added SDK pagination support for ListIdentityPools
+* `Aws\Connect` - This release adds a set of Amazon Connect APIs to programmatically control instance creation, modification, description and deletion.
+* `Aws\Kafka` - This release adds support for PER TOPIC PER PARTITION monitoring on AWS MSK clusters.
+* `Aws\Macie2` - The Amazon Macie API now provides S3 bucket metadata that indicates whether any one-time or recurring classification jobs are configured to analyze data in a bucket.
+* `Aws\S3` - Add new documentation regarding automatically generated Content-MD5 headers when using the SDK or CLI.
+
 ## 3.163.1 - 2020-11-19
 
 * `Aws\AutoScaling` - You can now create Auto Scaling groups with multiple launch templates using a mixed instances policy, making it easy to deploy an AMI with an architecture that is different from the rest of the group.
