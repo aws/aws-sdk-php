@@ -1,6 +1,8 @@
 <?php
 namespace Aws\Test;
 
+use Aws\Api\Service;
+use Aws\AwsClient;
 use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
@@ -166,6 +168,54 @@ class TraceMiddlewareTest extends TestCase
         }
     }
 
+    public function testRedactsSensitiveTraits()
+    {
+        $service = $this->generateTestService();
+        $client = $this->generateTestClient($service);
+        $command = $client->getCommand(
+            'SensitiveOp',
+             [
+                 "InputShape" => [
+                     "PublicParameter" => "PublicParameter not redacted",
+                     "SensitiveParameter" => "SensitiveParameter was redacted",
+                     "NestedParams" => [
+                         "NestedPublicParameter" => "NestedParams also not redacted",
+                         "NestedSensitiveParameter" => "NestedSensitiveParameter was also redacted",
+                     ],
+                     "SensitiveArray" => [
+                         "PublicParameter" => "SensitiveArray contents also redacted",
+                     ]
+                 ]
+             ]
+        );
+
+        $str = '';
+        $logfn = function ($value) use (&$str) { $str .= $value; };
+        $list = new HandlerList();
+        $list->setHandler(function () {
+            return Promise\promise_for(new Result());
+        });
+        $list->appendInit(function ($handler) {
+            return function ($cmd, $req) use ($handler) {
+                return $handler($cmd, $req);
+            };
+        });
+        $list->interpose(new TraceMiddleware(['logfn' => $logfn], $service));
+
+        $handler = $list->resolve();
+        $request = new Request('post', "/");
+        $handler($command, $request);
+
+        $this->assertContains("NestedParams also not redacted", $str);
+        $this->assertContains("PublicParameter not redacted", $str);
+        $this->assertContains("[SensitiveParameter]", $str);
+        $this->assertNotContains("SensitiveParameter was redacted", $str);
+        $this->assertContains("[NestedSensitiveParameter]", $str);
+        $this->assertNotContains("NestedSensitiveParameter was also redacted", $str);
+        $this->assertContains("[SensitiveArray]", $str);
+        $this->assertNotContains("SensitiveArray contents also redacted", $str);
+    }
+
     public function authStringProvider()
     {
         return [
@@ -227,5 +277,101 @@ class TraceMiddlewareTest extends TestCase
         foreach (array_values($scrubPatterns) as $scrubbed) {
             $this->assertContains($scrubbed, $str);
         }
+    }
+
+    private function generateTestClient(Service $service, $args = [])
+    {
+        return new AwsClient(
+            array_merge(
+                [
+                    'service'      => 'foo',
+                    'api_provider' => function () use ($service) {
+                        return $service->toArray();
+                    },
+                    'region'       => 'us-east-1',
+                    'version'      => 'latest',
+                ],
+                $args
+            )
+        );
+    }
+
+    private function generateTestService()
+    {
+        return new Service(
+            [
+                'metadata' => [
+                    "protocol" => "json",
+                    "apiVersion" => "2014-01-01"
+                ],
+                'shapes' => [
+                    "InputShape" => [
+                        "type" => "structure",
+                        "members" => [
+                            "PublicParameter" => [
+                                "shape" => "PublicParameter",
+                            ],
+                            "SensitiveParameter" => [
+                                "shape" => "SensitiveParameter",
+                            ],
+                            "NestedParams" => [
+                                "type" => "NestedParams",
+                                ],
+                            ],
+                            "SensitiveArray" => [
+                                "type" => "SensitiveArray",
+                            ],
+                        ],
+                    "PublicParameter"=> [
+                        "type"=> "string",
+                        "sensitive" => false
+                    ],
+                    "SensitiveParameter"=> [
+                        "type"=> "string",
+                        "sensitive" => true
+                    ],
+                    "NestedParams"=> [
+                        "type"=> "structure",
+                        "sensitive" => false,
+                        "members" => [
+                            "NestedPublicParameter" => [
+                                "shape" => "NestedPublicParameter"
+                            ],
+                            "NestedSensitiveParameter" => [
+                                "shape" => "NestedSensitiveParameter",
+                            ],
+                        ],
+                    ],
+                    "NestedPublicParameter"=> [
+                        "type"=> "string",
+                    ],
+                    "NestedSensitiveParameter"=> [
+                        "type"=> "string",
+                        "sensitive" => true
+                    ],
+                    "SensitiveArray"=> [
+                        "type"=> "string",
+                        "members" => [
+                            "NestedPublicParameter" => [
+                                "shape" => "string"
+                            ],
+                        ],
+                        "sensitive" => true
+                    ],
+                ],
+                'operations' => [
+                    "SensitiveOp"=> [
+                        "name"=> "SensitiveOp",
+                        "http"=> [
+                            "method"=> "POST",
+                            "requestUri"=> "/",
+                            "responseCode"=> 200
+                        ],
+                        "input"=> ["shape"=> "InputShape"],
+                    ],
+                ],
+            ],
+            function () { return []; }
+        );
     }
 }

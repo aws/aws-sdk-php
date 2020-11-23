@@ -1,5 +1,159 @@
 # CHANGELOG
 
+## 3.163.2 - 2020-11-20
+
+* `Aws\AppMesh` - This release makes tag value a required attribute of the tag's key-value pair.
+* `Aws\AppRegistry` - AWS Service Catalog AppRegistry Documentation update
+* `Aws\Chime` - The Amazon Chime SDK for messaging provides the building blocks needed to build chat and other real-time collaboration features.
+* `Aws\CloudHSMV2` - Added managed backup retention, a feature that enables customers to retain backups for a configurable period after which CloudHSM service will automatically delete them.
+* `Aws\CodeGuruReviewer` - This release supports tagging repository association resources in Amazon CodeGuru Reviewer.
+* `Aws\CognitoIdentity` - Added SDK pagination support for ListIdentityPools
+* `Aws\Connect` - This release adds a set of Amazon Connect APIs to programmatically control instance creation, modification, description and deletion.
+* `Aws\Kafka` - This release adds support for PER TOPIC PER PARTITION monitoring on AWS MSK clusters.
+* `Aws\Macie2` - The Amazon Macie API now provides S3 bucket metadata that indicates whether any one-time or recurring classification jobs are configured to analyze data in a bucket.
+* `Aws\S3` - Add new documentation regarding automatically generated Content-MD5 headers when using the SDK or CLI.
+
+## 3.163.1 - 2020-11-19
+
+* `Aws\AutoScaling` - You can now create Auto Scaling groups with multiple launch templates using a mixed instances policy, making it easy to deploy an AMI with an architecture that is different from the rest of the group.
+* `Aws\CloudWatchEvents` - EventBridge now supports Resource-based policy authorization on event buses. This enables cross-account PutEvents API calls, creating cross-account rules, and simplifies permission management.
+* `Aws\CostExplorer` - Additional metadata that may be applicable to the recommendation.
+* `Aws\DirectoryService` - Adding multi-region replication feature for AWS Managed Microsoft AD
+* `Aws\EventBridge` - EventBridge now supports Resource-based policy authorization on event buses. This enables cross-account PutEvents API calls, creating cross-account rules, and simplifies permission management.
+* `Aws\Glue` - Adding support for Glue Schema Registry. The AWS Glue Schema Registry is a new feature that allows you to centrally discover, control, and evolve data stream schemas.
+* `Aws\KinesisAnalyticsV2` - Amazon Kinesis Data Analytics now supports building and running streaming applications using Apache Flink 1.11 and provides a way to access the Apache Flink dashboard for supported Flink versions.
+* `Aws\Lambda` - Added the starting position and starting position timestamp to ESM Configuration. Now customers will be able to view these fields for their ESM.
+* `Aws\LexModelBuildingService` - Amazon Lex supports managing input and output contexts as well as default values for slots.
+* `Aws\LexRuntimeService` - Amazon Lex now supports the ability to view and manage active contexts associated with a user session.
+* `Aws\MediaLive` - The AWS Elemental MediaLive APIs and SDKs now support the ability to see the software update status on Link devices
+* `Aws\Redshift` - Amazon Redshift support for returning ClusterNamespaceArn in describeClusters
+
+## 3.163.0 - 2020-11-18
+
+* `Aws\Backup` - AWS Backup now supports cross-account backup, enabling AWS customers to securely copy their backups across their AWS accounts within their AWS organizations.
+* `Aws\CloudFormation` - This release adds ChangeSets support for Nested Stacks. ChangeSets offer a preview of how proposed changes to a stack might impact existing resources or create new ones.
+* `Aws\CodeBuild` - AWS CodeBuild - Adding Status field for Report Group
+* `Aws\Credentials` - Implements the AWS_SHARED_CREDENTIALS_FILE environment variable for specifying a file to retrieve credentials from
+* `Aws\EC2` - EC2 Fleet adds support of DeleteFleets API for instant type fleets. Now you can delete an instant type fleet and terminate all associated instances with a single API call.
+* `Aws\ElastiCache` - Adding Memcached 1.6 to parameter family
+* `Aws\Outposts` - Mark the Name parameter in CreateOutpost as required.
+* `Aws\S3Control` - AWS S3 Storage Lens provides visibility into your storage usage and activity trends at the organization or account level, with aggregations by Region, storage class, bucket, and prefix.
+
+## 3.162.0 - 2020-11-17
+
+* `Aws\Chime` - This release adds CRUD APIs for Amazon Chime SipMediaApplications and SipRules. It also adds the API for creating outbound PSTN calls for Amazon Chime meetings.
+* `Aws\Connect` - This release adds support for user hierarchy group and user hierarchy structure. For details, see the Release Notes in the Amazon Connect Administrator Guide.
+* `Aws\FMS` - Added Firewall Manager policy support for AWS Network Firewall resources.
+* `Aws\Macie2` - The Amazon Macie API now has a lastRunErrorStatus property to indicate if account- or bucket-level errors occurred during the run of a one-time classification job or the latest run of a recurring job.
+* `Aws\NetworkFirewall` - (New Service) AWS Network Firewall is a managed network layer firewall service that makes it easy to secure your virtual private cloud (VPC) networks and block malicious traffic.
+* `Aws\RDS` - Support copy-db-snapshot in the one region on cross clusters and local cluster for RDSonVmware. Add target-custom-availability-zone parameter to specify where a snapshot should be copied.
+
+## 3.161.2 - 2020-11-16
+
+* `Aws\CodePipeline` - We show details about inbound executions and id of action executions in GetPipelineState API. We also add ConflictException to StartPipelineExecution, RetryStageExecution, StopPipelineExecution APIs.
+* `Aws\DatabaseMigrationService` - Adding MoveReplicationTask feature to move replication tasks between instances
+* `Aws\IoTSecureTunneling` - Support using multiple data streams per tunnel using the Secure Tunneling multiplexing feature.
+* `Aws\IoTSiteWise` - This release supports Unicode characters for string operations in formulae computes in SiteWise. For more information, search for SiteWise in Amazon What's new or refer the SiteWise documentation.
+* `Aws\QuickSight` - Adding new parameters for dashboard persistence
+* `Aws\SNS` - Documentation updates for Amazon SNS.
+* `Aws\SageMaker` - This feature enables customers to encrypt their Amazon SageMaker Studio storage volumes with customer master keys (CMKs) managed by them in AWS Key Management Service (KMS).
+* `Aws\ServiceCatalog` - Support import of CloudFormation stacks into Service Catalog provisioned products.
+* `Aws\Synthetics` - AWS Synthetics now supports Environment Variables to assign runtime parameters in the canary scripts.
+
+## 3.161.1 - 2020-11-13
+
+* `Aws\ElasticLoadBalancingv2` - Adds dualstack support for Network Load Balancers (TCP/TLS only), an attribute for WAF fail open for Application Load Balancers, and an attribute for connection draining for Network Load Balancers.
+* `Aws\Shield` - This release adds APIs for two new features: 1) Allow customers to bundle resources into protection groups and treat as a single unit. 2) Provide per-account event summaries to all AWS customers.
+* `Aws\Textract` - AWS Textract now allows customers to specify their own KMS key to be used for asynchronous jobs output results, AWS Textract now also recognizes handwritten text from English documents.
+
+## 3.161.0 - 2020-11-12
+
+* `Aws\AppRegistry` - AWS Service Catalog AppRegistry provides a repository of your applications, their resources, and the application metadata that you use within your enterprise.
+* `Aws\IoT` - This release adds a batchMode parameter to the IotEvents, IotAnalytics, and Firehose actions which allows customers to send an array of messages to the corresponding services
+* `Aws\LexModelBuildingService` - Lex now supports es-ES, it-IT, fr-FR and fr-CA locales
+* `Aws\Lightsail` - This release adds support for Amazon Lightsail container services. You can now create a Lightsail container service, and deploy Docker images to it.
+* `Aws\PersonalizeRuntime` - Adds support to use dynamic filters with Personalize.
+* `Aws\Polly` - Amazon Polly adds new Australian English female voice - Olivia. Olivia is available as Neural voice only.
+* `Aws\RoboMaker` - This release introduces Robomaker Worldforge TagsOnCreate which allows customers to tag worlds as they are being generated by providing the tags while configuring a world generation job.
+
+## 3.160.0 - 2020-11-11
+
+* `Aws\Amplify` - Whereas previously custom headers were set via the app's buildspec, custom headers can now be set directly on the Amplify app for both ci/cd and manual deploy apps.
+* `Aws\ForecastService` - Providing support of custom quantiles in CreatePredictor API.
+* `Aws\GlueDataBrew` - This is the initial SDK release for AWS Glue DataBrew. DataBrew is a visual data preparation tool that enables users to clean and normalize data without writing any code.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for Automated ABR encoding and improved the reliability of embedded captions in accelerated outputs.
+* `Aws\QuickSight` - QuickSight now supports Column-level security and connecting to Oracle data source.
+* `Aws\ServiceCatalog` - Adding support to remove a Provisioned Product launch role via UpdateProvisionedProductProperties
+
+## 3.159.1 - 2020-11-10
+
+* `Aws\AutoScaling` - Documentation updates and corrections for Amazon EC2 Auto Scaling API Reference and SDKs.
+* `Aws\EC2` - This release adds support for Gateway Load Balancer VPC endpoints and VPC endpoint services
+* `Aws\ElasticLoadBalancingv2` - Added support for Gateway Load Balancers, which make it easy to deploy, scale, and run third-party virtual networking appliances.
+* `Aws\SSM` - Add SessionId as a filter for DescribeSessions API
+
+## 3.159.0 - 2020-11-09
+
+* `Aws\` - Removes sensitive data from debug logs
+* `Aws\DataSync` - DataSync now enables customers to adjust the network bandwidth used by a running AWS DataSync task.
+* `Aws\DynamoDB` - This release adds supports for exporting Amazon DynamoDB table data to Amazon S3 to perform analytics at any scale.
+* `Aws\ECS` - This release provides native support for specifying Amazon FSx for Windows File Server file systems as volumes in your Amazon ECS task definitions.
+* `Aws\ElasticsearchService` - Adding support for package versioning in Amazon Elasticsearch Service
+* `Aws\FSx` - This release adds support for creating DNS aliases for Amazon FSx for Windows File Server, and using AWS Backup to automate scheduled, policy-driven backup plans for Amazon FSx file systems.
+* `Aws\IoTAnalytics` - AWS IoT Analytics now supports Late Data Notifications for datasets, dataset content creation using previous version IDs, and includes the LastMessageArrivalTime attribute for channels and datastores.
+* `Aws\Macie2` - Sensitive data findings in Amazon Macie now include enhanced location data for Apache Avro object containers and Apache Parquet files.
+* `Aws\S3` - S3 Intelligent-Tiering adds support for Archive and Deep Archive Access tiers; S3 Replication adds replication metrics and failure notifications, brings feature parity for delete marker replication
+* `Aws\SSM` - add a new filter to allow customer to filter automation executions by using resource-group which used for execute automation
+* `Aws\StorageGateway` - Added bandwidth rate limit schedule for Tape and Volume Gateways
+
+## 3.158.22 - 2020-11-06
+
+* `Aws\DLM` - Amazon Data Lifecycle Manager now supports the creation and retention of EBS-backed Amazon Machine Images
+* `Aws\EC2` - Network card support with four new attributes: NetworkCardIndex, NetworkPerformance, DefaultNetworkCardIndex, and MaximumNetworkInterfaces, added to the DescribeInstanceTypes API.
+* `Aws\IoTSiteWise` - Remove the CreatePresignedPortalUrl API
+* `Aws\MediaLive` - Support for SCTE35 ad markers in OnCuePoint style in RTMP outputs.
+* `Aws\SSM` - Documentation updates for Systems Manager
+
+## 3.158.21 - 2020-11-05
+
+* `Aws\AppMesh` - This release adds circuit breaking capabilities to your mesh with connection pooling and outlier detection support.
+* `Aws\CloudWatchEvents` - With this release, customers can now reprocess past events by storing the events published on event bus in an encrypted archive.
+* `Aws\DynamoDB` - This release adds a new ReplicaStatus INACCESSIBLE_ENCRYPTION_CREDENTIALS for the Table description, indicating when a key used to encrypt a regional replica table is not accessible.
+* `Aws\EC2` - Documentation updates for EC2.
+* `Aws\ElasticsearchService` - Amazon Elasticsearch Service now provides the ability to define a custom endpoint for your domain and link an SSL certificate from ACM, making it easier to refer to Kibana and the domain endpoint.
+* `Aws\EventBridge` - With this release, customers can now reprocess past events by storing the events published on event bus in an encrypted archive.
+* `Aws\FraudDetector` - Added support for deleting resources like Variables, ExternalModels, Outcomes, Models, ModelVersions, Labels, EventTypes and EntityTypes. Updated DeleteEvent operation to catch missing exceptions.
+* `Aws\Lambda` - Support Amazon MQ as an Event Source.
+* `Aws\RDS` - Supports a new parameter to set the max allocated storage in gigabytes for the CreateDBInstanceReadReplica API.
+* `Aws\kendra` - Amazon Kendra now supports providing user context in your query requests, Tokens can be JSON or JWT format. This release also introduces support for Confluence cloud datasources.
+
+## 3.158.20 - 2020-11-04
+
+* `Aws\AutoScaling` - Capacity Rebalance helps you manage and maintain workload availability during Spot interruptions by proactively augmenting your Auto Scaling group with a new instance before interrupting an old one.
+* `Aws\CloudWatch` - Documentation updates for monitoring
+* `Aws\EC2` - Added support for Client Connect Handler for AWS Client VPN. Fleet supports launching replacement instances in response to Capacity Rebalance recommendation.
+* `Aws\ElasticsearchService` - Amazon Elasticsearch Service now supports native SAML authentication that seamlessly integrates with the customers' existing SAML 2.0 Identity Provider (IdP).
+* `Aws\IoT` - Updated API documentation and added paginator for AWS Iot Registry ListThingPrincipals API.
+* `Aws\MQ` - Amazon MQ introduces support for RabbitMQ, a popular message-broker with native support for AMQP 0.9.1. You can now create fully-managed RabbitMQ brokers in the cloud.
+* `Aws\MarketplaceMetering` - Adding Vendor Tagging Support in MeterUsage and BatchMeterUsage API.
+* `Aws\ServiceCatalog` - Service Catalog API ListPortfolioAccess can now support a maximum PageSize of 100.
+* `Aws\TranscribeStreamingService` - With this release, Amazon Transcribe now supports real-time transcription from audio sources in Italian (it-IT) and German(de-DE).
+* `Aws\XRay` - Releasing new APIs GetInsightSummaries, GetInsightEvents, GetInsight, GetInsightImpactGraph and updating GetTimeSeriesServiceStatistics API for AWS X-Ray Insights feature
+
+## 3.158.19 - 2020-11-02
+
+* `Aws\EC2` - This release adds support for the following features: 1. P4d instances based on NVIDIA A100 GPUs. 2. NetworkCardIndex attribute to support multiple network cards.
+
+## 3.158.18 - 2020-10-30
+
+* `Aws\Braket` - This release supports tagging for Amazon Braket quantum-task resources. It also supports tag-based access control for quantum-task APIs.
+* `Aws\DatabaseMigrationService` - Adding DocDbSettings to support DocumentDB as a source.
+* `Aws\ElastiCache` - Documentation updates for AWS ElastiCache
+* `Aws\Macie2` - This release of the Amazon Macie API adds an eqExactMatch operator for filtering findings. With this operator you can increase the precision of your finding filters and suppression rules.
+* `Aws\MediaLive` - Support for HLS discontinuity tags in the child manifests. Support for incomplete segment behavior in the media output. Support for automatic input failover condition settings.
+* `Aws\SNS` - Documentation updates for Amazon SNS
+* `Aws\imagebuilder` - This feature increases the number of accounts that can be added to the Launch permissions within an Image Builder Distribution configuration.
+
 ## 3.158.17 - 2020-10-29
 
 * `Aws\APIGateway` - Support disabling the default execute-api endpoint for REST APIs.

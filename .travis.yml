@@ -1,26 +1,72 @@
-dist: trusty
-
 language: php
-
-php:
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
-  - 7.3
-  - 7.4
-  - hhvm-3.24
-  - nightly
-env:
-  - COMPOSER_OPTS=""
-  - COMPOSER_OPTS="--prefer-lowest"
 
 matrix:
   allow_failures:
     - php: hhvm-3.24
     - php: nightly
+    - php: 8.0snapshot
   fast_finish: true
+  include:
+    - php: 5.5
+      dist: trusty
+      env: COMPOSER_OPTS=""
+    - php: 5.5
+      dist: trusty
+      env: COMPOSER_OPTS="--prefer-lowest"
+    - php: 5.6
+      dist: trusty
+      env: COMPOSER_OPTS=""
+    - php: 5.6
+      dist: trusty
+      env: COMPOSER_OPTS="--prefer-lowest"
+    - php: 7.0
+      dist: trusty
+      env: COMPOSER_OPTS=""
+    - php: 7.0
+      dist: trusty
+      env: COMPOSER_OPTS="--prefer-lowest"
+    - php: 7.1
+      dist: trusty
+      env: COMPOSER_OPTS=""
+    - php: 7.1
+      dist: trusty
+      env: COMPOSER_OPTS="--prefer-lowest"
+    - php: 7.2
+      dist: trusty
+      env: COMPOSER_OPTS=""
+    - php: 7.2
+      dist: trusty
+      env: COMPOSER_OPTS="--prefer-lowest"
+    - php: 7.3
+      dist: trusty
+      env: COMPOSER_OPTS=""
+    - php: 7.3
+      dist: trusty
+      env: COMPOSER_OPTS="--prefer-lowest"
+    - php: 7.4
+      dist: trusty
+      env: COMPOSER_OPTS=""
+    - php: 7.4
+      dist: trusty
+      env: COMPOSER_OPTS="--prefer-lowest"
+    - php: 8.0snapshot
+      dist: xenial
+      env: COMPOSER_OPTS=""
+    - php: 8.0snapshot
+      dist: xenial
+      env: COMPOSER_OPTS="--prefer-lowest"
+    - php: hhvm-3.24
+      dist: trusty
+      env: COMPOSER_OPTS=""
+    - php: hhvm-3.24
+      dist: trusty
+      env: COMPOSER_OPTS="--prefer-lowest"
+    - php: nightly
+      dist: trusty
+      env: COMPOSER_OPTS=""
+    - php: nightly
+      dist: trusty
+      env: COMPOSER_OPTS="--prefer-lowest"
 
 sudo: false
 
@@ -46,8 +92,9 @@ install:
     fi
 
   - >
-    if { [ $(phpenv version-name) == "7.2" ] || [ $(phpenv version-name) == "7.3" ] || [$(phpenv version-name) == "7.4"]; } && [ -v COMPOSER_OPTS ]; then
-      composer require --dev phpunit/phpunit "^5.7.11"
+    phpunit5_versions=("7.2" "7.3" "7.4" "8.0" "8.0snapshot");
+    if [[ " ${phpunit5_versions[@]} " =~ " $(phpenv version-name) " ]] && [ -z $COMPOSER_OPTS ]; then
+      composer require --dev --ignore-platform-reqs phpunit/phpunit "^5.7.11"
     fi
 
   # Resolve dependencies
@@ -64,7 +111,7 @@ script:
     test_versions=("7.1" "7.2" "7.3" "7.4");
     if [[ " ${test_versions[@]} " =~ " $(phpenv version-name) " ]] && [ -z $COMPOSER_OPTS ]; then
       composer require --dev nette/neon "^3.0"
-      composer require --dev phpstan/phpstan "^0.12.11"
+      composer require --dev phpstan/phpstan "0.12.45"
       vendor/bin/phpstan analyse src
     fi
 

@@ -25,7 +25,13 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listRecommendationsAsync(array $args = [])
  * @method \Aws\Result listRepositoryAssociations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listRepositoryAssociationsAsync(array $args = [])
+ * @method \Aws\Result listTagsForResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result putRecommendationFeedback(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putRecommendationFeedbackAsync(array $args = [])
+ * @method \Aws\Result tagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
+ * @method \Aws\Result untagResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  */
 class CodeGuruReviewerClient extends AwsClient {}

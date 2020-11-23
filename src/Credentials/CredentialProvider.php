@@ -51,6 +51,7 @@ class CredentialProvider
     const ENV_SECRET = 'AWS_SECRET_ACCESS_KEY';
     const ENV_SESSION = 'AWS_SESSION_TOKEN';
     const ENV_TOKEN_FILE = 'AWS_WEB_IDENTITY_TOKEN_FILE';
+    const ENV_SHARED_CREDENTIALS_FILE = 'AWS_SHARED_CREDENTIALS_FILE';
 
     /**
      * Create a default credential provider that first checks for environment
@@ -503,7 +504,7 @@ class CredentialProvider
      */
     public static function ini($profile = null, $filename = null, array $config = [])
     {
-        $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
+        $filename = self::getFileName($filename);
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename, $config) {
@@ -594,7 +595,7 @@ class CredentialProvider
      */
     public static function process($profile = null, $filename = null)
     {
-        $filename = $filename ?: (self::getHomeDir() . '/.aws/credentials');
+        $filename = self::getFileName($filename);
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename) {
@@ -858,5 +859,18 @@ class CredentialProvider
     private static function reject($msg)
     {
         return new Promise\RejectedPromise(new CredentialsException($msg));
+    }
+
+    /**
+     * @param $filename
+     * @return string
+     */
+    private static function getFileName($filename)
+    {
+        if (!isset($filename)) {
+            $filename = getenv(self::ENV_SHARED_CREDENTIALS_FILE) ?:
+                (self::getHomeDir() . '/.aws/credentials');
+        }
+        return $filename;
     }
 }

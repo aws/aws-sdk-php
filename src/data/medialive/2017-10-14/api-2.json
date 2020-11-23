@@ -4176,6 +4176,10 @@
           "shape": "DeviceSettingsSyncState",
           "locationName": "deviceSettingsSyncState"
         },
+        "DeviceUpdateStatus": {
+          "shape": "DeviceUpdateStatus",
+          "locationName": "deviceUpdateStatus"
+        },
         "HdDeviceSettings": {
           "shape": "InputDeviceHdSettings",
           "locationName": "hdDeviceSettings"
@@ -4666,6 +4670,13 @@
       "enum": [
         "SYNCED",
         "SYNCING"
+      ]
+    },
+    "DeviceUpdateStatus": {
+      "type": "string",
+      "enum": [
+        "UP_TO_DATE",
+        "NOT_UP_TO_DATE"
       ]
     },
     "DvbNitSettings": {
@@ -6858,6 +6869,10 @@
           "shape": "DeviceSettingsSyncState",
           "locationName": "deviceSettingsSyncState"
         },
+        "DeviceUpdateStatus": {
+          "shape": "DeviceUpdateStatus",
+          "locationName": "deviceUpdateStatus"
+        },
         "HdDeviceSettings": {
           "shape": "InputDeviceHdSettings",
           "locationName": "hdDeviceSettings"
@@ -7051,6 +7066,10 @@
         "DeviceSettingsSyncState": {
           "shape": "DeviceSettingsSyncState",
           "locationName": "deviceSettingsSyncState"
+        },
+        "DeviceUpdateStatus": {
+          "shape": "DeviceUpdateStatus",
+          "locationName": "deviceUpdateStatus"
         },
         "HdDeviceSettings": {
           "shape": "InputDeviceHdSettings",
@@ -9595,6 +9614,12 @@
         }
       }
     },
+    "RtmpAdMarkers": {
+      "type": "string",
+      "enum": [
+        "ON_CUE_POINT_SCTE35"
+      ]
+    },
     "RtmpCacheFullBehavior": {
       "type": "string",
       "enum": [
@@ -9618,6 +9643,10 @@
     "RtmpGroupSettings": {
       "type": "structure",
       "members": {
+        "AdMarkers": {
+          "shape": "__listOfRtmpAdMarkers",
+          "locationName": "adMarkers"
+        },
         "AuthenticationScheme": {
           "shape": "AuthenticationScheme",
           "locationName": "authenticationScheme"
@@ -10944,6 +10973,10 @@
           "shape": "DeviceSettingsSyncState",
           "locationName": "deviceSettingsSyncState"
         },
+        "DeviceUpdateStatus": {
+          "shape": "DeviceUpdateStatus",
+          "locationName": "deviceUpdateStatus"
+        },
         "HdDeviceSettings": {
           "shape": "InputDeviceHdSettings",
           "locationName": "hdDeviceSettings"
@@ -11857,6 +11890,12 @@
       "type": "list",
       "member": {
         "shape": "Reservation"
+      }
+    },
+    "__listOfRtmpAdMarkers": {
+      "type": "list",
+      "member": {
+        "shape": "RtmpAdMarkers"
       }
     },
     "__listOfScheduleAction": {

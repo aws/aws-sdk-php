@@ -24,6 +24,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAppConfig(array $args = [])
  * @method \Aws\AppMesh\AppMeshClient createAppMesh(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppMesh(array $args = [])
+ * @method \Aws\AppRegistry\AppRegistryClient createAppRegistry(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAppRegistry(array $args = [])
  * @method \Aws\AppSync\AppSyncClient createAppSync(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAppSync(array $args = [])
  * @method \Aws\Appflow\AppflowClient createAppflow(array $args = [])
@@ -198,6 +200,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionGlobalAccelerator(array $args = [])
  * @method \Aws\Glue\GlueClient createGlue(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGlue(array $args = [])
+ * @method \Aws\GlueDataBrew\GlueDataBrewClient createGlueDataBrew(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionGlueDataBrew(array $args = [])
  * @method \Aws\Greengrass\GreengrassClient createGreengrass(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGreengrass(array $args = [])
  * @method \Aws\GroundStation\GroundStationClient createGroundStation(array $args = [])
@@ -314,6 +318,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMobile(array $args = [])
  * @method \Aws\Neptune\NeptuneClient createNeptune(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNeptune(array $args = [])
+ * @method \Aws\NetworkFirewall\NetworkFirewallClient createNetworkFirewall(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionNetworkFirewall(array $args = [])
  * @method \Aws\NetworkManager\NetworkManagerClient createNetworkManager(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNetworkManager(array $args = [])
  * @method \Aws\OpsWorks\OpsWorksClient createOpsWorks(array $args = [])
@@ -471,7 +477,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.158.17';
+    const VERSION = '3.163.2';
 
     /** @var array Arguments for creating clients */
     private $args;

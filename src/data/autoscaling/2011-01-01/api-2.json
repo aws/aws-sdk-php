@@ -1002,7 +1002,8 @@
         "TerminationPolicies":{"shape":"TerminationPolicies"},
         "NewInstancesProtectedFromScaleIn":{"shape":"InstanceProtected"},
         "ServiceLinkedRoleARN":{"shape":"ResourceName"},
-        "MaxInstanceLifetime":{"shape":"MaxInstanceLifetime"}
+        "MaxInstanceLifetime":{"shape":"MaxInstanceLifetime"},
+        "CapacityRebalance":{"shape":"CapacityRebalanceEnabled"}
       }
     },
     "AutoScalingGroupDesiredCapacity":{"type":"integer"},
@@ -1153,6 +1154,7 @@
         "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"}
       }
     },
+    "CapacityRebalanceEnabled":{"type":"boolean"},
     "ClassicLinkVPCSecurityGroups":{
       "type":"list",
       "member":{"shape":"XmlStringMaxLen255"}
@@ -1204,6 +1206,7 @@
         "VPCZoneIdentifier":{"shape":"XmlStringMaxLen2047"},
         "TerminationPolicies":{"shape":"TerminationPolicies"},
         "NewInstancesProtectedFromScaleIn":{"shape":"InstanceProtected"},
+        "CapacityRebalance":{"shape":"CapacityRebalanceEnabled"},
         "LifecycleHookSpecificationList":{"shape":"LifecycleHookSpecifications"},
         "Tags":{"shape":"Tags"},
         "ServiceLinkedRoleARN":{"shape":"ResourceName"},
@@ -1862,13 +1865,14 @@
       "type":"string",
       "max":128,
       "min":3,
-      "pattern":"[a-zA-Z0-9\\(\\)\\.-/_]+"
+      "pattern":"[a-zA-Z0-9\\(\\)\\.\\-/_]+"
     },
     "LaunchTemplateOverrides":{
       "type":"structure",
       "members":{
         "InstanceType":{"shape":"XmlStringMaxLen255"},
-        "WeightedCapacity":{"shape":"XmlStringMaxLen32"}
+        "WeightedCapacity":{"shape":"XmlStringMaxLen32"},
+        "LaunchTemplateSpecification":{"shape":"LaunchTemplateSpecification"}
       }
     },
     "LaunchTemplateSpecification":{
@@ -2603,7 +2607,8 @@
         "TerminationPolicies":{"shape":"TerminationPolicies"},
         "NewInstancesProtectedFromScaleIn":{"shape":"InstanceProtected"},
         "ServiceLinkedRoleARN":{"shape":"ResourceName"},
-        "MaxInstanceLifetime":{"shape":"MaxInstanceLifetime"}
+        "MaxInstanceLifetime":{"shape":"MaxInstanceLifetime"},
+        "CapacityRebalance":{"shape":"CapacityRebalanceEnabled"}
       }
     },
     "Values":{

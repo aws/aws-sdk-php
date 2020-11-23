@@ -1120,6 +1120,14 @@
         "AwsJobTimeoutConfig$inProgressTimeoutInMinutes": "<p>Specifies the amount of time, in minutes, this device has to finish execution of this job. The timeout interval can be anywhere between 1 minute and 7 days (1 to 10080 minutes). The in progress timer can't be updated and will apply to all job executions for the job. Whenever a job execution remains in the IN_PROGRESS status for longer than this interval, the job execution will fail and switch to the terminal <code>TIMED_OUT</code> status.</p>"
       }
     },
+    "BatchMode": {
+      "base": null,
+      "refs": {
+        "FirehoseAction$batchMode": "<p>Whether to deliver the Kinesis Data Firehose stream as a batch by using <a href=\"https://docs.aws.amazon.com/firehose/latest/APIReference/API_PutRecordBatch.html\"> <code>PutRecordBatch</code> </a>. The default value is <code>false</code>.</p> <p>When <code>batchMode</code> is <code>true</code> and the rule's SQL statement evaluates to an Array, each Array element forms one record in the <a href=\"https://docs.aws.amazon.com/firehose/latest/APIReference/API_PutRecordBatch.html\"> <code>PutRecordBatch</code> </a> request. The resulting array can't have more than 500 records.</p>",
+        "IotAnalyticsAction$batchMode": "<p>Whether to process the action as a batch. The default value is <code>false</code>.</p> <p>When <code>batchMode</code> is <code>true</code> and the rule SQL statement evaluates to an Array, each Array element is delivered as a separate message when passed by <a href=\"https://docs.aws.amazon.com/iotanalytics/latest/APIReference/API_BatchPutMessage.html\"> <code>BatchPutMessage</code> </a> to the AWS IoT Analytics channel. The resulting array can't have more than 100 messages.</p>",
+        "IotEventsAction$batchMode": "<p>Whether to process the event actions as a batch. The default value is <code>false</code>.</p> <p>When <code>batchMode</code> is <code>true</code>, you can't specify a <code>messageId</code>. </p> <p>When <code>batchMode</code> is <code>true</code> and the rule SQL statement evaluates to an Array, each Array element is treated as a separate message when it's sent to AWS IoT Events by calling <a href=\"https://docs.aws.amazon.com/iotevents/latest/apireference/API_iotevents-data_BatchPutMessage.html\"> <code>BatchPutMessage</code> </a>. The resulting array can't have more than 10 messages.</p>"
+      }
+    },
     "Behavior": {
       "base": "<p>A Device Defender security profile behavior.</p>",
       "refs": {
@@ -3712,7 +3720,7 @@
     "Key": {
       "base": null,
       "refs": {
-        "S3Action$key": "<p>The object key.</p>"
+        "S3Action$key": "<p>The object key. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/list_amazons3.html\">Actions, resources, and condition keys for Amazon S3</a>.</p>"
       }
     },
     "KeyName": {
@@ -4413,7 +4421,7 @@
     "MessageId": {
       "base": null,
       "refs": {
-        "IotEventsAction$messageId": "<p>[Optional] Use this to ensure that only one input (message) with a given messageId will be processed by an AWS IoT Events detector.</p>"
+        "IotEventsAction$messageId": "<p>The ID of the message. The default <code>messageId</code> is a new UUID value.</p> <p>When <code>batchMode</code> is <code>true</code>, you can't specify a <code>messageId</code>--a new UUID value will be assigned.</p> <p>Assign a value to this property to ensure that only one input (message) with a given <code>messageId</code> will be processed by an AWS IoT Events detector.</p>"
       }
     },
     "MetricDimension": {
@@ -4592,8 +4600,8 @@
         "ListAuditSuppressionsResponse$nextToken": "<p> A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results. </p>",
         "ListAuditTasksRequest$nextToken": "<p>The token for the next set of results.</p>",
         "ListAuditTasksResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
-        "ListBillingGroupsRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListBillingGroupsResponse$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListBillingGroupsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListBillingGroupsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListDimensionsRequest$nextToken": "<p>The token for the next set of results.</p>",
         "ListDimensionsResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
         "ListIndicesRequest$nextToken": "<p>The token used to get the next set of results, or <code>null</code> if there are no additional results.</p>",
@@ -4608,8 +4616,8 @@
         "ListMitigationActionsResponse$nextToken": "<p>The token for the next set of results.</p>",
         "ListOTAUpdatesRequest$nextToken": "<p>A token used to retrieve the next set of results.</p>",
         "ListOTAUpdatesResponse$nextToken": "<p>A token to use to get the next set of results.</p>",
-        "ListPrincipalThingsRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListPrincipalThingsResponse$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListPrincipalThingsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListPrincipalThingsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListProvisioningTemplateVersionsRequest$nextToken": "<p>A token to retrieve the next set of results.</p>",
         "ListProvisioningTemplateVersionsResponse$nextToken": "<p>A token to retrieve the next set of results.</p>",
         "ListProvisioningTemplatesRequest$nextToken": "<p>A token to retrieve the next set of results.</p>",
@@ -4622,32 +4630,34 @@
         "ListSecurityProfilesResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
         "ListStreamsRequest$nextToken": "<p>A token used to get the next set of results.</p>",
         "ListStreamsResponse$nextToken": "<p>A token used to get the next set of results.</p>",
-        "ListTagsForResourceRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListTagsForResourceResponse$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListTagsForResourceRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListTagsForResourceResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListTargetsForSecurityProfileRequest$nextToken": "<p>The token for the next set of results.</p>",
         "ListTargetsForSecurityProfileResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
-        "ListThingGroupsForThingRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListThingGroupsForThingResponse$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
-        "ListThingGroupsRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListThingGroupsResponse$nextToken": "<p>The token used to get the next set of results. Will not be returned if operation has returned all results.</p>",
-        "ListThingRegistrationTaskReportsRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListThingRegistrationTaskReportsResponse$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
-        "ListThingRegistrationTasksRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListThingRegistrationTasksResponse$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
-        "ListThingTypesRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
+        "ListThingGroupsForThingRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListThingGroupsForThingResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListThingGroupsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListThingGroupsResponse$nextToken": "<p>The token to use to get the next set of results. Will not be returned if operation has returned all results.</p>",
+        "ListThingPrincipalsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListThingPrincipalsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListThingRegistrationTaskReportsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListThingRegistrationTaskReportsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListThingRegistrationTasksRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListThingRegistrationTasksResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListThingTypesRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
         "ListThingTypesResponse$nextToken": "<p>The token for the next set of results. Will not be returned if operation has returned all results.</p>",
-        "ListThingsInBillingGroupRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListThingsInBillingGroupResponse$nextToken": "<p>The token used to get the next set of results. Will not be returned if operation has returned all results.</p>",
-        "ListThingsInThingGroupRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListThingsInThingGroupResponse$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
-        "ListThingsRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListThingsResponse$nextToken": "<p>The token used to get the next set of results. Will not be returned if operation has returned all results.</p>",
-        "ListTopicRuleDestinationsRequest$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListTopicRuleDestinationsResponse$nextToken": "<p>The token to retrieve the next set of results.</p>",
-        "ListTopicRulesRequest$nextToken": "<p>A token used to retrieve the next value.</p>",
-        "ListTopicRulesResponse$nextToken": "<p>A token used to retrieve the next value.</p>",
-        "ListV2LoggingLevelsRequest$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
-        "ListV2LoggingLevelsResponse$nextToken": "<p>The token used to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListThingsInBillingGroupRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListThingsInBillingGroupResponse$nextToken": "<p>The token to use to get the next set of results. Will not be returned if operation has returned all results.</p>",
+        "ListThingsInThingGroupRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListThingsInThingGroupResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListThingsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListThingsResponse$nextToken": "<p>The token to use to get the next set of results. Will not be returned if operation has returned all results.</p>",
+        "ListTopicRuleDestinationsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListTopicRuleDestinationsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListTopicRulesRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListTopicRulesResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
+        "ListV2LoggingLevelsRequest$nextToken": "<p>To retrieve the next set of results, the <code>nextToken</code> value from a previous response; otherwise <b>null</b> to receive the first set of results.</p>",
+        "ListV2LoggingLevelsResponse$nextToken": "<p>The token to use to get the next set of results, or <b>null</b> if there are no additional results.</p>",
         "ListViolationEventsRequest$nextToken": "<p>The token for the next set of results.</p>",
         "ListViolationEventsResponse$nextToken": "<p>A token that can be used to retrieve the next set of results, or <code>null</code> if there are no additional results.</p>",
         "SearchIndexRequest$nextToken": "<p>The token used to get the next set of results, or <code>null</code> if there are no additional results.</p>",
@@ -5353,6 +5363,7 @@
         "ListPrincipalThingsRequest$maxResults": "<p>The maximum number of results to return in this operation.</p>",
         "ListThingGroupsForThingRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListThingGroupsRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
+        "ListThingPrincipalsRequest$maxResults": "<p>The maximum number of results to return in this operation.</p>",
         "ListThingRegistrationTaskReportsRequest$maxResults": "<p>The maximum number of results to return per request.</p>",
         "ListThingRegistrationTasksRequest$maxResults": "<p>The maximum number of results to return at one time.</p>",
         "ListThingTypesRequest$maxResults": "<p>The maximum number of results to return in this operation.</p>",
@@ -5966,7 +5977,7 @@
       }
     },
     "SigV4Authorization": {
-      "base": "<p>Use Sig V4 authorization.</p>",
+      "base": "<p>For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4 signing process</a>.</p>",
       "refs": {
         "HttpAuthorization$sigv4": "<p>Use Sig V4 authorization. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version 4 Signing Process</a>.</p>"
       }

@@ -4063,7 +4063,7 @@
       "members":{
         "Domain":{"shape":"DomainType"},
         "Address":{"shape":"PublicIpAddress"},
-        "PublicIpv4Pool":{"shape":"String"},
+        "PublicIpv4Pool":{"shape":"Ipv4PoolEc2Id"},
         "NetworkBorderGroup":{"shape":"String"},
         "CustomerOwnedIpv4Pool":{"shape":"String"},
         "DryRun":{
@@ -5968,6 +5968,30 @@
         "active"
       ]
     },
+    "ClientConnectOptions":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "LambdaFunctionArn":{"shape":"String"}
+      }
+    },
+    "ClientConnectResponseOptions":{
+      "type":"structure",
+      "members":{
+        "Enabled":{
+          "shape":"Boolean",
+          "locationName":"enabled"
+        },
+        "LambdaFunctionArn":{
+          "shape":"String",
+          "locationName":"lambdaFunctionArn"
+        },
+        "Status":{
+          "shape":"ClientVpnEndpointAttributeStatus",
+          "locationName":"status"
+        }
+      }
+    },
     "ClientData":{
       "type":"structure",
       "members":{
@@ -6103,6 +6127,10 @@
         "ConnectionEndTime":{
           "shape":"String",
           "locationName":"connectionEndTime"
+        },
+        "PostureComplianceStatuses":{
+          "shape":"ValueStringList",
+          "locationName":"postureComplianceStatusSet"
         }
       }
     },
@@ -6219,8 +6247,32 @@
         "SelfServicePortalUrl":{
           "shape":"String",
           "locationName":"selfServicePortalUrl"
+        },
+        "ClientConnectOptions":{
+          "shape":"ClientConnectResponseOptions",
+          "locationName":"clientConnectOptions"
         }
       }
+    },
+    "ClientVpnEndpointAttributeStatus":{
+      "type":"structure",
+      "members":{
+        "Code":{
+          "shape":"ClientVpnEndpointAttributeStatusCode",
+          "locationName":"code"
+        },
+        "Message":{
+          "shape":"String",
+          "locationName":"message"
+        }
+      }
+    },
+    "ClientVpnEndpointAttributeStatusCode":{
+      "type":"string",
+      "enum":[
+        "applying",
+        "applied"
+      ]
     },
     "ClientVpnEndpointId":{"type":"string"},
     "ClientVpnEndpointIdList":{
@@ -6785,7 +6837,8 @@
           "locationName":"SecurityGroupId"
         },
         "VpcId":{"shape":"VpcId"},
-        "SelfServicePortal":{"shape":"SelfServicePortal"}
+        "SelfServicePortal":{"shape":"SelfServicePortal"},
+        "ClientConnectOptions":{"shape":"ClientConnectOptions"}
       }
     },
     "CreateClientVpnEndpointResult":{
@@ -7172,7 +7225,11 @@
     },
     "CreateInstanceExportTaskRequest":{
       "type":"structure",
-      "required":["InstanceId"],
+      "required":[
+        "ExportToS3Task",
+        "InstanceId",
+        "TargetEnvironment"
+      ],
       "members":{
         "Description":{
           "shape":"String",
@@ -7657,6 +7714,7 @@
           "shape":"Boolean",
           "locationName":"dryRun"
         },
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
         "EgressOnlyInternetGatewayId":{
           "shape":"EgressOnlyInternetGatewayId",
           "locationName":"egressOnlyInternetGatewayId"
@@ -8316,7 +8374,6 @@
     },
     "CreateVpcEndpointServiceConfigurationRequest":{
       "type":"structure",
-      "required":["NetworkLoadBalancerArns"],
       "members":{
         "DryRun":{"shape":"Boolean"},
         "AcceptanceRequired":{"shape":"Boolean"},
@@ -8324,6 +8381,10 @@
         "NetworkLoadBalancerArns":{
           "shape":"ValueStringList",
           "locationName":"NetworkLoadBalancerArn"
+        },
+        "GatewayLoadBalancerArns":{
+          "shape":"ValueStringList",
+          "locationName":"GatewayLoadBalancerArn"
         },
         "ClientToken":{"shape":"String"},
         "TagSpecifications":{
@@ -8579,6 +8640,7 @@
     "DateTime":{"type":"timestamp"},
     "DedicatedHostFlag":{"type":"boolean"},
     "DedicatedHostId":{"type":"string"},
+    "DefaultNetworkCardIndex":{"type":"integer"},
     "DefaultRouteTableAssociationValue":{
       "type":"string",
       "enum":[
@@ -15424,11 +15486,45 @@
         "prioritized"
       ]
     },
+    "FleetReplacementStrategy":{
+      "type":"string",
+      "enum":["launch"]
+    },
     "FleetSet":{
       "type":"list",
       "member":{
         "shape":"FleetData",
         "locationName":"item"
+      }
+    },
+    "FleetSpotCapacityRebalance":{
+      "type":"structure",
+      "members":{
+        "ReplacementStrategy":{
+          "shape":"FleetReplacementStrategy",
+          "locationName":"replacementStrategy"
+        }
+      }
+    },
+    "FleetSpotCapacityRebalanceRequest":{
+      "type":"structure",
+      "members":{
+        "ReplacementStrategy":{"shape":"FleetReplacementStrategy"}
+      }
+    },
+    "FleetSpotMaintenanceStrategies":{
+      "type":"structure",
+      "members":{
+        "CapacityRebalance":{
+          "shape":"FleetSpotCapacityRebalance",
+          "locationName":"capacityRebalance"
+        }
+      }
+    },
+    "FleetSpotMaintenanceStrategiesRequest":{
+      "type":"structure",
+      "members":{
+        "CapacityRebalance":{"shape":"FleetSpotCapacityRebalanceRequest"}
       }
     },
     "FleetStateCode":{
@@ -20892,6 +20988,7 @@
     "MaxResults":{"type":"integer"},
     "MaximumBandwidthInMbps":{"type":"integer"},
     "MaximumIops":{"type":"integer"},
+    "MaximumNetworkCards":{"type":"integer"},
     "MaximumThroughputInMBps":{"type":"double"},
     "MembershipType":{
       "type":"string",
@@ -20976,7 +21073,8 @@
           "locationName":"SecurityGroupId"
         },
         "VpcId":{"shape":"VpcId"},
-        "SelfServicePortal":{"shape":"SelfServicePortal"}
+        "SelfServicePortal":{"shape":"SelfServicePortal"},
+        "ClientConnectOptions":{"shape":"ClientConnectOptions"}
       }
     },
     "ModifyClientVpnEndpointResult":{
@@ -21028,10 +21126,7 @@
     },
     "ModifyFleetRequest":{
       "type":"structure",
-      "required":[
-        "FleetId",
-        "TargetCapacitySpecification"
-      ],
+      "required":["FleetId"],
       "members":{
         "DryRun":{"shape":"Boolean"},
         "ExcessCapacityTerminationPolicy":{"shape":"FleetExcessCapacityTerminationPolicy"},
@@ -21835,6 +21930,14 @@
         "RemoveNetworkLoadBalancerArns":{
           "shape":"ValueStringList",
           "locationName":"RemoveNetworkLoadBalancerArn"
+        },
+        "AddGatewayLoadBalancerArns":{
+          "shape":"ValueStringList",
+          "locationName":"AddGatewayLoadBalancerArn"
+        },
+        "RemoveGatewayLoadBalancerArns":{
+          "shape":"ValueStringList",
+          "locationName":"RemoveGatewayLoadBalancerArn"
         }
       }
     },
@@ -22360,6 +22463,31 @@
         "locationName":"item"
       }
     },
+    "NetworkCardIndex":{"type":"integer"},
+    "NetworkCardInfo":{
+      "type":"structure",
+      "members":{
+        "NetworkCardIndex":{
+          "shape":"NetworkCardIndex",
+          "locationName":"networkCardIndex"
+        },
+        "NetworkPerformance":{
+          "shape":"NetworkPerformance",
+          "locationName":"networkPerformance"
+        },
+        "MaximumNetworkInterfaces":{
+          "shape":"MaxNetworkInterfaces",
+          "locationName":"maximumNetworkInterfaces"
+        }
+      }
+    },
+    "NetworkCardInfoList":{
+      "type":"list",
+      "member":{
+        "shape":"NetworkCardInfo",
+        "locationName":"item"
+      }
+    },
     "NetworkInfo":{
       "type":"structure",
       "members":{
@@ -22370,6 +22498,18 @@
         "MaximumNetworkInterfaces":{
           "shape":"MaxNetworkInterfaces",
           "locationName":"maximumNetworkInterfaces"
+        },
+        "MaximumNetworkCards":{
+          "shape":"MaximumNetworkCards",
+          "locationName":"maximumNetworkCards"
+        },
+        "DefaultNetworkCardIndex":{
+          "shape":"DefaultNetworkCardIndex",
+          "locationName":"defaultNetworkCardIndex"
+        },
+        "NetworkCards":{
+          "shape":"NetworkCardInfoList",
+          "locationName":"networkCards"
         },
         "Ipv4AddressesPerInterface":{
           "shape":"MaxIpv4AddrPerInterface",
@@ -24360,6 +24500,7 @@
           "shape":"Boolean",
           "locationName":"dryRun"
         },
+        "VpcEndpointId":{"shape":"VpcEndpointId"},
         "EgressOnlyInternetGatewayId":{
           "shape":"EgressOnlyInternetGatewayId",
           "locationName":"egressOnlyInternetGatewayId"
@@ -24450,6 +24591,10 @@
           "locationName":"route"
         }
       }
+    },
+    "ReplacementStrategy":{
+      "type":"string",
+      "enum":["launch"]
     },
     "ReportInstanceReasonCodes":{
       "type":"string",
@@ -26583,6 +26728,10 @@
           "shape":"ValueStringList",
           "locationName":"networkLoadBalancerArnSet"
         },
+        "GatewayLoadBalancerArns":{
+          "shape":"ValueStringList",
+          "locationName":"gatewayLoadBalancerArnSet"
+        },
         "BaseEndpointDnsNames":{
           "shape":"ValueStringList",
           "locationName":"baseEndpointDnsNameSet"
@@ -26682,7 +26831,8 @@
       "type":"string",
       "enum":[
         "Interface",
-        "Gateway"
+        "Gateway",
+        "GatewayLoadBalancer"
       ]
     },
     "ServiceTypeDetail":{
@@ -26987,6 +27137,15 @@
         "capacity-optimized"
       ]
     },
+    "SpotCapacityRebalance":{
+      "type":"structure",
+      "members":{
+        "ReplacementStrategy":{
+          "shape":"ReplacementStrategy",
+          "locationName":"replacementStrategy"
+        }
+      }
+    },
     "SpotDatafeedSubscription":{
       "type":"structure",
       "members":{
@@ -27141,6 +27300,10 @@
         "OnDemandAllocationStrategy":{
           "shape":"OnDemandAllocationStrategy",
           "locationName":"onDemandAllocationStrategy"
+        },
+        "SpotMaintenanceStrategies":{
+          "shape":"SpotMaintenanceStrategies",
+          "locationName":"spotMaintenanceStrategies"
         },
         "ClientToken":{
           "shape":"String",
@@ -27414,6 +27577,15 @@
         "persistent"
       ]
     },
+    "SpotMaintenanceStrategies":{
+      "type":"structure",
+      "members":{
+        "CapacityRebalance":{
+          "shape":"SpotCapacityRebalance",
+          "locationName":"capacityRebalance"
+        }
+      }
+    },
     "SpotMarketOptions":{
       "type":"structure",
       "members":{
@@ -27430,6 +27602,10 @@
         "AllocationStrategy":{
           "shape":"SpotAllocationStrategy",
           "locationName":"allocationStrategy"
+        },
+        "MaintenanceStrategies":{
+          "shape":"FleetSpotMaintenanceStrategies",
+          "locationName":"maintenanceStrategies"
         },
         "InstanceInterruptionBehavior":{
           "shape":"SpotInstanceInterruptionBehavior",
@@ -27461,6 +27637,7 @@
       "type":"structure",
       "members":{
         "AllocationStrategy":{"shape":"SpotAllocationStrategy"},
+        "MaintenanceStrategies":{"shape":"FleetSpotMaintenanceStrategiesRequest"},
         "InstanceInterruptionBehavior":{"shape":"SpotInstanceInterruptionBehavior"},
         "InstancePoolsToUseCount":{"shape":"Integer"},
         "SingleInstanceType":{"shape":"Boolean"},
@@ -30624,6 +30801,10 @@
         "NetworkLoadBalancerArns":{
           "shape":"ValueStringList",
           "locationName":"networkLoadBalancerArnSet"
+        },
+        "GatewayLoadBalancerArns":{
+          "shape":"ValueStringList",
+          "locationName":"gatewayLoadBalancerArnSet"
         }
       }
     },
@@ -30682,7 +30863,8 @@
       "type":"string",
       "enum":[
         "Interface",
-        "Gateway"
+        "Gateway",
+        "GatewayLoadBalancer"
       ]
     },
     "VpcFlowLogId":{"type":"string"},
