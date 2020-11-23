@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.163.3 - 2020-11-23
 
 * `Aws\ApplicationInsights` - Add Detected Workload to ApplicationComponent which shows the workloads that installed in the component
 * `Aws\AutoScaling` - Documentation updates and corrections for Amazon EC2 Auto Scaling API Reference and SDKs.
