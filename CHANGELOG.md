@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationInsights` - Add Detected Workload to ApplicationComponent which shows the workloads that installed in the component
+* `Aws\AutoScaling` - Documentation updates and corrections for Amazon EC2 Auto Scaling API Reference and SDKs.
+* `Aws\CodeArtifact` - Add support for the NuGet package format.
+* `Aws\CodeStarconnections` - Added support for the UpdateHost API.
+* `Aws\DynamoDB` - With this release, you can capture data changes in any Amazon DynamoDB table as an Amazon Kinesis data stream. You also can use PartiQL (SQL-compatible language) to manipulate data in DynamoDB tables.
+* `Aws\EC2` - This release adds support for Multiple Private DNS names to DescribeVpcEndpointServices response.
+* `Aws\ECS` - This release adds support for updating capacity providers, specifying custom instance warmup periods for capacity providers, and using deployment circuit breaker for your ECS Services.
+* `Aws\EMR` - Add API support for EMR Studio, a new notebook-first IDE for data scientists and data engineers with single sign-on, Jupyter notebooks, automated infrastructure provisioning, and job diagnosis.
+* `Aws\ElastiCache` - Documentation updates for elasticache
+* `Aws\ForecastService` - Releasing the set of PredictorBacktestExportJob APIs which allow customers to export backtest values and item-level metrics data from Predictor training.
+* `Aws\Glue` - Feature1 - Glue crawler adds data lineage configuration option. Feature2 - AWS Glue Data Catalog adds APIs for PartitionIndex creation and deletion as part of Enhancement Partition Management feature.
+* `Aws\IoT` - This release enables users to identify different file types in the over-the-air update (OTA) functionality using fileType parameter for CreateOTAUpdate API
+* `Aws\Kafka` - Adding MAINTENANCE and REBOOTING_BROKER to Cluster states.
+* `Aws\Lambda` - This release includes support for new feature: Code Signing for AWS Lambda. This adds new resources and APIs to configure Lambda functions to accept and verify signed code artifacts at deployment.
+* `Aws\LicenseManager` - AWS License Manager now provides the ability for license administrators to be able to associate license configurations to AMIs shared with their AWS account
+* `Aws\Outposts` - Support specifying tags during the creation of the Outpost resource. Tags are now returned in the response body of Outpost APIs.
+* `Aws\SSOAdmin` - AWS Single Sign-On now enables attribute-based access control for workforce identities to simplify permissions in AWS
+* `Aws\SecurityHub` - Updated the account management API to support the integration with AWS Organizations. Added new methods to allow users to view and manage the delegated administrator account for Security Hub.
+* `Aws\TimestreamQuery` - Amazon Timestream now supports "QueryStatus" in Query API which has information about cumulative bytes scanned, metered, as well as progress percentage for the query.
+* `Aws\Translate` - This update adds new operations to create and manage parallel data in Amazon Translate. Parallel data is a resource that you can use to run Active Custom Translation jobs.
+* `Aws\signer` - AWS Signer is launching code-signing for AWS Lambda. Now customers can cryptographically sign Lambda code to ensure trust, integrity, and functionality.
+
 ## 3.163.2 - 2020-11-20
 
 * `Aws\AppMesh` - This release makes tag value a required attribute of the tag's key-value pair.
