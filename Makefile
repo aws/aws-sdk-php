@@ -6,6 +6,8 @@ help:
 	@echo "  coverage       to perform unit tests with code coverage. Provide TEST to perform a specific test."
 	@echo "  coverage-show  to show the code coverage report"
 	@echo "  integ          to run integration tests. Provide TEST to perform a specific test."
+	@echo "  guide          to build the user guide documentation"
+	@echo "  guide-show     to view the user guide"
 	@echo "  api            to build the API documentation. Provide ISSUE_LOGGING_ENABLED to save build issues to file."
 	@echo "  api-show       to view the API documentation"
 	@echo "  api-package    to build the API documentation as a ZIP"
@@ -19,6 +21,7 @@ help:
 
 clean: clear-cache
 	rm -rf build/artifacts/*
+	cd docs && make clean
 
 clear-cache:
 	php build/aws-clear-cache.php
@@ -69,6 +72,12 @@ smoke-noassumerole:
 # Packages the phar and zip
 package:
 	php build/packager.php $(SERVICE)
+
+guide:
+	cd docs && make html
+
+guide-show:
+	open docs/_build/html/index.html
 
 api-get-apigen:
 	mkdir -p build/artifacts
@@ -153,7 +162,7 @@ release: check-tag package
 full_release: tag release
 
 .PHONY: help clean test coverage coverage-show integ package compile-json \
-api-get-apigen api api-show api-package api-manifest \
+guide guide-show api-get-apigen api api-show api-package api-manifest \
 check-tag tag release full-release clear-cache test-phar integ smoke \
 api-models compile-json annotate-clients annotate-client-locator \
 build-manifest check-models-dir sync-models

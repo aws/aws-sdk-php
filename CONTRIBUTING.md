@@ -156,4 +156,4 @@ category field should exist with the value set to an empty string `""`.
 [phpstan]: https://github.com/phpstan/phpstan
 [sphinx]: http://sphinx-doc.org/
 [restructuredtext]: http://sphinx-doc.org/rest.html
-[docs-readme]: https://github.com/awsdocs/aws-php-developers-guide/blob/master/README.rst
+[docs-readme]: https://github.com/aws/aws-sdk-php/blob/master/docs/README.md
