@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.164.0 - 2020-11-24
 
 * `Aws\Appflow` - Upsolver as a destination connector and documentation update.
 * `Aws\Batch` - Add Ec2Configuration in ComputeEnvironment.ComputeResources. Use in CreateComputeEnvironment API to enable AmazonLinux2 support.
