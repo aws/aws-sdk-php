@@ -22,7 +22,7 @@ class MultipartUploadExceptionTest extends TestCase
         $prev = new AwsException($msg, new Command($commandName));
         $exception = new MultipartUploadException($state, $prev);
 
-        $this->assertEquals(
+        $this->assertSame(
             "An exception occurred while {$status} a multipart upload: $msg",
             $exception->getMessage()
         );
@@ -59,6 +59,6 @@ An exception occurred while uploading parts to a multipart upload. The following
 
 MSG;
 
-        $this->assertEquals($expected, $exception->getMessage());
+        $this->assertSame($expected, $exception->getMessage());
     }
 }

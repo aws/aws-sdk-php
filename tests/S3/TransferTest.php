@@ -120,8 +120,8 @@ class TransferTest extends TestCase
 
         /** @var CommandInterface $test */
         foreach ($c as $test) {
-            $this->assertEquals('PutObject', $test->getName());
-            $this->assertEquals('foo', $test['Bucket']);
+            $this->assertSame('PutObject', $test->getName());
+            $this->assertSame('foo', $test['Bucket']);
             $this->assertStringStartsWith('bar/', $test['Key']);
             $this->assertContains($test['SourceFile'] . ' -> s3://foo/bar', $output);
         }
@@ -258,7 +258,7 @@ class TransferTest extends TestCase
         $s3 = $this->getTestClient('s3');
         $s3->getHandlerList()->appendSign(Middleware::tap(
             function (CommandInterface $cmd, RequestInterface $req) {
-                $this->assertEquals(
+                $this->assertSame(
                     'myaccess-123456789012.s3-accesspoint.us-east-1.amazonaws.com',
                     $req->getUri()->getHost()
                 );

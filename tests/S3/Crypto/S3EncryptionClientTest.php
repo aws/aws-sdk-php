@@ -616,7 +616,7 @@ EOXML;
         $list = $kms->getHandlerList();
         $list->setHandler(function($cmd, $req) {
             // Verify decryption command has correct parameters
-            $this->assertEquals('cek', $cmd['CiphertextBlob']);
+            $this->assertSame('cek', $cmd['CiphertextBlob']);
             $this->assertEquals(
                 [
                     'aws:x-amz-cek-alg' => 'AES/GCM/NoPadding'

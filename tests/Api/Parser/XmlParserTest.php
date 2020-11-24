@@ -1,6 +1,5 @@
 <?php
-
-require_once __DIR__ . '/ParserTestServiceTrait.php';
+namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\Exception\ParserException;
 use PHPUnit\Framework\TestCase;

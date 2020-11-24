@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers Aws\Signature\AnonymousSignature
  */
-class AnonymousTest extends TestCase
+class AnonymousSignatureTest extends TestCase
 {
     public function testDoesNotSignsRequests()
     {

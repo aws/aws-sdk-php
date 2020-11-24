@@ -1,4 +1,5 @@
 <?php
+namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Service;
 use Aws\AwsClient;

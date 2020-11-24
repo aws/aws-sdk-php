@@ -193,7 +193,7 @@ class ClientResolverTest extends TestCase
             ]
         ]);
         $res = $r->resolve([], new HandlerList());
-        $this->assertEquals('callable_test', $res['foo']);
+        $this->assertSame('callable_test', $res['foo']);
     }
 
     public function checkCallable()
@@ -213,7 +213,7 @@ class ClientResolverTest extends TestCase
         ]);
         $res = $r->resolve([], new HandlerList());
         $this->assertInternalType('callable', $callableFunction);
-        $this->assertEquals(
+        $this->assertSame(
             '\Aws\test\ClientResolverTest::checkCallable',
             $res['foo']
         );
@@ -245,8 +245,8 @@ class ClientResolverTest extends TestCase
         ], new HandlerList());
         $c = call_user_func($conf['credentials'])->wait();
         $this->assertInstanceOf('Aws\Credentials\CredentialsInterface', $c);
-        $this->assertEquals('foo', $c->getAccessKeyId());
-        $this->assertEquals('bar', $c->getSecretKey());
+        $this->assertSame('foo', $c->getAccessKeyId());
+        $this->assertSame('bar', $c->getSecretKey());
         putenv(CredentialProvider::ENV_KEY . "=$key");
         putenv(CredentialProvider::ENV_SECRET . "=$secret");
     }
@@ -267,10 +267,10 @@ class ClientResolverTest extends TestCase
             ]
         ], new HandlerList());
         $creds = call_user_func($conf['credentials'])->wait();
-        $this->assertEquals('foo', $creds->getAccessKeyId());
-        $this->assertEquals('baz', $creds->getSecretKey());
-        $this->assertEquals('tok', $creds->getSecurityToken());
-        $this->assertEquals($exp, $creds->getExpiration());
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('baz', $creds->getSecretKey());
+        $this->assertSame('tok', $creds->getSecurityToken());
+        $this->assertSame($exp, $creds->getExpiration());
     }
 
     public function testCanDisableRetries()
@@ -334,7 +334,7 @@ class ClientResolverTest extends TestCase
         ], new HandlerList());
         $creds = call_user_func($conf['credentials'])->wait();
         $this->assertInstanceOf('Aws\Credentials\Credentials', $creds);
-        $this->assertEquals('anonymous', $conf['config']['signature_version']);
+        $this->assertSame('anonymous', $conf['config']['signature_version']);
     }
 
     public function testCanCreateCredentialsFromProvider()
@@ -375,9 +375,9 @@ EOT;
             'version' => 'latest'
         ], new HandlerList());
         $creds = call_user_func($conf['credentials'])->wait();
-        $this->assertEquals('foo', $creds->getAccessKeyId());
-        $this->assertEquals('baz', $creds->getSecretKey());
-        $this->assertEquals('tok', $creds->getSecurityToken());
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('baz', $creds->getSecretKey());
+        $this->assertSame('tok', $creds->getSecurityToken());
         unlink($dir . '/credentials');
         putenv("HOME=$home");
     }
@@ -491,7 +491,7 @@ EOT;
             'endpoint_provider' => $p,
             'version' => 'latest'
         ], new HandlerList());
-        $this->assertEquals('v4', $conf['config']['signature_version']);
+        $this->assertSame('v4', $conf['config']['signature_version']);
     }
 
     public function testCanPassStsRegionalEndpointsToEndpointProvider()
@@ -510,7 +510,7 @@ EOT;
             'endpoint_provider'         => $partition
         ], new HandlerList());
 
-        $this->assertEquals(
+        $this->assertSame(
             'https://sts.us-west-2.amazonaws.com',
             $conf['endpoint']
         );
@@ -595,7 +595,7 @@ EOT;
             'version' => 'latest',
             'http'    => ['foo' => 'bar']
         ], new HandlerList());
-        $this->assertEquals('bar', $conf['http']['foo']);
+        $this->assertSame('bar', $conf['http']['foo']);
     }
 
     public function testCanAddConfigOptions()

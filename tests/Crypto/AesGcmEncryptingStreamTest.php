@@ -188,8 +188,8 @@ class AesGcmEncryptingStreamTest extends TestCase
         $cipherText = (string) $stream;
         $tag = $stream->getTag();
 
-        $this->assertEquals($cipherText, $knownAnswerTest['CT']);
-        $this->assertEquals($tag, $knownAnswerTest['Tag']);
+        $this->assertSame($cipherText, $knownAnswerTest['CT']);
+        $this->assertSame($tag, $knownAnswerTest['Tag']);
     }
 
     public function testIsNotWritable()

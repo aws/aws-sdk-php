@@ -13,8 +13,8 @@ class OperationTest extends TestCase
     public function testCreatesDefaultMethodAndUri()
     {
         $o = new Operation([], new ShapeMap([]));
-        $this->assertEquals('POST', $o->getHttp()['method']);
-        $this->assertEquals('/', $o->getHttp()['requestUri']);
+        $this->assertSame('POST', $o->getHttp()['method']);
+        $this->assertSame('/', $o->getHttp()['requestUri']);
     }
 
     public function testReturnsEmptyShapes()
@@ -34,7 +34,7 @@ class OperationTest extends TestCase
         ]));
         $i = $o->getInput();
         $this->assertInstanceOf('Aws\Api\Shape', $i);
-        $this->assertEquals('structure', $i->getType());
+        $this->assertSame('structure', $i->getType());
         $this->assertSame($i, $o->getInput());
     }
 
@@ -47,7 +47,7 @@ class OperationTest extends TestCase
         ]));
         $os = $o->getOutput();
         $this->assertInstanceOf('Aws\Api\Shape', $os);
-        $this->assertEquals('structure', $os->getType());
+        $this->assertSame('structure', $os->getType());
         $this->assertSame($os, $o->getOutput());
     }
 
@@ -63,8 +63,8 @@ class OperationTest extends TestCase
         $this->assertInternalType('array', $e);
         $this->assertInstanceOf('Aws\Api\Shape', $e[0]);
         $this->assertInstanceOf('Aws\Api\Shape', $e[1]);
-        $this->assertEquals('structure', $e[0]->getType());
-        $this->assertEquals('list', $e[1]->getType());
+        $this->assertSame('structure', $e[0]->getType());
+        $this->assertSame('list', $e[1]->getType());
     }
 
     public function testErrorsDoesNotCreateReferences()
@@ -79,6 +79,6 @@ class OperationTest extends TestCase
         $errorsCopy = $errors;
         $errorsCopy[0]['a_copy'] = $errorsCopy[0]['a'];
         $errorsCopy[0]['a'] = 'test';
-        $this->assertEquals('structure', $errors[0]->getType());
+        $this->assertSame('structure', $errors[0]->getType());
     }
 }

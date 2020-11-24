@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers Aws\S3\PutObjectUrlMiddleware
  */
-class PutObjectUrlTest extends TestCase
+class PutObjectUrlMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 
@@ -22,7 +22,7 @@ class PutObjectUrlTest extends TestCase
             'Key'    => 'key',
             'Body'   => 'hi'
         ]);
-        $this->assertEquals('http://foo.com', $result['ObjectURL']);
+        $this->assertSame('http://foo.com', $result['ObjectURL']);
     }
 
     public function testAddsObjectUrlToCompleteMultipart()
@@ -41,7 +41,7 @@ class PutObjectUrlTest extends TestCase
             'Key'      => 'key',
             'UploadId' => '123'
         ]);
-        $this->assertEquals(
+        $this->assertSame(
             'https://test.s3.amazonaws.com/key',
             $result['ObjectURL']
         );

@@ -21,7 +21,7 @@ class ParserExceptionTest extends TestCase
             ]
         );
 
-        $this->assertEquals('foo', $exception->getErrorCode());
-        $this->assertEquals('bar', $exception->getRequestId());
+        $this->assertSame('foo', $exception->getErrorCode());
+        $this->assertSame('bar', $exception->getRequestId());
     }
 }

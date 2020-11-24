@@ -215,7 +215,7 @@ class MiddlewareTest extends TestCase
         $request = new Request('PUT', 'http://exmaple.com', [], $payload);
         $handler(new Command('Foo'), $request);
 
-        $this->assertEquals(
+        $this->assertSame(
             'image/png',
             $h->getLastRequest()->getHeaderLine('Content-Type')
         );
@@ -233,7 +233,7 @@ class MiddlewareTest extends TestCase
         $handler = $list->resolve();
         $request = new Request('GET', 'http://exmaple.com');
         $handler(new Command('Foo'), $request);
-        $this->assertEquals('test', $mock->getLastCommand()->offsetGet('Hi'));
+        $this->assertSame('test', $mock->getLastCommand()->offsetGet('Hi'));
     }
 
     public function testCanMapRequests()
@@ -262,7 +262,7 @@ class MiddlewareTest extends TestCase
         $handler = $list->resolve();
         $request = new Request('GET', 'http://exmaple.com');
         $result = $handler(new Command('Foo'), $request)->wait();
-        $this->assertEquals('hi', $result['Test']);
+        $this->assertSame('hi', $result['Test']);
     }
 
     public function testCanTimeSuccessfulHandlers()

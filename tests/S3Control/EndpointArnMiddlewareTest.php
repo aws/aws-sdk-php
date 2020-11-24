@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test\S3;
+namespace Aws\Test\S3Control;
 
 use Aws\Arn\Exception\InvalidArnException;
 use Aws\CommandInterface;
@@ -57,7 +57,7 @@ class EndpointArnMiddlewareTest extends TestCase
                     $endpoint,
                     $req->getUri()->getHost()
                 );
-                $this->assertEquals("/{$target}", $req->getRequestTarget());
+                $this->assertSame("/{$target}", $req->getRequestTarget());
                 $this->assertContains(
                     "/{$signingRegion}/{$signingService}",
                     $req->getHeader('Authorization')[0]
@@ -405,8 +405,8 @@ class EndpointArnMiddlewareTest extends TestCase
             $this->fail('This test case should have failed with: '
                 . $expectedException->getMessage());
         } catch (\Exception $e) {
-            $this->assertEquals(get_class($expectedException), get_class($e));
-            $this->assertEquals($expectedException->getMessage(), $e->getMessage());
+            $this->assertInstanceOf(get_class($expectedException), $e);
+            $this->assertSame($expectedException->getMessage(), $e->getMessage());
         }
     }
 
