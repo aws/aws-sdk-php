@@ -48,12 +48,12 @@ class MockHandler implements \Countable
     {
         foreach (func_get_args() as $value) {
             if ($value instanceof ResultInterface
-                || $value instanceof AwsException
+                || $value instanceof Exception
                 || is_callable($value)
             ) {
                 $this->queue[] = $value;
             } else {
-                throw new \InvalidArgumentException('Expected an Aws\ResultInterface or Aws\Exception\AwsException.');
+                throw new \InvalidArgumentException('Expected an Aws\ResultInterface or Aws\Exception.');
             }
         }
     }
