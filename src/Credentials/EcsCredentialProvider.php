@@ -76,7 +76,7 @@ class EcsCredentialProvider
      */
     private function getEcsUri()
     {
-        $creds_uri = $_SERVER[self::ENV_URI];
+        $creds_uri = isset($_SERVER[self::ENV_URI]) ? $_SERVER[self::ENV_URI] : '';
         return self::SERVER_URI . $creds_uri;
     }
 
