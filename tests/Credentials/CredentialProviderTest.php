@@ -630,7 +630,7 @@ EOT;
             unlink($dir . '/credentials');
         }
     }
-    
+
     /**
      * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Circular source_profile reference found.
@@ -1798,7 +1798,7 @@ EOT;
     public function testCachesCacheableInDefaultChain()
     {
         $this->clearEnv();
-        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
+        $_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = '/latest';
         $cacheable = [
             'web_identity',
             'ecs',
@@ -1839,7 +1839,7 @@ EOT;
         $this->assertSame($instanceCredential->getAccessKeyId(), $credentials->getAccessKeyId());
         $this->assertSame($instanceCredential->getSecretKey(), $credentials->getSecretKey());
 
-        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
+        $_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = '/latest';
         $credentials = call_user_func(CredentialProvider::defaultProvider([
             'credentials' => $cache,
         ]))
