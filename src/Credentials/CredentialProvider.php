@@ -102,7 +102,7 @@ class CredentialProvider
             );
         }
 
-        if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
+        if (!empty($_SERVER[EcsCredentialProvider::ENV_URI])) {
             $defaultChain['ecs'] = self::ecsCredentials($config);
         }
         $defaultChain['process_credentials'] = self::process();
