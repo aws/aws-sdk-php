@@ -18,7 +18,7 @@ class MockHandlerTest extends TestCase
 {
     /**
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected an Aws\ResultInterface or Aws\Exception\AwsException
+     * @expectedExceptionMessage Expected an Aws\ResultInterface or Exception
      */
     public function testValidatesEachResult()
     {
