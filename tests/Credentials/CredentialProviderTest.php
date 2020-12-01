@@ -1798,7 +1798,7 @@ EOT;
     public function testCachesCacheableInDefaultChain()
     {
         $this->clearEnv();
-        $_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = '/latest';
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
         $cacheable = [
             'web_identity',
             'ecs',
@@ -1839,7 +1839,7 @@ EOT;
         $this->assertSame($instanceCredential->getAccessKeyId(), $credentials->getAccessKeyId());
         $this->assertSame($instanceCredential->getSecretKey(), $credentials->getSecretKey());
 
-        $_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = '/latest';
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
         $credentials = call_user_func(CredentialProvider::defaultProvider([
             'credentials' => $cache,
         ]))
