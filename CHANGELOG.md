@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.164.1 - 2020-12-01
 
 * `Aws\` - Use the assertSame to make assert equals strict, test namespace improvements
 * `Aws\` - Code changes to mock exceptions correctly in mockhandler
