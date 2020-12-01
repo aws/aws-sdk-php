@@ -362,7 +362,6 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPolly(array $args = [])
  * @method \Aws\Pricing\PricingClient createPricing(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPricing(array $args = [])
- * @method \Aws\Profile\ProfileClient createProfile(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionProfile(array $args = [])
  * @method \Aws\QLDB\QLDBClient createQLDB(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionQLDB(array $args = [])
