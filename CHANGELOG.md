@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.165.0 - 2020-12-01
 
 * `Aws\AmplifyBackend` - (New Service) The Amplify Admin UI offers an accessible way to develop app backends and manage app content. We recommend that you use the Amplify Admin UI to manage the backend of your Amplify app.
 * `Aws\AppIntegrationsService` - The Amazon AppIntegrations service (in preview release) enables you to configure and reuse connections to external applications.
