@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Use the assertSame to make assert equals strict, test namespace improvements
+* `Aws\` - Code changes to mock exceptions correctly in mockhandler
+* `Aws\EC2` - This release introduces Amazon EC2 Mac1 instances, a new Amazon EC2 instance family built on Apple Mac mini computers, powered by AWS Nitro System, and support running macOS workloads on Amazon EC2
+
 ## 3.164.0 - 2020-11-24
 
 * `Aws\Appflow` - Upsolver as a destination connector and documentation update.
