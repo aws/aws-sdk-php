@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.166.0 - 2020-12-01
 
 * `Aws\CustomerProfiles` - This is the first release of Amazon Connect Customer Profiles, a unified customer profile for your Amazon Connect contact center.
 * `Aws\Profile` - PR to remove profile folder from aws-models.
