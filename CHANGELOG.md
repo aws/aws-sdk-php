@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CustomerProfiles` - This is the first release of Amazon Connect Customer Profiles, a unified customer profile for your Amazon Connect contact center.
+* `Aws\Profile` - PR to remove profile folder from aws-models.
+
 ## 3.165.0 - 2020-12-01
 
 * `Aws\AmplifyBackend` - (New Service) The Amplify Admin UI offers an accessible way to develop app backends and manage app content. We recommend that you use the Amplify Admin UI to manage the backend of your Amplify app.
