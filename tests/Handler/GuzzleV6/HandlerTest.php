@@ -37,8 +37,8 @@ class HandlerTest extends TestCase
         /** @var $response Response */
         $response = $promise->wait();
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('foo', $response->getBody()->getContents());
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('foo', $response->getBody()->getContents());
     }
 
     public function testHandlerWorksWithFailedRequest()
@@ -66,7 +66,7 @@ class HandlerTest extends TestCase
             $this->assertInstanceOf(RequestException::class, $error['exception']);
             $this->assertFalse($error['connection_error']);
             $this->assertInstanceOf(Response::class, $error['response']);
-            $this->assertEquals(500, $error['response']->getStatusCode());
+            $this->assertSame(500, $error['response']->getStatusCode());
         }
 
         $this->assertTrue($wasRejected, 'Reject callback was not triggered.');

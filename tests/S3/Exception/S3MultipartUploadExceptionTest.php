@@ -34,8 +34,8 @@ class S3MultipartUploadExceptionTest extends TestCase
         $exception = new S3MultipartUploadException($state, $failed, [
             'file_name' => $path
         ]);
-        $this->assertEquals('foo', $exception->getBucket());
-        $this->assertEquals('bar', $exception->getKey());
-        $this->assertEquals('php://temp', $exception->getSourceFileName());
+        $this->assertSame('foo', $exception->getBucket());
+        $this->assertSame('bar', $exception->getKey());
+        $this->assertSame('php://temp', $exception->getSourceFileName());
     }
 }

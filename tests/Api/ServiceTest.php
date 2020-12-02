@@ -25,10 +25,10 @@ class ServiceTest extends TestCase
     public function testImplementsArrayAccess()
     {
         $s = new Service(['metadata' => ['foo' => 'bar']], function () { return []; });
-        $this->assertEquals('bar', $s['metadata']['foo']);
+        $this->assertSame('bar', $s['metadata']['foo']);
         $this->assertNull($s['missing']);
         $s['abc'] = '123';
-        $this->assertEquals('123', $s['abc']);
+        $this->assertSame('123', $s['abc']);
         $this->assertSame([], $s['shapes']);
     }
 
@@ -49,14 +49,14 @@ class ServiceTest extends TestCase
             ],
             function () { return []; }
         );
-        $this->assertEquals('Foo Service', $s->getServiceFullName());
-        $this->assertEquals('foo', $s->getServiceName());
-        $this->assertEquals('Foo', $s->getServiceId());
-        $this->assertEquals('bar', $s->getEndpointPrefix());
-        $this->assertEquals('baz', $s->getApiVersion());
-        $this->assertEquals('qux', $s->getSigningName());
-        $this->assertEquals('yak', $s->getProtocol());
-        $this->assertEquals('foo-2016-12-09', $s->getUid());
+        $this->assertSame('Foo Service', $s->getServiceFullName());
+        $this->assertSame('foo', $s->getServiceName());
+        $this->assertSame('Foo', $s->getServiceId());
+        $this->assertSame('bar', $s->getEndpointPrefix());
+        $this->assertSame('baz', $s->getApiVersion());
+        $this->assertSame('qux', $s->getSigningName());
+        $this->assertSame('yak', $s->getProtocol());
+        $this->assertSame('foo-2016-12-09', $s->getUid());
     }
 
     public function testReturnsMetadata()
@@ -68,7 +68,7 @@ class ServiceTest extends TestCase
             'endpointPrefix'  => 'bar',
             'apiVersion'      => 'baz'
         ];
-        $this->assertEquals('foo', $s->getMetadata('serviceFullName'));
+        $this->assertSame('foo', $s->getMetadata('serviceFullName'));
         $this->assertNull($s->getMetadata('baz'));
     }
 
@@ -77,9 +77,9 @@ class ServiceTest extends TestCase
         $service = $this->generateTestService('rest-json');
         $errorShapes = $service->getErrorShapes();
         $errorShape = $errorShapes[0];
-        $this->assertEquals(1, count($errorShapes));
+        $this->assertCount(1, $errorShapes);
         $this->assertInstanceOf(StructureShape::class, $errorShape);
-        $this->assertEquals('TestException', $errorShape->getName());
+        $this->assertSame('TestException', $errorShape->getName());
     }
 
     public function testReturnsIfOperationExists()

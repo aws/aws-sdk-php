@@ -44,8 +44,8 @@ class PostObjectTest extends TestCase
             'eyJleHBpcmF0aW9uIjoiMjAwNy0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6eyJhY2wiOiJwdWJsaWMtcmVhZCJ9fQ==',
             $a['policy']
         );
-        $this->assertEquals('ffajJbr1afVRb3qoFwdn9RK+qfM=', $a['signature']);
-        $this->assertEquals(
+        $this->assertSame('ffajJbr1afVRb3qoFwdn9RK+qfM=', $a['signature']);
+        $this->assertSame(
             '{"expiration":"2007-12-01T12:00:00.000Z","conditions":{"acl":"public-read"}}',
             $p->getJsonPolicy()
         );
@@ -57,17 +57,17 @@ class PostObjectTest extends TestCase
         $this->assertSame($this->client, $postObject->getClient());
         $this->assertSame('foo', $postObject->getBucket());
         $postObject->setFormInput('a', 'b');
-        $this->assertEquals('b', $postObject->getFormInputs()['a']);
+        $this->assertSame('b', $postObject->getFormInputs()['a']);
         $postObject->setFormAttribute('c', 'd');
-        $this->assertEquals('d', $postObject->getFormAttributes()['c']);
-        $this->assertEquals('', $postObject->getJsonPolicy());
+        $this->assertSame('d', $postObject->getFormAttributes()['c']);
+        $this->assertSame('', $postObject->getJsonPolicy());
     }
 
     public function testCanHandleDomainsWithDots()
     {
         $postObject = new PostObject($this->client, 'foo.bar', [], '');
         $formAttrs = $postObject->getFormAttributes();
-        $this->assertEquals(
+        $this->assertSame(
             'https://s3.amazonaws.com/foo.bar',
             $formAttrs['action']
         );
@@ -100,7 +100,7 @@ class PostObjectTest extends TestCase
         ];
         $postObject = new PostObject($s3, $bucket, [], $policy);
         $formAttrs = $postObject->getFormAttributes();
-        $this->assertEquals($expected, $formAttrs['action']);
+        $this->assertSame($expected, $formAttrs['action']);
     }
 
     public function pathStyleProvider()

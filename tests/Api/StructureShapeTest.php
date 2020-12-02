@@ -24,7 +24,7 @@ class StructureShapeTest extends TestCase
         ], new ShapeMap([]));
         $this->assertTrue($s->hasMember('foo'));
         $this->assertInstanceOf('Aws\Api\Shape', $s->getMember('foo'));
-        $this->assertEquals('string', $s->getMember('foo')->getType());
+        $this->assertSame('string', $s->getMember('foo')->getType());
     }
 
     public function testReturnsAllMembers()
@@ -39,8 +39,8 @@ class StructureShapeTest extends TestCase
         $this->assertInternalType('array', $members);
         $this->assertInstanceOf('Aws\Api\Shape', $members['foo']);
         $this->assertInstanceOf('Aws\Api\Shape', $members['baz']);
-        $this->assertEquals('string', $members['foo']->getType());
-        $this->assertEquals('integer', $members['baz']->getType());
+        $this->assertSame('string', $members['foo']->getType());
+        $this->assertSame('integer', $members['baz']->getType());
     }
 
     /**

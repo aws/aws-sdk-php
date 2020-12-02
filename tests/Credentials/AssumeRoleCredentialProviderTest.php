@@ -87,8 +87,8 @@ class AssumeRoleCredentialProviderTest extends TestCase
         $provider = new AssumeRoleCredentialProvider($args);
         $creds = $provider()->wait();
 
-        $this->assertEquals('foo', $creds->getAccessKeyId());
-        $this->assertEquals('bar', $creds->getSecretKey());
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('bar', $creds->getSecretKey());
         $this->assertNull($creds->getSecurityToken());
         $this->assertInternalType('int', $creds->getExpiration());
         $this->assertFalse($creds->isExpired());

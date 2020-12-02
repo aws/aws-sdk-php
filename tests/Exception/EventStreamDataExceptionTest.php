@@ -1,18 +1,19 @@
 <?php
 
-namespace Aws\Test;
+namespace Aws\Test\Exception;
 
 use Aws\Exception\EventStreamDataException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Exception\EventStreamDataException
  */
-class EventStreamDataExceptionTest extends \PHPUnit_Framework_TestCase
+class EventStreamDataExceptionTest extends TestCase
 {
     public function testAccessors()
     {
         $e = new EventStreamDataException('Code', 'This is a message.');
-        $this->assertEquals('Code', $e->getAwsErrorCode());
-        $this->assertEquals('This is a message.', $e->getAwsErrorMessage());
+        $this->assertSame('Code', $e->getAwsErrorCode());
+        $this->assertSame('This is a message.', $e->getAwsErrorMessage());
     }
 }

@@ -46,10 +46,10 @@ class RateLimiterTest extends TestCase
         $refLastLastThrottleTime->setAccessible(true);
         $refLastLastThrottleTime->setValue($rateLimiter, 5);
 
-        $this->assertEquals(0, $rateLimiter->updateSendingRate(false));
-        $this->assertEquals(3.2, $rateLimiter->updateSendingRate(false));
-        $this->assertEquals(2.24, $rateLimiter->updateSendingRate(false));
-        $this->assertEquals(2.048, $rateLimiter->updateSendingRate(false));
+        $this->assertSame(0, $rateLimiter->updateSendingRate(false));
+        $this->assertSame(3.2, $rateLimiter->updateSendingRate(false));
+        $this->assertSame(2.24, $rateLimiter->updateSendingRate(false));
+        $this->assertSame(2.048, $rateLimiter->updateSendingRate(false));
     }
 
     public function cubicSuccessProvider()

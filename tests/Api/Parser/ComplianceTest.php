@@ -103,9 +103,9 @@ class ComplianceTest extends TestCase
             $parser = Service::createErrorParser($service->getProtocol(), $service);
             $parsed = $parser($response, $command);
             $result = $parsed['body'];
-            $this->assertEquals($errorCode, $parsed['code']);
+            $this->assertSame($errorCode, $parsed['code']);
             if (!is_null($errorMessage)) {
-                $this->assertEquals($errorMessage, $parsed['message']);
+                $this->assertSame($errorMessage, $parsed['message']);
             }
         } else {
             $parser = Service::createParser($service);

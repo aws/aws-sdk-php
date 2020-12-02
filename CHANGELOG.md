@@ -1,5 +1,80 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CustomerProfiles` - This is the first release of Amazon Connect Customer Profiles, a unified customer profile for your Amazon Connect contact center.
+* `Aws\Profile` - PR to remove profile folder from aws-models.
+
+## 3.165.0 - 2020-12-01
+
+* `Aws\AmplifyBackend` - (New Service) The Amplify Admin UI offers an accessible way to develop app backends and manage app content. We recommend that you use the Amplify Admin UI to manage the backend of your Amplify app.
+* `Aws\AppIntegrationsService` - The Amazon AppIntegrations service (in preview release) enables you to configure and reuse connections to external applications.
+* `Aws\Connect` - This release adds an Amazon Connect API that provides the ability to create tasks, and a set of APIs (in preview) to configure AppIntegrations associations with Amazon Connect instances.
+* `Aws\ConnectContactLens` - Contact Lens for Amazon Connect analyzes conversations, both real-time and post-call. The ListRealtimeContactAnalysisSegments API returns a list of analysis segments for a real-time analysis session.
+* `Aws\DevOpsGuru` - (New Service) Amazon DevOps Guru is available in public preview. It's a fully managed service that uses machine learning to analyze your operational solutions to help you find and troubleshoot issues.
+* `Aws\DirectoryService` - Adding client authentication feature for AWS AD Connector
+* `Aws\EC2` - This release adds support for: EBS gp3 volumes; and D3/D3en/R5b/M5zn instances powered by Intel Cascade Lake CPUs
+* `Aws\ECRPublic` - Supports Amazon Elastic Container Registry (Amazon ECR) Public, a fully managed registry that makes it easy for a developer to publicly share container software worldwide for anyone to download.
+* `Aws\EKS` - Amazon EKS now allows you to define and manage the lifecycle for Kubernetes add-ons for your clusters. This release adds support for the AWS VPC CNI (vpc-cni).
+* `Aws\Honeycode` - Introducing APIs to read and write directly from Honeycode tables. Use APIs to pull table and column metadata, then use the read and write APIs to programmatically read and write from the tables.
+* `Aws\Lambda` - This release includes support for a new feature: Container images support in AWS Lambda. This adds APIs for deploying functions as container images. AWS Lambda now supports memory up to 10240MB.
+* `Aws\LookoutforVision` - This release introduces support for Amazon Lookout for Vision.
+* `Aws\Profile` - This is the first release of Amazon Connect Customer Profiles, a unified customer profile for your Amazon Connect contact center.
+* `Aws\S3` - S3 adds support for multiple-destination replication, option to sync replica modifications; S3 Bucket Keys to reduce cost of S3 SSE with AWS KMS
+* `Aws\SageMaker` - Amazon SageMaker Pipelines for ML workflows. Amazon SageMaker Feature Store, a fully managed repository for ML features.
+* `Aws\SageMakerFeatureStoreRuntime` - This release adds support for Amazon SageMaker Feature Store, which makes it easy for customers to create, version, share, and manage curated data for machine learning (ML) development.
+
+## 3.164.1 - 2020-12-01
+
+* `Aws\` - Use the assertSame to make assert equals strict, test namespace improvements
+* `Aws\` - Code changes to mock exceptions correctly in mockhandler
+* `Aws\EC2` - This release introduces Amazon EC2 Mac1 instances, a new Amazon EC2 instance family built on Apple Mac mini computers, powered by AWS Nitro System, and support running macOS workloads on Amazon EC2
+
+## 3.164.0 - 2020-11-24
+
+* `Aws\Appflow` - Upsolver as a destination connector and documentation update.
+* `Aws\Batch` - Add Ec2Configuration in ComputeEnvironment.ComputeResources. Use in CreateComputeEnvironment API to enable AmazonLinux2 support.
+* `Aws\CloudFormation` - Adds support for the new Modules feature for CloudFormation. A module encapsulates one or more resources and their respective configurations for reuse across your organization.
+* `Aws\CloudTrail` - CloudTrail now includes advanced event selectors, which give you finer-grained control over the events that are logged to your trail.
+* `Aws\CodeBuild` - Adding GetReportGroupTrend API for Test Reports.
+* `Aws\CognitoIdentityProvider` - This release adds ability to configure Cognito User Pools with third party sms and email providers for sending notifications to users.
+* `Aws\Comprehend` - Support Comprehend events detection APIs
+* `Aws\ElasticBeanstalk` - Updates the Integer constraint of DescribeEnvironmentManagedActionHistory's MaxItems parameter to [1, 100].
+* `Aws\FSx` - This release adds the capability to increase storage capacity of Amazon FSx for Lustre file systems, providing the flexibility to meet evolving storage needs over time.
+* `Aws\GameLift` - GameLift FlexMatch is now available as a standalone matchmaking solution. FlexMatch now provides customizable matchmaking for games hosted peer-to-peer, on-premises, or on cloud compute primitives.
+* `Aws\IoTSiteWise` - This release adds support for customer managed customer master key (CMK) based encryption in IoT SiteWise.
+* `Aws\LexModelBuildingService` - Lex now supports es-419, de-DE locales
+* `Aws\MWAA` - (New Service) Amazon MWAA is a managed service for Apache Airflow that makes it easy for data engineers and data scientists to execute data processing workflows in the cloud.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for Vorbis and Opus audio in OGG/OGA containers.
+* `Aws\QuickSight` - Support for embedding without user registration. New enum EmbeddingIdentityType. A potential breaking change. Affects code that refers IdentityType enum type directly instead of literal string value.
+* `Aws\SFN` - This release of the AWS Step Functions SDK introduces support for Synchronous Express Workflows
+* `Aws\TimestreamWrite` - Adds support of upserts for idempotent updates to Timestream.
+* `Aws\TranscribeStreamingService` - Amazon Transcribe Medical streaming added medical specialties and HTTP/2 support. Amazon Transcribe streaming supports additional languages. Both support OGG/OPUS and FLAC codecs for streaming.
+
+## 3.163.3 - 2020-11-23
+
+* `Aws\ApplicationInsights` - Add Detected Workload to ApplicationComponent which shows the workloads that installed in the component
+* `Aws\AutoScaling` - Documentation updates and corrections for Amazon EC2 Auto Scaling API Reference and SDKs.
+* `Aws\CodeArtifact` - Add support for the NuGet package format.
+* `Aws\CodeStarconnections` - Added support for the UpdateHost API.
+* `Aws\DynamoDB` - With this release, you can capture data changes in any Amazon DynamoDB table as an Amazon Kinesis data stream. You also can use PartiQL (SQL-compatible language) to manipulate data in DynamoDB tables.
+* `Aws\EC2` - This release adds support for Multiple Private DNS names to DescribeVpcEndpointServices response.
+* `Aws\ECS` - This release adds support for updating capacity providers, specifying custom instance warmup periods for capacity providers, and using deployment circuit breaker for your ECS Services.
+* `Aws\EMR` - Add API support for EMR Studio, a new notebook-first IDE for data scientists and data engineers with single sign-on, Jupyter notebooks, automated infrastructure provisioning, and job diagnosis.
+* `Aws\ElastiCache` - Documentation updates for elasticache
+* `Aws\ForecastService` - Releasing the set of PredictorBacktestExportJob APIs which allow customers to export backtest values and item-level metrics data from Predictor training.
+* `Aws\Glue` - Feature1 - Glue crawler adds data lineage configuration option. Feature2 - AWS Glue Data Catalog adds APIs for PartitionIndex creation and deletion as part of Enhancement Partition Management feature.
+* `Aws\IoT` - This release enables users to identify different file types in the over-the-air update (OTA) functionality using fileType parameter for CreateOTAUpdate API
+* `Aws\Kafka` - Adding MAINTENANCE and REBOOTING_BROKER to Cluster states.
+* `Aws\Lambda` - This release includes support for new feature: Code Signing for AWS Lambda. This adds new resources and APIs to configure Lambda functions to accept and verify signed code artifacts at deployment.
+* `Aws\LicenseManager` - AWS License Manager now provides the ability for license administrators to be able to associate license configurations to AMIs shared with their AWS account
+* `Aws\Outposts` - Support specifying tags during the creation of the Outpost resource. Tags are now returned in the response body of Outpost APIs.
+* `Aws\SSOAdmin` - AWS Single Sign-On now enables attribute-based access control for workforce identities to simplify permissions in AWS
+* `Aws\SecurityHub` - Updated the account management API to support the integration with AWS Organizations. Added new methods to allow users to view and manage the delegated administrator account for Security Hub.
+* `Aws\TimestreamQuery` - Amazon Timestream now supports "QueryStatus" in Query API which has information about cumulative bytes scanned, metered, as well as progress percentage for the query.
+* `Aws\Translate` - This update adds new operations to create and manage parallel data in Amazon Translate. Parallel data is a resource that you can use to run Active Custom Translation jobs.
+* `Aws\signer` - AWS Signer is launching code-signing for AWS Lambda. Now customers can cryptographically sign Lambda code to ensure trust, integrity, and functionality.
+
 ## 3.163.2 - 2020-11-20
 
 * `Aws\AppMesh` - This release makes tag value a required attribute of the tag's key-value pair.

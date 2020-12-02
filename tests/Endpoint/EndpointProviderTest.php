@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test;
+namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
@@ -39,6 +39,6 @@ class EndpointProviderTest extends TestCase
         ]);
         $this->assertInstanceOf('Aws\Endpoint\PatternEndpointProvider', $p);
         $result = EndpointProvider::resolve($p, []);
-        $this->assertEquals('https://foo.com', $result['endpoint']);
+        $this->assertSame('https://foo.com', $result['endpoint']);
     }
 }

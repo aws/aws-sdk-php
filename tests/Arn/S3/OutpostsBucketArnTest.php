@@ -127,7 +127,7 @@ class OutpostsBucketArnTest extends TestCase
             $this->fail('This was expected to fail with: ' . $expected->getMessage());
         } catch (\Exception $e) {
             $this->assertTrue($e instanceof $expected);
-            $this->assertEquals(
+            $this->assertSame(
                 $expected->getMessage(),
                 $e->getMessage()
             );

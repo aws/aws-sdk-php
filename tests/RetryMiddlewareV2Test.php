@@ -112,9 +112,9 @@ class RetryMiddlewareV2Test extends TestCase
                     $expected[$attempt - 1]['error']->getMessage(),
                     $e->getMessage()
                 );
-                $this->assertEquals(
+                $this->assertInstanceOf(
                     get_class($expected[$attempt - 1]['error']),
-                    get_class($e)
+                    $e
                 );
             } else {
                 throw $e;
@@ -126,7 +126,7 @@ class RetryMiddlewareV2Test extends TestCase
             throw $errors[0];
         }
 
-        $this->assertEquals($attempt, count($queue));
+        $this->assertCount($attempt, $queue);
     }
 
     function standardModeTestCases()
@@ -451,7 +451,7 @@ class RetryMiddlewareV2Test extends TestCase
             throw $errors[0];
         }
 
-        $this->assertEquals(count($expectedTimes), $attempt);
+        $this->assertCount($attempt, $expectedTimes);
     }
 
     public function testAddRetryHeader()
@@ -734,7 +734,7 @@ class RetryMiddlewareV2Test extends TestCase
         $attempts = 0;
         $handler = function ($command, $request) use (&$attempts) {
             if ($attempts > 0) {
-                $this->assertEquals(9999, $command['@http']['delay']);
+                $this->assertSame(9999, $command['@http']['delay']);
             }
             $attempts++;
             return \GuzzleHttp\Promise\rejection_for(
@@ -763,7 +763,7 @@ class RetryMiddlewareV2Test extends TestCase
             $wrapped($command, $request)->wait();
             $this->fail();
         } catch (AwsException $e) {
-            $this->assertEquals(3, $attempts);
+            $this->assertSame(3, $attempts);
             $this->assertContains('foo', $e->getMessage());
         }
     }

@@ -13,10 +13,10 @@ class CredentialsTest extends TestCase
     {
         $exp = time() + 500;
         $creds = new Credentials('foo', 'baz', 'tok', $exp);
-        $this->assertEquals('foo', $creds->getAccessKeyId());
-        $this->assertEquals('baz', $creds->getSecretKey());
-        $this->assertEquals('tok', $creds->getSecurityToken());
-        $this->assertEquals($exp, $creds->getExpiration());
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('baz', $creds->getSecretKey());
+        $this->assertSame('tok', $creds->getSecurityToken());
+        $this->assertSame($exp, $creds->getExpiration());
         $this->assertEquals([
             'key'     => 'foo',
             'secret'  => 'baz',

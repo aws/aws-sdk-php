@@ -107,12 +107,12 @@ class StreamWrapperPathStyleTest extends TestCase
         ]);
 
         $s = fopen('s3://bucket/key', 'r');
-        $this->assertEquals(0, ftell($s));
+        $this->assertSame(0, ftell($s));
         $this->assertFalse(feof($s));
-        $this->assertEquals('foo', fread($s, 4));
-        $this->assertEquals(3, ftell($s));
-        $this->assertEquals(-1, fseek($s, 0));
-        $this->assertEquals('', stream_get_contents($s));
+        $this->assertSame('foo', fread($s, 4));
+        $this->assertSame(3, ftell($s));
+        $this->assertSame(-1, fseek($s, 0));
+        $this->assertSame('', stream_get_contents($s));
         $this->assertTrue(feof($s));
         $this->assertTrue(fclose($s));
     }
@@ -133,12 +133,12 @@ class StreamWrapperPathStyleTest extends TestCase
             's3' => ['seekable' => true]
         ]));
 
-        $this->assertEquals(0, ftell($s));
+        $this->assertSame(0, ftell($s));
         $this->assertFalse(feof($s));
-        $this->assertEquals('test', fread($s, 4));
-        $this->assertEquals(4, ftell($s));
-        $this->assertEquals(0, fseek($s, 0));
-        $this->assertEquals('testing 123', stream_get_contents($s));
+        $this->assertSame('test', fread($s, 4));
+        $this->assertSame(4, ftell($s));
+        $this->assertSame(0, fseek($s, 0));
+        $this->assertSame('testing 123', stream_get_contents($s));
         $this->assertTrue(feof($s));
         $this->assertTrue(fclose($s));
     }
@@ -152,7 +152,7 @@ class StreamWrapperPathStyleTest extends TestCase
         });
         file_put_contents('s3://foo/bar.xml', 'test');
         $this->assertCount(1, $h);
-        $this->assertEquals('application/xml', $h[0][1]->getHeaderLine('Content-Type'));
+        $this->assertSame('application/xml', $h[0][1]->getHeaderLine('Content-Type'));
     }
 
     public function testCanOpenWriteOnlyStreams()
@@ -161,16 +161,16 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->client->getHandlerList()->appendSign(Middleware::history($history));
         $this->addMockResults($this->client, [new Result()]);
         $s = fopen('s3://bucket/key', 'w');
-        $this->assertEquals(4, fwrite($s, 'test'));
+        $this->assertSame(4, fwrite($s, 'test'));
         $this->assertTrue(fclose($s));
 
         // Ensure that the stream was flushed and sent the upload
         $this->assertCount(1, $history);
         $cmd = $history->getLastCommand();
-        $this->assertEquals('PutObject', $cmd->getName());
-        $this->assertEquals('bucket', $cmd['Bucket']);
-        $this->assertEquals('key', $cmd['Key']);
-        $this->assertEquals('test', (string) $cmd['Body']);
+        $this->assertSame('PutObject', $cmd->getName());
+        $this->assertSame('bucket', $cmd['Bucket']);
+        $this->assertSame('key', $cmd['Key']);
+        $this->assertSame('test', (string) $cmd['Body']);
     }
 
     /**
@@ -200,21 +200,21 @@ class StreamWrapperPathStyleTest extends TestCase
         ]);
 
         $s = fopen('s3://bucket/key', 'a');
-        $this->assertEquals(4, ftell($s));
-        $this->assertEquals(3, fwrite($s, 'ing'));
+        $this->assertSame(4, ftell($s));
+        $this->assertSame(3, fwrite($s, 'ing'));
         $this->assertTrue(fclose($s));
 
         // Ensure that the stream was flushed and sent the upload
         $this->assertCount(2, $history);
         $entries = $history->toArray();
         $c1 = $entries[0]['command'];
-        $this->assertEquals('GetObject', $c1->getName());
-        $this->assertEquals('bucket', $c1['Bucket']);
-        $this->assertEquals('key', $c1['Key']);
+        $this->assertSame('GetObject', $c1->getName());
+        $this->assertSame('bucket', $c1['Bucket']);
+        $this->assertSame('key', $c1['Key']);
         $c2 = $entries[1]['command'];
-        $this->assertEquals('PutObject', $c2->getName());
-        $this->assertEquals('key', $c2['Key']);
-        $this->assertEquals('testing', (string) $c2['Body']);
+        $this->assertSame('PutObject', $c2->getName());
+        $this->assertSame('key', $c2['Key']);
+        $this->assertSame('testing', (string) $c2['Body']);
     }
 
     public function testCanOpenAppendStreamsWithMissingFile()
@@ -225,7 +225,7 @@ class StreamWrapperPathStyleTest extends TestCase
         ]);
 
         $s = fopen('s3://bucket/key', 'a');
-        $this->assertEquals(0, ftell($s));
+        $this->assertSame(0, ftell($s));
         $this->assertTrue(fclose($s));
     }
 
@@ -239,9 +239,9 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertTrue(unlink('s3://bucket/key'));
         $this->assertCount(1, $history);
         $entries = $history->toArray();
-        $this->assertEquals('DELETE', $entries[0]['request']->getMethod());
-        $this->assertEquals('/bucket/key', $entries[0]['request']->getUri()->getPath());
-        $this->assertEquals('s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
+        $this->assertSame('DELETE', $entries[0]['request']->getMethod());
+        $this->assertSame('/bucket/key', $entries[0]['request']->getUri()->getPath());
+        $this->assertSame('s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
     }
 
     /**
@@ -302,16 +302,16 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertCount(6, $history);
         $entries = $history->toArray();
 
-        $this->assertEquals('HEAD', $entries[0]['request']->getMethod());
-        $this->assertEquals('HEAD', $entries[2]['request']->getMethod());
-        $this->assertEquals('HEAD', $entries[4]['request']->getMethod());
+        $this->assertSame('HEAD', $entries[0]['request']->getMethod());
+        $this->assertSame('HEAD', $entries[2]['request']->getMethod());
+        $this->assertSame('HEAD', $entries[4]['request']->getMethod());
 
-        $this->assertEquals('PUT', $entries[1]['request']->getMethod());
-        $this->assertEquals('/bucket', $entries[1]['request']->getUri()->getPath());
-        $this->assertEquals('s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
-        $this->assertEquals('public-read', (string) $entries[1]['request']->getHeaderLine('x-amz-acl'));
-        $this->assertEquals('authenticated-read', (string) $entries[3]['request']->getHeaderLine('x-amz-acl'));
-        $this->assertEquals('private', (string) $entries[5]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertSame('PUT', $entries[1]['request']->getMethod());
+        $this->assertSame('/bucket', $entries[1]['request']->getUri()->getPath());
+        $this->assertSame('s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
+        $this->assertSame('public-read', (string) $entries[1]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertSame('authenticated-read', (string) $entries[3]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertSame('private', (string) $entries[5]['request']->getHeaderLine('x-amz-acl'));
     }
 
     public function testCreatesNestedSubfolder()
@@ -327,8 +327,8 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertTrue(mkdir('s3://bucket/key/', 0777));
         $this->assertCount(2, $history);
         $entries = $history->toArray();
-        $this->assertEquals('HEAD', $entries[0]['request']->getMethod());
-        $this->assertEquals('PUT', $entries[1]['request']->getMethod());
+        $this->assertSame('HEAD', $entries[0]['request']->getMethod());
+        $this->assertSame('PUT', $entries[1]['request']->getMethod());
         $this->assertContains('public-read', $entries[1]['request']->getHeaderLine('x-amz-acl'));
     }
 
@@ -361,9 +361,9 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertTrue(rmdir('s3://bucket'));
         $this->assertCount(1, $history);
         $entries = $history->toArray();
-        $this->assertEquals('DELETE', $entries[0]['request']->getMethod());
-        $this->assertEquals('/bucket', $entries[0]['request']->getUri()->getPath());
-        $this->assertEquals('s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
+        $this->assertSame('DELETE', $entries[0]['request']->getMethod());
+        $this->assertSame('/bucket', $entries[0]['request']->getUri()->getPath());
+        $this->assertSame('s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
     }
 
     public function rmdirProvider()
@@ -385,7 +385,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertTrue(rmdir($path));
         $this->assertCount(1, $history);
         $entries = $history->toArray();
-        $this->assertEquals('GET', $entries[0]['request']->getMethod());
+        $this->assertSame('GET', $entries[0]['request']->getMethod());
         $this->assertContains('prefix=object%2F', $entries[0]['request']->getUri()->getQuery());
     }
 
@@ -405,10 +405,10 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertTrue(rmdir('s3://foo/bar'));
         $this->assertCount(2, $history);
         $entries = $history->toArray();
-        $this->assertEquals('GET', $entries[0]['request']->getMethod());
+        $this->assertSame('GET', $entries[0]['request']->getMethod());
         $this->assertContains('prefix=bar%2F', $entries[0]['request']->getUri()->getQuery());
-        $this->assertEquals('DELETE', $entries[1]['request']->getMethod());
-        $this->assertEquals('/foo/bar/', $entries[1]['request']->getUri()->getPath());
+        $this->assertSame('DELETE', $entries[1]['request']->getMethod());
+        $this->assertSame('/foo/bar/', $entries[1]['request']->getUri()->getPath());
     }
 
     /**
@@ -454,22 +454,22 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertTrue(rename('s3://bucket/key', 's3://other/new_key'));
         $entries = $history->toArray();
         $this->assertCount(3, $entries);
-        $this->assertEquals('HEAD', $entries[0]['request']->getMethod());
-        $this->assertEquals('/bucket/key', $entries[0]['request']->getUri()->getPath());
-        $this->assertEquals('PUT', $entries[1]['request']->getMethod());
-        $this->assertEquals('/other/new_key', $entries[1]['request']->getUri()->getPath());
-        $this->assertEquals('s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
-        $this->assertEquals(
+        $this->assertSame('HEAD', $entries[0]['request']->getMethod());
+        $this->assertSame('/bucket/key', $entries[0]['request']->getUri()->getPath());
+        $this->assertSame('PUT', $entries[1]['request']->getMethod());
+        $this->assertSame('/other/new_key', $entries[1]['request']->getUri()->getPath());
+        $this->assertSame('s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
+        $this->assertSame(
             '/bucket/key',
             $entries[1]['request']->getHeaderLine('x-amz-copy-source')
         );
-        $this->assertEquals(
+        $this->assertSame(
             'COPY',
             $entries[1]['request']->getHeaderLine('x-amz-metadata-directive')
         );
-        $this->assertEquals('DELETE', $entries[2]['request']->getMethod());
-        $this->assertEquals('/bucket/key', $entries[2]['request']->getUri()->getPath());
-        $this->assertEquals('s3.amazonaws.com', $entries[2]['request']->getUri()->getHost());
+        $this->assertSame('DELETE', $entries[2]['request']->getMethod());
+        $this->assertSame('/bucket/key', $entries[2]['request']->getUri()->getPath());
+        $this->assertSame('s3.amazonaws.com', $entries[2]['request']->getUri()->getHost());
     }
 
     public function testCanRenameObjectsWithCustomSettings()
@@ -488,14 +488,14 @@ class StreamWrapperPathStyleTest extends TestCase
         ));
         $entries = $history->toArray();
         $this->assertCount(3, $entries);
-        $this->assertEquals('PUT', $entries[1]['request']->getMethod());
-        $this->assertEquals('/other/new_key', $entries[1]['request']->getUri()->getPath());
-        $this->assertEquals('s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
-        $this->assertEquals(
+        $this->assertSame('PUT', $entries[1]['request']->getMethod());
+        $this->assertSame('/other/new_key', $entries[1]['request']->getUri()->getPath());
+        $this->assertSame('s3.amazonaws.com', $entries[1]['request']->getUri()->getHost());
+        $this->assertSame(
             '/bucket/key',
             $entries[1]['request']->getHeaderLine('x-amz-copy-source')
         );
-        $this->assertEquals(
+        $this->assertSame(
             'REPLACE',
             $entries[1]['request']->getHeaderLine('x-amz-metadata-directive')
         );
@@ -505,31 +505,31 @@ class StreamWrapperPathStyleTest extends TestCase
     {
         clearstatcache('s3://');
         $stat = stat('s3://');
-        $this->assertEquals(0040777, $stat['mode']);
+        $this->assertSame(0040777, $stat['mode']);
         $this->addMockResults($this->client, [
             new Result() // 200
         ]);
         clearstatcache('s3://bucket');
         $stat = stat('s3://bucket');
-        $this->assertEquals(0040777, $stat['mode']);
+        $this->assertSame(0040777, $stat['mode']);
     }
 
     public function testStatDataIsClearedOnWrite()
     {
         $this->cache->set('s3://foo/bar', ['size' => 123, 7 => 123]);
-        $this->assertEquals(123, filesize('s3://foo/bar'));
+        $this->assertSame(123, filesize('s3://foo/bar'));
         $this->addMockResults($this->client, [
             new Result,
             new Result(['ContentLength' => 124])
         ]);
         file_put_contents('s3://foo/bar', 'baz!');
-        $this->assertEquals(124, filesize('s3://foo/bar'));
+        $this->assertSame(124, filesize('s3://foo/bar'));
     }
 
     public function testCanPullStatDataFromCache()
     {
         $this->cache->set('s3://foo/bar', ['size' => 123, 7 => 123]);
-        $this->assertEquals(123, filesize('s3://foo/bar'));
+        $this->assertSame(123, filesize('s3://foo/bar'));
     }
 
     /**
@@ -571,10 +571,10 @@ class StreamWrapperPathStyleTest extends TestCase
         ]);
         clearstatcache('s3://bucket/key');
         $stat = stat('s3://bucket/key');
-        $this->assertEquals(0100777, $stat['mode']);
-        $this->assertEquals(5, $stat['size']);
-        $this->assertEquals($ts, $stat['mtime']);
-        $this->assertEquals($ts, $stat['ctime']);
+        $this->assertSame(0100777, $stat['mode']);
+        $this->assertSame(5, $stat['size']);
+        $this->assertSame($ts, $stat['mtime']);
+        $this->assertSame($ts, $stat['ctime']);
     }
 
     public function testCanStatPrefix()
@@ -591,7 +591,7 @@ class StreamWrapperPathStyleTest extends TestCase
         ]);
         clearstatcache('s3://bucket/prefix');
         $stat = stat('s3://bucket/prefix');
-        $this->assertEquals(0040777, $stat['mode']);
+        $this->assertSame(0040777, $stat['mode']);
     }
 
     /**
@@ -767,9 +767,9 @@ class StreamWrapperPathStyleTest extends TestCase
 
         $this->client->getHandlerList()->appendBuild(
             Middleware::tap(function (CommandInterface $c, $req) {
-                $this->assertEquals('bucket', $c['Bucket']);
-                $this->assertEquals('/', $c['Delimiter']);
-                $this->assertEquals('key/', $c['Prefix']);
+                $this->assertSame('bucket', $c['Bucket']);
+                $this->assertSame('/', $c['Delimiter']);
+                $this->assertSame('key/', $c['Prefix']);
             })
         );
 
@@ -809,9 +809,9 @@ class StreamWrapperPathStyleTest extends TestCase
 
         $this->client->getHandlerList()->appendBuild(
             Middleware::tap(function (CommandInterface $c, $req) {
-                $this->assertEquals('bucket', $c['Bucket']);
-                $this->assertEquals('', $c['Delimiter']);
-                $this->assertEquals('', $c['Prefix']);
+                $this->assertSame('bucket', $c['Bucket']);
+                $this->assertSame('', $c['Delimiter']);
+                $this->assertSame('', $c['Prefix']);
             })
         );
 
@@ -841,11 +841,11 @@ class StreamWrapperPathStyleTest extends TestCase
         $dir = 's3://bucket/key/';
         $r = opendir($dir);
         $file1 = readdir($r);
-        $this->assertEquals('e', $file1);
-        $this->assertEquals(1, filesize('s3://bucket/key/' . $file1));
+        $this->assertSame('e', $file1);
+        $this->assertSame(1, filesize('s3://bucket/key/' . $file1));
         $file2 = readdir($r);
-        $this->assertEquals('f', $file2);
-        $this->assertEquals(2, filesize('s3://bucket/key/' . $file2));
+        $this->assertSame('f', $file2);
+        $this->assertSame(2, filesize('s3://bucket/key/' . $file2));
         closedir($r);
     }
 
@@ -861,7 +861,7 @@ class StreamWrapperPathStyleTest extends TestCase
         ];
         $this->addMockResults($this->client, [$result]);
         $resource = fopen('s3://foo/bar', 'r');
-        $this->assertEquals(5, fstat($resource)['size']);
+        $this->assertSame(5, fstat($resource)['size']);
     }
 
     public function testCanUseCustomProtocol()
@@ -878,6 +878,6 @@ class StreamWrapperPathStyleTest extends TestCase
         ]);
 
         $s = fopen('foo://bucket/key', 'r');
-        $this->assertEquals('bar', fread($s, 4));
+        $this->assertSame('bar', fread($s, 4));
     }
 }

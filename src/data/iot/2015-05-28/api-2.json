@@ -6930,6 +6930,11 @@
       }
     },
     "FileName":{"type":"string"},
+    "FileType":{
+      "type":"integer",
+      "max":255,
+      "min":0
+    },
     "FindingId":{
       "type":"string",
       "max":128,
@@ -9381,6 +9386,7 @@
       "type":"structure",
       "members":{
         "fileName":{"shape":"FileName"},
+        "fileType":{"shape":"FileType"},
         "fileVersion":{"shape":"OTAUpdateFileVersion"},
         "fileLocation":{"shape":"FileLocation"},
         "codeSigning":{"shape":"CodeSigning"},

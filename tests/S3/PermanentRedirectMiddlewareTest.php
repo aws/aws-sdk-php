@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers Aws\S3\PermanentRedirectMiddleware
  */
-class PermanentRedirectTest extends TestCase
+class PermanentRedirectMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 

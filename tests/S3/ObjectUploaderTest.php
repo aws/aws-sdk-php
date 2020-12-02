@@ -31,7 +31,7 @@ class ObjectUploaderTest extends TestCase
         $this->addMockResults($client, $mockedResults);
         $result = (new ObjectUploader($client, 'bucket', 'key', $body, 'private', $options))
             ->upload();
-        $this->assertEquals('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
+        $this->assertSame('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
         $this->assertTrue($this->mockQueueEmpty());
     }
 
@@ -50,7 +50,7 @@ class ObjectUploaderTest extends TestCase
         $this->addMockResults($client, $mockedResults);
         $result = (new ObjectUploader($client, 'bucket', 'key', $body, 'private', $options))
             ->upload();
-        $this->assertEquals('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
+        $this->assertSame('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
         $this->assertTrue($this->mockQueueEmpty());
     }
 
@@ -68,11 +68,11 @@ class ObjectUploaderTest extends TestCase
         ]);
         $client->getHandlerList()->appendSign(Middleware::tap(
             function(CommandInterface $cmd, RequestInterface $req) {
-                $this->assertEquals(
+                $this->assertSame(
                     'mydest-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                     $req->getUri()->getHost()
                 );
-                $this->assertEquals(
+                $this->assertSame(
                     '/key',
                     $req->getUri()->getPath()
                 );
@@ -105,7 +105,7 @@ class ObjectUploaderTest extends TestCase
             ->promise();
         $this->assertFalse($this->mockQueueEmpty());
         $result = $promise->wait();
-        $this->assertEquals('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
+        $this->assertSame('https://bucket.s3.amazonaws.com/key', $result['ObjectURL']);
     }
 
     /**
@@ -125,7 +125,7 @@ class ObjectUploaderTest extends TestCase
             ->promise();
         $this->assertFalse($this->mockQueueEmpty());
         $result = $promise->wait();
-        $this->assertEquals('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
+        $this->assertSame('https://s3.amazonaws.com/bucket/key', $result['ObjectURL']);
     }
 
     public function getUploadTestCases()
@@ -241,7 +241,7 @@ class ObjectUploaderTest extends TestCase
         $uploadOptions = [
             'params'          => ['RequestPayer' => 'test'],
             'before_upload'   => function($command) {
-                $this->assertEquals('test', $command['RequestPayer']);
+                $this->assertSame('test', $command['RequestPayer']);
             },
         ];
         $url = 'https://foo.s3.amazonaws.com/bar';
@@ -265,7 +265,7 @@ class ObjectUploaderTest extends TestCase
             $uploadOptions);
         $result = $uploader->upload();
 
-        $this->assertEquals($url, $result['ObjectURL']);
+        $this->assertSame($url, $result['ObjectURL']);
     }
 
     public function testS3ObjectUploaderMultipartParams()
@@ -276,13 +276,13 @@ class ObjectUploaderTest extends TestCase
             'mup_threshold'   => self::MB * 4,
             'params'          => ['RequestPayer' => 'test'],
             'before_initiate' => function($command) {
-                $this->assertEquals('test', $command['RequestPayer']);
+                $this->assertSame('test', $command['RequestPayer']);
             },
             'before_upload'   => function($command) {
-                $this->assertEquals('test', $command['RequestPayer']);
+                $this->assertSame('test', $command['RequestPayer']);
             },
             'before_complete' => function($command) {
-                $this->assertEquals('test', $command['RequestPayer']);
+                $this->assertSame('test', $command['RequestPayer']);
             }
         ];
         $url = 'https://foo.s3.amazonaws.com/bar';
@@ -306,6 +306,6 @@ class ObjectUploaderTest extends TestCase
             $uploadOptions);
         $result = $uploader->upload();
 
-        $this->assertEquals($url, $result['ObjectURL']);
+        $this->assertSame($url, $result['ObjectURL']);
     }
 }

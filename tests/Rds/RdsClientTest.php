@@ -22,7 +22,7 @@ class RdsClientTest extends TestCase
             function ($command, $request) {
                 $this->assertNotNull($command['PreSignedUrl']);
                 $this->assertContains('us-west-2', $command['PreSignedUrl']);
-                $this->assertEquals('us-east-1', $command['DestinationRegion']);
+                $this->assertSame('us-east-1', $command['DestinationRegion']);
                 return new Result();
             }
         ]);

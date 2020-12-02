@@ -282,8 +282,8 @@ JSON;
         $json = str_replace([" ", "\n"], '', $json); // remove whitespace
 
         $m = new Marshaler;
-        $this->assertEquals($json, $m->unmarshalJson($item));
-        $this->assertEquals($json, json_encode($m->unmarshalItem($item)));
+        $this->assertSame($json, $m->unmarshalJson($item));
+        $this->assertSame($json, json_encode($m->unmarshalItem($item)));
     }
 
     public function testCanUnmarshalToObjectFormat()
@@ -294,7 +294,7 @@ JSON;
         );
 
         $this->assertInstanceOf('stdClass', $result);
-        $this->assertEquals('b', $result->a);
+        $this->assertSame('b', $result->a);
     }
 
     /**
@@ -343,8 +343,8 @@ JSON;
             'bar' => ['N' => '99999999999999999999.99999999999999999999'],
         ]);
         $this->assertInstanceOf('Aws\DynamoDb\NumberValue', $result['bar']);
-        $this->assertEquals('99999999999999999999', (string) iterator_to_array($result['foo'])[0]);
-        $this->assertEquals('99999999999999999999.99999999999999999999', (string) $result['bar']);
+        $this->assertSame('99999999999999999999', (string) iterator_to_array($result['foo'])[0]);
+        $this->assertSame('99999999999999999999.99999999999999999999', (string) $result['bar']);
     }
 
     /**
@@ -353,8 +353,8 @@ JSON;
     public function testNumberValueCanBeFormattedAndSerialized()
     {
         $number = new NumberValue('99999999999999999999');
-        $this->assertEquals('99999999999999999999', (string) $number);
-        $this->assertEquals('"99999999999999999999"', json_encode($number));
+        $this->assertSame('99999999999999999999', (string) $number);
+        $this->assertSame('"99999999999999999999"', json_encode($number));
     }
 
     /**
@@ -367,8 +367,8 @@ JSON;
         fseek($resource, 0);
 
         $binary = new BinaryValue($resource);
-        $this->assertEquals('foo', (string) $binary);
-        $this->assertEquals('"foo"', json_encode($binary));
+        $this->assertSame('foo', (string) $binary);
+        $this->assertSame('"foo"', json_encode($binary));
     }
 
     /**
@@ -378,7 +378,7 @@ JSON;
     {
         $set = new SetValue(['foo', 'bar', 'baz']);
         $this->assertEquals(['foo', 'bar', 'baz'], $set->toArray());
-        $this->assertEquals('["foo","bar","baz"]', json_encode($set));
+        $this->assertSame('["foo","bar","baz"]', json_encode($set));
         $this->assertCount(3, $set);
         $this->assertCount(3, $set);
     }
@@ -392,6 +392,6 @@ JSON;
         $resultCopy = $result;
         $resultCopy['foo_copy'] = $resultCopy['foo'];
         $resultCopy['foo'] = 'baz';
-        $this->assertEquals('bar', $result['foo']);
+        $this->assertSame('bar', $result['foo']);
     }
 }

@@ -63,7 +63,7 @@ class SessionHandlerTest extends TestCase
         $sh = new SessionHandler($connection);
         session_id('test');
         $this->assertTrue($sh->open('foo', 'bar'));
-        $this->assertEquals('', $sh->read('test'));
+        $this->assertSame('', $sh->read('test'));
         $this->assertFalse($sh->write('test', serialize($data)));
         $this->assertTrue($sh->close());
     }

@@ -13,13 +13,13 @@ class ConfigurationTest extends TestCase
     public function testGetsCorrectValues()
     {
         $config = new Configuration('regional');
-        $this->assertEquals('regional', $config->getEndpointsType());
+        $this->assertSame('regional', $config->getEndpointsType());
     }
 
     public function testAcceptsNonLowercase()
     {
         $config = new Configuration('rEgIoNaL');
-        $this->assertEquals('regional', $config->getEndpointsType());
+        $this->assertSame('regional', $config->getEndpointsType());
     }
 
     public function testToArray()

@@ -32,6 +32,6 @@ class MachineLearningClientTest extends TestCase
             'PredictEndpoint' => (string) $predictEndpoint
         ]);
 
-        $this->assertEquals($predictEndpoint->getHost(), $request->getUri()->getHost());
+        $this->assertSame($predictEndpoint->getHost(), $request->getUri()->getHost());
     }
 }

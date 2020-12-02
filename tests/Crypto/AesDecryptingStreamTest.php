@@ -46,12 +46,12 @@ class AesDecryptingStreamTest extends TestCase
             (string) $plainText
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $iv->getOpenSslName(),
             $aesDecryptingStream->getOpenSslName()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $iv->getAesName(),
             $aesDecryptingStream->getAesName()
         );

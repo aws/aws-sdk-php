@@ -32,7 +32,7 @@ class EndpointParameterMiddlewareTest extends TestCase
             $handler($command, new Request('POST', 'https://foo.com'));
             $this->fail('Test should have thrown an InvalidArgumentException for not having the host parameter set.');
         } catch (\InvalidArgumentException $e) {
-            $this->assertEquals(
+            $this->assertSame(
                 "The parameter 'HostParameter' must be set and not empty.",
                 $e->getMessage()
             );
@@ -60,7 +60,7 @@ class EndpointParameterMiddlewareTest extends TestCase
             $handler($command, new Request('POST', 'https://foo.com'));
             $this->fail('Test should have thrown an InvalidArgumentException for having an invalid host parameter.');
         } catch (\InvalidArgumentException $e) {
-            $this->assertEquals(
+            $this->assertSame(
                 "The supplied parameters result in an invalid hostname: '<bar).foo.com'.",
                 $e->getMessage()
             );

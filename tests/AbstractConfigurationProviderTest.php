@@ -30,7 +30,7 @@ class AbstractConfigurationProviderTest extends TestCase
         $ref = new \ReflectionClass('\Aws\AbstractConfigurationProvider');
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
-        $this->assertEquals('C:\\My\\Home', $meth->invoke(null));
+        $this->assertSame('C:\\My\\Home', $meth->invoke(null));
     }
 
     public function testMemoizes()
@@ -43,9 +43,9 @@ class AbstractConfigurationProviderTest extends TestCase
         };
         $p = call_user_func([$this->provider, 'memoize'], $f);
         $this->assertSame($expected, $p()->wait());
-        $this->assertEquals(1, $called);
+        $this->assertSame(1, $called);
         $this->assertSame($expected, $p()->wait());
-        $this->assertEquals(1, $called);
+        $this->assertSame(1, $called);
     }
 
     public function testChainsConfiguration()
@@ -101,7 +101,7 @@ class AbstractConfigurationProviderTest extends TestCase
             )->wait();
         }
 
-        $this->assertEquals(1, $timesCalled);
+        $this->assertSame(1, $timesCalled);
         $this->assertCount(1, $cache);
         $this->assertSame($expected->toArray(), $result->toArray());
     }

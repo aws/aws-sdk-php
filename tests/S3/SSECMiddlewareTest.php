@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers Aws\S3\SSECMiddleware
  */
-class SseCpkListenerTest extends TestCase
+class SSECMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
 

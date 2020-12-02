@@ -22,7 +22,7 @@ class SqsClientTest extends TestCase
             'region'  => 'us-east-1',
             'version' => 'latest'
         ]);
-        $this->assertEquals($arn, $sqs->getQueueArn($url));
+        $this->assertSame($arn, $sqs->getQueueArn($url));
     }
 
     public function testFifoQueueArn()
@@ -33,7 +33,7 @@ class SqsClientTest extends TestCase
             'region'  => 'us-east-1',
             'version' => 'latest'
         ]);
-        $this->assertEquals($arn, $sqs->getQueueArn($url));
+        $this->assertSame($arn, $sqs->getQueueArn($url));
     }
 
     /**
@@ -183,7 +183,7 @@ class SqsClientTest extends TestCase
         ]);
         $this->addMockResults($client, [[]]);
         $client->getHandlerList()->appendSign(Middleware::tap(function ($c, $r) use ($newUrl) {
-            $this->assertEquals($newUrl, $r->getUri());
+            $this->assertSame($newUrl, (string)$r->getUri());
         }));
         $client->receiveMessage(['QueueUrl' => $newUrl]);
     }

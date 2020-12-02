@@ -29,20 +29,20 @@ class GlacierClientTest extends TestCase
         $request = \Aws\serialize($command);
 
         // Added default accountId and the API version header.
-        $this->assertEquals('-', $command['accountId']);
+        $this->assertSame('-', $command['accountId']);
         $this->assertEquals(
             $client->getApi()->getMetadata('apiVersion'),
             $request->getHeaderLine('x-amz-glacier-version')
         );
 
         // Added Content-Type and Body
-        $this->assertEquals('foo', $command['body']);
-        $this->assertEquals('text/plain', $request->getHeaderLine('Content-Type'));
+        $this->assertSame('foo', (string)$command['body']);
+        $this->assertSame('text/plain', $request->getHeaderLine('Content-Type'));
 
         // Added the tree and content hashes.
         $hash = hash('sha256', 'foo');
-        $this->assertEquals($hash, $request->getHeaderLine('x-amz-content-sha256'));
-        $this->assertEquals($hash, $request->getHeaderLine('x-amz-sha256-tree-hash'));
+        $this->assertSame($hash, $request->getHeaderLine('x-amz-content-sha256'));
+        $this->assertSame($hash, $request->getHeaderLine('x-amz-sha256-tree-hash'));
     }
 
     /**

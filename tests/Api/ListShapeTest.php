@@ -20,7 +20,7 @@ class ListShapeTest extends TestCase
         $m = $s->getMember();
         $this->assertInstanceOf('Aws\Api\Shape', $m);
         $this->assertSame($m, $s->getMember());
-        $this->assertEquals('string', $m->getType());
+        $this->assertSame('string', $m->getType());
     }
 
     /**

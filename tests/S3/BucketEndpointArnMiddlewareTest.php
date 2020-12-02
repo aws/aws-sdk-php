@@ -59,7 +59,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     $endpoint,
                     $req->getUri()->getHost()
                 );
-                $this->assertEquals("/{$key}", $req->getRequestTarget());
+                $this->assertSame("/{$key}", $req->getRequestTarget());
                 $this->assertEquals(
                     $signingRegion,
                     $cmd['@context']['signing_region']
@@ -319,7 +319,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
             $this->fail('This was expected to fail with: ' . $expected->getMessage());
         } catch (\Exception $e) {
             $this->assertTrue($e instanceof $expected);
-            $this->assertEquals(
+            $this->assertSame(
                 $expected->getMessage(),
                 $e->getMessage()
             );
@@ -581,11 +581,11 @@ class BucketEndpointArnMiddlewareTest extends TestCase
             'region' => 'us-west-2',
             's3_use_arn_region' => true,
             'handler' => function(CommandInterface $cmd, RequestInterface $req) {
-                $this->assertEquals(
+                $this->assertSame(
                     'myendpoint-123456789012.s3-accesspoint.us-west-2.amazonaws.com',
                     $req->getUri()->getHost()
                 );
-                $this->assertEquals(
+                $this->assertSame(
                     'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint/myobject',
                     $req->getHeader('x-amz-copy-source')[0]
                 );

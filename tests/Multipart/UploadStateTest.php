@@ -35,7 +35,7 @@ class UploadStateTest extends TestCase
         $state = new UploadState([]);
         $this->assertNull($state->getPartSize());
         $state->setPartSize(50000000);
-        $this->assertEquals(50000000, $state->getPartSize());
+        $this->assertSame(50000000, $state->getPartSize());
     }
 
     public function testCanTrackUploadedParts()
@@ -65,7 +65,7 @@ class UploadStateTest extends TestCase
 
         /** @var UploadState $newState */
         $newState = unserialize($serializedState);
-        $this->assertEquals(5, $newState->getPartSize());
+        $this->assertSame(5, $newState->getPartSize());
         $this->assertArrayHasKey(1, $state->getUploadedParts());
         $this->assertTrue($newState->isInitiated());
         $this->assertArrayHasKey('foo', $newState->getId());

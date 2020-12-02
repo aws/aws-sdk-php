@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test;
+namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\Partition;
@@ -209,7 +209,7 @@ class PartitionEndpointProviderTest extends TestCase
             'region' => 'us-east-1',
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             'https://sts.us-east-1.amazonaws.com',
             $endpoint['endpoint']
         );
