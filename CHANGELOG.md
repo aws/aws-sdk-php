@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.166.1 - 2020-12-03
 
 * `Aws\AmplifyBackend` - Regular documentation updates.
 * `Aws\Batch` - This release adds support for customer to run Batch Jobs on ECS Fargate, the serverless compute engine built for containers on AWS. Customer can also propagate Job and Job Definition Tags to ECS Task.
