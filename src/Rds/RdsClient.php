@@ -285,7 +285,8 @@ class RdsClient extends AwsClient
                             'CopyDBSnapshot',
                             'CreateDBInstanceReadReplica',
                             'CopyDBClusterSnapshot',
-                            'CreateDBCluster'
+                            'CreateDBCluster',
+                            'StartDBInstanceAutomatedBackupsReplication'
                         ],
                         'service' => 'rds',
                         'presign_param' => 'PreSignedUrl',
