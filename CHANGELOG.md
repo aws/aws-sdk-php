@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.166.2 - 2020-12-04
 
 * `Aws\DirectoryService` - Documentation updates for ds - updated descriptions
 * `Aws\EC2` - This release introduces tag-on-create capability for the CreateImage API. A user can now specify tags that will be applied to the new resources (image, snapshots or both), during creation time.
