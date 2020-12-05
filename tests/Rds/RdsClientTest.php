@@ -20,6 +20,13 @@ class RdsClientTest extends TestCase
         $_SERVER['aws_time'] = 1598486400;
         $_SERVER['formatAwsTime'] = true;
     }
+
+    public static function tearDownAfterClass()
+    {
+        $_SERVER['aws_time'] = null;
+        $_SERVER['formatAwsTime'] = null;
+    }
+    
     public function testAddsCopySnapshotMiddleware()
     {
         $rds = new RdsClient([

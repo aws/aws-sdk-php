@@ -10,7 +10,6 @@ use Aws\Rds\RdsClient;
 use Aws\Result;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
-require_once __DIR__ . '/Signature/sig_hack.php';
 
 /**
  * @covers Aws\PresignUrlMiddleware
@@ -18,12 +17,6 @@ require_once __DIR__ . '/Signature/sig_hack.php';
 class PresignUrlMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
-
-    public static function setUpBeforeClass()
-    {
-        $_SERVER['aws_time'] = 1598486400;
-        $_SERVER['formatAwsTime'] = true;
-    }
 
     public function testDoesNotAddPresignedUrlForNonRequiredOperations()
     {

@@ -20,6 +20,12 @@ class DocDbClientTestClientTest extends TestCase
         $_SERVER['formatAwsTime'] = true;
     }
 
+    public static function tearDownAfterClass()
+    {
+        $_SERVER['aws_time'] = null;
+        $_SERVER['formatAwsTime'] = null;
+    }
+
     public function DocDbPresignMethodProvider()
     {
         return [

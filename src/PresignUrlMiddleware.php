@@ -69,10 +69,7 @@ class PresignUrlMiddleware
                 || (!empty($cmd['SourceRegion'])
                     && $cmd['SourceRegion'] !== $cmd['DestinationRegion'])
             ) {
-                $cmd[$this->presignParam] = $this->createPresignedUrl(
-                    $this->client,
-                    $cmd
-                );
+                $cmd[$this->presignParam] = $this->createPresignedUrl($this->client, $cmd);
             }
         }
         nexthandler:
