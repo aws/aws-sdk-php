@@ -7,6 +7,7 @@ use Aws\Rds\RdsClient;
 use Aws\MockHandler;
 use Aws\Result;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 require_once __DIR__ . '/../Signature/sig_hack.php';
 
 /**
