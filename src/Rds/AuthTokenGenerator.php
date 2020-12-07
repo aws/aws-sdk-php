@@ -39,12 +39,19 @@ class AuthTokenGenerator
      *                         (e.g., host:port)
      * @param string $region The region where the database is located
      * @param string $username The username to login as
-     * @param int $lifetime The lifetime of the token in minutes 
+     * @param int $lifetime The lifetime of the token in minutes
      *
      * @return string Token generated
      */
     public function createToken($endpoint, $region, $username, $lifetime = 15)
     {
+        if (!is_numeric($lifetime) || $lifetime > 15 || $lifetime <= 0) {
+            throw new \InvalidArgumentException(
+                "Lifetime must be a positive number less than or equal to 15, was {$lifetime}",
+                null
+            );
+        }
+
         $uri = new Uri($endpoint);
         $uri = $uri->withPath('/');
         $uri = $uri->withQuery('Action=connect&DBUser=' . $username);
