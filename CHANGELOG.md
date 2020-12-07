@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Adds cross region pre-signing to various methods in DocDbClient, RdsClient, and NeptuneClient
+* `Aws\AppRegistry` - AWS Service Catalog AppRegistry now supports adding, removing, and listing tags on resources after they are created.
+* `Aws\DatabaseMigrationService` - Added PreserveTransaction setting to preserve order of CDC for S3 as target. Added CsvNoSupValue setting to replace empty value for columns not included in the supplemental log for S3 as target.
+
 ## 3.166.2 - 2020-12-04
 
 * `Aws\DirectoryService` - Documentation updates for ds - updated descriptions
