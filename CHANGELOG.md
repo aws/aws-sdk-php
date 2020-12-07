@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.167.0 - 2020-12-07
 
 * `Aws\` - Adds cross region pre-signing to various methods in DocDbClient, RdsClient, and NeptuneClient
 * `Aws\AppRegistry` - AWS Service Catalog AppRegistry now supports adding, removing, and listing tags on resources after they are created.
