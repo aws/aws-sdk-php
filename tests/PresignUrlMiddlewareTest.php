@@ -2,7 +2,10 @@
 namespace Aws\Test;
 
 use Aws\CommandInterface;
+use Aws\Credentials\Credentials;
+use Aws\DocDB\DocDBClient;
 use Aws\Ec2\Ec2Client;
+use Aws\Neptune\NeptuneClient;
 use Aws\Rds\RdsClient;
 use Aws\Result;
 use Psr\Http\Message\RequestInterface;
@@ -101,3 +104,4 @@ class PresignUrlMiddlewareTest extends TestCase
         ]);
     }
 }
+
