@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.168.0 - 2020-12-08
 
 * `Aws\AuditManager` - AWS Audit Manager helps you continuously audit your AWS usage to simplify how you manage risk and compliance. This update releases the first version of the AWS Audit Manager APIs and SDK.
 * `Aws\ECR` - This release adds support for configuring cross-region and cross-account replication of your Amazon ECR images.
