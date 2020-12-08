@@ -34,7 +34,9 @@ class EcsCredentialProvider
         $timeout = getenv(self::ENV_TIMEOUT);
 
         if (!$timeout) {
-            $timeout = isset($_SERVER[self::ENV_TIMEOUT]) ? $_SERVER[self::ENV_TIMEOUT] : (isset($config['timeout']) ? $config['timeout'] : 1.0);
+            $timeout = isset($_SERVER[self::ENV_TIMEOUT])
+                ? $_SERVER[self::ENV_TIMEOUT]
+                : (isset($config['timeout']) ? $config['timeout'] : 1.0);
         }
 
         $this->timeout = (float) $timeout;
