@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.168.1 - 2020-12-09
 
 * `Aws\EC2` - This release adds support for G4ad instances powered by AMD Radeon Pro V520 GPUs and AMD 2nd Generation EPYC processors
 * `Aws\GlobalAccelerator` - This release adds support for custom routing accelerators
