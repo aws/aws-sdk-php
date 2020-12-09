@@ -1,5 +1,38 @@
 # CHANGELOG
 
+## 3.168.0 - 2020-12-08
+
+* `Aws\AuditManager` - AWS Audit Manager helps you continuously audit your AWS usage to simplify how you manage risk and compliance. This update releases the first version of the AWS Audit Manager APIs and SDK.
+* `Aws\ECR` - This release adds support for configuring cross-region and cross-account replication of your Amazon ECR images.
+* `Aws\EMRContainers` - This release adds support for Amazon EMR on EKS, a simple way to run Spark on Kubernetes.
+* `Aws\ForecastService` - This release adds support for the Amazon Forecast Weather Index which can increase forecasting accuracy by automatically including weather forecasts in demand forecasts.
+* `Aws\HealthLake` - This release introduces Amazon HealthLake (preview), a HIPAA-eligible service that enables healthcare and life sciences customers to store, transform, query, and analyze health data in the AWS Cloud.
+* `Aws\QuickSight` - Added new parameters for join optimization.
+* `Aws\Rds` - Added optional configurable lifetime value to Rds AuthTokenGenerator
+* `Aws\SageMaker` - This feature helps you monitor model performance characteristics such as accuracy, identify undesired bias in your ML models, and explain model decisions better with explainability drift detection.
+* `Aws\SageMakerRuntime` - This feature allows customers to invoke their endpoint with an inference ID. If used and data capture for the endpoint is enabled, this ID will be captured along with request data.
+* `Aws\SagemakerEdgeManager` - Amazon SageMaker Edge Manager makes it easy to optimize, secure, monitor, and maintain machine learning (ML) models across fleets of edge devices such as smart cameras, smart speakers, and robots.
+* `Aws\kendra` - 1. Amazon Kendra connector for Google Drive repositories 2. Amazon Kendra's relevance ranking models are regularly tuned for each customer by capturing end-user search patterns and feedback.
+
+## 3.167.0 - 2020-12-07
+
+* `Aws\` - Adds cross region pre-signing to various methods in DocDbClient, RdsClient, and NeptuneClient
+* `Aws\AppRegistry` - AWS Service Catalog AppRegistry now supports adding, removing, and listing tags on resources after they are created.
+* `Aws\DatabaseMigrationService` - Added PreserveTransaction setting to preserve order of CDC for S3 as target. Added CsvNoSupValue setting to replace empty value for columns not included in the supplemental log for S3 as target.
+
+## 3.166.2 - 2020-12-04
+
+* `Aws\DirectoryService` - Documentation updates for ds - updated descriptions
+* `Aws\EC2` - This release introduces tag-on-create capability for the CreateImage API. A user can now specify tags that will be applied to the new resources (image, snapshots or both), during creation time.
+* `Aws\Kafka` - Adding HEALING to ClusterState.
+* `Aws\Lambda` - Added the additional enum InvalidImage to StateReasonCode and LastUpdateStatusReasonCode fields.
+* `Aws\LicenseManager` - Automated Discovery now has support for custom tags, and detects software uninstalls.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports black video and audio silence as new conditions to trigger automatic input failover.
+* `Aws\Multipart` - Added a validation that a file hasn't been corrupted
+* `Aws\RDS` - Adds support for Amazon RDS Cross-Region Automated Backups, the ability to setup automatic replication of snapshots and transaction logs from a primary AWS Region to a secondary AWS Region.
+* `Aws\SSM` - AWS Systems Manager Patch Manager MAC OS Support and OpsMetadata Store APIs to store operational metadata for an Application.
+* `Aws\WorkSpaces` - Update the import-workspace-image API to have "BYOL_REGULAR_WSP" as a valid input string for ingestion-process.
+
 ## 3.166.1 - 2020-12-03
 
 * `Aws\AmplifyBackend` - Regular documentation updates.
