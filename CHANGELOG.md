@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - This release adds support for G4ad instances powered by AMD Radeon Pro V520 GPUs and AMD 2nd Generation EPYC processors
+* `Aws\GlobalAccelerator` - This release adds support for custom routing accelerators
+* `Aws\Redshift` - Add support for availability zone relocation feature.
+
 ## 3.168.0 - 2020-12-08
 
 * `Aws\AuditManager` - AWS Audit Manager helps you continuously audit your AWS usage to simplify how you manage risk and compliance. This update releases the first version of the AWS Audit Manager APIs and SDK.
