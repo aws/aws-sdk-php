@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.168.2 - 2020-12-10
 
 * `Aws\EC2` - TGW connect simplifies connectivity of SD-WAN appliances; IGMP support for TGW multicast; VPC Reachability Analyzer for VPC resources connectivity analysis.
 * `Aws\NetworkManager` - This release adds API support for Transit Gateway Connect integration into AWS Network Manager.
