@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - TGW connect simplifies connectivity of SD-WAN appliances; IGMP support for TGW multicast; VPC Reachability Analyzer for VPC resources connectivity analysis.
+* `Aws\NetworkManager` - This release adds API support for Transit Gateway Connect integration into AWS Network Manager.
+* `Aws\kendra` - Amazon Kendra now supports adding synonyms to an index through the new Thesaurus resource.
+
 ## 3.168.1 - 2020-12-09
 
 * `Aws\EC2` - This release adds support for G4ad instances powered by AMD Radeon Pro V520 GPUs and AMD 2nd Generation EPYC processors
