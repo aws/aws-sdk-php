@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Documentation updates and corrections for Amazon EC2 Auto Scaling API Reference and SDKs.
+* `Aws\CloudTrail` - CloudTrailInvalidClientTokenIdException is now thrown when a call results in the InvalidClientTokenId error code. The Name parameter of the AdvancedEventSelector data type is now optional.
+* `Aws\CloudWatch` - Documentation updates for monitoring
+* `Aws\GuardDuty` - Documentation updates for GuardDuty
+* `Aws\IoTSiteWise` - Added the ListAssetRelationships operation and support for composite asset models, which represent structured sets of properties within asset models.
+* `Aws\PI` - You can group DB load according to the dimension groups for database, application, and session type. Amazon RDS also supports the dimensions db.name, db.application.name, and db.session_type.name.
+
 ## 3.168.2 - 2020-12-10
 
 * `Aws\EC2` - TGW connect simplifies connectivity of SD-WAN appliances; IGMP support for TGW multicast; VPC Reachability Analyzer for VPC resources connectivity analysis.
