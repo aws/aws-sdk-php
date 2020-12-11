@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## 3.168.3 - 2020-12-11
+
+* `Aws\AutoScaling` - Documentation updates and corrections for Amazon EC2 Auto Scaling API Reference and SDKs.
+* `Aws\CloudTrail` - CloudTrailInvalidClientTokenIdException is now thrown when a call results in the InvalidClientTokenId error code. The Name parameter of the AdvancedEventSelector data type is now optional.
+* `Aws\CloudWatch` - Documentation updates for monitoring
+* `Aws\GuardDuty` - Documentation updates for GuardDuty
+* `Aws\IoTSiteWise` - Added the ListAssetRelationships operation and support for composite asset models, which represent structured sets of properties within asset models.
+* `Aws\PI` - You can group DB load according to the dimension groups for database, application, and session type. Amazon RDS also supports the dimensions db.name, db.application.name, and db.session_type.name.
+
+## 3.168.2 - 2020-12-10
+
+* `Aws\EC2` - TGW connect simplifies connectivity of SD-WAN appliances; IGMP support for TGW multicast; VPC Reachability Analyzer for VPC resources connectivity analysis.
+* `Aws\NetworkManager` - This release adds API support for Transit Gateway Connect integration into AWS Network Manager.
+* `Aws\kendra` - Amazon Kendra now supports adding synonyms to an index through the new Thesaurus resource.
+
+## 3.168.1 - 2020-12-09
+
+* `Aws\EC2` - This release adds support for G4ad instances powered by AMD Radeon Pro V520 GPUs and AMD 2nd Generation EPYC processors
+* `Aws\GlobalAccelerator` - This release adds support for custom routing accelerators
+* `Aws\Redshift` - Add support for availability zone relocation feature.
+
 ## 3.168.0 - 2020-12-08
 
 * `Aws\AuditManager` - AWS Audit Manager helps you continuously audit your AWS usage to simplify how you manage risk and compliance. This update releases the first version of the AWS Audit Manager APIs and SDK.
