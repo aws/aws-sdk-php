@@ -108,6 +108,9 @@ class AssumeRoleWithWebIdentityCredentialProvider
                         }
                         $token = file_get_contents($this->tokenFile);
                     }
+                    if (empty($token)) {
+                        throw new CredentialsException("InvalidIdentityToken from file: {$this->tokenFile}");
+                    }
                 } catch (\Exception $exception) {
                     throw new CredentialsException(
                         "Error reading WebIdentityTokenFile from " . $this->tokenFile,

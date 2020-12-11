@@ -158,6 +158,26 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $provider()->wait();
     }
 
+    public function testThrowsExceptionWhenEmptyTokenFile()
+    {
+        $dir = $this->clearEnv();
+        $tokenPath = $dir . '/emptyTokenFile';
+        $args['WebIdentityTokenFile'] = $tokenPath;
+        $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
+        file_put_contents($tokenPath, '');
+
+        try {
+            $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
+            $provider()->wait();
+            $this->fail("Should have thrown an exception");
+        } catch (\Exception $e) {
+            self::assertInstanceOf('\Aws\Exception\CredentialsException', $e);
+            self::assertContains('Error reading WebIdentityTokenFile', $e->getMessage());
+        } finally {
+            unlink($tokenPath);
+        }
+    }
+
     /**
      * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Error assuming role from web identity credentials
