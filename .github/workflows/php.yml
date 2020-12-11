@@ -1,0 +1,78 @@
+name: PHP Composer
+
+#whenever master has a PR or is pushed to
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    strategy:
+      #for each of the following versions of PHP, with and without --prefer-lowest
+      matrix:
+        php-versions: ['5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4']
+        composer-options: ['', '--prefer-lowest']
+    #set the name for each job
+    name: PHP ${{ matrix.php-versions }} ${{ matrix.composer-options }}
+    #set up environment variables used by unit tests
+    env:
+      AWS_ACCESS_KEY_ID: foo
+      AWS_SECRET_ACCESS_KEY: bar
+      AWS_CSM_ENABLED: false
+    steps:
+    #sets up the correct version of PHP with necessary config options
+    - name: Setup PHP with Xdebug
+      uses: shivammathur/setup-php@v2
+      with:
+        coverage: xdebug
+        php-version: ${{ matrix.php-versions }}
+        ini-values: xdebug.overload_var_dump=0, memory_limit=4G, phar.readonly=false
+
+    #checkout the codebase from github
+    - name: Checkout codebase
+      uses: actions/checkout@v2
+
+    #validate composer files
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    #downgrade to supported php unit
+    - if: ${{ matrix.php-versions <= '7.1'  && matrix.php-versions > 5.5}}
+      name: PHP 5.6-7.1 specific setup
+      run: composer require --dev --ignore-platform-reqs phpunit/phpunit "^5.7.11"
+
+    #downgrade to supported php unit and remove incompatible xdebug file
+    - if: ${{ matrix.php-versions == '5.5' }}
+      name: PHP 5.5 specific setup
+      run: |
+        sudo rm /etc/php5/cli/conf.d/20-xdebug.ini
+        composer require --dev --ignore-platform-reqs phpunit/phpunit "4.8.36"
+
+    #get dependencies
+    - name: Install dependencies
+      run: composer update ${{ matrix.composer-options }} --no-interaction --prefer-source
+
+    #run tests
+    - name: Run test suite
+      run: make test
+
+      #static analysis
+    - if: ${{ matrix.php-versions >= '7.1' && matrix.php-versions <= 7.4 && matrix.composer-options == '' }}
+      name: Static analysis
+      run: |
+        composer require --dev nette/neon "^3.0"
+        composer require --dev phpstan/phpstan "0.12.45"
+        vendor/bin/phpstan analyse src
+
+    #generate package
+    - if:  ${{ matrix.composer-options == '' }}
+      name: Package generation
+      run: make package
+
+    #generate code coverage
+    - if: ${{ matrix.php-versions == '7.1' && matrix.composer-options == '' }}
+      name: Code coverage
+      run: bash <(curl -s https://codecov.io/bash)
