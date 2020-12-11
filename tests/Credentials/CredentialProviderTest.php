@@ -630,7 +630,7 @@ EOT;
             unlink($dir . '/credentials');
         }
     }
-    
+
     /**
      * @expectedException \Aws\Exception\CredentialsException
      * @expectedExceptionMessage Circular source_profile reference found.
