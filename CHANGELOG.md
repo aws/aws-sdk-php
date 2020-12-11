@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.168.3 - 2020-12-11
 
 * `Aws\AutoScaling` - Documentation updates and corrections for Amazon EC2 Auto Scaling API Reference and SDKs.
 * `Aws\CloudTrail` - CloudTrailInvalidClientTokenIdException is now thrown when a call results in the InvalidClientTokenId error code. The Name parameter of the AdvancedEventSelector data type is now optional.
