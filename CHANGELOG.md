@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Added support for github actions
+* `Aws\` - Fix using ecs credentials provider on multi-threaded servers
+* `Aws\DevOpsGuru` - Documentation updates for DevOps Guru.
+* `Aws\EC2` - Add c5n.metal to ec2 instance types list
+* `Aws\GlobalAccelerator` - This release adds support for custom routing accelerators
+
 ## 3.168.3 - 2020-12-11
 
 * `Aws\AutoScaling` - Documentation updates and corrections for Amazon EC2 Auto Scaling API Reference and SDKs.
