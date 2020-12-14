@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.169.0 - 2020-12-14
 
 * `Aws\` - Added support for github actions
 * `Aws\` - Fix using ecs credentials provider on multi-threaded servers
