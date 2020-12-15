@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.170.0 - 2020-12-15
 
 * `Aws\GreengrassV2` - AWS IoT Greengrass V2 is a new major version of AWS IoT Greengrass. This release adds several updates such as modular components, continuous deployments, and improved ease of use.
 * `Aws\IoT` - AWS IoT Rules Engine adds Kafka Action that allows sending data to Apache Kafka clusters inside a VPC. AWS IoT Device Defender adds custom metrics and machine-learning based anomaly detection.
