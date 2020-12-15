@@ -50,7 +50,7 @@ class GuzzleHandler
                     ];
 
                     if (
-                        ($e instanceof RequestException || $e instanceof Error)
+                        ($e instanceof RequestException)
                         && $e->getResponse()
                     ) {
                         $error['response'] = $e->getResponse();
