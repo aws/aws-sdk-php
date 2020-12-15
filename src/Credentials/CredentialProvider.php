@@ -109,9 +109,9 @@ class CredentialProvider
 
         if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
             $defaultChain['ecs'] = self::ecsCredentials($config);
+        } else {
+            $defaultChain['instance'] = self::instanceProfile($config);
         }
-
-        $defaultChain['instance'] = self::instanceProfile($config);
 
         if (isset($config['credentials'])
             && $config['credentials'] instanceof CacheInterface
