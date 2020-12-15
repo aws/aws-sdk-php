@@ -114,9 +114,13 @@ class HandlerTest extends TestCase
     {
         $wasRejected = false;
         $request = new Request('PUT', 'http://example.com');
-        $mock = new MockHandler([new \Error(
-            'error message'
-        )]);
+        $mock = new MockHandler(
+            [
+                new RejectionException(
+                    new \Error('error message')
+                )
+            ]
+        );
         $client = new Client(['handler' => $mock]);
         $handler = new GuzzleHandler($client);
 
@@ -130,9 +134,9 @@ class HandlerTest extends TestCase
             $this->fail('An exception should have been thrown.');
         } catch (RejectionException $e) {
             $error = $e->getReason();
-            $this->assertInstanceOf(\Error::class, $error['exception']);
+            $this->assertInstanceOf(\Error::class, $error['exception']->getReason());
             $this->assertFalse($error['connection_error']);
-            $this->assertSame("error message", $error['exception']->getMessage());
+            $this->assertContains("error message", $error['exception']->getMessage());
         }
 
         $this->assertTrue($wasRejected, 'Reject callback was not triggered.');
