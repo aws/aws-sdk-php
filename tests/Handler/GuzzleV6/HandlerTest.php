@@ -115,7 +115,7 @@ class HandlerTest extends TestCase
         $wasRejected = false;
         $request = new Request('PUT', 'http://example.com');
         $mock = new MockHandler([new \Error(
-            'error message',
+            'error message'
         )]);
         $client = new Client(['handler' => $mock]);
         $handler = new GuzzleHandler($client);
