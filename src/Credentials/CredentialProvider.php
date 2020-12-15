@@ -76,9 +76,9 @@ class CredentialProvider
         $cacheable = [
             'web_identity',
             'sso',
-            'ecs',
             'process_credentials',
             'process_config',
+            'ecs',
             'instance'
         ];
 
@@ -100,23 +100,17 @@ class CredentialProvider
                 'profile default',
                 self::getHomeDir() . '/.aws/config'
             );
-        }
-
-        if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
-            $defaultChain['ecs'] = self::ecsCredentials($config);
-        }
-        
-        if (
-            !isset($config['use_aws_shared_config_files'])
-            || $config['use_aws_shared_config_files'] !== false
-        ) {
             $defaultChain['process_credentials'] = self::process();
             $defaultChain['process_config'] = self::process(
                 'profile default',
                 self::getHomeDir() . '/.aws/config'
             );
         }
-        
+
+        if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
+            $defaultChain['ecs'] = self::ecsCredentials($config);
+        }
+
         $defaultChain['instance'] = self::instanceProfile($config);
 
         if (isset($config['credentials'])
