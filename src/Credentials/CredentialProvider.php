@@ -102,9 +102,6 @@ class CredentialProvider
             );
         }
 
-        $shouldUseEcsCredentialsProvider = getenv(EcsCredentialProvider::ENV_URI);
-        // getenv() is not thread safe - fall back to $_SERVER
-        if ($shouldUseEcsCredentialsProvider === false) {
             $shouldUseEcsCredentialsProvider = isset($_SERVER[EcsCredentialProvider::ENV_URI])
                 ? $_SERVER[EcsCredentialProvider::ENV_URI]
                 : false;
