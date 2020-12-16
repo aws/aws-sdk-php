@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.0 - 2020-12-16
 
 * `Aws\CostExplorer` - This release updates the "MonitorArnList" from a list of String to be a list of Arn for both CreateAnomalySubscription and UpdateAnomalySubscription APIs
 * `Aws\LocationService` - Initial release of Amazon Location Service. A new geospatial service providing capabilities to render maps, geocode/reverse geocode, track device locations, and detect geofence entry/exit events.
