@@ -42,6 +42,16 @@ EOT;
         putenv('AWS_ROLE_SESSION_NAME');
         putenv('AWS_SHARED_CREDENTIALS_FILE');
 
+        unset($_SERVER[CredentialProvider::ENV_KEY]);
+        unset($_SERVER[CredentialProvider::ENV_SECRET]);
+        unset($_SERVER[CredentialProvider::ENV_PROFILE]);
+        unset($_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI']);
+        unset($_SERVER['AWS_SDK_LOAD_NONDEFAULT_CONFIG']);
+        unset($_SERVER['AWS_WEB_IDENTITY_TOKEN_FILE']);
+        unset($_SERVER['AWS_ROLE_ARN']);
+        unset($_SERVER['AWS_ROLE_SESSION_NAME']);
+        unset($_SERVER['AWS_SHARED_CREDENTIALS_FILE']);
+
         $dir = sys_get_temp_dir() . '/.aws';
 
         if (!is_dir($dir)) {
