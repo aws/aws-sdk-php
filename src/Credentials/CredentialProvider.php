@@ -882,3 +882,4 @@ class CredentialProvider
         return $filename;
     }
 }
+
