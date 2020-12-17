@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fix using ecs credentials provider on multi-threaded servers
+* `Aws\ConfigService` - Adding PutExternalEvaluation API which grants permission to deliver evaluation result to AWS Config
+* `Aws\Credentials` - Aligns the credential resolver to the documentation and other SDK behaviors.
+* `Aws\DLM` - Provide Cross-account copy event based policy support in DataLifecycleManager (DLM)
+* `Aws\EC2` - C6gn instances are powered by AWS Graviton2 processors and offer 100 Gbps networking bandwidth. These instances deliver up to 40% better price-performance benefit versus comparable x86-based instances
+* `Aws\Handler` - GuzzleHandler now accepts errors as well as exceptions on failure; errors are added to the body of the RejectionException from the promise
+* `Aws\KMS` - Added CreationDate and LastUpdatedDate timestamps to ListAliases API response
+* `Aws\Route53` - This release adds support for DNSSEC signing in Amazon Route 53.
+* `Aws\Route53Resolver` - Route 53 Resolver adds support for enabling resolver DNSSEC validation in virtual private cloud (VPC).
+* `Aws\SQS` - Amazon SQS adds queue attributes to enable high throughput FIFO.
+* `Aws\ServiceCatalog` - Support TagOptions sharing with Service Catalog portfolio sharing.
+* `Aws\imagebuilder` - This release adds support for building and distributing container images within EC2 Image Builder.
+
 ## 3.171.0 - 2020-12-16
 
 * `Aws\CostExplorer` - This release updates the "MonitorArnList" from a list of String to be a list of Arn for both CreateAnomalySubscription and UpdateAnomalySubscription APIs
