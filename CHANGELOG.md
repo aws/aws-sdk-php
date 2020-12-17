@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.1 - 2020-12-17
 
 * `Aws\` - Fix using ecs credentials provider on multi-threaded servers
 * `Aws\ConfigService` - Adding PutExternalEvaluation API which grants permission to deliver evaluation result to AWS Config
