@@ -56,6 +56,7 @@ class CredentialProvider
     /**
      * Create a default credential provider that
      * first checks for environment variables,
+     * then checks for assumed role via web identity,
      * then checks for cached SSO credentials from the CLI,
      * then check for credential_process in the "default" profile in ~/.aws/credentials,
      * then checks for the "default" profile in ~/.aws/credentials,
