@@ -1807,19 +1807,19 @@ EOT;
 
     public function testCachesCacheableInDefaultChain()
     {
-        $this->clearEnv();
-        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
         $cacheable = [
             'web_identity',
-            'ecs',
+            'sso',
             'process_credentials',
             'process_config',
-            'sso',
+            'ecs',
             'instance'
         ];
 
         $credsForCache = new Credentials('foo', 'bar', 'baz', PHP_INT_MAX);
         foreach ($cacheable as $provider) {
+            $this->clearEnv();
+            if ($provider == 'ecs') putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
             $cache = new LruArrayCache;
             $cache->set('aws_cached_' . $provider . '_credentials', $credsForCache);
             $credentials = call_user_func(CredentialProvider::defaultProvider([
