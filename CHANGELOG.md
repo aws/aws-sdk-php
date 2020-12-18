@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.2 - 2020-12-18
 
 * `Aws\` - Removed dev guide from this repo and linked to the new repo where it is hosted
 * `Aws\EC2` - EBS io2 volumes now supports Multi-Attach
