@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Removed dev guide from this repo and linked to the new repo where it is hosted
+* `Aws\EC2` - EBS io2 volumes now supports Multi-Attach
+* `Aws\PersonalizeRuntime` - Updated FilterValues regex pattern to align with Filter Expression.
+* `Aws\RDS` - Adds IAM DB authentication information to the PendingModifiedValues output of the DescribeDBInstances API. Adds ClusterPendingModifiedValues information to the output of the DescribeDBClusters API.
+
 ## 3.171.1 - 2020-12-17
 
 * `Aws\` - Fix using ecs credentials provider on multi-threaded servers
