@@ -119,7 +119,6 @@ class AssumeRoleWithWebIdentityCredentialProvider
                             continue;
                         }
                         throw new CredentialsException("InvalidIdentityToken from file: {$this->tokenFile}");
-
                     }
                 } catch (\Exception $exception) {
                     throw new CredentialsException(
