@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway.
+* `Aws\AppRegistry` - New API `SyncResouce` to update AppRegistry system tags.
+* `Aws\Batch` - Documentation updates for batch
+* `Aws\ConfigService` - AWS Config adds support to save advanced queries. New API operations - GetStoredQuery, PutStoredQuery, ListStoredQueries, DeleteStoredQuery
+* `Aws\ConnectParticipant` - This release adds three new APIs: StartAttachmentUpload, CompleteAttachmentUpload, and GetAttachment. For Amazon Connect Chat, you can use these APIs to share files in chat conversations.
+* `Aws\Credentials` - Bugfix to throw an exception on empty token file.
+* `Aws\DatabaseMigrationService` - AWS DMS launches support for AWS Secrets Manager to manage source and target database credentials.
+* `Aws\EC2` - This release adds Tag On Create feature support for the AllocateAddress API.
+* `Aws\Glue` - Add 4 connection properties: SECRET_ID, CONNECTOR_URL, CONNECTOR_TYPE, CONNECTOR_CLASS_NAME. Add two connection types: MARKETPLACE, CUSTOM
+* `Aws\ManagedBlockchain` - Added support for provisioning and managing public Ethereum nodes on main and test networks supporting secure access using Sigv4 and standard open-source Ethereum APIs.
+* `Aws\Outposts` - In this release, AWS Outposts adds support for three new APIs: TagResource, UntagResource, and ListTagsForResource. Customers can now manage tags for their resources through the SDK.
+* `Aws\QLDBSession` - Adds "TimingInformation" to all SendCommand API results and "IOUsage" to ExecuteStatementResult, FetchPageResult and CommitTransactionResult.
+* `Aws\S3` - Format GetObject's Expires header to be an http-date instead of iso8601
+* `Aws\SecurityHub` - Finding providers can now use BatchImportFindings to update Confidence, Criticality, RelatedFindings, Severity, and Types.
+* `Aws\ServiceQuotas` - Added the ability to tag applied quotas.
+
 ## 3.171.2 - 2020-12-18
 
 * `Aws\` - Removed dev guide from this repo and linked to the new repo where it is hosted
