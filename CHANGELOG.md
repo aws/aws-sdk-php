@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.3 - 2020-12-21
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway.
 * `Aws\AppRegistry` - New API `SyncResouce` to update AppRegistry system tags.
