@@ -2925,7 +2925,8 @@
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
         "ProcessorFeatures":{"shape":"ProcessorFeatureList"},
         "DeletionProtection":{"shape":"BooleanOptional"},
-        "MaxAllocatedStorage":{"shape":"IntegerOptional"}
+        "MaxAllocatedStorage":{"shape":"IntegerOptional"},
+        "EnableCustomerOwnedIp":{"shape":"BooleanOptional"}
       }
     },
     "CreateDBInstanceReadReplicaMessage":{
@@ -3735,7 +3736,8 @@
         "ListenerEndpoint":{"shape":"Endpoint"},
         "MaxAllocatedStorage":{"shape":"IntegerOptional"},
         "TagList":{"shape":"TagList"},
-        "DBInstanceAutomatedBackupsReplications":{"shape":"DBInstanceAutomatedBackupsReplicationList"}
+        "DBInstanceAutomatedBackupsReplications":{"shape":"DBInstanceAutomatedBackupsReplicationList"},
+        "CustomerOwnedIpEnabled":{"shape":"BooleanOptional"}
       },
       "wrapper":true
     },
@@ -6092,7 +6094,8 @@
         "DeletionProtection":{"shape":"BooleanOptional"},
         "MaxAllocatedStorage":{"shape":"IntegerOptional"},
         "CertificateRotationRestart":{"shape":"BooleanOptional"},
-        "ReplicaMode":{"shape":"ReplicaMode"}
+        "ReplicaMode":{"shape":"ReplicaMode"},
+        "EnableCustomerOwnedIp":{"shape":"BooleanOptional"}
       }
     },
     "ModifyDBInstanceResult":{
@@ -7159,7 +7162,8 @@
         "ProcessorFeatures":{"shape":"ProcessorFeatureList"},
         "UseDefaultProcessorFeatures":{"shape":"BooleanOptional"},
         "DBParameterGroupName":{"shape":"String"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "DeletionProtection":{"shape":"BooleanOptional"},
+        "EnableCustomerOwnedIp":{"shape":"BooleanOptional"}
       }
     },
     "RestoreDBInstanceFromDBSnapshotResult":{
@@ -7268,7 +7272,8 @@
         "DeletionProtection":{"shape":"BooleanOptional"},
         "SourceDbiResourceId":{"shape":"String"},
         "MaxAllocatedStorage":{"shape":"IntegerOptional"},
-        "SourceDBInstanceAutomatedBackupsArn":{"shape":"String"}
+        "SourceDBInstanceAutomatedBackupsArn":{"shape":"String"},
+        "EnableCustomerOwnedIp":{"shape":"BooleanOptional"}
       }
     },
     "RestoreDBInstanceToPointInTimeResult":{
