@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.4 - 2020-12-22
 
 * `Aws\Connect` - This release adds support for quick connects. For details, see the Release Notes in the Amazon Connect Administrator Guide.
 * `Aws\CostExplorer` - This release adds additional metadata that may be applicable to the Rightsizing Recommendations.
