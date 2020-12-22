@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - This release adds support for quick connects. For details, see the Release Notes in the Amazon Connect Administrator Guide.
+* `Aws\CostExplorer` - This release adds additional metadata that may be applicable to the Rightsizing Recommendations.
+* `Aws\ElastiCache` - Documentation updates for elasticache
+* `Aws\Glue` - AWS Glue Find Matches machine learning transforms now support column importance scores.
+* `Aws\IoTWireless` - Adding the ability to use Fingerprint in GetPartnerAccount and ListPartnerAccounts API responses to protect sensitive customer account information.
+* `Aws\RDS` - Adds customer-owned IP address (CoIP) support to Amazon RDS on AWS Outposts.
+* `Aws\SSM` - SSM Maintenance Window support for registering/updating maintenance window tasks without targets.
+
 ## 3.171.4 - 2020-12-22
 
 * `Aws\Connect` - This release adds support for quick connects. For details, see the Release Notes in the Amazon Connect Administrator Guide.
