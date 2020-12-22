@@ -4213,6 +4213,10 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
+        },
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
         }
       }
     },
@@ -22765,7 +22769,8 @@
         "Size":{"shape":"Integer"},
         "VolumeType":{"shape":"VolumeType"},
         "Iops":{"shape":"Integer"},
-        "Throughput":{"shape":"Integer"}
+        "Throughput":{"shape":"Integer"},
+        "MultiAttachEnabled":{"shape":"Boolean"}
       }
     },
     "ModifyVolumeResult":{
@@ -31783,6 +31788,10 @@
           "shape":"Integer",
           "locationName":"targetThroughput"
         },
+        "TargetMultiAttachEnabled":{
+          "shape":"Boolean",
+          "locationName":"targetMultiAttachEnabled"
+        },
         "OriginalSize":{
           "shape":"Integer",
           "locationName":"originalSize"
@@ -31798,6 +31807,10 @@
         "OriginalThroughput":{
           "shape":"Integer",
           "locationName":"originalThroughput"
+        },
+        "OriginalMultiAttachEnabled":{
+          "shape":"Boolean",
+          "locationName":"originalMultiAttachEnabled"
         },
         "Progress":{
           "shape":"Long",
