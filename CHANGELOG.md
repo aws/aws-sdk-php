@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze and generate optimization recommendations for lambda functions.
+* `Aws\DatabaseMigrationService` - AWS DMS launches support for AWS Secrets Manager to manage Oracle ASM Database credentials
+* `Aws\ResourceGroups` - Add operation `PutGroupConfiguration`. Support dedicated hosts and add `Pending` in operations `Un/GroupResources`. Add `Resources` in `ListGroupResources` and deprecate `ResourceIdentifiers`.
+
 ## 3.171.5 - 2020-12-22
 
 * `Aws\Connect` - This release adds support for quick connects. For details, see the Release Notes in the Amazon Connect Administrator Guide.
