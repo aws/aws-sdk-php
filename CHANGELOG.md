@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.6 - 2020-12-23
 
 * `Aws\ComputeOptimizer` - This release enables AWS Compute Optimizer to analyze and generate optimization recommendations for lambda functions.
 * `Aws\DatabaseMigrationService` - AWS DMS launches support for AWS Secrets Manager to manage Oracle ASM Database credentials
