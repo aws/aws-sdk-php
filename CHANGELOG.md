@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.8 - 2020-12-29
 
 * `Aws\ACMPCA` - This release adds a new parameter "CsrExtensions" in the "CertificateAuthorityConfiguration" data structure, which allows customers to add the addition of KU and SIA into the CA CSR.
 * `Aws\ApiGatewayV2` - Amazon API Gateway now supports data mapping for HTTP APIs which allows customers to modify HTTP Request before sending it to their integration and HTTP Response before sending it to the invoker.
