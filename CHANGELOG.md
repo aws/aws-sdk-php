@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.9 - 2020-12-30
 
 * `Aws\ElastiCache` - Documentation updates for elasticache
 * `Aws\Macie2` - This release of the Amazon Macie API includes miscellaneous updates and improvements to the documentation.
