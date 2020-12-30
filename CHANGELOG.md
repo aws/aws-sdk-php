@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ElastiCache` - Documentation updates for elasticache
+* `Aws\Macie2` - This release of the Amazon Macie API includes miscellaneous updates and improvements to the documentation.
+
 ## 3.171.8 - 2020-12-29
 
 * `Aws\ACMPCA` - This release adds a new parameter "CsrExtensions" in the "CertificateAuthorityConfiguration" data structure, which allows customers to add the addition of KU and SIA into the CA CSR.
