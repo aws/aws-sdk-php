@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.10 - 2020-12-31
 
 * `Aws\ServiceCatalog` - Enhanced Service Catalog DescribeProvisioningParameters API to return new parameter constraints, i.e., MinLength, MaxLength, MinValue, MaxValue, ConstraintDescription and AllowedPattern
 
