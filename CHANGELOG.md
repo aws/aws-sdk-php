@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ServiceCatalog` - Enhanced Service Catalog DescribeProvisioningParameters API to return new parameter constraints, i.e., MinLength, MaxLength, MinValue, MaxValue, ConstraintDescription and AllowedPattern
+
 ## 3.171.9 - 2020-12-30
 
 * `Aws\ElastiCache` - Documentation updates for elasticache
