@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.11 - 2021-01-04
 
 * `Aws\CloudSearch` - This release adds support for new Amazon CloudSearch instances.
 * `Aws\HealthLake` - Amazon HealthLake now supports exporting data from FHIR Data Stores in Preview.
