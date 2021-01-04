@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudSearch` - This release adds support for new Amazon CloudSearch instances.
+* `Aws\HealthLake` - Amazon HealthLake now supports exporting data from FHIR Data Stores in Preview.
+
 ## 3.171.10 - 2020-12-31
 
 * `Aws\ServiceCatalog` - Enhanced Service Catalog DescribeProvisioningParameters API to return new parameter constraints, i.e., MinLength, MaxLength, MinValue, MaxValue, ConstraintDescription and AllowedPattern
