@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.12 - 2021-01-05
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for Application Auto Scaling
 * `Aws\CostExplorer` - - ### Features - Add new GetCostcategories API - Support filter for GetDimensions, GetTags and GetCostcategories api - Support sortBy metrics for GetDimensions, GetTags and GetCostcategories api
