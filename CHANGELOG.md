@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - This update increases the number of instance types that can be added to the overrides within an mixed instances group configuration.
+* `Aws\AutoScalingPlans` - Documentation updates for AWS Auto Scaling
+* `Aws\Transfer` - This release adds support for Amazon EFS, so customers can transfer files over SFTP, FTPS and FTP in and out of Amazon S3 as well as Amazon EFS.
+
 ## 3.171.12 - 2021-01-05
 
 * `Aws\ApplicationAutoScaling` - Documentation updates for Application Auto Scaling
