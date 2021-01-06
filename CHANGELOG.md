@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.13 - 2021-01-06
 
 * `Aws\AutoScaling` - This update increases the number of instance types that can be added to the overrides within an mixed instances group configuration.
 * `Aws\AutoScalingPlans` - Documentation updates for AWS Auto Scaling
