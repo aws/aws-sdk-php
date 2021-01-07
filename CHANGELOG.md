@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.14 - 2021-01-07
 
 * `Aws\CodePipeline` - Adding cancelled status and summary for executions aborted by pipeline updates.
 * `Aws\DevOpsGuru` - Add resourceHours field in GetAccountHealth API to show total number of resource hours AWS Dev Ops Guru has done work for in the last hour.
