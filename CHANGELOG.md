@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodePipeline` - Adding cancelled status and summary for executions aborted by pipeline updates.
+* `Aws\DevOpsGuru` - Add resourceHours field in GetAccountHealth API to show total number of resource hours AWS Dev Ops Guru has done work for in the last hour.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for I-Frame-only HLS manifest generation in CMAF outputs.
+
 ## 3.171.13 - 2021-01-06
 
 * `Aws\AutoScaling` - This update increases the number of instance types that can be added to the overrides within an mixed instances group configuration.
