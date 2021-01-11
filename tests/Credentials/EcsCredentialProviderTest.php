@@ -20,6 +20,7 @@ class EcsCredentialProviderTest extends TestCase
     private function clearEnv()
     {
         putenv(EcsCredentialProvider::ENV_URI . '=');
+        unset($_SERVER[EcsCredentialProvider::ENV_URI]);
     }
 
     public function setUp()
