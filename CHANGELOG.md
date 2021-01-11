@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\KMS` - Adds support for filtering grants by grant ID and grantee principal in ListGrants requests to AWS KMS.
+* `Aws\RDS` - This releases adds support for Major Version Upgrades on Aurora MySQL Global Clusters. Customers will be able to upgrade their whole Aurora MySQL Global Cluster to a new major engine version.
+
 ## 3.171.14 - 2021-01-07
 
 * `Aws\CodePipeline` - Adding cancelled status and summary for executions aborted by pipeline updates.
