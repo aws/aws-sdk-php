@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Adds support for the Smart Card Redirection feature
+* `Aws\AuditManager` - This release introduces tag support for assessment frameworks. You can now add, remove, and get tags from existing frameworks, and specify the tags to apply when creating a custom framework.
+* `Aws\ElastiCache` - Documentation updates for elasticache
+* `Aws\Lightsail` - This release adds IPv6 support for Amazon Lightsail instances, container services, CDN distributions, and load balancers.
+* `Aws\SSM` - AWS Systems Manager adds pagination support for DescribeDocumentPermission API
+
 ## 3.171.15 - 2021-01-11
 
 * `Aws\KMS` - Adds support for filtering grants by grant ID and grantee principal in ListGrants requests to AWS KMS.
