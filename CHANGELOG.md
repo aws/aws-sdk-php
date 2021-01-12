@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.16 - 2021-01-12
 
 * `Aws\AppStream` - Adds support for the Smart Card Redirection feature
 * `Aws\AuditManager` - This release introduces tag support for assessment frameworks. You can now add, remove, and get tags from existing frameworks, and specify the tags to apply when creating a custom framework.
