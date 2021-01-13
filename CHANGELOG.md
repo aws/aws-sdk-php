@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\FraudDetector` - Added support for cancelling a model version that is TRAINING_IN_PROGRESS.
+* `Aws\Personalize` - Miscellaneous updates and improvements to the documentation
+
 ## 3.171.16 - 2021-01-12
 
 * `Aws\AppStream` - Adds support for the Smart Card Redirection feature
