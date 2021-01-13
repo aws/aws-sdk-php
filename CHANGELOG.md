@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.17 - 2021-01-13
 
 * `Aws\FraudDetector` - Added support for cancelling a model version that is TRAINING_IN_PROGRESS.
 * `Aws\Personalize` - Miscellaneous updates and improvements to the documentation
