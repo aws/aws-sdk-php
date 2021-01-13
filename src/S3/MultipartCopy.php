@@ -50,6 +50,11 @@ class MultipartCopy extends AbstractUploadManager
      *   options are ignored.
      * - source_metadata: (Aws\ResultInterface) An object that represents the
      *   result of executing a HeadObject command on the copy source.
+     * - copy_file_path: (string) The name of the file to copy, including the
+     *   folder.  This is specifically for copying files with a '?' in the path
+     *   so that we know if the source contains query params and where they
+     *   start.  If the file does not have a '?' in the title, this is not
+     *   necessary.
      *
      * @param S3ClientInterface $client Client used for the upload.
      * @param string $source Location of the data to be copied
@@ -185,7 +190,13 @@ class MultipartCopy extends AbstractUploadManager
             'Key' => $key,
         ];
         if (strpos($key, '?')) {
-            list($key, $query) = explode('?', $key, 2);
+            $query = [];
+            if (isset($this->config['copy_file_path'])) {
+                $query = substr($key, strlen($this->config['copy_file_path']));
+                $key = $this->config['copy_file_path'];
+            } else {
+                list($key, $query) = explode('?', $key, 2);
+            }
             $headParams['Key'] = $key;
             $query = Psr7\parse_query($query, false);
             if (isset($query['versionId'])) {

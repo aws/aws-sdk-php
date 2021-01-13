@@ -115,6 +115,7 @@ class MultipartCopyTest extends TestCase
         $copyOptions = [
             'bucket' => 'foo',
             'key' => 'bar',
+            'copy_file_path'  => ['bar'],
             'source_metadata' => new Result(['ContentLength' => 11 * self::MB]),
             'params'          => ['RequestPayer' => 'test'],
             'before_initiate' => function($command) {
