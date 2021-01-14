@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.18 - 2021-01-14
 
 * `Aws\CognitoIdentity` - Add Attributes For Access Control support for Amazon Cognito Identity Pools to facilitate access to AWS resources based on attributes from social and corporate identity providers
 * `Aws\Pinpoint` - Customers can create segments using 5 new filters. Filters can check for the presence of a substring in attributes and can perform time-based comparisons formatted as ISO_INSTANT datetimes.
