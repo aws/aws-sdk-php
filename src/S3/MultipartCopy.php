@@ -192,7 +192,7 @@ class MultipartCopy extends AbstractUploadManager
         if (strpos($key, '?')) {
             $query = [];
             if (isset($this->config['copy_file_path'])) {
-                $query = substr($key, strlen($this->config['copy_file_path']));
+                $query = substr($key, strlen($this->config['copy_file_path'])+1);
                 $key = $this->config['copy_file_path'];
             } else {
                 list($key, $query) = explode('?', $key, 2);
