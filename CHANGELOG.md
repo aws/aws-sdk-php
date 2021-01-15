@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.19 - 2021-01-15
 
 * `Aws\SNS` - Documentation updates for Amazon SNS.
 
