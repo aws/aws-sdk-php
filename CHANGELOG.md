@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SNS` - Documentation updates for Amazon SNS.
+
 ## 3.171.18 - 2021-01-14
 
 * `Aws\CognitoIdentity` - Add Attributes For Access Control support for Amazon Cognito Identity Pools to facilitate access to AWS resources based on attributes from social and corporate identity providers
