@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - ACM Private CA is launching additional certificate templates and API parameters. This allows customers to create custom certificates for their identity and secure communication use cases.
+* `Aws\Chime` - Add support for specifying ChimeBearer header as part of the request for Amazon Chime SDK messaging APIs. Documentation updates.
+* `Aws\ECS` - This release adds support to include task definition metadata information such as registeredAt, deregisteredAt, registeredBy as part of DescribeTaskDefinition API.
+
 ## 3.171.19 - 2021-01-15
 
 * `Aws\SNS` - Documentation updates for Amazon SNS.
