@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.20 - 2021-01-19
 
 * `Aws\ACMPCA` - ACM Private CA is launching additional certificate templates and API parameters. This allows customers to create custom certificates for their identity and secure communication use cases.
 * `Aws\Chime` - Add support for specifying ChimeBearer header as part of the request for Amazon Chime SDK messaging APIs. Documentation updates.
