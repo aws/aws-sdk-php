@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kafka` - Amazon MSK has added a new API that allows you to update all the brokers in the cluster to the specified type.
+* `Aws\ResourceGroupsTaggingAPI` - This release adds a new parameter ResourceARNList to Resource Groups Tagging api GetResources api to allow customers retrieve tag data for specific resources.
+* `Aws\SecurityHub` - This release of ASFF adds a new Action object and a new resource details object - AwsSsmPatchCompliance. It also adds several new attributes for the AwsEc2NetworkInterface resource type.
+
 ## 3.171.20 - 2021-01-19
 
 * `Aws\ACMPCA` - ACM Private CA is launching additional certificate templates and API parameters. This allows customers to create custom certificates for their identity and secure communication use cases.
