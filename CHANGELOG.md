@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.171.21 - 2021-01-21
 
 * `Aws\Kafka` - Amazon MSK has added a new API that allows you to update all the brokers in the cluster to the specified type.
 * `Aws\ResourceGroupsTaggingAPI` - This release adds a new parameter ResourceARNList to Resource Groups Tagging api GetResources api to allow customers retrieve tag data for specific resources.
