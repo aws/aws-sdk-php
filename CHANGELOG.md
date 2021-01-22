@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Introducing startDate field for CapacityReservation object for the date and time which the reservation started and adding reserved parameter for ModifyCapacityReservation.
+* `Aws\GreengrassV2` - Documentation updates that improve clarity and fix broken links.
+* `Aws\LexModelsV2` - This release adds support for Amazon Lex V2 APIs for model building.
+* `Aws\LexRuntimeV2` - This release adds support for Amazon Lex V2 APIs for runtime, including Streaming APIs for conversation management.
+* `Aws\RDS` - Documentation updates for Amazon RDS
+* `Aws\Redshift` - Update VPC endpoint field names.
+* `Aws\SSM` - Documentation updates for the ListDocumentFilters API action.
+
 ## 3.171.21 - 2021-01-21
 
 * `Aws\Kafka` - Amazon MSK has added a new API that allows you to update all the brokers in the cluster to the specified type.
