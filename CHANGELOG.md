@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Backup` - Documentation updates for AWS Backup
+
 ## 3.172.0 - 2021-01-22
 
 * `Aws\EC2` - Introducing startDate field for CapacityReservation object for the date and time which the reservation started and adding reserved parameter for ModifyCapacityReservation.
