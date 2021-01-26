@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.172.1 - 2021-01-26
 
 * `Aws\Backup` - Documentation updates for AWS Backup
 
