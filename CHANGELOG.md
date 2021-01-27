@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AccessAnalyzer` - This release adds Secrets Manager secrets as a supported resource in IAM Access Analyzer to help you identify secrets that can be accessed from outside your account or AWS organization.
+* `Aws\CustomerProfiles` - This release makes Uri a required parameter in GetIntegrationRequest and DeleteIntegrationRequest.
+* `Aws\ElastiCache` - Add support to pass ParameterGroup name as part updating Engine Version of Global Datastore.
+* `Aws\ElasticsearchService` - Amazon Elasticsearch Service adds support for node-to-node encryption and encryption at rest for existing domains running Elasticsearch version 6.7 and above
+* `Aws\Lightsail` - Documentation updates for Lightsail
+* `Aws\SesV2` - This release includes the ability to assign a configuration set to an email identity (a domain or email address), which allows the settings from the configuration set to be applied to the identity.
+
 ## 3.172.1 - 2021-01-26
 
 * `Aws\Backup` - Documentation updates for AWS Backup
