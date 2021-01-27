@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.172.2 - 2021-01-27
 
 * `Aws\AccessAnalyzer` - This release adds Secrets Manager secrets as a supported resource in IAM Access Analyzer to help you identify secrets that can be accessed from outside your account or AWS organization.
 * `Aws\CustomerProfiles` - This release makes Uri a required parameter in GetIntegrationRequest and DeleteIntegrationRequest.
