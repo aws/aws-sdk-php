@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.172.3 - 2021-01-28
 
 * `Aws\CloudWatch` - Update to SDK to support label time zones in CloudWatch GetMetricData
 * `Aws\GlueDataBrew` - This SDK release adds support for specifying a custom delimiter for input CSV datasets and for CSV job outputs.
