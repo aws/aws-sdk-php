@@ -99,7 +99,10 @@ class LexModelsV2Client extends AwsClient {
     }
 
     /**
-     * Creates a middleware that updates the Content-Type header when it is present
+     * Creates a middleware that updates the Content-Type header when it is present;
+     * this is necessary because the service protocol is rest-json which by default
+     * sets the content-type to 'application/json', but interacting with the service
+     * requires it to be set to x-amz-json-1.1
      *
      * @return callable
      */
