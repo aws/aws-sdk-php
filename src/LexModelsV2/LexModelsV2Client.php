@@ -99,7 +99,7 @@ class LexModelsV2Client extends AwsClient {
     }
 
     /**
-     * Creates a middleware that fixes the Content-Type header when it is present
+     * Creates a middleware that updates the Content-Type header when it is present
      *
      * @return callable
      */
