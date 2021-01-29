@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.172.4 - 2021-01-29
 
 * `Aws\Connect` - Added API to manage queues or get hours of operation for a queue programmatically, which can be used to create new/update queues, or take actions when skills are outside of their hours of operation.
 * `Aws\LexModelsV2` - Fixed bug where incorrect Content-Type header was being sent to the LexModelsV2 service
