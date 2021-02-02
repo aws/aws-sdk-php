@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.0 - 2021-02-02
 
 * `Aws\` - Added privatelink functionality
 * `Aws\AppMesh` - App Mesh now supports mutual TLS with two-way peer authentication. You can specify client certificates, server-side TLS validation, and matching of Subject Alternative Names.
