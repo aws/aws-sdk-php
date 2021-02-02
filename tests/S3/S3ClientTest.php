@@ -1771,7 +1771,7 @@ EOXML;
         $expectedException
     )
     {
-        if (!class_exists('Error')) {
+        if (version_compare(PHP_VERSION, '7.1', '<')) {
             $this->markTestSkipped();
         }
         $this->expectException('InvalidArgumentException');
