@@ -165,10 +165,10 @@ class S3ControlClientTest extends TestCase
             $this->markTestSkipped();
         }
         if (method_exists($this, 'expectException')) {
-            $this->expectException(Aws\Exception\UnresolvedEndpointException::class);
+            $this->expectException(\Aws\Exception\UnresolvedEndpointException::class);
             $this->expectExceptionMessage($expectedException);
         } else {
-            $this->setExpectedException(Aws\Exception\UnresolvedEndpointException::class, $expectedException);
+            $this->setExpectedException(\Aws\Exception\UnresolvedEndpointException::class, $expectedException);
         }
         $handler = function (RequestInterface $req) {
             return Promise\promise_for(new Response);
