@@ -1771,6 +1771,9 @@ EOXML;
         $expectedException
     )
     {
+        if (!class_exists('Error')) {
+            $this->markTestSkipped();
+        }
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage($expectedException);
         $s3ClientConfig = [

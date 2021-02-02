@@ -161,6 +161,9 @@ class S3ControlClientTest extends TestCase
         $expectedException
     )
     {
+        if (!class_exists('Error')) {
+            $this->markTestSkipped();
+        }
         $this->expectException('Aws\Exception\UnresolvedEndpointException');
         $this->expectExceptionMessage($expectedException);
         $handler = function (RequestInterface $req) {
