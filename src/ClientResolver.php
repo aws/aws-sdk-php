@@ -700,13 +700,6 @@ class ClientResolver
 
     public static function _apply_endpoint($value, array &$args, HandlerList $list)
     {
-        $parts = parse_url($value);
-        if (empty($parts['scheme']) || empty($parts['host'])) {
-            throw new IAE(
-                'Endpoints must be full URIs and include a scheme and host'
-            );
-        }
-
         $args['endpoint'] = $value;
     }
 

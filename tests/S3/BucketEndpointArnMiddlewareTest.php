@@ -412,21 +412,6 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     new Command([])
                 )
             ],
-            // Endpoint and ARN both set
-            [
-                new Command(
-                    'GetObject',
-                    [
-                        'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
-                        'Key' => 'Bar/Baz',
-                    ]
-                ),
-                ['region' => 'us-west-2', 'endpoint' => 'https://foo.com'],
-                new UnresolvedEndpointException('A custom endpoint has been'
-                    . ' supplied along with an access point ARN, and these are'
-                    . ' not compatible with each other. Please only use one or'
-                    . ' the other.')
-            ],
             // Non-matching partition
             [
                 new Command(

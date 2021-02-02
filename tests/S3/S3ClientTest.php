@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\S3;
 
+use Aws\Arn\ArnParser;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
@@ -12,6 +13,7 @@ use Aws\S3\Exception\S3Exception;
 use Aws\S3\RegionalEndpoint\Configuration;
 use Aws\S3\S3Client;
 use Aws\S3\UseArnRegion\Configuration as UseArnRegionConfiguration;
+use Aws\Signature\SignatureV4;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
@@ -1671,4 +1673,129 @@ EOXML;
 
         $this->assertSame(3, $counter);
     }
+
+    public function privateLinkSuccessProvider() {
+        return [
+            ['listObjects', ['Bucket' => 'bucketname'], 'beta.example.com' , ['s3' => ['use_dual_stack_endpoint' => false, 'addressing_style' => 'virtual', 'use_arn_region' => false]], 'us-west-2', 'bucketname.beta.example.com', ['name' => 's3', 'region' => 'us-west-2']],
+            ['listObjects', ['Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint'], 'beta.example.com' , ['s3' => ['use_dual_stack_endpoint' => false, 'addressing_style' => 'virtual', 'use_arn_region' => false]], 'us-west-2' , 'myendpoint-123456789012.beta.example.com' , ['name' => 's3', 'region' => 'us-west-2']],
+            ['listObjects', ['Bucket' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'], 'beta.example.com', ['s3' => ['use_dual_stack_endpoint' => false, 'addressing_style' => 'virtual', 'use_arn_region' => false]] , 'us-west-2' , 'myaccesspoint-123456789012.op-01234567890123456.beta.example.com' , ['name' => 's3-outposts', 'region' => 'us-west-2']],
+            ['listBuckets', [], 'bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', '[]' , 'us-west-2', 'bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com' , ['name' => 's3', 'region' => 'us-west-2']],
+            ['listObjects', ['Bucket' => 'bucketname'], 'bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', ['s3' => ['use_path_style_endpoint' => true]], 'us-west-2', 'bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', ['name' => 's3', 'region' => 'us-west-2']],
+            ['listObjects', ['Bucket' => 'bucketname'], 'bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', ['s3' => ['addressing_style' => 'virtual']], 'us-west-2', 'bucketname.bucket.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', ['name' => 's3', 'region' => 'us-west-2']],
+            ['listObjects', ['Bucket' => 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint'], 'accesspoint.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com', ['s3' => ['use_arn_region' => true]], 'eu-west-1' , 'myendpoint-123456789012.accesspoint.vpce-123-abc.s3.us-west-2.vpce.amazonaws.com' , ['name' => 's3', 'region' => 'us-west-2']],
+        ];
+    }
+    /**
+     * @dataProvider privateLinkSuccessProvider
+     * @param $operation
+     * @param $parameters
+     * @param $endpoint_url
+     * @param $configuration
+     * @param $region
+     * @param $expectedEndpoint
+     * @param $expectedSignature
+     */
+    public function testListObjectsWithPrivateLinkSuccess(
+        $operation,
+        $parameters,
+        $endpoint_url,
+        $configuration,
+        $region,
+        $expectedEndpoint,
+        $expectedSignature
+    )
+    {
+        $s3ClientConfig = [
+            'version'     => 'latest',
+            'region'      => $region,
+            'endpoint' => $endpoint_url,
+        ];
+        if (!empty($configuration['s3']['use_dual_stack_endpoint'])) {
+            $s3ClientConfig['use_dual_stack_endpoint'] = $configuration['s3']['use_dual_stack_endpoint'];
+        }
+        if (!empty($configuration['s3']['addressing_style'])) {
+            $s3ClientConfig['addressing_style'] = $configuration['s3']['addressing_style'];
+        }
+        if (!empty($configuration['s3']['use_arn_region'])) {
+            $s3ClientConfig['use_arn_region'] = $configuration['s3']['use_arn_region'];
+        }
+        if (!empty($configuration['s3']['use_path_style_endpoint'])) {
+            $s3ClientConfig['use_path_style_endpoint'] = $configuration['s3']['use_path_style_endpoint'];
+        }
+        $s3Client = new S3Client($s3ClientConfig);
+        $command = $s3Client->getCommand($operation, $parameters);
+        $request = \Aws\serialize($command);
+        $service = "";
+        $signerRegion = "";
+        if (ArnParser::isArn($command['Bucket'])) {
+            $bucketArn = ArnParser::parse($command['Bucket']);
+            $service = $bucketArn->getService();
+            $signerRegion = $bucketArn->getRegion();
+        } else {
+            $service = 's3';
+            $signerRegion = $region;
+        }
+        $signer = new SignatureV4(
+            $service,
+            $signerRegion
+        );
+        $requestUri = $signer->presign($request, $s3Client->getCredentials()->wait(), time())->getUri();
+
+        self::assertSame($expectedEndpoint, $requestUri->getHost());
+
+        foreach ($expectedSignature as $expectedInSignature) {
+            self::assertContains($expectedInSignature, $requestUri->getQuery());
+        }
+    }
+    public function getPrivateLinkFailureCases(){
+        return [
+            ['listObjects' , ['Bucket' => 'bucketname'], 'beta.example.com', ['s3' => ['use_dual_stack_endpoint' => true, 'addressing_style' => 'virtual', 'use_arn_region' => false]], 'us-west-2', 'Custom Endpoint + Dualstack not supported'],
+            ['listObjects' , ['Bucket' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'], 'beta.example.com', ['s3' => ['use_dual_stack_endpoint' => true, 'addressing_style' => 'virtual', 'use_arn_region' => false]] , 'us-west-2' , 'Outposts + dualstack is not supported'],
+        ];
+    }
+    /**
+     * @dataProvider getPrivateLinkFailureCases
+     * @param $operation
+     * @param $parameters
+     * @param $endpoint_url
+     * @param $configuration
+     * @param $region
+     * @param $expectedException
+     */
+    public function testListObjectsWithPrivateLinkFailures(
+        $operation,
+        $parameters,
+        $endpoint_url,
+        $configuration,
+        $region,
+        $expectedException
+    )
+    {
+        if (version_compare(PHP_VERSION, '7.1', '<')) {
+            $this->markTestSkipped();
+        }
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage($expectedException);
+        $s3ClientConfig = [
+            'version'     => 'latest',
+            'region'      => $region,
+            'endpoint' => $endpoint_url,
+        ];
+        if (!empty($configuration['s3']['use_dual_stack_endpoint'])) {
+            $s3ClientConfig['use_dual_stack_endpoint'] = $configuration['s3']['use_dual_stack_endpoint'];
+        }
+        if (!empty($configuration['s3']['addressing_style'])) {
+            $s3ClientConfig['addressing_style'] = $configuration['s3']['addressing_style'];
+        }
+        if (!empty($configuration['s3']['use_arn_region'])) {
+            $s3ClientConfig['use_arn_region'] = $configuration['s3']['use_arn_region'];
+        }
+        if (!empty($configuration['s3']['use_path_style_endpoint'])) {
+            $s3ClientConfig['use_path_style_endpoint'] = $configuration['s3']['use_path_style_endpoint'];
+        }
+        $s3Client = new S3Client($s3ClientConfig);
+        $command = $s3Client->getCommand($operation, $parameters);
+        \Aws\serialize($command);
+    }
+
 }
