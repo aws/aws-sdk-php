@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Added privatelink functionality
+* `Aws\AppMesh` - App Mesh now supports mutual TLS with two-way peer authentication. You can specify client certificates, server-side TLS validation, and matching of Subject Alternative Names.
+* `Aws\ApplicationAutoScaling` - With this release, scheduled actions of Application Auto Scaling can be created in the local time zone and automatically adjusted according to daylight saving changes.
+* `Aws\IoTWireless` - Add enum value MqttTopic for Destination ExpressionType, add LoRaWANNetworkServerCertificateId for GetWirelessGatewayCertificate API
+* `Aws\LocationService` - Doc only update for Amazon Location Maps that fixes a customer related issue regarding MapConfiguration
+* `Aws\LookoutforVision` - This release includes the General Availability (GA) SDK for Amazon Lookout for Vision. New for GA is tagging support for Amazon Lookout for Vision models.
+* `Aws\MediaLive` - AWS Elemental MediaLive now supports Image Media Playlists on HLS outputs, version 0.4 (trick-mode).
+* `Aws\Organizations` - Documentation updates for AWS Organizations.
+* `Aws\RDSDataService` - With the Data API, you can now use UUID and JSON data types as input to your database. Also with the Data API, you can now have a LONG type value returned from your database as a STRING value.
+* `Aws\Route53` - Documentation updates for Route 53
+* `Aws\S3Control` - Amazon S3 Batch Operations now supports Delete Object Tagging
+
 ## 3.172.4 - 2021-01-29
 
 * `Aws\Connect` - Added API to manage queues or get hours of operation for a queue programmatically, which can be used to create new/update queues, or take actions when skills are outside of their hours of operation.
