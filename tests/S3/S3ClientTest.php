@@ -23,6 +23,7 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
+use http\Exception\InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -1774,8 +1775,12 @@ EOXML;
         if (version_compare(PHP_VERSION, '7.1', '<')) {
             $this->markTestSkipped();
         }
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage($expectedException);
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(\InvalidArgumentException::class);
+            $this->expectExceptionMessage($expectedException);
+        } else {
+            $this->setExpectedException(\InvalidArgumentException::class, $expectedException);
+        }
         $s3ClientConfig = [
             'version'     => 'latest',
             'region'      => $region,
