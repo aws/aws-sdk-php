@@ -23,6 +23,7 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Uri;
+use http\Exception\InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -1747,55 +1748,4 @@ EOXML;
             self::assertContains($expectedInSignature, $requestUri->getQuery());
         }
     }
-    public function getPrivateLinkFailureCases(){
-        return [
-            ['listObjects' , ['Bucket' => 'bucketname'], 'beta.example.com', ['s3' => ['use_dual_stack_endpoint' => true, 'addressing_style' => 'virtual', 'use_arn_region' => false]], 'us-west-2', 'Custom Endpoint + Dualstack not supported'],
-            ['listObjects' , ['Bucket' => 'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint'], 'beta.example.com', ['s3' => ['use_dual_stack_endpoint' => true, 'addressing_style' => 'virtual', 'use_arn_region' => false]] , 'us-west-2' , 'Outposts + dualstack is not supported'],
-        ];
-    }
-    /**
-     * @dataProvider getPrivateLinkFailureCases
-     * @param $operation
-     * @param $parameters
-     * @param $endpoint_url
-     * @param $configuration
-     * @param $region
-     * @param $expectedException
-     */
-    public function testListObjectsWithPrivateLinkFailures(
-        $operation,
-        $parameters,
-        $endpoint_url,
-        $configuration,
-        $region,
-        $expectedException
-    )
-    {
-        if (version_compare(PHP_VERSION, '7.1', '<')) {
-            $this->markTestSkipped();
-        }
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage($expectedException);
-        $s3ClientConfig = [
-            'version'     => 'latest',
-            'region'      => $region,
-            'endpoint' => $endpoint_url,
-        ];
-        if (!empty($configuration['s3']['use_dual_stack_endpoint'])) {
-            $s3ClientConfig['use_dual_stack_endpoint'] = $configuration['s3']['use_dual_stack_endpoint'];
-        }
-        if (!empty($configuration['s3']['addressing_style'])) {
-            $s3ClientConfig['addressing_style'] = $configuration['s3']['addressing_style'];
-        }
-        if (!empty($configuration['s3']['use_arn_region'])) {
-            $s3ClientConfig['use_arn_region'] = $configuration['s3']['use_arn_region'];
-        }
-        if (!empty($configuration['s3']['use_path_style_endpoint'])) {
-            $s3ClientConfig['use_path_style_endpoint'] = $configuration['s3']['use_path_style_endpoint'];
-        }
-        $s3Client = new S3Client($s3ClientConfig);
-        $command = $s3Client->getCommand($operation, $parameters);
-        \Aws\serialize($command);
-    }
-
 }

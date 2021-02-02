@@ -164,8 +164,12 @@ class S3ControlClientTest extends TestCase
         if (version_compare(PHP_VERSION, '7.1', '<')) {
             $this->markTestSkipped();
         }
-        $this->expectException('Aws\Exception\UnresolvedEndpointException');
-        $this->expectExceptionMessage($expectedException);
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(\Aws\Exception\UnresolvedEndpointException::class);
+            $this->expectExceptionMessage($expectedException);
+        } else {
+            $this->setExpectedException(\Aws\Exception\UnresolvedEndpointException::class, $expectedException);
+        }
         $handler = function (RequestInterface $req) {
             return Promise\promise_for(new Response);
         };
