@@ -92,8 +92,26 @@ class BucketEndpointArnMiddleware
 
                         $arn = ArnParser::parse($cmd[$arnableKey]);
                         $partition = $this->validateArn($arn);
-
-                        $host = $this->generateAccessPointHost($arn, $req);
+                        $host = null;
+                        if (!empty($this->config['endpoint'])) {
+                            $host = "";
+                            if ($arn instanceof AccessPointArnInterface) {
+                                $cmd['@context']['signing_service'] = $arn->getService();
+                                $host .=  $arn->getAccesspointName() .
+                                    "-" .
+                                    $arn->getAccountId() .
+                                    ".";
+                            }
+                            if ($arn instanceof OutpostsArnInterface) {
+                                $host .=  $arn->getOutpostId() . '.';
+                            }
+                            if (empty($host)) {
+                                throw new InvalidArgumentException("endpoint must contain an access point or outpost");
+                            }
+                            $host .=  $this->config['endpoint'];
+                        } else {
+                            $host = $this->generateAccessPointHost($arn, $req);
+                        }
 
                         // Remove encoded bucket string from path
                         $path = $req->getUri()->getPath();
@@ -210,14 +228,6 @@ class BucketEndpointArnMiddleware
                     'Path-style addressing is currently not supported with'
                     . ' access points. Please disable path-style or do not'
                     . ' supply an access point ARN.');
-            }
-
-            // Custom endpoint is not supported with access points
-            if (!is_null($this->config['endpoint'])) {
-                throw new UnresolvedEndpointException(
-                    'A custom endpoint has been supplied along with an access'
-                    . ' point ARN, and these are not compatible with each other.'
-                    . ' Please only use one or the other.');
             }
 
             // Get partitions for ARN and client region

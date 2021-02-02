@@ -49,10 +49,7 @@ class GuzzleHandler
                         'response'         => null,
                     ];
 
-                    if (
-                        ($e instanceof RequestException)
-                        && $e->getResponse()
-                    ) {
+                    if ($e instanceof RequestException && $e->getResponse()) {
                         $error['response'] = $e->getResponse();
                     } else if (
                         class_exists('Error')
@@ -61,7 +58,6 @@ class GuzzleHandler
                     ) {
                         $error['response'] = $e->getResponse();
                     }
-
                     return new Promise\RejectedPromise($error);
                 }
             );

@@ -138,8 +138,10 @@ class EndpointArnMiddleware
                 // Process only if an appropriate member contains an ARN value
                 // and is an Outposts ARN
                 if (!empty($arn) && $arn instanceof OutpostsArnInterface) {
-                    // Generate host based on ARN
-                    $host = $this->generateOutpostsArnHost($arn, $req);
+                    // Generate host based on ARN if endpoint isn't set
+                    $host = !empty($this->config['endpoint'])
+                        ? $this->config['endpoint']
+                        : $this->generateOutpostsArnHost($arn, $req);
                     $req = $req->withHeader('x-amz-outpost-id', $arn->getOutpostId());
 
                     // ARN replacement
@@ -222,8 +224,19 @@ class EndpointArnMiddleware
                         $cmd['@context']['signing_service'] = $arn->getService();
                     }
                 }
+            elseif (!empty($this->config['endpoint'])) {
+                if (!empty($this->config['dual_stack'])) {
+                    throw new UnresolvedEndpointException(
+                        'Dualstack + Custom endpoint is not supported');
+                }
+                $cmd['@context']['signing_service'] = 's3-outposts';
+                return $nextHandler($cmd, $req);
+            }
+
             }
         }
+
+
 
         // For operations that redirect endpoint & signing service based on
         // presence of OutpostId member. These operations will likely not
@@ -231,9 +244,16 @@ class EndpointArnMiddleware
         if (in_array($cmd->getName(), self::$outpostIdRedirectCmds)
             && !empty($cmd['OutpostId'])
         ) {
-            $req = $req->withUri(
-                $req->getUri()->withHost($this->generateOutpostIdHost())
-            );
+            if (!empty($this->config['dual_stack'])) {
+                throw new UnresolvedEndpointException(
+                    'Dualstack is currently not supported with S3 Outposts ARNs.'
+                    . ' Please disable dualstack or do not supply an Outposts ARN.');
+            }
+            if (empty($this->config['endpoint'])) {
+                $req = $req->withUri(
+                    $req->getUri()->withHost($this->generateOutpostIdHost())
+                );
+            }
             $cmd['@context']['signing_service'] = 's3-outposts';
         }
 
@@ -293,7 +313,7 @@ class EndpointArnMiddleware
     private function validateArn(ArnInterface $arn)
     {
         // Dualstack is not supported with Outposts ARNs
-        if ($arn instanceof OutpostsArnInterface
+        if ($arn->getService() == 's3-outposts'
             && !empty($this->config['dual_stack'])
         ) {
             throw new UnresolvedEndpointException(
