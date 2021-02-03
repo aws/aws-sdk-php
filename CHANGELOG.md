@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.1 - 2021-02-03
 
 * `Aws\AuditManager` - This release adds AccessDeniedException to GetServicesInScope API.
 * `Aws\CodeBuild` - Documentation updates for codebuild
