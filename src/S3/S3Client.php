@@ -363,9 +363,7 @@ class S3Client extends AwsClient implements S3ClientInterface
                     [
                         'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
                         'accelerate' => $this->getConfig('use_accelerate_endpoint'),
-                        'path_style' => $this->getConfig('use_path_style_endpoint'),
-                        'endpoint'   => !empty($args['endpoint']) ? $args['endpoint'] : null,
-
+                        'path_style' => $this->getConfig('use_path_style_endpoint')
                     ]
                 ),
                 's3.endpoint_middleware'

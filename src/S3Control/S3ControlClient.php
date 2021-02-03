@@ -164,9 +164,6 @@ class S3ControlClient extends AwsClient
                 $this->getRegion(),
                 [
                     'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
-                    'endpoint' => isset($args['endpoint'])
-                        ? $args['endpoint']
-                        : null,
                 ]
             ),
             's3control.endpoint_middleware'
