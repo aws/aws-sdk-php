@@ -25,6 +25,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createGatewayAsync(array $args = [])
  * @method \Aws\Result createPortal(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createPortalAsync(array $args = [])
+ * @method \Aws\Result createPresignedPortalUrl(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createPresignedPortalUrlAsync(array $args = [])
  * @method \Aws\Result createProject(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createProjectAsync(array $args = [])
  * @method \Aws\Result deleteAccessPolicy(array $args = [])

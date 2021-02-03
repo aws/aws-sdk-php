@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AuditManager` - This release adds AccessDeniedException to GetServicesInScope API.
+* `Aws\CodeBuild` - Documentation updates for codebuild
+* `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
+* `Aws\CostExplorer` - Clarify valid values for the filter parameter for certain APIs.
+* `Aws\EC2` - EC2 Public IP now supports API for setting PTR records on Elastic IP address.
+* `Aws\GlueDataBrew` - This release adds the DescribeJobRun API to allow customers retrieve details of a given job run
+* `Aws\IoTSiteWise` - Update AccessPolicy API input to support IAM role for IAM mode. Iam role is added as part of accessPolicyIdentity.
+* `Aws\Lambda` - Support for creating Lambda Functions using 'nodejs14.x'
+* `Aws\S3` - Fix issue with s3 request uri generation
+* `Aws\SecurityHub` - Added a ProductArn parameter to DescribeProducts. ProductArn is used to identify the integration to return details for.
+* `Aws\WorkMail` - Increased maximum length of ipRanges values for Access Control Rules from 10 to 1024.
+
 ## 3.173.0 - 2021-02-02
 
 * `Aws\` - Added privatelink functionality
