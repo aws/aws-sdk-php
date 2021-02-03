@@ -46,6 +46,8 @@ class S3EndpointMiddleware
     private $endpointProvider;
     /** @var callable */
     private $nextHandler;
+    /** @var string */
+    private $endpoint;
 
     /**
      * Create a middleware wrapper function
@@ -278,11 +280,17 @@ class S3EndpointMiddleware
                 $command,
                 $this->endpoint
             );
-        $uri = new Uri();
-        //The host contains s3-outposts here, that's where it gets added
-        $request = $request->withUri(
-            $uri->withHost($host)
-        );
+        $uri = new Uri($host);
+        $scheme = $uri->getScheme();
+        if(empty($scheme)){
+            //The host contains s3-outposts here, that's where it gets added
+            $request = $request->withUri(
+                $uri->withHost($host)
+            );
+        } else {
+            $request = $request->withUri($uri);
+        }
+
         return $request;
     }
 
