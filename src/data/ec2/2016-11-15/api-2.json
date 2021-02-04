@@ -7109,6 +7109,7 @@
         "Name":{"shape":"String"},
         "SourceImageId":{"shape":"String"},
         "SourceRegion":{"shape":"String"},
+        "DestinationOutpostArn":{"shape":"String"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -7132,6 +7133,7 @@
       ],
       "members":{
         "Description":{"shape":"String"},
+        "DestinationOutpostArn":{"shape":"String"},
         "DestinationRegion":{
           "shape":"String",
           "locationName":"destinationRegion"
@@ -8325,6 +8327,7 @@
       "required":["VolumeId"],
       "members":{
         "Description":{"shape":"String"},
+        "OutpostArn":{"shape":"String"},
         "VolumeId":{"shape":"VolumeId"},
         "TagSpecifications":{
           "shape":"TagSpecificationList",
@@ -8342,6 +8345,7 @@
       "members":{
         "Description":{"shape":"String"},
         "InstanceSpecification":{"shape":"InstanceSpecification"},
+        "OutpostArn":{"shape":"String"},
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
@@ -14973,6 +14977,10 @@
         "Throughput":{
           "shape":"Integer",
           "locationName":"throughput"
+        },
+        "OutpostArn":{
+          "shape":"String",
+          "locationName":"outpostArn"
         },
         "Encrypted":{
           "shape":"Boolean",
@@ -28346,6 +28354,10 @@
           "shape":"String",
           "locationName":"ownerAlias"
         },
+        "OutpostArn":{
+          "shape":"String",
+          "locationName":"outpostArn"
+        },
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
@@ -28470,6 +28482,10 @@
         "SnapshotId":{
           "shape":"String",
           "locationName":"snapshotId"
+        },
+        "OutpostArn":{
+          "shape":"String",
+          "locationName":"outpostArn"
         }
       }
     },
