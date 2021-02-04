@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.173.2 - 2021-02-04
+
+* `Aws\S3` - This release fixes an issue with URL generation
+
 ## 3.173.1 - 2021-02-03
 
 * `Aws\AuditManager` - This release adds AccessDeniedException to GetServicesInScope API.
