@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.3 - 2021-02-04
 
 * `Aws\Appflow` - Adding schedule offset as an input for scheduled flows in CreateFlow API. Also, adding data pull start time and data pull end time for DescribeFlowExecutionRecords API response.
 * `Aws\Athena` - Adds the Athena ListEngineVersions action and the EngineVersion data type. ListEngineVersions returns the available Athena engine versions, including Auto, as a list of EngineVersion objects.
