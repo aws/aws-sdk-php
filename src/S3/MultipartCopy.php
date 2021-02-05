@@ -66,7 +66,7 @@ class MultipartCopy extends AbstractUploadManager
         if (is_array($source)) {
             $this->source = $source;
         } else {
-            $this->$source = $this->parseInputSource($source);
+            $this->source = $this->parseInputSource($source);
         }
         parent::__construct(
             $client,
@@ -133,7 +133,7 @@ class MultipartCopy extends AbstractUploadManager
             $key = str_replace('?', '%3F', $this->source['source_key']);
             $data['CopySource'] = '/' . $this->source['source_bucket'] . '/' . $key;
         } else {
-            list($bucket, $key) = explode('/', ltrim($this->sourceKey, '/'), 2);
+            list($bucket, $key) = explode('/', ltrim($this->source, '/'), 2);
             $data['CopySource'] = '/' . $bucket . '/' . $key;
         }
         $data['PartNumber'] = $partNumber;
@@ -189,7 +189,7 @@ class MultipartCopy extends AbstractUploadManager
                 $headParams['VersionId'] = $this->sourceVersionId;
             }
         } else {
-            list($bucket, $key) = explode('/', ltrim($this->sourceKey, '/'), 2);
+            list($bucket, $key) = explode('/', ltrim($this->source, '/'), 2);
             $headParams = [
                 'Bucket' => $bucket,
                 'Key' => $key,
