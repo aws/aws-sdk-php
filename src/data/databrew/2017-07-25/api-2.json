@@ -50,6 +50,10 @@
       "input":{"shape":"CreateProfileJobRequest"},
       "output":{"shape":"CreateProfileJobResponse"},
       "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -91,6 +95,10 @@
       "input":{"shape":"CreateRecipeJobRequest"},
       "output":{"shape":"CreateRecipeJobResponse"},
       "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -103,6 +111,8 @@
       "input":{"shape":"CreateScheduleRequest"},
       "output":{"shape":"CreateScheduleResponse"},
       "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -115,6 +125,7 @@
       "input":{"shape":"DeleteDatasetRequest"},
       "output":{"shape":"DeleteDatasetResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ]
@@ -128,6 +139,7 @@
       "input":{"shape":"DeleteJobRequest"},
       "output":{"shape":"DeleteJobResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ]
@@ -141,6 +153,7 @@
       "input":{"shape":"DeleteProjectRequest"},
       "output":{"shape":"DeleteProjectResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ]
@@ -154,6 +167,7 @@
       "input":{"shape":"DeleteRecipeVersionRequest"},
       "output":{"shape":"DeleteRecipeVersionResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ]
@@ -192,6 +206,19 @@
       },
       "input":{"shape":"DescribeJobRequest"},
       "output":{"shape":"DescribeJobResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "DescribeJobRun":{
+      "name":"DescribeJobRun",
+      "http":{
+        "method":"GET",
+        "requestUri":"/jobs/{name}/jobRun/{runId}"
+      },
+      "input":{"shape":"DescribeJobRunRequest"},
+      "output":{"shape":"DescribeJobRunResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
@@ -345,7 +372,8 @@
       "output":{"shape":"PublishRecipeResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"ResourceNotFoundException"}
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     },
     "SendProjectSessionAction":{
@@ -371,7 +399,9 @@
       "input":{"shape":"StartJobRunRequest"},
       "output":{"shape":"StartJobRunResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -384,7 +414,9 @@
       "input":{"shape":"StartProjectSessionRequest"},
       "output":{"shape":"StartProjectSessionResponse"},
       "errors":[
+        {"shape":"ConflictException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -438,6 +470,7 @@
       "input":{"shape":"UpdateDatasetRequest"},
       "output":{"shape":"UpdateDatasetResponse"},
       "errors":[
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ]
@@ -451,6 +484,8 @@
       "input":{"shape":"UpdateProfileJobRequest"},
       "output":{"shape":"UpdateProfileJobResponse"},
       "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -489,6 +524,8 @@
       "input":{"shape":"UpdateRecipeJobRequest"},
       "output":{"shape":"UpdateRecipeJobResponse"},
       "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
       ]
     },
@@ -501,6 +538,8 @@
       "input":{"shape":"UpdateScheduleRequest"},
       "output":{"shape":"UpdateScheduleResponse"},
       "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"}
       ]
     }
@@ -777,6 +816,18 @@
       "max":512,
       "min":1
     },
+    "CsvOptions":{
+      "type":"structure",
+      "members":{
+        "Delimiter":{"shape":"Delimiter"}
+      }
+    },
+    "CsvOutputOptions":{
+      "type":"structure",
+      "members":{
+        "Delimiter":{"shape":"Delimiter"}
+      }
+    },
     "DataCatalogInputDefinition":{
       "type":"structure",
       "required":[
@@ -927,6 +978,11 @@
         "Name":{"shape":"ScheduleName"}
       }
     },
+    "Delimiter":{
+      "type":"string",
+      "max":1,
+      "min":1
+    },
     "DescribeDatasetRequest":{
       "type":"structure",
       "required":["Name"],
@@ -991,6 +1047,45 @@
         "RoleArn":{"shape":"Arn"},
         "Tags":{"shape":"TagMap"},
         "Timeout":{"shape":"Timeout"}
+      }
+    },
+    "DescribeJobRunRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "RunId"
+      ],
+      "members":{
+        "Name":{
+          "shape":"JobName",
+          "location":"uri",
+          "locationName":"name"
+        },
+        "RunId":{
+          "shape":"JobRunId",
+          "location":"uri",
+          "locationName":"runId"
+        }
+      }
+    },
+    "DescribeJobRunResponse":{
+      "type":"structure",
+      "required":["JobName"],
+      "members":{
+        "Attempt":{"shape":"Attempt"},
+        "CompletedOn":{"shape":"Date"},
+        "DatasetName":{"shape":"DatasetName"},
+        "ErrorMessage":{"shape":"JobRunErrorMessage"},
+        "ExecutionTime":{"shape":"ExecutionTime"},
+        "JobName":{"shape":"JobName"},
+        "RunId":{"shape":"JobRunId"},
+        "State":{"shape":"JobRunState"},
+        "LogSubscription":{"shape":"LogSubscription"},
+        "LogGroupName":{"shape":"LogGroupName"},
+        "Outputs":{"shape":"OutputList"},
+        "RecipeReference":{"shape":"RecipeReference"},
+        "StartedBy":{"shape":"StartedBy"},
+        "StartedOn":{"shape":"Date"}
       }
     },
     "DescribeProjectRequest":{
@@ -1113,7 +1208,8 @@
       "type":"structure",
       "members":{
         "Json":{"shape":"JsonOptions"},
-        "Excel":{"shape":"ExcelOptions"}
+        "Excel":{"shape":"ExcelOptions"},
+        "Csv":{"shape":"CsvOptions"}
       }
     },
     "HiddenColumnList":{
@@ -1489,7 +1585,8 @@
         "Format":{"shape":"OutputFormat"},
         "PartitionColumns":{"shape":"ColumnNameList"},
         "Location":{"shape":"S3Location"},
-        "Overwrite":{"shape":"OverwriteOutput"}
+        "Overwrite":{"shape":"OverwriteOutput"},
+        "FormatOptions":{"shape":"OutputFormatOptions"}
       }
     },
     "OutputFormat":{
@@ -1503,6 +1600,12 @@
         "ORC",
         "XML"
       ]
+    },
+    "OutputFormatOptions":{
+      "type":"structure",
+      "members":{
+        "Csv":{"shape":"CsvOutputOptions"}
+      }
     },
     "OutputList":{
       "type":"list",

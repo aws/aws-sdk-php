@@ -9,6 +9,7 @@ use Aws\S3\S3EndpointMiddleware;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -333,6 +334,23 @@ class S3EndpointMiddlewareTest extends TestCase
             []
         );
         $middleware($command, $this->getIpAddressPathStyleRequest($command));
+    }
+
+    public function testApplyingEndpointWhenEndpointOptionAndPathStyleAreSet()
+    {
+        $nextHandler = function ($command, Request $request) {
+            $uri = $request->getUri();
+            $this->assertEquals($expectedHost = 'my-endpoint', $uri->getHost());
+            $this->assertEquals($expectedScheme = 'http', $uri->getScheme());
+        };
+        $command = new Command('CreateBucket', ['Bucket' => 'abc']);
+        $middleware = new S3EndpointMiddleware($nextHandler, 'us-west-2', [
+            'endpoint'   => 'http://my-endpoint:123',
+            'path_style' => true
+        ]);
+        $requestUri = new Uri('http://my-endpoint:123/some/path');
+        $request = new Request('GET', $requestUri);
+        $middleware($command, $request);
     }
 
     public function excludedCommandProvider()

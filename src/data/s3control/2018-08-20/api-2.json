@@ -1628,6 +1628,10 @@
           "shape":"S3SetObjectTaggingOperation",
           "box":true
         },
+        "S3DeleteObjectTagging":{
+          "shape":"S3DeleteObjectTaggingOperation",
+          "box":true
+        },
         "S3InitiateRestoreObject":{
           "shape":"S3InitiateRestoreObjectOperation",
           "box":true
@@ -2025,6 +2029,7 @@
         "S3PutObjectCopy",
         "S3PutObjectAcl",
         "S3PutObjectTagging",
+        "S3DeleteObjectTagging",
         "S3InitiateRestoreObject",
         "S3PutObjectLegalHold",
         "S3PutObjectRetention"
@@ -2420,6 +2425,11 @@
         "ObjectLockRetainUntilDate":{"shape":"TimeStamp"}
       }
     },
+    "S3DeleteObjectTaggingOperation":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "S3ExpirationInDays":{
       "type":"integer",
       "min":0
@@ -2464,7 +2474,10 @@
     "S3InitiateRestoreObjectOperation":{
       "type":"structure",
       "members":{
-        "ExpirationInDays":{"shape":"S3ExpirationInDays"},
+        "ExpirationInDays":{
+          "shape":"S3ExpirationInDays",
+          "box":true
+        },
         "GlacierJobTier":{"shape":"S3GlacierJobTier"}
       }
     },
