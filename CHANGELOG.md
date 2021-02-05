@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.4 - 2021-02-05
 
 * `Aws\ElasticLoadBalancingv2` - Adds a target group attribute for client IP preservation for Network Load Balancers.
 * `Aws\Macie` - Documentation updates for Amazon Macie Classic. We replaced the term "master account" with the term "administrator account." An administrator account is used to centrally manage multiple accounts.
