@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudTrail` - ConflictException is now thrown when certain operations are called on resources before CloudTrail has time to load the resources. Two new exceptions have been added to the PutInsightSelectors API.
+* `Aws\DataExchange` - This release introduces the new ExportRevision job type, which allows for the export of an entire revision.
+* `Aws\ElastiCache` - Documentation updates for elasticache
+* `Aws\ElasticLoadBalancingv2` - Adds a target group attribute for application-based stickiness for Application Load Balancers.
+* `Aws\GlobalAccelerator` - Global Accelerator now supports bringing your own IP addresses for custom routing accelerators
+* `Aws\IVS` - Fixed an issue where StreamStartTime could not be unmarshalled from response. Changed DeleteChannel and DeleteStreamKey response codes to 204.
+* `Aws\IoTSiteWise` - Recall CreatePresignedPortalUrl API
+* `Aws\Macie2` - This release of the Amazon Macie API adds support for specifying a time range in queries for usage data.
+
 ## 3.173.4 - 2021-02-05
 
 * `Aws\ElasticLoadBalancingv2` - Adds a target group attribute for client IP preservation for Network Load Balancers.
