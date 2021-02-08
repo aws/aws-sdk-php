@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.5 - 2021-02-08
 
 * `Aws\CloudTrail` - ConflictException is now thrown when certain operations are called on resources before CloudTrail has time to load the resources. Two new exceptions have been added to the PutInsightSelectors API.
 * `Aws\DataExchange` - This release introduces the new ExportRevision job type, which allows for the export of an entire revision.
