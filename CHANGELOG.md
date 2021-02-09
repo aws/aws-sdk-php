@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GameLift` - GameLift FleetIQ users can now use AMD instance families in supported Regions. In addition, FlexMatch matchmaking notification now supports SNS FIFO topics.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for WMA audio only ingest, SMPTE-TT text and image caption ingest, and MPEG-2 video in MXF OP1a outputs.
+* `Aws\QLDBSession` - This release adds CapacityExceededException to the AWS QLDBSession API.
+* `Aws\QuickSight` - QuickSight now supports Python's paginators for Exploration APIs.
+* `Aws\SageMaker` - Add a new optional FrameworkVersion field to Sagemaker Neo CreateCompilationJob API
+
 ## 3.173.5 - 2021-02-08
 
 * `Aws\CloudTrail` - ConflictException is now thrown when certain operations are called on resources before CloudTrail has time to load the resources. Two new exceptions have been added to the PutInsightSelectors API.
