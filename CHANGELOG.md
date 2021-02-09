@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.6 - 2021-02-09
 
 * `Aws\GameLift` - GameLift FleetIQ users can now use AMD instance families in supported Regions. In addition, FlexMatch matchmaking notification now supports SNS FIFO topics.
 * `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for WMA audio only ingest, SMPTE-TT text and image caption ingest, and MPEG-2 video in MXF OP1a outputs.
