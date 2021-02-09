@@ -128,7 +128,8 @@ class MultipartCopy extends AbstractUploadManager
         foreach ($params as $k => $v) {
             $data[$k] = $v;
         }
-
+        // The source parameter here is usually a string, but can be overloaded as an array
+        // if the key contains a '?' character to specify where the query parameters start
         if (is_array($this->source)) {
             $key = str_replace('?', '%3F', $this->source['source_key']);
             $data['CopySource'] = '/' . $this->source['source_bucket'] . '/' . $key;
@@ -197,7 +198,7 @@ class MultipartCopy extends AbstractUploadManager
             if (strpos($this->source, '?')) {
                 list($key, $query) = explode('?', $key, 2);
                 $headParams['Key'] = $key;
-                $query = Psr7\parse_query($query, true);
+                $query = Psr7\parse_query($query, false);
                 if (isset($query['versionId'])) {
                     $this->sourceVersionId = $query['versionId'];
                     $headParams['VersionId'] = $query['versionId'];
