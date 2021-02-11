@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.7 - 2021-02-11
 
 * `Aws\GlueDataBrew` - This release adds support for profile job sampling, which determines the number of rows on which the profile job will be executed.
 * `Aws\RDS` - Adding support for RDS Aurora Global Database Failover
