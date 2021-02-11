@@ -212,6 +212,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise describeValidDBInstanceModificationsAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result failoverDBCluster(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise failoverDBClusterAsync(array $args = []) (supported in versions 2014-10-31)
+ * @method \Aws\Result failoverGlobalCluster(array $args = []) (supported in versions 2014-10-31)
+ * @method \GuzzleHttp\Promise\Promise failoverGlobalClusterAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result importInstallationMedia(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise importInstallationMediaAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result modifyCertificates(array $args = []) (supported in versions 2014-10-31)

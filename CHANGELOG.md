@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GlueDataBrew` - This release adds support for profile job sampling, which determines the number of rows on which the profile job will be executed.
+* `Aws\RDS` - Adding support for RDS Aurora Global Database Failover
+
 ## 3.173.6 - 2021-02-09
 
 * `Aws\GameLift` - GameLift FleetIQ users can now use AMD instance families in supported Regions. In addition, FlexMatch matchmaking notification now supports SNS FIFO topics.
