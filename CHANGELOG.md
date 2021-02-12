@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppSync` - Approve release for appsync local on pipeline resolver
+* `Aws\CodePipeline` - The release provides new GetActionType and UpdateActionType APIs for viewing and editing action types in CodePipeline.
+* `Aws\Detective` - The API definition now indicates that the format for timestamps is an ISO 8601 date-time string
+* `Aws\EKS` - Amazon EKS now supports OpenId Connect (OIDC) compatible identity providers as a user authentication option
+* `Aws\ElasticLoadBalancingv2` - Adds a target group attribute for application-based stickiness for Application Load Balancers and an update to the client IP preservation attribute for Network Load Balancers.
+* `Aws\IAM` - AWS Identity and Access Management now supports tagging for the following resources: customer managed policies, identity providers, instance profiles, server certificates, and virtual MFA devices.
+* `Aws\Macie2` - This release of the Amazon Macie API replaces the term master account with the term administrator account, including deprecating APIs that use the previous term and adding APIs that use the new term.
+* `Aws\PersonalizeEvents` - Increased maximum char size of PutUsers and PutItems properties.
+* `Aws\RDS` - EngineMode in the response of DescribeDBClusterSnapshots. SupportedEngineModes, SupportsParallelQuery and SupportsGlobalDatabases in ValidUpgradeTarget of DBEngineVersions in DescribeDBEngineVersions.
+* `Aws\WAFV2` - Added the option to inspect the web request body as parsed and filtered JSON (new FieldToMatch type JsonBody), in addition to the existing option to inspect the web request body as plain text.
+
 ## 3.173.7 - 2021-02-11
 
 * `Aws\GlueDataBrew` - This release adds support for profile job sampling, which determines the number of rows on which the profile job will be executed.
