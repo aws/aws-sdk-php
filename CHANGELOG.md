@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.8 - 2021-02-12
 
 * `Aws\AppSync` - Approve release for appsync local on pipeline resolver
 * `Aws\CodePipeline` - The release provides new GetActionType and UpdateActionType APIs for viewing and editing action types in CodePipeline.
