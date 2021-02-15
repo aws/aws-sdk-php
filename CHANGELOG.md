@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Added option to provide KMS key to AWS Config DeliveryChannel
+* `Aws\KinesisVideoArchivedMedia` - The ListFragments and GetMediaForFragmentList APIs now support StreamName or StreamARN as input parameters.
+* `Aws\Lightsail` - Documentation updates for Lightsail
+* `Aws\MediaLive` - AWS MediaLive now supports Automatic-Input-Failover for CDI Inputs.
+* `Aws\MediaTailor` - MediaTailor now supports specifying aliases for dynamic variables. This allows use cases such as binding multiple origin domains to a single MediaTailor playback configuration.
+* `Aws\Pinpoint` - Lets customers use origination number when specifying SMS message configuration for Campaigns and Journeys.
+* `Aws\RedshiftDataAPIService` - This release enables fine grant access control in ListStatements, GetStatementResult, CancelStatement and DescribeStatement.
+* `Aws\WorkMailMessageFlow` - This release allows customers to update email messages as they flow in and out of Amazon WorkMail
+
 ## 3.173.8 - 2021-02-12
 
 * `Aws\AppSync` - Approve release for appsync local on pipeline resolver
