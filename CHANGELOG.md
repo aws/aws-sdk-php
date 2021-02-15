@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.9 - 2021-02-15
 
 * `Aws\ConfigService` - Added option to provide KMS key to AWS Config DeliveryChannel
 * `Aws\KinesisVideoArchivedMedia` - The ListFragments and GetMediaForFragmentList APIs now support StreamName or StreamARN as input parameters.
