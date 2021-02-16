@@ -66,7 +66,7 @@ class MultipartCopy extends AbstractUploadManager
         if (is_array($source)) {
             $this->source = $source;
         } else {
-            $this->source = $this->parseInputSource($source);
+            $this->source = $this->getInputSource($source);
         }
         parent::__construct(
             $client,
@@ -187,13 +187,16 @@ class MultipartCopy extends AbstractUploadManager
         if ($this->config['source_metadata'] instanceof ResultInterface) {
             return $this->config['source_metadata'];
         }
+        //if the source variable was overloaded with an array, use the inputs for key and bucket
         if (is_array($this->source)) {
+            $headParams = [];
             $headParams['Key'] = $this->source['source_key'];
             $headParams['Bucket'] = $this->source['source_bucket'];
             if (isset($this->source['source_version_id'])) {
                 $this->sourceVersionId = $this->source['source_version_id'];
                 $headParams['VersionId'] = $this->sourceVersionId;
             }
+        //otherwise, use the default source parsing behavior
         } else {
             list($bucket, $key) = explode('/', ltrim($this->source, '/'), 2);
             $headParams = [
@@ -214,10 +217,13 @@ class MultipartCopy extends AbstractUploadManager
     }
 
     /**
+     * Get the input source, starting with a slash if it is not an ARN to
+     * standardize the source location syntax
+     *
      * @param $inputSource
      * @return string
      */
-    private function parseInputSource($inputSource)
+    private function getInputSource($inputSource)
     {
         if (ArnParser::isArn($inputSource)) {
             $sourceBuilder = '';
