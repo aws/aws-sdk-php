@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeBuild` - This release provides per-project limits for the number of concurrent builds
+* `Aws\DevOpsGuru` - Amazon DevOps Guru is GA ready. This API update added a describeFeedback Api allows users to view submitted insight feedback. The release date is 02/16/2021
+
 ## 3.173.9 - 2021-02-15
 
 * `Aws\ConfigService` - Added option to provide KMS key to AWS Config DeliveryChannel
