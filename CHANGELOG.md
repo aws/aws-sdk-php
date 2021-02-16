@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.10 - 2021-02-16
 
 * `Aws\CodeBuild` - This release provides per-project limits for the number of concurrent builds
 * `Aws\DevOpsGuru` - Amazon DevOps Guru is GA ready. This API update added a describeFeedback Api allows users to view submitted insight feedback. The release date is 02/16/2021
