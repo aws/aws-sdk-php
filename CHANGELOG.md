@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.11 - 2021-02-17
 
 * `Aws\ConfigService` - Added INSUFFICIENT_DATA in ConformancePackComplianceType.
 * `Aws\EC2` - This release includes a new filter for describe-vpc-endpoint-services.
