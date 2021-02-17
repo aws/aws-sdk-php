@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Added INSUFFICIENT_DATA in ConformancePackComplianceType.
+* `Aws\EC2` - This release includes a new filter for describe-vpc-endpoint-services.
+* `Aws\LookoutforVision` - This release for Amazon Lookout for Vision includes documentation updates and a correction to the Status field returned in the response from StartModel and StopModel.
+
 ## 3.173.10 - 2021-02-16
 
 * `Aws\CodeBuild` - This release provides per-project limits for the number of concurrent builds
