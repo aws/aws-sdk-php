@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Adding the 'callAs' parameter to all CloudFormation StackSets APIs except getTemplateSummary to support creating and managing service-managed StackSets with AWS Organizations Delegated Administrators
+* `Aws\CodeBuild` - AWS CodeBuild now allows you to specify a separate bucket owner as part of the S3 destination in a report group.
+* `Aws\Health` - Documentation updates for health
+* `Aws\SageMaker` - This release adds expires-in-seconds parameter to the CreatePresignedDomainUrl API for support of a configurable TTL.
+
 ## 3.173.11 - 2021-02-17
 
 * `Aws\ConfigService` - Added INSUFFICIENT_DATA in ConformancePackComplianceType.
