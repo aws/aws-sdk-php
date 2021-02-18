@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.12 - 2021-02-18
 
 * `Aws\CloudFormation` - Adding the 'callAs' parameter to all CloudFormation StackSets APIs except getTemplateSummary to support creating and managing service-managed StackSets with AWS Organizations Delegated Administrators
 * `Aws\CodeBuild` - AWS CodeBuild now allows you to specify a separate bucket owner as part of the S3 destination in a report group.
