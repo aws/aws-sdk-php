@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.13 - 2021-02-19
 
 * `Aws\RDS` - Added awsBackupRecoveryPointArn in ModifyDBInstanceRequest and in the response of ModifyDBInstance.
 
