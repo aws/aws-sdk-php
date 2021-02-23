@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.15 - 2021-02-23
 
 * `Aws\AutoScaling` - Adds a new optional IncludeDeletedGroups parameter to the DescribeScalingActivities API.
 * `Aws\Connect` - Documentation updates for AWS Connect (MediaConcurrency Limit).
