@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.16 - 2021-02-24
 
 * `Aws\Appflow` - # Adding 'Amazon Honeycode' , 'Amazon Lookout for Metrics' and 'Amazon Connect Customer Profiles' as Destinations.
 * `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
