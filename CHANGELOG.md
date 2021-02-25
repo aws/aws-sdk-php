@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.17 - 2021-02-25
 
 * `Aws\Detective` - Changed "master account" to "administrator account." A new AdministratorId field replaces the deprecated MasterId field. Added an option to disable email notifications for member account invitations.
 * `Aws\GlueDataBrew` - This SDK release adds two new dataset features: 1) support for specifying the file format for a dataset, and 2) support for specifying whether the first row of a CSV or Excel file contains a header.
