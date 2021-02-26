@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.18 - 2021-02-26
 
 * `Aws\EKS` - Amazon EKS now supports adding KMS envelope encryption to existing clusters to enhance security for secrets
 * `Aws\EMR` - Added UpdateStudio API that allows updating a few attributes of an EMR Studio.
