@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EKS` - Amazon EKS now supports adding KMS envelope encryption to existing clusters to enhance security for secrets
+* `Aws\EMR` - Added UpdateStudio API that allows updating a few attributes of an EMR Studio.
+* `Aws\S3` - Add RequestPayer to GetObjectTagging and PutObjectTagging.
+* `Aws\SSOAdmin` - Relax constraint on List* API pagination tokens to include underscore character
+
 ## 3.173.17 - 2021-02-25
 
 * `Aws\Detective` - Changed "master account" to "administrator account." A new AdministratorId field replaces the deprecated MasterId field. Added an option to disable email notifications for member account invitations.

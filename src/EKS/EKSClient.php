@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **Amazon Elastic Container Service for Kubernetes** service.
+ * @method \Aws\Result associateEncryptionConfig(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise associateEncryptionConfigAsync(array $args = [])
  * @method \Aws\Result associateIdentityProviderConfig(array $args = [])
  * @method \GuzzleHttp\Promise\Promise associateIdentityProviderConfigAsync(array $args = [])
  * @method \Aws\Result createAddon(array $args = [])
