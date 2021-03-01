@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.19 - 2021-03-01
 
 * `Aws\AlexaForBusiness` - Added support for optional tags in CreateAddressBook, CreateConferenceProvider, CreateContact, CreateGatewayGroup, CreateNetworkProfile and RegisterAVSDevice APIs.
 * `Aws\CodePipeline` - Added a new field to the ListPipelines API to allow maximum search results of 1000
