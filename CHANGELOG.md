@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AlexaForBusiness` - Added support for optional tags in CreateAddressBook, CreateConferenceProvider, CreateContact, CreateGatewayGroup, CreateNetworkProfile and RegisterAVSDevice APIs.
+* `Aws\CodePipeline` - Added a new field to the ListPipelines API to allow maximum search results of 1000
+* `Aws\EKS` - Adding new error code AdmissionRequestDenied for Addons in EKS
+* `Aws\SSM` - Add Support for Patch Manger Baseline Override parameter.
+
 ## 3.173.18 - 2021-02-26
 
 * `Aws\EKS` - Amazon EKS now supports adding KMS envelope encryption to existing clusters to enhance security for secrets
