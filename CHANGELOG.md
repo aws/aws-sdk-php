@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.20 - 2021-03-02
 
 * `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
 * `Aws\DataSync` - Additional API Support to update NFS/SMB/ObjectStorage locations
