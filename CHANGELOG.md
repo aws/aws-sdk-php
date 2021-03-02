@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
+* `Aws\DataSync` - Additional API Support to update NFS/SMB/ObjectStorage locations
+* `Aws\DirectConnect` - Doc only update for AWS Direct Connect that fixes several customer-reported issues
+* `Aws\EventBridge` - Adds TraceHeader to PutEventsRequestEntry to support AWS X-Ray trace-ids on events generated using the PutEvents operation.
+* `Aws\IoTWireless` - Add ARN & Tags for PartnerAccount related APIs and WirelessGatewayTaskDefinition related APIs
+* `Aws\ManagedBlockchain` - Updates for Ethereum general availability release.
+
 ## 3.173.19 - 2021-03-01
 
 * `Aws\AlexaForBusiness` - Added support for optional tags in CreateAddressBook, CreateConferenceProvider, CreateContact, CreateGatewayGroup, CreateNetworkProfile and RegisterAVSDevice APIs.
