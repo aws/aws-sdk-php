@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.21 - 2021-03-03
 
 * `Aws\ACM` - Adds 2 new APIs to add and retrieve account configuration in AWS Certificate Manager.
 * `Aws\CloudWatchEvents` - Adds TraceHeader to PutEventsRequestEntry to support AWS X-Ray trace-ids on events generated using the PutEvents operation.
