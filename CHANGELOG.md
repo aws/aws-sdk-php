@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACM` - Adds 2 new APIs to add and retrieve account configuration in AWS Certificate Manager.
+* `Aws\CloudWatchEvents` - Adds TraceHeader to PutEventsRequestEntry to support AWS X-Ray trace-ids on events generated using the PutEvents operation.
+* `Aws\CodeBuild` - AWS CodeBuild now supports Session Manager debugging for batch builds.
+* `Aws\ElasticsearchService` - AWS ElasticSearch Feature : Support for adding tags in elastic search domain during domain creation
+* `Aws\ForecastService` - Added new StopResource operation that stops Amazon Forecast resource jobs that are in progress.
+* `Aws\Macie2` - This release of the Amazon Macie API includes miscellaneous updates and improvements to the documentation.
+* `Aws\SecretsManager` - Added support for multi-Region secrets APIs ReplicateSecretToRegions, RemoveRegionsFromReplication, and StopReplicationToReplica
+* `Aws\WellArchitected` - This release supports tagging on AWS Well-Architected workloads.
+
 ## 3.173.20 - 2021-03-02
 
 * `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
