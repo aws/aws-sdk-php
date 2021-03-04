@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.22 - 2021-03-04
 
 * `Aws\CloudWatchEvents` - Introducing support for EventBridge Api Destinations - any HTTP APIs as Targets, with managed authorization via EventBridge Connections.
 * `Aws\EventBridge` - Introducing support for EventBridge Api Destinations - any HTTP APIs as Targets, with managed authorization via EventBridge Connections.
