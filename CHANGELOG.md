@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchEvents` - Introducing support for EventBridge Api Destinations - any HTTP APIs as Targets, with managed authorization via EventBridge Connections.
+* `Aws\EventBridge` - Introducing support for EventBridge Api Destinations - any HTTP APIs as Targets, with managed authorization via EventBridge Connections.
+* `Aws\MWAA` - This release introduces a new MinWorker parameter to the CreateEnvironment and UpdateEnvironment APIs. MinWorker allows the users to set a minimum worker count for worker auto-scaling operations.
+* `Aws\SageMaker` - This release adds the ResolvedOutputS3Uri to the DescribeFeatureGroup API to indicate the S3 prefix where offline data is stored in a feature group
+* `Aws\ServiceDiscovery` - Supports creating API-only services under DNS namespace. Add namespace syntax validation.
+
 ## 3.173.21 - 2021-03-03
 
 * `Aws\ACM` - Adds 2 new APIs to add and retrieve account configuration in AWS Certificate Manager.
