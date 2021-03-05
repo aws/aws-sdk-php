@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.23 - 2021-03-05
 
 * `Aws\Appflow` - Documentation updates for arn:aws:trebuchet:::service:v1:decb008d-e0d8-44a4-b93c-092f0355d523
 * `Aws\Athena` - Adds APIs to create, list, update, and delete prepared SQL statements that have optional placeholder parameters. A prepared statement can use different values for these parameters each time it is run.
