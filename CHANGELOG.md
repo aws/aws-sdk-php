@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Appflow` - Documentation updates for arn:aws:trebuchet:::service:v1:decb008d-e0d8-44a4-b93c-092f0355d523
+* `Aws\Athena` - Adds APIs to create, list, update, and delete prepared SQL statements that have optional placeholder parameters. A prepared statement can use different values for these parameters each time it is run.
+* `Aws\CodePipeline` - Updated the parameters to make actionType required for UpdateActionType
+* `Aws\EC2` - Expands EC2/Spot Fleet capacity-optimized allocation strategy to allow users to prioritize instance pools. Fleet attempts to fulfill priorities on a best-effort basis but optimizes for capacity first.
+* `Aws\LicenseManager` - License Manager Automated Discovery now supports Exclusion Filters.
+* `Aws\MediaLive` - Medialive now supports the ability to transfer AWS Elemental Link devices to another region.
+* `Aws\NetworkFirewall` - Added a new UpdateToken output field to the PerObjectStatus as part of firewall sync state. This is added to track which version of the object the firewall is in sync or pending synchronization.
+* `Aws\Shield` - Add support for tagging of Shield protection and protection group resources.
+
 ## 3.173.22 - 2021-03-04
 
 * `Aws\CloudWatchEvents` - Introducing support for EventBridge Api Destinations - any HTTP APIs as Targets, with managed authorization via EventBridge Connections.
