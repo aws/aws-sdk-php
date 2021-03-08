@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.24 - 2021-03-08
 
 * `Aws\AutoScaling` - Documentation updates for autoscaling for capacity-optimized-prioritized SpotAllocationStrategy
 * `Aws\EMR` - Amazon EMR customers can now specify how EC2 On-Demand Capacity Reservations are used in their EMR clusters with instance fleets using allocation strategy.
