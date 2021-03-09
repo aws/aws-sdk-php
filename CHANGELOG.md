@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.25 - 2021-03-09
 
 * `Aws\AutoScaling` - EC2 Auto Scaling now supports setting a local time zone for cron expressions in scheduled actions, removing the need to adjust for Daylight Saving Time (DST)
 * `Aws\CodeGuruProfiler` - Update documentation to include Python. Add ConflictException for DeleteProfilingGroup. Add FrameMetricValue.
