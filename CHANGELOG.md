@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.26 - 2021-03-10
 
 * `Aws\AccessAnalyzer` - This release adds support to preview IAM Access Analyzer findings for a resource before deploying resource permission changes.
 * `Aws\Backup` - Added support for enabling continuous backups.
