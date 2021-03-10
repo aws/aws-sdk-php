@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AccessAnalyzer` - This release adds support to preview IAM Access Analyzer findings for a resource before deploying resource permission changes.
+* `Aws\Backup` - Added support for enabling continuous backups.
+* `Aws\S3` - Adding ID element to the CORSRule schema
+* `Aws\SSM` - Systems Manager support for tagging OpsMetadata.
+
 ## 3.173.25 - 2021-03-09
 
 * `Aws\AutoScaling` - EC2 Auto Scaling now supports setting a local time zone for cron expressions in scheduled actions, removing the need to adjust for Daylight Saving Time (DST)
