@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.27 - 2021-03-11
 
 * `Aws\Comprehend` - ContainsPiiEntities API analyzes the input text for the presence of personally identifiable information(PII) and returns the labels of identified PII entity types such as name, address etc.
 * `Aws\MediaLive` - MediaLive supports the ability to apply a canned ACL to output sent to an AWS S3 bucket; supports ability to specify position for EBU-TT and TTML output captions converted from Teletext source.
