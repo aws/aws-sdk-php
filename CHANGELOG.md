@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Comprehend` - ContainsPiiEntities API analyzes the input text for the presence of personally identifiable information(PII) and returns the labels of identified PII entity types such as name, address etc.
+* `Aws\MediaLive` - MediaLive supports the ability to apply a canned ACL to output sent to an AWS S3 bucket; supports ability to specify position for EBU-TT and TTML output captions converted from Teletext source.
+* `Aws\NetworkFirewall` - Correct the documentation about how you can provide rule group rules
+* `Aws\WAFV2` - Correct the documentation about JSON body parsing behavior and IP set update behavior
+
 ## 3.173.26 - 2021-03-10
 
 * `Aws\AccessAnalyzer` - This release adds support to preview IAM Access Analyzer findings for a resource before deploying resource permission changes.
