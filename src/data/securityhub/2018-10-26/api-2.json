@@ -245,6 +245,21 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "DescribeOrganizationConfiguration":{
+      "name":"DescribeOrganizationConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/organization/configuration"
+      },
+      "input":{"shape":"DescribeOrganizationConfigurationRequest"},
+      "output":{"shape":"DescribeOrganizationConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "DescribeProducts":{
       "name":"DescribeProducts",
       "http":{
@@ -301,6 +316,21 @@
         {"shape":"InternalException"},
         {"shape":"InvalidInputException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
+    "DisableOrganizationAdminAccount":{
+      "name":"DisableOrganizationAdminAccount",
+      "http":{
+        "method":"POST",
+        "requestUri":"/organization/admin/disable"
+      },
+      "input":{"shape":"DisableOrganizationAdminAccountRequest"},
+      "output":{"shape":"DisableOrganizationAdminAccountResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"InvalidInputException"},
         {"shape":"InvalidAccessException"},
         {"shape":"LimitExceededException"}
       ]
@@ -365,6 +395,21 @@
         {"shape":"InvalidInputException"},
         {"shape":"InvalidAccessException"},
         {"shape":"ResourceConflictException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
+    "EnableOrganizationAdminAccount":{
+      "name":"EnableOrganizationAdminAccount",
+      "http":{
+        "method":"POST",
+        "requestUri":"/organization/admin/enable"
+      },
+      "input":{"shape":"EnableOrganizationAdminAccountRequest"},
+      "output":{"shape":"EnableOrganizationAdminAccountResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InvalidAccessException"},
         {"shape":"LimitExceededException"}
       ]
     },
@@ -553,6 +598,21 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "ListOrganizationAdminAccounts":{
+      "name":"ListOrganizationAdminAccounts",
+      "http":{
+        "method":"GET",
+        "requestUri":"/organization/admin"
+      },
+      "input":{"shape":"ListOrganizationAdminAccountsRequest"},
+      "output":{"shape":"ListOrganizationAdminAccountsResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -643,6 +703,21 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "UpdateOrganizationConfiguration":{
+      "name":"UpdateOrganizationConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/organization/configuration"
+      },
+      "input":{"shape":"UpdateOrganizationConfigurationRequest"},
+      "output":{"shape":"UpdateOrganizationConfigurationResponse"},
+      "errors":[
+        {"shape":"InternalException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InvalidAccessException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "UpdateSecurityHubConfiguration":{
       "name":"UpdateSecurityHubConfiguration",
       "http":{
@@ -703,6 +778,7 @@
     },
     "AccountDetails":{
       "type":"structure",
+      "required":["AccountId"],
       "members":{
         "AccountId":{"shape":"AccountId"},
         "Email":{"shape":"NonEmptyString"}
@@ -716,6 +792,46 @@
     "AccountIdList":{
       "type":"list",
       "member":{"shape":"NonEmptyString"}
+    },
+    "Action":{
+      "type":"structure",
+      "members":{
+        "ActionType":{"shape":"NonEmptyString"},
+        "NetworkConnectionAction":{"shape":"NetworkConnectionAction"},
+        "AwsApiCallAction":{"shape":"AwsApiCallAction"},
+        "DnsRequestAction":{"shape":"DnsRequestAction"},
+        "PortProbeAction":{"shape":"PortProbeAction"}
+      }
+    },
+    "ActionLocalIpDetails":{
+      "type":"structure",
+      "members":{
+        "IpAddressV4":{"shape":"NonEmptyString"}
+      }
+    },
+    "ActionLocalPortDetails":{
+      "type":"structure",
+      "members":{
+        "Port":{"shape":"Integer"},
+        "PortName":{"shape":"NonEmptyString"}
+      }
+    },
+    "ActionRemoteIpDetails":{
+      "type":"structure",
+      "members":{
+        "IpAddressV4":{"shape":"NonEmptyString"},
+        "Organization":{"shape":"IpOrganizationDetails"},
+        "Country":{"shape":"Country"},
+        "City":{"shape":"City"},
+        "GeoLocation":{"shape":"GeoLocation"}
+      }
+    },
+    "ActionRemotePortDetails":{
+      "type":"structure",
+      "members":{
+        "Port":{"shape":"Integer"},
+        "PortName":{"shape":"NonEmptyString"}
+      }
     },
     "ActionTarget":{
       "type":"structure",
@@ -734,6 +850,29 @@
       "type":"list",
       "member":{"shape":"ActionTarget"}
     },
+    "AdminAccount":{
+      "type":"structure",
+      "members":{
+        "AccountId":{"shape":"NonEmptyString"},
+        "Status":{"shape":"AdminStatus"}
+      }
+    },
+    "AdminAccounts":{
+      "type":"list",
+      "member":{"shape":"AdminAccount"}
+    },
+    "AdminStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLE_IN_PROGRESS"
+      ]
+    },
+    "AdminsMaxResults":{
+      "type":"integer",
+      "max":10,
+      "min":1
+    },
     "ArnList":{
       "type":"list",
       "member":{"shape":"NonEmptyString"}
@@ -748,6 +887,25 @@
     "AvailabilityZones":{
       "type":"list",
       "member":{"shape":"AvailabilityZone"}
+    },
+    "AwsApiCallAction":{
+      "type":"structure",
+      "members":{
+        "Api":{"shape":"NonEmptyString"},
+        "ServiceName":{"shape":"NonEmptyString"},
+        "CallerType":{"shape":"NonEmptyString"},
+        "RemoteIpDetails":{"shape":"ActionRemoteIpDetails"},
+        "DomainDetails":{"shape":"AwsApiCallActionDomainDetails"},
+        "AffectedResources":{"shape":"FieldMap"},
+        "FirstSeen":{"shape":"NonEmptyString"},
+        "LastSeen":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsApiCallActionDomainDetails":{
+      "type":"structure",
+      "members":{
+        "Domain":{"shape":"NonEmptyString"}
+      }
     },
     "AwsApiGatewayAccessLogSettings":{
       "type":"structure",
@@ -1351,8 +1509,33 @@
         "Attachment":{"shape":"AwsEc2NetworkInterfaceAttachment"},
         "NetworkInterfaceId":{"shape":"NonEmptyString"},
         "SecurityGroups":{"shape":"AwsEc2NetworkInterfaceSecurityGroupList"},
-        "SourceDestCheck":{"shape":"Boolean"}
+        "SourceDestCheck":{"shape":"Boolean"},
+        "IpV6Addresses":{"shape":"AwsEc2NetworkInterfaceIpV6AddressList"},
+        "PrivateIpAddresses":{"shape":"AwsEc2NetworkInterfacePrivateIpAddressList"},
+        "PublicDnsName":{"shape":"NonEmptyString"},
+        "PublicIp":{"shape":"NonEmptyString"}
       }
+    },
+    "AwsEc2NetworkInterfaceIpV6AddressDetail":{
+      "type":"structure",
+      "members":{
+        "IpV6Address":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2NetworkInterfaceIpV6AddressList":{
+      "type":"list",
+      "member":{"shape":"AwsEc2NetworkInterfaceIpV6AddressDetail"}
+    },
+    "AwsEc2NetworkInterfacePrivateIpAddressDetail":{
+      "type":"structure",
+      "members":{
+        "PrivateIpAddress":{"shape":"NonEmptyString"},
+        "PrivateDnsName":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsEc2NetworkInterfacePrivateIpAddressList":{
+      "type":"list",
+      "member":{"shape":"AwsEc2NetworkInterfacePrivateIpAddressDetail"}
     },
     "AwsEc2NetworkInterfaceSecurityGroup":{
       "type":"structure",
@@ -2622,7 +2805,8 @@
         "RelatedFindings":{"shape":"RelatedFindingList"},
         "Note":{"shape":"Note"},
         "Vulnerabilities":{"shape":"VulnerabilityList"},
-        "PatchSummary":{"shape":"PatchSummary"}
+        "PatchSummary":{"shape":"PatchSummary"},
+        "Action":{"shape":"Action"}
       }
     },
     "AwsSecurityFindingFilters":{
@@ -2762,6 +2946,41 @@
         "DeadLetterTargetArn":{"shape":"NonEmptyString"}
       }
     },
+    "AwsSsmComplianceSummary":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"NonEmptyString"},
+        "CompliantCriticalCount":{"shape":"Integer"},
+        "CompliantHighCount":{"shape":"Integer"},
+        "CompliantMediumCount":{"shape":"Integer"},
+        "ExecutionType":{"shape":"NonEmptyString"},
+        "NonCompliantCriticalCount":{"shape":"Integer"},
+        "CompliantInformationalCount":{"shape":"Integer"},
+        "NonCompliantInformationalCount":{"shape":"Integer"},
+        "CompliantUnspecifiedCount":{"shape":"Integer"},
+        "NonCompliantLowCount":{"shape":"Integer"},
+        "NonCompliantHighCount":{"shape":"Integer"},
+        "CompliantLowCount":{"shape":"Integer"},
+        "ComplianceType":{"shape":"NonEmptyString"},
+        "PatchBaselineId":{"shape":"NonEmptyString"},
+        "OverallSeverity":{"shape":"NonEmptyString"},
+        "NonCompliantMediumCount":{"shape":"Integer"},
+        "NonCompliantUnspecifiedCount":{"shape":"Integer"},
+        "PatchGroup":{"shape":"NonEmptyString"}
+      }
+    },
+    "AwsSsmPatch":{
+      "type":"structure",
+      "members":{
+        "ComplianceSummary":{"shape":"AwsSsmComplianceSummary"}
+      }
+    },
+    "AwsSsmPatchComplianceDetails":{
+      "type":"structure",
+      "members":{
+        "Patch":{"shape":"AwsSsmPatch"}
+      }
+    },
     "AwsWafWebAclDetails":{
       "type":"structure",
       "members":{
@@ -2892,6 +3111,12 @@
       "type":"list",
       "member":{"shape":"CidrBlockAssociation"}
     },
+    "City":{
+      "type":"structure",
+      "members":{
+        "CityName":{"shape":"NonEmptyString"}
+      }
+    },
     "Compliance":{
       "type":"structure",
       "members":{
@@ -2924,6 +3149,13 @@
         "ENABLED",
         "DISABLED"
       ]
+    },
+    "Country":{
+      "type":"structure",
+      "members":{
+        "CountryCode":{"shape":"NonEmptyString"},
+        "CountryName":{"shape":"NonEmptyString"}
+      }
     },
     "CreateActionTargetRequest":{
       "type":"structure",
@@ -2967,6 +3199,7 @@
     },
     "CreateMembersRequest":{
       "type":"structure",
+      "required":["AccountDetails"],
       "members":{
         "AccountDetails":{"shape":"AccountDetailsList"}
       }
@@ -2976,6 +3209,11 @@
       "members":{
         "UnprocessedAccounts":{"shape":"ResultList"}
       }
+    },
+    "CrossAccountMaxResults":{
+      "type":"integer",
+      "max":50,
+      "min":1
     },
     "Cvss":{
       "type":"structure",
@@ -3076,6 +3314,7 @@
     },
     "DeleteMembersRequest":{
       "type":"structure",
+      "required":["AccountIds"],
       "members":{
         "AccountIds":{"shape":"AccountIdList"}
       }
@@ -3120,6 +3359,18 @@
         "AutoEnableControls":{"shape":"Boolean"}
       }
     },
+    "DescribeOrganizationConfigurationRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DescribeOrganizationConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "AutoEnable":{"shape":"Boolean"},
+        "MemberAccountLimitReached":{"shape":"Boolean"}
+      }
+    },
     "DescribeProductsRequest":{
       "type":"structure",
       "members":{
@@ -3132,6 +3383,11 @@
           "shape":"MaxResults",
           "location":"querystring",
           "locationName":"MaxResults"
+        },
+        "ProductArn":{
+          "shape":"NonEmptyString",
+          "location":"querystring",
+          "locationName":"ProductArn"
         }
       }
     },
@@ -3209,6 +3465,18 @@
       "members":{
       }
     },
+    "DisableOrganizationAdminAccountRequest":{
+      "type":"structure",
+      "required":["AdminAccountId"],
+      "members":{
+        "AdminAccountId":{"shape":"NonEmptyString"}
+      }
+    },
+    "DisableOrganizationAdminAccountResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DisableSecurityHubRequest":{
       "type":"structure",
       "members":{
@@ -3231,6 +3499,7 @@
     },
     "DisassociateMembersRequest":{
       "type":"structure",
+      "required":["AccountIds"],
       "members":{
         "AccountIds":{"shape":"AccountIdList"}
       }
@@ -3238,6 +3507,14 @@
     "DisassociateMembersResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "DnsRequestAction":{
+      "type":"structure",
+      "members":{
+        "Domain":{"shape":"NonEmptyString"},
+        "Protocol":{"shape":"NonEmptyString"},
+        "Blocked":{"shape":"Boolean"}
       }
     },
     "Double":{"type":"double"},
@@ -3252,6 +3529,18 @@
       "type":"structure",
       "members":{
         "ProductSubscriptionArn":{"shape":"NonEmptyString"}
+      }
+    },
+    "EnableOrganizationAdminAccountRequest":{
+      "type":"structure",
+      "required":["AdminAccountId"],
+      "members":{
+        "AdminAccountId":{"shape":"NonEmptyString"}
+      }
+    },
+    "EnableOrganizationAdminAccountResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "EnableSecurityHubRequest":{
@@ -3270,6 +3559,13 @@
       "type":"map",
       "key":{"shape":"NonEmptyString"},
       "value":{"shape":"NonEmptyString"}
+    },
+    "GeoLocation":{
+      "type":"structure",
+      "members":{
+        "Lon":{"shape":"Double"},
+        "Lat":{"shape":"Double"}
+      }
     },
     "GetEnabledStandardsRequest":{
       "type":"structure",
@@ -3491,6 +3787,7 @@
     },
     "InviteMembersRequest":{
       "type":"structure",
+      "required":["AccountIds"],
       "members":{
         "AccountIds":{"shape":"AccountIdList"}
       }
@@ -3510,6 +3807,15 @@
     "IpFilterList":{
       "type":"list",
       "member":{"shape":"IpFilter"}
+    },
+    "IpOrganizationDetails":{
+      "type":"structure",
+      "members":{
+        "Asn":{"shape":"Integer"},
+        "AsnOrg":{"shape":"NonEmptyString"},
+        "Isp":{"shape":"NonEmptyString"},
+        "Org":{"shape":"NonEmptyString"}
+      }
     },
     "Ipv6CidrBlockAssociation":{
       "type":"structure",
@@ -3568,7 +3874,7 @@
       "type":"structure",
       "members":{
         "MaxResults":{
-          "shape":"MaxResults",
+          "shape":"CrossAccountMaxResults",
           "location":"querystring",
           "locationName":"MaxResults"
         },
@@ -3595,7 +3901,7 @@
           "locationName":"OnlyAssociated"
         },
         "MaxResults":{
-          "shape":"MaxResults",
+          "shape":"CrossAccountMaxResults",
           "location":"querystring",
           "locationName":"MaxResults"
         },
@@ -3611,6 +3917,28 @@
       "members":{
         "Members":{"shape":"MemberList"},
         "NextToken":{"shape":"NonEmptyString"}
+      }
+    },
+    "ListOrganizationAdminAccountsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"AdminsMaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListOrganizationAdminAccountsResponse":{
+      "type":"structure",
+      "members":{
+        "AdminAccounts":{"shape":"AdminAccounts"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "ListTagsForResourceRequest":{
@@ -3736,6 +4064,17 @@
         "DestinationDomain":{"shape":"NonEmptyString"}
       }
     },
+    "NetworkConnectionAction":{
+      "type":"structure",
+      "members":{
+        "ConnectionDirection":{"shape":"NonEmptyString"},
+        "RemoteIpDetails":{"shape":"ActionRemoteIpDetails"},
+        "RemotePortDetails":{"shape":"ActionRemotePortDetails"},
+        "LocalPortDetails":{"shape":"ActionLocalPortDetails"},
+        "Protocol":{"shape":"NonEmptyString"},
+        "Blocked":{"shape":"Boolean"}
+      }
+    },
     "NetworkDirection":{
       "type":"string",
       "enum":[
@@ -3840,6 +4179,25 @@
         "RebootOption":{"shape":"NonEmptyString"},
         "Operation":{"shape":"NonEmptyString"}
       }
+    },
+    "PortProbeAction":{
+      "type":"structure",
+      "members":{
+        "PortProbeDetails":{"shape":"PortProbeDetailList"},
+        "Blocked":{"shape":"Boolean"}
+      }
+    },
+    "PortProbeDetail":{
+      "type":"structure",
+      "members":{
+        "LocalPortDetails":{"shape":"ActionLocalPortDetails"},
+        "LocalIpDetails":{"shape":"ActionLocalIpDetails"},
+        "RemoteIpDetails":{"shape":"ActionRemoteIpDetails"}
+      }
+    },
+    "PortProbeDetailList":{
+      "type":"list",
+      "member":{"shape":"PortProbeDetail"}
     },
     "PortRange":{
       "type":"structure",
@@ -3985,6 +4343,7 @@
         "AwsApiGatewayStage":{"shape":"AwsApiGatewayStageDetails"},
         "AwsApiGatewayRestApi":{"shape":"AwsApiGatewayRestApiDetails"},
         "AwsCloudTrailTrail":{"shape":"AwsCloudTrailTrailDetails"},
+        "AwsSsmPatchCompliance":{"shape":"AwsSsmPatchComplianceDetails"},
         "AwsCertificateManagerCertificate":{"shape":"AwsCertificateManagerCertificateDetails"},
         "AwsRedshiftCluster":{"shape":"AwsRedshiftClusterDetails"},
         "AwsElbLoadBalancer":{"shape":"AwsElbLoadBalancerDetails"},
@@ -4387,6 +4746,18 @@
       }
     },
     "UpdateInsightResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateOrganizationConfigurationRequest":{
+      "type":"structure",
+      "required":["AutoEnable"],
+      "members":{
+        "AutoEnable":{"shape":"Boolean"}
+      }
+    },
+    "UpdateOrganizationConfigurationResponse":{
       "type":"structure",
       "members":{
       }

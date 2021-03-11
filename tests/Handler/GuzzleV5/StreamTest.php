@@ -42,7 +42,7 @@ class StreamTest extends TestCase
         $stream->rewind();
         $str2 = $stream->getContents();
 
-        $this->assertEquals($expected, $str1);
-        $this->assertEquals($expected, $str2);
+        $this->assertSame($expected, $str1);
+        $this->assertSame($expected, $str2);
     }
 }

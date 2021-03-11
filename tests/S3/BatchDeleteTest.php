@@ -90,9 +90,9 @@ class BatchDeleteTest extends TestCase
             $this->fail();
         } catch (DeleteMultipleObjectsException $e) {
             $this->assertCount(1, $e->getErrors());
-            $this->assertEquals('foo', $e->getErrors()[0]['Key']);
+            $this->assertSame('foo', $e->getErrors()[0]['Key']);
             $this->assertCount(1, $e->getDeleted());
-            $this->assertEquals('baz', $e->getDeleted()[0]['Key']);
+            $this->assertSame('baz', $e->getDeleted()[0]['Key']);
         }
     }
 
@@ -119,9 +119,9 @@ class BatchDeleteTest extends TestCase
             $this->fail();
         } catch (DeleteMultipleObjectsException $e) {
             $this->assertCount(1, $e->getErrors());
-            $this->assertEquals('foo', $e->getErrors()[0]['Key']);
+            $this->assertSame('foo', $e->getErrors()[0]['Key']);
             $this->assertCount(1, $e->getDeleted());
-            $this->assertEquals('baz', $e->getDeleted()[0]['Key']);
+            $this->assertSame('baz', $e->getDeleted()[0]['Key']);
         }
     }
 
@@ -143,9 +143,9 @@ class BatchDeleteTest extends TestCase
         $batch = BatchDelete::fromListObjects($client, $params);
         $batch->delete();
         $last = $mock->getLastCommand();
-        $this->assertEquals('DeleteObjects', $last->getName());
+        $this->assertSame('DeleteObjects', $last->getName());
         $this->assertCount(2, $last['Delete']['Objects']);
-        $this->assertEquals('foo', $last['Bucket']);
+        $this->assertSame('foo', $last['Bucket']);
     }
 
     public function testDeletesYieldedCommandsWhenEachCallbackReturns()
@@ -206,8 +206,8 @@ class BatchDeleteTest extends TestCase
         $batch = BatchDelete::fromListObjects($client, $params);
         $batch->delete();
         $last = $mock->getLastCommand();
-        $this->assertEquals('ListObjects', $last->getName());
+        $this->assertSame('ListObjects', $last->getName());
         $this->assertFalse(isset($last['Delete']['Objects']));
-        $this->assertEquals('foo', $last['Bucket']);
+        $this->assertSame('foo', $last['Bucket']);
     }
 }

@@ -215,6 +215,62 @@
       ],
       "idempotent":true
     },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/tags/{resourceArn}"
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "SyncResource":{
+      "name":"SyncResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/sync/{resourceType}/{resource}"
+      },
+      "input":{"shape":"SyncResourceRequest"},
+      "output":{"shape":"SyncResourceResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"}
+      ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/tags/{resourceArn}"
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "output":{"shape":"TagResourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/tags/{resourceArn}"
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateApplication":{
       "name":"UpdateApplication",
       "http":{
@@ -725,6 +781,23 @@
         "nextToken":{"shape":"NextToken"}
       }
     },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "tags":{"shape":"Tags"}
+      }
+    },
     "MaxResults":{
       "type":"integer",
       "max":25,
@@ -784,11 +857,71 @@
       "pattern":"arn:aws[-a-z]*:cloudformation:[a-z]{2}(-gov)?-[a-z]+-\\d:\\d{12}:stack/[a-zA-Z][-A-Za-z0-9]{0,127}/[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}"
     },
     "String":{"type":"string"},
+    "SyncAction":{
+      "type":"string",
+      "enum":[
+        "START_SYNC",
+        "NO_ACTION"
+      ]
+    },
+    "SyncResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceType",
+        "resource"
+      ],
+      "members":{
+        "resourceType":{
+          "shape":"ResourceType",
+          "location":"uri",
+          "locationName":"resourceType"
+        },
+        "resource":{
+          "shape":"ResourceSpecifier",
+          "location":"uri",
+          "locationName":"resource"
+        }
+      }
+    },
+    "SyncResourceResponse":{
+      "type":"structure",
+      "members":{
+        "applicationArn":{"shape":"ApplicationArn"},
+        "resourceArn":{"shape":"Arn"},
+        "actionTaken":{"shape":"SyncAction"}
+      }
+    },
     "TagKey":{
       "type":"string",
       "max":128,
       "min":1,
       "pattern":"(?!aws:)[a-zA-Z+-=._:/]+"
+    },
+    "TagKeys":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":50,
+      "min":0
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tags"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tags":{"shape":"Tags"}
+      }
+    },
+    "TagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "TagValue":{
       "type":"string",
@@ -805,6 +938,30 @@
     "Timestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "tagKeys"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "tagKeys":{
+          "shape":"TagKeys",
+          "location":"querystring",
+          "locationName":"tagKeys"
+        }
+      }
+    },
+    "UntagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "UpdateApplicationRequest":{
       "type":"structure",

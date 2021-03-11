@@ -54,14 +54,17 @@ class CredentialProvider
     const ENV_SHARED_CREDENTIALS_FILE = 'AWS_SHARED_CREDENTIALS_FILE';
 
     /**
-     * Create a default credential provider that first checks for environment
-     * variables, then checks for the "default" profile in ~/.aws/credentials,
+     * Create a default credential provider that
+     * first checks for environment variables,
+     * then checks for assumed role via web identity,
+     * then checks for cached SSO credentials from the CLI,
+     * then check for credential_process in the "default" profile in ~/.aws/credentials,
+     * then checks for the "default" profile in ~/.aws/credentials,
+     * then for credential_process in the "default profile" profile in ~/.aws/config,
      * then checks for "profile default" profile in ~/.aws/config (which is
-     * the default profile of AWS CLI), then tries to make a GET Request to
-     * fetch credentials if Ecs environment variable is presented, then checks
-     * for credential_process in the "default" profile in ~/.aws/credentials,
-     * then for credential_process in the "default profile" profile in
-     * ~/.aws/config, and finally checks for EC2 instance profile credentials.
+     * the default profile of AWS CLI),
+     * then tries to make a GET Request to fetch credentials if ECS environment variable is presented,
+     * finally checks for EC2 instance profile credentials.
      *
      * This provider is automatically wrapped in a memoize function that caches
      * previously provided credentials.
@@ -76,9 +79,9 @@ class CredentialProvider
         $cacheable = [
             'web_identity',
             'sso',
-            'ecs',
             'process_credentials',
             'process_config',
+            'ecs',
             'instance'
         ];
 
@@ -95,22 +98,31 @@ class CredentialProvider
                 self::getHomeDir() . '/.aws/config',
                 $config
             );
+            $defaultChain['process_credentials'] = self::process();
             $defaultChain['ini'] = self::ini();
+            $defaultChain['process_config'] = self::process(
+                'profile default',
+                self::getHomeDir() . '/.aws/config'
+            );
             $defaultChain['ini_config'] = self::ini(
                 'profile default',
                 self::getHomeDir() . '/.aws/config'
             );
         }
 
-        if (!empty(getenv(EcsCredentialProvider::ENV_URI))) {
-            $defaultChain['ecs'] = self::ecsCredentials($config);
+        $shouldUseEcsCredentialsProvider = getenv(EcsCredentialProvider::ENV_URI);
+        // getenv() is not thread safe - fall back to $_SERVER
+        if ($shouldUseEcsCredentialsProvider === false) {
+            $shouldUseEcsCredentialsProvider = isset($_SERVER[EcsCredentialProvider::ENV_URI])
+                ? $_SERVER[EcsCredentialProvider::ENV_URI]
+                : false;
         }
-        $defaultChain['process_credentials'] = self::process();
-        $defaultChain['process_config'] = self::process(
-            'profile default',
-            self::getHomeDir() . '/.aws/config'
-        );
-        $defaultChain['instance'] = self::instanceProfile($config);
+
+        if (!empty($shouldUseEcsCredentialsProvider)) {
+            $defaultChain['ecs'] = self::ecsCredentials($config);
+        } else {
+            $defaultChain['instance'] = self::instanceProfile($config);
+        }
 
         if (isset($config['credentials'])
             && $config['credentials'] instanceof CacheInterface
@@ -874,3 +886,4 @@ class CredentialProvider
         return $filename;
     }
 }
+

@@ -133,10 +133,10 @@ class DynamoDbClientTest extends TestCase
             $client->getItem($params);
             $this->fail('This operation should have failed with a NonRetryableException.');
         } catch(AwsException $e) {
-            $this->assertEquals('NonRetryableException', $e->getAwsErrorCode());
+            $this->assertSame('NonRetryableException', $e->getAwsErrorCode());
         }
 
-        $this->assertEquals(3, $attemptCount);
+        $this->assertSame(3, $attemptCount);
     }
 
     public function dataProviderRetrySettings()

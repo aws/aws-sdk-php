@@ -159,6 +159,22 @@
         {"shape":"OpsItemInvalidParameterException"}
       ]
     },
+    "CreateOpsMetadata":{
+      "name":"CreateOpsMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateOpsMetadataRequest"},
+      "output":{"shape":"CreateOpsMetadataResult"},
+      "errors":[
+        {"shape":"OpsMetadataAlreadyExistsException"},
+        {"shape":"OpsMetadataTooManyUpdatesException"},
+        {"shape":"OpsMetadataInvalidArgumentException"},
+        {"shape":"OpsMetadataLimitExceededException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
     "CreatePatchBaseline":{
       "name":"CreatePatchBaseline",
       "http":{
@@ -259,6 +275,20 @@
       "input":{"shape":"DeleteMaintenanceWindowRequest"},
       "output":{"shape":"DeleteMaintenanceWindowResult"},
       "errors":[
+        {"shape":"InternalServerError"}
+      ]
+    },
+    "DeleteOpsMetadata":{
+      "name":"DeleteOpsMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteOpsMetadataRequest"},
+      "output":{"shape":"DeleteOpsMetadataResult"},
+      "errors":[
+        {"shape":"OpsMetadataNotFoundException"},
+        {"shape":"OpsMetadataInvalidArgumentException"},
         {"shape":"InternalServerError"}
       ]
     },
@@ -494,7 +524,9 @@
       "errors":[
         {"shape":"InternalServerError"},
         {"shape":"InvalidDocument"},
-        {"shape":"InvalidPermissionType"}
+        {"shape":"InvalidNextToken"},
+        {"shape":"InvalidPermissionType"},
+        {"shape":"InvalidDocumentOperation"}
       ]
     },
     "DescribeEffectiveInstanceAssociations":{
@@ -1010,6 +1042,20 @@
         {"shape":"OpsItemNotFoundException"}
       ]
     },
+    "GetOpsMetadata":{
+      "name":"GetOpsMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetOpsMetadataRequest"},
+      "output":{"shape":"GetOpsMetadataResult"},
+      "errors":[
+        {"shape":"OpsMetadataNotFoundException"},
+        {"shape":"OpsMetadataInvalidArgumentException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
     "GetOpsSummary":{
       "name":"GetOpsSummary",
       "http":{
@@ -1231,6 +1277,21 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "ListDocumentMetadataHistory":{
+      "name":"ListDocumentMetadataHistory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDocumentMetadataHistoryRequest"},
+      "output":{"shape":"ListDocumentMetadataHistoryResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidDocument"},
+        {"shape":"InvalidDocumentVersion"},
+        {"shape":"InvalidNextToken"}
+      ]
+    },
     "ListDocumentVersions":{
       "name":"ListDocumentVersions",
       "http":{
@@ -1273,6 +1334,34 @@
         {"shape":"InvalidTypeNameException"},
         {"shape":"InvalidFilter"},
         {"shape":"InvalidNextToken"}
+      ]
+    },
+    "ListOpsItemEvents":{
+      "name":"ListOpsItemEvents",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListOpsItemEventsRequest"},
+      "output":{"shape":"ListOpsItemEventsResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"OpsItemNotFoundException"},
+        {"shape":"OpsItemLimitExceededException"},
+        {"shape":"OpsItemInvalidParameterException"}
+      ]
+    },
+    "ListOpsMetadata":{
+      "name":"ListOpsMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListOpsMetadataRequest"},
+      "output":{"shape":"ListOpsMetadataResult"},
+      "errors":[
+        {"shape":"OpsMetadataInvalidArgumentException"},
+        {"shape":"InternalServerError"}
       ]
     },
     "ListResourceComplianceSummaries":{
@@ -1571,6 +1660,24 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "StartChangeRequestExecution":{
+      "name":"StartChangeRequestExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartChangeRequestExecutionRequest"},
+      "output":{"shape":"StartChangeRequestExecutionResult"},
+      "errors":[
+        {"shape":"AutomationDefinitionNotFoundException"},
+        {"shape":"InvalidAutomationExecutionParametersException"},
+        {"shape":"AutomationExecutionLimitExceededException"},
+        {"shape":"AutomationDefinitionVersionNotFoundException"},
+        {"shape":"IdempotentParameterMismatch"},
+        {"shape":"InternalServerError"},
+        {"shape":"AutomationDefinitionNotApprovedException"}
+      ]
+    },
     "StartSession":{
       "name":"StartSession",
       "http":{
@@ -1688,6 +1795,21 @@
         {"shape":"InvalidDocumentSchemaVersion"}
       ]
     },
+    "UpdateDocumentMetadata":{
+      "name":"UpdateDocumentMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateDocumentMetadataRequest"},
+      "output":{"shape":"UpdateDocumentMetadataResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidDocument"},
+        {"shape":"InvalidDocumentOperation"},
+        {"shape":"InvalidDocumentVersion"}
+      ]
+    },
     "UpdateMaintenanceWindow":{
       "name":"UpdateMaintenanceWindow",
       "http":{
@@ -1754,6 +1876,22 @@
         {"shape":"OpsItemAlreadyExistsException"},
         {"shape":"OpsItemLimitExceededException"},
         {"shape":"OpsItemInvalidParameterException"}
+      ]
+    },
+    "UpdateOpsMetadata":{
+      "name":"UpdateOpsMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateOpsMetadataRequest"},
+      "output":{"shape":"UpdateOpsMetadataResult"},
+      "errors":[
+        {"shape":"OpsMetadataNotFoundException"},
+        {"shape":"OpsMetadataInvalidArgumentException"},
+        {"shape":"OpsMetadataKeyLimitExceededException"},
+        {"shape":"OpsMetadataTooManyUpdatesException"},
+        {"shape":"InternalServerError"}
       ]
     },
     "UpdatePatchBaseline":{
@@ -1962,7 +2100,8 @@
         "MaxConcurrency":{"shape":"MaxConcurrency"},
         "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"},
         "SyncCompliance":{"shape":"AssociationSyncCompliance"},
-        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"}
+        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"},
+        "TargetLocations":{"shape":"TargetLocations"}
       }
     },
     "AssociationDescriptionList":{
@@ -2218,7 +2357,8 @@
         "MaxConcurrency":{"shape":"MaxConcurrency"},
         "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"},
         "SyncCompliance":{"shape":"AssociationSyncCompliance"},
-        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"}
+        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"},
+        "TargetLocations":{"shape":"TargetLocations"}
       }
     },
     "AssociationVersionLimitExceeded":{
@@ -2321,6 +2461,13 @@
       "type":"string",
       "pattern":"^aws:[a-zA-Z]{3,25}$"
     },
+    "AutomationDefinitionNotApprovedException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "AutomationDefinitionNotFoundException":{
       "type":"structure",
       "members":{
@@ -2365,7 +2512,13 @@
           "shape":"TargetLocations",
           "box":true
         },
-        "ProgressCounters":{"shape":"ProgressCounters"}
+        "ProgressCounters":{"shape":"ProgressCounters"},
+        "AutomationSubtype":{"shape":"AutomationSubtype"},
+        "ScheduledTime":{"shape":"DateTime"},
+        "Runbooks":{"shape":"Runbooks"},
+        "OpsItemId":{"shape":"String"},
+        "AssociationId":{"shape":"String"},
+        "ChangeRequestName":{"shape":"ChangeRequestName"}
       }
     },
     "AutomationExecutionFilter":{
@@ -2391,7 +2544,9 @@
         "StartTimeAfter",
         "AutomationType",
         "TagKey",
-        "TargetResourceGroup"
+        "TargetResourceGroup",
+        "AutomationSubtype",
+        "OpsItemId"
       ]
     },
     "AutomationExecutionFilterList":{
@@ -2447,7 +2602,13 @@
         "MaxConcurrency":{"shape":"MaxConcurrency"},
         "MaxErrors":{"shape":"MaxErrors"},
         "Target":{"shape":"String"},
-        "AutomationType":{"shape":"AutomationType"}
+        "AutomationType":{"shape":"AutomationType"},
+        "AutomationSubtype":{"shape":"AutomationSubtype"},
+        "ScheduledTime":{"shape":"DateTime"},
+        "Runbooks":{"shape":"Runbooks"},
+        "OpsItemId":{"shape":"String"},
+        "AssociationId":{"shape":"String"},
+        "ChangeRequestName":{"shape":"ChangeRequestName"}
       }
     },
     "AutomationExecutionMetadataList":{
@@ -2471,7 +2632,17 @@
         "TimedOut",
         "Cancelling",
         "Cancelled",
-        "Failed"
+        "Failed",
+        "PendingApproval",
+        "Approved",
+        "Rejected",
+        "Scheduled",
+        "RunbookInProgress",
+        "PendingChangeCalendarOverride",
+        "ChangeCalendarOverrideApproved",
+        "ChangeCalendarOverrideRejected",
+        "CompletedWithSuccess",
+        "CompletedWithFailure"
       ]
     },
     "AutomationParameterKey":{
@@ -2504,6 +2675,10 @@
       },
       "exception":true
     },
+    "AutomationSubtype":{
+      "type":"string",
+      "enum":["ChangeRequest"]
+    },
     "AutomationTargetParameterName":{
       "type":"string",
       "max":50,
@@ -2532,6 +2707,20 @@
       "max":128,
       "min":3,
       "pattern":"^[a-zA-Z0-9_\\-.]{3,128}$"
+    },
+    "BaselineOverride":{
+      "type":"structure",
+      "members":{
+        "OperatingSystem":{"shape":"OperatingSystem"},
+        "GlobalFilters":{"shape":"PatchFilterGroup"},
+        "ApprovalRules":{"shape":"PatchRuleGroup"},
+        "ApprovedPatches":{"shape":"PatchIdList"},
+        "ApprovedPatchesComplianceLevel":{"shape":"PatchComplianceLevel"},
+        "RejectedPatches":{"shape":"PatchIdList"},
+        "RejectedPatchesAction":{"shape":"PatchAction"},
+        "ApprovedPatchesEnableNonSecurity":{"shape":"Boolean"},
+        "Sources":{"shape":"PatchSourceList"}
+      }
     },
     "BatchErrorMessage":{"type":"string"},
     "Boolean":{"type":"boolean"},
@@ -2572,6 +2761,11 @@
       "members":{
         "WindowExecutionId":{"shape":"MaintenanceWindowExecutionId"}
       }
+    },
+    "ChangeRequestName":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "ClientToken":{
       "type":"string",
@@ -3006,7 +3200,8 @@
         "MaxConcurrency":{"shape":"MaxConcurrency"},
         "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"},
         "SyncCompliance":{"shape":"AssociationSyncCompliance"},
-        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"}
+        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"},
+        "TargetLocations":{"shape":"TargetLocations"}
       }
     },
     "CreateAssociationBatchResult":{
@@ -3033,7 +3228,8 @@
         "MaxConcurrency":{"shape":"MaxConcurrency"},
         "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"},
         "SyncCompliance":{"shape":"AssociationSyncCompliance"},
-        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"}
+        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"},
+        "TargetLocations":{"shape":"TargetLocations"}
       }
     },
     "CreateAssociationResult":{
@@ -3111,6 +3307,7 @@
       ],
       "members":{
         "Description":{"shape":"OpsItemDescription"},
+        "OpsItemType":{"shape":"OpsItemType"},
         "OperationalData":{"shape":"OpsItemOperationalData"},
         "Notifications":{"shape":"OpsItemNotifications"},
         "Priority":{"shape":"OpsItemPriority"},
@@ -3119,13 +3316,32 @@
         "Title":{"shape":"OpsItemTitle"},
         "Tags":{"shape":"TagList"},
         "Category":{"shape":"OpsItemCategory"},
-        "Severity":{"shape":"OpsItemSeverity"}
+        "Severity":{"shape":"OpsItemSeverity"},
+        "ActualStartTime":{"shape":"DateTime"},
+        "ActualEndTime":{"shape":"DateTime"},
+        "PlannedStartTime":{"shape":"DateTime"},
+        "PlannedEndTime":{"shape":"DateTime"}
       }
     },
     "CreateOpsItemResponse":{
       "type":"structure",
       "members":{
         "OpsItemId":{"shape":"String"}
+      }
+    },
+    "CreateOpsMetadataRequest":{
+      "type":"structure",
+      "required":["ResourceId"],
+      "members":{
+        "ResourceId":{"shape":"OpsMetadataResourceId"},
+        "Metadata":{"shape":"MetadataMap"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateOpsMetadataResult":{
+      "type":"structure",
+      "members":{
+        "OpsMetadataArn":{"shape":"OpsMetadataArn"}
       }
     },
     "CreatePatchBaselineRequest":{
@@ -3262,6 +3478,18 @@
       "type":"structure",
       "members":{
         "WindowId":{"shape":"MaintenanceWindowId"}
+      }
+    },
+    "DeleteOpsMetadataRequest":{
+      "type":"structure",
+      "required":["OpsMetadataArn"],
+      "members":{
+        "OpsMetadataArn":{"shape":"OpsMetadataArn"}
+      }
+    },
+    "DeleteOpsMetadataResult":{
+      "type":"structure",
+      "members":{
       }
     },
     "DeleteParameterRequest":{
@@ -3551,14 +3779,20 @@
       ],
       "members":{
         "Name":{"shape":"DocumentName"},
-        "PermissionType":{"shape":"DocumentPermissionType"}
+        "PermissionType":{"shape":"DocumentPermissionType"},
+        "MaxResults":{
+          "shape":"DocumentPermissionMaxResults",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "DescribeDocumentPermissionResponse":{
       "type":"structure",
       "members":{
         "AccountIds":{"shape":"AccountIdList"},
-        "AccountSharingInfoList":{"shape":"AccountSharingInfoList"}
+        "AccountSharingInfoList":{"shape":"AccountSharingInfoList"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "DescribeDocumentRequest":{
@@ -4051,6 +4285,7 @@
       },
       "exception":true
     },
+    "DocumentAuthor":{"type":"string"},
     "DocumentContent":{
       "type":"string",
       "min":1
@@ -4087,7 +4322,12 @@
         "TargetType":{"shape":"TargetType"},
         "Tags":{"shape":"TagList"},
         "AttachmentsInformation":{"shape":"AttachmentInformationList"},
-        "Requires":{"shape":"DocumentRequiresList"}
+        "Requires":{"shape":"DocumentRequiresList"},
+        "Author":{"shape":"DocumentAuthor"},
+        "ReviewInformation":{"shape":"ReviewInformationList"},
+        "ApprovedVersion":{"shape":"DocumentVersion"},
+        "PendingReviewVersion":{"shape":"DocumentVersion"},
+        "ReviewStatus":{"shape":"ReviewStatus"}
       }
     },
     "DocumentFilter":{
@@ -4151,7 +4391,9 @@
         "DocumentFormat":{"shape":"DocumentFormat"},
         "TargetType":{"shape":"TargetType"},
         "Tags":{"shape":"TagList"},
-        "Requires":{"shape":"DocumentRequiresList"}
+        "Requires":{"shape":"DocumentRequiresList"},
+        "ReviewStatus":{"shape":"ReviewStatus"},
+        "Author":{"shape":"DocumentAuthor"}
       }
     },
     "DocumentIdentifierList":{
@@ -4192,6 +4434,16 @@
       },
       "exception":true
     },
+    "DocumentMetadataEnum":{
+      "type":"string",
+      "enum":["DocumentReviews"]
+    },
+    "DocumentMetadataResponseInfo":{
+      "type":"structure",
+      "members":{
+        "ReviewerResponse":{"shape":"DocumentReviewerResponseList"}
+      }
+    },
     "DocumentName":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9_\\-.]{3,128}$"
@@ -4227,6 +4479,11 @@
       },
       "exception":true
     },
+    "DocumentPermissionMaxResults":{
+      "type":"integer",
+      "max":200,
+      "min":1
+    },
     "DocumentPermissionType":{
       "type":"string",
       "enum":["Share"]
@@ -4243,6 +4500,60 @@
       "type":"list",
       "member":{"shape":"DocumentRequires"},
       "min":1
+    },
+    "DocumentReviewAction":{
+      "type":"string",
+      "enum":[
+        "SendForReview",
+        "UpdateReview",
+        "Approve",
+        "Reject"
+      ]
+    },
+    "DocumentReviewComment":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
+    },
+    "DocumentReviewCommentList":{
+      "type":"list",
+      "member":{"shape":"DocumentReviewCommentSource"},
+      "max":1,
+      "min":0
+    },
+    "DocumentReviewCommentSource":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"DocumentReviewCommentType"},
+        "Content":{"shape":"DocumentReviewComment"}
+      }
+    },
+    "DocumentReviewCommentType":{
+      "type":"string",
+      "enum":["Comment"]
+    },
+    "DocumentReviewerResponseList":{
+      "type":"list",
+      "member":{"shape":"DocumentReviewerResponseSource"}
+    },
+    "DocumentReviewerResponseSource":{
+      "type":"structure",
+      "members":{
+        "CreateTime":{"shape":"DateTime"},
+        "UpdatedTime":{"shape":"DateTime"},
+        "ReviewStatus":{"shape":"ReviewStatus"},
+        "Comment":{"shape":"DocumentReviewCommentList"},
+        "Reviewer":{"shape":"Reviewer"}
+      }
+    },
+    "DocumentReviews":{
+      "type":"structure",
+      "required":["Action"],
+      "members":{
+        "Action":{"shape":"DocumentReviewAction"},
+        "Comment":{"shape":"DocumentReviewCommentList"}
+      }
     },
     "DocumentSchemaVersion":{
       "type":"string",
@@ -4271,7 +4582,8 @@
         "ApplicationConfiguration",
         "ApplicationConfigurationSchema",
         "DeploymentStrategy",
-        "ChangeCalendar"
+        "ChangeCalendar",
+        "Automation.ChangeTemplate"
       ]
     },
     "DocumentVersion":{
@@ -4288,7 +4600,8 @@
         "IsDefaultVersion":{"shape":"Boolean"},
         "DocumentFormat":{"shape":"DocumentFormat"},
         "Status":{"shape":"DocumentStatus"},
-        "StatusInformation":{"shape":"DocumentStatusInformation"}
+        "StatusInformation":{"shape":"DocumentStatusInformation"},
+        "ReviewStatus":{"shape":"ReviewStatus"}
       }
     },
     "DocumentVersionLimitExceeded":{
@@ -4366,7 +4679,8 @@
     "ExecutionRoleName":{
       "type":"string",
       "max":64,
-      "min":1
+      "min":1,
+      "pattern":"[\\w+=,.@-]+"
     },
     "ExpirationDate":{"type":"timestamp"},
     "FailedCreateAssociation":{
@@ -4502,7 +4816,8 @@
       ],
       "members":{
         "InstanceId":{"shape":"InstanceId"},
-        "SnapshotId":{"shape":"SnapshotId"}
+        "SnapshotId":{"shape":"SnapshotId"},
+        "BaselineOverride":{"shape":"BaselineOverride"}
       }
     },
     "GetDeployablePatchSnapshotForInstanceResult":{
@@ -4536,7 +4851,8 @@
         "DocumentType":{"shape":"DocumentType"},
         "DocumentFormat":{"shape":"DocumentFormat"},
         "Requires":{"shape":"DocumentRequiresList"},
-        "AttachmentsContent":{"shape":"AttachmentContentList"}
+        "AttachmentsContent":{"shape":"AttachmentContentList"},
+        "ReviewStatus":{"shape":"ReviewStatus"}
       }
     },
     "GetInventoryRequest":{
@@ -4735,6 +5051,31 @@
       "type":"structure",
       "members":{
         "OpsItem":{"shape":"OpsItem"}
+      }
+    },
+    "GetOpsMetadataMaxResults":{
+      "type":"integer",
+      "max":10,
+      "min":1
+    },
+    "GetOpsMetadataRequest":{
+      "type":"structure",
+      "required":["OpsMetadataArn"],
+      "members":{
+        "OpsMetadataArn":{"shape":"OpsMetadataArn"},
+        "MaxResults":{
+          "shape":"GetOpsMetadataMaxResults",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetOpsMetadataResult":{
+      "type":"structure",
+      "members":{
+        "ResourceId":{"shape":"OpsMetadataResourceId"},
+        "Metadata":{"shape":"MetadataMap"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "GetOpsSummaryRequest":{
@@ -6012,6 +6353,33 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListDocumentMetadataHistoryRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Metadata"
+      ],
+      "members":{
+        "Name":{"shape":"DocumentName"},
+        "DocumentVersion":{"shape":"DocumentVersion"},
+        "Metadata":{"shape":"DocumentMetadataEnum"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        }
+      }
+    },
+    "ListDocumentMetadataHistoryResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"DocumentName"},
+        "DocumentVersion":{"shape":"DocumentVersion"},
+        "Author":{"shape":"DocumentAuthor"},
+        "Metadata":{"shape":"DocumentMetadataResponseInfo"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListDocumentVersionsRequest":{
       "type":"structure",
       "required":["Name"],
@@ -6075,6 +6443,44 @@
         "SchemaVersion":{"shape":"InventoryItemSchemaVersion"},
         "CaptureTime":{"shape":"InventoryItemCaptureTime"},
         "Entries":{"shape":"InventoryItemEntryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListOpsItemEventsRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"OpsItemEventFilters"},
+        "MaxResults":{"shape":"OpsItemEventMaxResults"},
+        "NextToken":{"shape":"String"}
+      }
+    },
+    "ListOpsItemEventsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"String"},
+        "Summaries":{"shape":"OpsItemEventSummaries"}
+      }
+    },
+    "ListOpsMetadataMaxResults":{
+      "type":"integer",
+      "max":50,
+      "min":1
+    },
+    "ListOpsMetadataRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"OpsMetadataFilterList"},
+        "MaxResults":{
+          "shape":"ListOpsMetadataMaxResults",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListOpsMetadataResult":{
+      "type":"structure",
+      "members":{
+        "OpsMetadataList":{"shape":"OpsMetadataList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -6576,6 +6982,36 @@
       "max":50,
       "min":5
     },
+    "MetadataKey":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
+    },
+    "MetadataKeysToDeleteList":{
+      "type":"list",
+      "member":{"shape":"MetadataKey"},
+      "max":10,
+      "min":1
+    },
+    "MetadataMap":{
+      "type":"map",
+      "key":{"shape":"MetadataKey"},
+      "value":{"shape":"MetadataValue"},
+      "max":5,
+      "min":1
+    },
+    "MetadataValue":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"MetadataValueString"}
+      }
+    },
+    "MetadataValueString":{
+      "type":"string",
+      "max":4096,
+      "min":1
+    },
     "ModifyDocumentPermissionRequest":{
       "type":"structure",
       "required":[
@@ -6650,7 +7086,8 @@
         "SUSE",
         "CENTOS",
         "ORACLE_LINUX",
-        "DEBIAN"
+        "DEBIAN",
+        "MACOS"
       ]
     },
     "OpsAggregator":{
@@ -6795,6 +7232,7 @@
       "type":"structure",
       "members":{
         "CreatedBy":{"shape":"String"},
+        "OpsItemType":{"shape":"OpsItemType"},
         "CreatedTime":{"shape":"DateTime"},
         "Description":{"shape":"OpsItemDescription"},
         "LastModifiedBy":{"shape":"String"},
@@ -6809,7 +7247,11 @@
         "Source":{"shape":"OpsItemSource"},
         "OperationalData":{"shape":"OpsItemOperationalData"},
         "Category":{"shape":"OpsItemCategory"},
-        "Severity":{"shape":"OpsItemSeverity"}
+        "Severity":{"shape":"OpsItemSeverity"},
+        "ActualStartTime":{"shape":"DateTime"},
+        "ActualEndTime":{"shape":"DateTime"},
+        "PlannedStartTime":{"shape":"DateTime"},
+        "PlannedEndTime":{"shape":"DateTime"}
       }
     },
     "OpsItemAlreadyExistsException":{
@@ -6823,12 +7265,14 @@
     "OpsItemCategory":{
       "type":"string",
       "max":64,
-      "min":1
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
     },
     "OpsItemDataKey":{
       "type":"string",
       "max":128,
-      "min":1
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
     },
     "OpsItemDataType":{
       "type":"string",
@@ -6844,11 +7288,71 @@
         "Type":{"shape":"OpsItemDataType"}
       }
     },
-    "OpsItemDataValueString":{"type":"string"},
+    "OpsItemDataValueString":{
+      "type":"string",
+      "pattern":"[\\s\\S]*\\S[\\s\\S]*"
+    },
     "OpsItemDescription":{
       "type":"string",
       "max":1024,
+      "min":1,
+      "pattern":"[\\s\\S]*\\S[\\s\\S]*"
+    },
+    "OpsItemEventFilter":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Values",
+        "Operator"
+      ],
+      "members":{
+        "Key":{"shape":"OpsItemEventFilterKey"},
+        "Values":{"shape":"OpsItemEventFilterValues"},
+        "Operator":{"shape":"OpsItemEventFilterOperator"}
+      }
+    },
+    "OpsItemEventFilterKey":{
+      "type":"string",
+      "enum":["OpsItemId"]
+    },
+    "OpsItemEventFilterOperator":{
+      "type":"string",
+      "enum":["Equal"]
+    },
+    "OpsItemEventFilterValue":{
+      "type":"string",
+      "max":15,
+      "min":1,
+      "pattern":"^(oi)-[0-9a-f]{12}$"
+    },
+    "OpsItemEventFilterValues":{
+      "type":"list",
+      "member":{"shape":"OpsItemEventFilterValue"}
+    },
+    "OpsItemEventFilters":{
+      "type":"list",
+      "member":{"shape":"OpsItemEventFilter"}
+    },
+    "OpsItemEventMaxResults":{
+      "type":"integer",
+      "max":50,
       "min":1
+    },
+    "OpsItemEventSummaries":{
+      "type":"list",
+      "member":{"shape":"OpsItemEventSummary"}
+    },
+    "OpsItemEventSummary":{
+      "type":"structure",
+      "members":{
+        "OpsItemId":{"shape":"String"},
+        "EventId":{"shape":"String"},
+        "Source":{"shape":"String"},
+        "DetailType":{"shape":"String"},
+        "Detail":{"shape":"String"},
+        "CreatedBy":{"shape":"OpsItemIdentity"},
+        "CreatedTime":{"shape":"DateTime"}
+      }
     },
     "OpsItemFilter":{
       "type":"structure",
@@ -6874,13 +7378,24 @@
         "OpsItemId",
         "CreatedTime",
         "LastModifiedTime",
+        "ActualStartTime",
+        "ActualEndTime",
+        "PlannedStartTime",
+        "PlannedEndTime",
         "OperationalData",
         "OperationalDataKey",
         "OperationalDataValue",
         "ResourceId",
         "AutomationId",
         "Category",
-        "Severity"
+        "Severity",
+        "OpsItemType",
+        "ChangeRequestByRequesterArn",
+        "ChangeRequestByRequesterName",
+        "ChangeRequestByApproverArn",
+        "ChangeRequestByApproverName",
+        "ChangeRequestByTemplate",
+        "ChangeRequestByTargetsResourceGroup"
       ]
     },
     "OpsItemFilterOperator":{
@@ -6904,6 +7419,12 @@
     "OpsItemId":{
       "type":"string",
       "pattern":"^(oi)-[0-9a-f]{12}$"
+    },
+    "OpsItemIdentity":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"String"}
+      }
     },
     "OpsItemInvalidParameterException":{
       "type":"structure",
@@ -6966,19 +7487,36 @@
     "OpsItemSeverity":{
       "type":"string",
       "max":64,
-      "min":1
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
     },
     "OpsItemSource":{
       "type":"string",
-      "max":64,
-      "min":1
+      "max":128,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
     },
     "OpsItemStatus":{
       "type":"string",
       "enum":[
         "Open",
         "InProgress",
-        "Resolved"
+        "Resolved",
+        "Pending",
+        "TimedOut",
+        "Cancelling",
+        "Cancelled",
+        "Failed",
+        "CompletedWithSuccess",
+        "CompletedWithFailure",
+        "Scheduled",
+        "RunbookInProgress",
+        "PendingChangeCalendarOverride",
+        "ChangeCalendarOverrideApproved",
+        "ChangeCalendarOverrideRejected",
+        "PendingApproval",
+        "Approved",
+        "Rejected"
       ]
     },
     "OpsItemSummaries":{
@@ -6999,13 +7537,124 @@
         "Title":{"shape":"OpsItemTitle"},
         "OperationalData":{"shape":"OpsItemOperationalData"},
         "Category":{"shape":"OpsItemCategory"},
-        "Severity":{"shape":"OpsItemSeverity"}
+        "Severity":{"shape":"OpsItemSeverity"},
+        "OpsItemType":{"shape":"OpsItemType"},
+        "ActualStartTime":{"shape":"DateTime"},
+        "ActualEndTime":{"shape":"DateTime"},
+        "PlannedStartTime":{"shape":"DateTime"},
+        "PlannedEndTime":{"shape":"DateTime"}
       }
     },
     "OpsItemTitle":{
       "type":"string",
       "max":1024,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
+    },
+    "OpsItemType":{"type":"string"},
+    "OpsMetadata":{
+      "type":"structure",
+      "members":{
+        "ResourceId":{"shape":"OpsMetadataResourceId"},
+        "OpsMetadataArn":{"shape":"OpsMetadataArn"},
+        "LastModifiedDate":{"shape":"DateTime"},
+        "LastModifiedUser":{"shape":"String"},
+        "CreationDate":{"shape":"DateTime"}
+      }
+    },
+    "OpsMetadataAlreadyExistsException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "OpsMetadataArn":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:ssm:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:opsmetadata\\/([a-zA-Z0-9-_\\.\\/]*)"
+    },
+    "OpsMetadataFilter":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Values"
+      ],
+      "members":{
+        "Key":{"shape":"OpsMetadataFilterKey"},
+        "Values":{"shape":"OpsMetadataFilterValueList"}
+      }
+    },
+    "OpsMetadataFilterKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
+    },
+    "OpsMetadataFilterList":{
+      "type":"list",
+      "member":{"shape":"OpsMetadataFilter"},
+      "max":10,
+      "min":0
+    },
+    "OpsMetadataFilterValue":{
+      "type":"string",
+      "max":1024,
       "min":1
+    },
+    "OpsMetadataFilterValueList":{
+      "type":"list",
+      "member":{"shape":"OpsMetadataFilterValue"},
+      "max":10,
+      "min":1
+    },
+    "OpsMetadataInvalidArgumentException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "OpsMetadataKeyLimitExceededException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "OpsMetadataLimitExceededException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "OpsMetadataList":{
+      "type":"list",
+      "member":{"shape":"OpsMetadata"},
+      "max":50,
+      "min":1
+    },
+    "OpsMetadataNotFoundException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "OpsMetadataResourceId":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
+    },
+    "OpsMetadataTooManyUpdatesException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "exception":true
     },
     "OpsResultAttribute":{
       "type":"structure",
@@ -7891,15 +8540,15 @@
       "type":"structure",
       "required":[
         "WindowId",
-        "Targets",
         "TaskArn",
-        "TaskType",
-        "MaxConcurrency",
-        "MaxErrors"
+        "TaskType"
       ],
       "members":{
         "WindowId":{"shape":"MaintenanceWindowId"},
-        "Targets":{"shape":"Targets"},
+        "Targets":{
+          "shape":"Targets",
+          "box":true
+        },
         "TaskArn":{"shape":"MaintenanceWindowTaskArn"},
         "ServiceRoleArn":{"shape":"ServiceRole"},
         "TaskType":{"shape":"MaintenanceWindowTaskType"},
@@ -7909,8 +8558,14 @@
           "shape":"MaintenanceWindowTaskPriority",
           "box":true
         },
-        "MaxConcurrency":{"shape":"MaxConcurrency"},
-        "MaxErrors":{"shape":"MaxErrors"},
+        "MaxConcurrency":{
+          "shape":"MaxConcurrency",
+          "box":true
+        },
+        "MaxErrors":{
+          "shape":"MaxErrors",
+          "box":true
+        },
         "LoggingInfo":{"shape":"LoggingInfo"},
         "Name":{"shape":"MaintenanceWindowName"},
         "Description":{"shape":"MaintenanceWindowDescription"},
@@ -8230,7 +8885,8 @@
         "MaintenanceWindow",
         "Parameter",
         "PatchBaseline",
-        "OpsItem"
+        "OpsItem",
+        "OpsMetadata"
       ]
     },
     "ResponseCode":{"type":"integer"},
@@ -8261,6 +8917,59 @@
         "TokenValue":{"shape":"TokenValue"},
         "StreamUrl":{"shape":"StreamUrl"}
       }
+    },
+    "ReviewInformation":{
+      "type":"structure",
+      "members":{
+        "ReviewedTime":{"shape":"DateTime"},
+        "Status":{"shape":"ReviewStatus"},
+        "Reviewer":{"shape":"Reviewer"}
+      }
+    },
+    "ReviewInformationList":{
+      "type":"list",
+      "member":{"shape":"ReviewInformation"},
+      "min":1
+    },
+    "ReviewStatus":{
+      "type":"string",
+      "enum":[
+        "APPROVED",
+        "NOT_REVIEWED",
+        "PENDING",
+        "REJECTED"
+      ]
+    },
+    "Reviewer":{
+      "type":"string",
+      "max":50,
+      "pattern":"^[a-zA-Z0-9_\\-.]{1,128}$"
+    },
+    "Runbook":{
+      "type":"structure",
+      "required":["DocumentName"],
+      "members":{
+        "DocumentName":{"shape":"DocumentARN"},
+        "DocumentVersion":{
+          "shape":"DocumentVersion",
+          "box":true
+        },
+        "Parameters":{"shape":"AutomationParameterMap"},
+        "TargetParameterName":{"shape":"AutomationParameterKey"},
+        "Targets":{"shape":"Targets"},
+        "MaxConcurrency":{"shape":"MaxConcurrency"},
+        "MaxErrors":{"shape":"MaxErrors"},
+        "TargetLocations":{
+          "shape":"TargetLocations",
+          "box":true
+        }
+      }
+    },
+    "Runbooks":{
+      "type":"list",
+      "member":{"shape":"Runbook"},
+      "max":1,
+      "min":1
     },
     "S3BucketName":{
       "type":"string",
@@ -8593,6 +9302,32 @@
       }
     },
     "StartAutomationExecutionResult":{
+      "type":"structure",
+      "members":{
+        "AutomationExecutionId":{"shape":"AutomationExecutionId"}
+      }
+    },
+    "StartChangeRequestExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "DocumentName",
+        "Runbooks"
+      ],
+      "members":{
+        "ScheduledTime":{"shape":"DateTime"},
+        "DocumentName":{"shape":"DocumentARN"},
+        "DocumentVersion":{
+          "shape":"DocumentVersion",
+          "box":true
+        },
+        "Parameters":{"shape":"AutomationParameterMap"},
+        "ChangeRequestName":{"shape":"ChangeRequestName"},
+        "ClientToken":{"shape":"IdempotencyToken"},
+        "Runbooks":{"shape":"Runbooks"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "StartChangeRequestExecutionResult":{
       "type":"structure",
       "members":{
         "AutomationExecutionId":{"shape":"AutomationExecutionId"}
@@ -9012,7 +9747,8 @@
         "MaxConcurrency":{"shape":"MaxConcurrency"},
         "ComplianceSeverity":{"shape":"AssociationComplianceSeverity"},
         "SyncCompliance":{"shape":"AssociationSyncCompliance"},
-        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"}
+        "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"},
+        "TargetLocations":{"shape":"TargetLocations"}
       }
     },
     "UpdateAssociationResult":{
@@ -9055,6 +9791,23 @@
       "type":"structure",
       "members":{
         "Description":{"shape":"DocumentDefaultVersionDescription"}
+      }
+    },
+    "UpdateDocumentMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "DocumentReviews"
+      ],
+      "members":{
+        "Name":{"shape":"DocumentName"},
+        "DocumentVersion":{"shape":"DocumentVersion"},
+        "DocumentReviews":{"shape":"DocumentReviews"}
+      }
+    },
+    "UpdateDocumentMetadataResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "UpdateDocumentRequest":{
@@ -9243,12 +9996,31 @@
         "OpsItemId":{"shape":"OpsItemId"},
         "Title":{"shape":"OpsItemTitle"},
         "Category":{"shape":"OpsItemCategory"},
-        "Severity":{"shape":"OpsItemSeverity"}
+        "Severity":{"shape":"OpsItemSeverity"},
+        "ActualStartTime":{"shape":"DateTime"},
+        "ActualEndTime":{"shape":"DateTime"},
+        "PlannedStartTime":{"shape":"DateTime"},
+        "PlannedEndTime":{"shape":"DateTime"}
       }
     },
     "UpdateOpsItemResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "UpdateOpsMetadataRequest":{
+      "type":"structure",
+      "required":["OpsMetadataArn"],
+      "members":{
+        "OpsMetadataArn":{"shape":"OpsMetadataArn"},
+        "MetadataToUpdate":{"shape":"MetadataMap"},
+        "KeysToDelete":{"shape":"MetadataKeysToDeleteList"}
+      }
+    },
+    "UpdateOpsMetadataResult":{
+      "type":"structure",
+      "members":{
+        "OpsMetadataArn":{"shape":"OpsMetadataArn"}
       }
     },
     "UpdatePatchBaselineRequest":{

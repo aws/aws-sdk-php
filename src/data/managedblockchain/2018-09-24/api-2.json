@@ -29,7 +29,8 @@
         {"shape":"ResourceNotReadyException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceLimitExceededException"},
-        {"shape":"InternalServiceErrorException"}
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"TooManyTagsException"}
       ]
     },
     "CreateNetwork":{
@@ -46,14 +47,15 @@
         {"shape":"ResourceAlreadyExistsException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceLimitExceededException"},
-        {"shape":"InternalServiceErrorException"}
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"TooManyTagsException"}
       ]
     },
     "CreateNode":{
       "name":"CreateNode",
       "http":{
         "method":"POST",
-        "requestUri":"/networks/{networkId}/members/{memberId}/nodes"
+        "requestUri":"/networks/{networkId}/nodes"
       },
       "input":{"shape":"CreateNodeInput"},
       "output":{"shape":"CreateNodeOutput"},
@@ -65,7 +67,8 @@
         {"shape":"ResourceNotReadyException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceLimitExceededException"},
-        {"shape":"InternalServiceErrorException"}
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"TooManyTagsException"}
       ]
     },
     "CreateProposal":{
@@ -82,7 +85,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceNotReadyException"},
         {"shape":"ThrottlingException"},
-        {"shape":"InternalServiceErrorException"}
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"TooManyTagsException"}
       ]
     },
     "DeleteMember":{
@@ -106,7 +110,7 @@
       "name":"DeleteNode",
       "http":{
         "method":"DELETE",
-        "requestUri":"/networks/{networkId}/members/{memberId}/nodes/{nodeId}"
+        "requestUri":"/networks/{networkId}/nodes/{nodeId}"
       },
       "input":{"shape":"DeleteNodeInput"},
       "output":{"shape":"DeleteNodeOutput"},
@@ -155,7 +159,7 @@
       "name":"GetNode",
       "http":{
         "method":"GET",
-        "requestUri":"/networks/{networkId}/members/{memberId}/nodes/{nodeId}"
+        "requestUri":"/networks/{networkId}/nodes/{nodeId}"
       },
       "input":{"shape":"GetNodeInput"},
       "output":{"shape":"GetNodeOutput"},
@@ -234,7 +238,7 @@
       "name":"ListNodes",
       "http":{
         "method":"GET",
-        "requestUri":"/networks/{networkId}/members/{memberId}/nodes"
+        "requestUri":"/networks/{networkId}/nodes"
       },
       "input":{"shape":"ListNodesInput"},
       "output":{"shape":"ListNodesOutput"},
@@ -276,6 +280,21 @@
         {"shape":"InternalServiceErrorException"}
       ]
     },
+    "ListTagsForResource":{
+      "name":"ListTagsForResource",
+      "http":{
+        "method":"GET",
+        "requestUri":"/tags/{resourceArn}"
+      },
+      "input":{"shape":"ListTagsForResourceRequest"},
+      "output":{"shape":"ListTagsForResourceResponse"},
+      "errors":[
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceNotReadyException"}
+      ]
+    },
     "RejectInvitation":{
       "name":"RejectInvitation",
       "http":{
@@ -291,6 +310,37 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceErrorException"}
+      ]
+    },
+    "TagResource":{
+      "name":"TagResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/tags/{resourceArn}"
+      },
+      "input":{"shape":"TagResourceRequest"},
+      "output":{"shape":"TagResourceResponse"},
+      "errors":[
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"ResourceNotReadyException"}
+      ]
+    },
+    "UntagResource":{
+      "name":"UntagResource",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/tags/{resourceArn}"
+      },
+      "input":{"shape":"UntagResourceRequest"},
+      "output":{"shape":"UntagResourceResponse"},
+      "errors":[
+        {"shape":"InternalServiceErrorException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceNotReadyException"}
       ]
     },
     "UpdateMember":{
@@ -313,7 +363,7 @@
       "name":"UpdateNode",
       "http":{
         "method":"PATCH",
-        "requestUri":"/networks/{networkId}/members/{memberId}/nodes/{nodeId}"
+        "requestUri":"/networks/{networkId}/nodes/{nodeId}"
       },
       "input":{"shape":"UpdateNodeInput"},
       "output":{"shape":"UpdateNodeOutput"},
@@ -347,6 +397,7 @@
     "AccessDeniedException":{
       "type":"structure",
       "members":{
+        "Message":{"shape":"String"}
       },
       "error":{"httpStatusCode":403},
       "exception":true
@@ -358,6 +409,12 @@
         "ProposalDurationInHours":{"shape":"ProposalDurationInt"},
         "ThresholdComparator":{"shape":"ThresholdComparator"}
       }
+    },
+    "ArnString":{
+      "type":"string",
+      "max":1011,
+      "min":1,
+      "pattern":"^arn:.+:.+:.+:.+:.+"
     },
     "AvailabilityZoneString":{"type":"string"},
     "ClientRequestTokenString":{
@@ -414,7 +471,8 @@
         "FrameworkVersion":{"shape":"FrameworkVersionString"},
         "FrameworkConfiguration":{"shape":"NetworkFrameworkConfiguration"},
         "VotingPolicy":{"shape":"VotingPolicy"},
-        "MemberConfiguration":{"shape":"MemberConfiguration"}
+        "MemberConfiguration":{"shape":"MemberConfiguration"},
+        "Tags":{"shape":"InputTagMap"}
       }
     },
     "CreateNetworkOutput":{
@@ -429,7 +487,6 @@
       "required":[
         "ClientRequestToken",
         "NetworkId",
-        "MemberId",
         "NodeConfiguration"
       ],
       "members":{
@@ -442,12 +499,9 @@
           "location":"uri",
           "locationName":"networkId"
         },
-        "MemberId":{
-          "shape":"ResourceIdString",
-          "location":"uri",
-          "locationName":"memberId"
-        },
-        "NodeConfiguration":{"shape":"NodeConfiguration"}
+        "MemberId":{"shape":"ResourceIdString"},
+        "NodeConfiguration":{"shape":"NodeConfiguration"},
+        "Tags":{"shape":"InputTagMap"}
       }
     },
     "CreateNodeOutput":{
@@ -476,7 +530,8 @@
         },
         "MemberId":{"shape":"ResourceIdString"},
         "Actions":{"shape":"ProposalActions"},
-        "Description":{"shape":"DescriptionString"}
+        "Description":{"shape":"DescriptionString"},
+        "Tags":{"shape":"InputTagMap"}
       }
     },
     "CreateProposalOutput":{
@@ -513,7 +568,6 @@
       "type":"structure",
       "required":[
         "NetworkId",
-        "MemberId",
         "NodeId"
       ],
       "members":{
@@ -524,7 +578,7 @@
         },
         "MemberId":{
           "shape":"ResourceIdString",
-          "location":"uri",
+          "location":"querystring",
           "locationName":"memberId"
         },
         "NodeId":{
@@ -554,9 +608,13 @@
       "type":"boolean",
       "box":true
     },
+    "ExceptionMessage":{"type":"string"},
     "Framework":{
       "type":"string",
-      "enum":["HYPERLEDGER_FABRIC"]
+      "enum":[
+        "HYPERLEDGER_FABRIC",
+        "ETHEREUM"
+      ]
     },
     "FrameworkVersionString":{
       "type":"string",
@@ -609,7 +667,6 @@
       "type":"structure",
       "required":[
         "NetworkId",
-        "MemberId",
         "NodeId"
       ],
       "members":{
@@ -620,7 +677,7 @@
         },
         "MemberId":{
           "shape":"ResourceIdString",
-          "location":"uri",
+          "location":"querystring",
           "locationName":"memberId"
         },
         "NodeId":{
@@ -669,6 +726,13 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "InputTagMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"},
+      "max":50,
+      "min":0
+    },
     "InstanceTypeString":{"type":"string"},
     "InternalServiceErrorException":{
       "type":"structure",
@@ -692,7 +756,8 @@
         "CreationDate":{"shape":"Timestamp"},
         "ExpirationDate":{"shape":"Timestamp"},
         "Status":{"shape":"InvitationStatus"},
-        "NetworkSummary":{"shape":"NetworkSummary"}
+        "NetworkSummary":{"shape":"NetworkSummary"},
+        "Arn":{"shape":"ArnString"}
       }
     },
     "InvitationList":{
@@ -828,10 +893,7 @@
     },
     "ListNodesInput":{
       "type":"structure",
-      "required":[
-        "NetworkId",
-        "MemberId"
-      ],
+      "required":["NetworkId"],
       "members":{
         "NetworkId":{
           "shape":"ResourceIdString",
@@ -840,7 +902,7 @@
         },
         "MemberId":{
           "shape":"ResourceIdString",
-          "location":"uri",
+          "location":"querystring",
           "locationName":"memberId"
         },
         "Status":{
@@ -931,6 +993,23 @@
         "NextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListTagsForResourceRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{
+          "shape":"ArnString",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "ListTagsForResourceResponse":{
+      "type":"structure",
+      "members":{
+        "Tags":{"shape":"OutputTagMap"}
+      }
+    },
     "LogConfiguration":{
       "type":"structure",
       "members":{
@@ -953,7 +1032,9 @@
         "FrameworkAttributes":{"shape":"MemberFrameworkAttributes"},
         "LogPublishingConfiguration":{"shape":"MemberLogPublishingConfiguration"},
         "Status":{"shape":"MemberStatus"},
-        "CreationDate":{"shape":"Timestamp"}
+        "CreationDate":{"shape":"Timestamp"},
+        "Tags":{"shape":"OutputTagMap"},
+        "Arn":{"shape":"ArnString"}
       }
     },
     "MemberConfiguration":{
@@ -966,7 +1047,8 @@
         "Name":{"shape":"NetworkMemberNameString"},
         "Description":{"shape":"DescriptionString"},
         "FrameworkConfiguration":{"shape":"MemberFrameworkConfiguration"},
-        "LogPublishingConfiguration":{"shape":"MemberLogPublishingConfiguration"}
+        "LogPublishingConfiguration":{"shape":"MemberLogPublishingConfiguration"},
+        "Tags":{"shape":"InputTagMap"}
       }
     },
     "MemberFabricAttributes":{
@@ -1036,7 +1118,8 @@
         "Description":{"shape":"DescriptionString"},
         "Status":{"shape":"MemberStatus"},
         "CreationDate":{"shape":"Timestamp"},
-        "IsOwned":{"shape":"IsOwned"}
+        "IsOwned":{"shape":"IsOwned"},
+        "Arn":{"shape":"ArnString"}
       }
     },
     "MemberSummaryList":{
@@ -1061,7 +1144,15 @@
         "VpcEndpointServiceName":{"shape":"String"},
         "VotingPolicy":{"shape":"VotingPolicy"},
         "Status":{"shape":"NetworkStatus"},
-        "CreationDate":{"shape":"Timestamp"}
+        "CreationDate":{"shape":"Timestamp"},
+        "Tags":{"shape":"OutputTagMap"},
+        "Arn":{"shape":"ArnString"}
+      }
+    },
+    "NetworkEthereumAttributes":{
+      "type":"structure",
+      "members":{
+        "ChainId":{"shape":"String"}
       }
     },
     "NetworkFabricAttributes":{
@@ -1081,7 +1172,8 @@
     "NetworkFrameworkAttributes":{
       "type":"structure",
       "members":{
-        "Fabric":{"shape":"NetworkFabricAttributes"}
+        "Fabric":{"shape":"NetworkFabricAttributes"},
+        "Ethereum":{"shape":"NetworkEthereumAttributes"}
       }
     },
     "NetworkFrameworkConfiguration":{
@@ -1100,7 +1192,7 @@
       "type":"string",
       "max":64,
       "min":1,
-      "pattern":"^(?!-)^[^0-9](?!.*--)[A-Za-z0-9-]+[^- ]$"
+      "pattern":"^(?!-|[0-9])(?!.*-$)(?!.*?--)[a-zA-Z0-9-]+$"
     },
     "NetworkStatus":{
       "type":"string",
@@ -1121,7 +1213,8 @@
         "Framework":{"shape":"Framework"},
         "FrameworkVersion":{"shape":"FrameworkVersionString"},
         "Status":{"shape":"NetworkStatus"},
-        "CreationDate":{"shape":"Timestamp"}
+        "CreationDate":{"shape":"Timestamp"},
+        "Arn":{"shape":"ArnString"}
       }
     },
     "NetworkSummaryList":{
@@ -1140,20 +1233,26 @@
         "LogPublishingConfiguration":{"shape":"NodeLogPublishingConfiguration"},
         "StateDB":{"shape":"StateDBType"},
         "Status":{"shape":"NodeStatus"},
-        "CreationDate":{"shape":"Timestamp"}
+        "CreationDate":{"shape":"Timestamp"},
+        "Tags":{"shape":"OutputTagMap"},
+        "Arn":{"shape":"ArnString"}
       }
     },
     "NodeConfiguration":{
       "type":"structure",
-      "required":[
-        "InstanceType",
-        "AvailabilityZone"
-      ],
+      "required":["InstanceType"],
       "members":{
         "InstanceType":{"shape":"InstanceTypeString"},
         "AvailabilityZone":{"shape":"AvailabilityZoneString"},
         "LogPublishingConfiguration":{"shape":"NodeLogPublishingConfiguration"},
         "StateDB":{"shape":"StateDBType"}
+      }
+    },
+    "NodeEthereumAttributes":{
+      "type":"structure",
+      "members":{
+        "HttpEndpoint":{"shape":"String"},
+        "WebSocketEndpoint":{"shape":"String"}
       }
     },
     "NodeFabricAttributes":{
@@ -1173,7 +1272,8 @@
     "NodeFrameworkAttributes":{
       "type":"structure",
       "members":{
-        "Fabric":{"shape":"NodeFabricAttributes"}
+        "Fabric":{"shape":"NodeFabricAttributes"},
+        "Ethereum":{"shape":"NodeEthereumAttributes"}
       }
     },
     "NodeListMaxResults":{
@@ -1193,6 +1293,7 @@
       "enum":[
         "CREATING",
         "AVAILABLE",
+        "UNHEALTHY",
         "CREATE_FAILED",
         "UPDATING",
         "DELETING",
@@ -1207,12 +1308,20 @@
         "Status":{"shape":"NodeStatus"},
         "CreationDate":{"shape":"Timestamp"},
         "AvailabilityZone":{"shape":"AvailabilityZoneString"},
-        "InstanceType":{"shape":"InstanceTypeString"}
+        "InstanceType":{"shape":"InstanceTypeString"},
+        "Arn":{"shape":"ArnString"}
       }
     },
     "NodeSummaryList":{
       "type":"list",
       "member":{"shape":"NodeSummary"}
+    },
+    "OutputTagMap":{
+      "type":"map",
+      "key":{"shape":"TagKey"},
+      "value":{"shape":"TagValue"},
+      "max":200,
+      "min":0
     },
     "PaginationToken":{
       "type":"string",
@@ -1240,7 +1349,9 @@
         "ExpirationDate":{"shape":"Timestamp"},
         "YesVoteCount":{"shape":"VoteCount"},
         "NoVoteCount":{"shape":"VoteCount"},
-        "OutstandingVoteCount":{"shape":"VoteCount"}
+        "OutstandingVoteCount":{"shape":"VoteCount"},
+        "Tags":{"shape":"OutputTagMap"},
+        "Arn":{"shape":"ArnString"}
       }
     },
     "ProposalActions":{
@@ -1281,7 +1392,8 @@
         "ProposedByMemberName":{"shape":"NetworkMemberNameString"},
         "Status":{"shape":"ProposalStatus"},
         "CreationDate":{"shape":"Timestamp"},
-        "ExpirationDate":{"shape":"Timestamp"}
+        "ExpirationDate":{"shape":"Timestamp"},
+        "Arn":{"shape":"ArnString"}
       }
     },
     "ProposalSummaryList":{
@@ -1343,7 +1455,8 @@
     "ResourceNotFoundException":{
       "type":"structure",
       "members":{
-        "Message":{"shape":"String"}
+        "Message":{"shape":"String"},
+        "ResourceName":{"shape":"ArnString"}
       },
       "error":{"httpStatusCode":404},
       "exception":true
@@ -1364,6 +1477,42 @@
       ]
     },
     "String":{"type":"string"},
+    "TagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "TagKeyList":{
+      "type":"list",
+      "member":{"shape":"TagKey"},
+      "max":200,
+      "min":0
+    },
+    "TagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "Tags"
+      ],
+      "members":{
+        "ResourceArn":{
+          "shape":"ArnString",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "Tags":{"shape":"InputTagMap"}
+      }
+    },
+    "TagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "TagValue":{
+      "type":"string",
+      "max":256,
+      "min":0
+    },
     "ThresholdComparator":{
       "type":"string",
       "enum":[
@@ -1387,6 +1536,39 @@
     "Timestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
+    },
+    "TooManyTagsException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ExceptionMessage"},
+        "ResourceName":{"shape":"ArnString"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "UntagResourceRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "TagKeys"
+      ],
+      "members":{
+        "ResourceArn":{
+          "shape":"ArnString",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "TagKeys":{
+          "shape":"TagKeyList",
+          "location":"querystring",
+          "locationName":"tagKeys"
+        }
+      }
+    },
+    "UntagResourceResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "UpdateMemberInput":{
       "type":"structure",
@@ -1417,7 +1599,6 @@
       "type":"structure",
       "required":[
         "NetworkId",
-        "MemberId",
         "NodeId"
       ],
       "members":{
@@ -1426,11 +1607,7 @@
           "location":"uri",
           "locationName":"networkId"
         },
-        "MemberId":{
-          "shape":"ResourceIdString",
-          "location":"uri",
-          "locationName":"memberId"
-        },
+        "MemberId":{"shape":"ResourceIdString"},
         "NodeId":{
           "shape":"ResourceIdString",
           "location":"uri",

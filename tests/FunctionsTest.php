@@ -40,7 +40,7 @@ class FunctionsTest extends TestCase
         $b = function ($a, $b) { return $a . $b; };
         $c = function ($a, $b) { return 'C'; };
         $comp = Aws\or_chain($a, $b, $c);
-        $this->assertEquals('+-', $comp('+', '-'));
+        $this->assertSame('+-', $comp('+', '-'));
     }
 
     /**
@@ -182,7 +182,7 @@ class FunctionsTest extends TestCase
     public function testDescribeObject()
     {
         $obj = new \stdClass();
-        $this->assertEquals('object(stdClass)', Aws\describe_type($obj));
+        $this->assertSame('object(stdClass)', Aws\describe_type($obj));
     }
 
     /**
@@ -191,7 +191,7 @@ class FunctionsTest extends TestCase
     public function testDescribeArray()
     {
         $arr = [0, 1, 2];
-        $this->assertEquals('array(3)', Aws\describe_type($arr));
+        $this->assertSame('array(3)', Aws\describe_type($arr));
     }
 
     /**
@@ -200,7 +200,7 @@ class FunctionsTest extends TestCase
     public function testDescribeDoubleToFloat()
     {
         $double = (double)1.3;
-        $this->assertEquals('float(1.3)', Aws\describe_type($double));
+        $this->assertSame('float(1.3)', Aws\describe_type($double));
     }
 
     /**
@@ -208,8 +208,8 @@ class FunctionsTest extends TestCase
      */
     public function testDescribeType()
     {
-        $this->assertEquals('int(1)', Aws\describe_type(1));
-        $this->assertEquals('string(4) "test"', Aws\describe_type("test"));
+        $this->assertSame('int(1)', Aws\describe_type(1));
+        $this->assertSame('string(4) "test"', Aws\describe_type("test"));
     }
 
     /**
@@ -264,13 +264,13 @@ class FunctionsTest extends TestCase
             'Body'   => '123'
         ]);
         $request = \Aws\serialize($command);
-        $this->assertEquals('/bar', $request->getRequestTarget());
-        $this->assertEquals('PUT', $request->getMethod());
-        $this->assertEquals('foo.s3.amazonaws.com', $request->getHeaderLine('Host'));
+        $this->assertSame('/bar', $request->getRequestTarget());
+        $this->assertSame('PUT', $request->getMethod());
+        $this->assertSame('foo.s3.amazonaws.com', $request->getHeaderLine('Host'));
         $this->assertTrue($request->hasHeader('Authorization'));
         $this->assertTrue($request->hasHeader('X-Amz-Content-Sha256'));
         $this->assertTrue($request->hasHeader('X-Amz-Date'));
-        $this->assertEquals('123', (string) $request->getBody());
+        $this->assertSame('123', (string) $request->getBody());
     }
 
     /**

@@ -33,9 +33,9 @@ class StsClientTest extends TestCase
             'Aws\Credentials\CredentialsInterface',
             $credentials
         );
-        $this->assertEquals('foo', $credentials->getAccessKeyId());
-        $this->assertEquals('bar', $credentials->getSecretKey());
-        $this->assertEquals('baz', $credentials->getSecurityToken());
+        $this->assertSame('foo', $credentials->getAccessKeyId());
+        $this->assertSame('bar', $credentials->getSecretKey());
+        $this->assertSame('baz', $credentials->getSecurityToken());
         $this->assertInternalType('int', $credentials->getExpiration());
         $this->assertFalse($credentials->isExpired());
     }
@@ -86,6 +86,6 @@ class StsClientTest extends TestCase
         ]);
         $uri = new Uri($endpoint['endpoint']);
 
-        $this->assertEquals($uri->getHost(), $client->getEndpoint()->getHost());
+        $this->assertSame($uri->getHost(), $client->getEndpoint()->getHost());
     }
 }

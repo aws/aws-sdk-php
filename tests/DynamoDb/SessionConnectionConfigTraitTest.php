@@ -15,18 +15,18 @@ class SessionConnectionConfigTraitTest extends TestCase
     {
         $scc = $this->getMockForTrait('Aws\DynamoDb\SessionConnectionConfigTrait');
         $scc->setSessionLifetime((int) ini_get('session.gc_maxlifetime'));
-        $this->assertEquals('sessions', $scc->getTableName());
-        $this->assertEquals('id', $scc->getHashKey());
-        $this->assertEquals('data', $scc->getDataAttribute());
-        $this->assertEquals('string', $scc->getDataAttributeType());
-        $this->assertEquals((int) ini_get('session.gc_maxlifetime'), $scc->getSessionLifetime());
-        $this->assertEquals('expires', $scc->getSessionLifetimeAttribute());
+        $this->assertSame('sessions', $scc->getTableName());
+        $this->assertSame('id', $scc->getHashKey());
+        $this->assertSame('data', $scc->getDataAttribute());
+        $this->assertSame('string', $scc->getDataAttributeType());
+        $this->assertSame((int) ini_get('session.gc_maxlifetime'), $scc->getSessionLifetime());
+        $this->assertSame('expires', $scc->getSessionLifetimeAttribute());
         $this->assertTrue($scc->isConsistentRead());
         $this->assertFalse($scc->isLocking());
         $this->assertEmpty($scc->getBatchConfig());
-        $this->assertEquals(10, $scc->getMaxLockWaitTime());
-        $this->assertEquals(10000, $scc->getMinLockRetryMicrotime());
-        $this->assertEquals(50000, $scc->getMaxLockRetryMicrotime());
+        $this->assertSame(10, $scc->getMaxLockWaitTime());
+        $this->assertSame(10000, $scc->getMinLockRetryMicrotime());
+        $this->assertSame(50000, $scc->getMaxLockRetryMicrotime());
     }
 
     public function testCustomConfig()
@@ -47,23 +47,23 @@ class SessionConnectionConfigTraitTest extends TestCase
         ];
         $scc = $this->getMockForTrait('Aws\DynamoDb\SessionConnectionConfigTrait');
         $scc->initConfig($config);
-        $this->assertEquals('sessions_custom', $scc->getTableName());
-        $this->assertEquals('id_custom', $scc->getHashKey());
-        $this->assertEquals('data_custom', $scc->getDataAttribute());
-        $this->assertEquals('binary', $scc->getDataAttributeType());
-        $this->assertEquals(2019, $scc->getSessionLifetime());
-        $this->assertEquals('expires_custom', $scc->getSessionLifetimeAttribute());
+        $this->assertSame('sessions_custom', $scc->getTableName());
+        $this->assertSame('id_custom', $scc->getHashKey());
+        $this->assertSame('data_custom', $scc->getDataAttribute());
+        $this->assertSame('binary', $scc->getDataAttributeType());
+        $this->assertSame(2019, $scc->getSessionLifetime());
+        $this->assertSame('expires_custom', $scc->getSessionLifetimeAttribute());
         $this->assertFalse($scc->isConsistentRead());
         $this->assertTrue($scc->isLocking());
         $this->assertEquals($scc->getBatchConfig(), ['hello' => 'hello']);
-        $this->assertEquals(2019, $scc->getMaxLockWaitTime());
-        $this->assertEquals(2019, $scc->getMinLockRetryMicrotime());
-        $this->assertEquals(2019, $scc->getMaxLockRetryMicrotime());
+        $this->assertSame(2019, $scc->getMaxLockWaitTime());
+        $this->assertSame(2019, $scc->getMinLockRetryMicrotime());
+        $this->assertSame(2019, $scc->getMaxLockRetryMicrotime());
 
         // Test Custom Config Without Session Lifetime
         unset($config['session_lifetime']);
         $scc = $this->getMockForTrait('Aws\DynamoDb\SessionConnectionConfigTrait');
         $scc->initConfig($config);
-        $this->assertEquals((int) ini_get('session.gc_maxlifetime'), $scc->getSessionLifetime());
+        $this->assertSame((int) ini_get('session.gc_maxlifetime'), $scc->getSessionLifetime());
     }
 }

@@ -34,7 +34,7 @@ class TreeHashTest extends TestCase
         $leaf1 = hash('sha256', $leaf1 . $leaf2, true);
         $expectedTreeHash = hash('sha256', $leaf1 . $leaf3, true);
 
-        $this->assertEquals($expectedTreeHash, $hash->complete());
+        $this->assertSame($expectedTreeHash, $hash->complete());
     }
 
     /**
@@ -73,7 +73,7 @@ class TreeHashTest extends TestCase
         $hash->reset();
         $hash->update('foo');
 
-        $this->assertEquals(hash('sha256', 'foo', true), $hash->complete());
+        $this->assertSame(hash('sha256', 'foo', true), $hash->complete());
     }
 
     /**
@@ -83,7 +83,7 @@ class TreeHashTest extends TestCase
     {
         $hash = new TreeHash('sha256');
 
-        $this->assertEquals(TreeHash::EMPTY_HASH, bin2hex($hash->complete()));
+        $this->assertSame(TreeHash::EMPTY_HASH, bin2hex($hash->complete()));
     }
 
     /**
@@ -96,6 +96,6 @@ class TreeHashTest extends TestCase
         $hash = new TreeHash('sha256');
         $hash->update($data);
 
-        $this->assertEquals(hash('sha256', $data, true), $hash->complete());
+        $this->assertSame(hash('sha256', $data, true), $hash->complete());
     }
 }

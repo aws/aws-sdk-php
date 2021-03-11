@@ -27,7 +27,8 @@
         {"shape":"InvalidSessionException"},
         {"shape":"OccConflictException"},
         {"shape":"RateExceededException"},
-        {"shape":"LimitExceededException"}
+        {"shape":"LimitExceededException"},
+        {"shape":"CapacityExceededException"}
       ]
     }
   },
@@ -40,6 +41,7 @@
     "AbortTransactionResult":{
       "type":"structure",
       "members":{
+        "TimingInformation":{"shape":"TimingInformation"}
       }
     },
     "BadRequestException":{
@@ -47,6 +49,13 @@
       "members":{
         "Message":{"shape":"ErrorMessage"},
         "Code":{"shape":"ErrorCode"}
+      },
+      "exception":true
+    },
+    "CapacityExceededException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
     },
@@ -66,7 +75,9 @@
       "type":"structure",
       "members":{
         "TransactionId":{"shape":"TransactionId"},
-        "CommitDigest":{"shape":"CommitDigest"}
+        "CommitDigest":{"shape":"CommitDigest"},
+        "TimingInformation":{"shape":"TimingInformation"},
+        "ConsumedIOs":{"shape":"IOUsage"}
       }
     },
     "EndSessionRequest":{
@@ -77,6 +88,7 @@
     "EndSessionResult":{
       "type":"structure",
       "members":{
+        "TimingInformation":{"shape":"TimingInformation"}
       }
     },
     "ErrorCode":{"type":"string"},
@@ -96,7 +108,9 @@
     "ExecuteStatementResult":{
       "type":"structure",
       "members":{
-        "FirstPage":{"shape":"Page"}
+        "FirstPage":{"shape":"Page"},
+        "TimingInformation":{"shape":"TimingInformation"},
+        "ConsumedIOs":{"shape":"IOUsage"}
       }
     },
     "FetchPageRequest":{
@@ -113,7 +127,16 @@
     "FetchPageResult":{
       "type":"structure",
       "members":{
-        "Page":{"shape":"Page"}
+        "Page":{"shape":"Page"},
+        "TimingInformation":{"shape":"TimingInformation"},
+        "ConsumedIOs":{"shape":"IOUsage"}
+      }
+    },
+    "IOUsage":{
+      "type":"structure",
+      "members":{
+        "ReadIOs":{"shape":"ReadIOs"},
+        "WriteIOs":{"shape":"WriteIOs"}
       }
     },
     "InvalidSessionException":{
@@ -167,6 +190,7 @@
       "min":4,
       "pattern":"^[A-Za-z-0-9+/=]+$"
     },
+    "ProcessingTimeMilliseconds":{"type":"long"},
     "RateExceededException":{
       "type":"structure",
       "members":{
@@ -174,6 +198,7 @@
       },
       "exception":true
     },
+    "ReadIOs":{"type":"long"},
     "SendCommandRequest":{
       "type":"structure",
       "members":{
@@ -215,7 +240,8 @@
     "StartSessionResult":{
       "type":"structure",
       "members":{
-        "SessionToken":{"shape":"SessionToken"}
+        "SessionToken":{"shape":"SessionToken"},
+        "TimingInformation":{"shape":"TimingInformation"}
       }
     },
     "StartTransactionRequest":{
@@ -226,7 +252,8 @@
     "StartTransactionResult":{
       "type":"structure",
       "members":{
-        "TransactionId":{"shape":"TransactionId"}
+        "TransactionId":{"shape":"TransactionId"},
+        "TimingInformation":{"shape":"TimingInformation"}
       }
     },
     "Statement":{
@@ -237,6 +264,12 @@
     "StatementParameters":{
       "type":"list",
       "member":{"shape":"ValueHolder"}
+    },
+    "TimingInformation":{
+      "type":"structure",
+      "members":{
+        "ProcessingTimeMilliseconds":{"shape":"ProcessingTimeMilliseconds"}
+      }
     },
     "TransactionId":{
       "type":"string",
@@ -254,6 +287,7 @@
     "ValueHolders":{
       "type":"list",
       "member":{"shape":"ValueHolder"}
-    }
+    },
+    "WriteIOs":{"type":"long"}
   }
 }

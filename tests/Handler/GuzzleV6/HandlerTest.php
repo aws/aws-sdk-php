@@ -37,8 +37,8 @@ class HandlerTest extends TestCase
         /** @var $response Response */
         $response = $promise->wait();
         $this->assertInstanceOf(Response::class, $response);
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('foo', $response->getBody()->getContents());
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame('foo', $response->getBody()->getContents());
     }
 
     public function testHandlerWorksWithFailedRequest()
@@ -66,7 +66,7 @@ class HandlerTest extends TestCase
             $this->assertInstanceOf(RequestException::class, $error['exception']);
             $this->assertFalse($error['connection_error']);
             $this->assertInstanceOf(Response::class, $error['response']);
-            $this->assertEquals(500, $error['response']->getStatusCode());
+            $this->assertSame(500, $error['response']->getStatusCode());
         }
 
         $this->assertTrue($wasRejected, 'Reject callback was not triggered.');
@@ -109,4 +109,37 @@ class HandlerTest extends TestCase
 
         $this->assertTrue($wasCalled);
     }
+
+    public function testHandlerWorksWithErroredRequest()
+    {
+        $wasRejected = false;
+        $request = new Request('PUT', 'http://example.com');
+        $mock = new MockHandler(
+            [
+                new RejectionException(
+                    new \Error('error message')
+                )
+            ]
+        );
+        $client = new Client(['handler' => $mock]);
+        $handler = new GuzzleHandler($client);
+
+        $promise = $handler(new Request('PUT', 'http://example.com'));
+        $promise->then(null, function (array $error) use (&$wasRejected) {
+            $wasRejected = true;
+        });
+
+        try {
+            $promise->wait();
+            $this->fail('An exception should have been thrown.');
+        } catch (RejectionException $e) {
+            $error = $e->getReason();
+            $this->assertInstanceOf(\Error::class, $error['exception']->getReason());
+            $this->assertFalse($error['connection_error']);
+            $this->assertContains("error message", $error['exception']->getMessage());
+        }
+
+        $this->assertTrue($wasRejected, 'Reject callback was not triggered.');
+    }
+
 }

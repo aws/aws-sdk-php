@@ -57,7 +57,7 @@ class GuzzleV5HandlerTest extends TestCase
 
         // Check the sink.
         $sink->seek(0);
-        $this->assertEquals($body, $sink->getContents());
+        $this->assertSame($body, $sink->getContents());
     }
 
     public function testProduceErrorData()

@@ -97,10 +97,10 @@ class RestJsonSerializerTest extends TestCase
     public function testPreparesRequestsWithContentType()
     {
         $request = $this->getRequest('foo', ['baz' => 'bar']);
-        $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com/', (string) $request->getUri());
-        $this->assertEquals('{"baz":"bar"}', (string) $request->getBody());
-        $this->assertEquals(
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
+        $this->assertSame('{"baz":"bar"}', (string) $request->getBody());
+        $this->assertSame(
             'application/json',
             $request->getHeaderLine('Content-Type')
         );
@@ -109,10 +109,10 @@ class RestJsonSerializerTest extends TestCase
     public function testPreparesRequestsWithEndpointWithPath()
     {
         $request = $this->getPathEndpointRequest('foo', ['baz' => 'bar']);
-        $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com/bar', (string) $request->getUri());
-        $this->assertEquals('{"baz":"bar"}', (string) $request->getBody());
-        $this->assertEquals(
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com/bar', (string) $request->getUri());
+        $this->assertSame('{"baz":"bar"}', (string) $request->getBody());
+        $this->assertSame(
             'application/json',
             $request->getHeaderLine('Content-Type')
         );
@@ -121,20 +121,20 @@ class RestJsonSerializerTest extends TestCase
     public function testPreparesRequestsWithBlobButNoForcedContentType()
     {
         $request = $this->getRequest('bar', ['baz' => 'bar']);
-        $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com/', (string) $request->getUri());
-        $this->assertEquals('bar', (string) $request->getBody());
-        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
+        $this->assertSame('bar', (string) $request->getBody());
+        $this->assertSame('', $request->getHeaderLine('Content-Type'));
     }
 
     public function testPreparesRequestsWithJsonValueTraitString()
     {
         $jsonValueArgs = '{"a":"b"}';
         $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
-        $this->assertEquals('IntcImFcIjpcImJcIn0i', $request->getHeaderLine('baz'));
-        $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com/', (string) $request->getUri());
-        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
+        $this->assertSame('IntcImFcIjpcImJcIn0i', $request->getHeaderLine('baz'));
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
+        $this->assertSame('', $request->getHeaderLine('Content-Type'));
     }
 
     public function testPreparesRequestsWithJsonValueTraitArray()
@@ -143,20 +143,20 @@ class RestJsonSerializerTest extends TestCase
             "a" => "b"
         ];
         $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
-        $this->assertEquals('eyJhIjoiYiJ9', $request->getHeaderLine('baz'));
-        $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com/', (string) $request->getUri());
-        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
+        $this->assertSame('eyJhIjoiYiJ9', $request->getHeaderLine('baz'));
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
+        $this->assertSame('', $request->getHeaderLine('Content-Type'));
     }
 
     public function testPreparesRequestsWithJsonValueTraitEmptyString()
     {
         $jsonValueArgs = '';
         $request = $this->getRequest('foobar', ['baz' => $jsonValueArgs]);
-        $this->assertEquals('IiI=', $request->getHeaderLine('baz'));
-        $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com/', (string) $request->getUri());
-        $this->assertEquals('', $request->getHeaderLine('Content-Type'));
+        $this->assertSame('IiI=', $request->getHeaderLine('baz'));
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
+        $this->assertSame('', $request->getHeaderLine('Content-Type'));
     }
 
     /**
@@ -172,10 +172,10 @@ class RestJsonSerializerTest extends TestCase
     public function testPreparesRequestsWithStructPayload()
     {
         $request = $this->getRequest('baz', ['baz' => ['baz' => '1234']]);
-        $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com/', (string) $request->getUri());
-        $this->assertEquals('{"baz":"1234"}', (string) $request->getBody());
-        $this->assertEquals(
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
+        $this->assertSame('{"baz":"1234"}', (string) $request->getBody());
+        $this->assertSame(
             'application/json',
             $request->getHeaderLine('Content-Type')
         );

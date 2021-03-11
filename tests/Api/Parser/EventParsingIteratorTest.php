@@ -11,11 +11,12 @@ use Aws\Api\StructureShape;
 use Aws\Exception\EventStreamDataException;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers Aws\Api\Parser\EventParsingIterator
  */
-class EventParsingIteratorTest extends \PHPUnit_Framework_TestCase
+class EventParsingIteratorTest extends TestCase
 {
     /** @var array */
     private static $successEventNames = [
@@ -119,12 +120,12 @@ class EventParsingIteratorTest extends \PHPUnit_Framework_TestCase
         );
 
         try {
-            $this->assertEquals(0, $iterator->key());
+            $this->assertSame(0, $iterator->key());
             $iterator->current();
             $this->fail('Got event when error expected from stream.');
         } catch (EventStreamDataException $e) {
-            $this->assertEquals('Event Error', $e->getAwsErrorMessage());
-            $this->assertEquals('FooError', $e->getAwsErrorCode());
+            $this->assertSame('Event Error', $e->getAwsErrorMessage());
+            $this->assertSame('FooError', $e->getAwsErrorCode());
         } catch (\Exception $e) {
             $this->fail('Got other exception when error expected from stream.');
         }

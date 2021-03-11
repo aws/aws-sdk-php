@@ -20,6 +20,7 @@ class EcsCredentialProviderTest extends TestCase
     private function clearEnv()
     {
         putenv(EcsCredentialProvider::ENV_URI . '=');
+        unset($_SERVER[EcsCredentialProvider::ENV_URI]);
     }
 
     public function setUp()
@@ -64,10 +65,10 @@ class EcsCredentialProviderTest extends TestCase
         $c = $this->getTestCreds(
             $this->getCredentialArray('foo', 'baz', null, "@{$t}")
         )->wait();
-        $this->assertEquals('foo', $c->getAccessKeyId());
-        $this->assertEquals('baz', $c->getSecretKey());
+        $this->assertSame('foo', $c->getAccessKeyId());
+        $this->assertSame('baz', $c->getSecretKey());
         $this->assertNull($c->getSecurityToken());
-        $this->assertEquals($t, $c->getExpiration());
+        $this->assertSame($t, $c->getExpiration());
     }
 
     public function testDoesNotRequireConfig()
@@ -121,7 +122,7 @@ class EcsCredentialProviderTest extends TestCase
                     'handler' => function (
                         array $request
                     ) use ($credentials) {
-                        $this->assertEquals('', $request['client']['proxy']);
+                        $this->assertSame('', $request['client']['proxy']);
                         return new CompletedFutureArray([
                             'status'  => 200,
                             'headers' => [],
@@ -141,7 +142,7 @@ class EcsCredentialProviderTest extends TestCase
                         Psr7\Request $request,
                         array $options
                     ) use ($credentials) {
-                        $this->assertEquals('', $options['proxy']);
+                        $this->assertSame('', $options['proxy']);
                         return Promise\promise_for(
                             new Response(
                                 200,

@@ -249,7 +249,7 @@
     "AttributeType" : {
       "base" : null,
       "refs" : {
-        "AttributeDimension$AttributeType" : "<p>The type of segment dimension to use. Valid values are: INCLUSIVE, endpoints that match the criteria are included in the segment; and, EXCLUSIVE, endpoints that match the criteria are excluded from the segment.</p>"
+        "AttributeDimension$AttributeType" : "<p><ul><li>INCLUSIVE - endpoints that have attributes matching the values are included in the segment.</li><li>EXCLUSIVE - endpoints that have attributes matching the values are excluded in the segment.</li><li>CONTAINS - endpoints that have attributes' substrings match the values are included in the segment.</li><li>BEFORE - endpoints with attributes read as ISO_INSTANT datetimes before the value are included in the segment.</li><li>AFTER - endpoints with attributes read as ISO_INSTANT datetimes after the value are included in the segment.</li><li>ON - endpoints with attributes read as ISO_INSTANT dates on the value are included in the segment. Time is ignored in this comparison.</li><li>BETWEEN - endpoints with attributes read as ISO_INSTANT datetimes between the values are included in the segment.</li></p>"
       }
     },
     "AttributesResource" : {
@@ -1940,7 +1940,10 @@
         "CampaignResponse$TreatmentDescription" : "<p>The custom description of the default treatment for the campaign.</p>",
         "CampaignResponse$TreatmentName" : "<p>The custom name of the default treatment for the campaign, if the campaign has multiple treatments. A <i>treatment</i> is a variation of a campaign that's used for A/B testing.</p>",
         "CampaignSmsMessage$Body" : "<p>The body of the SMS message.</p>",
+        "CampaignSmsMessage$OriginationNumber" : "<p>The long code to send the SMS message from. This value should be one of the dedicated long codes that's assigned to your AWS account. Although it isn't required, we recommend that you specify the long code using an E.164 format to ensure prompt and accurate delivery of the message. For example, +12065550100.</p>",
         "CampaignSmsMessage$SenderId" : "<p>The sender ID to display on recipients' devices when they receive the SMS message.</p>",
+        "CampaignSmsMessage$EntityId" : "<p>The entity ID or Principal Entity (PE) id received from the regulatory body for sending SMS in your country.</p>",
+        "CampaignSmsMessage$TemplateId" : "<p>The template ID received from the regulatory body for sending SMS in your country.</p>",
         "CampaignsResponse$NextToken" : "<p>The string to use in a subsequent request to get the next page of results in a paginated response. This value is null if there are no additional pages.</p>",
         "ChannelResponse$ApplicationId" : "<p>The unique identifier for the application.</p>",
         "ChannelResponse$CreationDate" : "<p>The date and time, in ISO 8601 format, when the channel was enabled.</p>",
@@ -2140,7 +2143,10 @@
         "JourneyResponse$Name" : "<p>The name of the journey.</p>",
         "JourneyResponse$RefreshFrequency" : "<p>The frequency with which Amazon Pinpoint evaluates segment and event data for the journey, as a duration in ISO 8601 format.</p>",
         "JourneyResponse$StartActivity" : "<p>The unique identifier for the first activity in the journey.</p>",
+        "JourneySMSMessage$OriginationNumber" : "<p>The long code to send the SMS message from. This value should be one of the dedicated long codes that's assigned to your AWS account. Although it isn't required, we recommend that you specify the long code using an E.164 format to ensure prompt and accurate delivery of the message. For example, +12065550100.</p>",
         "JourneySMSMessage$SenderId" : "<p>The sender ID to display as the sender of the message on a recipient's device. Support for sender IDs varies by country or region. For more information, see <a href=\"https://docs.aws.amazon.com/pinpoint/latest/userguide/channels-sms-countries.html\">Supported Countries and Regions</a> in the Amazon Pinpoint User Guide.</p>",
+        "JourneySMSMessage$EntityId" : "<p>The entity ID or Principal Entity (PE) id received from the regulatory body for sending SMS in your country.</p>",
+        "JourneySMSMessage$TemplateId" : "<p>The template ID received from the regulatory body for sending SMS in your country.</p>",
         "JourneySchedule$EndTime" : "<p>The scheduled time, in ISO 8601 format, when the journey ended or will end.</p>",
         "JourneySchedule$StartTime" : "<p>The scheduled time, in ISO 8601 format, when the journey began or will begin.</p>",
         "JourneySchedule$Timezone" : "<p>The starting UTC offset for the journey schedule, if the value of the journey's LocalTime property is true. Valid values are: UTC,\n                  UTC+01, UTC+02, UTC+03, UTC+03:30, UTC+04, UTC+04:30, UTC+05, UTC+05:30,\n                  UTC+05:45, UTC+06, UTC+06:30, UTC+07, UTC+08, UTC+08:45, UTC+09, UTC+09:30,\n                  UTC+10, UTC+10:30, UTC+11, UTC+12, UTC+12:45, UTC+13, UTC+13:45, UTC-02,\n                  UTC-02:30, UTC-03, UTC-03:30, UTC-04, UTC-05, UTC-06, UTC-07, UTC-08, UTC-09,\n                  UTC-09:30, UTC-10, and UTC-11.</p>",
@@ -2232,6 +2238,8 @@
         "SMSMessage$MediaUrl" : "<p>This field is reserved for future use.</p>",
         "SMSMessage$OriginationNumber" : "<p>The number to send the SMS message from. This value should be one of the dedicated long or short codes that's assigned to your AWS account. If you don't specify a long or short code, Amazon Pinpoint assigns a random long code to the SMS message and sends the message from that code.</p>",
         "SMSMessage$SenderId" : "<p>The sender ID to display as the sender of the message on a recipient's device. Support for sender IDs varies by country or region.</p>",
+        "SMSMessage$EntityId" : "<p>The entity ID or Principal Entity (PE) id received from the regulatory body for sending SMS in your country.</p>",
+        "SMSMessage$TemplateId" : "<p>The template ID received from the regulatory body for sending SMS in your country.</p>",
         "SMSMessageActivity$NextActivity" : "<p>The unique identifier for the next activity to perform, after the message is sent.</p>",
         "SMSMessageActivity$TemplateName" : "<p>The name of the SMS message template to use for the message. If specified, this value must match the name of an existing message template.</p>",
         "SMSMessageActivity$TemplateVersion" : "<p>The unique identifier for the version of the SMS template to use for the message. If specified, this value must match the identifier for an existing template version. To retrieve a list of versions and version identifiers for a template, use the <link  linkend=\"templates-template-name-template-type-versions\">Template Versions</link> resource.</p> <p>If you don't specify a value for this property, Amazon Pinpoint uses the <i>active version</i> of the template. The <i>active version</i> is typically the version of a template that's been most recently reviewed and approved for use, depending on your workflow. It isn't necessarily the latest version of a template.</p>",

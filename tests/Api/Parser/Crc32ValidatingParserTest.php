@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test\Api;
+namespace Aws\Test\Api\Parser;
 
 use Aws\Api\ApiProvider;
 use Aws\Api\Parser\Crc32ValidatingParser;

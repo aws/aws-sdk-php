@@ -88,7 +88,7 @@ class QuotaManagerTest extends TestCase
         ]);
 
         $quota->hasRetryQuota($exception);
-        $this->assertEquals(5, $quota->releaseToQuota($result));
+        $this->assertSame(5, $quota->releaseToQuota($result));
 
         // Verify that the available capacity is indeed set back to 10
         for ($i = 5; $i <= 10; $i += 5) {
@@ -131,12 +131,12 @@ class QuotaManagerTest extends TestCase
         $quota->hasRetryQuota($exception);
 
         // First call should return taken capacity
-        $this->assertEquals(5, $quota->releaseToQuota($result));
+        $this->assertSame(5, $quota->releaseToQuota($result));
 
         // Subsequent calls should return no_retry_incerement
-        $this->assertEquals(1, $quota->releaseToQuota($result));
-        $this->assertEquals(1, $quota->releaseToQuota($result));
-        $this->assertEquals(1, $quota->releaseToQuota($result));
+        $this->assertSame(1, $quota->releaseToQuota($result));
+        $this->assertSame(1, $quota->releaseToQuota($result));
+        $this->assertSame(1, $quota->releaseToQuota($result));
 
         // Verify that available capacity is now at 8
         for ($i = 2; $i <= 8; $i += 2) {

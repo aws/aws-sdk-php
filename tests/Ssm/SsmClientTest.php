@@ -47,7 +47,7 @@ class SsmClientTest extends TestCase
 
         $mock = new MockHandler([
             function ($command, $request) {
-                $this->assertEquals('foo', $command['ClientToken']);
+                $this->assertSame('foo', $command['ClientToken']);
                 return new Result();
             }
         ]);

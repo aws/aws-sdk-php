@@ -20,7 +20,7 @@ class WriteRequestBatchTest extends TestCase
     {
         // Ensure threshold is correctly calculated
         $batch = new WriteRequestBatch($this->getTestClient('DynamoDb'), ['pool_size' => 2]);
-        $this->assertEquals(50, $this->readAttribute($batch, 'config')['threshold']);
+        $this->assertSame(50, $this->readAttribute($batch, 'config')['threshold']);
     }
 
     /**
@@ -204,6 +204,6 @@ class WriteRequestBatchTest extends TestCase
         // After 2 complete flushes, the queue should be empty, and there should
         // been 2 unhandled errors that would have triggered the callback.
         $this->assertCount(0, $this->readAttribute($batch, 'queue'));
-        $this->assertEquals(2, $unhandledErrors);
+        $this->assertSame(2, $unhandledErrors);
     }
 }

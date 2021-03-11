@@ -90,7 +90,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $sts = $this->getTestClient('Sts', ['credentials' => false]);
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
-                $this->assertEquals('fooSession', $c->toArray()['RoleSessionName']);
+                $this->assertSame('fooSession', $c->toArray()['RoleSessionName']);
                 return Promise\promise_for(new Result($result));
             }
         );
@@ -103,9 +103,9 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $creds = $provider()->wait();
 
         try {
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('bar', $creds->getSecretKey());
-            $this->assertEquals('baz', $creds->getSecurityToken());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('bar', $creds->getSecretKey());
+            $this->assertSame('baz', $creds->getSecurityToken());
             $this->assertInternalType('int', $creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Error $e) {
@@ -156,6 +156,26 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $args['WebIdentityTokenFile'] = '/foo';
         $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
         $provider()->wait();
+    }
+
+    public function testThrowsExceptionWhenEmptyTokenFile()
+    {
+        $dir = $this->clearEnv();
+        $tokenPath = $dir . '/emptyTokenFile';
+        $args['WebIdentityTokenFile'] = $tokenPath;
+        $args['RoleArn'] = self::SAMPLE_ROLE_ARN;
+        file_put_contents($tokenPath, '');
+
+        try {
+            $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
+            $provider()->wait();
+            $this->fail("Should have thrown an exception");
+        } catch (\Exception $e) {
+            self::assertInstanceOf('\Aws\Exception\CredentialsException', $e);
+            self::assertContains('Error reading WebIdentityTokenFile', $e->getMessage());
+        } finally {
+            unlink($tokenPath);
+        }
     }
 
     /**
@@ -271,9 +291,9 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $provider = new AssumeRoleWithWebIdentityCredentialProvider($args);
         $creds = $provider()->wait();
         try {
-            $this->assertEquals('foo', $creds->getAccessKeyId());
-            $this->assertEquals('bar', $creds->getSecretKey());
-            $this->assertEquals('baz', $creds->getSecurityToken());
+            $this->assertSame('foo', $creds->getAccessKeyId());
+            $this->assertSame('bar', $creds->getSecretKey());
+            $this->assertSame('baz', $creds->getSecurityToken());
             $this->assertInternalType('int', $creds->getExpiration());
             $this->assertFalse($creds->isExpired());
         } catch (\Exception $e) {

@@ -368,6 +368,24 @@
         {"shape":"GlueEncryptionException"}
       ]
     },
+    "CreatePartitionIndex":{
+      "name":"CreatePartitionIndex",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreatePartitionIndexRequest"},
+      "output":{"shape":"CreatePartitionIndexResponse"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"GlueEncryptionException"}
+      ]
+    },
     "CreateRegistry":{
       "name":"CreateRegistry",
       "http":{
@@ -648,6 +666,23 @@
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "DeletePartitionIndex":{
+      "name":"DeletePartitionIndex",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeletePartitionIndexRequest"},
+      "output":{"shape":"DeletePartitionIndexResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"GlueEncryptionException"}
       ]
     },
     "DeleteRegistry":{
@@ -2421,6 +2456,31 @@
       "exception":true
     },
     "AttemptCount":{"type":"integer"},
+    "BackfillError":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"BackfillErrorCode"},
+        "Partitions":{"shape":"BackfillErroredPartitionsList"}
+      }
+    },
+    "BackfillErrorCode":{
+      "type":"string",
+      "enum":[
+        "ENCRYPTED_PARTITION_ERROR",
+        "INTERNAL_ERROR",
+        "INVALID_PARTITION_TYPE_DATA_ERROR",
+        "MISSING_PARTITION_VALUE_ERROR",
+        "UNSUPPORTED_PARTITION_CHARACTER_ERROR"
+      ]
+    },
+    "BackfillErroredPartitionsList":{
+      "type":"list",
+      "member":{"shape":"PartitionValueList"}
+    },
+    "BackfillErrors":{
+      "type":"list",
+      "member":{"shape":"BackfillError"}
+    },
     "BatchCreatePartitionRequest":{
       "type":"structure",
       "required":[
@@ -2802,6 +2862,12 @@
         "TableName":{"shape":"NameString"}
       }
     },
+    "CatalogGetterPageSize":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "CatalogIdString":{
       "type":"string",
       "max":255,
@@ -2959,6 +3025,19 @@
     "ColumnErrors":{
       "type":"list",
       "member":{"shape":"ColumnError"}
+    },
+    "ColumnImportance":{
+      "type":"structure",
+      "members":{
+        "ColumnName":{"shape":"NameString"},
+        "Importance":{"shape":"GenericBoundedDouble"}
+      }
+    },
+    "ColumnImportanceList":{
+      "type":"list",
+      "member":{"shape":"ColumnImportance"},
+      "max":100,
+      "min":0
     },
     "ColumnList":{
       "type":"list",
@@ -3190,7 +3269,11 @@
         "KAFKA_BOOTSTRAP_SERVERS",
         "KAFKA_SSL_ENABLED",
         "KAFKA_CUSTOM_CERT",
-        "KAFKA_SKIP_CUSTOM_CERT_VALIDATION"
+        "KAFKA_SKIP_CUSTOM_CERT_VALIDATION",
+        "SECRET_ID",
+        "CONNECTOR_URL",
+        "CONNECTOR_TYPE",
+        "CONNECTOR_CLASS_NAME"
       ]
     },
     "ConnectionType":{
@@ -3200,7 +3283,9 @@
         "SFTP",
         "MONGODB",
         "KAFKA",
-        "NETWORK"
+        "NETWORK",
+        "MARKETPLACE",
+        "CUSTOM"
       ]
     },
     "ConnectionsList":{
@@ -3245,6 +3330,7 @@
         "Classifiers":{"shape":"ClassifierNameList"},
         "RecrawlPolicy":{"shape":"RecrawlPolicy"},
         "SchemaChangePolicy":{"shape":"SchemaChangePolicy"},
+        "LineageConfiguration":{"shape":"LineageConfiguration"},
         "State":{"shape":"CrawlerState"},
         "TablePrefix":{"shape":"TablePrefix"},
         "Schedule":{"shape":"Schedule"},
@@ -3258,6 +3344,13 @@
       }
     },
     "CrawlerConfiguration":{"type":"string"},
+    "CrawlerLineageSettings":{
+      "type":"string",
+      "enum":[
+        "ENABLE",
+        "DISABLE"
+      ]
+    },
     "CrawlerList":{
       "type":"list",
       "member":{"shape":"Crawler"}
@@ -3380,6 +3473,7 @@
         "TablePrefix":{"shape":"TablePrefix"},
         "SchemaChangePolicy":{"shape":"SchemaChangePolicy"},
         "RecrawlPolicy":{"shape":"RecrawlPolicy"},
+        "LineageConfiguration":{"shape":"LineageConfiguration"},
         "Configuration":{"shape":"CrawlerConfiguration"},
         "CrawlerSecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"},
         "Tags":{"shape":"TagsMap"}
@@ -3556,6 +3650,25 @@
       "type":"structure",
       "members":{
         "TransformId":{"shape":"HashString"}
+      }
+    },
+    "CreatePartitionIndexRequest":{
+      "type":"structure",
+      "required":[
+        "DatabaseName",
+        "TableName",
+        "PartitionIndex"
+      ],
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"},
+        "PartitionIndex":{"shape":"PartitionIndex"}
+      }
+    },
+    "CreatePartitionIndexResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "CreatePartitionRequest":{
@@ -4047,6 +4160,25 @@
         "TransformId":{"shape":"HashString"}
       }
     },
+    "DeletePartitionIndexRequest":{
+      "type":"structure",
+      "required":[
+        "DatabaseName",
+        "TableName",
+        "IndexName"
+      ],
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"},
+        "IndexName":{"shape":"NameString"}
+      }
+    },
+    "DeletePartitionIndexResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeletePartitionRequest":{
       "type":"structure",
       "required":[
@@ -4411,7 +4543,8 @@
         "Precision":{"shape":"GenericBoundedDouble"},
         "Recall":{"shape":"GenericBoundedDouble"},
         "F1":{"shape":"GenericBoundedDouble"},
-        "ConfusionMatrix":{"shape":"ConfusionMatrix"}
+        "ConfusionMatrix":{"shape":"ConfusionMatrix"},
+        "ColumnImportances":{"shape":"ColumnImportanceList"}
       }
     },
     "FindMatchesParameters":{
@@ -4649,7 +4782,7 @@
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"},
+        "MaxResults":{"shape":"CatalogGetterPageSize"},
         "ResourceShareType":{"shape":"ResourceShareType"}
       }
     },
@@ -4937,7 +5070,8 @@
         "Expression":{"shape":"PredicateString"},
         "NextToken":{"shape":"Token"},
         "Segment":{"shape":"Segment"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"PageSize"},
+        "ExcludeColumnSchema":{"shape":"BooleanNullable"}
       }
     },
     "GetPartitionsResponse":{
@@ -5186,7 +5320,7 @@
         "DatabaseName":{"shape":"NameString"},
         "TableName":{"shape":"NameString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"CatalogGetterPageSize"}
       }
     },
     "GetTableVersionsResponse":{
@@ -5204,7 +5338,7 @@
         "DatabaseName":{"shape":"NameString"},
         "Expression":{"shape":"FilterString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"CatalogGetterPageSize"}
       }
     },
     "GetTablesResponse":{
@@ -5281,7 +5415,7 @@
         "DatabaseName":{"shape":"NameString"},
         "Pattern":{"shape":"NameString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"CatalogGetterPageSize"}
       }
     },
     "GetUserDefinedFunctionsResponse":{
@@ -5738,6 +5872,12 @@
       ]
     },
     "LatestSchemaVersionBoolean":{"type":"boolean"},
+    "LineageConfiguration":{
+      "type":"structure",
+      "members":{
+        "CrawlerLineageSettings":{"shape":"CrawlerLineageSettings"}
+      }
+    },
     "ListCrawlersRequest":{
       "type":"structure",
       "members":{
@@ -6235,7 +6375,8 @@
       "members":{
         "IndexName":{"shape":"NameString"},
         "Keys":{"shape":"KeySchemaElementList"},
-        "IndexStatus":{"shape":"PartitionIndexStatus"}
+        "IndexStatus":{"shape":"PartitionIndexStatus"},
+        "BackfillErrors":{"shape":"BackfillErrors"}
       }
     },
     "PartitionIndexDescriptorList":{
@@ -6249,7 +6390,12 @@
     },
     "PartitionIndexStatus":{
       "type":"string",
-      "enum":["ACTIVE"]
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "DELETING",
+        "FAILED"
+      ]
     },
     "PartitionInput":{
       "type":"structure",
@@ -7658,6 +7804,7 @@
         "TablePrefix":{"shape":"TablePrefix"},
         "SchemaChangePolicy":{"shape":"SchemaChangePolicy"},
         "RecrawlPolicy":{"shape":"RecrawlPolicy"},
+        "LineageConfiguration":{"shape":"LineageConfiguration"},
         "Configuration":{"shape":"CrawlerConfiguration"},
         "CrawlerSecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"}
       }

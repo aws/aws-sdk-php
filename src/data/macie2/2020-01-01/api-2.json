@@ -677,6 +677,43 @@
         }
       ]
     },
+    "DisassociateFromAdministratorAccount": {
+      "name": "DisassociateFromAdministratorAccount",
+      "http": {
+        "method": "POST",
+        "requestUri": "/administrator/disassociate",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "DisassociateFromAdministratorAccountRequest"
+      },
+      "output": {
+        "shape": "DisassociateFromAdministratorAccountResponse"
+      },
+      "errors": [
+        {
+          "shape": "ValidationException"
+        },
+        {
+          "shape": "InternalServerException"
+        },
+        {
+          "shape": "ServiceQuotaExceededException"
+        },
+        {
+          "shape": "AccessDeniedException"
+        },
+        {
+          "shape": "ResourceNotFoundException"
+        },
+        {
+          "shape": "ThrottlingException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
     "DisassociateFromMasterAccount": {
       "name": "DisassociateFromMasterAccount",
       "http": {
@@ -800,6 +837,43 @@
       },
       "output": {
         "shape": "EnableOrganizationAdminAccountResponse"
+      },
+      "errors": [
+        {
+          "shape": "ValidationException"
+        },
+        {
+          "shape": "InternalServerException"
+        },
+        {
+          "shape": "ServiceQuotaExceededException"
+        },
+        {
+          "shape": "AccessDeniedException"
+        },
+        {
+          "shape": "ResourceNotFoundException"
+        },
+        {
+          "shape": "ThrottlingException"
+        },
+        {
+          "shape": "ConflictException"
+        }
+      ]
+    },
+    "GetAdministratorAccount": {
+      "name": "GetAdministratorAccount",
+      "http": {
+        "method": "GET",
+        "requestUri": "/administrator",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetAdministratorAccountRequest"
+      },
+      "output": {
+        "shape": "GetAdministratorAccountResponse"
       },
       "errors": [
         {
@@ -1837,6 +1911,10 @@
     "AcceptInvitationRequest": {
       "type": "structure",
       "members": {
+        "administratorAccountId": {
+          "shape": "__string",
+          "locationName": "administratorAccountId"
+        },
         "invitationId": {
           "shape": "__string",
           "locationName": "invitationId"
@@ -1847,7 +1925,6 @@
         }
       },
       "required": [
-        "masterAccount",
         "invitationId"
       ]
     },
@@ -2240,6 +2317,10 @@
           "shape": "ReplicationDetails",
           "locationName": "replicationDetails"
         },
+        "serverSideEncryption": {
+          "shape": "BucketServerSideEncryption",
+          "locationName": "serverSideEncryption"
+        },
         "sharedAccess": {
           "shape": "SharedAccess",
           "locationName": "sharedAccess"
@@ -2306,6 +2387,19 @@
         "permissionConfiguration": {
           "shape": "BucketPermissionConfiguration",
           "locationName": "permissionConfiguration"
+        }
+      }
+    },
+    "BucketServerSideEncryption": {
+      "type": "structure",
+      "members": {
+        "kmsMasterKeyId": {
+          "shape": "__string",
+          "locationName": "kmsMasterKeyId"
+        },
+        "type": {
+          "shape": "Type",
+          "locationName": "type"
         }
       }
     },
@@ -3077,6 +3171,14 @@
       "type": "structure",
       "members": {}
     },
+    "DisassociateFromAdministratorAccountRequest": {
+      "type": "structure",
+      "members": {}
+    },
+    "DisassociateFromAdministratorAccountResponse": {
+      "type": "structure",
+      "members": {}
+    },
     "DisassociateFromMasterAccountRequest": {
       "type": "structure",
       "members": {}
@@ -3411,6 +3513,19 @@
         }
       }
     },
+    "GetAdministratorAccountRequest": {
+      "type": "structure",
+      "members": {}
+    },
+    "GetAdministratorAccountResponse": {
+      "type": "structure",
+      "members": {
+        "administrator": {
+          "shape": "Invitation",
+          "locationName": "administrator"
+        }
+      }
+    },
     "GetBucketStatisticsRequest": {
       "type": "structure",
       "members": {
@@ -3731,6 +3846,10 @@
           "shape": "__string",
           "locationName": "accountId"
         },
+        "administratorAccountId": {
+          "shape": "__string",
+          "locationName": "administratorAccountId"
+        },
         "arn": {
           "shape": "__string",
           "locationName": "arn"
@@ -3779,6 +3898,10 @@
         "sortBy": {
           "shape": "UsageStatisticsSortBy",
           "locationName": "sortBy"
+        },
+        "timeRange": {
+          "shape": "TimeRange",
+          "locationName": "timeRange"
         }
       }
     },
@@ -3792,16 +3915,30 @@
         "records": {
           "shape": "__listOfUsageRecord",
           "locationName": "records"
+        },
+        "timeRange": {
+          "shape": "TimeRange",
+          "locationName": "timeRange"
         }
       }
     },
     "GetUsageTotalsRequest": {
       "type": "structure",
-      "members": {}
+      "members": {
+        "timeRange": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "timeRange"
+        }
+      }
     },
     "GetUsageTotalsResponse": {
       "type": "structure",
       "members": {
+        "timeRange": {
+          "shape": "TimeRange",
+          "locationName": "timeRange"
+        },
         "usageTotals": {
           "shape": "__listOfUsageTotal",
           "locationName": "usageTotals"
@@ -3991,7 +4128,8 @@
         "LT",
         "LTE",
         "NE",
-        "CONTAINS"
+        "CONTAINS",
+        "STARTS_WITH"
       ]
     },
     "JobDetails": {
@@ -4457,6 +4595,10 @@
           "shape": "__string",
           "locationName": "accountId"
         },
+        "administratorAccountId": {
+          "shape": "__string",
+          "locationName": "administratorAccountId"
+        },
         "arn": {
           "shape": "__string",
           "locationName": "arn"
@@ -4767,7 +4909,11 @@
           "shape": "__listOf__string",
           "locationName": "buckets"
         }
-      }
+      },
+      "required": [
+        "accountId",
+        "buckets"
+      ]
     },
     "S3BucketOwner": {
       "type": "structure",
@@ -4876,7 +5022,8 @@
         "OBJECT_EXTENSION",
         "OBJECT_LAST_MODIFIED_DATE",
         "OBJECT_SIZE",
-        "TAG"
+        "TAG",
+        "OBJECT_KEY"
       ]
     },
     "Scoping": {
@@ -5224,6 +5371,21 @@
       "error": {
         "httpStatusCode": 429
       }
+    },
+    "TimeRange": {
+      "type": "string",
+      "enum": [
+        "MONTH_TO_DATE",
+        "PAST_30_DAYS"
+      ]
+    },
+    "Type": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "AES256",
+        "aws:kms"
+      ]
     },
     "Unit": {
       "type": "string",

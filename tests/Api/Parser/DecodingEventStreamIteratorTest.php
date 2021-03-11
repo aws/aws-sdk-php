@@ -66,7 +66,7 @@ class DecodingEventStreamIteratorTest extends TestCase
 
             $events->rewind();
             $this->assertTrue($events->valid());
-            $this->assertEquals(0, $events->key());
+            $this->assertSame(0, $events->key());
 
             $firstEvent['payload'] =
                 (string) $firstEvent['payload'];
@@ -76,7 +76,7 @@ class DecodingEventStreamIteratorTest extends TestCase
             $this->assertEquals($firstEvent, $current);
 
             $decodedEvent = json_decode((string) $decodedData, true);
-            $this->assertEquals(
+            $this->assertSame(
                 base64_decode(
                     $decodedEvent['payload']
                 ),
@@ -124,7 +124,7 @@ class DecodingEventStreamIteratorTest extends TestCase
 
                 $headerCount--;
             }
-            $this->assertEquals(0, $headerCount);
+            $this->assertSame(0, $headerCount);
         } catch (ParserException $e) {
             if (!$isNegative) {
                 $this->fail('Unsuccessful parse of event from valid source.');

@@ -926,6 +926,7 @@
         {"shape":"IdentityTypeNotSupportedException"},
         {"shape":"SessionLifetimeInMinutesInvalidException"},
         {"shape":"UnsupportedUserEditionException"},
+        {"shape":"UnsupportedPricingPlanException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -1800,6 +1801,12 @@
         "AvailabilityStatus":{"shape":"DashboardBehavior"}
       }
     },
+    "AdditionalDashboardIdList":{
+      "type":"list",
+      "member":{"shape":"RestrictiveResourceId"},
+      "max":20,
+      "min":1
+    },
     "AliasName":{
       "type":"string",
       "max":2048,
@@ -1862,8 +1869,7 @@
     "AnalysisName":{
       "type":"string",
       "max":2048,
-      "min":1,
-      "pattern":"[\\u0020-\\u00FF]+"
+      "min":1
     },
     "AnalysisSearchFilter":{
       "type":"structure",
@@ -1876,7 +1882,8 @@
     "AnalysisSearchFilterList":{
       "type":"list",
       "member":{"shape":"AnalysisSearchFilter"},
-      "max":1
+      "max":1,
+      "min":1
     },
     "AnalysisSourceEntity":{
       "type":"structure",
@@ -2348,6 +2355,7 @@
         "LogicalTableMap":{"shape":"LogicalTableMap"},
         "ImportMode":{"shape":"DataSetImportMode"},
         "ColumnGroups":{"shape":"ColumnGroupList"},
+        "FieldFolders":{"shape":"FieldFolderMap"},
         "Permissions":{"shape":"ResourcePermissionList"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
@@ -2833,8 +2841,7 @@
     "DashboardName":{
       "type":"string",
       "max":2048,
-      "min":1,
-      "pattern":"[\\u0020-\\u00FF]+"
+      "min":1
     },
     "DashboardPublishOptions":{
       "type":"structure",
@@ -2856,7 +2863,8 @@
     "DashboardSearchFilterList":{
       "type":"list",
       "member":{"shape":"DashboardSearchFilter"},
-      "max":1
+      "max":1,
+      "min":1
     },
     "DashboardSourceEntity":{
       "type":"structure",
@@ -2952,6 +2960,7 @@
         "ImportMode":{"shape":"DataSetImportMode"},
         "ConsumedSpiceCapacityInBytes":{"shape":"Long"},
         "ColumnGroups":{"shape":"ColumnGroupList"},
+        "FieldFolders":{"shape":"FieldFolderMap"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"}
       }
@@ -4431,6 +4440,14 @@
         "ENTERPRISE"
       ]
     },
+    "EmbeddingIdentityType":{
+      "type":"string",
+      "enum":[
+        "IAM",
+        "QUICKSIGHT",
+        "ANONYMOUS"
+      ]
+    },
     "EmbeddingUrl":{
       "type":"string",
       "sensitive":true
@@ -4472,6 +4489,27 @@
       "max":4096,
       "min":1
     },
+    "FieldFolder":{
+      "type":"structure",
+      "members":{
+        "description":{"shape":"FieldFolderDescription"},
+        "columns":{"shape":"FolderColumnList"}
+      }
+    },
+    "FieldFolderDescription":{
+      "type":"string",
+      "max":500
+    },
+    "FieldFolderMap":{
+      "type":"map",
+      "key":{"shape":"FieldFolderPath"},
+      "value":{"shape":"FieldFolder"}
+    },
+    "FieldFolderPath":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
     "FileFormat":{
       "type":"string",
       "enum":[
@@ -4493,6 +4531,11 @@
     "FilterOperator":{
       "type":"string",
       "enum":["StringEquals"]
+    },
+    "FolderColumnList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5000
     },
     "GeoSpatialColumnGroup":{
       "type":"structure",
@@ -4542,7 +4585,7 @@
           "locationName":"DashboardId"
         },
         "IdentityType":{
-          "shape":"IdentityType",
+          "shape":"EmbeddingIdentityType",
           "location":"querystring",
           "locationName":"creds-type"
         },
@@ -4570,6 +4613,16 @@
           "shape":"Arn",
           "location":"querystring",
           "locationName":"user-arn"
+        },
+        "Namespace":{
+          "shape":"Namespace",
+          "location":"querystring",
+          "locationName":"namespace"
+        },
+        "AdditionalDashboardIds":{
+          "shape":"AdditionalDashboardIdList",
+          "location":"querystring",
+          "locationName":"additional-dashboard-ids"
         }
       }
     },
@@ -4950,8 +5003,19 @@
       "members":{
         "LeftOperand":{"shape":"LogicalTableId"},
         "RightOperand":{"shape":"LogicalTableId"},
+        "LeftJoinKeyProperties":{"shape":"JoinKeyProperties"},
+        "RightJoinKeyProperties":{"shape":"JoinKeyProperties"},
         "Type":{"shape":"JoinType"},
         "OnClause":{"shape":"OnClause"}
+      }
+    },
+    "JoinKeyProperties":{
+      "type":"structure",
+      "members":{
+        "UniqueKey":{
+          "shape":"Boolean",
+          "box":true
+        }
       }
     },
     "JoinType":{
@@ -5788,7 +5852,7 @@
       "type":"map",
       "key":{"shape":"LogicalTableId"},
       "value":{"shape":"LogicalTable"},
-      "max":32,
+      "max":64,
       "min":1
     },
     "LogicalTableSource":{
@@ -5969,7 +6033,7 @@
       "type":"map",
       "key":{"shape":"PhysicalTableId"},
       "value":{"shape":"PhysicalTable"},
-      "max":16,
+      "max":32,
       "min":1
     },
     "Port":{
@@ -6141,10 +6205,15 @@
       ],
       "members":{
         "DataSourceArn":{"shape":"Arn"},
+        "Catalog":{"shape":"RelationalTableCatalog"},
         "Schema":{"shape":"RelationalTableSchema"},
         "Name":{"shape":"RelationalTableName"},
         "InputColumns":{"shape":"InputColumnList"}
       }
+    },
+    "RelationalTableCatalog":{
+      "type":"string",
+      "max":256
     },
     "RelationalTableName":{
       "type":"string",
@@ -6643,8 +6712,7 @@
     "TemplateName":{
       "type":"string",
       "max":2048,
-      "min":1,
-      "pattern":"[\\u0020-\\u00FF]+"
+      "min":1
     },
     "TemplateSourceAnalysis":{
       "type":"structure",
@@ -6921,6 +6989,15 @@
         "Measure":{"shape":"HexColor"},
         "MeasureForeground":{"shape":"HexColor"}
       }
+    },
+    "UnsupportedPricingPlanException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"},
+        "RequestId":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":403},
+      "exception":true
     },
     "UnsupportedUserEditionException":{
       "type":"structure",
@@ -7259,6 +7336,7 @@
         "LogicalTableMap":{"shape":"LogicalTableMap"},
         "ImportMode":{"shape":"DataSetImportMode"},
         "ColumnGroups":{"shape":"ColumnGroupList"},
+        "FieldFolders":{"shape":"FieldFolderMap"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"}
       }

@@ -54,6 +54,28 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "CreateContainerRecipe":{
+      "name":"CreateContainerRecipe",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/CreateContainerRecipe"
+      },
+      "input":{"shape":"CreateContainerRecipeRequest"},
+      "output":{"shape":"CreateContainerRecipeResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"IdempotentParameterMismatchException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"},
+        {"shape":"InvalidVersionNumberException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ServiceQuotaExceededException"}
+      ]
+    },
     "CreateDistributionConfiguration":{
       "name":"CreateDistributionConfiguration",
       "http":{
@@ -168,6 +190,24 @@
       },
       "input":{"shape":"DeleteComponentRequest"},
       "output":{"shape":"DeleteComponentResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"},
+        {"shape":"ResourceDependencyException"}
+      ]
+    },
+    "DeleteContainerRecipe":{
+      "name":"DeleteContainerRecipe",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/DeleteContainerRecipe"
+      },
+      "input":{"shape":"DeleteContainerRecipeRequest"},
+      "output":{"shape":"DeleteContainerRecipeResponse"},
       "errors":[
         {"shape":"ServiceException"},
         {"shape":"ClientException"},
@@ -298,6 +338,40 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"}
+      ]
+    },
+    "GetContainerRecipe":{
+      "name":"GetContainerRecipe",
+      "http":{
+        "method":"GET",
+        "requestUri":"/GetContainerRecipe"
+      },
+      "input":{"shape":"GetContainerRecipeRequest"},
+      "output":{"shape":"GetContainerRecipeResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"}
+      ]
+    },
+    "GetContainerRecipePolicy":{
+      "name":"GetContainerRecipePolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/GetContainerRecipePolicy"
+      },
+      "input":{"shape":"GetContainerRecipePolicyRequest"},
+      "output":{"shape":"GetContainerRecipePolicyResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ForbiddenException"},
         {"shape":"CallRateLimitExceededException"}
       ]
@@ -478,6 +552,24 @@
         {"shape":"CallRateLimitExceededException"}
       ]
     },
+    "ListContainerRecipes":{
+      "name":"ListContainerRecipes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListContainerRecipes"
+      },
+      "input":{"shape":"ListContainerRecipesRequest"},
+      "output":{"shape":"ListContainerRecipesResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidPaginationTokenException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"}
+      ]
+    },
     "ListDistributionConfigurations":{
       "name":"ListDistributionConfigurations",
       "http":{
@@ -510,6 +602,25 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidPaginationTokenException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"}
+      ]
+    },
+    "ListImagePackages":{
+      "name":"ListImagePackages",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListImagePackages"
+      },
+      "input":{"shape":"ListImagePackagesRequest"},
+      "output":{"shape":"ListImagePackagesResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidPaginationTokenException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ForbiddenException"},
         {"shape":"CallRateLimitExceededException"}
       ]
@@ -627,6 +738,25 @@
       },
       "input":{"shape":"PutComponentPolicyRequest"},
       "output":{"shape":"PutComponentPolicyResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"}
+      ]
+    },
+    "PutContainerRecipePolicy":{
+      "name":"PutContainerRecipePolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/PutContainerRecipePolicy"
+      },
+      "input":{"shape":"PutContainerRecipePolicyRequest"},
+      "output":{"shape":"PutContainerRecipePolicyResponse"},
       "errors":[
         {"shape":"ServiceException"},
         {"shape":"ClientException"},
@@ -827,6 +957,7 @@
       "pattern":"^[-_A-Za-z0-9{][-_A-Za-z0-9\\s:{}\\.]+[-_A-Za-z0-9}]$"
     },
     "Arn":{"type":"string"},
+    "Boolean":{"type":"boolean"},
     "CallRateLimitExceededException":{
       "type":"structure",
       "members":{
@@ -963,6 +1094,76 @@
       "type":"list",
       "member":{"shape":"ComponentVersion"}
     },
+    "Container":{
+      "type":"structure",
+      "members":{
+        "region":{"shape":"NonEmptyString"},
+        "imageUris":{"shape":"StringList"}
+      }
+    },
+    "ContainerDistributionConfiguration":{
+      "type":"structure",
+      "required":["targetRepository"],
+      "members":{
+        "description":{"shape":"NonEmptyString"},
+        "containerTags":{"shape":"StringList"},
+        "targetRepository":{"shape":"TargetContainerRepository"}
+      }
+    },
+    "ContainerList":{
+      "type":"list",
+      "member":{"shape":"Container"}
+    },
+    "ContainerRecipe":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ImageBuilderArn"},
+        "containerType":{"shape":"ContainerType"},
+        "name":{"shape":"ResourceName"},
+        "description":{"shape":"NonEmptyString"},
+        "platform":{"shape":"Platform"},
+        "owner":{"shape":"NonEmptyString"},
+        "version":{"shape":"VersionNumber"},
+        "components":{"shape":"ComponentConfigurationList"},
+        "dockerfileTemplateData":{"shape":"DockerFileTemplate"},
+        "kmsKeyId":{"shape":"NonEmptyString"},
+        "encrypted":{"shape":"NullableBoolean"},
+        "parentImage":{"shape":"NonEmptyString"},
+        "dateCreated":{"shape":"DateTime"},
+        "tags":{"shape":"TagMap"},
+        "workingDirectory":{"shape":"NonEmptyString"},
+        "targetRepository":{"shape":"TargetContainerRepository"}
+      }
+    },
+    "ContainerRecipeArn":{
+      "type":"string",
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):container-recipe/[a-z0-9-_]+/\\d+\\.\\d+\\.\\d+$"
+    },
+    "ContainerRecipeSummary":{
+      "type":"structure",
+      "members":{
+        "arn":{"shape":"ImageBuilderArn"},
+        "containerType":{"shape":"ContainerType"},
+        "name":{"shape":"ResourceName"},
+        "platform":{"shape":"Platform"},
+        "owner":{"shape":"NonEmptyString"},
+        "parentImage":{"shape":"NonEmptyString"},
+        "dateCreated":{"shape":"DateTime"},
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "ContainerRecipeSummaryList":{
+      "type":"list",
+      "member":{"shape":"ContainerRecipeSummary"}
+    },
+    "ContainerRepositoryService":{
+      "type":"string",
+      "enum":["ECR"]
+    },
+    "ContainerType":{
+      "type":"string",
+      "enum":["DOCKER"]
+    },
     "CreateComponentRequest":{
       "type":"structure",
       "required":[
@@ -996,6 +1197,47 @@
         "componentBuildVersionArn":{"shape":"ComponentBuildVersionArn"}
       }
     },
+    "CreateContainerRecipeRequest":{
+      "type":"structure",
+      "required":[
+        "containerType",
+        "name",
+        "semanticVersion",
+        "components",
+        "dockerfileTemplateData",
+        "parentImage",
+        "targetRepository",
+        "clientToken"
+      ],
+      "members":{
+        "containerType":{"shape":"ContainerType"},
+        "name":{"shape":"ResourceName"},
+        "description":{"shape":"NonEmptyString"},
+        "semanticVersion":{"shape":"VersionNumber"},
+        "components":{"shape":"ComponentConfigurationList"},
+        "dockerfileTemplateData":{"shape":"InlineDockerFileTemplate"},
+        "dockerfileTemplateUri":{"shape":"Uri"},
+        "platformOverride":{"shape":"Platform"},
+        "imageOsVersionOverride":{"shape":"NonEmptyString"},
+        "parentImage":{"shape":"NonEmptyString"},
+        "tags":{"shape":"TagMap"},
+        "workingDirectory":{"shape":"NonEmptyString"},
+        "targetRepository":{"shape":"TargetContainerRepository"},
+        "kmsKeyId":{"shape":"NonEmptyString"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateContainerRecipeResponse":{
+      "type":"structure",
+      "members":{
+        "requestId":{"shape":"NonEmptyString"},
+        "clientToken":{"shape":"ClientToken"},
+        "containerRecipeArn":{"shape":"ContainerRecipeArn"}
+      }
+    },
     "CreateDistributionConfigurationRequest":{
       "type":"structure",
       "required":[
@@ -1026,7 +1268,6 @@
       "type":"structure",
       "required":[
         "name",
-        "imageRecipeArn",
         "infrastructureConfigurationArn",
         "clientToken"
       ],
@@ -1034,6 +1275,7 @@
         "name":{"shape":"ResourceName"},
         "description":{"shape":"NonEmptyString"},
         "imageRecipeArn":{"shape":"ImageRecipeArn"},
+        "containerRecipeArn":{"shape":"ContainerRecipeArn"},
         "infrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
         "distributionConfigurationArn":{"shape":"DistributionConfigurationArn"},
         "imageTestsConfiguration":{"shape":"ImageTestsConfiguration"},
@@ -1090,12 +1332,12 @@
     "CreateImageRequest":{
       "type":"structure",
       "required":[
-        "imageRecipeArn",
         "infrastructureConfigurationArn",
         "clientToken"
       ],
       "members":{
         "imageRecipeArn":{"shape":"ImageRecipeArn"},
+        "containerRecipeArn":{"shape":"ContainerRecipeArn"},
         "distributionConfigurationArn":{"shape":"DistributionConfigurationArn"},
         "infrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
         "imageTestsConfiguration":{"shape":"ImageTestsConfiguration"},
@@ -1166,6 +1408,24 @@
       "members":{
         "requestId":{"shape":"NonEmptyString"},
         "componentBuildVersionArn":{"shape":"ComponentBuildVersionArn"}
+      }
+    },
+    "DeleteContainerRecipeRequest":{
+      "type":"structure",
+      "required":["containerRecipeArn"],
+      "members":{
+        "containerRecipeArn":{
+          "shape":"ContainerRecipeArn",
+          "location":"querystring",
+          "locationName":"containerRecipeArn"
+        }
+      }
+    },
+    "DeleteContainerRecipeResponse":{
+      "type":"structure",
+      "members":{
+        "requestId":{"shape":"NonEmptyString"},
+        "containerRecipeArn":{"shape":"ContainerRecipeArn"}
       }
     },
     "DeleteDistributionConfigurationRequest":{
@@ -1264,6 +1524,7 @@
       "members":{
         "region":{"shape":"NonEmptyString"},
         "amiDistributionConfiguration":{"shape":"AmiDistributionConfiguration"},
+        "containerDistributionConfiguration":{"shape":"ContainerDistributionConfiguration"},
         "licenseConfigurationArns":{"shape":"LicenseConfigurationArnList"}
       }
     },
@@ -1293,7 +1554,8 @@
         "description":{"shape":"NonEmptyString"},
         "dateCreated":{"shape":"DateTime"},
         "dateUpdated":{"shape":"DateTime"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "regions":{"shape":"RegionList"}
       }
     },
     "DistributionConfigurationSummaryList":{
@@ -1309,6 +1571,7 @@
       "max":720,
       "min":30
     },
+    "DockerFileTemplate":{"type":"string"},
     "EbsInstanceBlockDeviceSpecification":{
       "type":"structure",
       "members":{
@@ -1338,6 +1601,7 @@
         "io1",
         "io2",
         "gp2",
+        "gp3",
         "sc1",
         "st1"
       ]
@@ -1417,6 +1681,42 @@
       "members":{
         "requestId":{"shape":"NonEmptyString"},
         "component":{"shape":"Component"}
+      }
+    },
+    "GetContainerRecipePolicyRequest":{
+      "type":"structure",
+      "required":["containerRecipeArn"],
+      "members":{
+        "containerRecipeArn":{
+          "shape":"ContainerRecipeArn",
+          "location":"querystring",
+          "locationName":"containerRecipeArn"
+        }
+      }
+    },
+    "GetContainerRecipePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "requestId":{"shape":"NonEmptyString"},
+        "policy":{"shape":"ResourcePolicyDocument"}
+      }
+    },
+    "GetContainerRecipeRequest":{
+      "type":"structure",
+      "required":["containerRecipeArn"],
+      "members":{
+        "containerRecipeArn":{
+          "shape":"ContainerRecipeArn",
+          "location":"querystring",
+          "locationName":"containerRecipeArn"
+        }
+      }
+    },
+    "GetContainerRecipeResponse":{
+      "type":"structure",
+      "members":{
+        "requestId":{"shape":"NonEmptyString"},
+        "containerRecipe":{"shape":"ContainerRecipe"}
       }
     },
     "GetDistributionConfigurationRequest":{
@@ -1557,6 +1857,7 @@
       "type":"structure",
       "members":{
         "arn":{"shape":"ImageBuilderArn"},
+        "type":{"shape":"ImageType"},
         "name":{"shape":"ResourceName"},
         "version":{"shape":"VersionNumber"},
         "platform":{"shape":"Platform"},
@@ -1564,6 +1865,7 @@
         "osVersion":{"shape":"OsVersion"},
         "state":{"shape":"ImageState"},
         "imageRecipe":{"shape":"ImageRecipe"},
+        "containerRecipe":{"shape":"ContainerRecipe"},
         "sourcePipelineName":{"shape":"ResourceName"},
         "sourcePipelineArn":{"shape":"Arn"},
         "infrastructureConfiguration":{"shape":"InfrastructureConfiguration"},
@@ -1580,7 +1882,18 @@
     },
     "ImageBuilderArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):(?:image-recipe|infrastructure-configuration|distribution-configuration|component|image|image-pipeline)/[a-z0-9-_]+(?:/(?:(?:x|\\d+)\\.(?:x|\\d+)\\.(?:x|\\d+))(?:/\\d+)?)?$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):(?:image-recipe|container-recipe|infrastructure-configuration|distribution-configuration|component|image|image-pipeline)/[a-z0-9-_]+(?:/(?:(?:x|\\d+)\\.(?:x|\\d+)\\.(?:x|\\d+))(?:/\\d+)?)?$"
+    },
+    "ImagePackage":{
+      "type":"structure",
+      "members":{
+        "packageName":{"shape":"NonEmptyString"},
+        "packageVersion":{"shape":"NonEmptyString"}
+      }
+    },
+    "ImagePackageList":{
+      "type":"list",
+      "member":{"shape":"ImagePackage"}
     },
     "ImagePipeline":{
       "type":"structure",
@@ -1591,6 +1904,7 @@
         "platform":{"shape":"Platform"},
         "enhancedImageMetadataEnabled":{"shape":"NullableBoolean"},
         "imageRecipeArn":{"shape":"Arn"},
+        "containerRecipeArn":{"shape":"Arn"},
         "infrastructureConfigurationArn":{"shape":"Arn"},
         "distributionConfigurationArn":{"shape":"Arn"},
         "imageTestsConfiguration":{"shape":"ImageTestsConfiguration"},
@@ -1615,6 +1929,7 @@
       "type":"structure",
       "members":{
         "arn":{"shape":"ImageBuilderArn"},
+        "type":{"shape":"ImageType"},
         "name":{"shape":"ResourceName"},
         "description":{"shape":"NonEmptyString"},
         "platform":{"shape":"Platform"},
@@ -1676,6 +1991,7 @@
       "members":{
         "arn":{"shape":"ImageBuilderArn"},
         "name":{"shape":"ResourceName"},
+        "type":{"shape":"ImageType"},
         "version":{"shape":"VersionNumber"},
         "platform":{"shape":"Platform"},
         "osVersion":{"shape":"OsVersion"},
@@ -1702,11 +2018,19 @@
       "max":1440,
       "min":60
     },
+    "ImageType":{
+      "type":"string",
+      "enum":[
+        "AMI",
+        "DOCKER"
+      ]
+    },
     "ImageVersion":{
       "type":"structure",
       "members":{
         "arn":{"shape":"ImageBuilderArn"},
         "name":{"shape":"ResourceName"},
+        "type":{"shape":"ImageType"},
         "version":{"shape":"VersionNumber"},
         "platform":{"shape":"Platform"},
         "osVersion":{"shape":"OsVersion"},
@@ -1769,7 +2093,7 @@
         "name":{"shape":"ResourceName"},
         "description":{"shape":"NonEmptyString"},
         "instanceTypes":{"shape":"InstanceTypeList"},
-        "instanceProfileName":{"shape":"NonEmptyString"},
+        "instanceProfileName":{"shape":"InstanceProfileNameType"},
         "securityGroupIds":{"shape":"SecurityGroupIds"},
         "subnetId":{"shape":"NonEmptyString"},
         "logging":{"shape":"Logging"},
@@ -1795,7 +2119,9 @@
         "dateCreated":{"shape":"DateTime"},
         "dateUpdated":{"shape":"DateTime"},
         "resourceTags":{"shape":"ResourceTagMap"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "instanceTypes":{"shape":"InstanceTypeList"},
+        "instanceProfileName":{"shape":"InstanceProfileNameType"}
       }
     },
     "InfrastructureConfigurationSummaryList":{
@@ -1805,7 +2131,14 @@
     "InlineComponentData":{
       "type":"string",
       "max":16000,
-      "min":1
+      "min":1,
+      "pattern":"[^\\x00]+"
+    },
+    "InlineDockerFileTemplate":{
+      "type":"string",
+      "max":16000,
+      "min":1,
+      "pattern":"[^\\x00]+"
     },
     "InstanceBlockDeviceMapping":{
       "type":"structure",
@@ -1819,6 +2152,12 @@
     "InstanceBlockDeviceMappings":{
       "type":"list",
       "member":{"shape":"InstanceBlockDeviceMapping"}
+    },
+    "InstanceProfileNameType":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[\\w+=,.@-]+$"
     },
     "InstanceType":{"type":"string"},
     "InstanceTypeList":{
@@ -1915,6 +2254,7 @@
       "members":{
         "owner":{"shape":"Ownership"},
         "filters":{"shape":"FilterList"},
+        "byName":{"shape":"Boolean"},
         "maxResults":{
           "shape":"RestrictedInteger",
           "box":true
@@ -1928,6 +2268,26 @@
         "requestId":{"shape":"NonEmptyString"},
         "componentVersionList":{"shape":"ComponentVersionList"},
         "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListContainerRecipesRequest":{
+      "type":"structure",
+      "members":{
+        "owner":{"shape":"Ownership"},
+        "filters":{"shape":"FilterList"},
+        "maxResults":{
+          "shape":"RestrictedInteger",
+          "box":true
+        },
+        "nextToken":{"shape":"NonEmptyString"}
+      }
+    },
+    "ListContainerRecipesResponse":{
+      "type":"structure",
+      "members":{
+        "requestId":{"shape":"NonEmptyString"},
+        "containerRecipeSummaryList":{"shape":"ContainerRecipeSummaryList"},
+        "nextToken":{"shape":"NonEmptyString"}
       }
     },
     "ListDistributionConfigurationsRequest":{
@@ -1967,6 +2327,26 @@
       "members":{
         "requestId":{"shape":"NonEmptyString"},
         "imageSummaryList":{"shape":"ImageSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListImagePackagesRequest":{
+      "type":"structure",
+      "required":["imageBuildVersionArn"],
+      "members":{
+        "imageBuildVersionArn":{"shape":"ImageBuildVersionArn"},
+        "maxResults":{
+          "shape":"RestrictedInteger",
+          "box":true
+        },
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListImagePackagesResponse":{
+      "type":"structure",
+      "members":{
+        "requestId":{"shape":"NonEmptyString"},
+        "imagePackageList":{"shape":"ImagePackageList"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -2035,11 +2415,13 @@
       "members":{
         "owner":{"shape":"Ownership"},
         "filters":{"shape":"FilterList"},
+        "byName":{"shape":"Boolean"},
         "maxResults":{
           "shape":"RestrictedInteger",
           "box":true
         },
-        "nextToken":{"shape":"PaginationToken"}
+        "nextToken":{"shape":"PaginationToken"},
+        "includeDeprecated":{"shape":"NullableBoolean"}
       }
     },
     "ListImagesResponse":{
@@ -2111,7 +2493,8 @@
     "OutputResources":{
       "type":"structure",
       "members":{
-        "amis":{"shape":"AmiList"}
+        "amis":{"shape":"AmiList"},
+        "containers":{"shape":"ContainerList"}
       }
     },
     "Ownership":{
@@ -2166,6 +2549,24 @@
         "componentArn":{"shape":"ComponentBuildVersionArn"}
       }
     },
+    "PutContainerRecipePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "containerRecipeArn",
+        "policy"
+      ],
+      "members":{
+        "containerRecipeArn":{"shape":"ContainerRecipeArn"},
+        "policy":{"shape":"ResourcePolicyDocument"}
+      }
+    },
+    "PutContainerRecipePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "requestId":{"shape":"NonEmptyString"},
+        "containerRecipeArn":{"shape":"ContainerRecipeArn"}
+      }
+    },
     "PutImagePolicyRequest":{
       "type":"structure",
       "required":[
@@ -2201,6 +2602,10 @@
         "requestId":{"shape":"NonEmptyString"},
         "imageRecipeArn":{"shape":"ImageRecipeArn"}
       }
+    },
+    "RegionList":{
+      "type":"list",
+      "member":{"shape":"NonEmptyString"}
     },
     "ResourceAlreadyExistsException":{
       "type":"structure",
@@ -2266,6 +2671,7 @@
       "type":"structure",
       "members":{
         "scheduleExpression":{"shape":"NonEmptyString"},
+        "timezone":{"shape":"Timezone"},
         "pipelineExecutionStartCondition":{"shape":"PipelineExecutionStartCondition"}
       }
     },
@@ -2370,6 +2776,23 @@
       "type":"string",
       "max":256
     },
+    "TargetContainerRepository":{
+      "type":"structure",
+      "required":[
+        "service",
+        "repositoryName"
+      ],
+      "members":{
+        "service":{"shape":"ContainerRepositoryService"},
+        "repositoryName":{"shape":"NonEmptyString"}
+      }
+    },
+    "Timezone":{
+      "type":"string",
+      "max":100,
+      "min":3,
+      "pattern":"[a-zA-Z0-9]{2,}(?:\\/[a-zA-z0-9-_+]+)*"
+    },
     "UntagResourceRequest":{
       "type":"structure",
       "required":[
@@ -2423,7 +2846,6 @@
       "type":"structure",
       "required":[
         "imagePipelineArn",
-        "imageRecipeArn",
         "infrastructureConfigurationArn",
         "clientToken"
       ],
@@ -2431,6 +2853,7 @@
         "imagePipelineArn":{"shape":"ImagePipelineArn"},
         "description":{"shape":"NonEmptyString"},
         "imageRecipeArn":{"shape":"ImageRecipeArn"},
+        "containerRecipeArn":{"shape":"ContainerRecipeArn"},
         "infrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
         "distributionConfigurationArn":{"shape":"DistributionConfigurationArn"},
         "imageTestsConfiguration":{"shape":"ImageTestsConfiguration"},

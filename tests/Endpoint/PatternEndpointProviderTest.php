@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Test;
+namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PatternEndpointProvider;
@@ -99,10 +99,10 @@ class PatternEndpointProviderTest extends TestCase
             'eu-west-1/s3' => ['endpoint' => 's3-{region}.amazonaws.com'],
             'ap-southeast-1/s3' => ['endpoint' => 's3-{region}.amazonaws.com'],
             'ap-southeast-2/s3' => ['endpoint' => 's3-{region}.amazonaws.com'],
-            'ap-northeast-1/s3' => ['endpoint' => 's3-{region}.amazonaws.com'], 
+            'ap-northeast-1/s3' => ['endpoint' => 's3-{region}.amazonaws.com'],
             'sa-east-1/s3' => ['endpoint' => 's3-{region}.amazonaws.com'],
         ]);
-        
+
         $this->assertEquals($output, call_user_func($p, $input));
     }
 }

@@ -156,7 +156,7 @@ class SignerTest extends TestCase
         $m = new \ReflectionMethod(Signer::class, 'createCannedPolicy');
         $m->setAccessible(true);
         $result = $m->invoke($this->instance, $resource, $ts);
-        $this->assertEquals(
+        $this->assertSame(
             '{"Statement":[{"Resource":"' . $resource
             . '","Condition":{"DateLessThan":{"AWS:EpochTime":'
             . $ts . '}}}]}',

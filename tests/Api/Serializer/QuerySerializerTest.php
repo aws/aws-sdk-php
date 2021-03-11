@@ -43,8 +43,8 @@ class QuerySerializerTest extends TestCase
         $q = new QuerySerializer($service, 'http://foo.com');
         $cmd = new Command('foo', ['baz' => []]);
         $request = $q($cmd);
-        $this->assertEquals('POST', $request->getMethod());
-        $this->assertEquals('http://foo.com', (string) $request->getUri());
-        $this->assertEquals('Action=foo&Version=1&baz=', (string) $request->getBody());
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com', (string) $request->getUri());
+        $this->assertSame('Action=foo&Version=1&baz=', (string) $request->getBody());
     }
 }

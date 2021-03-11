@@ -74,7 +74,7 @@ class AbstractUploaderTest extends TestCase
             new Result(), // Upload
             new Result(['test' => 'foo']) // Complete
         ], Psr7\stream_for('abcdef'));
-        $this->assertEquals('foo', $uploader->upload()['test']);
+        $this->assertSame('foo', $uploader->upload()['test']);
         $this->assertTrue($uploader->getState()->isCompleted());
     }
 
@@ -128,7 +128,7 @@ class AbstractUploaderTest extends TestCase
                 ]
             );
             $result = $secondChance->upload();
-            $this->assertEquals('bar', $result['foo']);
+            $this->assertSame('bar', $result['foo']);
         }
     }
 
@@ -157,7 +157,7 @@ class AbstractUploaderTest extends TestCase
         $promise = $uploader->promise();
         $this->assertSame($promise, $uploader->promise());
         $this->assertInstanceOf('Aws\Result', $promise->wait());
-        $this->assertEquals(6, $called);
+        $this->assertSame(6, $called);
     }
 
     /**

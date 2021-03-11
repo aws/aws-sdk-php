@@ -525,6 +525,7 @@
         {"shape":"NotFoundException"},
         {"shape":"DependencyTimeoutException"},
         {"shape":"InvalidMarkerException"},
+        {"shape":"InvalidGrantIdException"},
         {"shape":"InvalidArnException"},
         {"shape":"KMSInternalException"},
         {"shape":"KMSInvalidStateException"}
@@ -818,7 +819,9 @@
       "members":{
         "AliasName":{"shape":"AliasNameType"},
         "AliasArn":{"shape":"ArnType"},
-        "TargetKeyId":{"shape":"KeyIdType"}
+        "TargetKeyId":{"shape":"KeyIdType"},
+        "CreationDate":{"shape":"DateType"},
+        "LastUpdatedDate":{"shape":"DateType"}
       }
     },
     "AliasNameType":{
@@ -1755,7 +1758,9 @@
       "members":{
         "Limit":{"shape":"LimitType"},
         "Marker":{"shape":"MarkerType"},
-        "KeyId":{"shape":"KeyIdType"}
+        "KeyId":{"shape":"KeyIdType"},
+        "GrantId":{"shape":"GrantIdType"},
+        "GranteePrincipal":{"shape":"PrincipalIdType"}
       }
     },
     "ListGrantsResponse":{

@@ -30,9 +30,9 @@ class RestJsonErrorParserTest extends TestCase
     ) {
         $response = Psr7\parse_response($response);
         $parsed = $parser($response, $command);
-        $this->assertEquals(
+        $this->assertCount(
             count($expected),
-            count($parsed)
+            $parsed
         );
         foreach($parsed as $key => $value) {
             if ($key === 'error_shape') {

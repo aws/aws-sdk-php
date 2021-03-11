@@ -21,7 +21,7 @@ class Ec2ClientTest extends TestCase
         $mock = new MockHandler([
             function ($command, $request) {
                 $this->assertNotNull($command['PresignedUrl']);
-                $this->assertEquals('us-east-1', $command['DestinationRegion']);
+                $this->assertSame('us-east-1', $command['DestinationRegion']);
                 return new Result();
             }
         ]);
@@ -70,7 +70,7 @@ class Ec2ClientTest extends TestCase
 
         $mock = new MockHandler([
             function ($command, $request) {
-                $this->assertEquals('foo', $command['ClientToken']);
+                $this->assertSame('foo', $command['ClientToken']);
                 return new Result();
             }
         ]);

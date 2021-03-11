@@ -15,7 +15,7 @@ class MapShapeTest extends TestCase
         $s = new MapShape(['value' => ['type' => 'string']], new ShapeMap([]));
         $v = $s->getValue();
         $this->assertInstanceOf('Aws\Api\Shape', $v);
-        $this->assertEquals('string', $v->getType());
+        $this->assertSame('string', $v->getType());
         $this->assertSame($v, $s->getValue());
     }
 
@@ -32,7 +32,7 @@ class MapShapeTest extends TestCase
         $s = new MapShape(['key' => ['type' => 'string']], new ShapeMap([]));
         $k = $s->getKey();
         $this->assertInstanceOf('Aws\Api\Shape', $k);
-        $this->assertEquals('string', $k->getType());
+        $this->assertSame('string', $k->getType());
     }
 
     public function testReturnsEmptyKey()

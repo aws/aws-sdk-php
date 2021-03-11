@@ -338,7 +338,7 @@ class XmlErrorParserTest extends TestCase
         );
         $parser = new XmlErrorParser();
         $result = $parser($response);
-        $this->assertEquals('400 Bad Request', $result['message']);
+        $this->assertSame('400 Bad Request', $result['message']);
         $this->assertNull($result['parsed']);
     }
 
@@ -349,8 +349,8 @@ class XmlErrorParserTest extends TestCase
         );
         $parser = new XmlErrorParser();
         $result = $parser($response);
-        $this->assertEquals('400 Bad Request (Request-ID: Foo)', $result['message']);
-        $this->assertEquals('Foo', $result['request_id']);
+        $this->assertSame('400 Bad Request (Request-ID: Foo)', $result['message']);
+        $this->assertSame('Foo', $result['request_id']);
     }
 
     public function testUsesNotFoundWhen404()
@@ -360,6 +360,6 @@ class XmlErrorParserTest extends TestCase
         );
         $parser = new XmlErrorParser();
         $result = $parser($response);
-        $this->assertEquals('NotFound', $result['code']);
+        $this->assertSame('NotFound', $result['code']);
     }
 }

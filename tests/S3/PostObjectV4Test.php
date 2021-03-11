@@ -85,7 +85,7 @@ class PostObjectV4Test extends TestCase
         . 'bGdvcml0aG0iOiJBV1M0LUhNQUMtU0hBMjU2In1dfQ==';
         $this->assertSame($policy, $a['Policy']);
 
-        $this->assertEquals(
+        $this->assertSame(
             '683963a1575bb197c642490ac60f3f08cda08233cd3a163ad31b554e9327a3ff',
             $a['X-Amz-Signature']
         );
@@ -204,12 +204,12 @@ class PostObjectV4Test extends TestCase
 
         $this->assertSame($policy, $a['Policy']);
 
-        $this->assertEquals(
+        $this->assertSame(
             'ca86530c5c799e8fd3bf2013aaccc581bc34646d676c4b195d996b6723e2bb91',
             $a['X-Amz-Signature']
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             'abJe44dFgDEXAMPLE',
             $a['X-Amz-Security-Token']
         );
@@ -221,16 +221,16 @@ class PostObjectV4Test extends TestCase
         $this->assertSame($this->client, $postObject->getClient());
         $this->assertSame('foo', $postObject->getBucket());
         $postObject->setFormInput('a', 'b');
-        $this->assertEquals('b', $postObject->getFormInputs()['a']);
+        $this->assertSame('b', $postObject->getFormInputs()['a']);
         $postObject->setFormAttribute('c', 'd');
-        $this->assertEquals('d', $postObject->getFormAttributes()['c']);
+        $this->assertSame('d', $postObject->getFormAttributes()['c']);
     }
 
     public function testCanHandleDomainsWithDots()
     {
         $postObject = new PostObjectV4($this->client, 'foo.bar', []);
         $formAttrs = $postObject->getFormAttributes();
-        $this->assertEquals(
+        $this->assertSame(
             'https://s3.amazonaws.com/foo.bar',
             $formAttrs['action']
         );
@@ -257,7 +257,7 @@ class PostObjectV4Test extends TestCase
         ]);
         $postObject = new PostObjectV4($s3, $bucket, []);
         $formAttrs = $postObject->getFormAttributes();
-        $this->assertEquals($expected, $formAttrs['action']);
+        $this->assertSame($expected, $formAttrs['action']);
     }
 
     public function virtualStyleProvider()
@@ -292,7 +292,7 @@ class PostObjectV4Test extends TestCase
         ]);
         $postObject = new PostObjectV4($s3, $bucket, []);
         $formAttrs = $postObject->getFormAttributes();
-        $this->assertEquals($expected, $formAttrs['action']);
+        $this->assertSame($expected, $formAttrs['action']);
     }
 
     public function pathStyleProvider()

@@ -26,7 +26,7 @@ class KmsMaterialsProviderTest extends TestCase
             ['kms_cmk_id' => $keyId],
             $provider->getMaterialsDescription()
         );
-        $this->assertEquals('kms', $provider->getWrapAlgorithmName());
+        $this->assertSame('kms', $provider->getWrapAlgorithmName());
     }
 
     public function testEncryptCek()
@@ -39,7 +39,7 @@ class KmsMaterialsProviderTest extends TestCase
         ]);
 
         $provider = new KmsMaterialsProvider($client, $keyId);
-        $this->assertEquals(
+        $this->assertSame(
             base64_encode('encrypted'),
             $provider->encryptCek(
                 'plaintext',
@@ -58,7 +58,7 @@ class KmsMaterialsProviderTest extends TestCase
         ]);
 
         $provider = new KmsMaterialsProvider($client, $keyId);
-        $this->assertEquals(
+        $this->assertSame(
             'plaintext',
             $provider->decryptCek(
                 'encrypted',

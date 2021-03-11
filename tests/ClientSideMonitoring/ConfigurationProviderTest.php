@@ -322,7 +322,7 @@ EOT;
         $ref = new \ReflectionClass('Aws\ClientSideMonitoring\ConfigurationProvider');
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
-        $this->assertEquals('C:\\Michael\\Home', $meth->invoke(null));
+        $this->assertSame('C:\\Michael\\Home', $meth->invoke(null));
     }
 
     public function testMemoizes()
@@ -335,9 +335,9 @@ EOT;
         };
         $p = ConfigurationProvider::memoize($f);
         $this->assertSame($expected, $p()->wait());
-        $this->assertEquals(1, $called);
+        $this->assertSame(1, $called);
         $this->assertSame($expected, $p()->wait());
-        $this->assertEquals(1, $called);
+        $this->assertSame(1, $called);
     }
 
     public function testChainsConfiguration()
@@ -414,7 +414,7 @@ EOT;
                 ->wait();
         }
 
-        $this->assertEquals(1, $timesCalled);
+        $this->assertSame(1, $timesCalled);
         $this->assertCount(1, $cache);
         $this->assertSame($expected->toArray(), $result->toArray());
     }

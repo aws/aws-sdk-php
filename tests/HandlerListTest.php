@@ -103,7 +103,7 @@ class HandlerListTest extends TestCase
         }
         $built = $list->resolve();
         $cmd = new Command('foo');
-        $this->assertEquals('baz', $built($cmd));
+        $this->assertSame('baz', $built($cmd));
         $this->assertEquals($steps, $h);
     }
 
@@ -121,7 +121,7 @@ class HandlerListTest extends TestCase
         }
         $built = $list->resolve();
         $cmd = new Command('foo');
-        $this->assertEquals('baz', $built($cmd));
+        $this->assertSame('baz', $built($cmd));
         $this->assertEquals($steps, $h);
     }
 
@@ -136,9 +136,9 @@ class HandlerListTest extends TestCase
         $lines = explode("\n", (string) $list);
         $this->assertCount(6, $lines);
         $this->assertContains('0) Step: init, Name: foo, Function: callable(', $lines[0]);
-        $this->assertEquals("1) Step: init, Name: bar, Function: callable(['Aws\\Test\\HandlerListTest', 'bar'])", $lines[1]);
-        $this->assertEquals('2) Step: validate, Function: callable(Aws\Test\HandlerListTest::foo)', $lines[2]);
-        $this->assertEquals("3) Step: sign, Name: baz, Function: callable(['Aws\\Middleware', 'tap'])", $lines[3]);
+        $this->assertSame("1) Step: init, Name: bar, Function: callable(['Aws\\Test\\HandlerListTest', 'bar'])", $lines[1]);
+        $this->assertSame('2) Step: validate, Function: callable(Aws\Test\HandlerListTest::foo)', $lines[2]);
+        $this->assertSame("3) Step: sign, Name: baz, Function: callable(['Aws\\Middleware', 'tap'])", $lines[3]);
         $this->assertContains('4) Handler: callable(', $lines[4]);
     }
 

@@ -446,6 +446,40 @@
         }
       ]
     },
+    "CreatePartnerInput": {
+      "name": "CreatePartnerInput",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/inputs/{inputId}/partners",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreatePartnerInputRequest"
+      },
+      "output": {
+        "shape": "CreatePartnerInputResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
     "CreateTags": {
       "name": "CreateTags",
       "http": {
@@ -2601,6 +2635,22 @@
         }
       }
     },
+    "AudioSilenceFailoverSettings": {
+      "type": "structure",
+      "members": {
+        "AudioSelectorName": {
+          "shape": "__string",
+          "locationName": "audioSelectorName"
+        },
+        "AudioSilenceThresholdMsec": {
+          "shape": "__integerMin1000",
+          "locationName": "audioSilenceThresholdMsec"
+        }
+      },
+      "required": [
+        "AudioSelectorName"
+      ]
+    },
     "AudioTrack": {
       "type": "structure",
       "members": {
@@ -3466,6 +3516,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -3572,6 +3626,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -3645,6 +3703,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -3700,6 +3762,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -4022,6 +4088,60 @@
         }
       }
     },
+    "CreatePartnerInput": {
+      "type": "structure",
+      "members": {
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        }
+      }
+    },
+    "CreatePartnerInputRequest": {
+      "type": "structure",
+      "members": {
+        "InputId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "inputId"
+        },
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "InputId"
+      ]
+    },
+    "CreatePartnerInputResponse": {
+      "type": "structure",
+      "members": {
+        "Input": {
+          "shape": "Input",
+          "locationName": "input"
+        }
+      }
+    },
+    "CreatePartnerInputResultModel": {
+      "type": "structure",
+      "members": {
+        "Input": {
+          "shape": "Input",
+          "locationName": "input"
+        }
+      }
+    },
     "CreateTagsRequest": {
       "type": "structure",
       "members": {
@@ -4118,6 +4238,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -4465,6 +4589,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -4527,6 +4655,10 @@
         "Type": {
           "shape": "InputDeviceType",
           "locationName": "type"
+        },
+        "UhdDeviceSettings": {
+          "shape": "InputDeviceUhdSettings",
+          "locationName": "uhdDeviceSettings"
         }
       }
     },
@@ -4618,6 +4750,10 @@
         "InputDevices": {
           "shape": "__listOfInputDeviceSettings",
           "locationName": "inputDevices"
+        },
+        "InputPartnerIds": {
+          "shape": "__listOf__string",
+          "locationName": "inputPartnerIds"
         },
         "InputSourceType": {
           "shape": "InputSourceType",
@@ -5545,9 +5681,17 @@
     "FailoverConditionSettings": {
       "type": "structure",
       "members": {
+        "AudioSilenceSettings": {
+          "shape": "AudioSilenceFailoverSettings",
+          "locationName": "audioSilenceSettings"
+        },
         "InputLossSettings": {
           "shape": "InputLossFailoverSettings",
           "locationName": "inputLossSettings"
+        },
+        "VideoBlackSettings": {
+          "shape": "VideoBlackFailoverSettings",
+          "locationName": "videoBlackSettings"
         }
       }
     },
@@ -5699,6 +5843,11 @@
         "Destination"
       ]
     },
+    "FrameCaptureHlsSettings": {
+      "type": "structure",
+      "members": {
+      }
+    },
     "FrameCaptureIntervalUnit": {
       "type": "string",
       "enum": [
@@ -5726,10 +5875,7 @@
           "shape": "FrameCaptureIntervalUnit",
           "locationName": "captureIntervalUnits"
         }
-      },
-      "required": [
-        "CaptureInterval"
-      ]
+      }
     },
     "GatewayTimeoutException": {
       "type": "structure",
@@ -6939,6 +7085,10 @@
           "shape": "Fmp4HlsSettings",
           "locationName": "fmp4HlsSettings"
         },
+        "FrameCaptureHlsSettings": {
+          "shape": "FrameCaptureHlsSettings",
+          "locationName": "frameCaptureHlsSettings"
+        },
         "StandardHlsSettings": {
           "shape": "StandardHlsSettings",
           "locationName": "standardHlsSettings"
@@ -7049,6 +7199,10 @@
         "InputDevices": {
           "shape": "__listOfInputDeviceSettings",
           "locationName": "inputDevices"
+        },
+        "InputPartnerIds": {
+          "shape": "__listOf__string",
+          "locationName": "inputPartnerIds"
         },
         "InputSourceType": {
           "shape": "InputSourceType",
@@ -7264,6 +7418,10 @@
         "Type": {
           "shape": "InputDeviceType",
           "locationName": "type"
+        },
+        "UhdDeviceSettings": {
+          "shape": "InputDeviceUhdSettings",
+          "locationName": "uhdDeviceSettings"
         }
       }
     },
@@ -7462,6 +7620,10 @@
         "Type": {
           "shape": "InputDeviceType",
           "locationName": "type"
+        },
+        "UhdDeviceSettings": {
+          "shape": "InputDeviceUhdSettings",
+          "locationName": "uhdDeviceSettings"
         }
       }
     },
@@ -7477,6 +7639,43 @@
       "enum": [
         "HD"
       ]
+    },
+    "InputDeviceUhdSettings": {
+      "type": "structure",
+      "members": {
+        "ActiveInput": {
+          "shape": "InputDeviceActiveInput",
+          "locationName": "activeInput"
+        },
+        "ConfiguredInput": {
+          "shape": "InputDeviceConfiguredInput",
+          "locationName": "configuredInput"
+        },
+        "DeviceState": {
+          "shape": "InputDeviceState",
+          "locationName": "deviceState"
+        },
+        "Framerate": {
+          "shape": "__double",
+          "locationName": "framerate"
+        },
+        "Height": {
+          "shape": "__integer",
+          "locationName": "height"
+        },
+        "MaxBitrate": {
+          "shape": "__integer",
+          "locationName": "maxBitrate"
+        },
+        "ScanType": {
+          "shape": "InputDeviceScanType",
+          "locationName": "scanType"
+        },
+        "Width": {
+          "shape": "__integer",
+          "locationName": "width"
+        }
+      }
     },
     "InputFilter": {
       "type": "string",
@@ -10870,6 +11069,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -11096,6 +11299,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -11298,6 +11505,10 @@
           "shape": "__string",
           "locationName": "targetCustomerId"
         },
+        "TargetRegion": {
+          "shape": "__string",
+          "locationName": "targetRegion"
+        },
         "TransferMessage": {
           "shape": "__string",
           "locationName": "transferMessage"
@@ -11315,6 +11526,10 @@
         "TargetCustomerId": {
           "shape": "__string",
           "locationName": "targetCustomerId"
+        },
+        "TargetRegion": {
+          "shape": "__string",
+          "locationName": "targetRegion"
         },
         "TransferMessage": {
           "shape": "__string",
@@ -11633,6 +11848,10 @@
         "Name": {
           "shape": "__string",
           "locationName": "name"
+        },
+        "UhdDeviceSettings": {
+          "shape": "InputDeviceConfigurableSettings",
+          "locationName": "uhdDeviceSettings"
         }
       }
     },
@@ -11651,6 +11870,10 @@
         "Name": {
           "shape": "__string",
           "locationName": "name"
+        },
+        "UhdDeviceSettings": {
+          "shape": "InputDeviceConfigurableSettings",
+          "locationName": "uhdDeviceSettings"
         }
       },
       "required": [
@@ -11703,6 +11926,10 @@
         "Type": {
           "shape": "InputDeviceType",
           "locationName": "type"
+        },
+        "UhdDeviceSettings": {
+          "shape": "InputDeviceUhdSettings",
+          "locationName": "uhdDeviceSettings"
         }
       }
     },
@@ -11963,6 +12190,19 @@
         }
       }
     },
+    "VideoBlackFailoverSettings": {
+      "type": "structure",
+      "members": {
+        "BlackDetectThreshold": {
+          "shape": "__doubleMin0Max1",
+          "locationName": "blackDetectThreshold"
+        },
+        "VideoBlackThresholdMsec": {
+          "shape": "__integerMin1000",
+          "locationName": "videoBlackThresholdMsec"
+        }
+      }
+    },
     "VideoCodecSettings": {
       "type": "structure",
       "members": {
@@ -12098,6 +12338,26 @@
         }
       }
     },
+    "VpcOutputSettings": {
+      "type": "structure",
+      "members": {
+        "PublicAddressAllocationIds": {
+          "shape": "__listOf__string",
+          "locationName": "publicAddressAllocationIds"
+        },
+        "SecurityGroupIds": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroupIds"
+        },
+        "SubnetIds": {
+          "shape": "__listOf__string",
+          "locationName": "subnetIds"
+        }
+      },
+      "required": [
+        "SubnetIds"
+      ]
+    },
     "WavCodingMode": {
       "type": "string",
       "enum": [
@@ -12136,6 +12396,9 @@
       "type": "double"
     },
     "__doubleMin0": {
+      "type": "double"
+    },
+    "__doubleMin0Max1": {
       "type": "double"
     },
     "__doubleMin1": {
