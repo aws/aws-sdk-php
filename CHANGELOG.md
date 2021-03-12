@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.173.28 - 2021-03-12
 
 * `Aws\CostandUsageReportService` - - Added optional billingViewArn field for OSG.
 * `Aws\MediaTailor` - MediaTailor channel assembly is a new manifest-only service that allows you to assemble linear streams using your existing VOD content.
