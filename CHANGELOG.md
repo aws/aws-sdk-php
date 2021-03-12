@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CostandUsageReportService` - - Added optional billingViewArn field for OSG.
+* `Aws\MediaTailor` - MediaTailor channel assembly is a new manifest-only service that allows you to assemble linear streams using your existing VOD content.
+* `Aws\WorkSpaces` - Adds API support for WorkSpaces bundle management operations.
+
 ## 3.173.27 - 2021-03-11
 
 * `Aws\Comprehend` - ContainsPiiEntities API analyzes the input text for the presence of personally identifiable information(PII) and returns the labels of identified PII entity types such as name, address etc.
