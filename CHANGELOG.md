@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.174.0 - 2021-03-15
 
 * `Aws\CodeDeploy` - AWS CodeDeploy can now detect instances running an outdated revision of your application and automatically update them with the latest revision.
 * `Aws\ECS` - This is for ecs exec feature release which includes two new APIs - execute-command and update-cluster and an AWS CLI customization for execute-command API
