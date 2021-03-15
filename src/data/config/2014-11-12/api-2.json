@@ -919,6 +919,7 @@
         {"shape":"InvalidDeliveryChannelNameException"},
         {"shape":"NoSuchBucketException"},
         {"shape":"InvalidS3KeyPrefixException"},
+        {"shape":"InvalidS3KmsKeyArnException"},
         {"shape":"InvalidSNSTopicARNException"},
         {"shape":"InsufficientDeliveryPolicyException"}
       ]
@@ -1733,7 +1734,8 @@
       "type":"string",
       "enum":[
         "COMPLIANT",
-        "NON_COMPLIANT"
+        "NON_COMPLIANT",
+        "INSUFFICIENT_DATA"
       ]
     },
     "ConformancePackConfigRuleNames":{
@@ -2066,6 +2068,7 @@
         "name":{"shape":"ChannelName"},
         "s3BucketName":{"shape":"String"},
         "s3KeyPrefix":{"shape":"String"},
+        "s3KmsKeyArn":{"shape":"String"},
         "snsTopicARN":{"shape":"String"},
         "configSnapshotDeliveryProperties":{"shape":"ConfigSnapshotDeliveryProperties"}
       }
@@ -2974,6 +2977,12 @@
       "exception":true
     },
     "InvalidS3KeyPrefixException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "InvalidS3KmsKeyArnException":{
       "type":"structure",
       "members":{
       },

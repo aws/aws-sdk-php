@@ -3914,7 +3914,8 @@
         "Mode":{"shape":"ContainerMode"},
         "ModelDataUrl":{"shape":"Url"},
         "Environment":{"shape":"EnvironmentMap"},
-        "ModelPackageName":{"shape":"VersionedArnOrName"}
+        "ModelPackageName":{"shape":"VersionedArnOrName"},
+        "MultiModelConfig":{"shape":"MultiModelConfig"}
       }
     },
     "ContainerDefinitionList":{
@@ -4623,6 +4624,7 @@
         "ModelName":{"shape":"ModelName"},
         "PrimaryContainer":{"shape":"ContainerDefinition"},
         "Containers":{"shape":"ContainerDefinitionList"},
+        "InferenceExecutionConfig":{"shape":"InferenceExecutionConfig"},
         "ExecutionRoleArn":{"shape":"RoleArn"},
         "Tags":{"shape":"TagList"},
         "VpcConfig":{"shape":"VpcConfig"},
@@ -4809,7 +4811,8 @@
       "members":{
         "DomainId":{"shape":"DomainId"},
         "UserProfileName":{"shape":"UserProfileName"},
-        "SessionExpirationDurationInSeconds":{"shape":"SessionExpirationDurationInSeconds"}
+        "SessionExpirationDurationInSeconds":{"shape":"SessionExpirationDurationInSeconds"},
+        "ExpiresInSeconds":{"shape":"ExpiresInSeconds"}
       }
     },
     "CreatePresignedDomainUrlResponse":{
@@ -6458,6 +6461,7 @@
         "ModelName":{"shape":"ModelName"},
         "PrimaryContainer":{"shape":"ContainerDefinition"},
         "Containers":{"shape":"ContainerDefinitionList"},
+        "InferenceExecutionConfig":{"shape":"InferenceExecutionConfig"},
         "ExecutionRoleArn":{"shape":"RoleArn"},
         "VpcConfig":{"shape":"VpcConfig"},
         "CreationTime":{"shape":"Timestamp"},
@@ -7595,6 +7599,11 @@
         "LastModifiedTime":{"shape":"Timestamp"}
       }
     },
+    "ExpiresInSeconds":{
+      "type":"integer",
+      "max":300,
+      "min":5
+    },
     "Explainability":{
       "type":"structure",
       "members":{
@@ -7917,6 +7926,12 @@
         "DARKNET",
         "SKLEARN"
       ]
+    },
+    "FrameworkVersion":{
+      "type":"string",
+      "max":10,
+      "min":3,
+      "pattern":"[0-9]\\.[A-Za-z0-9.]+"
     },
     "GenerateCandidateDefinitionsOnly":{"type":"boolean"},
     "GetDeviceFleetReportRequest":{
@@ -8556,6 +8571,20 @@
       "type":"list",
       "member":{"shape":"Image"}
     },
+    "InferenceExecutionConfig":{
+      "type":"structure",
+      "required":["Mode"],
+      "members":{
+        "Mode":{"shape":"InferenceExecutionMode"}
+      }
+    },
+    "InferenceExecutionMode":{
+      "type":"string",
+      "enum":[
+        "Serial",
+        "Direct"
+      ]
+    },
     "InferenceSpecification":{
       "type":"structure",
       "required":[
@@ -8581,7 +8610,8 @@
       "members":{
         "S3Uri":{"shape":"S3Uri"},
         "DataInputConfig":{"shape":"DataInputConfig"},
-        "Framework":{"shape":"Framework"}
+        "Framework":{"shape":"Framework"},
+        "FrameworkVersion":{"shape":"FrameworkVersion"}
       }
     },
     "InputDataConfig":{
@@ -10360,6 +10390,13 @@
         "GroundTruthS3Input":{"shape":"MonitoringGroundTruthS3Input"}
       }
     },
+    "ModelCacheSetting":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
+    },
     "ModelClientConfig":{
       "type":"structure",
       "members":{
@@ -11033,6 +11070,12 @@
       "type":"string",
       "max":1024,
       "pattern":"^\\/.*"
+    },
+    "MultiModelConfig":{
+      "type":"structure",
+      "members":{
+        "ModelCacheSetting":{"shape":"ModelCacheSetting"}
+      }
     },
     "NameContains":{
       "type":"string",
@@ -11972,7 +12015,8 @@
         "InitialInstanceCount":{"shape":"TaskCount"},
         "InstanceType":{"shape":"ProductionVariantInstanceType"},
         "InitialVariantWeight":{"shape":"VariantWeight"},
-        "AcceleratorType":{"shape":"ProductionVariantAcceleratorType"}
+        "AcceleratorType":{"shape":"ProductionVariantAcceleratorType"},
+        "CoreDumpConfig":{"shape":"ProductionVariantCoreDumpConfig"}
       }
     },
     "ProductionVariantAcceleratorType":{
@@ -11985,6 +12029,14 @@
         "ml.eia2.large",
         "ml.eia2.xlarge"
       ]
+    },
+    "ProductionVariantCoreDumpConfig":{
+      "type":"structure",
+      "required":["DestinationS3Uri"],
+      "members":{
+        "DestinationS3Uri":{"shape":"DestinationS3Uri"},
+        "KmsKeyId":{"shape":"KmsKeyId"}
+      }
     },
     "ProductionVariantInstanceType":{
       "type":"string",
@@ -12620,7 +12672,8 @@
       "required":["S3Uri"],
       "members":{
         "S3Uri":{"shape":"S3Uri"},
-        "KmsKeyId":{"shape":"KmsKeyId"}
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "ResolvedOutputS3Uri":{"shape":"S3Uri"}
       }
     },
     "S3Uri":{
@@ -13292,7 +13345,6 @@
     },
     "TaskAvailabilityLifetimeInSeconds":{
       "type":"integer",
-      "max":864000,
       "min":60
     },
     "TaskCount":{
@@ -13325,7 +13377,6 @@
     },
     "TaskTimeLimitInSeconds":{
       "type":"integer",
-      "max":604800,
       "min":30
     },
     "TaskTitle":{

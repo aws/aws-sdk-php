@@ -2862,6 +2862,12 @@
         "TableName":{"shape":"NameString"}
       }
     },
+    "CatalogGetterPageSize":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "CatalogIdString":{
       "type":"string",
       "max":255,
@@ -3019,6 +3025,19 @@
     "ColumnErrors":{
       "type":"list",
       "member":{"shape":"ColumnError"}
+    },
+    "ColumnImportance":{
+      "type":"structure",
+      "members":{
+        "ColumnName":{"shape":"NameString"},
+        "Importance":{"shape":"GenericBoundedDouble"}
+      }
+    },
+    "ColumnImportanceList":{
+      "type":"list",
+      "member":{"shape":"ColumnImportance"},
+      "max":100,
+      "min":0
     },
     "ColumnList":{
       "type":"list",
@@ -4523,7 +4542,8 @@
         "Precision":{"shape":"GenericBoundedDouble"},
         "Recall":{"shape":"GenericBoundedDouble"},
         "F1":{"shape":"GenericBoundedDouble"},
-        "ConfusionMatrix":{"shape":"ConfusionMatrix"}
+        "ConfusionMatrix":{"shape":"ConfusionMatrix"},
+        "ColumnImportances":{"shape":"ColumnImportanceList"}
       }
     },
     "FindMatchesParameters":{
@@ -4761,7 +4781,7 @@
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"},
+        "MaxResults":{"shape":"CatalogGetterPageSize"},
         "ResourceShareType":{"shape":"ResourceShareType"}
       }
     },
@@ -5049,7 +5069,8 @@
         "Expression":{"shape":"PredicateString"},
         "NextToken":{"shape":"Token"},
         "Segment":{"shape":"Segment"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"PageSize"},
+        "ExcludeColumnSchema":{"shape":"BooleanNullable"}
       }
     },
     "GetPartitionsResponse":{
@@ -5298,7 +5319,7 @@
         "DatabaseName":{"shape":"NameString"},
         "TableName":{"shape":"NameString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"CatalogGetterPageSize"}
       }
     },
     "GetTableVersionsResponse":{
@@ -5316,7 +5337,7 @@
         "DatabaseName":{"shape":"NameString"},
         "Expression":{"shape":"FilterString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"CatalogGetterPageSize"}
       }
     },
     "GetTablesResponse":{
@@ -5393,7 +5414,7 @@
         "DatabaseName":{"shape":"NameString"},
         "Pattern":{"shape":"NameString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"CatalogGetterPageSize"}
       }
     },
     "GetUserDefinedFunctionsResponse":{

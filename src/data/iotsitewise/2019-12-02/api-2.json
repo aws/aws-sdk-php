@@ -2658,6 +2658,13 @@
         "id":{"shape":"IdentityId"}
       }
     },
+    "IAMRoleIdentity":{
+      "type":"structure",
+      "required":["arn"],
+      "members":{
+        "arn":{"shape":"ARN"}
+      }
+    },
     "IAMUserIdentity":{
       "type":"structure",
       "required":["arn"],
@@ -2682,7 +2689,8 @@
       "members":{
         "user":{"shape":"UserIdentity"},
         "group":{"shape":"GroupIdentity"},
-        "iamUser":{"shape":"IAMUserIdentity"}
+        "iamUser":{"shape":"IAMUserIdentity"},
+        "iamRole":{"shape":"IAMRoleIdentity"}
       }
     },
     "IdentityId":{

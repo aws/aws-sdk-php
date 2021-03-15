@@ -2,15 +2,18 @@
   "version": "2.0",
   "service": "API for AWS Elemental MediaLive",
   "operations": {
+    "AcceptInputDeviceTransfer": "Accept an incoming input device transfer. The ownership of the device will transfer to your AWS account.",
     "BatchDelete": "Starts delete of resources.",
     "BatchStart": "Starts existing resources",
     "BatchStop": "Stops running resources",
     "BatchUpdateSchedule": "Update a channel schedule",
+    "CancelInputDeviceTransfer": "Cancel an input device transfer that you have requested.",
     "CreateChannel": "Creates a new channel",
     "CreateInput": "Create an input",
     "CreateInputSecurityGroup": "Creates a Input Security Group",
     "CreateMultiplex": "Create a new multiplex.",
     "CreateMultiplexProgram": "Create a new program in the multiplex.",
+    "CreatePartnerInput": "Create a partner input",
     "CreateTags": "Create tags for a resource",
     "DeleteChannel": "Starts deletion of channel. The associated outputs are also deleted.",
     "DeleteInput": "Deletes the input end point",
@@ -31,6 +34,7 @@
     "DescribeReservation": "Get details for a reservation.",
     "DescribeSchedule": "Get a channel schedule",
     "ListChannels": "Produces list of channels that have been created",
+    "ListInputDeviceTransfers": "List input devices that are currently being transferred. List input devices that you are transferring from your AWS account or input devices that another AWS account is transferring to you.",
     "ListInputDevices": "List input devices",
     "ListInputSecurityGroups": "Produces a list of Input Security Groups for an account",
     "ListInputs": "Produces list of inputs that have been created",
@@ -40,10 +44,12 @@
     "ListReservations": "List purchased reservations.",
     "ListTagsForResource": "Produces list of tags that have been created for a resource",
     "PurchaseOffering": "Purchase an offering and create a reservation.",
+    "RejectInputDeviceTransfer": "Reject the transfer of the specified input device to your AWS account.",
     "StartChannel": "Starts an existing channel",
     "StartMultiplex": "Start (run) the multiplex. Starting the multiplex does not start the channels. You must explicitly start each channel.",
     "StopChannel": "Stops a running channel",
     "StopMultiplex": "Stops a running multiplex. If the multiplex isn't running, this action has no effect.",
+    "TransferInputDevice": "Start an input device transfer to another AWS account. After you make the request, the other account must accept or reject the transfer.",
     "UpdateChannel": "Updates a channel.",
     "UpdateChannelClass": "Changes the class of the channel.",
     "UpdateInput": "Updates an input.",
@@ -147,7 +153,20 @@
       "base": "Afd Signaling",
       "refs": {
         "H264Settings$AfdSignaling": "Indicates that AFD values will be written into the output stream.  If afdSignaling is \"auto\", the system will try to preserve the input AFD value (in cases where multiple AFD values are valid). If set to \"fixed\", the AFD value will be the value configured in the fixedAfd parameter.",
-        "H265Settings$AfdSignaling": "Indicates that AFD values will be written into the output stream.  If afdSignaling is \"auto\", the system will try to preserve the input AFD value (in cases where multiple AFD values are valid). If set to \"fixed\", the AFD value will be the value configured in the fixedAfd parameter."
+        "H265Settings$AfdSignaling": "Indicates that AFD values will be written into the output stream.  If afdSignaling is \"auto\", the system will try to preserve the input AFD value (in cases where multiple AFD values are valid). If set to \"fixed\", the AFD value will be the value configured in the fixedAfd parameter.",
+        "Mpeg2Settings$AfdSignaling": "Indicates the AFD values that MediaLive will write into the video encode. If you do not know what AFD signaling is, or if your downstream system has not given you guidance, choose AUTO.\nAUTO: MediaLive will try to preserve the input AFD value (in cases where multiple AFD values are valid).\nFIXED: MediaLive will use the value you specify in fixedAFD."
+      }
+    },
+    "AncillarySourceSettings": {
+      "base": "Ancillary Source Settings",
+      "refs": {
+        "CaptionSelectorSettings$AncillarySourceSettings": null
+      }
+    },
+    "ArchiveCdnSettings": {
+      "base": "Archive Cdn Settings",
+      "refs": {
+        "ArchiveGroupSettings$ArchiveCdnSettings": "Parameters that control interactions with the CDN."
       }
     },
     "ArchiveContainerSettings": {
@@ -166,6 +185,18 @@
       "base": "Archive Output Settings",
       "refs": {
         "OutputSettings$ArchiveOutputSettings": null
+      }
+    },
+    "ArchiveS3LogUploads": {
+      "base": "Archive S3 Log Uploads",
+      "refs": {
+        "ArchiveS3Settings$LogUploads": "When set to enabled, each upload to CDN or server will be logged."
+      }
+    },
+    "ArchiveS3Settings": {
+      "base": "Archive S3 Settings",
+      "refs": {
+        "ArchiveCdnSettings$ArchiveS3Settings": null
       }
     },
     "AribDestinationSettings": {
@@ -500,6 +531,12 @@
         "__listOfCaptionLanguageMapping$member": null
       }
     },
+    "CaptionRectangle": {
+       "base": "Caption Rectangle",
+       "refs": {
+         "TeletextSourceSettings$OutputRectangle": "Optionally defines a region where TTML style captions will be displayed"
+      }
+    }, 
     "CaptionSelector": {
       "base": "Output groups for this Live Event. Output groups contain information about where streams should be distributed.",
       "refs": {
@@ -510,6 +547,21 @@
       "base": "Caption Selector Settings",
       "refs": {
         "CaptionSelector$SelectorSettings": "Caption selector settings."
+      }
+    },
+    "CdiInputResolution": {
+      "base": "Maximum CDI input resolution; SD is 480i and 576i up to 30 frames-per-second (fps), HD is 720p up to 60 fps / 1080i up to 30 fps, FHD is 1080p up to 60 fps, UHD is 2160p up to 60 fps\n",
+      "refs": {
+        "CdiInputSpecification$Resolution": "Maximum CDI input resolution"
+      }
+    },
+    "CdiInputSpecification": {
+      "base": null,
+      "refs": {
+        "Channel$CdiInputSpecification": "Specification of CDI inputs for this channel",
+        "ChannelSummary$CdiInputSpecification": "Specification of CDI inputs for this channel",
+        "CreateChannel$CdiInputSpecification": "Specification of CDI inputs for this channel",
+        "UpdateChannel$CdiInputSpecification": "Specification of CDI inputs for this channel"
       }
     },
     "Channel": {
@@ -606,6 +658,16 @@
       }
     },
     "CreateMultiplexResultModel": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreatePartnerInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreatePartnerInputResultModel": {
       "base": null,
       "refs": {
       }
@@ -847,6 +909,18 @@
         "UpdateChannel$EncoderSettings": "The encoder settings for this channel."
       }
     },
+    "FailoverCondition": {
+      "base": "Failover Condition settings. There can be multiple failover conditions inside AutomaticInputFailoverSettings.",
+      "refs": {
+        "__listOfFailoverCondition$member": null
+      }
+    },
+    "FailoverConditionSettings": {
+      "base": "Settings for one failover condition.",
+      "refs": {
+        "FailoverCondition$FailoverConditionSettings": "Failover condition type-specific settings."
+      }
+    },
     "FeatureActivations": {
       "base": "Feature Activations",
       "refs": {
@@ -875,7 +949,8 @@
       "base": "Fixed Afd",
       "refs": {
         "H264Settings$FixedAfd": "Four bit AFD value to write on all frames of video in the output stream. Only valid when afdSignaling is set to 'Fixed'.",
-        "H265Settings$FixedAfd": "Four bit AFD value to write on all frames of video in the output stream. Only valid when afdSignaling is set to 'Fixed'."
+        "H265Settings$FixedAfd": "Four bit AFD value to write on all frames of video in the output stream. Only valid when afdSignaling is set to 'Fixed'.",
+        "Mpeg2Settings$FixedAfd": "Complete this field only when afdSignaling is set to FIXED. Enter the AFD value (4 bits) to write on all frames of the video encode."
       }
     },
     "FixedModeScheduleActionStartSettings": {
@@ -919,10 +994,22 @@
       "refs": {
       }
     },
+    "FrameCaptureCdnSettings": {
+      "base": "Frame Capture Cdn Settings",
+      "refs": {
+        "FrameCaptureGroupSettings$FrameCaptureCdnSettings": "Parameters that control interactions with the CDN."
+      }
+    },
     "FrameCaptureGroupSettings": {
       "base": "Frame Capture Group Settings",
       "refs": {
         "OutputGroupSettings$FrameCaptureGroupSettings": null
+      }
+    },
+    "FrameCaptureHlsSettings": {
+      "base": "Frame Capture Hls Settings",
+      "refs": {
+        "HlsSettings$FrameCaptureHlsSettings": null
       }
     },
     "FrameCaptureIntervalUnit": {
@@ -935,6 +1022,18 @@
       "base": "Frame Capture Output Settings",
       "refs": {
         "OutputSettings$FrameCaptureOutputSettings": null
+      }
+    },
+    "FrameCaptureS3LogUploads": {
+      "base": "Frame Capture S3 Log Uploads",
+      "refs": {
+        "FrameCaptureS3Settings$LogUploads": "When set to enabled, each upload to CDN or server will be logged."
+      }
+    },
+    "FrameCaptureS3Settings": {
+      "base": "Frame Capture S3 Settings",
+      "refs": {
+        "FrameCaptureCdnSettings$FrameCaptureS3Settings": null
       }
     },
     "FrameCaptureSettings": {
@@ -1278,6 +1377,12 @@
         "HlsGroupSettings$DirectoryStructure": "Place segments in subdirectories."
       }
     },
+    "HlsDiscontinuityTags": {
+      "base": "Hls Discontinuity Tags",
+      "refs": {
+        "HlsGroupSettings$DiscontinuityTags": "Specifies whether to insert EXT-X-DISCONTINUITY tags in the HLS child manifests for this output group.\nTypically, choose Insert because these tags are required in the manifest (according to the HLS specification) and serve an important purpose.\nChoose Never Insert only if the downstream system is doing real-time failover (without using the MediaLive automatic failover feature) and only if that downstream system has advised you to exclude the tags."
+      }
+    },
     "HlsEncryptionType": {
       "base": "Hls Encryption Type",
       "refs": {
@@ -1306,6 +1411,12 @@
       "base": "State of HLS ID3 Segment Tagging",
       "refs": {
         "HlsGroupSettings$HlsId3SegmentTagging": "State of HLS ID3 Segment Tagging"
+      }
+    },
+    "HlsIncompleteSegmentBehavior": {
+      "base": "Hls Incomplete Segment Behavior",
+      "refs": {
+        "HlsGroupSettings$IncompleteSegmentBehavior": "Specifies whether to include the final (incomplete) segment in the media output when the pipeline stops producing output because of a channel stop, a channel pause or a loss of input to the pipeline.\nAuto means that MediaLive decides whether to include the final segment, depending on the channel class and the types of output groups.\nSuppress means to never include the incomplete segment. We recommend you choose Auto and let MediaLive control the behavior."
       }
     },
     "HlsInputSettings": {
@@ -1380,6 +1491,18 @@
         "HlsGroupSettings$RedundantManifest": "ENABLED: The master manifest (.m3u8 file) for each pipeline includes information about both pipelines: first its own media files, then the media files of the other pipeline. This feature allows playout device that support stale manifest detection to switch from one manifest to the other, when the current manifest seems to be stale. There are still two destinations and two master manifests, but both master manifests reference the media files from both pipelines.\n\nDISABLED: The master manifest (.m3u8 file) for each pipeline includes information about its own pipeline only.\n\nFor an HLS output group with MediaPackage as the destination, the DISABLED behavior is always followed. MediaPackage regenerates the manifests it serves to players so a redundant manifest from MediaLive is irrelevant."
       }
     },
+    "HlsS3LogUploads": {
+      "base": "Hls S3 Log Uploads",
+      "refs": {
+        "HlsS3Settings$LogUploads": "When set to enabled, each fragment upload to CDN or server will be logged."
+      }
+    },
+    "HlsS3Settings": {
+      "base": "Hls S3 Settings",
+      "refs": {
+        "HlsCdnSettings$HlsS3Settings": null
+      }
+    },
     "HlsSegmentationMode": {
       "base": "Hls Segmentation Mode",
       "refs": {
@@ -1444,6 +1567,7 @@
       "base": null,
       "refs": {
         "CreateInputResultModel$Input": null,
+        "CreatePartnerInputResultModel$Input": null,
         "UpdateInputResultModel$Input": null,
         "__listOfInput$member": null
       }
@@ -1600,6 +1724,12 @@
         "__listOfInputDeviceSummary$member": null
       }
     },
+    "InputDeviceTransferType": {
+      "base": "The type of device transfer. INCOMING for an input device that is being transferred to you, OUTGOING for an input device that you are transferring to another AWS account.",
+      "refs": {
+        "TransferringInputDeviceSummary$TransferType": "The type (direction) of the input device transfer."
+      }
+    },
     "InputDeviceType": {
       "base": "The type of the input device. For an AWS Elemental Link device that outputs resolutions up to 1080, choose \"HD\".",
       "refs": {
@@ -1662,6 +1792,12 @@
       "base": "Input Loss Behavior",
       "refs": {
         "GlobalConfiguration$InputLossBehavior": "Settings for system actions when input is lost."
+      }
+    },
+    "InputLossFailoverSettings": {
+      "base": "MediaLive will perform a failover if content is not detected in this input for the specified period.",
+      "refs": {
+        "FailoverConditionSettings$InputLossSettings": "MediaLive will perform a failover if content is not detected in this input for the specified period."
       }
     },
     "InputLossImageType": {
@@ -1746,10 +1882,10 @@
     "InputSpecification": {
       "base": null,
       "refs": {
-        "Channel$InputSpecification": null,
-        "ChannelSummary$InputSpecification": null,
-        "CreateChannel$InputSpecification": "Specification of input for this channel (max. bitrate, resolution, codec, etc.)",
-        "UpdateChannel$InputSpecification": "Specification of input for this channel (max. bitrate, resolution, codec, etc.)"
+        "Channel$InputSpecification": "Specification of network and file inputs for this channel",
+        "ChannelSummary$InputSpecification": "Specification of network and file inputs for this channel",
+        "CreateChannel$InputSpecification": "Specification of network and file inputs for this channel",
+        "UpdateChannel$InputSpecification": "Specification of network and file inputs for this channel"
       }
     },
     "InputState": {
@@ -1829,6 +1965,11 @@
     },
     "ListChannelsResultModel": {
       "base": null,
+      "refs": {
+      }
+    },
+    "ListInputDeviceTransfersResultModel": {
+      "base": "The list of input devices in the transferred state. The recipient hasn't yet accepted or rejected the transfer.",
       "refs": {
       }
     },
@@ -2069,6 +2210,66 @@
         "AudioCodecSettings$Mp2Settings": null
       }
     },
+    "Mpeg2AdaptiveQuantization": {
+      "base": "Mpeg2 Adaptive Quantization",
+      "refs": {
+        "Mpeg2Settings$AdaptiveQuantization": "Choose Off to disable adaptive quantization. Or choose another value to enable the quantizer and set its strength. The strengths are: Auto, Off, Low, Medium, High. When you enable this field, MediaLive allows intra-frame quantizers to vary, which might improve visual quality."
+      }
+    },
+    "Mpeg2ColorMetadata": {
+      "base": "Mpeg2 Color Metadata",
+      "refs": {
+        "Mpeg2Settings$ColorMetadata": "Specifies whether to include the color space metadata. The metadata describes the color space that applies to the video (the colorSpace field). We recommend that you insert the metadata."
+      }
+    },
+    "Mpeg2ColorSpace": {
+      "base": "Mpeg2 Color Space",
+      "refs": {
+        "Mpeg2Settings$ColorSpace": "Choose the type of color space conversion to apply to the output. For detailed information on setting up both the input and the output to obtain the desired color space in the output, see the section on \\\"MediaLive Features - Video - color space\\\" in the MediaLive User Guide.\nPASSTHROUGH: Keep the color space of the input content - do not convert it.\nAUTO:Convert all content that is SD to rec 601, and convert all content that is HD to rec 709."
+      }
+    },
+    "Mpeg2DisplayRatio": {
+      "base": "Mpeg2 Display Ratio",
+      "refs": {
+        "Mpeg2Settings$DisplayAspectRatio": "Sets the pixel aspect ratio for the encode."
+      }
+    },
+    "Mpeg2FilterSettings": {
+      "base": "Mpeg2 Filter Settings",
+      "refs": {
+        "Mpeg2Settings$FilterSettings": "Optionally specify a noise reduction filter, which can improve quality of compressed content. If you do not choose a filter, no filter will be applied.\nTEMPORAL: This filter is useful for both source content that is noisy (when it has excessive digital artifacts) and source content that is clean.\nWhen the content is noisy, the filter cleans up the source content before the encoding phase, with these two effects: First, it improves the output video quality because the content has been cleaned up. Secondly, it decreases the bandwidth because MediaLive does not waste bits on encoding noise.\nWhen the content is reasonably clean, the filter tends to decrease the bitrate."
+      }
+    },
+    "Mpeg2GopSizeUnits": {
+      "base": "Mpeg2 Gop Size Units",
+      "refs": {
+        "Mpeg2Settings$GopSizeUnits": "Relates to the GOP structure. Specifies whether the gopSize is specified in frames or seconds. If you do not plan to change the default gopSize, leave the default. If you specify SECONDS, MediaLive will internally convert the gop size to a frame count."
+      }
+    },
+    "Mpeg2ScanType": {
+      "base": "Mpeg2 Scan Type",
+      "refs": {
+        "Mpeg2Settings$ScanType": "Set the scan type of the output to PROGRESSIVE or INTERLACED (top field first)."
+      }
+    },
+    "Mpeg2Settings": {
+      "base": "Mpeg2 Settings",
+      "refs": {
+        "VideoCodecSettings$Mpeg2Settings": null
+      }
+    },
+    "Mpeg2SubGopLength": {
+      "base": "Mpeg2 Sub Gop Length",
+      "refs": {
+        "Mpeg2Settings$SubgopLength": "Relates to the GOP structure. If you do not know what GOP is, use the default.\nFIXED: Set the number of B-frames in each sub-GOP to the value in gopNumBFrames.\nDYNAMIC: Let MediaLive optimize the number of B-frames in each sub-GOP, to improve visual quality."
+      }
+    },
+    "Mpeg2TimecodeInsertionBehavior": {
+      "base": "Mpeg2 Timecode Insertion Behavior",
+      "refs": {
+        "Mpeg2Settings$TimecodeInsertion": "Determines how MediaLive inserts timecodes in the output video. For detailed information about setting up the input and the output for a timecode, see the section on \\\"MediaLive Features - Timecode configuration\\\" in the MediaLive User Guide.\nDISABLED: do not include timecodes.\nGOP_TIMECODE: Include timecode metadata in the GOP header."
+      }
+    },
     "MsSmoothGroupSettings": {
       "base": "Ms Smooth Group Settings",
       "refs": {
@@ -2140,6 +2341,12 @@
       "base": "Packet identifiers map for a given Multiplex program.",
       "refs": {
         "MultiplexProgram$PacketIdentifiersMap": "The packet identifier map for this multiplex program."
+      }
+    },
+    "MultiplexProgramPipelineDetail": {
+      "base": "The current source for one of the pipelines in the multiplex.",
+      "refs": {
+        "__listOfMultiplexProgramPipelineDetail$member": null
       }
     },
     "MultiplexProgramServiceDescriptor": {
@@ -2345,6 +2552,12 @@
       "refs": {
       }
     },
+    "RawSettings": {
+      "base": "Raw Settings",
+      "refs": {
+        "ArchiveContainerSettings$RawSettings": null
+      }
+    },
     "Rec601Settings": {
       "base": "Rec601 Settings",
       "refs": {
@@ -2478,6 +2691,14 @@
       "base": "Rtmp Output Settings",
       "refs": {
         "OutputSettings$RtmpOutputSettings": null
+      }
+    },
+    "S3CannedAcl": {
+      "base": "S3 Canned Acl",
+      "refs": {
+        "ArchiveS3Settings$CannedAcl": "Specify the canned ACL to apply to each S3 request. Defaults to none.",
+        "FrameCaptureS3Settings$CannedAcl": "Specify the canned ACL to apply to each S3 request. Defaults to none.",
+        "HlsS3Settings$CannedAcl": "Specify the canned ACL to apply to each S3 request. Defaults to none."
       }
     },
     "ScheduleAction": {
@@ -2750,6 +2971,7 @@
         "CreateChannel$Tags": "A collection of key-value pairs.",
         "CreateInput$Tags": "A collection of key-value pairs.",
         "CreateMultiplex$Tags": "A collection of key-value pairs.",
+        "CreatePartnerInput$Tags": "A collection of key-value pairs.",
         "Input$Tags": "A collection of key-value pairs.",
         "InputSecurityGroup$Tags": "A collection of key-value pairs.",
         "InputSecurityGroupWhitelistRequest$Tags": "A collection of key-value pairs.",
@@ -2787,13 +3009,19 @@
       "base": "Temporal Filter Settings",
       "refs": {
         "H264FilterSettings$TemporalFilterSettings": null,
-        "H265FilterSettings$TemporalFilterSettings": null
+        "H265FilterSettings$TemporalFilterSettings": null,
+        "Mpeg2FilterSettings$TemporalFilterSettings": null
       }
     },
     "TemporalFilterStrength": {
       "base": "Temporal Filter Strength",
       "refs": {
         "TemporalFilterSettings$Strength": "Choose a filter strength. We recommend a strength of 1 or 2. A higher strength might take out good information, resulting in an image that is overly soft."
+      }
+    },
+    "ThumbnailData": {
+      "base": "The binary data for the thumbnail that the Link device has most recently sent to MediaLive.",
+      "refs": {
       }
     },
     "TimecodeConfig": {
@@ -2811,6 +3039,17 @@
     "TooManyRequestsException": {
       "base": null,
       "refs": {
+      }
+    },
+    "TransferInputDevice": {
+      "base": "The transfer details of the input device.",
+      "refs": {
+      }
+    },
+    "TransferringInputDeviceSummary": {
+      "base": "Details about the input device that is being transferred.",
+      "refs": {
+        "__listOfTransferringInputDeviceSummary$member": null
       }
     },
     "TtmlDestinationSettings": {
@@ -2991,6 +3230,26 @@
         "VideoSelector$SelectorSettings": "The video selector settings."
       }
     },
+    "VpcOutputSettings": {
+      "base": "The properties for a private VPC Output\nWhen this property is specified, the output egress addresses will be created in a user specified VPC\n",
+      "refs": {
+        "Channel$Vpc": "Settings for VPC output",
+        "ChannelSummary$Vpc": "Settings for VPC output",
+        "CreateChannel$Vpc": "Settings for VPC output"
+      }
+    },
+    "WavCodingMode": {
+      "base": "Wav Coding Mode",
+      "refs": {
+        "WavSettings$CodingMode": "The audio coding mode for the WAV audio. The mode determines the number of channels in the audio."
+      }
+    },
+    "WavSettings": {
+      "base": "Wav Settings",
+      "refs": {
+        "AudioCodecSettings$WavSettings": null
+      }
+    },
     "WebvttDestinationSettings": {
       "base": "Webvtt Destination Settings",
       "refs": {
@@ -3019,10 +3278,13 @@
         "InputDeviceUhdSettings$Framerate": "The frame rate of the video source.",
         "Mp2Settings$Bitrate": "Average bitrate in bits/second.",
         "Mp2Settings$SampleRate": "Sample rate in Hz.",
+        "Mpeg2Settings$GopSize": "Relates to the GOP structure. The GOP size (keyframe interval) in the units specified in gopSizeUnits. If you do not know what GOP is, use the default.\nIf gopSizeUnits is frames, then the gopSize must be an integer and must be greater than or equal to 1.\nIf gopSizeUnits is seconds, the gopSize must be greater than 0, but does not need to be an integer.",
         "Offering$FixedPrice": "One-time charge for each reserved resource, e.g. '0.0' for a NO_UPFRONT offering",
         "Offering$UsagePrice": "Recurring usage charge for each reserved resource, e.g. '157.0'",
         "Reservation$FixedPrice": "One-time charge for each reserved resource, e.g. '0.0' for a NO_UPFRONT offering",
-        "Reservation$UsagePrice": "Recurring usage charge for each reserved resource, e.g. '157.0'"
+        "Reservation$UsagePrice": "Recurring usage charge for each reserved resource, e.g. '157.0'",
+        "WavSettings$BitDepth": "Bits per sample.",
+        "WavSettings$SampleRate": "Sample rate in Hz."
       }
     },
     "__doubleMin0": {
@@ -3038,6 +3300,15 @@
         "VideoBlackFailoverSettings$BlackDetectThreshold": "A value used in calculating the threshold below which MediaLive considers a pixel to be 'black'. For the input to be considered black, every pixel in a frame must be below this threshold. The threshold is calculated as a percentage (expressed as a decimal) of white. Therefore .1 means 10% white (or 90% black). Note how the formula works for any color depth. For example, if you set this field to 0.1 in 10-bit color depth: (1023*0.1=102.3), which means a pixel value of 102 or less is 'black'. If you set this field to .1 in an 8-bit color depth: (255*0.1=25.5), which means a pixel value of 25 or less is 'black'. The range is 0.0 to 1.0, with any number of decimal places."
       }
     },
+    "__doubleMin0Max100": {
+      "base": null,
+      "refs": {
+        "CaptionRectangle$Height": "See the description in leftOffset.\nFor height, specify the entire height of the rectangle as a percentage of the underlying frame height. For example, \\\"80\\\" means the rectangle height is 80% of the underlying frame height. The topOffset and rectangleHeight must add up to 100% or less.\nThis field corresponds to tts:extent - Y in the TTML standard.",
+        "CaptionRectangle$LeftOffset": "Applies only if you plan to convert these source captions to EBU-TT-D or TTML in an output. (Make sure to leave the default if you don't have either of these formats in the output.) You can define a display rectangle for the captions that is smaller than the underlying video frame. You define the rectangle by specifying the position of the left edge, top edge, bottom edge, and right edge of the rectangle, all within the underlying video frame. The units for the measurements are percentages.\nIf you specify a value for one of these fields, you must specify a value for all of them.\nFor leftOffset, specify the position of the left edge of the rectangle, as a percentage of the underlying frame width, and relative to the left edge of the frame. For example, \\\"10\\\" means the measurement is 10% of the underlying frame width. The rectangle left edge starts at that position from the left edge of the frame.\nThis field corresponds to tts:origin - X in the TTML standard.",
+        "CaptionRectangle$TopOffset": "See the description in leftOffset.\nFor topOffset, specify the position of the top edge of the rectangle, as a percentage of the underlying frame height, and relative to the top edge of the frame. For example, \\\"10\\\" means the measurement is 10% of the underlying frame height. The rectangle top edge starts at that position from the top edge of the frame.\nThis field corresponds to tts:origin - Y in the TTML standard.",
+        "CaptionRectangle$Width": "See the description in leftOffset.\nFor width, specify the entire width of the rectangle as a percentage of the underlying frame width. For example, \\\"80\\\" means the rectangle width is 80% of the underlying frame width. The leftOffset and rectangleWidth must add up to 100% or less.\nThis field corresponds to tts:extent - X in the TTML standard."
+      }
+    }, 
     "__doubleMin1": {
       "base": null,
       "refs": {
@@ -3115,6 +3386,7 @@
         "M2tsSettings$AudioFramesPerPes": "The number of audio frames to insert for each PES packet.",
         "M2tsSettings$Bitrate": "The output bitrate of the transport stream in bits per second. Setting to 0 lets the muxer automatically determine the appropriate bitrate.",
         "M3u8Settings$AudioFramesPerPes": "The number of audio frames to insert for each PES packet.",
+        "Mpeg2Settings$GopClosedCadence": "MPEG2: default is open GOP.",
         "MsSmoothGroupSettings$ConnectionRetryInterval": "Number of seconds to wait before retrying connection to the IIS server if the connection is lost. Content will be cached during this time and the cache will be be delivered to the IIS server once the connection is re-established.",
         "MsSmoothGroupSettings$FilecacheDuration": "Size in seconds of file cache for streaming outputs.",
         "MsSmoothGroupSettings$NumRetries": "Number of retry attempts.",
@@ -3178,7 +3450,7 @@
     "__integerMin0Max128": {
       "base": null,
       "refs": {
-        "H264Settings$Softness": "Softness. Selects quantizer matrix, larger values reduce high-frequency content in the encoded image."
+        "H264Settings$Softness": "Softness. Selects quantizer matrix, larger values reduce high-frequency content in the encoded image.  If not set to zero, must be greater than 15."
       }
     },
     "__integerMin0Max15": {
@@ -3267,6 +3539,7 @@
       "refs": {
         "AudioChannelMapping$OutputChannel": "The index of the output channel being produced.",
         "H264Settings$GopNumBFrames": "Number of B-frames between reference frames.",
+        "Mpeg2Settings$GopNumBFrames": "Relates to the GOP structure. The number of B-frames between reference frames. If you do not know what a B-frame is, use the default.",
         "StaticImageActivateScheduleActionSettings$Layer": "The number of the layer, 0 to 7. There are 8 layers that can be overlaid on the video, each layer with a different image. The layers are in Z order, which means that overlays with higher values of layer are inserted on top of overlays with lower values of layer. Default is 0.",
         "StaticImageDeactivateScheduleActionSettings$Layer": "The image overlay layer to deactivate, 0 to 7. Default is 0."
       }
@@ -3283,6 +3556,7 @@
       "refs": {
         "ArchiveGroupSettings$RolloverInterval": "Number of seconds to write to archive file before closing and starting a new one.",
         "AudioTrack$Track": "1-based integer value that maps to a specific audio track",
+        "AutomaticInputFailoverSettings$ErrorClearTimeMsec": "This clear time defines the requirement a recovered input must meet to be considered healthy. The input must have no failover conditions for this length of time. Enter a time in milliseconds. This value is particularly important if the input_preference for the failover pair is set to PRIMARY_INPUT_PREFERRED, because after this time, MediaLive will switch back to the primary input.",
         "DvbSubSourceSettings$Pid": "When using DVB-Sub with Burn-In or SMPTE-TT, use this PID for the source content. Unused for DVB-Sub passthrough. All DVB-Sub content is passed through, regardless of selectors.",
         "H264Settings$FramerateDenominator": "Framerate denominator.",
         "H264Settings$FramerateNumerator": "Framerate numerator - framerate is a fraction, e.g. 24000 / 1001 = 23.976 fps.",
@@ -3294,12 +3568,20 @@
         "HlsGroupSettings$KeepSegments": "Applies only if Mode field is LIVE.\n\nSpecifies the number of media segments to retain in the destination directory. This number should be bigger than indexNSegments (Num segments). We recommend (value = (2 x indexNsegments) + 1).\n\nIf this \"keep segments\" number is too low, the following might happen: the player is still reading a media manifest file that lists this segment, but that segment has been removed from the destination directory (as directed by indexNSegments). This situation would result in a 404 HTTP error on the player.",
         "HlsGroupSettings$SegmentLength": "Length of MPEG-2 Transport Stream segments to create (in seconds). Note that segments will end on the next keyframe after this number of seconds, so actual segment length may be longer.",
         "HlsGroupSettings$SegmentsPerSubdirectory": "Number of segments to write to a subdirectory before starting a new one. directoryStructure must be subdirectoryPerStream for this setting to have an effect.",
+        "Mpeg2Settings$FramerateDenominator": "description\": \"The framerate denominator. For example, 1001. The framerate is the numerator divided by the denominator. For example, 24000 / 1001 = 23.976 FPS.",
+        "Mpeg2Settings$FramerateNumerator": "The framerate numerator. For example, 24000. The framerate is the numerator divided by the denominator. For example, 24000 / 1001 = 23.976 FPS.",
         "MsSmoothGroupSettings$FragmentLength": "Length of mp4 fragments to generate (in seconds). Fragment length must be compatible with GOP size and framerate.",
         "PurchaseOffering$Count": "Number of resources",
         "RtmpOutputSettings$ConnectionRetryInterval": "Number of seconds to wait before retrying a connection to the Flash Media server if the connection is lost.",
         "Scte27SourceSettings$Pid": "The pid field is used in conjunction with the caption selector languageCode field as follows:\n  - Specify PID and Language: Extracts captions from that PID; the language is \"informational\".\n  - Specify PID and omit Language: Extracts the specified PID.\n  - Omit PID and specify Language: Extracts the specified language, whichever PID that happens to be.\n  - Omit PID and omit Language: Valid only if source is DVB-Sub that is being passed through; all languages will be passed through.",
         "StaticImageActivateScheduleActionSettings$Height": "The height of the image when inserted into the video, in pixels. The overlay will be scaled up or down to the specified height. Leave blank to use the native height of the overlay.",
         "StaticImageActivateScheduleActionSettings$Width": "The width of the image when inserted into the video, in pixels. The overlay will be scaled up or down to the specified width. Leave blank to use the native width of the overlay."
+      }
+    },
+    "__integerMin100": {
+      "base": null,
+      "refs": {
+        "InputLossFailoverSettings$InputLossThresholdMsec": "The amount of time (in milliseconds) that no input is detected. After that time, an input failover will occur."
       }
     },
     "__integerMin1000": {
@@ -3337,12 +3619,6 @@
       "base": null,
       "refs": {
         "H265Settings$BufSize": "Size of buffer (HRD buffer model) in bits."
-      }
-    },
-    "__integerMin1000Max3000": {
-      "base": null,
-      "refs": {
-        "MultiplexSettings$MaximumVideoBufferDelayMilliseconds": "Maximum video buffer delay in milliseconds."
       }
     },
     "__integerMin1000Max30000": {
@@ -3405,6 +3681,7 @@
     "__integerMin1Max4": {
       "base": null,
       "refs": {
+        "AncillarySourceSettings$SourceAncillaryChannelNumber": "Specifies the number (1 to 4) of the captions channel you want to extract from the ancillary captions. If you plan to convert the ancillary captions to another format, complete this field. If you plan to choose Embedded as the captions destination in the output (to pass through all the channels in the ancillary captions), leave this field blank because MediaLive ignores the field.",
         "CaptionLanguageMapping$CaptionChannel": "The closed caption channel being described by this CaptionLanguageMapping.  Each channel mapping must have a unique channel number (maximum of 4)",
         "EmbeddedSourceSettings$Source608ChannelNumber": "Specifies the 608/708 channel number within the video track from which to extract captions. Unused for passthrough.",
         "Scte20SourceSettings$Source608ChannelNumber": "Specifies the 608/708 channel number within the video track from which to extract captions. Unused for passthrough."
@@ -3459,6 +3736,12 @@
         "FecOutputSettings$ColumnDepth": "Parameter D from SMPTE 2022-1. The height of the FEC protection matrix.  The number of transport stream packets per column error correction packet. Must be between 4 and 20, inclusive."
       }
     },
+    "__integerMin800Max3000": {
+      "base": null,
+      "refs": {
+        "MultiplexSettings$MaximumVideoBufferDelayMilliseconds": "Maximum video buffer delay in milliseconds."
+      }
+    },
     "__integerMin96Max600": {
       "base": null,
       "refs": {
@@ -3476,6 +3759,7 @@
     "__integerMinNegative5Max5": {
       "base": null,
       "refs": {
+        "MultiplexStatmuxVideoSettings$Priority": "The purpose of the priority is to use a combination of the\\nmultiplex rate control algorithm and the QVBR capability of the\\nencoder to prioritize the video quality of some channels in a\\nmultiplex over others.  Channels that have a higher priority will\\nget higher video quality at the expense of the video quality of\\nother channels in the multiplex with lower priority."
       }
     },
     "__integerMinNegative60Max6": {
@@ -3559,6 +3843,12 @@
       "base": null,
       "refs": {
         "ListChannelsResultModel$Channels": null
+      }
+    },
+    "__listOfFailoverCondition": {
+      "base": null,
+      "refs": {
+        "AutomaticInputFailoverSettings$FailoverConditions": "A list of failover conditions. If any of these conditions occur, MediaLive will perform a failover to the other input."
       }
     },
     "__listOfHlsAdMarkers": {
@@ -3676,6 +3966,12 @@
         "Multiplex$Destinations": "A list of the multiplex output destinations."
       }
     },
+    "__listOfMultiplexProgramPipelineDetail": {
+      "base": null,
+      "refs": {
+        "MultiplexProgram$PipelineDetails": "Contains information about the current sources for the specified program in the specified multiplex. Keep in mind that each multiplex pipeline connects to both pipelines in a given source channel (the channel identified by the program). But only one of those channel pipelines is ever active at one time."
+      }
+    },
     "__listOfMultiplexProgramSummary": {
       "base": null,
       "refs": {
@@ -3761,6 +4057,12 @@
         "Scte35TimeSignalScheduleActionSettings$Scte35Descriptors": "The list of SCTE-35 descriptors accompanying the SCTE-35 time_signal."
       }
     },
+    "__listOfTransferringInputDeviceSummary": {
+      "base": null,
+      "refs": {
+        "ListInputDeviceTransfersResultModel$InputDeviceTransfers": "The list of devices that you are transferring or are being transferred to you."
+      }
+    },
     "__listOfValidationError": {
       "base": null,
       "refs": {
@@ -3799,6 +4101,7 @@
         "CreateInput$InputSecurityGroups": "A list of security groups referenced by IDs to attach to the input.",
         "CreateMultiplex$AvailabilityZones": "A list of availability zones for the multiplex. You must specify exactly two.",
         "Input$AttachedChannels": "A list of channel IDs that that input is attached to (currently an input can only be attached to one channel).",
+        "Input$InputPartnerIds": "A list of IDs for all Inputs which are partners of this one.",
         "Input$SecurityGroups": "A list of IDs for all the Input Security Groups attached to the input.",
         "InputDeviceNetworkSettings$DnsAddresses": "The DNS addresses of the input device.",
         "InputPrepareScheduleActionSettings$UrlPath": "The value for the variable portion of the URL for the dynamic input, for this instance of the input. Each time you use the same dynamic input in an input switch action, you can provide a different value, in order to connect the input to a different content source.",
@@ -3810,7 +4113,10 @@
         "MultiplexSummary$AvailabilityZones": "A list of availability zones for the multiplex.",
         "Output$AudioDescriptionNames": "The names of the AudioDescriptions used as audio sources for this output.",
         "Output$CaptionDescriptionNames": "The names of the CaptionDescriptions used as caption sources for this output.",
-        "UpdateInput$InputSecurityGroups": "A list of security groups referenced by IDs to attach to the input."
+        "UpdateInput$InputSecurityGroups": "A list of security groups referenced by IDs to attach to the input.",
+        "VpcOutputSettings$PublicAddressAllocationIds": "List of public address allocation ids to associate with ENIs that will be created in Output VPC.\nMust specify one for SINGLE_PIPELINE, two for STANDARD channels\n",
+        "VpcOutputSettings$SecurityGroupIds": "A list of up to 5 EC2 VPC security group IDs to attach to the Output VPC network interfaces.\nIf none are specified then the VPC default security group will be used\n",
+        "VpcOutputSettings$SubnetIds": "A list of VPC subnet IDs from the same VPC.\nIf STANDARD channel, subnet IDs must be mapped to two unique availability zones (AZ).\n"
       }
     },
     "__longMin0Max1099511627775": {
@@ -3881,6 +4187,7 @@
         "CreateMultiplex$RequestId": "Unique request ID. This prevents retries from creating multiple\nresources.\n",
         "CreateMultiplexProgram$ProgramName": "Name of multiplex program.",
         "CreateMultiplexProgram$RequestId": "Unique request ID. This prevents retries from creating multiple\nresources.\n",
+        "CreatePartnerInput$RequestId": "Unique identifier of the request to ensure the request is handled\nexactly once in case of retries.\n",
         "DvbSubDestinationSettings$FontSize": "When set to auto fontSize will scale depending on the size of the output.  Giving a positive integer will specify the exact font size in points.  All burn-in and DVB-Sub font settings must match.",
         "EbuTtDDestinationSettings$FontFamily": "Specifies the font family to include in the font data attached to the EBU-TT captions. Valid only if styleControl is set to include. If you leave this field empty, the font family is set to \"monospaced\". (If styleControl is set to exclude, the font family is always set to \"monospaced\".)\n\nYou specify only the font family. All other style information (color, bold, position and so on) is copied from the input captions. The size is always set to 100% to allow the downstream player to choose the size.\n\n- Enter a list of font families, as a comma-separated list of font names, in order of preference. The name can be a font family (such as \u201cArial\u201d), or a generic font family (such as \u201cserif\u201d), or \u201cdefault\u201d (to let the downstream player choose the font).\n- Leave blank to set the family to \u201cmonospace\u201d.",
         "FixedModeScheduleActionStartSettings$Time": "Start time for the action to start in the channel. (Not the time for the action to be added to the schedule: actions are always added to the schedule immediately.) UTC format: yyyy-mm-ddThh:mm:ss.nnnZ. All the letters are digits (for example, mm might be 01) except for the two constants \"T\" for time and \"Z\" for \"UTC format\".",
@@ -3946,6 +4253,7 @@
         "InvalidRequest$Message": null,
         "LimitExceeded$Message": null,
         "ListChannelsResultModel$NextToken": null,
+        "ListInputDeviceTransfersResultModel$NextToken": "A token to get additional list results.",
         "ListInputDevicesResultModel$NextToken": "A token to get additional list results.",
         "ListInputSecurityGroupsResultModel$NextToken": null,
         "ListInputsResultModel$NextToken": null,
@@ -3986,6 +4294,8 @@
         "MultiplexConfigurationValidationError$Message": "The error message.",
         "MultiplexProgram$ChannelId": "The MediaLive channel associated with the program.",
         "MultiplexProgram$ProgramName": "The name of the multiplex program.",
+        "MultiplexProgramPipelineDetail$ActiveChannelPipeline": "Identifies the channel pipeline that is currently active for the pipeline (identified by PipelineId) in the multiplex.",
+        "MultiplexProgramPipelineDetail$PipelineId": "Identifies a specific pipeline in the multiplex.",
         "MultiplexProgramSummary$ChannelId": "The MediaLive Channel associated with the program.",
         "MultiplexProgramSummary$ProgramName": "The name of the multiplex program.",
         "MultiplexSummary$Arn": "The unique arn of the multiplex.",
@@ -4029,6 +4339,13 @@
         "StopTimecode$Timecode": "The timecode for the frame where you want to stop the clip. Optional; if not specified, the clip continues to the end of the file. Enter the timecode as HH:MM:SS:FF or HH:MM:SS;FF.",
         "Tags$member": null,
         "TeletextSourceSettings$PageNumber": "Specifies the teletext page number within the data stream from which to extract captions. Range of 0x100 (256) to 0x8FF (2303). Unused for passthrough. Should be specified as a hexadecimal string with no \"0x\" prefix.",
+        "ThumbnailData$Body": "The binary data for the thumbnail that the Link device has most recently sent to MediaLive.",
+        "TransferInputDevice$TargetCustomerId": "The AWS account ID (12 digits) for the recipient of the device transfer.",
+        "TransferInputDevice$TargetRegion": "The target AWS region to transfer the device.",
+        "TransferInputDevice$TransferMessage": "An optional message for the recipient. Maximum 280 characters.",
+        "TransferringInputDeviceSummary$Id": "The unique ID of the input device.",
+        "TransferringInputDeviceSummary$Message": "The optional message that the sender has attached to the transfer.",
+        "TransferringInputDeviceSummary$TargetCustomerId": "The AWS account ID for the recipient of the input device transfer.",
         "UpdateChannel$Name": "The name of the channel.",
         "UpdateChannel$RoleArn": "An optional Amazon Resource Name (ARN) of the role to assume when running the Channel. If you do not specify this on an update call but the role was previously set that role will be removed.",
         "UpdateInput$Name": "Name of the input.",
@@ -4042,6 +4359,12 @@
         "__listOf__string$member": null
       }
     },
+    "__stringMax1000": {
+      "base": null,
+      "refs": {
+        "EbuTtDDestinationSettings$CopyrightHolder": "Applies only if you plan to convert these source captions to EBU-TT-D or TTML in an output. Complete this field if you want to include the name of the copyright holder in the copyright metadata tag in the TTML"
+      }
+    }, 
     "__stringMax256": {
       "base": null,
       "refs": {

@@ -1,6 +1,10 @@
 <?php
 namespace Aws\Test\S3Control;
 
+use Aws\Arn\ArnParser;
+use Aws\Exception\UnresolvedEndpointException;
+use Aws\S3Control\S3ControlClient;
+use Aws\Signature\SignatureV4;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -59,4 +63,5 @@ class S3ControlClientTest extends TestCase
             '@use_dual_stack_endpoint' => true,
         ]);
     }
+
 }

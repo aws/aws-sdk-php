@@ -784,7 +784,8 @@
         "buildBatchNumber":{"shape":"WrapperLong"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
         "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
-        "buildGroups":{"shape":"BuildGroups"}
+        "buildGroups":{"shape":"BuildGroups"},
+        "debugSessionEnabled":{"shape":"WrapperBoolean"}
       }
     },
     "BuildBatchFilter":{
@@ -1020,7 +1021,8 @@
         "badgeEnabled":{"shape":"WrapperBoolean"},
         "logsConfig":{"shape":"LogsConfig"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
-        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"}
+        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
+        "concurrentBuildLimit":{"shape":"WrapperInt"}
       }
     },
     "CreateProjectOutput":{
@@ -1697,7 +1699,8 @@
         "badge":{"shape":"ProjectBadge"},
         "logsConfig":{"shape":"LogsConfig"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
-        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"}
+        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
+        "concurrentBuildLimit":{"shape":"WrapperInt"}
       }
     },
     "ProjectArns":{
@@ -2118,6 +2121,7 @@
       "type":"structure",
       "members":{
         "bucket":{"shape":"NonEmptyString"},
+        "bucketOwner":{"shape":"String"},
         "path":{"shape":"String"},
         "packaging":{"shape":"ReportPackagingType"},
         "encryptionKey":{"shape":"NonEmptyString"},
@@ -2225,7 +2229,8 @@
         "logsConfigOverride":{"shape":"LogsConfig"},
         "registryCredentialOverride":{"shape":"RegistryCredential"},
         "imagePullCredentialsTypeOverride":{"shape":"ImagePullCredentialsType"},
-        "buildBatchConfigOverride":{"shape":"ProjectBuildBatchConfig"}
+        "buildBatchConfigOverride":{"shape":"ProjectBuildBatchConfig"},
+        "debugSessionEnabled":{"shape":"WrapperBoolean"}
       }
     },
     "StartBuildBatchOutput":{
@@ -2399,7 +2404,8 @@
         "badgeEnabled":{"shape":"WrapperBoolean"},
         "logsConfig":{"shape":"LogsConfig"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
-        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"}
+        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
+        "concurrentBuildLimit":{"shape":"WrapperInt"}
       }
     },
     "UpdateProjectOutput":{

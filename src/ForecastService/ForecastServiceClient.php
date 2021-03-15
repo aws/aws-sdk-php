@@ -65,6 +65,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listPredictorsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result stopResource(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopResourceAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])

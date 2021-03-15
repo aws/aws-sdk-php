@@ -1,9 +1,12 @@
 <?php
 namespace Aws\S3;
 
+use Aws\Arn\ArnParser;
 use Aws\CommandInterface;
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
+use GuzzleHttp\Exception\InvalidArgumentException;
+use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -43,6 +46,8 @@ class S3EndpointMiddleware
     private $endpointProvider;
     /** @var callable */
     private $nextHandler;
+    /** @var string */
+    private $endpoint;
 
     /**
      * Create a middleware wrapper function
@@ -73,6 +78,8 @@ class S3EndpointMiddleware
         $this->accelerateByDefault = isset($options['accelerate'])
             ? (bool) $options['accelerate'] : false;
         $this->region = (string) $region;
+        $this->endpoint = isset($options['endpoint'])
+            ? $options['endpoint'] : "";
         $this->endpointProvider = is_null($endpointProvider)
             ? PartitionEndpointProvider::defaultProvider()
             : $endpointProvider;
@@ -81,32 +88,35 @@ class S3EndpointMiddleware
 
     public function __invoke(CommandInterface $command, RequestInterface $request)
     {
-        switch ($this->endpointPatternDecider($command, $request)) {
-            case self::HOST_STYLE:
-                $request = $this->applyHostStyleEndpoint($command, $request);
-                break;
-            case self::NO_PATTERN:
-            case self::PATH_STYLE:
-                break;
-            case self::DUALSTACK:
-                $request = $this->applyDualStackEndpoint($command, $request);
-                break;
-            case self::ACCELERATE:
-                $request = $this->applyAccelerateEndpoint(
-                    $command,
-                    $request,
-                    's3-accelerate'
-                );
-                break;
-            case self::ACCELERATE_DUALSTACK:
-                $request = $this->applyAccelerateEndpoint(
-                    $command,
-                    $request,
-                    's3-accelerate.dualstack'
-                );
-                break;
+        if (!empty($this->endpoint)) {
+            $request = $this->applyEndpoint($command, $request);
+        } else {
+            switch ($this->endpointPatternDecider($command, $request)) {
+                case self::HOST_STYLE:
+                    $request = $this->applyHostStyleEndpoint($command, $request);
+                    break;
+                case self::NO_PATTERN:
+                case self::PATH_STYLE:
+                    break;
+                case self::DUALSTACK:
+                    $request = $this->applyDualStackEndpoint($command, $request);
+                    break;
+                case self::ACCELERATE:
+                    $request = $this->applyAccelerateEndpoint(
+                        $command,
+                        $request,
+                        's3-accelerate'
+                    );
+                    break;
+                case self::ACCELERATE_DUALSTACK:
+                    $request = $this->applyAccelerateEndpoint(
+                        $command,
+                        $request,
+                        's3-accelerate.dualstack'
+                    );
+                    break;
+            }
         }
-
         $nextHandler = $this->nextHandler;
         return $nextHandler($command, $request);
     }
@@ -247,4 +257,41 @@ class S3EndpointMiddleware
         $pattern = '/^\\/' . preg_quote($command['Bucket'], '/') . '/';
         return preg_replace($pattern, '', $path) ?: '/';
     }
+
+    private function applyEndpoint(
+        CommandInterface $command,
+        RequestInterface $request
+    ) {
+        $dualStack = isset($command['@use_dual_stack_endpoint'])
+            ? $command['@use_dual_stack_endpoint'] : $this->dualStackByDefault;
+        if (ArnParser::isArn($command['Bucket'])) {
+            $arn = ArnParser::parse($command['Bucket']);
+            $outpost = $arn->getService() == 's3-outposts';
+            if ($outpost && $dualStack) {
+                throw new InvalidArgumentException("Outposts + dualstack is not supported");
+            }
+        }
+        if ($dualStack) {
+            throw new InvalidArgumentException("Custom Endpoint + Dualstack not supported");
+        }
+        $host = ($this->pathStyleByDefault) ?
+            $this->endpoint :
+            $this->getBucketStyleHost(
+                $command,
+                $this->endpoint
+            );
+        $uri = new Uri($host);
+        $scheme = $uri->getScheme();
+        if(empty($scheme)){
+            //The host contains s3-outposts here, that's where it gets added
+            $request = $request->withUri(
+                $uri->withHost($host)
+            );
+        } else {
+            $request = $request->withUri($uri);
+        }
+
+        return $request;
+    }
+
 }

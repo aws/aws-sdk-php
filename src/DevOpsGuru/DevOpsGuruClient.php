@@ -13,6 +13,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeAccountOverviewAsync(array $args = [])
  * @method \Aws\Result describeAnomaly(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeAnomalyAsync(array $args = [])
+ * @method \Aws\Result describeFeedback(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeFeedbackAsync(array $args = [])
  * @method \Aws\Result describeInsight(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeInsightAsync(array $args = [])
  * @method \Aws\Result describeResourceCollectionHealth(array $args = [])

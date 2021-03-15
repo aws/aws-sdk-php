@@ -21,6 +21,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getEC2RecommendationProjectedMetricsAsync(array $args = [])
  * @method \Aws\Result getEnrollmentStatus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getEnrollmentStatusAsync(array $args = [])
+ * @method \Aws\Result getLambdaFunctionRecommendations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getLambdaFunctionRecommendationsAsync(array $args = [])
  * @method \Aws\Result getRecommendationSummaries(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getRecommendationSummariesAsync(array $args = [])
  * @method \Aws\Result updateEnrollmentStatus(array $args = [])

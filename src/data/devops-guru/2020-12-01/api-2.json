@@ -80,6 +80,23 @@
         {"shape":"ValidationException"}
       ]
     },
+    "DescribeFeedback":{
+      "name":"DescribeFeedback",
+      "http":{
+        "method":"POST",
+        "requestUri":"/feedback",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeFeedbackRequest"},
+      "output":{"shape":"DescribeFeedbackResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "DescribeInsight":{
       "name":"DescribeInsight",
       "http":{
@@ -476,12 +493,14 @@
       "required":[
         "OpenReactiveInsights",
         "OpenProactiveInsights",
-        "MetricsAnalyzed"
+        "MetricsAnalyzed",
+        "ResourceHours"
       ],
       "members":{
         "OpenReactiveInsights":{"shape":"NumOpenReactiveInsights"},
         "OpenProactiveInsights":{"shape":"NumOpenProactiveInsights"},
-        "MetricsAnalyzed":{"shape":"NumMetricsAnalyzed"}
+        "MetricsAnalyzed":{"shape":"NumMetricsAnalyzed"},
+        "ResourceHours":{"shape":"ResourceHours"}
       }
     },
     "DescribeAccountOverviewRequest":{
@@ -521,6 +540,18 @@
       "members":{
         "ProactiveAnomaly":{"shape":"ProactiveAnomaly"},
         "ReactiveAnomaly":{"shape":"ReactiveAnomaly"}
+      }
+    },
+    "DescribeFeedbackRequest":{
+      "type":"structure",
+      "members":{
+        "InsightId":{"shape":"InsightId"}
+      }
+    },
+    "DescribeFeedbackResponse":{
+      "type":"structure",
+      "members":{
+        "InsightFeedback":{"shape":"InsightFeedback"}
       }
     },
     "DescribeInsightRequest":{
@@ -1245,6 +1276,7 @@
       "type":"string",
       "enum":["AWS_CLOUD_FORMATION"]
     },
+    "ResourceHours":{"type":"long"},
     "ResourceIdString":{"type":"string"},
     "ResourceIdType":{"type":"string"},
     "ResourceNotFoundException":{

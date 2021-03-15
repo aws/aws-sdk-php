@@ -446,6 +446,40 @@
         }
       ]
     },
+    "CreatePartnerInput": {
+      "name": "CreatePartnerInput",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/inputs/{inputId}/partners",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreatePartnerInputRequest"
+      },
+      "output": {
+        "shape": "CreatePartnerInputResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
     "CreateTags": {
       "name": "CreateTags",
       "http": {
@@ -2298,6 +2332,15 @@
         }
       }
     },
+    "ArchiveCdnSettings": {
+      "type": "structure",
+      "members": {
+        "ArchiveS3Settings": {
+          "shape": "ArchiveS3Settings",
+          "locationName": "archiveS3Settings"
+        }
+      }
+    },
     "ArchiveContainerSettings": {
       "type": "structure",
       "members": {
@@ -2314,6 +2357,10 @@
     "ArchiveGroupSettings": {
       "type": "structure",
       "members": {
+        "ArchiveCdnSettings": {
+          "shape": "ArchiveCdnSettings",
+          "locationName": "archiveCdnSettings"
+        },
         "Destination": {
           "shape": "OutputLocationRef",
           "locationName": "destination"
@@ -2346,6 +2393,22 @@
       "required": [
         "ContainerSettings"
       ]
+    },
+    "ArchiveS3LogUploads": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "ArchiveS3Settings": {
+      "type": "structure",
+      "members": {
+        "CannedAcl": {
+          "shape": "S3CannedAcl",
+          "locationName": "cannedAcl"
+        }
+      }
     },
     "AribDestinationSettings": {
       "type": "structure",
@@ -3345,6 +3408,33 @@
         "CaptionChannel"
       ]
     },
+    "CaptionRectangle": {
+       "type": "structure",
+       "members": {
+         "Height": {
+           "shape": "__doubleMin0Max100",
+           "locationName": "height"
+         },
+         "LeftOffset": {
+           "shape": "__doubleMin0Max100",
+           "locationName": "leftOffset"
+         },
+         "TopOffset": {
+           "shape": "__doubleMin0Max100",
+           "locationName": "topOffset"
+         },
+         "Width": {
+           "shape": "__doubleMin0Max100",
+           "locationName": "width"
+         }
+       },
+       "required": [
+         "TopOffset",
+         "Height",
+         "Width",
+         "LeftOffset"
+      ]
+    }, 
     "CaptionSelector": {
       "type": "structure",
       "members": {
@@ -3482,6 +3572,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -3588,6 +3682,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -3661,6 +3759,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -3716,6 +3818,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -4038,6 +4144,60 @@
         }
       }
     },
+    "CreatePartnerInput": {
+      "type": "structure",
+      "members": {
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        }
+      }
+    },
+    "CreatePartnerInputRequest": {
+      "type": "structure",
+      "members": {
+        "InputId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "inputId"
+        },
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "InputId"
+      ]
+    },
+    "CreatePartnerInputResponse": {
+      "type": "structure",
+      "members": {
+        "Input": {
+          "shape": "Input",
+          "locationName": "input"
+        }
+      }
+    },
+    "CreatePartnerInputResultModel": {
+      "type": "structure",
+      "members": {
+        "Input": {
+          "shape": "Input",
+          "locationName": "input"
+        }
+      }
+    },
     "CreateTagsRequest": {
       "type": "structure",
       "members": {
@@ -4134,6 +4294,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -4481,6 +4645,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -4638,6 +4806,10 @@
         "InputDevices": {
           "shape": "__listOfInputDeviceSettings",
           "locationName": "inputDevices"
+        },
+        "InputPartnerIds": {
+          "shape": "__listOf__string",
+          "locationName": "inputPartnerIds"
         },
         "InputSourceType": {
           "shape": "InputSourceType",
@@ -5424,6 +5596,10 @@
           "shape": "EbuTtDFillLineGapControl",
           "locationName": "fillLineGap"
         },
+        "CopyrightHolder": {
+          "shape": "__stringMax1000",
+          "locationName": "copyrightHolder"
+        }, 
         "FontFamily": {
           "shape": "__string",
           "locationName": "fontFamily"
@@ -5715,17 +5891,35 @@
         "httpStatusCode": 403
       }
     },
+    "FrameCaptureCdnSettings": {
+      "type": "structure",
+      "members": {
+        "FrameCaptureS3Settings": {
+          "shape": "FrameCaptureS3Settings",
+          "locationName": "frameCaptureS3Settings"
+        }
+      }
+    },
     "FrameCaptureGroupSettings": {
       "type": "structure",
       "members": {
         "Destination": {
           "shape": "OutputLocationRef",
           "locationName": "destination"
+        },
+        "FrameCaptureCdnSettings": {
+          "shape": "FrameCaptureCdnSettings",
+          "locationName": "frameCaptureCdnSettings"
         }
       },
       "required": [
         "Destination"
       ]
+    },
+    "FrameCaptureHlsSettings": {
+      "type": "structure",
+      "members": {
+      }
     },
     "FrameCaptureIntervalUnit": {
       "type": "string",
@@ -5743,6 +5937,22 @@
         }
       }
     },
+    "FrameCaptureS3LogUploads": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "FrameCaptureS3Settings": {
+      "type": "structure",
+      "members": {
+        "CannedAcl": {
+          "shape": "S3CannedAcl",
+          "locationName": "cannedAcl"
+        }
+      }
+    },
     "FrameCaptureSettings": {
       "type": "structure",
       "members": {
@@ -5754,10 +5964,7 @@
           "shape": "FrameCaptureIntervalUnit",
           "locationName": "captureIntervalUnits"
         }
-      },
-      "required": [
-        "CaptureInterval"
-      ]
+      }
     },
     "GatewayTimeoutException": {
       "type": "structure",
@@ -6566,6 +6773,10 @@
           "shape": "HlsMediaStoreSettings",
           "locationName": "hlsMediaStoreSettings"
         },
+        "HlsS3Settings": {
+          "shape": "HlsS3Settings",
+          "locationName": "hlsS3Settings"
+        },
         "HlsWebdavSettings": {
           "shape": "HlsWebdavSettings",
           "locationName": "hlsWebdavSettings"
@@ -6949,6 +7160,22 @@
         "ENABLED"
       ]
     },
+    "HlsS3LogUploads": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "HlsS3Settings": {
+      "type": "structure",
+      "members": {
+        "CannedAcl": {
+          "shape": "S3CannedAcl",
+          "locationName": "cannedAcl"
+        }
+      }
+    },
     "HlsSegmentationMode": {
       "type": "string",
       "enum": [
@@ -6966,6 +7193,10 @@
         "Fmp4HlsSettings": {
           "shape": "Fmp4HlsSettings",
           "locationName": "fmp4HlsSettings"
+        },
+        "FrameCaptureHlsSettings": {
+          "shape": "FrameCaptureHlsSettings",
+          "locationName": "frameCaptureHlsSettings"
         },
         "StandardHlsSettings": {
           "shape": "StandardHlsSettings",
@@ -7077,6 +7308,10 @@
         "InputDevices": {
           "shape": "__listOfInputDeviceSettings",
           "locationName": "inputDevices"
+        },
+        "InputPartnerIds": {
+          "shape": "__listOf__string",
+          "locationName": "inputPartnerIds"
         },
         "InputSourceType": {
           "shape": "InputSourceType",
@@ -10391,6 +10626,15 @@
         "Destination"
       ]
     },
+    "S3CannedAcl": {
+      "type": "string",
+      "enum": [
+        "AUTHENTICATED_READ",
+        "BUCKET_OWNER_FULL_CONTROL",
+        "BUCKET_OWNER_READ",
+        "PUBLIC_READ"
+      ]
+    },
     "ScheduleAction": {
       "type": "structure",
       "members": {
@@ -10943,6 +11187,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -11169,6 +11417,10 @@
         "Tags": {
           "shape": "Tags",
           "locationName": "tags"
+        },
+        "Vpc": {
+          "shape": "VpcOutputSettings",
+          "locationName": "vpc"
         }
       }
     },
@@ -11269,6 +11521,10 @@
     "TeletextSourceSettings": {
       "type": "structure",
       "members": {
+        "OutputRectangle": {
+          "shape": "CaptionRectangle",
+          "locationName": "outputRectangle"
+        }, 
         "PageNumber": {
           "shape": "__string",
           "locationName": "pageNumber"
@@ -11371,6 +11627,10 @@
           "shape": "__string",
           "locationName": "targetCustomerId"
         },
+        "TargetRegion": {
+          "shape": "__string",
+          "locationName": "targetRegion"
+        },
         "TransferMessage": {
           "shape": "__string",
           "locationName": "transferMessage"
@@ -11388,6 +11648,10 @@
         "TargetCustomerId": {
           "shape": "__string",
           "locationName": "targetCustomerId"
+        },
+        "TargetRegion": {
+          "shape": "__string",
+          "locationName": "targetRegion"
         },
         "TransferMessage": {
           "shape": "__string",
@@ -11418,6 +11682,10 @@
           "shape": "__string",
           "locationName": "targetCustomerId"
         },
+        "TargetRegion": {
+          "shape": "__string",
+          "locationName": "targetRegion"
+        }, 
         "TransferType": {
           "shape": "InputDeviceTransferType",
           "locationName": "transferType"
@@ -12196,6 +12464,26 @@
         }
       }
     },
+    "VpcOutputSettings": {
+      "type": "structure",
+      "members": {
+        "PublicAddressAllocationIds": {
+          "shape": "__listOf__string",
+          "locationName": "publicAddressAllocationIds"
+        },
+        "SecurityGroupIds": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroupIds"
+        },
+        "SubnetIds": {
+          "shape": "__listOf__string",
+          "locationName": "subnetIds"
+        }
+      },
+      "required": [
+        "SubnetIds"
+      ]
+    },
     "WavCodingMode": {
       "type": "string",
       "enum": [
@@ -12239,6 +12527,9 @@
     "__doubleMin0Max1": {
       "type": "double"
     },
+    "__doubleMin0Max100": {
+      "type": "double"
+    }, 
     "__doubleMin1": {
       "type": "double"
     },
@@ -12807,6 +13098,10 @@
     "__string": {
       "type": "string"
     },
+    "__stringMax1000": {
+      "type": "string",
+      "max": 1000
+    }, 
     "__stringMax256": {
       "type": "string",
       "max": 256

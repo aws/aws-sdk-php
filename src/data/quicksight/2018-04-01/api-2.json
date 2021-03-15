@@ -1869,8 +1869,7 @@
     "AnalysisName":{
       "type":"string",
       "max":2048,
-      "min":1,
-      "pattern":"[\\u0020-\\u00FF]+"
+      "min":1
     },
     "AnalysisSearchFilter":{
       "type":"structure",
@@ -1883,7 +1882,8 @@
     "AnalysisSearchFilterList":{
       "type":"list",
       "member":{"shape":"AnalysisSearchFilter"},
-      "max":1
+      "max":1,
+      "min":1
     },
     "AnalysisSourceEntity":{
       "type":"structure",
@@ -2355,6 +2355,7 @@
         "LogicalTableMap":{"shape":"LogicalTableMap"},
         "ImportMode":{"shape":"DataSetImportMode"},
         "ColumnGroups":{"shape":"ColumnGroupList"},
+        "FieldFolders":{"shape":"FieldFolderMap"},
         "Permissions":{"shape":"ResourcePermissionList"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
@@ -2840,8 +2841,7 @@
     "DashboardName":{
       "type":"string",
       "max":2048,
-      "min":1,
-      "pattern":"[\\u0020-\\u00FF]+"
+      "min":1
     },
     "DashboardPublishOptions":{
       "type":"structure",
@@ -2863,7 +2863,8 @@
     "DashboardSearchFilterList":{
       "type":"list",
       "member":{"shape":"DashboardSearchFilter"},
-      "max":1
+      "max":1,
+      "min":1
     },
     "DashboardSourceEntity":{
       "type":"structure",
@@ -2959,6 +2960,7 @@
         "ImportMode":{"shape":"DataSetImportMode"},
         "ConsumedSpiceCapacityInBytes":{"shape":"Long"},
         "ColumnGroups":{"shape":"ColumnGroupList"},
+        "FieldFolders":{"shape":"FieldFolderMap"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"}
       }
@@ -4487,6 +4489,27 @@
       "max":4096,
       "min":1
     },
+    "FieldFolder":{
+      "type":"structure",
+      "members":{
+        "description":{"shape":"FieldFolderDescription"},
+        "columns":{"shape":"FolderColumnList"}
+      }
+    },
+    "FieldFolderDescription":{
+      "type":"string",
+      "max":500
+    },
+    "FieldFolderMap":{
+      "type":"map",
+      "key":{"shape":"FieldFolderPath"},
+      "value":{"shape":"FieldFolder"}
+    },
+    "FieldFolderPath":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
     "FileFormat":{
       "type":"string",
       "enum":[
@@ -4508,6 +4531,11 @@
     "FilterOperator":{
       "type":"string",
       "enum":["StringEquals"]
+    },
+    "FolderColumnList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5000
     },
     "GeoSpatialColumnGroup":{
       "type":"structure",
@@ -6684,8 +6712,7 @@
     "TemplateName":{
       "type":"string",
       "max":2048,
-      "min":1,
-      "pattern":"[\\u0020-\\u00FF]+"
+      "min":1
     },
     "TemplateSourceAnalysis":{
       "type":"structure",
@@ -7309,6 +7336,7 @@
         "LogicalTableMap":{"shape":"LogicalTableMap"},
         "ImportMode":{"shape":"DataSetImportMode"},
         "ColumnGroups":{"shape":"ColumnGroupList"},
+        "FieldFolders":{"shape":"FieldFolderMap"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"}
       }

@@ -4810,7 +4810,12 @@
       "type": "string",
       "enum": [
         "INCLUSIVE",
-        "EXCLUSIVE"
+        "EXCLUSIVE",
+        "CONTAINS",
+        "BEFORE",
+        "AFTER",
+        "BETWEEN",
+        "ON"
       ]
     },
     "AttributesResource": {
@@ -5165,7 +5170,16 @@
         "MessageType": {
           "shape": "MessageType"
         },
+        "OriginationNumber": {
+          "shape": "__string"
+        },
         "SenderId": {
+          "shape": "__string"
+        },
+        "EntityId": {
+          "shape": "__string"
+        },
+        "TemplateId": {
           "shape": "__string"
         }
       }
@@ -9188,7 +9202,16 @@
         "MessageType": {
           "shape": "MessageType"
         },
+        "OriginationNumber": {
+          "shape": "__string"
+        },
         "SenderId": {
+          "shape": "__string"
+        },
+        "EntityId": {
+          "shape": "__string"
+        },
+        "TemplateId": {
           "shape": "__string"
         }
       }
@@ -10193,6 +10216,12 @@
         },
         "Substitutions": {
           "shape": "MapOfListOf__string"
+        },
+        "EntityId": {
+          "shape": "__string"
+        },
+        "TemplateId": {
+          "shape": "__string"
         }
       }
     },

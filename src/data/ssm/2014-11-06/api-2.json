@@ -524,7 +524,9 @@
       "errors":[
         {"shape":"InternalServerError"},
         {"shape":"InvalidDocument"},
-        {"shape":"InvalidPermissionType"}
+        {"shape":"InvalidNextToken"},
+        {"shape":"InvalidPermissionType"},
+        {"shape":"InvalidDocumentOperation"}
       ]
     },
     "DescribeEffectiveInstanceAssociations":{
@@ -2706,6 +2708,20 @@
       "min":3,
       "pattern":"^[a-zA-Z0-9_\\-.]{3,128}$"
     },
+    "BaselineOverride":{
+      "type":"structure",
+      "members":{
+        "OperatingSystem":{"shape":"OperatingSystem"},
+        "GlobalFilters":{"shape":"PatchFilterGroup"},
+        "ApprovalRules":{"shape":"PatchRuleGroup"},
+        "ApprovedPatches":{"shape":"PatchIdList"},
+        "ApprovedPatchesComplianceLevel":{"shape":"PatchComplianceLevel"},
+        "RejectedPatches":{"shape":"PatchIdList"},
+        "RejectedPatchesAction":{"shape":"PatchAction"},
+        "ApprovedPatchesEnableNonSecurity":{"shape":"Boolean"},
+        "Sources":{"shape":"PatchSourceList"}
+      }
+    },
     "BatchErrorMessage":{"type":"string"},
     "Boolean":{"type":"boolean"},
     "CalendarNameOrARN":{"type":"string"},
@@ -3318,7 +3334,8 @@
       "required":["ResourceId"],
       "members":{
         "ResourceId":{"shape":"OpsMetadataResourceId"},
-        "Metadata":{"shape":"MetadataMap"}
+        "Metadata":{"shape":"MetadataMap"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "CreateOpsMetadataResult":{
@@ -3762,14 +3779,20 @@
       ],
       "members":{
         "Name":{"shape":"DocumentName"},
-        "PermissionType":{"shape":"DocumentPermissionType"}
+        "PermissionType":{"shape":"DocumentPermissionType"},
+        "MaxResults":{
+          "shape":"DocumentPermissionMaxResults",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "DescribeDocumentPermissionResponse":{
       "type":"structure",
       "members":{
         "AccountIds":{"shape":"AccountIdList"},
-        "AccountSharingInfoList":{"shape":"AccountSharingInfoList"}
+        "AccountSharingInfoList":{"shape":"AccountSharingInfoList"},
+        "NextToken":{"shape":"NextToken"}
       }
     },
     "DescribeDocumentRequest":{
@@ -4456,6 +4479,11 @@
       },
       "exception":true
     },
+    "DocumentPermissionMaxResults":{
+      "type":"integer",
+      "max":200,
+      "min":1
+    },
     "DocumentPermissionType":{
       "type":"string",
       "enum":["Share"]
@@ -4788,7 +4816,8 @@
       ],
       "members":{
         "InstanceId":{"shape":"InstanceId"},
-        "SnapshotId":{"shape":"SnapshotId"}
+        "SnapshotId":{"shape":"SnapshotId"},
+        "BaselineOverride":{"shape":"BaselineOverride"}
       }
     },
     "GetDeployablePatchSnapshotForInstanceResult":{
@@ -8468,15 +8497,15 @@
       "type":"structure",
       "required":[
         "WindowId",
-        "Targets",
         "TaskArn",
-        "TaskType",
-        "MaxConcurrency",
-        "MaxErrors"
+        "TaskType"
       ],
       "members":{
         "WindowId":{"shape":"MaintenanceWindowId"},
-        "Targets":{"shape":"Targets"},
+        "Targets":{
+          "shape":"Targets",
+          "box":true
+        },
         "TaskArn":{"shape":"MaintenanceWindowTaskArn"},
         "ServiceRoleArn":{"shape":"ServiceRole"},
         "TaskType":{"shape":"MaintenanceWindowTaskType"},
@@ -8486,8 +8515,14 @@
           "shape":"MaintenanceWindowTaskPriority",
           "box":true
         },
-        "MaxConcurrency":{"shape":"MaxConcurrency"},
-        "MaxErrors":{"shape":"MaxErrors"},
+        "MaxConcurrency":{
+          "shape":"MaxConcurrency",
+          "box":true
+        },
+        "MaxErrors":{
+          "shape":"MaxErrors",
+          "box":true
+        },
         "LoggingInfo":{"shape":"LoggingInfo"},
         "Name":{"shape":"MaintenanceWindowName"},
         "Description":{"shape":"MaintenanceWindowDescription"},
@@ -8807,7 +8842,8 @@
         "MaintenanceWindow",
         "Parameter",
         "PatchBaseline",
-        "OpsItem"
+        "OpsItem",
+        "OpsMetadata"
       ]
     },
     "ResponseCode":{"type":"integer"},
