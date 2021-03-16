@@ -43,8 +43,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listChannelsAsync(array $args = [])
  * @method \Aws\Result listPlaybackConfigurations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listPlaybackConfigurationsAsync(array $args = [])
- * @method \Aws\Result listPrograms(array $args = [])
- * @method \GuzzleHttp\Promise\Promise listProgramsAsync(array $args = [])
  * @method \Aws\Result listSourceLocations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSourceLocationsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])

@@ -51,5 +51,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateArchiveRuleAsync(array $args = [])
  * @method \Aws\Result updateFindings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateFindingsAsync(array $args = [])
+ * @method \Aws\Result validatePolicy(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise validatePolicyAsync(array $args = [])
  */
 class AccessAnalyzerClient extends AwsClient {}

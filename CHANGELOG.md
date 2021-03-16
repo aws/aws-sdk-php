@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AccessAnalyzer` - This release adds support for the ValidatePolicy API. IAM Access Analyzer is adding over 100 policy checks and actionable recommendations that help you validate your policies during authoring.
+* `Aws\GameLift` - GameLift expands to six new AWS Regions, adds support for multi-location fleets to streamline management of hosting resources, and lets you customize more of the game session placement process.
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+* `Aws\Lambda` - Allow empty list for function response types
+* `Aws\MWAA` - This release adds UPDATE_FAILED and UNAVAILABLE MWAA environment states.
+* `Aws\MediaConnect` - This release adds support for the SRT-listener protocol on sources and outputs.
+* `Aws\MediaTailor` - MediaTailor channel assembly is a new manifest-only service that allows you to assemble linear streams using your existing VOD content.
+
 ## 3.174.0 - 2021-03-15
 
 * `Aws\CodeDeploy` - AWS CodeDeploy can now detect instances running an outdated revision of your application and automatically update them with the latest revision.
