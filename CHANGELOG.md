@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.174.1 - 2021-03-16
 
 * `Aws\AccessAnalyzer` - This release adds support for the ValidatePolicy API. IAM Access Analyzer is adding over 100 policy checks and actionable recommendations that help you validate your policies during authoring.
 * `Aws\GameLift` - GameLift expands to six new AWS Regions, adds support for multi-location fleets to streamline management of hosting resources, and lets you customize more of the game session placement process.
