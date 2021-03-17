@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - Making serviceRole an optional parameter when creating a compute environment. If serviceRole is not provided then Service Linked Role will be created (or reused if it already exists).
+* `Aws\SageMaker` - Support new target device ml_eia2 in SageMaker CreateCompilationJob API
+
 ## 3.174.1 - 2021-03-16
 
 * `Aws\AccessAnalyzer` - This release adds support for the ValidatePolicy API. IAM Access Analyzer is adding over 100 policy checks and actionable recommendations that help you validate your policies during authoring.
