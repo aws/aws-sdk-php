@@ -679,6 +679,12 @@ class ClientResolver
         if (defined('HHVM_VERSION')) {
             array_unshift($value, 'HHVM/' . HHVM_VERSION);
         }
+
+        $osName = php_uname('s') . '/' . php_uname('r');
+        if (!empty($osName)) {
+            array_unshift($value, $osName);
+        }
+
         array_unshift($value, 'aws-sdk-php/' . Sdk::VERSION);
         $args['ua_append'] = $value;
 
