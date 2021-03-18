@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.174.3 - 2021-03-18
 
 * `Aws\AutoScaling` - Amazon EC2 Auto Scaling Instance Refresh now supports phased deployments.
 * `Aws\Redshift` - Add new fields for additional information about VPC endpoint for clusters with reallocation enabled, and a new field for total storage capacity for all clusters.
