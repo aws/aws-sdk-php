@@ -209,6 +209,7 @@ class S3EndpointMiddleware
     private function applyPathStyleEndpointCustomizations(
         CommandInterface $command,
         RequestInterface $request
+    ) {
         if ($command->getName() == 'WriteGetObjectResponse') {
             $region = $this->region;
             $dnsSuffix = $this->endpointProvider
