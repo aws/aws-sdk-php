@@ -680,9 +680,15 @@ class ClientResolver
             array_unshift($value, 'HHVM/' . HHVM_VERSION);
         }
 
-        $osName = php_uname('s') . '/' . php_uname('r');
-        if (!empty($osName)) {
-            array_unshift($value, $osName);
+        $disabledFunctions = explode(',', ini_get('disable_functions'));
+        if (!ini_get('safe_mode')
+            && function_exists('php_uname')
+            && !in_array('php_uname', $disabledFunctions, true)
+        ) {
+            $osName = php_uname('s') . '/' . php_uname('r');
+            if (!empty($osName)) {
+                array_unshift($value, $osName);
+            }
         }
 
         array_unshift($value, 'aws-sdk-php/' . Sdk::VERSION);
