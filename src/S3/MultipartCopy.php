@@ -131,7 +131,7 @@ class MultipartCopy extends AbstractUploadManager
         // The source parameter here is usually a string, but can be overloaded as an array
         // if the key contains a '?' character to specify where the query parameters start
         if (is_array($this->source)) {
-            $key = str_replace('?', '%3F', $this->source['source_key']);
+            $key = str_replace('%2F', '/', rawurlencode($this->source['source_key']));
             $data['CopySource'] = '/' . $this->source['source_bucket'] . '/' . $key;
         } else {
             list($bucket, $key) = explode('/', ltrim($this->source, '/'), 2);
@@ -189,9 +189,10 @@ class MultipartCopy extends AbstractUploadManager
         }
         //if the source variable was overloaded with an array, use the inputs for key and bucket
         if (is_array($this->source)) {
-            $headParams = [];
-            $headParams['Key'] = $this->source['source_key'];
-            $headParams['Bucket'] = $this->source['source_bucket'];
+            $headParams = [
+                'Key' => $this->source['source_key'],
+                'Bucket' => $this->source['source_bucket']
+            ];
             if (isset($this->source['source_version_id'])) {
                 $this->sourceVersionId = $this->source['source_version_id'];
                 $headParams['VersionId'] = $this->sourceVersionId;
@@ -220,8 +221,8 @@ class MultipartCopy extends AbstractUploadManager
      * Get the input source, starting with a slash if it is not an ARN to
      * standardize the source location syntax
      *
-     * @param $inputSource
-     * @return string
+     * @param string $inputSource The source that was passed to the constructor
+     * @return string The source, starting with a slash if it's not an arn
      */
     private function getInputSource($inputSource)
     {
