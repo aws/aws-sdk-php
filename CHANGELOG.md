@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.175.0 - 2021-03-19
 
 * `Aws\EC2` - X2gd instances are the next generation of memory-optimized instances powered by AWS-designed, Arm-based AWS Graviton2 processors.
 * `Aws\S3` - Added support for object lambda endpoints.
