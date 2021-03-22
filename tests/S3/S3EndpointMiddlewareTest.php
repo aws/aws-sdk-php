@@ -727,7 +727,6 @@ class S3EndpointMiddlewareTest extends TestCase
 
         return [
             ["us-west-2", "route", null, 'route.s3-object-lambda.us-west-2.amazonaws.com'],
-            ["us-west-2", "route", "my-endpoint.com", 'route.my-endpoint.com'],
             ["us-east-1", "route", null, 'route.s3-object-lambda.us-east-1.amazonaws.com'],
         ];
     }
