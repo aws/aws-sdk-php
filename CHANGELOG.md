@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.175.1 - 2021-03-22
 
 * `Aws\CodeArtifact` - Documentation updates for CodeArtifact
 * `Aws\EC2` - This release adds support for UEFI boot on selected AMD- and Intel-based EC2 instances.
