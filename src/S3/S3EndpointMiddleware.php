@@ -321,7 +321,7 @@ class S3EndpointMiddleware
                 $command,
                 $this->endpoint
             );
-        $uri = new Uri($host);
+        $uri = $request->getUri();
         $scheme = $uri->getScheme();
         if(empty($scheme)){
             $request = $request->withUri(
