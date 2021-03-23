@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CostExplorer` - You can now create cost categories with inherited value rules and specify default values for any uncategorized costs.
+* `Aws\FIS` - Updated maximum allowed size of action parameter from 64 to 1024
+* `Aws\GameLift` - GameLift adds support for using event notifications to monitor game session placements. Specify an SNS topic or use CloudWatch Events to track activity for a game session queue.
+* `Aws\IAM` - Documentation updates for IAM operations and descriptions.
+* `Aws\Redshift` - Removed APIs to control AQUA on clusters.
+
 ## 3.175.1 - 2021-03-22
 
 * `Aws\CodeArtifact` - Documentation updates for CodeArtifact
