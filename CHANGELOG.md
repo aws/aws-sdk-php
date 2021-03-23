@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.175.2 - 2021-03-23
 
 * `Aws\CostExplorer` - You can now create cost categories with inherited value rules and specify default values for any uncategorized costs.
 * `Aws\FIS` - Updated maximum allowed size of action parameter from 64 to 1024
