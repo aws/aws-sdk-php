@@ -32,7 +32,7 @@ abstract class RestSerializer
     public function __construct(Service $api, $endpoint)
     {
         $this->api = $api;
-        $this->endpoint = Psr7\uri_for($endpoint);
+        $this->endpoint = Psr7\Utils::uriFor($endpoint);
     }
 
     /**
