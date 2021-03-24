@@ -205,7 +205,7 @@ class PerformanceContext implements Context, SnippetAcceptingContext
     public function thenDownloadTheFile()
     {
         $this->addMockResults($this->s3Client, [new Result([
-            'Body' => Psr7\stream_for(Psr7\try_fopen($this->tempFilePath, 'rb')),
+            'Body' => Psr7\Utils::streamFor(Psr7\Utils::tryFopen($this->tempFilePath, 'rb')),
         ])]);
 
         $this->s3Client->getObject([

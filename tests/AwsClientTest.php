@@ -266,7 +266,7 @@ class AwsClientTest extends TestCase
         $client = new Ec2Client($conf);
         $client->describeInstances();
         $request = $mock->getLastRequest();
-        $str = \GuzzleHttp\Psr7\str($request);
+        $str = \GuzzleHttp\Psr7\Message::toString($request);
         $this->assertContains('AWS4-HMAC-SHA256', $str);
     }
 
