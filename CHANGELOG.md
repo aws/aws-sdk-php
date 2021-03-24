@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.175.3 - 2021-03-24
 
 * `Aws\EC2` - maximumEfaInterfaces added to DescribeInstanceTypes API
 * `Aws\Greengrass` - Updated the parameters to make name required for CreateGroup API.
