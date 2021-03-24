@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - maximumEfaInterfaces added to DescribeInstanceTypes API
+* `Aws\Greengrass` - Updated the parameters to make name required for CreateGroup API.
+* `Aws\Route53` - Documentation updates for route53
+* `Aws\S3` - Documentation updates for Amazon S3
+* `Aws\S3Control` - Documentation updates for s3-control
+* `Aws\SES` - Adds support for generating V4 SMTP credentials for SES
+* `Aws\SSM` - This release allows SSM Explorer customers to enable OpsData sources across their organization when creating a resource data sync.
+
 ## 3.175.2 - 2021-03-23
 
 * `Aws\CostExplorer` - You can now create cost categories with inherited value rules and specify default values for any uncategorized costs.
