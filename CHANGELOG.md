@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.175.3 - 2021-03-25
+
+* Performed the migration to static API to in order to use the future versions Guzzle\Psr7 using the [migration guide](https://github.com/guzzle/psr7#upgrading-from-function-api).
+
 ## 3.175.2 - 2021-03-23
 
 * `Aws\CostExplorer` - You can now create cost categories with inherited value rules and specify default values for any uncategorized costs.
