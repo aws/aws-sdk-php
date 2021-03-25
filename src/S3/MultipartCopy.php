@@ -57,7 +57,7 @@ class MultipartCopy extends AbstractUploadManager
      * @param string $source Location of the data to be copied (in the form
      *                       /<bucket>/<key>).  If the key contains a '?'
      *                       character, instead pass an array of source_key,
-     *                       source_buckey, and source_version_id.
+     *                       source_bucket, and source_version_id.
      * @param array $config Configuration used to perform the upload.
      */
     public function __construct(
@@ -137,12 +137,8 @@ class MultipartCopy extends AbstractUploadManager
             $data['CopySource'] = '/' . $this->source['source_bucket'] . '/' . $key;
         } else {
             list($bucket, $key) = explode('/', ltrim($this->source, '/'), 2);
-            $data['CopySource'] = '/' . $bucket . '/' . rawurlencode(
-                    implode(
-                        '/',
-                        array_map('urlencode', explode('/', $key))
-                    )
-                );
+            $key =  str_replace('%2F', '/', rawurlencode($key));
+            $data['CopySource'] = '/' . $bucket . '/' . $key;
         }
         $data['PartNumber'] = $partNumber;
         if (!empty($this->sourceVersionId)) {
@@ -220,8 +216,8 @@ class MultipartCopy extends AbstractUploadManager
     }
 
     /**
-     * Get the input source, starting with a slash if it is not an ARN to
-     * standardize the source location syntax
+     * Get the url decoded input source, starting with a slash if it is not an
+     * ARN to standardize the source location syntax.
      *
      * @param string $inputSource The source that was passed to the constructor
      * @return string The source, starting with a slash if it's not an arn
@@ -233,7 +229,7 @@ class MultipartCopy extends AbstractUploadManager
         } else {
             $sourceBuilder = "/";
         }
-        $sourceBuilder .= ltrim($inputSource, '/');
+        $sourceBuilder .= ltrim(rawurldecode($inputSource), '/');
         return $sourceBuilder;
     }
 
