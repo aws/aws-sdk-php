@@ -177,6 +177,21 @@ class SesClient extends \Aws\AwsClient
         return base64_encode($version . $signature);
     }
 
+    /**
+     * Create an SMTP password for a given IAM user's credentials.
+     *
+     * The SMTP username is the Access Key ID for the provided credentials. This
+     * utility method is not guaranteed to work indefinitely and is provided as
+     * a convenience to customers using the generateSmtpPassword method.  It is
+     * not recommended for use in production
+     *
+     * @link https://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-credentials.html#smtp-credentials-convert
+     *
+     * @param CredentialsInterface $creds
+     * @param string $region
+     *
+     * @return string
+     */
     public static function generateSmtpPasswordV4(CredentialsInterface $creds, $region)
     {
         $key = $creds->getSecretKey();
