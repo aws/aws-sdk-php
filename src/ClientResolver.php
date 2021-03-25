@@ -679,6 +679,18 @@ class ClientResolver
         if (defined('HHVM_VERSION')) {
             array_unshift($value, 'HHVM/' . HHVM_VERSION);
         }
+
+        $disabledFunctions = explode(',', ini_get('disable_functions'));
+        if (!ini_get('safe_mode')
+            && function_exists('php_uname')
+            && !in_array('php_uname', $disabledFunctions, true)
+        ) {
+            $osName = php_uname('s') . '/' . php_uname('r');
+            if (!empty($osName)) {
+                array_unshift($value, $osName);
+            }
+        }
+
         array_unshift($value, 'aws-sdk-php/' . Sdk::VERSION);
         $args['ua_append'] = $value;
 
@@ -700,13 +712,6 @@ class ClientResolver
 
     public static function _apply_endpoint($value, array &$args, HandlerList $list)
     {
-        $parts = parse_url($value);
-        if (empty($parts['scheme']) || empty($parts['host'])) {
-            throw new IAE(
-                'Endpoints must be full URIs and include a scheme and host'
-            );
-        }
-
         $args['endpoint'] = $value;
     }
 

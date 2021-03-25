@@ -177,6 +177,30 @@ class SesClient extends \Aws\AwsClient
         return base64_encode($version . $signature);
     }
 
+    public static function generateSmtpPasswordV4(CredentialsInterface $creds, $region)
+    {
+        $key = $creds->getSecretKey();
+
+        $date = "11111111";
+        $service = "ses";
+        $terminal = "aws4_request";
+        $message = "SendRawEmail";
+        $version = 0x04;
+
+        $signature = self::sign($date, "AWS4" . $key);
+        $signature = self::sign($region, $signature);
+        $signature = self::sign($service, $signature);
+        $signature = self::sign($terminal, $signature);
+        $signature = self::sign($message, $signature);
+        $signatureAndVersion = pack('c', $version) . $signature;
+
+        return  base64_encode($signatureAndVersion);
+    }
+
+    private static function sign($key, $message) {
+        return hash_hmac('sha256', $key, $message, true);
+    }
+
     /**
      * Create an SMTP password for a given IAM user's credentials.
      *
