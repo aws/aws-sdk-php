@@ -1,8 +1,19 @@
 # CHANGELOG
 
-## 3.175.3 - 2021-03-25
+## 3.175.4 - 2021-03-25
 
 * Performed the migration to static API to in order to use the future versions Guzzle\Psr7 using the [migration guide](https://github.com/guzzle/psr7#upgrading-from-function-api).
+
+## 3.175.3 - 2021-03-24
+
+* `Aws\EC2` - maximumEfaInterfaces added to DescribeInstanceTypes API
+* `Aws\Greengrass` - Updated the parameters to make name required for CreateGroup API.
+* `Aws\Route53` - Documentation updates for route53
+* `Aws\S3` - Documentation updates for Amazon S3
+* `Aws\S3Control` - Documentation updates for s3-control
+* `Aws\SES` - Adds support for generating V4 SMTP credentials for SES
+* `Aws\SSM` - This release allows SSM Explorer customers to enable OpsData sources across their organization when creating a resource data sync.
+
 
 ## 3.175.2 - 2021-03-23
 
