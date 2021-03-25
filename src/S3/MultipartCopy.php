@@ -54,8 +54,8 @@ class MultipartCopy extends AbstractUploadManager
      *   result of executing a HeadObject command on the copy source.
      *
      * @param S3ClientInterface $client Client used for the upload.
-     * @param string $source Location of the data to be copied (in the form
-     *                       /<bucket>/<key>).  If the key contains a '?'
+     * @param string|array $source Location of the data to be copied (in the
+     *                       form /<bucket>/<key>).  If the key contains a '?'
      *                       character, instead pass an array of source_key,
      *                       source_bucket, and source_version_id.
      * @param array $config Configuration used to perform the upload.
