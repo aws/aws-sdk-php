@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchEvents` - Add support for SageMaker Model Builder Pipelines Targets to EventBridge
+* `Aws\CustomerProfiles` - This release adds an optional parameter named FlowDefinition in PutIntegrationRequest.
+* `Aws\EventBridge` - Add support for SageMaker Model Builder Pipelines Targets to EventBridge
+* `Aws\IoTWireless` - Support tag-on-create for WirelessDevice.
+* `Aws\TranscribeService` - Amazon Transcribe now supports tagging words that match your vocabulary filter for batch transcription.
+
 ## 3.176.1 - 2021-03-26
 
 * `Aws\LookoutMetrics` - Allowing uppercase alphabets for RDS and Redshift database names.
