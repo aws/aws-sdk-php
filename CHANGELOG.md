@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.176.1 - 2021-03-26
 
 * `Aws\LookoutMetrics` - Allowing uppercase alphabets for RDS and Redshift database names.
 * `Aws\LookoutMetrics` - Fixed bug where incorrect Content-Type header was being sent to the LookoutMetrics service
