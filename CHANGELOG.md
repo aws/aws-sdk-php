@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.176.3 - 2021-03-29
 
 * `Aws\DocDB` - This release adds support for Event Subscriptions to DocumentDB.
 * `Aws\Glue` - Allow Dots in Registry and Schema Names for CreateRegistry, CreateSchema; Fixed issue when duplicate keys are present and not returned as part of QuerySchemaVersionMetadata.
