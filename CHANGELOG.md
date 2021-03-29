@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DocDB` - This release adds support for Event Subscriptions to DocumentDB.
+* `Aws\Glue` - Allow Dots in Registry and Schema Names for CreateRegistry, CreateSchema; Fixed issue when duplicate keys are present and not returned as part of QuerySchemaVersionMetadata.
+* `Aws\IAM` - AWS Identity and Access Management GetAccessKeyLastUsed API will throw a custom error if customer public key is not found for access keys.
+* `Aws\LocationService` - Amazon Location added support for specifying pricing plan information on resources in alignment with our cost model.
+* `Aws\WAFV2` - Added custom request handling and custom response support in rule actions and default action; Added the option to inspect the web request body as parsed and filtered JSON.
+
 ## 3.176.2 - 2021-03-26
 
 * `Aws\CloudWatchEvents` - Add support for SageMaker Model Builder Pipelines Targets to EventBridge
