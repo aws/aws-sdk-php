@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.176.4 - 2021-03-30
 
 * `Aws\CloudWatch` - SDK update for new Metric Streams feature
 * `Aws\ConfigService` - Adding new APIs to support ConformancePack Compliance CI in Aggregators
