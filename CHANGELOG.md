@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - AWS Batch adds support for Amazon EFS File System
+* `Aws\Cloud9` - Add ImageId input parameter to CreateEnvironmentEC2 endpoint. New parameter enables creation of environments with different AMIs.
+* `Aws\CloudFormation` - 1. Added a new parameter "RegionConcurrencyType" in OperationPreferences. 2. Changed the name of "AccountUrl" to "AccountsUrl" in "DeploymentTargets" parameter.
+* `Aws\CloudHSM` - Minor documentation and link updates.
+* `Aws\CognitoSync` - Minor documentation updates and link updates.
+* `Aws\Comprehend` - Support for customer managed KMS encryption of Comprehend custom models
+* `Aws\DataPipeline` - Minor documentation updates and link updates.
+* `Aws\Detective` - Added the ability to assign tag values to Detective behavior graphs. Tag values can be used for attribute-based access control, and for cost allocation for billing.
+* `Aws\DirectConnect` - This release adds MACsec support to AWS Direct Connect
+* `Aws\IoT` - Added ability to prefix search on attribute value for ListThings API.
+* `Aws\IoTWireless` - Add Sidewalk support to APIs: GetWirelessDevice, ListWirelessDevices, GetWirelessDeviceStatistics. Add Gateway connection status in GetWirelessGatewayStatistics API.
+* `Aws\MachineLearning` - Minor documentation updates and link updates.
+* `Aws\Pricing` - Minor documentation and link updates.
+* `Aws\Redshift` - Enable customers to share access to their Redshift clusters from other VPCs (including VPCs from other accounts).
+* `Aws\TranscribeService` - Amazon Transcribe now supports creating custom language models in the following languages: British English (en-GB), Australian English (en-AU), Indian Hindi (hi-IN), and US Spanish (es-US).
+* `Aws\WorkMail` - This release adds support for mobile device access rules management in Amazon WorkMail.
+
 ## 3.176.4 - 2021-03-30
 
 * `Aws\CloudWatch` - SDK update for new Metric Streams feature
