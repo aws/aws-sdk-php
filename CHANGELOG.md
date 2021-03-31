@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.176.5 - 2021-03-31
 
 * `Aws\Batch` - AWS Batch adds support for Amazon EFS File System
 * `Aws\Cloud9` - Add ImageId input parameter to CreateEnvironmentEC2 endpoint. New parameter enables creation of environments with different AMIs.
