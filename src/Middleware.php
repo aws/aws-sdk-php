@@ -121,6 +121,7 @@ final class Middleware
                 return $credProvider()->then(
                     function (CredentialsInterface $creds)
                     use ($handler, $command, $signer, $request) {
+                        self::userAgent($request, $creds);
                         return $handler(
                             $command,
                             $signer->signRequest($request, $creds)
@@ -238,6 +239,27 @@ final class Middleware
                 return $handler($command, $request);
             };
         };
+    }
+
+    /**
+     * Function that adds credential source to the user agent
+     * if both the user-agent and credential source are present
+     *
+     * @param array $operations Operations that Content-Type should be added to.
+     *
+     * @return callable
+     */
+    private static function userAgent(&$request, $credentials)
+    {
+        if (($userAgent = $request->getHeader('User-Agent'))
+            && ($sourceType = $credentials->getSourceType())
+        ) {
+            //Add credential source type to user agent
+            $request = $request->withHeader(
+                'User-Agent',
+                $userAgent[0] . " CredentialSource:${sourceType}"
+            );
+        }
     }
 
     /**

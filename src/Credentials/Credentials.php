@@ -11,6 +11,7 @@ class Credentials implements CredentialsInterface, \Serializable
     private $secret;
     private $token;
     private $expires;
+    private $sourceType;
 
     /**
      * Constructs a new BasicAWSCredentials object, with the specified AWS
@@ -20,13 +21,20 @@ class Credentials implements CredentialsInterface, \Serializable
      * @param string $secret  AWS secret access key
      * @param string $token   Security token to use
      * @param int    $expires UNIX timestamp for when credentials expire
+     * @param string $sourceType Type of provider the credentials came from
      */
-    public function __construct($key, $secret, $token = null, $expires = null)
-    {
+    public function __construct(
+        $key,
+        $secret,
+        $token = null,
+        $expires = null,
+        $sourceType = null
+    ) {
         $this->key = trim($key);
         $this->secret = trim($secret);
         $this->token = $token;
         $this->expires = $expires;
+        $this->sourceType = $sourceType;
     }
 
     public static function __set_state(array $state)
@@ -57,6 +65,11 @@ class Credentials implements CredentialsInterface, \Serializable
     public function getExpiration()
     {
         return $this->expires;
+    }
+
+    public function getSourceType()
+    {
+        return $this->sourceType;
     }
 
     public function isExpired()

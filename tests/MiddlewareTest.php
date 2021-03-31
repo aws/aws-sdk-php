@@ -108,6 +108,36 @@ class MiddlewareTest extends TestCase
         $this->assertTrue($req->hasHeader('Authorization'));
     }
 
+    public function testAddsSsoToUserAgent()
+    {
+        $list = new HandlerList();
+        $mock = function ($command, $request) use (&$req) {
+            $req = $request;
+            return Promise\promise_for(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+        $list->setHandler($mock);
+        $creds = CredentialProvider::fromCredentials(new Credentials(
+            'foo',
+            'bar',
+            null,
+            null,
+            "SSO")
+        );
+        $signature = new SignatureV4('a', 'b');
+        $list->appendSign(Middleware::signer($creds, Aws\constantly($signature)));
+        $handler = $list->resolve();
+        $request =  new Request('GET', 'http://exmaple.com');
+        $handler(
+            new Command('foo'),
+            $request->withHeader("User-Agent", "some/user/agent")
+        );
+        Promise\queue()->run();
+        $this->assertTrue($req->hasHeader('User-Agent'));
+        $this->assertContains("CredentialSource:SSO",$req->getHeader('User-Agent')[0]);
+    }
+
     public function testBuildsRequests()
     {
         $r = new Request('GET', 'http://www.foo.com');
