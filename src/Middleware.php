@@ -257,7 +257,7 @@ final class Middleware
             //Add credential source type to user agent
             $request = $request->withHeader(
                 'User-Agent',
-                $userAgent[0] . " md/CredentialSource:${sourceType}"
+                $userAgent[0] . " cfg/CredentialSource:${sourceType}"
             );
         }
     }
