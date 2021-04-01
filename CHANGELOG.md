@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.176.6 - 2021-04-01
 
 * `Aws\EC2` - VPC Flow Logs Service adds a new API, GetFlowLogsIntegrationTemplate, which generates CloudFormation templates for Athena. For more info, see https://docs.aws.amazon.com/console/vpc/flow-logs/athena
 * `Aws\FMS` - Added Firewall Manager policy support for AWS Route 53 Resolver DNS Firewall.
