@@ -685,7 +685,7 @@ class ClientResolver
             && function_exists('php_uname')
             && !in_array('php_uname', $disabledFunctions, true)
         ) {
-            $osName = php_uname('s') . '/' . php_uname('r');
+            $osName = "OS/" . php_uname('s') . '/' . php_uname('r');
             if (!empty($osName)) {
                 array_unshift($value, $osName);
             }
