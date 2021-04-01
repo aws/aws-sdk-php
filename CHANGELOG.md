@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - VPC Flow Logs Service adds a new API, GetFlowLogsIntegrationTemplate, which generates CloudFormation templates for Athena. For more info, see https://docs.aws.amazon.com/console/vpc/flow-logs/athena
+* `Aws\FMS` - Added Firewall Manager policy support for AWS Route 53 Resolver DNS Firewall.
+* `Aws\LexModelBuildingService` - Lex now supports the ja-JP locale
+* `Aws\LexRuntimeService` - Amazon Lex now supports base64-encoded message and input transcript fields.
+* `Aws\Lightsail` - - This release adds support for state detail for Amazon Lightsail container services.
+* `Aws\MediaConvert` - MediaConvert now supports HLS ingest, sidecar WebVTT ingest, Teletext color & style passthrough to TTML subtitles, TTML to WebVTT subtitle conversion with style, & DRC profiles in AC3 audio.
+* `Aws\Route53Resolver` - Route 53 Resolver DNS Firewall is a firewall service that allows you to filter and regulate outbound DNS traffic for your VPCs.
+* `Aws\WAFV2` - Added support for ScopeDownStatement for ManagedRuleGroups, Labels, LabelMatchStatement, and LoggingFilter. For more information on these features, see the AWS WAF Developer Guide.
+* `Aws\kendra` - AWS Kendra's ServiceNow data source now supports OAuth 2.0 authentication and knowledge article filtering via a ServiceNow query.
+
 ## 3.176.5 - 2021-03-31
 
 * `Aws\Batch` - AWS Batch adds support for Amazon EFS File System
