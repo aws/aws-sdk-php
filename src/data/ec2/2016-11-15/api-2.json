@@ -5626,6 +5626,27 @@
       }
     },
     "Boolean":{"type":"boolean"},
+    "BootModeType":{
+      "type":"string",
+      "enum":[
+        "legacy-bios",
+        "uefi"
+      ]
+    },
+    "BootModeTypeList":{
+      "type":"list",
+      "member":{
+        "shape":"BootModeType",
+        "locationName":"item"
+      }
+    },
+    "BootModeValues":{
+      "type":"string",
+      "enum":[
+        "legacy-bios",
+        "uefi"
+      ]
+    },
     "BundleId":{"type":"string"},
     "BundleIdStringList":{
       "type":"list",
@@ -7834,8 +7855,8 @@
       "members":{
         "DestinationCidrBlock":{"shape":"String"},
         "LocalGatewayRouteTableId":{"shape":"LocalGatewayRoutetableId"},
-        "LocalGatewayVirtualInterfaceGroupId":{"shape":"LocalGatewayVirtualInterfaceGroupId"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "LocalGatewayVirtualInterfaceGroupId":{"shape":"LocalGatewayVirtualInterfaceGroupId"}
       }
     },
     "CreateLocalGatewayRouteResult":{
@@ -15096,6 +15117,15 @@
         "default"
       ]
     },
+    "EfaInfo":{
+      "type":"structure",
+      "members":{
+        "MaximumEfaInterfaces":{
+          "shape":"MaximumEfaInterfaces",
+          "locationName":"maximumEfaInterfaces"
+        }
+      }
+    },
     "EfaSupportedFlag":{"type":"boolean"},
     "EgressOnlyInternetGateway":{
       "type":"structure",
@@ -18068,6 +18098,10 @@
         "VirtualizationType":{
           "shape":"VirtualizationType",
           "locationName":"virtualizationType"
+        },
+        "BootMode":{
+          "shape":"BootModeValues",
+          "locationName":"bootMode"
         }
       }
     },
@@ -18105,6 +18139,10 @@
         "SriovNetSupport":{
           "shape":"AttributeValue",
           "locationName":"sriovNetSupport"
+        },
+        "BootMode":{
+          "shape":"AttributeValue",
+          "locationName":"bootMode"
         }
       }
     },
@@ -18117,7 +18155,8 @@
         "launchPermission",
         "productCodes",
         "blockDeviceMapping",
-        "sriovNetSupport"
+        "sriovNetSupport",
+        "bootMode"
       ]
     },
     "ImageDiskContainer":{
@@ -18958,6 +18997,10 @@
         "EnclaveOptions":{
           "shape":"EnclaveOptions",
           "locationName":"enclaveOptions"
+        },
+        "BootMode":{
+          "shape":"BootModeValues",
+          "locationName":"bootMode"
         }
       }
     },
@@ -20176,7 +20219,16 @@
         "m6gd.8xlarge",
         "m6gd.12xlarge",
         "m6gd.16xlarge",
-        "mac1.metal"
+        "mac1.metal",
+        "x2gd.medium",
+        "x2gd.large",
+        "x2gd.xlarge",
+        "x2gd.2xlarge",
+        "x2gd.4xlarge",
+        "x2gd.8xlarge",
+        "x2gd.12xlarge",
+        "x2gd.16xlarge",
+        "x2gd.metal"
       ]
     },
     "InstanceTypeHypervisor":{
@@ -20280,6 +20332,10 @@
         "AutoRecoverySupported":{
           "shape":"AutoRecoveryFlag",
           "locationName":"autoRecoverySupported"
+        },
+        "SupportedBootModes":{
+          "shape":"BootModeTypeList",
+          "locationName":"supportedBootModes"
         }
       }
     },
@@ -22062,6 +22118,7 @@
     "MaxNetworkInterfaces":{"type":"integer"},
     "MaxResults":{"type":"integer"},
     "MaximumBandwidthInMbps":{"type":"integer"},
+    "MaximumEfaInterfaces":{"type":"integer"},
     "MaximumIops":{"type":"integer"},
     "MaximumNetworkCards":{"type":"integer"},
     "MaximumThroughputInMBps":{"type":"double"},
@@ -23628,6 +23685,10 @@
         "EfaSupported":{
           "shape":"EfaSupportedFlag",
           "locationName":"efaSupported"
+        },
+        "EfaInfo":{
+          "shape":"EfaInfo",
+          "locationName":"efaInfo"
         }
       }
     },
@@ -25529,7 +25590,8 @@
         "VirtualizationType":{
           "shape":"String",
           "locationName":"virtualizationType"
-        }
+        },
+        "BootMode":{"shape":"BootModeValues"}
       }
     },
     "RegisterImageResult":{

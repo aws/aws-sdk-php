@@ -685,7 +685,7 @@ class ClientResolver
             && function_exists('php_uname')
             && !in_array('php_uname', $disabledFunctions, true)
         ) {
-            $osName = "OS/" . php_uname('s') . '/' . php_uname('r');
+            $osName = php_uname('s') . '/' . php_uname('r');
             if (!empty($osName)) {
                 array_unshift($value, $osName);
             }
@@ -712,13 +712,6 @@ class ClientResolver
 
     public static function _apply_endpoint($value, array &$args, HandlerList $list)
     {
-        $parts = parse_url($value);
-        if (empty($parts['scheme']) || empty($parts['host'])) {
-            throw new IAE(
-                'Endpoints must be full URIs and include a scheme and host'
-            );
-        }
-
         $args['endpoint'] = $value;
     }
 

@@ -1,5 +1,79 @@
 # CHANGELOG
 
+## 3.176.3 - 2021-03-29
+
+* `Aws\DocDB` - This release adds support for Event Subscriptions to DocumentDB.
+* `Aws\Glue` - Allow Dots in Registry and Schema Names for CreateRegistry, CreateSchema; Fixed issue when duplicate keys are present and not returned as part of QuerySchemaVersionMetadata.
+* `Aws\IAM` - AWS Identity and Access Management GetAccessKeyLastUsed API will throw a custom error if customer public key is not found for access keys.
+* `Aws\LocationService` - Amazon Location added support for specifying pricing plan information on resources in alignment with our cost model.
+* `Aws\WAFV2` - Added custom request handling and custom response support in rule actions and default action; Added the option to inspect the web request body as parsed and filtered JSON.
+
+## 3.176.2 - 2021-03-26
+
+* `Aws\CloudWatchEvents` - Add support for SageMaker Model Builder Pipelines Targets to EventBridge
+* `Aws\CustomerProfiles` - This release adds an optional parameter named FlowDefinition in PutIntegrationRequest.
+* `Aws\EventBridge` - Add support for SageMaker Model Builder Pipelines Targets to EventBridge
+* `Aws\IoTWireless` - Support tag-on-create for WirelessDevice.
+* `Aws\TranscribeService` - Amazon Transcribe now supports tagging words that match your vocabulary filter for batch transcription.
+
+## 3.176.1 - 2021-03-26
+
+* `Aws\LookoutMetrics` - Allowing uppercase alphabets for RDS and Redshift database names.
+* `Aws\LookoutMetrics` - Fixed bug where incorrect Content-Type header was being sent to the LookoutMetrics service
+
+## 3.176.0 - 2021-03-25
+
+* `Aws\AlexaForBusiness` - Added support for enabling and disabling data retention in the CreateProfile and UpdateProfile APIs and retrieving the state of data retention for a profile in the GetProfile API.
+* `Aws\LookoutMetrics` - Amazon Lookout for Metrics is now generally available. You can use Lookout for Metrics to monitor your data for anomalies. For more information, see the Amazon Lookout for Metrics Developer Guide.
+* `Aws\MediaLive` - EML now supports handling HDR10 and HLG 2020 color space from a Link input.
+* `Aws\Rekognition` - "This release introduces AWS tagging support for Amazon Rekognition collections, stream processors, and Custom Label models."
+* `Aws\SQS` - Documentation updates for Amazon SQS
+* `Aws\SageMaker` - This feature allows customer to specify the environment variables in their CreateTrainingJob requests.
+
+## 3.175.3 - 2021-03-24
+
+* `Aws\EC2` - maximumEfaInterfaces added to DescribeInstanceTypes API
+* `Aws\Greengrass` - Updated the parameters to make name required for CreateGroup API.
+* `Aws\Route53` - Documentation updates for route53
+* `Aws\S3` - Documentation updates for Amazon S3
+* `Aws\S3Control` - Documentation updates for s3-control
+* `Aws\SES` - Adds support for generating V4 SMTP credentials for SES
+* `Aws\SSM` - This release allows SSM Explorer customers to enable OpsData sources across their organization when creating a resource data sync.
+
+## 3.175.2 - 2021-03-23
+
+* `Aws\CostExplorer` - You can now create cost categories with inherited value rules and specify default values for any uncategorized costs.
+* `Aws\FIS` - Updated maximum allowed size of action parameter from 64 to 1024
+* `Aws\GameLift` - GameLift adds support for using event notifications to monitor game session placements. Specify an SNS topic or use CloudWatch Events to track activity for a game session queue.
+* `Aws\IAM` - Documentation updates for IAM operations and descriptions.
+* `Aws\Redshift` - Removed APIs to control AQUA on clusters.
+
+## 3.175.1 - 2021-03-22
+
+* `Aws\CodeArtifact` - Documentation updates for CodeArtifact
+* `Aws\EC2` - This release adds support for UEFI boot on selected AMD- and Intel-based EC2 instances.
+* `Aws\Macie2` - This release of the Amazon Macie API adds support for publishing sensitive data findings to AWS Security Hub and specifying which categories of findings to publish to Security Hub.
+* `Aws\Redshift` - Added support to enable AQUA in Amazon Redshift clusters.
+
+## 3.175.0 - 2021-03-19
+
+* `Aws\EC2` - X2gd instances are the next generation of memory-optimized instances powered by AWS-designed, Arm-based AWS Graviton2 processors.
+* `Aws\S3` - Added support for object lambda endpoints.
+* `Aws\SageMaker` - Adding authentication support for pulling images stored in private Docker registries to build containers for real-time inference.
+
+## 3.174.3 - 2021-03-18
+
+* `Aws\AutoScaling` - Amazon EC2 Auto Scaling Instance Refresh now supports phased deployments.
+* `Aws\Redshift` - Add new fields for additional information about VPC endpoint for clusters with reallocation enabled, and a new field for total storage capacity for all clusters.
+* `Aws\S3` - S3 Object Lambda is a new S3 feature that enables users to apply their own custom code to process the output of a standard S3 GET request by automatically invoking a Lambda function with a GET request
+* `Aws\S3Control` - S3 Object Lambda is a new S3 feature that enables users to apply their own custom code to process the output of a standard S3 GET request by automatically invoking a Lambda function with a GET request
+* `Aws\SecurityHub` - New object for separate provider and customer values. New objects track S3 Public Access Block configuration and identify sensitive data. BatchImportFinding requests are limited to 100 findings.
+
+## 3.174.2 - 2021-03-17
+
+* `Aws\Batch` - Making serviceRole an optional parameter when creating a compute environment. If serviceRole is not provided then Service Linked Role will be created (or reused if it already exists).
+* `Aws\SageMaker` - Support new target device ml_eia2 in SageMaker CreateCompilationJob API
+
 ## 3.174.1 - 2021-03-16
 
 * `Aws\AccessAnalyzer` - This release adds support for the ValidatePolicy API. IAM Access Analyzer is adding over 100 policy checks and actionable recommendations that help you validate your policies during authoring.
