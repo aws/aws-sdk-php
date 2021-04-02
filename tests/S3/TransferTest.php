@@ -4,6 +4,7 @@ namespace Aws\Test\S3;
 use Aws\CommandInterface;
 use Aws\Middleware;
 use Aws\Result;
+use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\S3\Transfer;
 use Aws\Test\UsesServiceTrait;
@@ -358,6 +359,59 @@ class TransferTest extends TestCase
 
         (new Transfer($s3, __DIR__, 's3://bare-bucket'))
             ->transfer();
+    }
+
+    public function testCanUploadOnce()
+    {
+        $justThisFile = array_filter(
+            iterator_to_array(\Aws\recursive_dir_iterator(__DIR__)),
+            function ($path) { return $path === __FILE__; }
+        );
+        $headObjectCommand = $this->getMockBuilder('Aws\CommandInterface')->getMock();
+        $putObjectCommand = $this->getMockBuilder('Aws\CommandInterface')->getMock();
+
+        $s3 = $this->getMockS3Client();
+        $s3->expects($this->once())
+           ->method('getCommand')
+           ->with(
+               'HeadObject',
+               new \PHPUnit\Framework\Constraint\Callback(function (array $args) {
+                   return 'bucket' === $args['Bucket']
+                       && $args['Key'] === basename(__FILE__);
+               })
+           )
+           ->willReturn($headObjectCommand);
+        $s3->expects($this->once())
+            ->method('executeAsync')
+            ->with($headObjectCommand)
+            ->willReturn(Promise\promise_for(new Result()));
+
+        $uploader = new Transfer($s3, new \ArrayIterator($justThisFile), 's3://bucket', [
+            'base_dir' => __DIR__,
+            'overwrite' => false
+        ]);
+        $uploader->transfer();
+
+        $s3 = $this->getMockS3Client();
+        $s3->expects($this->any())
+           ->method('getCommand')
+           ->withAnyParameters()
+           ->willReturn($headObjectCommand, $putObjectCommand);
+        $s3->expects($this->exactly(2))
+           ->method('executeAsync')
+           ->with()
+           ->willReturnMap(
+               [
+                   [$headObjectCommand, Promise\rejection_for(new S3Exception('not found', $headObjectCommand))],
+                   [$putObjectCommand, Promise\promise_for(new Result())]
+               ]
+           );
+
+        $uploader = new Transfer($s3, new \ArrayIterator($justThisFile), 's3://bucket', [
+            'base_dir' => __DIR__,
+            'overwrite' => false
+        ]);
+        $uploader->transfer();
     }
 
     public function testCanUploadFilesYieldedBySourceIterator()

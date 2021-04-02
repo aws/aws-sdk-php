@@ -25,6 +25,7 @@ class Transfer implements PromisorInterface
     private $concurrency;
     private $mupThreshold;
     private $before;
+    private $overwrite;
     private $s3Args = [];
 
     /**
@@ -57,6 +58,8 @@ class Transfer implements PromisorInterface
      *   being uploaded and the average size of each file. Generally speaking,
      *   smaller files benefit from a higher concurrency while larger files
      *   will not.
+     * - overwrite: (bool, default=true) Set to false to upload files
+     *   only once based on their names.
      * - debug: (bool) Set to true to print out debug information for
      *   transfers. Set to an fopen() resource to write to a specific stream
      *   rather than writing to STDOUT.
@@ -123,6 +126,11 @@ class Transfer implements PromisorInterface
                 throw new \InvalidArgumentException('before must be a callable.');
             }
         }
+
+        // Handle "overwrite" option
+        $this->overwrite = isset($options['overwrite'])
+            ? (bool)$options['overwrite']
+            : true;
 
         // Handle "debug" option.
         if (isset($options['debug'])) {
@@ -293,9 +301,7 @@ class Transfer implements PromisorInterface
     {
         // Map each file into a promise that performs the actual transfer.
         $files = \Aws\map($this->getUploadsIterator(), function ($file) {
-            return (filesize($file) >= $this->mupThreshold)
-                ? $this->uploadMultipart($file)
-                : $this->upload($file);
+            return $this->uploadAsNeeded($file);
         });
 
         // Create an EachPromise, that will concurrently handle the upload
@@ -340,7 +346,37 @@ class Transfer implements PromisorInterface
         return $this->source;
     }
 
-    private function upload($filename)
+    private function uploadAsNeeded($file)
+    {
+        if (!$this->overwrite) {
+            return $this->client
+                ->executeAsync($this->hasBeenUploadedCommand($file))
+                ->otherwise(function(Aws\S3\Exception\S3Exception $e) use ($file) {
+                    if ($e->getAwsErrorCode() === 'AccessDenied') {
+                        // The file does exist
+                        return;
+                    }
+
+                    if ($e->getStatusCode() >= 500) {
+                        throw $e;
+                    }
+
+                    // The file does not exist one way or another
+                    $this->upload($file)->wait();
+                });
+        }
+
+        return $this->upload($file);
+    }
+
+    private function upload($file)
+    {
+        return (filesize($file) >= $this->mupThreshold)
+            ? $this->uploadMultipart($file)
+            : $this->uploadSimple($file);
+    }
+
+    private function uploadSimple($filename)
     {
         $args = $this->s3Args;
         $args['SourceFile'] = $filename;
@@ -365,6 +401,14 @@ class Transfer implements PromisorInterface
             'before_complete' => $this->before,
             'concurrency'     => $this->concurrency,
         ]))->promise();
+    }
+
+    private function hasBeenUploadedCommand($file)
+    {
+        $args = $this->s3Args;
+        $args['Key'] = $this->createS3Key($file);
+
+        return $this->client->getCommand('HeadObject', $args);
     }
 
     private function createS3Key($filename)
