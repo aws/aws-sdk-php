@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.176.8 - 2021-04-05
 
 * `Aws\Appflow` - Added destination properties for Zendesk.
 * `Aws\AuditManager` - AWS Audit Manager has updated the GetAssessment API operation to include a new response field called userRole. The userRole field indicates the role information and IAM ARN of the API caller.
