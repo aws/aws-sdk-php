@@ -47,9 +47,7 @@ jobs:
     #downgrade to supported php unit and remove incompatible xdebug file
     - if: ${{ matrix.php-versions == '5.5' }}
       name: PHP 5.5 specific setup
-      run: |
-        sudo rm /etc/php5/cli/conf.d/20-xdebug.ini
-        composer require --dev --ignore-platform-reqs phpunit/phpunit "4.8.36"
+      run: composer require --dev --ignore-platform-reqs phpunit/phpunit "4.8.36"
 
     #get dependencies
     - name: Install dependencies
