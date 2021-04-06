@@ -393,18 +393,16 @@ class TransferTest extends TestCase
         $uploader->transfer();
 
         $s3 = $this->getMockS3Client();
-        $s3->expects($this->any())
+        $s3->expects($this->exactly(2))
            ->method('getCommand')
-           ->withAnyParameters()
-           ->willReturn($headObjectCommand, $putObjectCommand);
+            ->will($this->onConsecutiveCalls($headObjectCommand, $putObjectCommand));
         $s3->expects($this->exactly(2))
            ->method('executeAsync')
-           ->with()
-           ->willReturnMap(
-               [
-                   [$headObjectCommand, Promise\rejection_for(new S3Exception('not found', $headObjectCommand))],
-                   [$putObjectCommand, Promise\promise_for(new Result())]
-               ]
+           ->will(
+               $this->onConsecutiveCalls(
+                    Promise\rejection_for(new S3Exception('not found', $headObjectCommand)),
+                    Promise\promise_for(new Result())
+               )
            );
 
         $uploader = new Transfer($s3, new \ArrayIterator($justThisFile), 's3://bucket', [
