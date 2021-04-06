@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.176.9 - 2021-04-06
 
 * `Aws\Cloud9` - Documentation updates for Cloud9
 * `Aws\EC2` - This release adds support for storing EBS-backed AMIs in S3 and restoring them from S3 to enable cross-partition copying of AMIs
