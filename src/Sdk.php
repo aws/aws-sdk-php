@@ -520,6 +520,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionimagebuilder(array $args = [])
  * @method \Aws\kendra\kendraClient createkendra(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionkendra(array $args = [])
+ * @method \Aws\mgn\mgnClient createmgn(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionmgn(array $args = [])
  * @method \Aws\signer\signerClient createsigner(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionsigner(array $args = [])
  */
