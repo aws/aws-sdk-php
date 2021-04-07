@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.177.0 - 2021-04-07
 
 * `Aws\AccessAnalyzer` - IAM Access Analyzer now analyzes your CloudTrail events to identify actions and services that have been used by an IAM entity (user or role) and generates an IAM policy that is based on that activity.
 * `Aws\ElastiCache` - This release adds tagging support for all AWS ElastiCache resources except Global Replication Groups.
