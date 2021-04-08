@@ -2645,6 +2645,7 @@ class AesGcmTest extends TestCase
                 $tag2
             );
             $this->assertSame(bin2hex($exp), bin2hex($got));
+            $this->assertSame(bin2hex($tag1), bin2hex($tag2));
         }
     }
 }
