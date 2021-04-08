@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.178.0 - 2021-04-08
 
 * `Aws\AppStream` - This release provides support for image updates
 * `Aws\AutoScaling` - Amazon EC2 Auto Scaling announces Warm Pools that help applications to scale out faster by pre-initializing EC2 instances and save money by requiring fewer continuously running instances
