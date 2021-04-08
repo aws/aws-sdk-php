@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - This release provides support for image updates
+* `Aws\AutoScaling` - Amazon EC2 Auto Scaling announces Warm Pools that help applications to scale out faster by pre-initializing EC2 instances and save money by requiring fewer continuously running instances
+* `Aws\CustomerProfiles` - Documentation updates for Put-Integration API
+* `Aws\KinesisVideoArchivedMedia` - Documentation updates for archived.kinesisvideo
+* `Aws\LookoutEquipment` - This release introduces support for Amazon Lookout for Equipment.
+* `Aws\RAM` - Documentation updates for AWS RAM resource sharing
+* `Aws\RoboMaker` - This release allows RoboMaker customers to specify custom tools to run with their simulation job
+
 ## 3.177.0 - 2021-04-07
 
 * `Aws\AccessAnalyzer` - IAM Access Analyzer now analyzes your CloudTrail events to identify actions and services that have been used by an IAM entity (user or role) and generates an IAM policy that is based on that activity.

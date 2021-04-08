@@ -308,6 +308,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionLightsail(array $args = [])
  * @method \Aws\LocationService\LocationServiceClient createLocationService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLocationService(array $args = [])
+ * @method \Aws\LookoutEquipment\LookoutEquipmentClient createLookoutEquipment(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionLookoutEquipment(array $args = [])
  * @method \Aws\LookoutMetrics\LookoutMetricsClient createLookoutMetrics(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLookoutMetrics(array $args = [])
  * @method \Aws\LookoutforVision\LookoutforVisionClient createLookoutforVision(array $args = [])
