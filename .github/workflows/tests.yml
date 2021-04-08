@@ -9,7 +9,7 @@ on:
 
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     strategy:
       #for each of the following versions of PHP, with and without --prefer-lowest
       matrix:
@@ -44,11 +44,11 @@ jobs:
       name: PHP 5.6-7.1 specific setup
       run: composer require --dev --ignore-platform-reqs phpunit/phpunit "^5.7.11"
 
-    #downgrade to supported php unit and remove incompatible xdebug file
+    #downgrade to supported php unit and remove incompatible xdebug file if it exists
     - if: ${{ matrix.php-versions == '5.5' }}
       name: PHP 5.5 specific setup
       run: |
-        sudo rm /etc/php5/cli/conf.d/20-xdebug.ini
+        sudo rm -f /etc/php5/cli/conf.d/20-xdebug.ini
         composer require --dev --ignore-platform-reqs phpunit/phpunit "4.8.36"
 
     #get dependencies

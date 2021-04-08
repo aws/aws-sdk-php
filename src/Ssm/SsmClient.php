@@ -240,6 +240,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise stopAutomationExecutionAsync(array $args = [])
  * @method \Aws\Result terminateSession(array $args = [])
  * @method \GuzzleHttp\Promise\Promise terminateSessionAsync(array $args = [])
+ * @method \Aws\Result unlabelParameterVersion(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise unlabelParameterVersionAsync(array $args = [])
  * @method \Aws\Result updateAssociation(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAssociationAsync(array $args = [])
  * @method \Aws\Result updateAssociationStatus(array $args = [])
