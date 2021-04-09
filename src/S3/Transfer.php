@@ -129,7 +129,7 @@ class Transfer implements PromisorInterface
 
         // Handle "overwrite" option
         $this->overwrite = isset($options['overwrite'])
-            ? (bool)$options['overwrite']
+            ? filter_var($options['overwrite'], FILTER_VALIDATE_BOOLEAN)
             : true;
 
         // Handle "debug" option.
