@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.178.1 - 2021-04-09
 
 * `Aws\EC2` - Add paginator support to DescribeStoreImageTasks and update documentation.
 * `Aws\Redshift` - Add support for case sensitive table level restore
