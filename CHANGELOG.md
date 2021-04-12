@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeBuild` - AWS CodeBuild now allows you to set the access permissions for build artifacts, project artifacts, and log files that are uploaded to an Amazon S3 bucket that is owned by another account.
+* `Aws\FSx` - Support for cross-region and cross-account backup copies
+
 ## 3.178.1 - 2021-04-09
 
 * `Aws\EC2` - Add paginator support to DescribeStoreImageTasks and update documentation.
