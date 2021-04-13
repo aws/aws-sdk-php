@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.178.3 - 2021-04-13
 
 * `Aws\ComprehendMedical` - The InferICD10CM API now returns TIME_EXPRESSION entities that refer to medical conditions.
 * `Aws\Lightsail` - Documentation updates for Amazon Lightsail.
