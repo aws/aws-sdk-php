@@ -152,6 +152,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getClusterCredentialsAsync(array $args = [])
  * @method \Aws\Result getReservedNodeExchangeOfferings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getReservedNodeExchangeOfferingsAsync(array $args = [])
+ * @method \Aws\Result modifyAquaConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise modifyAquaConfigurationAsync(array $args = [])
  * @method \Aws\Result modifyCluster(array $args = [])
  * @method \GuzzleHttp\Promise\Promise modifyClusterAsync(array $args = [])
  * @method \Aws\Result modifyClusterDbRevision(array $args = [])
