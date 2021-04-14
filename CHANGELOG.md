@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.178.4 - 2021-04-14
 
 * `Aws\CodeStarconnections` - This release adds tagging support for CodeStar Connections Host resources
 * `Aws\ConfigService` - Add exception for DeleteRemediationConfiguration and DescribeRemediationExecutionStatus
