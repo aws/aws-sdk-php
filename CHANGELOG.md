@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeStarconnections` - This release adds tagging support for CodeStar Connections Host resources
+* `Aws\ConfigService` - Add exception for DeleteRemediationConfiguration and DescribeRemediationExecutionStatus
+* `Aws\MediaConnect` - For flows that use Listener protocols, you can now easily locate an output's outbound IP address for a private internet. Additionally, MediaConnect now supports the Waiters feature that makes it easier to poll for the status of a flow until it reaches its desired state.
+* `Aws\Route53` - Documentation updates for route53
+
 ## 3.178.3 - 2021-04-13
 
 * `Aws\ComprehendMedical` - The InferICD10CM API now returns TIME_EXPRESSION entities that refer to medical conditions.
