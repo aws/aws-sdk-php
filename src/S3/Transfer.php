@@ -59,7 +59,8 @@ class Transfer implements PromisorInterface
      *   smaller files benefit from a higher concurrency while larger files
      *   will not.
      * - overwrite: (bool, default=true) Set to false to upload files
-     *   only once based on their names.
+     *   only once based on their names. When set to false, a bucket that has
+     *   versioning enabled will never have multiple versions of a file.
      * - debug: (bool) Set to true to print out debug information for
      *   transfers. Set to an fopen() resource to write to a specific stream
      *   rather than writing to STDOUT.
