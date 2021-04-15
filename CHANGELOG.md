@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DatabaseMigrationService` - AWS DMS added support of TLS for Kafka endpoint. Added Describe endpoint setting API for DMS endpoints.
+* `Aws\STS` - STS now supports assume role with Web Identity using JWT token length upto 20000 characters
+
 ## 3.178.4 - 2021-04-14
 
 * `Aws\CodeStarconnections` - This release adds tagging support for CodeStar Connections Host resources
