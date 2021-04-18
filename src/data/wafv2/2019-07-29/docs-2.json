@@ -50,6 +50,18 @@
         "SampledHTTPRequest$Action": "<p>The action for the <code>Rule</code> that the request matched: <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p>"
       }
     },
+    "ActionCondition": {
+      "base": "<p>A single action condition for a <a>Condition</a> in a logging filter.</p>",
+      "refs": {
+        "Condition$ActionCondition": "<p>A single action condition.</p>"
+      }
+    },
+    "ActionValue": {
+      "base": null,
+      "refs": {
+        "ActionCondition$Action": "<p>The action setting that a log record must contain in order to meet the condition. </p>"
+      }
+    },
     "All": {
       "base": "<p>Inspect all of the elements that AWS WAF has parsed and extracted from the web request JSON body that are within the <a>JsonBody</a> <code>MatchScope</code>. This is used with the <a>FieldToMatch</a> option <code>JsonBody</code>. </p> <p>This is used only to indicate the web request component for AWS WAF to inspect, in the <a>FieldToMatch</a> specification. </p>",
       "refs": {
@@ -63,7 +75,7 @@
       }
     },
     "AllowAction": {
-      "base": "<p>Specifies that AWS WAF should allow requests.</p> <p>This is used only in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p>",
+      "base": "<p>Specifies that AWS WAF should allow the request and optionally defines additional custom handling for the request.</p> <p>This is used in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p>",
       "refs": {
         "DefaultAction$Allow": "<p>Specifies that AWS WAF should allow requests by default.</p>",
         "RuleAction$Allow": "<p>Instructs AWS WAF to allow the web request.</p>"
@@ -86,7 +98,7 @@
       }
     },
     "BlockAction": {
-      "base": "<p>Specifies that AWS WAF should block requests.</p> <p>This is used only in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p>",
+      "base": "<p>Specifies that AWS WAF should block the request and optionally defines additional custom handling for the response to the web request.</p> <p>This is used in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p>",
       "refs": {
         "DefaultAction$Block": "<p>Specifies that AWS WAF should block requests by default. </p>",
         "RuleAction$Block": "<p>Instructs AWS WAF to block the web request.</p>"
@@ -143,6 +155,18 @@
         "SizeConstraintStatement$ComparisonOperator": "<p>The operator to use to compare the request part to the size setting. </p>"
       }
     },
+    "Condition": {
+      "base": "<p>A single match condition for a <a>Filter</a>.</p>",
+      "refs": {
+        "Conditions$member": null
+      }
+    },
+    "Conditions": {
+      "base": null,
+      "refs": {
+        "Filter$Conditions": "<p>Match conditions for the filter.</p>"
+      }
+    },
     "ConsumedCapacity": {
       "base": null,
       "refs": {
@@ -151,7 +175,7 @@
       }
     },
     "CountAction": {
-      "base": "<p>Specifies that AWS WAF should count requests.</p> <p>This is used only in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p>",
+      "base": "<p>Specifies that AWS WAF should count the request. Optionally defines additional custom handling for the request.</p> <p>This is used in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p>",
       "refs": {
         "OverrideAction$Count": "<p>Override the rule action setting to count.</p>",
         "RuleAction$Count": "<p>Instructs AWS WAF to count the web request and allow it.</p>"
@@ -215,8 +239,63 @@
       "refs": {
       }
     },
+    "CustomHTTPHeader": {
+      "base": "<p>A custom header for custom request and response handling. This is used in <a>CustomResponse</a> and <a>CustomRequestHandling</a>.</p>",
+      "refs": {
+        "CustomHTTPHeaders$member": null
+      }
+    },
+    "CustomHTTPHeaderName": {
+      "base": null,
+      "refs": {
+        "CustomHTTPHeader$Name": "<p>The name of the custom header. </p> <p>For custom request header insertion, when AWS WAF inserts the header into the request, it prefixes this name <code>x-amzn-waf-</code>, to avoid confusion with the headers that are already in the request. For example, for the header name <code>sample</code>, AWS WAF inserts the header <code>x-amzn-waf-sample</code>.</p>"
+      }
+    },
+    "CustomHTTPHeaderValue": {
+      "base": null,
+      "refs": {
+        "CustomHTTPHeader$Value": "<p>The value of the custom header.</p>"
+      }
+    },
+    "CustomHTTPHeaders": {
+      "base": null,
+      "refs": {
+        "CustomRequestHandling$InsertHeaders": "<p>The HTTP headers to insert into the request. Duplicate header names are not allowed. </p> <p>For information about the limits on count and size for custom request and response settings, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">AWS WAF quotas</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>",
+        "CustomResponse$ResponseHeaders": "<p>The HTTP headers to use in the response. Duplicate header names are not allowed. </p> <p>For information about the limits on count and size for custom request and response settings, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">AWS WAF quotas</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>"
+      }
+    },
+    "CustomRequestHandling": {
+      "base": "<p>Custom request handling behavior that inserts custom headers into a web request. You can add custom request handling for the rule actions allow and count. </p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in AWS WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>",
+      "refs": {
+        "AllowAction$CustomRequestHandling": "<p>Defines custom handling for the web request.</p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in AWS WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>",
+        "CountAction$CustomRequestHandling": "<p>Defines custom handling for the web request.</p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in AWS WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>"
+      }
+    },
+    "CustomResponse": {
+      "base": "<p>A custom response to send to the client. You can define a custom response for rule actions and default web ACL actions that are set to <a>BlockAction</a>. </p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in AWS WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>",
+      "refs": {
+        "BlockAction$CustomResponse": "<p>Defines a custom response for the web request.</p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in AWS WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>"
+      }
+    },
+    "CustomResponseBodies": {
+      "base": null,
+      "refs": {
+        "CreateRuleGroupRequest$CustomResponseBodies": "<p>A map of custom response keys and content bodies. When you create a rule with a block action, you can send a custom response to the web request. You define these for the rule group, and then use them in the rules that you define in the rule group. </p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in AWS WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p> <p>For information about the limits on count and size for custom request and response settings, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">AWS WAF quotas</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>",
+        "CreateWebACLRequest$CustomResponseBodies": "<p>A map of custom response keys and content bodies. When you create a rule with a block action, you can send a custom response to the web request. You define these for the web ACL, and then use them in the rules and default actions that you define in the web ACL. </p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in AWS WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p> <p>For information about the limits on count and size for custom request and response settings, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">AWS WAF quotas</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>",
+        "RuleGroup$CustomResponseBodies": "<p>A map of custom response keys and content bodies. When you create a rule with a block action, you can send a custom response to the web request. You define these for the rule group, and then use them in the rules that you define in the rule group. </p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in AWS WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p> <p>For information about the limits on count and size for custom request and response settings, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">AWS WAF quotas</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>",
+        "UpdateRuleGroupRequest$CustomResponseBodies": "<p>A map of custom response keys and content bodies. When you create a rule with a block action, you can send a custom response to the web request. You define these for the rule group, and then use them in the rules that you define in the rule group. </p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in AWS WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p> <p>For information about the limits on count and size for custom request and response settings, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">AWS WAF quotas</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>",
+        "UpdateWebACLRequest$CustomResponseBodies": "<p>A map of custom response keys and content bodies. When you create a rule with a block action, you can send a custom response to the web request. You define these for the web ACL, and then use them in the rules and default actions that you define in the web ACL. </p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in AWS WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p> <p>For information about the limits on count and size for custom request and response settings, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">AWS WAF quotas</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>",
+        "WebACL$CustomResponseBodies": "<p>A map of custom response keys and content bodies. When you create a rule with a block action, you can send a custom response to the web request. You define these for the web ACL, and then use them in the rules and default actions that you define in the web ACL. </p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in AWS WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p> <p>For information about the limits on count and size for custom request and response settings, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">AWS WAF quotas</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>"
+      }
+    },
+    "CustomResponseBody": {
+      "base": "<p>The response body to use in a custom response to a web request. This is referenced by key from <a>CustomResponse</a> <code>CustomResponseBodyKey</code>.</p>",
+      "refs": {
+        "CustomResponseBodies$value": null
+      }
+    },
     "DefaultAction": {
-      "base": "<p>In a <a>WebACL</a>, this is the action that you want AWS WAF to perform when a web request doesn't match any of the rules in the <code>WebACL</code>. The default action must be a terminating action, so count is not allowed.</p>",
+      "base": "<p>In a <a>WebACL</a>, this is the action that you want AWS WAF to perform when a web request doesn't match any of the rules in the <code>WebACL</code>. The default action must be a terminating action, so you can't use count.</p>",
       "refs": {
         "CreateWebACLRequest$DefaultAction": "<p>The action to perform if none of the <code>Rules</code> contained in the <code>WebACL</code> match. </p>",
         "UpdateWebACLRequest$DefaultAction": "<p>The action to perform if none of the <code>Rules</code> contained in the <code>WebACL</code> match. </p>",
@@ -368,6 +447,8 @@
         "CreateRegexPatternSetRequest$Name": "<p>The name of the set. You cannot change the name after you create the set.</p>",
         "CreateRuleGroupRequest$Name": "<p>The name of the rule group. You cannot change the name of a rule group after you create it.</p>",
         "CreateWebACLRequest$Name": "<p>The name of the Web ACL. You cannot change the name of a Web ACL after you create it.</p>",
+        "CustomResponse$CustomResponseBodyKey": "<p>References the response body that you want AWS WAF to return to the web request client. You can define a custom response for a rule action or a default web ACL action that is set to block. To do this, you first define the response body key and value in the <code>CustomResponseBodies</code> setting for the <a>WebACL</a> or <a>RuleGroup</a> where you want to use it. Then, in the rule action or web ACL default action <code>BlockAction</code> setting, you reference the response body using this key. </p>",
+        "CustomResponseBodies$key": null,
         "DeleteIPSetRequest$Name": "<p>The name of the IP set. You cannot change the name of an <code>IPSet</code> after you create it.</p>",
         "DeleteRegexPatternSetRequest$Name": "<p>The name of the set. You cannot change the name after you create the set.</p>",
         "DeleteRuleGroupRequest$Name": "<p>The name of the rule group. You cannot change the name of a rule group after you create it.</p>",
@@ -462,6 +543,31 @@
       "refs": {
         "SingleHeader$Name": "<p>The name of the query header to inspect.</p>",
         "SingleQueryArgument$Name": "<p>The name of the query argument to inspect.</p>"
+      }
+    },
+    "Filter": {
+      "base": "<p>A single logging filter, used in <a>LoggingFilter</a>. </p>",
+      "refs": {
+        "Filters$member": null
+      }
+    },
+    "FilterBehavior": {
+      "base": null,
+      "refs": {
+        "Filter$Behavior": "<p>How to handle logs that satisfy the filter's conditions and requirement. </p>",
+        "LoggingFilter$DefaultBehavior": "<p>Default handling for logs that don't match any of the specified filtering conditions. </p>"
+      }
+    },
+    "FilterRequirement": {
+      "base": null,
+      "refs": {
+        "Filter$Requirement": "<p>Logic to apply to the filtering conditions. You can specify that, in order to satisfy the filter, a log must match all conditions or must match at least one condition.</p>"
+      }
+    },
+    "Filters": {
+      "base": null,
+      "refs": {
+        "LoggingFilter$Filters": "<p>The filters that you want to apply to the logs. </p>"
       }
     },
     "FirewallManagerRuleGroup": {
@@ -608,7 +714,8 @@
     "HTTPHeaders": {
       "base": null,
       "refs": {
-        "HTTPRequest$Headers": "<p>A complex type that contains the name and value for each header in the sampled web request.</p>"
+        "HTTPRequest$Headers": "<p>A complex type that contains the name and value for each header in the sampled web request.</p>",
+        "SampledHTTPRequest$RequestHeadersInserted": "<p>Custom request headers inserted by AWS WAF into the request, according to the custom request configuration for the matching rule action.</p>"
       }
     },
     "HTTPMethod": {
@@ -731,6 +838,69 @@
         "JsonMatchPattern$IncludedPaths": "<p>Match only the specified include paths. See also <code>MatchScope</code> in <a>JsonBody</a>. </p> <p>Provide the include paths using JSON Pointer syntax. For example, <code>\"IncludedPaths\": [\"/dogs/0/name\", \"/dogs/1/name\"]</code>. For information about this syntax, see the Internet Engineering Task Force (IETF) documentation <a href=\"https://tools.ietf.org/html/rfc6901\">JavaScript Object Notation (JSON) Pointer</a>. </p> <p>You must specify either this setting or the <code>All</code> setting, but not both.</p> <note> <p>Don't use this option to include all paths. Instead, use the <code>All</code> setting. </p> </note>"
       }
     },
+    "Label": {
+      "base": "<p>A single label container. This is used as an element of a label array in multiple contexts, for example, in <code>RuleLabels</code> inside a <a>Rule</a> and in <code>Labels</code> inside a <a>SampledHTTPRequest</a>. </p>",
+      "refs": {
+        "Labels$member": null
+      }
+    },
+    "LabelMatchKey": {
+      "base": null,
+      "refs": {
+        "LabelMatchStatement$Key": "<p>The string to match against. The setting you provide for this depends on the match statement's <code>Scope</code> settings: </p> <ul> <li> <p>If the <code>Scope</code> indicates <code>LABEL</code>, then this specification must include the name and can include any number of preceding namespace specifications and prefix up to providing the fully qualified label name. </p> </li> <li> <p>If the <code>Scope</code> indicates <code>NAMESPACE</code>, then this specification can include any number of contiguous namespace strings, and can include the entire label namespace prefix from the rule group or web ACL where the label originates.</p> </li> </ul> <p>Labels are case sensitive and components of a label must be separated by colon, for example <code>NS1:NS2:name</code>.</p>"
+      }
+    },
+    "LabelMatchScope": {
+      "base": null,
+      "refs": {
+        "LabelMatchStatement$Scope": "<p>Specify whether you want to match using the label name or just the namespace. </p>"
+      }
+    },
+    "LabelMatchStatement": {
+      "base": "<p>A rule statement that defines a string match search against labels that have been added to the web request by rules that have already run in the web ACL. </p> <p>The label match statement provides the label or namespace string to search for. The label string can represent a part or all of the fully qualified label name that had been added to the web request. Fully qualified labels have a prefix, optional namespaces, and label name. The prefix identifies the rule group or web ACL context of the rule that added the label. If you do not provide the fully qualified name in your label match string, AWS WAF performs the search for labels that were added in the same context as the label match statement. </p>",
+      "refs": {
+        "Statement$LabelMatchStatement": "<p>A rule statement that defines a string match search against labels that have been added to the web request by rules that have already run in the web ACL. </p> <p>The label match statement provides the label or namespace string to search for. The label string can represent a part or all of the fully qualified label name that had been added to the web request. Fully qualified labels have a prefix, optional namespaces, and label name. The prefix identifies the rule group or web ACL context of the rule that added the label. If you do not provide the fully qualified name in your label match string, AWS WAF performs the search for labels that were added in the same context as the label match statement. </p>"
+      }
+    },
+    "LabelName": {
+      "base": null,
+      "refs": {
+        "DescribeManagedRuleGroupResponse$LabelNamespace": "<p>The label namespace prefix for this rule group. All labels added by rules in this rule group have this prefix. </p> <ul> <li> <p>The syntax for the label namespace prefix for a managed rule group is the following: </p> <p> <code>awswaf:managed:&lt;vendor&gt;:&lt;rule group name&gt;</code>:</p> </li> <li> <p>When a rule with a label matches a web request, AWS WAF adds the fully qualified label to the request. A fully qualified label is made up of the label namespace from the rule group or web ACL where the rule is defined and the label from the rule, separated by a colon: </p> <p> <code>&lt;label namespace&gt;:&lt;label from rule&gt;</code> </p> </li> </ul>",
+        "Label$Name": "<p>The label string. </p>",
+        "LabelNameCondition$LabelName": "<p>The label name that a log record must contain in order to meet the condition. This must be a fully qualified label name. Fully qualified labels have a prefix, optional namespaces, and label name. The prefix identifies the rule group or web ACL context of the rule that added the label. </p>",
+        "LabelSummary$Name": "<p>An individual label specification.</p>",
+        "RuleGroup$LabelNamespace": "<p>The label namespace prefix for this rule group. All labels added by rules in this rule group have this prefix. </p> <ul> <li> <p>The syntax for the label namespace prefix for your rule groups is the following: </p> <p> <code>awswaf:&lt;account ID&gt;:rulegroup:&lt;rule group name&gt;:</code> </p> </li> <li> <p>When a rule with a label matches a web request, AWS WAF adds the fully qualified label to the request. A fully qualified label is made up of the label namespace from the rule group or web ACL where the rule is defined and the label from the rule, separated by a colon: </p> <p> <code>&lt;label namespace&gt;:&lt;label from rule&gt;</code> </p> </li> </ul>",
+        "WebACL$LabelNamespace": "<p>The label namespace prefix for this web ACL. All labels added by rules in this web ACL have this prefix. </p> <ul> <li> <p>The syntax for the label namespace prefix for a web ACL is the following: </p> <p> <code>awswaf:&lt;account ID&gt;:webacl:&lt;web ACL name&gt;:</code> </p> </li> <li> <p>When a rule with a label matches a web request, AWS WAF adds the fully qualified label to the request. A fully qualified label is made up of the label namespace from the rule group or web ACL where the rule is defined and the label from the rule, separated by a colon: </p> <p> <code>&lt;label namespace&gt;:&lt;label from rule&gt;</code> </p> </li> </ul>"
+      }
+    },
+    "LabelNameCondition": {
+      "base": "<p>A single label name condition for a <a>Condition</a> in a logging filter.</p>",
+      "refs": {
+        "Condition$LabelNameCondition": "<p>A single label name condition.</p>"
+      }
+    },
+    "LabelSummaries": {
+      "base": null,
+      "refs": {
+        "DescribeManagedRuleGroupResponse$AvailableLabels": "<p>The labels that one or more rules in this rule group add to matching web ACLs. These labels are defined in the <code>RuleLabels</code> for a <a>Rule</a>.</p>",
+        "DescribeManagedRuleGroupResponse$ConsumedLabels": "<p>The labels that one or more rules in this rule group match against in label match statements. These labels are defined in a <code>LabelMatchStatement</code> specification, in the <a>Statement</a> definition of a rule. </p>",
+        "RuleGroup$AvailableLabels": "<p>The labels that one or more rules in this rule group add to matching web ACLs. These labels are defined in the <code>RuleLabels</code> for a <a>Rule</a>.</p>",
+        "RuleGroup$ConsumedLabels": "<p>The labels that one or more rules in this rule group match against in label match statements. These labels are defined in a <code>LabelMatchStatement</code> specification, in the <a>Statement</a> definition of a rule. </p>"
+      }
+    },
+    "LabelSummary": {
+      "base": "<p>List of labels used by one or more of the rules of a <a>RuleGroup</a>. This summary object is used for the following rule group lists: </p> <ul> <li> <p> <code>AvailableLabels</code> - Labels that rules add to matching requests. These labels are defined in the <code>RuleLabels</code> for a <a>Rule</a>. </p> </li> <li> <p> <code>ConsumedLabels</code> - Labels that rules match against. These labels are defined in a <code>LabelMatchStatement</code> specification, in the <a>Statement</a> definition of a rule. </p> </li> </ul>",
+      "refs": {
+        "LabelSummaries$member": null
+      }
+    },
+    "Labels": {
+      "base": null,
+      "refs": {
+        "Rule$RuleLabels": "<p>Labels to apply to web requests that match the rule match statement. AWS WAF applies fully qualified labels to matching web requests. A fully qualified label is the concatenation of a label namespace and a rule label. The rule's rule group or web ACL defines the label namespace. </p> <p>Rules that run after this rule in the web ACL can match against these labels using a <code>LabelMatchStatement</code>.</p> <p>For each label, provide a case-sensitive string containing optional namespaces and a label name, according to the following guidelines:</p> <ul> <li> <p>Separate each component of the label with a colon. </p> </li> <li> <p>Each namespace or name can have up to 128 characters.</p> </li> <li> <p>You can specify up to 5 namespaces in a label.</p> </li> <li> <p>Don't use the following reserved words in your label specification: <code>aws</code>, <code>waf</code>, <code>managed</code>, <code>rulegroup</code>, <code>webacl</code>, <code>regexpatternset</code>, or <code>ipset</code>.</p> </li> </ul> <p>For example, <code>myLabelName</code> or <code>nameSpace1:nameSpace2:myLabelName</code>. </p>",
+        "SampledHTTPRequest$Labels": "<p>Labels applied to the web request by matching rules. AWS WAF applies fully qualified labels to matching web requests. A fully qualified label is the concatenation of a label namespace and a rule label. The rule's rule group or web ACL defines the label namespace. </p> <p>For example, <code>awswaf:111122223333:myRuleGroup:testRules:testNS1:testNS2:labelNameA</code> or <code>awswaf:managed:aws:managed-rule-set:header:encoding:utf8</code>. </p>"
+      }
+    },
     "ListAvailableManagedRuleGroupsRequest": {
       "base": null,
       "refs": {
@@ -851,7 +1021,7 @@
       }
     },
     "LoggingConfiguration": {
-      "base": "<p>Defines an association between Amazon Kinesis Data Firehose destinations and a web ACL resource, for logging from AWS WAF. As part of the association, you can specify parts of the standard logging fields to keep out of the logs. </p>",
+      "base": "<p>Defines an association between Amazon Kinesis Data Firehose destinations and a web ACL resource, for logging from AWS WAF. As part of the association, you can specify parts of the standard logging fields to keep out of the logs and you can specify filters so that you log only a subset of the logging records. </p>",
       "refs": {
         "GetLoggingConfigurationResponse$LoggingConfiguration": "<p>The <a>LoggingConfiguration</a> for the specified web ACL.</p>",
         "LoggingConfigurations$member": null,
@@ -863,6 +1033,12 @@
       "base": null,
       "refs": {
         "ListLoggingConfigurationsResponse$LoggingConfigurations": "<p/>"
+      }
+    },
+    "LoggingFilter": {
+      "base": "<p>Filtering that specifies which web requests are kept in the logs and which are dropped, defined for a web ACL's <a>LoggingConfiguration</a>. </p> <p>You can filter on the rule action and on the web request labels that were applied by matching rules during web ACL evaluation. </p>",
+      "refs": {
+        "LoggingConfiguration$LoggingFilter": "<p>Filtering that specifies which web requests are kept in the logs and which are dropped. You can filter on the rule action and on the web request labels that were applied by matching rules during web ACL evaluation. </p>"
       }
     },
     "ManagedRuleGroupStatement": {
@@ -917,7 +1093,7 @@
       }
     },
     "NoneAction": {
-      "base": "<p>Specifies that AWS WAF should do nothing. This is generally used to try out a rule without performing any actions. You set the <code>OverrideAction</code> on the <a>Rule</a>. </p> <p>This is used only in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p>",
+      "base": "<p>Specifies that AWS WAF should do nothing. This is generally used to try out a rule without performing any actions. You set the <code>OverrideAction</code> on the <a>Rule</a>. </p> <p>This is used in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p>",
       "refs": {
         "OverrideAction$None": "<p>Don't override the rule action setting.</p>"
       }
@@ -1133,6 +1309,25 @@
         "ListResourcesForWebACLRequest$ResourceType": "<p>Used for web ACLs that are scoped for regional applications. A regional application can be an Application Load Balancer (ALB), an API Gateway REST API, or an AppSync GraphQL API. </p>"
       }
     },
+    "ResponseContent": {
+      "base": null,
+      "refs": {
+        "CustomResponseBody$Content": "<p>The payload of the custom response. </p> <p>You can use JSON escape strings in JSON content. To do this, you must specify JSON content in the <code>ContentType</code> setting. </p> <p>For information about the limits on count and size for custom request and response settings, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">AWS WAF quotas</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>"
+      }
+    },
+    "ResponseContentType": {
+      "base": null,
+      "refs": {
+        "CustomResponseBody$ContentType": "<p>The type of content in the payload that you are defining in the <code>Content</code> string.</p>"
+      }
+    },
+    "ResponseStatusCode": {
+      "base": null,
+      "refs": {
+        "CustomResponse$ResponseCode": "<p>The HTTP status code to return to the client. </p> <p>For a list of status codes that you can use in your custom reqponses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/customizing-the-response-status-codes.html\">Supported status codes for custom response</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF Developer Guide</a>. </p>",
+        "SampledHTTPRequest$ResponseCodeSent": "<p>The response code that was sent for the request.</p>"
+      }
+    },
     "Rule": {
       "base": "<p>A single rule, which you can use in a <a>WebACL</a> or <a>RuleGroup</a> to identify web requests that you want to allow, block, or count. Each rule includes one top-level <a>Statement</a> that AWS WAF uses to identify matching web requests, and parameters that govern how AWS WAF handles them. </p>",
       "refs": {
@@ -1291,6 +1486,7 @@
     "Statement": {
       "base": "<p>The processing guidance for a <a>Rule</a>, used by AWS WAF to determine whether a web request matches the rule. </p>",
       "refs": {
+        "ManagedRuleGroupStatement$ScopeDownStatement": null,
         "NotStatement$Statement": "<p>The statement to negate. You can use any statement that can be nested.</p>",
         "RateBasedStatement$ScopeDownStatement": "<p>An optional nested statement that narrows the scope of the rate-based statement to matching web requests. This can be any nestable statement, and you can nest statements at any level below this scope-down statement.</p>",
         "Rule$Statement": "<p>The AWS WAF processing statement for the rule, for example <a>ByteMatchStatement</a> or <a>SizeConstraintStatement</a>. </p>",
@@ -1538,7 +1734,7 @@
       }
     },
     "WAFSubscriptionNotFoundException": {
-      "base": "<p/>",
+      "base": "<p>You tried to use a managed rule group that's available by subscription, but you aren't subscribed to it yet. </p>",
       "refs": {
       }
     },

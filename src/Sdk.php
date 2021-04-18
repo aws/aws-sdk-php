@@ -308,6 +308,10 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionLightsail(array $args = [])
  * @method \Aws\LocationService\LocationServiceClient createLocationService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLocationService(array $args = [])
+ * @method \Aws\LookoutEquipment\LookoutEquipmentClient createLookoutEquipment(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionLookoutEquipment(array $args = [])
+ * @method \Aws\LookoutMetrics\LookoutMetricsClient createLookoutMetrics(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionLookoutMetrics(array $args = [])
  * @method \Aws\LookoutforVision\LookoutforVisionClient createLookoutforVision(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLookoutforVision(array $args = [])
  * @method \Aws\MQ\MQClient createMQ(array $args = [])
@@ -518,12 +522,14 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionimagebuilder(array $args = [])
  * @method \Aws\kendra\kendraClient createkendra(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionkendra(array $args = [])
+ * @method \Aws\mgn\mgnClient createmgn(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionmgn(array $args = [])
  * @method \Aws\signer\signerClient createsigner(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionsigner(array $args = [])
  */
 class Sdk
 {
-    const VERSION = '3.175.2';
+    const VERSION = '3.178.5';
 
     /** @var array Arguments for creating clients */
     private $args;
