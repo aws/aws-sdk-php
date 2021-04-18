@@ -549,6 +549,10 @@ class S3EndpointMiddlewareTest extends TestCase
         $endpointUrl,
         $expectedEndpoint)
     {
+        $isMvpRegion = getenv('AIRGAPPED_REGION') == 'LCK';
+        if ($isMvpRegion) {
+            $this->markTestSkipped();
+        }
         //additional flags is not used yet, will be in the future if dualstack support is added
         $clientConfig = [
             'region' => $clientRegion,

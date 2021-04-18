@@ -1,8 +1,143 @@
 # CHANGELOG
 
-## 3.175.4 - 2021-03-25
+## 3.178.5 - 2021-04-15
 
-* Performed the migration to static API to in order to use the future versions Guzzle\Psr7 using the [migration guide](https://github.com/guzzle/psr7#upgrading-from-function-api).
+* `Aws\DatabaseMigrationService` - AWS DMS added support of TLS for Kafka endpoint. Added Describe endpoint setting API for DMS endpoints.
+* `Aws\STS` - STS now supports assume role with Web Identity using JWT token length upto 20000 characters
+
+## 3.178.4 - 2021-04-14
+
+* `Aws\CodeStarconnections` - This release adds tagging support for CodeStar Connections Host resources
+* `Aws\ConfigService` - Add exception for DeleteRemediationConfiguration and DescribeRemediationExecutionStatus
+* `Aws\MediaConnect` - For flows that use Listener protocols, you can now easily locate an output's outbound IP address for a private internet. Additionally, MediaConnect now supports the Waiters feature that makes it easier to poll for the status of a flow until it reaches its desired state.
+* `Aws\Route53` - Documentation updates for route53
+
+## 3.178.3 - 2021-04-13
+
+* `Aws\ComprehendMedical` - The InferICD10CM API now returns TIME_EXPRESSION entities that refer to medical conditions.
+* `Aws\Lightsail` - Documentation updates for Amazon Lightsail.
+* `Aws\RDS` - Clarify that enabling or disabling automated backups causes a brief downtime, not an outage.
+* `Aws\Redshift` - Added support to enable AQUA in Amazon Redshift clusters.
+* `Aws\STS` - This release adds the SourceIdentity parameter that can be set when assuming a role.
+
+## 3.178.2 - 2021-04-12
+
+* `Aws\CodeBuild` - AWS CodeBuild now allows you to set the access permissions for build artifacts, project artifacts, and log files that are uploaded to an Amazon S3 bucket that is owned by another account.
+* `Aws\FSx` - Support for cross-region and cross-account backup copies
+
+## 3.178.1 - 2021-04-09
+
+* `Aws\EC2` - Add paginator support to DescribeStoreImageTasks and update documentation.
+* `Aws\Redshift` - Add support for case sensitive table level restore
+* `Aws\Shield` - CreateProtection now throws InvalidParameterException instead of InternalErrorException when system tags (tag with keys prefixed with "aws:") are passed in.
+
+## 3.178.0 - 2021-04-08
+
+* `Aws\AppStream` - This release provides support for image updates
+* `Aws\AutoScaling` - Amazon EC2 Auto Scaling announces Warm Pools that help applications to scale out faster by pre-initializing EC2 instances and save money by requiring fewer continuously running instances
+* `Aws\CustomerProfiles` - Documentation updates for Put-Integration API
+* `Aws\KinesisVideoArchivedMedia` - Documentation updates for archived.kinesisvideo
+* `Aws\LookoutEquipment` - This release introduces support for Amazon Lookout for Equipment.
+* `Aws\RAM` - Documentation updates for AWS RAM resource sharing
+* `Aws\RoboMaker` - This release allows RoboMaker customers to specify custom tools to run with their simulation job
+
+## 3.177.0 - 2021-04-07
+
+* `Aws\AccessAnalyzer` - IAM Access Analyzer now analyzes your CloudTrail events to identify actions and services that have been used by an IAM entity (user or role) and generates an IAM policy that is based on that activity.
+* `Aws\ElastiCache` - This release adds tagging support for all AWS ElastiCache resources except Global Replication Groups.
+* `Aws\IVS` - This release adds support for the Auto-Record to S3 feature. Amazon IVS now enables you to save your live video to Amazon S3.
+* `Aws\StorageGateway` - File Gateway APIs now support FSx for Windows as a cloud storage.
+* `Aws\mgn` - Add new service - Application Migration Service.
+
+## 3.176.9 - 2021-04-06
+
+* `Aws\Cloud9` - Documentation updates for Cloud9
+* `Aws\EC2` - This release adds support for storing EBS-backed AMIs in S3 and restoring them from S3 to enable cross-partition copying of AMIs
+* `Aws\MediaLive` - MediaLive VPC outputs update to include Availability Zones, Security groups, Elastic Network Interfaces, and Subnet Ids in channel response
+* `Aws\SSM` - Supports removing a label or labels from a parameter, enables ScheduledEndTime and ChangeDetails for StartChangeRequestExecution API, supports critical/security/other noncompliant count for patch API.
+
+## 3.176.8 - 2021-04-05
+
+* `Aws\Appflow` - Added destination properties for Zendesk.
+* `Aws\AuditManager` - AWS Audit Manager has updated the GetAssessment API operation to include a new response field called userRole. The userRole field indicates the role information and IAM ARN of the API caller.
+* `Aws\MediaLive` - MediaLive now support HTML5 Motion Graphics overlay
+
+## 3.176.7 - 2021-04-02
+
+* `Aws\MediaPackage` - SPEKE v2 is an upgrade to the existing SPEKE API to support multiple encryption keys, based on an encryption contract selected by the customer.
+* `Aws\imagebuilder` - This release adds support for Block Device Mappings for container image builds, and adds distribution configuration support for EC2 launch templates in AMI builds.
+
+## 3.176.6 - 2021-04-01
+
+* `Aws\EC2` - VPC Flow Logs Service adds a new API, GetFlowLogsIntegrationTemplate, which generates CloudFormation templates for Athena. For more info, see https://docs.aws.amazon.com/console/vpc/flow-logs/athena
+* `Aws\FMS` - Added Firewall Manager policy support for AWS Route 53 Resolver DNS Firewall.
+* `Aws\LexModelBuildingService` - Lex now supports the ja-JP locale
+* `Aws\LexRuntimeService` - Amazon Lex now supports base64-encoded message and input transcript fields.
+* `Aws\Lightsail` - - This release adds support for state detail for Amazon Lightsail container services.
+* `Aws\MediaConvert` - MediaConvert now supports HLS ingest, sidecar WebVTT ingest, Teletext color & style passthrough to TTML subtitles, TTML to WebVTT subtitle conversion with style, & DRC profiles in AC3 audio.
+* `Aws\Route53Resolver` - Route 53 Resolver DNS Firewall is a firewall service that allows you to filter and regulate outbound DNS traffic for your VPCs.
+* `Aws\WAFV2` - Added support for ScopeDownStatement for ManagedRuleGroups, Labels, LabelMatchStatement, and LoggingFilter. For more information on these features, see the AWS WAF Developer Guide.
+* `Aws\kendra` - AWS Kendra's ServiceNow data source now supports OAuth 2.0 authentication and knowledge article filtering via a ServiceNow query.
+
+## 3.176.5 - 2021-03-31
+
+* `Aws\Batch` - AWS Batch adds support for Amazon EFS File System
+* `Aws\Cloud9` - Add ImageId input parameter to CreateEnvironmentEC2 endpoint. New parameter enables creation of environments with different AMIs.
+* `Aws\CloudFormation` - 1. Added a new parameter "RegionConcurrencyType" in OperationPreferences. 2. Changed the name of "AccountUrl" to "AccountsUrl" in "DeploymentTargets" parameter.
+* `Aws\CloudHSM` - Minor documentation and link updates.
+* `Aws\CognitoSync` - Minor documentation updates and link updates.
+* `Aws\Comprehend` - Support for customer managed KMS encryption of Comprehend custom models
+* `Aws\DataPipeline` - Minor documentation updates and link updates.
+* `Aws\Detective` - Added the ability to assign tag values to Detective behavior graphs. Tag values can be used for attribute-based access control, and for cost allocation for billing.
+* `Aws\DirectConnect` - This release adds MACsec support to AWS Direct Connect
+* `Aws\IoT` - Added ability to prefix search on attribute value for ListThings API.
+* `Aws\IoTWireless` - Add Sidewalk support to APIs: GetWirelessDevice, ListWirelessDevices, GetWirelessDeviceStatistics. Add Gateway connection status in GetWirelessGatewayStatistics API.
+* `Aws\MachineLearning` - Minor documentation updates and link updates.
+* `Aws\Pricing` - Minor documentation and link updates.
+* `Aws\Redshift` - Enable customers to share access to their Redshift clusters from other VPCs (including VPCs from other accounts).
+* `Aws\TranscribeService` - Amazon Transcribe now supports creating custom language models in the following languages: British English (en-GB), Australian English (en-AU), Indian Hindi (hi-IN), and US Spanish (es-US).
+* `Aws\WorkMail` - This release adds support for mobile device access rules management in Amazon WorkMail.
+
+## 3.176.4 - 2021-03-30
+
+* `Aws\CloudWatch` - SDK update for new Metric Streams feature
+* `Aws\ConfigService` - Adding new APIs to support ConformancePack Compliance CI in Aggregators
+* `Aws\EC2` - ReplaceRootVolume feature enables customers to replace the EBS root volume of a running instance to a previously known state. Add support to grant account-level access to the EC2 serial console
+* `Aws\EC2InstanceConnect` - Adding support to push SSH keys to the EC2 serial console in order to allow an SSH connection to your Amazon EC2 instance's serial port.
+* `Aws\FraudDetector` - This release adds support for Batch Predictions in Amazon Fraud Detector.
+* `Aws\GlueDataBrew` - This SDK release adds two new dataset features: 1) support for specifying a database connection as a dataset input 2) support for dynamic datasets that accept configurable parameters in S3 path.
+* `Aws\Pinpoint` - Added support for journey pause/resume, journey updatable import segment and journey quiet time wait.
+* `Aws\SageMaker` - Amazon SageMaker Autopilot now supports 1) feature importance reports for AutoML jobs and 2) PartialFailures for AutoML jobs
+
+## 3.176.3 - 2021-03-29
+
+* `Aws\DocDB` - This release adds support for Event Subscriptions to DocumentDB.
+* `Aws\Glue` - Allow Dots in Registry and Schema Names for CreateRegistry, CreateSchema; Fixed issue when duplicate keys are present and not returned as part of QuerySchemaVersionMetadata.
+* `Aws\IAM` - AWS Identity and Access Management GetAccessKeyLastUsed API will throw a custom error if customer public key is not found for access keys.
+* `Aws\LocationService` - Amazon Location added support for specifying pricing plan information on resources in alignment with our cost model.
+* `Aws\WAFV2` - Added custom request handling and custom response support in rule actions and default action; Added the option to inspect the web request body as parsed and filtered JSON.
+
+## 3.176.2 - 2021-03-26
+
+* `Aws\CloudWatchEvents` - Add support for SageMaker Model Builder Pipelines Targets to EventBridge
+* `Aws\CustomerProfiles` - This release adds an optional parameter named FlowDefinition in PutIntegrationRequest.
+* `Aws\EventBridge` - Add support for SageMaker Model Builder Pipelines Targets to EventBridge
+* `Aws\IoTWireless` - Support tag-on-create for WirelessDevice.
+* `Aws\TranscribeService` - Amazon Transcribe now supports tagging words that match your vocabulary filter for batch transcription.
+
+## 3.176.1 - 2021-03-26
+
+* `Aws\LookoutMetrics` - Allowing uppercase alphabets for RDS and Redshift database names.
+* `Aws\LookoutMetrics` - Fixed bug where incorrect Content-Type header was being sent to the LookoutMetrics service
+
+## 3.176.0 - 2021-03-25
+
+* `Aws\AlexaForBusiness` - Added support for enabling and disabling data retention in the CreateProfile and UpdateProfile APIs and retrieving the state of data retention for a profile in the GetProfile API.
+* `Aws\LookoutMetrics` - Amazon Lookout for Metrics is now generally available. You can use Lookout for Metrics to monitor your data for anomalies. For more information, see the Amazon Lookout for Metrics Developer Guide.
+* `Aws\MediaLive` - EML now supports handling HDR10 and HLG 2020 color space from a Link input.
+* `Aws\Rekognition` - "This release introduces AWS tagging support for Amazon Rekognition collections, stream processors, and Custom Label models."
+* `Aws\SQS` - Documentation updates for Amazon SQS
+* `Aws\SageMaker` - This feature allows customer to specify the environment variables in their CreateTrainingJob requests.
 
 ## 3.175.3 - 2021-03-24
 
@@ -13,7 +148,6 @@
 * `Aws\S3Control` - Documentation updates for s3-control
 * `Aws\SES` - Adds support for generating V4 SMTP credentials for SES
 * `Aws\SSM` - This release allows SSM Explorer customers to enable OpsData sources across their organization when creating a resource data sync.
-
 
 ## 3.175.2 - 2021-03-23
 

@@ -3166,7 +3166,8 @@
         "CreationTime":{"shape":"Timestamp"},
         "EndTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
-        "FailureReason":{"shape":"AutoMLFailureReason"}
+        "FailureReason":{"shape":"AutoMLFailureReason"},
+        "CandidateProperties":{"shape":"CandidateProperties"}
       }
     },
     "AutoMLCandidateStep":{
@@ -3292,7 +3293,10 @@
         "Stopped",
         "MaxAutoMLJobRuntimeReached",
         "Stopping",
-        "CandidateDefinitionsGenerated"
+        "CandidateDefinitionsGenerated",
+        "GeneratingExplainabilityReport",
+        "Completed",
+        "ExplainabilityError"
       ]
     },
     "AutoMLJobStatus":{
@@ -3327,7 +3331,8 @@
         "CreationTime":{"shape":"Timestamp"},
         "EndTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
-        "FailureReason":{"shape":"AutoMLFailureReason"}
+        "FailureReason":{"shape":"AutoMLFailureReason"},
+        "PartialFailureReasons":{"shape":"AutoMLPartialFailureReasons"}
       }
     },
     "AutoMLMaxResults":{
@@ -3357,6 +3362,18 @@
         "KmsKeyId":{"shape":"KmsKeyId"},
         "S3OutputPath":{"shape":"S3Uri"}
       }
+    },
+    "AutoMLPartialFailureReason":{
+      "type":"structure",
+      "members":{
+        "PartialFailureMessage":{"shape":"AutoMLFailureReason"}
+      }
+    },
+    "AutoMLPartialFailureReasons":{
+      "type":"list",
+      "member":{"shape":"AutoMLPartialFailureReason"},
+      "max":5,
+      "min":1
     },
     "AutoMLS3DataSource":{
       "type":"structure",
@@ -3462,6 +3479,13 @@
         "SourcePipelineExecutionArn":{"shape":"PipelineExecutionArn"}
       }
     },
+    "CandidateArtifactLocations":{
+      "type":"structure",
+      "required":["Explainability"],
+      "members":{
+        "Explainability":{"shape":"ExplainabilityLocation"}
+      }
+    },
     "CandidateDefinitionNotebookLocation":{
       "type":"string",
       "min":1
@@ -3470,6 +3494,12 @@
       "type":"string",
       "max":64,
       "min":1
+    },
+    "CandidateProperties":{
+      "type":"structure",
+      "members":{
+        "CandidateArtifactLocations":{"shape":"CandidateArtifactLocations"}
+      }
     },
     "CandidateSortBy":{
       "type":"string",
@@ -4918,7 +4948,8 @@
         "TensorBoardOutputConfig":{"shape":"TensorBoardOutputConfig"},
         "ExperimentConfig":{"shape":"ExperimentConfig"},
         "ProfilerConfig":{"shape":"ProfilerConfig"},
-        "ProfilerRuleConfigurations":{"shape":"ProfilerRuleConfigurations"}
+        "ProfilerRuleConfigurations":{"shape":"ProfilerRuleConfigurations"},
+        "Environment":{"shape":"TrainingEnvironmentMap"}
       }
     },
     "CreateTrainingJobResponse":{
@@ -5841,6 +5872,7 @@
         "EndTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "FailureReason":{"shape":"AutoMLFailureReason"},
+        "PartialFailureReasons":{"shape":"AutoMLPartialFailureReasons"},
         "BestCandidate":{"shape":"AutoMLCandidate"},
         "AutoMLJobStatus":{"shape":"AutoMLJobStatus"},
         "AutoMLJobSecondaryStatus":{"shape":"AutoMLJobSecondaryStatus"},
@@ -6846,7 +6878,8 @@
         "ProfilerConfig":{"shape":"ProfilerConfig"},
         "ProfilerRuleConfigurations":{"shape":"ProfilerRuleConfigurations"},
         "ProfilerRuleEvaluationStatuses":{"shape":"ProfilerRuleEvaluationStatuses"},
-        "ProfilingStatus":{"shape":"ProfilingStatus"}
+        "ProfilingStatus":{"shape":"ProfilingStatus"},
+        "Environment":{"shape":"TrainingEnvironmentMap"}
       }
     },
     "DescribeTransformJobRequest":{
@@ -7609,6 +7642,10 @@
       "members":{
         "Report":{"shape":"MetricsSource"}
       }
+    },
+    "ExplainabilityLocation":{
+      "type":"string",
+      "min":1
     },
     "FailureReason":{
       "type":"string",
@@ -13465,6 +13502,22 @@
         "CANARY"
       ]
     },
+    "TrainingEnvironmentKey":{
+      "type":"string",
+      "max":512,
+      "pattern":"[a-zA-Z_][a-zA-Z0-9_]*"
+    },
+    "TrainingEnvironmentMap":{
+      "type":"map",
+      "key":{"shape":"TrainingEnvironmentKey"},
+      "value":{"shape":"TrainingEnvironmentValue"},
+      "max":48
+    },
+    "TrainingEnvironmentValue":{
+      "type":"string",
+      "max":512,
+      "pattern":"[\\S\\s]*"
+    },
     "TrainingInputMode":{
       "type":"string",
       "enum":[
@@ -13561,6 +13614,7 @@
         "DebugRuleConfigurations":{"shape":"DebugRuleConfigurations"},
         "TensorBoardOutputConfig":{"shape":"TensorBoardOutputConfig"},
         "DebugRuleEvaluationStatuses":{"shape":"DebugRuleEvaluationStatuses"},
+        "Environment":{"shape":"TrainingEnvironmentMap"},
         "Tags":{"shape":"TagList"}
       }
     },

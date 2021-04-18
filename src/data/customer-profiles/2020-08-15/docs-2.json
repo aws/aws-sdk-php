@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "service": "<fullname>Amazon Connect Customer Profiles</fullname> <p>Welcome to the Amazon Connect Customer Profiles API Reference. This guide provides information about the Amazon Connect Customer Profiles API, including supported operations, data types, parameters, and schemas.</p> <p>Amazon Connect Customer Profiles is a unified customer profile for your contact center that has pre-built connectors powered by AppFlow that make it easy to combine customer information from third party applications, such as Salesforce (CRM), ServiceNow (ITSM), and your enterprise resource planning (ERP), with contact history from your Amazon Connect contact center.</p> <p>If you're new to Amazon Connect, you might find it helpful to also review the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/what-is-amazon-connect.html\">Amazon Connect Administrator Guide</a>.</p>",
+  "service": "<fullname>Amazon Connect Customer Profiles</fullname> <p>Welcome to the Amazon Connect Customer Profiles API Reference. This guide provides information about the Amazon Connect Customer Profiles API, including supported operations, data types, parameters, and schemas.</p> <p>Amazon Connect Customer Profiles is a unified customer profile for your contact center that has pre-built connectors powered by AppFlow that make it easy to combine customer information from third party applications, such as Salesforce (CRM), ServiceNow (ITSM), and your enterprise resource planning (ERP), with contact history from your Amazon Connect contact center.</p> <p>If you're new to Amazon Connect , you might find it helpful to also review the <a href=\"https://docs.aws.amazon.com/connect/latest/adminguide/what-is-amazon-connect.html\">Amazon Connect Administrator Guide</a>.</p>",
   "operations": {
     "AddProfileKey": "<p>Associates a new key value with a specific profile, such as a Contact Trace Record (CTR) ContactId.</p> <p>A profile object can have a single unique key and any number of additional keys that can be used to identify the profile that it belongs to.</p>",
     "CreateDomain": "<p>Creates a domain, which is a container for all customer data, such as customer profile attributes, object types, profile keys, and encryption keys. You can create multiple domains, and each domain can have multiple third-party integrations.</p> <p>Each Amazon Connect instance can be associated with only one domain. Multiple Amazon Connect instances can be associated with one domain.</p>",
@@ -122,6 +122,30 @@
       "refs": {
       }
     },
+    "BucketName": {
+      "base": null,
+      "refs": {
+        "S3SourceProperties$BucketName": "<p>The Amazon S3 bucket name where the source files are stored.</p>"
+      }
+    },
+    "BucketPrefix": {
+      "base": null,
+      "refs": {
+        "S3SourceProperties$BucketPrefix": "<p>The object key for the Amazon S3 bucket in which the source files are stored.</p>"
+      }
+    },
+    "ConnectorOperator": {
+      "base": "<p>The operation to be performed on the provided source fields.</p>",
+      "refs": {
+        "Task$ConnectorOperator": "<p>The operation to be performed on the provided source fields.</p>"
+      }
+    },
+    "ConnectorProfileName": {
+      "base": null,
+      "refs": {
+        "SourceFlowConfig$ConnectorProfileName": "<p>The name of the AppFlow connector profile. This name must be unique for each connector profile in the AWS account.</p>"
+      }
+    },
     "CreateDomainRequest": {
       "base": null,
       "refs": {
@@ -140,6 +164,26 @@
     "CreateProfileResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "DataPullMode": {
+      "base": null,
+      "refs": {
+        "ScheduledTriggerProperties$DataPullMode": "<p>Specifies whether a scheduled flow has an incremental data transfer or a complete data transfer for each flow run.</p>"
+      }
+    },
+    "Date": {
+      "base": null,
+      "refs": {
+        "ScheduledTriggerProperties$ScheduleStartTime": "<p>Specifies the scheduled start time for a scheduled-trigger flow.</p>",
+        "ScheduledTriggerProperties$ScheduleEndTime": "<p>Specifies the scheduled end time for a scheduled-trigger flow.</p>",
+        "ScheduledTriggerProperties$FirstExecutionFrom": "<p>Specifies the date range for the records to import from the connector in the first flow run.</p>"
+      }
+    },
+    "DatetimeTypeFieldName": {
+      "base": null,
+      "refs": {
+        "IncrementalPullConfig$DatetimeTypeFieldName": "<p>A field that specifies the date time or timestamp field as the criteria to use when importing incremental records from the source.</p>"
       }
     },
     "DeleteDomainRequest": {
@@ -202,6 +246,12 @@
       "refs": {
       }
     },
+    "DestinationField": {
+      "base": null,
+      "refs": {
+        "Task$DestinationField": "<p>A field in a destination connector, or a field value against which Amazon AppFlow validates a source field.</p>"
+      }
+    },
     "DomainList": {
       "base": null,
       "refs": {
@@ -233,6 +283,24 @@
       "base": null,
       "refs": {
         "ObjectTypeKey$FieldNames": "<p>The reference for the key name of the fields map.</p>"
+      }
+    },
+    "FlowDefinition": {
+      "base": "<p>The configurations that control how Customer Profiles retrieves data from the source, Amazon AppFlow. Customer Profiles uses this information to create an AppFlow flow on behalf of customers.</p>",
+      "refs": {
+        "PutIntegrationRequest$FlowDefinition": "<p>The configuration that controls how Customer Profiles retrieves data from the source.</p>"
+      }
+    },
+    "FlowDescription": {
+      "base": null,
+      "refs": {
+        "FlowDefinition$Description": "<p>A description of the flow you want to create.</p>"
+      }
+    },
+    "FlowName": {
+      "base": null,
+      "refs": {
+        "FlowDefinition$FlowName": "<p>The specified name of the flow. Use underscores (_) or hyphens (-) only. Spaces are not allowed.</p>"
       }
     },
     "Gender": {
@@ -283,6 +351,12 @@
       "refs": {
       }
     },
+    "IncrementalPullConfig": {
+      "base": "<p>Specifies the configuration used when importing incremental records from the source.</p>",
+      "refs": {
+        "SourceFlowConfig$IncrementalPullConfig": "<p>Defines the configuration for a scheduled incremental data pull. If a valid configuration is provided, the fields specified in the configuration are used when querying for the incremental data pull.</p>"
+      }
+    },
     "IntegrationList": {
       "base": null,
       "refs": {
@@ -302,6 +376,12 @@
         "GetProfileObjectTypeTemplateResponse$Keys": "<p>A list of unique keys that can be used to map data to the profile.</p>",
         "PutProfileObjectTypeRequest$Keys": "<p>A list of unique keys that can be used to map data to the profile.</p>",
         "PutProfileObjectTypeResponse$Keys": "<p>A list of unique keys that can be used to map data to the profile.</p>"
+      }
+    },
+    "KmsArn": {
+      "base": null,
+      "refs": {
+        "FlowDefinition$KmsArn": "<p>The Amazon Resource Name of the AWS Key Management Service (KMS) key you provide for encryption.</p>"
       }
     },
     "ListAccountIntegrationsRequest": {
@@ -404,6 +484,27 @@
       "refs": {
       }
     },
+    "MarketoConnectorOperator": {
+      "base": null,
+      "refs": {
+        "ConnectorOperator$Marketo": "<p>The operation to be performed on the provided Marketo source fields.</p>"
+      }
+    },
+    "MarketoSourceProperties": {
+      "base": "<p>The properties that are applied when Marketo is being used as a source.</p>",
+      "refs": {
+        "SourceConnectorProperties$Marketo": "<p>The properties that are applied when Marketo is being used as a source.</p>"
+      }
+    },
+    "Object": {
+      "base": null,
+      "refs": {
+        "MarketoSourceProperties$Object": "<p>The object specified in the Marketo flow source.</p>",
+        "SalesforceSourceProperties$Object": "<p>The object specified in the Salesforce flow source.</p>",
+        "ServiceNowSourceProperties$Object": "<p>The object specified in the ServiceNow flow source.</p>",
+        "ZendeskSourceProperties$Object": "<p>The object specified in the Zendesk flow source.</p>"
+      }
+    },
     "ObjectTypeField": {
       "base": "<p>Represents a field in a ProfileObjectType.</p>",
       "refs": {
@@ -420,6 +521,12 @@
       "base": null,
       "refs": {
         "KeyMap$value": null
+      }
+    },
+    "OperatorPropertiesKeys": {
+      "base": null,
+      "refs": {
+        "TaskPropertiesMap$key": null
       }
     },
     "PartyType": {
@@ -460,6 +567,12 @@
         "ListProfileObjectTypeTemplatesResponse$Items": "<p>The list of ListProfileObjectType template instances.</p>"
       }
     },
+    "Property": {
+      "base": null,
+      "refs": {
+        "TaskPropertiesMap$value": null
+      }
+    },
     "PutIntegrationRequest": {
       "base": null,
       "refs": {
@@ -495,6 +608,48 @@
       "refs": {
       }
     },
+    "S3ConnectorOperator": {
+      "base": null,
+      "refs": {
+        "ConnectorOperator$S3": "<p>The operation to be performed on the provided Amazon S3 source fields.</p>"
+      }
+    },
+    "S3SourceProperties": {
+      "base": "<p>The properties that are applied when Amazon S3 is being used as the flow source.</p>",
+      "refs": {
+        "SourceConnectorProperties$S3": "<p>The properties that are applied when Amazon S3 is being used as the flow source.</p>"
+      }
+    },
+    "SalesforceConnectorOperator": {
+      "base": null,
+      "refs": {
+        "ConnectorOperator$Salesforce": "<p>The operation to be performed on the provided Salesforce source fields.</p>"
+      }
+    },
+    "SalesforceSourceProperties": {
+      "base": "<p>The properties that are applied when Salesforce is being used as a source.</p>",
+      "refs": {
+        "SourceConnectorProperties$Salesforce": "<p>The properties that are applied when Salesforce is being used as a source.</p>"
+      }
+    },
+    "ScheduleExpression": {
+      "base": null,
+      "refs": {
+        "ScheduledTriggerProperties$ScheduleExpression": "<p>The scheduling expression that determines the rate at which the schedule will run, for example rate (5 minutes).</p>"
+      }
+    },
+    "ScheduleOffset": {
+      "base": null,
+      "refs": {
+        "ScheduledTriggerProperties$ScheduleOffset": "<p>Specifies the optional offset that is added to the time interval for a schedule-triggered flow.</p>"
+      }
+    },
+    "ScheduledTriggerProperties": {
+      "base": "<p>Specifies the configuration details of a scheduled-trigger flow that you define. Currently, these settings only apply to the scheduled-trigger type.</p>",
+      "refs": {
+        "TriggerProperties$Scheduled": "<p>Specifies the configuration details of a schedule-triggered flow that you define.</p>"
+      }
+    },
     "SearchProfilesRequest": {
       "base": null,
       "refs": {
@@ -503,6 +658,42 @@
     "SearchProfilesResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "ServiceNowConnectorOperator": {
+      "base": null,
+      "refs": {
+        "ConnectorOperator$ServiceNow": "<p>The operation to be performed on the provided ServiceNow source fields.</p>"
+      }
+    },
+    "ServiceNowSourceProperties": {
+      "base": "<p>The properties that are applied when ServiceNow is being used as a source.</p>",
+      "refs": {
+        "SourceConnectorProperties$ServiceNow": "<p>The properties that are applied when ServiceNow is being used as a source.</p>"
+      }
+    },
+    "SourceConnectorProperties": {
+      "base": "<p>Specifies the information that is required to query a particular Amazon AppFlow connector. Customer Profiles supports Salesforce, Zendesk, Marketo, ServiceNow and Amazon S3.</p>",
+      "refs": {
+        "SourceFlowConfig$SourceConnectorProperties": "<p>Specifies the information that is required to query a particular source connector.</p>"
+      }
+    },
+    "SourceConnectorType": {
+      "base": null,
+      "refs": {
+        "SourceFlowConfig$ConnectorType": "<p>The type of connector, such as Salesforce, Marketo, and so on.</p>"
+      }
+    },
+    "SourceFields": {
+      "base": null,
+      "refs": {
+        "Task$SourceFields": "<p>The source fields to which a particular task is applied.</p>"
+      }
+    },
+    "SourceFlowConfig": {
+      "base": "<p>Contains information about the configuration of the source connector used in the flow.</p>",
+      "refs": {
+        "FlowDefinition$SourceFlowConfig": "<p>The configuration that controls how Customer Profiles retrieves data from the source.</p>"
       }
     },
     "StandardIdentifier": {
@@ -575,9 +766,57 @@
         "TagMap$value": null
       }
     },
+    "Task": {
+      "base": "<p>A class for modeling different type of tasks. Task implementation varies based on the TaskType.</p>",
+      "refs": {
+        "Tasks$member": null
+      }
+    },
+    "TaskPropertiesMap": {
+      "base": null,
+      "refs": {
+        "Task$TaskProperties": "<p>A map used to store task-related information. The service looks for particular information based on the TaskType.</p>"
+      }
+    },
+    "TaskType": {
+      "base": null,
+      "refs": {
+        "Task$TaskType": "<p>Specifies the particular task implementation that Amazon AppFlow performs.</p>"
+      }
+    },
+    "Tasks": {
+      "base": null,
+      "refs": {
+        "FlowDefinition$Tasks": "<p>A list of tasks that Customer Profiles performs while transferring the data in the flow run.</p>"
+      }
+    },
     "ThrottlingException": {
       "base": "<p>You exceeded the maximum number of requests.</p>",
       "refs": {
+      }
+    },
+    "Timezone": {
+      "base": null,
+      "refs": {
+        "ScheduledTriggerProperties$Timezone": "<p>Specifies the time zone used when referring to the date and time of a scheduled-triggered flow, such as America/New_York.</p>"
+      }
+    },
+    "TriggerConfig": {
+      "base": "<p>The trigger settings that determine how and when Amazon AppFlow runs the specified flow.</p>",
+      "refs": {
+        "FlowDefinition$TriggerConfig": "<p>The trigger settings that determine how and when the flow runs.</p>"
+      }
+    },
+    "TriggerProperties": {
+      "base": "<p>Specifies the configuration details that control the trigger for a flow. Currently, these settings only apply to the Scheduled trigger type.</p>",
+      "refs": {
+        "TriggerConfig$TriggerProperties": "<p>Specifies the configuration details of a schedule-triggered flow that you define. Currently, these settings only apply to the Scheduled trigger type.</p>"
+      }
+    },
+    "TriggerType": {
+      "base": null,
+      "refs": {
+        "TriggerConfig$TriggerType": "<p>Specifies the type of flow trigger. It can be OnDemand, Scheduled, or Event.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -625,13 +864,27 @@
       "refs": {
       }
     },
+    "ZendeskConnectorOperator": {
+      "base": null,
+      "refs": {
+        "ConnectorOperator$Zendesk": "<p>The operation to be performed on the provided Zendesk source fields.</p>"
+      }
+    },
+    "ZendeskSourceProperties": {
+      "base": "<p>The properties that are applied when using Zendesk as a flow source.</p>",
+      "refs": {
+        "SourceConnectorProperties$Zendesk": "<p>The properties that are applied when using Zendesk as a flow source.</p>"
+      }
+    },
     "boolean": {
       "base": null,
       "refs": {
         "GetProfileObjectTypeResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
         "GetProfileObjectTypeTemplateResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
         "PutProfileObjectTypeRequest$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
-        "PutProfileObjectTypeResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>"
+        "PutProfileObjectTypeResponse$AllowProfileCreation": "<p>Indicates whether a profile should be created when data is received if one doesn’t exist for an object of this type. The default is <code>FALSE</code>. If the AllowProfileCreation flag is set to <code>FALSE</code>, then the service tries to fetch a standard profile and associate this object with the profile. If it is set to <code>TRUE</code>, and if no match is found, then the service creates a new standard profile.</p>",
+        "SalesforceSourceProperties$EnableDynamicFieldUpdate": "<p>The flag that enables dynamic fetching of new (recently added) fields in the Salesforce objects while running a flow.</p>",
+        "SalesforceSourceProperties$IncludeDeletedRecords": "<p>Indicates whether Amazon AppFlow includes deleted files in the flow run.</p>"
       }
     },
     "encryptionKey": {
@@ -811,6 +1064,12 @@
         "PutProfileObjectResponse$ProfileObjectUniqueKey": "<p>The unique identifier of the profile object generated by the service.</p>",
         "UpdateAttributes$key": null,
         "requestValueList$member": null
+      }
+    },
+    "stringTo2048": {
+      "base": null,
+      "refs": {
+        "SourceFields$member": null
       }
     },
     "stringifiedJson": {

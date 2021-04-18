@@ -3409,32 +3409,32 @@
       ]
     },
     "CaptionRectangle": {
-       "type": "structure",
-       "members": {
-         "Height": {
-           "shape": "__doubleMin0Max100",
-           "locationName": "height"
-         },
-         "LeftOffset": {
-           "shape": "__doubleMin0Max100",
-           "locationName": "leftOffset"
-         },
-         "TopOffset": {
-           "shape": "__doubleMin0Max100",
-           "locationName": "topOffset"
-         },
-         "Width": {
-           "shape": "__doubleMin0Max100",
-           "locationName": "width"
-         }
-       },
-       "required": [
-         "TopOffset",
-         "Height",
-         "Width",
-         "LeftOffset"
+      "type": "structure",
+      "members": {
+        "Height": {
+          "shape": "__doubleMin0Max100",
+          "locationName": "height"
+        },
+        "LeftOffset": {
+          "shape": "__doubleMin0Max100",
+          "locationName": "leftOffset"
+        },
+        "TopOffset": {
+          "shape": "__doubleMin0Max100",
+          "locationName": "topOffset"
+        },
+        "Width": {
+          "shape": "__doubleMin0Max100",
+          "locationName": "width"
+        }
+      },
+      "required": [
+        "TopOffset",
+        "Height",
+        "Width",
+        "LeftOffset"
       ]
-    }, 
+    },
     "CaptionSelector": {
       "type": "structure",
       "members": {
@@ -3574,7 +3574,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -3684,7 +3684,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -4296,7 +4296,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -4647,7 +4647,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -5592,6 +5592,10 @@
     "EbuTtDDestinationSettings": {
       "type": "structure",
       "members": {
+        "CopyrightHolder": {
+          "shape": "__stringMax1000",
+          "locationName": "copyrightHolder"
+        },
         "FillLineGap": {
           "shape": "EbuTtDFillLineGapControl",
           "locationName": "fillLineGap"
@@ -5599,7 +5603,7 @@
         "CopyrightHolder": {
           "shape": "__stringMax1000",
           "locationName": "copyrightHolder"
-        }, 
+        },
         "FontFamily": {
           "shape": "__string",
           "locationName": "fontFamily"
@@ -5704,6 +5708,10 @@
         "GlobalConfiguration": {
           "shape": "GlobalConfiguration",
           "locationName": "globalConfiguration"
+        },
+        "MotionGraphicsConfiguration": {
+          "shape": "MotionGraphicsConfiguration",
+          "locationName": "motionGraphicsConfiguration"
         },
         "NielsenConfiguration": {
           "shape": "NielsenConfiguration",
@@ -7268,6 +7276,11 @@
           "shape": "__integerMin0Max15",
           "locationName": "restartDelay"
         }
+      }
+    },
+    "HtmlMotionGraphicsSettings": {
+      "type": "structure",
+      "members": {
       }
     },
     "IFrameOnlyPlaylistType": {
@@ -9213,6 +9226,64 @@
       "members": {
       }
     },
+    "MotionGraphicsActivateScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "Duration": {
+          "shape": "__longMin0Max86400000",
+          "locationName": "duration"
+        },
+        "PasswordParam": {
+          "shape": "__string",
+          "locationName": "passwordParam"
+        },
+        "Url": {
+          "shape": "__string",
+          "locationName": "url"
+        },
+        "Username": {
+          "shape": "__string",
+          "locationName": "username"
+        }
+      }
+    },
+    "MotionGraphicsConfiguration": {
+      "type": "structure",
+      "members": {
+        "MotionGraphicsInsertion": {
+          "shape": "MotionGraphicsInsertion",
+          "locationName": "motionGraphicsInsertion"
+        },
+        "MotionGraphicsSettings": {
+          "shape": "MotionGraphicsSettings",
+          "locationName": "motionGraphicsSettings"
+        }
+      },
+      "required": [
+        "MotionGraphicsSettings"
+      ]
+    },
+    "MotionGraphicsDeactivateScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+      }
+    },
+    "MotionGraphicsInsertion": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "MotionGraphicsSettings": {
+      "type": "structure",
+      "members": {
+        "HtmlMotionGraphicsSettings": {
+          "shape": "HtmlMotionGraphicsSettings",
+          "locationName": "htmlMotionGraphicsSettings"
+        }
+      }
+    },
     "Mp2CodingMode": {
       "type": "string",
       "enum": [
@@ -10169,6 +10240,14 @@
           "shape": "__string",
           "locationName": "activeInputSwitchActionName"
         },
+        "ActiveMotionGraphicsActionName": {
+          "shape": "__string",
+          "locationName": "activeMotionGraphicsActionName"
+        },
+        "ActiveMotionGraphicsUri": {
+          "shape": "__string",
+          "locationName": "activeMotionGraphicsUri"
+        },
         "PipelineId": {
           "shape": "__string",
           "locationName": "pipelineId"
@@ -10675,6 +10754,14 @@
         "InputSwitchSettings": {
           "shape": "InputSwitchScheduleActionSettings",
           "locationName": "inputSwitchSettings"
+        },
+        "MotionGraphicsImageActivateSettings": {
+          "shape": "MotionGraphicsActivateScheduleActionSettings",
+          "locationName": "motionGraphicsImageActivateSettings"
+        },
+        "MotionGraphicsImageDeactivateSettings": {
+          "shape": "MotionGraphicsDeactivateScheduleActionSettings",
+          "locationName": "motionGraphicsImageDeactivateSettings"
         },
         "PauseStateSettings": {
           "shape": "PauseStateScheduleActionSettings",
@@ -11189,7 +11276,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -11419,7 +11506,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -11524,7 +11611,7 @@
         "OutputRectangle": {
           "shape": "CaptionRectangle",
           "locationName": "outputRectangle"
-        }, 
+        },
         "PageNumber": {
           "shape": "__string",
           "locationName": "pageNumber"
@@ -11685,7 +11772,7 @@
         "TargetRegion": {
           "shape": "__string",
           "locationName": "targetRegion"
-        }, 
+        },
         "TransferType": {
           "shape": "InputDeviceTransferType",
           "locationName": "transferType"
@@ -12408,6 +12495,10 @@
           "shape": "VideoSelectorColorSpace",
           "locationName": "colorSpace"
         },
+        "ColorSpaceSettings": {
+          "shape": "VideoSelectorColorSpaceSettings",
+          "locationName": "colorSpaceSettings"
+        },
         "ColorSpaceUsage": {
           "shape": "VideoSelectorColorSpaceUsage",
           "locationName": "colorSpaceUsage"
@@ -12422,9 +12513,20 @@
       "type": "string",
       "enum": [
         "FOLLOW",
+        "HDR10",
+        "HLG_2020",
         "REC_601",
         "REC_709"
       ]
+    },
+    "VideoSelectorColorSpaceSettings": {
+      "type": "structure",
+      "members": {
+        "Hdr10Settings": {
+          "shape": "Hdr10Settings",
+          "locationName": "hdr10Settings"
+        }
+      }
     },
     "VideoSelectorColorSpaceUsage": {
       "type": "string",
@@ -12484,6 +12586,27 @@
         "SubnetIds"
       ]
     },
+    "VpcOutputSettingsDescription": {
+      "type": "structure",
+      "members": {
+        "AvailabilityZones": {
+          "shape": "__listOf__string",
+          "locationName": "availabilityZones"
+        },
+        "NetworkInterfaceIds": {
+          "shape": "__listOf__string",
+          "locationName": "networkInterfaceIds"
+        },
+        "SecurityGroupIds": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroupIds"
+        },
+        "SubnetIds": {
+          "shape": "__listOf__string",
+          "locationName": "subnetIds"
+        }
+      }
+    },
     "WavCodingMode": {
       "type": "string",
       "enum": [
@@ -12529,7 +12652,7 @@
     },
     "__doubleMin0Max100": {
       "type": "double"
-    }, 
+    },
     "__doubleMin1": {
       "type": "double"
     },
@@ -13095,13 +13218,18 @@
       "min": 0,
       "max": 8589934591
     },
+    "__longMin0Max86400000": {
+      "type": "long",
+      "min": 0,
+      "max": 86400000
+    },
     "__string": {
       "type": "string"
     },
     "__stringMax1000": {
       "type": "string",
       "max": 1000
-    }, 
+    },
     "__stringMax256": {
       "type": "string",
       "max": 256
