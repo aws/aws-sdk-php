@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.178.6 - 2021-04-19
 
 * `Aws\CostExplorer` - Adding support for Sagemaker savings plans in GetSavingsPlansPurchaseRecommendation API
 * `Aws\SavingsPlans` - Added support for Amazon SageMaker in Machine Learning Savings Plans
