@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CostExplorer` - Adding support for Sagemaker savings plans in GetSavingsPlansPurchaseRecommendation API
+* `Aws\SavingsPlans` - Added support for Amazon SageMaker in Machine Learning Savings Plans
+
 ## 3.178.5 - 2021-04-15
 
 * `Aws\DatabaseMigrationService` - AWS DMS added support of TLS for Kafka endpoint. Added Describe endpoint setting API for DMS endpoints.
