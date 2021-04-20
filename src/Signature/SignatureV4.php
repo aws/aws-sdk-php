@@ -81,7 +81,7 @@ class SignatureV4 implements SignatureInterface
     public function signRequest(
         RequestInterface $request,
         CredentialsInterface $credentials,
-        string $signingService = null
+        $signingService = null
     ) {
         $ldt = gmdate(self::ISO8601_BASIC);
         $sdt = substr($ldt, 0, 8);
