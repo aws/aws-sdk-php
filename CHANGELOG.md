@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.178.7 - 2021-04-21
 
 * `Aws\CloudFormation` - Added support for creating and updating stack sets with self-managed permissions from templates that reference macros.
 * `Aws\Detective` - Added parameters to track the data volume in bytes for a member account. Deprecated the existing parameters that tracked the volume as a percentage of the allowed volume for a behavior graph. Changes reflected in MemberDetails object.
