@@ -8,6 +8,8 @@ use Aws\AwsClient;
  *
  * @method \Aws\Result acceptReservedNodeExchange(array $args = [])
  * @method \GuzzleHttp\Promise\Promise acceptReservedNodeExchangeAsync(array $args = [])
+ * @method \Aws\Result addPartner(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise addPartnerAsync(array $args = [])
  * @method \Aws\Result authorizeClusterSecurityGroupIngress(array $args = [])
  * @method \GuzzleHttp\Promise\Promise authorizeClusterSecurityGroupIngressAsync(array $args = [])
  * @method \Aws\Result authorizeEndpointAccess(array $args = [])
@@ -68,6 +70,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteHsmClientCertificateAsync(array $args = [])
  * @method \Aws\Result deleteHsmConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteHsmConfigurationAsync(array $args = [])
+ * @method \Aws\Result deletePartner(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deletePartnerAsync(array $args = [])
  * @method \Aws\Result deleteScheduledAction(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteScheduledActionAsync(array $args = [])
  * @method \Aws\Result deleteSnapshotCopyGrant(array $args = [])
@@ -120,6 +124,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeNodeConfigurationOptionsAsync(array $args = [])
  * @method \Aws\Result describeOrderableClusterOptions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeOrderableClusterOptionsAsync(array $args = [])
+ * @method \Aws\Result describePartners(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describePartnersAsync(array $args = [])
  * @method \Aws\Result describeReservedNodeOfferings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeReservedNodeOfferingsAsync(array $args = [])
  * @method \Aws\Result describeReservedNodes(array $args = [])
@@ -206,5 +212,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise revokeSnapshotAccessAsync(array $args = [])
  * @method \Aws\Result rotateEncryptionKey(array $args = [])
  * @method \GuzzleHttp\Promise\Promise rotateEncryptionKeyAsync(array $args = [])
+ * @method \Aws\Result updatePartnerStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updatePartnerStatusAsync(array $args = [])
  */
 class RedshiftClient extends AwsClient {}

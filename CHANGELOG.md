@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - Added support for creating and updating stack sets with self-managed permissions from templates that reference macros.
+* `Aws\Detective` - Added parameters to track the data volume in bytes for a member account. Deprecated the existing parameters that tracked the volume as a percentage of the allowed volume for a behavior graph. Changes reflected in MemberDetails object.
+* `Aws\GroundStation` - Support new S3 Recording Config allowing customers to write downlink data directly to S3.
+* `Aws\Redshift` - Add operations: AddPartner, DescribePartners, DeletePartner, and UpdatePartnerStatus to support tracking integration status with data partners.
+* `Aws\kendra` - Amazon Kendra now enables users to override index-level boosting configurations for each query.
+
 ## 3.178.6 - 2021-04-19
 
 * `Aws\CostExplorer` - Adding support for Sagemaker savings plans in GetSavingsPlansPurchaseRecommendation API
