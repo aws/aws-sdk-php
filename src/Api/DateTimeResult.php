@@ -9,8 +9,8 @@ use Exception;
  * DateTime overrides that make DateTime work more seamlessly as a string,
  * with JSON documents, and with JMESPath.
  */
-class DateTimeResult extends \DateTime implements \JsonSerializable
-{
+class DateTimeResult extends \DateTime implements \JsonSerializable {
+
     /**
      * Create a new DateTimeResult from a unix timestamp.
      * The Unix epoch (or Unix time or POSIX time or Unix
@@ -21,8 +21,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      * @return DateTimeResult
      * @throws Exception
      */
-    public static function fromEpoch($unixTimestamp)
-    {
+    public static function fromEpoch($unixTimestamp) {
         return new self(gmdate('c', $unixTimestamp));
     }
 
@@ -31,12 +30,39 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      *
      * @return DateTimeResult
      */
-    public static function fromISO8601($iso8601Timestamp)
-    {
+    public static function fromISO8601($iso8601Timestamp) {
         if (is_numeric($iso8601Timestamp) || !is_string($iso8601Timestamp)) {
             throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromISO8601');
         }
-        return new DateTimeResult($iso8601Timestamp);
+        $timeIso8601 = self::toPrecisionMs($iso8601Timestamp);
+        return new DateTimeResult($timeIso8601);
+    }
+
+    /**
+     * 
+     * @param string $iso8601Timestamp
+     * 
+     * @return string
+     */
+    private static function toPrecisionMs($iso8601Timestamp) {
+        $timeIso8601 = strtoupper($iso8601Timestamp);
+        $startPos = strpos($timeIso8601, '.');
+        if ($startPos != false) {
+            $startPos += 1;
+            $endPos = strpos($timeIso8601, '+');
+            if ($endPos == false) {
+                $endPos = strpos($timeIso8601, "Z");
+            }
+            if ($endPos == false) {
+                $endPos = strlen($timeIso8601);
+            }
+            $ns = substr($timeIso8601, $startPos, $endPos - $startPos);
+            if (strlen($ns) > 6) {
+                $nns = substr($ns, 0, 6);
+                $timeIso8601 = str_replace($ns, $nns, $timeIso8601);
+            }
+        }
+        return $timeIso8601;
     }
 
     /**
@@ -47,8 +73,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      * @return DateTimeResult
      * @throws ParserException|Exception
      */
-    public static function fromTimestamp($timestamp, $expectedFormat = null)
-    {
+    public static function fromTimestamp($timestamp, $expectedFormat = null) {
         if (empty($timestamp)) {
             return self::fromEpoch(0);
         }
@@ -84,8 +109,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->format('c');
     }
 
@@ -94,9 +118,8 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      *
      * @return mixed|string
      */
-    public function jsonSerialize()
-    {
+    public function jsonSerialize() {
         return (string) $this;
     }
-}
 
+}
