@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.178.8 - 2021-04-22
 
 * `Aws\CognitoIdentityProvider` - Documentation updates for cognito-idp
 * `Aws\ElastiCache` - This release introduces log delivery of Redis slow log from Amazon ElastiCache.
