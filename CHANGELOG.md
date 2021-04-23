@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.178.9 - 2021-04-23
 
 * `Aws\MediaPackage` - Add support for Widevine DRM on CMAF origin endpoints. Both Widevine and FairPlay DRMs can now be used simultaneously, with CBCS encryption.
 * `Aws\SNS` - Amazon SNS adds two new attributes, TemplateId and EntityId, for using sender IDs to send SMS messages to destinations in India.
