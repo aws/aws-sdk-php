@@ -52,6 +52,17 @@ class PartitionTest extends TestCase
             (new Partition($definition))->getDnsSuffix()
         );
     }
+    /**
+     * @dataProvider partitionDefinitionProvider
+     *
+     * @param array $definition
+     */
+    public function testFipsEndpoint(array $definition)
+    {
+        $partition = new Partition($definition);
+        $resolved = $partition(['region' => 'fips-aws-global', 'service' => 'service']);
+        self::assertContains('service-fips.amazonaws.com', $resolved['endpoint']);
+    }
 
     public function partitionDefinitionProvider()
     {
@@ -69,6 +80,7 @@ class PartitionTest extends TestCase
                         'endpoints' => [
                             'us-east-1' => [],
                             'us-west-2' => [],
+                            'fips-aws-global' => ['hostname' => 'service-fips.amazonaws.com'],
                         ],
                     ],
                 ],
