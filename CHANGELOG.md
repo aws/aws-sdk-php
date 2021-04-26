@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.178.10 - 2021-04-26
 
 * `Aws\CodeGuruReviewer` - Include KMS Key Details in Repository Association APIs to enable usage of customer managed KMS Keys.
 * `Aws\EC2` - Adding support for Red Hat Enterprise Linux with HA for Reserved Instances.
