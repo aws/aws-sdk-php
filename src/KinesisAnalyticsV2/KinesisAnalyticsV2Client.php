@@ -59,5 +59,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
  * @method \Aws\Result updateApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateApplicationAsync(array $args = [])
+ * @method \Aws\Result updateApplicationMaintenanceConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateApplicationMaintenanceConfigurationAsync(array $args = [])
  */
 class KinesisAnalyticsV2Client extends AwsClient {}
