@@ -80,7 +80,8 @@ class SignatureV4 implements SignatureInterface
      */
     public function signRequest(
         RequestInterface $request,
-        CredentialsInterface $credentials
+        CredentialsInterface $credentials,
+        $signingService = null
     ) {
         $ldt = gmdate(self::ISO8601_BASIC);
         $sdt = substr($ldt, 0, 8);
@@ -90,7 +91,8 @@ class SignatureV4 implements SignatureInterface
         if ($token = $credentials->getSecurityToken()) {
             $parsed['headers']['X-Amz-Security-Token'] = [$token];
         }
-        $cs = $this->createScope($sdt, $this->region, $this->service);
+        $service = isset($signingService) ? $signingService : $this->service;
+        $cs = $this->createScope($sdt, $this->region, $service);
         $payload = $this->getPayload($request);
 
         if ($payload == self::UNSIGNED_PAYLOAD) {
@@ -102,7 +104,7 @@ class SignatureV4 implements SignatureInterface
         $signingKey = $this->getSigningKey(
             $sdt,
             $this->region,
-            $this->service,
+            $service,
             $credentials->getSecretKey()
         );
         $signature = hash_hmac('sha256', $toSign, $signingKey);
