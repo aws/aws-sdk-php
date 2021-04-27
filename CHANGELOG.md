@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.178.11 - 2021-04-27
 
 * `Aws\AuditManager` - This release restricts using backslashes in control, assessment, and framework names. The controlSetName field of the UpdateAssessmentFrameworkControlSet API now allows strings without backslashes.
 * `Aws\S3` - Bugfix to apply the correct signature to certain functions in S3 object lambda requests
