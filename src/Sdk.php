@@ -364,6 +364,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionNetworkFirewall(array $args = [])
  * @method \Aws\NetworkManager\NetworkManagerClient createNetworkManager(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNetworkManager(array $args = [])
+ * @method \Aws\NimbleStudio\NimbleStudioClient createNimbleStudio(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionNimbleStudio(array $args = [])
  * @method \Aws\OpsWorks\OpsWorksClient createOpsWorks(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOpsWorks(array $args = [])
  * @method \Aws\OpsWorksCM\OpsWorksCMClient createOpsWorksCM(array $args = [])
