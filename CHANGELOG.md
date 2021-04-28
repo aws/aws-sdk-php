@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.179.0 - 2021-04-28
 
 * `Aws\CloudFormation` - Add CallAs parameter to GetTemplateSummary to enable use with StackSets delegated administrator integration
 * `Aws\Connect` - Updated max number of tags that can be attached from 200 to 50. MaxContacts is now an optional parameter for the UpdateQueueMaxContact API.
