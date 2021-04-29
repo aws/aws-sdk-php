@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.179.1 - 2021-04-29
 
 * `Aws\Chime` - Increase AppInstanceUserId length to 64 characters
 * `Aws\ECS` - Add support for EphemeralStorage on TaskDefinition and TaskOverride
