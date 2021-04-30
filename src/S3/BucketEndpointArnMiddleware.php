@@ -114,7 +114,9 @@ class BucketEndpointArnMiddleware
                         );
 
                         // Update signing region based on ARN data if configured to do so
-                        if ($this->config['use_arn_region']->isUseArnRegion()) {
+                        if ($this->config['use_arn_region']->isUseArnRegion()
+                            && !$this->isFipsPseudoRegion($this->region)
+                        ) {
                             $region = $arn->getRegion();
                         } else {
                             $region = $this->region;
@@ -169,7 +171,11 @@ class BucketEndpointArnMiddleware
                 $host .= '.s3-object-lambda';
             }
         } else {
-            $host .= '.s3-accesspoint';
+            if ($this->isFipsPseudoRegion($this->region)) {
+                $host .= ".s3-accesspoint-fips";
+            } else {
+                $host .= '.s3-accesspoint';
+            }
             if (!empty($this->config['dual_stack'])) {
                 $host .= '.dualstack';
             }
@@ -240,6 +246,16 @@ class BucketEndpointArnMiddleware
                     . ' points. Please disable dualstack or do not supply an'
                     . ' access point ARN.');
             }
+            // Global endpoints do not support cross-region requests
+            if ($this->isGlobal($this->region)
+                && $this->config['use_arn_region']->isUseArnRegion() == false
+                && $arn->getRegion() != $this->region
+            ) {
+                throw new UnresolvedEndpointException(
+                    'Global endpoints do not support cross region requests'
+                    . ' Please enable use_arn_region or do not supply a global region'
+                    . ' with a different region in the ARN.');
+            }
 
             // Get partitions for ARN and client region
             $arnPart = $this->partitionProvider->getPartition(
@@ -275,12 +291,23 @@ class BucketEndpointArnMiddleware
             $this->validateMatchingRegion($arn);
 
             // Ensure it is not resolved to fips pseudo-region for S3 Outposts
-            $this->validateFipsNotUsedWithOutposts($arn);
+            $this->validateFipsConfigurations($arn);
 
             return $arnPart;
         }
 
         throw new InvalidArnException('Provided ARN was not a valid S3 access'
             . ' point ARN or S3 Outposts access point ARN.');
+    }
+
+    /**
+     * Checks if a region is global
+     *
+     * @param $region
+     * @return bool
+     */
+    private function isGlobal($region)
+    {
+        return $region == 's3-external-1' || $region == 'aws-global';
     }
 }
