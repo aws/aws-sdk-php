@@ -15,6 +15,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise associateSigninDelegateGroupsWithAccountAsync(array $args = [])
  * @method \Aws\Result batchCreateAttendee(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchCreateAttendeeAsync(array $args = [])
+ * @method \Aws\Result batchCreateChannelMembership(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchCreateChannelMembershipAsync(array $args = [])
  * @method \Aws\Result batchCreateRoomMembership(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchCreateRoomMembershipAsync(array $args = [])
  * @method \Aws\Result batchDeletePhoneNumber(array $args = [])
