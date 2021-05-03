@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.180.0 - 2021-05-03
 
 * `Aws\Chime` - Added new BatchCreateChannelMembership API to support multiple membership creation for channels
 * `Aws\FinSpaceData` - This is the initial SDK release for the data APIs for Amazon FinSpace. Amazon FinSpace is a data management and analytics application for the financial services industry (FSI).
