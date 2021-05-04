@@ -25,14 +25,13 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise updateEnvironmentAsync(array $args = [])
  */
 class finspaceClient extends AwsClient {
-
     public function __construct(array $args)
     {
         parent::__construct($args);
 
         // Setup middleware.
         $stack = $this->getHandlerList();
-        $stack->appendBuild($this->updateContentType(), 'models.finspace.updateContentType');
+        $stack->appendBuild($this->updateContentType(), 'models.finspaceData.updateContentType');
     }
 
     /**
