@@ -21,7 +21,7 @@ class FinSpaceDataClient extends AwsClient {
 
         // Setup middleware.
         $stack = $this->getHandlerList();
-        $stack->appendBuild($this->updateContentType(), 'models.finspace.updateContentType');
+        $stack->appendBuild($this->updateContentType(), 'models.finspaceData.updateContentType');
     }
 
     /**
