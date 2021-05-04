@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - This release adds the KeyStorageSecurityStandard parameter to the CreateCertificateAuthority API to allow customers to mandate a security standard to which the CA key will be stored within.
+* `Aws\Chime` - This release adds the ability to search for and order international phone numbers for Amazon Chime SIP media applications.
+* `Aws\DevOpsGuru` - Added GetCostEstimation and StartCostEstimation to get the monthly resource usage cost and added ability to view resource health by AWS service name and to search insights be AWS service name.
+* `Aws\Health` - Documentation updates for health
+* `Aws\SageMaker` - Enable retrying Training and Tuning Jobs that fail with InternalServerError by setting RetryStrategy.
+
 ## 3.180.0 - 2021-05-03
 
 * `Aws\Chime` - Added new BatchCreateChannelMembership API to support multiple membership creation for channels

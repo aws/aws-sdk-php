@@ -265,6 +265,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listSipMediaApplicationsAsync(array $args = [])
  * @method \Aws\Result listSipRules(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSipRulesAsync(array $args = [])
+ * @method \Aws\Result listSupportedPhoneNumberCountries(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listSupportedPhoneNumberCountriesAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result listUsers(array $args = [])
