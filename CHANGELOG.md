@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.180.1 - 2021-05-04
 
 * `Aws\ACMPCA` - This release adds the KeyStorageSecurityStandard parameter to the CreateCertificateAuthority API to allow customers to mandate a security standard to which the CA key will be stored within.
 * `Aws\Chime` - This release adds the ability to search for and order international phone numbers for Amazon Chime SIP media applications.
