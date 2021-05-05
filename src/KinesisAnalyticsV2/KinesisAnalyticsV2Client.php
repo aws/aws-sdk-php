@@ -49,6 +49,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listApplicationsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result rollbackApplication(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise rollbackApplicationAsync(array $args = [])
  * @method \Aws\Result startApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startApplicationAsync(array $args = [])
  * @method \Aws\Result stopApplication(array $args = [])
