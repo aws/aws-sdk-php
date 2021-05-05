@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.180.3 - 2021-05-05
 
 * `Aws\AuditManager` - This release updates the CreateAssessmentFrameworkControlSet and UpdateAssessmentFrameworkControlSet API data types. For both of these data types, the control set name is now a required attribute.
 * `Aws\KinesisAnalyticsV2` - Amazon Kinesis Analytics now supports RollbackApplication for Apache Flink applications to revert the application to the previous running version
