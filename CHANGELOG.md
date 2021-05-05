@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.180.2 - 2021-05-05
 
 * `Aws\FinSpaceData` - Documentation updates for FinSpaceData API.
 * `Aws\finspace` - Documentation updates for FinSpace API.
