@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kafka` - IAM Access Control for Amazon MSK enables you to create clusters that use IAM to authenticate clients and to allow or deny Apache Kafka actions for those clients.
+* `Aws\SSM` - SSM feature release - ChangeCalendar integration with StateManager.
+* `Aws\ServiceDiscovery` - Bugfix: Improved input validation for RegisterInstance action, InstanceId field
+* `Aws\Snowball` - AWS Snow Family adds APIs for ordering and managing Snow jobs with long term pricing
+
 ## 3.180.3 - 2021-05-05
 
 * `Aws\AuditManager` - This release updates the CreateAssessmentFrameworkControlSet and UpdateAssessmentFrameworkControlSet API data types. For both of these data types, the control set name is now a required attribute.
