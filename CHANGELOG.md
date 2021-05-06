@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.180.4 - 2021-05-06
 
 * `Aws\Kafka` - IAM Access Control for Amazon MSK enables you to create clusters that use IAM to authenticate clients and to allow or deny Apache Kafka actions for those clients.
 * `Aws\SSM` - SSM feature release - ChangeCalendar integration with StateManager.
