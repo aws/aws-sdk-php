@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.180.5 - 2021-05-07
 
 * `Aws\Connect` - Adds tagging support for Connect APIs CreateIntegrationAssociation and CreateUseCase.
 * `Aws\LakeFormation` - This release adds Tag Based Access Control to AWS Lake Formation service
