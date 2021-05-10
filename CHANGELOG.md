@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.180.6 - 2021-05-10
 
 * `Aws\CodeArtifact` - Documentation updates for CodeArtifact
 * `Aws\ConfigService` - Adds paginator to multiple APIs: By default, the paginator allows user to iterate over the results and allows the CLI to return up to 1000 results.
