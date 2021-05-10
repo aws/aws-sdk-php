@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeArtifact` - Documentation updates for CodeArtifact
+* `Aws\ConfigService` - Adds paginator to multiple APIs: By default, the paginator allows user to iterate over the results and allows the CLI to return up to 1000 results.
+* `Aws\ECS` - This release contains updates for Amazon ECS.
+* `Aws\EKS` - This release updates create-nodegroup and update-nodegroup-config APIs for adding/updating taints on managed nodegroups.
+* `Aws\IoTWireless` - Add three new optional fields to support filtering and configurable sub-band in WirelessGateway APIs. The filtering is for all the RF region supported. The sub-band configuration is only applicable to LoRa gateways of US915 or AU915 RF region.
+* `Aws\KinesisAnalyticsV2` - Amazon Kinesis Analytics now supports ListApplicationVersions and DescribeApplicationVersion API for Apache Flink applications
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for Kantar SNAP File Audio Watermarking with a Kantar Watermarking account, and Display Definition Segment(DDS) segment data controls for DVB-Sub caption outputs.
+* `Aws\SSM` - This release adds new APIs to associate, disassociate and list related items in SSM OpsCenter; and this release adds DisplayName as a version-level attribute for SSM Documents and introduces two new document types: ProblemAnalysis, ProblemAnalysisTemplate.
+
 ## 3.180.5 - 2021-05-07
 
 * `Aws\Connect` - Adds tagging support for Connect APIs CreateIntegrationAssociation and CreateUseCase.
