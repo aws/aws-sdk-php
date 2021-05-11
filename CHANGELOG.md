@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.181.0 - 2021-05-11
 
 * `Aws\S3Control` - Documentation updates for Amazon S3-control
 * `Aws\SSMContacts` - AWS Systems Manager Incident Manager enables faster resolution of critical application availability and performance issues, management of contacts and post incident analysis
