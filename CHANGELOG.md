@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3Control` - Documentation updates for Amazon S3-control
+* `Aws\SSMContacts` - AWS Systems Manager Incident Manager enables faster resolution of critical application availability and performance issues, management of contacts and post incident analysis
+* `Aws\SSMIncidents` - AWS Systems Manager Incident Manager enables faster resolution of critical application availability and performance issues, management of contacts and post-incident analysis
+* `Aws\TranscribeStreamingService` - Amazon Transcribe supports partial results stabilization for streaming transcription.
+
 ## 3.180.6 - 2021-05-10
 
 * `Aws\CodeArtifact` - Documentation updates for CodeArtifact
