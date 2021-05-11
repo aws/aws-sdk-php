@@ -99,7 +99,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
             while ($result == null) {
                 try {
                     $token = is_readable($this->tokenFile)
-                        ? file_get_contents($this->tokenFile)
+                        ? @file_get_contents($this->tokenFile)
                         : false;
                     if (false === $token) {
                         clearstatcache(true, dirname($this->tokenFile) . "/" . readlink($this->tokenFile));
@@ -110,7 +110,7 @@ class AssumeRoleWithWebIdentityCredentialProvider
                                 "Unreadable tokenfile at location {$this->tokenFile}"
                             );
                         }
-                        $token = file_get_contents($this->tokenFile);
+                        $token = @file_get_contents($this->tokenFile);
                     }
                     if (empty($token)) {
                         if ($this->tokenFileReadAttempts < $this->retries) {
