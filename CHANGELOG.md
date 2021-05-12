@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - High Memory virtual instances are powered by Intel Sky Lake CPUs and offer up to 12TB of memory.
+
 ## 3.181.0 - 2021-05-11
 
 * `Aws\S3Control` - Documentation updates for Amazon S3-control
