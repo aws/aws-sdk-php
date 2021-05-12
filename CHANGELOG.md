@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.181.1 - 2021-05-12
 
 * `Aws\EC2` - High Memory virtual instances are powered by Intel Sky Lake CPUs and offer up to 12TB of memory.
 
