@@ -118,18 +118,6 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'us-east-1',
                 null,
             ],
-            // s3-external, use_arn_region false
-            [
-                'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
-                [
-                    'region' => 's3-external-1',
-                    'use_arn_region' => false,
-                ],
-                'myendpoint-123456789012.s3-accesspoint.s3-external-1.amazonaws.com',
-                'Bar/Baz',
-                'us-east-1',
-                null,
-            ],
             // With dual-stack endpoint
             [
                 'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint',
@@ -140,6 +128,19 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 'myendpoint-123456789012.s3-accesspoint.dualstack.us-west-2.amazonaws.com',
                 'Bar/Baz',
                 'us-west-2',
+                null,
+            ],
+            // With dual-stack fips endpoint, use_arn_region true
+            [
+                'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_dual_stack_endpoint' => true,
+                    'use_arn_region' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint-fips.dualstack.us-gov-east-1.amazonaws.com',
+                'Bar/Baz',
+                'fips-us-gov-east-1',
                 null,
             ],
             // Non-aws partition, use_arn_region true
@@ -197,9 +198,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'region' => 'fips-us-gov-east-1',
                     'use_arn_region' => true,
                 ],
-                'myendpoint-123456789012.s3-accesspoint.us-gov-east-1.amazonaws.com',
+                'myendpoint-123456789012.s3-accesspoint-fips.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
-                'us-gov-east-1',
+                'fips-us-gov-east-1',
                 null,
             ],
             // Fips region with dualstack
@@ -210,9 +211,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'use_arn_region' => true,
                     'use_dual_stack_endpoint' => true,
                 ],
-                'myendpoint-123456789012.s3-accesspoint.dualstack.us-gov-east-1.amazonaws.com',
+                'myendpoint-123456789012.s3-accesspoint-fips.dualstack.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
-                'us-gov-east-1',
+                'fips-us-gov-east-1',
                 null,
             ],
             // S3 outposts, standard case
@@ -270,7 +271,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myaccesspoint-123456789012.op-01234567890123456.s3-outposts.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
-                'us-gov-east-1',
+                'fips-us-gov-east-1',
                 's3-outposts',
             ],
             // S3 Outposts, non-aws partition
@@ -516,9 +517,9 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     ]
                 ),
                 ['region' => 'fips-us-gov-west-1'],
-                new InvalidRegionException('Fips is currently not supported with'
-                    . ' S3 Outposts access points. Please provide a non-fips'
-                    . ' region or do not supply an access point ARN.')
+                new InvalidRegionException('Fips is currently not supported with S3 Outposts access'
+                    . ' points. Please provide a non-fips region or do not supply an'
+                    . ' access point ARN.')
             ],
             // S3 Outposts, dualstack
             [
@@ -553,6 +554,42 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 new UnresolvedEndpointException('Accelerate is currently not'
                     . ' supported with access points. Please disable accelerate'
                     . ' or do not supply an access point ARN.')
+            ],
+            // s3-external, use_arn_region false
+            [
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                [
+                    'region' => 's3-external-1',
+                    'use_arn_region' => false,
+                ],
+                new UnresolvedEndpointException('Global endpoints do not'
+                    . ' support cross region requests Please enable use_arn_region or'
+                    . ' do not supply a global region with a different region in the ARN.'
+                )
+            ],
+            // aws-global, use_arn_region false
+            [
+                new Command(
+                    'GetObject',
+                    [
+                        'Bucket' => 'arn:aws:s3:us-east-1:123456789012:accesspoint:myendpoint',
+                        'Key' => 'Bar/Baz',
+                    ]
+                ),
+                [
+                    'region' => 'aws-global',
+                    'use_arn_region' => false,
+                ],
+                new UnresolvedEndpointException('Global endpoints do not'
+                    . ' support cross region requests Please enable use_arn_region or'
+                    . ' do not supply a global region with a different region in the ARN.'
+                )
             ],
             // S3 Outposts, invalid ARN
             [
