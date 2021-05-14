@@ -99,6 +99,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise putClassificationExportConfigurationAsync(array $args = [])
  * @method \Aws\Result putFindingsPublicationConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putFindingsPublicationConfigurationAsync(array $args = [])
+ * @method \Aws\Result searchResources(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchResourcesAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result testCustomDataIdentifier(array $args = [])
