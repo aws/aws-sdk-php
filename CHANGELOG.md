@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.181.2 - 2021-05-14
 
 * `Aws\CloudWatchEvents` - Update InputTransformer variable limit from 10 to 100 variables.
 * `Aws\Detective` - Updated descriptions of array parameters to add the restrictions on the array and value lengths.
