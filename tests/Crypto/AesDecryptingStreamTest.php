@@ -36,7 +36,7 @@ class AesDecryptingStreamTest extends TestCase
         );
 
         $aesDecryptingStream = new AesDecryptingStream(
-            Psr7\stream_for($cipherText),
+            Psr7\Utils::streamFor($cipherText),
             $key,
             $iv
         );
@@ -76,7 +76,7 @@ class AesDecryptingStreamTest extends TestCase
             $iv->getCurrentIv()
         );
         $deciphered = new AesDecryptingStream(
-            Psr7\stream_for($cipherText),
+            Psr7\Utils::streamFor($cipherText),
             $key,
             $iv
         );
@@ -106,7 +106,7 @@ class AesDecryptingStreamTest extends TestCase
             OPENSSL_RAW_DATA,
             $iv->getCurrentIv()
         );
-        $deciphered = new AesDecryptingStream(Psr7\stream_for($cipherText), $key, $iv);
+        $deciphered = new AesDecryptingStream(Psr7\Utils::streamFor($cipherText), $key, $iv);
         $firstBytes = $deciphered->read(256 * 2 + 3);
         $deciphered->rewind();
         $this->assertSame($firstBytes, $deciphered->read(256 * 2 + 3));
@@ -164,7 +164,7 @@ class AesDecryptingStreamTest extends TestCase
     public function testReturnsEmptyStringWhenSourceStreamEmpty(
         CipherMethod $cipherMethod
     ) {
-        $stream = new AesDecryptingStream(Psr7\stream_for(''), 'foo', $cipherMethod);
+        $stream = new AesDecryptingStream(Psr7\Utils::streamFor(''), 'foo', $cipherMethod);
 
         $this->assertEmpty($stream->read(self::MB));
         $this->assertSame($stream->read(self::MB), '');

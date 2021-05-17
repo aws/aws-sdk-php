@@ -83,7 +83,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
         $uploader = new S3EncryptionMultipartUploaderV2(
             $s3,
-            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            Psr7\Utils::streamFor(str_repeat('.', 12 * self::MB)),
             [
                 'bucket' => 'foo',
                 'key'    => 'bar',
@@ -118,7 +118,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
         $uploader = new S3EncryptionMultipartUploaderV2(
             $s3,
-            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            Psr7\Utils::streamFor(str_repeat('.', 12 * self::MB)),
             [
                 'bucket' => 'foo',
                 'key'    => 'bar',
@@ -171,7 +171,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
         $uploader = new S3EncryptionMultipartUploaderV2(
             $s3,
-            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            Psr7\Utils::streamFor(str_repeat('.', 12 * self::MB)),
             [
                 'bucket' => 'foo',
                 'key'    => 'bar',
@@ -211,7 +211,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
         $uploader = new S3EncryptionMultipartUploaderV2(
             $s3,
-            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            Psr7\Utils::streamFor(str_repeat('.', 12 * self::MB)),
             [
                 'bucket' => 'foo',
                 'key'    => 'bar',
@@ -252,7 +252,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
         $uploader = new S3EncryptionMultipartUploaderV2(
             $s3,
-            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            Psr7\Utils::streamFor(str_repeat('.', 12 * self::MB)),
             [
                 'bucket' => 'foo',
                 'key'    => 'bar',
@@ -305,7 +305,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
         $uploader = new S3EncryptionMultipartUploaderV2(
             $s3,
-            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            Psr7\Utils::streamFor(str_repeat('.', 12 * self::MB)),
             [
                 'bucket' => 'foo',
                 'key'    => 'bar',
@@ -370,7 +370,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
         $uploader = new S3EncryptionMultipartUploaderV2(
             $s3,
-            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            Psr7\Utils::streamFor(str_repeat('.', 12 * self::MB)),
             [
                 'bucket' => 'foo',
                 'key'    => 'bar',
@@ -411,7 +411,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
         $uploader = new S3EncryptionMultipartUploaderV2(
             $s3,
-            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            Psr7\Utils::streamFor(str_repeat('.', 12 * self::MB)),
             [
                 'bucket' => 'foo',
                 'key'    => 'bar',
@@ -468,7 +468,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
             'bar',
             'baz'
         );
-        $source = Psr7\stream_for(str_repeat('.', 9 * self::MB));
+        $source = Psr7\Utils::streamFor(str_repeat('.', 9 * self::MB));
         $uploader = new S3EncryptionMultipartUploaderV2(
             $s3,
             $source,
@@ -520,7 +520,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
         $uploader = new S3EncryptionMultipartUploaderV2(
             $s3,
-            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            Psr7\Utils::streamFor(str_repeat('.', 12 * self::MB)),
             [
                 'bucket' => 'foo',
                 'key'    => 'bar',
@@ -578,7 +578,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
 
         $uploader = new S3EncryptionMultipartUploaderV2(
             $s3,
-            Psr7\stream_for(str_repeat('.', 12 * self::MB)),
+            Psr7\Utils::streamFor(str_repeat('.', 12 * self::MB)),
             [
                 'bucket' => 'foo',
                 'key'    => 'bar',

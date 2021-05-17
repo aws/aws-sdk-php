@@ -38,7 +38,7 @@ class MultipartContext implements Context, SnippetAcceptingContext
      */
     public function iHaveASeekableReadStream()
     {
-        $this->stream = Psr7\stream_for(Psr7\try_fopen(self::$tempFile, 'r'));
+        $this->stream = Psr7\Utils::streamFor(Psr7\Utils::tryFopen(self::$tempFile, 'r'));
     }
 
     /**

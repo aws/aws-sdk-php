@@ -56,7 +56,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
     {
         $service = $this->generateTestService();
         $client = $this->generateTestClient($service);
-        $inputStream = Psr7\stream_for('test');
+        $inputStream = Psr7\Utils::streamFor('test');
 
         return [
             [
@@ -123,7 +123,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
         $command = $client->getCommand(
             'StreamingOp',
             [
-                'InputStream' => Psr7\stream_for('test'),
+                'InputStream' => Psr7\Utils::streamFor('test'),
             ]
         );
         $middleware = StreamRequestPayloadMiddleware::wrap($service);

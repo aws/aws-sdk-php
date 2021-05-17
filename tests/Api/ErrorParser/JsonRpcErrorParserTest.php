@@ -31,7 +31,7 @@ class JsonRpcErrorParserTest extends TestCase
         $parser,
         $expected
     ) {
-        $response = Psr7\parse_response($response);
+        $response = Psr7\Message::parseResponse($response);
         $parsed = $parser($response, $command);
         $this->assertCount(
             count($expected),

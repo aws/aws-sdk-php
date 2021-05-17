@@ -91,7 +91,7 @@ class EcsCredentialProviderTest extends TestCase
     private function getTestCreds($result, Response $more = null)
     {
         $responses = [];
-        $responses[] = new Response(200, [], Psr7\stream_for(json_encode($result)));
+        $responses[] = new Response(200, [], Psr7\Utils::streamFor(json_encode($result)));
         if ($more) {
             $responses[] = $more;
         }
@@ -126,7 +126,7 @@ class EcsCredentialProviderTest extends TestCase
                         return new CompletedFutureArray([
                             'status'  => 200,
                             'headers' => [],
-                            'body'    => Psr7\stream_for(
+                            'body'    => Psr7\Utils::streamFor(
                                 json_encode($credentials)
                             ),
                         ]);
@@ -147,7 +147,7 @@ class EcsCredentialProviderTest extends TestCase
                             new Response(
                                 200,
                                 [],
-                                Psr7\stream_for(json_encode($credentials))
+                                Psr7\Utils::streamFor(json_encode($credentials))
                             )
                         );
                     }

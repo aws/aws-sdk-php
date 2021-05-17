@@ -201,7 +201,7 @@ class SignatureV4 implements SignatureInterface
         }
 
         $sr = $request->withMethod('GET')
-            ->withBody(Psr7\stream_for(''))
+            ->withBody(Psr7\Utils::streamFor(''))
             ->withoutHeader('Content-Type')
             ->withoutHeader('Content-Length');
 
@@ -230,7 +230,7 @@ class SignatureV4 implements SignatureInterface
         }
 
         try {
-            return Psr7\hash($request->getBody(), 'sha256');
+            return Psr7\Utils::hash($request->getBody(), 'sha256');
         } catch (\Exception $e) {
             throw new CouldNotCreateChecksumException('sha256', $e);
         }
@@ -395,7 +395,7 @@ class SignatureV4 implements SignatureInterface
         return [
             'method'  => $request->getMethod(),
             'path'    => $uri->getPath(),
-            'query'   => Psr7\parse_query($uri->getQuery()),
+            'query'   => Psr7\Query::parse($uri->getQuery()),
             'uri'     => $uri,
             'headers' => $request->getHeaders(),
             'body'    => $request->getBody(),
@@ -406,7 +406,7 @@ class SignatureV4 implements SignatureInterface
     private function buildRequest(array $req)
     {
         if ($req['query']) {
-            $req['uri'] = $req['uri']->withQuery(Psr7\build_query($req['query']));
+            $req['uri'] = $req['uri']->withQuery(Psr7\Query::build($req['query']));
         }
 
         return new Psr7\Request(

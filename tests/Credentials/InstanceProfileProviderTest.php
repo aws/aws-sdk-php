@@ -127,7 +127,7 @@ class InstanceProfileProviderTest extends TestCase
                         new Response(
                             200,
                             [],
-                            Psr7\stream_for('MOCK_TOKEN_VALUE')
+                            Psr7\Utils::streamFor('MOCK_TOKEN_VALUE')
                         )
                     );
                 }
@@ -159,7 +159,7 @@ class InstanceProfileProviderTest extends TestCase
                             return $responses['get_profile'][$getProfileRequests++];
                         }
                         return Promise\promise_for(
-                            new Response(200, [], Psr7\stream_for($profile))
+                            new Response(200, [], Psr7\Utils::streamFor($profile))
                         );
                         break;
 
@@ -172,7 +172,7 @@ class InstanceProfileProviderTest extends TestCase
                             new Response(
                                 200,
                                 [],
-                                Psr7\stream_for(
+                                Psr7\Utils::streamFor(
                                     json_encode(call_user_func_array(
                                         [$this, 'getCredentialArray'],
                                         $creds
@@ -256,7 +256,7 @@ class InstanceProfileProviderTest extends TestCase
                             return $responses['get_profile'][$getProfileRequests++];
                         }
                         return Promise\promise_for(
-                            new Response(200, [], Psr7\stream_for($profile))
+                            new Response(200, [], Psr7\Utils::streamFor($profile))
                         );
                         break;
 
@@ -269,7 +269,7 @@ class InstanceProfileProviderTest extends TestCase
                             new Response(
                                 200,
                                 [],
-                                Psr7\stream_for(
+                                Psr7\Utils::streamFor(
                                     json_encode(call_user_func_array(
                                         [$this, 'getCredentialArray'],
                                         $creds
@@ -348,10 +348,10 @@ class InstanceProfileProviderTest extends TestCase
         );
 
         $promiseProfile = Promise\promise_for(
-            new Response(200, [], Psr7\stream_for('MockProfile'))
+            new Response(200, [], Psr7\Utils::streamFor('MockProfile'))
         );
         $promiseCreds = Promise\promise_for(
-            new Response(200, [], Psr7\stream_for(
+            new Response(200, [], Psr7\Utils::streamFor(
                 json_encode(call_user_func_array(
                     [$this, 'getCredentialArray'],
                     $creds
@@ -359,7 +359,7 @@ class InstanceProfileProviderTest extends TestCase
             )
         );
         $promiseBadJsonCreds = Promise\promise_for(
-            new Response(200, [], Psr7\stream_for('{'))
+            new Response(200, [], Psr7\Utils::streamFor('{'))
         );
 
         $rejectionThrottleProfile = Promise\rejection_for([
@@ -391,7 +391,7 @@ class InstanceProfileProviderTest extends TestCase
                                 'exception' => $putThrottleException
                             ]),
                             Promise\promise_for(
-                                new Response(200, [], Psr7\stream_for('MOCK_TOKEN_VALUE'))
+                                new Response(200, [], Psr7\Utils::streamFor('MOCK_TOKEN_VALUE'))
                             )
                         ],
                         'get_profile' => [
@@ -467,7 +467,7 @@ class InstanceProfileProviderTest extends TestCase
                                 'exception' => $putThrottleException
                             ]),
                             Promise\promise_for(
-                                new Response(200, [], Psr7\stream_for('MOCK_TOKEN_VALUE'))
+                                new Response(200, [], Psr7\Utils::streamFor('MOCK_TOKEN_VALUE'))
                             )
                         ],
                         'get_profile' => [
@@ -538,7 +538,7 @@ class InstanceProfileProviderTest extends TestCase
         $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
 
         $promiseBadJsonCreds = Promise\promise_for(
-            new Response(200, [], Psr7\stream_for('{'))
+            new Response(200, [], Psr7\Utils::streamFor('{'))
         );
         $rejectionThrottleToken = Promise\rejection_for([
             'exception' => new RequestException(
@@ -870,7 +870,7 @@ class InstanceProfileProviderTest extends TestCase
 
     public function testAddsUserAgentToRequest()
     {
-        $response = new Response(200, [], Psr7\stream_for('test'));
+        $response = new Response(200, [], Psr7\Utils::streamFor('test'));
         $client = function (RequestInterface $request) use ($response) {
             $this->assertSame(
                 'aws-sdk-php/' . Sdk::VERSION . ' ' . \Aws\default_user_agent(),
@@ -941,7 +941,7 @@ class InstanceProfileProviderTest extends TestCase
 
         $t = time() + 1000;
         $result = json_encode($this->getCredentialArray('foo', 'baz', null, "@{$t}"));
-        $responses = [new Response(200, [], Psr7\stream_for($result))];
+        $responses = [new Response(200, [], Psr7\Utils::streamFor($result))];
 
         $client = function () use (&$retries, $responses) {
             if (0 === $retries--) {

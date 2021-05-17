@@ -103,9 +103,9 @@ class LogRecordIteratorTest extends TestCase
         ]);
 
         $this->addMockResults($client, [
-            new Result(['Body' => Psr7\stream_for('{"Records":[{"r1":"r1"},{"r2":"r2"},{"r3":"r3"}]}')]),
-            new Result(['Body' => Psr7\stream_for('{}')]),
-            new Result(['Body' => Psr7\stream_for('{"Records":[{"r4":"r4"},{"r5":"r5"}]}')]),
+            new Result(['Body' => Psr7\Utils::streamFor('{"Records":[{"r1":"r1"},{"r2":"r2"},{"r3":"r3"}]}')]),
+            new Result(['Body' => Psr7\Utils::streamFor('{}')]),
+            new Result(['Body' => Psr7\Utils::streamFor('{"Records":[{"r4":"r4"},{"r5":"r5"}]}')]),
         ]);
 
         return $client;

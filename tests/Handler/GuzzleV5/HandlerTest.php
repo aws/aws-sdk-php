@@ -36,7 +36,7 @@ class HandlerTest extends TestCase
         $deferred = new Deferred();
         $handler = $this->getHandler($deferred);
         $request = new PsrRequest('PUT', 'http://example.com', [], '{}');
-        $sink = Psr7\stream_for();
+        $sink = Psr7\Utils::streamFor();
 
         $promise = $handler($request, ['delay' => 500, 'sink' => $sink]);
         $this->assertInstanceOf('GuzzleHttp\\Promise\\PromiseInterface', $promise);
@@ -138,7 +138,7 @@ EOXML;
     public function testHandlerWorksWithFailedRequestStreamSink()
     {
         $xml = $this->getErrorXml();
-        $sink = Psr7\stream_for();
+        $sink = Psr7\Utils::streamFor();
         $deferred = new Deferred();
         $handler = $this->getHandler($deferred, $xml);
         $wasRejected = false;
