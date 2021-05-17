@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.182.0 - 2021-05-17
 
 * `Aws\` - Performed the migration to static API to in order to use the future versions Guzzle\Psr7 using the [migration guide](https://github.com/guzzle/psr7#upgrading-from-function-api).
 * `Aws\Api` - Fixed a bug where certain characters weren't escaped in the XML encoding
