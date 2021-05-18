@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.0 - 2021-05-18
 
 * `Aws\AppRunner` - AWS App Runner is a service that provides a fast, simple, and cost-effective way to deploy from source code or a container image directly to a scalable and secure web application in the AWS Cloud.
 * `Aws\ComputeOptimizer` - This release enables compute optimizer to support exporting recommendations to Amazon S3 for EBS volumes and Lambda Functions.
