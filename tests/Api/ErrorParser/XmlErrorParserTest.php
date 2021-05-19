@@ -28,7 +28,7 @@ class XmlErrorParserTest extends TestCase
         $expected,
         $expectedParsedType
     ) {
-        $response = Psr7\parse_response($response);
+        $response = Psr7\Message::parseResponse($response);
         $result = $parser($response, $command);
         $this->assertArraySubset($expected, $result);
 
@@ -333,7 +333,7 @@ class XmlErrorParserTest extends TestCase
 
     public function testParsesResponsesWithNoBodyAndNoRequestId()
     {
-        $response = Psr7\parse_response(
+        $response = Psr7\Message::parseResponse(
             "HTTP/1.1 400 Bad Request\r\n\r\n"
         );
         $parser = new XmlErrorParser();
@@ -344,7 +344,7 @@ class XmlErrorParserTest extends TestCase
 
     public function testParsesResponsesWithNoBody()
     {
-        $response = $response = Psr7\parse_response(
+        $response = $response = Psr7\Message::parseResponse(
             "HTTP/1.1 400 Bad Request\r\nX-Amz-Request-ID: Foo\r\n\r\n"
         );
         $parser = new XmlErrorParser();
@@ -355,7 +355,7 @@ class XmlErrorParserTest extends TestCase
 
     public function testUsesNotFoundWhen404()
     {
-        $response = $response = Psr7\parse_response(
+        $response = $response = Psr7\Message::parseResponse(
             "HTTP/1.1 404 Not Found\r\nX-Amz-Request-ID: Foo\r\n\r\n"
         );
         $parser = new XmlErrorParser();

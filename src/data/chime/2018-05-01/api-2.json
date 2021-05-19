@@ -109,6 +109,25 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "BatchCreateChannelMembership":{
+      "name":"BatchCreateChannelMembership",
+      "http":{
+        "method":"POST",
+        "requestUri":"/channels/{channelArn}/memberships?operation=batch-create",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchCreateChannelMembershipRequest"},
+      "output":{"shape":"BatchCreateChannelMembershipResponse"},
+      "errors":[
+        {"shape":"ServiceFailureException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ThrottledClientException"}
+      ],
+      "endpoint":{"hostPrefix":"messaging-"}
+    },
     "BatchCreateRoomMembership":{
       "name":"BatchCreateRoomMembership",
       "http":{
@@ -846,6 +865,7 @@
         {"shape":"BadRequestException"},
         {"shape":"ForbiddenException"},
         {"shape":"UnauthorizedClientException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottledClientException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
@@ -2461,6 +2481,25 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "ListSupportedPhoneNumberCountries":{
+      "name":"ListSupportedPhoneNumberCountries",
+      "http":{
+        "method":"GET",
+        "requestUri":"/phone-number-countries",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSupportedPhoneNumberCountriesRequest"},
+      "output":{"shape":"ListSupportedPhoneNumberCountriesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -3747,6 +3786,15 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "BatchChannelMemberships":{
+      "type":"structure",
+      "members":{
+        "InvitedBy":{"shape":"Identity"},
+        "Type":{"shape":"ChannelMembershipType"},
+        "Members":{"shape":"Members"},
+        "ChannelArn":{"shape":"ChimeArn"}
+      }
+    },
     "BatchCreateAttendeeErrorList":{
       "type":"list",
       "member":{"shape":"CreateAttendeeError"}
@@ -3771,6 +3819,46 @@
       "members":{
         "Attendees":{"shape":"AttendeeList"},
         "Errors":{"shape":"BatchCreateAttendeeErrorList"}
+      }
+    },
+    "BatchCreateChannelMembershipError":{
+      "type":"structure",
+      "members":{
+        "MemberArn":{"shape":"ChimeArn"},
+        "ErrorCode":{"shape":"ErrorCode"},
+        "ErrorMessage":{"shape":"String"}
+      }
+    },
+    "BatchCreateChannelMembershipErrors":{
+      "type":"list",
+      "member":{"shape":"BatchCreateChannelMembershipError"}
+    },
+    "BatchCreateChannelMembershipRequest":{
+      "type":"structure",
+      "required":[
+        "ChannelArn",
+        "MemberArns"
+      ],
+      "members":{
+        "ChannelArn":{
+          "shape":"ChimeArn",
+          "location":"uri",
+          "locationName":"channelArn"
+        },
+        "Type":{"shape":"ChannelMembershipType"},
+        "MemberArns":{"shape":"MemberArns"},
+        "ChimeBearer":{
+          "shape":"ChimeArn",
+          "location":"header",
+          "locationName":"x-amz-chime-bearer"
+        }
+      }
+    },
+    "BatchCreateChannelMembershipResponse":{
+      "type":"structure",
+      "members":{
+        "BatchChannelMemberships":{"shape":"BatchChannelMemberships"},
+        "Errors":{"shape":"BatchCreateChannelMembershipErrors"}
       }
     },
     "BatchCreateRoomMembershipRequest":{
@@ -6957,6 +7045,23 @@
         "NextToken":{"shape":"NextTokenString"}
       }
     },
+    "ListSupportedPhoneNumberCountriesRequest":{
+      "type":"structure",
+      "required":["ProductType"],
+      "members":{
+        "ProductType":{
+          "shape":"PhoneNumberProductType",
+          "location":"querystring",
+          "locationName":"product-type"
+        }
+      }
+    },
+    "ListSupportedPhoneNumberCountriesResponse":{
+      "type":"structure",
+      "members":{
+        "PhoneNumberCountries":{"shape":"PhoneNumberCountriesList"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["ResourceARN"],
@@ -7162,6 +7267,12 @@
         "AccountId":{"shape":"NonEmptyString"}
       }
     },
+    "MemberArns":{
+      "type":"list",
+      "member":{"shape":"ChimeArn"},
+      "max":100,
+      "min":1
+    },
     "MemberError":{
       "type":"structure",
       "members":{
@@ -7181,6 +7292,10 @@
         "Bot",
         "Webhook"
       ]
+    },
+    "Members":{
+      "type":"list",
+      "member":{"shape":"Identity"}
     },
     "MembershipItem":{
       "type":"structure",
@@ -7357,6 +7472,7 @@
       "members":{
         "PhoneNumberId":{"shape":"String"},
         "E164PhoneNumber":{"shape":"E164PhoneNumber"},
+        "Country":{"shape":"Alpha2CountryCode"},
         "Type":{"shape":"PhoneNumberType"},
         "ProductType":{"shape":"PhoneNumberProductType"},
         "Status":{"shape":"PhoneNumberStatus"},
@@ -7400,6 +7516,17 @@
         "OutboundSMS":{"shape":"NullableBoolean"},
         "InboundMMS":{"shape":"NullableBoolean"},
         "OutboundMMS":{"shape":"NullableBoolean"}
+      }
+    },
+    "PhoneNumberCountriesList":{
+      "type":"list",
+      "member":{"shape":"PhoneNumberCountry"}
+    },
+    "PhoneNumberCountry":{
+      "type":"structure",
+      "members":{
+        "CountryCode":{"shape":"Alpha2CountryCode"},
+        "SupportedPhoneNumberTypes":{"shape":"PhoneNumberTypeList"}
       }
     },
     "PhoneNumberError":{
@@ -7451,7 +7578,8 @@
       "type":"string",
       "enum":[
         "BusinessCalling",
-        "VoiceConnector"
+        "VoiceConnector",
+        "SipMediaApplicationDialIn"
       ]
     },
     "PhoneNumberStatus":{
@@ -7473,6 +7601,10 @@
         "Local",
         "TollFree"
       ]
+    },
+    "PhoneNumberTypeList":{
+      "type":"list",
+      "member":{"shape":"PhoneNumberType"}
     },
     "Port":{
       "type":"integer",
@@ -8039,7 +8171,7 @@
           "locationName":"city"
         },
         "Country":{
-          "shape":"String",
+          "shape":"Alpha2CountryCode",
           "location":"querystring",
           "locationName":"country"
         },
@@ -8052,6 +8184,11 @@
           "shape":"TollFreePrefix",
           "location":"querystring",
           "locationName":"toll-free-prefix"
+        },
+        "PhoneNumberType":{
+          "shape":"PhoneNumberType",
+          "location":"querystring",
+          "locationName":"phone-number-type"
         },
         "MaxResults":{
           "shape":"PhoneNumberMaxResults",
@@ -8068,7 +8205,8 @@
     "SearchAvailablePhoneNumbersResponse":{
       "type":"structure",
       "members":{
-        "E164PhoneNumbers":{"shape":"E164PhoneNumberList"}
+        "E164PhoneNumbers":{"shape":"E164PhoneNumberList"},
+        "NextToken":{"shape":"String"}
       }
     },
     "SendChannelMessageRequest":{
@@ -8994,9 +9132,9 @@
     },
     "UserId":{
       "type":"string",
-      "max":50,
+      "max":64,
       "min":1,
-      "pattern":"[A-Za-z0-9][A-Za-z0-9\\:\\-\\_\\.\\@]{3,50}[A-Za-z0-9]",
+      "pattern":"[A-Za-z0-9]([A-Za-z0-9\\:\\-\\_\\.\\@]{0,62}[A-Za-z0-9])?",
       "sensitive":true
     },
     "UserIdList":{

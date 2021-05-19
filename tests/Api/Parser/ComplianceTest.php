@@ -96,7 +96,7 @@ class ComplianceTest extends TestCase
         $response = new Psr7\Response(
             $res['status_code'],
             $res['headers'],
-            Psr7\stream_for($res['body'])
+            Psr7\Utils::streamFor($res['body'])
         );
 
         if (!is_null($errorCode)) {

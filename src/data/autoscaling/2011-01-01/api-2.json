@@ -246,6 +246,24 @@
         {"shape":"ResourceInUseFault"}
       ]
     },
+    "DeleteWarmPool":{
+      "name":"DeleteWarmPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteWarmPoolType"},
+      "output":{
+        "shape":"DeleteWarmPoolAnswer",
+        "resultWrapper":"DeleteWarmPoolResult"
+      },
+      "errors":[
+        {"shape":"LimitExceededFault"},
+        {"shape":"ResourceContentionFault"},
+        {"shape":"ScalingActivityInProgressFault"},
+        {"shape":"ResourceInUseFault"}
+      ]
+    },
     "DescribeAccountLimits":{
       "name":"DescribeAccountLimits",
       "http":{
@@ -534,6 +552,23 @@
         {"shape":"ResourceContentionFault"}
       ]
     },
+    "DescribeWarmPool":{
+      "name":"DescribeWarmPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeWarmPoolType"},
+      "output":{
+        "shape":"DescribeWarmPoolAnswer",
+        "resultWrapper":"DescribeWarmPoolResult"
+      },
+      "errors":[
+        {"shape":"InvalidNextToken"},
+        {"shape":"LimitExceededFault"},
+        {"shape":"ResourceContentionFault"}
+      ]
+    },
     "DetachInstances":{
       "name":"DetachInstances",
       "http":{
@@ -698,6 +733,22 @@
       "input":{"shape":"PutScheduledUpdateGroupActionType"},
       "errors":[
         {"shape":"AlreadyExistsFault"},
+        {"shape":"LimitExceededFault"},
+        {"shape":"ResourceContentionFault"}
+      ]
+    },
+    "PutWarmPool":{
+      "name":"PutWarmPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutWarmPoolType"},
+      "output":{
+        "shape":"PutWarmPoolAnswer",
+        "resultWrapper":"PutWarmPoolResult"
+      },
+      "errors":[
         {"shape":"LimitExceededFault"},
         {"shape":"ResourceContentionFault"}
       ]
@@ -871,7 +922,9 @@
         "StatusCode":{"shape":"ScalingActivityStatusCode"},
         "StatusMessage":{"shape":"XmlStringMaxLen255"},
         "Progress":{"shape":"Progress"},
-        "Details":{"shape":"XmlString"}
+        "Details":{"shape":"XmlString"},
+        "AutoScalingGroupState":{"shape":"AutoScalingGroupState"},
+        "AutoScalingGroupARN":{"shape":"ResourceName"}
       }
     },
     "ActivityIds":{
@@ -1003,7 +1056,9 @@
         "NewInstancesProtectedFromScaleIn":{"shape":"InstanceProtected"},
         "ServiceLinkedRoleARN":{"shape":"ResourceName"},
         "MaxInstanceLifetime":{"shape":"MaxInstanceLifetime"},
-        "CapacityRebalance":{"shape":"CapacityRebalanceEnabled"}
+        "CapacityRebalance":{"shape":"CapacityRebalanceEnabled"},
+        "WarmPoolConfiguration":{"shape":"WarmPoolConfiguration"},
+        "WarmPoolSize":{"shape":"WarmPoolSize"}
       }
     },
     "AutoScalingGroupDesiredCapacity":{"type":"integer"},
@@ -1020,6 +1075,11 @@
         "NextToken":{"shape":"XmlString"},
         "MaxRecords":{"shape":"MaxRecords"}
       }
+    },
+    "AutoScalingGroupState":{
+      "type":"string",
+      "max":32,
+      "min":1
     },
     "AutoScalingGroups":{
       "type":"list",
@@ -1154,6 +1214,15 @@
       }
     },
     "CapacityRebalanceEnabled":{"type":"boolean"},
+    "CheckpointDelay":{
+      "type":"integer",
+      "max":172800,
+      "min":0
+    },
+    "CheckpointPercentages":{
+      "type":"list",
+      "member":{"shape":"NonZeroIntPercent"}
+    },
     "ClassicLinkVPCSecurityGroups":{
       "type":"list",
       "member":{"shape":"XmlStringMaxLen255"}
@@ -1320,6 +1389,19 @@
         "Tags":{"shape":"Tags"}
       }
     },
+    "DeleteWarmPoolAnswer":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteWarmPoolType":{
+      "type":"structure",
+      "required":["AutoScalingGroupName"],
+      "members":{
+        "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
+        "ForceDelete":{"shape":"ForceDelete"}
+      }
+    },
     "DescribeAccountLimitsAnswer":{
       "type":"structure",
       "members":{
@@ -1456,6 +1538,7 @@
       "members":{
         "ActivityIds":{"shape":"ActivityIds"},
         "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
+        "IncludeDeletedGroups":{"shape":"IncludeDeletedGroups"},
         "MaxRecords":{"shape":"MaxRecords"},
         "NextToken":{"shape":"XmlString"}
       }
@@ -1483,6 +1566,23 @@
       "type":"structure",
       "members":{
         "TerminationPolicyTypes":{"shape":"TerminationPolicies"}
+      }
+    },
+    "DescribeWarmPoolAnswer":{
+      "type":"structure",
+      "members":{
+        "WarmPoolConfiguration":{"shape":"WarmPoolConfiguration"},
+        "Instances":{"shape":"Instances"},
+        "NextToken":{"shape":"XmlString"}
+      }
+    },
+    "DescribeWarmPoolType":{
+      "type":"structure",
+      "required":["AutoScalingGroupName"],
+      "members":{
+        "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
+        "MaxRecords":{"shape":"MaxRecords"},
+        "NextToken":{"shape":"XmlString"}
       }
     },
     "DetachInstancesAnswer":{
@@ -1652,6 +1752,7 @@
     "HealthCheckGracePeriod":{"type":"integer"},
     "HeartbeatTimeout":{"type":"integer"},
     "HonorCooldown":{"type":"boolean"},
+    "IncludeDeletedGroups":{"type":"boolean"},
     "Instance":{
       "type":"structure",
       "required":[
@@ -1721,7 +1822,8 @@
         "StartTime":{"shape":"TimestampType"},
         "EndTime":{"shape":"TimestampType"},
         "PercentageComplete":{"shape":"IntPercent"},
-        "InstancesToUpdate":{"shape":"InstancesToUpdate"}
+        "InstancesToUpdate":{"shape":"InstancesToUpdate"},
+        "ProgressDetails":{"shape":"InstanceRefreshProgressDetails"}
       }
     },
     "InstanceRefreshIds":{
@@ -1740,6 +1842,20 @@
       },
       "exception":true
     },
+    "InstanceRefreshLivePoolProgress":{
+      "type":"structure",
+      "members":{
+        "PercentageComplete":{"shape":"IntPercent"},
+        "InstancesToUpdate":{"shape":"InstancesToUpdate"}
+      }
+    },
+    "InstanceRefreshProgressDetails":{
+      "type":"structure",
+      "members":{
+        "LivePoolProgress":{"shape":"InstanceRefreshLivePoolProgress"},
+        "WarmPoolProgress":{"shape":"InstanceRefreshWarmPoolProgress"}
+      }
+    },
     "InstanceRefreshStatus":{
       "type":"string",
       "enum":[
@@ -1750,6 +1866,13 @@
         "Cancelling",
         "Cancelled"
       ]
+    },
+    "InstanceRefreshWarmPoolProgress":{
+      "type":"structure",
+      "members":{
+        "PercentageComplete":{"shape":"IntPercent"},
+        "InstancesToUpdate":{"shape":"InstancesToUpdate"}
+      }
     },
     "InstanceRefreshes":{
       "type":"list",
@@ -1946,7 +2069,16 @@
         "Detaching",
         "Detached",
         "EnteringStandby",
-        "Standby"
+        "Standby",
+        "Warmed:Pending",
+        "Warmed:Pending:Wait",
+        "Warmed:Pending:Proceed",
+        "Warmed:Terminating",
+        "Warmed:Terminating:Wait",
+        "Warmed:Terminating:Proceed",
+        "Warmed:Terminated",
+        "Warmed:Stopped",
+        "Warmed:Running"
       ]
     },
     "LifecycleTransition":{"type":"string"},
@@ -1987,6 +2119,10 @@
     "LoadBalancerTargetGroupStates":{
       "type":"list",
       "member":{"shape":"LoadBalancerTargetGroupState"}
+    },
+    "MaxGroupPreparedCapacity":{
+      "type":"integer",
+      "min":-1
     },
     "MaxInstanceLifetime":{"type":"integer"},
     "MaxNumberOfAutoScalingGroups":{"type":"integer"},
@@ -2075,6 +2211,11 @@
     },
     "MonitoringEnabled":{"type":"boolean"},
     "NoDevice":{"type":"boolean"},
+    "NonZeroIntPercent":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
     "NotificationConfiguration":{
       "type":"structure",
       "members":{
@@ -2228,7 +2369,23 @@
         "Recurrence":{"shape":"XmlStringMaxLen255"},
         "MinSize":{"shape":"AutoScalingGroupMinSize"},
         "MaxSize":{"shape":"AutoScalingGroupMaxSize"},
-        "DesiredCapacity":{"shape":"AutoScalingGroupDesiredCapacity"}
+        "DesiredCapacity":{"shape":"AutoScalingGroupDesiredCapacity"},
+        "TimeZone":{"shape":"XmlStringMaxLen255"}
+      }
+    },
+    "PutWarmPoolAnswer":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "PutWarmPoolType":{
+      "type":"structure",
+      "required":["AutoScalingGroupName"],
+      "members":{
+        "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
+        "MaxGroupPreparedCapacity":{"shape":"MaxGroupPreparedCapacity"},
+        "MinSize":{"shape":"WarmPoolMinSize"},
+        "PoolState":{"shape":"WarmPoolState"}
       }
     },
     "RecordLifecycleActionHeartbeatAnswer":{
@@ -2257,7 +2414,9 @@
       "type":"structure",
       "members":{
         "MinHealthyPercentage":{"shape":"IntPercent"},
-        "InstanceWarmup":{"shape":"RefreshInstanceWarmup"}
+        "InstanceWarmup":{"shape":"RefreshInstanceWarmup"},
+        "CheckpointPercentages":{"shape":"CheckpointPercentages"},
+        "CheckpointDelay":{"shape":"CheckpointDelay"}
       }
     },
     "RefreshStrategy":{
@@ -2379,7 +2538,8 @@
         "Recurrence":{"shape":"XmlStringMaxLen255"},
         "MinSize":{"shape":"AutoScalingGroupMinSize"},
         "MaxSize":{"shape":"AutoScalingGroupMaxSize"},
-        "DesiredCapacity":{"shape":"AutoScalingGroupDesiredCapacity"}
+        "DesiredCapacity":{"shape":"AutoScalingGroupDesiredCapacity"},
+        "TimeZone":{"shape":"XmlStringMaxLen255"}
       }
     },
     "ScheduledUpdateGroupActionRequest":{
@@ -2392,7 +2552,8 @@
         "Recurrence":{"shape":"XmlStringMaxLen255"},
         "MinSize":{"shape":"AutoScalingGroupMinSize"},
         "MaxSize":{"shape":"AutoScalingGroupMaxSize"},
-        "DesiredCapacity":{"shape":"AutoScalingGroupDesiredCapacity"}
+        "DesiredCapacity":{"shape":"AutoScalingGroupDesiredCapacity"},
+        "TimeZone":{"shape":"XmlStringMaxLen255"}
       }
     },
     "ScheduledUpdateGroupActionRequests":{
@@ -2613,6 +2774,31 @@
     "Values":{
       "type":"list",
       "member":{"shape":"XmlString"}
+    },
+    "WarmPoolConfiguration":{
+      "type":"structure",
+      "members":{
+        "MaxGroupPreparedCapacity":{"shape":"MaxGroupPreparedCapacity"},
+        "MinSize":{"shape":"WarmPoolMinSize"},
+        "PoolState":{"shape":"WarmPoolState"},
+        "Status":{"shape":"WarmPoolStatus"}
+      }
+    },
+    "WarmPoolMinSize":{
+      "type":"integer",
+      "min":0
+    },
+    "WarmPoolSize":{"type":"integer"},
+    "WarmPoolState":{
+      "type":"string",
+      "enum":[
+        "Stopped",
+        "Running"
+      ]
+    },
+    "WarmPoolStatus":{
+      "type":"string",
+      "enum":["PendingDelete"]
     },
     "XmlString":{
       "type":"string",

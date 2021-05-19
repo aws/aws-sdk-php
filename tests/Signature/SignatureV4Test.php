@@ -229,7 +229,7 @@ class SignatureV4Test extends TestCase
         $_SERVER['override_v4_time'] = true;
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
-        $query = Psr7\parse_query(
+        $query = Psr7\Query::parse(
             $signature->presign($request, $credentials, 1386720000)
                 ->getUri()
                 ->getQuery()
@@ -314,7 +314,7 @@ class SignatureV4Test extends TestCase
     public function testEnsuresContentSha256CanBeCalculated()
     {
         list($request, $credentials, $signature) = $this->getFixtures();
-        $request = $request->withBody(new NoSeekStream(Psr7\stream_for('foo')));
+        $request = $request->withBody(new NoSeekStream(Psr7\Utils::streamFor('foo')));
         $signature->signRequest($request, $credentials);
     }
 
@@ -324,7 +324,7 @@ class SignatureV4Test extends TestCase
     public function testEnsuresContentSha256CanBeCalculatedWhenSeekFails()
     {
         list($request, $credentials, $signature) = $this->getFixtures();
-        $stream = Psr7\FnStream::decorate(Psr7\stream_for('foo'), [
+        $stream = Psr7\FnStream::decorate(Psr7\Utils::streamFor('foo'), [
             'seek' => function () {
                 throw new \Exception('Could not seek');
             }
@@ -395,7 +395,7 @@ class SignatureV4Test extends TestCase
         $_SERVER['aws_time'] = '20110909T233600Z';
         $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
         $signature = new SignatureV4('host', 'us-east-1', ['unsigned-body' => 'true']);
-        $request = Psr7\parse_request($req);
+        $request = Psr7\Message::parseRequest($req);
         $contextFn = new \ReflectionMethod($signature, 'createContext');
         $contextFn->setAccessible(true);
         $parseFn = new \ReflectionMethod($signature, 'parseRequest');
@@ -407,7 +407,7 @@ class SignatureV4Test extends TestCase
         $this->assertSame('UNSIGNED-PAYLOAD',$payload);
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
-        $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));
+        $this->assertSame($sreq, Psr7\Message::toString($signature->signRequest($request, $credentials)));
     }
 
     public function testProvider()
@@ -520,7 +520,7 @@ class SignatureV4Test extends TestCase
         $_SERVER['aws_time'] = '20110909T233600Z';
         $credentials = new Credentials(self::DEFAULT_KEY, self::DEFAULT_SECRET);
         $signature = new SignatureV4('host', 'us-east-1');
-        $request = Psr7\parse_request($req);
+        $request = Psr7\Message::parseRequest($req);
         $contextFn = new \ReflectionMethod($signature, 'createContext');
         $contextFn->setAccessible(true);
         $parseFn = new \ReflectionMethod($signature, 'parseRequest');
@@ -531,6 +531,6 @@ class SignatureV4Test extends TestCase
         $payload = $payloadFn->invoke($signature, $request);
         $ctx = $contextFn->invoke($signature, $parsed, $payload);
         $this->assertEquals($creq, $ctx['creq']);
-        $this->assertSame($sreq, Psr7\str($signature->signRequest($request, $credentials)));
+        $this->assertSame($sreq, Psr7\Message::toString($signature->signRequest($request, $credentials)));
     }
 }

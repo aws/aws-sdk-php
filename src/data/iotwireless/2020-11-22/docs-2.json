@@ -96,9 +96,9 @@
     "AmazonResourceName": {
       "base": null,
       "refs": {
-        "ListTagsForResourceRequest$ResourceArn": "<p>The ARN of the resource for which to list tags.</p>",
+        "ListTagsForResourceRequest$ResourceArn": "<p>The ARN of the resource for which you want to list tags.</p>",
         "TagResourceRequest$ResourceArn": "<p>The ARN of the resource to add tags to.</p>",
-        "TooManyTagsException$ResourceName": null,
+        "TooManyTagsException$ResourceName": "<p>Name of the resource that exceeds maximum number of tags allowed.</p>",
         "UntagResourceRequest$ResourceArn": "<p>The ARN of the resource to remove tags from.</p>"
       }
     },
@@ -176,10 +176,28 @@
         "GetWirelessGatewayTaskDefinitionResponse$AutoCreateTasks": "<p>Whether to automatically create tasks using this task definition for all gateways with the specified current version. If <code>false</code>, the task must me created by calling <code>CreateWirelessGatewayTask</code>.</p>"
       }
     },
+    "BatteryLevel": {
+      "base": "<p>Sidewalk device battery level.</p>",
+      "refs": {
+        "SidewalkDeviceMetadata$BatteryLevel": "<p>Sidewalk device battery level.</p>"
+      }
+    },
+    "CertificateList": {
+      "base": "<p>List of sidewalk certificates.</p>",
+      "refs": {
+        "DeviceCertificateList$member": null
+      }
+    },
     "CertificatePEM": {
       "base": null,
       "refs": {
         "GetServiceEndpointResponse$ServerTrust": "<p>The Root CA of the server trust certificate.</p>"
+      }
+    },
+    "CertificateValue": {
+      "base": "<p>Certificate value.</p>",
+      "refs": {
+        "CertificateList$Value": "<p>The value of the chosen sidewalk certificate.</p>"
       }
     },
     "ChannelMask": {
@@ -215,6 +233,12 @@
     "ConflictException": {
       "base": "<p>Adding, updating, or deleting the resource can cause an inconsistent state.</p>",
       "refs": {
+      }
+    },
+    "ConnectionStatus": {
+      "base": null,
+      "refs": {
+        "GetWirelessGatewayStatisticsResponse$ConnectionStatus": "<p>The connection status of the wireless gateway.</p>"
       }
     },
     "Crc": {
@@ -437,6 +461,13 @@
         "LoRaWANGetServiceProfileInfo$DevStatusReqFreq": "<p>The DevStatusReqFreq value.</p>"
       }
     },
+    "DeviceCertificateList": {
+      "base": "<p>List of device certificate chain.</p>",
+      "refs": {
+        "SidewalkDevice$DeviceCertificates": "<p>The sidewalk device certificates for Ed25519 and P256r1.</p>",
+        "SidewalkListDevice$DeviceCertificates": "<p>The sidewalk device certificates for Ed25519 and P256r1.</p>"
+      }
+    },
     "DeviceProfile": {
       "base": "<p>Describes a device profile.</p>",
       "refs": {
@@ -476,6 +507,12 @@
         "CreateDeviceProfileRequest$Name": "<p>The name of the new resource.</p>",
         "DeviceProfile$Name": "<p>The name of the resource.</p>",
         "GetDeviceProfileResponse$Name": "<p>The name of the resource.</p>"
+      }
+    },
+    "DeviceState": {
+      "base": "<p>Device state defines the device status of sidewalk device.</p>",
+      "refs": {
+        "SidewalkDeviceMetadata$DeviceState": "<p>Device state defines the device status of sidewalk device.</p>"
       }
     },
     "DisassociateAwsAccountFromPartnerAccountRequest": {
@@ -559,6 +596,12 @@
       "base": null,
       "refs": {
         "GetServiceEndpointResponse$ServiceEndpoint": "<p>The service endpoint value.</p>"
+      }
+    },
+    "Event": {
+      "base": "<p>Sidewalk device status notification.</p>",
+      "refs": {
+        "SidewalkDeviceMetadata$Event": "<p>Sidewalk device status notification.</p>"
       }
     },
     "Expression": {
@@ -770,7 +813,8 @@
       "refs": {
         "LoRaWANDeviceMetadata$FPort": "<p>The FPort value.</p>",
         "LoRaWANDeviceMetadata$DataRate": "<p>The DataRate value.</p>",
-        "LoRaWANDeviceMetadata$Frequency": "<p>The device's channel frequency in Hz.</p>"
+        "LoRaWANDeviceMetadata$Frequency": "<p>The device's channel frequency in Hz.</p>",
+        "SidewalkDeviceMetadata$Rssi": "<p>The RSSI value.</p>"
       }
     },
     "InternalServerException": {
@@ -784,13 +828,27 @@
         "AssociateWirelessGatewayWithCertificateRequest$IotCertificateId": "<p>The ID of the certificate to associate with the wireless gateway.</p>",
         "AssociateWirelessGatewayWithCertificateResponse$IotCertificateId": "<p>The ID of the certificate associated with the wireless gateway.</p>",
         "GetWirelessGatewayCertificateResponse$IotCertificateId": "<p>The ID of the certificate associated with the wireless gateway.</p>",
-        "GetWirelessGatewayCertificateResponse$LoRaWANNetworkServerCertificateId": "<p>The ID of the certificate associated with the wireless gateway and used for LoRaWANNetworkServer endpoint.</p>"
+        "GetWirelessGatewayCertificateResponse$LoRaWANNetworkServerCertificateId": "<p>The ID of the certificate that is associated with the wireless gateway and used for the LoRaWANNetworkServer endpoint.</p>"
       }
     },
     "JoinEui": {
       "base": null,
       "refs": {
+        "JoinEuiRange$member": null,
         "OtaaV1_1$JoinEui": "<p>The JoinEUI value.</p>"
+      }
+    },
+    "JoinEuiFilters": {
+      "base": "<p>A list of JoinEuiRange used by LoRa gateways to filter LoRa frames.</p>",
+      "refs": {
+        "LoRaWANGateway$JoinEuiFilters": null,
+        "UpdateWirelessGatewayRequest$JoinEuiFilters": null
+      }
+    },
+    "JoinEuiRange": {
+      "base": "<p>A pair of join EUI describing a range [BegEui, EndEui], both ends are inclusive.</p>",
+      "refs": {
+        "JoinEuiFilters$member": null
       }
     },
     "ListDestinationsRequest": {
@@ -1019,6 +1077,12 @@
         "SendDataToWirelessDeviceResponse$MessageId": "<p>The ID of the message sent to the wireless device.</p>"
       }
     },
+    "MessageType": {
+      "base": "<p>Sidewalk device message type.</p>",
+      "refs": {
+        "SidewalkSendDataToDevice$MessageType": null
+      }
+    },
     "MinGwDiversity": {
       "base": null,
       "refs": {
@@ -1029,6 +1093,19 @@
       "base": null,
       "refs": {
         "LoRaWANGatewayVersion$Model": "<p>The model number of the wireless gateway.</p>"
+      }
+    },
+    "NetId": {
+      "base": "<p>LoRaWAN network ID.</p>",
+      "refs": {
+        "NetIdFilters$member": null
+      }
+    },
+    "NetIdFilters": {
+      "base": "<p>A list of NetId values that are used by LoRa gateways to filter the uplink frames.</p>",
+      "refs": {
+        "LoRaWANGateway$NetIdFilters": null,
+        "UpdateWirelessGatewayRequest$NetIdFilters": null
       }
     },
     "NextToken": {
@@ -1090,6 +1167,13 @@
       "base": null,
       "refs": {
         "LoRaWANGatewayVersion$PackageVersion": "<p>The version of the wireless gateway firmware.</p>"
+      }
+    },
+    "PartnerAccountArn": {
+      "base": null,
+      "refs": {
+        "AssociateAwsAccountWithPartnerAccountResponse$Arn": "<p>The Amazon Resource Name of the resource.</p>",
+        "SidewalkAccountInfoWithFingerprint$Arn": "<p>The Amazon Resource Name of the resource.</p>"
       }
     },
     "PartnerAccountId": {
@@ -1171,8 +1255,8 @@
     "ResourceId": {
       "base": null,
       "refs": {
-        "ConflictException$ResourceId": null,
-        "ResourceNotFoundException$ResourceId": null
+        "ConflictException$ResourceId": "<p>Id of the resource in the conflicting operation.</p>",
+        "ResourceNotFoundException$ResourceId": "<p>Id of the not found resource.</p>"
       }
     },
     "ResourceNotFoundException": {
@@ -1183,8 +1267,8 @@
     "ResourceType": {
       "base": null,
       "refs": {
-        "ConflictException$ResourceType": null,
-        "ResourceNotFoundException$ResourceType": null
+        "ConflictException$ResourceType": "<p>Type of the resource in the conflicting operation.</p>",
+        "ResourceNotFoundException$ResourceType": "<p>Type of the font found resource.</p>"
       }
     },
     "Result": {
@@ -1328,10 +1412,36 @@
         "ListPartnerAccountsResponse$Sidewalk": "<p>The Sidewalk account credentials.</p>"
       }
     },
+    "SidewalkDevice": {
+      "base": "<p>Sidewalk device object.</p>",
+      "refs": {
+        "GetWirelessDeviceResponse$Sidewalk": "<p>Sidewalk device object.</p>"
+      }
+    },
+    "SidewalkDeviceMetadata": {
+      "base": "<p>MetaData for Sidewalk device.</p>",
+      "refs": {
+        "GetWirelessDeviceStatisticsResponse$Sidewalk": "<p>MetaData for Sidewalk device.</p>"
+      }
+    },
+    "SidewalkId": {
+      "base": "<p>The sidewalk device identification.</p>",
+      "refs": {
+        "SidewalkDevice$SidewalkId": "<p>The sidewalk device identification.</p>",
+        "SidewalkListDevice$SidewalkId": "<p>The sidewalk device identification.</p>"
+      }
+    },
     "SidewalkListDevice": {
       "base": "<p>Sidewalk object used by list functions.</p>",
       "refs": {
         "WirelessDeviceStatistics$Sidewalk": "<p>The Sidewalk account credentials.</p>"
+      }
+    },
+    "SidewalkManufacturingSn": {
+      "base": null,
+      "refs": {
+        "SidewalkDevice$SidewalkManufacturingSn": "<p>The Sidewalk manufacturing series number.</p>",
+        "SidewalkListDevice$SidewalkManufacturingSn": "<p>The Sidewalk manufacturing series number.</p>"
       }
     },
     "SidewalkSendDataToDevice": {
@@ -1346,10 +1456,28 @@
         "UpdatePartnerAccountRequest$Sidewalk": "<p>The Sidewalk account credentials.</p>"
       }
     },
+    "SigningAlg": {
+      "base": "<p>The certificate chain algorithm provided by sidewalk.</p>",
+      "refs": {
+        "CertificateList$SigningAlg": "<p>The certificate chain algorithm provided by sidewalk.</p>"
+      }
+    },
     "Station": {
       "base": null,
       "refs": {
         "LoRaWANGatewayVersion$Station": "<p>The basic station version of the wireless gateway.</p>"
+      }
+    },
+    "SubBand": {
+      "base": "<p>A subset of supported frequency channels in a certain RFRegion.</p>",
+      "refs": {
+        "SubBands$member": null
+      }
+    },
+    "SubBands": {
+      "base": "<p>A list of integer indicating which sub bands are supported by LoRa gateway.</p>",
+      "refs": {
+        "LoRaWANGateway$SubBands": null
       }
     },
     "Supports32BitFCnt": {
@@ -1398,12 +1526,15 @@
     "TagList": {
       "base": null,
       "refs": {
-        "CreateDestinationRequest$Tags": "<p>The tags to attach to the new destination. Tags are metadata that can be used to manage a resource.</p>",
-        "CreateDeviceProfileRequest$Tags": "<p>The tags to attach to the new device profile Tags are metadata that can be used to manage a resource.</p>",
-        "CreateServiceProfileRequest$Tags": "<p>The tags to attach to the new service profile. Tags are metadata that can be used to manage a resource.</p>",
-        "CreateWirelessGatewayRequest$Tags": "<p>The tags to attach to the new wireless gateway. Tags are metadata that can be used to manage a resource.</p>",
-        "ListTagsForResourceResponse$Tags": "<p>The tags attached to the specified resource. Tags are metadata that can be used to manage a resource</p>",
-        "TagResourceRequest$Tags": "<p>Adds to or modifies the tags of the given resource. Tags are metadata that can be used to manage a resource.</p>"
+        "AssociateAwsAccountWithPartnerAccountRequest$Tags": "<p>The tags to attach to the specified resource. Tags are metadata that you can use to manage a resource.</p>",
+        "CreateDestinationRequest$Tags": "<p>The tags to attach to the new destination. Tags are metadata that you can use to manage a resource.</p>",
+        "CreateDeviceProfileRequest$Tags": "<p>The tags to attach to the new device profile. Tags are metadata that you can use to manage a resource.</p>",
+        "CreateServiceProfileRequest$Tags": "<p>The tags to attach to the new service profile. Tags are metadata that you can use to manage a resource.</p>",
+        "CreateWirelessDeviceRequest$Tags": "<p>The tags to attach to the new wireless device. Tags are metadata that you can use to manage a resource.</p>",
+        "CreateWirelessGatewayRequest$Tags": "<p>The tags to attach to the new wireless gateway. Tags are metadata that you can use to manage a resource.</p>",
+        "CreateWirelessGatewayTaskDefinitionRequest$Tags": "<p>The tags to attach to the specified resource. Tags are metadata that you can use to manage a resource.</p>",
+        "ListTagsForResourceResponse$Tags": "<p>The tags to attach to the specified resource. Tags are metadata that you can use to manage a resource.</p>",
+        "TagResourceRequest$Tags": "<p>Adds to or modifies the tags of the given resource. Tags are metadata that you can use to manage a resource.</p>"
       }
     },
     "TagResourceRequest": {
@@ -1691,6 +1822,14 @@
       "base": null,
       "refs": {
         "ListWirelessGatewaysResponse$WirelessGatewayList": "<p>The ID of the wireless gateway.</p>"
+      }
+    },
+    "WirelessGatewayTaskDefinitionArn": {
+      "base": null,
+      "refs": {
+        "CreateWirelessGatewayTaskDefinitionResponse$Arn": "<p>The Amazon Resource Name of the resource.</p>",
+        "GetWirelessGatewayTaskDefinitionResponse$Arn": "<p>The Amazon Resource Name of the resource.</p>",
+        "UpdateWirelessGatewayTaskEntry$Arn": "<p>The Amazon Resource Name of the resource.</p>"
       }
     },
     "WirelessGatewayTaskDefinitionId": {

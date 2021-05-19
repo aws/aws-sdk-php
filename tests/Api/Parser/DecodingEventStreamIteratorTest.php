@@ -26,10 +26,10 @@ class DecodingEventStreamIteratorTest extends TestCase
             }
 
             $case = [
-                Psr7\stream_for(
+                Psr7\Utils::streamFor(
                     file_get_contents($file)
                 ),
-                Psr7\stream_for(
+                Psr7\Utils::streamFor(
                     file_get_contents(
                         str_replace('encoded', 'decoded', $file)
                     )

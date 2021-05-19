@@ -982,10 +982,32 @@
         "CODING_MODE_3_2_LFE"
       ]
     },
+    "Ac3DynamicRangeCompressionLine": {
+      "type": "string",
+      "enum": [
+        "FILM_STANDARD",
+        "FILM_LIGHT",
+        "MUSIC_STANDARD",
+        "MUSIC_LIGHT",
+        "SPEECH",
+        "NONE"
+      ]
+    },
     "Ac3DynamicRangeCompressionProfile": {
       "type": "string",
       "enum": [
         "FILM_STANDARD",
+        "NONE"
+      ]
+    },
+    "Ac3DynamicRangeCompressionRf": {
+      "type": "string",
+      "enum": [
+        "FILM_STANDARD",
+        "FILM_LIGHT",
+        "MUSIC_STANDARD",
+        "MUSIC_LIGHT",
+        "SPEECH",
         "NONE"
       ]
     },
@@ -1022,9 +1044,17 @@
           "shape": "__integerMin1Max31",
           "locationName": "dialnorm"
         },
+        "DynamicRangeCompressionLine": {
+          "shape": "Ac3DynamicRangeCompressionLine",
+          "locationName": "dynamicRangeCompressionLine"
+        },
         "DynamicRangeCompressionProfile": {
           "shape": "Ac3DynamicRangeCompressionProfile",
           "locationName": "dynamicRangeCompressionProfile"
+        },
+        "DynamicRangeCompressionRf": {
+          "shape": "Ac3DynamicRangeCompressionRf",
+          "locationName": "dynamicRangeCompressionRf"
         },
         "LfeFilter": {
           "shape": "Ac3LfeFilter",
@@ -1544,7 +1574,7 @@
           "locationName": "maxBitrate"
         },
         "NumberBFramesBetweenReferenceFrames": {
-          "shape": "__integerMin7Max15",
+          "shape": "__integerMin0Max15",
           "locationName": "numberBFramesBetweenReferenceFrames"
         },
         "QvbrSettings": {
@@ -1942,6 +1972,10 @@
         "TtmlDestinationSettings": {
           "shape": "TtmlDestinationSettings",
           "locationName": "ttmlDestinationSettings"
+        },
+        "WebvttDestinationSettings": {
+          "shape": "WebvttDestinationSettings",
+          "locationName": "webvttDestinationSettings"
         }
       }
     },
@@ -2040,7 +2074,8 @@
         "SMPTE_TT",
         "TELETEXT",
         "NULL_SOURCE",
-        "IMSC"
+        "IMSC",
+        "WEBVTT"
       ]
     },
     "ChannelMapping": {
@@ -2170,6 +2205,10 @@
           "shape": "CmafMpdProfile",
           "locationName": "mpdProfile"
         },
+        "PtsOffsetHandlingForBFrames": {
+          "shape": "CmafPtsOffsetHandlingForBFrames",
+          "locationName": "ptsOffsetHandlingForBFrames"
+        },
         "SegmentControl": {
           "shape": "CmafSegmentControl",
           "locationName": "segmentControl"
@@ -2231,6 +2270,13 @@
         "ON_DEMAND_PROFILE"
       ]
     },
+    "CmafPtsOffsetHandlingForBFrames": {
+      "type": "string",
+      "enum": [
+        "ZERO_BASED",
+        "MATCH_INITIAL_PTS"
+      ]
+    },
     "CmafSegmentControl": {
       "type": "string",
       "enum": [
@@ -2273,6 +2319,21 @@
         "MATCH_VIDEO_DURATION"
       ]
     },
+    "CmfcAudioTrackType": {
+      "type": "string",
+      "enum": [
+        "ALTERNATE_AUDIO_AUTO_SELECT_DEFAULT",
+        "ALTERNATE_AUDIO_AUTO_SELECT",
+        "ALTERNATE_AUDIO_NOT_AUTO_SELECT"
+      ]
+    },
+    "CmfcDescriptiveVideoServiceFlag": {
+      "type": "string",
+      "enum": [
+        "DONT_FLAG",
+        "FLAG"
+      ]
+    },
     "CmfcIFrameOnlyManifest": {
       "type": "string",
       "enum": [
@@ -2300,6 +2361,22 @@
         "AudioDuration": {
           "shape": "CmfcAudioDuration",
           "locationName": "audioDuration"
+        },
+        "AudioGroupId": {
+          "shape": "__string",
+          "locationName": "audioGroupId"
+        },
+        "AudioRenditionSets": {
+          "shape": "__string",
+          "locationName": "audioRenditionSets"
+        },
+        "AudioTrackType": {
+          "shape": "CmfcAudioTrackType",
+          "locationName": "audioTrackType"
+        },
+        "DescriptiveVideoServiceFlag": {
+          "shape": "CmfcDescriptiveVideoServiceFlag",
+          "locationName": "descriptiveVideoServiceFlag"
         },
         "IFrameOnlyManifest": {
           "shape": "CmfcIFrameOnlyManifest",
@@ -2688,12 +2765,23 @@
         }
       }
     },
+    "DashIsoGroupAudioChannelConfigSchemeIdUri": {
+      "type": "string",
+      "enum": [
+        "MPEG_CHANNEL_CONFIGURATION",
+        "DOLBY_CHANNEL_CONFIGURATION"
+      ]
+    },
     "DashIsoGroupSettings": {
       "type": "structure",
       "members": {
         "AdditionalManifests": {
           "shape": "__listOfDashAdditionalManifest",
           "locationName": "additionalManifests"
+        },
+        "AudioChannelConfigSchemeIdUri": {
+          "shape": "DashIsoGroupAudioChannelConfigSchemeIdUri",
+          "locationName": "audioChannelConfigSchemeIdUri"
         },
         "BaseUrl": {
           "shape": "__string",
@@ -2731,6 +2819,10 @@
           "shape": "DashIsoMpdProfile",
           "locationName": "mpdProfile"
         },
+        "PtsOffsetHandlingForBFrames": {
+          "shape": "DashIsoPtsOffsetHandlingForBFrames",
+          "locationName": "ptsOffsetHandlingForBFrames"
+        },
         "SegmentControl": {
           "shape": "DashIsoSegmentControl",
           "locationName": "segmentControl"
@@ -2764,6 +2856,13 @@
       "enum": [
         "CENC_V1",
         "UNENCRYPTED_SEI"
+      ]
+    },
+    "DashIsoPtsOffsetHandlingForBFrames": {
+      "type": "string",
+      "enum": [
+        "ZERO_BASED",
+        "MATCH_INITIAL_PTS"
       ]
     },
     "DashIsoSegmentControl": {
@@ -3051,6 +3150,18 @@
           "shape": "__integerMin0Max255",
           "locationName": "backgroundOpacity"
         },
+        "DdsHandling": {
+          "shape": "DvbddsHandling",
+          "locationName": "ddsHandling"
+        },
+        "DdsXCoordinate": {
+          "shape": "__integerMin0Max2147483647",
+          "locationName": "ddsXCoordinate"
+        },
+        "DdsYCoordinate": {
+          "shape": "__integerMin0Max2147483647",
+          "locationName": "ddsYCoordinate"
+        },
         "FontColor": {
           "shape": "DvbSubtitleFontColor",
           "locationName": "fontColor"
@@ -3070,6 +3181,10 @@
         "FontSize": {
           "shape": "__integerMin0Max96",
           "locationName": "fontSize"
+        },
+        "Height": {
+          "shape": "__integerMin1Max2147483647",
+          "locationName": "height"
         },
         "OutlineColor": {
           "shape": "DvbSubtitleOutlineColor",
@@ -3102,6 +3217,10 @@
         "TeletextSpacing": {
           "shape": "DvbSubtitleTeletextSpacing",
           "locationName": "teletextSpacing"
+        },
+        "Width": {
+          "shape": "__integerMin1Max2147483647",
+          "locationName": "width"
         },
         "XPosition": {
           "shape": "__integerMin0Max2147483647",
@@ -3189,6 +3308,14 @@
           "locationName": "tdtInterval"
         }
       }
+    },
+    "DvbddsHandling": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "SPECIFIED",
+        "NO_DISPLAY_WINDOW"
+      ]
     },
     "Eac3AtmosBitstreamMode": {
       "type": "string",
@@ -3675,7 +3802,7 @@
           "locationName": "framerate"
         },
         "SourceFile": {
-          "shape": "__stringMin14PatternS3SccSCCTtmlTTMLDfxpDFXPStlSTLSrtSRTXmlXMLSmiSMIHttpsSccSCCTtmlTTMLDfxpDFXPStlSTLSrtSRTXmlXMLSmiSMI",
+          "shape": "__stringMin14PatternS3SccSCCTtmlTTMLDfxpDFXPStlSTLSrtSRTXmlXMLSmiSMIVttVTTHttpsSccSCCTtmlTTMLDfxpDFXPStlSTLSrtSRTXmlXMLSmiSMIVttVTT",
           "locationName": "sourceFile"
         },
         "TimeDelta": {
@@ -4723,6 +4850,13 @@
         "RFC_4281"
       ]
     },
+    "HlsDescriptiveVideoServiceFlag": {
+      "type": "string",
+      "enum": [
+        "DONT_FLAG",
+        "FLAG"
+      ]
+    },
     "HlsDirectoryStructure": {
       "type": "string",
       "enum": [
@@ -4961,6 +5095,10 @@
           "shape": "HlsAudioTrackType",
           "locationName": "audioTrackType"
         },
+        "DescriptiveVideoServiceFlag": {
+          "shape": "HlsDescriptiveVideoServiceFlag",
+          "locationName": "descriptiveVideoServiceFlag"
+        },
         "IFrameOnlyManifest": {
           "shape": "HlsIFrameOnlyManifest",
           "locationName": "iFrameOnlyManifest"
@@ -5197,6 +5335,14 @@
         "DEGREES_180",
         "DEGREES_270",
         "AUTO"
+      ]
+    },
+    "InputSampleRange": {
+      "type": "string",
+      "enum": [
+        "FOLLOW",
+        "FULL_RANGE",
+        "LIMITED_RANGE"
       ]
     },
     "InputScanType": {
@@ -5498,6 +5644,10 @@
           "shape": "__listOfInput",
           "locationName": "inputs"
         },
+        "KantarWatermark": {
+          "shape": "KantarWatermarkSettings",
+          "locationName": "kantarWatermark"
+        },
         "MotionImageInserter": {
           "shape": "MotionImageInserter",
           "locationName": "motionImageInserter"
@@ -5622,6 +5772,10 @@
           "shape": "__listOfInputTemplate",
           "locationName": "inputs"
         },
+        "KantarWatermark": {
+          "shape": "KantarWatermarkSettings",
+          "locationName": "kantarWatermark"
+        },
         "MotionImageInserter": {
           "shape": "MotionImageInserter",
           "locationName": "motionImageInserter"
@@ -5645,6 +5799,63 @@
         "TimedMetadataInsertion": {
           "shape": "TimedMetadataInsertion",
           "locationName": "timedMetadataInsertion"
+        }
+      }
+    },
+    "KantarWatermarkSettings": {
+      "type": "structure",
+      "members": {
+        "ChannelName": {
+          "shape": "__stringMin1Max20",
+          "locationName": "channelName"
+        },
+        "ContentReference": {
+          "shape": "__stringMin1Max50PatternAZAZ09",
+          "locationName": "contentReference"
+        },
+        "CredentialsSecretName": {
+          "shape": "__stringMin1Max512PatternAZAZ09",
+          "locationName": "credentialsSecretName"
+        },
+        "FileOffset": {
+          "shape": "__doubleMin0",
+          "locationName": "fileOffset"
+        },
+        "KantarLicenseId": {
+          "shape": "__integerMin0Max2147483647",
+          "locationName": "kantarLicenseId"
+        },
+        "KantarServerUrl": {
+          "shape": "__stringPatternHttpsKantarmediaCom",
+          "locationName": "kantarServerUrl"
+        },
+        "LogDestination": {
+          "shape": "__stringPatternS3",
+          "locationName": "logDestination"
+        },
+        "Metadata3": {
+          "shape": "__stringMin1Max50",
+          "locationName": "metadata3"
+        },
+        "Metadata4": {
+          "shape": "__stringMin1Max50",
+          "locationName": "metadata4"
+        },
+        "Metadata5": {
+          "shape": "__stringMin1Max50",
+          "locationName": "metadata5"
+        },
+        "Metadata6": {
+          "shape": "__stringMin1Max50",
+          "locationName": "metadata6"
+        },
+        "Metadata7": {
+          "shape": "__stringMin1Max50",
+          "locationName": "metadata7"
+        },
+        "Metadata8": {
+          "shape": "__stringMin1Max50",
+          "locationName": "metadata8"
         }
       }
     },
@@ -6332,6 +6543,10 @@
         "AudioPids": {
           "shape": "__listOf__integerMin32Max8182",
           "locationName": "audioPids"
+        },
+        "MaxPcrInterval": {
+          "shape": "__integerMin0Max500",
+          "locationName": "maxPcrInterval"
         },
         "NielsenId3": {
           "shape": "M3u8NielsenId3",
@@ -8652,6 +8867,10 @@
         "Rotate": {
           "shape": "InputRotate",
           "locationName": "rotate"
+        },
+        "SampleRange": {
+          "shape": "InputSampleRange",
+          "locationName": "sampleRange"
         }
       }
     },
@@ -8900,6 +9119,22 @@
           "locationName": "sampleRate"
         }
       }
+    },
+    "WebvttDestinationSettings": {
+      "type": "structure",
+      "members": {
+        "StylePassthrough": {
+          "shape": "WebvttStylePassthrough",
+          "locationName": "stylePassthrough"
+        }
+      }
+    },
+    "WebvttStylePassthrough": {
+      "type": "string",
+      "enum": [
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "__boolean": {
       "type": "boolean"
@@ -9289,11 +9524,6 @@
       "min": 64000,
       "max": 640000
     },
-    "__integerMin7Max15": {
-      "type": "integer",
-      "min": 7,
-      "max": 15
-    },
     "__integerMin8000Max192000": {
       "type": "integer",
       "min": 8000,
@@ -9643,10 +9873,10 @@
       "min": 14,
       "pattern": "^((s3://(.*)(\\.mov|[0-9]+\\.png))|(https?://(.*)(\\.mov|[0-9]+\\.png)(\\?([^&=]+=[^&]+&)*[^&=]+=[^&]+)?))$"
     },
-    "__stringMin14PatternS3SccSCCTtmlTTMLDfxpDFXPStlSTLSrtSRTXmlXMLSmiSMIHttpsSccSCCTtmlTTMLDfxpDFXPStlSTLSrtSRTXmlXMLSmiSMI": {
+    "__stringMin14PatternS3SccSCCTtmlTTMLDfxpDFXPStlSTLSrtSRTXmlXMLSmiSMIVttVTTHttpsSccSCCTtmlTTMLDfxpDFXPStlSTLSrtSRTXmlXMLSmiSMIVttVTT": {
       "type": "string",
       "min": 14,
-      "pattern": "^((s3://(.*?)\\.(scc|SCC|ttml|TTML|dfxp|DFXP|stl|STL|srt|SRT|xml|XML|smi|SMI))|(https?://(.*?)\\.(scc|SCC|ttml|TTML|dfxp|DFXP|stl|STL|srt|SRT|xml|XML|smi|SMI)(\\?([^&=]+=[^&]+&)*[^&=]+=[^&]+)?))$"
+      "pattern": "^((s3://(.*?)\\.(scc|SCC|ttml|TTML|dfxp|DFXP|stl|STL|srt|SRT|xml|XML|smi|SMI|vtt|VTT))|(https?://(.*?)\\.(scc|SCC|ttml|TTML|dfxp|DFXP|stl|STL|srt|SRT|xml|XML|smi|SMI|vtt|VTT)(\\?([^&=]+=[^&]+&)*[^&=]+=[^&]+)?))$"
     },
     "__stringMin16Max24PatternAZaZ0922AZaZ0916": {
       "type": "string",
@@ -9673,6 +9903,18 @@
       "type": "string",
       "min": 1,
       "max": 50
+    },
+    "__stringMin1Max50PatternAZAZ09": {
+      "type": "string",
+      "min": 1,
+      "max": 50,
+      "pattern": "^[a-zA-Z0-9_\\/_+=.@-]*$"
+    },
+    "__stringMin1Max512PatternAZAZ09": {
+      "type": "string",
+      "min": 1,
+      "max": 512,
+      "pattern": "^[a-zA-Z0-9_\\/_+=.@-]*$"
     },
     "__stringMin24Max512PatternAZaZ0902": {
       "type": "string",
@@ -9761,6 +10003,10 @@
     "__stringPatternHttps": {
       "type": "string",
       "pattern": "^https:\\/\\/"
+    },
+    "__stringPatternHttpsKantarmediaCom": {
+      "type": "string",
+      "pattern": "^https:\\/\\/.*.kantarmedia.com$"
     },
     "__stringPatternIdentityAZaZ26AZaZ09163": {
       "type": "string",

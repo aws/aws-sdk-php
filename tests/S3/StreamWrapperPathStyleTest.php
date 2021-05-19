@@ -195,7 +195,7 @@ class StreamWrapperPathStyleTest extends TestCase
         // Queue the 200 response that will load the original, and queue the
         // 204 flush response
         $this->addMockResults($this->client, [
-            new Result(['Body' => Psr7\stream_for('test')]),
+            new Result(['Body' => Psr7\Utils::streamFor('test')]),
             new Result(['@metadata' => ['statusCode' => 204, 'effectiveUri' => 'http://foo.com']])
         ]);
 
@@ -676,7 +676,7 @@ class StreamWrapperPathStyleTest extends TestCase
     public function testStreamCastIsNotPossible()
     {
         $this->addMockResults($this->client, [
-            new Result(['Body' => Psr7\stream_for('')])
+            new Result(['Body' => Psr7\Utils::streamFor('')])
         ]);
         $r = fopen('s3://bucket/key', 'r');
         $read = [$r];
@@ -851,7 +851,7 @@ class StreamWrapperPathStyleTest extends TestCase
 
     public function testReturnsStreamSizeFromHeaders()
     {
-        $stream = Psr7\stream_for('12345');
+        $stream = Psr7\Utils::streamFor('12345');
         $stream = Psr7\FnStream::decorate($stream, [
             'getSize' => function () { return null; }
         ]);

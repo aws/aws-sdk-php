@@ -1507,6 +1507,23 @@
       "max":30,
       "min":1
     },
+    "DocumentRelevanceConfiguration":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Relevance"
+      ],
+      "members":{
+        "Name":{"shape":"DocumentMetadataConfigurationName"},
+        "Relevance":{"shape":"Relevance"}
+      }
+    },
+    "DocumentRelevanceOverrideConfigurationList":{
+      "type":"list",
+      "member":{"shape":"DocumentRelevanceConfiguration"},
+      "max":500,
+      "min":0
+    },
     "DocumentsMetadataConfiguration":{
       "type":"structure",
       "members":{
@@ -2050,6 +2067,7 @@
         "Facets":{"shape":"FacetList"},
         "RequestedDocumentAttributes":{"shape":"DocumentAttributeKeyList"},
         "QueryResultTypeFilter":{"shape":"QueryResultType"},
+        "DocumentRelevanceOverrideConfigurations":{"shape":"DocumentRelevanceOverrideConfigurationList"},
         "PageNumber":{"shape":"Integer"},
         "PageSize":{"shape":"Integer"},
         "SortingConfiguration":{"shape":"SortingConfiguration"},
@@ -2400,6 +2418,13 @@
         "KmsKeyId":{"shape":"KmsKeyId"}
       }
     },
+    "ServiceNowAuthenticationType":{
+      "type":"string",
+      "enum":[
+        "HTTP_BASIC",
+        "OAUTH2"
+      ]
+    },
     "ServiceNowBuildVersionType":{
       "type":"string",
       "enum":[
@@ -2419,7 +2444,8 @@
         "SecretArn":{"shape":"SecretArn"},
         "ServiceNowBuildVersion":{"shape":"ServiceNowBuildVersionType"},
         "KnowledgeArticleConfiguration":{"shape":"ServiceNowKnowledgeArticleConfiguration"},
-        "ServiceCatalogConfiguration":{"shape":"ServiceNowServiceCatalogConfiguration"}
+        "ServiceCatalogConfiguration":{"shape":"ServiceNowServiceCatalogConfiguration"},
+        "AuthenticationType":{"shape":"ServiceNowAuthenticationType"}
       }
     },
     "ServiceNowHostUrl":{
@@ -2437,8 +2463,15 @@
         "ExcludeAttachmentFilePatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
         "DocumentDataFieldName":{"shape":"DataSourceFieldName"},
         "DocumentTitleFieldName":{"shape":"DataSourceFieldName"},
-        "FieldMappings":{"shape":"DataSourceToIndexFieldMappingList"}
+        "FieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "FilterQuery":{"shape":"ServiceNowKnowledgeArticleFilterQuery"}
       }
+    },
+    "ServiceNowKnowledgeArticleFilterQuery":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^\\P{C}*$"
     },
     "ServiceNowServiceCatalogConfiguration":{
       "type":"structure",

@@ -1817,7 +1817,7 @@
     },
     "Concurrency":{
       "type":"integer",
-      "max":5,
+      "max":10,
       "min":1
     },
     "ContactFlow":{
@@ -1971,7 +1971,8 @@
         "IntegrationArn":{"shape":"ARN"},
         "SourceApplicationUrl":{"shape":"URI"},
         "SourceApplicationName":{"shape":"SourceApplicationName"},
-        "SourceType":{"shape":"SourceType"}
+        "SourceType":{"shape":"SourceType"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "CreateIntegrationAssociationResponse":{
@@ -2087,7 +2088,8 @@
           "location":"uri",
           "locationName":"IntegrationAssociationId"
         },
-        "UseCaseType":{"shape":"UseCaseType"}
+        "UseCaseType":{"shape":"UseCaseType"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "CreateUseCaseResponse":{
@@ -5076,14 +5078,14 @@
     "TagKeyList":{
       "type":"list",
       "member":{"shape":"TagKey"},
-      "max":200,
+      "max":50,
       "min":1
     },
     "TagMap":{
       "type":"map",
       "key":{"shape":"TagKey"},
       "value":{"shape":"TagValue"},
-      "max":200,
+      "max":50,
       "min":1
     },
     "TagResourceRequest":{
@@ -5291,8 +5293,7 @@
       "type":"structure",
       "required":[
         "InstanceId",
-        "QueueId",
-        "MaxContacts"
+        "QueueId"
       ],
       "members":{
         "InstanceId":{

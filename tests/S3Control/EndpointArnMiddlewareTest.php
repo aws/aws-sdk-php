@@ -450,9 +450,9 @@ class EndpointArnMiddlewareTest extends TestCase
                 [
                     'region' => 'fips-us-gov-east-1',
                 ],
-                new InvalidRegionException("Fips is currently not supported with"
-                    . " S3 Outposts access points. Please provide a non-fips"
-                    . " region or do not supply an access point ARN."),
+                new InvalidRegionException('Fips is currently not supported with S3 Outposts access'
+                    . ' points. Please provide a non-fips region or do not supply an'
+                    . ' access point ARN.')
             ],
             // Outposts accesspoint ARN, fips, use_arn_region true
             [
@@ -533,9 +533,9 @@ class EndpointArnMiddlewareTest extends TestCase
                 [
                     'region' => 'fips-us-gov-east-1',
                 ],
-                new InvalidRegionException("Fips is currently not supported with"
-                    . " S3 Outposts access points. Please provide a non-fips"
-                    . " region or do not supply an access point ARN."),
+                new InvalidRegionException('Fips is currently not supported with S3 Outposts access'
+                    . ' points. Please provide a non-fips region or do not supply an'
+                    . ' access point ARN.')
             ],
             // Outposts bucket ARN, fips, use_arn_region true
             [
@@ -551,6 +551,21 @@ class EndpointArnMiddlewareTest extends TestCase
                 new InvalidRegionException("Fips is currently not supported with"
                     . " S3 Outposts access points. Please provide a non-fips"
                     . " region or do not supply an access point ARN."),
+            ],
+            // Outposts bucket ARN, fips, use_arn_region false
+            [
+                'DeleteBucket',
+                [
+                    'AccountId' => '123456789012',
+                    'Bucket' => 'arn:aws-us-gov:s3-outposts:fips-us-gov-west-1:123456789012:outpost:op-01234567890123456:bucket:mybucket'
+                ],
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => false
+                ],
+                new InvalidRegionException("The region specified in the"
+                    . " ARN (fips-us-gov-west-1) does not match the client region"
+                    . " (fips-us-gov-east-1).")
             ],
             // Outposts bucket ARN, dualstack
             [

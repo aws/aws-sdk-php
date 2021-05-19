@@ -2862,6 +2862,12 @@
         "TableName":{"shape":"NameString"}
       }
     },
+    "CatalogGetterPageSize":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "CatalogIdString":{
       "type":"string",
       "max":255,
@@ -3264,6 +3270,11 @@
         "KAFKA_SSL_ENABLED",
         "KAFKA_CUSTOM_CERT",
         "KAFKA_SKIP_CUSTOM_CERT_VALIDATION",
+        "KAFKA_CLIENT_KEYSTORE",
+        "KAFKA_CLIENT_KEYSTORE_PASSWORD",
+        "KAFKA_CLIENT_KEY_PASSWORD",
+        "ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD",
+        "ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD",
         "SECRET_ID",
         "CONNECTOR_URL",
         "CONNECTOR_TYPE",
@@ -4776,7 +4787,7 @@
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"},
+        "MaxResults":{"shape":"CatalogGetterPageSize"},
         "ResourceShareType":{"shape":"ResourceShareType"}
       }
     },
@@ -5064,7 +5075,8 @@
         "Expression":{"shape":"PredicateString"},
         "NextToken":{"shape":"Token"},
         "Segment":{"shape":"Segment"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"PageSize"},
+        "ExcludeColumnSchema":{"shape":"BooleanNullable"}
       }
     },
     "GetPartitionsResponse":{
@@ -5313,7 +5325,7 @@
         "DatabaseName":{"shape":"NameString"},
         "TableName":{"shape":"NameString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"CatalogGetterPageSize"}
       }
     },
     "GetTableVersionsResponse":{
@@ -5331,7 +5343,7 @@
         "DatabaseName":{"shape":"NameString"},
         "Expression":{"shape":"FilterString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"CatalogGetterPageSize"}
       }
     },
     "GetTablesResponse":{
@@ -5408,7 +5420,7 @@
         "DatabaseName":{"shape":"NameString"},
         "Pattern":{"shape":"NameString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"PageSize"}
+        "MaxResults":{"shape":"CatalogGetterPageSize"}
       }
     },
     "GetUserDefinedFunctionsResponse":{
@@ -6157,7 +6169,8 @@
       "type":"structure",
       "members":{
         "MetadataValue":{"shape":"MetadataValueString"},
-        "CreatedTime":{"shape":"CreatedTimestamp"}
+        "CreatedTime":{"shape":"CreatedTimestamp"},
+        "OtherMetadataValueList":{"shape":"OtherMetadataValueList"}
       }
     },
     "MetadataInfoMap":{
@@ -6305,6 +6318,17 @@
     "OrderList":{
       "type":"list",
       "member":{"shape":"Order"}
+    },
+    "OtherMetadataValueList":{
+      "type":"list",
+      "member":{"shape":"OtherMetadataValueListItem"}
+    },
+    "OtherMetadataValueListItem":{
+      "type":"structure",
+      "members":{
+        "MetadataValue":{"shape":"MetadataValueString"},
+        "CreatedTime":{"shape":"CreatedTimestamp"}
+      }
     },
     "PageSize":{
       "type":"integer",
@@ -6918,7 +6942,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"[a-zA-Z0-9-_$#]+"
+      "pattern":"[a-zA-Z0-9-_$#.]+"
     },
     "SchemaRegistryTokenString":{"type":"string"},
     "SchemaStatus":{

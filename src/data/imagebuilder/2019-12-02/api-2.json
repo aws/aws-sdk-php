@@ -606,6 +606,25 @@
         {"shape":"CallRateLimitExceededException"}
       ]
     },
+    "ListImagePackages":{
+      "name":"ListImagePackages",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListImagePackages"
+      },
+      "input":{"shape":"ListImagePackagesRequest"},
+      "output":{"shape":"ListImagePackagesResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidPaginationTokenException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"CallRateLimitExceededException"}
+      ]
+    },
     "ListImagePipelineImages":{
       "name":"ListImagePipelineImages",
       "http":{
@@ -897,7 +916,7 @@
   "shapes":{
     "AccountId":{
       "type":"string",
-      "pattern":"^\\d{12}$"
+      "pattern":"^[0-9]{12}$"
     },
     "AccountList":{
       "type":"list",
@@ -1003,7 +1022,7 @@
     },
     "ComponentBuildVersionArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):component/[a-z0-9-_]+/\\d+\\.\\d+\\.\\d+/\\d+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):component/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]+$"
     },
     "ComponentConfiguration":{
       "type":"structure",
@@ -1065,11 +1084,11 @@
     },
     "ComponentVersionArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):component/[a-z0-9-_]+/\\d+\\.\\d+\\.\\d+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):component/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
     "ComponentVersionArnOrBuildVersionArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):component/[a-z0-9-_]+/(?:(?:(\\d+|x)\\.(\\d+|x)\\.(\\d+|x))|(?:\\d+\\.\\d+\\.\\d+/\\d+))$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):component/[a-z0-9-_]+/(?:(?:([0-9]+|x)\\.([0-9]+|x)\\.([0-9]+|x))|(?:[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]+))$"
     },
     "ComponentVersionList":{
       "type":"list",
@@ -1106,6 +1125,7 @@
         "owner":{"shape":"NonEmptyString"},
         "version":{"shape":"VersionNumber"},
         "components":{"shape":"ComponentConfigurationList"},
+        "instanceConfiguration":{"shape":"InstanceConfiguration"},
         "dockerfileTemplateData":{"shape":"DockerFileTemplate"},
         "kmsKeyId":{"shape":"NonEmptyString"},
         "encrypted":{"shape":"NullableBoolean"},
@@ -1118,7 +1138,7 @@
     },
     "ContainerRecipeArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):container-recipe/[a-z0-9-_]+/\\d+\\.\\d+\\.\\d+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):container-recipe/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
     "ContainerRecipeSummary":{
       "type":"structure",
@@ -1185,7 +1205,6 @@
         "name",
         "semanticVersion",
         "components",
-        "dockerfileTemplateData",
         "parentImage",
         "targetRepository",
         "clientToken"
@@ -1196,6 +1215,7 @@
         "description":{"shape":"NonEmptyString"},
         "semanticVersion":{"shape":"VersionNumber"},
         "components":{"shape":"ComponentConfigurationList"},
+        "instanceConfiguration":{"shape":"InstanceConfiguration"},
         "dockerfileTemplateData":{"shape":"InlineDockerFileTemplate"},
         "dockerfileTemplateUri":{"shape":"Uri"},
         "platformOverride":{"shape":"Platform"},
@@ -1349,7 +1369,7 @@
         "name":{"shape":"ResourceName"},
         "description":{"shape":"NonEmptyString"},
         "instanceTypes":{"shape":"InstanceTypeList"},
-        "instanceProfileName":{"shape":"NonEmptyString"},
+        "instanceProfileName":{"shape":"InstanceProfileNameType"},
         "securityGroupIds":{"shape":"SecurityGroupIds"},
         "subnetId":{"shape":"NonEmptyString"},
         "logging":{"shape":"Logging"},
@@ -1506,7 +1526,8 @@
         "region":{"shape":"NonEmptyString"},
         "amiDistributionConfiguration":{"shape":"AmiDistributionConfiguration"},
         "containerDistributionConfiguration":{"shape":"ContainerDistributionConfiguration"},
-        "licenseConfigurationArns":{"shape":"LicenseConfigurationArnList"}
+        "licenseConfigurationArns":{"shape":"LicenseConfigurationArnList"},
+        "launchTemplateConfigurations":{"shape":"LaunchTemplateConfigurationList"}
       }
     },
     "DistributionConfiguration":{
@@ -1525,7 +1546,7 @@
     },
     "DistributionConfigurationArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):distribution-configuration/[a-z0-9-_]+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):distribution-configuration/[a-z0-9-_]+$"
     },
     "DistributionConfigurationSummary":{
       "type":"structure",
@@ -1582,6 +1603,7 @@
         "io1",
         "io2",
         "gp2",
+        "gp3",
         "sc1",
         "st1"
       ]
@@ -1858,11 +1880,22 @@
     },
     "ImageBuildVersionArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):image/[a-z0-9-_]+/\\d+\\.\\d+\\.\\d+/\\d+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):image/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]+$"
     },
     "ImageBuilderArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):(?:image-recipe|container-recipe|infrastructure-configuration|distribution-configuration|component|image|image-pipeline)/[a-z0-9-_]+(?:/(?:(?:x|\\d+)\\.(?:x|\\d+)\\.(?:x|\\d+))(?:/\\d+)?)?$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):(?:image-recipe|container-recipe|infrastructure-configuration|distribution-configuration|component|image|image-pipeline)/[a-z0-9-_]+(?:/(?:(?:x|[0-9]+)\\.(?:x|[0-9]+)\\.(?:x|[0-9]+))(?:/[0-9]+)?)?$"
+    },
+    "ImagePackage":{
+      "type":"structure",
+      "members":{
+        "packageName":{"shape":"NonEmptyString"},
+        "packageVersion":{"shape":"NonEmptyString"}
+      }
+    },
+    "ImagePackageList":{
+      "type":"list",
+      "member":{"shape":"ImagePackage"}
     },
     "ImagePipeline":{
       "type":"structure",
@@ -1888,7 +1921,7 @@
     },
     "ImagePipelineArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):image-pipeline/[a-z0-9-_]+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):image-pipeline/[a-z0-9-_]+$"
     },
     "ImagePipelineList":{
       "type":"list",
@@ -1914,7 +1947,7 @@
     },
     "ImageRecipeArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):image-recipe/[a-z0-9-_]+/\\d+\\.\\d+\\.\\d+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):image-recipe/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
     "ImageRecipeSummary":{
       "type":"structure",
@@ -2009,11 +2042,11 @@
     },
     "ImageVersionArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):image/[a-z0-9-_]+/\\d+\\.\\d+\\.\\d+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):image/[a-z0-9-_]+/[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
     "ImageVersionArnOrBuildVersionArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):image/[a-z0-9-_]+/(?:(?:(\\d+|x)\\.(\\d+|x)\\.(\\d+|x))|(?:\\d+\\.\\d+\\.\\d+/\\d+))$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):image/[a-z0-9-_]+/(?:(?:([0-9]+|x)\\.([0-9]+|x)\\.([0-9]+|x))|(?:[0-9]+\\.[0-9]+\\.[0-9]+/[0-9]+))$"
     },
     "ImageVersionList":{
       "type":"list",
@@ -2062,7 +2095,7 @@
         "name":{"shape":"ResourceName"},
         "description":{"shape":"NonEmptyString"},
         "instanceTypes":{"shape":"InstanceTypeList"},
-        "instanceProfileName":{"shape":"NonEmptyString"},
+        "instanceProfileName":{"shape":"InstanceProfileNameType"},
         "securityGroupIds":{"shape":"SecurityGroupIds"},
         "subnetId":{"shape":"NonEmptyString"},
         "logging":{"shape":"Logging"},
@@ -2077,7 +2110,7 @@
     },
     "InfrastructureConfigurationArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:\\d{12}|aws):infrastructure-configuration/[a-z0-9-_]+$"
+      "pattern":"^arn:aws[^:]*:imagebuilder:[^:]+:(?:[0-9]{12}|aws):infrastructure-configuration/[a-z0-9-_]+$"
     },
     "InfrastructureConfigurationSummary":{
       "type":"structure",
@@ -2088,7 +2121,9 @@
         "dateCreated":{"shape":"DateTime"},
         "dateUpdated":{"shape":"DateTime"},
         "resourceTags":{"shape":"ResourceTagMap"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "instanceTypes":{"shape":"InstanceTypeList"},
+        "instanceProfileName":{"shape":"InstanceProfileNameType"}
       }
     },
     "InfrastructureConfigurationSummaryList":{
@@ -2119,6 +2154,19 @@
     "InstanceBlockDeviceMappings":{
       "type":"list",
       "member":{"shape":"InstanceBlockDeviceMapping"}
+    },
+    "InstanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "image":{"shape":"NonEmptyString"},
+        "blockDeviceMappings":{"shape":"InstanceBlockDeviceMappings"}
+      }
+    },
+    "InstanceProfileNameType":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^[\\w+=,.@-]+$"
     },
     "InstanceType":{"type":"string"},
     "InstanceTypeList":{
@@ -2180,9 +2228,28 @@
         "userGroups":{"shape":"StringList"}
       }
     },
+    "LaunchTemplateConfiguration":{
+      "type":"structure",
+      "required":["launchTemplateId"],
+      "members":{
+        "launchTemplateId":{"shape":"LaunchTemplateId"},
+        "accountId":{"shape":"AccountId"},
+        "setDefaultVersion":{"shape":"Boolean"}
+      }
+    },
+    "LaunchTemplateConfigurationList":{
+      "type":"list",
+      "member":{"shape":"LaunchTemplateConfiguration"},
+      "max":100,
+      "min":1
+    },
+    "LaunchTemplateId":{
+      "type":"string",
+      "pattern":"^lt-[a-z0-9-_]{17}$"
+    },
     "LicenseConfigurationArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:license-manager:[^:]+:\\d{12}:license-configuration:lic-[a-z0-9-_]{32}$"
+      "pattern":"^arn:aws[^:]*:license-manager:[^:]+:[0-9]{12}:license-configuration:lic-[a-z0-9-_]{32}$"
     },
     "LicenseConfigurationArnList":{
       "type":"list",
@@ -2288,6 +2355,26 @@
       "members":{
         "requestId":{"shape":"NonEmptyString"},
         "imageSummaryList":{"shape":"ImageSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListImagePackagesRequest":{
+      "type":"structure",
+      "required":["imageBuildVersionArn"],
+      "members":{
+        "imageBuildVersionArn":{"shape":"ImageBuildVersionArn"},
+        "maxResults":{
+          "shape":"RestrictedInteger",
+          "box":true
+        },
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "ListImagePackagesResponse":{
+      "type":"structure",
+      "members":{
+        "requestId":{"shape":"NonEmptyString"},
+        "imagePackageList":{"shape":"ImagePackageList"},
         "nextToken":{"shape":"PaginationToken"}
       }
     },
@@ -2612,6 +2699,7 @@
       "type":"structure",
       "members":{
         "scheduleExpression":{"shape":"NonEmptyString"},
+        "timezone":{"shape":"Timezone"},
         "pipelineExecutionStartCondition":{"shape":"PipelineExecutionStartCondition"}
       }
     },
@@ -2645,7 +2733,7 @@
     },
     "SnsTopicArn":{
       "type":"string",
-      "pattern":"^arn:aws[^:]*:sns:[^:]+:\\d{12}:[a-zA-Z0-9-_]{1,256}$"
+      "pattern":"^arn:aws[^:]*:sns:[^:]+:[0-9]{12}:[a-zA-Z0-9-_]{1,256}$"
     },
     "StartImagePipelineExecutionRequest":{
       "type":"structure",
@@ -2726,6 +2814,12 @@
         "service":{"shape":"ContainerRepositoryService"},
         "repositoryName":{"shape":"NonEmptyString"}
       }
+    },
+    "Timezone":{
+      "type":"string",
+      "max":100,
+      "min":3,
+      "pattern":"[a-zA-Z0-9]{2,}(?:\\/[a-zA-z0-9-_+]+)*"
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -2819,7 +2913,7 @@
         "infrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"},
         "description":{"shape":"NonEmptyString"},
         "instanceTypes":{"shape":"InstanceTypeList"},
-        "instanceProfileName":{"shape":"NonEmptyString"},
+        "instanceProfileName":{"shape":"InstanceProfileNameType"},
         "securityGroupIds":{"shape":"SecurityGroupIds"},
         "subnetId":{"shape":"NonEmptyString"},
         "logging":{"shape":"Logging"},

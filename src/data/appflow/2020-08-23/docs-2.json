@@ -41,6 +41,7 @@
       "base": null,
       "refs": {
         "GoogleAnalyticsConnectorProfileCredentials$accessToken": "<p> The credentials used to access protected Google Analytics resources. </p>",
+        "HoneycodeConnectorProfileCredentials$accessToken": "<p> The credentials used to access protected Amazon Honeycode resources. </p>",
         "MarketoConnectorProfileCredentials$accessToken": "<p> The credentials used to access protected Marketo resources. </p>",
         "SalesforceConnectorProfileCredentials$accessToken": "<p> The credentials used to access protected Salesforce resources. </p>",
         "SlackConnectorProfileCredentials$accessToken": "<p> The credentials used to access protected Slack resources. </p>",
@@ -269,6 +270,7 @@
       "base": "<p> Used by select connectors for which the OAuth workflow is supported, such as Salesforce, Google Analytics, Marketo, Zendesk, and Slack. </p>",
       "refs": {
         "GoogleAnalyticsConnectorProfileCredentials$oAuthRequest": "<p> The OAuth requirement needed to request security tokens from the connector endpoint. </p>",
+        "HoneycodeConnectorProfileCredentials$oAuthRequest": null,
         "MarketoConnectorProfileCredentials$oAuthRequest": "<p> The OAuth requirement needed to request security tokens from the connector endpoint. </p>",
         "SalesforceConnectorProfileCredentials$oAuthRequest": "<p> The OAuth requirement needed to request security tokens from the connector endpoint. </p>",
         "SlackConnectorProfileCredentials$oAuthRequest": "<p> The OAuth requirement needed to request security tokens from the connector endpoint. </p>",
@@ -366,7 +368,7 @@
       "base": null,
       "refs": {
         "ConnectorConfiguration$supportedDestinationConnectors": "<p> Lists the connectors that are available for use as destinations. </p>",
-        "DescribeConnectorsRequest$connectorTypes": "<p> The type of connector, such as Salesforce, Amplitude, and so on. </p> <note> <p> <i>Locke</i> refers to a new destination known as Amazon Connect Customer Profiles. At this time, we recommend that you do not use this destination. </p> </note>"
+        "DescribeConnectorsRequest$connectorTypes": "<p> The type of connector, such as Salesforce, Amplitude, and so on. </p>"
       }
     },
     "CreateConnectorProfileRequest": {
@@ -394,6 +396,18 @@
       "refs": {
         "DescribeFlowResponse$createdBy": "<p> The ARN of the user who created the flow. </p>",
         "FlowDefinition$createdBy": "<p> The ARN of the user who created the flow. </p>"
+      }
+    },
+    "CustomerProfilesDestinationProperties": {
+      "base": "<p> The properties that are applied when Amazon Connect Customer Profiles is used as a destination. </p>",
+      "refs": {
+        "DestinationConnectorProperties$CustomerProfiles": "<p> The properties required to query Amazon Connect Customer Profiles. </p>"
+      }
+    },
+    "CustomerProfilesMetadata": {
+      "base": "<p> The connector metadata specific to Amazon Connect Customer Profiles. </p>",
+      "refs": {
+        "ConnectorMetadata$CustomerProfiles": "<p> The connector metadata specific to Amazon Connect Customer Profiles. </p>"
       }
     },
     "DataPullMode": {
@@ -453,7 +467,8 @@
         "FlowDefinition$createdAt": "<p> Specifies when the flow was created. </p>",
         "FlowDefinition$lastUpdatedAt": "<p> Specifies when the flow was last updated. </p>",
         "ScheduledTriggerProperties$scheduleStartTime": "<p> Specifies the scheduled start time for a schedule-triggered flow. </p>",
-        "ScheduledTriggerProperties$scheduleEndTime": "<p> Specifies the scheduled end time for a schedule-triggered flow. </p>"
+        "ScheduledTriggerProperties$scheduleEndTime": "<p> Specifies the scheduled end time for a schedule-triggered flow. </p>",
+        "ScheduledTriggerProperties$firstExecutionFrom": "<p> Specifies the date range for the records to import from the connector in the first flow run. </p>"
       }
     },
     "DatetimeTypeFieldName": {
@@ -570,6 +585,12 @@
         "UpdateFlowRequest$destinationFlowConfigList": "<p> The configuration that controls how Amazon AppFlow transfers data to the destination connector. </p>"
       }
     },
+    "DomainName": {
+      "base": null,
+      "refs": {
+        "CustomerProfilesDestinationProperties$domainName": "<p> The unique name of the Amazon Connect Customer Profiles domain. </p>"
+      }
+    },
     "DynatraceConnectorOperator": {
       "base": null,
       "refs": {
@@ -610,9 +631,11 @@
       "base": "<p> The settings that determine how Amazon AppFlow handles an error when placing data in the destination. For example, this setting would determine if the flow should fail after one insertion error, or continue and attempt to insert every record regardless of the initial failure. <code>ErrorHandlingConfig</code> is a part of the destination connector details. </p>",
       "refs": {
         "EventBridgeDestinationProperties$errorHandlingConfig": null,
+        "HoneycodeDestinationProperties$errorHandlingConfig": null,
         "RedshiftDestinationProperties$errorHandlingConfig": "<p> The settings that determine how Amazon AppFlow handles an error when placing data in the Amazon Redshift destination. For example, this setting would determine if the flow should fail after one insertion error, or continue and attempt to insert every record regardless of the initial failure. <code>ErrorHandlingConfig</code> is a part of the destination connector details. </p>",
         "SalesforceDestinationProperties$errorHandlingConfig": "<p> The settings that determine how Amazon AppFlow handles an error when placing data in the Salesforce destination. For example, this setting would determine if the flow should fail after one insertion error, or continue and attempt to insert every record regardless of the initial failure. <code>ErrorHandlingConfig</code> is a part of the destination connector details. </p>",
-        "SnowflakeDestinationProperties$errorHandlingConfig": "<p> The settings that determine how Amazon AppFlow handles an error when placing data in the Snowflake destination. For example, this setting would determine if the flow should fail after one insertion error, or continue and attempt to insert every record regardless of the initial failure. <code>ErrorHandlingConfig</code> is a part of the destination connector details. </p>"
+        "SnowflakeDestinationProperties$errorHandlingConfig": "<p> The settings that determine how Amazon AppFlow handles an error when placing data in the Snowflake destination. For example, this setting would determine if the flow should fail after one insertion error, or continue and attempt to insert every record regardless of the initial failure. <code>ErrorHandlingConfig</code> is a part of the destination connector details. </p>",
+        "ZendeskDestinationProperties$errorHandlingConfig": null
       }
     },
     "ErrorInfo": {
@@ -814,10 +837,35 @@
         "ConnectorEntityMap$key": null
       }
     },
+    "HoneycodeConnectorProfileCredentials": {
+      "base": "<p> The connector-specific credentials required when using Amazon Honeycode. </p>",
+      "refs": {
+        "ConnectorProfileCredentials$Honeycode": "<p> The connector-specific credentials required when using Amazon Honeycode. </p>"
+      }
+    },
+    "HoneycodeConnectorProfileProperties": {
+      "base": "<p> The connector-specific properties required when using Amazon Honeycode. </p>",
+      "refs": {
+        "ConnectorProfileProperties$Honeycode": "<p> The connector-specific properties required by Amazon Honeycode. </p>"
+      }
+    },
+    "HoneycodeDestinationProperties": {
+      "base": "<p> The properties that are applied when Amazon Honeycode is used as a destination. </p>",
+      "refs": {
+        "DestinationConnectorProperties$Honeycode": "<p> The properties required to query Amazon Honeycode. </p>"
+      }
+    },
+    "HoneycodeMetadata": {
+      "base": "<p> The connector metadata specific to Amazon Honeycode. </p>",
+      "refs": {
+        "ConnectorMetadata$Honeycode": "<p> The connector metadata specific to Amazon Honeycode. </p>"
+      }
+    },
     "IdFieldNameList": {
       "base": "<p> A list of field names that can be used as an ID field when performing a write operation. </p>",
       "refs": {
-        "SalesforceDestinationProperties$idFieldNames": "<p> The name of the field that Amazon AppFlow uses as an ID when performing a write operation such as update or delete. </p>"
+        "SalesforceDestinationProperties$idFieldNames": "<p> The name of the field that Amazon AppFlow uses as an ID when performing a write operation such as update or delete. </p>",
+        "ZendeskDestinationProperties$idFieldNames": null
       }
     },
     "Identifier": {
@@ -942,6 +990,12 @@
         "ExecutionResult$recordsProcessed": "<p> The number of records processed in the flow run. </p>"
       }
     },
+    "LookoutMetricsDestinationProperties": {
+      "base": "<p> The properties that are applied when Amazon Lookout for Metrics is used as a destination. </p>",
+      "refs": {
+        "DestinationConnectorProperties$LookoutMetrics": "<p> The properties required to query Amazon Lookout for Metrics. </p>"
+      }
+    },
     "MarketoConnectorOperator": {
       "base": null,
       "refs": {
@@ -1017,6 +1071,7 @@
       "base": null,
       "refs": {
         "GoogleAnalyticsMetadata$oAuthScopes": "<p> The desired authorization scope for the Google Analytics account. </p>",
+        "HoneycodeMetadata$oAuthScopes": "<p> The desired authorization scope for the Amazon Honeycode account. </p>",
         "SalesforceMetadata$oAuthScopes": "<p> The desired authorization scope for the Salesforce account. </p>",
         "SlackMetadata$oAuthScopes": "<p> The desired authorization scope for the Slack account. </p>",
         "ZendeskMetadata$oAuthScopes": "<p> The desired authorization scope for the Zendesk account. </p>"
@@ -1030,6 +1085,7 @@
         "DynatraceSourceProperties$object": "<p> The object specified in the Dynatrace flow source. </p>",
         "EventBridgeDestinationProperties$object": "<p> The object specified in the Amazon EventBridge flow destination. </p>",
         "GoogleAnalyticsSourceProperties$object": "<p> The object specified in the Google Analytics flow source. </p>",
+        "HoneycodeDestinationProperties$object": "<p> The object specified in the Amazon Honeycode flow destination. </p>",
         "InforNexusSourceProperties$object": "<p> The object specified in the Infor Nexus flow source. </p>",
         "MarketoSourceProperties$object": "<p> The object specified in the Marketo flow source. </p>",
         "RedshiftDestinationProperties$object": "<p> The object specified in the Amazon Redshift flow destination. </p>",
@@ -1041,7 +1097,14 @@
         "SnowflakeDestinationProperties$object": "<p> The object specified in the Snowflake flow destination. </p>",
         "TrendmicroSourceProperties$object": "<p> The object specified in the Trend Micro flow source. </p>",
         "VeevaSourceProperties$object": "<p> The object specified in the Veeva flow source. </p>",
+        "ZendeskDestinationProperties$object": null,
         "ZendeskSourceProperties$object": "<p> The object specified in the Zendesk flow source. </p>"
+      }
+    },
+    "ObjectTypeName": {
+      "base": null,
+      "refs": {
+        "CustomerProfilesDestinationProperties$objectTypeName": "<p> The object specified in the Amazon Connect Customer Profiles flow destination. </p>"
       }
     },
     "Operator": {
@@ -1075,13 +1138,13 @@
     "PrefixFormat": {
       "base": null,
       "refs": {
-        "PrefixConfig$prefixFormat": "<p> Determines the format of the prefix, and whether it applies to the file name, file path, or both. </p>"
+        "PrefixConfig$prefixFormat": "<p> Determines the level of granularity that's included in the prefix. </p>"
       }
     },
     "PrefixType": {
       "base": null,
       "refs": {
-        "PrefixConfig$prefixType": "<p> Determines the level of granularity that's included in the prefix. </p>"
+        "PrefixConfig$prefixType": "<p> Determines the format of the prefix, and whether it applies to the file name, file path, or both. </p>"
       }
     },
     "PrivateLinkServiceName": {
@@ -1130,6 +1193,7 @@
       "base": null,
       "refs": {
         "GoogleAnalyticsConnectorProfileCredentials$refreshToken": "<p> The credentials used to acquire new access tokens. This is required only for OAuth2 access tokens, and is not required for OAuth1 access tokens. </p>",
+        "HoneycodeConnectorProfileCredentials$refreshToken": "<p> The credentials used to acquire new access tokens. </p>",
         "SalesforceConnectorProfileCredentials$refreshToken": "<p> The credentials used to acquire new access tokens. </p>"
       }
     },
@@ -1710,7 +1774,8 @@
       "base": "<p> The possible write operations in the destination connector. When this value is not provided, this defaults to the <code>INSERT</code> operation. </p>",
       "refs": {
         "SalesforceDestinationProperties$writeOperationType": "<p> This specifies the type of write operation to be performed in Salesforce. When the value is <code>UPSERT</code>, then <code>idFieldNames</code> is required. </p>",
-        "SupportedWriteOperationList$member": null
+        "SupportedWriteOperationList$member": null,
+        "ZendeskDestinationProperties$writeOperationType": null
       }
     },
     "ZendeskConnectorOperator": {
@@ -1729,6 +1794,12 @@
       "base": "<p> The connector-specific profile properties required when using Zendesk. </p>",
       "refs": {
         "ConnectorProfileProperties$Zendesk": "<p> The connector-specific properties required by Zendesk. </p>"
+      }
+    },
+    "ZendeskDestinationProperties": {
+      "base": null,
+      "refs": {
+        "DestinationConnectorProperties$Zendesk": null
       }
     },
     "ZendeskMetadata": {

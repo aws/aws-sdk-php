@@ -203,7 +203,7 @@ class S3Context implements Context, SnippetAcceptingContext
     public function iChangeTheBodyOfThePreSignedRequestToBe($body)
     {
         $this->presignedRequest = $this->presignedRequest
-            ->withBody(Psr7\stream_for($body));
+            ->withBody(Psr7\Utils::streamFor($body));
     }
 
     /**
@@ -212,7 +212,7 @@ class S3Context implements Context, SnippetAcceptingContext
     public function iHaveAnClientAndIHaveAFile()
     {
         $this->s3Client = self::getSdk()->createS3();
-        $this->stream = Psr7\stream_for(Psr7\try_fopen(self::$tempFile, 'r'));
+        $this->stream = Psr7\Utils::streamFor(Psr7\Utils::tryFopen(self::$tempFile, 'r'));
     }
 
     /**
