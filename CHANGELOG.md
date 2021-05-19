@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.1 - 2021-05-19
 
 * `Aws\AutoScaling` - With this release, customers can easily use Predictive Scaling as a policy directly through Amazon EC2 Auto Scaling configurations to proactively scale their applications ahead of predicted demand.
 * `Aws\EKS` - Update the EKS AddonActive waiter.
