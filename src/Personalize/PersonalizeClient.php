@@ -95,6 +95,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listSolutionVersionsAsync(array $args = [])
  * @method \Aws\Result listSolutions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSolutionsAsync(array $args = [])
+ * @method \Aws\Result stopSolutionVersionCreation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise stopSolutionVersionCreationAsync(array $args = [])
  * @method \Aws\Result updateCampaign(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateCampaignAsync(array $args = [])
  */
