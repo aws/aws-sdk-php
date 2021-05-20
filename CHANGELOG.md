@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.2 - 2021-05-20
 
 * `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
 * `Aws\LexModelsV2` - Customers can now use resource-based policies to control access to their Lex V2 bots. This release adds APIs to attach and manage permissions for a bot or a bot alias. For details, see: https://docs.aws.amazon.com/lexv2/latest/dg/security_iam_service-with-iam.html
