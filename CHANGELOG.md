@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchLogs` - This release provides dimensions and unit support for metric filters.
+* `Aws\ComputeOptimizer` - Adds support for 1) additional instance types, 2) additional instance metrics, 3) finding reasons for instance recommendations, and 4) platform differences between a current instance and a recommended instance type.
+* `Aws\CostExplorer` - Introduced FindingReasonCodes, PlatformDifferences, DiskResourceUtilization and NetworkResourceUtilization to GetRightsizingRecommendation action
+* `Aws\EC2` - This release adds support for creating and managing EC2 On-Demand Capacity Reservations on Outposts.
+* `Aws\QuickSight` - Add new parameters on RegisterUser and UpdateUser APIs to assign or update external ID associated to QuickSight users federated through web identity.
+
 ## 3.183.3 - 2021-05-21
 
 * `Aws\EFS` - EFS now supports account preferences. Utilizing the new capability, users can customize some aspects of their experience using EFS APIs and the EFS Console. The first preference clients are able to set is whether to start using longer File System and Mount Target IDs before EFS migrates to such IDs.
