@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.8 - 2021-05-27
 
 * `Aws\DeviceFarm` - Introduces support for using our desktop testing service with applications hosted within your Virtual Private Cloud (VPC).
 * `Aws\FSx` - This release adds LZ4 data compression support to FSx for Lustre to reduce storage consumption of both file system storage and file system backups.
