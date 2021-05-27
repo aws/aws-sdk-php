@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.7 - 2021-05-27
 
 * `Aws\EC2` - This release removes resource ids and tagging support for VPC security group rules.
 
