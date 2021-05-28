@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.9 - 2021-05-28
 
 * `Aws\DataSync` - Added SecurityDescriptorCopyFlags option that allows for control of which components of SMB security descriptors are copied from source to destination objects.
 * `Aws\LocationService` - Adds support for calculation of routes, resource tagging and customer provided KMS keys.
