@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.10 - 2021-06-01
 
 * `Aws\EC2` - Added idempotency to CreateNetworkInterface using the ClientToken parameter.
 * `Aws\IoTWireless` - Added six new public customer logging APIs to allow customers to set/get/reset log levels at resource type and resource id level. The log level set from the APIs will be used to filter log messages that can be emitted to CloudWatch in customer accounts.
