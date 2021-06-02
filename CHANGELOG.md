@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.11 - 2021-06-02
 
 * `Aws\AutoScaling` - You can now launch EC2 instances with GP3 volumes when using Auto Scaling groups with Launch Configurations
 * `Aws\Braket` - Introduction of a RETIRED status for devices.
