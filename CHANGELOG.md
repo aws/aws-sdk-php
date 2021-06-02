@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - You can now launch EC2 instances with GP3 volumes when using Auto Scaling groups with Launch Configurations
+* `Aws\Braket` - Introduction of a RETIRED status for devices.
+* `Aws\DocDB` - This SDK release adds support for DocDB global clusters.
+* `Aws\ECS` - Documentation updates for Amazon ECS.
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+* `Aws\Lightsail` - Documentation updates for Lightsail
+
 ## 3.183.10 - 2021-06-01
 
 * `Aws\EC2` - Added idempotency to CreateNetworkInterface using the ClientToken parameter.
