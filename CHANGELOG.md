@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.12 - 2021-06-03
 
 * `Aws\ForecastService` - Added optional field AutoMLOverrideStrategy to CreatePredictor API that allows users to customize AutoML strategy. If provided in CreatePredictor request, this field is visible in DescribePredictor and GetAccuracyMetrics responses.
 * `Aws\Route53Resolver` - Documentation updates for Route 53 Resolver
