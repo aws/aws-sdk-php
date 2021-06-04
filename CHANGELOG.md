@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.13 - 2021-06-04
 
 * `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling
 * `Aws\CloudTrail` - AWS CloudTrail supports data events on new service resources, including Amazon DynamoDB tables and S3 Object Lambda access points.
