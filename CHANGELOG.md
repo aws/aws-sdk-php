@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.14 - 2021-06-07
 
 * `Aws\EKS` - Added updateConfig option that allows customers to control upgrade velocity in Managed Node Group.
 * `Aws\Glue` - Add SampleSize variable to S3Target to enable s3-sampling feature through API.
