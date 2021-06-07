@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EKS` - Added updateConfig option that allows customers to control upgrade velocity in Managed Node Group.
+* `Aws\Glue` - Add SampleSize variable to S3Target to enable s3-sampling feature through API.
+* `Aws\Personalize` - Update regex validation in kmsKeyArn and s3 path API parameters for AWS Personalize APIs
+* `Aws\SageMaker` - AWS SageMaker - Releasing new APIs related to Callback steps in model building pipelines. Adds experiment integration to model building pipelines.
+
 ## 3.183.13 - 2021-06-04
 
 * `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling
