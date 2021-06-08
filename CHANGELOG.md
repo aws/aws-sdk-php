@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.183.15 - 2021-06-08
 
 * `Aws\CognitoIdentityProvider` - Documentation updates for cognito-idp
 * `Aws\FSx` - This release adds support for auditing end-user access to files, folders, and file shares using Windows event logs, enabling customers to meet their security and compliance needs.
