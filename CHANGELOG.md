@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.184.0 - 2021-06-09
 
 * `Aws\PersonalizeEvents` - Support for unstructured text inputs in the items dataset to to automatically extract key information from product/content description as an input when creating solution versions.
 * `Aws\Proton` - This is the initial SDK release for AWS Proton
