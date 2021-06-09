@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\PersonalizeEvents` - Support for unstructured text inputs in the items dataset to to automatically extract key information from product/content description as an input when creating solution versions.
+* `Aws\Proton` - This is the initial SDK release for AWS Proton
+* `Aws\Transfer` - Documentation updates for the AWS Transfer Family service.
+* `Aws\kendra` - AWS Kendra now supports checking document status.
+
 ## 3.183.15 - 2021-06-08
 
 * `Aws\CognitoIdentityProvider` - Documentation updates for cognito-idp

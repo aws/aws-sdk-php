@@ -400,6 +400,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPricing(array $args = [])
  * @method \Aws\PrometheusService\PrometheusServiceClient createPrometheusService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPrometheusService(array $args = [])
+ * @method \Aws\Proton\ProtonClient createProton(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionProton(array $args = [])
  * @method \Aws\QLDB\QLDBClient createQLDB(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionQLDB(array $args = [])
  * @method \Aws\QLDBSession\QLDBSessionClient createQLDBSession(array $args = [])

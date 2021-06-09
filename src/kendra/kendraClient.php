@@ -7,6 +7,8 @@ use Aws\AwsClient;
  * This client is used to interact with the **AWSKendraFrontendService** service.
  * @method \Aws\Result batchDeleteDocument(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchDeleteDocumentAsync(array $args = [])
+ * @method \Aws\Result batchGetDocumentStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise batchGetDocumentStatusAsync(array $args = [])
  * @method \Aws\Result batchPutDocument(array $args = [])
  * @method \GuzzleHttp\Promise\Promise batchPutDocumentAsync(array $args = [])
  * @method \Aws\Result clearQuerySuggestions(array $args = [])
