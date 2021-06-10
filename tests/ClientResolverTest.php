@@ -721,6 +721,11 @@ EOT;
             ->willReturn(['MockBuilder']);
 
         $request->expects($this->once())
+            ->method('getHeader')
+            ->with('x-amz-user-agent')
+            ->willReturn(['MockBuilder']);
+
+        $request->expects($this->once())
             ->method('withHeader')
             ->with(
                 'User-Agent',
