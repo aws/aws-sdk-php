@@ -720,10 +720,20 @@ class ClientResolver
                     implode(' ', array_merge(
                         $legacyUserAgent,
                         $request->getHeader('User-Agent')
-                    )))->withHeader(
+                    )));
+                return $handler($command, $request->withHeader(
+                    'User-Agent',
+                    implode(' ', array_merge(
+                        $legacyUserAgent,
+                        $request->getHeader('User-Agent')
+                    ))
+                )->withHeader(
                     'x-amz-user-agent',
-                    implode(' ', $xAmzUserAgent));
-                return $handler($command, $request);
+                    implode(' ', array_merge(
+                        $xAmzUserAgent,
+                        $request->getHeader('User-Agent')
+                    ))
+                ));
             };
         });
     }
