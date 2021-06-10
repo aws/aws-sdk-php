@@ -715,12 +715,6 @@ class ClientResolver
                 CommandInterface $command,
                 RequestInterface $request
             ) use ($handler, $legacyUserAgent, $xAmzUserAgent) {
-                $request = $request->withHeader(
-                    'User-Agent',
-                    implode(' ', array_merge(
-                        $legacyUserAgent,
-                        $request->getHeader('User-Agent')
-                    )));
                 return $handler($command, $request->withHeader(
                     'User-Agent',
                     implode(' ', array_merge(
@@ -731,7 +725,7 @@ class ClientResolver
                     'x-amz-user-agent',
                     implode(' ', array_merge(
                         $xAmzUserAgent,
-                        $request->getHeader('User-Agent')
+                        $request->getHeader('x-amz-user-agent')
                         ))
                     ));
             };
