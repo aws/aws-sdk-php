@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.184.1 - 2021-06-10
 
 * `Aws\AppMesh` - AppMesh now supports additional routing capabilities in match and rewrites for Gateway Routes and Routes. Additionally, App Mesh also supports specifying DNS Response Types in Virtual Nodes.
 * `Aws\Appflow` - Adding MAP_ALL task type support.
