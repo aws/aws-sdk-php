@@ -452,7 +452,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
         $list = $s3->getHandlerList();
         $list->appendSign(Middleware::tap(function($cmd, $req) {
             $this->assertContains(
-                'S3CryptoV' . S3EncryptionMultipartUploader::CRYPTO_VERSION,
+                'feat/s3-encrypt/' . S3EncryptionMultipartUploader::CRYPTO_VERSION,
                 $req->getHeaderLine('User-Agent')
             );
         }));
