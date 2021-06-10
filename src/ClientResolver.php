@@ -732,8 +732,8 @@ class ClientResolver
                     implode(' ', array_merge(
                         $xAmzUserAgent,
                         $request->getHeader('User-Agent')
-                    ))
-                ));
+                        ))
+                    ));
             };
         });
     }
