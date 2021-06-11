@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Amazon EC2 adds new AMI property to flag outdated AMIs
+* `Aws\MediaConnect` - When you enable source failover, you can now designate one of two sources as the primary source. You can choose between two failover modes to prevent any disruption to the video stream. Merge combines the sources into a single stream. Failover allows switching between a primary and a backup stream.
+* `Aws\MediaLive` - AWS MediaLive now supports OCR-based conversion of DVB-Sub and SCTE-27 image-based source captions to WebVTT, and supports ingest of ad avail decorations in HLS input manifests.
+
 ## 3.184.1 - 2021-06-10
 
 * `Aws\AppMesh` - AppMesh now supports additional routing capabilities in match and rewrites for Gateway Routes and Routes. Additionally, App Mesh also supports specifying DNS Response Types in Virtual Nodes.
