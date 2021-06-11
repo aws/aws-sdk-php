@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.184.2 - 2021-06-11
 
 * `Aws\EC2` - Amazon EC2 adds new AMI property to flag outdated AMIs
 * `Aws\MediaConnect` - When you enable source failover, you can now designate one of two sources as the primary source. You can choose between two failover modes to prevent any disruption to the video stream. Merge combines the sources into a single stream. Failover allows switching between a primary and a backup stream.
