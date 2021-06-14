@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\GreengrassV2` - We have verified the APIs being released here and are ready to release
+* `Aws\IoTAnalytics` - Adds support for data store partitions.
+* `Aws\LookoutMetrics` - Added "LEARNING" status for anomaly detector and updated description for "Offset" parameter in MetricSet APIs.
+
 ## 3.184.2 - 2021-06-11
 
 * `Aws\EC2` - Amazon EC2 adds new AMI property to flag outdated AMIs
