@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.184.3 - 2021-06-14
 
 * `Aws\GreengrassV2` - We have verified the APIs being released here and are ready to release
 * `Aws\IoTAnalytics` - Adds support for data store partitions.
