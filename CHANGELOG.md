@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - This release adds new sets of APIs: AssociateBot, DisassociateBot, and ListBots. You can use it to programmatically add an Amazon Lex bot or Amazon Lex V2 bot on the specified Amazon Connect instance
+* `Aws\EC2` - EC2 M5n, M5dn, R5n, R5dn metal instances with 100 Gbps network performance and Elastic Fabric Adapter (EFA) for ultra low latency
+* `Aws\LexModelsV2` - This release adds support for Multi Valued slots in Amazon Lex V2 APIs for model building
+* `Aws\LexRuntimeV2` - This release adds support for Multi Valued slots in Amazon Lex V2 APIs for runtime
+* `Aws\RedshiftDataAPIService` - Redshift Data API service now supports SQL parameterization.
+
 ## 3.184.3 - 2021-06-14
 
 * `Aws\GreengrassV2` - We have verified the APIs being released here and are ready to release
