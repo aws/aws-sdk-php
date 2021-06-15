@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.184.4 - 2021-06-15
 
 * `Aws\Connect` - This release adds new sets of APIs: AssociateBot, DisassociateBot, and ListBots. You can use it to programmatically add an Amazon Lex bot or Amazon Lex V2 bot on the specified Amazon Connect instance
 * `Aws\EC2` - EC2 M5n, M5dn, R5n, R5dn metal instances with 100 Gbps network performance and Elastic Fabric Adapter (EFA) for ultra low latency
