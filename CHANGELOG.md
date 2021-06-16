@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.184.5 - 2021-06-16
 
 * `Aws\EC2` - This release adds support for VLAN-tagged network traffic over an Elastic Network Interface (ENI). This feature is in limited Preview for this release. Contact your account manager if you are interested in this feature.
 * `Aws\KMS` - Adds support for multi-Region keys
