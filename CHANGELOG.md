@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - This release adds support for VLAN-tagged network traffic over an Elastic Network Interface (ENI). This feature is in limited Preview for this release. Contact your account manager if you are interested in this feature.
+* `Aws\KMS` - Adds support for multi-Region keys
+* `Aws\MediaTailor` - Adds AWS Secrets Manager Access Token Authentication for Source Locations
+* `Aws\RDS` - This release enables fast cloning in Aurora Serverless. You can now clone between Aurora Serverless clusters and Aurora Provisioned clusters.
+
 ## 3.184.4 - 2021-06-15
 
 * `Aws\Connect` - This release adds new sets of APIs: AssociateBot, DisassociateBot, and ListBots. You can use it to programmatically add an Amazon Lex bot or Amazon Lex V2 bot on the specified Amazon Connect instance
