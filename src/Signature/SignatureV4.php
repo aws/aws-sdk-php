@@ -55,6 +55,7 @@ class SignatureV4 implements SignatureInterface
             'from'                  => true,
             'referer'               => true,
             'user-agent'            => true,
+            'x-amz-user-agent'      => true,
             'x-amzn-trace-id'       => true,
             'aws-sdk-invocation-id' => true,
             'aws-sdk-retry'         => true,
