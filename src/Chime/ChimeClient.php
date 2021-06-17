@@ -361,6 +361,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateRoomMembershipAsync(array $args = [])
  * @method \Aws\Result updateSipMediaApplication(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSipMediaApplicationAsync(array $args = [])
+ * @method \Aws\Result updateSipMediaApplicationCall(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateSipMediaApplicationCallAsync(array $args = [])
  * @method \Aws\Result updateSipRule(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSipRuleAsync(array $args = [])
  * @method \Aws\Result updateUser(array $args = [])
