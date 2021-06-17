@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.184.6 - 2021-06-17
 
 * `Aws\Chime` - This release adds a new API UpdateSipMediaApplicationCall, to update an in-progress call for SipMediaApplication.
 * `Aws\RDS` - This release enables Database Activity Streams for RDS Oracle
