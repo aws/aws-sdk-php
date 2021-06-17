@@ -388,7 +388,8 @@ class SignatureV4 implements SignatureInterface
         $request = $request
             ->withoutHeader('X-Amz-Date')
             ->withoutHeader('Date')
-            ->withoutHeader('Authorization');
+            ->withoutHeader('Authorization')
+            ->withoutHeader('x-amz-user-agent');
         $uri = $request->getUri();
 
         return [
