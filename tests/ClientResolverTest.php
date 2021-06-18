@@ -717,6 +717,7 @@ EOT;
 
         $request->expects($this->once())
             ->method('getHeader')
+            ->with('User-Agent')
             ->willReturn(['MockBuilder']);
 
         $request->expects($this->once())
