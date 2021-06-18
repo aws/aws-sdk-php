@@ -742,9 +742,7 @@ EOT;
                     '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
                 ))
             ->willReturn($request);
-
-
-
+        
         $args = [];
         $list = new HandlerList(function () {});
         ClientResolver::_apply_user_agent([], $args, $list);
