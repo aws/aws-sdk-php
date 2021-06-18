@@ -715,38 +715,40 @@ EOT;
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request->expects($this->once(0))
+        $request->expects($this->at(0))
             ->method('getHeader')
             ->with('X-Amz-User-Agent')
-            ->willReturn(['MockBuilder']);
+            ->willReturn(["MockBuilder"]);
 
-        $request->expects($this->at(1))
+        $request->expects($this->at(2))
             ->method('getHeader')
             ->with('User-Agent')
             ->willReturn(['MockBuilder']);
 
-        $request->expects($this->once())
+        $request->expects($this->at(3))
             ->method('withHeader')
             ->with(
+                new \PHPUnit\Framework\Constraint\RegularExpression(
                 'User-Agent',
-                new \PHPUnit\Framework\Constraint\RegularExpression(
                     '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
-                )
-            );
-        $request->expects($this->once())
+                ))
+            ->willReturn($request);
+
+        $request->expects($this->at(1))
             ->method('withHeader')
             ->with(
-                'X-Amz-User-Agent',
                 new \PHPUnit\Framework\Constraint\RegularExpression(
+                'X-Amz-User-Agent',
                     '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
-                )
-            );
+            ))
+            ->willReturn($request);
 
         $args = [];
         $list = new HandlerList(function () {});
         ClientResolver::_apply_user_agent([], $args, $list);
         call_user_func($list->resolve(), $command, $request);
     }
+
 
     /**
      * @dataProvider statValueProvider
