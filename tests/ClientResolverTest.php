@@ -720,6 +720,15 @@ EOT;
             ->with('X-Amz-User-Agent')
             ->willReturn(["MockBuilder"]);
 
+        $request->expects($this->at(1))
+            ->method('withHeader')
+            ->with(
+                'X-Amz-User-Agent',
+                new \PHPUnit\Framework\Constraint\RegularExpression(
+                    '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
+                ))
+            ->willReturn($request);
+
         $request->expects($this->at(2))
             ->method('getHeader')
             ->with('User-Agent')
@@ -728,20 +737,13 @@ EOT;
         $request->expects($this->at(3))
             ->method('withHeader')
             ->with(
-                new \PHPUnit\Framework\Constraint\RegularExpression(
                 'User-Agent',
+                new \PHPUnit\Framework\Constraint\RegularExpression(
                     '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
                 ))
             ->willReturn($request);
 
-        $request->expects($this->at(1))
-            ->method('withHeader')
-            ->with(
-                new \PHPUnit\Framework\Constraint\RegularExpression(
-                'X-Amz-User-Agent',
-                    '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
-            ))
-            ->willReturn($request);
+
 
         $args = [];
         $list = new HandlerList(function () {});
