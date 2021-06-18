@@ -717,18 +717,25 @@ EOT;
 
         $request->expects($this->once())
             ->method('getHeader')
-            ->with('X-Amz-User-Agent')
             ->willReturn(['MockBuilder']);
 
         $request->expects($this->once())
             ->method('getHeader')
-            ->with('User-Agent')
+            ->with('X-Amz-User-Agent')
             ->willReturn(['MockBuilder']);
 
         $request->expects($this->once())
             ->method('withHeader')
             ->with(
                 'User-Agent',
+                new \PHPUnit\Framework\Constraint\RegularExpression(
+                    '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
+                )
+            );
+        $request->expects($this->once())
+            ->method('withHeader')
+            ->with(
+                'X-Amz-User-Agent',
                 new \PHPUnit\Framework\Constraint\RegularExpression(
                     '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
                 )
