@@ -715,14 +715,14 @@ EOT;
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request->expects($this->once())
-            ->method('getHeader')
-            ->with('User-Agent')
-            ->willReturn(['MockBuilder']);
-
-        $request->expects($this->once())
+        $request->expects($this->once(0))
             ->method('getHeader')
             ->with('X-Amz-User-Agent')
+            ->willReturn(['MockBuilder']);
+
+        $request->expects($this->at(1))
+            ->method('getHeader')
+            ->with('User-Agent')
             ->willReturn(['MockBuilder']);
 
         $request->expects($this->once())
