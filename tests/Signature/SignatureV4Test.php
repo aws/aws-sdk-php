@@ -304,6 +304,7 @@ class SignatureV4Test extends TestCase
         ]);
         $presigned = $sig->presign($req, $creds, '+5 minutes');
         $this->assertNotContains('user-agent', (string)$presigned->getUri());
+        $this->assertNotContains('X-Amz-User-Agent', (string)$presigned->getUri());
         $this->assertNotContains('content-length', (string)$presigned->getUri());
         $this->assertNotContains('Content-Type', (string)$presigned->getUri());
     }
