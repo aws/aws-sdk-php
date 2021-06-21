@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - CloudFormation registry service now supports 3rd party public type sharing
+
 ## 3.184.6 - 2021-06-17
 
 * `Aws\Chime` - This release adds a new API UpdateSipMediaApplicationCall, to update an in-progress call for SipMediaApplication.
