@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.184.7 - 2021-06-21
 
 * `Aws\CloudFormation` - CloudFormation registry service now supports 3rd party public type sharing
 
