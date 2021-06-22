@@ -668,24 +668,17 @@ class ClientResolver
         );
     }
 
-    public static function _apply_user_agent($legacyUserAgent, array &$args, HandlerList $list)
+    public static function _apply_user_agent($inputUserAgent, array &$args, HandlerList $list)
     {
-        if (!is_array($legacyUserAgent)) {
-            $legacyUserAgent = [$legacyUserAgent];
-        }
-
-        $legacyUserAgent = array_map('strval', $legacyUserAgent);
-
         //Add SDK version
         $legacyUserAgent []= 'aws-sdk-php/' . Sdk::VERSION;
-        $args['ua_append'] = $legacyUserAgent;
 
-        //if on HHVM add the HHVM version
+        //If on HHVM add the HHVM version
         if (defined('HHVM_VERSION')) {
             $legacyUserAgent []= 'HHVM/' . HHVM_VERSION;
         }
 
-        //set up the updated user agent
+        //Set up the updated user agent
         $xAmzUserAgent = $legacyUserAgent;
 
         //Add OS version
@@ -706,6 +699,18 @@ class ClientResolver
         if ($executionEnvironment = getenv('AWS_EXECUTION_ENV')) {
             $legacyUserAgent []= $executionEnvironment;
         }
+
+        //Add the input to the end
+        if ($inputUserAgent){
+            if (!is_array($inputUserAgent)) {
+                $inputUserAgent = [$inputUserAgent];
+            }
+            $inputUserAgent = array_map('strval', $inputUserAgent);
+            $legacyUserAgent = array_merge($legacyUserAgent, $inputUserAgent);
+            $xAmzUserAgent = array_merge($xAmzUserAgent, $inputUserAgent);
+        }
+
+        $args['ua_append'] = $legacyUserAgent;
 
         $list->appendBuild(static function (callable $handler) use (
             $xAmzUserAgent,
