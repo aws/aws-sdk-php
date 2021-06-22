@@ -55,6 +55,7 @@ class SignatureV4 implements SignatureInterface
             'from'                  => true,
             'referer'               => true,
             'user-agent'            => true,
+            'X-Amz-User-Agent'      => true,
             'x-amzn-trace-id'       => true,
             'aws-sdk-invocation-id' => true,
             'aws-sdk-retry'         => true,
@@ -366,6 +367,9 @@ class SignatureV4 implements SignatureInterface
 
     private function moveHeadersToQuery(array $parsedRequest)
     {
+        //x-amz-user-agent shouldn't be put in a query param
+        unset($parsedRequest['headers']['X-Amz-User-Agent']);
+
         foreach ($parsedRequest['headers'] as $name => $header) {
             $lname = strtolower($name);
             if (substr($lname, 0, 5) == 'x-amz') {

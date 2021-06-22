@@ -503,7 +503,7 @@ class S3EncryptionMultipartUploaderV2Test extends TestCase
         $list = $s3->getHandlerList();
         $list->appendSign(Middleware::tap(function($cmd, $req) {
             $this->assertContains(
-                'S3CryptoV' . S3EncryptionMultipartUploaderV2::CRYPTO_VERSION,
+                'feat/s3-encrypt/' . S3EncryptionMultipartUploaderV2::CRYPTO_VERSION,
                 $req->getHeaderLine('User-Agent')
             );
         }));
