@@ -671,15 +671,15 @@ class ClientResolver
     public static function _apply_user_agent($inputUserAgent, array &$args, HandlerList $list)
     {
         //Add SDK version
-        $legacyUserAgent []= 'aws-sdk-php/' . Sdk::VERSION;
+        $xAmzUserAgent = ['aws-sdk-php/' . Sdk::VERSION];
 
         //If on HHVM add the HHVM version
         if (defined('HHVM_VERSION')) {
-            $legacyUserAgent []= 'HHVM/' . HHVM_VERSION;
+            $xAmzUserAgent []= 'HHVM/' . HHVM_VERSION;
         }
 
         //Set up the updated user agent
-        $xAmzUserAgent = $legacyUserAgent;
+        $legacyUserAgent = $xAmzUserAgent;
 
         //Add OS version
         $disabledFunctions = explode(',', ini_get('disable_functions'));
