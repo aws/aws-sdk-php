@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - User agent header updated to include info on OS and language version
+* `Aws\Cloud9` - Updated documentation for CreateEnvironmentEC2 to explain that because Amazon Linux AMI has ended standard support as of December 31, 2020, we recommend you choose Amazon Linux 2--which includes long term support through 2023--for new AWS Cloud9 environments.
+* `Aws\CloudFront` - Amazon CloudFront adds support for a new security policy, TLSv1.2_2021.
+* `Aws\CloudSearch` - This release replaces previous generation CloudSearch instances with equivalent new instances that provide better stability at the same price.
+* `Aws\CloudWatchEvents` - Added the following parameters to ECS targets: CapacityProviderStrategy, EnableECSManagedTags, EnableExecuteCommand, PlacementConstraints, PlacementStrategy, PropagateTags, ReferenceId, and Tags
+* `Aws\CodeGuruReviewer` - Adds support for S3 based full repository analysis and changed lines scan.
+* `Aws\DocDB` - DocumentDB documentation-only edits
+* `Aws\EC2` - This release adds support for provisioning your own IP (BYOIP) range in multiple regions. This feature is in limited Preview for this release. Contact your account manager if you are interested in this feature.
+* `Aws\EventBridge` - Added the following parameters to ECS targets: CapacityProviderStrategy, EnableECSManagedTags, EnableExecuteCommand, PlacementConstraints, PlacementStrategy, PropagateTags, ReferenceId, and Tags
+* `Aws\LicenseManager` - AWS License Manager now allows license administrators and end users to communicate to each other by setting custom status reasons when updating the status on a granted license.
+* `Aws\MediaTailor` - Update GetChannelSchedule to return information on ad breaks.
+* `Aws\QuickSight` - Releasing new APIs for AWS QuickSight Folders
+
 ## 3.184.7 - 2021-06-21
 
 * `Aws\CloudFormation` - CloudFormation registry service now supports 3rd party public type sharing
