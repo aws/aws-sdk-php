@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.0 - 2021-06-23
 
 * `Aws\` - User agent header updated to include info on OS and language version
 * `Aws\Cloud9` - Updated documentation for CreateEnvironmentEC2 to explain that because Amazon Linux AMI has ended standard support as of December 31, 2020, we recommend you choose Amazon Linux 2--which includes long term support through 2023--for new AWS Cloud9 environments.
