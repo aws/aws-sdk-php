@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.1 - 2021-06-24
 
 * `Aws\Chime` - Adds EventIngestionUrl field to MediaPlacement
 * `Aws\Cloud9` - Minor update to AWS Cloud9 documentation to allow correct parsing of outputted text
