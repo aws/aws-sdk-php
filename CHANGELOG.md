@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Chime` - Adds EventIngestionUrl field to MediaPlacement
+* `Aws\Cloud9` - Minor update to AWS Cloud9 documentation to allow correct parsing of outputted text
+* `Aws\CodeBuild` - BucketOwnerAccess is currently not supported
+* `Aws\Connect` - Released Amazon Connect quick connects management API for general availability (GA). For more information, see https://docs.aws.amazon.com/connect/latest/APIReference/Welcome.html
+* `Aws\DAX` - Add support for encryption in transit to DAX clusters.
+* `Aws\SecurityHub` - Added new resource details for ECS clusters and ECS task definitions. Added additional information for S3 buckets, Elasticsearch domains, and API Gateway V2 stages.
+* `Aws\Transfer` - Customers can successfully use legacy clients with Transfer Family endpoints enabled for FTPS and FTP behind routers, firewalls, and load balancers by providing a Custom IP address used for data channel communication.
+* `Aws\WAFV2` - Added support for 15 new text transformation.
+* `Aws\kendra` - Amazon Kendra now supports SharePoint 2013 and SharePoint 2016 when using a SharePoint data source.
+
 ## 3.185.0 - 2021-06-23
 
 * `Aws\` - User agent header updated to include info on OS and language version
