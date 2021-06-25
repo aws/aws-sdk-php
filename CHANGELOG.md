@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.2 - 2021-06-25
 
 * `Aws\AmplifyBackend` - Imports an existing backend authentication resource.
 * `Aws\Proton` - Added waiters for template registration, service operations, and environment deployments.
