@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.3 - 2021-06-28
 
 * `Aws\Glue` - Add JSON Support for Glue Schema Registry
 * `Aws\MediaConvert` - MediaConvert adds support for HDR10+, ProRes 4444, and XAVC outputs, ADM/DAMF support for Dolby Atmos ingest, and alternative audio and WebVTT caption ingest via HLS inputs. MediaConvert also now supports creating trickplay outputs for Roku devices for HLS, CMAF, and DASH output groups.
