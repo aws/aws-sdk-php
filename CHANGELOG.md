@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.4 - 2021-06-30
 
 * `Aws\AutoScaling` - Amazon EC2 Auto Scaling infrastructure improvements and optimizations.
 * `Aws\GlueDataBrew` - Adds support for the output of job results to the AWS Glue Data Catalog.
