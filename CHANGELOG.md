@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Amazon EC2 Auto Scaling infrastructure improvements and optimizations.
+* `Aws\GlueDataBrew` - Adds support for the output of job results to the AWS Glue Data Catalog.
+* `Aws\MediaPackageVod` - Add support for Widevine DRM on CMAF packaging configurations. Both Widevine and FairPlay DRMs can now be used simultaneously, with CBCS encryption.
+* `Aws\SSMContacts` - Fixes the tag key length range to 128 chars, tag value length to 256 chars; Adds support for UTF-8 chars for contact and channel names, Allows users to unset name in UpdateContact API; Adds throttling exception to StopEngagement API, validation exception to APIs UntagResource, ListTagsForResource
+* `Aws\ServiceDiscovery` - AWS Cloud Map now allows configuring the TTL of the SOA record for a hosted zone to control the negative caching for new services.
+* `Aws\kendra` - Amazon Kendra Enterprise Edition now offered in smaller more granular units to enable customers with smaller workloads. Virtual Storage Capacity units now offer scaling in increments of 100,000 documents (up to 30GB) per unit and Virtual Query Units offer scaling increments of 8,000 queries per day.
+
 ## 3.185.3 - 2021-06-28
 
 * `Aws\Glue` - Add JSON Support for Glue Schema Registry
