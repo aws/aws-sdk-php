@@ -13,6 +13,22 @@
     "xmlNamespace":"http://rds.amazonaws.com/doc/2014-10-31/"
   },
   "operations":{
+    "AddSourceIdentifierToSubscription":{
+      "name":"AddSourceIdentifierToSubscription",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AddSourceIdentifierToSubscriptionMessage"},
+      "output":{
+        "shape":"AddSourceIdentifierToSubscriptionResult",
+        "resultWrapper":"AddSourceIdentifierToSubscriptionResult"
+      },
+      "errors":[
+        {"shape":"SubscriptionNotFoundFault"},
+        {"shape":"SourceNotFoundFault"}
+      ]
+    },
     "AddTagsToResource":{
       "name":"AddTagsToResource",
       "http":{
@@ -106,7 +122,9 @@
         {"shape":"KMSKeyNotAccessibleFault"},
         {"shape":"DBClusterNotFoundFault"},
         {"shape":"DBInstanceNotFoundFault"},
-        {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"}
+        {"shape":"DBSubnetGroupDoesNotCoverEnoughAZs"},
+        {"shape":"GlobalClusterNotFoundFault"},
+        {"shape":"InvalidGlobalClusterStateFault"}
       ]
     },
     "CreateDBClusterParameterGroup":{
@@ -192,6 +210,45 @@
         {"shape":"InvalidSubnet"}
       ]
     },
+    "CreateEventSubscription":{
+      "name":"CreateEventSubscription",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateEventSubscriptionMessage"},
+      "output":{
+        "shape":"CreateEventSubscriptionResult",
+        "resultWrapper":"CreateEventSubscriptionResult"
+      },
+      "errors":[
+        {"shape":"EventSubscriptionQuotaExceededFault"},
+        {"shape":"SubscriptionAlreadyExistFault"},
+        {"shape":"SNSInvalidTopicFault"},
+        {"shape":"SNSNoAuthorizationFault"},
+        {"shape":"SNSTopicArnNotFoundFault"},
+        {"shape":"SubscriptionCategoryNotFoundFault"},
+        {"shape":"SourceNotFoundFault"}
+      ]
+    },
+    "CreateGlobalCluster":{
+      "name":"CreateGlobalCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateGlobalClusterMessage"},
+      "output":{
+        "shape":"CreateGlobalClusterResult",
+        "resultWrapper":"CreateGlobalClusterResult"
+      },
+      "errors":[
+        {"shape":"GlobalClusterAlreadyExistsFault"},
+        {"shape":"GlobalClusterQuotaExceededFault"},
+        {"shape":"InvalidDBClusterStateFault"},
+        {"shape":"DBClusterNotFoundFault"}
+      ]
+    },
     "DeleteDBCluster":{
       "name":"DeleteDBCluster",
       "http":{
@@ -269,6 +326,38 @@
         {"shape":"InvalidDBSubnetGroupStateFault"},
         {"shape":"InvalidDBSubnetStateFault"},
         {"shape":"DBSubnetGroupNotFoundFault"}
+      ]
+    },
+    "DeleteEventSubscription":{
+      "name":"DeleteEventSubscription",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteEventSubscriptionMessage"},
+      "output":{
+        "shape":"DeleteEventSubscriptionResult",
+        "resultWrapper":"DeleteEventSubscriptionResult"
+      },
+      "errors":[
+        {"shape":"SubscriptionNotFoundFault"},
+        {"shape":"InvalidEventSubscriptionStateFault"}
+      ]
+    },
+    "DeleteGlobalCluster":{
+      "name":"DeleteGlobalCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteGlobalClusterMessage"},
+      "output":{
+        "shape":"DeleteGlobalClusterResult",
+        "resultWrapper":"DeleteGlobalClusterResult"
+      },
+      "errors":[
+        {"shape":"GlobalClusterNotFoundFault"},
+        {"shape":"InvalidGlobalClusterStateFault"}
       ]
     },
     "DescribeCertificates":{
@@ -427,6 +516,21 @@
         "resultWrapper":"DescribeEventCategoriesResult"
       }
     },
+    "DescribeEventSubscriptions":{
+      "name":"DescribeEventSubscriptions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeEventSubscriptionsMessage"},
+      "output":{
+        "shape":"EventSubscriptionsMessage",
+        "resultWrapper":"DescribeEventSubscriptionsResult"
+      },
+      "errors":[
+        {"shape":"SubscriptionNotFoundFault"}
+      ]
+    },
     "DescribeEvents":{
       "name":"DescribeEvents",
       "http":{
@@ -438,6 +542,21 @@
         "shape":"EventsMessage",
         "resultWrapper":"DescribeEventsResult"
       }
+    },
+    "DescribeGlobalClusters":{
+      "name":"DescribeGlobalClusters",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeGlobalClustersMessage"},
+      "output":{
+        "shape":"GlobalClustersMessage",
+        "resultWrapper":"DescribeGlobalClustersResult"
+      },
+      "errors":[
+        {"shape":"GlobalClusterNotFoundFault"}
+      ]
     },
     "DescribeOrderableDBInstanceOptions":{
       "name":"DescribeOrderableDBInstanceOptions",
@@ -604,6 +723,42 @@
         {"shape":"InvalidSubnet"}
       ]
     },
+    "ModifyEventSubscription":{
+      "name":"ModifyEventSubscription",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyEventSubscriptionMessage"},
+      "output":{
+        "shape":"ModifyEventSubscriptionResult",
+        "resultWrapper":"ModifyEventSubscriptionResult"
+      },
+      "errors":[
+        {"shape":"EventSubscriptionQuotaExceededFault"},
+        {"shape":"SubscriptionNotFoundFault"},
+        {"shape":"SNSInvalidTopicFault"},
+        {"shape":"SNSNoAuthorizationFault"},
+        {"shape":"SNSTopicArnNotFoundFault"},
+        {"shape":"SubscriptionCategoryNotFoundFault"}
+      ]
+    },
+    "ModifyGlobalCluster":{
+      "name":"ModifyGlobalCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyGlobalClusterMessage"},
+      "output":{
+        "shape":"ModifyGlobalClusterResult",
+        "resultWrapper":"ModifyGlobalClusterResult"
+      },
+      "errors":[
+        {"shape":"GlobalClusterNotFoundFault"},
+        {"shape":"InvalidGlobalClusterStateFault"}
+      ]
+    },
     "RebootDBInstance":{
       "name":"RebootDBInstance",
       "http":{
@@ -618,6 +773,39 @@
       "errors":[
         {"shape":"InvalidDBInstanceStateFault"},
         {"shape":"DBInstanceNotFoundFault"}
+      ]
+    },
+    "RemoveFromGlobalCluster":{
+      "name":"RemoveFromGlobalCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RemoveFromGlobalClusterMessage"},
+      "output":{
+        "shape":"RemoveFromGlobalClusterResult",
+        "resultWrapper":"RemoveFromGlobalClusterResult"
+      },
+      "errors":[
+        {"shape":"GlobalClusterNotFoundFault"},
+        {"shape":"InvalidGlobalClusterStateFault"},
+        {"shape":"DBClusterNotFoundFault"}
+      ]
+    },
+    "RemoveSourceIdentifierFromSubscription":{
+      "name":"RemoveSourceIdentifierFromSubscription",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RemoveSourceIdentifierFromSubscriptionMessage"},
+      "output":{
+        "shape":"RemoveSourceIdentifierFromSubscriptionResult",
+        "resultWrapper":"RemoveSourceIdentifierFromSubscriptionResult"
+      },
+      "errors":[
+        {"shape":"SubscriptionNotFoundFault"},
+        {"shape":"SourceNotFoundFault"}
       ]
     },
     "RemoveTagsFromResource":{
@@ -744,6 +932,23 @@
     }
   },
   "shapes":{
+    "AddSourceIdentifierToSubscriptionMessage":{
+      "type":"structure",
+      "required":[
+        "SubscriptionName",
+        "SourceIdentifier"
+      ],
+      "members":{
+        "SubscriptionName":{"shape":"String"},
+        "SourceIdentifier":{"shape":"String"}
+      }
+    },
+    "AddSourceIdentifierToSubscriptionResult":{
+      "type":"structure",
+      "members":{
+        "EventSubscription":{"shape":"EventSubscription"}
+      }
+    },
     "AddTagsToResourceMessage":{
       "type":"structure",
       "required":[
@@ -911,9 +1116,7 @@
       "type":"structure",
       "required":[
         "DBClusterIdentifier",
-        "Engine",
-        "MasterUsername",
-        "MasterUserPassword"
+        "Engine"
       ],
       "members":{
         "AvailabilityZones":{"shape":"AvailabilityZones"},
@@ -934,7 +1137,8 @@
         "KmsKeyId":{"shape":"String"},
         "PreSignedUrl":{"shape":"String"},
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "DeletionProtection":{"shape":"BooleanOptional"},
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -1027,6 +1231,47 @@
         "DBSubnetGroup":{"shape":"DBSubnetGroup"}
       }
     },
+    "CreateEventSubscriptionMessage":{
+      "type":"structure",
+      "required":[
+        "SubscriptionName",
+        "SnsTopicArn"
+      ],
+      "members":{
+        "SubscriptionName":{"shape":"String"},
+        "SnsTopicArn":{"shape":"String"},
+        "SourceType":{"shape":"String"},
+        "EventCategories":{"shape":"EventCategoriesList"},
+        "SourceIds":{"shape":"SourceIdsList"},
+        "Enabled":{"shape":"BooleanOptional"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateEventSubscriptionResult":{
+      "type":"structure",
+      "members":{
+        "EventSubscription":{"shape":"EventSubscription"}
+      }
+    },
+    "CreateGlobalClusterMessage":{
+      "type":"structure",
+      "required":["GlobalClusterIdentifier"],
+      "members":{
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
+        "SourceDBClusterIdentifier":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "EngineVersion":{"shape":"String"},
+        "DeletionProtection":{"shape":"BooleanOptional"},
+        "DatabaseName":{"shape":"String"},
+        "StorageEncrypted":{"shape":"BooleanOptional"}
+      }
+    },
+    "CreateGlobalClusterResult":{
+      "type":"structure",
+      "members":{
+        "GlobalCluster":{"shape":"GlobalCluster"}
+      }
+    },
     "DBCluster":{
       "type":"structure",
       "members":{
@@ -1048,6 +1293,8 @@
         "MasterUsername":{"shape":"String"},
         "PreferredBackupWindow":{"shape":"String"},
         "PreferredMaintenanceWindow":{"shape":"String"},
+        "ReplicationSourceIdentifier":{"shape":"String"},
+        "ReadReplicaIdentifiers":{"shape":"ReadReplicaIdentifierList"},
         "DBClusterMembers":{"shape":"DBClusterMemberList"},
         "VpcSecurityGroups":{"shape":"VpcSecurityGroupMembershipList"},
         "HostedZoneId":{"shape":"String"},
@@ -1593,6 +1840,32 @@
         "DBSubnetGroupName":{"shape":"String"}
       }
     },
+    "DeleteEventSubscriptionMessage":{
+      "type":"structure",
+      "required":["SubscriptionName"],
+      "members":{
+        "SubscriptionName":{"shape":"String"}
+      }
+    },
+    "DeleteEventSubscriptionResult":{
+      "type":"structure",
+      "members":{
+        "EventSubscription":{"shape":"EventSubscription"}
+      }
+    },
+    "DeleteGlobalClusterMessage":{
+      "type":"structure",
+      "required":["GlobalClusterIdentifier"],
+      "members":{
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"}
+      }
+    },
+    "DeleteGlobalClusterResult":{
+      "type":"structure",
+      "members":{
+        "GlobalCluster":{"shape":"GlobalCluster"}
+      }
+    },
     "DescribeCertificatesMessage":{
       "type":"structure",
       "members":{
@@ -1712,6 +1985,15 @@
         "Filters":{"shape":"FilterList"}
       }
     },
+    "DescribeEventSubscriptionsMessage":{
+      "type":"structure",
+      "members":{
+        "SubscriptionName":{"shape":"String"},
+        "Filters":{"shape":"FilterList"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
     "DescribeEventsMessage":{
       "type":"structure",
       "members":{
@@ -1721,6 +2003,15 @@
         "EndTime":{"shape":"TStamp"},
         "Duration":{"shape":"IntegerOptional"},
         "EventCategories":{"shape":"EventCategoriesList"},
+        "Filters":{"shape":"FilterList"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeGlobalClustersMessage":{
+      "type":"structure",
+      "members":{
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
         "Filters":{"shape":"FilterList"},
         "MaxRecords":{"shape":"IntegerOptional"},
         "Marker":{"shape":"String"}
@@ -1812,6 +2103,47 @@
         "locationName":"Event"
       }
     },
+    "EventSubscription":{
+      "type":"structure",
+      "members":{
+        "CustomerAwsId":{"shape":"String"},
+        "CustSubscriptionId":{"shape":"String"},
+        "SnsTopicArn":{"shape":"String"},
+        "Status":{"shape":"String"},
+        "SubscriptionCreationTime":{"shape":"String"},
+        "SourceType":{"shape":"String"},
+        "SourceIdsList":{"shape":"SourceIdsList"},
+        "EventCategoriesList":{"shape":"EventCategoriesList"},
+        "Enabled":{"shape":"Boolean"},
+        "EventSubscriptionArn":{"shape":"String"}
+      },
+      "wrapper":true
+    },
+    "EventSubscriptionQuotaExceededFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"EventSubscriptionQuotaExceeded",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "EventSubscriptionsList":{
+      "type":"list",
+      "member":{
+        "shape":"EventSubscription",
+        "locationName":"EventSubscription"
+      }
+    },
+    "EventSubscriptionsMessage":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"String"},
+        "EventSubscriptionsList":{"shape":"EventSubscriptionsList"}
+      }
+    },
     "EventsMessage":{
       "type":"structure",
       "members":{
@@ -1855,6 +2187,91 @@
       "member":{
         "shape":"String",
         "locationName":"Value"
+      }
+    },
+    "GlobalCluster":{
+      "type":"structure",
+      "members":{
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
+        "GlobalClusterResourceId":{"shape":"String"},
+        "GlobalClusterArn":{"shape":"String"},
+        "Status":{"shape":"String"},
+        "Engine":{"shape":"String"},
+        "EngineVersion":{"shape":"String"},
+        "DatabaseName":{"shape":"String"},
+        "StorageEncrypted":{"shape":"BooleanOptional"},
+        "DeletionProtection":{"shape":"BooleanOptional"},
+        "GlobalClusterMembers":{"shape":"GlobalClusterMemberList"}
+      },
+      "wrapper":true
+    },
+    "GlobalClusterAlreadyExistsFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"GlobalClusterAlreadyExistsFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "GlobalClusterIdentifier":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[A-Za-z][0-9A-Za-z-:._]*"
+    },
+    "GlobalClusterList":{
+      "type":"list",
+      "member":{
+        "shape":"GlobalCluster",
+        "locationName":"GlobalClusterMember"
+      }
+    },
+    "GlobalClusterMember":{
+      "type":"structure",
+      "members":{
+        "DBClusterArn":{"shape":"String"},
+        "Readers":{"shape":"ReadersArnList"},
+        "IsWriter":{"shape":"Boolean"}
+      },
+      "wrapper":true
+    },
+    "GlobalClusterMemberList":{
+      "type":"list",
+      "member":{
+        "shape":"GlobalClusterMember",
+        "locationName":"GlobalClusterMember"
+      }
+    },
+    "GlobalClusterNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"GlobalClusterNotFoundFault",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "GlobalClusterQuotaExceededFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"GlobalClusterQuotaExceededFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "GlobalClustersMessage":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"String"},
+        "GlobalClusters":{"shape":"GlobalClusterList"}
       }
     },
     "InstanceQuotaExceededFault":{
@@ -1986,6 +2403,28 @@
       },
       "error":{
         "code":"InvalidDBSubnetStateFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "InvalidEventSubscriptionStateFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InvalidEventSubscriptionState",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "InvalidGlobalClusterStateFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InvalidGlobalClusterStateFault",
         "httpStatusCode":400,
         "senderFault":true
       },
@@ -2144,6 +2583,38 @@
         "DBSubnetGroup":{"shape":"DBSubnetGroup"}
       }
     },
+    "ModifyEventSubscriptionMessage":{
+      "type":"structure",
+      "required":["SubscriptionName"],
+      "members":{
+        "SubscriptionName":{"shape":"String"},
+        "SnsTopicArn":{"shape":"String"},
+        "SourceType":{"shape":"String"},
+        "EventCategories":{"shape":"EventCategoriesList"},
+        "Enabled":{"shape":"BooleanOptional"}
+      }
+    },
+    "ModifyEventSubscriptionResult":{
+      "type":"structure",
+      "members":{
+        "EventSubscription":{"shape":"EventSubscription"}
+      }
+    },
+    "ModifyGlobalClusterMessage":{
+      "type":"structure",
+      "required":["GlobalClusterIdentifier"],
+      "members":{
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
+        "NewGlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
+        "DeletionProtection":{"shape":"BooleanOptional"}
+      }
+    },
+    "ModifyGlobalClusterResult":{
+      "type":"structure",
+      "members":{
+        "GlobalCluster":{"shape":"GlobalCluster"}
+      }
+    },
     "OrderableDBInstanceOption":{
       "type":"structure",
       "members":{
@@ -2250,6 +2721,17 @@
         "PendingCloudwatchLogsExports":{"shape":"PendingCloudwatchLogsExports"}
       }
     },
+    "ReadReplicaIdentifierList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"ReadReplicaIdentifier"
+      }
+    },
+    "ReadersArnList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "RebootDBInstanceMessage":{
       "type":"structure",
       "required":["DBInstanceIdentifier"],
@@ -2262,6 +2744,40 @@
       "type":"structure",
       "members":{
         "DBInstance":{"shape":"DBInstance"}
+      }
+    },
+    "RemoveFromGlobalClusterMessage":{
+      "type":"structure",
+      "required":[
+        "GlobalClusterIdentifier",
+        "DbClusterIdentifier"
+      ],
+      "members":{
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
+        "DbClusterIdentifier":{"shape":"String"}
+      }
+    },
+    "RemoveFromGlobalClusterResult":{
+      "type":"structure",
+      "members":{
+        "GlobalCluster":{"shape":"GlobalCluster"}
+      }
+    },
+    "RemoveSourceIdentifierFromSubscriptionMessage":{
+      "type":"structure",
+      "required":[
+        "SubscriptionName",
+        "SourceIdentifier"
+      ],
+      "members":{
+        "SubscriptionName":{"shape":"String"},
+        "SourceIdentifier":{"shape":"String"}
+      }
+    },
+    "RemoveSourceIdentifierFromSubscriptionResult":{
+      "type":"structure",
+      "members":{
+        "EventSubscription":{"shape":"EventSubscription"}
       }
     },
     "RemoveTagsFromResourceMessage":{
@@ -2357,6 +2873,39 @@
         "DBCluster":{"shape":"DBCluster"}
       }
     },
+    "SNSInvalidTopicFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"SNSInvalidTopic",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "SNSNoAuthorizationFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"SNSNoAuthorization",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "SNSTopicArnNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"SNSTopicArnNotFound",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "SharedSnapshotQuotaExceededFault":{
       "type":"structure",
       "members":{
@@ -2375,6 +2924,24 @@
       "error":{
         "code":"SnapshotQuotaExceeded",
         "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "SourceIdsList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"SourceId"
+      }
+    },
+    "SourceNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"SourceNotFound",
+        "httpStatusCode":404,
         "senderFault":true
       },
       "exception":true
@@ -2471,6 +3038,39 @@
         "shape":"Subnet",
         "locationName":"Subnet"
       }
+    },
+    "SubscriptionAlreadyExistFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"SubscriptionAlreadyExist",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "SubscriptionCategoryNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"SubscriptionCategoryNotFound",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "SubscriptionNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"SubscriptionNotFound",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
     },
     "TStamp":{"type":"timestamp"},
     "Tag":{

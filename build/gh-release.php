@@ -112,7 +112,7 @@ function retryUpload($client, $uploadClient, $owner, $repo, $releaseBody, $uploa
             $attempts++;
             $response = $uploadClient->post("{$uploadUrl}/assets?name={$filename}", [
                 'headers' => ['Content-Type' => "application/{$filetype}"],
-                'body'    => Psr7\try_fopen(__DIR__ . "/artifacts/{$filename}", 'r')
+                'body'    => Psr7\Utils::tryFopen(__DIR__ . "/artifacts/{$filename}", 'r')
             ]);
             echo "{$filename} uploaded to: " . json_decode($response->getBody(), true)['browser_download_url'] . "\n";
             $isSuccessful = true;

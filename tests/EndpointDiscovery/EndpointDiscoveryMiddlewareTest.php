@@ -53,10 +53,13 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
             if ($cmd->getName() === 'DescribeEndpoints') {
                 return Promise\promise_for($describeResult);
             }
-            $this->assertEquals(
-                $expected->getHeader('User-Agent'),
-                $req->getHeader('User-Agent')
-            );
+            $expectedUserAgentParts = explode(' ', $expected->getHeader('User-Agent')[0]);
+            foreach ($expectedUserAgentParts as $expectedUserAgentPart) {
+                $this->assertContains(
+                    $expectedUserAgentPart,
+                    $req->getHeader('User-Agent')[0]
+                );
+            }
             $uri = $req->getUri();
             $expectedUri = $expected->getUri();
             $this->assertSame($expectedUri->getHost(), $uri->getHost());

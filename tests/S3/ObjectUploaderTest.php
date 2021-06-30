@@ -224,7 +224,7 @@ class ObjectUploaderTest extends TestCase
 
     private function generateStream($size, $sizeKnown = true, $seekable = true)
     {
-        return FnStream::decorate(Psr7\stream_for(str_repeat('.', $size)), [
+        return FnStream::decorate(Psr7\Utils::streamFor(str_repeat('.', $size)), [
             'getSize' => function () use ($sizeKnown, $size) {
                 return $sizeKnown ? $size : null;
             },
@@ -246,7 +246,7 @@ class ObjectUploaderTest extends TestCase
         ];
         $url = 'https://foo.s3.amazonaws.com/bar';
         $data = str_repeat('.', 1 * self::MB);
-        $source = Psr7\stream_for($data);
+        $source = Psr7\Utils::streamFor($data);
 
         $this->addMockResults($client, [
             new Result(['UploadId' => 'baz']),
@@ -287,7 +287,7 @@ class ObjectUploaderTest extends TestCase
         ];
         $url = 'https://foo.s3.amazonaws.com/bar';
         $data = str_repeat('.', 12 * self::MB);
-        $source = Psr7\stream_for($data);
+        $source = Psr7\Utils::streamFor($data);
 
         $this->addMockResults($client, [
             new Result(['UploadId' => 'baz']),

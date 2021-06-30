@@ -424,7 +424,13 @@
     "Boolean":{"type":"boolean"},
     "CLMLanguageCode":{
       "type":"string",
-      "enum":["en-US"]
+      "enum":[
+        "en-US",
+        "hi-IN",
+        "es-US",
+        "en-GB",
+        "en-AU"
+      ]
     },
     "ConflictException":{
       "type":"structure",
@@ -915,6 +921,10 @@
       "max":48000,
       "min":8000
     },
+    "MedicalContentIdentificationType":{
+      "type":"string",
+      "enum":["PHI"]
+    },
     "MedicalTranscript":{
       "type":"structure",
       "members":{
@@ -936,6 +946,7 @@
         "CompletionTime":{"shape":"DateTime"},
         "FailureReason":{"shape":"FailureReason"},
         "Settings":{"shape":"MedicalTranscriptionSetting"},
+        "ContentIdentificationType":{"shape":"MedicalContentIdentificationType"},
         "Specialty":{"shape":"Specialty"},
         "Type":{"shape":"Type"}
       }
@@ -956,6 +967,7 @@
         "FailureReason":{"shape":"FailureReason"},
         "OutputLocationType":{"shape":"OutputLocationType"},
         "Specialty":{"shape":"Specialty"},
+        "ContentIdentificationType":{"shape":"MedicalContentIdentificationType"},
         "Type":{"shape":"Type"}
       }
     },
@@ -1082,6 +1094,7 @@
         "OutputKey":{"shape":"OutputKey"},
         "OutputEncryptionKMSKeyId":{"shape":"KMSKeyId"},
         "Settings":{"shape":"MedicalTranscriptionSetting"},
+        "ContentIdentificationType":{"shape":"MedicalContentIdentificationType"},
         "Specialty":{"shape":"Specialty"},
         "Type":{"shape":"Type"}
       }
@@ -1277,7 +1290,8 @@
       "type":"string",
       "enum":[
         "remove",
-        "mask"
+        "mask",
+        "tag"
       ]
     },
     "VocabularyFilterName":{

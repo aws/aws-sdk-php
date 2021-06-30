@@ -3270,6 +3270,11 @@
         "KAFKA_SSL_ENABLED",
         "KAFKA_CUSTOM_CERT",
         "KAFKA_SKIP_CUSTOM_CERT_VALIDATION",
+        "KAFKA_CLIENT_KEYSTORE",
+        "KAFKA_CLIENT_KEYSTORE_PASSWORD",
+        "KAFKA_CLIENT_KEY_PASSWORD",
+        "ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD",
+        "ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD",
         "SECRET_ID",
         "CONNECTOR_URL",
         "CONNECTOR_TYPE",
@@ -3930,7 +3935,10 @@
     },
     "DataFormat":{
       "type":"string",
-      "enum":["AVRO"]
+      "enum":[
+        "AVRO",
+        "JSON"
+      ]
     },
     "DataLakePrincipal":{
       "type":"structure",
@@ -6164,7 +6172,8 @@
       "type":"structure",
       "members":{
         "MetadataValue":{"shape":"MetadataValueString"},
-        "CreatedTime":{"shape":"CreatedTimestamp"}
+        "CreatedTime":{"shape":"CreatedTimestamp"},
+        "OtherMetadataValueList":{"shape":"OtherMetadataValueList"}
       }
     },
     "MetadataInfoMap":{
@@ -6312,6 +6321,17 @@
     "OrderList":{
       "type":"list",
       "member":{"shape":"Order"}
+    },
+    "OtherMetadataValueList":{
+      "type":"list",
+      "member":{"shape":"OtherMetadataValueListItem"}
+    },
+    "OtherMetadataValueListItem":{
+      "type":"structure",
+      "members":{
+        "MetadataValue":{"shape":"MetadataValueString"},
+        "CreatedTime":{"shape":"CreatedTimestamp"}
+      }
     },
     "PageSize":{
       "type":"integer",
@@ -6806,7 +6826,8 @@
       "members":{
         "Path":{"shape":"Path"},
         "Exclusions":{"shape":"PathList"},
-        "ConnectionName":{"shape":"ConnectionName"}
+        "ConnectionName":{"shape":"ConnectionName"},
+        "SampleSize":{"shape":"NullableInteger"}
       }
     },
     "S3TargetList":{
@@ -6925,7 +6946,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"[a-zA-Z0-9-_$#]+"
+      "pattern":"[a-zA-Z0-9-_$#.]+"
     },
     "SchemaRegistryTokenString":{"type":"string"},
     "SchemaStatus":{

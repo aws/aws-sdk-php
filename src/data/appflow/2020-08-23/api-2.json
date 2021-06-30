@@ -922,7 +922,8 @@
         "LookoutMetrics":{"shape":"LookoutMetricsDestinationProperties"},
         "Upsolver":{"shape":"UpsolverDestinationProperties"},
         "Honeycode":{"shape":"HoneycodeDestinationProperties"},
-        "CustomerProfiles":{"shape":"CustomerProfilesDestinationProperties"}
+        "CustomerProfiles":{"shape":"CustomerProfilesDestinationProperties"},
+        "Zendesk":{"shape":"ZendeskDestinationProperties"}
       }
     },
     "DestinationField":{
@@ -1531,7 +1532,8 @@
         "TRUNCATE_LENGTH",
         "MATH_OPERATION_FIELDS_ORDER",
         "CONCAT_FORMAT",
-        "SUBFIELD_CATEGORY_MAP"
+        "SUBFIELD_CATEGORY_MAP",
+        "EXCLUDE_SOURCE_FIELDS_LIST"
       ]
     },
     "Password":{
@@ -2196,6 +2198,7 @@
         "Arithmetic",
         "Filter",
         "Map",
+        "Map_all",
         "Mask",
         "Merge",
         "Truncate",
@@ -2515,6 +2518,16 @@
       "required":["instanceUrl"],
       "members":{
         "instanceUrl":{"shape":"InstanceUrl"}
+      }
+    },
+    "ZendeskDestinationProperties":{
+      "type":"structure",
+      "required":["object"],
+      "members":{
+        "object":{"shape":"Object"},
+        "idFieldNames":{"shape":"IdFieldNameList"},
+        "errorHandlingConfig":{"shape":"ErrorHandlingConfig"},
+        "writeOperationType":{"shape":"WriteOperationType"}
       }
     },
     "ZendeskMetadata":{

@@ -71,6 +71,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getAssetPropertyValueAsync(array $args = [])
  * @method \Aws\Result getAssetPropertyValueHistory(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAssetPropertyValueHistoryAsync(array $args = [])
+ * @method \Aws\Result getInterpolatedAssetPropertyValues(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getInterpolatedAssetPropertyValuesAsync(array $args = [])
  * @method \Aws\Result listAccessPolicies(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAccessPoliciesAsync(array $args = [])
  * @method \Aws\Result listAssetModels(array $args = [])

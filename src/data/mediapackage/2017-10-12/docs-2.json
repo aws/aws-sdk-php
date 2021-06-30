@@ -118,6 +118,12 @@
         "ConfigureLogsParameters$EgressAccessLogs" : null
       }
     },
+    "EncryptionContractConfiguration" : {
+      "base" : "Use encryptionContractConfiguration to configure one or more content encryption keys for your endpoints that use SPEKE 2.0. \nThe encryption contract defines which content keys are used to encrypt the audio and video tracks in your stream. \nTo configure the encryption contract, specify which audio and video encryption presets to use.\nNote the following considerations when using encryptionContractConfiguration:\nencryptionContractConfiguration can be used for DASH endpoints that use SPEKE 2.0. SPEKE 2.0 relies on the CPIX 2.3 specification.\nYou must disable key rotation for this endpoint by setting keyRotationIntervalSeconds to 0.\n",
+      "refs" : {
+        "SpekeKeyProvider$EncryptionContractConfiguration" : null
+      }
+    },
     "EncryptionMethod" : {
       "base" : null,
       "refs" : {
@@ -235,6 +241,18 @@
         "HlsManifest$PlaylistType" : "The HTTP Live Streaming (HLS) playlist type.\nWhen either \"EVENT\" or \"VOD\" is specified, a corresponding EXT-X-PLAYLIST-TYPE\nentry will be included in the media playlist.\n",
         "HlsManifestCreateOrUpdateParameters$PlaylistType" : "The HTTP Live Streaming (HLS) playlist type.\nWhen either \"EVENT\" or \"VOD\" is specified, a corresponding EXT-X-PLAYLIST-TYPE\nentry will be included in the media playlist.\n",
         "HlsPackage$PlaylistType" : "The HTTP Live Streaming (HLS) playlist type.\nWhen either \"EVENT\" or \"VOD\" is specified, a corresponding EXT-X-PLAYLIST-TYPE\nentry will be included in the media playlist.\n"
+      }
+    },
+    "PresetSpeke20Audio" : {
+      "base" : null,
+      "refs" : {
+        "EncryptionContractConfiguration$PresetSpeke20Audio" : "A collection of audio encryption presets."
+      }
+    },
+    "PresetSpeke20Video" : {
+      "base" : null,
+      "refs" : {
+        "EncryptionContractConfiguration$PresetSpeke20Video" : "A collection of video encryption presets."
       }
     },
     "Profile" : {
@@ -429,6 +447,7 @@
         "ChannelCreateParameters$Id" : "The ID of the Channel. The ID must be unique within the region and it\ncannot be changed after a Channel is created.\n",
         "ChannelList$NextToken" : "A token that can be used to resume pagination from the end of the collection.",
         "ChannelUpdateParameters$Description" : "A short text description of the Channel.",
+        "CmafEncryption$ConstantInitializationVector" : "An optional 128-bit, 16-byte hex value represented by a 32-character string, used in conjunction with the key for encrypting blocks. If you don't specify a value, then MediaPackage creates the constant initialization vector (IV).",
         "CmafPackage$SegmentPrefix" : "An optional custom string that is prepended to the name of each segment. If not specified, it defaults to the ChannelId.",
         "CmafPackageCreateOrUpdateParameters$SegmentPrefix" : "An optional custom string that is prepended to the name of each segment. If not specified, it defaults to the ChannelId.",
         "DashPackage$UtcTimingUri" : "Specifies the value attribute of the UTCTiming field when utcTiming is set to HTTP-ISO or HTTP-HEAD",

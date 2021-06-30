@@ -1,15 +1,16 @@
 {
   "version": "2.0",
-  "service": "<p>Security Hub provides you with a comprehensive view of the security state of your AWS environment and resources. It also provides you with the readiness status of your environment based on controls from supported security standards. Security Hub collects security data from AWS accounts, services, and integrated third-party products and helps you analyze security trends in your environment to identify the highest priority security issues. For more information about Security Hub, see the <i> <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html\">AWS Security Hub User Guide</a> </i>.</p> <p>When you use operations in the Security Hub API, the requests are executed only in the AWS Region that is currently active or in the specific AWS Region that you specify in your request. Any configuration or settings change that results from the operation is applied only to that Region. To make the same change in other Regions, execute the same command for each Region to apply the change to.</p> <p>For example, if your Region is set to <code>us-west-2</code>, when you use <code> <a>CreateMembers</a> </code> to add a member account to Security Hub, the association of the member account with the master account is created only in the <code>us-west-2</code> Region. Security Hub must be enabled for the member account in the same Region that the invitation was sent from.</p> <p>The following throttling limits apply to using Security Hub API operations.</p> <ul> <li> <p> <code> <a>BatchEnableStandards</a> </code> - <code>RateLimit</code> of 1 request per second, <code>BurstLimit</code> of 1 request per second.</p> </li> <li> <p> <code> <a>GetFindings</a> </code> - <code>RateLimit</code> of 3 requests per second. <code>BurstLimit</code> of 6 requests per second.</p> </li> <li> <p> <code> <a>UpdateFindings</a> </code> - <code>RateLimit</code> of 1 request per second. <code>BurstLimit</code> of 5 requests per second.</p> </li> <li> <p> <code> <a>UpdateStandardsControl</a> </code> - <code>RateLimit</code> of 1 request per second, <code>BurstLimit</code> of 5 requests per second.</p> </li> <li> <p>All other operations - <code>RateLimit</code> of 10 requests per second. <code>BurstLimit</code> of 30 requests per second.</p> </li> </ul>",
+  "service": "<p>Security Hub provides you with a comprehensive view of the security state of your AWS environment and resources. It also provides you with the readiness status of your environment based on controls from supported security standards. Security Hub collects security data from AWS accounts, services, and integrated third-party products and helps you analyze security trends in your environment to identify the highest priority security issues. For more information about Security Hub, see the <i> <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html\">AWS Security Hub User Guide</a> </i>.</p> <p>When you use operations in the Security Hub API, the requests are executed only in the AWS Region that is currently active or in the specific AWS Region that you specify in your request. Any configuration or settings change that results from the operation is applied only to that Region. To make the same change in other Regions, execute the same command for each Region to apply the change to.</p> <p>For example, if your Region is set to <code>us-west-2</code>, when you use <code> <a>CreateMembers</a> </code> to add a member account to Security Hub, the association of the member account with the administrator account is created only in the <code>us-west-2</code> Region. Security Hub must be enabled for the member account in the same Region that the invitation was sent from.</p> <p>The following throttling limits apply to using Security Hub API operations.</p> <ul> <li> <p> <code> <a>BatchEnableStandards</a> </code> - <code>RateLimit</code> of 1 request per second, <code>BurstLimit</code> of 1 request per second.</p> </li> <li> <p> <code> <a>GetFindings</a> </code> - <code>RateLimit</code> of 3 requests per second. <code>BurstLimit</code> of 6 requests per second.</p> </li> <li> <p> <code> <a>UpdateFindings</a> </code> - <code>RateLimit</code> of 1 request per second. <code>BurstLimit</code> of 5 requests per second.</p> </li> <li> <p> <code> <a>UpdateStandardsControl</a> </code> - <code>RateLimit</code> of 1 request per second, <code>BurstLimit</code> of 5 requests per second.</p> </li> <li> <p>All other operations - <code>RateLimit</code> of 10 requests per second. <code>BurstLimit</code> of 30 requests per second.</p> </li> </ul>",
   "operations": {
-    "AcceptInvitation": "<p>Accepts the invitation to be a member account and be monitored by the Security Hub master account that the invitation was sent from.</p> <p>This operation is only used by member accounts that are not added through Organizations.</p> <p>When the member account accepts the invitation, permission is granted to the master account to view findings generated in the member account.</p>",
+    "AcceptAdministratorInvitation": "<p>Accepts the invitation to be a member account and be monitored by the Security Hub administrator account that the invitation was sent from.</p> <p>This operation is only used by member accounts that are not added through Organizations.</p> <p>When the member account accepts the invitation, permission is granted to the administrator account to view findings generated in the member account.</p>",
+    "AcceptInvitation": "<p>This method is deprecated. Instead, use <code>AcceptAdministratorInvitation</code>.</p> <p>The Security Hub console continues to use <code>AcceptInvitation</code>. It will eventually change to use <code>AcceptAdministratorInvitation</code>. Any IAM policies that specifically control access to this function must continue to use <code>AcceptInvitation</code>. You should also add <code>AcceptAdministratorInvitation</code> to your policies to ensure that the correct permissions are in place after the console begins to use <code>AcceptAdministratorInvitation</code>.</p> <p>Accepts the invitation to be a member account and be monitored by the Security Hub administrator account that the invitation was sent from.</p> <p>This operation is only used by member accounts that are not added through Organizations.</p> <p>When the member account accepts the invitation, permission is granted to the administrator account to view findings generated in the member account.</p>",
     "BatchDisableStandards": "<p>Disables the standards specified by the provided <code>StandardsSubscriptionArns</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards.html\">Security Standards</a> section of the <i>AWS Security Hub User Guide</i>.</p>",
     "BatchEnableStandards": "<p>Enables the standards specified by the provided <code>StandardsArn</code>. To obtain the ARN for a standard, use the <code> <a>DescribeStandards</a> </code> operation.</p> <p>For more information, see the <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards.html\">Security Standards</a> section of the <i>AWS Security Hub User Guide</i>.</p>",
-    "BatchImportFindings": "<p>Imports security findings generated from an integrated third-party product into Security Hub. This action is requested by the integrated product to import its findings into Security Hub.</p> <p>The maximum allowed size for a finding is 240 Kb. An error is returned for any finding larger than 240 Kb.</p> <p>After a finding is created, <code>BatchImportFindings</code> cannot be used to update the following finding fields and objects, which Security Hub customers use to manage their investigation workflow.</p> <ul> <li> <p> <code>Note</code> </p> </li> <li> <p> <code>UserDefinedFields</code> </p> </li> <li> <p> <code>VerificationState</code> </p> </li> <li> <p> <code>Workflow</code> </p> </li> </ul> <p> <code>BatchImportFindings</code> can be used to update the following finding fields and objects only if they have not been updated using <code>BatchUpdateFindings</code>. After they are updated using <code>BatchUpdateFindings</code>, these fields cannot be updated using <code>BatchImportFindings</code>.</p> <ul> <li> <p> <code>Confidence</code> </p> </li> <li> <p> <code>Criticality</code> </p> </li> <li> <p> <code>RelatedFindings</code> </p> </li> <li> <p> <code>Severity</code> </p> </li> <li> <p> <code>Types</code> </p> </li> </ul>",
-    "BatchUpdateFindings": "<p>Used by Security Hub customers to update information about their investigation into a finding. Requested by master accounts or member accounts. Master accounts can update findings for their account and their member accounts. Member accounts can update findings for their account.</p> <p>Updates from <code>BatchUpdateFindings</code> do not affect the value of <code>UpdatedAt</code> for a finding.</p> <p>Master and member accounts can use <code>BatchUpdateFindings</code> to update the following finding fields and objects.</p> <ul> <li> <p> <code>Confidence</code> </p> </li> <li> <p> <code>Criticality</code> </p> </li> <li> <p> <code>Note</code> </p> </li> <li> <p> <code>RelatedFindings</code> </p> </li> <li> <p> <code>Severity</code> </p> </li> <li> <p> <code>Types</code> </p> </li> <li> <p> <code>UserDefinedFields</code> </p> </li> <li> <p> <code>VerificationState</code> </p> </li> <li> <p> <code>Workflow</code> </p> </li> </ul> <p>You can configure IAM policies to restrict access to fields and field values. For example, you might not want member accounts to be able to suppress findings or change the finding severity. See <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/finding-update-batchupdatefindings.html#batchupdatefindings-configure-access\">Configuring access to BatchUpdateFindings</a> in the <i>AWS Security Hub User Guide</i>.</p>",
+    "BatchImportFindings": "<p>Imports security findings generated from an integrated product into Security Hub. This action is requested by the integrated product to import its findings into Security Hub.</p> <p>The maximum allowed size for a finding is 240 Kb. An error is returned for any finding larger than 240 Kb.</p> <p>After a finding is created, <code>BatchImportFindings</code> cannot be used to update the following finding fields and objects, which Security Hub customers use to manage their investigation workflow.</p> <ul> <li> <p> <code>Note</code> </p> </li> <li> <p> <code>UserDefinedFields</code> </p> </li> <li> <p> <code>VerificationState</code> </p> </li> <li> <p> <code>Workflow</code> </p> </li> </ul> <p>Finding providers also should not use <code>BatchImportFindings</code> to update the following attributes.</p> <ul> <li> <p> <code>Confidence</code> </p> </li> <li> <p> <code>Criticality</code> </p> </li> <li> <p> <code>RelatedFindings</code> </p> </li> <li> <p> <code>Severity</code> </p> </li> <li> <p> <code>Types</code> </p> </li> </ul> <p>Instead, finding providers use <code>FindingProviderFields</code> to provide values for these attributes.</p>",
+    "BatchUpdateFindings": "<p>Used by Security Hub customers to update information about their investigation into a finding. Requested by administrator accounts or member accounts. Administrator accounts can update findings for their account and their member accounts. Member accounts can update findings for their account.</p> <p>Updates from <code>BatchUpdateFindings</code> do not affect the value of <code>UpdatedAt</code> for a finding.</p> <p>Administrator and member accounts can use <code>BatchUpdateFindings</code> to update the following finding fields and objects.</p> <ul> <li> <p> <code>Confidence</code> </p> </li> <li> <p> <code>Criticality</code> </p> </li> <li> <p> <code>Note</code> </p> </li> <li> <p> <code>RelatedFindings</code> </p> </li> <li> <p> <code>Severity</code> </p> </li> <li> <p> <code>Types</code> </p> </li> <li> <p> <code>UserDefinedFields</code> </p> </li> <li> <p> <code>VerificationState</code> </p> </li> <li> <p> <code>Workflow</code> </p> </li> </ul> <p>You can configure IAM policies to restrict access to fields and field values. For example, you might not want member accounts to be able to suppress findings or change the finding severity. See <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/finding-update-batchupdatefindings.html#batchupdatefindings-configure-access\">Configuring access to BatchUpdateFindings</a> in the <i>AWS Security Hub User Guide</i>.</p>",
     "CreateActionTarget": "<p>Creates a custom action target in Security Hub.</p> <p>You can use custom actions on findings and insights in Security Hub to trigger target actions in Amazon CloudWatch Events.</p>",
     "CreateInsight": "<p>Creates a custom insight in Security Hub. An insight is a consolidation of findings that relate to a security issue that requires attention or remediation.</p> <p>To group the related findings in the insight, use the <code>GroupByAttribute</code>.</p>",
-    "CreateMembers": "<p>Creates a member association in Security Hub between the specified accounts and the account used to make the request, which is the master account. If you are integrated with Organizations, then the master account is the Security Hub administrator account that is designated by the organization management account.</p> <p> <code>CreateMembers</code> is always used to add accounts that are not organization members.</p> <p>For accounts that are part of an organization, <code>CreateMembers</code> is only used in the following cases:</p> <ul> <li> <p>Security Hub is not configured to automatically add new accounts in an organization.</p> </li> <li> <p>The account was disassociated or deleted in Security Hub.</p> </li> </ul> <p>This action can only be used by an account that has Security Hub enabled. To enable Security Hub, you can use the <code> <a>EnableSecurityHub</a> </code> operation.</p> <p>For accounts that are not organization members, you create the account association and then send an invitation to the member account. To send the invitation, you use the <code> <a>InviteMembers</a> </code> operation. If the account owner accepts the invitation, the account becomes a member account in Security Hub.</p> <p>Accounts that are part of an organization do not receive an invitation. They automatically become a member account in Security Hub.</p> <p>A permissions policy is added that permits the master account to view the findings generated in the member account. When Security Hub is enabled in a member account, findings are sent to both the member and master accounts. </p> <p>To remove the association between the master and member accounts, use the <code> <a>DisassociateFromMasterAccount</a> </code> or <code> <a>DisassociateMembers</a> </code> operation.</p>",
+    "CreateMembers": "<p>Creates a member association in Security Hub between the specified accounts and the account used to make the request, which is the administrator account. If you are integrated with Organizations, then the administrator account is designated by the organization management account.</p> <p> <code>CreateMembers</code> is always used to add accounts that are not organization members.</p> <p>For accounts that are part of an organization, <code>CreateMembers</code> is only used in the following cases:</p> <ul> <li> <p>Security Hub is not configured to automatically add new accounts in an organization.</p> </li> <li> <p>The account was disassociated or deleted in Security Hub.</p> </li> </ul> <p>This action can only be used by an account that has Security Hub enabled. To enable Security Hub, you can use the <code> <a>EnableSecurityHub</a> </code> operation.</p> <p>For accounts that are not organization members, you create the account association and then send an invitation to the member account. To send the invitation, you use the <code> <a>InviteMembers</a> </code> operation. If the account owner accepts the invitation, the account becomes a member account in Security Hub.</p> <p>Accounts that are part of an organization do not receive an invitation. They automatically become a member account in Security Hub.</p> <p>A permissions policy is added that permits the administrator account to view the findings generated in the member account. When Security Hub is enabled in a member account, the member account findings are also visible to the administrator account. </p> <p>To remove the association between the administrator and member accounts, use the <code> <a>DisassociateFromMasterAccount</a> </code> or <code> <a>DisassociateMembers</a> </code> operation.</p>",
     "DeclineInvitations": "<p>Declines invitations to become a member account.</p> <p>This operation is only used by accounts that are not part of an organization. Organization accounts do not receive invitations.</p>",
     "DeleteActionTarget": "<p>Deletes a custom action target from Security Hub.</p> <p>Deleting a custom action target does not affect any findings or insights that were already sent to Amazon CloudWatch Events using the custom action.</p>",
     "DeleteInsight": "<p>Deletes the insight specified by the <code>InsightArn</code>.</p>",
@@ -23,23 +24,25 @@
     "DescribeStandardsControls": "<p>Returns a list of security standards controls.</p> <p>For each control, the results include information about whether it is currently enabled, the severity, and a link to remediation information.</p>",
     "DisableImportFindingsForProduct": "<p>Disables the integration of the specified product with Security Hub. After the integration is disabled, findings from that product are no longer sent to Security Hub.</p>",
     "DisableOrganizationAdminAccount": "<p>Disables a Security Hub administrator account. Can only be called by the organization management account.</p>",
-    "DisableSecurityHub": "<p>Disables Security Hub in your account only in the current Region. To disable Security Hub in all Regions, you must submit one request per Region where you have enabled Security Hub.</p> <p>When you disable Security Hub for a master account, it doesn't disable Security Hub for any associated member accounts.</p> <p>When you disable Security Hub, your existing findings and insights and any Security Hub configuration settings are deleted after 90 days and cannot be recovered. Any standards that were enabled are disabled, and your master and member account associations are removed.</p> <p>If you want to save your existing findings, you must export them before you disable Security Hub.</p>",
-    "DisassociateFromMasterAccount": "<p>Disassociates the current Security Hub member account from the associated master account.</p> <p>This operation is only used by accounts that are not part of an organization. For organization accounts, only the master account (the designated Security Hub administrator) can disassociate a member account.</p>",
-    "DisassociateMembers": "<p>Disassociates the specified member accounts from the associated master account.</p> <p>Can be used to disassociate both accounts that are in an organization and accounts that were invited manually.</p>",
+    "DisableSecurityHub": "<p>Disables Security Hub in your account only in the current Region. To disable Security Hub in all Regions, you must submit one request per Region where you have enabled Security Hub.</p> <p>When you disable Security Hub for an administrator account, it doesn't disable Security Hub for any associated member accounts.</p> <p>When you disable Security Hub, your existing findings and insights and any Security Hub configuration settings are deleted after 90 days and cannot be recovered. Any standards that were enabled are disabled, and your administrator and member account associations are removed.</p> <p>If you want to save your existing findings, you must export them before you disable Security Hub.</p>",
+    "DisassociateFromAdministratorAccount": "<p>Disassociates the current Security Hub member account from the associated administrator account.</p> <p>This operation is only used by accounts that are not part of an organization. For organization accounts, only the administrator account can disassociate a member account.</p>",
+    "DisassociateFromMasterAccount": "<p>This method is deprecated. Instead, use <code>DisassociateFromAdministratorAccount</code>.</p> <p>The Security Hub console continues to use <code>DisassociateFromMasterAccount</code>. It will eventually change to use <code>DisassociateFromAdministratorAccount</code>. Any IAM policies that specifically control access to this function must continue to use <code>DisassociateFromMasterAccount</code>. You should also add <code>DisassociateFromAdministratorAccount</code> to your policies to ensure that the correct permissions are in place after the console begins to use <code>DisassociateFromAdministratorAccount</code>.</p> <p>Disassociates the current Security Hub member account from the associated administrator account.</p> <p>This operation is only used by accounts that are not part of an organization. For organization accounts, only the administrator account can disassociate a member account.</p>",
+    "DisassociateMembers": "<p>Disassociates the specified member accounts from the associated administrator account.</p> <p>Can be used to disassociate both accounts that are managed using Organizations and accounts that were invited manually.</p>",
     "EnableImportFindingsForProduct": "<p>Enables the integration of a partner product with Security Hub. Integrated products send findings to Security Hub.</p> <p>When you enable a product integration, a permissions policy that grants permission for the product to send findings to Security Hub is applied.</p>",
     "EnableOrganizationAdminAccount": "<p>Designates the Security Hub administrator account for an organization. Can only be called by the organization management account.</p>",
     "EnableSecurityHub": "<p>Enables Security Hub for your account in the current Region or the Region you specify in the request.</p> <p>When you enable Security Hub, you grant to Security Hub the permissions necessary to gather findings from other services that are integrated with Security Hub.</p> <p>When you use the <code>EnableSecurityHub</code> operation to enable Security Hub, you also automatically enable the following standards.</p> <ul> <li> <p>CIS AWS Foundations</p> </li> <li> <p>AWS Foundational Security Best Practices</p> </li> </ul> <p>You do not enable the Payment Card Industry Data Security Standard (PCI DSS) standard. </p> <p>To not enable the automatically enabled standards, set <code>EnableDefaultStandards</code> to <code>false</code>.</p> <p>After you enable Security Hub, to enable a standard, use the <code> <a>BatchEnableStandards</a> </code> operation. To disable a standard, use the <code> <a>BatchDisableStandards</a> </code> operation.</p> <p>To learn more, see <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-settingup.html\">Setting Up AWS Security Hub</a> in the <i>AWS Security Hub User Guide</i>.</p>",
+    "GetAdministratorAccount": "<p>Provides the details for the Security Hub administrator account for the current member account.</p> <p>Can be used by both member accounts that are managed using Organizations and accounts that were invited manually.</p>",
     "GetEnabledStandards": "<p>Returns a list of the standards that are currently enabled.</p>",
     "GetFindings": "<p>Returns a list of findings that match the specified criteria.</p>",
     "GetInsightResults": "<p>Lists the results of the Security Hub insight specified by the insight ARN.</p>",
     "GetInsights": "<p>Lists and describes insights for the specified insight ARNs.</p>",
     "GetInvitationsCount": "<p>Returns the count of all Security Hub membership invitations that were sent to the current member account, not including the currently accepted invitation. </p>",
-    "GetMasterAccount": "<p>Provides the details for the Security Hub master account for the current member account.</p> <p>Can be used by both member accounts that are in an organization and accounts that were invited manually.</p>",
-    "GetMembers": "<p>Returns the details for the Security Hub member accounts for the specified account IDs.</p> <p>A master account can be either a delegated Security Hub administrator account for an organization or a master account that enabled Security Hub manually.</p> <p>The results include both member accounts that are in an organization and accounts that were invited manually.</p>",
-    "InviteMembers": "<p>Invites other AWS accounts to become member accounts for the Security Hub master account that the invitation is sent from.</p> <p>This operation is only used to invite accounts that do not belong to an organization. Organization accounts do not receive invitations.</p> <p>Before you can use this action to invite a member, you must first use the <code> <a>CreateMembers</a> </code> action to create the member account in Security Hub.</p> <p>When the account owner enables Security Hub and accepts the invitation to become a member account, the master account can view the findings generated from the member account.</p>",
+    "GetMasterAccount": "<p>This method is deprecated. Instead, use <code>GetAdministratorAccount</code>.</p> <p>The Security Hub console continues to use <code>GetMasterAccount</code>. It will eventually change to use <code>GetAdministratorAccount</code>. Any IAM policies that specifically control access to this function must continue to use <code>GetMasterAccount</code>. You should also add <code>GetAdministratorAccount</code> to your policies to ensure that the correct permissions are in place after the console begins to use <code>GetAdministratorAccount</code>.</p> <p>Provides the details for the Security Hub administrator account for the current member account.</p> <p>Can be used by both member accounts that are managed using Organizations and accounts that were invited manually.</p>",
+    "GetMembers": "<p>Returns the details for the Security Hub member accounts for the specified account IDs.</p> <p>An administrator account can be either the delegated Security Hub administrator account for an organization or an administrator account that enabled Security Hub manually.</p> <p>The results include both member accounts that are managed using Organizations and accounts that were invited manually.</p>",
+    "InviteMembers": "<p>Invites other AWS accounts to become member accounts for the Security Hub administrator account that the invitation is sent from.</p> <p>This operation is only used to invite accounts that do not belong to an organization. Organization accounts do not receive invitations.</p> <p>Before you can use this action to invite a member, you must first use the <code> <a>CreateMembers</a> </code> action to create the member account in Security Hub.</p> <p>When the account owner enables Security Hub and accepts the invitation to become a member account, the administrator account can view the findings generated from the member account.</p>",
     "ListEnabledProductsForImport": "<p>Lists all findings-generating solutions (products) that you are subscribed to receive findings from in Security Hub.</p>",
-    "ListInvitations": "<p>Lists all Security Hub membership invitations that were sent to the current AWS account.</p> <p>This operation is only used by accounts that do not belong to an organization. Organization accounts do not receive invitations.</p>",
-    "ListMembers": "<p>Lists details about all member accounts for the current Security Hub master account.</p> <p>The results include both member accounts that belong to an organization and member accounts that were invited manually.</p>",
+    "ListInvitations": "<p>Lists all Security Hub membership invitations that were sent to the current AWS account.</p> <p>This operation is only used by accounts that are managed by invitation. Accounts that are managed using the integration with AWS Organizations do not receive invitations.</p>",
+    "ListMembers": "<p>Lists details about all member accounts for the current Security Hub administrator account.</p> <p>The results include both member accounts that belong to an organization and member accounts that were invited manually.</p>",
     "ListOrganizationAdminAccounts": "<p>Lists the Security Hub administrator accounts. Can only be called by the organization management account.</p>",
     "ListTagsForResource": "<p>Returns a list of tags associated with a resource.</p>",
     "TagResource": "<p>Adds one or more tags to a resource.</p>",
@@ -52,6 +55,16 @@
     "UpdateStandardsControl": "<p>Used to control whether an individual security standard control is enabled or disabled.</p>"
   },
   "shapes": {
+    "AcceptAdministratorInvitationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "AcceptAdministratorInvitationResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "AcceptInvitationRequest": {
       "base": null,
       "refs": {
@@ -76,14 +89,14 @@
     "AccountDetailsList": {
       "base": null,
       "refs": {
-        "CreateMembersRequest$AccountDetails": "<p>The list of accounts to associate with the Security Hub master account. For each account, the list includes the account ID and optionally the email address.</p>"
+        "CreateMembersRequest$AccountDetails": "<p>The list of accounts to associate with the Security Hub administrator account. For each account, the list includes the account ID and optionally the email address.</p>"
       }
     },
     "AccountId": {
       "base": null,
       "refs": {
         "AccountDetails$AccountId": "<p>The ID of an AWS account.</p>",
-        "Invitation$AccountId": "<p>The account ID of the Security Hub master account that the invitation was sent from.</p>",
+        "Invitation$AccountId": "<p>The account ID of the Security Hub administrator account that the invitation was sent from.</p>",
         "Member$AccountId": "<p>The AWS account ID of the member account.</p>",
         "Result$AccountId": "<p>An AWS account ID of the account that was not processed.</p>"
       }
@@ -94,7 +107,7 @@
         "DeclineInvitationsRequest$AccountIds": "<p>The list of account IDs for the accounts from which to decline the invitations to Security Hub.</p>",
         "DeleteInvitationsRequest$AccountIds": "<p>The list of the account IDs that sent the invitations to delete.</p>",
         "DeleteMembersRequest$AccountIds": "<p>The list of account IDs for the member accounts to delete.</p>",
-        "DisassociateMembersRequest$AccountIds": "<p>The account IDs of the member accounts to disassociate from the master account.</p>",
+        "DisassociateMembersRequest$AccountIds": "<p>The account IDs of the member accounts to disassociate from the administrator account.</p>",
         "GetMembersRequest$AccountIds": "<p>The list of account IDs for the Security Hub member accounts to return the details for. </p>",
         "InviteMembersRequest$AccountIds": "<p>The list of account IDs of the AWS accounts to invite to Security Hub as members. </p>"
       }
@@ -231,7 +244,7 @@
       }
     },
     "AwsApiGatewayRestApiDetails": {
-      "base": "<p>contains information about a REST API in version 1 of Amazon API Gateway.</p>",
+      "base": "<p>Contains information about a REST API in version 1 of Amazon API Gateway.</p>",
       "refs": {
         "ResourceDetails$AwsApiGatewayRestApi": "<p>Provides information about a REST API in version 1 of Amazon API Gateway.</p>"
       }
@@ -598,9 +611,51 @@
       }
     },
     "AwsEc2InstanceDetails": {
-      "base": "<p>The details of an Amazon EC2 instance.</p>",
+      "base": "<p>The details of an EC2 instance.</p>",
       "refs": {
-        "ResourceDetails$AwsEc2Instance": "<p>Details about an Amazon EC2 instance related to a finding.</p>"
+        "ResourceDetails$AwsEc2Instance": "<p>Details about an EC2 instance related to a finding.</p>"
+      }
+    },
+    "AwsEc2InstanceNetworkInterfacesDetails": {
+      "base": "<p>Identifies a network interface for the EC2 instance.</p>",
+      "refs": {
+        "AwsEc2InstanceNetworkInterfacesList$member": null
+      }
+    },
+    "AwsEc2InstanceNetworkInterfacesList": {
+      "base": null,
+      "refs": {
+        "AwsEc2InstanceDetails$NetworkInterfaces": "<p>The identifiers of the network interfaces for the EC2 instance. The details for each network interface are in a corresponding <code>AwsEc2NetworkInterfacesDetails</code> object.</p>"
+      }
+    },
+    "AwsEc2NetworkAclAssociation": {
+      "base": "<p>An association between the network ACL and a subnet.</p>",
+      "refs": {
+        "AwsEc2NetworkAclAssociationList$member": null
+      }
+    },
+    "AwsEc2NetworkAclAssociationList": {
+      "base": null,
+      "refs": {
+        "AwsEc2NetworkAclDetails$Associations": "<p>Associations between the network ACL and subnets.</p>"
+      }
+    },
+    "AwsEc2NetworkAclDetails": {
+      "base": "<p>Contains details about an EC2 network access control list (ACL).</p>",
+      "refs": {
+        "ResourceDetails$AwsEc2NetworkAcl": "<p>Details about an EC2 network access control list (ACL).</p>"
+      }
+    },
+    "AwsEc2NetworkAclEntry": {
+      "base": "<p>A rule for the network ACL. Each rule allows or denies access based on the IP address, traffic direction, port, and protocol.</p>",
+      "refs": {
+        "AwsEc2NetworkAclEntryList$member": null
+      }
+    },
+    "AwsEc2NetworkAclEntryList": {
+      "base": null,
+      "refs": {
+        "AwsEc2NetworkAclDetails$Entries": "<p>The set of rules in the network ACL.</p>"
       }
     },
     "AwsEc2NetworkInterfaceAttachment": {
@@ -718,6 +773,12 @@
         "AwsEc2SecurityGroupIpPermission$UserIdGroupPairs": "<p>The security group and AWS account ID pairs.</p>"
       }
     },
+    "AwsEc2SubnetDetails": {
+      "base": "<p>Contains information about a subnet in EC2.</p>",
+      "refs": {
+        "ResourceDetails$AwsEc2Subnet": "<p>Details about a subnet in EC2.</p>"
+      }
+    },
     "AwsEc2VolumeAttachment": {
       "base": "<p>An attachment to an AWS EC2 volume.</p>",
       "refs": {
@@ -742,6 +803,390 @@
         "ResourceDetails$AwsEc2Vpc": "<p>Details for an EC2 VPC.</p>"
       }
     },
+    "AwsEcsClusterClusterSettingsDetails": {
+      "base": "<p>Indicates whether to enable CloudWatch Container Insights for the ECS cluster.</p>",
+      "refs": {
+        "AwsEcsClusterClusterSettingsList$member": null
+      }
+    },
+    "AwsEcsClusterClusterSettingsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsClusterDetails$ClusterSettings": "<p>The setting to use to create the cluster. Specifically used to configure whether to enable CloudWatch Container Insights for the cluster.</p>"
+      }
+    },
+    "AwsEcsClusterConfigurationDetails": {
+      "base": "<p>The run command configuration for the cluster.</p>",
+      "refs": {
+        "AwsEcsClusterDetails$Configuration": "<p>The run command configuration for the cluster.</p>"
+      }
+    },
+    "AwsEcsClusterConfigurationExecuteCommandConfigurationDetails": {
+      "base": "<p>Contains the run command configuration for the cluster.</p>",
+      "refs": {
+        "AwsEcsClusterConfigurationDetails$ExecuteCommandConfiguration": "<p>Contains the run command configuration for the cluster.</p>"
+      }
+    },
+    "AwsEcsClusterConfigurationExecuteCommandConfigurationLogConfigurationDetails": {
+      "base": "<p>The log configuration for the results of the run command actions.</p>",
+      "refs": {
+        "AwsEcsClusterConfigurationExecuteCommandConfigurationDetails$LogConfiguration": "<p>The log configuration for the results of the run command actions. Required if <code>Logging</code> is <code>NONE</code>.</p>"
+      }
+    },
+    "AwsEcsClusterDefaultCapacityProviderStrategyDetails": {
+      "base": "<p>The default capacity provider strategy for the cluster. The default capacity provider strategy is used when services or tasks are run without a specified launch type or capacity provider strategy.</p>",
+      "refs": {
+        "AwsEcsClusterDefaultCapacityProviderStrategyList$member": null
+      }
+    },
+    "AwsEcsClusterDefaultCapacityProviderStrategyList": {
+      "base": null,
+      "refs": {
+        "AwsEcsClusterDetails$DefaultCapacityProviderStrategy": "<p>The default capacity provider strategy for the cluster. The default capacity provider strategy is used when services or tasks are run without a specified launch type or capacity provider strategy.</p>"
+      }
+    },
+    "AwsEcsClusterDetails": {
+      "base": "<p>provides details about an ECS cluster.</p>",
+      "refs": {
+        "ResourceDetails$AwsEcsCluster": "<p>Details about an ECS cluster.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsDependsOnDetails": {
+      "base": "<p>A dependency that is defined for container startup and shutdown.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDependsOnList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsDependsOnList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$DependsOn": "<p>The dependencies that are defined for container startup and shutdown.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsDetails": {
+      "base": "<p>A container definition that describes a container in the task.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsEnvironmentDetails": {
+      "base": "<p>An environment variable to pass to the container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsEnvironmentList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsEnvironmentFilesDetails": {
+      "base": "<p>A file that contain environment variables to pass to a container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsEnvironmentFilesList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsEnvironmentFilesList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$EnvironmentFiles": "<p>A list of files containing the environment variables to pass to a container.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsEnvironmentList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Environment": "<p>The environment variables to pass to a container.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsExtraHostsDetails": {
+      "base": "<p>A hostname and IP address mapping to append to the <b>/etc/hosts</b> file on the container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsExtraHostsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsExtraHostsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$ExtraHosts": "<p>A list of hostnames and IP address mappings to append to the <b>/etc/hosts</b> file on the container.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsFirelensConfigurationDetails": {
+      "base": "<p>The FireLens configuration for the container. The configuration specifies and configures a log router for container logs.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$FirelensConfiguration": "<p>The FireLens configuration for the container. Specifies and configures a log router for container logs.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsHealthCheckDetails": {
+      "base": "<p>The container health check command and associated configuration parameters for the container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$HealthCheck": "<p>The container health check command and associated configuration parameters for the container.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersCapabilitiesDetails": {
+      "base": "<p>The Linux capabilities for the container that are added to or dropped from the default configuration provided by Docker.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDetails$Capabilities": "<p>The Linux capabilities for the container that are added to or dropped from the default configuration provided by Docker.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDetails": {
+      "base": "<p>&gt;Linux-specific modifications that are applied to the container, such as Linux kernel capabilities.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$LinuxParameters": "<p>Linux-specific modifications that are applied to the container, such as Linux kernel capabilities.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDevicesDetails": {
+      "base": "<p>A host device to expose to the container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDevicesList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDevicesList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDetails$Devices": "<p>The host devices to expose to the container.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersTmpfsDetails": {
+      "base": "<p>The container path, mount options, and size (in MiB) of a tmpfs mount.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersTmpfsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersTmpfsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDetails$Tmpfs": "<p>The container path, mount options, and size (in MiB) of the tmpfs mount.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionDetails$ContainerDefinitions": "<p>The container definitions that describe the containers that make up the task.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsLogConfigurationDetails": {
+      "base": "<p>The log configuration specification for the container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$LogConfiguration": "<p>The log configuration specification for the container.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsLogConfigurationSecretOptionsDetails": {
+      "base": "<p>A secret to pass to the log configuration.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsLogConfigurationSecretOptionsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsLogConfigurationSecretOptionsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsLogConfigurationDetails$SecretOptions": "<p>The secrets to pass to the log configuration.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsMountPointsDetails": {
+      "base": "<p>A mount point for the data volumes in the container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsMountPointsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsMountPointsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$MountPoints": "<p>The mount points for the data volumes in the container.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsPortMappingsDetails": {
+      "base": "<p>A port mapping for the container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsPortMappingsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsPortMappingsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$PortMappings": "<p>The list of port mappings for the container.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsRepositoryCredentialsDetails": {
+      "base": "<p>The private repository authentication credentials to use.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$RepositoryCredentials": "<p>The private repository authentication credentials to use.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsResourceRequirementsDetails": {
+      "base": "<p>A resource to assign to a container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsResourceRequirementsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsResourceRequirementsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$ResourceRequirements": "<p>The type and amount of a resource to assign to a container. The only supported resource is a GPU.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsSecretsDetails": {
+      "base": "<p>A secret to pass to the container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsSecretsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsSecretsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Secrets": "<p>The secrets to pass to the container.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsSystemControlsDetails": {
+      "base": "<p>A namespaced kernel parameter to set in the container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsSystemControlsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsSystemControlsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$SystemControls": "<p>A list of namespaced kernel parameters to set in the container.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsUlimitsDetails": {
+      "base": "<p>A ulimit to set in the container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsUlimitsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsUlimitsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Ulimits": "<p>A list of ulimits to set in the container. </p>"
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsVolumesFromDetails": {
+      "base": "<p>A data volume to mount from another container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsVolumesFromList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionContainerDefinitionsVolumesFromList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$VolumesFrom": "<p>Data volumes to mount from another container.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionDetails": {
+      "base": "<p>details about a task definition. A task definition describes the container and volume definitions of an Amazon Elastic Container Service task.</p>",
+      "refs": {
+        "ResourceDetails$AwsEcsTaskDefinition": "<p>Details about a task definition. A task definition describes the container and volume definitions of an Amazon Elastic Container Service task.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionInferenceAcceleratorsDetails": {
+      "base": "<p>An Elastic Inference accelerator to use for the containers in the task.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionInferenceAcceleratorsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionInferenceAcceleratorsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionDetails$InferenceAccelerators": "<p>The Elastic Inference accelerators to use for the containers in the task.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionPlacementConstraintsDetails": {
+      "base": "<p>A placement constraint object to use for tasks.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionPlacementConstraintsList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionPlacementConstraintsList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionDetails$PlacementConstraints": "<p>The placement constraint objects to use for tasks.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionProxyConfigurationDetails": {
+      "base": "<p>The configuration details for the App Mesh proxy.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionDetails$ProxyConfiguration": "<p>The configuration details for the App Mesh proxy.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionProxyConfigurationProxyConfigurationPropertiesDetails": {
+      "base": "<p>A network configuration parameter to provide to the Container Network Interface (CNI) plugin.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionProxyConfigurationProxyConfigurationPropertiesList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionProxyConfigurationProxyConfigurationPropertiesList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionProxyConfigurationDetails$ProxyConfigurationProperties": "<p>The set of network configuration parameters to provide to the Container Network Interface (CNI) plugin, specified as key-value pairs.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionVolumesDetails": {
+      "base": "<p>A data volume to mount from another container.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionVolumesList$member": null
+      }
+    },
+    "AwsEcsTaskDefinitionVolumesDockerVolumeConfigurationDetails": {
+      "base": "<p>Information about a Docker volume.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionVolumesDetails$DockerVolumeConfiguration": "<p>Information about a Docker volume.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionVolumesEfsVolumeConfigurationAuthorizationConfigDetails": {
+      "base": "<p/>",
+      "refs": {
+        "AwsEcsTaskDefinitionVolumesEfsVolumeConfigurationDetails$AuthorizationConfig": "<p>The authorization configuration details for the Amazon EFS file system.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionVolumesEfsVolumeConfigurationDetails": {
+      "base": "<p>Information about the Amazon Elastic File System file system that is used for task storage.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionVolumesDetails$EfsVolumeConfiguration": "<p>Information about the Amazon Elastic File System file system that is used for task storage.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionVolumesHostDetails": {
+      "base": "<p>Information about a bind mount host volume.</p>",
+      "refs": {
+        "AwsEcsTaskDefinitionVolumesDetails$Host": "<p>Information about a bind mount host volume.</p>"
+      }
+    },
+    "AwsEcsTaskDefinitionVolumesList": {
+      "base": null,
+      "refs": {
+        "AwsEcsTaskDefinitionDetails$Volumes": "<p>The data volume definitions for the task.</p>"
+      }
+    },
+    "AwsElasticBeanstalkEnvironmentDetails": {
+      "base": "<p>Contains details about an Elastic Beanstalk environment.</p>",
+      "refs": {
+        "ResourceDetails$AwsElasticBeanstalkEnvironment": "<p>Details about an Elastic Beanstalk environment.</p>"
+      }
+    },
+    "AwsElasticBeanstalkEnvironmentEnvironmentLink": {
+      "base": "<p>Contains information about a link to another environment that is in the same group.</p>",
+      "refs": {
+        "AwsElasticBeanstalkEnvironmentEnvironmentLinks$member": null
+      }
+    },
+    "AwsElasticBeanstalkEnvironmentEnvironmentLinks": {
+      "base": null,
+      "refs": {
+        "AwsElasticBeanstalkEnvironmentDetails$EnvironmentLinks": "<p>Links to other environments in the same group.</p>"
+      }
+    },
+    "AwsElasticBeanstalkEnvironmentOptionSetting": {
+      "base": "<p>A configuration option setting for the environment.</p>",
+      "refs": {
+        "AwsElasticBeanstalkEnvironmentOptionSettings$member": null
+      }
+    },
+    "AwsElasticBeanstalkEnvironmentOptionSettings": {
+      "base": null,
+      "refs": {
+        "AwsElasticBeanstalkEnvironmentDetails$OptionSettings": "<p>The configuration setting for the environment.</p>"
+      }
+    },
+    "AwsElasticBeanstalkEnvironmentTier": {
+      "base": "<p>Contains information about the tier of the environment.</p>",
+      "refs": {
+        "AwsElasticBeanstalkEnvironmentDetails$Tier": "<p>The tier of the environment.</p>"
+      }
+    },
     "AwsElasticsearchDomainDetails": {
       "base": "<p>Information about an Elasticsearch domain.</p>",
       "refs": {
@@ -760,10 +1205,29 @@
         "AwsElasticsearchDomainDetails$EncryptionAtRestOptions": "<p>Details about the configuration for encryption at rest.</p>"
       }
     },
+    "AwsElasticsearchDomainLogPublishingOptions": {
+      "base": "<p>configures the CloudWatch Logs to publish for the Elasticsearch domain.</p>",
+      "refs": {
+        "AwsElasticsearchDomainDetails$LogPublishingOptions": "<p>Configures the CloudWatch Logs to publish for the Elasticsearch domain.</p>"
+      }
+    },
+    "AwsElasticsearchDomainLogPublishingOptionsLogConfig": {
+      "base": "<p>The log configuration.</p>",
+      "refs": {
+        "AwsElasticsearchDomainLogPublishingOptions$IndexSlowLogs": "<p>Configures the Elasticsearch index logs publishing.</p>",
+        "AwsElasticsearchDomainLogPublishingOptions$SearchSlowLogs": "<p>Configures the Elasticsearch search slow log publishing.</p>"
+      }
+    },
     "AwsElasticsearchDomainNodeToNodeEncryptionOptions": {
       "base": "<p>Details about the configuration for node-to-node encryption.</p>",
       "refs": {
         "AwsElasticsearchDomainDetails$NodeToNodeEncryptionOptions": "<p>Details about the configuration for node-to-node encryption.</p>"
+      }
+    },
+    "AwsElasticsearchDomainServiceSoftwareOptions": {
+      "base": "<p>Information about the state of the domain relative to the latest service software.</p>",
+      "refs": {
+        "AwsElasticsearchDomainDetails$ServiceSoftwareOptions": "<p>Information about the status of a domain relative to the latest service software.</p>"
       }
     },
     "AwsElasticsearchDomainVPCOptions": {
@@ -1083,7 +1547,7 @@
       }
     },
     "AwsLambdaFunctionEnvironmentError": {
-      "base": "<p>Error messages for environment variables that couldn't be applied.</p>",
+      "base": "<p>Error messages for environment variables that could not be applied.</p>",
       "refs": {
         "AwsLambdaFunctionEnvironment$Error": "<p>An <code>AwsLambdaFunctionEnvironmentError</code> object.</p>"
       }
@@ -1107,7 +1571,7 @@
       }
     },
     "AwsLambdaFunctionVpcConfig": {
-      "base": "<p>The VPC security groups and subnets that are attached to a Lambda function. For more information, see VPC Settings.</p>",
+      "base": "<p>The VPC security groups and subnets that are attached to a Lambda function.</p>",
       "refs": {
         "AwsLambdaFunctionDetails$VpcConfig": "<p>The function's networking configuration.</p>"
       }
@@ -1447,6 +1911,97 @@
         "AwsRedshiftClusterDetails$VpcSecurityGroups": "<p>The list of VPC security groups that the cluster belongs to, if the cluster is in a VPC.</p>"
       }
     },
+    "AwsS3AccountPublicAccessBlockDetails": {
+      "base": "<p>provides information about the Amazon S3 Public Access Block configuration for accounts.</p>",
+      "refs": {
+        "AwsS3BucketDetails$PublicAccessBlockConfiguration": "<p>Provides information about the Amazon S3 Public Access Block configuration for the S3 bucket.</p>",
+        "ResourceDetails$AwsS3AccountPublicAccessBlock": "<p>Details about the Amazon S3 Public Access Block configuration for an account.</p>"
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationDetails": {
+      "base": "<p>The lifecycle configuration for the objects in the S3 bucket.</p>",
+      "refs": {
+        "AwsS3BucketDetails$BucketLifecycleConfiguration": "<p>The lifecycle configuration for objects in the S3 bucket.</p>"
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesAbortIncompleteMultipartUploadDetails": {
+      "base": "<p>Information about what Amazon S3 does when a multipart upload is incomplete.</p>",
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesDetails$AbortIncompleteMultipartUpload": "<p>How Amazon S3 responds when a multipart upload is incomplete. Specifically, provides a number of days before Amazon S3 cancels the entire upload.</p>"
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesDetails": {
+      "base": "<p>Configuration for a lifecycle rule.</p>",
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesList$member": null
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesFilterDetails": {
+      "base": "<p>Identifies the objects that a rule applies to.</p>",
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesDetails$Filter": "<p>Identifies the objects that a rule applies to.</p>"
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateDetails": {
+      "base": "<p>The configuration for the filter.</p>",
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterDetails$Predicate": "<p>The configuration for the filter.</p>"
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateOperandsDetails": {
+      "base": "<p>A value to use for the filter.</p>",
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateOperandsList$member": null
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateOperandsList": {
+      "base": null,
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateDetails$Operands": "<p>The values to use for the filter.</p>"
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateOperandsTagDetails": {
+      "base": "<p>A tag that is assigned to matching objects.</p>",
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateOperandsDetails$Tag": "<p>A tag that is assigned to matching objects.</p>"
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateTagDetails": {
+      "base": "<p>A tag filter.</p>",
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateDetails$Tag": "<p>A tag filter.</p>"
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesList": {
+      "base": null,
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationDetails$Rules": "<p>The lifecycle rules.</p>"
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesNoncurrentVersionTransitionsDetails": {
+      "base": "<p>A transition rule that describes when noncurrent objects transition to a specified storage class.</p>",
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesNoncurrentVersionTransitionsList$member": null
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesNoncurrentVersionTransitionsList": {
+      "base": null,
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesDetails$NoncurrentVersionTransitions": "<p>Transition rules that describe when noncurrent objects transition to a specified storage class.</p>"
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesTransitionsDetails": {
+      "base": "<p>A rule for when objects transition to specific storage classes.</p>",
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesTransitionsList$member": null
+      }
+    },
+    "AwsS3BucketBucketLifecycleConfigurationRulesTransitionsList": {
+      "base": null,
+      "refs": {
+        "AwsS3BucketBucketLifecycleConfigurationRulesDetails$Transitions": "<p>Transition rules that indicate when objects transition to a specified storage class.</p>"
+      }
+    },
     "AwsS3BucketDetails": {
       "base": "<p>The details of an Amazon S3 bucket.</p>",
       "refs": {
@@ -1498,7 +2053,8 @@
     "AwsSecurityFinding": {
       "base": "<p>Provides consistent format for the contents of the Security Hub-aggregated findings. <code>AwsSecurityFinding</code> format enables you to share findings between AWS security services and third-party solutions, and security standards checks.</p> <note> <p>A finding is a potential security issue generated either by AWS services (Amazon GuardDuty, Amazon Inspector, and Amazon Macie) or by the integrated third-party solutions and standards checks.</p> </note>",
       "refs": {
-        "AwsSecurityFindingList$member": null
+        "AwsSecurityFindingList$member": null,
+        "BatchImportFindingsRequestFindingList$member": null
       }
     },
     "AwsSecurityFindingFilters": {
@@ -1528,12 +2084,11 @@
     "AwsSecurityFindingList": {
       "base": null,
       "refs": {
-        "BatchImportFindingsRequest$Findings": "<p>A list of findings to import. To successfully import a finding, it must follow the <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-findings-format.html\">AWS Security Finding Format</a>. Maximum of 100 findings per request.</p>",
         "GetFindingsResponse$Findings": "<p>The findings that matched the filters specified in the request.</p>"
       }
     },
     "AwsSnsTopicDetails": {
-      "base": "<p>A wrapper type for the topic's Amazon Resource Name (ARN).</p>",
+      "base": "<p>A wrapper type for the topic's ARN.</p>",
       "refs": {
         "ResourceDetails$AwsSnsTopic": "<p>Details about an SNS topic.</p>"
       }
@@ -1617,6 +2172,12 @@
       "refs": {
       }
     },
+    "BatchImportFindingsRequestFindingList": {
+      "base": null,
+      "refs": {
+        "BatchImportFindingsRequest$Findings": "<p>A list of findings to import. To successfully import a finding, it must follow the <a href=\"https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-findings-format.html\">AWS Security Finding Format</a>. Maximum of 100 findings per request.</p>"
+      }
+    },
     "BatchImportFindingsResponse": {
       "base": null,
       "refs": {
@@ -1671,13 +2232,33 @@
         "AwsDynamoDbTableGlobalSecondaryIndex$Backfilling": "<p>Whether the index is currently backfilling.</p>",
         "AwsDynamoDbTableRestoreSummary$RestoreInProgress": "<p>Whether a restore is currently in progress.</p>",
         "AwsDynamoDbTableStreamSpecification$StreamEnabled": "<p>Indicates whether DynamoDB Streams is enabled on the table.</p>",
+        "AwsEc2NetworkAclDetails$IsDefault": "<p>Whether this is the default network ACL for the VPC.</p>",
+        "AwsEc2NetworkAclEntry$Egress": "<p>Whether the rule is an egress rule. An egress rule is a rule that applies to traffic that leaves the subnet.</p>",
         "AwsEc2NetworkInterfaceAttachment$DeleteOnTermination": "<p>Indicates whether the network interface is deleted when the instance is terminated.</p>",
         "AwsEc2NetworkInterfaceDetails$SourceDestCheck": "<p>Indicates whether traffic to or from the instance is validated.</p>",
+        "AwsEc2SubnetDetails$AssignIpv6AddressOnCreation": "<p>Whether to assign an IPV6 address to a network interface that is created in this subnet.</p>",
+        "AwsEc2SubnetDetails$DefaultForAz": "<p>Whether this subnet is the default subnet for the Availability Zone.</p>",
+        "AwsEc2SubnetDetails$MapPublicIpOnLaunch": "<p>Whether instances in this subnet receive a public IP address.</p>",
         "AwsEc2VolumeAttachment$DeleteOnTermination": "<p>Whether the EBS volume is deleted when the EC2 instance is terminated.</p>",
         "AwsEc2VolumeDetails$Encrypted": "<p>Whether the volume is encrypted.</p>",
+        "AwsEcsClusterConfigurationExecuteCommandConfigurationLogConfigurationDetails$CloudWatchEncryptionEnabled": "<p>Whether to enable encryption on the CloudWatch logs.</p>",
+        "AwsEcsClusterConfigurationExecuteCommandConfigurationLogConfigurationDetails$S3EncryptionEnabled": "<p>Whether to encrypt the logs that are sent to the S3 bucket.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$DisableNetworking": "<p>Whether to disable networking within the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Essential": "<p>Whether the container is essential. All tasks must have at least one essential container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Interactive": "<p>If set to true, then containerized applications can be deployed that require <code>stdin</code> or a <code>tty</code> to be allocated.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Privileged": "<p>Whether the container is given elevated privileges on the host container instance. The elevated privileges are similar to the root user.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$PseudoTerminal": "<p>Whether to allocate a TTY to the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$ReadonlyRootFilesystem": "<p>Whether the container is given read-only access to its root file system.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDetails$InitProcessEnabled": "<p>Whether to run an <code>init</code> process inside the container that forwards signals and reaps processes. </p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsMountPointsDetails$ReadOnly": "<p>Whether the container has read-only access to the volume.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsVolumesFromDetails$ReadOnly": "<p>Whether the container has read-only access to the volume.</p>",
+        "AwsEcsTaskDefinitionVolumesDockerVolumeConfigurationDetails$Autoprovision": "<p>Whether to create the Docker volume automatically if it does not already exist.</p>",
         "AwsElasticsearchDomainDomainEndpointOptions$EnforceHTTPS": "<p>Whether to require that all traffic to the domain arrive over HTTPS.</p>",
         "AwsElasticsearchDomainEncryptionAtRestOptions$Enabled": "<p>Whether encryption at rest is enabled.</p>",
+        "AwsElasticsearchDomainLogPublishingOptionsLogConfig$Enabled": "<p>Whether the log publishing is enabled.</p>",
         "AwsElasticsearchDomainNodeToNodeEncryptionOptions$Enabled": "<p>Whether node-to-node encryption is enabled.</p>",
+        "AwsElasticsearchDomainServiceSoftwareOptions$Cancellable": "<p>Whether a request to update the domain can be canceled.</p>",
+        "AwsElasticsearchDomainServiceSoftwareOptions$UpdateAvailable": "<p>Whether a service software update is available for the domain.</p>",
         "AwsElbLoadBalancerAccessLog$Enabled": "<p>Indicates whether access logs are enabled for the load balancer.</p>",
         "AwsElbLoadBalancerConnectionDraining$Enabled": "<p>Indicates whether connection draining is enabled for the load balancer.</p>",
         "AwsElbLoadBalancerCrossZoneLoadBalancing$Enabled": "<p>Indicates whether cross-zone load balancing is enabled for the load balancer.</p>",
@@ -1713,15 +2294,21 @@
         "AwsRedshiftClusterPendingModifiedValues$EnhancedVpcRouting": "<p>Indicates whether to create the cluster with enhanced VPC routing enabled.</p>",
         "AwsRedshiftClusterPendingModifiedValues$PubliclyAccessible": "<p>The pending or in-progress change to whether the cluster can be connected to from the public network.</p>",
         "AwsRedshiftClusterResizeInfo$AllowCancelResize": "<p>Indicates whether the resize operation can be canceled.</p>",
+        "AwsS3AccountPublicAccessBlockDetails$BlockPublicAcls": "<p>Indicates whether to reject calls to update an S3 bucket if the calls include a public access control list (ACL).</p>",
+        "AwsS3AccountPublicAccessBlockDetails$BlockPublicPolicy": "<p>Indicates whether to reject calls to update the access policy for an S3 bucket or access point if the policy allows public access.</p>",
+        "AwsS3AccountPublicAccessBlockDetails$IgnorePublicAcls": "<p>Indicates whether Amazon S3 ignores public ACLs that are associated with an S3 bucket.</p>",
+        "AwsS3AccountPublicAccessBlockDetails$RestrictPublicBuckets": "<p>Indicates whether to restrict access to an access point or S3 bucket that has a public policy to only AWS service principals and authorized users within the S3 bucket owner's account.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesDetails$ExpiredObjectDeleteMarker": "<p>Whether Amazon S3 removes a delete marker that has no noncurrent versions. If set to <code>true</code>, the delete marker is expired. If set to <code>false</code>, the policy takes no action.</p> <p>If you provide <code>ExpiredObjectDeleteMarker</code>, you cannot provide <code>ExpirationInDays</code> or <code>ExpirationDate</code>.</p>",
         "AwsSecretsManagerSecretDetails$RotationOccurredWithinFrequency": "<p>Whether the rotation occurred within the specified rotation frequency.</p>",
         "AwsSecretsManagerSecretDetails$RotationEnabled": "<p>Whether rotation is enabled.</p>",
         "AwsSecretsManagerSecretDetails$Deleted": "<p>Whether the secret is deleted.</p>",
+        "ClassificationResult$AdditionalOccurrences": "<p>Indicates whether there are additional occurrences of sensitive data that are not included in the finding. This occurs when the number of occurrences exceeds the maximum that can be included.</p>",
         "DescribeHubResponse$AutoEnableControls": "<p>Whether to automatically enable new controls when they are added to standards that are enabled.</p> <p>If set to <code>true</code>, then new controls for enabled standards are enabled automatically. If set to <code>false</code>, then new controls are not enabled.</p>",
         "DescribeOrganizationConfigurationResponse$AutoEnable": "<p>Whether to automatically enable Security Hub for new accounts in the organization.</p> <p>If set to <code>true</code>, then Security Hub is enabled for new accounts. If set to false, then new accounts are not added automatically.</p>",
         "DescribeOrganizationConfigurationResponse$MemberAccountLimitReached": "<p>Whether the maximum number of allowed member accounts are already associated with the Security Hub administrator account.</p>",
         "DnsRequestAction$Blocked": "<p>Indicates whether the DNS request was blocked.</p>",
         "EnableSecurityHubRequest$EnableDefaultStandards": "<p>Whether to enable the security standards that Security Hub has designated as automatically enabled. If you do not provide a value for <code>EnableDefaultStandards</code>, it is set to <code>true</code>. To not enable the automatically enabled standards, set <code>EnableDefaultStandards</code> to <code>false</code>.</p>",
-        "ListMembersRequest$OnlyAssociated": "<p>Specifies which member accounts to include in the response based on their relationship status with the master account. The default value is <code>TRUE</code>.</p> <p>If <code>OnlyAssociated</code> is set to <code>TRUE</code>, the response includes member accounts whose relationship status with the master is set to <code>ENABLED</code>.</p> <p>If <code>OnlyAssociated</code> is set to <code>FALSE</code>, the response includes all existing member accounts. </p>",
+        "ListMembersRequest$OnlyAssociated": "<p>Specifies which member accounts to include in the response based on their relationship status with the administrator account. The default value is <code>TRUE</code>.</p> <p>If <code>OnlyAssociated</code> is set to <code>TRUE</code>, the response includes member accounts whose relationship status with the administrator account is set to <code>ENABLED</code>.</p> <p>If <code>OnlyAssociated</code> is set to <code>FALSE</code>, the response includes all existing member accounts. </p>",
         "NetworkConnectionAction$Blocked": "<p>Indicates whether the network connection attempt was blocked.</p>",
         "PortProbeAction$Blocked": "<p>Indicates whether the port probe was blocked.</p>",
         "Standard$EnabledByDefault": "<p>Whether the standard is enabled by default. When Security Hub is enabled from the console, if a standard is enabled by default, the check box for that standard is selected by default.</p> <p>When Security Hub is enabled using the <code>EnableSecurityHub</code> API operation, the standard is enabled by default unless <code>EnableDefaultStandards</code> is set to <code>false</code>.</p>",
@@ -1733,6 +2320,18 @@
       "base": null,
       "refs": {
         "Product$Categories": "<p>The categories assigned to the product.</p>"
+      }
+    },
+    "Cell": {
+      "base": "<p>An occurrence of sensitive data detected in a Microsoft Excel workbook, comma-separated value (CSV) file, or tab-separated value (TSV) file.</p>",
+      "refs": {
+        "Cells$member": null
+      }
+    },
+    "Cells": {
+      "base": null,
+      "refs": {
+        "Occurrences$Cells": "<p>Occurrences of sensitive data detected in Microsoft Excel workbooks, comma-separated value (CSV) files, or tab-separated value (TSV) files.</p>"
       }
     },
     "CidrBlockAssociation": {
@@ -1751,6 +2350,18 @@
       "base": "<p>Information about a city.</p>",
       "refs": {
         "ActionRemoteIpDetails$City": "<p>The city where the remote IP address is located.</p>"
+      }
+    },
+    "ClassificationResult": {
+      "base": "<p>Details about the sensitive data that was detected on the resource.</p>",
+      "refs": {
+        "DataClassificationDetails$Result": "<p>The details about the sensitive data that was detected on the resource.</p>"
+      }
+    },
+    "ClassificationStatus": {
+      "base": "<p>Provides details about the current status of the sensitive data detection.</p>",
+      "refs": {
+        "ClassificationResult$Status": "<p>The current status of the sensitive data detection.</p>"
       }
     },
     "Compliance": {
@@ -1821,6 +2432,24 @@
         "ListMembersRequest$MaxResults": "<p>The maximum number of items to return in the response. </p>"
       }
     },
+    "CustomDataIdentifiersDetections": {
+      "base": "<p>The list of detected instances of sensitive data.</p>",
+      "refs": {
+        "CustomDataIdentifiersDetectionsList$member": null
+      }
+    },
+    "CustomDataIdentifiersDetectionsList": {
+      "base": null,
+      "refs": {
+        "CustomDataIdentifiersResult$Detections": "<p>The list of detected instances of sensitive data.</p>"
+      }
+    },
+    "CustomDataIdentifiersResult": {
+      "base": "<p>Contains an instance of sensitive data that was detected by a customer-defined identifier.</p>",
+      "refs": {
+        "ClassificationResult$CustomDataIdentifiers": "<p>Provides details about sensitive data that was identified based on customer-defined configuration.</p>"
+      }
+    },
     "Cvss": {
       "base": "<p>CVSS scores from the advisory related to the vulnerability.</p>",
       "refs": {
@@ -1831,6 +2460,12 @@
       "base": null,
       "refs": {
         "Vulnerability$Cvss": "<p>CVSS scores from the advisory related to the vulnerability.</p>"
+      }
+    },
+    "DataClassificationDetails": {
+      "base": "<p>Provides details about sensitive data that was detected on a resource.</p>",
+      "refs": {
+        "Resource$DataClassification": "<p>Contains information about sensitive data that was detected on the resource.</p>"
       }
     },
     "DateFilter": {
@@ -2007,6 +2642,16 @@
       "refs": {
       }
     },
+    "DisassociateFromAdministratorAccountRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DisassociateFromAdministratorAccountResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DisassociateFromMasterAccountRequest": {
       "base": null,
       "refs": {
@@ -2088,6 +2733,11 @@
         "AwsApiGatewayCanarySettings$StageVariableOverrides": "<p>Stage variables that are overridden in the canary release deployment. The variables include new stage variables that are introduced in the canary.</p> <p>Each variable is represented as a string-to-string map between the stage variable name and the variable value.</p>",
         "AwsApiGatewayStageDetails$Variables": "<p>A map that defines the stage variables for the stage.</p> <p>Variable names can have alphanumeric and underscore characters.</p> <p>Variable values can contain the following characters:</p> <ul> <li> <p>Uppercase and lowercase letters</p> </li> <li> <p>Numbers</p> </li> <li> <p>Special characters -._~:/?#&amp;=,</p> </li> </ul>",
         "AwsApiGatewayV2StageDetails$StageVariables": "<p>A map that defines the stage variables for the stage.</p> <p>Variable names can have alphanumeric and underscore characters.</p> <p>Variable values can contain the following characters:</p> <ul> <li> <p>Uppercase and lowercase letters</p> </li> <li> <p>Numbers</p> </li> <li> <p>Special characters -._~:/?#&amp;=,</p> </li> </ul>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$DockerLabels": "<p>A key-value map of labels to add to the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsFirelensConfigurationDetails$Options": "<p>The options to use to configure the log router.</p> <p>The valid option keys are as follows:</p> <ul> <li> <p> <code>enable-ecs-log-metadata</code>. The value can be <code>true</code> or <code>false</code>.</p> </li> <li> <p> <code>config-file-type</code>. The value can be <code>s3</code> or <code>file</code>.</p> </li> <li> <p> <code>config-file-value</code>. The value is either an S3 ARN or a file path.</p> </li> </ul>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLogConfigurationDetails$Options": "<p>The configuration options to send to the log driver. Requires version 1.19 of the Docker Remote API or greater on your container instance.</p>",
+        "AwsEcsTaskDefinitionVolumesDockerVolumeConfigurationDetails$DriverOpts": "<p>A map of Docker driver-specific options that are passed through.</p>",
+        "AwsEcsTaskDefinitionVolumesDockerVolumeConfigurationDetails$Labels": "<p>Custom metadata to add to the Docker volume.</p>",
         "AwsElasticsearchDomainDetails$Endpoints": "<p>The key-value pair that exists if the Amazon ES domain uses VPC endpoints.</p>",
         "AwsLambdaFunctionEnvironment$Variables": "<p>Environment variable key-value pairs.</p>",
         "AwsSecurityFinding$ProductFields": "<p>A data type where security-findings providers can include additional solution-specific details that aren't part of the defined <code>AwsSecurityFinding</code> format.</p>",
@@ -2097,10 +2747,32 @@
         "ResourceDetails$Other": "<p>Details about a resource that are not available in a type-specific details object. Use the <code>Other</code> object in the following cases.</p> <ul> <li> <p>The type-specific object does not contain all of the fields that you want to populate. In this case, first use the type-specific object to populate those fields. Use the <code>Other</code> object to populate the fields that are missing from the type-specific object.</p> </li> <li> <p>The resource type does not have a corresponding object. This includes resources for which the type is <code>Other</code>. </p> </li> </ul>"
       }
     },
+    "FindingProviderFields": {
+      "base": "<p>In a <code>BatchImportFindings</code> request, finding providers use <code>FindingProviderFields</code> to provide and update values for confidence, criticality, related findings, severity, and types.</p>",
+      "refs": {
+        "AwsSecurityFinding$FindingProviderFields": "<p>In a <code>BatchImportFindings</code> request, finding providers use <code>FindingProviderFields</code> to provide and update their own values for confidence, criticality, related findings, severity, and types.</p>"
+      }
+    },
+    "FindingProviderSeverity": {
+      "base": "<p>The severity assigned to the finding by the finding provider.</p>",
+      "refs": {
+        "FindingProviderFields$Severity": "<p>The severity of a finding.</p>"
+      }
+    },
     "GeoLocation": {
       "base": "<p>Provides the latitude and longitude coordinates of a location.</p>",
       "refs": {
         "ActionRemoteIpDetails$GeoLocation": "<p>The coordinates of the location of the remote IP address.</p>"
+      }
+    },
+    "GetAdministratorAccountRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetAdministratorAccountResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "GetEnabledStandardsRequest": {
@@ -2173,6 +2845,12 @@
       "refs": {
       }
     },
+    "IcmpTypeCode": {
+      "base": "<p>An Internet Control Message Protocol (ICMP) type and code.</p>",
+      "refs": {
+        "AwsEc2NetworkAclEntry$IcmpTypeCode": "<p>The Internet Control Message Protocol (ICMP) type and code for which to deny or allow access.</p>"
+      }
+    },
     "ImportFindingsError": {
       "base": "<p>The list of the findings that cannot be imported. For each finding, the list provides the error.</p>",
       "refs": {
@@ -2235,10 +2913,32 @@
         "AwsDynamoDbTableProvisionedThroughput$ReadCapacityUnits": "<p>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a <code>ThrottlingException</code>.</p>",
         "AwsDynamoDbTableProvisionedThroughput$WriteCapacityUnits": "<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException</code>.</p>",
         "AwsDynamoDbTableProvisionedThroughputOverride$ReadCapacityUnits": "<p>The read capacity units for the replica.</p>",
+        "AwsEc2NetworkAclEntry$RuleNumber": "<p>The rule number. The rules are processed in order by their number.</p>",
         "AwsEc2NetworkInterfaceAttachment$DeviceIndex": "<p>The device index of the network interface attachment on the instance.</p>",
         "AwsEc2SecurityGroupIpPermission$FromPort": "<p>The start of the port range for the TCP and UDP protocols, or an ICMP/ICMPv6 type number.</p> <p>A value of -1 indicates all ICMP/ICMPv6 types. If you specify all ICMP/ICMPv6 types, you must specify all codes. </p>",
         "AwsEc2SecurityGroupIpPermission$ToPort": "<p>The end of the port range for the TCP and UDP protocols, or an ICMP/ICMPv6 code.</p> <p>A value of -1 indicates all ICMP/ICMPv6 codes. If you specify all ICMP/ICMPv6 types, you must specify all codes.</p>",
+        "AwsEc2SubnetDetails$AvailableIpAddressCount": "<p>The number of available IPV4 addresses in the subnet. Does not include addresses for stopped instances.</p>",
         "AwsEc2VolumeDetails$Size": "<p>The size of the volume, in GiBs.</p>",
+        "AwsEcsClusterDefaultCapacityProviderStrategyDetails$Base": "<p>The minimum number of tasks to run on the specified capacity provider.</p>",
+        "AwsEcsClusterDefaultCapacityProviderStrategyDetails$Weight": "<p>The relative percentage of the total number of tasks launched that should use the capacity provider.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Cpu": "<p>The number of CPU units reserved for the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Memory": "<p>The amount (in MiB) of memory to present to the container. If the container attempts to exceed the memory specified here, the container is shut down. The total amount of memory reserved for all containers within a task must be lower than the task memory value, if one is specified.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$MemoryReservation": "<p>The soft limit (in MiB) of memory to reserve for the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$StartTimeout": "<p>The number of seconds to wait before giving up on resolving dependencies for a container. </p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$StopTimeout": "<p>The number of seconds to wait before the container is stopped if it doesn't shut down normally on its own.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsHealthCheckDetails$Interval": "<p>The time period in seconds between each health check execution. The default value is 30 seconds.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsHealthCheckDetails$Retries": "<p>The number of times to retry a failed health check before the container is considered unhealthy. The default value is 3.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsHealthCheckDetails$StartPeriod": "<p>The optional grace period in seconds that allows containers time to bootstrap before failed health checks count towards the maximum number of retries.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsHealthCheckDetails$Timeout": "<p>The time period in seconds to wait for a health check to succeed before it is considered a failure. The default value is 5.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDetails$MaxSwap": "<p>The total amount of swap memory (in MiB) that a container can use.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDetails$SharedMemorySize": "<p>The value for the size (in MiB) of the <b>/dev/shm</b> volume.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDetails$Swappiness": "<p>Configures the container's memory swappiness behavior. Determines how aggressively pages are swapped. The higher the value, the more aggressive the swappiness. The default is 60.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersTmpfsDetails$Size": "<p>The maximum size (in MiB) of the tmpfs volume.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsPortMappingsDetails$ContainerPort": "<p>The port number on the container that is bound to the user-specified or automatically assigned host port.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsPortMappingsDetails$HostPort": "<p>The port number on the container instance to reserve for the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsUlimitsDetails$HardLimit": "<p>The hard limit for the ulimit type.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsUlimitsDetails$SoftLimit": "<p>The soft limit for the ulimit type.</p>",
+        "AwsEcsTaskDefinitionVolumesEfsVolumeConfigurationDetails$TransitEncryptionPort": "<p>The port to use when sending encrypted data between the Amazon ECS host and the Amazon EFS server.</p>",
         "AwsElbLoadBalancerAccessLog$EmitInterval": "<p>The interval in minutes for publishing the access logs.</p> <p>You can publish access logs either every 5 minutes or every 60 minutes.</p>",
         "AwsElbLoadBalancerBackendServerDescription$InstancePort": "<p>The port on which the EC2 instance is listening.</p>",
         "AwsElbLoadBalancerConnectionDraining$Timeout": "<p>The maximum time, in seconds, to keep the existing connections open before deregistering the instances.</p>",
@@ -2252,7 +2952,7 @@
         "AwsIamPolicyDetails$AttachmentCount": "<p>The number of users, groups, and roles that the policy is attached to.</p>",
         "AwsIamPolicyDetails$PermissionsBoundaryUsageCount": "<p>The number of users and roles that use the policy to set the permissions boundary.</p>",
         "AwsIamRoleDetails$MaxSessionDuration": "<p>The maximum session duration (in seconds) that you want to set for the specified role.</p>",
-        "AwsLambdaFunctionDetails$MemorySize": "<p>The memory that's allocated to the function.</p>",
+        "AwsLambdaFunctionDetails$MemorySize": "<p>The memory that is allocated to the function.</p>",
         "AwsLambdaFunctionDetails$Timeout": "<p>The amount of time that Lambda allows a function to run before stopping it.</p>",
         "AwsLambdaFunctionLayer$CodeSize": "<p>The size of the layer archive in bytes.</p>",
         "AwsRdsDbClusterDetails$AllocatedStorage": "<p>For all database engines except Aurora, specifies the allocated storage size in gibibytes (GiB).</p>",
@@ -2287,6 +2987,11 @@
         "AwsRedshiftClusterEndpoint$Port": "<p>The port that the database engine listens on.</p>",
         "AwsRedshiftClusterPendingModifiedValues$AutomatedSnapshotRetentionPeriod": "<p>The pending or in-progress change to the automated snapshot retention period.</p>",
         "AwsRedshiftClusterPendingModifiedValues$NumberOfNodes": "<p>The pending or in-progress change to the number of nodes in the cluster.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesAbortIncompleteMultipartUploadDetails$DaysAfterInitiation": "<p>The number of days after which Amazon S3 cancels an incomplete multipart upload.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesDetails$ExpirationInDays": "<p>The length in days of the lifetime for objects that are subject to the rule.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesDetails$NoncurrentVersionExpirationInDays": "<p>The number of days that an object is noncurrent before Amazon S3 can perform the associated action.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesNoncurrentVersionTransitionsDetails$Days": "<p>The number of days that an object is noncurrent before Amazon S3 can perform the associated action.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesTransitionsDetails$Days": "<p>The number of days after which to transition the object to the specified storage class. If you provide <code>Days</code>, you cannot provide <code>Date</code>.</p>",
         "AwsSecretsManagerSecretRotationRules$AutomaticallyAfterDays": "<p>The number of days after the previous rotation to rotate the secret.</p>",
         "AwsSecurityFinding$Confidence": "<p>A finding's confidence. Confidence is defined as the likelihood that a finding accurately identifies the behavior or issue that it was intended to identify.</p> <p>Confidence is scored on a 0-100 basis using a ratio scale, where 0 means zero percent confidence and 100 means 100 percent confidence.</p>",
         "AwsSecurityFinding$Criticality": "<p>The level of importance assigned to the resources associated with the finding.</p> <p>A score of 0 means that the underlying resources have no criticality, and a score of 100 is reserved for the most critical resources.</p>",
@@ -2308,6 +3013,8 @@
         "BatchImportFindingsResponse$SuccessCount": "<p>The number of findings that were successfully imported.</p>",
         "DateRange$Value": "<p>A date range value for the date filter.</p>",
         "GetInvitationsCountResponse$InvitationsCount": "<p>The number of all membership invitations sent to this Security Hub member account, not including the currently accepted invitation.</p>",
+        "IcmpTypeCode$Code": "<p>The ICMP code for which to deny or allow access. To deny or allow all codes, use the value -1.</p>",
+        "IcmpTypeCode$Type": "<p>The ICMP type for which to deny or allow access. To deny or allow all types, use the value -1.</p>",
         "InsightResultValue$Count": "<p>The number of findings returned for each <code>GroupByAttributeValue</code>.</p>",
         "IpOrganizationDetails$Asn": "<p>The Autonomous System Number (ASN) of the internet provider</p>",
         "Network$SourcePort": "<p>The source port of network-related information about a finding.</p>",
@@ -2320,6 +3027,8 @@
         "PatchSummary$InstalledPendingReboot": "<p>The number of patches that were applied, but that require the instance to be rebooted in order to be marked as installed.</p>",
         "PortRange$Begin": "<p>The first port in the port range.</p>",
         "PortRange$End": "<p>The last port in the port range.</p>",
+        "PortRangeFromTo$From": "<p>The first port in the port range.</p>",
+        "PortRangeFromTo$To": "<p>The last port in the port range.</p>",
         "ProcessDetails$Pid": "<p>The process ID.</p>",
         "ProcessDetails$ParentPid": "<p>The parent process ID.</p>",
         "Severity$Normalized": "<p>Deprecated. The normalized severity of a finding. This attribute is being deprecated. Instead of providing <code>Normalized</code>, provide <code>Label</code>.</p> <p>If you provide <code>Label</code> and do not provide <code>Normalized</code>, then <code>Normalized</code> is set automatically as follows.</p> <ul> <li> <p> <code>INFORMATIONAL</code> - 0</p> </li> <li> <p> <code>LOW</code> - 1</p> </li> <li> <p> <code>MEDIUM</code> - 40</p> </li> <li> <p> <code>HIGH</code> - 70</p> </li> <li> <p> <code>CRITICAL</code> - 90</p> </li> </ul>"
@@ -2334,7 +3043,7 @@
     "IntegrationTypeList": {
       "base": null,
       "refs": {
-        "Product$IntegrationTypes": "<p>The types of integration that the product supports. Available values are the following.</p> <ul> <li> <p> <code>SEND_FINDINGS_TO_SECURITY_HUB</code> - Indicates that the integration sends findings to Security Hub.</p> </li> <li> <p> <code>RECEIVE_FINDINGS_FROM_SECURITY_HUB</code> - Indicates that the integration receives findings from Security Hub.</p> </li> </ul>"
+        "Product$IntegrationTypes": "<p>The types of integration that the product supports. Available values are the following.</p> <ul> <li> <p> <code>SEND_FINDINGS_TO_SECURITY_HUB</code> - The integration sends findings to Security Hub.</p> </li> <li> <p> <code>RECEIVE_FINDINGS_FROM_SECURITY_HUB</code> - The integration receives findings from Security Hub.</p> </li> <li> <p> <code>UPDATE_FINDINGS_IN_SECURITY_HUB</code> - The integration does not send new findings to Security Hub, but does make updates to the findings that it receives from Security Hub.</p> </li> </ul>"
       }
     },
     "InternalException": {
@@ -2355,7 +3064,8 @@
     "Invitation": {
       "base": "<p>Details about an invitation.</p>",
       "refs": {
-        "GetMasterAccountResponse$Master": "<p>A list of details about the Security Hub master account for the current member account. </p>",
+        "GetAdministratorAccountResponse$Administrator": null,
+        "GetMasterAccountResponse$Master": "<p>A list of details about the Security Hub administrator account for the current member account. </p>",
         "InvitationList$member": null
       }
     },
@@ -2407,6 +3117,7 @@
     "Ipv6CidrBlockAssociationList": {
       "base": null,
       "refs": {
+        "AwsEc2SubnetDetails$Ipv6CidrBlockAssociationSet": "<p>The IPV6 CIDR blocks that are associated with the subnet.</p>",
         "AwsEc2VpcDetails$Ipv6CidrBlockAssociationSet": "<p>Information about the IPv6 CIDR blocks associated with the VPC.</p>"
       }
     },
@@ -2490,7 +3201,19 @@
         "AwsRedshiftClusterRestoreStatus$ElapsedTimeInSeconds": "<p>The amount of time an in-progress restore has been running, or the amount of time it took a completed restore to finish.</p> <p>This field is only updated when you restore to DC2 and DS2 node types.</p>",
         "AwsRedshiftClusterRestoreStatus$EstimatedTimeToCompletionInSeconds": "<p>The estimate of the time remaining before the restore is complete. Returns 0 for a completed restore.</p> <p>This field is only updated when you restore to DC2 and DS2 node types.</p>",
         "AwsRedshiftClusterRestoreStatus$ProgressInMegaBytes": "<p>The number of megabytes that were transferred from snapshot storage.</p> <p>This field is only updated when you restore to DC2 and DS2 node types.</p>",
-        "AwsRedshiftClusterRestoreStatus$SnapshotSizeInMegaBytes": "<p>The size of the set of snapshot data that was used to restore the cluster.</p> <p>This field is only updated when you restore to DC2 and DS2 node types.</p>"
+        "AwsRedshiftClusterRestoreStatus$SnapshotSizeInMegaBytes": "<p>The size of the set of snapshot data that was used to restore the cluster.</p> <p>This field is only updated when you restore to DC2 and DS2 node types.</p>",
+        "Cell$Column": "<p>The column number of the column that contains the data. For a Microsoft Excel workbook, the column number corresponds to the alphabetical column identifiers. For example, a value of 1 for Column corresponds to the A column in the workbook.</p>",
+        "Cell$Row": "<p>The row number of the row that contains the data.</p>",
+        "ClassificationResult$SizeClassified": "<p>The total size in bytes of the affected data.</p>",
+        "CustomDataIdentifiersDetections$Count": "<p>The total number of occurrences of sensitive data that were detected.</p>",
+        "CustomDataIdentifiersResult$TotalCount": "<p>The total number of occurrences of sensitive data.</p>",
+        "Page$PageNumber": "<p>The page number of the page that contains the sensitive data.</p>",
+        "Range$Start": "<p>The number of lines (for a line range) or characters (for an offset range) from the beginning of the file to the end of the sensitive data.</p>",
+        "Range$End": "<p>The number of lines (for a line range) or characters (for an offset range) from the beginning of the file to the end of the sensitive data.</p>",
+        "Range$StartColumn": "<p>In the line where the sensitive data starts, the column within the line where the sensitive data starts.</p>",
+        "Record$RecordIndex": "<p>The record index, starting from 0, for the record that contains the data.</p>",
+        "SensitiveDataDetections$Count": "<p>The total number of occurrences of sensitive data that were detected.</p>",
+        "SensitiveDataResult$TotalCount": "<p>The total number of occurrences of sensitive data.</p>"
       }
     },
     "Malware": {
@@ -2636,8 +3359,10 @@
     "NonEmptyString": {
       "base": null,
       "refs": {
-        "AcceptInvitationRequest$MasterId": "<p>The account ID of the Security Hub master account that sent the invitation.</p>",
-        "AcceptInvitationRequest$InvitationId": "<p>The ID of the invitation sent from the Security Hub master account.</p>",
+        "AcceptAdministratorInvitationRequest$AdministratorId": "<p>The account ID of the Security Hub administrator account that sent the invitation.</p>",
+        "AcceptAdministratorInvitationRequest$InvitationId": "<p>The identifier of the invitation sent from the Security Hub administrator account.</p>",
+        "AcceptInvitationRequest$MasterId": "<p>The account ID of the Security Hub administrator account that sent the invitation.</p>",
+        "AcceptInvitationRequest$InvitationId": "<p>The identifier of the invitation sent from the Security Hub administrator account.</p>",
         "AccessDeniedException$Message": null,
         "AccessDeniedException$Code": null,
         "AccountDetails$Email": "<p>The email of an AWS account.</p>",
@@ -2693,6 +3418,7 @@
         "AwsApiGatewayV2ApiDetails$ProtocolType": "<p>The API protocol for the API.</p> <p>Valid values: <code>WEBSOCKET</code> | <code>HTTP</code> </p>",
         "AwsApiGatewayV2ApiDetails$RouteSelectionExpression": "<p>The route selection expression for the API.</p> <p>For HTTP APIs, must be <code>${request.method} ${request.path}</code>. This is the default value for HTTP APIs.</p> <p>For WebSocket APIs, there is no default value.</p>",
         "AwsApiGatewayV2RouteSettings$LoggingLevel": "<p>The logging level. The logging level affects the log entries that are pushed to CloudWatch Logs. Supported only for WebSocket APIs.</p> <p>If the logging level is <code>ERROR</code>, then the logs only include error-level entries.</p> <p>If the logging level is <code>INFO</code>, then the logs include both <code>ERROR</code> events and extra informational events.</p> <p>Valid values: <code>OFF</code> | <code>ERROR</code> | <code>INFO</code> </p>",
+        "AwsApiGatewayV2StageDetails$ClientCertificateId": "<p>The identifier of a client certificate for a stage. Supported only for WebSocket API calls.</p>",
         "AwsApiGatewayV2StageDetails$CreatedDate": "<p>Indicates when the stage was created.</p> <p>Uses the <code>date-time</code> format specified in <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339 section 5.6, Internet Date/Time Format</a>. The value cannot contain spaces. For example, <code>2020-03-22T13:22:13.933Z</code>.</p>",
         "AwsApiGatewayV2StageDetails$Description": "<p>The description of the stage.</p>",
         "AwsApiGatewayV2StageDetails$DeploymentId": "<p>The identifier of the deployment that the stage is associated with. </p>",
@@ -2756,13 +3482,13 @@
         "AwsCloudTrailTrailDetails$SnsTopicArn": "<p>The ARN of the SNS topic that is used for notifications of log file delivery.</p>",
         "AwsCloudTrailTrailDetails$SnsTopicName": "<p>The name of the SNS topic that is used for notifications of log file delivery.</p>",
         "AwsCloudTrailTrailDetails$TrailArn": "<p>The ARN of the trail.</p>",
-        "AwsCodeBuildProjectDetails$EncryptionKey": "<p>The AWS Key Management Service (AWS KMS) customer master key (CMK) used to encrypt the build output artifacts.</p> <p>You can specify either the Amazon Resource Name (ARN) of the CMK or, if available, the CMK alias (using the format alias/alias-name). </p>",
+        "AwsCodeBuildProjectDetails$EncryptionKey": "<p>The AWS Key Management Service (AWS KMS) customer master key (CMK) used to encrypt the build output artifacts.</p> <p>You can specify either the ARN of the CMK or, if available, the CMK alias (using the format alias/alias-name). </p>",
         "AwsCodeBuildProjectDetails$Name": "<p>The name of the build project.</p>",
         "AwsCodeBuildProjectDetails$ServiceRole": "<p>The ARN of the IAM role that enables AWS CodeBuild to interact with dependent AWS services on behalf of the AWS account.</p>",
         "AwsCodeBuildProjectEnvironment$Certificate": "<p>The certificate to use with this build project.</p>",
         "AwsCodeBuildProjectEnvironment$ImagePullCredentialsType": "<p>The type of credentials AWS CodeBuild uses to pull images in your build.</p> <p>Valid values:</p> <ul> <li> <p> <code>CODEBUILD</code> specifies that AWS CodeBuild uses its own credentials. This requires that you modify your ECR repository policy to trust the AWS CodeBuild service principal.</p> </li> <li> <p> <code>SERVICE_ROLE</code> specifies that AWS CodeBuild uses your build project's service role.</p> </li> </ul> <p>When you use a cross-account or private registry image, you must use <code>SERVICE_ROLE</code> credentials. When you use an AWS CodeBuild curated image, you must use <code>CODEBUILD</code> credentials.</p>",
         "AwsCodeBuildProjectEnvironment$Type": "<p>The type of build environment to use for related builds.</p> <p>The environment type <code>ARM_CONTAINER</code> is available only in Regions US East (N. Virginia), US East (Ohio), US West (Oregon), Europe (Ireland), Asia Pacific (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Sydney), and Europe (Frankfurt).</p> <p>The environment type <code>LINUX_CONTAINER</code> with compute type build.general1.2xlarge is available only in Regions US East (N. Virginia), US East (N. Virginia), US West (Oregon), Canada (Central), Europe (Ireland), Europe (London), Europe (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Seoul), Asia Pacific (Singapore), Asia Pacific (Sydney), China (Beijing), and China (Ningxia).</p> <p>The environment type <code>LINUX_GPU_CONTAINER</code> is available only in Regions US East (N. Virginia), US East (N. Virginia), US West (Oregon), Canada (Central), Europe (Ireland), Europe (London), Europe (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Seoul), Asia Pacific (Singapore), Asia Pacific (Sydney), China (Beijing), and China (Ningxia).</p> <p>Valid values: <code>WINDOWS_CONTAINER</code> | <code>LINUX_CONTAINER</code> | <code>LINUX_GPU_CONTAINER</code> | <code>ARM_CONTAINER</code> </p>",
-        "AwsCodeBuildProjectEnvironmentRegistryCredential$Credential": "<p>The Amazon Resource Name (ARN) or name of credentials created using AWS Secrets Manager.</p> <note> <p>The credential can use the name of the credentials only if they exist in your current AWS Region. </p> </note>",
+        "AwsCodeBuildProjectEnvironmentRegistryCredential$Credential": "<p>The ARN or name of credentials created using AWS Secrets Manager.</p> <note> <p>The credential can use the name of the credentials only if they exist in your current AWS Region. </p> </note>",
         "AwsCodeBuildProjectEnvironmentRegistryCredential$CredentialProvider": "<p>The service that created the credentials to access a private Docker registry.</p> <p>The valid value,<code> SECRETS_MANAGER</code>, is for AWS Secrets Manager.</p>",
         "AwsCodeBuildProjectSource$Type": "<p>The type of repository that contains the source code to be built. Valid values are:</p> <ul> <li> <p> <code>BITBUCKET</code> - The source code is in a Bitbucket repository.</p> </li> <li> <p> <code>CODECOMMIT</code> - The source code is in an AWS CodeCommit repository.</p> </li> <li> <p> <code>CODEPIPELINE</code> - The source code settings are specified in the source action of a pipeline in AWS CodePipeline.</p> </li> <li> <p> <code>GITHUB</code> - The source code is in a GitHub repository.</p> </li> <li> <p> <code>GITHUB_ENTERPRISE</code> - The source code is in a GitHub Enterprise repository.</p> </li> <li> <p> <code>NO_SOURCE</code> - The project does not have input source code.</p> </li> <li> <p> <code>S3</code> - The source code is in an S3 input bucket. </p> </li> </ul>",
         "AwsCodeBuildProjectSource$Location": "<p>Information about the location of the source code to be built.</p> <p>Valid values include:</p> <ul> <li> <p>For source code settings that are specified in the source action of a pipeline in AWS CodePipeline, location should not be specified. If it is specified, AWS CodePipeline ignores it. This is because AWS CodePipeline uses the settings in a pipeline's source action instead of this value.</p> </li> <li> <p>For source code in an AWS CodeCommit repository, the HTTPS clone URL to the repository that contains the source code and the build spec file (for example, <code>https://git-codecommit.region-ID.amazonaws.com/v1/repos/repo-name</code> ).</p> </li> <li> <p>For source code in an S3 input bucket, one of the following.</p> <ul> <li> <p>The path to the ZIP file that contains the source code (for example, <code>bucket-name/path/to/object-name.zip</code>).</p> </li> <li> <p> The path to the folder that contains the source code (for example, <code>bucket-name/path/to/source-code/folder/</code>).</p> </li> </ul> </li> <li> <p>For source code in a GitHub repository, the HTTPS clone URL to the repository that contains the source and the build spec file.</p> </li> <li> <p>For source code in a Bitbucket repository, the HTTPS clone URL to the repository that contains the source and the build spec file. </p> </li> </ul>",
@@ -2818,6 +3544,17 @@
         "AwsEc2InstanceDetails$VpcId": "<p>The identifier of the VPC that the instance was launched in.</p>",
         "AwsEc2InstanceDetails$SubnetId": "<p>The identifier of the subnet that the instance was launched in.</p>",
         "AwsEc2InstanceDetails$LaunchedAt": "<p>Indicates when the instance was launched.</p> <p>Uses the <code>date-time</code> format specified in <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339 section 5.6, Internet Date/Time Format</a>. The value cannot contain spaces. For example, <code>2020-03-22T13:22:13.933Z</code>.</p>",
+        "AwsEc2InstanceNetworkInterfacesDetails$NetworkInterfaceId": "<p>The identifier of the network interface. The details are in a corresponding <code>AwsEc2NetworkInterfacesDetails</code> object.</p>",
+        "AwsEc2NetworkAclAssociation$NetworkAclAssociationId": "<p>The identifier of the association between the network ACL and the subnet.</p>",
+        "AwsEc2NetworkAclAssociation$NetworkAclId": "<p>The identifier of the network ACL.</p>",
+        "AwsEc2NetworkAclAssociation$SubnetId": "<p>The identifier of the subnet that is associated with the network ACL.</p>",
+        "AwsEc2NetworkAclDetails$NetworkAclId": "<p>The identifier of the network ACL.</p>",
+        "AwsEc2NetworkAclDetails$OwnerId": "<p>The identifier of the AWS account that owns the network ACL.</p>",
+        "AwsEc2NetworkAclDetails$VpcId": "<p>The identifier of the VPC for the network ACL.</p>",
+        "AwsEc2NetworkAclEntry$CidrBlock": "<p>The IPV4 network range for which to deny or allow access.</p>",
+        "AwsEc2NetworkAclEntry$Ipv6CidrBlock": "<p>The IPV6 network range for which to deny or allow access.</p>",
+        "AwsEc2NetworkAclEntry$Protocol": "<p>The protocol that the rule applies to. To deny or allow access to all protocols, use the value -1.</p>",
+        "AwsEc2NetworkAclEntry$RuleAction": "<p>Whether the rule is used to allow access or deny access.</p>",
         "AwsEc2NetworkInterfaceAttachment$AttachTime": "<p>Indicates when the attachment initiated.</p> <p>Uses the <code>date-time</code> format specified in <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339 section 5.6, Internet Date/Time Format</a>. The value cannot contain spaces. For example, <code>2020-03-22T13:22:13.933Z</code>.</p>",
         "AwsEc2NetworkInterfaceAttachment$AttachmentId": "<p>The identifier of the network interface attachment</p>",
         "AwsEc2NetworkInterfaceAttachment$InstanceId": "<p>The ID of the instance.</p>",
@@ -2842,9 +3579,17 @@
         "AwsEc2SecurityGroupUserIdGroupPair$GroupId": "<p>The ID of the security group.</p>",
         "AwsEc2SecurityGroupUserIdGroupPair$GroupName": "<p>The name of the security group.</p>",
         "AwsEc2SecurityGroupUserIdGroupPair$PeeringStatus": "<p>The status of a VPC peering connection, if applicable.</p>",
-        "AwsEc2SecurityGroupUserIdGroupPair$UserId": "<p>The ID of an AWS account.</p> <p>For a referenced security group in another VPC, the account ID of the referenced security group is returned in the response. If the referenced security group is deleted, this value is not returned.</p> <p>[EC2-Classic] Required when adding or removing rules that reference a security group in another AWS. </p>",
+        "AwsEc2SecurityGroupUserIdGroupPair$UserId": "<p>The ID of an AWS account.</p> <p>For a referenced security group in another VPC, the account ID of the referenced security group is returned in the response. If the referenced security group is deleted, this value is not returned.</p> <p>[EC2-Classic] Required when adding or removing rules that reference a security group in another VPC. </p>",
         "AwsEc2SecurityGroupUserIdGroupPair$VpcId": "<p>The ID of the VPC for the referenced security group, if applicable.</p>",
         "AwsEc2SecurityGroupUserIdGroupPair$VpcPeeringConnectionId": "<p>The ID of the VPC peering connection, if applicable.</p>",
+        "AwsEc2SubnetDetails$AvailabilityZone": "<p>The Availability Zone for the subnet.</p>",
+        "AwsEc2SubnetDetails$AvailabilityZoneId": "<p>The identifier of the Availability Zone for the subnet.</p>",
+        "AwsEc2SubnetDetails$CidrBlock": "<p>The IPV4 CIDR block that is assigned to the subnet.</p>",
+        "AwsEc2SubnetDetails$OwnerId": "<p>The identifier of the AWS account that owns the subnet.</p>",
+        "AwsEc2SubnetDetails$State": "<p>The current state of the subnet.</p>",
+        "AwsEc2SubnetDetails$SubnetArn": "<p>The ARN of the subnet.</p>",
+        "AwsEc2SubnetDetails$SubnetId": "<p>The identifier of the subnet.</p>",
+        "AwsEc2SubnetDetails$VpcId": "<p>The identifier of the VPC that contains the subnet.</p>",
         "AwsEc2VolumeAttachment$AttachTime": "<p>The datetime when the attachment initiated.</p>",
         "AwsEc2VolumeAttachment$InstanceId": "<p>The identifier of the EC2 instance.</p>",
         "AwsEc2VolumeAttachment$Status": "<p>The attachment state of the volume.</p>",
@@ -2854,6 +3599,93 @@
         "AwsEc2VolumeDetails$KmsKeyId": "<p>The ARN of the AWS Key Management Service (AWS KMS) customer master key (CMK) that was used to protect the volume encryption key for the volume.</p>",
         "AwsEc2VpcDetails$DhcpOptionsId": "<p>The identifier of the set of Dynamic Host Configuration Protocol (DHCP) options that are associated with the VPC. If the default options are associated with the VPC, then this is default.</p>",
         "AwsEc2VpcDetails$State": "<p>The current state of the VPC.</p>",
+        "AwsEcsClusterClusterSettingsDetails$Name": "<p>The name of the setting.</p>",
+        "AwsEcsClusterClusterSettingsDetails$Value": "<p>The value of the setting.</p>",
+        "AwsEcsClusterConfigurationExecuteCommandConfigurationDetails$KmsKeyId": "<p>The identifier of the KMS key that is used to encrypt the data between the local client and the container.</p>",
+        "AwsEcsClusterConfigurationExecuteCommandConfigurationDetails$Logging": "<p>The log setting to use for redirecting logs for run command results.</p>",
+        "AwsEcsClusterConfigurationExecuteCommandConfigurationLogConfigurationDetails$CloudWatchLogGroupName": "<p>The name of the CloudWatch log group to send the logs to.</p>",
+        "AwsEcsClusterConfigurationExecuteCommandConfigurationLogConfigurationDetails$S3BucketName": "<p>The name of the S3 bucket to send logs to.</p>",
+        "AwsEcsClusterConfigurationExecuteCommandConfigurationLogConfigurationDetails$S3KeyPrefix": "<p>Identifies the folder in the S3 bucket to send the logs to.</p>",
+        "AwsEcsClusterDefaultCapacityProviderStrategyDetails$CapacityProvider": "<p>The name of the capacity provider.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDependsOnDetails$Condition": "<p>The dependency condition of the dependent container. Indicates the required status of the dependent container before the current container can start.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDependsOnDetails$ContainerName": "<p>The name of the dependent container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Hostname": "<p>The hostname to use for the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Image": "<p>The image used to start the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Name": "<p>The name of the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$User": "<p>The user to use inside the container.</p> <p>The value can use one of the following formats.</p> <ul> <li> <p> <code> <i>user</i> </code> </p> </li> <li> <p> <code> <i>user</i> </code>:<code> <i>group</i> </code> </p> </li> <li> <p> <code> <i>uid</i> </code> </p> </li> <li> <p> <code> <i>uid</i> </code>:<code> <i>gid</i> </code> </p> </li> <li> <p> <code> <i>user</i> </code>:<code> <i>gid</i> </code> </p> </li> <li> <p> <code> <i>uid</i> </code>:<code> <i>group</i> </code> </p> </li> </ul>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$WorkingDirectory": "<p>The working directory in which to run commands inside the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsEnvironmentDetails$Name": "<p>The name of the environment variable.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsEnvironmentDetails$Value": "<p>The value of the environment variable.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsEnvironmentFilesDetails$Type": "<p>The type of environment file.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsEnvironmentFilesDetails$Value": "<p>The ARN of the S3 object that contains the environment variable file.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsExtraHostsDetails$Hostname": "<p>The hostname to use in the <b>/etc/hosts</b> entry.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsExtraHostsDetails$IpAddress": "<p>The IP address to use in the <b>/etc/hosts</b> entry.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsFirelensConfigurationDetails$Type": "<p>The log router to use. </p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDevicesDetails$ContainerPath": "<p>The path inside the container at which to expose the host device.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDevicesDetails$HostPath": "<p>The path for the device on the host container instance.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersTmpfsDetails$ContainerPath": "<p>The absolute file path where the tmpfs volume is to be mounted.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLogConfigurationDetails$LogDriver": "<p>The log driver to use for the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLogConfigurationSecretOptionsDetails$Name": "<p>The name of the secret.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLogConfigurationSecretOptionsDetails$ValueFrom": "<p>The secret to expose to the container.</p> <p>The value is either the full ARN of the Secrets Manager secret or the full ARN of the parameter in the Systems Manager Parameter Store.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsMountPointsDetails$ContainerPath": "<p>The path on the container to mount the host volume at.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsMountPointsDetails$SourceVolume": "<p>The name of the volume to mount. Must match the name of a volume listed in <code>VolumeDetails</code> for the task definition.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsPortMappingsDetails$Protocol": "<p>The protocol used for the port mapping. The default is <code>tcp</code>.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsRepositoryCredentialsDetails$CredentialsParameter": "<p>The ARN of the secret that contains the private repository credentials.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsResourceRequirementsDetails$Type": "<p>The type of resource to assign to a container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsResourceRequirementsDetails$Value": "<p>The value for the specified resource type.</p> <p>For <code>GPU</code>, the value is the number of physical GPUs the Amazon ECS container agent reserves for the container.</p> <p>For <code>InferenceAccelerator</code>, the value should match the <code>DeviceName</code> attribute of an entry in <code>InferenceAccelerators</code>.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsSecretsDetails$Name": "<p>The name of the secret.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsSecretsDetails$ValueFrom": "<p>The secret to expose to the container. The value is either the full ARN of the Secrets Manager secret or the full ARN of the parameter in the Systems Manager Parameter Store.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsSystemControlsDetails$Namespace": "<p>The namespaced kernel parameter for which to set a value.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsSystemControlsDetails$Value": "<p>The value of the parameter.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsUlimitsDetails$Name": "<p>The type of the ulimit.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsVolumesFromDetails$SourceContainer": "<p>The name of another container within the same task definition from which to mount volumes.</p>",
+        "AwsEcsTaskDefinitionDetails$Cpu": "<p>The number of CPU units used by the task.</p>",
+        "AwsEcsTaskDefinitionDetails$ExecutionRoleArn": "<p>The ARN of the task execution role that grants the container agent permission to make API calls on behalf of the container user.</p>",
+        "AwsEcsTaskDefinitionDetails$Family": "<p>The name of a family that this task definition is registered to.</p>",
+        "AwsEcsTaskDefinitionDetails$IpcMode": "<p>The IPC resource namespace to use for the containers in the task.</p>",
+        "AwsEcsTaskDefinitionDetails$Memory": "<p>The amount (in MiB) of memory used by the task.</p>",
+        "AwsEcsTaskDefinitionDetails$NetworkMode": "<p>The Docker networking mode to use for the containers in the task.</p>",
+        "AwsEcsTaskDefinitionDetails$PidMode": "<p>The process namespace to use for the containers in the task.</p>",
+        "AwsEcsTaskDefinitionDetails$TaskRoleArn": "<p>The short name or ARN of the IAM role that grants containers in the task permission to call AWS API operations on your behalf.</p>",
+        "AwsEcsTaskDefinitionInferenceAcceleratorsDetails$DeviceName": "<p>The Elastic Inference accelerator device name.</p>",
+        "AwsEcsTaskDefinitionInferenceAcceleratorsDetails$DeviceType": "<p>The Elastic Inference accelerator type to use.</p>",
+        "AwsEcsTaskDefinitionPlacementConstraintsDetails$Expression": "<p>A cluster query language expression to apply to the constraint.</p>",
+        "AwsEcsTaskDefinitionPlacementConstraintsDetails$Type": "<p>The type of constraint.</p>",
+        "AwsEcsTaskDefinitionProxyConfigurationDetails$ContainerName": "<p>The name of the container that will serve as the App Mesh proxy.</p>",
+        "AwsEcsTaskDefinitionProxyConfigurationDetails$Type": "<p>The proxy type.</p>",
+        "AwsEcsTaskDefinitionProxyConfigurationProxyConfigurationPropertiesDetails$Name": "<p>The name of the property.</p>",
+        "AwsEcsTaskDefinitionProxyConfigurationProxyConfigurationPropertiesDetails$Value": "<p>The value of the property.</p>",
+        "AwsEcsTaskDefinitionVolumesDetails$Name": "<p>The name of the data volume.</p>",
+        "AwsEcsTaskDefinitionVolumesDockerVolumeConfigurationDetails$Driver": "<p>The Docker volume driver to use.</p>",
+        "AwsEcsTaskDefinitionVolumesDockerVolumeConfigurationDetails$Scope": "<p>The scope for the Docker volume that determines its lifecycle. Docker volumes that are scoped to a task are provisioned automatically when the task starts and destroyed when the task stops. Docker volumes that are shared persist after the task stops.</p>",
+        "AwsEcsTaskDefinitionVolumesEfsVolumeConfigurationAuthorizationConfigDetails$AccessPointId": "<p>The Amazon EFS access point identifier to use.</p>",
+        "AwsEcsTaskDefinitionVolumesEfsVolumeConfigurationAuthorizationConfigDetails$Iam": "<p>Whether to use the Amazon ECS task IAM role defined in a task definition when mounting the Amazon EFS file system.</p>",
+        "AwsEcsTaskDefinitionVolumesEfsVolumeConfigurationDetails$FilesystemId": "<p>The Amazon EFS file system identifier to use.</p>",
+        "AwsEcsTaskDefinitionVolumesEfsVolumeConfigurationDetails$RootDirectory": "<p>The directory within the Amazon EFS file system to mount as the root directory inside the host.</p>",
+        "AwsEcsTaskDefinitionVolumesEfsVolumeConfigurationDetails$TransitEncryption": "<p>Whether to enable encryption for Amazon EFS data in transit between the Amazon ECS host and the Amazon EFS server. </p>",
+        "AwsEcsTaskDefinitionVolumesHostDetails$SourcePath": "<p>The path on the host container instance that is presented to the container.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$ApplicationName": "<p>The name of the application that is associated with the environment.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$Cname": "<p>The URL to the CNAME for this environment.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$DateCreated": "<p>The creation date for this environment.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$DateUpdated": "<p>The date when this environment was last modified.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$Description": "<p>A description of the environment.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$EndpointUrl": "<p>For load-balanced, autoscaling environments, the URL to the load balancer. For single-instance environments, the IP address of the instance.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$EnvironmentArn": "<p>The ARN of the environment.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$EnvironmentId": "<p>The identifier of the environment.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$EnvironmentName": "<p>The name of the environment.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$PlatformArn": "<p>The ARN of the platform version for the environment.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$SolutionStackName": "<p>The name of the solution stack that is deployed with the environment.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$Status": "<p>The current operational status of the environment.</p>",
+        "AwsElasticBeanstalkEnvironmentDetails$VersionLabel": "<p>The application version of the environment.</p>",
+        "AwsElasticBeanstalkEnvironmentEnvironmentLink$EnvironmentName": "<p>The name of the linked environment.</p>",
+        "AwsElasticBeanstalkEnvironmentEnvironmentLink$LinkName": "<p>The name of the environment link.</p>",
+        "AwsElasticBeanstalkEnvironmentOptionSetting$Namespace": "<p>The type of resource that the configuration option is associated with.</p>",
+        "AwsElasticBeanstalkEnvironmentOptionSetting$OptionName": "<p>The name of the option.</p>",
+        "AwsElasticBeanstalkEnvironmentOptionSetting$ResourceName": "<p>The name of the resource.</p>",
+        "AwsElasticBeanstalkEnvironmentOptionSetting$Value": "<p>The value of the configuration setting.</p>",
+        "AwsElasticBeanstalkEnvironmentTier$Name": "<p>The name of the environment tier.</p>",
+        "AwsElasticBeanstalkEnvironmentTier$Type": "<p>The type of environment tier.</p>",
+        "AwsElasticBeanstalkEnvironmentTier$Version": "<p>The version of the environment tier.</p>",
         "AwsElasticsearchDomainDetails$AccessPolicies": "<p>IAM policy document specifying the access policies for the new Amazon ES domain.</p>",
         "AwsElasticsearchDomainDetails$DomainId": "<p>Unique identifier for an Amazon ES domain.</p>",
         "AwsElasticsearchDomainDetails$DomainName": "<p>Name of an Amazon ES domain.</p> <p>Domain names are unique across all domains owned by the same account within an AWS Region.</p> <p>Domain names must start with a lowercase letter and must be between 3 and 28 characters.</p> <p>Valid characters are a-z (lowercase only), 0-9, and – (hyphen). </p>",
@@ -2861,6 +3693,12 @@
         "AwsElasticsearchDomainDetails$ElasticsearchVersion": "<p>Elasticsearch version.</p>",
         "AwsElasticsearchDomainDomainEndpointOptions$TLSSecurityPolicy": "<p>The TLS security policy to apply to the HTTPS endpoint of the Elasticsearch domain.</p> <p>Valid values:</p> <ul> <li> <p> <code>Policy-Min-TLS-1-0-2019-07</code>, which supports TLSv1.0 and higher</p> </li> <li> <p> <code>Policy-Min-TLS-1-2-2019-07</code>, which only supports TLSv1.2</p> </li> </ul>",
         "AwsElasticsearchDomainEncryptionAtRestOptions$KmsKeyId": "<p>The KMS key ID. Takes the form 1a2a3a4-1a2a-3a4a-5a6a-1a2a3a4a5a6a.</p>",
+        "AwsElasticsearchDomainLogPublishingOptionsLogConfig$CloudWatchLogsLogGroupArn": "<p>The ARN of the CloudWatch Logs group to publish the logs to.</p>",
+        "AwsElasticsearchDomainServiceSoftwareOptions$AutomatedUpdateDate": "<p>The epoch time when the deployment window closes for required updates. After this time, Amazon Elasticsearch Service schedules the software upgrade automatically.</p>",
+        "AwsElasticsearchDomainServiceSoftwareOptions$CurrentVersion": "<p>The version of the service software that is currently installed on the domain.</p>",
+        "AwsElasticsearchDomainServiceSoftwareOptions$Description": "<p>A more detailed description of the service software status.</p>",
+        "AwsElasticsearchDomainServiceSoftwareOptions$NewVersion": "<p>The most recent version of the service software.</p>",
+        "AwsElasticsearchDomainServiceSoftwareOptions$UpdateStatus": "<p>The status of the service software update.</p>",
         "AwsElasticsearchDomainVPCOptions$VPCId": "<p>ID for the VPC.</p>",
         "AwsElbAppCookieStickinessPolicy$CookieName": "<p>The name of the application cookie used for stickiness.</p>",
         "AwsElbAppCookieStickinessPolicy$PolicyName": "<p>The mnemonic name for the policy being created. The name must be unique within the set of policies for the load balancer.</p>",
@@ -2949,7 +3787,7 @@
         "AwsLambdaFunctionCode$S3Key": "<p>The Amazon S3 key of the deployment package.</p>",
         "AwsLambdaFunctionCode$S3ObjectVersion": "<p>For versioned objects, the version of the deployment package object to use.</p>",
         "AwsLambdaFunctionCode$ZipFile": "<p>The base64-encoded contents of the deployment package. AWS SDK and AWS CLI clients handle the encoding for you.</p>",
-        "AwsLambdaFunctionDeadLetterConfig$TargetArn": "<p>The Amazon Resource Name (ARN) of an Amazon SQS queue or Amazon SNS topic.</p>",
+        "AwsLambdaFunctionDeadLetterConfig$TargetArn": "<p>The ARN of an Amazon SQS queue or Amazon SNS topic.</p>",
         "AwsLambdaFunctionDetails$CodeSha256": "<p>The SHA256 hash of the function's deployment package.</p>",
         "AwsLambdaFunctionDetails$FunctionName": "<p>The name of the function.</p>",
         "AwsLambdaFunctionDetails$Handler": "<p>The function that Lambda calls to begin executing your function.</p>",
@@ -2962,7 +3800,7 @@
         "AwsLambdaFunctionDetails$Version": "<p>The version of the Lambda function.</p>",
         "AwsLambdaFunctionEnvironmentError$ErrorCode": "<p>The error code.</p>",
         "AwsLambdaFunctionEnvironmentError$Message": "<p>The error message.</p>",
-        "AwsLambdaFunctionLayer$Arn": "<p>The Amazon Resource Name (ARN) of the function layer.</p>",
+        "AwsLambdaFunctionLayer$Arn": "<p>The ARN of the function layer.</p>",
         "AwsLambdaFunctionTracingConfig$Mode": "<p>The tracing mode.</p>",
         "AwsLambdaFunctionVpcConfig$VpcId": "<p>The ID of the VPC.</p>",
         "AwsLambdaLayerVersionDetails$CreatedDate": "<p>Indicates when the version was created.</p> <p>Uses the <code>date-time</code> format specified in <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339 section 5.6, Internet Date/Time Format</a>. The value cannot contain spaces. For example, <code>2020-03-22T13:22:13.933Z</code>.</p>",
@@ -3006,7 +3844,7 @@
         "AwsRdsDbDomainMembership$Status": "<p>The status of the Active Directory Domain membership for the DB instance.</p>",
         "AwsRdsDbDomainMembership$Fqdn": "<p>The fully qualified domain name of the Active Directory domain.</p>",
         "AwsRdsDbDomainMembership$IamRoleName": "<p>The name of the IAM role to use when making API calls to the Directory Service.</p>",
-        "AwsRdsDbInstanceAssociatedRole$RoleArn": "<p>The Amazon Resource Name (ARN) of the IAM role that is associated with the DB instance.</p>",
+        "AwsRdsDbInstanceAssociatedRole$RoleArn": "<p>The ARN of the IAM role that is associated with the DB instance.</p>",
         "AwsRdsDbInstanceAssociatedRole$FeatureName": "<p>The name of the feature associated with the IAM)role.</p>",
         "AwsRdsDbInstanceAssociatedRole$Status": "<p>Describes the state of the association between the IAM role and the DB instance. The <code>Status</code> property returns one of the following values:</p> <ul> <li> <p> <code>ACTIVE</code> - The IAM role ARN is associated with the DB instance and can be used to access other AWS services on your behalf.</p> </li> <li> <p> <code>PENDING</code> - The IAM role ARN is being associated with the DB instance.</p> </li> <li> <p> <code>INVALID</code> - The IAM role ARN is associated with the DB instance. But the DB instance is unable to assume the IAM role in order to access other AWS services on your behalf. </p> </li> </ul>",
         "AwsRdsDbInstanceDetails$CACertificateIdentifier": "<p>The identifier of the CA certificate for this DB instance.</p>",
@@ -3140,6 +3978,21 @@
         "AwsRedshiftClusterRestoreStatus$Status": "<p>The status of the restore action.</p> <p>Valid values: <code>starting</code> | <code>restoring</code> | <code>completed</code> | <code>failed</code> </p>",
         "AwsRedshiftClusterVpcSecurityGroup$Status": "<p>The status of the VPC security group.</p>",
         "AwsRedshiftClusterVpcSecurityGroup$VpcSecurityGroupId": "<p>The identifier of the VPC security group.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesDetails$ExpirationDate": "<p>The date when objects are moved or deleted.</p> <p>Uses the <code>date-time</code> format specified in <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339 section 5.6, Internet Date/Time Format</a>. The value cannot contain spaces. For example, <code>2020-03-22T13:22:13.933Z</code>.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesDetails$ID": "<p>The unique identifier of the rule.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesDetails$Prefix": "<p>A prefix that identifies one or more objects that the rule applies to.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesDetails$Status": "<p>The current status of the rule. Indicates whether the rule is currently being applied.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateDetails$Prefix": "<p>A prefix filter.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateDetails$Type": "<p>Whether to use <code>AND</code> or <code>OR</code> to join the operands.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateOperandsDetails$Prefix": "<p>Prefix text for matching objects.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateOperandsDetails$Type": "<p>The type of filter value.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateOperandsTagDetails$Key": "<p>The tag key.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateOperandsTagDetails$Value": "<p>The tag value.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateTagDetails$Key": "<p>The tag key.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesFilterPredicateTagDetails$Value": "<p>The tag value</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesNoncurrentVersionTransitionsDetails$StorageClass": "<p>The class of storage to change the object to after the object is noncurrent for the specified number of days.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesTransitionsDetails$Date": "<p>A date on which to transition objects to the specified storage class. If you provide <code>Date</code>, you cannot provide <code>Days</code>.</p> <p>Uses the <code>date-time</code> format specified in <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339 section 5.6, Internet Date/Time Format</a>. The value cannot contain spaces. For example, <code>2020-03-22T13:22:13.933Z</code>.</p>",
+        "AwsS3BucketBucketLifecycleConfigurationRulesTransitionsDetails$StorageClass": "<p>The storage class to transition the object to.</p>",
         "AwsS3BucketDetails$OwnerId": "<p>The canonical user ID of the owner of the S3 bucket.</p>",
         "AwsS3BucketDetails$OwnerName": "<p>The display name of the owner of the S3 bucket.</p>",
         "AwsS3BucketDetails$CreatedAt": "<p>Indicates when the S3 bucket was created.</p> <p>Uses the <code>date-time</code> format specified in <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339 section 5.6, Internet Date/Time Format</a>. The value cannot contain spaces. For example, <code>2020-03-22T13:22:13.933Z</code>.</p>",
@@ -3176,7 +4029,7 @@
         "AwsSnsTopicSubscription$Protocol": "<p>The subscription's protocol.</p>",
         "AwsSqsQueueDetails$KmsMasterKeyId": "<p>The ID of an AWS managed customer master key (CMK) for Amazon SQS or a custom CMK.</p>",
         "AwsSqsQueueDetails$QueueName": "<p>The name of the new queue.</p>",
-        "AwsSqsQueueDetails$DeadLetterTargetArn": "<p>The Amazon Resource Name (ARN) of the dead-letter queue to which Amazon SQS moves messages after the value of <code>maxReceiveCount</code> is exceeded. </p>",
+        "AwsSqsQueueDetails$DeadLetterTargetArn": "<p>The ARN of the dead-letter queue to which Amazon SQS moves messages after the value of <code>maxReceiveCount</code> is exceeded. </p>",
         "AwsSsmComplianceSummary$Status": "<p>The current patch compliance status.</p> <p>The possible status values are:</p> <ul> <li> <p> <code>COMPLIANT</code> </p> </li> <li> <p> <code>NON_COMPLIANT</code> </p> </li> <li> <p> <code>UNSPECIFIED_DATA</code> </p> </li> </ul>",
         "AwsSsmComplianceSummary$ExecutionType": "<p>The type of execution that was used determine compliance.</p>",
         "AwsSsmComplianceSummary$ComplianceType": "<p>The type of resource for which the compliance was determined. For <code>AwsSsmPatchCompliance</code>, <code>ComplianceType</code> is <code>Patch</code>. </p>",
@@ -3191,25 +4044,33 @@
         "BatchUpdateFindingsUnprocessedFinding$ErrorCode": "<p>The code associated with the error.</p>",
         "BatchUpdateFindingsUnprocessedFinding$ErrorMessage": "<p>The message associated with the error.</p>",
         "CategoryList$member": null,
+        "Cell$ColumnName": "<p>The name of the column that contains the data.</p>",
+        "Cell$CellReference": "<p>For a Microsoft Excel workbook, provides the location of the cell, as an absolute cell reference, that contains the data. For example, Sheet2!C5 for cell C5 on Sheet2.</p>",
         "CidrBlockAssociation$AssociationId": "<p>The association ID for the IPv4 CIDR block.</p>",
         "CidrBlockAssociation$CidrBlock": "<p>The IPv4 CIDR block.</p>",
         "CidrBlockAssociation$CidrBlockState": "<p>Information about the state of the IPv4 CIDR block.</p>",
         "City$CityName": "<p>The name of the city.</p>",
+        "ClassificationResult$MimeType": "<p>The type of content that the finding applies to.</p>",
+        "ClassificationStatus$Code": "<p>The code that represents the status of the sensitive data detection.</p>",
+        "ClassificationStatus$Reason": "<p>A longer description of the current status of the sensitive data detection.</p>",
         "ContainerDetails$Name": "<p>The name of the container related to a finding.</p>",
         "ContainerDetails$ImageId": "<p>The identifier of the image related to a finding.</p>",
         "ContainerDetails$ImageName": "<p>The name of the image related to a finding.</p>",
         "ContainerDetails$LaunchedAt": "<p>Indicates when the container started.</p> <p>Uses the <code>date-time</code> format specified in <a href=\"https://tools.ietf.org/html/rfc3339#section-5.6\">RFC 3339 section 5.6, Internet Date/Time Format</a>. The value cannot contain spaces. For example, <code>2020-03-22T13:22:13.933Z</code>.</p>",
         "Country$CountryCode": "<p>The 2-letter ISO 3166 country code for the country.</p>",
         "Country$CountryName": "<p>The name of the country.</p>",
-        "CreateActionTargetRequest$Name": "<p>The name of the custom action target.</p>",
+        "CreateActionTargetRequest$Name": "<p>The name of the custom action target. Can contain up to 20 characters.</p>",
         "CreateActionTargetRequest$Description": "<p>The description for the custom action target.</p>",
-        "CreateActionTargetRequest$Id": "<p>The ID for the custom action target.</p>",
+        "CreateActionTargetRequest$Id": "<p>The ID for the custom action target. Can contain up to 20 alphanumeric characters.</p>",
         "CreateActionTargetResponse$ActionTargetArn": "<p>The ARN for the custom action target.</p>",
         "CreateInsightRequest$Name": "<p>The name of the custom insight to create.</p>",
         "CreateInsightRequest$GroupByAttribute": "<p>The attribute used to group the findings for the insight. The grouping attribute identifies the type of item that the insight applies to. For example, if an insight is grouped by resource identifier, then the insight produces a list of resource identifiers.</p>",
         "CreateInsightResponse$InsightArn": "<p>The ARN of the insight created.</p>",
+        "CustomDataIdentifiersDetections$Arn": "<p>The ARN of the custom identifier that was used to detect the sensitive data.</p>",
+        "CustomDataIdentifiersDetections$Name": "<p>he name of the custom identifier that detected the sensitive data.</p>",
         "Cvss$Version": "<p>The version of CVSS for the CVSS score.</p>",
         "Cvss$BaseVector": "<p>The base scoring vector for the CVSS score.</p>",
+        "DataClassificationDetails$DetailedResultsLocation": "<p>The path to the folder or file that contains the sensitive data.</p>",
         "DateFilter$Start": "<p>A start date for the date filter.</p>",
         "DateFilter$End": "<p>An end date for the date filter.</p>",
         "DeleteActionTargetRequest$ActionTargetArn": "<p>The ARN of the custom action target to delete.</p>",
@@ -3230,6 +4091,7 @@
         "EnableOrganizationAdminAccountRequest$AdminAccountId": "<p>The AWS account identifier of the account to designate as the Security Hub administrator account.</p>",
         "FieldMap$key": null,
         "FieldMap$value": null,
+        "FindingProviderSeverity$Original": "<p>The finding provider's original value for the severity.</p>",
         "GetInsightResultsRequest$InsightArn": "<p>The ARN of the insight for which to return results.</p>",
         "ImportFindingsError$Id": "<p>The identifier of the finding that could not be updated.</p>",
         "ImportFindingsError$ErrorCode": "<p>The code of the error returned by the <code>BatchImportFindings</code> operation.</p>",
@@ -3247,7 +4109,7 @@
         "InvalidInputException$Message": null,
         "InvalidInputException$Code": null,
         "Invitation$InvitationId": "<p>The ID of the invitation sent to the member account.</p>",
-        "Invitation$MemberStatus": "<p>The current status of the association between the member and master accounts.</p>",
+        "Invitation$MemberStatus": "<p>The current status of the association between the member and administrator accounts.</p>",
         "IpFilter$Cidr": "<p>A finding's CIDR value.</p>",
         "IpOrganizationDetails$AsnOrg": "<p>The name of the organization that registered the ASN.</p>",
         "IpOrganizationDetails$Isp": "<p>The ISP information for the internet provider.</p>",
@@ -3267,8 +4129,9 @@
         "MapFilter$Key": "<p>The key of the map filter. For example, for <code>ResourceTags</code>, <code>Key</code> identifies the name of the tag. For <code>UserDefinedFields</code>, <code>Key</code> is the name of the field.</p>",
         "MapFilter$Value": "<p>The value for the key in the map filter. Filter values are case sensitive. For example, one of the values for a tag called <code>Department</code> might be <code>Security</code>. If you provide <code>security</code> as the filter value, then there is no match.</p>",
         "Member$Email": "<p>The email address of the member account.</p>",
-        "Member$MasterId": "<p>The AWS account ID of the Security Hub master account associated with this member account.</p>",
-        "Member$MemberStatus": "<p>The status of the relationship between the member account and its master account. </p> <p>The status can have one of the following values:</p> <ul> <li> <p> <code>CREATED</code> - Indicates that the master account added the member account, but has not yet invited the member account.</p> </li> <li> <p> <code>INVITED</code> - Indicates that the master account invited the member account. The member account has not yet responded to the invitation.</p> </li> <li> <p> <code>ENABLED</code> - Indicates that the member account is currently active. For manually invited member accounts, indicates that the member account accepted the invitation.</p> </li> <li> <p> <code>REMOVED</code> - Indicates that the master account disassociated the member account.</p> </li> <li> <p> <code>RESIGNED</code> - Indicates that the member account disassociated themselves from the master account.</p> </li> <li> <p> <code>DELETED</code> - Indicates that the master account deleted the member account.</p> </li> </ul>",
+        "Member$MasterId": "<p>This is replaced by <code>AdministratorID</code>.</p> <p>The AWS account ID of the Security Hub administrator account associated with this member account.</p>",
+        "Member$AdministratorId": "<p>The AWS account ID of the Security Hub administrator account associated with this member account.</p>",
+        "Member$MemberStatus": "<p>The status of the relationship between the member account and its administrator account. </p> <p>The status can have one of the following values:</p> <ul> <li> <p> <code>CREATED</code> - Indicates that the administrator account added the member account, but has not yet invited the member account.</p> </li> <li> <p> <code>INVITED</code> - Indicates that the administrator account invited the member account. The member account has not yet responded to the invitation.</p> </li> <li> <p> <code>ENABLED</code> - Indicates that the member account is currently active. For manually invited member accounts, indicates that the member account accepted the invitation.</p> </li> <li> <p> <code>REMOVED</code> - Indicates that the administrator account disassociated the member account.</p> </li> <li> <p> <code>RESIGNED</code> - Indicates that the member account disassociated themselves from the administrator account.</p> </li> <li> <p> <code>DELETED</code> - Indicates that the administrator account deleted the member account.</p> </li> </ul>",
         "Network$Protocol": "<p>The protocol of network-related information about a finding.</p>",
         "Network$SourceIpV4": "<p>The source IPv4 address of network-related information about a finding.</p>",
         "Network$SourceIpV6": "<p>The source IPv6 address of network-related information about a finding.</p>",
@@ -3301,12 +4164,13 @@
         "Product$ProductName": "<p>The name of the product.</p>",
         "Product$CompanyName": "<p>The name of the company that provides the product.</p>",
         "Product$Description": "<p>A description of the product.</p>",
-        "Product$MarketplaceUrl": "<p>The URL for the page that contains more information about the product.</p>",
-        "Product$ActivationUrl": "<p>The URL used to activate the product.</p>",
+        "Product$MarketplaceUrl": "<p>For integrations with AWS services, the AWS Console URL from which to activate the service.</p> <p>For integrations with third-party products, the AWS Marketplace URL from which to subscribe to or purchase the product.</p>",
+        "Product$ActivationUrl": "<p>The URL to the service or product documentation about the integration with Security Hub, including how to activate the integration.</p>",
         "Product$ProductSubscriptionResourcePolicy": "<p>The resource policy associated with the product.</p>",
         "ProductSubscriptionArnList$member": null,
         "Recommendation$Text": "<p>Describes the recommended steps to take to remediate an issue identified in a finding.</p>",
         "Recommendation$Url": "<p>A URL to a page or site that contains information about how to remediate a finding.</p>",
+        "Record$JsonPath": "<p>The path, as a JSONPath expression, to the field in the record that contains the data. If the field name is longer than 20 characters, it is truncated. If the path is longer than 250 characters, it is truncated.</p>",
         "RelatedFinding$ProductArn": "<p>The ARN of the product that generated a related finding.</p>",
         "RelatedFinding$Id": "<p>The product-generated identifier for a related finding.</p>",
         "RelatedRequirementsList$member": null,
@@ -3320,6 +4184,8 @@
         "ResourceNotFoundException$Code": null,
         "Result$ProcessingResult": "<p>The reason that the account was not processed.</p>",
         "SecurityGroups$member": null,
+        "SensitiveDataDetections$Type": "<p>The type of sensitive data that was detected. For example, the type might indicate that the data is an email address.</p>",
+        "SensitiveDataResult$Category": "<p>The category of sensitive data that was detected. For example, the category can indicate that the sensitive data involved credentials, financial information, or personal information.</p>",
         "Severity$Original": "<p>The native severity from the finding product that generated the finding.</p>",
         "SoftwarePackage$Name": "<p>The name of the software package.</p>",
         "SoftwarePackage$Version": "<p>The version of the software package.</p>",
@@ -3381,6 +4247,19 @@
         "AwsCorsConfiguration$ExposeHeaders": "<p>The exposed headers for CORS requests.</p>",
         "AwsCorsConfiguration$AllowMethods": "<p>The allowed methods for CORS requests.</p>",
         "AwsCorsConfiguration$AllowHeaders": "<p>The allowed headers for CORS requests.</p>",
+        "AwsEcsClusterDetails$CapacityProviders": "<p>The short name of one or more capacity providers to associate with the cluster.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Command": "<p>The command that is passed to the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$DnsSearchDomains": "<p>A list of DNS search domains that are presented to the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$DnsServers": "<p>A list of DNS servers that are presented to the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$DockerSecurityOptions": "<p>A list of strings to provide custom labels for SELinux and AppArmor multi-level security systems.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$EntryPoint": "<p>The entry point that is passed to the container.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsDetails$Links": "<p>A list of links for the container in the form <code> <i>container_name</i>:<i>alias</i> </code>. Allows containers to communicate with each other without the need for port mappings.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsHealthCheckDetails$Command": "<p>The command that the container runs to determine whether it is healthy.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersCapabilitiesDetails$Add": "<p>The Linux capabilities for the container that are added to the default configuration provided by Docker.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersCapabilitiesDetails$Drop": "<p>The Linux capabilities for the container that are dropped from the default configuration provided by Docker.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersDevicesDetails$Permissions": "<p>The explicit permissions to provide to the container for the device. By default, the container has permissions for read, write, and <code>mknod</code> for the device.</p>",
+        "AwsEcsTaskDefinitionContainerDefinitionsLinuxParametersTmpfsDetails$MountOptions": "<p>The list of tmpfs volume mount options.</p>",
+        "AwsEcsTaskDefinitionDetails$RequiresCompatibilities": "<p>The task launch types that the task definition was validated against.</p>",
         "AwsElasticsearchDomainVPCOptions$AvailabilityZones": "<p>The list of Availability Zones associated with the VPC subnets.</p>",
         "AwsElasticsearchDomainVPCOptions$SecurityGroupIds": "<p>The list of security group IDs associated with the VPC endpoints for the domain.</p>",
         "AwsElasticsearchDomainVPCOptions$SubnetIds": "<p>A list of subnet IDs associated with the VPC endpoints for the domain.</p>",
@@ -3418,7 +4297,28 @@
         "AwsSecurityFindingFilters$NetworkSourcePort": "<p>The source port of network-related information about a finding.</p>",
         "AwsSecurityFindingFilters$NetworkDestinationPort": "<p>The destination port of network-related information about a finding.</p>",
         "AwsSecurityFindingFilters$ProcessPid": "<p>The process ID.</p>",
-        "AwsSecurityFindingFilters$ProcessParentPid": "<p>The parent process ID.</p>"
+        "AwsSecurityFindingFilters$ProcessParentPid": "<p>The parent process ID.</p>",
+        "AwsSecurityFindingFilters$FindingProviderFieldsConfidence": "<p>The finding provider value for the finding confidence. Confidence is defined as the likelihood that a finding accurately identifies the behavior or issue that it was intended to identify.</p> <p>Confidence is scored on a 0-100 basis using a ratio scale, where 0 means zero percent confidence and 100 means 100 percent confidence.</p>",
+        "AwsSecurityFindingFilters$FindingProviderFieldsCriticality": "<p>The finding provider value for the level of importance assigned to the resources associated with the findings.</p> <p>A score of 0 means that the underlying resources have no criticality, and a score of 100 is reserved for the most critical resources. </p>"
+      }
+    },
+    "Occurrences": {
+      "base": "<p>The detected occurrences of sensitive data.</p>",
+      "refs": {
+        "CustomDataIdentifiersDetections$Occurrences": "<p>Details about the sensitive data that was detected.</p>",
+        "SensitiveDataDetections$Occurrences": "<p>Details about the sensitive data that was detected.</p>"
+      }
+    },
+    "Page": {
+      "base": "<p>An occurrence of sensitive data in an Adobe Portable Document Format (PDF) file.</p>",
+      "refs": {
+        "Pages$member": null
+      }
+    },
+    "Pages": {
+      "base": null,
+      "refs": {
+        "Occurrences$Pages": "<p>Occurrences of sensitive data in an Adobe Portable Document Format (PDF) file.</p>"
       }
     },
     "Partition": {
@@ -3458,6 +4358,12 @@
         "PortRangeList$member": null
       }
     },
+    "PortRangeFromTo": {
+      "base": "<p>A range of ports.</p>",
+      "refs": {
+        "AwsEc2NetworkAclEntry$PortRange": "<p>For TCP or UDP protocols, the range of ports that the rule applies to.</p>"
+      }
+    },
     "PortRangeList": {
       "base": null,
       "refs": {
@@ -3488,11 +4394,28 @@
         "DescribeProductsResponse$Products": "<p>A list of products, including details for each product.</p>"
       }
     },
+    "Range": {
+      "base": "<p>Identifies where the sensitive data begins and ends.</p>",
+      "refs": {
+        "Page$LineRange": "<p>An occurrence of sensitive data detected in a non-binary text file or a Microsoft Word file. Non-binary text files include files such as HTML, XML, JSON, and TXT files.</p>",
+        "Page$OffsetRange": "<p>An occurrence of sensitive data detected in a binary text file.</p>",
+        "Ranges$member": null
+      }
+    },
+    "Ranges": {
+      "base": null,
+      "refs": {
+        "Occurrences$LineRanges": "<p>Occurrences of sensitive data detected in a non-binary text file or a Microsoft Word file. Non-binary text files include files such as HTML, XML, JSON, and TXT files.</p>",
+        "Occurrences$OffsetRanges": "<p>Occurrences of sensitive data detected in a binary text file.</p>"
+      }
+    },
     "RatioScale": {
       "base": null,
       "refs": {
         "BatchUpdateFindingsRequest$Confidence": "<p>The updated value for the finding confidence. Confidence is defined as the likelihood that a finding accurately identifies the behavior or issue that it was intended to identify.</p> <p>Confidence is scored on a 0-100 basis using a ratio scale, where 0 means zero percent confidence and 100 means 100 percent confidence.</p>",
         "BatchUpdateFindingsRequest$Criticality": "<p>The updated value for the level of importance assigned to the resources associated with the findings.</p> <p>A score of 0 means that the underlying resources have no criticality, and a score of 100 is reserved for the most critical resources. </p>",
+        "FindingProviderFields$Confidence": "<p>A finding's confidence. Confidence is defined as the likelihood that a finding accurately identifies the behavior or issue that it was intended to identify.</p> <p>Confidence is scored on a 0-100 basis using a ratio scale, where 0 means zero percent confidence and 100 means 100 percent confidence.</p>",
+        "FindingProviderFields$Criticality": "<p>The level of importance assigned to the resources associated with the finding.</p> <p>A score of 0 means that the underlying resources have no criticality, and a score of 100 is reserved for the most critical resources.</p>",
         "SeverityUpdate$Normalized": "<p>The normalized severity for the finding. This attribute is to be deprecated in favor of <code>Label</code>.</p> <p>If you provide <code>Normalized</code> and do not provide <code>Label</code>, <code>Label</code> is set automatically as follows.</p> <ul> <li> <p>0 - <code>INFORMATIONAL</code> </p> </li> <li> <p>1–39 - <code>LOW</code> </p> </li> <li> <p>40–69 - <code>MEDIUM</code> </p> </li> <li> <p>70–89 - <code>HIGH</code> </p> </li> <li> <p>90–100 - <code>CRITICAL</code> </p> </li> </ul>"
       }
     },
@@ -3502,11 +4425,23 @@
         "Remediation$Recommendation": "<p>A recommendation on the steps to take to remediate the issue identified by a finding.</p>"
       }
     },
+    "Record": {
+      "base": "<p>An occurrence of sensitive data in an Apache Avro object container or an Apache Parquet file.</p>",
+      "refs": {
+        "Records$member": null
+      }
+    },
     "RecordState": {
       "base": null,
       "refs": {
         "AwsSecurityFinding$RecordState": "<p>The record state of a finding.</p>",
         "UpdateFindingsRequest$RecordState": "<p>The updated record state for the finding.</p>"
+      }
+    },
+    "Records": {
+      "base": null,
+      "refs": {
+        "Occurrences$Records": "<p>Occurrences of sensitive data in an Apache Avro object container or an Apache Parquet file.</p>"
       }
     },
     "RelatedFinding": {
@@ -3519,7 +4454,8 @@
       "base": null,
       "refs": {
         "AwsSecurityFinding$RelatedFindings": "<p>A list of related findings.</p>",
-        "BatchUpdateFindingsRequest$RelatedFindings": "<p>A list of findings that are related to the updated findings.</p>"
+        "BatchUpdateFindingsRequest$RelatedFindings": "<p>A list of findings that are related to the updated findings.</p>",
+        "FindingProviderFields$RelatedFindings": "<p>A list of findings that are related to the current finding.</p>"
       }
     },
     "RelatedRequirementsList": {
@@ -3594,6 +4530,30 @@
         "AwsElbv2LoadBalancerDetails$SecurityGroups": "<p>The IDs of the security groups for the load balancer.</p>"
       }
     },
+    "SensitiveDataDetections": {
+      "base": "<p>The list of detected instances of sensitive data.</p>",
+      "refs": {
+        "SensitiveDataDetectionsList$member": null
+      }
+    },
+    "SensitiveDataDetectionsList": {
+      "base": null,
+      "refs": {
+        "SensitiveDataResult$Detections": "<p>The list of detected instances of sensitive data.</p>"
+      }
+    },
+    "SensitiveDataResult": {
+      "base": "<p>Contains a detected instance of sensitive data that are based on built-in identifiers.</p>",
+      "refs": {
+        "SensitiveDataResultList$member": null
+      }
+    },
+    "SensitiveDataResultList": {
+      "base": null,
+      "refs": {
+        "ClassificationResult$SensitiveData": "<p>Provides details about sensitive data that was identified based on built-in configuration.</p>"
+      }
+    },
     "Severity": {
       "base": "<p>The severity of the finding.</p> <p>The finding provider can provide the initial severity. The finding provider can only update the severity if it has not been updated using <code>BatchUpdateFindings</code>.</p> <p>The finding must have either <code>Label</code> or <code>Normalized</code> populated. If only one of these attributes is populated, then Security Hub automatically populates the other one. If neither attribute is populated, then the finding is invalid. <code>Label</code> is the preferred attribute.</p>",
       "refs": {
@@ -3603,6 +4563,7 @@
     "SeverityLabel": {
       "base": null,
       "refs": {
+        "FindingProviderSeverity$Label": "<p>The severity label assigned to the finding by the finding provider.</p>",
         "Severity$Label": "<p>The severity value of the finding. The allowed values are the following.</p> <ul> <li> <p> <code>INFORMATIONAL</code> - No issue was found.</p> </li> <li> <p> <code>LOW</code> - The issue does not require action on its own.</p> </li> <li> <p> <code>MEDIUM</code> - The issue must be addressed but not urgently.</p> </li> <li> <p> <code>HIGH</code> - The issue must be addressed as a priority.</p> </li> <li> <p> <code>CRITICAL</code> - The issue must be remediated immediately to avoid it escalating.</p> </li> </ul> <p>If you provide <code>Normalized</code> and do not provide <code>Label</code>, then <code>Label</code> is set automatically as follows. </p> <ul> <li> <p>0 - <code>INFORMATIONAL</code> </p> </li> <li> <p>1–39 - <code>LOW</code> </p> </li> <li> <p>40–69 - <code>MEDIUM</code> </p> </li> <li> <p>70–89 - <code>HIGH</code> </p> </li> <li> <p>90–100 - <code>CRITICAL</code> </p> </li> </ul>",
         "SeverityUpdate$Label": "<p>The severity value of the finding. The allowed values are the following.</p> <ul> <li> <p> <code>INFORMATIONAL</code> - No issue was found.</p> </li> <li> <p> <code>LOW</code> - The issue does not require action on its own.</p> </li> <li> <p> <code>MEDIUM</code> - The issue must be addressed but not urgently.</p> </li> <li> <p> <code>HIGH</code> - The issue must be addressed as a priority.</p> </li> <li> <p> <code>CRITICAL</code> - The issue must be remediated immediately to avoid it escalating.</p> </li> </ul>"
       }
@@ -3806,7 +4767,12 @@
         "AwsSecurityFindingFilters$RelatedFindingsProductArn": "<p>The ARN of the solution that generated a related finding.</p>",
         "AwsSecurityFindingFilters$RelatedFindingsId": "<p>The solution-generated identifier for a related finding.</p>",
         "AwsSecurityFindingFilters$NoteText": "<p>The text of a note.</p>",
-        "AwsSecurityFindingFilters$NoteUpdatedBy": "<p>The principal that created a note.</p>"
+        "AwsSecurityFindingFilters$NoteUpdatedBy": "<p>The principal that created a note.</p>",
+        "AwsSecurityFindingFilters$FindingProviderFieldsRelatedFindingsId": "<p>The finding identifier of a related finding that is identified by the finding provider.</p>",
+        "AwsSecurityFindingFilters$FindingProviderFieldsRelatedFindingsProductArn": "<p>The ARN of the solution that generated a related finding that is identified by the finding provider.</p>",
+        "AwsSecurityFindingFilters$FindingProviderFieldsSeverityLabel": "<p>The finding provider value for the severity label.</p>",
+        "AwsSecurityFindingFilters$FindingProviderFieldsSeverityOriginal": "<p>The finding provider's original value for the severity.</p>",
+        "AwsSecurityFindingFilters$FindingProviderFieldsTypes": "<p>One or more finding types that the finding provider assigned to the finding. Uses the format of <code>namespace/category/classifier</code> that classify a finding.</p> <p>Valid namespace values are: Software and Configuration Checks | TTPs | Effects | Unusual Behaviors | Sensitive Data Identifications</p>"
       }
     },
     "StringList": {
@@ -3853,7 +4819,7 @@
     "TagKeyList": {
       "base": null,
       "refs": {
-        "UntagResourceRequest$TagKeys": "<p>The tag keys associated with the tags to remove from the resource.</p>"
+        "UntagResourceRequest$TagKeys": "<p>The tag keys associated with the tags to remove from the resource. You can remove up to 50 tags at a time.</p>"
       }
     },
     "TagMap": {
@@ -3861,7 +4827,7 @@
       "refs": {
         "EnableSecurityHubRequest$Tags": "<p>The tags to add to the hub resource when you enable Security Hub.</p>",
         "ListTagsForResourceResponse$Tags": "<p>The tags associated with a resource.</p>",
-        "TagResourceRequest$Tags": "<p>The tags to add to the resource.</p>"
+        "TagResourceRequest$Tags": "<p>The tags to add to the resource. You can add up to 50 tags at a time. The tag keys can be no longer than 128 characters. The tag values can be no longer than 256 characters.</p>"
       }
     },
     "TagResourceRequest": {
@@ -3917,7 +4883,8 @@
       "base": null,
       "refs": {
         "AwsSecurityFinding$Types": "<p>One or more finding types in the format of <code>namespace/category/classifier</code> that classify a finding.</p> <p>Valid namespace values are: Software and Configuration Checks | TTPs | Effects | Unusual Behaviors | Sensitive Data Identifications</p>",
-        "BatchUpdateFindingsRequest$Types": "<p>One or more finding types in the format of namespace/category/classifier that classify a finding.</p> <p>Valid namespace values are as follows.</p> <ul> <li> <p>Software and Configuration Checks</p> </li> <li> <p>TTPs</p> </li> <li> <p>Effects</p> </li> <li> <p>Unusual Behaviors</p> </li> <li> <p>Sensitive Data Identifications </p> </li> </ul>"
+        "BatchUpdateFindingsRequest$Types": "<p>One or more finding types in the format of namespace/category/classifier that classify a finding.</p> <p>Valid namespace values are as follows.</p> <ul> <li> <p>Software and Configuration Checks</p> </li> <li> <p>TTPs</p> </li> <li> <p>Effects</p> </li> <li> <p>Unusual Behaviors</p> </li> <li> <p>Sensitive Data Identifications </p> </li> </ul>",
+        "FindingProviderFields$Types": "<p>One or more finding types in the format of <code>namespace/category/classifier</code> that classify a finding.</p> <p>Valid namespace values are: Software and Configuration Checks | TTPs | Effects | Unusual Behaviors | Sensitive Data Identifications</p>"
       }
     },
     "UntagResourceRequest": {

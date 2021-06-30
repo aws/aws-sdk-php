@@ -52,7 +52,7 @@ class GlacierClientTest extends TestCase
     {
         $this->getTestClient('Glacier')->uploadArchive([
             'vaultName' => 'foo',
-            'body'      => new NoSeekStream(Psr7\stream_for('foo')),
+            'body'      => new NoSeekStream(Psr7\Utils::streamFor('foo')),
         ]);
     }
 }
