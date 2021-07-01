@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.5 - 2021-07-01
 
 * `Aws\EC2` - Adding a new reserved field to support future infrastructure improvements for Amazon EC2 Fleet.
 * `Aws\SQS` - Documentation updates for Amazon SQS.
