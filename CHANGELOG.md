@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Adding a new reserved field to support future infrastructure improvements for Amazon EC2 Fleet.
+* `Aws\SQS` - Documentation updates for Amazon SQS.
+* `Aws\SageMaker` - SageMaker model registry now supports up to 5 containers and associated environment variables.
+
 ## 3.185.4 - 2021-06-30
 
 * `Aws\AutoScaling` - Amazon EC2 Auto Scaling infrastructure improvements and optimizations.
