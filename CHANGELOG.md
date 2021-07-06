@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.7 - 2021-07-06
 
 * `Aws\EKS` - Adding new error code UnsupportedAddonModification for Addons in EKS
 * `Aws\Lambda` - Added support for AmazonMQRabbitMQ as an event source. Added support for VIRTUAL_HOST as SourceAccessType for streams event source mappings.
