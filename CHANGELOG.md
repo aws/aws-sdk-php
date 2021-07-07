@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.8 - 2021-07-07
 
 * `Aws\Chime` - Releasing new APIs for AWS Chime MediaCapturePipeline
 * `Aws\CloudFront` - Amazon CloudFront now provides two new APIs, ListConflictingAliases and AssociateAlias, that help locate and move Alternate Domain Names (CNAMEs) if you encounter the CNAMEAlreadyExists error code.
