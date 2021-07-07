@@ -13,6 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 class EcsCredentialProvider
 {
     const SERVER_URI = 'http://169.254.170.2';
+    const ENV_SERVER_URI = 'AWS_CONTAINER_CREDENTIALS_SERVER_URI';
     const ENV_URI = "AWS_CONTAINER_CREDENTIALS_RELATIVE_URI";
     const ENV_TIMEOUT = 'AWS_METADATA_SERVICE_TIMEOUT';
 
@@ -89,8 +90,14 @@ class EcsCredentialProvider
         if ($credsUri === false) {
             $credsUri = isset($_SERVER[self::ENV_URI]) ? $_SERVER[self::ENV_URI] : '';
         }
-        
-        return self::SERVER_URI . $credsUri;
+
+        $serverUri = getenv(self::ENV_SERVER_URI);
+
+        if ($serverUri === false) {
+            $serverUri = isset($_SERVER[self::ENV_SERVER_URI]) ? $_SERVER[self::ENV_SERVER_URI] : self::SERVER_URI;
+        }
+
+        return $serverUri . $credsUri;
     }
 
     private function decodeResult($response)
