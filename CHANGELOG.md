@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.9 - 2021-07-08
 
 * `Aws\DevOpsGuru` - Add AnomalyReportedTimeRange field to include open and close time of anomalies.
 * `Aws\EKS` - Added waiters for EKS FargateProfiles.
