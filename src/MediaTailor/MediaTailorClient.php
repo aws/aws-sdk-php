@@ -39,6 +39,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getChannelScheduleAsync(array $args = [])
  * @method \Aws\Result getPlaybackConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getPlaybackConfigurationAsync(array $args = [])
+ * @method \Aws\Result listAlerts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAlertsAsync(array $args = [])
  * @method \Aws\Result listChannels(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listChannelsAsync(array $args = [])
  * @method \Aws\Result listPlaybackConfigurations(array $args = [])
