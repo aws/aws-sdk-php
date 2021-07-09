@@ -211,11 +211,13 @@ class S3EndpointMiddleware
         RequestInterface $request
     ) {
         if ($command->getName() == 'WriteGetObjectResponse') {
-            $region = $this->region;
             $dnsSuffix = $this->endpointProvider
                 ->getPartition($this->region, 's3')
                 ->getDnsSuffix();
-            $host = "{$command['RequestRoute']}.s3-object-lambda.{$region}.{$dnsSuffix}";
+            $fips = $this->isFipsPseudoRegion($this->region) ? "-fips" : "";
+            $region = $this->stripPseudoRegions($this->region);
+            $host =
+                "{$command['RequestRoute']}.s3-object-lambda{$fips}.{$region}.{$dnsSuffix}";
 
             $uri = $request->getUri();
             $request = $request->withUri(
@@ -332,6 +334,11 @@ class S3EndpointMiddleware
         }
 
         return $request;
+    }
+
+    private function isFipsPseudoRegion($region)
+    {
+        return strpos($region, 'fips-') !== false || strpos($region, '-fips') !== false;
     }
 
 }

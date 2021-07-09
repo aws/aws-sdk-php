@@ -161,6 +161,7 @@ class BucketEndpointArnMiddleware
         }
 
         $host = "{$accesspointName}-" . $arn->getAccountId();
+        $fips = $this->isFipsPseudoRegion($this->region) ? "-fips" : "";
 
         if ($arn instanceof OutpostsAccessPointArn) {
             $host .= '.' . $arn->getOutpostId() . '.s3-outposts';
@@ -168,14 +169,10 @@ class BucketEndpointArnMiddleware
             if (!empty($this->config['endpoint'])) {
                return $host . '.' . $this->config['endpoint'];
             } else {
-                $host .= '.s3-object-lambda';
+                $host .= ".s3-object-lambda{$fips}";
             }
         } else {
-            if ($this->isFipsPseudoRegion($this->region)) {
-                $host .= ".s3-accesspoint-fips";
-            } else {
-                $host .= '.s3-accesspoint';
-            }
+            $host .= ".s3-accesspoint{$fips}";
             if (!empty($this->config['dual_stack'])) {
                 $host .= '.dualstack';
             }
@@ -186,6 +183,7 @@ class BucketEndpointArnMiddleware
         } else {
             $region = $this->region;
         }
+        $region = $this->stripPseudoRegions($region);
         $host .= '.' . $region . '.' . $this->getPartitionSuffix($arn, $this->partitionProvider);
         return $host;
     }
@@ -252,7 +250,7 @@ class BucketEndpointArnMiddleware
                 && $arn->getRegion() != $this->region
             ) {
                 throw new UnresolvedEndpointException(
-                    'Global endpoints do not support cross region requests'
+                    'Global endpoints do not support cross region requests.'
                     . ' Please enable use_arn_region or do not supply a global region'
                     . ' with a different region in the ARN.');
             }
