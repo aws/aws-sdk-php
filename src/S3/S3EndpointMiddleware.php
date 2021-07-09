@@ -340,7 +340,7 @@ class S3EndpointMiddleware
     {
         return strpos($region, 'fips-') !== false || strpos($region, '-fips') !== false;
     }
-    
+
     private function stripPseudoRegions($region)
     {
         return str_replace(['fips-', '-fips'], ['', ''], $region);
