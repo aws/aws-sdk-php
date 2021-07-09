@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\FraudDetector` - This release adds support for ML Explainability to display model variable importance value in Amazon Fraud Detector.
+* `Aws\MediaConvert` - MediaConvert now supports color, style and position information passthrough from 608 and Teletext to SRT and WebVTT subtitles. MediaConvert now also supports Automatic QVBR quality levels for QVBR RateControlMode.
+* `Aws\SageMaker` - Releasing new APIs related to Tuning steps in model building pipelines.
+
 ## 3.185.9 - 2021-07-08
 
 * `Aws\DevOpsGuru` - Add AnomalyReportedTimeRange field to include open and close time of anomalies.
