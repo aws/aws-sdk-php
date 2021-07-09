@@ -70,16 +70,16 @@ class MultipartUploaderTest extends TestCase
         return [
             [ // Seekable stream
                 $defaults,
-                Psr7\stream_for(fopen($filename, 'r'))
+                Psr7\Utils::streamFor(fopen($filename, 'r'))
             ],
             [ // Non-seekable stream
                 $defaults,
-                Psr7\stream_for($data)
+                Psr7\Utils::streamFor($data)
             ],
             [ // Error: bad part_size
                 ['part_size' => 1] + $defaults,
                 Psr7\FnStream::decorate(
-                    Psr7\stream_for($data), [
+                    Psr7\Utils::streamFor($data), [
                         'getSize' => function () {return null;}
                     ]
                 ),
@@ -112,7 +112,7 @@ class MultipartUploaderTest extends TestCase
         ]);
 
         $state = MultipartUploader::getStateFromService($client, 'foo', 'bar', 'baz');
-        $source = Psr7\stream_for(str_repeat('.', (int) (2.2 * self::MB)));
+        $source = Psr7\Utils::streamFor(str_repeat('.', (int) (2.2 * self::MB)));
         $uploader = new MultipartUploader($client, $source, ['state' => $state]);
 
         $parts = $state->getUploadedParts();

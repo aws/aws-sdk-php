@@ -511,6 +511,23 @@
       ],
       "endpoint":{"hostPrefix":"monitor."}
     },
+    "DescribeStorageConfiguration":{
+      "name":"DescribeStorageConfiguration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/configuration/account/storage"
+      },
+      "input":{"shape":"DescribeStorageConfigurationRequest"},
+      "output":{"shape":"DescribeStorageConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
+      ]
+    },
     "DisassociateAssets":{
       "name":"DisassociateAssets",
       "http":{
@@ -569,6 +586,23 @@
       },
       "input":{"shape":"GetAssetPropertyValueHistoryRequest"},
       "output":{"shape":"GetAssetPropertyValueHistoryResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "endpoint":{"hostPrefix":"data."}
+    },
+    "GetInterpolatedAssetPropertyValues":{
+      "name":"GetInterpolatedAssetPropertyValues",
+      "http":{
+        "method":"GET",
+        "requestUri":"/properties/interpolated"
+      },
+      "input":{"shape":"GetInterpolatedAssetPropertyValuesRequest"},
+      "output":{"shape":"GetInterpolatedAssetPropertyValuesResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
@@ -786,6 +820,24 @@
         {"shape":"ResourceNotFoundException"}
       ],
       "endpoint":{"hostPrefix":"model."}
+    },
+    "PutStorageConfiguration":{
+      "name":"PutStorageConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/configuration/account/storage"
+      },
+      "input":{"shape":"PutStorageConfigurationRequest"},
+      "output":{"shape":"PutStorageConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConflictingOperationException"}
+      ]
     },
     "TagResource":{
       "name":"TagResource",
@@ -1054,6 +1106,14 @@
         "minimum":{"shape":"AggregatedDoubleValue"},
         "sum":{"shape":"AggregatedDoubleValue"},
         "standardDeviation":{"shape":"AggregatedDoubleValue"}
+      }
+    },
+    "Alarms":{
+      "type":"structure",
+      "required":["alarmRoleArn"],
+      "members":{
+        "alarmRoleArn":{"shape":"ARN"},
+        "notificationLambdaArn":{"shape":"ARN"}
       }
     },
     "AmazonResourceName":{
@@ -1793,7 +1853,9 @@
         "portalLogoImageFile":{"shape":"ImageFile"},
         "roleArn":{"shape":"ARN"},
         "tags":{"shape":"TagMap"},
-        "portalAuthMode":{"shape":"AuthMode"}
+        "portalAuthMode":{"shape":"AuthMode"},
+        "notificationSenderEmail":{"shape":"Email"},
+        "alarms":{"shape":"Alarms"}
       }
     },
     "CreatePortalResponse":{
@@ -1839,6 +1901,17 @@
       "members":{
         "projectId":{"shape":"ID"},
         "projectArn":{"shape":"ARN"}
+      }
+    },
+    "CustomerManagedS3Storage":{
+      "type":"structure",
+      "required":[
+        "s3ResourceArn",
+        "roleArn"
+      ],
+      "members":{
+        "s3ResourceArn":{"shape":"ARN"},
+        "roleArn":{"shape":"ARN"}
       }
     },
     "DashboardDefinition":{
@@ -2324,7 +2397,9 @@
         "portalLastUpdateDate":{"shape":"Timestamp"},
         "portalLogoImageLocation":{"shape":"ImageLocation"},
         "roleArn":{"shape":"ARN"},
-        "portalAuthMode":{"shape":"AuthMode"}
+        "portalAuthMode":{"shape":"AuthMode"},
+        "notificationSenderEmail":{"shape":"Email"},
+        "alarms":{"shape":"Alarms"}
       }
     },
     "DescribeProjectRequest":{
@@ -2356,6 +2431,24 @@
         "projectDescription":{"shape":"Description"},
         "projectCreationDate":{"shape":"Timestamp"},
         "projectLastUpdateDate":{"shape":"Timestamp"}
+      }
+    },
+    "DescribeStorageConfigurationRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DescribeStorageConfigurationResponse":{
+      "type":"structure",
+      "required":[
+        "storageType",
+        "configurationStatus"
+      ],
+      "members":{
+        "storageType":{"shape":"StorageType"},
+        "multiLayerStorage":{"shape":"MultiLayerStorage"},
+        "configurationStatus":{"shape":"ConfigurationStatus"},
+        "lastUpdateDate":{"shape":"Timestamp"}
       }
     },
     "Description":{
@@ -2644,6 +2737,86 @@
         "propertyValue":{"shape":"AssetPropertyValue"}
       }
     },
+    "GetInterpolatedAssetPropertyValuesRequest":{
+      "type":"structure",
+      "required":[
+        "startTimeInSeconds",
+        "endTimeInSeconds",
+        "quality",
+        "intervalInSeconds",
+        "type"
+      ],
+      "members":{
+        "assetId":{
+          "shape":"ID",
+          "location":"querystring",
+          "locationName":"assetId"
+        },
+        "propertyId":{
+          "shape":"ID",
+          "location":"querystring",
+          "locationName":"propertyId"
+        },
+        "propertyAlias":{
+          "shape":"AssetPropertyAlias",
+          "location":"querystring",
+          "locationName":"propertyAlias"
+        },
+        "startTimeInSeconds":{
+          "shape":"TimeInSeconds",
+          "location":"querystring",
+          "locationName":"startTimeInSeconds"
+        },
+        "startTimeOffsetInNanos":{
+          "shape":"OffsetInNanos",
+          "location":"querystring",
+          "locationName":"startTimeOffsetInNanos"
+        },
+        "endTimeInSeconds":{
+          "shape":"TimeInSeconds",
+          "location":"querystring",
+          "locationName":"endTimeInSeconds"
+        },
+        "endTimeOffsetInNanos":{
+          "shape":"OffsetInNanos",
+          "location":"querystring",
+          "locationName":"endTimeOffsetInNanos"
+        },
+        "quality":{
+          "shape":"Quality",
+          "location":"querystring",
+          "locationName":"quality"
+        },
+        "intervalInSeconds":{
+          "shape":"IntervalInSeconds",
+          "location":"querystring",
+          "locationName":"intervalInSeconds"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxInterpolatedResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "type":{
+          "shape":"InterpolationType",
+          "location":"querystring",
+          "locationName":"type"
+        }
+      }
+    },
+    "GetInterpolatedAssetPropertyValuesResponse":{
+      "type":"structure",
+      "required":["interpolatedAssetPropertyValues"],
+      "members":{
+        "interpolatedAssetPropertyValues":{"shape":"InterpolatedAssetPropertyValues"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "Greengrass":{
       "type":"structure",
       "required":["groupArn"],
@@ -2755,11 +2928,36 @@
       "exception":true,
       "fault":true
     },
+    "InterpolatedAssetPropertyValue":{
+      "type":"structure",
+      "required":[
+        "timestamp",
+        "value"
+      ],
+      "members":{
+        "timestamp":{"shape":"TimeInNanos"},
+        "value":{"shape":"Variant"}
+      }
+    },
+    "InterpolatedAssetPropertyValues":{
+      "type":"list",
+      "member":{"shape":"InterpolatedAssetPropertyValue"}
+    },
+    "InterpolationType":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
     "Interval":{
       "type":"string",
       "max":3,
       "min":2,
       "pattern":"1w|1d|1h|15m|5m|1m"
+    },
+    "IntervalInSeconds":{
+      "type":"long",
+      "max":320000000,
+      "min":1
     },
     "InvalidRequestException":{
       "type":"structure",
@@ -3141,6 +3339,10 @@
       "min":1,
       "pattern":"[^\\u0000-\\u001F\\u007F]+"
     },
+    "MaxInterpolatedResults":{
+      "type":"integer",
+      "min":1
+    },
     "MaxResults":{
       "type":"integer",
       "max":250,
@@ -3186,6 +3388,13 @@
       }
     },
     "MonitorErrorMessage":{"type":"string"},
+    "MultiLayerStorage":{
+      "type":"structure",
+      "required":["customerManagedS3Storage"],
+      "members":{
+        "customerManagedS3Storage":{"shape":"CustomerManagedS3Storage"}
+      }
+    },
     "Name":{
       "type":"string",
       "max":256,
@@ -3194,7 +3403,7 @@
     },
     "NextToken":{
       "type":"string",
-      "max":2048,
+      "max":4096,
       "min":1,
       "pattern":"[A-Za-z0-9+/=]+"
     },
@@ -3412,6 +3621,26 @@
       "members":{
       }
     },
+    "PutStorageConfigurationRequest":{
+      "type":"structure",
+      "required":["storageType"],
+      "members":{
+        "storageType":{"shape":"StorageType"},
+        "multiLayerStorage":{"shape":"MultiLayerStorage"}
+      }
+    },
+    "PutStorageConfigurationResponse":{
+      "type":"structure",
+      "required":[
+        "storageType",
+        "configurationStatus"
+      ],
+      "members":{
+        "storageType":{"shape":"StorageType"},
+        "multiLayerStorage":{"shape":"MultiLayerStorage"},
+        "configurationStatus":{"shape":"ConfigurationStatus"}
+      }
+    },
     "Qualities":{
       "type":"list",
       "member":{"shape":"Quality"},
@@ -3487,6 +3716,13 @@
       "error":{"httpStatusCode":503},
       "exception":true,
       "fault":true
+    },
+    "StorageType":{
+      "type":"string",
+      "enum":[
+        "SITEWISE_DEFAULT_STORAGE",
+        "MULTI_LAYER_STORAGE"
+      ]
     },
     "TagKey":{
       "type":"string",
@@ -3837,7 +4073,9 @@
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "notificationSenderEmail":{"shape":"Email"},
+        "alarms":{"shape":"Alarms"}
       }
     },
     "UpdatePortalResponse":{

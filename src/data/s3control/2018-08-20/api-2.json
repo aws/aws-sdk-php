@@ -2903,7 +2903,8 @@
         "TargetKeyPrefix":{"shape":"NonEmptyMaxLength1024String"},
         "ObjectLockLegalHoldStatus":{"shape":"S3ObjectLockLegalHoldStatus"},
         "ObjectLockMode":{"shape":"S3ObjectLockMode"},
-        "ObjectLockRetainUntilDate":{"shape":"TimeStamp"}
+        "ObjectLockRetainUntilDate":{"shape":"TimeStamp"},
+        "BucketKeyEnabled":{"shape":"Boolean"}
       }
     },
     "S3DeleteObjectTaggingOperation":{
@@ -3251,12 +3252,12 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@%]*)$"
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
     },
     "TagValueString":{
       "type":"string",
       "max":1024,
-      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@%]*)$"
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]*)$"
     },
     "Tagging":{
       "type":"structure",

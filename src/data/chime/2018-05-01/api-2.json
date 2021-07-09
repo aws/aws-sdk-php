@@ -109,6 +109,25 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "BatchCreateChannelMembership":{
+      "name":"BatchCreateChannelMembership",
+      "http":{
+        "method":"POST",
+        "requestUri":"/channels/{channelArn}/memberships?operation=batch-create",
+        "responseCode":200
+      },
+      "input":{"shape":"BatchCreateChannelMembershipRequest"},
+      "output":{"shape":"BatchCreateChannelMembershipResponse"},
+      "errors":[
+        {"shape":"ServiceFailureException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ThrottledClientException"}
+      ],
+      "endpoint":{"hostPrefix":"messaging-"}
+    },
     "BatchCreateRoomMembership":{
       "name":"BatchCreateRoomMembership",
       "http":{
@@ -428,6 +447,25 @@
         {"shape":"ServiceFailureException"}
       ],
       "endpoint":{"hostPrefix":"messaging-"}
+    },
+    "CreateMediaCapturePipeline":{
+      "name":"CreateMediaCapturePipeline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/media-capture-pipelines",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateMediaCapturePipelineRequest"},
+      "output":{"shape":"CreateMediaCapturePipelineResponse"},
+      "errors":[
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
     },
     "CreateMeeting":{
       "name":"CreateMeeting",
@@ -846,6 +884,7 @@
         {"shape":"BadRequestException"},
         {"shape":"ForbiddenException"},
         {"shape":"UnauthorizedClientException"},
+        {"shape":"ConflictException"},
         {"shape":"ThrottledClientException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
@@ -903,6 +942,24 @@
         {"shape":"BadRequestException"},
         {"shape":"UnauthorizedClientException"},
         {"shape":"ResourceLimitExceededException"}
+      ]
+    },
+    "DeleteMediaCapturePipeline":{
+      "name":"DeleteMediaCapturePipeline",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/media-capture-pipelines/{mediaPipelineId}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteMediaCapturePipelineRequest"},
+      "errors":[
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
       ]
     },
     "DeleteMeeting":{
@@ -1593,6 +1650,25 @@
         {"shape":"UnauthorizedClientException"},
         {"shape":"ForbiddenException"},
         {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "GetMediaCapturePipeline":{
+      "name":"GetMediaCapturePipeline",
+      "http":{
+        "method":"GET",
+        "requestUri":"/media-capture-pipelines/{mediaPipelineId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMediaCapturePipelineRequest"},
+      "output":{"shape":"GetMediaCapturePipelineResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"UnauthorizedClientException"},
         {"shape":"ThrottledClientException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
@@ -2295,6 +2371,24 @@
       ],
       "endpoint":{"hostPrefix":"messaging-"}
     },
+    "ListMediaCapturePipelines":{
+      "name":"ListMediaCapturePipelines",
+      "http":{
+        "method":"GET",
+        "requestUri":"/media-capture-pipelines",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMediaCapturePipelinesRequest"},
+      "output":{"shape":"ListMediaCapturePipelinesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "ListMeetingTags":{
       "name":"ListMeetingTags",
       "http":{
@@ -2456,6 +2550,25 @@
         {"shape":"UnauthorizedClientException"},
         {"shape":"ForbiddenException"},
         {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "ListSupportedPhoneNumberCountries":{
+      "name":"ListSupportedPhoneNumberCountries",
+      "http":{
+        "method":"GET",
+        "requestUri":"/phone-number-countries",
+        "responseCode":200
+      },
+      "input":{"shape":"ListSupportedPhoneNumberCountriesRequest"},
+      "output":{"shape":"ListSupportedPhoneNumberCountriesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"UnauthorizedClientException"},
         {"shape":"ThrottledClientException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
@@ -3351,6 +3464,26 @@
         {"shape":"ServiceFailureException"}
       ]
     },
+    "UpdateSipMediaApplicationCall":{
+      "name":"UpdateSipMediaApplicationCall",
+      "http":{
+        "method":"POST",
+        "requestUri":"/sip-media-applications/{sipMediaApplicationId}/calls/{transactionId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateSipMediaApplicationCallRequest"},
+      "output":{"shape":"UpdateSipMediaApplicationCallResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "UpdateSipRule":{
       "name":"UpdateSipRule",
       "http":{
@@ -3747,6 +3880,15 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "BatchChannelMemberships":{
+      "type":"structure",
+      "members":{
+        "InvitedBy":{"shape":"Identity"},
+        "Type":{"shape":"ChannelMembershipType"},
+        "Members":{"shape":"Members"},
+        "ChannelArn":{"shape":"ChimeArn"}
+      }
+    },
     "BatchCreateAttendeeErrorList":{
       "type":"list",
       "member":{"shape":"CreateAttendeeError"}
@@ -3771,6 +3913,46 @@
       "members":{
         "Attendees":{"shape":"AttendeeList"},
         "Errors":{"shape":"BatchCreateAttendeeErrorList"}
+      }
+    },
+    "BatchCreateChannelMembershipError":{
+      "type":"structure",
+      "members":{
+        "MemberArn":{"shape":"ChimeArn"},
+        "ErrorCode":{"shape":"ErrorCode"},
+        "ErrorMessage":{"shape":"String"}
+      }
+    },
+    "BatchCreateChannelMembershipErrors":{
+      "type":"list",
+      "member":{"shape":"BatchCreateChannelMembershipError"}
+    },
+    "BatchCreateChannelMembershipRequest":{
+      "type":"structure",
+      "required":[
+        "ChannelArn",
+        "MemberArns"
+      ],
+      "members":{
+        "ChannelArn":{
+          "shape":"ChimeArn",
+          "location":"uri",
+          "locationName":"channelArn"
+        },
+        "Type":{"shape":"ChannelMembershipType"},
+        "MemberArns":{"shape":"MemberArns"},
+        "ChimeBearer":{
+          "shape":"ChimeArn",
+          "location":"header",
+          "locationName":"x-amz-chime-bearer"
+        }
+      }
+    },
+    "BatchCreateChannelMembershipResponse":{
+      "type":"structure",
+      "members":{
+        "BatchChannelMemberships":{"shape":"BatchChannelMemberships"},
+        "Errors":{"shape":"BatchCreateChannelMembershipErrors"}
       }
     },
     "BatchCreateRoomMembershipRequest":{
@@ -4445,6 +4627,31 @@
         "ChannelArn":{"shape":"ChimeArn"}
       }
     },
+    "CreateMediaCapturePipelineRequest":{
+      "type":"structure",
+      "required":[
+        "SourceType",
+        "SourceArn",
+        "SinkType",
+        "SinkArn"
+      ],
+      "members":{
+        "SourceType":{"shape":"MediaPipelineSourceType"},
+        "SourceArn":{"shape":"Arn"},
+        "SinkType":{"shape":"MediaPipelineSinkType"},
+        "SinkArn":{"shape":"Arn"},
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateMediaCapturePipelineResponse":{
+      "type":"structure",
+      "members":{
+        "MediaCapturePipeline":{"shape":"MediaCapturePipeline"}
+      }
+    },
     "CreateMeetingDialOutRequest":{
       "type":"structure",
       "required":[
@@ -4981,6 +5188,17 @@
           "shape":"NonEmptyString",
           "location":"uri",
           "locationName":"botId"
+        }
+      }
+    },
+    "DeleteMediaCapturePipelineRequest":{
+      "type":"structure",
+      "required":["MediaPipelineId"],
+      "members":{
+        "MediaPipelineId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"mediaPipelineId"
         }
       }
     },
@@ -5780,6 +5998,23 @@
       "members":{
         "BusinessCalling":{"shape":"BusinessCallingSettings"},
         "VoiceConnector":{"shape":"VoiceConnectorSettings"}
+      }
+    },
+    "GetMediaCapturePipelineRequest":{
+      "type":"structure",
+      "required":["MediaPipelineId"],
+      "members":{
+        "MediaPipelineId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"mediaPipelineId"
+        }
+      }
+    },
+    "GetMediaCapturePipelineResponse":{
+      "type":"structure",
+      "members":{
+        "MediaCapturePipeline":{"shape":"MediaCapturePipeline"}
       }
     },
     "GetMeetingRequest":{
@@ -6703,6 +6938,28 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListMediaCapturePipelinesRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"ResultMax",
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListMediaCapturePipelinesResponse":{
+      "type":"structure",
+      "members":{
+        "MediaCapturePipelines":{"shape":"MediaCapturePipelineList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListMeetingTagsRequest":{
       "type":"structure",
       "required":["MeetingId"],
@@ -6957,6 +7214,23 @@
         "NextToken":{"shape":"NextTokenString"}
       }
     },
+    "ListSupportedPhoneNumberCountriesRequest":{
+      "type":"structure",
+      "required":["ProductType"],
+      "members":{
+        "ProductType":{
+          "shape":"PhoneNumberProductType",
+          "location":"querystring",
+          "locationName":"product-type"
+        }
+      }
+    },
+    "ListSupportedPhoneNumberCountriesResponse":{
+      "type":"structure",
+      "members":{
+        "PhoneNumberCountries":{"shape":"PhoneNumberCountriesList"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["ResourceARN"],
@@ -7108,6 +7382,41 @@
       "max":50,
       "min":1
     },
+    "MediaCapturePipeline":{
+      "type":"structure",
+      "members":{
+        "MediaPipelineId":{"shape":"GuidString"},
+        "SourceType":{"shape":"MediaPipelineSourceType"},
+        "SourceArn":{"shape":"Arn"},
+        "Status":{"shape":"MediaPipelineStatus"},
+        "SinkType":{"shape":"MediaPipelineSinkType"},
+        "SinkArn":{"shape":"Arn"},
+        "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
+        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"}
+      }
+    },
+    "MediaCapturePipelineList":{
+      "type":"list",
+      "member":{"shape":"MediaCapturePipeline"}
+    },
+    "MediaPipelineSinkType":{
+      "type":"string",
+      "enum":["S3Bucket"]
+    },
+    "MediaPipelineSourceType":{
+      "type":"string",
+      "enum":["ChimeSdkMeeting"]
+    },
+    "MediaPipelineStatus":{
+      "type":"string",
+      "enum":[
+        "Initializing",
+        "InProgress",
+        "Failed",
+        "Stopping",
+        "Stopped"
+      ]
+    },
     "MediaPlacement":{
       "type":"structure",
       "members":{
@@ -7117,7 +7426,8 @@
         "ScreenSharingUrl":{"shape":"UriType"},
         "ScreenViewingUrl":{"shape":"UriType"},
         "SignalingUrl":{"shape":"UriType"},
-        "TurnControlUrl":{"shape":"UriType"}
+        "TurnControlUrl":{"shape":"UriType"},
+        "EventIngestionUrl":{"shape":"UriType"}
       }
     },
     "Meeting":{
@@ -7162,6 +7472,12 @@
         "AccountId":{"shape":"NonEmptyString"}
       }
     },
+    "MemberArns":{
+      "type":"list",
+      "member":{"shape":"ChimeArn"},
+      "max":100,
+      "min":1
+    },
     "MemberError":{
       "type":"structure",
       "members":{
@@ -7181,6 +7497,10 @@
         "Bot",
         "Webhook"
       ]
+    },
+    "Members":{
+      "type":"list",
+      "member":{"shape":"Identity"}
     },
     "MembershipItem":{
       "type":"structure",
@@ -7357,6 +7677,7 @@
       "members":{
         "PhoneNumberId":{"shape":"String"},
         "E164PhoneNumber":{"shape":"E164PhoneNumber"},
+        "Country":{"shape":"Alpha2CountryCode"},
         "Type":{"shape":"PhoneNumberType"},
         "ProductType":{"shape":"PhoneNumberProductType"},
         "Status":{"shape":"PhoneNumberStatus"},
@@ -7400,6 +7721,17 @@
         "OutboundSMS":{"shape":"NullableBoolean"},
         "InboundMMS":{"shape":"NullableBoolean"},
         "OutboundMMS":{"shape":"NullableBoolean"}
+      }
+    },
+    "PhoneNumberCountriesList":{
+      "type":"list",
+      "member":{"shape":"PhoneNumberCountry"}
+    },
+    "PhoneNumberCountry":{
+      "type":"structure",
+      "members":{
+        "CountryCode":{"shape":"Alpha2CountryCode"},
+        "SupportedPhoneNumberTypes":{"shape":"PhoneNumberTypeList"}
       }
     },
     "PhoneNumberError":{
@@ -7451,7 +7783,8 @@
       "type":"string",
       "enum":[
         "BusinessCalling",
-        "VoiceConnector"
+        "VoiceConnector",
+        "SipMediaApplicationDialIn"
       ]
     },
     "PhoneNumberStatus":{
@@ -7473,6 +7806,10 @@
         "Local",
         "TollFree"
       ]
+    },
+    "PhoneNumberTypeList":{
+      "type":"list",
+      "member":{"shape":"PhoneNumberType"}
     },
     "Port":{
       "type":"integer",
@@ -8025,6 +8362,13 @@
         "RetentionDays":{"shape":"RetentionDays"}
       }
     },
+    "SMAUpdateCallArgumentsMap":{
+      "type":"map",
+      "key":{"shape":"SensitiveString"},
+      "value":{"shape":"SensitiveString"},
+      "max":20,
+      "min":0
+    },
     "SearchAvailablePhoneNumbersRequest":{
       "type":"structure",
       "members":{
@@ -8039,7 +8383,7 @@
           "locationName":"city"
         },
         "Country":{
-          "shape":"String",
+          "shape":"Alpha2CountryCode",
           "location":"querystring",
           "locationName":"country"
         },
@@ -8052,6 +8396,11 @@
           "shape":"TollFreePrefix",
           "location":"querystring",
           "locationName":"toll-free-prefix"
+        },
+        "PhoneNumberType":{
+          "shape":"PhoneNumberType",
+          "location":"querystring",
+          "locationName":"phone-number-type"
         },
         "MaxResults":{
           "shape":"PhoneNumberMaxResults",
@@ -8068,7 +8417,8 @@
     "SearchAvailablePhoneNumbersResponse":{
       "type":"structure",
       "members":{
-        "E164PhoneNumbers":{"shape":"E164PhoneNumberList"}
+        "E164PhoneNumbers":{"shape":"E164PhoneNumberList"},
+        "NextToken":{"shape":"String"}
       }
     },
     "SendChannelMessageRequest":{
@@ -8477,7 +8827,8 @@
           "location":"uri",
           "locationName":"accountId"
         },
-        "Name":{"shape":"AccountName"}
+        "Name":{"shape":"AccountName"},
+        "DefaultLicense":{"shape":"License"}
       }
     },
     "UpdateAccountResponse":{
@@ -8796,6 +9147,33 @@
         "Room":{"shape":"Room"}
       }
     },
+    "UpdateSipMediaApplicationCallRequest":{
+      "type":"structure",
+      "required":[
+        "SipMediaApplicationId",
+        "TransactionId",
+        "Arguments"
+      ],
+      "members":{
+        "SipMediaApplicationId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"sipMediaApplicationId"
+        },
+        "TransactionId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"transactionId"
+        },
+        "Arguments":{"shape":"SMAUpdateCallArgumentsMap"}
+      }
+    },
+    "UpdateSipMediaApplicationCallResponse":{
+      "type":"structure",
+      "members":{
+        "SipMediaApplicationCall":{"shape":"SipMediaApplicationCall"}
+      }
+    },
     "UpdateSipMediaApplicationRequest":{
       "type":"structure",
       "required":["SipMediaApplicationId"],
@@ -8994,9 +9372,9 @@
     },
     "UserId":{
       "type":"string",
-      "max":50,
+      "max":64,
       "min":1,
-      "pattern":"[A-Za-z0-9][A-Za-z0-9\\:\\-\\_\\.\\@]{3,50}[A-Za-z0-9]",
+      "pattern":"[A-Za-z0-9]([A-Za-z0-9\\:\\-\\_\\.\\@]{0,62}[A-Za-z0-9])?",
       "sensitive":true
     },
     "UserIdList":{

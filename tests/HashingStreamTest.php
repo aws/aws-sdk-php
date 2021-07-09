@@ -13,7 +13,7 @@ class HashingStreamTest extends TestCase
 {
     public function testCanCreateRollingMd5()
     {
-        $source = Psr7\stream_for('foobar');
+        $source = Psr7\Utils::streamFor('foobar');
         $hash = new PhpHash('md5');
         (new HashingStream($source, $hash))->getContents();
         $this->assertSame(md5('foobar'), bin2hex($hash->complete()));
@@ -21,7 +21,7 @@ class HashingStreamTest extends TestCase
 
     public function testCallbackTriggeredWhenComplete()
     {
-        $source = Psr7\stream_for('foobar');
+        $source = Psr7\Utils::streamFor('foobar');
         $hash = new PhpHash('md5');
         $called = false;
         $stream = new HashingStream($source, $hash, function () use (&$called) {
@@ -33,7 +33,7 @@ class HashingStreamTest extends TestCase
 
     public function testCanOnlySeekToTheBeginning()
     {
-        $source = Psr7\stream_for('foobar');
+        $source = Psr7\Utils::streamFor('foobar');
         $hash = new PhpHash('md5');
         $stream = new HashingStream($source, $hash);
 

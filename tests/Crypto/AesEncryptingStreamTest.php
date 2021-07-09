@@ -157,7 +157,7 @@ class AesEncryptingStreamTest extends TestCase
         CipherMethod $cipherMethod
     ) {
         $stream = new AesEncryptingStream(
-            Psr7\stream_for(''),
+            Psr7\Utils::streamFor(''),
             'foo',
             $cipherMethod
         );
@@ -177,7 +177,7 @@ class AesEncryptingStreamTest extends TestCase
      */
     public function testDoesNotSupportSeekingFromEnd(CipherMethod $cipherMethod)
     {
-        $stream = new AesEncryptingStream(Psr7\stream_for('foo'), 'foo', $cipherMethod);
+        $stream = new AesEncryptingStream(Psr7\Utils::streamFor('foo'), 'foo', $cipherMethod);
 
         $stream->seek(1, SEEK_END);
     }
@@ -191,7 +191,7 @@ class AesEncryptingStreamTest extends TestCase
         CipherMethod $cipherMethod
     ) {
         $stream = new AesEncryptingStream(
-            Psr7\stream_for(openssl_random_pseudo_bytes(2 * self::MB)),
+            Psr7\Utils::streamFor(openssl_random_pseudo_bytes(2 * self::MB)),
             'foo',
             $cipherMethod
         );

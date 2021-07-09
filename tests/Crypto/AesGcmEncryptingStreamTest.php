@@ -80,7 +80,7 @@ class AesGcmEncryptingStreamTest extends TestCase
         $expectedTag
     ) {
         $stream = new AesGcmEncryptingStream(
-            Psr7\stream_for(hex2bin($plaintext)),
+            Psr7\Utils::streamFor(hex2bin($plaintext)),
             hex2bin($key),
             hex2bin($iv),
             hex2bin($aad),
@@ -178,7 +178,7 @@ class AesGcmEncryptingStreamTest extends TestCase
             'Tag' => hex2bin('cba38431a0c28712778de8e8c6ec4594')
         ];
         $stream = new AesGcmEncryptingStream(
-            Psr7\stream_for($knownAnswerTest['PT']),
+            Psr7\Utils::streamFor($knownAnswerTest['PT']),
             $knownAnswerTest['KEY'],
             $knownAnswerTest['IV'],
             $knownAnswerTest['AAD'],
@@ -195,7 +195,7 @@ class AesGcmEncryptingStreamTest extends TestCase
     public function testIsNotWritable()
     {
         $decryptingStream = new AesGcmEncryptingStream(
-            Psr7\stream_for(''),
+            Psr7\Utils::streamFor(''),
             'key',
             random_bytes(openssl_cipher_iv_length('aes-256-gcm'))
         );

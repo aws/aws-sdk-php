@@ -72,9 +72,9 @@ trait AesEncryptionStreamTestTrait
     public function plainTextProvider()
     {
         return [
-            [Psr7\stream_for('The rain in Spain falls mainly on the plain.')],
-            [Psr7\stream_for('دست‌نوشته‌ها نمی‌سوزند')],
-            [Psr7\stream_for('Рукописи не горят')],
+            [Psr7\Utils::streamFor('The rain in Spain falls mainly on the plain.')],
+            [Psr7\Utils::streamFor('دست‌نوشته‌ها نمی‌سوزند')],
+            [Psr7\Utils::streamFor('Рукописи не горят')],
             [new CachingStream(new RandomByteStream(2 * 1024 * 1024 + 11))]
         ];
     }
