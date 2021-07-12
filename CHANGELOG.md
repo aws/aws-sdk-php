@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.11 - 2021-07-12
 
 * `Aws\EKS` - Documentation updates for Wesley to support the parallel node upgrade feature.
 * `Aws\kendra` - Amazon Kendra now supports Principal Store
