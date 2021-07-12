@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EKS` - Documentation updates for Wesley to support the parallel node upgrade feature.
+* `Aws\kendra` - Amazon Kendra now supports Principal Store
+
 ## 3.185.10 - 2021-07-09
 
 * `Aws\FraudDetector` - This release adds support for ML Explainability to display model variable importance value in Amazon Fraud Detector.
