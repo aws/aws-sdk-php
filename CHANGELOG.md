@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.12 - 2021-07-13
 
 * `Aws\` - Removes a broken smoke test for device farms
 * `Aws\AmplifyBackend` - Added Sign in with Apple OAuth provider.
