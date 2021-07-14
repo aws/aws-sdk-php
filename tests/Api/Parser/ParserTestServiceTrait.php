@@ -63,6 +63,14 @@ trait ParserTestServiceTrait
                             ]
                         ]
                     ],
+                    "ParseDocTypeResponse" => [
+                        "type" => "structure",
+                        "members" => [
+                            "DocumentValue" => [
+                                "shape" => "DocumentType",
+                            ]
+                        ]
+                    ],
                     "ParseUnixResponse" => [
                         "type" => "structure",
                         "members" => [
@@ -79,6 +87,10 @@ trait ParserTestServiceTrait
                             ]
                         ]
                     ],
+                    "DocumentType" => [
+                        "type" => "structure",
+                        "document" => true
+                    ],
                     "__timestampIso8601" => [
                         "type" => "timestamp",
                         "timestampFormat" => "iso8601"
@@ -92,6 +104,17 @@ trait ParserTestServiceTrait
                     ],
                 ],
                 'operations' => [
+                    "ParseDocType" => [
+                        "name" => "ParseDocType",
+                        "http" => [
+                            "method" => "GET",
+                            "requestUri" => "/",
+                            "responseCode" => 200
+                        ],
+                        "output" => [
+                            "shape" => "ParseDocTypeResponse"
+                        ]
+                    ],
                     "ParseIso8601" => [
                         "name" => "ParseIso8601",
                         "http" => [

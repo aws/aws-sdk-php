@@ -635,5 +635,215 @@
         }
       }
     ]
+  },
+  {
+    "description": "Serializes document with standalone primitive as part of the JSON request payload with no escaping.",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "documentValue": {
+            "shape": "DocumentType"
+          }
+        }
+      },
+      "DocumentType": {
+        "type": "structure",
+        "document": true
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/InlineDocument"
+          },
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "documentValue": "foo"
+        },
+        "serialized": {
+          "body": "{\"documentValue\": \"foo\"}",
+          "uri": "/InlineDocument"
+        }
+      },
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/InlineDocument"
+          },
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "documentValue": 123
+        },
+        "serialized": {
+          "body": "{\"documentValue\": 123}",
+          "uri": "/InlineDocument"
+        }
+      },
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/InlineDocument"
+          },
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "documentValue": true
+        },
+        "serialized": {
+          "body": "{\"documentValue\": true}",
+          "uri": "/InlineDocument"
+        }
+      },
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/InlineDocument"
+          },
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "documentValue": ""
+        },
+        "serialized": {
+          "body": "{\"documentValue\": \"\"}",
+          "uri": "/InlineDocument"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Serializes inline documents as part of the JSON request payload with no escaping.",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "documentValue": {
+            "shape": "DocumentType"
+          }
+        }
+      },
+      "DocumentType": {
+        "type": "structure",
+        "document": true
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/InlineDocument"
+          },
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "documentValue": {"foo": "bar"}
+        },
+        "serialized": {
+          "body": "{\"documentValue\": {\"foo\": \"bar\"}}",
+          "uri": "/InlineDocument"
+        }
+      }
+    ]
+  },
+  {
+    "description": "Serializes aggregate documents as part of the JSON request payload with no escaping.",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "InputShape": {
+        "type": "structure",
+        "members": {
+          "documentValue": {
+            "shape": "DocumentType"
+          }
+        }
+      },
+      "DocumentType": {
+        "type": "structure",
+        "document": true
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/InlineDocument"
+          },
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "documentValue": {
+            "childDocument1": {"foo": "test"},
+            "childDocument2": {"bar": true},
+            "childDocument3": 123
+          }
+        },
+        "serialized": {
+          "body": "{\"documentValue\": {\"childDocument1\": {\"foo\": \"test\"}, \"childDocument2\": {\"bar\": true}, \"childDocument3\": 123}}",
+          "uri": "/InlineDocument"
+        }
+      },
+      {
+        "given": {
+          "http": {
+            "method": "POST",
+            "requestUri": "/InlineDocument"
+          },
+          "input": {
+            "shape": "InputShape"
+          },
+          "name": "OperationName"
+        },
+        "params": {
+          "documentValue": [
+            {"foo": "test"},
+            {"bar": true},
+            123
+          ]
+        },
+        "serialized": {
+          "body": "{\"documentValue\": [{\"foo\": \"test\"}, {\"bar\": true}, 123]}",
+          "uri": "/InlineDocument"
+        }
+      }
+    ]
   }
 ]
