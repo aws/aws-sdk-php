@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.13 - 2021-07-14
 
 * `Aws\ACM` - Added support for RSA 3072 SSL certificate import
 * `Aws\DatabaseMigrationService` - Release of feature needed for ECA-Endpoint settings. This allows customer to delete a field in endpoint settings by using --exact-settings flag in modify-endpoint api. This also displays default values for certain required fields of endpoint settings in describe-endpoint-settings api.
