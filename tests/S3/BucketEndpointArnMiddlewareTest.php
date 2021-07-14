@@ -569,7 +569,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'use_arn_region' => false,
                 ],
                 new UnresolvedEndpointException('Global endpoints do not'
-                    . ' support cross region requests Please enable use_arn_region or'
+                    . ' support cross region requests. Please enable use_arn_region or'
                     . ' do not supply a global region with a different region in the ARN.'
                 )
             ],
@@ -587,7 +587,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'use_arn_region' => false,
                 ],
                 new UnresolvedEndpointException('Global endpoints do not'
-                    . ' support cross region requests Please enable use_arn_region or'
+                    . ' support cross region requests. Please enable use_arn_region or'
                     . ' do not supply a global region with a different region in the ARN.'
                 )
             ],
