@@ -1007,7 +1007,8 @@ EOT;
 
     private function getDocumentText(StructureShape $member)
     {
-        return 'document (null|bool|string|numeric) or an (array|associate array) containing a document';
+        return 'document (null|bool|string|numeric) or an (array|associate array) whose'
+        . ' members are all valid documents';
     }
 
     private function getPrimitivePhpType($member)
