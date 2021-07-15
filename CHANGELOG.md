@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.14 - 2021-07-15
 
 * `Aws\CognitoIdentityProvider` - Documentation updates for cognito-idp
 * `Aws\EC2` - This feature enables customers to specify weekly recurring time window(s) for scheduled events that reboot, stop or terminate EC2 instances.
