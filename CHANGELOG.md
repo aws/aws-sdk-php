@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentityProvider` - Documentation updates for cognito-idp
+* `Aws\EC2` - This feature enables customers to specify weekly recurring time window(s) for scheduled events that reboot, stop or terminate EC2 instances.
+* `Aws\ECS` - Documentation updates for support of awsvpc mode on Windows.
+* `Aws\Endpoint` - Fixed bug where the wrong endpoint was being generated for FIPS endpoints with object lambdas
+* `Aws\IoTSiteWise` - Update the default endpoint for the APIs used to manage asset models, assets, gateways, tags, and account configurations. If you have firewalls with strict egress rules, configure the rules to grant you access to api.iotsitewise.[region].amazonaws.com or api.iotsitewise.[cn-region].amazonaws.com.cn.
+* `Aws\LexModelBuildingService` - Lex now supports the en-IN locale
+
 ## 3.185.13 - 2021-07-14
 
 * `Aws\ACM` - Added support for RSA 3072 SSL certificate import
