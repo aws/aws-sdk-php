@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.15 - 2021-07-16
 
 * `Aws\AppIntegrationsService` - Documentation update for AppIntegrations Service
 * `Aws\AuditManager` - This release relaxes the S3 URL character restrictions in AWS Audit Manager. Regex patterns have been updated for the following attributes: s3RelativePath, destination, and s3ResourcePath. 'AWS' terms have also been replaced with entities to align with China Rebrand documentation efforts.
