@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppIntegrationsService` - Documentation update for AppIntegrations Service
+* `Aws\AuditManager` - This release relaxes the S3 URL character restrictions in AWS Audit Manager. Regex patterns have been updated for the following attributes: s3RelativePath, destination, and s3ResourcePath. 'AWS' terms have also been replaced with entities to align with China Rebrand documentation efforts.
+* `Aws\Chime` - This SDK release adds Account Status as one of the attributes in Account API response
+
 ## 3.185.14 - 2021-07-15
 
 * `Aws\CognitoIdentityProvider` - Documentation updates for cognito-idp
