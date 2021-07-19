@@ -2690,6 +2690,11 @@
         "MissingWorkflows":{"shape":"WorkflowNames"}
       }
     },
+    "BatchSize":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
     "BatchStopJobRunError":{
       "type":"structure",
       "members":{
@@ -2784,6 +2789,12 @@
       "members":{
         "Errors":{"shape":"BatchUpdatePartitionFailureList"}
       }
+    },
+    "BatchWindow":{
+      "type":"integer",
+      "box":true,
+      "max":900,
+      "min":1
     },
     "BinaryColumnStatisticsData":{
       "type":"structure",
@@ -3270,6 +3281,11 @@
         "KAFKA_SSL_ENABLED",
         "KAFKA_CUSTOM_CERT",
         "KAFKA_SKIP_CUSTOM_CERT_VALIDATION",
+        "KAFKA_CLIENT_KEYSTORE",
+        "KAFKA_CLIENT_KEYSTORE_PASSWORD",
+        "KAFKA_CLIENT_KEY_PASSWORD",
+        "ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD",
+        "ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD",
         "SECRET_ID",
         "CONNECTOR_URL",
         "CONNECTOR_TYPE",
@@ -3810,7 +3826,8 @@
         "Actions":{"shape":"ActionList"},
         "Description":{"shape":"DescriptionString"},
         "StartOnCreation":{"shape":"BooleanValue"},
-        "Tags":{"shape":"TagsMap"}
+        "Tags":{"shape":"TagsMap"},
+        "EventBatchingCondition":{"shape":"EventBatchingCondition"}
       }
     },
     "CreateTriggerResponse":{
@@ -3930,7 +3947,10 @@
     },
     "DataFormat":{
       "type":"string",
-      "enum":["AVRO"]
+      "enum":[
+        "AVRO",
+        "JSON"
+      ]
     },
     "DataLakePrincipal":{
       "type":"structure",
@@ -4506,6 +4526,14 @@
       "members":{
         "TransformType":{"shape":"TransformType"},
         "FindMatchesMetrics":{"shape":"FindMatchesMetrics"}
+      }
+    },
+    "EventBatchingCondition":{
+      "type":"structure",
+      "required":["BatchSize"],
+      "members":{
+        "BatchSize":{"shape":"BatchSize"},
+        "BatchWindow":{"shape":"BatchWindow"}
       }
     },
     "ExecutionProperty":{
@@ -6818,7 +6846,8 @@
       "members":{
         "Path":{"shape":"Path"},
         "Exclusions":{"shape":"PathList"},
-        "ConnectionName":{"shape":"ConnectionName"}
+        "ConnectionName":{"shape":"ConnectionName"},
+        "SampleSize":{"shape":"NullableInteger"}
       }
     },
     "S3TargetList":{
@@ -7237,6 +7266,13 @@
         "RunId":{"shape":"IdString"}
       }
     },
+    "StartingEventBatchCondition":{
+      "type":"structure",
+      "members":{
+        "BatchSize":{"shape":"NullableInteger"},
+        "BatchWindow":{"shape":"NullableInteger"}
+      }
+    },
     "StopCrawlerRequest":{
       "type":"structure",
       "required":["Name"],
@@ -7640,7 +7676,8 @@
         "Description":{"shape":"DescriptionString"},
         "Schedule":{"shape":"GenericString"},
         "Actions":{"shape":"ActionList"},
-        "Predicate":{"shape":"Predicate"}
+        "Predicate":{"shape":"Predicate"},
+        "EventBatchingCondition":{"shape":"EventBatchingCondition"}
       }
     },
     "TriggerList":{
@@ -7675,7 +7712,8 @@
       "enum":[
         "SCHEDULED",
         "CONDITIONAL",
-        "ON_DEMAND"
+        "ON_DEMAND",
+        "EVENT"
       ]
     },
     "TriggerUpdate":{
@@ -7685,7 +7723,8 @@
         "Description":{"shape":"DescriptionString"},
         "Schedule":{"shape":"GenericString"},
         "Actions":{"shape":"ActionList"},
-        "Predicate":{"shape":"Predicate"}
+        "Predicate":{"shape":"Predicate"},
+        "EventBatchingCondition":{"shape":"EventBatchingCondition"}
       }
     },
     "TypeString":{
@@ -8201,7 +8240,8 @@
         "Status":{"shape":"WorkflowRunStatus"},
         "ErrorMessage":{"shape":"ErrorString"},
         "Statistics":{"shape":"WorkflowRunStatistics"},
-        "Graph":{"shape":"WorkflowGraph"}
+        "Graph":{"shape":"WorkflowGraph"},
+        "StartingEventBatchCondition":{"shape":"StartingEventBatchCondition"}
       }
     },
     "WorkflowRunProperties":{

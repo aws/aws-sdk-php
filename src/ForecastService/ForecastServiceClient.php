@@ -33,6 +33,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deletePredictorAsync(array $args = [])
  * @method \Aws\Result deletePredictorBacktestExportJob(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deletePredictorBacktestExportJobAsync(array $args = [])
+ * @method \Aws\Result deleteResourceTree(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteResourceTreeAsync(array $args = [])
  * @method \Aws\Result describeDataset(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeDatasetAsync(array $args = [])
  * @method \Aws\Result describeDatasetGroup(array $args = [])

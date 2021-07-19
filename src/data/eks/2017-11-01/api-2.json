@@ -529,7 +529,8 @@
       "enum":[
         "AL2_x86_64",
         "AL2_x86_64_GPU",
-        "AL2_ARM_64"
+        "AL2_ARM_64",
+        "CUSTOM"
       ]
     },
     "Addon":{
@@ -577,7 +578,8 @@
         "ClusterUnreachable",
         "InsufficientNumberOfReplicas",
         "ConfigurationConflict",
-        "AdmissionRequestDenied"
+        "AdmissionRequestDenied",
+        "UnsupportedAddonModification"
       ]
     },
     "AddonIssueList":{
@@ -879,12 +881,14 @@
         "remoteAccess":{"shape":"RemoteAccessConfig"},
         "nodeRole":{"shape":"String"},
         "labels":{"shape":"labelsMap"},
+        "taints":{"shape":"taintsList"},
         "tags":{"shape":"TagMap"},
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
         },
         "launchTemplate":{"shape":"LaunchTemplateSpecification"},
+        "updateConfig":{"shape":"NodegroupUpdateConfig"},
         "capacityType":{"shape":"CapacityTypes"},
         "version":{"shape":"String"},
         "releaseVersion":{"shape":"String"}
@@ -1228,7 +1232,8 @@
         "ClusterUnreachable",
         "InsufficientNumberOfReplicas",
         "ConfigurationConflict",
-        "AdmissionRequestDenied"
+        "AdmissionRequestDenied",
+        "UnsupportedAddonModification"
       ]
     },
     "ErrorDetail":{
@@ -1640,9 +1645,11 @@
         "amiType":{"shape":"AMITypes"},
         "nodeRole":{"shape":"String"},
         "labels":{"shape":"labelsMap"},
+        "taints":{"shape":"taintsList"},
         "resources":{"shape":"NodegroupResources"},
         "diskSize":{"shape":"BoxedInteger"},
         "health":{"shape":"NodegroupHealth"},
+        "updateConfig":{"shape":"NodegroupUpdateConfig"},
         "launchTemplate":{"shape":"LaunchTemplateSpecification"},
         "tags":{"shape":"TagMap"}
       }
@@ -1686,9 +1693,9 @@
     "NodegroupScalingConfig":{
       "type":"structure",
       "members":{
-        "minSize":{"shape":"Capacity"},
+        "minSize":{"shape":"ZeroCapacity"},
         "maxSize":{"shape":"Capacity"},
-        "desiredSize":{"shape":"Capacity"}
+        "desiredSize":{"shape":"ZeroCapacity"}
       }
     },
     "NodegroupStatus":{
@@ -1702,6 +1709,18 @@
         "DELETE_FAILED",
         "DEGRADED"
       ]
+    },
+    "NodegroupUpdateConfig":{
+      "type":"structure",
+      "members":{
+        "maxUnavailable":{"shape":"NonZeroInteger"},
+        "maxUnavailablePercentage":{"shape":"PercentCapacity"}
+      }
+    },
+    "NonZeroInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
     },
     "NotFoundException":{
       "type":"structure",
@@ -1751,6 +1770,12 @@
         "groupsPrefix":{"shape":"String"},
         "requiredClaims":{"shape":"requiredClaimsMap"}
       }
+    },
+    "PercentCapacity":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
     },
     "Provider":{
       "type":"structure",
@@ -1877,6 +1902,22 @@
     "TagValue":{
       "type":"string",
       "max":256
+    },
+    "Taint":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"taintKey"},
+        "value":{"shape":"taintValue"},
+        "effect":{"shape":"TaintEffect"}
+      }
+    },
+    "TaintEffect":{
+      "type":"string",
+      "enum":[
+        "NO_SCHEDULE",
+        "NO_EXECUTE",
+        "PREFER_NO_SCHEDULE"
+      ]
     },
     "Timestamp":{"type":"timestamp"},
     "UnsupportedAvailabilityZoneException":{
@@ -2030,7 +2071,9 @@
           "locationName":"nodegroupName"
         },
         "labels":{"shape":"UpdateLabelsPayload"},
+        "taints":{"shape":"UpdateTaintsPayload"},
         "scalingConfig":{"shape":"NodegroupScalingConfig"},
+        "updateConfig":{"shape":"NodegroupUpdateConfig"},
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
@@ -2094,15 +2137,21 @@
         "DesiredSize",
         "LabelsToAdd",
         "LabelsToRemove",
+        "TaintsToAdd",
+        "TaintsToRemove",
         "MaxSize",
         "MinSize",
         "ReleaseVersion",
         "PublicAccessCidrs",
+        "LaunchTemplateName",
+        "LaunchTemplateVersion",
         "IdentityProviderConfig",
         "EncryptionConfig",
         "AddonVersion",
         "ServiceAccountRoleArn",
-        "ResolveConflicts"
+        "ResolveConflicts",
+        "MaxUnavailable",
+        "MaxUnavailablePercentage"
       ]
     },
     "UpdateParams":{
@@ -2117,6 +2166,13 @@
         "Cancelled",
         "Successful"
       ]
+    },
+    "UpdateTaintsPayload":{
+      "type":"structure",
+      "members":{
+        "addOrUpdateTaints":{"shape":"taintsList"},
+        "removeTaints":{"shape":"taintsList"}
+      }
     },
     "UpdateType":{
       "type":"string",
@@ -2153,6 +2209,11 @@
         "publicAccessCidrs":{"shape":"StringList"}
       }
     },
+    "ZeroCapacity":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
     "configStatus":{
       "type":"string",
       "enum":[
@@ -2168,7 +2229,7 @@
     },
     "labelValue":{
       "type":"string",
-      "max":253,
+      "max":63,
       "min":1
     },
     "labelsKeyList":{
@@ -2194,6 +2255,20 @@
       "type":"string",
       "max":253,
       "min":1
+    },
+    "taintKey":{
+      "type":"string",
+      "max":63,
+      "min":1
+    },
+    "taintValue":{
+      "type":"string",
+      "max":63,
+      "min":0
+    },
+    "taintsList":{
+      "type":"list",
+      "member":{"shape":"Taint"}
     }
   }
 }

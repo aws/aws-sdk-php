@@ -74,18 +74,18 @@ class MultipartUploaderTest extends TestCase
             [ // Seekable stream, regular config
                 [],
                 ['acl' => 'private'] + $defaults,
-                Psr7\stream_for(fopen($filename, 'r'))
+                Psr7\Utils::streamFor(fopen($filename, 'r'))
             ],
             [ // Non-seekable stream
                 [],
                 $defaults,
-                Psr7\stream_for($data)
+                Psr7\Utils::streamFor($data)
             ],
             [ // Error: bad part_size
                 [],
                 ['part_size' => 1] + $defaults,
                 Psr7\FnStream::decorate(
-                    Psr7\stream_for($data), [
+                    Psr7\Utils::streamFor($data), [
                         'getSize' => function () {return null;}
                     ]
                 ),
@@ -108,7 +108,7 @@ class MultipartUploaderTest extends TestCase
         ]);
 
         $state = MultipartUploader::getStateFromService($client, 'foo', 'bar', 'baz');
-        $source = Psr7\stream_for(str_repeat('.', 9 * self::MB));
+        $source = Psr7\Utils::streamFor(str_repeat('.', 9 * self::MB));
         $uploader = new MultipartUploader($client, $source, ['state' => $state]);
         $result = $uploader->upload();
 
@@ -120,11 +120,11 @@ class MultipartUploaderTest extends TestCase
     public function testCanUseCaseInsensitiveConfigKeys()
     {
         $client = $this->getTestClient('s3');
-        $putObjectMup = new MultipartUploader($client, Psr7\stream_for('x'), [
+        $putObjectMup = new MultipartUploader($client, Psr7\Utils::streamFor('x'), [
             'Bucket' => 'bucket',
             'Key' => 'key',
         ]);
-        $classicMup = new MultipartUploader($client, Psr7\stream_for('x'), [
+        $classicMup = new MultipartUploader($client, Psr7\Utils::streamFor('x'), [
             'bucket' => 'bucket',
             'key' => 'key',
         ]);
@@ -144,11 +144,11 @@ class MultipartUploaderTest extends TestCase
 
         return [
             [ // Seekable stream, regular config
-                Psr7\stream_for(fopen($filename, 'r')),
+                Psr7\Utils::streamFor(fopen($filename, 'r')),
                 $size,
             ],
             [ // Non-seekable stream
-                Psr7\stream_for($data),
+                Psr7\Utils::streamFor($data),
                 $size,
             ]
         ];
@@ -205,22 +205,22 @@ class MultipartUploaderTest extends TestCase
 
         return [
             [ // Successful lookup from filename via stream
-                Psr7\stream_for(fopen($filename, 'r')),
+                Psr7\Utils::streamFor(fopen($filename, 'r')),
                 [],
                 'text/plain'
             ],
             [ // Unsuccessful lookup because of no file name
-                Psr7\stream_for($data),
+                Psr7\Utils::streamFor($data),
                 [],
                 'application/octet-stream'
             ],
             [ // Successful override of known type from filename
-                Psr7\stream_for(fopen($filename, 'r')),
+                Psr7\Utils::streamFor(fopen($filename, 'r')),
                 ['ContentType' => 'TestType'],
                 'TestType'
             ],
             [ // Successful override of unknown type
-                Psr7\stream_for($data),
+                Psr7\Utils::streamFor($data),
                 ['ContentType' => 'TestType'],
                 'TestType'
             ]
@@ -293,7 +293,7 @@ class MultipartUploaderTest extends TestCase
         ]);
 
         $data = str_repeat('.', 12 * 1048576);
-        $source = Psr7\stream_for($data);
+        $source = Psr7\Utils::streamFor($data);
 
         $uploader = new MultipartUploader(
             $s3,

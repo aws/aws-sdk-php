@@ -218,7 +218,8 @@
             "type": "structure",
             "required": [
                 "name",
-                "timeToLive"
+                "timeToLive",
+                "contextAttributes"
             ],
             "members": {
                 "name": {
@@ -781,6 +782,9 @@
         },
         "Message": {
             "type": "structure",
+            "required": [
+                "contentType"
+            ],
             "members": {
                 "content": {
                     "shape": "Text"
@@ -1181,11 +1185,24 @@
                 }
             }
         },
+        "Shape": {
+            "type": "string",
+            "enum": [
+                "Scalar",
+                "List"
+            ]
+        },
         "Slot": {
             "type": "structure",
             "members": {
                 "value": {
                     "shape": "Value"
+                },
+                "shape": {
+                    "shape": "Shape"
+                },
+                "values": {
+                    "shape": "Values"
                 }
             }
         },
@@ -1431,6 +1448,12 @@
                 "resolvedValues": {
                     "shape": "StringList"
                 }
+            }
+        },
+        "Values": {
+            "type": "list",
+            "member": {
+                "shape": "Slot"
             }
         }
     }

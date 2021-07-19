@@ -28,7 +28,7 @@ class StreamTest extends TestCase
 
     public function testCanAdaptPsrStreamToGuzzle()
     {
-        $stream = new GuzzleStreamAdapter(Psr7\stream_for('foo'));
+        $stream = new GuzzleStreamAdapter(Psr7\Utils::streamFor('foo'));
         $this->verify($stream, 'foo');
     }
 

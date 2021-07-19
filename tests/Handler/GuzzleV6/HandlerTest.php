@@ -26,7 +26,7 @@ class HandlerTest extends TestCase
 
     public function testHandlerWorksWithSuccessfulRequest()
     {
-        $mock = new MockHandler([new Response(200, [], Psr7\stream_for('foo'))]);
+        $mock = new MockHandler([new Response(200, [], Psr7\Utils::streamFor('foo'))]);
         $client = new Client(['handler' => $mock]);
         $handler = new GuzzleHandler($client);
 
@@ -74,7 +74,7 @@ class HandlerTest extends TestCase
 
     public function testHandlerWillInvokeOnTransferStatsCallback()
     {
-        $mock = new MockHandler([new Response(200, [], Psr7\stream_for('foo'))]);
+        $mock = new MockHandler([new Response(200, [], Psr7\Utils::streamFor('foo'))]);
         $client = new Client(['handler' => $mock]);
         $handler = new GuzzleHandler($client);
 
@@ -93,7 +93,7 @@ class HandlerTest extends TestCase
 
     public function testHandlerWillStillInvokeOnStatsCallback()
     {
-        $mock = new MockHandler([new Response(200, [], Psr7\stream_for('foo'))]);
+        $mock = new MockHandler([new Response(200, [], Psr7\Utils::streamFor('foo'))]);
         $client = new Client(['handler' => $mock]);
         $handler = new GuzzleHandler($client);
 

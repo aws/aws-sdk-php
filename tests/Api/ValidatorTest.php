@@ -346,7 +346,7 @@ class ValidatorTest extends TestCase
                     'type' => 'structure',
                     'members' => ['foo' => ['type' => 'blob']]
                 ],
-                ['foo' => Psr7\stream_for('test')],
+                ['foo' => Psr7\Utils::streamFor('test')],
                 true
             ],
             [

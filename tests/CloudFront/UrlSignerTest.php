@@ -45,7 +45,7 @@ class UrlSignerTest extends TestCase
             $url
         );
         $urlObject = new Uri($url);
-        $query = \GuzzleHttp\Psr7\parse_query($urlObject->getQuery());
+        $query = \GuzzleHttp\Psr7\Query::parse($urlObject->getQuery());
         $signature = $query['Signature'];
         $this->assertNotContains('?', $signature);
         $this->assertNotContains('=', $signature);
