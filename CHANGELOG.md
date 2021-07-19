@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.16 - 2021-07-19
 
 * `Aws\DirectConnect` - Documentation updates for directconnect
 * `Aws\EMRContainers` - Updated DescribeManagedEndpoint and ListManagedEndpoints to return failureReason and stateDetails in API response.
