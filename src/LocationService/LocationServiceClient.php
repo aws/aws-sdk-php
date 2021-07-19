@@ -95,5 +95,15 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateGeofenceCollection(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateGeofenceCollectionAsync(array $args = [])
+ * @method \Aws\Result updateMap(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateMapAsync(array $args = [])
+ * @method \Aws\Result updatePlaceIndex(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updatePlaceIndexAsync(array $args = [])
+ * @method \Aws\Result updateRouteCalculator(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateRouteCalculatorAsync(array $args = [])
+ * @method \Aws\Result updateTracker(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateTrackerAsync(array $args = [])
  */
 class LocationServiceClient extends AwsClient {}
