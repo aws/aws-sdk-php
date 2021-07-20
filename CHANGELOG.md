@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.17 - 2021-07-20
 
 * `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
 * `Aws\EC2` - Added idempotency to the CreateVolume API using the ClientToken request parameter
