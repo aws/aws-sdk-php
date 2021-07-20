@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
+* `Aws\EC2` - Added idempotency to the CreateVolume API using the ClientToken request parameter
+
 ## 3.185.16 - 2021-07-19
 
 * `Aws\DirectConnect` - Documentation updates for directconnect
