@@ -130,9 +130,8 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
         $invokable = $middleware(function($cmd, $req) {});
 
         // Mock a request with a body whose size returns null
-        $streamMock = $this->getMockBuilder(\stdClass::class)
-            ->setMethods(['getSize'])
-            ->getMock();
+        $streamMock = $this->createMock(Psr7\Stream::class);
+        $streamMock->method('getSize')->willReturn(null);
         $streamMock->expects($this->any())
             ->method('getSize')
             ->willReturn(null);

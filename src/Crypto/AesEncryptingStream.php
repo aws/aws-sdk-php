@@ -88,7 +88,9 @@ class AesEncryptingStream implements AesStreamInterface
     {
         if ($length > strlen($this->buffer)) {
             $this->buffer .= $this->encryptBlock(
-                self::BLOCK_SIZE * ceil(($length - strlen($this->buffer)) / self::BLOCK_SIZE)
+                    intval(
+                    self::BLOCK_SIZE * ceil(($length - strlen($this->buffer)) / self::BLOCK_SIZE)
+                    )
             );
         }
 
@@ -125,7 +127,7 @@ class AesEncryptingStream implements AesStreamInterface
 
         $plainText = '';
         do {
-            $plainText .= $this->stream->read($length - strlen($plainText));
+            $plainText .= $this->stream->read(intval($length - strlen($plainText)));
         } while (strlen($plainText) < $length && !$this->stream->eof());
 
         $options = OPENSSL_RAW_DATA;

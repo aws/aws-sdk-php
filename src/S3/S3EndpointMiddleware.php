@@ -221,11 +221,10 @@ class S3EndpointMiddleware
 
             $uri = $request->getUri();
             $request = $request->withUri(
-                $uri->withHost($host)
-                    ->withPath($this->getBucketlessPath(
+                $uri->withPath($this->getBucketlessPath(
                         $uri->getPath(),
                         $command
-                    ))
+                    ))->withHost($host)
             );
         }
         return $request;
@@ -284,7 +283,11 @@ class S3EndpointMiddleware
     private function getBucketlessPath($path, CommandInterface $command)
     {
         $pattern = '/^\\/' . preg_quote($command['Bucket'], '/') . '/';
-        return preg_replace($pattern, '', $path) ?: '/';
+        $path = preg_replace($pattern, '', $path) ?: '/';
+        if (substr($path, 0 , 1) !== '/') {
+            $path = '/' . $path;
+        }
+        return $path;
     }
 
     private function applyEndpoint(

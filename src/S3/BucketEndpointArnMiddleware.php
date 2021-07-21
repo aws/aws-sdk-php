@@ -103,6 +103,9 @@ class BucketEndpointArnMiddleware
                         $len = strlen($encoded) + 1;
                         if (trim(substr($path, 0, $len), '/') === "{$encoded}") {
                             $path = substr($path, $len);
+                            if (substr($path, 0, 1) !== "/") {
+                                $path = '/' . $path;
+                            }
                         }
                         if (empty($path)) {
                             $path = '';
@@ -110,7 +113,7 @@ class BucketEndpointArnMiddleware
 
                         // Set modified request
                         $req = $req->withUri(
-                            $req->getUri()->withHost($host)->withPath($path)
+                            $req->getUri()->withPath($path)->withHost($host)
                         );
 
                         // Update signing region based on ARN data if configured to do so
