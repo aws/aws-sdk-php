@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.19 - 2021-07-22
 
 * `Aws\EC2` - This release allows customers to assign prefixes to their elastic network interface and to reserve IP blocks in their subnet CIDRs. These reserved blocks can be used to assign prefixes to elastic network interfaces or be excluded from auto-assignment.
 * `Aws\ElasticLoadBalancingv2` - Adds support for enabling TLS protocol version and cipher suite headers to be sent to backend targets for Application Load Balancers.
