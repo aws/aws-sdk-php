@@ -131,7 +131,6 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
 
         // Mock a request with a body whose size returns null
         $streamMock = $this->createMock(Psr7\Stream::class);
-        $streamMock->method('getSize')->willReturn(null);
         $streamMock->expects($this->any())
             ->method('getSize')
             ->willReturn(null);
