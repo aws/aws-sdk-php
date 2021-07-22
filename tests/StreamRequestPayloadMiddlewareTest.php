@@ -146,6 +146,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
             ->willReturn($streamMock);
 
         $invokable($command, $requestMock);
+        fclose($fp);
     }
 
     private function generateTestHandlerList()
