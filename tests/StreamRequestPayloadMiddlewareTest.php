@@ -130,9 +130,9 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
         $invokable = $middleware(function($cmd, $req) {});
 
         // Mock a request with a body whose size returns null
-        $fp = fopen('php://memory', 'r+');
+        $filestream = tmpfile();
         $streamMock = $this->getMockBuilder(Psr7\Stream::class)
-            ->setConstructorArgs([$fp])
+            ->setConstructorArgs([$filestream])
             ->getMock();
         $streamMock->expects($this->any())
             ->method('getSize')
@@ -146,7 +146,7 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
             ->willReturn($streamMock);
 
         $invokable($command, $requestMock);
-        fclose($fp);
+        fclose($filestream);
     }
 
     private function generateTestHandlerList()
