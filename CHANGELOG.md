@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.20 - 2021-07-23
 
 * `Aws\S3Outposts` - Add on-premise access type support for endpoints
 * `Aws\SecurityHub` - Added product name, company name, and Region fields for security findings. Added details objects for RDS event subscriptions and AWS ECS services. Added fields to the details for AWS Elasticsearch domains.
