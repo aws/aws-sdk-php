@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\S3Outposts` - Add on-premise access type support for endpoints
+* `Aws\SecurityHub` - Added product name, company name, and Region fields for security findings. Added details objects for RDS event subscriptions and AWS ECS services. Added fields to the details for AWS Elasticsearch domains.
+* `Aws\imagebuilder` - Update to documentation to reapply missing change to SSM uninstall switch default value and improve description.
+
 ## 3.185.19 - 2021-07-22
 
 * `Aws\EC2` - This release allows customers to assign prefixes to their elastic network interface and to reserve IP blocks in their subnet CIDRs. These reserved blocks can be used to assign prefixes to elastic network interfaces or be excluded from auto-assignment.
