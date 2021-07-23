@@ -68,7 +68,7 @@ jobs:
         vendor/bin/phpstan analyse src
 
     #generate package
-    - if:  ${{ matrix.composer-options == '' }}
+    - if:  ${{ matrix.composer-options == '--prefer-lowest' }}
       name: Package generation
       run: make package
 
