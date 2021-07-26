@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatch` - SDK update to support creation of Cross-Account Metric Alarms and update API documentation.
+* `Aws\IdentityStore` - Documentation updates for SSO API Ref.
+* `Aws\Proton` - Documentation-only update links
+* `Aws\S3Control` - S3 Access Point aliases can be used anywhere you use S3 bucket names to access data in S3
+* `Aws\Synthetics` - CloudWatch Synthetics now supports visual testing in its canaries.
+* `Aws\Textract` - Adds support for AnalyzeExpense, a new API to extract relevant data such as contact information, items purchased, and vendor name, from almost any invoice or receipt without the need for any templates or configuration.
+
 ## 3.185.20 - 2021-07-23
 
 * `Aws\S3Outposts` - Add on-premise access type support for endpoints
