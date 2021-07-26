@@ -478,7 +478,7 @@ EOT
             "BAR",
             Aws\get_environment_variable("FOO")
         );
-        putenv("FOO=");
+        putenv("FOO");
     }
 
     public function testGetEnvironmentVariableFromServer()
@@ -488,7 +488,7 @@ EOT
             "BAR",
             Aws\get_environment_variable("FOO")
         );
-        putenv("FOO=");
+        unset($_SERVER['FOO']);
     }
 
     public function  testGetConfigVariableWithDefaultProfie() {

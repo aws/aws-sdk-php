@@ -1164,9 +1164,9 @@ EOT;
         ]);
         $provider()->wait();
 
-        putenv("AWS_CONFIG_FILE=");
-        putenv("AWS_EC2_METADATA_SERVICE_ENDPOINT_MODE=");
-        putenv("AWS_EC2_METADATA_SERVICE_ENDPOINT=");
+        putenv("AWS_CONFIG_FILE");
+        putenv("AWS_EC2_METADATA_SERVICE_ENDPOINT_MODE");
+        putenv("AWS_EC2_METADATA_SERVICE_ENDPOINT");
         unlink($tmpFile);
     }
 
@@ -1207,9 +1207,9 @@ EOT;
         ]);
         $provider()->wait();
 
-        putenv("AWS_CONFIG_FILE=");
-        putenv("AWS_EC2_METADATA_SERVICE_ENDPOINT_MODE=");
-        putenv("AWS_EC2_METADATA_SERVICE_ENDPOINT=");
+        putenv("AWS_CONFIG_FILE");
+        putenv("AWS_EC2_METADATA_SERVICE_ENDPOINT_MODE");
+        putenv("AWS_EC2_METADATA_SERVICE_ENDPOINT");
         unlink($tmpFile);
     }
 
@@ -1247,7 +1247,7 @@ EOT;
         ]);
         $provider()->wait();
 
-        putenv("AWS_CONFIG_FILE=");
+        putenv("AWS_CONFIG_FILE");
         unlink($tmpFile);
     }
 }

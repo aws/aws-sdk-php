@@ -560,7 +560,9 @@ function get_config_variable($variableName, $filePath = '/.aws/config', $profile
         $filePath .= '/.aws/config';
     }
 
-
+    if (!file_exists($filePath)) {
+        return false;
+    }
 
     if ($profileName == null) {
         $profileName = get_environment_variable('AWS_PROFILE') ?: 'default';
