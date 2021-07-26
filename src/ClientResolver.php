@@ -533,6 +533,12 @@ class ClientResolver
     public static function _apply_endpoint_provider(callable $value, array &$args)
     {
         if (!isset($args['endpoint'])) {
+            $ec2MetadataEndpoint =
+                \Aws\get_environment_variable('AWS_EC2_METADATA_SERVICE_ENDPOINT');
+            if ($ec2MetadataEndpoint) {
+                $args['endpoint'] = $ec2MetadataEndpoint;
+                return;
+            }
             $endpointPrefix = isset($args['api']['metadata']['endpointPrefix'])
                 ? $args['api']['metadata']['endpointPrefix']
                 : $args['service'];
