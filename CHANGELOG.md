@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.185.21 - 2021-07-26
 
 * `Aws\CloudWatch` - SDK update to support creation of Cross-Account Metric Alarms and update API documentation.
 * `Aws\IdentityStore` - Documentation updates for SSO API Ref.
