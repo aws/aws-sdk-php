@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.186.0 - 2021-07-27
 
 * `Aws\Batch` - Add support for ListJob filters
 * `Aws\IoTAnalytics` - IoT Analytics now supports creating a dataset resource with IoT SiteWise MultiLayerStorage data stores, enabling customers to query industrial data within the service. This release includes adding JOIN functionality for customers to query multiple data sources in a dataset.
