@@ -116,10 +116,7 @@ class InstanceProfileProvider
                 );
         }
         if ($endpoint !== false) {
-            if (!filter_var('http://' . $endpoint, FILTER_VALIDATE_URL)) {
-                throw new IAE ("Input endpoint '{$config['endpoint']}' is not a valid URI");
-            }
-            $this->endpoint = 'http://' . $endpoint . '/latest/';
+            $this->endpoint =  'http://' . $endpoint . '/latest/';
         } else {
             $endpoint_uri =
                 $this->endpoint_mode == 'v4'

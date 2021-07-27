@@ -12,6 +12,7 @@ use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
@@ -1008,32 +1009,6 @@ class InstanceProfileProviderTest extends TestCase
         $provider = new InstanceProfileProvider([
             'client' => $client,
             'endpoint' => '[fd00:ec2::254]',
-            'retries' => 5,
-        ]);
-        $provider()->wait();
-    }
-
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage is not a valid URI
-     */
-    public function testFailsOnBadCustomEndpoint(){
-
-        $invalidUri = 'http://abc.cloudfront.net/images/éüàçµñåœŒ.jpg?query key=query value';
-        $client = function (RequestInterface $req) {
-            $expiry = time() + 1000;
-            $creds = ['foo_key', 'baz_secret', 'qux_token', "@{$expiry}"];
-            return new FulfilledPromise(new Response(
-                200,
-                [],
-                Psr7\Utils::streamFor(
-                    json_encode(call_user_func_array([$this, 'getCredentialArray'], $creds))
-                )
-            ));
-        };
-        $provider = new InstanceProfileProvider([
-            'client' => $client,
-            'endpoint' => $invalidUri,
             'retries' => 5,
         ]);
         $provider()->wait();
