@@ -45,6 +45,9 @@ class InstanceProfileProvider
     /** @var string */
     private $endpoint_mode;
 
+    /** @var string */
+    private $configFile;
+
     /** @var int */
     private $retries;
 
@@ -77,53 +80,13 @@ class InstanceProfileProvider
         $this->client = isset($config['client'])
             ? $config['client'] // internal use only
             : \Aws\default_http_handler();
-
         $configFile =
             \Aws\get_environment_variable(InstanceProfileProvider::ENV_CONFIG_FILE);
-        $configFile = $configFile !== false ? $configFile : null;
-        $endpoint_mode =
-            isset($config['endpoint_mode'])
-                ? $config['endpoint_mode']
-                : false;
-        if ($endpoint_mode == false) {
-            $endpoint_mode =
-                \Aws\get_environment_variable(InstanceProfileProvider::ENV_ENDPOINT_MODE);
-        }
-        if ($endpoint_mode == false) {
-            $endpoint_mode =
-                \Aws\get_config_variable(
-                    InstanceProfileProvider::CONFIG_ENDPOINT_MODE,
-                    $configFile
-                );
-        }
-        if ($endpoint_mode !== false) {
-            $this->applyEndpointMode($endpoint_mode);
-        } else {
-            $this->endpoint_mode = 'v4';
-        }
+        $this->configFile = $configFile !== false ? $configFile : null;
 
+        $this->applyEndpointMode($config);
 
-        $endpoint = isset($config['endpoint']) ? $config['endpoint'] : false;
-        if ($endpoint === false) {
-            $endpoint =
-                \Aws\get_environment_variable(InstanceProfileProvider::ENV_ENDPOINT);
-        }
-        if ($endpoint === false) {
-            $endpoint =
-                \Aws\get_config_variable(
-                    InstanceProfileProvider::CONFIG_ENDPOINT,
-                    $configFile
-                );
-        }
-        if ($endpoint !== false) {
-            $this->endpoint =  'http://' . $endpoint . '/latest/';
-        } else {
-            $endpoint_uri =
-                $this->endpoint_mode == 'v4'
-                    ? self::V4_SERVER_URI
-                    : self::V6_SERVER_URI;
-            $this->endpoint = 'http://' . $endpoint_uri . '/latest/';
-        }
+        $this->applyEndpoint($config);
 
     }
 
@@ -348,14 +311,73 @@ class InstanceProfileProvider
     /**
      * @param $endpoint_mode
      */
-    private function applyEndpointMode($endpoint_mode)
+    private function applyEndpointMode($config)
     {
-        if (!in_array($endpoint_mode, self::$supporedIpVersions)) {
-            throw new IAE(
-                "Invalid input for endpoint_mode provided.  Valid inputs include: "
-                . implode(', ', self::$supporedIpVersions)
-            );
+        $endpoint_mode = isset($config['endpoint_mode'])
+                ? $config['endpoint_mode']
+                : false;
+        if ($endpoint_mode == false) {
+            $endpoint_mode =
+                \Aws\get_environment_variable(InstanceProfileProvider::ENV_ENDPOINT_MODE);
         }
-        $this->endpoint_mode = str_replace('IP', '', $endpoint_mode);
+        if ($endpoint_mode == false) {
+            $endpoint_mode =
+                \Aws\get_config_variable(
+                    InstanceProfileProvider::CONFIG_ENDPOINT_MODE,
+                    $this->configFile
+                );
+        }
+
+        if ($endpoint_mode !== false) {
+            if (!in_array($endpoint_mode, self::$supporedIpVersions)) {
+                throw new IAE(
+                    "Invalid input for endpoint_mode provided.  Valid inputs include: "
+                    . implode(', ', self::$supporedIpVersions)
+                );
+            }
+            $this->endpoint_mode = str_replace('IP', '', $endpoint_mode);
+        } else {
+            $this->endpoint_mode = 'v4';
+        }
+    }
+
+    /**
+     * @param array $config
+     * @param $configFile
+     * @return array
+     */
+    private function getEndpointMode(array $config, $configFile)
+    {
+
+        return $config;
+    }
+
+    /**
+     * @param array $config
+     * @param $configFile
+     */
+    private function applyEndpoint(array $config)
+    {
+        $endpoint = isset($config['endpoint']) ? $config['endpoint'] : false;
+        if ($endpoint === false) {
+            $endpoint =
+                \Aws\get_environment_variable(InstanceProfileProvider::ENV_ENDPOINT);
+        }
+        if ($endpoint === false) {
+            $endpoint =
+                \Aws\get_config_variable(
+                    InstanceProfileProvider::CONFIG_ENDPOINT,
+                    $this->configFile
+                );
+        }
+        if ($endpoint !== false) {
+            $this->endpoint = 'http://' . $endpoint . '/latest/';
+        } else {
+            $endpoint_uri =
+                $this->endpoint_mode == 'v4'
+                    ? self::V4_SERVER_URI
+                    : self::V6_SERVER_URI;
+            $this->endpoint = 'http://' . $endpoint_uri . '/latest/';
+        }
     }
 }
