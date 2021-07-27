@@ -533,6 +533,20 @@ class ValidatorTest extends TestCase
                 "Found 1 error while validating the input provided for the Foo operation:\n"
                 . "[documentVal] is not a valid document type"
             ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => ["nestedArray" => [0 => "val1", "mixedTypeKey" => "val2"]]],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[documentVal] is not a valid document type"
+            ],
         ];
     }
 

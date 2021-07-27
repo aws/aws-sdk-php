@@ -281,23 +281,21 @@ class Validator
     private function checkDocumentType($value)
     {
         if (is_array($value)) {
-            $isValid = true;
+            $typeOfFirstKey = gettype(key($value));
             foreach ($value as $key => $val) {
                if(!$this->checkDocumentType($val)) {
-                $isValid = false;
+                   return false;
+               }
+               if (gettype($key) != $typeOfFirstKey) {
+                   return false;
                }
             }
-            if (!$isValid) {
-                return false;
-            }
-        } else if (!is_null($value)
-            && !is_numeric($value)
-            && !is_string($value)
-            && !is_bool($value))
-        {
-            return false;
         }
-        return true;
+        return is_null($value)
+            || is_numeric($value)
+            || is_string($value)
+            || is_bool($value)
+            || is_array($value);
     }
 
     private function addError($message)
