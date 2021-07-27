@@ -283,10 +283,7 @@ class Validator
         if (is_array($value)) {
             $typeOfFirstKey = gettype(key($value));
             foreach ($value as $key => $val) {
-               if(!$this->checkDocumentType($val)) {
-                   return false;
-               }
-               if (gettype($key) != $typeOfFirstKey) {
+               if (!$this->checkDocumentType($val) || gettype($key) != $typeOfFirstKey) {
                    return false;
                }
             }
