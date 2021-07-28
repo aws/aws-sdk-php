@@ -83,11 +83,8 @@ class InstanceProfileProvider
         $configFile =
             \Aws\get_environment_variable(InstanceProfileProvider::ENV_CONFIG_FILE);
         $this->configFile = $configFile !== false ? $configFile : null;
-
         $this->applyEndpointMode($config);
-
         $this->applyEndpoint($config);
-
     }
 
     /**
