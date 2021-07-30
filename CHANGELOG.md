@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppSync` - AWS AppSync now supports a new authorization mode allowing you to define your own authorization logic using an AWS Lambda function.
+* `Aws\ElasticLoadBalancingv2` - Client Port Preservation ALB Attribute Launch
+* `Aws\SageMaker` - API changes with respect to Lambda steps in model building pipelines. Adds several waiters to async Sagemaker Image APIs. Add more instance types to AppInstanceType field
+* `Aws\SecretsManager` - Add support for KmsKeyIds in the ListSecretVersionIds API response
+
 ## 3.186.2 - 2021-07-29
 
 * `Aws\Chime` - Adds support for live transcription of meetings with Amazon Transcribe and Amazon Transcribe Medical. The new APIs, StartMeetingTranscription and StopMeetingTranscription, control the generation of user-attributed transcriptions sent to meeting clients via Amazon Chime SDK data messages.
