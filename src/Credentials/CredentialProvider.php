@@ -111,6 +111,7 @@ class CredentialProvider
         }
 
         $shouldUseEcsCredentialsProvider =
+            \Aws\get_environment_variable(EcsCredentialProvider::ENV_URI);
 
         if (!empty($shouldUseEcsCredentialsProvider)) {
             $defaultChain['ecs'] = self::ecsCredentials($config);
