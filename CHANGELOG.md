@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.186.3 - 2021-07-30
 
 * `Aws\AppSync` - AWS AppSync now supports a new authorization mode allowing you to define your own authorization logic using an AWS Lambda function.
 * `Aws\ElasticLoadBalancingv2` - Client Port Preservation ALB Attribute Launch
