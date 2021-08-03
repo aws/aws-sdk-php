@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Instance Profile Provider now has new input for IP version, taking IPv4 or IPv6.  Default behavior hasn't changed, but new defaults if IPv6 is explicitly enabled.
+* `Aws\Glue` - Add ConcurrentModificationException to create-table, delete-table, create-database, update-database, delete-database
+* `Aws\IoTSiteWise` - My AWS Service (placeholder) - This release introduces custom Intervals and offset for tumbling window in metric for AWS IoT SiteWise.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added control over the passthrough of XDS captions metadata to outputs.
+* `Aws\Proton` - Docs only add idempotent create apis
+* `Aws\Redshift` - API support for Redshift Data Sharing feature.
+
 ## 3.186.4 - 2021-08-02
 
 * `Aws\GreengrassV2` - This release adds support for component system resource limits and idempotent Create operations. You can now specify the maximum amount of CPU and memory resources that each component can use.
