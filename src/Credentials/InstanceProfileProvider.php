@@ -6,47 +6,29 @@ use Aws\Exception\InvalidJsonException;
 use Aws\Sdk;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\Promise;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
-use InvalidArgumentException as IAE;
 
 /**
  * Credential provider that provides credentials from the EC2 metadata service.
  */
 class InstanceProfileProvider
 {
-    const V4_SERVER_URI = '169.254.169.254';
-    const V6_SERVER_URI = '[fd00:ec2::254]';
+    const SERVER_URI = 'http://169.254.169.254/latest/';
     const CRED_PATH = 'meta-data/iam/security-credentials/';
     const TOKEN_PATH = 'api/token';
 
     const ENV_DISABLE = 'AWS_EC2_METADATA_DISABLED';
     const ENV_TIMEOUT = 'AWS_METADATA_SERVICE_TIMEOUT';
     const ENV_RETRIES = 'AWS_METADATA_SERVICE_NUM_ATTEMPTS';
-    const ENV_ENDPOINT = 'AWS_EC2_METADATA_SERVICE_ENDPOINT';
-    const ENV_CONFIG_FILE = 'AWS_CONFIG_FILE';
-    const ENV_ENDPOINT_MODE = 'AWS_EC2_METADATA_SERVICE_ENDPOINT_MODE';
-
-    const CONFIG_ENDPOINT_MODE = 'ec2_metadata_service_endpoint_mode';
-    const CONFIG_ENDPOINT = 'ec2_metadata_service_endpoint';
-
-    public static $supporedIpVersions = ['IPv4', 'IPv6'];
 
     /** @var string */
     private $profile;
 
     /** @var callable */
     private $client;
-
-    /** @var string */
-    private $endpoint;
-
-    /** @var string */
-    private $endpoint_mode;
-
-    /** @var string */
-    private $configFile;
 
     /** @var int */
     private $retries;
@@ -66,8 +48,6 @@ class InstanceProfileProvider
      * - timeout: Connection timeout, in seconds.
      * - profile: Optional EC2 profile name, if known.
      * - retries: Optional number of retries to be attempted.
-     * - endpoint: Optional endpoint to use for fetching metadata info
-     * - endpoint_mode: Optional specification to force IPv4 or IPv6; defaults to IPv4
      *
      * @param array $config Configuration options.
      */
@@ -80,11 +60,6 @@ class InstanceProfileProvider
         $this->client = isset($config['client'])
             ? $config['client'] // internal use only
             : \Aws\default_http_handler();
-        $configFile =
-            \Aws\get_environment_variable(InstanceProfileProvider::ENV_CONFIG_FILE);
-        $this->configFile = $configFile !== false ? $configFile : null;
-        $this->applyEndpointMode($config);
-        $this->applyEndpoint($config);
     }
 
     /**
@@ -223,12 +198,7 @@ class InstanceProfileProvider
         }
 
         $fn = $this->client;
-        $request = new Request(
-            $method,
-            $this->endpoint . $url,
-            ['force_ip_resolve' => $this->endpoint_mode]
-        );
-
+        $request = new Request($method, self::SERVER_URI . $url);
         $userAgent = 'aws-sdk-php/' . Sdk::VERSION;
         if (defined('HHVM_VERSION')) {
             $userAgent .= ' HHVM/' . HHVM_VERSION;
@@ -303,78 +273,5 @@ class InstanceProfileProvider
         }
 
         return $result;
-    }
-
-    /**
-     * @param $endpoint_mode
-     */
-    private function applyEndpointMode($config)
-    {
-        $endpoint_mode = isset($config['endpoint_mode'])
-                ? $config['endpoint_mode']
-                : false;
-        if ($endpoint_mode == false) {
-            $endpoint_mode =
-                \Aws\get_environment_variable(InstanceProfileProvider::ENV_ENDPOINT_MODE);
-        }
-        if ($endpoint_mode == false) {
-            $endpoint_mode =
-                \Aws\get_config_variable(
-                    InstanceProfileProvider::CONFIG_ENDPOINT_MODE,
-                    $this->configFile
-                );
-        }
-
-        if ($endpoint_mode !== false) {
-            if (!in_array($endpoint_mode, self::$supporedIpVersions)) {
-                throw new IAE(
-                    "Invalid input for endpoint_mode provided.  Valid inputs include: "
-                    . implode(', ', self::$supporedIpVersions)
-                );
-            }
-            $this->endpoint_mode = str_replace('IP', '', $endpoint_mode);
-        } else {
-            $this->endpoint_mode = 'v4';
-        }
-    }
-
-    /**
-     * @param array $config
-     * @param $configFile
-     * @return array
-     */
-    private function getEndpointMode(array $config, $configFile)
-    {
-
-        return $config;
-    }
-
-    /**
-     * @param array $config
-     * @param $configFile
-     */
-    private function applyEndpoint(array $config)
-    {
-        $endpoint = isset($config['endpoint']) ? $config['endpoint'] : false;
-        if ($endpoint === false) {
-            $endpoint =
-                \Aws\get_environment_variable(InstanceProfileProvider::ENV_ENDPOINT);
-        }
-        if ($endpoint === false) {
-            $endpoint =
-                \Aws\get_config_variable(
-                    InstanceProfileProvider::CONFIG_ENDPOINT,
-                    $this->configFile
-                );
-        }
-        if ($endpoint !== false) {
-            $this->endpoint = 'http://' . $endpoint . '/latest/';
-        } else {
-            $endpoint_uri =
-                $this->endpoint_mode == 'v4'
-                    ? self::V4_SERVER_URI
-                    : self::V6_SERVER_URI;
-            $this->endpoint = 'http://' . $endpoint_uri . '/latest/';
-        }
     }
 }
