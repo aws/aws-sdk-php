@@ -21,6 +21,7 @@ use PHPUnit\Framework\TestCase;
 class ComplianceTest extends TestCase
 {
     use UsesServiceTrait;
+
     public function testCaseProvider()
     {
         $cases = [];

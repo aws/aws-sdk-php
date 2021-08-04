@@ -239,6 +239,21 @@ class Validator
         }
     }
 
+    private function check_array($arr)
+    {
+        return $this->isIndexed($arr) || $this->isAssociative($arr);
+    }
+
+    private function isAssociative($arr)
+    {
+        return count(array_filter(array_keys($arr), "is_string")) == count($arr);
+    }
+
+    private function isIndexed(array $arr)
+    {
+        return $arr == array_values($arr);
+    }
+
     private function checkCanString($value)
     {
         static $valid = [
@@ -287,12 +302,12 @@ class Validator
                    return false;
                }
             }
+            return $this->check_array($value);
         }
         return is_null($value)
             || is_numeric($value)
             || is_string($value)
-            || is_bool($value)
-            || is_array($value);
+            || is_bool($value);
     }
 
     private function addError($message)
