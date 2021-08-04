@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 3.187.0 - 2021-08-03
+## 3.187.1 - 2021-08-04
 
 * `Aws\` - Instance Profile Provider now has new input for IP version, taking IPv4 or IPv6.  Default behavior hasn't changed, but new defaults if IPv6 is explicitly enabled.
 * `Aws\Glue` - Add ConcurrentModificationException to create-table, delete-table, create-database, update-database, delete-database
