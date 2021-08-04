@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EventBridge` - Documentation updates to add EC2 Image Builder as a target on PutTargets.
+* `Aws\RDS` - This release adds AutomaticRestartTime to the DescribeDBInstances and DescribeDBClusters operations. AutomaticRestartTime indicates the time when a stopped DB instance or DB cluster is restarted automatically.
+* `Aws\SSMIncidents` - Documentation updates for Incident Manager.
+* `Aws\TranscribeService` - This release adds support for call analytics (batch) within Amazon Transcribe.
+* `Aws\imagebuilder` - Updated list actions to include a list of valid filters that can be used in the request.
+
 ## 3.187.1 - 2021-08-04
 
 * `Aws\` - Instance Profile Provider now has new input for IP version, taking IPv4 or IPv6.  Default behavior hasn't changed, but new defaults if IPv6 is explicitly enabled.
