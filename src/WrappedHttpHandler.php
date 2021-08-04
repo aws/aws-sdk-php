@@ -5,6 +5,7 @@ use Aws\Api\Parser\Exception\ParserException;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Promise\Create;
 
 /**
  * Converts an HTTP handler into a Command HTTP handler.
@@ -84,7 +85,7 @@ class WrappedHttpHandler
                 . ' receiver to Aws\WrappedHttpHandler is not supported.');
         }
 
-        return Promise\promise_for($fn($request, $options))
+        return Create::promiseFor($fn($request, $options))
             ->then(
                 function (
                     ResponseInterface $res
