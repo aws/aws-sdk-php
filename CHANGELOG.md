@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.187.2 - 2021-08-04
 
 * `Aws\EventBridge` - Documentation updates to add EC2 Image Builder as a target on PutTargets.
 * `Aws\RDS` - This release adds AutomaticRestartTime to the DescribeDBInstances and DescribeDBClusters operations. AutomaticRestartTime indicates the time when a stopped DB instance or DB cluster is restarted automatically.
