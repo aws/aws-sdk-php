@@ -24,6 +24,7 @@ trait HasDataTrait
      *
      * @return mixed|null
      */
+    #[\ReturnTypeWillChange]
     public function & offsetGet($offset)
     {
         if (isset($this->data[$offset])) {
@@ -34,16 +35,19 @@ trait HasDataTrait
         return $value;
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->data[$offset] = $value;
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->data[$offset]);
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->data[$offset]);
