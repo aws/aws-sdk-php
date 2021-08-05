@@ -27,6 +27,7 @@ class History implements \Countable, \IteratorAggregate
         return count($this->entries);
     }
 
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator(array_values($this->entries));

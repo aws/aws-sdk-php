@@ -10,6 +10,7 @@ trait HasDataTrait
     /** @var array */
     private $data = [];
 
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator($this->data);
