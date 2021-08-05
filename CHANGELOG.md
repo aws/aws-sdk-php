@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - EC2 Auto Scaling adds configuration checks and Launch Template validation to Instance Refresh.
+* `Aws\LexModelsV2` - Customers can now toggle the active field on prompts and responses.
+
 ## 3.187.2 - 2021-08-04
 
 * `Aws\EventBridge` - Documentation updates to add EC2 Image Builder as a target on PutTargets.
