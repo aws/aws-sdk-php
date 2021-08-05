@@ -53,6 +53,7 @@ trait HasDataTrait
         return $this->data;
     }
 
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->data);
