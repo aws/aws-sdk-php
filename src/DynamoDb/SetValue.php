@@ -1,8 +1,6 @@
 <?php
 namespace Aws\DynamoDb;
 
-use \ReturnTypeWillChange;
-
 /**
  * Special object to represent a DynamoDB set (SS/NS/BS) value.
  */
@@ -41,7 +39,7 @@ class SetValue implements \JsonSerializable, \Countable, \IteratorAggregate
         return new \ArrayIterator($this->values);
     }
 
-    #[ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->toArray();
