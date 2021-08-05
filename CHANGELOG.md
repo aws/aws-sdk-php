@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.187.3 - 2021-08-05
 
 * `Aws\AutoScaling` - EC2 Auto Scaling adds configuration checks and Launch Template validation to Instance Refresh.
 * `Aws\LexModelsV2` - Customers can now toggle the active field on prompts and responses.
