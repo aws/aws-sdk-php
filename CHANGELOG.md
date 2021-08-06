@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Athena` - Documentation updates for Athena.
+* `Aws\ChimeSDKIdentity` - The Amazon Chime SDK Identity APIs allow software developers to create and manage unique instances of their messaging applications.
+* `Aws\ChimeSDKMessaging` - The Amazon Chime SDK Messaging APIs allow software developers to send and receive messages in custom messaging applications.
+* `Aws\Connect` - This release adds support for agent status and hours of operation. For details, see the Release Notes in the Amazon Connect Administrator Guide.
+* `Aws\Lightsail` - This release adds support to track when a bucket access key was last used.
+* `Aws\Synthetics` - Documentation updates for Visual Monitoring feature and other doc ticket fixes.
+
 ## 3.187.3 - 2021-08-05
 
 * `Aws\AutoScaling` - EC2 Auto Scaling adds configuration checks and Launch Template validation to Instance Refresh.
