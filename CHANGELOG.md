@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.188.0 - 2021-08-06
 
 * `Aws\Athena` - Documentation updates for Athena.
 * `Aws\ChimeSDKIdentity` - The Amazon Chime SDK Identity APIs allow software developers to create and manage unique instances of their messaging applications.
