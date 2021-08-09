@@ -239,7 +239,7 @@ class Validator
         }
     }
 
-    private function check_array($arr)
+    private function checkArray($arr)
     {
         return $this->isIndexed($arr) || $this->isAssociative($arr);
     }
@@ -302,7 +302,7 @@ class Validator
                    return false;
                }
             }
-            return $this->check_array($value);
+            return $this->checkArray($value);
         }
         return is_null($value)
             || is_numeric($value)
