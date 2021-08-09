@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.188.1 - 2021-08-09
 
 * `Aws\Rekognition` - This release adds support for four new types of segments (opening credits, content segments, slates, and studio logos), improved accuracy for credits and shot detection and new filters to control black frame detection.
 * `Aws\SSM` - Documentation updates for AWS Systems Manager.
