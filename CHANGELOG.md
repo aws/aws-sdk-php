@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Rekognition` - This release adds support for four new types of segments (opening credits, content segments, slates, and studio logos), improved accuracy for credits and shot detection and new filters to control black frame detection.
+* `Aws\SSM` - Documentation updates for AWS Systems Manager.
+* `Aws\WAFV2` - This release adds APIs to support versioning feature of AWS WAF Managed rule groups
+
 ## 3.188.0 - 2021-08-06
 
 * `Aws\Athena` - Documentation updates for Athena.
