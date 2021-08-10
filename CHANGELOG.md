@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Enable support for internal document model types to allow the sending of raw json directly to services
+* `Aws\Chime` - Add support for "auto" in Region field of StartMeetingTranscription API request.
+
 ## 3.188.1 - 2021-08-09
 
 * `Aws\Rekognition` - This release adds support for four new types of segments (opening credits, content segments, slates, and studio logos), improved accuracy for credits and shot detection and new filters to control black frame detection.
