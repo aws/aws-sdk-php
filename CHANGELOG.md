@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.189.0 - 2021-08-10
 
 * `Aws\` - Enable support for internal document model types to allow the sending of raw json directly to services
 * `Aws\Chime` - Add support for "auto" in Region field of StartMeetingTranscription API request.
