@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.190.0 - 2021-08-11
 
 * `Aws\CodeBuild` - CodeBuild now allows you to make the build results for your build projects available to the public without requiring access to an AWS account.
 * `Aws\EBS` - Documentation updates for Amazon EBS direct APIs.
