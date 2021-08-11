@@ -470,27 +470,26 @@ EOT
             ],
         ];
     }
-}
 
     public function testGetEnvironmentVariableFromEnv()
     {
-        putenv(“FOO=BAR”);
+        putenv("FOO=BAR");
         $this->assertEquals(
-            “BAR”,
-            Aws\get_environment_variable(“FOO”)
+            "BAR",
+            Aws\get_environment_variable("FOO")
         );
-        putenv(“FOO”);
+        putenv("FOO");
     }
     public function testGetEnvironmentVariableFromServer()
     {
-        $_SERVER[‘FOO’] = ‘BAR’;
+        $_SERVER['FOO'] = 'BAR';
         $this->assertEquals(
-            “BAR”,
-            Aws\get_environment_variable(“FOO”)
+            "BAR",
+            Aws\get_environment_variable("FOO")
         );
-        unset($_SERVER[‘FOO’]);
+        unset($_SERVER['FOO']);
     }
-    public function  testGetConfigVariableWithDefaultProfile() {
+    public function  testGetConfigVariableWithDefaultProfie() {
         $fileContents = <<<EOT
 [default]
 foo_key = bar
@@ -499,15 +498,15 @@ baz_key = qux
 foo_key = bar-custom
 baz_key = qux-custom
 EOT;
-        $tmpFile = sys_get_temp_dir() . ‘/test.ini’;
+        $tmpFile = sys_get_temp_dir() . '/test.ini';
         file_put_contents($tmpFile, $fileContents);
         $this->assertEquals(
-            “bar”,
-            Aws\get_config_variable(‘foo_key’, $tmpFile)
+            "bar",
+            Aws\get_config_variable('foo_key', $tmpFile)
         );
         unlink($tmpFile);
     }
-    public function  testGetConfigVariableWithCustomProfile() {
+    public function  testGetConfigVariableWithCustomProfie() {
         $fileContents = <<<EOT
 [default]
 foo_key = bar
@@ -516,12 +515,12 @@ baz_key = qux
 foo_key = bar-custom
 baz_key = qux-custom
 EOT;
-        $tmpFile = sys_get_temp_dir() . ‘/test.ini’;
+        $tmpFile = sys_get_temp_dir() . '/test.ini';
         file_put_contents($tmpFile, $fileContents);
         $this->assertEquals(
-            “bar-custom”,
-            Aws\get_config_variable(‘foo_key’, $tmpFile, ‘custom’)
+            "bar-custom",
+            Aws\get_config_variable('foo_key', $tmpFile, 'custom')
         );
         unlink($tmpFile);
     }
-
+}
