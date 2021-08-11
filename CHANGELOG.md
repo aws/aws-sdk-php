@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeBuild` - CodeBuild now allows you to make the build results for your build projects available to the public without requiring access to an AWS account.
+* `Aws\EBS` - Documentation updates for Amazon EBS direct APIs.
+* `Aws\ECS` - Documentation updates for ECS.
+* `Aws\NimbleStudio` - Add new attribute 'ownedBy' in Streaming Session APIs. 'ownedBy' represents the AWS SSO Identity Store User ID of the owner of the Streaming Session resource.
+* `Aws\Route53` - Documentation updates for route53
+* `Aws\SnowDeviceManagement` - AWS Snow Family customers can remotely monitor and operate their connected AWS Snowcone devices.
+
 ## 3.189.0 - 2021-08-10
 
 * `Aws\` - Enable support for internal document model types to allow the sending of raw json directly to services
