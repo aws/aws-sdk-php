@@ -470,6 +470,7 @@ EOT
             ],
         ];
     }
+}
 
     public function testGetEnvironmentVariableFromEnv()
     {
@@ -523,4 +524,4 @@ EOT;
         );
         unlink($tmpFile);
     }
-}
+
