@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.190.1 - 2021-08-12
 
 * `Aws\APIGateway` - Adding support for ACM imported or private CA certificates for mTLS enabled domain names
 * `Aws\ApiGatewayV2` - Adding support for ACM imported or private CA certificates for mTLS enabled domain names
