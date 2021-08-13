@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.190.2 - 2021-08-13
 
 * `Aws\CustomerProfiles` - This release introduces Standard Profile Objects, namely Asset and Case which contain values populated by data from third party systems and belong to a specific profile. This release adds an optional parameter, ObjectFilter to the ListProfileObjects API in order to search for these Standard Objects.
 * `Aws\EMR` - Amazon EMR customers can now specify custom AMIs at the instance level in their clusters. This allows using custom AMIs in clusters that have instances with different instruction set architectures, e.g. m5.xlarge (x86) and m6g.xlarge (ARM).
