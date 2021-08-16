@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.190.3 - 2021-08-16
 
 * `Aws\CodeBuild` - CodeBuild now allows you to select how batch build statuses are sent to the source provider for a project.
 * `Aws\ConfigService` - Update ResourceType enum with values for Backup Plan, Selection, Vault, RecoveryPoint; ECS Cluster, Service, TaskDefinition; EFS AccessPoint, FileSystem; EKS Cluster; ECR Repository resources
