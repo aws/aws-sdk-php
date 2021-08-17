@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.190.4 - 2021-08-17
 
 * `Aws\Cloud9` - Added DryRun parameter to CreateEnvironmentEC2 API. Added ManagedCredentialsActions parameter to UpdateEnvironment API
 * `Aws\CloudDirectory` - Documentation updates for clouddirectory
