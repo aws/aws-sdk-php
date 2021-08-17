@@ -67,7 +67,7 @@ class PostObjectV4
         ];
 
         // setup basic formInputs
-        $this->formInputs = $formInputs + ['key' => '${filename}'];
+        $this->formInputs = $formInputs + ['key' => $filename];
 
         // finalize policy and signature
 
