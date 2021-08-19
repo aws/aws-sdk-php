@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Appflow` - This release adds support for SAPOData connector and extends Veeva connector for document extraction.
+* `Aws\ApplicationAutoScaling` - This release extends Application Auto Scaling support for replication group of Amazon ElastiCache Redis clusters. Auto Scaling monitors and automatically expands node group count and number of replicas per node group when a critical usage threshold is met or according to customer-defined schedule.
+* `Aws\EC2` - The ImportImage API now supports the ability to create AMIs with AWS-managed licenses for Microsoft SQL Server for both Windows and Linux.
+* `Aws\MemoryDB` - AWS MemoryDB SDK now supports all APIs for newly launched MemoryDB service.
+
 ## 3.190.5 - 2021-08-18
 
 * `Aws\CodeBuild` - CodeBuild now allows you to make the build results for your build projects available to the public without requiring access to an AWS account.
