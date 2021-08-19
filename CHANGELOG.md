@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.191.0 - 2021-08-19
 
 * `Aws\Appflow` - This release adds support for SAPOData connector and extends Veeva connector for document extraction.
 * `Aws\ApplicationAutoScaling` - This release extends Application Auto Scaling support for replication group of Amazon ElastiCache Redis clusters. Auto Scaling monitors and automatically expands node group count and number of replicas per node group when a critical usage threshold is met or according to customer-defined schedule.
