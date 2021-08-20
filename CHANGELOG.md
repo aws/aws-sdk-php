@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Comprehend` - Add tagging support for Comprehend async inference job.
+* `Aws\EC2` - encryptionInTransitSupported added to DescribeInstanceTypes API
+* `Aws\EKS` - Adds support for EKS add-ons "preserve" flag, which allows customers to maintain software on their EKS clusters after removing it from EKS add-ons management.
+* `Aws\RoboMaker` - Documentation updates for RoboMaker
+
 ## 3.191.0 - 2021-08-19
 
 * `Aws\Appflow` - This release adds support for SAPOData connector and extends Veeva connector for document extraction.
