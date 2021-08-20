@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.191.1 - 2021-08-20
 
 * `Aws\Comprehend` - Add tagging support for Comprehend async inference job.
 * `Aws\EC2` - encryptionInTransitSupported added to DescribeInstanceTypes API
