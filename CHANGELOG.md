@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.191.2 - 2021-08-23
 
 * `Aws\APIGateway` - Adding some of the pending releases (1) Adding WAF Filter to GatewayResponseType enum (2) Ensuring consistent error model for all operations (3) Add missing BRE to GetVpcLink operation
 * `Aws\Backup` - AWS Backup - Features: Evaluate your backup activity and generate audit reports.
