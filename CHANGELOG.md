@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoTDataPlane` - Updated Publish with support for new Retain flag and added two new API operations: GetRetainedMessage, ListRetainedMessages.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added MBAFF encoding support for AVC video and the ability to pass encryption context from the job settings to S3.
+* `Aws\Polly` - Amazon Polly adds new New Zealand English voice - Aria. Aria is available as Neural voice only.
+* `Aws\SSM` - Updated Parameter Store property for logging improvements.
+* `Aws\TranscribeService` - This release adds support for feature tagging with Amazon Transcribe batch jobs.
+
 ## 3.191.2 - 2021-08-23
 
 * `Aws\APIGateway` - Adding some of the pending releases (1) Adding WAF Filter to GatewayResponseType enum (2) Ensuring consistent error model for all operations (3) Add missing BRE to GetVpcLink operation
