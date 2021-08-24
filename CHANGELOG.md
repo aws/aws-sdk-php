@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.191.3 - 2021-08-24
 
 * `Aws\IoTDataPlane` - Updated Publish with support for new Retain flag and added two new API operations: GetRetainedMessage, ListRetainedMessages.
 * `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added MBAFF encoding support for AVC video and the ability to pass encryption context from the job settings to S3.
