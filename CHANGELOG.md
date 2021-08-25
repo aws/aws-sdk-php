@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchEvents` - AWS CWEvents adds an enum of EXTERNAL for EcsParameters LaunchType for PutTargets API
+* `Aws\DataSync` - Added include filters to CreateTask and UpdateTask, and added exclude filters to StartTaskExecution, giving customers more granular control over how DataSync transfers files, folders, and objects.
+* `Aws\EC2` - Support added for IMDS IPv6 endpoint
+* `Aws\EventBridge` - AWS EventBridge adds an enum of EXTERNAL for EcsParameters LaunchType for PutTargets API
+* `Aws\FMS` - AWS Firewall Manager now supports triggering resource cleanup workflow when account or resource goes out of policy scope for AWS WAF, Security group, AWS Network Firewall, and Amazon Route 53 Resolver DNS Firewall policies.
+
 ## 3.191.3 - 2021-08-24
 
 * `Aws\IoTDataPlane` - Updated Publish with support for new Retain flag and added two new API operations: GetRetainedMessage, ListRetainedMessages.
