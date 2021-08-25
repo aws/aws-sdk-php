@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.191.4 - 2021-08-25
 
 * `Aws\CloudWatchEvents` - AWS CWEvents adds an enum of EXTERNAL for EcsParameters LaunchType for PutTargets API
 * `Aws\DataSync` - Added include filters to CreateTask and UpdateTask, and added exclude filters to StartTaskExecution, giving customers more granular control over how DataSync transfers files, folders, and objects.
