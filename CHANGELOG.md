@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.191.5 - 2021-08-26
 
 * `Aws\ComputeOptimizer` - Adds support for 1) the AWS Graviton (AWS_ARM64) recommendation preference for Amazon EC2 instance and Auto Scaling group recommendations, and 2) the ability to get the enrollment statuses for all member accounts of an organization.
 * `Aws\EC2` - Support added for resizing VPC prefix lists
