@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - This release adds the BootMode flag to the ImportImage API and showing the detected BootMode of an ImportImage task.
+* `Aws\EMR` - Amazon EMR now supports auto-terminating idle EMR clusters. You can specify the idle timeout value when enabling auto-termination for both running and new clusters and Amazon EMR automatically terminates the cluster when idle timeout kicks in.
+* `Aws\S3` - Documentation updates for Amazon S3.
+
 ## 3.191.5 - 2021-08-26
 
 * `Aws\ComputeOptimizer` - Adds support for 1) the AWS Graviton (AWS_ARM64) recommendation preference for Amazon EC2 instance and Auto Scaling group recommendations, and 2) the ability to get the enrollment statuses for all member accounts of an organization.
