@@ -166,7 +166,7 @@ class MarshalerTest extends TestCase
             // Binary
             [$m->binary('foo'), ['B' => 'foo']],
             [$resource, ['B' => 'foo']],
-            [Psr7\stream_for('foo'), ['B' => 'foo']],
+            [Psr7\Utils::streamFor('foo'), ['B' => 'foo']],
 
             // Set
             [$m->set(['a', 'b', 'c']), ['SS' => ['a', 'b', 'c']]],

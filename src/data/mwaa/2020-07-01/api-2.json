@@ -266,6 +266,7 @@
         "KmsKey":{"shape":"KmsKey"},
         "LoggingConfiguration":{"shape":"LoggingConfigurationInput"},
         "MaxWorkers":{"shape":"MaxWorkers"},
+        "MinWorkers":{"shape":"MinWorkers"},
         "Name":{
           "shape":"EnvironmentName",
           "location":"uri",
@@ -276,6 +277,7 @@
         "PluginsS3Path":{"shape":"RelativePath"},
         "RequirementsS3ObjectVersion":{"shape":"S3ObjectVersion"},
         "RequirementsS3Path":{"shape":"RelativePath"},
+        "Schedulers":{"shape":"Schedulers"},
         "SourceBucketArn":{"shape":"S3BucketArn"},
         "Tags":{"shape":"TagMap"},
         "WebserverAccessMode":{"shape":"WebserverAccessMode"},
@@ -356,12 +358,14 @@
         "LastUpdate":{"shape":"LastUpdate"},
         "LoggingConfiguration":{"shape":"LoggingConfiguration"},
         "MaxWorkers":{"shape":"MaxWorkers"},
+        "MinWorkers":{"shape":"MinWorkers"},
         "Name":{"shape":"EnvironmentName"},
         "NetworkConfiguration":{"shape":"NetworkConfiguration"},
         "PluginsS3ObjectVersion":{"shape":"S3ObjectVersion"},
         "PluginsS3Path":{"shape":"RelativePath"},
         "RequirementsS3ObjectVersion":{"shape":"S3ObjectVersion"},
         "RequirementsS3Path":{"shape":"RelativePath"},
+        "Schedulers":{"shape":"Schedulers"},
         "ServiceRoleArn":{"shape":"IamRoleArn"},
         "SourceBucketArn":{"shape":"S3BucketArn"},
         "Status":{"shape":"EnvironmentStatus"},
@@ -400,7 +404,9 @@
         "AVAILABLE",
         "UPDATING",
         "DELETING",
-        "DELETED"
+        "DELETED",
+        "UNAVAILABLE",
+        "UPDATE_FAILED"
       ]
     },
     "ErrorCode":{"type":"string"},
@@ -570,6 +576,11 @@
         "Value":{"shape":"Double"}
       }
     },
+    "MinWorkers":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "ModuleLoggingConfiguration":{
       "type":"structure",
       "members":{
@@ -642,12 +653,17 @@
       "type":"string",
       "max":1224,
       "min":1,
-      "pattern":"^arn:aws(-[a-z]+)?:s3:::airflow-[a-z0-9.\\-]+$"
+      "pattern":"^arn:aws(-[a-z]+)?:s3:::[a-z0-9.\\-]+$"
     },
     "S3ObjectVersion":{
       "type":"string",
       "max":1024,
       "min":1
+    },
+    "Schedulers":{
+      "type":"integer",
+      "box":true,
+      "max":5
     },
     "SecurityGroupId":{
       "type":"string",
@@ -817,6 +833,7 @@
         "ExecutionRoleArn":{"shape":"IamRoleArn"},
         "LoggingConfiguration":{"shape":"LoggingConfigurationInput"},
         "MaxWorkers":{"shape":"MaxWorkers"},
+        "MinWorkers":{"shape":"MinWorkers"},
         "Name":{
           "shape":"EnvironmentName",
           "location":"uri",
@@ -827,6 +844,7 @@
         "PluginsS3Path":{"shape":"RelativePath"},
         "RequirementsS3ObjectVersion":{"shape":"S3ObjectVersion"},
         "RequirementsS3Path":{"shape":"RelativePath"},
+        "Schedulers":{"shape":"Schedulers"},
         "SourceBucketArn":{"shape":"S3BucketArn"},
         "WebserverAccessMode":{"shape":"WebserverAccessMode"},
         "WeeklyMaintenanceWindowStart":{"shape":"WeeklyMaintenanceWindowStart"}

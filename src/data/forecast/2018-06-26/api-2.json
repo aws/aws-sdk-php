@@ -221,6 +221,20 @@
       ],
       "idempotent":true
     },
+    "DeleteResourceTree":{
+      "name":"DeleteResourceTree",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResourceTreeRequest"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"}
+      ],
+      "idempotent":true
+    },
     "DescribeDataset":{
       "name":"DescribeDataset",
       "http":{
@@ -443,6 +457,20 @@
         {"shape":"InvalidInputException"}
       ]
     },
+    "StopResource":{
+      "name":"StopResource",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopResourceRequest"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ],
+      "idempotent":true
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -505,6 +533,10 @@
         "timestamp",
         "geolocation"
       ]
+    },
+    "AutoMLOverrideStrategy":{
+      "type":"string",
+      "enum":["LatencyOptimized"]
     },
     "Boolean":{"type":"boolean"},
     "CategoricalParameterRange":{
@@ -684,6 +716,7 @@
         "ForecastHorizon":{"shape":"Integer"},
         "ForecastTypes":{"shape":"ForecastTypes"},
         "PerformAutoML":{"shape":"Boolean"},
+        "AutoMLOverrideStrategy":{"shape":"AutoMLOverrideStrategy"},
         "PerformHPO":{"shape":"Boolean"},
         "TrainingParameters":{"shape":"TrainingParameters"},
         "EvaluationParameters":{"shape":"EvaluationParameters"},
@@ -815,6 +848,13 @@
         "PredictorArn":{"shape":"Arn"}
       }
     },
+    "DeleteResourceTreeRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"Arn"}
+      }
+    },
     "DescribeDatasetGroupRequest":{
       "type":"structure",
       "required":["DatasetGroupArn"],
@@ -852,6 +892,7 @@
         "UseGeolocationForTimeZone":{"shape":"UseGeolocationForTimeZone"},
         "GeolocationFormat":{"shape":"GeolocationFormat"},
         "DataSource":{"shape":"DataSource"},
+        "EstimatedTimeRemainingInMinutes":{"shape":"Long"},
         "FieldStatistics":{"shape":"FieldStatistics"},
         "DataSize":{"shape":"Double"},
         "Status":{"shape":"Status"},
@@ -917,6 +958,7 @@
         "ForecastTypes":{"shape":"ForecastTypes"},
         "PredictorArn":{"shape":"Arn"},
         "DatasetGroupArn":{"shape":"Arn"},
+        "EstimatedTimeRemainingInMinutes":{"shape":"Long"},
         "Status":{"shape":"String"},
         "Message":{"shape":"ErrorMessage"},
         "CreationTime":{"shape":"Timestamp"},
@@ -959,6 +1001,7 @@
         "ForecastHorizon":{"shape":"Integer"},
         "ForecastTypes":{"shape":"ForecastTypes"},
         "PerformAutoML":{"shape":"Boolean"},
+        "AutoMLOverrideStrategy":{"shape":"AutoMLOverrideStrategy"},
         "PerformHPO":{"shape":"Boolean"},
         "TrainingParameters":{"shape":"TrainingParameters"},
         "EvaluationParameters":{"shape":"EvaluationParameters"},
@@ -967,6 +1010,7 @@
         "FeaturizationConfig":{"shape":"FeaturizationConfig"},
         "EncryptionConfig":{"shape":"EncryptionConfig"},
         "PredictorExecutionDetails":{"shape":"PredictorExecutionDetails"},
+        "EstimatedTimeRemainingInMinutes":{"shape":"Long"},
         "DatasetImportJobArns":{"shape":"ArnList"},
         "AutoMLAlgorithmArns":{"shape":"ArnList"},
         "Status":{"shape":"Status"},
@@ -1178,7 +1222,8 @@
     "GetAccuracyMetricsResponse":{
       "type":"structure",
       "members":{
-        "PredictorEvaluationResults":{"shape":"PredictorEvaluationResults"}
+        "PredictorEvaluationResults":{"shape":"PredictorEvaluationResults"},
+        "AutoMLOverrideStrategy":{"shape":"AutoMLOverrideStrategy"}
       }
     },
     "HyperParameterTuningJobConfig":{
@@ -1358,6 +1403,7 @@
         "Tags":{"shape":"Tags"}
       }
     },
+    "Long":{"type":"long"},
     "MaxResults":{
       "type":"integer",
       "max":100,
@@ -1535,12 +1581,23 @@
         "Min":{"shape":"String"},
         "Max":{"shape":"String"},
         "Avg":{"shape":"Double"},
-        "Stddev":{"shape":"Double"}
+        "Stddev":{"shape":"Double"},
+        "CountLong":{"shape":"Long"},
+        "CountDistinctLong":{"shape":"Long"},
+        "CountNullLong":{"shape":"Long"},
+        "CountNanLong":{"shape":"Long"}
       }
     },
     "Status":{
       "type":"string",
       "max":256
+    },
+    "StopResourceRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"Arn"}
+      }
     },
     "String":{
       "type":"string",

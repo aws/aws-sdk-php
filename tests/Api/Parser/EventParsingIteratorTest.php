@@ -81,7 +81,7 @@ class EventParsingIteratorTest extends TestCase
      */
     public function testEmitsEvents($input, $output, $expectedCount)
     {
-        $stream = Psr7\stream_for($input);
+        $stream = Psr7\Utils::streamFor($input);
         $iterator = new EventParsingIterator(
             $stream,
             $this->eventstreamShape,
@@ -106,7 +106,7 @@ class EventParsingIteratorTest extends TestCase
 
     public function testThrowsOnErrorEvent()
     {
-        $stream = Psr7\stream_for(
+        $stream = Psr7\Utils::streamFor(
             base64_decode(file_get_contents(
                 __DIR__ . '/../eventstream_fixtures/input/error_event'
             ))
@@ -137,7 +137,7 @@ class EventParsingIteratorTest extends TestCase
      */
     public function testThrowsOnUnknownMessageType()
     {
-        $stream = Psr7\stream_for(
+        $stream = Psr7\Utils::streamFor(
             base64_decode(file_get_contents(
                 __DIR__ . '/../eventstream_fixtures/input/unknown_message_type'
             ))
@@ -159,7 +159,7 @@ class EventParsingIteratorTest extends TestCase
      */
     public function testThrowsOnUnknownEventType()
     {
-        $stream = Psr7\stream_for(
+        $stream = Psr7\Utils::streamFor(
             base64_decode(file_get_contents(
                 __DIR__ . '/../eventstream_fixtures/input/unknown_event_type'
             ))

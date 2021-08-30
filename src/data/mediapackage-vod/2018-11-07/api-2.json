@@ -12,6 +12,40 @@
     "uid": "mediapackage-vod-2018-11-07"
   },
   "operations": {
+    "ConfigureLogs": {
+      "errors": [
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ],
+      "http": {
+        "method": "PUT",
+        "requestUri": "/packaging_groups/{id}/configure_logs",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ConfigureLogsRequest"
+      },
+      "name": "ConfigureLogs",
+      "output": {
+        "shape": "ConfigureLogsResponse"
+      }
+    },
     "CreateAsset": {
       "errors": [
         {
@@ -648,6 +682,10 @@
     },
     "CmafEncryption": {
       "members": {
+        "ConstantInitializationVector": {
+          "locationName": "constantInitializationVector",
+          "shape": "__string"
+        },
         "SpekeKeyProvider": {
           "locationName": "spekeKeyProvider",
           "shape": "SpekeKeyProvider"
@@ -668,6 +706,10 @@
           "locationName": "hlsManifests",
           "shape": "__listOfHlsManifest"
         },
+        "IncludeEncoderConfigurationInSegments": {
+          "locationName": "includeEncoderConfigurationInSegments",
+          "shape": "__boolean"
+        },
         "SegmentDurationSeconds": {
           "locationName": "segmentDurationSeconds",
           "shape": "__integer"
@@ -676,6 +718,61 @@
       "required": [
         "HlsManifests"
       ],
+      "type": "structure"
+    },
+    "ConfigureLogsParameters": {
+      "members": {
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        }
+      },
+      "type": "structure"
+    },
+    "ConfigureLogsRequest": {
+      "members": {
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
+        "Id": {
+          "location": "uri",
+          "locationName": "id",
+          "shape": "__string"
+        }
+      },
+      "required": [
+        "Id"
+      ],
+      "type": "structure"
+    },
+    "ConfigureLogsResponse": {
+      "members": {
+        "Arn": {
+          "locationName": "arn",
+          "shape": "__string"
+        },
+        "Authorization": {
+          "locationName": "authorization",
+          "shape": "Authorization"
+        },
+        "DomainName": {
+          "locationName": "domainName",
+          "shape": "__string"
+        },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
+        "Id": {
+          "locationName": "id",
+          "shape": "__string"
+        },
+        "Tags": {
+          "locationName": "tags",
+          "shape": "Tags"
+        }
+      },
       "type": "structure"
     },
     "CreateAssetRequest": {
@@ -834,6 +931,10 @@
           "locationName": "authorization",
           "shape": "Authorization"
         },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
         "Id": {
           "locationName": "id",
           "shape": "__string"
@@ -861,6 +962,10 @@
         "DomainName": {
           "locationName": "domainName",
           "shape": "__string"
+        },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
         },
         "Id": {
           "locationName": "id",
@@ -919,6 +1024,10 @@
         "Encryption": {
           "locationName": "encryption",
           "shape": "DashEncryption"
+        },
+        "IncludeEncoderConfigurationInSegments": {
+          "locationName": "includeEncoderConfigurationInSegments",
+          "shape": "__boolean"
         },
         "PeriodTriggers": {
           "locationName": "periodTriggers",
@@ -1120,6 +1229,10 @@
           "locationName": "domainName",
           "shape": "__string"
         },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
         "Id": {
           "locationName": "id",
           "shape": "__string"
@@ -1127,6 +1240,15 @@
         "Tags": {
           "locationName": "tags",
           "shape": "Tags"
+        }
+      },
+      "type": "structure"
+    },
+    "EgressAccessLogs": {
+      "members": {
+        "LogGroupName": {
+          "locationName": "logGroupName",
+          "shape": "__string"
         }
       },
       "type": "structure"
@@ -1537,6 +1659,10 @@
           "locationName": "domainName",
           "shape": "__string"
         },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
         "Id": {
           "locationName": "id",
           "shape": "__string"
@@ -1553,6 +1679,10 @@
         "Authorization": {
           "locationName": "authorization",
           "shape": "Authorization"
+        },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
         },
         "Id": {
           "locationName": "id",
@@ -1779,6 +1909,10 @@
         "DomainName": {
           "locationName": "domainName",
           "shape": "__string"
+        },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
         },
         "Id": {
           "locationName": "id",

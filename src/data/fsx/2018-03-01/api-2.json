@@ -44,6 +44,29 @@
       ],
       "idempotent":true
     },
+    "CopyBackup":{
+      "name":"CopyBackup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CopyBackupRequest"},
+      "output":{"shape":"CopyBackupResponse"},
+      "errors":[
+        {"shape":"BadRequest"},
+        {"shape":"BackupNotFound"},
+        {"shape":"ServiceLimitExceeded"},
+        {"shape":"UnsupportedOperation"},
+        {"shape":"IncompatibleParameterError"},
+        {"shape":"InternalServerError"},
+        {"shape":"InvalidSourceKmsKey"},
+        {"shape":"InvalidDestinationKmsKey"},
+        {"shape":"InvalidRegion"},
+        {"shape":"SourceBackupUnavailable"},
+        {"shape":"IncompatibleRegionForMultiAZ"}
+      ],
+      "idempotent":true
+    },
     "CreateBackup":{
       "name":"CreateBackup",
       "http":{
@@ -137,7 +160,8 @@
         {"shape":"BackupNotFound"},
         {"shape":"BackupRestoring"},
         {"shape":"IncompatibleParameterError"},
-        {"shape":"InternalServerError"}
+        {"shape":"InternalServerError"},
+        {"shape":"BackupBeingCopied"}
       ],
       "idempotent":true
     },
@@ -310,7 +334,8 @@
       "type":"structure",
       "members":{
         "DomainName":{"shape":"ActiveDirectoryFullyQualifiedName"},
-        "ActiveDirectoryId":{"shape":"DirectoryId"}
+        "ActiveDirectoryId":{"shape":"DirectoryId"},
+        "ResourceARN":{"shape":"ResourceARN"}
       }
     },
     "ActiveDirectoryError":{
@@ -462,8 +487,19 @@
         "ResourceARN":{"shape":"ResourceARN"},
         "Tags":{"shape":"Tags"},
         "FileSystem":{"shape":"FileSystem"},
-        "DirectoryInformation":{"shape":"ActiveDirectoryBackupAttributes"}
+        "DirectoryInformation":{"shape":"ActiveDirectoryBackupAttributes"},
+        "OwnerId":{"shape":"AWSAccountId"},
+        "SourceBackupId":{"shape":"BackupId"},
+        "SourceBackupRegion":{"shape":"Region"}
       }
+    },
+    "BackupBeingCopied":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"},
+        "BackupId":{"shape":"BackupId"}
+      },
+      "exception":true
     },
     "BackupFailureDetails":{
       "type":"structure",
@@ -497,7 +533,8 @@
         "TRANSFERRING",
         "DELETED",
         "FAILED",
-        "PENDING"
+        "PENDING",
+        "COPYING"
       ]
     },
     "BackupNotFound":{
@@ -565,6 +602,27 @@
         "Scope":{"shape":"ReportScope"}
       }
     },
+    "CopyBackupRequest":{
+      "type":"structure",
+      "required":["SourceBackupId"],
+      "members":{
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "SourceBackupId":{"shape":"SourceBackupId"},
+        "SourceRegion":{"shape":"Region"},
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "CopyTags":{"shape":"Flag"},
+        "Tags":{"shape":"Tags"}
+      }
+    },
+    "CopyBackupResponse":{
+      "type":"structure",
+      "members":{
+        "Backup":{"shape":"Backup"}
+      }
+    },
     "CreateBackupRequest":{
       "type":"structure",
       "required":["FileSystemId"],
@@ -625,7 +683,8 @@
         "Tags":{"shape":"Tags"},
         "WindowsConfiguration":{"shape":"CreateFileSystemWindowsConfiguration"},
         "LustreConfiguration":{"shape":"CreateFileSystemLustreConfiguration"},
-        "StorageType":{"shape":"StorageType"}
+        "StorageType":{"shape":"StorageType"},
+        "KmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "CreateFileSystemFromBackupResponse":{
@@ -647,7 +706,8 @@
         "DailyAutomaticBackupStartTime":{"shape":"DailyTime"},
         "AutomaticBackupRetentionDays":{"shape":"AutomaticBackupRetentionDays"},
         "CopyTagsToBackups":{"shape":"Flag"},
-        "DriveCacheType":{"shape":"DriveCacheType"}
+        "DriveCacheType":{"shape":"DriveCacheType"},
+        "DataCompressionType":{"shape":"DataCompressionType"}
       }
     },
     "CreateFileSystemRequest":{
@@ -692,7 +752,8 @@
         "DailyAutomaticBackupStartTime":{"shape":"DailyTime"},
         "AutomaticBackupRetentionDays":{"shape":"AutomaticBackupRetentionDays"},
         "CopyTagsToBackups":{"shape":"Flag"},
-        "Aliases":{"shape":"AlternateDNSNames"}
+        "Aliases":{"shape":"AlternateDNSNames"},
+        "AuditLogConfiguration":{"shape":"WindowsAuditLogCreateConfiguration"}
       }
     },
     "CreationTime":{"type":"timestamp"},
@@ -707,6 +768,13 @@
       "max":5,
       "min":5,
       "pattern":"^([01]\\d|2[0-3]):?([0-5]\\d)$"
+    },
+    "DataCompressionType":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "LZ4"
+      ]
     },
     "DataRepositoryConfiguration":{
       "type":"structure",
@@ -1172,11 +1240,24 @@
       "max":10
     },
     "Flag":{"type":"boolean"},
+    "GeneralARN":{
+      "type":"string",
+      "max":1024,
+      "min":8,
+      "pattern":"^arn:[^:]{1,63}:[^:]{0,63}:[^:]{0,63}:(?:|\\d{12}):[^/].{0,1023}$"
+    },
     "IncompatibleParameterError":{
       "type":"structure",
       "required":["Parameter"],
       "members":{
         "Parameter":{"shape":"Parameter"},
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "IncompatibleRegionForMultiAZ":{
+      "type":"structure",
+      "members":{
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
@@ -1188,6 +1269,13 @@
       },
       "exception":true,
       "fault":true
+    },
+    "InvalidDestinationKmsKey":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
     },
     "InvalidExportPath":{
       "type":"structure",
@@ -1213,6 +1301,20 @@
       "exception":true
     },
     "InvalidPerUnitStorageThroughput":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "InvalidRegion":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "InvalidSourceKmsKey":{
       "type":"structure",
       "members":{
         "Message":{"shape":"ErrorMessage"}
@@ -1267,7 +1369,8 @@
         "DailyAutomaticBackupStartTime":{"shape":"DailyTime"},
         "AutomaticBackupRetentionDays":{"shape":"AutomaticBackupRetentionDays"},
         "CopyTagsToBackups":{"shape":"Flag"},
-        "DriveCacheType":{"shape":"DriveCacheType"}
+        "DriveCacheType":{"shape":"DriveCacheType"},
+        "DataCompressionType":{"shape":"DataCompressionType"}
       }
     },
     "LustreFileSystemMountName":{
@@ -1343,6 +1446,12 @@
       "type":"integer",
       "max":100,
       "min":0
+    },
+    "Region":{
+      "type":"string",
+      "max":20,
+      "min":1,
+      "pattern":"^[a-z0-9-]{1,20}$"
     },
     "ReportFormat":{
       "type":"string",
@@ -1429,7 +1538,9 @@
         "FILE_SYSTEM_COUNT",
         "TOTAL_THROUGHPUT_CAPACITY",
         "TOTAL_STORAGE",
-        "TOTAL_USER_INITIATED_BACKUPS"
+        "TOTAL_USER_INITIATED_BACKUPS",
+        "TOTAL_USER_TAGS",
+        "TOTAL_IN_PROGRESS_COPY_BACKUPS"
       ]
     },
     "ServiceLimitExceeded":{
@@ -1438,6 +1549,20 @@
       "members":{
         "Limit":{"shape":"ServiceLimit"},
         "Message":{"shape":"ErrorMessage"}
+      },
+      "exception":true
+    },
+    "SourceBackupId":{
+      "type":"string",
+      "max":128,
+      "min":12,
+      "pattern":"^(backup-[0-9a-f]{8,})$"
+    },
+    "SourceBackupUnavailable":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"ErrorMessage"},
+        "BackupId":{"shape":"BackupId"}
       },
       "exception":true
     },
@@ -1568,7 +1693,8 @@
         "WeeklyMaintenanceStartTime":{"shape":"WeeklyTime"},
         "DailyAutomaticBackupStartTime":{"shape":"DailyTime"},
         "AutomaticBackupRetentionDays":{"shape":"AutomaticBackupRetentionDays"},
-        "AutoImportPolicy":{"shape":"AutoImportPolicyType"}
+        "AutoImportPolicy":{"shape":"AutoImportPolicyType"},
+        "DataCompressionType":{"shape":"DataCompressionType"}
       }
     },
     "UpdateFileSystemRequest":{
@@ -1598,7 +1724,8 @@
         "DailyAutomaticBackupStartTime":{"shape":"DailyTime"},
         "AutomaticBackupRetentionDays":{"shape":"AutomaticBackupRetentionDays"},
         "ThroughputCapacity":{"shape":"MegabytesPerSecond"},
-        "SelfManagedActiveDirectoryConfiguration":{"shape":"SelfManagedActiveDirectoryConfigurationUpdates"}
+        "SelfManagedActiveDirectoryConfiguration":{"shape":"SelfManagedActiveDirectoryConfigurationUpdates"},
+        "AuditLogConfiguration":{"shape":"WindowsAuditLogCreateConfiguration"}
       }
     },
     "VpcId":{
@@ -1612,6 +1739,39 @@
       "max":7,
       "min":7,
       "pattern":"^[1-7]:([01]\\d|2[0-3]):?([0-5]\\d)$"
+    },
+    "WindowsAccessAuditLogLevel":{
+      "type":"string",
+      "enum":[
+        "DISABLED",
+        "SUCCESS_ONLY",
+        "FAILURE_ONLY",
+        "SUCCESS_AND_FAILURE"
+      ]
+    },
+    "WindowsAuditLogConfiguration":{
+      "type":"structure",
+      "required":[
+        "FileAccessAuditLogLevel",
+        "FileShareAccessAuditLogLevel"
+      ],
+      "members":{
+        "FileAccessAuditLogLevel":{"shape":"WindowsAccessAuditLogLevel"},
+        "FileShareAccessAuditLogLevel":{"shape":"WindowsAccessAuditLogLevel"},
+        "AuditLogDestination":{"shape":"GeneralARN"}
+      }
+    },
+    "WindowsAuditLogCreateConfiguration":{
+      "type":"structure",
+      "required":[
+        "FileAccessAuditLogLevel",
+        "FileShareAccessAuditLogLevel"
+      ],
+      "members":{
+        "FileAccessAuditLogLevel":{"shape":"WindowsAccessAuditLogLevel"},
+        "FileShareAccessAuditLogLevel":{"shape":"WindowsAccessAuditLogLevel"},
+        "AuditLogDestination":{"shape":"GeneralARN"}
+      }
     },
     "WindowsDeploymentType":{
       "type":"string",
@@ -1636,7 +1796,8 @@
         "DailyAutomaticBackupStartTime":{"shape":"DailyTime"},
         "AutomaticBackupRetentionDays":{"shape":"AutomaticBackupRetentionDays"},
         "CopyTagsToBackups":{"shape":"Flag"},
-        "Aliases":{"shape":"Aliases"}
+        "Aliases":{"shape":"Aliases"},
+        "AuditLogConfiguration":{"shape":"WindowsAuditLogConfiguration"}
       }
     }
   }

@@ -51,6 +51,25 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "ExportEBSVolumeRecommendations":{
+      "name":"ExportEBSVolumeRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ExportEBSVolumeRecommendationsRequest"},
+      "output":{"shape":"ExportEBSVolumeRecommendationsResponse"},
+      "errors":[
+        {"shape":"OptInRequiredException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingAuthenticationToken"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "ExportEC2InstanceRecommendations":{
       "name":"ExportEC2InstanceRecommendations",
       "http":{
@@ -59,6 +78,25 @@
       },
       "input":{"shape":"ExportEC2InstanceRecommendationsRequest"},
       "output":{"shape":"ExportEC2InstanceRecommendationsResponse"},
+      "errors":[
+        {"shape":"OptInRequiredException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingAuthenticationToken"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
+    "ExportLambdaFunctionRecommendations":{
+      "name":"ExportLambdaFunctionRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ExportLambdaFunctionRecommendationsRequest"},
+      "output":{"shape":"ExportLambdaFunctionRecommendationsResponse"},
       "errors":[
         {"shape":"OptInRequiredException"},
         {"shape":"InternalServerException"},
@@ -163,6 +201,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "GetEnrollmentStatusesForOrganization":{
+      "name":"GetEnrollmentStatusesForOrganization",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetEnrollmentStatusesForOrganizationRequest"},
+      "output":{"shape":"GetEnrollmentStatusesForOrganizationResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingAuthenticationToken"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "GetLambdaFunctionRecommendations":{
       "name":"GetLambdaFunctionRecommendations",
       "http":{
@@ -227,6 +282,19 @@
       "exception":true,
       "synthetic":true
     },
+    "AccountEnrollmentStatus":{
+      "type":"structure",
+      "members":{
+        "accountId":{"shape":"AccountId"},
+        "status":{"shape":"Status"},
+        "statusReason":{"shape":"StatusReason"},
+        "lastUpdatedTimestamp":{"shape":"LastUpdatedTimestamp"}
+      }
+    },
+    "AccountEnrollmentStatuses":{
+      "type":"list",
+      "member":{"shape":"AccountEnrollmentStatus"}
+    },
     "AccountId":{"type":"string"},
     "AccountIds":{
       "type":"list",
@@ -279,6 +347,17 @@
       "member":{"shape":"AutoScalingGroupRecommendation"}
     },
     "Code":{"type":"string"},
+    "CpuVendorArchitecture":{
+      "type":"string",
+      "enum":[
+        "AWS_ARM64",
+        "CURRENT"
+      ]
+    },
+    "CpuVendorArchitectures":{
+      "type":"list",
+      "member":{"shape":"CpuVendorArchitecture"}
+    },
     "CreationTimestamp":{"type":"timestamp"},
     "CurrentInstanceType":{"type":"string"},
     "DescribeRecommendationExportJobsRequest":{
@@ -344,6 +423,21 @@
       "type":"list",
       "member":{"shape":"EBSUtilizationMetric"}
     },
+    "EnrollmentFilter":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"EnrollmentFilterName"},
+        "values":{"shape":"FilterValues"}
+      }
+    },
+    "EnrollmentFilterName":{
+      "type":"string",
+      "enum":["Status"]
+    },
+    "EnrollmentFilters":{
+      "type":"list",
+      "member":{"shape":"EnrollmentFilter"}
+    },
     "ErrorMessage":{"type":"string"},
     "ExportAutoScalingGroupRecommendationsRequest":{
       "type":"structure",
@@ -354,7 +448,8 @@
         "fieldsToExport":{"shape":"ExportableAutoScalingGroupFields"},
         "s3DestinationConfig":{"shape":"S3DestinationConfig"},
         "fileFormat":{"shape":"FileFormat"},
-        "includeMemberAccounts":{"shape":"IncludeMemberAccounts"}
+        "includeMemberAccounts":{"shape":"IncludeMemberAccounts"},
+        "recommendationPreferences":{"shape":"RecommendationPreferences"}
       }
     },
     "ExportAutoScalingGroupRecommendationsResponse":{
@@ -370,6 +465,25 @@
         "s3":{"shape":"S3Destination"}
       }
     },
+    "ExportEBSVolumeRecommendationsRequest":{
+      "type":"structure",
+      "required":["s3DestinationConfig"],
+      "members":{
+        "accountIds":{"shape":"AccountIds"},
+        "filters":{"shape":"EBSFilters"},
+        "fieldsToExport":{"shape":"ExportableVolumeFields"},
+        "s3DestinationConfig":{"shape":"S3DestinationConfig"},
+        "fileFormat":{"shape":"FileFormat"},
+        "includeMemberAccounts":{"shape":"IncludeMemberAccounts"}
+      }
+    },
+    "ExportEBSVolumeRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "jobId":{"shape":"JobId"},
+        "s3Destination":{"shape":"S3Destination"}
+      }
+    },
     "ExportEC2InstanceRecommendationsRequest":{
       "type":"structure",
       "required":["s3DestinationConfig"],
@@ -379,10 +493,30 @@
         "fieldsToExport":{"shape":"ExportableInstanceFields"},
         "s3DestinationConfig":{"shape":"S3DestinationConfig"},
         "fileFormat":{"shape":"FileFormat"},
-        "includeMemberAccounts":{"shape":"IncludeMemberAccounts"}
+        "includeMemberAccounts":{"shape":"IncludeMemberAccounts"},
+        "recommendationPreferences":{"shape":"RecommendationPreferences"}
       }
     },
     "ExportEC2InstanceRecommendationsResponse":{
+      "type":"structure",
+      "members":{
+        "jobId":{"shape":"JobId"},
+        "s3Destination":{"shape":"S3Destination"}
+      }
+    },
+    "ExportLambdaFunctionRecommendationsRequest":{
+      "type":"structure",
+      "required":["s3DestinationConfig"],
+      "members":{
+        "accountIds":{"shape":"AccountIds"},
+        "filters":{"shape":"LambdaFunctionRecommendationFilters"},
+        "fieldsToExport":{"shape":"ExportableLambdaFunctionFields"},
+        "s3DestinationConfig":{"shape":"S3DestinationConfig"},
+        "fileFormat":{"shape":"FileFormat"},
+        "includeMemberAccounts":{"shape":"IncludeMemberAccounts"}
+      }
+    },
+    "ExportLambdaFunctionRecommendationsResponse":{
       "type":"structure",
       "members":{
         "jobId":{"shape":"JobId"},
@@ -402,6 +536,14 @@
         "UtilizationMetricsEbsWriteOpsPerSecondMaximum",
         "UtilizationMetricsEbsReadBytesPerSecondMaximum",
         "UtilizationMetricsEbsWriteBytesPerSecondMaximum",
+        "UtilizationMetricsDiskReadOpsPerSecondMaximum",
+        "UtilizationMetricsDiskWriteOpsPerSecondMaximum",
+        "UtilizationMetricsDiskReadBytesPerSecondMaximum",
+        "UtilizationMetricsDiskWriteBytesPerSecondMaximum",
+        "UtilizationMetricsNetworkInBytesPerSecondMaximum",
+        "UtilizationMetricsNetworkOutBytesPerSecondMaximum",
+        "UtilizationMetricsNetworkPacketsInPerSecondMaximum",
+        "UtilizationMetricsNetworkPacketsOutPerSecondMaximum",
         "LookbackPeriodInDays",
         "CurrentConfigurationInstanceType",
         "CurrentConfigurationDesiredCapacity",
@@ -442,6 +584,7 @@
         "InstanceArn",
         "InstanceName",
         "Finding",
+        "FindingReasonCodes",
         "LookbackPeriodInDays",
         "CurrentInstanceType",
         "UtilizationMetricsCpuMaximum",
@@ -450,6 +593,14 @@
         "UtilizationMetricsEbsWriteOpsPerSecondMaximum",
         "UtilizationMetricsEbsReadBytesPerSecondMaximum",
         "UtilizationMetricsEbsWriteBytesPerSecondMaximum",
+        "UtilizationMetricsDiskReadOpsPerSecondMaximum",
+        "UtilizationMetricsDiskWriteOpsPerSecondMaximum",
+        "UtilizationMetricsDiskReadBytesPerSecondMaximum",
+        "UtilizationMetricsDiskWriteBytesPerSecondMaximum",
+        "UtilizationMetricsNetworkInBytesPerSecondMaximum",
+        "UtilizationMetricsNetworkOutBytesPerSecondMaximum",
+        "UtilizationMetricsNetworkPacketsInPerSecondMaximum",
+        "UtilizationMetricsNetworkPacketsOutPerSecondMaximum",
         "CurrentOnDemandPrice",
         "CurrentStandardOneYearNoUpfrontReservedPrice",
         "CurrentStandardThreeYearNoUpfrontReservedPrice",
@@ -460,6 +611,7 @@
         "RecommendationOptionsInstanceType",
         "RecommendationOptionsProjectedUtilizationMetricsCpuMaximum",
         "RecommendationOptionsProjectedUtilizationMetricsMemoryMaximum",
+        "RecommendationOptionsPlatformDifferences",
         "RecommendationOptionsPerformanceRisk",
         "RecommendationOptionsVcpus",
         "RecommendationOptionsMemory",
@@ -477,6 +629,70 @@
       "type":"list",
       "member":{"shape":"ExportableInstanceField"}
     },
+    "ExportableLambdaFunctionField":{
+      "type":"string",
+      "enum":[
+        "AccountId",
+        "FunctionArn",
+        "FunctionVersion",
+        "Finding",
+        "FindingReasonCodes",
+        "NumberOfInvocations",
+        "UtilizationMetricsDurationMaximum",
+        "UtilizationMetricsDurationAverage",
+        "UtilizationMetricsMemoryMaximum",
+        "UtilizationMetricsMemoryAverage",
+        "LookbackPeriodInDays",
+        "CurrentConfigurationMemorySize",
+        "CurrentConfigurationTimeout",
+        "CurrentCostTotal",
+        "CurrentCostAverage",
+        "RecommendationOptionsConfigurationMemorySize",
+        "RecommendationOptionsCostLow",
+        "RecommendationOptionsCostHigh",
+        "RecommendationOptionsProjectedUtilizationMetricsDurationLowerBound",
+        "RecommendationOptionsProjectedUtilizationMetricsDurationUpperBound",
+        "RecommendationOptionsProjectedUtilizationMetricsDurationExpected",
+        "LastRefreshTimestamp"
+      ]
+    },
+    "ExportableLambdaFunctionFields":{
+      "type":"list",
+      "member":{"shape":"ExportableLambdaFunctionField"}
+    },
+    "ExportableVolumeField":{
+      "type":"string",
+      "enum":[
+        "AccountId",
+        "VolumeArn",
+        "Finding",
+        "UtilizationMetricsVolumeReadOpsPerSecondMaximum",
+        "UtilizationMetricsVolumeWriteOpsPerSecondMaximum",
+        "UtilizationMetricsVolumeReadBytesPerSecondMaximum",
+        "UtilizationMetricsVolumeWriteBytesPerSecondMaximum",
+        "LookbackPeriodInDays",
+        "CurrentConfigurationVolumeType",
+        "CurrentConfigurationVolumeBaselineIOPS",
+        "CurrentConfigurationVolumeBaselineThroughput",
+        "CurrentConfigurationVolumeBurstIOPS",
+        "CurrentConfigurationVolumeBurstThroughput",
+        "CurrentConfigurationVolumeSize",
+        "CurrentMonthlyPrice",
+        "RecommendationOptionsConfigurationVolumeType",
+        "RecommendationOptionsConfigurationVolumeBaselineIOPS",
+        "RecommendationOptionsConfigurationVolumeBaselineThroughput",
+        "RecommendationOptionsConfigurationVolumeBurstIOPS",
+        "RecommendationOptionsConfigurationVolumeBurstThroughput",
+        "RecommendationOptionsConfigurationVolumeSize",
+        "RecommendationOptionsMonthlyPrice",
+        "RecommendationOptionsPerformanceRisk",
+        "LastRefreshTimestamp"
+      ]
+    },
+    "ExportableVolumeFields":{
+      "type":"list",
+      "member":{"shape":"ExportableVolumeField"}
+    },
     "FailureReason":{"type":"string"},
     "FileFormat":{
       "type":"string",
@@ -493,6 +709,7 @@
       "type":"string",
       "enum":[
         "Finding",
+        "FindingReasonCodes",
         "RecommendationSourceType"
       ]
     },
@@ -534,7 +751,8 @@
         "autoScalingGroupArns":{"shape":"AutoScalingGroupArns"},
         "nextToken":{"shape":"NextToken"},
         "maxResults":{"shape":"MaxResults"},
-        "filters":{"shape":"Filters"}
+        "filters":{"shape":"Filters"},
+        "recommendationPreferences":{"shape":"RecommendationPreferences"}
       }
     },
     "GetAutoScalingGroupRecommendationsResponse":{
@@ -570,7 +788,8 @@
         "nextToken":{"shape":"NextToken"},
         "maxResults":{"shape":"MaxResults"},
         "filters":{"shape":"Filters"},
-        "accountIds":{"shape":"AccountIds"}
+        "accountIds":{"shape":"AccountIds"},
+        "recommendationPreferences":{"shape":"RecommendationPreferences"}
       }
     },
     "GetEC2InstanceRecommendationsResponse":{
@@ -595,7 +814,8 @@
         "stat":{"shape":"MetricStatistic"},
         "period":{"shape":"Period"},
         "startTime":{"shape":"Timestamp"},
-        "endTime":{"shape":"Timestamp"}
+        "endTime":{"shape":"Timestamp"},
+        "recommendationPreferences":{"shape":"RecommendationPreferences"}
       }
     },
     "GetEC2RecommendationProjectedMetricsResponse":{
@@ -614,7 +834,24 @@
       "members":{
         "status":{"shape":"Status"},
         "statusReason":{"shape":"StatusReason"},
-        "memberAccountsEnrolled":{"shape":"MemberAccountsEnrolled"}
+        "memberAccountsEnrolled":{"shape":"MemberAccountsEnrolled"},
+        "lastUpdatedTimestamp":{"shape":"LastUpdatedTimestamp"},
+        "numberOfMemberAccountsOptedIn":{"shape":"NumberOfMemberAccountsOptedIn"}
+      }
+    },
+    "GetEnrollmentStatusesForOrganizationRequest":{
+      "type":"structure",
+      "members":{
+        "filters":{"shape":"EnrollmentFilters"},
+        "nextToken":{"shape":"NextToken"},
+        "maxResults":{"shape":"MaxResults"}
+      }
+    },
+    "GetEnrollmentStatusesForOrganizationResponse":{
+      "type":"structure",
+      "members":{
+        "accountEnrollmentStatuses":{"shape":"AccountEnrollmentStatuses"},
+        "nextToken":{"shape":"NextToken"}
       }
     },
     "GetLambdaFunctionRecommendationsRequest":{
@@ -677,6 +914,7 @@
         "instanceName":{"shape":"InstanceName"},
         "currentInstanceType":{"shape":"CurrentInstanceType"},
         "finding":{"shape":"Finding"},
+        "findingReasonCodes":{"shape":"InstanceRecommendationFindingReasonCodes"},
         "utilizationMetrics":{"shape":"UtilizationMetrics"},
         "lookBackPeriodInDays":{"shape":"LookBackPeriodInDays"},
         "recommendationOptions":{"shape":"RecommendationOptions"},
@@ -684,11 +922,37 @@
         "lastRefreshTimestamp":{"shape":"LastRefreshTimestamp"}
       }
     },
+    "InstanceRecommendationFindingReasonCode":{
+      "type":"string",
+      "enum":[
+        "CPUOverprovisioned",
+        "CPUUnderprovisioned",
+        "MemoryOverprovisioned",
+        "MemoryUnderprovisioned",
+        "EBSThroughputOverprovisioned",
+        "EBSThroughputUnderprovisioned",
+        "EBSIOPSOverprovisioned",
+        "EBSIOPSUnderprovisioned",
+        "NetworkBandwidthOverprovisioned",
+        "NetworkBandwidthUnderprovisioned",
+        "NetworkPPSOverprovisioned",
+        "NetworkPPSUnderprovisioned",
+        "DiskIOPSOverprovisioned",
+        "DiskIOPSUnderprovisioned",
+        "DiskThroughputOverprovisioned",
+        "DiskThroughputUnderprovisioned"
+      ]
+    },
+    "InstanceRecommendationFindingReasonCodes":{
+      "type":"list",
+      "member":{"shape":"InstanceRecommendationFindingReasonCode"}
+    },
     "InstanceRecommendationOption":{
       "type":"structure",
       "members":{
         "instanceType":{"shape":"InstanceType"},
         "projectedUtilizationMetrics":{"shape":"ProjectedUtilizationMetrics"},
+        "platformDifferences":{"shape":"PlatformDifferences"},
         "performanceRisk":{"shape":"PerformanceRisk"},
         "rank":{"shape":"Rank"}
       }
@@ -895,7 +1159,15 @@
         "EBS_READ_OPS_PER_SECOND",
         "EBS_WRITE_OPS_PER_SECOND",
         "EBS_READ_BYTES_PER_SECOND",
-        "EBS_WRITE_BYTES_PER_SECOND"
+        "EBS_WRITE_BYTES_PER_SECOND",
+        "DISK_READ_OPS_PER_SECOND",
+        "DISK_WRITE_OPS_PER_SECOND",
+        "DISK_READ_BYTES_PER_SECOND",
+        "DISK_WRITE_BYTES_PER_SECOND",
+        "NETWORK_IN_BYTES_PER_SECOND",
+        "NETWORK_OUT_BYTES_PER_SECOND",
+        "NETWORK_PACKETS_IN_PER_SECOND",
+        "NETWORK_PACKETS_OUT_PER_SECOND"
       ]
     },
     "MetricStatistic":{
@@ -921,6 +1193,7 @@
     },
     "NextToken":{"type":"string"},
     "NumberOfInvocations":{"type":"long"},
+    "NumberOfMemberAccountsOptedIn":{"type":"integer"},
     "OptInRequiredException":{
       "type":"structure",
       "members":{
@@ -931,10 +1204,25 @@
     },
     "PerformanceRisk":{
       "type":"double",
-      "max":5,
+      "max":4,
       "min":0
     },
     "Period":{"type":"integer"},
+    "PlatformDifference":{
+      "type":"string",
+      "enum":[
+        "Hypervisor",
+        "NetworkInterface",
+        "StorageInterface",
+        "InstanceStoreAvailability",
+        "VirtualizationType",
+        "Architecture"
+      ]
+    },
+    "PlatformDifferences":{
+      "type":"list",
+      "member":{"shape":"PlatformDifference"}
+    },
     "ProjectedMetric":{
       "type":"structure",
       "members":{
@@ -982,6 +1270,12 @@
     "RecommendationOptions":{
       "type":"list",
       "member":{"shape":"InstanceRecommendationOption"}
+    },
+    "RecommendationPreferences":{
+      "type":"structure",
+      "members":{
+        "cpuVendorArchitectures":{"shape":"CpuVendorArchitectures"}
+      }
     },
     "RecommendationSource":{
       "type":"structure",
@@ -1041,7 +1335,9 @@
       "type":"string",
       "enum":[
         "Ec2Instance",
-        "AutoScalingGroup"
+        "AutoScalingGroup",
+        "EbsVolume",
+        "LambdaFunction"
       ]
     },
     "S3Destination":{

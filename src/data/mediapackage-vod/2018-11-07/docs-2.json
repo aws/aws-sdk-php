@@ -2,6 +2,7 @@
   "version" : "2.0",
   "service" : "AWS Elemental MediaPackage VOD",
   "operations" : {
+    "ConfigureLogs" : "Changes the packaging group's properities to configure log subscription",
     "CreateAsset" : "Creates a new MediaPackage VOD Asset resource.",
     "CreatePackagingConfiguration" : "Creates a new MediaPackage VOD PackagingConfiguration resource.",
     "CreatePackagingGroup" : "Creates a new MediaPackage VOD PackagingGroup resource.",
@@ -65,6 +66,10 @@
         "PackagingConfigurationCreateParameters$CmafPackage" : null
       }
     },
+    "ConfigureLogsParameters" : {
+      "base" : "The configuration parameters for egress access logging.",
+      "refs" : { }
+    },
     "DashEncryption" : {
       "base" : "A Dynamic Adaptive Streaming over HTTP (DASH) encryption configuration.",
       "refs" : {
@@ -82,6 +87,14 @@
       "refs" : {
         "PackagingConfiguration$DashPackage" : null,
         "PackagingConfigurationCreateParameters$DashPackage" : null
+      }
+    },
+    "EgressAccessLogs" : {
+      "base" : "Configure egress access logging.",
+      "refs" : {
+        "ConfigureLogsParameters$EgressAccessLogs" : null,
+        "PackagingGroup$EgressAccessLogs" : null,
+        "PackagingGroupCreateParameters$EgressAccessLogs" : null
       }
     },
     "EgressEndpoint" : {
@@ -232,6 +245,8 @@
     "__boolean" : {
       "base" : null,
       "refs" : {
+        "CmafPackage$IncludeEncoderConfigurationInSegments" : "When includeEncoderConfigurationInSegments is set to true, MediaPackage places your encoder's Sequence Parameter Set (SPS), Picture Parameter Set (PPS), and Video Parameter Set (VPS) metadata in every video segment instead of in the init fragment. This lets you use different SPS/PPS/VPS settings for your assets during content playback.\n",
+        "DashPackage$IncludeEncoderConfigurationInSegments" : "When includeEncoderConfigurationInSegments is set to true, MediaPackage places your encoder's Sequence Parameter Set (SPS), Picture Parameter Set (PPS), and Video Parameter Set (VPS) metadata in every video segment instead of in the init fragment. This lets you use different SPS/PPS/VPS settings for your assets during content playback.\n",
         "HlsManifest$IncludeIframeOnlyStream" : "When enabled, an I-Frame only stream will be included in the output.",
         "HlsManifest$RepeatExtXKey" : "When enabled, the EXT-X-KEY tag will be repeated in output manifests.",
         "HlsPackage$UseAudioRenditionGroup" : "When enabled, audio streams will be placed in rendition groups in the output."
@@ -336,7 +351,9 @@
         "AssetShallow$SourceRoleArn" : "The IAM role ARN used to access the source S3 bucket.",
         "Authorization$CdnIdentifierSecret" : "The Amazon Resource Name (ARN) for the secret in AWS Secrets Manager that is used for CDN authorization.",
         "Authorization$SecretsRoleArn" : "The Amazon Resource Name (ARN) for the IAM role that allows MediaPackage to communicate with AWS Secrets Manager.",
+        "CmafEncryption$ConstantInitializationVector" : "An optional 128-bit, 16-byte hex value represented by a 32-character string, used in conjunction with the key for encrypting blocks. If you don't specify a value, then MediaPackage creates the constant initialization vector (IV).",
         "DashManifest$ManifestName" : "An optional string to include in the name of the manifest.",
+        "EgressAccessLogs$LogGroupName" : "Customize the log group name.",
         "EgressEndpoint$PackagingConfigurationId" : "The ID of the PackagingConfiguration being applied to the Asset.",
         "EgressEndpoint$Url" : "The URL of the parent manifest for the repackaged Asset.",
         "HlsEncryption$ConstantInitializationVector" : "A constant initialization vector for encryption (optional).\nWhen not specified the initialization vector will be periodically rotated.\n",

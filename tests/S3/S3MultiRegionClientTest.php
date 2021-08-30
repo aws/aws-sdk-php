@@ -596,7 +596,7 @@ EOXML;
             ->appendSign(function (callable $handler) {
                 return function (CommandInterface $c) use ($handler) {
                     return $handler($c)->then(function (ResultInterface $result) {
-                        $result['Body'] = Psr7\stream_for(str_repeat($result['Body'], 2));
+                        $result['Body'] = Psr7\Utils::streamFor(str_repeat($result['Body'], 2));
                         return $result;
                     });
                 };

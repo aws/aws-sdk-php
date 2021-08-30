@@ -208,13 +208,13 @@ class MultipartCopy extends AbstractUploadManager
                 'Bucket' => $bucket,
                 'Key' => $key,
             ];
-            if (strpos($this->source, '?')) {
+            if (strpos($key, '?')) {
                 list($key, $query) = explode('?', $key, 2);
                 $headParams['Key'] = $key;
-                $query = Psr7\parse_query($query, false);
+                $query = Psr7\Query::parse($query, false);
                 if (isset($query['versionId'])) {
                     $this->sourceVersionId = $query['versionId'];
-                    $headParams['VersionId'] = $query['versionId'];
+                    $headParams['VersionId'] = $this->sourceVersionId;
                 }
             }
         }

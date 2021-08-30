@@ -310,6 +310,21 @@
         {"shape":"InvalidInput"}
       ]
     },
+    "UpdateHttpNamespace":{
+      "name":"UpdateHttpNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateHttpNamespaceRequest"},
+      "output":{"shape":"UpdateHttpNamespaceResponse"},
+      "errors":[
+        {"shape":"InvalidInput"},
+        {"shape":"NamespaceNotFound"},
+        {"shape":"ResourceInUse"},
+        {"shape":"DuplicateRequest"}
+      ]
+    },
     "UpdateInstanceCustomHealthStatus":{
       "name":"UpdateInstanceCustomHealthStatus",
       "http":{
@@ -322,6 +337,36 @@
         {"shape":"ServiceNotFound"},
         {"shape":"CustomHealthNotFound"},
         {"shape":"InvalidInput"}
+      ]
+    },
+    "UpdatePrivateDnsNamespace":{
+      "name":"UpdatePrivateDnsNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdatePrivateDnsNamespaceRequest"},
+      "output":{"shape":"UpdatePrivateDnsNamespaceResponse"},
+      "errors":[
+        {"shape":"InvalidInput"},
+        {"shape":"NamespaceNotFound"},
+        {"shape":"ResourceInUse"},
+        {"shape":"DuplicateRequest"}
+      ]
+    },
+    "UpdatePublicDnsNamespace":{
+      "name":"UpdatePublicDnsNamespace",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdatePublicDnsNamespaceRequest"},
+      "output":{"shape":"UpdatePublicDnsNamespaceResponse"},
+      "errors":[
+        {"shape":"InvalidInput"},
+        {"shape":"NamespaceNotFound"},
+        {"shape":"ResourceInUse"},
+        {"shape":"DuplicateRequest"}
       ]
     },
     "UpdateService":{
@@ -369,7 +414,7 @@
       "type":"structure",
       "required":["Name"],
       "members":{
-        "Name":{"shape":"NamespaceName"},
+        "Name":{"shape":"NamespaceNameHttp"},
         "CreatorRequestId":{
           "shape":"ResourceId",
           "idempotencyToken":true
@@ -391,14 +436,15 @@
         "Vpc"
       ],
       "members":{
-        "Name":{"shape":"NamespaceName"},
+        "Name":{"shape":"NamespaceNamePrivate"},
         "CreatorRequestId":{
           "shape":"ResourceId",
           "idempotencyToken":true
         },
         "Description":{"shape":"ResourceDescription"},
         "Vpc":{"shape":"ResourceId"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "Properties":{"shape":"PrivateDnsNamespaceProperties"}
       }
     },
     "CreatePrivateDnsNamespaceResponse":{
@@ -411,13 +457,14 @@
       "type":"structure",
       "required":["Name"],
       "members":{
-        "Name":{"shape":"NamespaceName"},
+        "Name":{"shape":"NamespaceNamePublic"},
         "CreatorRequestId":{
           "shape":"ResourceId",
           "idempotencyToken":true
         },
         "Description":{"shape":"ResourceDescription"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "Properties":{"shape":"PublicDnsNamespaceProperties"}
       }
     },
     "CreatePublicDnsNamespaceResponse":{
@@ -440,7 +487,8 @@
         "DnsConfig":{"shape":"DnsConfig"},
         "HealthCheckConfig":{"shape":"HealthCheckConfig"},
         "HealthCheckCustomConfig":{"shape":"HealthCheckCustomConfig"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "Type":{"shape":"ServiceTypeOption"}
       }
     },
     "CreateServiceResponse":{
@@ -554,7 +602,8 @@
     "DnsProperties":{
       "type":"structure",
       "members":{
-        "HostedZoneId":{"shape":"ResourceId"}
+        "HostedZoneId":{"shape":"ResourceId"},
+        "SOA":{"shape":"SOA"}
       }
     },
     "DnsRecord":{
@@ -688,7 +737,11 @@
     "HealthCheckCustomConfig":{
       "type":"structure",
       "members":{
-        "FailureThreshold":{"shape":"FailureThreshold"}
+        "FailureThreshold":{
+          "shape":"FailureThreshold",
+          "deprecated":true,
+          "deprecatedMessage":"Configurable FailureThreshold of HealthCheckCustomConfig is deprecated.  It will always have value 1."
+        }
       }
     },
     "HealthCheckType":{
@@ -712,14 +765,15 @@
       "enum":[
         "HEALTHY",
         "UNHEALTHY",
-        "ALL"
+        "ALL",
+        "HEALTHY_OR_ELSE_ALL"
       ]
     },
     "HttpInstanceSummary":{
       "type":"structure",
       "members":{
         "InstanceId":{"shape":"ResourceId"},
-        "NamespaceName":{"shape":"NamespaceName"},
+        "NamespaceName":{"shape":"NamespaceNameHttp"},
         "ServiceName":{"shape":"ServiceName"},
         "HealthStatus":{"shape":"HealthStatus"},
         "Attributes":{"shape":"Attributes"}
@@ -728,6 +782,13 @@
     "HttpInstanceSummaryList":{
       "type":"list",
       "member":{"shape":"HttpInstanceSummary"}
+    },
+    "HttpNamespaceChange":{
+      "type":"structure",
+      "required":["Description"],
+      "members":{
+        "Description":{"shape":"ResourceDescription"}
+      }
     },
     "HttpProperties":{
       "type":"structure",
@@ -748,6 +809,11 @@
       "type":"map",
       "key":{"shape":"ResourceId"},
       "value":{"shape":"HealthStatus"}
+    },
+    "InstanceId":{
+      "type":"string",
+      "max":64,
+      "pattern":"^[0-9a-zA-Z_/:.@-]+$"
     },
     "InstanceIdList":{
       "type":"list",
@@ -906,6 +972,21 @@
       "type":"string",
       "max":1024
     },
+    "NamespaceNameHttp":{
+      "type":"string",
+      "max":1024,
+      "pattern":"^[!-~]{1,1024}$"
+    },
+    "NamespaceNamePrivate":{
+      "type":"string",
+      "max":1024,
+      "pattern":"^[!-~]{1,1024}$"
+    },
+    "NamespaceNamePublic":{
+      "type":"string",
+      "max":1024,
+      "pattern":"^([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?$"
+    },
     "NamespaceNotFound":{
       "type":"structure",
       "members":{
@@ -1037,10 +1118,81 @@
       "enum":[
         "CREATE_NAMESPACE",
         "DELETE_NAMESPACE",
+        "UPDATE_NAMESPACE",
         "UPDATE_SERVICE",
         "REGISTER_INSTANCE",
         "DEREGISTER_INSTANCE"
       ]
+    },
+    "PrivateDnsNamespaceChange":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"ResourceDescription"},
+        "Properties":{"shape":"PrivateDnsNamespacePropertiesChange"}
+      }
+    },
+    "PrivateDnsNamespaceProperties":{
+      "type":"structure",
+      "required":["DnsProperties"],
+      "members":{
+        "DnsProperties":{"shape":"PrivateDnsPropertiesMutable"}
+      }
+    },
+    "PrivateDnsNamespacePropertiesChange":{
+      "type":"structure",
+      "required":["DnsProperties"],
+      "members":{
+        "DnsProperties":{"shape":"PrivateDnsPropertiesMutableChange"}
+      }
+    },
+    "PrivateDnsPropertiesMutable":{
+      "type":"structure",
+      "required":["SOA"],
+      "members":{
+        "SOA":{"shape":"SOA"}
+      }
+    },
+    "PrivateDnsPropertiesMutableChange":{
+      "type":"structure",
+      "required":["SOA"],
+      "members":{
+        "SOA":{"shape":"SOAChange"}
+      }
+    },
+    "PublicDnsNamespaceChange":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"ResourceDescription"},
+        "Properties":{"shape":"PublicDnsNamespacePropertiesChange"}
+      }
+    },
+    "PublicDnsNamespaceProperties":{
+      "type":"structure",
+      "required":["DnsProperties"],
+      "members":{
+        "DnsProperties":{"shape":"PublicDnsPropertiesMutable"}
+      }
+    },
+    "PublicDnsNamespacePropertiesChange":{
+      "type":"structure",
+      "required":["DnsProperties"],
+      "members":{
+        "DnsProperties":{"shape":"PublicDnsPropertiesMutableChange"}
+      }
+    },
+    "PublicDnsPropertiesMutable":{
+      "type":"structure",
+      "required":["SOA"],
+      "members":{
+        "SOA":{"shape":"SOA"}
+      }
+    },
+    "PublicDnsPropertiesMutableChange":{
+      "type":"structure",
+      "required":["SOA"],
+      "members":{
+        "SOA":{"shape":"SOAChange"}
+      }
     },
     "RecordTTL":{
       "type":"long",
@@ -1065,7 +1217,7 @@
       ],
       "members":{
         "ServiceId":{"shape":"ResourceId"},
-        "InstanceId":{"shape":"ResourceId"},
+        "InstanceId":{"shape":"InstanceId"},
         "CreatorRequestId":{
           "shape":"ResourceId",
           "idempotencyToken":true
@@ -1127,6 +1279,20 @@
         "WEIGHTED"
       ]
     },
+    "SOA":{
+      "type":"structure",
+      "required":["TTL"],
+      "members":{
+        "TTL":{"shape":"RecordTTL"}
+      }
+    },
+    "SOAChange":{
+      "type":"structure",
+      "required":["TTL"],
+      "members":{
+        "TTL":{"shape":"RecordTTL"}
+      }
+    },
     "Service":{
       "type":"structure",
       "members":{
@@ -1137,6 +1303,7 @@
         "Description":{"shape":"ResourceDescription"},
         "InstanceCount":{"shape":"ResourceCount"},
         "DnsConfig":{"shape":"DnsConfig"},
+        "Type":{"shape":"ServiceType"},
         "HealthCheckConfig":{"shape":"HealthCheckConfig"},
         "HealthCheckCustomConfig":{"shape":"HealthCheckCustomConfig"},
         "CreateDate":{"shape":"Timestamp"},
@@ -1201,6 +1368,7 @@
         "Id":{"shape":"ResourceId"},
         "Arn":{"shape":"Arn"},
         "Name":{"shape":"ServiceName"},
+        "Type":{"shape":"ServiceType"},
         "Description":{"shape":"ResourceDescription"},
         "InstanceCount":{"shape":"ResourceCount"},
         "DnsConfig":{"shape":"DnsConfig"},
@@ -1208,6 +1376,18 @@
         "HealthCheckCustomConfig":{"shape":"HealthCheckCustomConfig"},
         "CreateDate":{"shape":"Timestamp"}
       }
+    },
+    "ServiceType":{
+      "type":"string",
+      "enum":[
+        "HTTP",
+        "DNS_HTTP",
+        "DNS"
+      ]
+    },
+    "ServiceTypeOption":{
+      "type":"string",
+      "enum":["HTTP"]
     },
     "Tag":{
       "type":"structure",
@@ -1283,6 +1463,27 @@
       "members":{
       }
     },
+    "UpdateHttpNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Namespace"
+      ],
+      "members":{
+        "Id":{"shape":"ResourceId"},
+        "UpdaterRequestId":{
+          "shape":"ResourceId",
+          "idempotencyToken":true
+        },
+        "Namespace":{"shape":"HttpNamespaceChange"}
+      }
+    },
+    "UpdateHttpNamespaceResponse":{
+      "type":"structure",
+      "members":{
+        "OperationId":{"shape":"OperationId"}
+      }
+    },
     "UpdateInstanceCustomHealthStatusRequest":{
       "type":"structure",
       "required":[
@@ -1294,6 +1495,48 @@
         "ServiceId":{"shape":"ResourceId"},
         "InstanceId":{"shape":"ResourceId"},
         "Status":{"shape":"CustomHealthStatus"}
+      }
+    },
+    "UpdatePrivateDnsNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Namespace"
+      ],
+      "members":{
+        "Id":{"shape":"ResourceId"},
+        "UpdaterRequestId":{
+          "shape":"ResourceId",
+          "idempotencyToken":true
+        },
+        "Namespace":{"shape":"PrivateDnsNamespaceChange"}
+      }
+    },
+    "UpdatePrivateDnsNamespaceResponse":{
+      "type":"structure",
+      "members":{
+        "OperationId":{"shape":"OperationId"}
+      }
+    },
+    "UpdatePublicDnsNamespaceRequest":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "Namespace"
+      ],
+      "members":{
+        "Id":{"shape":"ResourceId"},
+        "UpdaterRequestId":{
+          "shape":"ResourceId",
+          "idempotencyToken":true
+        },
+        "Namespace":{"shape":"PublicDnsNamespaceChange"}
+      }
+    },
+    "UpdatePublicDnsNamespaceResponse":{
+      "type":"structure",
+      "members":{
+        "OperationId":{"shape":"OperationId"}
       }
     },
     "UpdateServiceRequest":{

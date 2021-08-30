@@ -107,6 +107,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ContainsPiiEntities":{
+      "name":"ContainsPiiEntities",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ContainsPiiEntitiesRequest"},
+      "output":{"shape":"ContainsPiiEntitiesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"TextSizeLimitExceededException"},
+        {"shape":"UnsupportedLanguageException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateDocumentClassifier":{
       "name":"CreateDocumentClassifier",
       "http":{
@@ -661,6 +676,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceUnavailableException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -676,6 +692,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -693,6 +710,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceUnavailableException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -708,6 +726,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -723,6 +742,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -738,6 +758,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -753,6 +774,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -768,6 +790,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -1205,6 +1228,23 @@
       },
       "exception":true
     },
+    "ContainsPiiEntitiesRequest":{
+      "type":"structure",
+      "required":[
+        "Text",
+        "LanguageCode"
+      ],
+      "members":{
+        "Text":{"shape":"String"},
+        "LanguageCode":{"shape":"LanguageCode"}
+      }
+    },
+    "ContainsPiiEntitiesResponse":{
+      "type":"structure",
+      "members":{
+        "Labels":{"shape":"ListOfEntityLabels"}
+      }
+    },
     "CreateDocumentClassifierRequest":{
       "type":"structure",
       "required":[
@@ -1226,7 +1266,8 @@
         "LanguageCode":{"shape":"LanguageCode"},
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
         "VpcConfig":{"shape":"VpcConfig"},
-        "Mode":{"shape":"DocumentClassifierMode"}
+        "Mode":{"shape":"DocumentClassifierMode"},
+        "ModelKmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "CreateDocumentClassifierResponse":{
@@ -1250,7 +1291,8 @@
           "shape":"ClientRequestTokenString",
           "idempotencyToken":true
         },
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "DataAccessRoleArn":{"shape":"IamRoleArn"}
       }
     },
     "CreateEndpointResponse":{
@@ -1278,7 +1320,8 @@
         },
         "LanguageCode":{"shape":"LanguageCode"},
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "ModelKmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "CreateEntityRecognizerResponse":{
@@ -1598,6 +1641,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -1684,7 +1728,8 @@
         "DataAccessRoleArn":{"shape":"IamRoleArn"},
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
         "VpcConfig":{"shape":"VpcConfig"},
-        "Mode":{"shape":"DocumentClassifierMode"}
+        "Mode":{"shape":"DocumentClassifierMode"},
+        "ModelKmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "DocumentClassifierPropertiesList":{
@@ -1718,6 +1763,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -1754,7 +1800,8 @@
         "DesiredInferenceUnits":{"shape":"InferenceUnitsInteger"},
         "CurrentInferenceUnits":{"shape":"InferenceUnitsInteger"},
         "CreationTime":{"shape":"Timestamp"},
-        "LastModifiedTime":{"shape":"Timestamp"}
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "DataAccessRoleArn":{"shape":"IamRoleArn"}
       }
     },
     "EndpointPropertiesList":{
@@ -1784,6 +1831,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -1810,6 +1858,13 @@
         "Text":{"shape":"String"},
         "BeginOffset":{"shape":"Integer"},
         "EndOffset":{"shape":"Integer"}
+      }
+    },
+    "EntityLabel":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"PiiEntityType"},
+        "Score":{"shape":"Float"}
       }
     },
     "EntityRecognizerAnnotations":{
@@ -1919,7 +1974,8 @@
         "RecognizerMetadata":{"shape":"EntityRecognizerMetadata"},
         "DataAccessRoleArn":{"shape":"IamRoleArn"},
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "ModelKmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "EntityRecognizerPropertiesList":{
@@ -1943,7 +1999,7 @@
     "EntityTypeName":{
       "type":"string",
       "max":64,
-      "pattern":"^(?:(?!\\\\n+|\\\\t+|\\\\r+|[\\r\\t\\n\\s,]).)+$"
+      "pattern":"^(?:(?!\\\\n+|\\\\t+|\\\\r+|[\\r\\t\\n,]).)+$"
     },
     "EntityTypesEvaluationMetrics":{
       "type":"structure",
@@ -1983,6 +2039,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -2100,6 +2157,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -2303,6 +2361,10 @@
       "type":"list",
       "member":{"shape":"Entity"}
     },
+    "ListOfEntityLabels":{
+      "type":"list",
+      "member":{"shape":"EntityLabel"}
+    },
     "ListOfKeyPhrases":{
       "type":"list",
       "member":{"shape":"KeyPhrase"}
@@ -2461,6 +2523,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -2603,6 +2666,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -2657,13 +2721,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartDocumentClassificationJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2684,13 +2750,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartDominantLanguageDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2714,13 +2782,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartEntitiesDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2743,13 +2813,15 @@
           "shape":"ClientRequestTokenString",
           "idempotencyToken":true
         },
-        "TargetEventTypes":{"shape":"TargetEventTypes"}
+        "TargetEventTypes":{"shape":"TargetEventTypes"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartEventsDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2772,13 +2844,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartKeyPhrasesDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2802,13 +2876,15 @@
         "ClientRequestToken":{
           "shape":"ClientRequestTokenString",
           "idempotencyToken":true
-        }
+        },
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartPiiEntitiesDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2831,13 +2907,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartSentimentDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2859,13 +2937,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartTopicsDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -3103,6 +3183,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},

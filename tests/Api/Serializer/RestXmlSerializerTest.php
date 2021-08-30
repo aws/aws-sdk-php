@@ -31,6 +31,23 @@ class RestXmlSerializerTest extends TestCase
         $this->assertSame('abc', $request->getHeaderLine('Content-Type'));
     }
 
+    public function testEscapesAllXMLCharacters()
+    {
+        $request = $this->getRequest('DeleteObjects', [
+            'Bucket' => 'foo',
+            'Delete' => ['Objects' =>
+                [
+                    ['Key' => '/@/#/=/;/:/ /,/?/\'/"/</>/&/\r/\n/']
+                ]
+            ],
+        ]);
+        $contents = $request->getBody()->getContents();
+        $this->assertContains(
+            "<Key>/@/#/=/;/:/ /,/?/&apos;/&quot;/&lt;/&gt;/&amp;/&#13;/&#10;/",
+            $contents
+        );
+    }
+
     public function testPreparesRequestsWithNoContentType()
     {
         $request = $this->getRequest('PutObject', [

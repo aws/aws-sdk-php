@@ -446,6 +446,40 @@
         }
       ]
     },
+    "CreatePartnerInput": {
+      "name": "CreatePartnerInput",
+      "http": {
+        "method": "POST",
+        "requestUri": "/prod/inputs/{inputId}/partners",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreatePartnerInputRequest"
+      },
+      "output": {
+        "shape": "CreatePartnerInputResponse"
+      },
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "BadGatewayException"
+        },
+        {
+          "shape": "GatewayTimeoutException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ]
+    },
     "CreateTags": {
       "name": "CreateTags",
       "http": {
@@ -2298,6 +2332,15 @@
         }
       }
     },
+    "ArchiveCdnSettings": {
+      "type": "structure",
+      "members": {
+        "ArchiveS3Settings": {
+          "shape": "ArchiveS3Settings",
+          "locationName": "archiveS3Settings"
+        }
+      }
+    },
     "ArchiveContainerSettings": {
       "type": "structure",
       "members": {
@@ -2314,6 +2357,10 @@
     "ArchiveGroupSettings": {
       "type": "structure",
       "members": {
+        "ArchiveCdnSettings": {
+          "shape": "ArchiveCdnSettings",
+          "locationName": "archiveCdnSettings"
+        },
         "Destination": {
           "shape": "OutputLocationRef",
           "locationName": "destination"
@@ -2346,6 +2393,22 @@
       "required": [
         "ContainerSettings"
       ]
+    },
+    "ArchiveS3LogUploads": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "ArchiveS3Settings": {
+      "type": "structure",
+      "members": {
+        "CannedAcl": {
+          "shape": "S3CannedAcl",
+          "locationName": "cannedAcl"
+        }
+      }
     },
     "AribDestinationSettings": {
       "type": "structure",
@@ -2464,6 +2527,23 @@
       "enum": [
         "FOLLOW_INPUT",
         "USE_CONFIGURED"
+      ]
+    },
+    "AudioHlsRenditionSelection": {
+      "type": "structure",
+      "members": {
+        "GroupId": {
+          "shape": "__stringMin1",
+          "locationName": "groupId"
+        },
+        "Name": {
+          "shape": "__stringMin1",
+          "locationName": "name"
+        }
+      },
+      "required": [
+        "Name",
+        "GroupId"
       ]
     },
     "AudioLanguageSelection": {
@@ -2587,6 +2667,10 @@
     "AudioSelectorSettings": {
       "type": "structure",
       "members": {
+        "AudioHlsRenditionSelection": {
+          "shape": "AudioHlsRenditionSelection",
+          "locationName": "audioHlsRenditionSelection"
+        },
         "AudioLanguageSelection": {
           "shape": "AudioLanguageSelection",
           "locationName": "audioLanguageSelection"
@@ -3345,6 +3429,33 @@
         "CaptionChannel"
       ]
     },
+    "CaptionRectangle": {
+      "type": "structure",
+      "members": {
+        "Height": {
+          "shape": "__doubleMin0Max100",
+          "locationName": "height"
+        },
+        "LeftOffset": {
+          "shape": "__doubleMin0Max100",
+          "locationName": "leftOffset"
+        },
+        "TopOffset": {
+          "shape": "__doubleMin0Max100",
+          "locationName": "topOffset"
+        },
+        "Width": {
+          "shape": "__doubleMin0Max100",
+          "locationName": "width"
+        }
+      },
+      "required": [
+        "TopOffset",
+        "Height",
+        "Width",
+        "LeftOffset"
+      ]
+    },
     "CaptionSelector": {
       "type": "structure",
       "members": {
@@ -3484,7 +3595,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -3594,7 +3705,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -4054,6 +4165,60 @@
         }
       }
     },
+    "CreatePartnerInput": {
+      "type": "structure",
+      "members": {
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        }
+      }
+    },
+    "CreatePartnerInputRequest": {
+      "type": "structure",
+      "members": {
+        "InputId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "inputId"
+        },
+        "RequestId": {
+          "shape": "__string",
+          "locationName": "requestId",
+          "idempotencyToken": true
+        },
+        "Tags": {
+          "shape": "Tags",
+          "locationName": "tags"
+        }
+      },
+      "required": [
+        "InputId"
+      ]
+    },
+    "CreatePartnerInputResponse": {
+      "type": "structure",
+      "members": {
+        "Input": {
+          "shape": "Input",
+          "locationName": "input"
+        }
+      }
+    },
+    "CreatePartnerInputResultModel": {
+      "type": "structure",
+      "members": {
+        "Input": {
+          "shape": "Input",
+          "locationName": "input"
+        }
+      }
+    },
     "CreateTagsRequest": {
       "type": "structure",
       "members": {
@@ -4152,7 +4317,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -4503,7 +4668,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -4662,6 +4827,10 @@
         "InputDevices": {
           "shape": "__listOfInputDeviceSettings",
           "locationName": "inputDevices"
+        },
+        "InputPartnerIds": {
+          "shape": "__listOf__string",
+          "locationName": "inputPartnerIds"
         },
         "InputSourceType": {
           "shape": "InputSourceType",
@@ -5224,9 +5393,24 @@
         "SCALED"
       ]
     },
+    "DvbSubOcrLanguage": {
+      "type": "string",
+      "enum": [
+        "DEU",
+        "ENG",
+        "FRA",
+        "NLD",
+        "POR",
+        "SPA"
+      ]
+    },
     "DvbSubSourceSettings": {
       "type": "structure",
       "members": {
+        "OcrLanguage": {
+          "shape": "DvbSubOcrLanguage",
+          "locationName": "ocrLanguage"
+        },
         "Pid": {
           "shape": "__integerMin1",
           "locationName": "pid"
@@ -5444,6 +5628,10 @@
     "EbuTtDDestinationSettings": {
       "type": "structure",
       "members": {
+        "CopyrightHolder": {
+          "shape": "__stringMax1000",
+          "locationName": "copyrightHolder"
+        },
         "FillLineGap": {
           "shape": "EbuTtDFillLineGapControl",
           "locationName": "fillLineGap"
@@ -5552,6 +5740,10 @@
         "GlobalConfiguration": {
           "shape": "GlobalConfiguration",
           "locationName": "globalConfiguration"
+        },
+        "MotionGraphicsConfiguration": {
+          "shape": "MotionGraphicsConfiguration",
+          "locationName": "motionGraphicsConfiguration"
         },
         "NielsenConfiguration": {
           "shape": "NielsenConfiguration",
@@ -5739,12 +5931,25 @@
         "httpStatusCode": 403
       }
     },
+    "FrameCaptureCdnSettings": {
+      "type": "structure",
+      "members": {
+        "FrameCaptureS3Settings": {
+          "shape": "FrameCaptureS3Settings",
+          "locationName": "frameCaptureS3Settings"
+        }
+      }
+    },
     "FrameCaptureGroupSettings": {
       "type": "structure",
       "members": {
         "Destination": {
           "shape": "OutputLocationRef",
           "locationName": "destination"
+        },
+        "FrameCaptureCdnSettings": {
+          "shape": "FrameCaptureCdnSettings",
+          "locationName": "frameCaptureCdnSettings"
         }
       },
       "required": [
@@ -5769,6 +5974,22 @@
         "NameModifier": {
           "shape": "__string",
           "locationName": "nameModifier"
+        }
+      }
+    },
+    "FrameCaptureS3LogUploads": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "FrameCaptureS3Settings": {
+      "type": "structure",
+      "members": {
+        "CannedAcl": {
+          "shape": "S3CannedAcl",
+          "locationName": "cannedAcl"
         }
       }
     },
@@ -5858,6 +6079,7 @@
     "H264AdaptiveQuantization": {
       "type": "string",
       "enum": [
+        "AUTO",
         "HIGH",
         "HIGHER",
         "LOW",
@@ -6226,6 +6448,7 @@
     "H265AdaptiveQuantization": {
       "type": "string",
       "enum": [
+        "AUTO",
         "HIGH",
         "HIGHER",
         "LOW",
@@ -6592,6 +6815,10 @@
           "shape": "HlsMediaStoreSettings",
           "locationName": "hlsMediaStoreSettings"
         },
+        "HlsS3Settings": {
+          "shape": "HlsS3Settings",
+          "locationName": "hlsS3Settings"
+        },
         "HlsWebdavSettings": {
           "shape": "HlsWebdavSettings",
           "locationName": "hlsWebdavSettings"
@@ -6860,6 +7087,10 @@
         "RetryInterval": {
           "shape": "__integerMin0",
           "locationName": "retryInterval"
+        },
+        "Scte35Source": {
+          "shape": "HlsScte35SourceType",
+          "locationName": "scte35Source"
         }
       }
     },
@@ -6975,6 +7206,29 @@
         "ENABLED"
       ]
     },
+    "HlsS3LogUploads": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "HlsS3Settings": {
+      "type": "structure",
+      "members": {
+        "CannedAcl": {
+          "shape": "S3CannedAcl",
+          "locationName": "cannedAcl"
+        }
+      }
+    },
+    "HlsScte35SourceType": {
+      "type": "string",
+      "enum": [
+        "MANIFEST",
+        "SEGMENTS"
+      ]
+    },
     "HlsSegmentationMode": {
       "type": "string",
       "enum": [
@@ -7069,6 +7323,11 @@
         }
       }
     },
+    "HtmlMotionGraphicsSettings": {
+      "type": "structure",
+      "members": {
+      }
+    },
     "IFrameOnlyPlaylistType": {
       "type": "string",
       "enum": [
@@ -7107,6 +7366,10 @@
         "InputDevices": {
           "shape": "__listOfInputDeviceSettings",
           "locationName": "inputDevices"
+        },
+        "InputPartnerIds": {
+          "shape": "__listOf__string",
+          "locationName": "inputPartnerIds"
         },
         "InputSourceType": {
           "shape": "InputSourceType",
@@ -9008,6 +9271,64 @@
       "members": {
       }
     },
+    "MotionGraphicsActivateScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+        "Duration": {
+          "shape": "__longMin0Max86400000",
+          "locationName": "duration"
+        },
+        "PasswordParam": {
+          "shape": "__string",
+          "locationName": "passwordParam"
+        },
+        "Url": {
+          "shape": "__string",
+          "locationName": "url"
+        },
+        "Username": {
+          "shape": "__string",
+          "locationName": "username"
+        }
+      }
+    },
+    "MotionGraphicsConfiguration": {
+      "type": "structure",
+      "members": {
+        "MotionGraphicsInsertion": {
+          "shape": "MotionGraphicsInsertion",
+          "locationName": "motionGraphicsInsertion"
+        },
+        "MotionGraphicsSettings": {
+          "shape": "MotionGraphicsSettings",
+          "locationName": "motionGraphicsSettings"
+        }
+      },
+      "required": [
+        "MotionGraphicsSettings"
+      ]
+    },
+    "MotionGraphicsDeactivateScheduleActionSettings": {
+      "type": "structure",
+      "members": {
+      }
+    },
+    "MotionGraphicsInsertion": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "ENABLED"
+      ]
+    },
+    "MotionGraphicsSettings": {
+      "type": "structure",
+      "members": {
+        "HtmlMotionGraphicsSettings": {
+          "shape": "HtmlMotionGraphicsSettings",
+          "locationName": "htmlMotionGraphicsSettings"
+        }
+      }
+    },
     "Mp2CodingMode": {
       "type": "string",
       "enum": [
@@ -9964,6 +10285,14 @@
           "shape": "__string",
           "locationName": "activeInputSwitchActionName"
         },
+        "ActiveMotionGraphicsActionName": {
+          "shape": "__string",
+          "locationName": "activeMotionGraphicsActionName"
+        },
+        "ActiveMotionGraphicsUri": {
+          "shape": "__string",
+          "locationName": "activeMotionGraphicsUri"
+        },
         "PipelineId": {
           "shape": "__string",
           "locationName": "pipelineId"
@@ -10293,7 +10622,9 @@
       "type": "string",
       "enum": [
         "ADVANCED_AUDIO",
-        "AUDIO_NORMALIZATION"
+        "AUDIO_NORMALIZATION",
+        "MGHD",
+        "MGUHD"
       ]
     },
     "ReservationState": {
@@ -10421,6 +10752,15 @@
         "Destination"
       ]
     },
+    "S3CannedAcl": {
+      "type": "string",
+      "enum": [
+        "AUTHENTICATED_READ",
+        "BUCKET_OWNER_FULL_CONTROL",
+        "BUCKET_OWNER_READ",
+        "PUBLIC_READ"
+      ]
+    },
     "ScheduleAction": {
       "type": "structure",
       "members": {
@@ -10461,6 +10801,14 @@
         "InputSwitchSettings": {
           "shape": "InputSwitchScheduleActionSettings",
           "locationName": "inputSwitchSettings"
+        },
+        "MotionGraphicsImageActivateSettings": {
+          "shape": "MotionGraphicsActivateScheduleActionSettings",
+          "locationName": "motionGraphicsImageActivateSettings"
+        },
+        "MotionGraphicsImageDeactivateSettings": {
+          "shape": "MotionGraphicsDeactivateScheduleActionSettings",
+          "locationName": "motionGraphicsImageDeactivateSettings"
         },
         "PauseStateSettings": {
           "shape": "PauseStateScheduleActionSettings",
@@ -10556,9 +10904,24 @@
       "members": {
       }
     },
+    "Scte27OcrLanguage": {
+      "type": "string",
+      "enum": [
+        "DEU",
+        "ENG",
+        "FRA",
+        "NLD",
+        "POR",
+        "SPA"
+      ]
+    },
     "Scte27SourceSettings": {
       "type": "structure",
       "members": {
+        "OcrLanguage": {
+          "shape": "Scte27OcrLanguage",
+          "locationName": "ocrLanguage"
+        },
         "Pid": {
           "shape": "__integerMin1",
           "locationName": "pid"
@@ -10975,7 +11338,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -11205,7 +11568,7 @@
           "locationName": "tags"
         },
         "Vpc": {
-          "shape": "VpcOutputSettings",
+          "shape": "VpcOutputSettingsDescription",
           "locationName": "vpc"
         }
       }
@@ -11307,6 +11670,10 @@
     "TeletextSourceSettings": {
       "type": "structure",
       "members": {
+        "OutputRectangle": {
+          "shape": "CaptionRectangle",
+          "locationName": "outputRectangle"
+        },
         "PageNumber": {
           "shape": "__string",
           "locationName": "pageNumber"
@@ -11409,6 +11776,10 @@
           "shape": "__string",
           "locationName": "targetCustomerId"
         },
+        "TargetRegion": {
+          "shape": "__string",
+          "locationName": "targetRegion"
+        },
         "TransferMessage": {
           "shape": "__string",
           "locationName": "transferMessage"
@@ -11426,6 +11797,10 @@
         "TargetCustomerId": {
           "shape": "__string",
           "locationName": "targetCustomerId"
+        },
+        "TargetRegion": {
+          "shape": "__string",
+          "locationName": "targetRegion"
         },
         "TransferMessage": {
           "shape": "__string",
@@ -12178,6 +12553,10 @@
           "shape": "VideoSelectorColorSpace",
           "locationName": "colorSpace"
         },
+        "ColorSpaceSettings": {
+          "shape": "VideoSelectorColorSpaceSettings",
+          "locationName": "colorSpaceSettings"
+        },
         "ColorSpaceUsage": {
           "shape": "VideoSelectorColorSpaceUsage",
           "locationName": "colorSpaceUsage"
@@ -12192,9 +12571,20 @@
       "type": "string",
       "enum": [
         "FOLLOW",
+        "HDR10",
+        "HLG_2020",
         "REC_601",
         "REC_709"
       ]
+    },
+    "VideoSelectorColorSpaceSettings": {
+      "type": "structure",
+      "members": {
+        "Hdr10Settings": {
+          "shape": "Hdr10Settings",
+          "locationName": "hdr10Settings"
+        }
+      }
     },
     "VideoSelectorColorSpaceUsage": {
       "type": "string",
@@ -12254,6 +12644,27 @@
         "SubnetIds"
       ]
     },
+    "VpcOutputSettingsDescription": {
+      "type": "structure",
+      "members": {
+        "AvailabilityZones": {
+          "shape": "__listOf__string",
+          "locationName": "availabilityZones"
+        },
+        "NetworkInterfaceIds": {
+          "shape": "__listOf__string",
+          "locationName": "networkInterfaceIds"
+        },
+        "SecurityGroupIds": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroupIds"
+        },
+        "SubnetIds": {
+          "shape": "__listOf__string",
+          "locationName": "subnetIds"
+        }
+      }
+    },
     "WavCodingMode": {
       "type": "string",
       "enum": [
@@ -12283,7 +12694,18 @@
     "WebvttDestinationSettings": {
       "type": "structure",
       "members": {
+        "StyleControl": {
+          "shape": "WebvttDestinationStyleControl",
+          "locationName": "styleControl"
+        }
       }
+    },
+    "WebvttDestinationStyleControl": {
+      "type": "string",
+      "enum": [
+        "NO_STYLE_DATA",
+        "PASSTHROUGH"
+      ]
     },
     "__boolean": {
       "type": "boolean"
@@ -12295,6 +12717,9 @@
       "type": "double"
     },
     "__doubleMin0Max1": {
+      "type": "double"
+    },
+    "__doubleMin0Max100": {
       "type": "double"
     },
     "__doubleMin1": {
@@ -12862,8 +13287,17 @@
       "min": 0,
       "max": 8589934591
     },
+    "__longMin0Max86400000": {
+      "type": "long",
+      "min": 0,
+      "max": 86400000
+    },
     "__string": {
       "type": "string"
+    },
+    "__stringMax1000": {
+      "type": "string",
+      "max": 1000
     },
     "__stringMax256": {
       "type": "string",

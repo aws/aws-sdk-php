@@ -989,7 +989,7 @@
       "type":"string",
       "max":300,
       "min":1,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[^\\\\]*$"
     },
     "AssessmentReport":{
       "type":"structure",
@@ -1356,7 +1356,7 @@
       "type":"string",
       "max":300,
       "min":1,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[^\\\\]*$"
     },
     "ControlResponse":{
       "type":"string",
@@ -1436,6 +1436,7 @@
     },
     "CreateAssessmentFrameworkControlSet":{
       "type":"structure",
+      "required":["name"],
       "members":{
         "name":{"shape":"ControlSetName"},
         "controls":{"shape":"CreateAssessmentFrameworkControls"}
@@ -1866,7 +1867,7 @@
       "type":"string",
       "max":300,
       "min":1,
-      "pattern":"^[\\w\\W\\s\\S]*$"
+      "pattern":"^[^\\\\]*$"
     },
     "FrameworkType":{
       "type":"string",
@@ -1948,7 +1949,8 @@
     "GetAssessmentResponse":{
       "type":"structure",
       "members":{
-        "assessment":{"shape":"Assessment"}
+        "assessment":{"shape":"Assessment"},
+        "userRole":{"shape":"Role"}
       }
     },
     "GetChangeLogsRequest":{
@@ -2593,7 +2595,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^(S|s)3:\\/\\/[a-zA-Z0-9-_\\/.]+$"
+      "pattern":"^(S|s)3:\\/\\/[a-zA-Z0-9\\-\\.\\(\\)\\'\\*\\_\\!\\/]+$"
     },
     "SNSTopic":{
       "type":"string",
@@ -2864,8 +2866,9 @@
     },
     "UpdateAssessmentFrameworkControlSet":{
       "type":"structure",
+      "required":["name"],
       "members":{
-        "id":{"shape":"UUID"},
+        "id":{"shape":"ControlSetName"},
         "name":{"shape":"ControlSetName"},
         "controls":{"shape":"CreateAssessmentFrameworkControls"}
       }

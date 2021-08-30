@@ -44,7 +44,8 @@
         {"shape":"FileSystemAlreadyExists"},
         {"shape":"FileSystemLimitExceeded"},
         {"shape":"InsufficientThroughputCapacity"},
-        {"shape":"ThroughputLimitExceeded"}
+        {"shape":"ThroughputLimitExceeded"},
+        {"shape":"UnsupportedAvailabilityZone"}
       ]
     },
     "CreateMountTarget":{
@@ -68,7 +69,8 @@
         {"shape":"NetworkInterfaceLimitExceeded"},
         {"shape":"SecurityGroupLimitExceeded"},
         {"shape":"SecurityGroupNotFound"},
-        {"shape":"UnsupportedAvailabilityZone"}
+        {"shape":"UnsupportedAvailabilityZone"},
+        {"shape":"AvailabilityZonesMismatch"}
       ]
     },
     "CreateTags":{
@@ -175,6 +177,19 @@
         {"shape":"InternalServerError"},
         {"shape":"FileSystemNotFound"},
         {"shape":"AccessPointNotFound"}
+      ]
+    },
+    "DescribeAccountPreferences":{
+      "name":"DescribeAccountPreferences",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2015-02-01/account-preferences",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeAccountPreferencesRequest"},
+      "output":{"shape":"DescribeAccountPreferencesResponse"},
+      "errors":[
+        {"shape":"InternalServerError"}
       ]
     },
     "DescribeBackupPolicy":{
@@ -322,6 +337,19 @@
         {"shape":"SecurityGroupNotFound"}
       ]
     },
+    "PutAccountPreferences":{
+      "name":"PutAccountPreferences",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2015-02-01/account-preferences",
+        "responseCode":200
+      },
+      "input":{"shape":"PutAccountPreferencesRequest"},
+      "output":{"shape":"PutAccountPreferencesResponse"},
+      "errors":[
+        {"shape":"InternalServerError"}
+      ]
+    },
     "PutBackupPolicy":{
       "name":"PutBackupPolicy",
       "http":{
@@ -436,7 +464,11 @@
       "error":{"httpStatusCode":409},
       "exception":true
     },
-    "AccessPointArn":{"type":"string"},
+    "AccessPointArn":{
+      "type":"string",
+      "max":128,
+      "pattern":"^arn:aws[-a-z]*:elasticfilesystem:[0-9a-z-:]+:access-point/fsap-[0-9a-f]{8,40}$"
+    },
     "AccessPointDescription":{
       "type":"structure",
       "members":{
@@ -456,7 +488,11 @@
       "type":"list",
       "member":{"shape":"AccessPointDescription"}
     },
-    "AccessPointId":{"type":"string"},
+    "AccessPointId":{
+      "type":"string",
+      "max":128,
+      "pattern":"^(arn:aws[-a-z]*:elasticfilesystem:[0-9a-z-:]+:access-point/fsap-[0-9a-f]{8,40}|fsap-[0-9a-f]{8,40})$"
+    },
     "AccessPointLimitExceeded":{
       "type":"structure",
       "required":["ErrorCode"],
@@ -478,12 +514,27 @@
       "exception":true
     },
     "AvailabilityZoneId":{"type":"string"},
-    "AvailabilityZoneName":{"type":"string"},
+    "AvailabilityZoneName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":".+"
+    },
+    "AvailabilityZonesMismatch":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"ErrorCode"},
+        "Message":{"shape":"ErrorMessage"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "AwsAccountId":{
       "type":"string",
       "max":14,
       "pattern":"^(\\d{12})|(\\d{4}-\\d{4}-\\d{4})$"
     },
+    "Backup":{"type":"boolean"},
     "BackupPolicy":{
       "type":"structure",
       "required":["Status"],
@@ -511,7 +562,8 @@
     "ClientToken":{
       "type":"string",
       "max":64,
-      "min":1
+      "min":1,
+      "pattern":".+"
     },
     "CreateAccessPointRequest":{
       "type":"structure",
@@ -543,6 +595,8 @@
         "KmsKeyId":{"shape":"KmsKeyId"},
         "ThroughputMode":{"shape":"ThroughputMode"},
         "ProvisionedThroughputInMibps":{"shape":"ProvisionedThroughputInMibps"},
+        "AvailabilityZoneName":{"shape":"AvailabilityZoneName"},
+        "Backup":{"shape":"Backup"},
         "Tags":{"shape":"Tags"}
       }
     },
@@ -691,6 +745,20 @@
       "type":"structure",
       "members":{
         "AccessPoints":{"shape":"AccessPointDescriptions"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "DescribeAccountPreferencesRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"Token"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "DescribeAccountPreferencesResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceIdPreference":{"shape":"ResourceIdPreference"},
         "NextToken":{"shape":"Token"}
       }
     },
@@ -895,6 +963,8 @@
         "KmsKeyId":{"shape":"KmsKeyId"},
         "ThroughputMode":{"shape":"ThroughputMode"},
         "ProvisionedThroughputInMibps":{"shape":"ProvisionedThroughputInMibps"},
+        "AvailabilityZoneName":{"shape":"AvailabilityZoneName"},
+        "AvailabilityZoneId":{"shape":"AvailabilityZoneId"},
         "Tags":{"shape":"Tags"}
       }
     },
@@ -1035,7 +1105,7 @@
     "KmsKeyId":{
       "type":"string",
       "max":2048,
-      "pattern":"^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|alias/[a-zA-Z0-9/_-]+|(arn:aws[-a-z]*:kms:[a-z0-9-]+:\\d{12}:((key/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})|(alias/[a-zA-Z0-9/_-]+))))$"
+      "pattern":"^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|mrk-[0-9a-f]{32}|alias/[a-zA-Z0-9/_-]+|(arn:aws[-a-z]*:kms:[a-z0-9-]+:\\d{12}:((key/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})|(key/mrk-[0-9a-f]{32})|(alias/[a-zA-Z0-9/_-]+))))$"
     },
     "LifeCycleState":{
       "type":"string",
@@ -1044,7 +1114,8 @@
         "available",
         "updating",
         "deleting",
-        "deleted"
+        "deleted",
+        "error"
       ]
     },
     "LifecycleConfigurationDescription":{
@@ -1207,7 +1278,8 @@
     "Path":{
       "type":"string",
       "max":100,
-      "min":1
+      "min":1,
+      "pattern":"^(\\/|(\\/(?!\\.)+[^$#<>;`|&?{}^*/\\n]+){1,4})$"
     },
     "PerformanceMode":{
       "type":"string",
@@ -1218,9 +1290,16 @@
     },
     "Permissions":{
       "type":"string",
+      "max":4,
+      "min":3,
       "pattern":"^[0-7]{3,4}$"
     },
-    "Policy":{"type":"string"},
+    "Policy":{
+      "type":"string",
+      "max":20000,
+      "min":1,
+      "pattern":"[\\s\\S]+"
+    },
     "PolicyNotFound":{
       "type":"structure",
       "members":{
@@ -1245,6 +1324,19 @@
     "ProvisionedThroughputInMibps":{
       "type":"double",
       "min":1.0
+    },
+    "PutAccountPreferencesRequest":{
+      "type":"structure",
+      "required":["ResourceIdType"],
+      "members":{
+        "ResourceIdType":{"shape":"ResourceIdType"}
+      }
+    },
+    "PutAccountPreferencesResponse":{
+      "type":"structure",
+      "members":{
+        "ResourceIdPreference":{"shape":"ResourceIdPreference"}
+      }
     },
     "PutBackupPolicyRequest":{
       "type":"structure",
@@ -1292,7 +1384,36 @@
         "LifecyclePolicies":{"shape":"LifecyclePolicies"}
       }
     },
-    "ResourceId":{"type":"string"},
+    "Resource":{
+      "type":"string",
+      "enum":[
+        "FILE_SYSTEM",
+        "MOUNT_TARGET"
+      ]
+    },
+    "ResourceId":{
+      "type":"string",
+      "max":128,
+      "pattern":"^(arn:aws[-a-z]*:elasticfilesystem:[0-9a-z-:]+:(access-point/fsap|file-system/fs)-[0-9a-f]{8,40}|fs(ap)?-[0-9a-f]{8,40})$"
+    },
+    "ResourceIdPreference":{
+      "type":"structure",
+      "members":{
+        "ResourceIdType":{"shape":"ResourceIdType"},
+        "Resources":{"shape":"Resources"}
+      }
+    },
+    "ResourceIdType":{
+      "type":"string",
+      "enum":[
+        "LONG_ID",
+        "SHORT_ID"
+      ]
+    },
+    "Resources":{
+      "type":"list",
+      "member":{"shape":"Resource"}
+    },
     "RootDirectory":{
       "type":"structure",
       "members":{
@@ -1427,7 +1548,12 @@
       ]
     },
     "Timestamp":{"type":"timestamp"},
-    "Token":{"type":"string"},
+    "Token":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":".+"
+    },
     "TooManyRequests":{
       "type":"structure",
       "required":["ErrorCode"],

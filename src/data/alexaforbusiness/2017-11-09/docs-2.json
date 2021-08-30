@@ -68,7 +68,7 @@
     "PutSkillAuthorization": "<p>Links a user's account to a third-party skill provider. If this API operation is called by an assumed IAM role, the skill being linked must be a private skill. Also, the skill must be owned by the AWS account that assumed the IAM role.</p>",
     "RegisterAVSDevice": "<p>Registers an Alexa-enabled device built by an Original Equipment Manufacturer (OEM) using Alexa Voice Service (AVS).</p>",
     "RejectSkill": "<p>Disassociates a skill from the organization under a user's AWS account. If the skill is a private skill, it moves to an AcceptStatus of PENDING. Any private or public skill that is rejected can be added later by calling the ApproveSkill API. </p>",
-    "ResolveRoom": "<p>Determines the details for the room from which a skill request was invoked. This operation is used by skill developers.</p>",
+    "ResolveRoom": "<p>Determines the details for the room from which a skill request was invoked. This operation is used by skill developers.</p> <p>To query ResolveRoom from an Alexa skill, the skill ID needs to be authorized. When the skill is using an AWS Lambda function, the skill is automatically authorized when you publish your skill as a private skill to your AWS account. Skills that are hosted using a custom web service must be manually authorized. To get your skill authorized, contact AWS Support with your AWS account ID that queries the ResolveRoom API and skill ID. </p>",
     "RevokeInvitation": "<p>Revokes an invitation and invalidates the enrollment URL.</p>",
     "SearchAddressBooks": "<p>Searches address books and lists the ones that meet a set of filter and sort criteria.</p>",
     "SearchContacts": "<p>Searches contacts and lists the ones that meet a set of filter and sort criteria.</p>",
@@ -271,7 +271,7 @@
         "ProfileData$ProfileArn": "<p>The ARN of a room profile.</p>",
         "PutRoomSkillParameterRequest$RoomArn": "<p>The ARN of the room associated with the room skill parameter. Required.</p>",
         "PutSkillAuthorizationRequest$RoomArn": "<p>The room that the skill is authorized for.</p>",
-        "RegisterAVSDeviceRequest$RoomArn": "<p>The ARN of the room with which to associate your AVS device.</p>",
+        "RegisterAVSDeviceRequest$RoomArn": "<p>The Amazon Resource Name (ARN) of the room with which to associate your AVS device.</p>",
         "RegisterAVSDeviceResponse$DeviceArn": "<p>The ARN of the device.</p>",
         "ResolveRoomResponse$RoomArn": "<p>The ARN of the room from which the skill request was invoked.</p>",
         "RevokeInvitationRequest$UserArn": "<p>The ARN of the user for whom to revoke an enrollment invitation. Required.</p>",
@@ -396,6 +396,7 @@
         "CreateMeetingRoomConfiguration$RoomUtilizationMetricsEnabled": "<p>Whether room utilization metrics are enabled or not.</p>",
         "CreateProfileRequest$SetupModeDisabled": "<p>Whether room profile setup is enabled.</p>",
         "CreateProfileRequest$PSTNEnabled": "<p>Whether PSTN calling is enabled.</p>",
+        "CreateProfileRequest$DataRetentionOptIn": "<p>Whether data retention of the profile is enabled.</p>",
         "CreateRequireCheckIn$Enabled": "<p>Whether require check in is enabled or not.</p>",
         "EndOfMeetingReminder$Enabled": "<p>Whether an end of meeting reminder is enabled or not.</p>",
         "InstantBooking$Enabled": "<p>Whether instant booking is enabled or not.</p>",
@@ -403,6 +404,7 @@
         "Profile$IsDefault": "<p>Retrieves if the profile is default or not.</p>",
         "Profile$SetupModeDisabled": "<p>The setup mode of a room profile.</p>",
         "Profile$PSTNEnabled": "<p>The PSTN setting of a room profile.</p>",
+        "Profile$DataRetentionOptIn": "<p>Whether data retention of the profile is enabled.</p>",
         "ProfileData$IsDefault": "<p>Retrieves if the profile data is default or not.</p>",
         "RequireCheckIn$Enabled": "<p>Whether require check in is enabled or not.</p>",
         "UpdateEndOfMeetingReminder$Enabled": "<p>Whether an end of meeting reminder is enabled or not.</p>",
@@ -411,6 +413,7 @@
         "UpdateProfileRequest$IsDefault": "<p>Sets the profile as default if selected. If this is missing, no update is done to the default status.</p>",
         "UpdateProfileRequest$SetupModeDisabled": "<p>Whether the setup mode of the profile is enabled.</p>",
         "UpdateProfileRequest$PSTNEnabled": "<p>Whether the PSTN setting of the room profile is enabled.</p>",
+        "UpdateProfileRequest$DataRetentionOptIn": "<p>Whether data retention of the profile is enabled.</p>",
         "UpdateRequireCheckIn$Enabled": "<p>Whether require check in is enabled or not.</p>"
       }
     },
@@ -2614,12 +2617,18 @@
     "TagList": {
       "base": null,
       "refs": {
+        "CreateAddressBookRequest$Tags": "<p>The tags to be added to the specified resource. Do not provide system tags.</p>",
         "CreateBusinessReportScheduleRequest$Tags": "<p>The tags for the business report schedule.</p>",
+        "CreateConferenceProviderRequest$Tags": "<p>The tags to be added to the specified resource. Do not provide system tags.</p>",
+        "CreateContactRequest$Tags": "<p>The tags to be added to the specified resource. Do not provide system tags.</p>",
+        "CreateGatewayGroupRequest$Tags": "<p>The tags to be added to the specified resource. Do not provide system tags.</p>",
+        "CreateNetworkProfileRequest$Tags": "<p>The tags to be added to the specified resource. Do not provide system tags. </p>",
         "CreateProfileRequest$Tags": "<p>The tags for the profile.</p>",
         "CreateRoomRequest$Tags": "<p>The tags for the room.</p>",
         "CreateSkillGroupRequest$Tags": "<p>The tags for the skill group.</p>",
         "CreateUserRequest$Tags": "<p>The tags for the user.</p>",
         "ListTagsResponse$Tags": "<p>The tags requested for the specified resource.</p>",
+        "RegisterAVSDeviceRequest$Tags": "<p>The tags to be added to the specified resource. Do not provide system tags.</p>",
         "TagResourceRequest$Tags": "<p>The tags to be added to the specified resource. Do not provide system tags. Required. </p>"
       }
     },

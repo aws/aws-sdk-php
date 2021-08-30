@@ -1503,7 +1503,11 @@
         "PostLaunchFileFailure",
         "BadPermissionError",
         "DownloadConditionFailed",
-        "InternalServerError"
+        "BadLambdaAssociated",
+        "InternalServerError",
+        "RobotApplicationDoesNotExist",
+        "DeploymentFleetDoesNotExist",
+        "FleetDeploymentTimeout"
       ]
     },
     "DeploymentJobs":{
@@ -1786,7 +1790,8 @@
         "generationJob":{"shape":"Arn"},
         "template":{"shape":"Arn"},
         "createdAt":{"shape":"CreatedAt"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "worldDescriptionBody":{"shape":"Json"}
       }
     },
     "DescribeWorldTemplateRequest":{
@@ -1804,7 +1809,8 @@
         "name":{"shape":"TemplateName"},
         "createdAt":{"shape":"CreatedAt"},
         "lastUpdatedAt":{"shape":"LastUpdatedAt"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "version":{"shape":"GenericString"}
       }
     },
     "EnvironmentVariableKey":{
@@ -1825,6 +1831,13 @@
       "max":1024,
       "min":1,
       "pattern":".*"
+    },
+    "ExitBehavior":{
+      "type":"string",
+      "enum":[
+        "FAIL",
+        "RESTART"
+      ]
     },
     "FailedAt":{"type":"timestamp"},
     "FailedCreateSimulationJobRequest":{
@@ -2369,7 +2382,9 @@
         "applicationVersion":{"shape":"Version"},
         "launchConfig":{"shape":"LaunchConfig"},
         "uploadConfigurations":{"shape":"UploadConfigurations"},
-        "useDefaultUploadConfigurations":{"shape":"BoxedBoolean"}
+        "useDefaultUploadConfigurations":{"shape":"BoxedBoolean"},
+        "tools":{"shape":"Tools"},
+        "useDefaultTools":{"shape":"BoxedBoolean"}
       }
     },
     "RobotApplicationConfigs":{
@@ -2445,7 +2460,8 @@
       "enum":[
         "Kinetic",
         "Melodic",
-        "Dashing"
+        "Dashing",
+        "Foxy"
       ]
     },
     "RobotStatus":{
@@ -2534,7 +2550,9 @@
         "launchConfig":{"shape":"LaunchConfig"},
         "uploadConfigurations":{"shape":"UploadConfigurations"},
         "worldConfigs":{"shape":"WorldConfigs"},
-        "useDefaultUploadConfigurations":{"shape":"BoxedBoolean"}
+        "useDefaultUploadConfigurations":{"shape":"BoxedBoolean"},
+        "tools":{"shape":"Tools"},
+        "useDefaultTools":{"shape":"BoxedBoolean"}
       }
     },
     "SimulationApplicationConfigs":{
@@ -2630,6 +2648,8 @@
         "InternalServiceError",
         "RobotApplicationCrash",
         "SimulationApplicationCrash",
+        "RobotApplicationHealthCheckFailure",
+        "SimulationApplicationHealthCheckFailure",
         "BadPermissionsRobotApplication",
         "BadPermissionsSimulationApplication",
         "BadPermissionsS3Object",
@@ -2641,6 +2661,7 @@
         "InvalidBundleRobotApplication",
         "InvalidBundleSimulationApplication",
         "InvalidS3Resource",
+        "ThrottlingError",
         "LimitExceeded",
         "MismatchedEtag",
         "RobotApplicationVersionMismatchedEtag",
@@ -2730,7 +2751,7 @@
       "type":"string",
       "max":1024,
       "min":0,
-      "pattern":"7|9|Kinetic|Melodic|Dashing"
+      "pattern":"7|9|11|Kinetic|Melodic|Dashing|Foxy"
     },
     "SimulationTimeMillis":{"type":"long"},
     "SimulationUnit":{
@@ -2895,7 +2916,8 @@
         "arn":{"shape":"Arn"},
         "createdAt":{"shape":"CreatedAt"},
         "lastUpdatedAt":{"shape":"LastUpdatedAt"},
-        "name":{"shape":"TemplateName"}
+        "name":{"shape":"TemplateName"},
+        "version":{"shape":"GenericString"}
       }
     },
     "ThrottlingException":{
@@ -2905,6 +2927,32 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "Tool":{
+      "type":"structure",
+      "required":[
+        "name",
+        "command"
+      ],
+      "members":{
+        "streamUI":{"shape":"BoxedBoolean"},
+        "name":{"shape":"Name"},
+        "command":{"shape":"UnrestrictedCommand"},
+        "streamOutputToCloudWatch":{"shape":"BoxedBoolean"},
+        "exitBehavior":{"shape":"ExitBehavior"}
+      }
+    },
+    "Tools":{
+      "type":"list",
+      "member":{"shape":"Tool"},
+      "max":10,
+      "min":0
+    },
+    "UnrestrictedCommand":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":".*"
     },
     "UntagResourceRequest":{
       "type":"structure",

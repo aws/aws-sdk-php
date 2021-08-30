@@ -17,6 +17,9 @@ class JsonParser
 
         switch ($shape['type']) {
             case 'structure':
+                if (isset($shape['document']) && $shape['document']) {
+                    return $value;
+                }
                 $target = [];
                 foreach ($shape->getMembers() as $name => $member) {
                     $locationName = $member['locationName'] ?: $name;

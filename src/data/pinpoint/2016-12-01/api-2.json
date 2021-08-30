@@ -5170,7 +5170,16 @@
         "MessageType": {
           "shape": "MessageType"
         },
+        "OriginationNumber": {
+          "shape": "__string"
+        },
         "SenderId": {
+          "shape": "__string"
+        },
+        "EntityId": {
+          "shape": "__string"
+        },
+        "TemplateId": {
           "shape": "__string"
         }
       }
@@ -9120,6 +9129,9 @@
         },
         "MessagesPerSecond": {
           "shape": "__integer"
+        },
+        "EndpointReentryInterval": {
+            "shape": "__string"
         }
       }
     },
@@ -9193,7 +9205,16 @@
         "MessageType": {
           "shape": "MessageType"
         },
+        "OriginationNumber": {
+          "shape": "__string"
+        },
         "SenderId": {
+          "shape": "__string"
+        },
+        "EntityId": {
+          "shape": "__string"
+        },
+        "TemplateId": {
           "shape": "__string"
         }
       }
@@ -10198,6 +10219,12 @@
         },
         "Substitutions": {
           "shape": "MapOfListOf__string"
+        },
+        "EntityId": {
+          "shape": "__string"
+        },
+        "TemplateId": {
+          "shape": "__string"
         }
       }
     },
@@ -10736,7 +10763,8 @@
         "ACTIVE",
         "COMPLETED",
         "CANCELLED",
-        "CLOSED"
+        "CLOSED",
+        "PAUSED"
       ]
     },
     "TagResourceRequest": {
@@ -12091,6 +12119,12 @@
         },
         "State": {
           "shape": "State"
+        },
+        "WaitForQuietTime": {
+            "shape": "__boolean"
+        },
+        "RefreshOnSegmentUpdate": {
+            "shape": "__boolean"
         }
       },
       "required": [

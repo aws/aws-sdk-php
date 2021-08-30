@@ -27,6 +27,10 @@ class RestJsonSerializerTest extends TestCase
                         'http' => ['httpMethod' => 'POST'],
                         'input' => ['shape' => 'FooInput'],
                     ],
+                    'doctype' => [
+                        'http' => ['httpMethod' => 'POST'],
+                        'input' => ['shape' => 'DocTypeInput'],
+                    ],
                     'bar' => [
                         'http' => ['httpMethod' => 'POST'],
                         'input' => ['shape' => 'BarInput'],
@@ -46,6 +50,18 @@ class RestJsonSerializerTest extends TestCase
                         'members' => [
                             'baz' => ['shape' => 'BazShape']
                         ]
+                    ],
+                    'DocTypeInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            "DocumentValue" => [
+                                "shape" => "DocumentType",
+                            ]
+                        ]
+                    ],
+                    "DocumentType" => [
+                        "type" => "structure",
+                        "document" => true
                     ],
                     'BarInput' => [
                         'type' => 'structure',
@@ -180,4 +196,57 @@ class RestJsonSerializerTest extends TestCase
             $request->getHeaderLine('Content-Type')
         );
     }
+
+    /**
+     * @dataProvider doctypeTestProvider
+     * @param string $operation
+     *
+     */
+    public function testHandlesDoctype($input, $expectedOutput)
+    {
+        $request = $this->getRequest('doctype', $input);
+        $this->assertSame('POST', $request->getMethod());
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
+        $this->assertSame($expectedOutput, $request->getBody()->getContents());
+        $this->assertSame(
+            'application/json',
+            $request->getHeaderLine('Content-Type')
+        );
+    }
+
+
+    public function doctypeTestProvider() {
+        return [
+            [
+                ['DocumentValue' =>
+                    ['DocumentType' =>
+                        [
+                            'name' => "John",
+                            'age'=> 31,
+                            'active'=> true
+                        ]
+                    ]
+                ],
+                '{"DocumentValue":{"DocumentType":{"name":"John","age":31,"active":true}}}'
+            ],
+            [
+                ['DocumentValue' =>
+                    [
+                        'DocumentType' => true
+                    ]
+                ],
+                '{"DocumentValue":{"DocumentType":true}}'
+            ],
+            [
+                ['DocumentValue' =>
+                    [
+                        'DocumentType' => 2
+                    ]
+                ],
+                '{"DocumentValue":{"DocumentType":2}}'
+            ],
+        ];
+    }
+
 }
+

@@ -674,7 +674,8 @@
       "members":{
         "authenticationType":{"shape":"AuthenticationType"},
         "openIDConnectConfig":{"shape":"OpenIDConnectConfig"},
-        "userPoolConfig":{"shape":"CognitoUserPoolConfig"}
+        "userPoolConfig":{"shape":"CognitoUserPoolConfig"},
+        "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"}
       }
     },
     "AdditionalAuthenticationProviders":{
@@ -772,7 +773,8 @@
         "API_KEY",
         "AWS_IAM",
         "AMAZON_COGNITO_USER_POOLS",
-        "OPENID_CONNECT"
+        "OPENID_CONNECT",
+        "AWS_LAMBDA"
       ]
     },
     "AuthorizationConfig":{
@@ -947,7 +949,8 @@
         "dataSourceName":{"shape":"ResourceName"},
         "requestMappingTemplate":{"shape":"MappingTemplate"},
         "responseMappingTemplate":{"shape":"MappingTemplate"},
-        "functionVersion":{"shape":"String"}
+        "functionVersion":{"shape":"String"},
+        "syncConfig":{"shape":"SyncConfig"}
       }
     },
     "CreateFunctionResponse":{
@@ -970,7 +973,8 @@
         "openIDConnectConfig":{"shape":"OpenIDConnectConfig"},
         "tags":{"shape":"TagMap"},
         "additionalAuthenticationProviders":{"shape":"AdditionalAuthenticationProviders"},
-        "xrayEnabled":{"shape":"Boolean"}
+        "xrayEnabled":{"shape":"Boolean"},
+        "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"}
       }
     },
     "CreateGraphqlApiResponse":{
@@ -1299,7 +1303,8 @@
         "dataSourceName":{"shape":"ResourceName"},
         "requestMappingTemplate":{"shape":"MappingTemplate"},
         "responseMappingTemplate":{"shape":"MappingTemplate"},
-        "functionVersion":{"shape":"String"}
+        "functionVersion":{"shape":"String"},
+        "syncConfig":{"shape":"SyncConfig"}
       }
     },
     "Functions":{
@@ -1527,7 +1532,8 @@
         "tags":{"shape":"TagMap"},
         "additionalAuthenticationProviders":{"shape":"AdditionalAuthenticationProviders"},
         "xrayEnabled":{"shape":"Boolean"},
-        "wafWebAclArn":{"shape":"String"}
+        "wafWebAclArn":{"shape":"String"},
+        "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"}
       }
     },
     "GraphqlApis":{
@@ -1549,6 +1555,15 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "LambdaAuthorizerConfig":{
+      "type":"structure",
+      "required":["authorizerUri"],
+      "members":{
+        "authorizerResultTtlInSeconds":{"shape":"TTL"},
+        "authorizerUri":{"shape":"String"},
+        "identityValidationExpression":{"shape":"String"}
+      }
     },
     "LambdaConflictHandlerConfig":{
       "type":"structure",
@@ -1967,11 +1982,16 @@
         "lambdaConflictHandlerConfig":{"shape":"LambdaConflictHandlerConfig"}
       }
     },
+    "TTL":{
+      "type":"integer",
+      "max":3600,
+      "min":0
+    },
     "TagKey":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"^(?!aws:)[ a-zA-Z+-=._:/]+$"
     },
     "TagKeyList":{
       "type":"list",
@@ -2174,7 +2194,8 @@
         "dataSourceName":{"shape":"ResourceName"},
         "requestMappingTemplate":{"shape":"MappingTemplate"},
         "responseMappingTemplate":{"shape":"MappingTemplate"},
-        "functionVersion":{"shape":"String"}
+        "functionVersion":{"shape":"String"},
+        "syncConfig":{"shape":"SyncConfig"}
       }
     },
     "UpdateFunctionResponse":{
@@ -2201,7 +2222,8 @@
         "userPoolConfig":{"shape":"UserPoolConfig"},
         "openIDConnectConfig":{"shape":"OpenIDConnectConfig"},
         "additionalAuthenticationProviders":{"shape":"AdditionalAuthenticationProviders"},
-        "xrayEnabled":{"shape":"Boolean"}
+        "xrayEnabled":{"shape":"Boolean"},
+        "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"}
       }
     },
     "UpdateGraphqlApiResponse":{

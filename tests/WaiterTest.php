@@ -72,7 +72,7 @@ class WaiterTest extends TestCase
             ) use (&$retries) {
                 if (0 === --$retries) {
                     return new FulfilledPromise(new Response(200, [],
-                        Psr7\stream_for('{"Table":{"TableStatus":"ACTIVE"}}')
+                        Psr7\Utils::streamFor('{"Table":{"TableStatus":"ACTIVE"}}')
                     ));
                 }
 
@@ -113,7 +113,7 @@ class WaiterTest extends TestCase
 
             $promise = new Promise\Promise();
             $promise->resolve(new Response(200, [],
-                Psr7\stream_for(sprintf(
+                Psr7\Utils::streamFor(sprintf(
                     '{"Table":{"TableStatus":"%s"}}',
                     $statusQueue[$iteration]
                 ))

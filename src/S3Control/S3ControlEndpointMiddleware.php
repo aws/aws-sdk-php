@@ -2,7 +2,6 @@
 namespace Aws\S3Control;
 
 use Aws\CommandInterface;
-use GuzzleHttp\Exception\InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -49,18 +48,12 @@ class S3ControlEndpointMiddleware
             ? (bool) $options['dual_stack'] : false;
         $this->region = (string) $region;
         $this->nextHandler = $nextHandler;
-        $this->endpoint = isset($options['endpoint'])
-            ? $options['endpoint'] : null;
     }
 
     public function __invoke(CommandInterface $command, RequestInterface $request)
     {
         if ($this->isDualStackRequest($command, $request)) {
             $request = $this->applyDualStackEndpoint($command, $request);
-        } else if (!empty($this->endpoint)) {
-            $uri = $request->getUri();
-            $host = $uri->getHost() . $this->endpoint;
-            $request = $request->withUri($uri->withHost($host));
         }
 
         $nextHandler = $this->nextHandler;
@@ -78,11 +71,7 @@ class S3ControlEndpointMiddleware
     private function getDualStackHost($host)
     {
         $parts = explode(".{$this->region}.", $host);
-        $host = $parts[0] . ".dualstack.{$this->region}";
-        if (sizeof($parts) > 1) {
-            $host .= "." . $parts[1];
-        }
-        return $host;
+        return $parts[0] . ".dualstack.{$this->region}." . $parts[1];
     }
 
     private function applyDualStackEndpoint(

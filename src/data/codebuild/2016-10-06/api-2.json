@@ -542,6 +542,19 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "UpdateProjectVisibility":{
+      "name":"UpdateProjectVisibility",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateProjectVisibilityInput"},
+      "output":{"shape":"UpdateProjectVisibilityOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "UpdateReportGroup":{
       "name":"UpdateReportGroup",
       "http":{
@@ -699,6 +712,14 @@
       }
     },
     "Boolean":{"type":"boolean"},
+    "BucketOwnerAccess":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "READ_ONLY",
+        "FULL"
+      ]
+    },
     "Build":{
       "type":"structure",
       "members":{
@@ -744,7 +765,8 @@
         "md5sum":{"shape":"String"},
         "overrideArtifactName":{"shape":"WrapperBoolean"},
         "encryptionDisabled":{"shape":"WrapperBoolean"},
-        "artifactIdentifier":{"shape":"String"}
+        "artifactIdentifier":{"shape":"String"},
+        "bucketOwnerAccess":{"shape":"BucketOwnerAccess"}
       }
     },
     "BuildArtifactsList":{
@@ -784,7 +806,8 @@
         "buildBatchNumber":{"shape":"WrapperLong"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
         "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
-        "buildGroups":{"shape":"BuildGroups"}
+        "buildGroups":{"shape":"BuildGroups"},
+        "debugSessionEnabled":{"shape":"WrapperBoolean"}
       }
     },
     "BuildBatchFilter":{
@@ -1020,7 +1043,8 @@
         "badgeEnabled":{"shape":"WrapperBoolean"},
         "logsConfig":{"shape":"LogsConfig"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
-        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"}
+        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
+        "concurrentBuildLimit":{"shape":"WrapperInt"}
       }
     },
     "CreateProjectOutput":{
@@ -1697,7 +1721,11 @@
         "badge":{"shape":"ProjectBadge"},
         "logsConfig":{"shape":"LogsConfig"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
-        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"}
+        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
+        "concurrentBuildLimit":{"shape":"WrapperInt"},
+        "projectVisibility":{"shape":"ProjectVisibilityType"},
+        "publicProjectAlias":{"shape":"NonEmptyString"},
+        "resourceAccessRole":{"shape":"NonEmptyString"}
       }
     },
     "ProjectArns":{
@@ -1718,7 +1746,8 @@
         "packaging":{"shape":"ArtifactPackaging"},
         "overrideArtifactName":{"shape":"WrapperBoolean"},
         "encryptionDisabled":{"shape":"WrapperBoolean"},
-        "artifactIdentifier":{"shape":"String"}
+        "artifactIdentifier":{"shape":"String"},
+        "bucketOwnerAccess":{"shape":"BucketOwnerAccess"}
       }
     },
     "ProjectArtifactsList":{
@@ -1851,6 +1880,13 @@
       "member":{"shape":"ProjectSource"},
       "max":12,
       "min":0
+    },
+    "ProjectVisibilityType":{
+      "type":"string",
+      "enum":[
+        "PUBLIC_READ",
+        "PRIVATE"
+      ]
     },
     "Projects":{
       "type":"list",
@@ -2111,13 +2147,15 @@
       "members":{
         "status":{"shape":"LogsConfigStatusType"},
         "location":{"shape":"String"},
-        "encryptionDisabled":{"shape":"WrapperBoolean"}
+        "encryptionDisabled":{"shape":"WrapperBoolean"},
+        "bucketOwnerAccess":{"shape":"BucketOwnerAccess"}
       }
     },
     "S3ReportExportConfig":{
       "type":"structure",
       "members":{
         "bucket":{"shape":"NonEmptyString"},
+        "bucketOwner":{"shape":"String"},
         "path":{"shape":"String"},
         "packaging":{"shape":"ReportPackagingType"},
         "encryptionKey":{"shape":"NonEmptyString"},
@@ -2225,7 +2263,8 @@
         "logsConfigOverride":{"shape":"LogsConfig"},
         "registryCredentialOverride":{"shape":"RegistryCredential"},
         "imagePullCredentialsTypeOverride":{"shape":"ImagePullCredentialsType"},
-        "buildBatchConfigOverride":{"shape":"ProjectBuildBatchConfig"}
+        "buildBatchConfigOverride":{"shape":"ProjectBuildBatchConfig"},
+        "debugSessionEnabled":{"shape":"WrapperBoolean"}
       }
     },
     "StartBuildBatchOutput":{
@@ -2399,13 +2438,34 @@
         "badgeEnabled":{"shape":"WrapperBoolean"},
         "logsConfig":{"shape":"LogsConfig"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
-        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"}
+        "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
+        "concurrentBuildLimit":{"shape":"WrapperInt"}
       }
     },
     "UpdateProjectOutput":{
       "type":"structure",
       "members":{
         "project":{"shape":"Project"}
+      }
+    },
+    "UpdateProjectVisibilityInput":{
+      "type":"structure",
+      "required":[
+        "projectArn",
+        "projectVisibility"
+      ],
+      "members":{
+        "projectArn":{"shape":"NonEmptyString"},
+        "projectVisibility":{"shape":"ProjectVisibilityType"},
+        "resourceAccessRole":{"shape":"NonEmptyString"}
+      }
+    },
+    "UpdateProjectVisibilityOutput":{
+      "type":"structure",
+      "members":{
+        "projectArn":{"shape":"NonEmptyString"},
+        "publicProjectAlias":{"shape":"NonEmptyString"},
+        "projectVisibility":{"shape":"ProjectVisibilityType"}
       }
     },
     "UpdateReportGroupInput":{

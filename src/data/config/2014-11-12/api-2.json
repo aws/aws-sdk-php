@@ -169,7 +169,8 @@
       "errors":[
         {"shape":"NoSuchRemediationConfigurationException"},
         {"shape":"RemediationInProgressException"},
-        {"shape":"InsufficientPermissionsException"}
+        {"shape":"InsufficientPermissionsException"},
+        {"shape":"InvalidParameterValueException"}
       ]
     },
     "DeleteRemediationExceptions":{
@@ -243,6 +244,21 @@
       },
       "input":{"shape":"DescribeAggregateComplianceByConfigRulesRequest"},
       "output":{"shape":"DescribeAggregateComplianceByConfigRulesResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidLimitException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"NoSuchConfigurationAggregatorException"}
+      ]
+    },
+    "DescribeAggregateComplianceByConformancePacks":{
+      "name":"DescribeAggregateComplianceByConformancePacks",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAggregateComplianceByConformancePacksRequest"},
+      "output":{"shape":"DescribeAggregateComplianceByConformancePacksResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InvalidLimitException"},
@@ -547,7 +563,8 @@
       "output":{"shape":"DescribeRemediationExecutionStatusResponse"},
       "errors":[
         {"shape":"NoSuchRemediationConfigurationException"},
-        {"shape":"InvalidNextTokenException"}
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"InvalidParameterValueException"}
       ]
     },
     "DescribeRetentionConfigurations":{
@@ -587,6 +604,21 @@
       },
       "input":{"shape":"GetAggregateConfigRuleComplianceSummaryRequest"},
       "output":{"shape":"GetAggregateConfigRuleComplianceSummaryResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InvalidLimitException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"NoSuchConfigurationAggregatorException"}
+      ]
+    },
+    "GetAggregateConformancePackComplianceSummary":{
+      "name":"GetAggregateConformancePackComplianceSummary",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAggregateConformancePackComplianceSummaryRequest"},
+      "output":{"shape":"GetAggregateConformancePackComplianceSummaryResponse"},
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"InvalidLimitException"},
@@ -919,6 +951,7 @@
         {"shape":"InvalidDeliveryChannelNameException"},
         {"shape":"NoSuchBucketException"},
         {"shape":"InvalidS3KeyPrefixException"},
+        {"shape":"InvalidS3KmsKeyArnException"},
         {"shape":"InvalidSNSTopicARNException"},
         {"shape":"InsufficientDeliveryPolicyException"}
       ]
@@ -1201,6 +1234,19 @@
       "type":"list",
       "member":{"shape":"AggregateComplianceByConfigRule"}
     },
+    "AggregateComplianceByConformancePack":{
+      "type":"structure",
+      "members":{
+        "ConformancePackName":{"shape":"ConformancePackName"},
+        "Compliance":{"shape":"AggregateConformancePackCompliance"},
+        "AccountId":{"shape":"AccountId"},
+        "AwsRegion":{"shape":"AwsRegion"}
+      }
+    },
+    "AggregateComplianceByConformancePackList":{
+      "type":"list",
+      "member":{"shape":"AggregateComplianceByConformancePack"}
+    },
     "AggregateComplianceCount":{
       "type":"structure",
       "members":{
@@ -1211,6 +1257,56 @@
     "AggregateComplianceCountList":{
       "type":"list",
       "member":{"shape":"AggregateComplianceCount"}
+    },
+    "AggregateConformancePackCompliance":{
+      "type":"structure",
+      "members":{
+        "ComplianceType":{"shape":"ConformancePackComplianceType"},
+        "CompliantRuleCount":{"shape":"Integer"},
+        "NonCompliantRuleCount":{"shape":"Integer"},
+        "TotalRuleCount":{"shape":"Integer"}
+      }
+    },
+    "AggregateConformancePackComplianceCount":{
+      "type":"structure",
+      "members":{
+        "CompliantConformancePackCount":{"shape":"Integer"},
+        "NonCompliantConformancePackCount":{"shape":"Integer"}
+      }
+    },
+    "AggregateConformancePackComplianceFilters":{
+      "type":"structure",
+      "members":{
+        "ConformancePackName":{"shape":"ConformancePackName"},
+        "ComplianceType":{"shape":"ConformancePackComplianceType"},
+        "AccountId":{"shape":"AccountId"},
+        "AwsRegion":{"shape":"AwsRegion"}
+      }
+    },
+    "AggregateConformancePackComplianceSummary":{
+      "type":"structure",
+      "members":{
+        "ComplianceSummary":{"shape":"AggregateConformancePackComplianceCount"},
+        "GroupName":{"shape":"StringWithCharLimit256"}
+      }
+    },
+    "AggregateConformancePackComplianceSummaryFilters":{
+      "type":"structure",
+      "members":{
+        "AccountId":{"shape":"AccountId"},
+        "AwsRegion":{"shape":"AwsRegion"}
+      }
+    },
+    "AggregateConformancePackComplianceSummaryGroupKey":{
+      "type":"string",
+      "enum":[
+        "ACCOUNT_ID",
+        "AWS_REGION"
+      ]
+    },
+    "AggregateConformancePackComplianceSummaryList":{
+      "type":"list",
+      "member":{"shape":"AggregateConformancePackComplianceSummary"}
     },
     "AggregateEvaluationResult":{
       "type":"structure",
@@ -1733,7 +1829,8 @@
       "type":"string",
       "enum":[
         "COMPLIANT",
-        "NON_COMPLIANT"
+        "NON_COMPLIANT",
+        "INSUFFICIENT_DATA"
       ]
     },
     "ConformancePackConfigRuleNames":{
@@ -1835,7 +1932,8 @@
       "type":"structure",
       "members":{
         "ConfigRuleName":{"shape":"ConfigRuleName"},
-        "ComplianceType":{"shape":"ConformancePackComplianceType"}
+        "ComplianceType":{"shape":"ConformancePackComplianceType"},
+        "Controls":{"shape":"ControlsList"}
       }
     },
     "ConformancePackRuleComplianceList":{
@@ -1897,6 +1995,12 @@
       "members":{
       },
       "exception":true
+    },
+    "ControlsList":{
+      "type":"list",
+      "member":{"shape":"StringWithCharLimit128"},
+      "max":20,
+      "min":0
     },
     "CosmosPageLimit":{
       "type":"integer",
@@ -2066,6 +2170,7 @@
         "name":{"shape":"ChannelName"},
         "s3BucketName":{"shape":"String"},
         "s3KeyPrefix":{"shape":"String"},
+        "s3KmsKeyArn":{"shape":"String"},
         "snsTopicARN":{"shape":"String"},
         "configSnapshotDeliveryProperties":{"shape":"ConfigSnapshotDeliveryProperties"}
       }
@@ -2123,6 +2228,23 @@
       "type":"structure",
       "members":{
         "AggregateComplianceByConfigRules":{"shape":"AggregateComplianceByConfigRuleList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeAggregateComplianceByConformancePacksRequest":{
+      "type":"structure",
+      "required":["ConfigurationAggregatorName"],
+      "members":{
+        "ConfigurationAggregatorName":{"shape":"ConfigurationAggregatorName"},
+        "Filters":{"shape":"AggregateConformancePackComplianceFilters"},
+        "Limit":{"shape":"Limit"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeAggregateComplianceByConformancePacksResponse":{
+      "type":"structure",
+      "members":{
+        "AggregateComplianceByConformancePacks":{"shape":"AggregateComplianceByConformancePackList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -2666,6 +2788,25 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "GetAggregateConformancePackComplianceSummaryRequest":{
+      "type":"structure",
+      "required":["ConfigurationAggregatorName"],
+      "members":{
+        "ConfigurationAggregatorName":{"shape":"ConfigurationAggregatorName"},
+        "Filters":{"shape":"AggregateConformancePackComplianceSummaryFilters"},
+        "GroupByKey":{"shape":"AggregateConformancePackComplianceSummaryGroupKey"},
+        "Limit":{"shape":"Limit"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetAggregateConformancePackComplianceSummaryResponse":{
+      "type":"structure",
+      "members":{
+        "AggregateConformancePackComplianceSummaries":{"shape":"AggregateConformancePackComplianceSummaryList"},
+        "GroupByKey":{"shape":"StringWithCharLimit256"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "GetAggregateDiscoveredResourceCountsRequest":{
       "type":"structure",
       "required":["ConfigurationAggregatorName"],
@@ -2974,6 +3115,12 @@
       "exception":true
     },
     "InvalidS3KeyPrefixException":{
+      "type":"structure",
+      "members":{
+      },
+      "exception":true
+    },
+    "InvalidS3KmsKeyArnException":{
       "type":"structure",
       "members":{
       },
@@ -4193,6 +4340,7 @@
         "AWS::SSM::PatchCompliance",
         "AWS::Shield::Protection",
         "AWS::ShieldRegional::Protection",
+        "AWS::Config::ConformancePackCompliance",
         "AWS::Config::ResourceCompliance",
         "AWS::ApiGateway::Stage",
         "AWS::ApiGateway::RestApi",
@@ -4207,7 +4355,18 @@
         "AWS::QLDB::Ledger",
         "AWS::SecretsManager::Secret",
         "AWS::SNS::Topic",
-        "AWS::SSM::FileData"
+        "AWS::SSM::FileData",
+        "AWS::Backup::BackupPlan",
+        "AWS::Backup::BackupSelection",
+        "AWS::Backup::BackupVault",
+        "AWS::Backup::RecoveryPoint",
+        "AWS::ECR::Repository",
+        "AWS::ECS::Cluster",
+        "AWS::ECS::Service",
+        "AWS::ECS::TaskDefinition",
+        "AWS::EFS::AccessPoint",
+        "AWS::EFS::FileSystem",
+        "AWS::EKS::Cluster"
       ]
     },
     "ResourceTypeList":{

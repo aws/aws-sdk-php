@@ -121,6 +121,45 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "CreateFolder":{
+      "name":"CreateFolder",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/folders/{FolderId}"
+      },
+      "input":{"shape":"CreateFolderRequest"},
+      "output":{"shape":"CreateFolderResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceExistsException"},
+        {"shape":"ConflictException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "CreateFolderMembership":{
+      "name":"CreateFolderMembership",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/folders/{FolderId}/members/{MemberType}/{MemberId}"
+      },
+      "input":{"shape":"CreateFolderMembershipRequest"},
+      "output":{"shape":"CreateFolderMembershipResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceExistsException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "CreateGroup":{
       "name":"CreateGroup",
       "http":{
@@ -373,6 +412,42 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DeleteFolder":{
+      "name":"DeleteFolder",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/folders/{FolderId}"
+      },
+      "input":{"shape":"DeleteFolderRequest"},
+      "output":{"shape":"DeleteFolderResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DeleteFolderMembership":{
+      "name":"DeleteFolderMembership",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/accounts/{AwsAccountId}/folders/{FolderId}/members/{MemberType}/{MemberId}"
+      },
+      "input":{"shape":"DeleteFolderMembershipRequest"},
+      "output":{"shape":"DeleteFolderMembershipResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -717,6 +792,57 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeFolder":{
+      "name":"DescribeFolder",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/folders/{FolderId}"
+      },
+      "input":{"shape":"DescribeFolderRequest"},
+      "output":{"shape":"DescribeFolderResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DescribeFolderPermissions":{
+      "name":"DescribeFolderPermissions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/folders/{FolderId}/permissions"
+      },
+      "input":{"shape":"DescribeFolderPermissionsRequest"},
+      "output":{"shape":"DescribeFolderPermissionsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DescribeFolderResolvedPermissions":{
+      "name":"DescribeFolderResolvedPermissions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/folders/{FolderId}/resolved-permissions"
+      },
+      "input":{"shape":"DescribeFolderResolvedPermissionsRequest"},
+      "output":{"shape":"DescribeFolderResolvedPermissionsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DescribeGroup":{
       "name":"DescribeGroup",
       "http":{
@@ -907,6 +1033,45 @@
         {"shape":"ResourceUnavailableException"}
       ]
     },
+    "GenerateEmbedUrlForAnonymousUser":{
+      "name":"GenerateEmbedUrlForAnonymousUser",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/embed-url/anonymous-user"
+      },
+      "input":{"shape":"GenerateEmbedUrlForAnonymousUserRequest"},
+      "output":{"shape":"GenerateEmbedUrlForAnonymousUserResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"SessionLifetimeInMinutesInvalidException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"UnsupportedPricingPlanException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "GenerateEmbedUrlForRegisteredUser":{
+      "name":"GenerateEmbedUrlForRegisteredUser",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/embed-url/registered-user"
+      },
+      "input":{"shape":"GenerateEmbedUrlForRegisteredUserRequest"},
+      "output":{"shape":"GenerateEmbedUrlForRegisteredUserResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"QuickSightUserNotFoundException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"SessionLifetimeInMinutesInvalidException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"UnsupportedPricingPlanException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "GetDashboardEmbedUrl":{
       "name":"GetDashboardEmbedUrl",
       "http":{
@@ -1026,6 +1191,42 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ThrottlingException"},
         {"shape":"InvalidNextTokenException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListFolderMembers":{
+      "name":"ListFolderMembers",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/folders/{FolderId}/members"
+      },
+      "input":{"shape":"ListFolderMembersRequest"},
+      "output":{"shape":"ListFolderMembersResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListFolders":{
+      "name":"ListFolders",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/folders"
+      },
+      "input":{"shape":"ListFoldersRequest"},
+      "output":{"shape":"ListFoldersResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"UnsupportedUserEditionException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -1367,6 +1568,24 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "SearchFolders":{
+      "name":"SearchFolders",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/search/folders"
+      },
+      "input":{"shape":"SearchFoldersRequest"},
+      "output":{"shape":"SearchFoldersResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidNextTokenException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -1588,6 +1807,43 @@
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateFolder":{
+      "name":"UpdateFolder",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/folders/{FolderId}"
+      },
+      "input":{"shape":"UpdateFolderRequest"},
+      "output":{"shape":"UpdateFolderResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceExistsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "UpdateFolderPermissions":{
+      "name":"UpdateFolderPermissions",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/accounts/{AwsAccountId}/folders/{FolderId}/permissions"
+      },
+      "input":{"shape":"UpdateFolderPermissionsRequest"},
+      "output":{"shape":"UpdateFolderPermissionsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -1869,8 +2125,7 @@
     "AnalysisName":{
       "type":"string",
       "max":2048,
-      "min":1,
-      "pattern":"[\\u0020-\\u00FF]+"
+      "min":1
     },
     "AnalysisSearchFilter":{
       "type":"structure",
@@ -1883,7 +2138,8 @@
     "AnalysisSearchFilterList":{
       "type":"list",
       "member":{"shape":"AnalysisSearchFilter"},
-      "max":1
+      "max":1,
+      "min":1
     },
     "AnalysisSourceEntity":{
       "type":"structure",
@@ -1918,7 +2174,24 @@
       "member":{"shape":"AnalysisSummary"},
       "max":100
     },
+    "AnonymousUserDashboardEmbeddingConfiguration":{
+      "type":"structure",
+      "required":["InitialDashboardId"],
+      "members":{
+        "InitialDashboardId":{"shape":"RestrictiveResourceId"}
+      }
+    },
+    "AnonymousUserEmbeddingExperienceConfiguration":{
+      "type":"structure",
+      "members":{
+        "Dashboard":{"shape":"AnonymousUserDashboardEmbeddingConfiguration"}
+      }
+    },
     "Arn":{"type":"string"},
+    "ArnList":{
+      "type":"list",
+      "member":{"shape":"Arn"}
+    },
     "AssignmentStatus":{
       "type":"string",
       "enum":[
@@ -2355,8 +2628,10 @@
         "LogicalTableMap":{"shape":"LogicalTableMap"},
         "ImportMode":{"shape":"DataSetImportMode"},
         "ColumnGroups":{"shape":"ColumnGroupList"},
+        "FieldFolders":{"shape":"FieldFolderMap"},
         "Permissions":{"shape":"ResourcePermissionList"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
+        "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
         "Tags":{"shape":"TagList"}
       }
@@ -2411,6 +2686,81 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "CreateFolderMembershipRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FolderId",
+        "MemberId",
+        "MemberType"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FolderId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"FolderId"
+        },
+        "MemberId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"MemberId"
+        },
+        "MemberType":{
+          "shape":"MemberType",
+          "location":"uri",
+          "locationName":"MemberType"
+        }
+      }
+    },
+    "CreateFolderMembershipResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"StatusCode"},
+        "FolderMember":{"shape":"FolderMember"},
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "CreateFolderRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FolderId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FolderId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"FolderId"
+        },
+        "Name":{"shape":"FolderName"},
+        "FolderType":{"shape":"FolderType"},
+        "ParentFolderArn":{"shape":"Arn"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateFolderResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "Arn":{"shape":"Arn"},
+        "FolderId":{"shape":"RestrictiveResourceId"},
+        "RequestId":{"shape":"String"}
       }
     },
     "CreateGroupMembershipRequest":{
@@ -2840,8 +3190,7 @@
     "DashboardName":{
       "type":"string",
       "max":2048,
-      "min":1,
-      "pattern":"[\\u0020-\\u00FF]+"
+      "min":1
     },
     "DashboardPublishOptions":{
       "type":"structure",
@@ -2863,7 +3212,8 @@
     "DashboardSearchFilterList":{
       "type":"list",
       "member":{"shape":"DashboardSearchFilter"},
-      "max":1
+      "max":1,
+      "min":1
     },
     "DashboardSourceEntity":{
       "type":"structure",
@@ -2959,7 +3309,9 @@
         "ImportMode":{"shape":"DataSetImportMode"},
         "ConsumedSpiceCapacityInBytes":{"shape":"Long"},
         "ColumnGroups":{"shape":"ColumnGroupList"},
+        "FieldFolders":{"shape":"FieldFolderMap"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
+        "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"}
       }
     },
@@ -3025,6 +3377,7 @@
         "LastUpdatedTime":{"shape":"Timestamp"},
         "ImportMode":{"shape":"DataSetImportMode"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
+        "RowLevelPermissionTagConfigurationApplied":{"shape":"Boolean"},
         "ColumnLevelPermissionRulesApplied":{"shape":"Boolean"}
       }
     },
@@ -3341,6 +3694,75 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "DeleteFolderMembershipRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FolderId",
+        "MemberId",
+        "MemberType"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FolderId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"FolderId"
+        },
+        "MemberId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"MemberId"
+        },
+        "MemberType":{
+          "shape":"MemberType",
+          "location":"uri",
+          "locationName":"MemberType"
+        }
+      }
+    },
+    "DeleteFolderMembershipResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"StatusCode"},
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "DeleteFolderRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FolderId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FolderId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"FolderId"
+        }
+      }
+    },
+    "DeleteFolderResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "Arn":{"shape":"Arn"},
+        "FolderId":{"shape":"RestrictiveResourceId"},
+        "RequestId":{"shape":"String"}
       }
     },
     "DeleteGroupMembershipRequest":{
@@ -4022,6 +4444,100 @@
         }
       }
     },
+    "DescribeFolderPermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FolderId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FolderId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"FolderId"
+        }
+      }
+    },
+    "DescribeFolderPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "FolderId":{"shape":"RestrictiveResourceId"},
+        "Arn":{"shape":"Arn"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "DescribeFolderRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FolderId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FolderId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"FolderId"
+        }
+      }
+    },
+    "DescribeFolderResolvedPermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FolderId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FolderId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"FolderId"
+        }
+      }
+    },
+    "DescribeFolderResolvedPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "FolderId":{"shape":"RestrictiveResourceId"},
+        "Arn":{"shape":"Arn"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "DescribeFolderResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "Folder":{"shape":"Folder"},
+        "RequestId":{"shape":"String"}
+      }
+    },
     "DescribeGroupRequest":{
       "type":"structure",
       "required":[
@@ -4450,6 +4966,11 @@
       "type":"string",
       "sensitive":true
     },
+    "EntryPath":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
     "EntryPoint":{
       "type":"string",
       "max":1000,
@@ -4487,6 +5008,27 @@
       "max":4096,
       "min":1
     },
+    "FieldFolder":{
+      "type":"structure",
+      "members":{
+        "description":{"shape":"FieldFolderDescription"},
+        "columns":{"shape":"FolderColumnList"}
+      }
+    },
+    "FieldFolderDescription":{
+      "type":"string",
+      "max":500
+    },
+    "FieldFolderMap":{
+      "type":"map",
+      "key":{"shape":"FieldFolderPath"},
+      "value":{"shape":"FieldFolder"}
+    },
+    "FieldFolderPath":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
     "FileFormat":{
       "type":"string",
       "enum":[
@@ -4508,6 +5050,148 @@
     "FilterOperator":{
       "type":"string",
       "enum":["StringEquals"]
+    },
+    "Folder":{
+      "type":"structure",
+      "members":{
+        "FolderId":{"shape":"RestrictiveResourceId"},
+        "Arn":{"shape":"Arn"},
+        "Name":{"shape":"FolderName"},
+        "FolderType":{"shape":"FolderType"},
+        "FolderPath":{"shape":"Path"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "FolderColumnList":{
+      "type":"list",
+      "member":{"shape":"String"},
+      "max":5000
+    },
+    "FolderFilterAttribute":{
+      "type":"string",
+      "enum":["PARENT_FOLDER_ARN"]
+    },
+    "FolderMember":{
+      "type":"structure",
+      "members":{
+        "MemberId":{"shape":"RestrictiveResourceId"},
+        "MemberType":{"shape":"MemberType"}
+      }
+    },
+    "FolderMemberList":{
+      "type":"list",
+      "member":{"shape":"MemberIdArnPair"},
+      "max":100
+    },
+    "FolderName":{
+      "type":"string",
+      "max":200,
+      "min":1
+    },
+    "FolderSearchFilter":{
+      "type":"structure",
+      "members":{
+        "Operator":{"shape":"FilterOperator"},
+        "Name":{"shape":"FolderFilterAttribute"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "FolderSearchFilterList":{
+      "type":"list",
+      "member":{"shape":"FolderSearchFilter"},
+      "max":100
+    },
+    "FolderSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "FolderId":{"shape":"RestrictiveResourceId"},
+        "Name":{"shape":"FolderName"},
+        "FolderType":{"shape":"FolderType"},
+        "CreatedTime":{"shape":"Timestamp"},
+        "LastUpdatedTime":{"shape":"Timestamp"}
+      }
+    },
+    "FolderSummaryList":{
+      "type":"list",
+      "member":{"shape":"FolderSummary"},
+      "max":100
+    },
+    "FolderType":{
+      "type":"string",
+      "enum":["SHARED"]
+    },
+    "GenerateEmbedUrlForAnonymousUserRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Namespace",
+        "AuthorizedResourceArns",
+        "ExperienceConfiguration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "SessionLifetimeInMinutes":{"shape":"SessionLifetimeInMinutes"},
+        "Namespace":{"shape":"Namespace"},
+        "SessionTags":{"shape":"SessionTagList"},
+        "AuthorizedResourceArns":{"shape":"ArnList"},
+        "ExperienceConfiguration":{"shape":"AnonymousUserEmbeddingExperienceConfiguration"}
+      }
+    },
+    "GenerateEmbedUrlForAnonymousUserResponse":{
+      "type":"structure",
+      "required":[
+        "EmbedUrl",
+        "Status",
+        "RequestId"
+      ],
+      "members":{
+        "EmbedUrl":{"shape":"EmbeddingUrl"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "GenerateEmbedUrlForRegisteredUserRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "UserArn",
+        "ExperienceConfiguration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "SessionLifetimeInMinutes":{"shape":"SessionLifetimeInMinutes"},
+        "UserArn":{"shape":"Arn"},
+        "ExperienceConfiguration":{"shape":"RegisteredUserEmbeddingExperienceConfiguration"}
+      }
+    },
+    "GenerateEmbedUrlForRegisteredUserResponse":{
+      "type":"structure",
+      "required":[
+        "EmbedUrl",
+        "Status",
+        "RequestId"
+      ],
+      "members":{
+        "EmbedUrl":{"shape":"EmbeddingUrl"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
     },
     "GeoSpatialColumnGroup":{
       "type":"structure",
@@ -5185,6 +5869,82 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "ListFolderMembersRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FolderId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FolderId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"FolderId"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListFolderMembersResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "FolderMemberList":{"shape":"FolderMemberList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "ListFoldersRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListFoldersResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "FolderSummaryList":{"shape":"FolderSummaryList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"}
       }
     },
     "ListGroupMembershipsRequest":{
@@ -5877,6 +6637,21 @@
       "max":100,
       "min":1
     },
+    "MemberIdArnPair":{
+      "type":"structure",
+      "members":{
+        "MemberId":{"shape":"RestrictiveResourceId"},
+        "MemberArn":{"shape":"Arn"}
+      }
+    },
+    "MemberType":{
+      "type":"string",
+      "enum":[
+        "DASHBOARD",
+        "ANALYSIS",
+        "DATASET"
+      ]
+    },
     "MySqlParameters":{
       "type":"structure",
       "required":[
@@ -5985,6 +6760,12 @@
     "Password":{
       "type":"string",
       "max":1024,
+      "min":1
+    },
+    "Path":{
+      "type":"list",
+      "member":{"shape":"Arn"},
+      "max":10,
       "min":1
     },
     "PhysicalTable":{
@@ -6153,7 +6934,10 @@
           "locationName":"Namespace"
         },
         "UserName":{"shape":"UserName"},
-        "CustomPermissionsName":{"shape":"RoleName"}
+        "CustomPermissionsName":{"shape":"RoleName"},
+        "ExternalLoginFederationProviderType":{"shape":"String"},
+        "CustomFederationProviderUrl":{"shape":"String"},
+        "ExternalLoginId":{"shape":"String"}
       }
     },
     "RegisterUserResponse":{
@@ -6166,6 +6950,26 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "RegisteredUserDashboardEmbeddingConfiguration":{
+      "type":"structure",
+      "required":["InitialDashboardId"],
+      "members":{
+        "InitialDashboardId":{"shape":"RestrictiveResourceId"}
+      }
+    },
+    "RegisteredUserEmbeddingExperienceConfiguration":{
+      "type":"structure",
+      "members":{
+        "Dashboard":{"shape":"RegisteredUserDashboardEmbeddingConfiguration"},
+        "QuickSightConsole":{"shape":"RegisteredUserQuickSightConsoleEmbeddingConfiguration"}
+      }
+    },
+    "RegisteredUserQuickSightConsoleEmbeddingConfiguration":{
+      "type":"structure",
+      "members":{
+        "InitialPath":{"shape":"EntryPath"}
       }
     },
     "RelationalTable":{
@@ -6343,8 +7147,17 @@
       "members":{
         "Namespace":{"shape":"Namespace"},
         "Arn":{"shape":"Arn"},
-        "PermissionPolicy":{"shape":"RowLevelPermissionPolicy"}
+        "PermissionPolicy":{"shape":"RowLevelPermissionPolicy"},
+        "FormatVersion":{"shape":"RowLevelPermissionFormatVersion"},
+        "Status":{"shape":"Status"}
       }
+    },
+    "RowLevelPermissionFormatVersion":{
+      "type":"string",
+      "enum":[
+        "VERSION_1",
+        "VERSION_2"
+      ]
     },
     "RowLevelPermissionPolicy":{
       "type":"string",
@@ -6352,6 +7165,37 @@
         "GRANT_ACCESS",
         "DENY_ACCESS"
       ]
+    },
+    "RowLevelPermissionTagConfiguration":{
+      "type":"structure",
+      "required":["TagRules"],
+      "members":{
+        "Status":{"shape":"Status"},
+        "TagRules":{"shape":"RowLevelPermissionTagRuleList"}
+      }
+    },
+    "RowLevelPermissionTagDelimiter":{
+      "type":"string",
+      "max":10
+    },
+    "RowLevelPermissionTagRule":{
+      "type":"structure",
+      "required":[
+        "TagKey",
+        "ColumnName"
+      ],
+      "members":{
+        "TagKey":{"shape":"SessionTagKey"},
+        "ColumnName":{"shape":"String"},
+        "TagMultiValueDelimiter":{"shape":"RowLevelPermissionTagDelimiter"},
+        "MatchAllValue":{"shape":"SessionTagValue"}
+      }
+    },
+    "RowLevelPermissionTagRuleList":{
+      "type":"list",
+      "member":{"shape":"RowLevelPermissionTagRule"},
+      "max":50,
+      "min":1
     },
     "S3Bucket":{
       "type":"string",
@@ -6446,6 +7290,38 @@
         "RequestId":{"shape":"String"}
       }
     },
+    "SearchFoldersRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Filters"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "Filters":{"shape":"FolderSearchFilterList"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        }
+      }
+    },
+    "SearchFoldersResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "FolderSummaryList":{"shape":"FolderSummaryList"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"}
+      }
+    },
     "ServiceNowParameters":{
       "type":"structure",
       "required":["SiteBaseUrl"],
@@ -6466,6 +7342,34 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "SessionTag":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Key":{"shape":"SessionTagKey"},
+        "Value":{"shape":"SessionTagValue"}
+      }
+    },
+    "SessionTagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "SessionTagList":{
+      "type":"list",
+      "member":{"shape":"SessionTag"},
+      "max":50,
+      "min":1
+    },
+    "SessionTagValue":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "sensitive":true
     },
     "Sheet":{
       "type":"structure",
@@ -6544,6 +7448,13 @@
       "members":{
         "DisableSsl":{"shape":"Boolean"}
       }
+    },
+    "Status":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "StatusCode":{"type":"integer"},
     "String":{"type":"string"},
@@ -6684,8 +7595,7 @@
     "TemplateName":{
       "type":"string",
       "max":2048,
-      "min":1,
-      "pattern":"[\\u0020-\\u00FF]+"
+      "min":1
     },
     "TemplateSourceAnalysis":{
       "type":"structure",
@@ -7309,7 +8219,9 @@
         "LogicalTableMap":{"shape":"LogicalTableMap"},
         "ImportMode":{"shape":"DataSetImportMode"},
         "ColumnGroups":{"shape":"ColumnGroupList"},
+        "FieldFolders":{"shape":"FieldFolderMap"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
+        "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"}
       }
     },
@@ -7396,6 +8308,70 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "UpdateFolderPermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FolderId"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FolderId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"FolderId"
+        },
+        "GrantPermissions":{"shape":"ResourcePermissionList"},
+        "RevokePermissions":{"shape":"ResourcePermissionList"}
+      }
+    },
+    "UpdateFolderPermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"StatusCode"},
+        "Arn":{"shape":"Arn"},
+        "FolderId":{"shape":"RestrictiveResourceId"},
+        "Permissions":{"shape":"ResourcePermissionList"},
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "UpdateFolderRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "FolderId",
+        "Name"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "FolderId":{
+          "shape":"RestrictiveResourceId",
+          "location":"uri",
+          "locationName":"FolderId"
+        },
+        "Name":{"shape":"FolderName"}
+      }
+    },
+    "UpdateFolderResponse":{
+      "type":"structure",
+      "members":{
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "Arn":{"shape":"Arn"},
+        "FolderId":{"shape":"RestrictiveResourceId"},
+        "RequestId":{"shape":"String"}
       }
     },
     "UpdateGroupRequest":{
@@ -7730,7 +8706,10 @@
         "Email":{"shape":"String"},
         "Role":{"shape":"UserRole"},
         "CustomPermissionsName":{"shape":"RoleName"},
-        "UnapplyCustomPermissions":{"shape":"Boolean"}
+        "UnapplyCustomPermissions":{"shape":"Boolean"},
+        "ExternalLoginFederationProviderType":{"shape":"String"},
+        "CustomFederationProviderUrl":{"shape":"String"},
+        "ExternalLoginId":{"shape":"String"}
       }
     },
     "UpdateUserResponse":{
@@ -7770,7 +8749,10 @@
         "IdentityType":{"shape":"IdentityType"},
         "Active":{"shape":"Boolean"},
         "PrincipalId":{"shape":"String"},
-        "CustomPermissionsName":{"shape":"RoleName"}
+        "CustomPermissionsName":{"shape":"RoleName"},
+        "ExternalLoginFederationProviderType":{"shape":"String"},
+        "ExternalLoginFederationProviderUrl":{"shape":"String"},
+        "ExternalLoginId":{"shape":"String"}
       }
     },
     "UserList":{
