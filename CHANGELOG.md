@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.191.7 - 2021-08-30
 
 * `Aws\CloudFormation` - AWS CloudFormation allows you to iteratively develop your applications when failures are encountered without rolling back successfully provisioned resources. By specifying stack failure options, you can troubleshoot resources in a CREATE_FAILED or UPDATE_FAILED status.
 * `Aws\CodeBuild` - Documentation updates for CodeBuild
