@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.191.8 - 2021-08-31
 
 * `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
 * `Aws\IoT` - Added Create/Update/Delete/Describe/List APIs for a new IoT resource named FleetMetric. Added a new Fleet Indexing query API named GetBucketsAggregation. Added a new field named DisconnectedReason in Fleet Indexing query response. Updated their related documentations.
