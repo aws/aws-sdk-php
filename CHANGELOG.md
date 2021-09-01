@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.191.9 - 2021-09-01
 
 * `Aws\AppRegistry` - Introduction of GetAssociatedResource API and GetApplication response extension for Resource Groups support.
 * `Aws\CloudTrail` - Documentation updates for CloudTrail
