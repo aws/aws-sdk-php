@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppRegistry` - Introduction of GetAssociatedResource API and GetApplication response extension for Resource Groups support.
+* `Aws\CloudTrail` - Documentation updates for CloudTrail
+* `Aws\ConfigService` - Documentation updates for config
+* `Aws\EC2` - Added LaunchTemplate support for the IMDS IPv6 endpoint
+* `Aws\MediaTailor` - This release adds support for wall clock programs in LINEAR channels.
+
 ## 3.191.8 - 2021-08-31
 
 * `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
