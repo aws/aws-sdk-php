@@ -197,7 +197,7 @@ class S3ClientTest extends TestCase
         ]);
         $url = $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertSame('/foobar.test.abc/%2B%25.a', $url->getPath());
-        $query = Psr7\parse_query($url->getQuery());
+        $query = Psr7\Query::parse($url->getQuery());
         $this->assertArrayHasKey('X-Amz-Credential', $query);
         $this->assertArrayHasKey('X-Amz-Signature', $query);
     }
@@ -216,7 +216,7 @@ class S3ClientTest extends TestCase
         ]);
         $url = $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertSame('/foobar.test.abc/%2B%25.a', $url->getPath());
-        $query = Psr7\parse_query($url->getQuery());
+        $query = Psr7\Query::parse($url->getQuery());
         $this->assertArrayHasKey('X-Amz-Credential', $query);
         $this->assertArrayHasKey('X-Amz-Signature', $query);
     }
@@ -829,7 +829,7 @@ EOXML;
         $client->putObject([
             'Bucket' => 'bucket',
             'Key' => 'key',
-            'Body' => Psr7\stream_for('x'),
+            'Body' => Psr7\Utils::streamFor('x'),
         ]);
     }
 
@@ -970,7 +970,7 @@ EOXML;
             'version' => 'latest',
             'region' => 'us-west-2',
             'http_handler' => function (RequestInterface $request) {
-                $query = Psr7\parse_query($request->getUri()->getQuery());
+                $query = Psr7\Query::parse($request->getUri()->getQuery());
                 $this->assertArrayHasKey('encoding-type', $query);
                 $this->assertSame('url', $query['encoding-type']);
 

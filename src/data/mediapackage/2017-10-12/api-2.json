@@ -12,6 +12,40 @@
     "uid": "mediapackage-2017-10-12"
   },
   "operations": {
+    "ConfigureLogs": {
+      "errors": [
+        {
+          "shape": "UnprocessableEntityException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        },
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "ServiceUnavailableException"
+        },
+        {
+          "shape": "TooManyRequestsException"
+        }
+      ],
+      "http": {
+        "method": "PUT",
+        "requestUri": "/channels/{id}/configure_logs",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ConfigureLogsRequest"
+      },
+      "name": "ConfigureLogs",
+      "output": {
+        "shape": "ConfigureLogsResponse"
+      }
+    },
     "CreateChannel": {
       "errors": [
         {
@@ -616,6 +650,10 @@
           "locationName": "description",
           "shape": "__string"
         },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -623,6 +661,10 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
+        },
+        "IngressAccessLogs": {
+          "locationName": "ingressAccessLogs",
+          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",
@@ -675,6 +717,10 @@
     },
     "CmafEncryption": {
       "members": {
+        "ConstantInitializationVector": {
+          "locationName": "constantInitializationVector",
+          "shape": "__string"
+        },
         "KeyRotationIntervalSeconds": {
           "locationName": "keyRotationIntervalSeconds",
           "shape": "__integer"
@@ -739,6 +785,73 @@
       },
       "type": "structure"
     },
+    "ConfigureLogsParameters": {
+      "members": {
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
+        "IngressAccessLogs": {
+          "locationName": "ingressAccessLogs",
+          "shape": "IngressAccessLogs"
+        }
+      },
+      "type": "structure"
+    },
+    "ConfigureLogsRequest": {
+      "members": {
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
+        "Id": {
+          "location": "uri",
+          "locationName": "id",
+          "shape": "__string"
+        },
+        "IngressAccessLogs": {
+          "locationName": "ingressAccessLogs",
+          "shape": "IngressAccessLogs"
+        }
+      },
+      "required": [
+        "Id"
+      ],
+      "type": "structure"
+    },
+    "ConfigureLogsResponse": {
+      "members": {
+        "Arn": {
+          "locationName": "arn",
+          "shape": "__string"
+        },
+        "Description": {
+          "locationName": "description",
+          "shape": "__string"
+        },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
+        "HlsIngest": {
+          "locationName": "hlsIngest",
+          "shape": "HlsIngest"
+        },
+        "Id": {
+          "locationName": "id",
+          "shape": "__string"
+        },
+        "IngressAccessLogs": {
+          "locationName": "ingressAccessLogs",
+          "shape": "IngressAccessLogs"
+        },
+        "Tags": {
+          "locationName": "tags",
+          "shape": "Tags"
+        }
+      },
+      "type": "structure"
+    },
     "CreateChannelRequest": {
       "members": {
         "Description": {
@@ -769,6 +882,10 @@
           "locationName": "description",
           "shape": "__string"
         },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -776,6 +893,10 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
+        },
+        "IngressAccessLogs": {
+          "locationName": "ingressAccessLogs",
+          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",
@@ -1129,6 +1250,10 @@
           "locationName": "description",
           "shape": "__string"
         },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -1136,6 +1261,10 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
+        },
+        "IngressAccessLogs": {
+          "locationName": "ingressAccessLogs",
+          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",
@@ -1278,6 +1407,32 @@
           "shape": "__listOf__string"
         }
       },
+      "type": "structure"
+    },
+    "EgressAccessLogs": {
+      "members": {
+        "LogGroupName": {
+          "locationName": "logGroupName",
+          "shape": "__string"
+        }
+      },
+      "type": "structure"
+    },
+    "EncryptionContractConfiguration": {
+      "members": {
+        "PresetSpeke20Audio": {
+          "locationName": "presetSpeke20Audio",
+          "shape": "PresetSpeke20Audio"
+        },
+        "PresetSpeke20Video": {
+          "locationName": "presetSpeke20Video",
+          "shape": "PresetSpeke20Video"
+        }
+      },
+      "required": [
+        "PresetSpeke20Audio",
+        "PresetSpeke20Video"
+      ],
       "type": "structure"
     },
     "EncryptionMethod": {
@@ -1572,6 +1727,15 @@
         },
         "Username": {
           "locationName": "username",
+          "shape": "__string"
+        }
+      },
+      "type": "structure"
+    },
+    "IngressAccessLogs": {
+      "members": {
+        "LogGroupName": {
+          "locationName": "logGroupName",
           "shape": "__string"
         }
       },
@@ -1980,6 +2144,18 @@
       ],
       "type": "string"
     },
+    "PresetSpeke20Audio": {
+      "enum": [
+        "PRESET-AUDIO-1"
+      ],
+      "type": "string"
+    },
+    "PresetSpeke20Video": {
+      "enum": [
+        "PRESET-VIDEO-1"
+      ],
+      "type": "string"
+    },
     "Profile": {
       "enum": [
         "NONE",
@@ -2012,6 +2188,10 @@
           "locationName": "description",
           "shape": "__string"
         },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -2019,6 +2199,10 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
+        },
+        "IngressAccessLogs": {
+          "locationName": "ingressAccessLogs",
+          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",
@@ -2056,6 +2240,10 @@
           "locationName": "description",
           "shape": "__string"
         },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -2063,6 +2251,10 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
+        },
+        "IngressAccessLogs": {
+          "locationName": "ingressAccessLogs",
+          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",
@@ -2119,6 +2311,10 @@
         "CertificateArn": {
           "locationName": "certificateArn",
           "shape": "__string"
+        },
+        "EncryptionContractConfiguration": {
+          "locationName": "encryptionContractConfiguration",
+          "shape": "EncryptionContractConfiguration"
         },
         "ResourceId": {
           "locationName": "resourceId",
@@ -2289,6 +2485,10 @@
           "locationName": "description",
           "shape": "__string"
         },
+        "EgressAccessLogs": {
+          "locationName": "egressAccessLogs",
+          "shape": "EgressAccessLogs"
+        },
         "HlsIngest": {
           "locationName": "hlsIngest",
           "shape": "HlsIngest"
@@ -2296,6 +2496,10 @@
         "Id": {
           "locationName": "id",
           "shape": "__string"
+        },
+        "IngressAccessLogs": {
+          "locationName": "ingressAccessLogs",
+          "shape": "IngressAccessLogs"
         },
         "Tags": {
           "locationName": "tags",

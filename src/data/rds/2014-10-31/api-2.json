@@ -2432,6 +2432,10 @@
         "async"
       ]
     },
+    "ActivityStreamModeList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "ActivityStreamStatus":{
       "type":"string",
       "enum":[
@@ -3335,6 +3339,7 @@
         "DBClusterParameterGroup":{"shape":"String"},
         "DBSubnetGroup":{"shape":"String"},
         "Status":{"shape":"String"},
+        "AutomaticRestartTime":{"shape":"TStamp"},
         "PercentProgress":{"shape":"String"},
         "EarliestRestorableTime":{"shape":"TStamp"},
         "Endpoint":{"shape":"String"},
@@ -3803,6 +3808,7 @@
         "DBInstanceClass":{"shape":"String"},
         "Engine":{"shape":"String"},
         "DBInstanceStatus":{"shape":"String"},
+        "AutomaticRestartTime":{"shape":"TStamp"},
         "MasterUsername":{"shape":"String"},
         "DBName":{"shape":"String"},
         "Endpoint":{"shape":"Endpoint"},
@@ -3862,7 +3868,12 @@
         "TagList":{"shape":"TagList"},
         "DBInstanceAutomatedBackupsReplications":{"shape":"DBInstanceAutomatedBackupsReplicationList"},
         "CustomerOwnedIpEnabled":{"shape":"BooleanOptional"},
-        "AwsBackupRecoveryPointArn":{"shape":"String"}
+        "AwsBackupRecoveryPointArn":{"shape":"String"},
+        "ActivityStreamStatus":{"shape":"ActivityStreamStatus"},
+        "ActivityStreamKmsKeyId":{"shape":"String"},
+        "ActivityStreamKinesisStreamName":{"shape":"String"},
+        "ActivityStreamMode":{"shape":"ActivityStreamMode"},
+        "ActivityStreamEngineNativeAuditFieldsIncluded":{"shape":"BooleanOptional"}
       },
       "wrapper":true
     },
@@ -4478,7 +4489,8 @@
         "IAMDatabaseAuthenticationEnabled":{"shape":"Boolean"},
         "ProcessorFeatures":{"shape":"ProcessorFeatureList"},
         "DbiResourceId":{"shape":"String"},
-        "TagList":{"shape":"TagList"}
+        "TagList":{"shape":"TagList"},
+        "OriginalSnapshotCreateTime":{"shape":"TStamp"}
       },
       "wrapper":true
     },
@@ -6822,6 +6834,7 @@
         "SupportsStorageAutoscaling":{"shape":"BooleanOptional"},
         "SupportsKerberosAuthentication":{"shape":"BooleanOptional"},
         "OutpostCapable":{"shape":"Boolean"},
+        "SupportedActivityStreamModes":{"shape":"ActivityStreamModeList"},
         "SupportsGlobalDatabases":{"shape":"Boolean"}
       },
       "wrapper":true
@@ -7429,7 +7442,9 @@
         "DeletionProtection":{"shape":"BooleanOptional"},
         "CopyTagsToSnapshot":{"shape":"BooleanOptional"},
         "Domain":{"shape":"String"},
-        "DomainIAMRoleName":{"shape":"String"}
+        "DomainIAMRoleName":{"shape":"String"},
+        "ScalingConfiguration":{"shape":"ScalingConfiguration"},
+        "EngineMode":{"shape":"String"}
       }
     },
     "RestoreDBClusterToPointInTimeResult":{
@@ -7754,7 +7769,8 @@
         "ResourceArn":{"shape":"String"},
         "Mode":{"shape":"ActivityStreamMode"},
         "KmsKeyId":{"shape":"String"},
-        "ApplyImmediately":{"shape":"BooleanOptional"}
+        "ApplyImmediately":{"shape":"BooleanOptional"},
+        "EngineNativeAuditFieldsIncluded":{"shape":"BooleanOptional"}
       }
     },
     "StartActivityStreamResponse":{
@@ -7764,7 +7780,8 @@
         "KinesisStreamName":{"shape":"String"},
         "Status":{"shape":"ActivityStreamStatus"},
         "Mode":{"shape":"ActivityStreamMode"},
-        "ApplyImmediately":{"shape":"Boolean"}
+        "ApplyImmediately":{"shape":"Boolean"},
+        "EngineNativeAuditFieldsIncluded":{"shape":"BooleanOptional"}
       }
     },
     "StartDBClusterMessage":{

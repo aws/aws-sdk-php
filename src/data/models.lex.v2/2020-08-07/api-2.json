@@ -103,6 +103,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CreateExport":{
+      "name":"CreateExport",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/exports/",
+        "responseCode":202
+      },
+      "input":{"shape":"CreateExportRequest"},
+      "output":{"shape":"CreateExportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateIntent":{
       "name":"CreateIntent",
       "http":{
@@ -119,6 +137,43 @@
         {"shape":"PreconditionFailedException"},
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "CreateResourcePolicy":{
+      "name":"CreateResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/policy/{resourceArn}/",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateResourcePolicyRequest"},
+      "output":{"shape":"CreateResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"PreconditionFailedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "CreateResourcePolicyStatement":{
+      "name":"CreateResourcePolicyStatement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/policy/{resourceArn}/statements/",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateResourcePolicyStatementRequest"},
+      "output":{"shape":"CreateResourcePolicyStatementResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"PreconditionFailedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "CreateSlot":{
@@ -153,6 +208,23 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ValidationException"},
         {"shape":"PreconditionFailedException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "CreateUploadUrl":{
+      "name":"CreateUploadUrl",
+      "http":{
+        "method":"POST",
+        "requestUri":"/createuploadurl/",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateUploadUrlRequest"},
+      "output":{"shape":"CreateUploadUrlResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
       ]
@@ -229,6 +301,40 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DeleteExport":{
+      "name":"DeleteExport",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/exports/{exportId}/",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteExportRequest"},
+      "output":{"shape":"DeleteExportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"PreconditionFailedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DeleteImport":{
+      "name":"DeleteImport",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/imports/{importId}/",
+        "responseCode":202
+      },
+      "input":{"shape":"DeleteImportRequest"},
+      "output":{"shape":"DeleteImportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"PreconditionFailedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DeleteIntent":{
       "name":"DeleteIntent",
       "http":{
@@ -244,6 +350,38 @@
         {"shape":"ConflictException"},
         {"shape":"PreconditionFailedException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/policy/{resourceArn}/",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "output":{"shape":"DeleteResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"PreconditionFailedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
+    "DeleteResourcePolicyStatement":{
+      "name":"DeleteResourcePolicyStatement",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/policy/{resourceArn}/statements/{statementId}/",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteResourcePolicyStatementRequest"},
+      "output":{"shape":"DeleteResourcePolicyStatementResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"PreconditionFailedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "DeleteSlot":{
@@ -348,6 +486,38 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DescribeExport":{
+      "name":"DescribeExport",
+      "http":{
+        "method":"GET",
+        "requestUri":"/exports/{exportId}/",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeExportRequest"},
+      "output":{"shape":"DescribeExportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DescribeImport":{
+      "name":"DescribeImport",
+      "http":{
+        "method":"GET",
+        "requestUri":"/imports/{importId}/",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeImportRequest"},
+      "output":{"shape":"DescribeImportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DescribeIntent":{
       "name":"DescribeIntent",
       "http":{
@@ -363,6 +533,21 @@
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "DescribeResourcePolicy":{
+      "name":"DescribeResourcePolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/policy/{resourceArn}/",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeResourcePolicyRequest"},
+      "output":{"shape":"DescribeResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "DescribeSlot":{
@@ -495,6 +680,36 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListExports":{
+      "name":"ListExports",
+      "http":{
+        "method":"POST",
+        "requestUri":"/exports/",
+        "responseCode":200
+      },
+      "input":{"shape":"ListExportsRequest"},
+      "output":{"shape":"ListExportsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListImports":{
+      "name":"ListImports",
+      "http":{
+        "method":"POST",
+        "requestUri":"/imports/",
+        "responseCode":200
+      },
+      "input":{"shape":"ListImportsRequest"},
+      "output":{"shape":"ListImportsResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListIntents":{
       "name":"ListIntents",
       "http":{
@@ -557,6 +772,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"}
+      ]
+    },
+    "StartImport":{
+      "name":"StartImport",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/imports/",
+        "responseCode":202
+      },
+      "input":{"shape":"StartImportRequest"},
+      "output":{"shape":"StartImportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "TagResource":{
@@ -645,6 +878,24 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "UpdateExport":{
+      "name":"UpdateExport",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/exports/{exportId}/",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateExportRequest"},
+      "output":{"shape":"UpdateExportResponse"},
+      "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "UpdateIntent":{
       "name":"UpdateIntent",
       "http":{
@@ -661,6 +912,24 @@
         {"shape":"PreconditionFailedException"},
         {"shape":"ConflictException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateResourcePolicy":{
+      "name":"UpdateResourcePolicy",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/policy/{resourceArn}/",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateResourcePolicyRequest"},
+      "output":{"shape":"UpdateResourcePolicyResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"PreconditionFailedException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"}
       ]
     },
     "UpdateSlot":{
@@ -798,6 +1067,17 @@
       "type":"list",
       "member":{"shape":"BotAliasSummary"}
     },
+    "BotExportSpecification":{
+      "type":"structure",
+      "required":[
+        "botId",
+        "botVersion"
+      ],
+      "members":{
+        "botId":{"shape":"Id"},
+        "botVersion":{"shape":"BotVersion"}
+      }
+    },
     "BotFilter":{
       "type":"structure",
       "required":[
@@ -827,6 +1107,35 @@
       "member":{"shape":"BotFilter"},
       "max":1,
       "min":1
+    },
+    "BotImportSpecification":{
+      "type":"structure",
+      "required":[
+        "botName",
+        "roleArn",
+        "dataPrivacy"
+      ],
+      "members":{
+        "botName":{"shape":"Name"},
+        "roleArn":{"shape":"RoleArn"},
+        "dataPrivacy":{"shape":"DataPrivacy"},
+        "idleSessionTTLInSeconds":{"shape":"SessionTTL"},
+        "botTags":{"shape":"TagMap"},
+        "testBotAliasTags":{"shape":"TagMap"}
+      }
+    },
+    "BotLocaleExportSpecification":{
+      "type":"structure",
+      "required":[
+        "botId",
+        "botVersion",
+        "localeId"
+      ],
+      "members":{
+        "botId":{"shape":"Id"},
+        "botVersion":{"shape":"BotVersion"},
+        "localeId":{"shape":"LocaleId"}
+      }
     },
     "BotLocaleFilter":{
       "type":"structure",
@@ -874,6 +1183,21 @@
       "type":"list",
       "member":{"shape":"BotLocaleHistoryEvent"}
     },
+    "BotLocaleImportSpecification":{
+      "type":"structure",
+      "required":[
+        "botId",
+        "botVersion",
+        "localeId"
+      ],
+      "members":{
+        "botId":{"shape":"Id"},
+        "botVersion":{"shape":"DraftBotVersion"},
+        "localeId":{"shape":"LocaleId"},
+        "nluIntentConfidenceThreshold":{"shape":"ConfidenceThreshold"},
+        "voiceSettings":{"shape":"VoiceSettings"}
+      }
+    },
     "BotLocaleSortAttribute":{
       "type":"string",
       "enum":["BotLocaleName"]
@@ -898,7 +1222,8 @@
         "ReadyExpressTesting",
         "Failed",
         "Deleting",
-        "NotBuilt"
+        "NotBuilt",
+        "Importing"
       ]
     },
     "BotLocaleSummary":{
@@ -939,7 +1264,8 @@
         "Inactive",
         "Deleting",
         "Failed",
-        "Versioning"
+        "Versioning",
+        "Importing"
       ]
     },
     "BotSummary":{
@@ -1165,6 +1491,34 @@
         "lambdaCodeHook":{"shape":"LambdaCodeHook"}
       }
     },
+    "ConditionKey":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ConditionKeyValueMap":{
+      "type":"map",
+      "key":{"shape":"ConditionKey"},
+      "value":{"shape":"ConditionValue"},
+      "max":10,
+      "min":0
+    },
+    "ConditionMap":{
+      "type":"map",
+      "key":{"shape":"ConditionOperator"},
+      "value":{"shape":"ConditionKeyValueMap"},
+      "max":10,
+      "min":0
+    },
+    "ConditionOperator":{
+      "type":"string",
+      "min":1
+    },
+    "ConditionValue":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "ConfidenceThreshold":{
       "type":"double",
       "max":1,
@@ -1331,6 +1685,28 @@
         "creationDateTime":{"shape":"Timestamp"}
       }
     },
+    "CreateExportRequest":{
+      "type":"structure",
+      "required":[
+        "resourceSpecification",
+        "fileFormat"
+      ],
+      "members":{
+        "resourceSpecification":{"shape":"ExportResourceSpecification"},
+        "fileFormat":{"shape":"ImportExportFileFormat"},
+        "filePassword":{"shape":"ImportExportFilePassword"}
+      }
+    },
+    "CreateExportResponse":{
+      "type":"structure",
+      "members":{
+        "exportId":{"shape":"Id"},
+        "resourceSpecification":{"shape":"ExportResourceSpecification"},
+        "fileFormat":{"shape":"ImportExportFileFormat"},
+        "exportStatus":{"shape":"ExportStatus"},
+        "creationDateTime":{"shape":"Timestamp"}
+      }
+    },
     "CreateIntentRequest":{
       "type":"structure",
       "required":[
@@ -1389,6 +1765,62 @@
         "creationDateTime":{"shape":"Timestamp"}
       }
     },
+    "CreateResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "policy"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"AmazonResourceName",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "policy":{"shape":"Policy"}
+      }
+    },
+    "CreateResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
+        "revisionId":{"shape":"RevisionId"}
+      }
+    },
+    "CreateResourcePolicyStatementRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "statementId",
+        "effect",
+        "principal",
+        "action"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"AmazonResourceName",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "statementId":{"shape":"Name"},
+        "effect":{"shape":"Effect"},
+        "principal":{"shape":"PrincipalList"},
+        "action":{"shape":"OperationList"},
+        "condition":{"shape":"ConditionMap"},
+        "expectedRevisionId":{
+          "shape":"RevisionId",
+          "location":"querystring",
+          "locationName":"expectedRevisionId"
+        }
+      }
+    },
+    "CreateResourcePolicyStatementResponse":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
+        "revisionId":{"shape":"RevisionId"}
+      }
+    },
     "CreateSlotRequest":{
       "type":"structure",
       "required":[
@@ -1425,7 +1857,8 @@
           "shape":"Id",
           "location":"uri",
           "locationName":"intentId"
-        }
+        },
+        "multipleValuesSetting":{"shape":"MultipleValuesSetting"}
       }
     },
     "CreateSlotResponse":{
@@ -1441,7 +1874,8 @@
         "botVersion":{"shape":"DraftBotVersion"},
         "localeId":{"shape":"LocaleId"},
         "intentId":{"shape":"Id"},
-        "creationDateTime":{"shape":"Timestamp"}
+        "creationDateTime":{"shape":"Timestamp"},
+        "multipleValuesSetting":{"shape":"MultipleValuesSetting"}
       }
     },
     "CreateSlotTypeRequest":{
@@ -1489,6 +1923,18 @@
         "botVersion":{"shape":"DraftBotVersion"},
         "localeId":{"shape":"LocaleId"},
         "creationDateTime":{"shape":"Timestamp"}
+      }
+    },
+    "CreateUploadUrlRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "CreateUploadUrlResponse":{
+      "type":"structure",
+      "members":{
+        "importId":{"shape":"Id"},
+        "uploadUrl":{"shape":"PresignedS3Url"}
       }
     },
     "CustomPayload":{
@@ -1631,6 +2077,42 @@
         "botStatus":{"shape":"BotStatus"}
       }
     },
+    "DeleteExportRequest":{
+      "type":"structure",
+      "required":["exportId"],
+      "members":{
+        "exportId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"exportId"
+        }
+      }
+    },
+    "DeleteExportResponse":{
+      "type":"structure",
+      "members":{
+        "exportId":{"shape":"Id"},
+        "exportStatus":{"shape":"ExportStatus"}
+      }
+    },
+    "DeleteImportRequest":{
+      "type":"structure",
+      "required":["importId"],
+      "members":{
+        "importId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"importId"
+        }
+      }
+    },
+    "DeleteImportResponse":{
+      "type":"structure",
+      "members":{
+        "importId":{"shape":"Id"},
+        "importStatus":{"shape":"ImportStatus"}
+      }
+    },
     "DeleteIntentRequest":{
       "type":"structure",
       "required":[
@@ -1660,6 +2142,60 @@
           "location":"uri",
           "locationName":"localeId"
         }
+      }
+    },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"AmazonResourceName",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "expectedRevisionId":{
+          "shape":"RevisionId",
+          "location":"querystring",
+          "locationName":"expectedRevisionId"
+        }
+      }
+    },
+    "DeleteResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
+        "revisionId":{"shape":"RevisionId"}
+      }
+    },
+    "DeleteResourcePolicyStatementRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "statementId"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"AmazonResourceName",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "statementId":{
+          "shape":"Name",
+          "location":"uri",
+          "locationName":"statementId"
+        },
+        "expectedRevisionId":{
+          "shape":"RevisionId",
+          "location":"querystring",
+          "locationName":"expectedRevisionId"
+        }
+      }
+    },
+    "DeleteResourcePolicyStatementResponse":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
+        "revisionId":{"shape":"RevisionId"}
       }
     },
     "DeleteSlotRequest":{
@@ -1875,6 +2411,55 @@
         "creationDateTime":{"shape":"Timestamp"}
       }
     },
+    "DescribeExportRequest":{
+      "type":"structure",
+      "required":["exportId"],
+      "members":{
+        "exportId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"exportId"
+        }
+      }
+    },
+    "DescribeExportResponse":{
+      "type":"structure",
+      "members":{
+        "exportId":{"shape":"Id"},
+        "resourceSpecification":{"shape":"ExportResourceSpecification"},
+        "fileFormat":{"shape":"ImportExportFileFormat"},
+        "exportStatus":{"shape":"ExportStatus"},
+        "failureReasons":{"shape":"FailureReasons"},
+        "downloadUrl":{"shape":"PresignedS3Url"},
+        "creationDateTime":{"shape":"Timestamp"},
+        "lastUpdatedDateTime":{"shape":"Timestamp"}
+      }
+    },
+    "DescribeImportRequest":{
+      "type":"structure",
+      "required":["importId"],
+      "members":{
+        "importId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"importId"
+        }
+      }
+    },
+    "DescribeImportResponse":{
+      "type":"structure",
+      "members":{
+        "importId":{"shape":"Id"},
+        "resourceSpecification":{"shape":"ImportResourceSpecification"},
+        "importedResourceId":{"shape":"ImportedResourceId"},
+        "importedResourceName":{"shape":"Name"},
+        "mergeStrategy":{"shape":"MergeStrategy"},
+        "importStatus":{"shape":"ImportStatus"},
+        "failureReasons":{"shape":"FailureReasons"},
+        "creationDateTime":{"shape":"Timestamp"},
+        "lastUpdatedDateTime":{"shape":"Timestamp"}
+      }
+    },
     "DescribeIntentRequest":{
       "type":"structure",
       "required":[
@@ -1929,6 +2514,25 @@
         "lastUpdatedDateTime":{"shape":"Timestamp"}
       }
     },
+    "DescribeResourcePolicyRequest":{
+      "type":"structure",
+      "required":["resourceArn"],
+      "members":{
+        "resourceArn":{
+          "shape":"AmazonResourceName",
+          "location":"uri",
+          "locationName":"resourceArn"
+        }
+      }
+    },
+    "DescribeResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
+        "policy":{"shape":"Policy"},
+        "revisionId":{"shape":"RevisionId"}
+      }
+    },
     "DescribeSlotRequest":{
       "type":"structure",
       "required":[
@@ -1980,7 +2584,8 @@
         "localeId":{"shape":"LocaleId"},
         "intentId":{"shape":"Id"},
         "creationDateTime":{"shape":"Timestamp"},
-        "lastUpdatedDateTime":{"shape":"Timestamp"}
+        "lastUpdatedDateTime":{"shape":"Timestamp"},
+        "multipleValuesSetting":{"shape":"MultipleValuesSetting"}
       }
     },
     "DescribeSlotTypeRequest":{
@@ -2048,7 +2653,90 @@
       "min":5,
       "pattern":"^DRAFT$"
     },
+    "Effect":{
+      "type":"string",
+      "enum":[
+        "Allow",
+        "Deny"
+      ]
+    },
     "ExceptionMessage":{"type":"string"},
+    "ExportFilter":{
+      "type":"structure",
+      "required":[
+        "name",
+        "values",
+        "operator"
+      ],
+      "members":{
+        "name":{"shape":"ExportFilterName"},
+        "values":{"shape":"FilterValues"},
+        "operator":{"shape":"ExportFilterOperator"}
+      }
+    },
+    "ExportFilterName":{
+      "type":"string",
+      "enum":["ExportResourceType"]
+    },
+    "ExportFilterOperator":{
+      "type":"string",
+      "enum":[
+        "CO",
+        "EQ"
+      ]
+    },
+    "ExportFilters":{
+      "type":"list",
+      "member":{"shape":"ExportFilter"},
+      "max":1,
+      "min":1
+    },
+    "ExportResourceSpecification":{
+      "type":"structure",
+      "members":{
+        "botExportSpecification":{"shape":"BotExportSpecification"},
+        "botLocaleExportSpecification":{"shape":"BotLocaleExportSpecification"}
+      }
+    },
+    "ExportSortAttribute":{
+      "type":"string",
+      "enum":["LastUpdatedDateTime"]
+    },
+    "ExportSortBy":{
+      "type":"structure",
+      "required":[
+        "attribute",
+        "order"
+      ],
+      "members":{
+        "attribute":{"shape":"ExportSortAttribute"},
+        "order":{"shape":"SortOrder"}
+      }
+    },
+    "ExportStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Completed",
+        "Failed",
+        "Deleting"
+      ]
+    },
+    "ExportSummary":{
+      "type":"structure",
+      "members":{
+        "exportId":{"shape":"Id"},
+        "resourceSpecification":{"shape":"ExportResourceSpecification"},
+        "fileFormat":{"shape":"ImportExportFileFormat"},
+        "exportStatus":{"shape":"ExportStatus"},
+        "creationDateTime":{"shape":"Timestamp"},
+        "lastUpdatedDateTime":{"shape":"Timestamp"}
+      }
+    },
+    "ExportSummaryList":{
+      "type":"list",
+      "member":{"shape":"ExportSummary"}
+    },
     "FailureReason":{"type":"string"},
     "FailureReasons":{
       "type":"list",
@@ -2089,6 +2777,99 @@
         "buttons":{"shape":"ButtonsList"}
       }
     },
+    "ImportExportFileFormat":{
+      "type":"string",
+      "enum":["LexJson"]
+    },
+    "ImportExportFilePassword":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "sensitive":true
+    },
+    "ImportFilter":{
+      "type":"structure",
+      "required":[
+        "name",
+        "values",
+        "operator"
+      ],
+      "members":{
+        "name":{"shape":"ImportFilterName"},
+        "values":{"shape":"FilterValues"},
+        "operator":{"shape":"ImportFilterOperator"}
+      }
+    },
+    "ImportFilterName":{
+      "type":"string",
+      "enum":["ImportResourceType"]
+    },
+    "ImportFilterOperator":{
+      "type":"string",
+      "enum":[
+        "CO",
+        "EQ"
+      ]
+    },
+    "ImportFilters":{
+      "type":"list",
+      "member":{"shape":"ImportFilter"},
+      "max":1,
+      "min":1
+    },
+    "ImportResourceSpecification":{
+      "type":"structure",
+      "members":{
+        "botImportSpecification":{"shape":"BotImportSpecification"},
+        "botLocaleImportSpecification":{"shape":"BotLocaleImportSpecification"}
+      }
+    },
+    "ImportSortAttribute":{
+      "type":"string",
+      "enum":["LastUpdatedDateTime"]
+    },
+    "ImportSortBy":{
+      "type":"structure",
+      "required":[
+        "attribute",
+        "order"
+      ],
+      "members":{
+        "attribute":{"shape":"ImportSortAttribute"},
+        "order":{"shape":"SortOrder"}
+      }
+    },
+    "ImportStatus":{
+      "type":"string",
+      "enum":[
+        "InProgress",
+        "Completed",
+        "Failed",
+        "Deleting"
+      ]
+    },
+    "ImportSummary":{
+      "type":"structure",
+      "members":{
+        "importId":{"shape":"Id"},
+        "importedResourceId":{"shape":"ImportedResourceId"},
+        "importedResourceName":{"shape":"Name"},
+        "importStatus":{"shape":"ImportStatus"},
+        "mergeStrategy":{"shape":"MergeStrategy"},
+        "creationDateTime":{"shape":"Timestamp"},
+        "lastUpdatedDateTime":{"shape":"Timestamp"}
+      }
+    },
+    "ImportSummaryList":{
+      "type":"list",
+      "member":{"shape":"ImportSummary"}
+    },
+    "ImportedResourceId":{
+      "type":"string",
+      "max":10,
+      "min":5,
+      "pattern":"^([0-9a-zA-Z_])+$"
+    },
     "InputContext":{
       "type":"structure",
       "required":["name"],
@@ -2106,7 +2887,8 @@
       "type":"structure",
       "required":["closingResponse"],
       "members":{
-        "closingResponse":{"shape":"ResponseSpecification"}
+        "closingResponse":{"shape":"ResponseSpecification"},
+        "active":{"shape":"BoxedBoolean"}
       }
     },
     "IntentConfirmationSetting":{
@@ -2117,7 +2899,8 @@
       ],
       "members":{
         "promptSpecification":{"shape":"PromptSpecification"},
-        "declinationResponse":{"shape":"ResponseSpecification"}
+        "declinationResponse":{"shape":"ResponseSpecification"},
+        "active":{"shape":"BoxedBoolean"}
       }
     },
     "IntentFilter":{
@@ -2367,6 +3150,46 @@
         "localeId":{"shape":"LocaleId"}
       }
     },
+    "ListExportsRequest":{
+      "type":"structure",
+      "members":{
+        "botId":{"shape":"Id"},
+        "botVersion":{"shape":"BotVersion"},
+        "sortBy":{"shape":"ExportSortBy"},
+        "filters":{"shape":"ExportFilters"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListExportsResponse":{
+      "type":"structure",
+      "members":{
+        "botId":{"shape":"Id"},
+        "botVersion":{"shape":"BotVersion"},
+        "exportSummaries":{"shape":"ExportSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListImportsRequest":{
+      "type":"structure",
+      "members":{
+        "botId":{"shape":"Id"},
+        "botVersion":{"shape":"DraftBotVersion"},
+        "sortBy":{"shape":"ImportSortBy"},
+        "filters":{"shape":"ImportFilters"},
+        "maxResults":{"shape":"MaxResults"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListImportsResponse":{
+      "type":"structure",
+      "members":{
+        "botId":{"shape":"Id"},
+        "botVersion":{"shape":"DraftBotVersion"},
+        "importSummaries":{"shape":"ImportSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListIntentsRequest":{
       "type":"structure",
       "required":[
@@ -2520,6 +3343,13 @@
       "max":1000,
       "min":1
     },
+    "MergeStrategy":{
+      "type":"string",
+      "enum":[
+        "Overwrite",
+        "FailOnConflict"
+      ]
+    },
     "Message":{
       "type":"structure",
       "members":{
@@ -2549,6 +3379,12 @@
       "max":2,
       "min":0
     },
+    "MultipleValuesSetting":{
+      "type":"structure",
+      "members":{
+        "allowMultipleValues":{"shape":"Boolean"}
+      }
+    },
     "Name":{
       "type":"string",
       "max":100,
@@ -2575,6 +3411,16 @@
         "None",
         "DefaultObfuscation"
       ]
+    },
+    "Operation":{
+      "type":"string",
+      "max":50,
+      "min":5,
+      "pattern":"lex:[a-zA-Z*]+$"
+    },
+    "OperationList":{
+      "type":"list",
+      "member":{"shape":"Operation"}
     },
     "OutputContext":{
       "type":"structure",
@@ -2607,6 +3453,10 @@
       "max":1000,
       "min":1
     },
+    "Policy":{
+      "type":"string",
+      "min":2
+    },
     "PreconditionFailedException":{
       "type":"structure",
       "members":{
@@ -2615,9 +3465,31 @@
       "error":{"httpStatusCode":412},
       "exception":true
     },
+    "PresignedS3Url":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "Principal":{
+      "type":"structure",
+      "members":{
+        "service":{"shape":"ServicePrincipal"},
+        "arn":{"shape":"PrincipalArn"}
+      }
+    },
+    "PrincipalArn":{
+      "type":"string",
+      "max":1024,
+      "min":30,
+      "pattern":"^arn:aws:iam::[0-9]{12}:(root|(user|role)/.*)$"
+    },
+    "PrincipalList":{
+      "type":"list",
+      "member":{"shape":"Principal"}
+    },
     "PriorityValue":{
       "type":"integer",
-      "max":25,
+      "max":100,
       "min":0
     },
     "PromptMaxRetries":{
@@ -2665,6 +3537,12 @@
       }
     },
     "RetryAfterSeconds":{"type":"integer"},
+    "RevisionId":{
+      "type":"string",
+      "max":5,
+      "min":1,
+      "pattern":"^[0-9]+$"
+    },
     "RoleArn":{
       "type":"string",
       "max":2048,
@@ -2725,6 +3603,12 @@
       "members":{
         "detectSentiment":{"shape":"Boolean"}
       }
+    },
+    "ServicePrincipal":{
+      "type":"string",
+      "max":1024,
+      "min":15,
+      "pattern":"^[0-9a-zA-Z_.]+$"
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -2966,6 +3850,30 @@
         "Ascending",
         "Descending"
       ]
+    },
+    "StartImportRequest":{
+      "type":"structure",
+      "required":[
+        "importId",
+        "resourceSpecification",
+        "mergeStrategy"
+      ],
+      "members":{
+        "importId":{"shape":"Id"},
+        "resourceSpecification":{"shape":"ImportResourceSpecification"},
+        "mergeStrategy":{"shape":"MergeStrategy"},
+        "filePassword":{"shape":"ImportExportFilePassword"}
+      }
+    },
+    "StartImportResponse":{
+      "type":"structure",
+      "members":{
+        "importId":{"shape":"Id"},
+        "resourceSpecification":{"shape":"ImportResourceSpecification"},
+        "mergeStrategy":{"shape":"MergeStrategy"},
+        "importStatus":{"shape":"ImportStatus"},
+        "creationDateTime":{"shape":"Timestamp"}
+      }
     },
     "StillWaitingResponseFrequency":{
       "type":"integer",
@@ -3225,6 +4133,29 @@
         "lastUpdatedDateTime":{"shape":"Timestamp"}
       }
     },
+    "UpdateExportRequest":{
+      "type":"structure",
+      "required":["exportId"],
+      "members":{
+        "exportId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"exportId"
+        },
+        "filePassword":{"shape":"ImportExportFilePassword"}
+      }
+    },
+    "UpdateExportResponse":{
+      "type":"structure",
+      "members":{
+        "exportId":{"shape":"Id"},
+        "resourceSpecification":{"shape":"ExportResourceSpecification"},
+        "fileFormat":{"shape":"ImportExportFileFormat"},
+        "exportStatus":{"shape":"ExportStatus"},
+        "creationDateTime":{"shape":"Timestamp"},
+        "lastUpdatedDateTime":{"shape":"Timestamp"}
+      }
+    },
     "UpdateIntentRequest":{
       "type":"structure",
       "required":[
@@ -3292,6 +4223,33 @@
         "lastUpdatedDateTime":{"shape":"Timestamp"}
       }
     },
+    "UpdateResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "policy"
+      ],
+      "members":{
+        "resourceArn":{
+          "shape":"AmazonResourceName",
+          "location":"uri",
+          "locationName":"resourceArn"
+        },
+        "policy":{"shape":"Policy"},
+        "expectedRevisionId":{
+          "shape":"RevisionId",
+          "location":"querystring",
+          "locationName":"expectedRevisionId"
+        }
+      }
+    },
+    "UpdateResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "resourceArn":{"shape":"AmazonResourceName"},
+        "revisionId":{"shape":"RevisionId"}
+      }
+    },
     "UpdateSlotRequest":{
       "type":"structure",
       "required":[
@@ -3334,7 +4292,8 @@
           "shape":"Id",
           "location":"uri",
           "locationName":"intentId"
-        }
+        },
+        "multipleValuesSetting":{"shape":"MultipleValuesSetting"}
       }
     },
     "UpdateSlotResponse":{
@@ -3351,7 +4310,8 @@
         "localeId":{"shape":"LocaleId"},
         "intentId":{"shape":"Id"},
         "creationDateTime":{"shape":"Timestamp"},
-        "lastUpdatedDateTime":{"shape":"Timestamp"}
+        "lastUpdatedDateTime":{"shape":"Timestamp"},
+        "multipleValuesSetting":{"shape":"MultipleValuesSetting"}
       }
     },
     "UpdateSlotTypeRequest":{
@@ -3439,7 +4399,8 @@
       "members":{
         "waitingResponse":{"shape":"ResponseSpecification"},
         "continueResponse":{"shape":"ResponseSpecification"},
-        "stillWaitingResponse":{"shape":"StillWaitingResponseSpecification"}
+        "stillWaitingResponse":{"shape":"StillWaitingResponseSpecification"},
+        "active":{"shape":"BoxedBoolean"}
       }
     }
   }

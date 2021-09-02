@@ -403,6 +403,28 @@
         {"shape":"LimitExceededException"}
       ]
     },
+    "CreateFleetMetric":{
+      "name":"CreateFleetMetric",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/fleet-metric/{metricName}"
+      },
+      "input":{"shape":"CreateFleetMetricRequest"},
+      "output":{"shape":"CreateFleetMetricResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidQueryException"},
+        {"shape":"InvalidAggregationException"},
+        {"shape":"IndexNotReadyException"}
+      ]
+    },
     "CreateJob":{
       "name":"CreateJob",
       "http":{
@@ -418,6 +440,23 @@
         {"shape":"LimitExceededException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "CreateJobTemplate":{
+      "name":"CreateJobTemplate",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/job-templates/{jobTemplateId}"
+      },
+      "input":{"shape":"CreateJobTemplateRequest"},
+      "output":{"shape":"CreateJobTemplateResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ConflictException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "CreateKeysAndCertificate":{
@@ -868,6 +907,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DeleteFleetMetric":{
+      "name":"DeleteFleetMetric",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/fleet-metric/{metricName}"
+      },
+      "input":{"shape":"DeleteFleetMetricRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"VersionConflictException"}
+      ]
+    },
     "DeleteJob":{
       "name":"DeleteJob",
       "http":{
@@ -897,6 +952,20 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "DeleteJobTemplate":{
+      "name":"DeleteJobTemplate",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/job-templates/{jobTemplateId}"
+      },
+      "input":{"shape":"DeleteJobTemplateRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "DeleteMitigationAction":{
@@ -1438,6 +1507,23 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "DescribeFleetMetric":{
+      "name":"DescribeFleetMetric",
+      "http":{
+        "method":"GET",
+        "requestUri":"/fleet-metric/{metricName}"
+      },
+      "input":{"shape":"DescribeFleetMetricRequest"},
+      "output":{"shape":"DescribeFleetMetricResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DescribeIndex":{
       "name":"DescribeIndex",
       "http":{
@@ -1483,6 +1569,21 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "DescribeJobTemplate":{
+      "name":"DescribeJobTemplate",
+      "http":{
+        "method":"GET",
+        "requestUri":"/job-templates/{jobTemplateId}"
+      },
+      "input":{"shape":"DescribeJobTemplateRequest"},
+      "output":{"shape":"DescribeJobTemplateResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "DescribeMitigationAction":{
@@ -1769,6 +1870,26 @@
         {"shape":"ThrottlingException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "GetBucketsAggregation":{
+      "name":"GetBucketsAggregation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/indices/buckets"
+      },
+      "input":{"shape":"GetBucketsAggregationRequest"},
+      "output":{"shape":"GetBucketsAggregationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidQueryException"},
+        {"shape":"InvalidAggregationException"},
+        {"shape":"IndexNotReadyException"}
       ]
     },
     "GetCardinality":{
@@ -2259,6 +2380,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "ListFleetMetrics":{
+      "name":"ListFleetMetrics",
+      "http":{
+        "method":"GET",
+        "requestUri":"/fleet-metrics"
+      },
+      "input":{"shape":"ListFleetMetricsRequest"},
+      "output":{"shape":"ListFleetMetricsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "ListIndices":{
       "name":"ListIndices",
       "http":{
@@ -2303,6 +2440,20 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "ListJobTemplates":{
+      "name":"ListJobTemplates",
+      "http":{
+        "method":"GET",
+        "requestUri":"/job-templates"
+      },
+      "input":{"shape":"ListJobTemplatesRequest"},
+      "output":{"shape":"ListJobTemplatesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "ListJobs":{
@@ -3377,6 +3528,26 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "UpdateFleetMetric":{
+      "name":"UpdateFleetMetric",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/fleet-metric/{metricName}"
+      },
+      "input":{"shape":"UpdateFleetMetricRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidQueryException"},
+        {"shape":"InvalidAggregationException"},
+        {"shape":"VersionConflictException"},
+        {"shape":"IndexNotReadyException"}
+      ]
+    },
     "UpdateIndexingConfiguration":{
       "name":"UpdateIndexingConfiguration",
       "http":{
@@ -3752,6 +3923,32 @@
     "AggregationField":{
       "type":"string",
       "min":1
+    },
+    "AggregationType":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{"shape":"AggregationTypeName"},
+        "values":{"shape":"AggregationTypeValues"}
+      }
+    },
+    "AggregationTypeName":{
+      "type":"string",
+      "enum":[
+        "Statistics",
+        "Percentiles",
+        "Cardinality"
+      ]
+    },
+    "AggregationTypeValue":{
+      "type":"string",
+      "max":12,
+      "min":1,
+      "pattern":"[a-zA-Z0-9]+"
+    },
+    "AggregationTypeValues":{
+      "type":"list",
+      "member":{"shape":"AggregationTypeValue"}
     },
     "AlarmName":{"type":"string"},
     "AlertTarget":{
@@ -4498,7 +4695,25 @@
     },
     "Boolean":{"type":"boolean"},
     "BooleanKey":{"type":"boolean"},
+    "Bucket":{
+      "type":"structure",
+      "members":{
+        "keyValue":{"shape":"BucketKeyValue"},
+        "count":{"shape":"Count"}
+      }
+    },
+    "BucketKeyValue":{"type":"string"},
     "BucketName":{"type":"string"},
+    "Buckets":{
+      "type":"list",
+      "member":{"shape":"Bucket"}
+    },
+    "BucketsAggregationType":{
+      "type":"structure",
+      "members":{
+        "termsAggregation":{"shape":"TermsAggregation"}
+      }
+    },
     "CACertificate":{
       "type":"structure",
       "members":{
@@ -4923,6 +5138,14 @@
       "max":2048,
       "min":1
     },
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"errorMessage"}
+      },
+      "error":{"httpStatusCode":409},
+      "exception":true
+    },
     "ConflictingResourceUpdateException":{
       "type":"structure",
       "members":{
@@ -5148,6 +5371,39 @@
         "queryVersion":{"shape":"QueryVersion"}
       }
     },
+    "CreateFleetMetricRequest":{
+      "type":"structure",
+      "required":[
+        "metricName",
+        "queryString",
+        "aggregationType",
+        "period",
+        "aggregationField"
+      ],
+      "members":{
+        "metricName":{
+          "shape":"FleetMetricName",
+          "location":"uri",
+          "locationName":"metricName"
+        },
+        "queryString":{"shape":"QueryString"},
+        "aggregationType":{"shape":"AggregationType"},
+        "period":{"shape":"FleetMetricPeriod"},
+        "aggregationField":{"shape":"AggregationField"},
+        "description":{"shape":"FleetMetricDescription"},
+        "queryVersion":{"shape":"QueryVersion"},
+        "indexName":{"shape":"IndexName"},
+        "unit":{"shape":"FleetMetricUnit"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateFleetMetricResponse":{
+      "type":"structure",
+      "members":{
+        "metricName":{"shape":"FleetMetricName"},
+        "metricArn":{"shape":"FleetMetricArn"}
+      }
+    },
     "CreateJobRequest":{
       "type":"structure",
       "required":[
@@ -5170,7 +5426,8 @@
         "abortConfig":{"shape":"AbortConfig"},
         "timeoutConfig":{"shape":"TimeoutConfig"},
         "tags":{"shape":"TagList"},
-        "namespaceId":{"shape":"NamespaceId"}
+        "namespaceId":{"shape":"NamespaceId"},
+        "jobTemplateArn":{"shape":"JobTemplateArn"}
       }
     },
     "CreateJobResponse":{
@@ -5179,6 +5436,36 @@
         "jobArn":{"shape":"JobArn"},
         "jobId":{"shape":"JobId"},
         "description":{"shape":"JobDescription"}
+      }
+    },
+    "CreateJobTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "jobTemplateId",
+        "description"
+      ],
+      "members":{
+        "jobTemplateId":{
+          "shape":"JobTemplateId",
+          "location":"uri",
+          "locationName":"jobTemplateId"
+        },
+        "jobArn":{"shape":"JobArn"},
+        "documentSource":{"shape":"JobDocumentSource"},
+        "document":{"shape":"JobDocument"},
+        "description":{"shape":"JobDescription"},
+        "presignedUrlConfig":{"shape":"PresignedUrlConfig"},
+        "jobExecutionsRolloutConfig":{"shape":"JobExecutionsRolloutConfig"},
+        "abortConfig":{"shape":"AbortConfig"},
+        "timeoutConfig":{"shape":"TimeoutConfig"},
+        "tags":{"shape":"TagList"}
+      }
+    },
+    "CreateJobTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "jobTemplateArn":{"shape":"JobTemplateArn"},
+        "jobTemplateId":{"shape":"JobTemplateId"}
       }
     },
     "CreateKeysAndCertificateRequest":{
@@ -5600,7 +5887,7 @@
     "CreationDate":{"type":"timestamp"},
     "CredentialDurationSeconds":{
       "type":"integer",
-      "max":3600,
+      "max":43200,
       "min":900
     },
     "CustomCodeSigning":{
@@ -5833,6 +6120,22 @@
       "members":{
       }
     },
+    "DeleteFleetMetricRequest":{
+      "type":"structure",
+      "required":["metricName"],
+      "members":{
+        "metricName":{
+          "shape":"FleetMetricName",
+          "location":"uri",
+          "locationName":"metricName"
+        },
+        "expectedVersion":{
+          "shape":"OptionalVersion",
+          "location":"querystring",
+          "locationName":"expectedVersion"
+        }
+      }
+    },
     "DeleteJobExecutionRequest":{
       "type":"structure",
       "required":[
@@ -5886,6 +6189,17 @@
           "shape":"NamespaceId",
           "location":"querystring",
           "locationName":"namespaceId"
+        }
+      }
+    },
+    "DeleteJobTemplateRequest":{
+      "type":"structure",
+      "required":["jobTemplateId"],
+      "members":{
+        "jobTemplateId":{
+          "shape":"JobTemplateId",
+          "location":"uri",
+          "locationName":"jobTemplateId"
         }
       }
     },
@@ -6507,6 +6821,35 @@
         "lastModifiedDate":{"shape":"LastModifiedDate"}
       }
     },
+    "DescribeFleetMetricRequest":{
+      "type":"structure",
+      "required":["metricName"],
+      "members":{
+        "metricName":{
+          "shape":"FleetMetricName",
+          "location":"uri",
+          "locationName":"metricName"
+        }
+      }
+    },
+    "DescribeFleetMetricResponse":{
+      "type":"structure",
+      "members":{
+        "metricName":{"shape":"FleetMetricName"},
+        "queryString":{"shape":"QueryString"},
+        "aggregationType":{"shape":"AggregationType"},
+        "period":{"shape":"FleetMetricPeriod"},
+        "aggregationField":{"shape":"AggregationField"},
+        "description":{"shape":"FleetMetricDescription"},
+        "queryVersion":{"shape":"QueryVersion"},
+        "indexName":{"shape":"IndexName"},
+        "creationDate":{"shape":"CreationDate"},
+        "lastModifiedDate":{"shape":"LastModifiedDate"},
+        "unit":{"shape":"FleetMetricUnit"},
+        "version":{"shape":"Version"},
+        "metricArn":{"shape":"FleetMetricArn"}
+      }
+    },
     "DescribeIndexRequest":{
       "type":"structure",
       "required":["indexName"],
@@ -6572,6 +6915,32 @@
       "members":{
         "documentSource":{"shape":"JobDocumentSource"},
         "job":{"shape":"Job"}
+      }
+    },
+    "DescribeJobTemplateRequest":{
+      "type":"structure",
+      "required":["jobTemplateId"],
+      "members":{
+        "jobTemplateId":{
+          "shape":"JobTemplateId",
+          "location":"uri",
+          "locationName":"jobTemplateId"
+        }
+      }
+    },
+    "DescribeJobTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "jobTemplateArn":{"shape":"JobTemplateArn"},
+        "jobTemplateId":{"shape":"JobTemplateId"},
+        "description":{"shape":"JobDescription"},
+        "documentSource":{"shape":"JobDocumentSource"},
+        "document":{"shape":"JobDocument"},
+        "createdAt":{"shape":"DateType"},
+        "presignedUrlConfig":{"shape":"PresignedUrlConfig"},
+        "jobExecutionsRolloutConfig":{"shape":"JobExecutionsRolloutConfig"},
+        "abortConfig":{"shape":"AbortConfig"},
+        "timeoutConfig":{"shape":"TimeoutConfig"}
       }
     },
     "DescribeMitigationActionRequest":{
@@ -7074,6 +7443,7 @@
         }
       }
     },
+    "DisconnectReason":{"type":"string"},
     "DomainConfigurationArn":{"type":"string"},
     "DomainConfigurationName":{
       "type":"string",
@@ -7362,6 +7732,66 @@
       "pattern":"([\\n\\t])|(\\r\\n)|(,)"
     },
     "Flag":{"type":"boolean"},
+    "FleetMetricArn":{"type":"string"},
+    "FleetMetricDescription":{
+      "type":"string",
+      "max":1024,
+      "pattern":"[\\p{Graph}\\x20]*"
+    },
+    "FleetMetricName":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_\\-\\.]+"
+    },
+    "FleetMetricNameAndArn":{
+      "type":"structure",
+      "members":{
+        "metricName":{"shape":"FleetMetricName"},
+        "metricArn":{"shape":"FleetMetricArn"}
+      }
+    },
+    "FleetMetricNameAndArnList":{
+      "type":"list",
+      "member":{"shape":"FleetMetricNameAndArn"}
+    },
+    "FleetMetricPeriod":{
+      "type":"integer",
+      "max":86400,
+      "min":60
+    },
+    "FleetMetricUnit":{
+      "type":"string",
+      "enum":[
+        "Seconds",
+        "Microseconds",
+        "Milliseconds",
+        "Bytes",
+        "Kilobytes",
+        "Megabytes",
+        "Gigabytes",
+        "Terabytes",
+        "Bits",
+        "Kilobits",
+        "Megabits",
+        "Gigabits",
+        "Terabits",
+        "Percent",
+        "Count",
+        "Bytes/Second",
+        "Kilobytes/Second",
+        "Megabytes/Second",
+        "Gigabytes/Second",
+        "Terabytes/Second",
+        "Bits/Second",
+        "Kilobits/Second",
+        "Megabits/Second",
+        "Gigabits/Second",
+        "Terabits/Second",
+        "Count/Second",
+        "None"
+      ]
+    },
     "ForceDelete":{"type":"boolean"},
     "ForceDeleteAWSJob":{"type":"boolean"},
     "ForceFlag":{"type":"boolean"},
@@ -7394,6 +7824,28 @@
       "members":{
         "summaries":{"shape":"BehaviorModelTrainingSummaries"},
         "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetBucketsAggregationRequest":{
+      "type":"structure",
+      "required":[
+        "queryString",
+        "aggregationField",
+        "bucketsAggregationType"
+      ],
+      "members":{
+        "indexName":{"shape":"IndexName"},
+        "queryString":{"shape":"QueryString"},
+        "aggregationField":{"shape":"AggregationField"},
+        "queryVersion":{"shape":"QueryVersion"},
+        "bucketsAggregationType":{"shape":"BucketsAggregationType"}
+      }
+    },
+    "GetBucketsAggregationResponse":{
+      "type":"structure",
+      "members":{
+        "totalCount":{"shape":"Count"},
+        "buckets":{"shape":"Buckets"}
       }
     },
     "GetCardinalityRequest":{
@@ -7892,7 +8344,8 @@
         "completedAt":{"shape":"DateType"},
         "jobProcessDetails":{"shape":"JobProcessDetails"},
         "timeoutConfig":{"shape":"TimeoutConfig"},
-        "namespaceId":{"shape":"NamespaceId"}
+        "namespaceId":{"shape":"NamespaceId"},
+        "jobTemplateArn":{"shape":"JobTemplateArn"}
       }
     },
     "JobArn":{"type":"string"},
@@ -8043,6 +8496,31 @@
       "type":"list",
       "member":{"shape":"TargetArn"},
       "min":1
+    },
+    "JobTemplateArn":{
+      "type":"string",
+      "max":1600,
+      "min":1,
+      "pattern":"^arn:[!-~]+$"
+    },
+    "JobTemplateId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "JobTemplateSummary":{
+      "type":"structure",
+      "members":{
+        "jobTemplateArn":{"shape":"JobTemplateArn"},
+        "jobTemplateId":{"shape":"JobTemplateId"},
+        "description":{"shape":"JobDescription"},
+        "createdAt":{"shape":"DateType"}
+      }
+    },
+    "JobTemplateSummaryList":{
+      "type":"list",
+      "member":{"shape":"JobTemplateSummary"}
     },
     "JsonDocument":{"type":"string"},
     "KafkaAction":{
@@ -8662,6 +9140,28 @@
         "nextMarker":{"shape":"Marker"}
       }
     },
+    "ListFleetMetricsRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListFleetMetricsResponse":{
+      "type":"structure",
+      "members":{
+        "fleetMetrics":{"shape":"FleetMetricNameAndArnList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
     "ListIndicesRequest":{
       "type":"structure",
       "members":{
@@ -8752,6 +9252,28 @@
       "type":"structure",
       "members":{
         "executionSummaries":{"shape":"JobExecutionSummaryForThingList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListJobTemplatesRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"LaserMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListJobTemplatesResponse":{
+      "type":"structure",
+      "members":{
+        "jobTemplates":{"shape":"JobTemplateSummaryList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -9565,6 +10087,11 @@
           "shape":"ThingTypeName",
           "location":"querystring",
           "locationName":"thingTypeName"
+        },
+        "usePrefixAttributeValue":{
+          "shape":"usePrefixAttributeValue",
+          "location":"querystring",
+          "locationName":"usePrefixAttributeValue"
         }
       }
     },
@@ -9777,9 +10304,13 @@
       "type":"string",
       "pattern":"[A-Za-z0-9+/]+={0,2}"
     },
+    "MaxBuckets":{
+      "type":"integer",
+      "max":10000,
+      "min":1
+    },
     "MaxJobExecutionsPerMin":{
       "type":"integer",
-      "max":1000,
       "min":1
     },
     "MaxResults":{
@@ -11424,6 +11955,12 @@
       "pattern":"^[0-9A-Za-z_-]+$"
     },
     "TemplateVersionId":{"type":"integer"},
+    "TermsAggregation":{
+      "type":"structure",
+      "members":{
+        "maxBuckets":{"shape":"MaxBuckets"}
+      }
+    },
     "TestAuthorizationRequest":{
       "type":"structure",
       "required":["authInfos"],
@@ -11491,7 +12028,8 @@
       "type":"structure",
       "members":{
         "connected":{"shape":"Boolean"},
-        "timestamp":{"shape":"ConnectivityTimestamp"}
+        "timestamp":{"shape":"ConnectivityTimestamp"},
+        "disconnectReason":{"shape":"DisconnectReason"}
       }
     },
     "ThingConnectivityIndexingMode":{
@@ -12186,6 +12724,29 @@
       "members":{
       }
     },
+    "UpdateFleetMetricRequest":{
+      "type":"structure",
+      "required":[
+        "metricName",
+        "indexName"
+      ],
+      "members":{
+        "metricName":{
+          "shape":"FleetMetricName",
+          "location":"uri",
+          "locationName":"metricName"
+        },
+        "queryString":{"shape":"QueryString"},
+        "aggregationType":{"shape":"AggregationType"},
+        "period":{"shape":"FleetMetricPeriod"},
+        "aggregationField":{"shape":"AggregationField"},
+        "description":{"shape":"FleetMetricDescription"},
+        "queryVersion":{"shape":"QueryVersion"},
+        "indexName":{"shape":"IndexName"},
+        "unit":{"shape":"FleetMetricUnit"},
+        "expectedVersion":{"shape":"OptionalVersion"}
+      }
+    },
     "UpdateIndexingConfigurationRequest":{
       "type":"structure",
       "members":{
@@ -12579,6 +13140,7 @@
     "errorMessage":{"type":"string"},
     "resourceArn":{"type":"string"},
     "resourceId":{"type":"string"},
-    "stringValue":{"type":"string"}
+    "stringValue":{"type":"string"},
+    "usePrefixAttributeValue":{"type":"boolean"}
   }
 }

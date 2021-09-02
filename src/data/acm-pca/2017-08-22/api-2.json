@@ -506,7 +506,8 @@
         "FailureReason":{"shape":"FailureReason"},
         "CertificateAuthorityConfiguration":{"shape":"CertificateAuthorityConfiguration"},
         "RevocationConfiguration":{"shape":"RevocationConfiguration"},
-        "RestorableUntil":{"shape":"TStamp"}
+        "RestorableUntil":{"shape":"TStamp"},
+        "KeyStorageSecurityStandard":{"shape":"KeyStorageSecurityStandard"}
       }
     },
     "CertificateAuthorityConfiguration":{
@@ -611,6 +612,7 @@
         "RevocationConfiguration":{"shape":"RevocationConfiguration"},
         "CertificateAuthorityType":{"shape":"CertificateAuthorityType"},
         "IdempotencyToken":{"shape":"IdempotencyToken"},
+        "KeyStorageSecurityStandard":{"shape":"KeyStorageSecurityStandard"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -647,7 +649,8 @@
           "box":true
         },
         "CustomCname":{"shape":"String253"},
-        "S3BucketName":{"shape":"String3To255"}
+        "S3BucketName":{"shape":"String3To255"},
+        "S3ObjectAcl":{"shape":"S3ObjectAcl"}
       }
     },
     "CsrBlob":{
@@ -964,6 +967,13 @@
         "EC_secp384r1"
       ]
     },
+    "KeyStorageSecurityStandard":{
+      "type":"string",
+      "enum":[
+        "FIPS_140_2_LEVEL_2_OR_HIGHER",
+        "FIPS_140_2_LEVEL_3_OR_HIGHER"
+      ]
+    },
     "KeyUsage":{
       "type":"structure",
       "members":{
@@ -1062,6 +1072,17 @@
       "type":"string",
       "max":500,
       "min":1
+    },
+    "OcspConfiguration":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "OcspCustomCname":{"shape":"String253"}
+      }
     },
     "OtherName":{
       "type":"structure",
@@ -1204,7 +1225,8 @@
     "RevocationConfiguration":{
       "type":"structure",
       "members":{
-        "CrlConfiguration":{"shape":"CrlConfiguration"}
+        "CrlConfiguration":{"shape":"CrlConfiguration"},
+        "OcspConfiguration":{"shape":"OcspConfiguration"}
       }
     },
     "RevocationReason":{
@@ -1241,6 +1263,13 @@
     "S3Key":{
       "type":"string",
       "max":1024
+    },
+    "S3ObjectAcl":{
+      "type":"string",
+      "enum":[
+        "PUBLIC_READ",
+        "BUCKET_OWNER_FULL_CONTROL"
+      ]
     },
     "SigningAlgorithm":{
       "type":"string",

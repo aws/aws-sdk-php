@@ -20,12 +20,12 @@ class S3MultipartUploadExceptionTest extends TestCase
             1 => new AwsException('Bad digest.', new Command('UploadPart', [
                 'Bucket' => 'foo',
                 'Key' => 'bar',
-                'Body' => Psr7\stream_for('Part 1'),
+                'Body' => Psr7\Utils::streamFor('Part 1'),
             ])),
             5 => new AwsException('Missing header.', new Command('UploadPart', [
                 'Bucket' => 'foo',
                 'Key' => 'bar',
-                'Body' => Psr7\stream_for('Part 2'),
+                'Body' => Psr7\Utils::streamFor('Part 2'),
             ])),
             8 => new AwsException('Needs more love.', new Command('UploadPart')),
         ];

@@ -697,7 +697,8 @@
         "Options":{"shape":"Options"},
         "Excludes":{"shape":"FilterList"},
         "Schedule":{"shape":"TaskSchedule"},
-        "Tags":{"shape":"InputTagList"}
+        "Tags":{"shape":"InputTagList"},
+        "Includes":{"shape":"FilterList"}
       }
     },
     "CreateTaskResponse":{
@@ -916,7 +917,8 @@
         "Schedule":{"shape":"TaskSchedule"},
         "ErrorCode":{"shape":"string"},
         "ErrorDetail":{"shape":"string"},
-        "CreationTime":{"shape":"Time"}
+        "CreationTime":{"shape":"Time"},
+        "Includes":{"shape":"FilterList"}
       }
     },
     "DestinationNetworkInterfaceArns":{
@@ -1304,7 +1306,8 @@
         "BytesPerSecond":{"shape":"BytesPerSecond"},
         "TaskQueueing":{"shape":"TaskQueueing"},
         "LogLevel":{"shape":"LogLevel"},
-        "TransferMode":{"shape":"TransferMode"}
+        "TransferMode":{"shape":"TransferMode"},
+        "SecurityDescriptorCopyFlags":{"shape":"SmbSecurityDescriptorCopyFlags"}
       }
     },
     "OutputTagList":{
@@ -1426,6 +1429,14 @@
       "pattern":"^.{0,104}$",
       "sensitive":true
     },
+    "SmbSecurityDescriptorCopyFlags":{
+      "type":"string",
+      "enum":[
+        "NONE",
+        "OWNER_DACL",
+        "OWNER_DACL_SACL"
+      ]
+    },
     "SmbSubdirectory":{
       "type":"string",
       "max":4096,
@@ -1454,7 +1465,8 @@
       "members":{
         "TaskArn":{"shape":"TaskArn"},
         "OverrideOptions":{"shape":"Options"},
-        "Includes":{"shape":"FilterList"}
+        "Includes":{"shape":"FilterList"},
+        "Excludes":{"shape":"FilterList"}
       }
     },
     "StartTaskExecutionResponse":{
@@ -1739,7 +1751,8 @@
         "Excludes":{"shape":"FilterList"},
         "Schedule":{"shape":"TaskSchedule"},
         "Name":{"shape":"TagValue"},
-        "CloudWatchLogGroupArn":{"shape":"LogGroupArn"}
+        "CloudWatchLogGroupArn":{"shape":"LogGroupArn"},
+        "Includes":{"shape":"FilterList"}
       }
     },
     "UpdateTaskResponse":{

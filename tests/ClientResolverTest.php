@@ -715,19 +715,33 @@ EOT;
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request->expects($this->once())
+        $request->expects($this->at(0))
+            ->method('getHeader')
+            ->with('X-Amz-User-Agent')
+            ->willReturn(["MockBuilder"]);
+
+        $request->expects($this->at(1))
+            ->method('withHeader')
+            ->with(
+                'X-Amz-User-Agent',
+                new \PHPUnit\Framework\Constraint\RegularExpression(
+                    '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
+                )
+            )->willReturn($request);
+
+        $request->expects($this->at(2))
             ->method('getHeader')
             ->with('User-Agent')
             ->willReturn(['MockBuilder']);
 
-        $request->expects($this->once())
+        $request->expects($this->at(3))
             ->method('withHeader')
             ->with(
                 'User-Agent',
                 new \PHPUnit\Framework\Constraint\RegularExpression(
                     '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
                 )
-            );
+            )->willReturn($request);
 
         $args = [];
         $list = new HandlerList(function () {});
@@ -735,27 +749,6 @@ EOT;
         call_user_func($list->resolve(), $command, $request);
     }
 
-    public function malformedEndpointProvider()
-    {
-        return [
-            ['www.amazon.com'], // missing protocol
-            ['https://'], // missing host
-        ];
-    }
-
-    /**
-     * @dataProvider malformedEndpointProvider
-     * @param $endpoint
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Endpoints must be full URIs and include a scheme and host
-     */
-    public function testRejectsMalformedEndpoints($endpoint)
-    {
-        $list = new HandlerList();
-        $args = [];
-        ClientResolver::_apply_endpoint($endpoint, $args, $list);
-    }
 
     /**
      * @dataProvider statValueProvider

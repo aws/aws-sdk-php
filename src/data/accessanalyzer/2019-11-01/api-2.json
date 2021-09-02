@@ -29,6 +29,23 @@
       ],
       "idempotent":true
     },
+    "CancelPolicyGeneration":{
+      "name":"CancelPolicyGeneration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/policy/generation/{jobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"CancelPolicyGenerationRequest"},
+      "output":{"shape":"CancelPolicyGenerationResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
+    },
     "CreateAccessPreview":{
       "name":"CreateAccessPreview",
       "http":{
@@ -206,6 +223,22 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "GetGeneratedPolicy":{
+      "name":"GetGeneratedPolicy",
+      "http":{
+        "method":"GET",
+        "requestUri":"/policy/generation/{jobId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetGeneratedPolicyRequest"},
+      "output":{"shape":"GetGeneratedPolicyResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListAccessPreviewFindings":{
       "name":"ListAccessPreviewFindings",
       "http":{
@@ -307,6 +340,22 @@
         {"shape":"AccessDeniedException"}
       ]
     },
+    "ListPolicyGenerations":{
+      "name":"ListPolicyGenerations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/policy/generation",
+        "responseCode":200
+      },
+      "input":{"shape":"ListPolicyGenerationsRequest"},
+      "output":{"shape":"ListPolicyGenerationsResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -323,6 +372,25 @@
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
       ]
+    },
+    "StartPolicyGeneration":{
+      "name":"StartPolicyGeneration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/policy/generation",
+        "responseCode":200
+      },
+      "input":{"shape":"StartPolicyGenerationRequest"},
+      "output":{"shape":"StartPolicyGenerationResponse"},
+      "errors":[
+        {"shape":"ConflictException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ],
+      "idempotent":true
     },
     "StartResourceScan":{
       "name":"StartResourceScan",
@@ -409,6 +477,22 @@
         {"shape":"AccessDeniedException"}
       ],
       "idempotent":true
+    },
+    "ValidatePolicy":{
+      "name":"ValidatePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/policy/validation",
+        "responseCode":200
+      },
+      "input":{"shape":"ValidatePolicyRequest"},
+      "output":{"shape":"ValidatePolicyResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"}
+      ]
     }
   },
   "shapes":{
@@ -426,7 +510,7 @@
     },
     "AccessPointArn":{
       "type":"string",
-      "pattern":"arn:[^:]*:s3:[^:]*:[^:]*:accesspoint/.*$"
+      "pattern":"arn:[^:]*:s3:[^:]*:[^:]*:accesspoint/.*"
     },
     "AccessPointPolicy":{"type":"string"},
     "AccessPreview":{
@@ -482,7 +566,7 @@
     },
     "AccessPreviewId":{
       "type":"string",
-      "pattern":"^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
     },
     "AccessPreviewStatus":{
       "type":"string",
@@ -594,7 +678,7 @@
     },
     "AnalyzerArn":{
       "type":"string",
-      "pattern":"^[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:analyzer/.{1,255}$"
+      "pattern":"[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:analyzer/.{1,255}"
     },
     "AnalyzerStatus":{
       "type":"string",
@@ -667,6 +751,53 @@
     "Boolean":{
       "type":"boolean",
       "box":true
+    },
+    "CancelPolicyGenerationRequest":{
+      "type":"structure",
+      "required":["jobId"],
+      "members":{
+        "jobId":{
+          "shape":"JobId",
+          "location":"uri",
+          "locationName":"jobId"
+        }
+      }
+    },
+    "CancelPolicyGenerationResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "CloudTrailArn":{
+      "type":"string",
+      "pattern":"arn:[^:]*:cloudtrail:[^:]*:[^:]*:trail/.{1,576}"
+    },
+    "CloudTrailDetails":{
+      "type":"structure",
+      "required":[
+        "accessRole",
+        "startTime",
+        "trails"
+      ],
+      "members":{
+        "accessRole":{"shape":"RoleArn"},
+        "endTime":{"shape":"Timestamp"},
+        "startTime":{"shape":"Timestamp"},
+        "trails":{"shape":"TrailList"}
+      }
+    },
+    "CloudTrailProperties":{
+      "type":"structure",
+      "required":[
+        "endTime",
+        "startTime",
+        "trailProperties"
+      ],
+      "members":{
+        "endTime":{"shape":"Timestamp"},
+        "startTime":{"shape":"Timestamp"},
+        "trailProperties":{"shape":"TrailPropertiesList"}
+      }
     },
     "ConditionKeyMap":{
       "type":"map",
@@ -946,6 +1077,34 @@
       "type":"list",
       "member":{"shape":"FindingSummary"}
     },
+    "GeneratedPolicy":{
+      "type":"structure",
+      "required":["policy"],
+      "members":{
+        "policy":{"shape":"String"}
+      }
+    },
+    "GeneratedPolicyList":{
+      "type":"list",
+      "member":{"shape":"GeneratedPolicy"}
+    },
+    "GeneratedPolicyProperties":{
+      "type":"structure",
+      "required":["principalArn"],
+      "members":{
+        "cloudTrailProperties":{"shape":"CloudTrailProperties"},
+        "isComplete":{"shape":"Boolean"},
+        "principalArn":{"shape":"PrincipalArn"}
+      }
+    },
+    "GeneratedPolicyResult":{
+      "type":"structure",
+      "required":["properties"],
+      "members":{
+        "generatedPolicies":{"shape":"GeneratedPolicyList"},
+        "properties":{"shape":"GeneratedPolicyProperties"}
+      }
+    },
     "GetAccessPreviewRequest":{
       "type":"structure",
       "required":[
@@ -1066,6 +1225,38 @@
         "finding":{"shape":"Finding"}
       }
     },
+    "GetGeneratedPolicyRequest":{
+      "type":"structure",
+      "required":["jobId"],
+      "members":{
+        "includeResourcePlaceholders":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"includeResourcePlaceholders"
+        },
+        "includeServiceLevelTemplate":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"includeServiceLevelTemplate"
+        },
+        "jobId":{
+          "shape":"JobId",
+          "location":"uri",
+          "locationName":"jobId"
+        }
+      }
+    },
+    "GetGeneratedPolicyResponse":{
+      "type":"structure",
+      "required":[
+        "generatedPolicyResult",
+        "jobDetails"
+      ],
+      "members":{
+        "generatedPolicyResult":{"shape":"GeneratedPolicyResult"},
+        "jobDetails":{"shape":"JobDetails"}
+      }
+    },
     "GranteePrincipal":{"type":"string"},
     "IamRoleConfiguration":{
       "type":"structure",
@@ -1114,7 +1305,53 @@
       "members":{
       }
     },
+    "IssueCode":{"type":"string"},
     "IssuingAccount":{"type":"string"},
+    "JobDetails":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "startedOn",
+        "status"
+      ],
+      "members":{
+        "completedOn":{"shape":"Timestamp"},
+        "jobError":{"shape":"JobError"},
+        "jobId":{"shape":"JobId"},
+        "startedOn":{"shape":"Timestamp"},
+        "status":{"shape":"JobStatus"}
+      }
+    },
+    "JobError":{
+      "type":"structure",
+      "required":[
+        "code",
+        "message"
+      ],
+      "members":{
+        "code":{"shape":"JobErrorCode"},
+        "message":{"shape":"String"}
+      }
+    },
+    "JobErrorCode":{
+      "type":"string",
+      "enum":[
+        "AUTHORIZATION_ERROR",
+        "RESOURCE_NOT_FOUND_ERROR",
+        "SERVICE_QUOTA_EXCEEDED_ERROR",
+        "SERVICE_ERROR"
+      ]
+    },
+    "JobId":{"type":"string"},
+    "JobStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "SUCCEEDED",
+        "FAILED",
+        "CANCELED"
+      ]
+    },
     "KmsConstraintsKey":{"type":"string"},
     "KmsConstraintsMap":{
       "type":"map",
@@ -1184,6 +1421,7 @@
       "value":{"shape":"KmsKeyPolicy"}
     },
     "KmsKeyPolicy":{"type":"string"},
+    "LearnMoreLink":{"type":"string"},
     "ListAccessPreviewFindingsRequest":{
       "type":"structure",
       "required":[
@@ -1333,6 +1571,39 @@
         "nextToken":{"shape":"Token"}
       }
     },
+    "ListPolicyGenerationsRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListPolicyGenerationsRequestMaxResultsInteger",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "principalArn":{
+          "shape":"PrincipalArn",
+          "location":"querystring",
+          "locationName":"principalArn"
+        }
+      }
+    },
+    "ListPolicyGenerationsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
+    "ListPolicyGenerationsResponse":{
+      "type":"structure",
+      "required":["policyGenerations"],
+      "members":{
+        "nextToken":{"shape":"Token"},
+        "policyGenerations":{"shape":"PolicyGenerationList"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -1350,11 +1621,41 @@
         "tags":{"shape":"TagsMap"}
       }
     },
+    "Locale":{
+      "type":"string",
+      "enum":[
+        "DE",
+        "EN",
+        "ES",
+        "FR",
+        "IT",
+        "JA",
+        "KO",
+        "PT_BR",
+        "ZH_CN",
+        "ZH_TW"
+      ]
+    },
+    "Location":{
+      "type":"structure",
+      "required":[
+        "path",
+        "span"
+      ],
+      "members":{
+        "path":{"shape":"PathElementList"},
+        "span":{"shape":"Span"}
+      }
+    },
+    "LocationList":{
+      "type":"list",
+      "member":{"shape":"Location"}
+    },
     "Name":{
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^[A-Za-z][A-Za-z0-9_.-]*$"
+      "pattern":"[A-Za-z][A-Za-z0-9_.-]*"
     },
     "NetworkOriginConfiguration":{
       "type":"structure",
@@ -1371,7 +1672,74 @@
         "DESC"
       ]
     },
+    "PathElement":{
+      "type":"structure",
+      "members":{
+        "index":{"shape":"Integer"},
+        "key":{"shape":"String"},
+        "substring":{"shape":"Substring"},
+        "value":{"shape":"String"}
+      },
+      "union":true
+    },
+    "PathElementList":{
+      "type":"list",
+      "member":{"shape":"PathElement"}
+    },
+    "PolicyDocument":{"type":"string"},
+    "PolicyGeneration":{
+      "type":"structure",
+      "required":[
+        "jobId",
+        "principalArn",
+        "startedOn",
+        "status"
+      ],
+      "members":{
+        "completedOn":{"shape":"Timestamp"},
+        "jobId":{"shape":"JobId"},
+        "principalArn":{"shape":"PrincipalArn"},
+        "startedOn":{"shape":"Timestamp"},
+        "status":{"shape":"JobStatus"}
+      }
+    },
+    "PolicyGenerationDetails":{
+      "type":"structure",
+      "required":["principalArn"],
+      "members":{
+        "principalArn":{"shape":"PrincipalArn"}
+      }
+    },
+    "PolicyGenerationList":{
+      "type":"list",
+      "member":{"shape":"PolicyGeneration"}
+    },
     "PolicyName":{"type":"string"},
+    "PolicyType":{
+      "type":"string",
+      "enum":[
+        "IDENTITY_POLICY",
+        "RESOURCE_POLICY",
+        "SERVICE_CONTROL_POLICY"
+      ]
+    },
+    "Position":{
+      "type":"structure",
+      "required":[
+        "column",
+        "line",
+        "offset"
+      ],
+      "members":{
+        "column":{"shape":"Integer"},
+        "line":{"shape":"Integer"},
+        "offset":{"shape":"Integer"}
+      }
+    },
+    "PrincipalArn":{
+      "type":"string",
+      "pattern":"arn:[^:]*:iam::[^:]*:(role|user)/.{1,576}"
+    },
     "PrincipalMap":{
       "type":"map",
       "key":{"shape":"String"},
@@ -1386,9 +1754,13 @@
         "SERVICE_LINKED_ROLE_CREATION_FAILED"
       ]
     },
+    "RegionList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "ResourceArn":{
       "type":"string",
-      "pattern":"arn:[^:]*:[^:]*:[^:]*:[^:]*:.*$"
+      "pattern":"arn:[^:]*:[^:]*:[^:]*:[^:]*:.*"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -1421,6 +1793,10 @@
       ]
     },
     "RetiringPrincipal":{"type":"string"},
+    "RoleArn":{
+      "type":"string",
+      "pattern":"arn:[^:]*:iam::[^:]*:role/.{1,576}"
+    },
     "S3AccessPointConfiguration":{
       "type":"structure",
       "members":{
@@ -1508,6 +1884,17 @@
         "orderBy":{"shape":"OrderBy"}
       }
     },
+    "Span":{
+      "type":"structure",
+      "required":[
+        "end",
+        "start"
+      ],
+      "members":{
+        "end":{"shape":"Position"},
+        "start":{"shape":"Position"}
+      }
+    },
     "SqsQueueConfiguration":{
       "type":"structure",
       "members":{
@@ -1515,6 +1902,25 @@
       }
     },
     "SqsQueuePolicy":{"type":"string"},
+    "StartPolicyGenerationRequest":{
+      "type":"structure",
+      "required":["policyGenerationDetails"],
+      "members":{
+        "clientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "cloudTrailDetails":{"shape":"CloudTrailDetails"},
+        "policyGenerationDetails":{"shape":"PolicyGenerationDetails"}
+      }
+    },
+    "StartPolicyGenerationResponse":{
+      "type":"structure",
+      "required":["jobId"],
+      "members":{
+        "jobId":{"shape":"JobId"}
+      }
+    },
     "StartResourceScanRequest":{
       "type":"structure",
       "required":[
@@ -1534,6 +1940,17 @@
       }
     },
     "String":{"type":"string"},
+    "Substring":{
+      "type":"structure",
+      "required":[
+        "length",
+        "start"
+      ],
+      "members":{
+        "length":{"shape":"Integer"},
+        "start":{"shape":"Integer"}
+      }
+    },
     "TagKeys":{
       "type":"list",
       "member":{"shape":"String"}
@@ -1586,6 +2003,32 @@
       "timestampFormat":"iso8601"
     },
     "Token":{"type":"string"},
+    "Trail":{
+      "type":"structure",
+      "required":["cloudTrailArn"],
+      "members":{
+        "allRegions":{"shape":"Boolean"},
+        "cloudTrailArn":{"shape":"CloudTrailArn"},
+        "regions":{"shape":"RegionList"}
+      }
+    },
+    "TrailList":{
+      "type":"list",
+      "member":{"shape":"Trail"}
+    },
+    "TrailProperties":{
+      "type":"structure",
+      "required":["cloudTrailArn"],
+      "members":{
+        "allRegions":{"shape":"Boolean"},
+        "cloudTrailArn":{"shape":"CloudTrailArn"},
+        "regions":{"shape":"RegionList"}
+      }
+    },
+    "TrailPropertiesList":{
+      "type":"list",
+      "member":{"shape":"TrailProperties"}
+    },
     "Type":{
       "type":"string",
       "enum":[
@@ -1659,6 +2102,66 @@
         "status":{"shape":"FindingStatusUpdate"}
       }
     },
+    "ValidatePolicyFinding":{
+      "type":"structure",
+      "required":[
+        "findingDetails",
+        "findingType",
+        "issueCode",
+        "learnMoreLink",
+        "locations"
+      ],
+      "members":{
+        "findingDetails":{"shape":"String"},
+        "findingType":{"shape":"ValidatePolicyFindingType"},
+        "issueCode":{"shape":"IssueCode"},
+        "learnMoreLink":{"shape":"LearnMoreLink"},
+        "locations":{"shape":"LocationList"}
+      }
+    },
+    "ValidatePolicyFindingList":{
+      "type":"list",
+      "member":{"shape":"ValidatePolicyFinding"}
+    },
+    "ValidatePolicyFindingType":{
+      "type":"string",
+      "enum":[
+        "ERROR",
+        "SECURITY_WARNING",
+        "SUGGESTION",
+        "WARNING"
+      ]
+    },
+    "ValidatePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "policyDocument",
+        "policyType"
+      ],
+      "members":{
+        "locale":{"shape":"Locale"},
+        "maxResults":{
+          "shape":"Integer",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "policyDocument":{"shape":"PolicyDocument"},
+        "policyType":{"shape":"PolicyType"}
+      }
+    },
+    "ValidatePolicyResponse":{
+      "type":"structure",
+      "required":["findings"],
+      "members":{
+        "findings":{"shape":"ValidatePolicyFindingList"},
+        "nextToken":{"shape":"Token"}
+      }
+    },
     "ValidationException":{
       "type":"structure",
       "required":[
@@ -1715,7 +2218,7 @@
     },
     "VpcId":{
       "type":"string",
-      "pattern":"^vpc-([0-9a-f]){8}(([0-9a-f]){9})?$"
+      "pattern":"vpc-([0-9a-f]){8}(([0-9a-f]){9})?"
     }
   }
 }
