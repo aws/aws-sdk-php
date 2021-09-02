@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.191.10 - 2021-09-02
 
 * `Aws\ACMPCA` - Private Certificate Authority Service now allows customers to enable an online certificate status protocol (OCSP) responder service on their private certificate authorities. Customers can also optionally configure a custom CNAME for their OCSP responder.
 * `Aws\AccessAnalyzer` - Updates service API, documentation, and paginators to support multi-region access points from Amazon S3.
