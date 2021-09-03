@@ -33,7 +33,9 @@ class ServiceBuilder
     {
         $property = lcfirst($fileType) . 'Path';
         $method = 'generateDefault' . $fileType;
-        if (!file_exists($this->{$property})) {
+        if (!file_exists($this->{$property})
+            && !file_exists(lcfirst($this->{$property}))
+        ) {
             if (!is_dir(dirname($this->{$property}))) {
                 mkdir(dirname($this->{$property}), 0755, true);
             }
