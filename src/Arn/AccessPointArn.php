@@ -41,7 +41,6 @@ class AccessPointArn extends Arn implements AccessPointArnInterface
      */
     protected static function validate(array $data)
     {
-        self::validateRegion($data, 'access point ARN');
         self::validateAccountId($data, 'access point ARN');
 
         if ($data['resource_type'] !== 'accesspoint') {

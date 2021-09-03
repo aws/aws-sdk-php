@@ -4,11 +4,14 @@ namespace Aws\S3;
 use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
+use Aws\Arn\AccessPointArn;
+use Aws\Arn\ArnParser;
 use Aws\AwsClient;
 use Aws\CacheInterface;
 use Aws\ClientResolver;
 use Aws\Command;
 use Aws\Exception\AwsException;
+use Aws\Exception\UnresolvedEndpointException;
 use Aws\HandlerList;
 use Aws\InputValidationMiddleware;
 use Aws\Middleware;
@@ -25,6 +28,7 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Client used to interact with **Amazon Simple Storage Service (Amazon S3)**.
@@ -286,6 +290,15 @@ class S3Client extends AwsClient implements S3ClientInterface
                     . ' \'@use_path_style_endpoint\' to true or false.',
                 'default' => false,
             ],
+            'disable_multiregion_access_points' => [
+                'type' => 'config',
+                'valid' => ['bool'],
+                'doc' => 'Set to true to disable the usage of'
+                    . ' multi region access points. These are enabled by default.'
+                    . ' Can be enabled or disabled on individual operations by setting'
+                    . ' \'@disable_multiregion_access_points\' to true or false.',
+                'default' => false,
+            ],
         ];
     }
 
@@ -334,6 +347,11 @@ class S3Client extends AwsClient implements S3ClientInterface
      *   Can be enabled or disabled on individual operations by setting
      *   '@use_path_style_endpoint\' to true or false. Note:
      *   you cannot use it together with an accelerate endpoint.
+     * - disable_multiregion_access_points: (bool) Set to true to disable
+     *   sending multi region requests.  They are enabled by default.
+     *   Can be enabled or disabled on individual operations by setting
+     *   '@disable_multiregion_access_points\' to true or false. Note:
+     *   you cannot use it together with an accelerate or dualstack endpoint.
      *
      * @param array $args
      */
@@ -381,6 +399,8 @@ class S3Client extends AwsClient implements S3ClientInterface
                     'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
                     'accelerate' => $this->getConfig('use_accelerate_endpoint'),
                     'path_style' => $this->getConfig('use_path_style_endpoint'),
+                    'disable_multiregion_access_points' =>
+                        $this->getConfig('disable_multiregion_access_points'),
                     'endpoint' => isset($args['endpoint'])
                         ? $args['endpoint']
                         : null

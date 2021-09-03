@@ -7,6 +7,7 @@ use Aws\Arn\ArnParser;
 use Aws\Arn\ObjectLambdaAccessPointArn;
 use Aws\Arn\Exception\InvalidArnException;
 use Aws\Arn\AccessPointArn as BaseAccessPointArn;
+use Aws\Arn\S3\MultiRegionAccessPointArn;
 use Aws\Arn\S3\OutpostsAccessPointArn;
 use Aws\Arn\S3\OutpostsArnInterface;
 use Aws\CommandInterface;
@@ -160,6 +161,15 @@ class BucketEndpointArnMiddleware
             $accesspointName = $arn->getResourceId();
         }
 
+        if ($arn instanceof MultiRegionAccessPointArn) {
+            $partition = $this->partitionProvider->getPartitionByName(
+                $arn->getPartition(),
+                's3'
+            );
+            $dnsSuffix = $partition->getDnsSuffix();
+            return "{$accesspointName}.accesspoint.s3-global.{$dnsSuffix}";
+        }
+
         $host = "{$accesspointName}-" . $arn->getAccountId();
         $fips = $this->isFipsPseudoRegion($this->region) ? "-fips" : "";
 
@@ -207,6 +217,21 @@ class BucketEndpointArnMiddleware
                     'Dualstack is currently not supported with S3 Outposts access'
                     . ' points. Please disable dualstack or do not supply an'
                     . ' access point ARN.');
+            }
+
+            if ($arn instanceof MultiRegionAccessPointArn) {
+                if ($this->config['disable_multiregion_access_points'] == true) {
+                    throw new UnresolvedEndpointException(
+                        'Multi-Region Access Point ARNs are disabled, but one was provided.  Please'
+                        . ' enable them or provide a different ARN.'
+                    );
+                }
+                if ($this->config['dual_stack'] == true) {
+                    throw new UnresolvedEndpointException(
+                        'Multi-Region Access Point ARNs do not currently support dual stack. Please'
+                        . ' disable dual stack or provide a different ARN.'
+                    );
+                }
             }
 
             // Accelerate is not supported with access points
@@ -278,15 +303,6 @@ class BucketEndpointArnMiddleware
                 throw new InvalidRegionException('The supplied ARN partition'
                     . " does not match the client's partition.");
             }
-            if ($clientPart->getName() !== $arnPart->getName()) {
-                throw new InvalidRegionException('The corresponding partition'
-                    . ' for the supplied ARN region does not match the'
-                    . " client's partition.");
-            }
-
-            // Ensure ARN region matches client region unless
-            // configured for using ARN region over client region
-            $this->validateMatchingRegion($arn);
 
             // Ensure it is not resolved to fips pseudo-region for S3 Outposts
             $this->validateFipsConfigurations($arn);
@@ -296,6 +312,34 @@ class BucketEndpointArnMiddleware
 
         throw new InvalidArnException('Provided ARN was not a valid S3 access'
             . ' point ARN or S3 Outposts access point ARN.');
+    }
+
+    /**
+     * @param CommandInterface $cmd
+     */
+    private function validateMrapConfig(CommandInterface $cmd)
+    {
+        if ($this->config['disable_multiregion_access_points'] == true) {
+            throw new S3Exception(
+                'Multi-Region Access Point ARNs are disabled, but one was provided.  Please'
+                . ' enable them or provide a different ARN.',
+                $cmd
+            );
+        }
+        if ($this->config['dual_stack'] == true) {
+            throw new S3Exception(
+                'Multi-Region Access Point ARNs do not currently support dual stack. Please'
+                . ' disable dual stack or provide a different ARN.',
+                $cmd
+            );
+        }
+        if ($this->config['accelerate'] == true) {
+            throw new S3Exception(
+                'Multi-Region Access Point ARNs do not currently support accelerate. Please'
+                . ' disable accelerate or provide a different ARN.',
+                $cmd
+            );
+        }
     }
 
     /**
