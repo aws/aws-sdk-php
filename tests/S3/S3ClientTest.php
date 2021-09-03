@@ -1701,6 +1701,9 @@ EOXML;
         $expectedEndpoint,
         $expectedHeaders
     ) {
+        if (!extension_loaded('awscrt')) {
+            $this->markTestSkipped();
+        }
         $client = new S3Client([
             'region' => $clientRegion,
             'use_arn_region' => $useArnRegion,
