@@ -8173,6 +8173,7 @@
           "shape":"Boolean",
           "locationName":"dryRun"
         },
+        "KeyType":{"shape":"KeyType"},
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
@@ -9558,7 +9559,6 @@
       "type":"structure",
       "required":["CidrBlock"],
       "members":{
-        "CidrBlock":{"shape":"String"},
         "AmazonProvidedIpv6CidrBlock":{
           "shape":"Boolean",
           "locationName":"amazonProvidedIpv6CidrBlock"
@@ -9577,7 +9577,8 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
-        }
+        },
+        "CidrBlock":{"shape":"String"}
       }
     },
     "CreateVpcResult":{
@@ -16441,6 +16442,7 @@
         "Enabled":{"shape":"Boolean"}
       }
     },
+    "EncryptionInTransitSupported":{"type":"boolean"},
     "EndDateType":{
       "type":"string",
       "enum":[
@@ -19217,7 +19219,9 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
-        }
+        },
+        "UsageOperation":{"shape":"String"},
+        "BootMode":{"shape":"BootModeValues"}
       }
     },
     "ImportImageResult":{
@@ -19282,6 +19286,10 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "UsageOperation":{
+          "shape":"String",
+          "locationName":"usageOperation"
         }
       }
     },
@@ -19347,6 +19355,14 @@
         "LicenseSpecifications":{
           "shape":"ImportImageLicenseSpecificationListResponse",
           "locationName":"licenseSpecifications"
+        },
+        "UsageOperation":{
+          "shape":"String",
+          "locationName":"usageOperation"
+        },
+        "BootMode":{
+          "shape":"BootModeValues",
+          "locationName":"bootMode"
         }
       }
     },
@@ -20487,7 +20503,8 @@
       "members":{
         "HttpTokens":{"shape":"HttpTokensState"},
         "HttpPutResponseHopLimit":{"shape":"Integer"},
-        "HttpEndpoint":{"shape":"InstanceMetadataEndpointState"}
+        "HttpEndpoint":{"shape":"InstanceMetadataEndpointState"},
+        "HttpProtocolIpv6":{"shape":"InstanceMetadataProtocolState"}
       }
     },
     "InstanceMetadataOptionsResponse":{
@@ -20508,6 +20525,10 @@
         "HttpEndpoint":{
           "shape":"InstanceMetadataEndpointState",
           "locationName":"httpEndpoint"
+        },
+        "HttpProtocolIpv6":{
+          "shape":"InstanceMetadataProtocolState",
+          "locationName":"httpProtocolIpv6"
         }
       }
     },
@@ -20516,6 +20537,13 @@
       "enum":[
         "pending",
         "applied"
+      ]
+    },
+    "InstanceMetadataProtocolState":{
+      "type":"string",
+      "enum":[
+        "disabled",
+        "enabled"
       ]
     },
     "InstanceMonitoring":{
@@ -21382,6 +21410,15 @@
         "m6gd.8xlarge",
         "m6gd.12xlarge",
         "m6gd.16xlarge",
+        "m6i.large",
+        "m6i.xlarge",
+        "m6i.2xlarge",
+        "m6i.4xlarge",
+        "m6i.8xlarge",
+        "m6i.12xlarge",
+        "m6i.16xlarge",
+        "m6i.24xlarge",
+        "m6i.32xlarge",
         "mac1.metal",
         "x2gd.medium",
         "x2gd.large",
@@ -21984,6 +22021,10 @@
           "shape":"String",
           "locationName":"keyName"
         },
+        "KeyType":{
+          "shape":"KeyType",
+          "locationName":"keyType"
+        },
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
@@ -21998,6 +22039,13 @@
       }
     },
     "KeyPairName":{"type":"string"},
+    "KeyType":{
+      "type":"string",
+      "enum":[
+        "rsa",
+        "ed25519"
+      ]
+    },
     "KmsKeyId":{"type":"string"},
     "LastError":{
       "type":"structure",
@@ -22471,6 +22519,10 @@
         "HttpEndpoint":{
           "shape":"LaunchTemplateInstanceMetadataEndpointState",
           "locationName":"httpEndpoint"
+        },
+        "HttpProtocolIpv6":{
+          "shape":"LaunchTemplateInstanceMetadataProtocolIpv6",
+          "locationName":"httpProtocolIpv6"
         }
       }
     },
@@ -22479,7 +22531,8 @@
       "members":{
         "HttpTokens":{"shape":"LaunchTemplateHttpTokensState"},
         "HttpPutResponseHopLimit":{"shape":"Integer"},
-        "HttpEndpoint":{"shape":"LaunchTemplateInstanceMetadataEndpointState"}
+        "HttpEndpoint":{"shape":"LaunchTemplateInstanceMetadataEndpointState"},
+        "HttpProtocolIpv6":{"shape":"LaunchTemplateInstanceMetadataProtocolIpv6"}
       }
     },
     "LaunchTemplateInstanceMetadataOptionsState":{
@@ -22487,6 +22540,13 @@
       "enum":[
         "pending",
         "applied"
+      ]
+    },
+    "LaunchTemplateInstanceMetadataProtocolIpv6":{
+      "type":"string",
+      "enum":[
+        "disabled",
+        "enabled"
       ]
     },
     "LaunchTemplateInstanceNetworkInterfaceSpecification":{
@@ -23893,7 +23953,8 @@
         "HttpTokens":{"shape":"HttpTokensState"},
         "HttpPutResponseHopLimit":{"shape":"Integer"},
         "HttpEndpoint":{"shape":"InstanceMetadataEndpointState"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "HttpProtocolIpv6":{"shape":"InstanceMetadataProtocolState"}
       }
     },
     "ModifyInstanceMetadataOptionsResult":{
@@ -23980,7 +24041,8 @@
         "RemoveEntries":{
           "shape":"RemovePrefixListEntries",
           "locationName":"RemoveEntry"
-        }
+        },
+        "MaxEntries":{"shape":"Integer"}
       }
     },
     "ModifyManagedPrefixListResult":{
@@ -25044,6 +25106,10 @@
         "EfaInfo":{
           "shape":"EfaInfo",
           "locationName":"efaInfo"
+        },
+        "EncryptionInTransitSupported":{
+          "shape":"EncryptionInTransitSupported",
+          "locationName":"encryptionInTransitSupported"
         }
       }
     },
