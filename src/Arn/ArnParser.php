@@ -3,6 +3,7 @@ namespace Aws\Arn;
 
 use Aws\Arn\S3\AccessPointArn as S3AccessPointArn;
 use Aws\Arn\ObjectLambdaAccessPointArn;
+use Aws\Arn\S3\MultiRegionAccessPointArn;
 use Aws\Arn\S3\OutpostsBucketArn;
 use Aws\Arn\S3\RegionalBucketArn;
 use Aws\Arn\S3\OutpostsAccessPointArn;
@@ -47,6 +48,9 @@ class ArnParser
             if (isset($resource[2]) && $resource[2] === 'accesspoint') {
                 return new OutpostsAccessPointArn($string);
             }
+        }
+        if (empty($data['region'])) {
+            return new MultiRegionAccessPointArn($string);
         }
         if ($resource[0] === 'accesspoint') {
             if ($data['service'] === 's3') {
