@@ -26,6 +26,7 @@ use GuzzleHttp\Psr7\Uri;
 use http\Exception\InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
+use Aws\Exception\UnresolvedEndpointException;
 
 /**
  * @covers Aws\S3\S3Client
@@ -1674,5 +1675,219 @@ EOXML;
 
         $this->assertSame(3, $counter);
     }
+
+    public function multiRegionSuccessProvider()
+    {
+
+        return [
+            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-east-1", null, null, false, "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
+            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", null, null, false, "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
+            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "aws-global", null, null, false, "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
+            ["arn:aws-cn:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "cn-north-1", null, null, false, "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com.cn", "x-amz-region-set:*"],
+            ["arn:aws:s3::123456789012:accesspoint:myendpoint", "us-west-2", null, null, false, "myendpoint.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
+            ["arn:aws:s3::123456789012:accesspoint:my.bucket", "us-west-2", null, null, false, "my.bucket.accesspoint.s3-global.amazonaws.com", "x-amz-region-set:*"],
+        ];
+    }
+
+    /**
+     * @dataProvider multiRegionSuccessProvider
+     */
+    public function testMrapParsing(
+        $bucketFieldInput,
+        $clientRegion,
+        $additionalFlags,
+        $useArnRegion,
+        $disableMraps,
+        $expectedEndpoint,
+        $expectedHeaders
+    ) {
+        if (!extension_loaded('awscrt')) {
+            $this->markTestSkipped();
+        }
+        $client = new S3Client([
+            'region' => $clientRegion,
+            'use_arn_region' => $useArnRegion,
+            'version' => 'latest',
+            'disable_multiregion_access_points' => $disableMraps,
+            'handler' => function (CommandInterface $cmd, RequestInterface $req)
+            use ($expectedEndpoint, $expectedHeaders) {
+                $this->assertSame(
+                    $expectedEndpoint,
+                    $req->getUri()->getHost()
+                );
+                $this->assertSame(
+                    '/Bar/Baz',
+                    $req->getUri()->getPath()
+                );
+                $expectedHeaders = explode(',', $expectedHeaders);
+                foreach ($expectedHeaders as $expectedHeader) {
+                    $header = explode(':', $expectedHeader);
+                    $this->assertSame($header[1], $req->getHeader($header[0])[0]);
+                }
+
+                return new Result([]);
+            },
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $bucketFieldInput,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $client->execute($command);
+    }
+
+    public function mrapExceptionTestProvider() {
+        return [
+            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", null, null, true, "Multi-Region Access Point ARNs are disabled, but one was provided.  Please enable them or provide a different ARN."],
+            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "aws-global", null, null, true, "Multi-Region Access Point ARNs are disabled, but one was provided.  Please enable them or provide a different ARN."],
+            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", "dualstack", null, false, "Multi-Region Access Point ARNs do not currently support dual stack. Please disable dual stack or provide a different ARN."],
+            ["arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap", "us-west-2", "accelerate", null, false, "Accelerate is currently not supported with access points. Please disable accelerate or do not supply an access point ARN."],
+            ["arn:aws:s3::123456789012:accesspoint:myendpoint", "us-west-2", null, null, true, "Multi-Region Access Point ARNs are disabled, but one was provided.  Please enable them or provide a different ARN."],
+        ];
+    }
+
+    /**
+     * @dataProvider mrapExceptionTestProvider
+     */
+    public function testMrapExceptions(
+        $bucketFieldInput,
+        $clientRegion,
+        $additionalFlags,
+        $useArnRegion,
+        $disableMraps,
+        $expectedException
+    ) {
+        $client = new S3Client([
+            'region' => $clientRegion,
+            'use_arn_region' => $useArnRegion,
+            'version' => 'latest',
+            'disable_multiregion_access_points' => $disableMraps,
+            'use_dual_stack_endpoint' => !empty($additionalFlags) && $additionalFlags == 'dualstack',
+            'use_accelerate_endpoint' => !empty($additionalFlags) && $additionalFlags == 'accelerate',
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $bucketFieldInput,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        try {
+            $client->execute($command);
+            self::fail("exception should have been thrown");
+        } catch (\Exception $e) {
+            self::assertTrue(
+                $e instanceof  UnresolvedEndpointException
+                || $e instanceof S3Exception
+            );
+            self::assertContains($expectedException, $e->getMessage());
+        }
+    }
+
+    /**
+     * @dataProvider AccessPointFailureProvider
+     * @param $bucketFieldInput
+     * @param $clientRegion
+     * @param $additionalFlags
+     * @param $useArnRegion
+     * @param $disableMraps
+     * @param $expectedException
+     */
+    public function testAccessPointFailures (
+        $bucketFieldInput,
+        $clientRegion,
+        $additionalFlags,
+        $useArnRegion,
+        $disableMraps,
+        $expectedException
+    ){
+        $client = new S3Client([
+            'region' => $clientRegion,
+            'use_arn_region' => $useArnRegion,
+            'version' => 'latest',
+            'disable_multiregion_access_points' => $disableMraps,
+            'use_dual_stack_endpoint' => !empty($additionalFlags) && $additionalFlags == 'dualstack',
+            'use_accelerate_endpoint' => !empty($additionalFlags) && $additionalFlags == 'accelerate',
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $bucketFieldInput,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        try {
+            $client->execute($command);
+            self::fail("exception should have been thrown");
+        } catch (\Exception $e) {
+            self::assertTrue(
+                $e instanceof  UnresolvedEndpointException
+                || $e instanceof S3Exception
+            );
+            self::assertContains($expectedException, $e->getMessage());
+        }
+    }
+    public function AccessPointFailureProvider()
+    {
+        return [
+            ["arn:aws:sqs:us-west-2:123456789012:someresource", "us-west-2", null, null, null, "Provided ARN was not a valid S3 access point ARN or S3 Outposts access point ARN."],
+            ["arn:aws:s3:us-west-2:123456789012:bucket_name:mybucket", "us-west-2", null, null, null, "Provided ARN was not a valid S3 access point ARN or S3 Outposts access point ARN."],
+            ["arn:aws:s3:us-west-2::accesspoint:myendpoint", "us-west-2", null, null, null, "The 5th component of a access point ARN is required, represents the account ID, and must be a valid host label.", ],
+            ["arn:aws:s3:us-west-2:123.45678.9012:accesspoint:mybucket", "us-west-2", null, null, null, "The 5th component of a access point ARN is required, represents the account ID, and must be a valid host label."],
+            ["arn:aws:s3:us-west-2:123456789012:accesspoint", "us-west-2", null, null, null, "The 7th component of an access point ARN represents the resource ID and must not be empty."],
+            ["arn:aws:s3:us-west-2:123456789012:accesspoint:*", "us-west-2", null, null, null, "Bucket parameter parsed as ARN and failed with: The resource ID in an access point ARN must be a valid host label value."],
+            ["arn:aws:s3:us-west-2:123456789012:accesspoint:my.bucket", "us-west-2", null, null, null, "Bucket parameter parsed as ARN and failed with: The resource ID in an access point ARN must be a valid host label value."],
+            ["arn:aws:s3:us-west-2:123456789012:accesspoint:mybucket:object:foo", "us-west-2", null, null, null, "The resource ID component of an access point ARN must not contain additional components (delimited by ':')."],
+        ];
+    }
+
+    public function testPresignedMrapSuccess (){
+        $arn = 'arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap';
+        $expectedEndpoint = "mfzwi23gnjvgw.mrap.accesspoint.s3-global.amazonaws.com";
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'disable_multiregion_access_points' => false,
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $arn,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        $presigned = $client->createPresignedRequest($command, time() + 10000);
+        self::assertSame($expectedEndpoint, $presigned->getUri()->getHost());
+        self::assertSame("*", $presigned->getHeader("x-amz-region-set")[0]);
+
+    }
+
+    public function testPresignedMrapFailure (){
+        $arn = 'arn:aws:s3::123456789012:accesspoint:mfzwi23gnjvgw.mrap';
+        $expectedException = "Multi-Region Access Point ARNs are disabled, but one was provided.  Please enable them or provide a different ARN.";
+        $client = new S3Client([
+            'region' => 'us-east-1',
+            'version' => 'latest',
+            'disable_multiregion_access_points' => true,
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $arn,
+                'Key' => 'Bar/Baz',
+            ]
+        );
+        try {
+            $client->createPresignedRequest($command, time() + 10000);
+            self::fail("exception should have been thrown");
+        } catch (\Exception $e) {
+            self::assertTrue($e instanceof  UnresolvedEndpointException);
+            self::assertContains($expectedException, $e->getMessage());
+        }
+    }
+
+
 
 }
