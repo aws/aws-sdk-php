@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKIdentity` - Documentation updates for Chime
+* `Aws\ChimeSDKMessaging` - Documentation updates for Chime
+* `Aws\CodeGuruReviewer` - Added support for CodeInconsistencies detectors
+* `Aws\FraudDetector` - Enhanced GetEventPrediction API response to include risk scores from imported SageMaker models
+* `Aws\Outposts` - This release adds a new API CreateOrder.
+* `Aws\S3` - Added support for S3 multi-region access points
+
 ## 3.191.10 - 2021-09-02
 
 * `Aws\ACMPCA` - Private Certificate Authority Service now allows customers to enable an online certificate status protocol (OCSP) responder service on their private certificate authorities. Customers can also optionally configure a custom CNAME for their OCSP responder.
