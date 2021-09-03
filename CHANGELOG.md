@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.192.0 - 2021-09-03
 
 * `Aws\ChimeSDKIdentity` - Documentation updates for Chime
 * `Aws\ChimeSDKMessaging` - Documentation updates for Chime
