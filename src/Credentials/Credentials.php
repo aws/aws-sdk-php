@@ -76,10 +76,20 @@ class Credentials implements CredentialsInterface, \Serializable
 
     public function serialize()
     {
-        return json_encode($this->toArray());
+        return $this->__serialize();
     }
 
     public function unserialize($serialized)
+    {
+        $this->__unserialize($serialized);
+    }
+
+    public function __serialize()
+    {
+        return json_encode($this->toArray());
+    }
+
+    public function __unserialize($serialized)
     {
         $data = json_decode($serialized, true);
 
