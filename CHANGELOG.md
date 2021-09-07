@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.192.1 - 2021-09-07
 
 * `Aws\EKS` - Adding RegisterCluster and DeregisterCluster operations, to support connecting external clusters to EKS.
 * `Aws\ElastiCache` - Doc only update for ElastiCache
