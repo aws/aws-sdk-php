@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Kafka` - Amazon MSK has added a new API that allows you to update the encrypting and authentication settings for an existing cluster.
+* `Aws\OpenSearchService` - Updated Configuration APIs for Amazon OpenSearch Service (successor to Amazon Elasticsearch Service)
+* `Aws\RAM` - A minor text-only update that fixes several customer issues.
+* `Aws\S3` - Option to overload parameter on multipart copy
+
 ## 3.192.1 - 2021-09-07
 
 * `Aws\EKS` - Adding RegisterCluster and DeregisterCluster operations, to support connecting external clusters to EKS.
