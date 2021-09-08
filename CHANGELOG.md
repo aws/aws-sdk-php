@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 3.193.0 - 2021-09-08
+
+* `Aws\Kafka` - Amazon MSK has added a new API that allows you to update the encrypting and authentication settings for an existing cluster.
+* `Aws\OpenSearchService` - Updated Configuration APIs for Amazon OpenSearch Service (successor to Amazon Elasticsearch Service)
+* `Aws\RAM` - A minor text-only update that fixes several customer issues.
+* `Aws\S3` - Option to overload parameter on multipart copy
+
+## 3.192.1 - 2021-09-07
+
+* `Aws\EKS` - Adding RegisterCluster and DeregisterCluster operations, to support connecting external clusters to EKS.
+* `Aws\ElastiCache` - Doc only update for ElastiCache
+* `Aws\ForecastService` - Predictor creation now supports selecting an accuracy metric to optimize in AutoML and hyperparameter optimization. This release adds additional accuracy metrics for predictors - AverageWeightedQuantileLoss, MAPE and MASE.
+* `Aws\MediaPackage` - SPEKE v2 support for live CMAF packaging type. SPEKE v2 is an upgrade to the existing SPEKE API to support multiple encryption keys, it supports live DASH currently.
+* `Aws\PrometheusService` - This release adds tagging support for Amazon Managed Service for Prometheus workspace.
+* `Aws\SSMContacts` - Added SDK examples for SSM-Contacts.
+* `Aws\XRay` - Updated references to AWS KMS keys and customer managed keys to reflect current terminology.
+
 ## 3.192.0 - 2021-09-03
 
 * `Aws\ChimeSDKIdentity` - Documentation updates for Chime

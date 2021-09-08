@@ -378,6 +378,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionNetworkManager(array $args = [])
  * @method \Aws\NimbleStudio\NimbleStudioClient createNimbleStudio(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNimbleStudio(array $args = [])
+ * @method \Aws\OpenSearchService\OpenSearchServiceClient createOpenSearchService(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionOpenSearchService(array $args = [])
  * @method \Aws\OpsWorks\OpsWorksClient createOpsWorks(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOpsWorks(array $args = [])
  * @method \Aws\OpsWorksCM\OpsWorksCMClient createOpsWorksCM(array $args = [])
@@ -559,7 +561,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.192.0';
+    const VERSION = '3.193.0';
 
     /** @var array Arguments for creating clients */
     private $args;
