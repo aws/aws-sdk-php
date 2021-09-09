@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.193.1 - 2021-09-09
 
 * `Aws\CodeGuruReviewer` - The Amazon CodeGuru Reviewer API now includes the RuleMetadata data object and a Severity attribute on a RecommendationSummary object. A RuleMetadata object contains information about a rule that generates a recommendation. Severity indicates how severe the issue associated with a recommendation is.
 * `Aws\EMR` - This release enables customers to login to EMR Studio using AWS Identity and Access Management (IAM) identities or identities in their Identity Provider (IdP) via IAM.
