@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.193.2 - 2021-09-10
 
 * `Aws\CloudFormation` - Doc only update for CloudFormation that fixes several customer-reported issues.
 * `Aws\ECR` - This release updates terminology around KMS keys.
