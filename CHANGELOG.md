@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.193.3 - 2021-09-13
 
 * `Aws\EC2` - Adds support for T3 instances on Amazon EC2 Dedicated Hosts.
 * `Aws\IoT` - AWS IoT Rules Engine adds OpenSearch action. The OpenSearch rule action lets you stream data from IoT sensors and applications to Amazon OpenSearch Service which is a successor to Amazon Elasticsearch Service.
