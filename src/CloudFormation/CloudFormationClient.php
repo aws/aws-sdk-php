@@ -112,6 +112,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise registerPublisherAsync(array $args = [])
  * @method \Aws\Result registerType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerTypeAsync(array $args = [])
+ * @method \Aws\Result rollbackStack(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise rollbackStackAsync(array $args = [])
  * @method \Aws\Result setStackPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise setStackPolicyAsync(array $args = [])
  * @method \Aws\Result setTypeConfiguration(array $args = [])

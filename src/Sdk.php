@@ -66,6 +66,10 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBudgets(array $args = [])
  * @method \Aws\Chime\ChimeClient createChime(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionChime(array $args = [])
+ * @method \Aws\ChimeSDKIdentity\ChimeSDKIdentityClient createChimeSDKIdentity(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionChimeSDKIdentity(array $args = [])
+ * @method \Aws\ChimeSDKMessaging\ChimeSDKMessagingClient createChimeSDKMessaging(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionChimeSDKMessaging(array $args = [])
  * @method \Aws\Cloud9\Cloud9Client createCloud9(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloud9(array $args = [])
  * @method \Aws\CloudDirectory\CloudDirectoryClient createCloudDirectory(array $args = [])
@@ -358,6 +362,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMediaStoreData(array $args = [])
  * @method \Aws\MediaTailor\MediaTailorClient createMediaTailor(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMediaTailor(array $args = [])
+ * @method \Aws\MemoryDB\MemoryDBClient createMemoryDB(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMemoryDB(array $args = [])
  * @method \Aws\MigrationHub\MigrationHubClient createMigrationHub(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHub(array $args = [])
  * @method \Aws\MigrationHubConfig\MigrationHubConfigClient createMigrationHubConfig(array $args = [])
@@ -372,6 +378,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionNetworkManager(array $args = [])
  * @method \Aws\NimbleStudio\NimbleStudioClient createNimbleStudio(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionNimbleStudio(array $args = [])
+ * @method \Aws\OpenSearchService\OpenSearchServiceClient createOpenSearchService(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionOpenSearchService(array $args = [])
  * @method \Aws\OpsWorks\OpsWorksClient createOpsWorks(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionOpsWorks(array $args = [])
  * @method \Aws\OpsWorksCM\OpsWorksCMClient createOpsWorksCM(array $args = [])
@@ -490,6 +498,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionSms(array $args = [])
  * @method \Aws\SnowBall\SnowBallClient createSnowBall(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSnowBall(array $args = [])
+ * @method \Aws\SnowDeviceManagement\SnowDeviceManagementClient createSnowDeviceManagement(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionSnowDeviceManagement(array $args = [])
  * @method \Aws\Sns\SnsClient createSns(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionSns(array $args = [])
  * @method \Aws\Sqs\SqsClient createSqs(array $args = [])
@@ -551,7 +561,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.187.2';
+    const VERSION = '3.193.4';
 
     /** @var array Arguments for creating clients */
     private $args;

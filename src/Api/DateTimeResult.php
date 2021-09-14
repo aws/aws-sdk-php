@@ -4,7 +4,6 @@ namespace Aws\Api;
 
 use Aws\Api\Parser\Exception\ParserException;
 use Exception;
-use \ReturnTypeWillChange;
 
 /**
  * DateTime overrides that make DateTime work more seamlessly as a string,
@@ -95,10 +94,9 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      *
      * @return mixed|string
      */
-    #[ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return (string) $this;
     }
 }
-

@@ -962,6 +962,9 @@ EOT;
             if (!empty($member['eventstream'])) {
                 return $this->getEventStreamMemberText($member);
             }
+            if (!empty($member['document'])) {
+                return $this->getDocumentText($member);
+            }
             return $this->memberLink($member->getName()) . ' structure';
         } elseif ($member instanceof ListShape) {
             switch ($member->getMember()['type']) {
@@ -1000,6 +1003,12 @@ EOT;
                     )
                 )
             );
+    }
+
+    private function getDocumentText(StructureShape $member)
+    {
+        return 'document (null|bool|string|numeric) or an (array|associative array)'
+        . ' whose members are all valid documents';
     }
 
     private function getPrimitivePhpType($member)

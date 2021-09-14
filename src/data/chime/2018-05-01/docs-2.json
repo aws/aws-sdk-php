@@ -7,7 +7,7 @@
     "AssociatePhoneNumbersWithVoiceConnectorGroup": "<p>Associates phone numbers with the specified Amazon Chime Voice Connector group.</p>",
     "AssociateSigninDelegateGroupsWithAccount": "<p>Associates the specified sign-in delegate groups with the specified Amazon Chime account.</p>",
     "BatchCreateAttendee": "<p> Creates up to 100 new attendees for an active Amazon Chime SDK meeting. For more information about the Amazon Chime SDK, see <a href=\"https://docs.aws.amazon.com/chime/latest/dg/meetings-sdk.html\">Using the Amazon Chime SDK</a> in the <i>Amazon Chime Developer Guide</i>. </p>",
-    "BatchCreateChannelMembership": "<p>Adds a specified number of users to a channel. </p>",
+    "BatchCreateChannelMembership": "<p>Adds a specified number of users to a channel.</p>",
     "BatchCreateRoomMembership": "<p>Adds up to 50 members to a chat room in an Amazon Chime Enterprise account. Members can be users or bots. The member role designates whether the member is a chat room administrator or a general chat room member.</p>",
     "BatchDeletePhoneNumber": "<p> Moves phone numbers into the <b>Deletion queue</b>. Phone numbers must be disassociated from any users or Amazon Chime Voice Connectors before they can be deleted. </p> <p> Phone numbers remain in the <b>Deletion queue</b> for 7 days before they are deleted permanently. </p>",
     "BatchSuspendUser": "<p>Suspends up to 50 users from a <code>Team</code> or <code>EnterpriseLWA</code> Amazon Chime account. For more information about different account types, see <a href=\"https://docs.aws.amazon.com/chime/latest/ag/manage-chime-account.html\">Managing Your Amazon Chime Accounts</a> in the <i>Amazon Chime Administration Guide</i>.</p> <p>Users suspended from a <code>Team</code> account are disassociated from the account,but they can continue to use Amazon Chime as free users. To remove the suspension from suspended <code>Team</code> account users, invite them to the <code>Team</code> account again. You can use the <a>InviteUsers</a> action to do so.</p> <p>Users suspended from an <code>EnterpriseLWA</code> account are immediately signed out of Amazon Chime and can no longer sign in. To remove the suspension from suspended <code>EnterpriseLWA</code> account users, use the <a>BatchUnsuspendUser</a> action.</p> <p> To sign out users without suspending them, use the <a>LogoutUser</a> action. </p>",
@@ -68,7 +68,7 @@
     "DeleteVoiceConnectorTerminationCredentials": "<p>Deletes the specified SIP credentials used by your equipment to authenticate during call termination.</p>",
     "DescribeAppInstance": "<p>Returns the full details of an <code>AppInstance</code>.</p>",
     "DescribeAppInstanceAdmin": "<p>Returns the full details of an <code>AppInstanceAdmin</code>.</p>",
-    "DescribeAppInstanceUser": "<p> Returns the full details of an <code>AppInstanceUser</code> . </p>",
+    "DescribeAppInstanceUser": "<p>Returns the full details of an <code>AppInstanceUser</code>.</p>",
     "DescribeChannel": "<p>Returns the full details of a channel in an Amazon Chime <code>AppInstance</code>.</p> <note> <p>The <code>x-amz-chime-bearer</code> request header is mandatory. Use the <code>AppInstanceUserArn</code> of the user that makes the API call as the value in the header.</p> </note>",
     "DescribeChannelBan": "<p>Returns the full details of a channel ban.</p> <note> <p>The <code>x-amz-chime-bearer</code> request header is mandatory. Use the <code>AppInstanceUserArn</code> of the user that makes the API call as the value in the header.</p> </note>",
     "DescribeChannelMembership": "<p>Returns the full details of a user's channel membership.</p> <note> <p>The <code>x-amz-chime-bearer</code> request header is mandatory. Use the <code>AppInstanceUserArn</code> of the user that makes the API call as the value in the header.</p> </note>",
@@ -114,7 +114,7 @@
     "InviteUsers": "<p>Sends email to a maximum of 50 users, inviting them to the specified Amazon Chime <code>Team</code> account. Only <code>Team</code> account types are currently supported for this action.</p>",
     "ListAccounts": "<p>Lists the Amazon Chime accounts under the administrator's AWS account. You can filter accounts by account name prefix. To find out which Amazon Chime account a user belongs to, you can filter by the user's email address, which returns one account result.</p>",
     "ListAppInstanceAdmins": "<p>Returns a list of the administrators in the <code>AppInstance</code>.</p>",
-    "ListAppInstanceUsers": "<p> List all <code>AppInstanceUsers</code> created under a single <code>AppInstance</code>. </p>",
+    "ListAppInstanceUsers": "<p>List all <code>AppInstanceUsers</code> created under a single <code>AppInstance</code>. </p>",
     "ListAppInstances": "<p>Lists all Amazon Chime <code>AppInstance</code>s created under a single AWS account.</p>",
     "ListAttendeeTags": "<p>Lists the tags applied to an Amazon Chime SDK attendee resource.</p>",
     "ListAttendees": "<p> Lists the attendees for the specified Amazon Chime SDK meeting. For more information about the Amazon Chime SDK, see <a href=\"https://docs.aws.amazon.com/chime/latest/dg/meetings-sdk.html\">Using the Amazon Chime SDK</a> in the <i>Amazon Chime Developer Guide</i>. </p>",
@@ -163,7 +163,7 @@
     "RestorePhoneNumber": "<p>Moves a phone number from the <b>Deletion queue</b> back into the phone number <b>Inventory</b>.</p>",
     "SearchAvailablePhoneNumbers": "<p>Searches for phone numbers that can be ordered. For US numbers, provide at least one of the following search filters: <code>AreaCode</code>, <code>City</code>, <code>State</code>, or <code>TollFreePrefix</code>. If you provide <code>City</code>, you must also provide <code>State</code>. Numbers outside the US only support the <code>PhoneNumberType</code> filter, which you must use.</p>",
     "SendChannelMessage": "<p>Sends a message to a particular channel that the member is a part of.</p> <note> <p>The <code>x-amz-chime-bearer</code> request header is mandatory. Use the <code>AppInstanceUserArn</code> of the user that makes the API call as the value in the header.</p> <p>Also, <code>STANDARD</code> messages can contain 4KB of data and the 1KB of metadata. <code>CONTROL</code> messages can contain 30 bytes of data and no metadata.</p> </note>",
-    "StartMeetingTranscription": "<p>Start transcription for the specified <code>meetingId</code>. </p>",
+    "StartMeetingTranscription": "<p>Starts transcription for the specified <code>meetingId</code>. </p>",
     "StopMeetingTranscription": "<p>Stops transcription for the specified <code>meetingId</code>.</p>",
     "TagAttendee": "<p>Applies the specified tags to the specified Amazon Chime SDK attendee.</p>",
     "TagMeeting": "<p>Applies the specified tags to the specified Amazon Chime SDK meeting.</p>",
@@ -337,7 +337,7 @@
     "AppInstanceUserMembershipSummary": {
       "base": "<p>Summary of the membership details of an <code>AppInstanceUser</code>.</p>",
       "refs": {
-        "ChannelMembershipForAppInstanceUserSummary$AppInstanceUserMembershipSummary": "<p>Returns the channel membership data for an <code>AppInstance</code>.</p>"
+        "ChannelMembershipForAppInstanceUserSummary$AppInstanceUserMembershipSummary": null
       }
     },
     "AppInstanceUserSummary": {
@@ -555,7 +555,7 @@
         "AlexaForBusinessMetadata$IsAlexaForBusinessEnabled": "<p>Starts or stops Alexa for Business.</p>",
         "CreateVoiceConnectorRequest$RequireEncryption": "<p>When enabled, requires encryption for the Amazon Chime Voice Connector.</p>",
         "LoggingConfiguration$EnableSIPLogs": "<p>When true, enables SIP message logs for sending to Amazon CloudWatch Logs.</p>",
-        "Origination$Disabled": "<p>When origination settings are disabled, inbound calls are not enabled for your Amazon Chime Voice Connector.</p>",
+        "Origination$Disabled": "<p>When origination settings are disabled, inbound calls are not enabled for your Amazon Chime Voice Connector. This parameter is not required, but you must specify this parameter or <code>Routes</code>.</p>",
         "Proxy$Disabled": "<p>When true, stops proxy sessions from being created on the specified Amazon Chime Voice Connector.</p>",
         "PutVoiceConnectorProxyRequest$Disabled": "<p>When true, stops proxy sessions from being created on the specified Amazon Chime Voice Connector.</p>",
         "SipMediaApplicationLoggingConfiguration$EnableSipMediaApplicationMessageLogs": "<p>Enables application message logs for the SIP media application.</p>",
@@ -798,7 +798,7 @@
       "base": "<p>Summary of the details of a <code>Channel</code>.</p>",
       "refs": {
         "ChannelMembershipForAppInstanceUserSummary$ChannelSummary": null,
-        "ChannelModeratedByAppInstanceUserSummary$ChannelSummary": null,
+        "ChannelModeratedByAppInstanceUserSummary$ChannelSummary": "<p>Summary of the details of a <code>Channel</code>.</p>",
         "ChannelSummaryList$member": null
       }
     },
@@ -923,7 +923,7 @@
         "SendChannelMessageRequest$ChimeBearer": "<p>The <code>AppInstanceUserArn</code> of the user that makes the API call.</p>",
         "SendChannelMessageResponse$ChannelArn": "<p>The ARN of the channel.</p>",
         "UpdateAppInstanceRequest$AppInstanceArn": "<p>The ARN of the <code>AppInstance</code>.</p>",
-        "UpdateAppInstanceResponse$AppInstanceArn": "<p>The ARN of the <code>AppInstance</code>.</p>",
+        "UpdateAppInstanceResponse$AppInstanceArn": "<p>The ARN of the <code>AppInstance</code>. </p>",
         "UpdateAppInstanceUserRequest$AppInstanceUserArn": "<p>The ARN of the <code>AppInstanceUser</code>.</p>",
         "UpdateAppInstanceUserResponse$AppInstanceUserArn": "<p>The ARN of the <code>AppInstanceUser</code>.</p>",
         "UpdateChannelMessageRequest$ChannelArn": "<p>The ARN of the channel.</p>",
@@ -1618,7 +1618,7 @@
     "EngineTranscribeMedicalSettings": {
       "base": "<p>Settings specific to the Amazon Transcribe Medical engine.</p>",
       "refs": {
-        "TranscriptionConfiguration$EngineTranscribeMedicalSettings": "<p>The transcription configuration settings passed to Amazon Transcribe.</p>"
+        "TranscriptionConfiguration$EngineTranscribeMedicalSettings": "<p>The transcription configuration settings passed to Amazon Transcribe Medical.</p>"
       }
     },
     "EngineTranscribeSettings": {
@@ -2048,7 +2048,7 @@
       "refs": {
         "AppInstanceAdmin$Admin": "<p>The <code>AppInstanceAdmin</code> data.</p>",
         "AppInstanceAdminSummary$Admin": "<p>The details of the <code>AppInstanceAdmin</code>.</p>",
-        "BatchChannelMemberships$InvitedBy": null,
+        "BatchChannelMemberships$InvitedBy": "<p>The identifier of the member who invited another member.</p>",
         "Channel$CreatedBy": "<p>The <code>AppInstanceUser</code> who created the channel.</p>",
         "ChannelBan$Member": "<p>The member being banned from the channel.</p>",
         "ChannelBan$CreatedBy": "<p>The <code>AppInstanceUser</code> who created the ban.</p>",
@@ -2937,7 +2937,7 @@
       }
     },
     "Origination": {
-      "base": "<p>Origination settings enable your SIP hosts to receive inbound calls using your Amazon Chime Voice Connector.</p>",
+      "base": "<p>Origination settings enable your SIP hosts to receive inbound calls using your Amazon Chime Voice Connector.</p> <note> <p>The parameters listed below are not required, but you must use at least one. </p> </note>",
       "refs": {
         "GetVoiceConnectorOriginationResponse$Origination": "<p>The origination setting details.</p>",
         "PutVoiceConnectorOriginationRequest$Origination": "<p>The origination setting details to add.</p>",
@@ -2945,7 +2945,7 @@
       }
     },
     "OriginationRoute": {
-      "base": "<p>Origination routes define call distribution properties for your SIP hosts to receive inbound calls using your Amazon Chime Voice Connector. Limit: Ten origination routes for each Amazon Chime Voice Connector.</p>",
+      "base": "<p>Origination routes define call distribution properties for your SIP hosts to receive inbound calls using your Amazon Chime Voice Connector. Limit: Ten origination routes for each Amazon Chime Voice Connector.</p> <note> <p>The parameters listed below are not required, but you must use at least one. </p> </note>",
       "refs": {
         "OriginationRouteList$member": null
       }
@@ -2953,7 +2953,7 @@
     "OriginationRouteList": {
       "base": null,
       "refs": {
-        "Origination$Routes": "<p>The call distribution properties defined for your SIP hosts. Valid range: Minimum value of 1. Maximum value of 20.</p>"
+        "Origination$Routes": "<p>The call distribution properties defined for your SIP hosts. Valid range: Minimum value of 1. Maximum value of 20. This parameter is not required, but you must specify this parameter or <code>Disabled</code>.</p>"
       }
     },
     "OriginationRoutePriority": {
@@ -3493,6 +3493,8 @@
         "SMAUpdateCallArgumentsMap$key": null,
         "SMAUpdateCallArgumentsMap$value": null,
         "SensitiveStringList$member": null,
+        "SipHeadersMap$key": null,
+        "SipHeadersMap$value": null,
         "UpdateRoomRequest$Name": "<p>The room name.</p>",
         "User$PrimaryProvisionedNumber": "<p>The primary phone number associated with the user.</p>",
         "User$DisplayName": "<p>The display name of the user.</p>"
@@ -3532,6 +3534,12 @@
       "base": null,
       "refs": {
         "SipRuleTargetApplication$Priority": "<p>Priority of the SIP media application in the target list.</p>"
+      }
+    },
+    "SipHeadersMap": {
+      "base": null,
+      "refs": {
+        "CreateSipMediaApplicationCallRequest$SipHeaders": "<p>The SIP headers added to an outbound call leg.</p>"
       }
     },
     "SipMediaApplication": {
@@ -3913,7 +3921,7 @@
     "TranscribeMedicalRegion": {
       "base": null,
       "refs": {
-        "EngineTranscribeMedicalSettings$Region": "<p>The AWS Region passed to Amazon Transcribe Medical. If you don't specify a Region, Amazon Chime uses the Region closest to the meeting's Region.</p>"
+        "EngineTranscribeMedicalSettings$Region": "<p>The AWS Region passed to Amazon Transcribe Medical. If you don't specify a Region, Amazon Chime uses the meeting's Region.</p>"
       }
     },
     "TranscribeMedicalSpecialty": {
@@ -3931,7 +3939,7 @@
     "TranscribeRegion": {
       "base": null,
       "refs": {
-        "EngineTranscribeSettings$Region": "<p>The AWS Region passed to Amazon Transcribe. If you don't specify a Region, Amazon Chime uses the Region closest to the meeting's Region.</p>"
+        "EngineTranscribeSettings$Region": "<p>The AWS Region passed to Amazon Transcribe. If you don't specify a Region, Amazon Chime uses the meeting's Region.</p>"
       }
     },
     "TranscribeVocabularyFilterMethod": {

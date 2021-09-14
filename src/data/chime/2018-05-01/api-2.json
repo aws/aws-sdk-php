@@ -640,6 +640,7 @@
         {"shape":"ResourceLimitExceededException"},
         {"shape":"ThrottledClientException"},
         {"shape":"UnauthorizedClientException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -4889,7 +4890,8 @@
           "shape":"NonEmptyString",
           "location":"uri",
           "locationName":"sipMediaApplicationId"
-        }
+        },
+        "SipHeaders":{"shape":"SipHeadersMap"}
       }
     },
     "CreateSipMediaApplicationCallResponse":{
@@ -8575,6 +8577,13 @@
       "type":"integer",
       "min":1
     },
+    "SipHeadersMap":{
+      "type":"map",
+      "key":{"shape":"SensitiveString"},
+      "value":{"shape":"SensitiveString"},
+      "max":20,
+      "min":0
+    },
     "SipMediaApplication":{
       "type":"structure",
       "members":{
@@ -8893,7 +8902,8 @@
         "us-west-2",
         "ap-southeast-2",
         "ca-central-1",
-        "eu-west-1"
+        "eu-west-1",
+        "auto"
       ]
     },
     "TranscribeMedicalSpecialty":{
@@ -8927,7 +8937,8 @@
         "eu-central-1",
         "eu-west-1",
         "eu-west-2",
-        "sa-east-1"
+        "sa-east-1",
+        "auto"
       ]
     },
     "TranscribeVocabularyFilterMethod":{
