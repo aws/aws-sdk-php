@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.193.4 - 2021-09-14
 
 * `Aws\Chime` - Adds support for SipHeaders parameter for CreateSipMediaApplicationCall.
 * `Aws\Comprehend` - Amazon Comprehend now allows you to train and run PDF and Word documents for custom entity recognition. With PDF and Word formats, you can extract information from documents containing headers, lists and tables.
