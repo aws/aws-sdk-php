@@ -68,7 +68,7 @@ class ResultPaginator implements \Iterator
      */
     public function each(callable $handleResult)
     {
-        return Promise\coroutine::of(function () use ($handleResult) {
+        return Promise\Coroutine::of(function () use ($handleResult) {
             $nextToken = null;
             do {
                 $command = $this->createNextCommand($this->args, $nextToken);

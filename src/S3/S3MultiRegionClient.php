@@ -255,7 +255,7 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
                     $command['@region'] = $region;
                 }
 
-                return Promise\coroutine::of(function () use (
+                return Promise\Coroutine::of(function () use (
                     $handler,
                     $command,
                     $cacheKey
