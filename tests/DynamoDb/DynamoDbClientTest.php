@@ -173,7 +173,7 @@ class DynamoDbClientTest extends TestCase
                 $this->assertSame(0, $options['delay']);
             }
 
-            return \GuzzleHttp\Promise\promise_for(array_shift($queue));
+            return \GuzzleHttp\Promise\Create::promiseFor(array_shift($queue));
         };
 
         $client = new DynamoDbClient([

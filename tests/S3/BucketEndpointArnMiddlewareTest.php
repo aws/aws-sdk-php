@@ -626,7 +626,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint/myobject',
                     $req->getHeader('x-amz-copy-source')[0]
                 );
-                return Promise\promise_for(new Result([]));
+                return Promise\Create::promiseFor(new Result([]));
             }
         ]);
         $command = $s3->getCommand(

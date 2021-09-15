@@ -144,7 +144,7 @@ class ObjectCopierTest extends TestCase
 
                 }
 
-                return Promise\promise_for(new Result([]));
+                return Promise\Create::promiseFor(new Result([]));
             }
         ));
         $this->addMockResults($client, $mockedResults);
@@ -306,9 +306,9 @@ class ObjectCopierTest extends TestCase
             ->will($this->returnValueMap([
                 [
                     $headObjectCommand,
-                    Promise\promise_for(new Result(['ContentLength' => 1024 * 1024 * 6]))
+                    Promise\Create::promiseFor(new Result(['ContentLength' => 1024 * 1024 * 6]))
                 ],
-                [$copyObjectCommand, Promise\promise_for(new Result)],
+                [$copyObjectCommand, Promise\Create::promiseFor(new Result)],
             ]));
 
         (new ObjectCopier(

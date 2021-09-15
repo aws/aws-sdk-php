@@ -136,7 +136,7 @@ class BlockingContext extends \PHPUnit_Framework_Assert implements Context, Snip
      */
     public function iCanWaitOnAllPromises()
     {
-        Promise\all($this->promises)
+        promise\Utils::all($this->promises)
             ->wait();
     }
 

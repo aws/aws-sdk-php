@@ -737,7 +737,7 @@ class RetryMiddlewareV2Test extends TestCase
                 $this->assertSame(9999, $command['@http']['delay']);
             }
             $attempts++;
-            return \GuzzleHttp\Promise\rejection_for(
+            return \GuzzleHttp\Promise\Create::rejectionFor(
                 new AwsException(
                     'foo',
                     $command,

@@ -345,7 +345,7 @@ class ClientResolverTest extends TestCase
             'service'     => 'sqs',
             'region'      => 'x',
             'credentials' => function () use ($c) {
-                return \GuzzleHttp\Promise\promise_for($c);
+                return \GuzzleHttp\Promise\Create::promiseFor($c);
             },
             'version'     => 'latest'
         ], new HandlerList());
