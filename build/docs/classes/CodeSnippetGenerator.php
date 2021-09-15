@@ -157,9 +157,4 @@ class CodeSnippetGenerator
 
         return '';
     }
-
-    private function isAssociative(array $arr)
-    {
-        return $arr = array_values($arr);
-    }
 }

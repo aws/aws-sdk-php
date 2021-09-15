@@ -5,6 +5,8 @@ use Aws\AwsClient;
 
 /**
  * This client is used to interact with the **AWS Outposts** service.
+ * @method \Aws\Result createOrder(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createOrderAsync(array $args = [])
  * @method \Aws\Result createOutpost(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createOutpostAsync(array $args = [])
  * @method \Aws\Result deleteOutpost(array $args = [])

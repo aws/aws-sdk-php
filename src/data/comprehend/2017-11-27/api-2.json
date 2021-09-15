@@ -676,6 +676,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceUnavailableException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -691,6 +692,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -708,6 +710,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ResourceUnavailableException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -723,6 +726,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -738,6 +742,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -753,6 +758,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -768,6 +774,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -783,6 +790,7 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -963,6 +971,13 @@
       "min":1,
       "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9])*"
     },
+    "AugmentedManifestsDocumentTypeFormat":{
+      "type":"string",
+      "enum":[
+        "PLAIN_TEXT_DOCUMENT",
+        "SEMI_STRUCTURED_DOCUMENT"
+      ]
+    },
     "AugmentedManifestsListItem":{
       "type":"structure",
       "required":[
@@ -971,7 +986,10 @@
       ],
       "members":{
         "S3Uri":{"shape":"S3Uri"},
-        "AttributeNames":{"shape":"AttributeNamesList"}
+        "AttributeNames":{"shape":"AttributeNamesList"},
+        "AnnotationDataS3Uri":{"shape":"S3Uri"},
+        "SourceDocumentsS3Uri":{"shape":"S3Uri"},
+        "DocumentType":{"shape":"AugmentedManifestsDocumentTypeFormat"}
       }
     },
     "BatchDetectDominantLanguageItemResult":{
@@ -1633,6 +1651,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -1653,7 +1672,7 @@
     "DocumentClassifierArn":{
       "type":"string",
       "max":256,
-      "pattern":"arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document-classifier/[a-zA-Z0-9](-*[a-zA-Z0-9])*"
+      "pattern":"arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:document-classifier/[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?"
     },
     "DocumentClassifierAugmentedManifestsList":{
       "type":"list",
@@ -1734,6 +1753,36 @@
         "Score":{"shape":"Float"}
       }
     },
+    "DocumentReadAction":{
+      "type":"string",
+      "enum":[
+        "TEXTRACT_DETECT_DOCUMENT_TEXT",
+        "TEXTRACT_ANALYZE_DOCUMENT"
+      ]
+    },
+    "DocumentReadFeatureTypes":{
+      "type":"string",
+      "enum":[
+        "TABLES",
+        "FORMS"
+      ]
+    },
+    "DocumentReadMode":{
+      "type":"string",
+      "enum":[
+        "SERVICE_DEFAULT",
+        "FORCE_DOCUMENT_READ_ACTION"
+      ]
+    },
+    "DocumentReaderConfig":{
+      "type":"structure",
+      "required":["DocumentReadAction"],
+      "members":{
+        "DocumentReadAction":{"shape":"DocumentReadAction"},
+        "DocumentReadMode":{"shape":"DocumentReadMode"},
+        "FeatureTypes":{"shape":"ListOfDocumentReadFeatureTypes"}
+      }
+    },
     "DominantLanguage":{
       "type":"structure",
       "members":{
@@ -1754,6 +1803,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -1821,6 +1871,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -1866,7 +1917,7 @@
     "EntityRecognizerArn":{
       "type":"string",
       "max":256,
-      "pattern":"arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity-recognizer/[a-zA-Z0-9](-*[a-zA-Z0-9])*"
+      "pattern":"arn:aws(-[^:]+)?:comprehend:[a-zA-Z0-9-]*:[0-9]{12}:entity-recognizer/[a-zA-Z0-9](-*[a-zA-Z0-9])*(/version/[a-zA-Z0-9](-*[a-zA-Z0-9])*)?"
     },
     "EntityRecognizerAugmentedManifestsList":{
       "type":"list",
@@ -2028,6 +2079,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -2060,7 +2112,8 @@
       "required":["S3Uri"],
       "members":{
         "S3Uri":{"shape":"S3Uri"},
-        "InputFormat":{"shape":"InputFormat"}
+        "InputFormat":{"shape":"InputFormat"},
+        "DocumentReaderConfig":{"shape":"DocumentReaderConfig"}
       }
     },
     "InputFormat":{
@@ -2145,6 +2198,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -2164,7 +2218,8 @@
     },
     "KmsKeyId":{
       "type":"string",
-      "max":2048
+      "max":2048,
+      "pattern":".*"
     },
     "KmsKeyValidationException":{
       "type":"structure",
@@ -2340,6 +2395,12 @@
       "type":"list",
       "member":{"shape":"BatchDetectSyntaxItemResult"}
     },
+    "ListOfDocumentReadFeatureTypes":{
+      "type":"list",
+      "member":{"shape":"DocumentReadFeatureTypes"},
+      "max":2,
+      "min":1
+    },
     "ListOfDominantLanguages":{
       "type":"list",
       "member":{"shape":"DominantLanguage"}
@@ -2510,6 +2571,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -2652,6 +2714,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},
@@ -2706,13 +2769,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartDocumentClassificationJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2733,13 +2798,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartDominantLanguageDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2763,13 +2830,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartEntitiesDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2792,13 +2861,15 @@
           "shape":"ClientRequestTokenString",
           "idempotencyToken":true
         },
-        "TargetEventTypes":{"shape":"TargetEventTypes"}
+        "TargetEventTypes":{"shape":"TargetEventTypes"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartEventsDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2821,13 +2892,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartKeyPhrasesDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2851,13 +2924,15 @@
         "ClientRequestToken":{
           "shape":"ClientRequestTokenString",
           "idempotencyToken":true
-        }
+        },
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartPiiEntitiesDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2880,13 +2955,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartSentimentDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -2908,13 +2985,15 @@
           "idempotencyToken":true
         },
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
-        "VpcConfig":{"shape":"VpcConfig"}
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
       }
     },
     "StartTopicsDetectionJobResponse":{
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobStatus":{"shape":"JobStatus"}
       }
     },
@@ -3152,6 +3231,7 @@
       "type":"structure",
       "members":{
         "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
         "JobName":{"shape":"JobName"},
         "JobStatus":{"shape":"JobStatus"},
         "Message":{"shape":"AnyLengthString"},

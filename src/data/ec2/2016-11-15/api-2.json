@@ -772,6 +772,15 @@
       "input":{"shape":"CreateSubnetRequest"},
       "output":{"shape":"CreateSubnetResult"}
     },
+    "CreateSubnetCidrReservation":{
+      "name":"CreateSubnetCidrReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateSubnetCidrReservationRequest"},
+      "output":{"shape":"CreateSubnetCidrReservationResult"}
+    },
     "CreateTags":{
       "name":"CreateTags",
       "http":{
@@ -1250,6 +1259,15 @@
         "requestUri":"/"
       },
       "input":{"shape":"DeleteSubnetRequest"}
+    },
+    "DeleteSubnetCidrReservation":{
+      "name":"DeleteSubnetCidrReservation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteSubnetCidrReservationRequest"},
+      "output":{"shape":"DeleteSubnetCidrReservationResult"}
     },
     "DeleteTags":{
       "name":"DeleteTags",
@@ -3108,6 +3126,15 @@
       "input":{"shape":"GetSerialConsoleAccessStatusRequest"},
       "output":{"shape":"GetSerialConsoleAccessStatusResult"}
     },
+    "GetSubnetCidrReservations":{
+      "name":"GetSubnetCidrReservations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetSubnetCidrReservationsRequest"},
+      "output":{"shape":"GetSubnetCidrReservationsResult"}
+    },
     "GetTransitGatewayAttachmentPropagations":{
       "name":"GetTransitGatewayAttachmentPropagations",
       "http":{
@@ -4892,7 +4919,8 @@
       "enum":[
         "i386",
         "x86_64",
-        "arm64"
+        "arm64",
+        "x86_64_mac"
       ]
     },
     "ArnList":{
@@ -4914,6 +4942,11 @@
           "shape":"Ipv6AddressList",
           "locationName":"ipv6Addresses"
         },
+        "Ipv6PrefixCount":{"shape":"Integer"},
+        "Ipv6Prefixes":{
+          "shape":"IpPrefixList",
+          "locationName":"Ipv6Prefix"
+        },
         "NetworkInterfaceId":{
           "shape":"NetworkInterfaceId",
           "locationName":"networkInterfaceId"
@@ -4926,6 +4959,10 @@
         "AssignedIpv6Addresses":{
           "shape":"Ipv6AddressList",
           "locationName":"assignedIpv6Addresses"
+        },
+        "AssignedIpv6Prefixes":{
+          "shape":"IpPrefixList",
+          "locationName":"assignedIpv6PrefixSet"
         },
         "NetworkInterfaceId":{
           "shape":"String",
@@ -4952,7 +4989,12 @@
         "SecondaryPrivateIpAddressCount":{
           "shape":"Integer",
           "locationName":"secondaryPrivateIpAddressCount"
-        }
+        },
+        "Ipv4Prefixes":{
+          "shape":"IpPrefixList",
+          "locationName":"Ipv4Prefix"
+        },
+        "Ipv4PrefixCount":{"shape":"Integer"}
       }
     },
     "AssignPrivateIpAddressesResult":{
@@ -4965,6 +5007,10 @@
         "AssignedPrivateIpAddresses":{
           "shape":"AssignedPrivateIpAddressList",
           "locationName":"assignedPrivateIpAddressesSet"
+        },
+        "AssignedIpv4Prefixes":{
+          "shape":"Ipv4PrefixesList",
+          "locationName":"assignedIpv4PrefixSet"
         }
       }
     },
@@ -8128,6 +8174,7 @@
           "shape":"Boolean",
           "locationName":"dryRun"
         },
+        "KeyType":{"shape":"KeyType"},
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
@@ -8478,6 +8525,16 @@
           "shape":"Integer",
           "locationName":"secondaryPrivateIpAddressCount"
         },
+        "Ipv4Prefixes":{
+          "shape":"Ipv4PrefixList",
+          "locationName":"Ipv4Prefix"
+        },
+        "Ipv4PrefixCount":{"shape":"Integer"},
+        "Ipv6Prefixes":{
+          "shape":"Ipv6PrefixList",
+          "locationName":"Ipv6Prefix"
+        },
+        "Ipv6PrefixCount":{"shape":"Integer"},
         "InterfaceType":{"shape":"NetworkInterfaceCreationType"},
         "SubnetId":{
           "shape":"SubnetId",
@@ -8841,11 +8898,39 @@
         }
       }
     },
+    "CreateSubnetCidrReservationRequest":{
+      "type":"structure",
+      "required":[
+        "SubnetId",
+        "Cidr",
+        "ReservationType"
+      ],
+      "members":{
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "SubnetId":{"shape":"SubnetId"},
+        "Cidr":{"shape":"String"},
+        "ReservationType":{"shape":"SubnetCidrReservationType"},
+        "Description":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateSubnetCidrReservationResult":{
+      "type":"structure",
+      "members":{
+        "SubnetCidrReservation":{
+          "shape":"SubnetCidrReservation",
+          "locationName":"subnetCidrReservation"
+        }
+      }
+    },
     "CreateSubnetRequest":{
       "type":"structure",
       "required":[
-        "CidrBlock",
-        "VpcId"
+        "VpcId",
+        "CidrBlock"
       ],
       "members":{
         "TagSpecifications":{
@@ -8854,14 +8939,14 @@
         },
         "AvailabilityZone":{"shape":"String"},
         "AvailabilityZoneId":{"shape":"String"},
-        "CidrBlock":{"shape":"String"},
         "Ipv6CidrBlock":{"shape":"String"},
         "OutpostArn":{"shape":"String"},
         "VpcId":{"shape":"VpcId"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
-        }
+        },
+        "CidrBlock":{"shape":"String"}
       }
     },
     "CreateSubnetResult":{
@@ -9322,7 +9407,11 @@
           "locationName":"TagSpecification"
         },
         "MultiAttachEnabled":{"shape":"Boolean"},
-        "Throughput":{"shape":"Integer"}
+        "Throughput":{"shape":"Integer"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
       }
     },
     "CreateVpcEndpointConnectionNotificationRequest":{
@@ -10371,6 +10460,23 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
+        }
+      }
+    },
+    "DeleteSubnetCidrReservationRequest":{
+      "type":"structure",
+      "required":["SubnetCidrReservationId"],
+      "members":{
+        "SubnetCidrReservationId":{"shape":"SubnetCidrReservationId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteSubnetCidrReservationResult":{
+      "type":"structure",
+      "members":{
+        "DeletedSubnetCidrReservation":{
+          "shape":"SubnetCidrReservation",
+          "locationName":"deletedSubnetCidrReservation"
         }
       }
     },
@@ -15682,7 +15788,7 @@
           "locationName":"iops"
         },
         "SnapshotId":{
-          "shape":"String",
+          "shape":"SnapshotId",
           "locationName":"snapshotId"
         },
         "VolumeSize":{
@@ -16337,6 +16443,7 @@
         "Enabled":{"shape":"Boolean"}
       }
     },
+    "EncryptionInTransitSupported":{"type":"boolean"},
     "EndDateType":{
       "type":"string",
       "enum":[
@@ -18055,6 +18162,42 @@
         }
       }
     },
+    "GetSubnetCidrReservationsMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "GetSubnetCidrReservationsRequest":{
+      "type":"structure",
+      "required":["SubnetId"],
+      "members":{
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "SubnetId":{"shape":"SubnetId"},
+        "DryRun":{"shape":"Boolean"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"GetSubnetCidrReservationsMaxResults"}
+      }
+    },
+    "GetSubnetCidrReservationsResult":{
+      "type":"structure",
+      "members":{
+        "SubnetIpv4CidrReservations":{
+          "shape":"SubnetCidrReservationList",
+          "locationName":"subnetIpv4CidrReservationSet"
+        },
+        "SubnetIpv6CidrReservations":{
+          "shape":"SubnetCidrReservationList",
+          "locationName":"subnetIpv6CidrReservationSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "GetTransitGatewayAttachmentPropagationsRequest":{
       "type":"structure",
       "required":["TransitGatewayAttachmentId"],
@@ -19077,7 +19220,9 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
-        }
+        },
+        "UsageOperation":{"shape":"String"},
+        "BootMode":{"shape":"BootModeValues"}
       }
     },
     "ImportImageResult":{
@@ -19142,6 +19287,10 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "UsageOperation":{
+          "shape":"String",
+          "locationName":"usageOperation"
         }
       }
     },
@@ -19207,6 +19356,14 @@
         "LicenseSpecifications":{
           "shape":"ImportImageLicenseSpecificationListResponse",
           "locationName":"licenseSpecifications"
+        },
+        "UsageOperation":{
+          "shape":"String",
+          "locationName":"usageOperation"
+        },
+        "BootMode":{
+          "shape":"BootModeValues",
+          "locationName":"bootMode"
         }
       }
     },
@@ -20239,6 +20396,22 @@
         "terminate"
       ]
     },
+    "InstanceIpv4Prefix":{
+      "type":"structure",
+      "members":{
+        "Ipv4Prefix":{
+          "shape":"String",
+          "locationName":"ipv4Prefix"
+        }
+      }
+    },
+    "InstanceIpv4PrefixList":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceIpv4Prefix",
+        "locationName":"item"
+      }
+    },
     "InstanceIpv6Address":{
       "type":"structure",
       "members":{
@@ -20266,6 +20439,22 @@
       "type":"structure",
       "members":{
         "Ipv6Address":{"shape":"String"}
+      }
+    },
+    "InstanceIpv6Prefix":{
+      "type":"structure",
+      "members":{
+        "Ipv6Prefix":{
+          "shape":"String",
+          "locationName":"ipv6Prefix"
+        }
+      }
+    },
+    "InstanceIpv6PrefixList":{
+      "type":"list",
+      "member":{
+        "shape":"InstanceIpv6Prefix",
+        "locationName":"item"
       }
     },
     "InstanceLifecycle":{
@@ -20315,7 +20504,8 @@
       "members":{
         "HttpTokens":{"shape":"HttpTokensState"},
         "HttpPutResponseHopLimit":{"shape":"Integer"},
-        "HttpEndpoint":{"shape":"InstanceMetadataEndpointState"}
+        "HttpEndpoint":{"shape":"InstanceMetadataEndpointState"},
+        "HttpProtocolIpv6":{"shape":"InstanceMetadataProtocolState"}
       }
     },
     "InstanceMetadataOptionsResponse":{
@@ -20336,6 +20526,10 @@
         "HttpEndpoint":{
           "shape":"InstanceMetadataEndpointState",
           "locationName":"httpEndpoint"
+        },
+        "HttpProtocolIpv6":{
+          "shape":"InstanceMetadataProtocolState",
+          "locationName":"httpProtocolIpv6"
         }
       }
     },
@@ -20344,6 +20538,13 @@
       "enum":[
         "pending",
         "applied"
+      ]
+    },
+    "InstanceMetadataProtocolState":{
+      "type":"string",
+      "enum":[
+        "disabled",
+        "enabled"
       ]
     },
     "InstanceMonitoring":{
@@ -20432,6 +20633,14 @@
         "InterfaceType":{
           "shape":"String",
           "locationName":"interfaceType"
+        },
+        "Ipv4Prefixes":{
+          "shape":"InstanceIpv4PrefixList",
+          "locationName":"ipv4PrefixSet"
+        },
+        "Ipv6Prefixes":{
+          "shape":"InstanceIpv6PrefixList",
+          "locationName":"ipv6PrefixSet"
         }
       }
     },
@@ -20547,7 +20756,17 @@
         },
         "AssociateCarrierIpAddress":{"shape":"Boolean"},
         "InterfaceType":{"shape":"String"},
-        "NetworkCardIndex":{"shape":"Integer"}
+        "NetworkCardIndex":{"shape":"Integer"},
+        "Ipv4Prefixes":{
+          "shape":"Ipv4PrefixList",
+          "locationName":"Ipv4Prefix"
+        },
+        "Ipv4PrefixCount":{"shape":"Integer"},
+        "Ipv6Prefixes":{
+          "shape":"Ipv6PrefixList",
+          "locationName":"Ipv6Prefix"
+        },
+        "Ipv6PrefixCount":{"shape":"Integer"}
       }
     },
     "InstanceNetworkInterfaceSpecificationList":{
@@ -21029,6 +21248,8 @@
         "g3.8xlarge",
         "g3.16xlarge",
         "g3s.xlarge",
+        "g4ad.xlarge",
+        "g4ad.2xlarge",
         "g4ad.4xlarge",
         "g4ad.8xlarge",
         "g4ad.16xlarge",
@@ -21190,6 +21411,15 @@
         "m6gd.8xlarge",
         "m6gd.12xlarge",
         "m6gd.16xlarge",
+        "m6i.large",
+        "m6i.xlarge",
+        "m6i.2xlarge",
+        "m6i.4xlarge",
+        "m6i.8xlarge",
+        "m6i.12xlarge",
+        "m6i.16xlarge",
+        "m6i.24xlarge",
+        "m6i.32xlarge",
         "mac1.metal",
         "x2gd.medium",
         "x2gd.large",
@@ -21199,7 +21429,10 @@
         "x2gd.8xlarge",
         "x2gd.12xlarge",
         "x2gd.16xlarge",
-        "x2gd.metal"
+        "x2gd.metal",
+        "vt1.3xlarge",
+        "vt1.6xlarge",
+        "vt1.24xlarge"
       ]
     },
     "InstanceTypeHypervisor":{
@@ -21498,6 +21731,13 @@
         "locationName":"item"
       }
     },
+    "IpPrefixList":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"item"
+      }
+    },
     "IpRange":{
       "type":"structure",
       "members":{
@@ -21526,6 +21766,51 @@
       }
     },
     "Ipv4PoolEc2Id":{"type":"string"},
+    "Ipv4PrefixList":{
+      "type":"list",
+      "member":{
+        "shape":"Ipv4PrefixSpecificationRequest",
+        "locationName":"item"
+      }
+    },
+    "Ipv4PrefixListResponse":{
+      "type":"list",
+      "member":{
+        "shape":"Ipv4PrefixSpecificationResponse",
+        "locationName":"item"
+      }
+    },
+    "Ipv4PrefixSpecification":{
+      "type":"structure",
+      "members":{
+        "Ipv4Prefix":{
+          "shape":"String",
+          "locationName":"ipv4Prefix"
+        }
+      }
+    },
+    "Ipv4PrefixSpecificationRequest":{
+      "type":"structure",
+      "members":{
+        "Ipv4Prefix":{"shape":"String"}
+      }
+    },
+    "Ipv4PrefixSpecificationResponse":{
+      "type":"structure",
+      "members":{
+        "Ipv4Prefix":{
+          "shape":"String",
+          "locationName":"ipv4Prefix"
+        }
+      }
+    },
+    "Ipv4PrefixesList":{
+      "type":"list",
+      "member":{
+        "shape":"Ipv4PrefixSpecification",
+        "locationName":"item"
+      }
+    },
     "Ipv6Address":{"type":"string"},
     "Ipv6AddressList":{
       "type":"list",
@@ -21612,6 +21897,51 @@
         "locationName":"item"
       }
     },
+    "Ipv6PrefixList":{
+      "type":"list",
+      "member":{
+        "shape":"Ipv6PrefixSpecificationRequest",
+        "locationName":"item"
+      }
+    },
+    "Ipv6PrefixListResponse":{
+      "type":"list",
+      "member":{
+        "shape":"Ipv6PrefixSpecificationResponse",
+        "locationName":"item"
+      }
+    },
+    "Ipv6PrefixSpecification":{
+      "type":"structure",
+      "members":{
+        "Ipv6Prefix":{
+          "shape":"String",
+          "locationName":"ipv6Prefix"
+        }
+      }
+    },
+    "Ipv6PrefixSpecificationRequest":{
+      "type":"structure",
+      "members":{
+        "Ipv6Prefix":{"shape":"String"}
+      }
+    },
+    "Ipv6PrefixSpecificationResponse":{
+      "type":"structure",
+      "members":{
+        "Ipv6Prefix":{
+          "shape":"String",
+          "locationName":"ipv6Prefix"
+        }
+      }
+    },
+    "Ipv6PrefixesList":{
+      "type":"list",
+      "member":{
+        "shape":"Ipv6PrefixSpecification",
+        "locationName":"item"
+      }
+    },
     "Ipv6Range":{
       "type":"structure",
       "members":{
@@ -21695,6 +22025,10 @@
           "shape":"String",
           "locationName":"keyName"
         },
+        "KeyType":{
+          "shape":"KeyType",
+          "locationName":"keyType"
+        },
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
@@ -21709,6 +22043,13 @@
       }
     },
     "KeyPairName":{"type":"string"},
+    "KeyType":{
+      "type":"string",
+      "enum":[
+        "rsa",
+        "ed25519"
+      ]
+    },
     "KmsKeyId":{"type":"string"},
     "LastError":{
       "type":"structure",
@@ -22182,6 +22523,10 @@
         "HttpEndpoint":{
           "shape":"LaunchTemplateInstanceMetadataEndpointState",
           "locationName":"httpEndpoint"
+        },
+        "HttpProtocolIpv6":{
+          "shape":"LaunchTemplateInstanceMetadataProtocolIpv6",
+          "locationName":"httpProtocolIpv6"
         }
       }
     },
@@ -22190,7 +22535,8 @@
       "members":{
         "HttpTokens":{"shape":"LaunchTemplateHttpTokensState"},
         "HttpPutResponseHopLimit":{"shape":"Integer"},
-        "HttpEndpoint":{"shape":"LaunchTemplateInstanceMetadataEndpointState"}
+        "HttpEndpoint":{"shape":"LaunchTemplateInstanceMetadataEndpointState"},
+        "HttpProtocolIpv6":{"shape":"LaunchTemplateInstanceMetadataProtocolIpv6"}
       }
     },
     "LaunchTemplateInstanceMetadataOptionsState":{
@@ -22198,6 +22544,13 @@
       "enum":[
         "pending",
         "applied"
+      ]
+    },
+    "LaunchTemplateInstanceMetadataProtocolIpv6":{
+      "type":"string",
+      "enum":[
+        "disabled",
+        "enabled"
       ]
     },
     "LaunchTemplateInstanceNetworkInterfaceSpecification":{
@@ -22262,6 +22615,22 @@
         "NetworkCardIndex":{
           "shape":"Integer",
           "locationName":"networkCardIndex"
+        },
+        "Ipv4Prefixes":{
+          "shape":"Ipv4PrefixListResponse",
+          "locationName":"ipv4PrefixSet"
+        },
+        "Ipv4PrefixCount":{
+          "shape":"Integer",
+          "locationName":"ipv4PrefixCount"
+        },
+        "Ipv6Prefixes":{
+          "shape":"Ipv6PrefixListResponse",
+          "locationName":"ipv6PrefixSet"
+        },
+        "Ipv6PrefixCount":{
+          "shape":"Integer",
+          "locationName":"ipv6PrefixCount"
         }
       }
     },
@@ -22292,7 +22661,17 @@
         "PrivateIpAddresses":{"shape":"PrivateIpAddressSpecificationList"},
         "SecondaryPrivateIpAddressCount":{"shape":"Integer"},
         "SubnetId":{"shape":"SubnetId"},
-        "NetworkCardIndex":{"shape":"Integer"}
+        "NetworkCardIndex":{"shape":"Integer"},
+        "Ipv4Prefixes":{
+          "shape":"Ipv4PrefixList",
+          "locationName":"Ipv4Prefix"
+        },
+        "Ipv4PrefixCount":{"shape":"Integer"},
+        "Ipv6Prefixes":{
+          "shape":"Ipv6PrefixList",
+          "locationName":"Ipv6Prefix"
+        },
+        "Ipv6PrefixCount":{"shape":"Integer"}
       }
     },
     "LaunchTemplateInstanceNetworkInterfaceSpecificationRequestList":{
@@ -23578,7 +23957,8 @@
         "HttpTokens":{"shape":"HttpTokensState"},
         "HttpPutResponseHopLimit":{"shape":"Integer"},
         "HttpEndpoint":{"shape":"InstanceMetadataEndpointState"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "HttpProtocolIpv6":{"shape":"InstanceMetadataProtocolState"}
       }
     },
     "ModifyInstanceMetadataOptionsResult":{
@@ -23665,7 +24045,8 @@
         "RemoveEntries":{
           "shape":"RemovePrefixListEntries",
           "locationName":"RemoveEntry"
-        }
+        },
+        "MaxEntries":{"shape":"Integer"}
       }
     },
     "ModifyManagedPrefixListResult":{
@@ -24729,6 +25110,10 @@
         "EfaInfo":{
           "shape":"EfaInfo",
           "locationName":"efaInfo"
+        },
+        "EncryptionInTransitSupported":{
+          "shape":"EncryptionInTransitSupported",
+          "locationName":"encryptionInTransitSupported"
         }
       }
     },
@@ -24927,6 +25312,14 @@
         "PrivateIpAddresses":{
           "shape":"NetworkInterfacePrivateIpAddressList",
           "locationName":"privateIpAddressesSet"
+        },
+        "Ipv4Prefixes":{
+          "shape":"Ipv4PrefixesList",
+          "locationName":"ipv4PrefixSet"
+        },
+        "Ipv6Prefixes":{
+          "shape":"Ipv6PrefixesList",
+          "locationName":"ipv6PrefixSet"
         },
         "RequesterId":{
           "shape":"String",
@@ -25758,7 +26151,7 @@
       "type":"structure",
       "members":{
         "GroupName":{
-          "shape":"String",
+          "shape":"PlacementGroupName",
           "locationName":"groupName"
         }
       }
@@ -28073,8 +28466,10 @@
     "ResourceType":{
       "type":"string",
       "enum":[
+        "capacity-reservation",
         "client-vpn-endpoint",
         "customer-gateway",
+        "carrier-gateway",
         "dedicated-host",
         "dhcp-options",
         "egress-only-internet-gateway",
@@ -28091,15 +28486,24 @@
         "instance",
         "instance-event-window",
         "internet-gateway",
+        "ipv4pool-ec2",
+        "ipv6pool-ec2",
         "key-pair",
         "launch-template",
+        "local-gateway",
+        "local-gateway-route-table",
+        "local-gateway-virtual-interface",
+        "local-gateway-virtual-interface-group",
         "local-gateway-route-table-vpc-association",
+        "local-gateway-route-table-virtual-interface-group-association",
         "natgateway",
         "network-acl",
         "network-interface",
         "network-insights-analysis",
         "network-insights-path",
         "placement-group",
+        "prefix-list",
+        "replace-root-volume-task",
         "reserved-instances",
         "route-table",
         "security-group",
@@ -28118,6 +28522,8 @@
         "transit-gateway-route-table",
         "volume",
         "vpc",
+        "vpc-endpoint",
+        "vpc-endpoint-service",
         "vpc-peering-connection",
         "vpn-connection",
         "vpn-gateway",
@@ -29971,7 +30377,7 @@
           "locationName":"iamInstanceProfile"
         },
         "ImageId":{
-          "shape":"String",
+          "shape":"ImageId",
           "locationName":"imageId"
         },
         "InstanceType":{
@@ -29983,7 +30389,7 @@
           "locationName":"kernelId"
         },
         "KeyName":{
-          "shape":"String",
+          "shape":"KeyPairName",
           "locationName":"keyName"
         },
         "Monitoring":{
@@ -30007,7 +30413,7 @@
           "locationName":"spotPrice"
         },
         "SubnetId":{
-          "shape":"String",
+          "shape":"SubnetId",
           "locationName":"subnetId"
         },
         "UserData":{
@@ -30434,7 +30840,7 @@
           "locationName":"availabilityZone"
         },
         "GroupName":{
-          "shape":"String",
+          "shape":"PlacementGroupName",
           "locationName":"groupName"
         },
         "Tenancy":{
@@ -30882,6 +31288,54 @@
         "disassociated",
         "failing",
         "failed"
+      ]
+    },
+    "SubnetCidrReservation":{
+      "type":"structure",
+      "members":{
+        "SubnetCidrReservationId":{
+          "shape":"SubnetCidrReservationId",
+          "locationName":"subnetCidrReservationId"
+        },
+        "SubnetId":{
+          "shape":"SubnetId",
+          "locationName":"subnetId"
+        },
+        "Cidr":{
+          "shape":"String",
+          "locationName":"cidr"
+        },
+        "ReservationType":{
+          "shape":"SubnetCidrReservationType",
+          "locationName":"reservationType"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "SubnetCidrReservationId":{"type":"string"},
+    "SubnetCidrReservationList":{
+      "type":"list",
+      "member":{
+        "shape":"SubnetCidrReservation",
+        "locationName":"item"
+      }
+    },
+    "SubnetCidrReservationType":{
+      "type":"string",
+      "enum":[
+        "prefix",
+        "explicit"
       ]
     },
     "SubnetId":{"type":"string"},
@@ -32858,18 +33312,19 @@
     },
     "UnassignIpv6AddressesRequest":{
       "type":"structure",
-      "required":[
-        "NetworkInterfaceId",
-        "Ipv6Addresses"
-      ],
+      "required":["NetworkInterfaceId"],
       "members":{
-        "NetworkInterfaceId":{
-          "shape":"NetworkInterfaceId",
-          "locationName":"networkInterfaceId"
-        },
         "Ipv6Addresses":{
           "shape":"Ipv6AddressList",
           "locationName":"ipv6Addresses"
+        },
+        "Ipv6Prefixes":{
+          "shape":"IpPrefixList",
+          "locationName":"Ipv6Prefix"
+        },
+        "NetworkInterfaceId":{
+          "shape":"NetworkInterfaceId",
+          "locationName":"networkInterfaceId"
         }
       }
     },
@@ -32883,15 +33338,16 @@
         "UnassignedIpv6Addresses":{
           "shape":"Ipv6AddressList",
           "locationName":"unassignedIpv6Addresses"
+        },
+        "UnassignedIpv6Prefixes":{
+          "shape":"IpPrefixList",
+          "locationName":"unassignedIpv6PrefixSet"
         }
       }
     },
     "UnassignPrivateIpAddressesRequest":{
       "type":"structure",
-      "required":[
-        "NetworkInterfaceId",
-        "PrivateIpAddresses"
-      ],
+      "required":["NetworkInterfaceId"],
       "members":{
         "NetworkInterfaceId":{
           "shape":"NetworkInterfaceId",
@@ -32900,6 +33356,10 @@
         "PrivateIpAddresses":{
           "shape":"PrivateIpAddressStringList",
           "locationName":"privateIpAddress"
+        },
+        "Ipv4Prefixes":{
+          "shape":"IpPrefixList",
+          "locationName":"Ipv4Prefix"
         }
       }
     },

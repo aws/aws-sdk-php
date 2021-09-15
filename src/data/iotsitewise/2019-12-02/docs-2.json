@@ -36,7 +36,7 @@
     "GetAssetPropertyAggregates": "<p>Gets aggregated values for an asset property. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/query-industrial-data.html#aggregates\">Querying aggregates</a> in the <i>IoT SiteWise User Guide</i>.</p> <p>To identify an asset property, you must specify one of the following:</p> <ul> <li> <p>The <code>assetId</code> and <code>propertyId</code> of an asset property.</p> </li> <li> <p>A <code>propertyAlias</code>, which is a data stream alias (for example, <code>/company/windfarm/3/turbine/7/temperature</code>). To define an asset property's alias, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_UpdateAssetProperty.html\">UpdateAssetProperty</a>.</p> </li> </ul>",
     "GetAssetPropertyValue": "<p>Gets an asset property's current value. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/query-industrial-data.html#current-values\">Querying current values</a> in the <i>IoT SiteWise User Guide</i>.</p> <p>To identify an asset property, you must specify one of the following:</p> <ul> <li> <p>The <code>assetId</code> and <code>propertyId</code> of an asset property.</p> </li> <li> <p>A <code>propertyAlias</code>, which is a data stream alias (for example, <code>/company/windfarm/3/turbine/7/temperature</code>). To define an asset property's alias, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_UpdateAssetProperty.html\">UpdateAssetProperty</a>.</p> </li> </ul>",
     "GetAssetPropertyValueHistory": "<p>Gets the history of an asset property's values. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/query-industrial-data.html#historical-values\">Querying historical values</a> in the <i>IoT SiteWise User Guide</i>.</p> <p>To identify an asset property, you must specify one of the following:</p> <ul> <li> <p>The <code>assetId</code> and <code>propertyId</code> of an asset property.</p> </li> <li> <p>A <code>propertyAlias</code>, which is a data stream alias (for example, <code>/company/windfarm/3/turbine/7/temperature</code>). To define an asset property's alias, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_UpdateAssetProperty.html\">UpdateAssetProperty</a>.</p> </li> </ul>",
-    "GetInterpolatedAssetPropertyValues": "<p>Get interpolated values for an asset property for a specified time interval, during a period of time. For example, you can use the this operation to return the interpolated temperature values for a wind turbine every 24 hours over a duration of 7 days.</p> <p>To identify an asset property, you must specify one of the following:</p> <ul> <li> <p>The <code>assetId</code> and <code>propertyId</code> of an asset property.</p> </li> <li> <p>A <code>propertyAlias</code>, which is a data stream alias (for example, <code>/company/windfarm/3/turbine/7/temperature</code>). To define an asset property's alias, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_UpdateAssetProperty.html\">UpdateAssetProperty</a>.</p> </li> </ul>",
+    "GetInterpolatedAssetPropertyValues": "<p>Get interpolated values for an asset property for a specified time interval, during a period of time. If your time series is missing data points during the specified time interval, you can use interpolation to estimate the missing data.</p> <p>For example, you can use this operation to return the interpolated temperature values for a wind turbine every 24 hours over a duration of 7 days.</p> <p>To identify an asset property, you must specify one of the following:</p> <ul> <li> <p>The <code>assetId</code> and <code>propertyId</code> of an asset property.</p> </li> <li> <p>A <code>propertyAlias</code>, which is a data stream alias (for example, <code>/company/windfarm/3/turbine/7/temperature</code>). To define an asset property's alias, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/APIReference/API_UpdateAssetProperty.html\">UpdateAssetProperty</a>.</p> </li> </ul>",
     "ListAccessPolicies": "<p>Retrieves a paginated list of access policies for an identity (an Amazon Web Services SSO user, an Amazon Web Services SSO group, or an IAM user) or an IoT SiteWise Monitor resource (a portal or project).</p>",
     "ListAssetModels": "<p>Retrieves a paginated list of summaries of all asset models.</p>",
     "ListAssetRelationships": "<p>Retrieves a paginated list of asset relationships for an asset. You can use this operation to identify an asset's root asset and all associated assets between that asset and its root.</p>",
@@ -583,6 +583,13 @@
         "DescribeAssetPropertyResponse$compositeModel": "<p>The composite asset model that declares this asset property, if this asset property exists in a composite model.</p>"
       }
     },
+    "ComputeLocation": {
+      "base": null,
+      "refs": {
+        "MetricProcessingConfig$computeLocation": "<p>The compute location for the given metric property. </p>",
+        "TransformProcessingConfig$computeLocation": "<p>The compute location for the given transform property. </p>"
+      }
+    },
     "ConfigurationErrorDetails": {
       "base": "<p>Contains the details of an IoT SiteWise configuration error.</p>",
       "refs": {
@@ -607,6 +614,12 @@
     "ConflictingOperationException": {
       "base": "<p>Your request has conflicting operations. This can occur if you're trying to perform more than one operation on the same resource at the same time.</p>",
       "refs": {
+      }
+    },
+    "CoreDeviceThingName": {
+      "base": null,
+      "refs": {
+        "GreengrassV2$coreDeviceThingName": "<p>The name of the IoT thing for your IoT Greengrass V2 core device.</p>"
       }
     },
     "CreateAccessPolicyRequest": {
@@ -920,6 +933,30 @@
         "UpdateProjectRequest$projectDescription": "<p>A new description for the project.</p>"
       }
     },
+    "DetailedError": {
+      "base": "<p>Contains detailed error information. </p>",
+      "refs": {
+        "DetailedErrors$member": null
+      }
+    },
+    "DetailedErrorCode": {
+      "base": null,
+      "refs": {
+        "DetailedError$code": "<p>The error code. </p>"
+      }
+    },
+    "DetailedErrorMessage": {
+      "base": null,
+      "refs": {
+        "DetailedError$message": "<p>The error message. </p>"
+      }
+    },
+    "DetailedErrors": {
+      "base": null,
+      "refs": {
+        "ErrorDetails$details": "<p> A list of detailed errors. </p>"
+      }
+    },
     "DisassociateAssetsRequest": {
       "base": null,
       "refs": {
@@ -1008,6 +1045,19 @@
         "Transform$variables": "<p>The list of variables used in the expression.</p>"
       }
     },
+    "ForwardingConfig": {
+      "base": "<p>The forwarding configuration for a given property.</p>",
+      "refs": {
+        "MeasurementProcessingConfig$forwardingConfig": "<p>The forwarding configuration for the given measurement property. </p>",
+        "TransformProcessingConfig$forwardingConfig": null
+      }
+    },
+    "ForwardingConfigState": {
+      "base": null,
+      "refs": {
+        "ForwardingConfig$state": "<p>The forwarding state for the given property. </p>"
+      }
+    },
     "GatewayCapabilitySummaries": {
       "base": null,
       "refs": {
@@ -1025,7 +1075,8 @@
       "base": "<p>Contains a gateway's platform information.</p>",
       "refs": {
         "CreateGatewayRequest$gatewayPlatform": "<p>The gateway's platform. You can only specify one platform in a gateway.</p>",
-        "DescribeGatewayResponse$gatewayPlatform": "<p>The gateway's platform.</p>"
+        "DescribeGatewayResponse$gatewayPlatform": "<p>The gateway's platform.</p>",
+        "GatewaySummary$gatewayPlatform": null
       }
     },
     "GatewaySummaries": {
@@ -1084,6 +1135,12 @@
       "base": "<p>Contains details for a gateway that runs on IoT Greengrass. To create a gateway that runs on IoT Greengrass, you must add the IoT SiteWise connector to a Greengrass group and deploy it. Your Greengrass group must also have permissions to upload data to IoT SiteWise. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/gateway-connector.html\">Ingesting data using a gateway</a> in the <i>IoT SiteWise User Guide</i>.</p>",
       "refs": {
         "GatewayPlatform$greengrass": "<p>A gateway that runs on IoT Greengrass.</p>"
+      }
+    },
+    "GreengrassV2": {
+      "base": "<p>Contains details for a gateway that runs on IoT Greengrass V2. To create a gateway that runs on IoT Greengrass V2, you must deploy the IoT SiteWise Edge component to your gateway device. Your <a href=\"https://docs.aws.amazon.com/greengrass/v2/developerguide/device-service-role.html\">Greengrass device role</a> must use the <code>AWSIoTSiteWiseEdgeAccess</code> policy. For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/sw-gateways.html\">Using IoT SiteWise at the edge</a> in the <i>IoT SiteWise User Guide</i>.</p>",
+      "refs": {
+        "GatewayPlatform$greengrassV2": "<p>A gateway that runs on IoT Greengrass V2.</p>"
       }
     },
     "GroupIdentity": {
@@ -1292,19 +1349,25 @@
     "InterpolationType": {
       "base": null,
       "refs": {
-        "GetInterpolatedAssetPropertyValuesRequest$type": "<p>The interpolation type.</p> <p>Valid values: <code>LINEAR_INTERPOLATION</code> </p>"
+        "GetInterpolatedAssetPropertyValuesRequest$type": "<p>The interpolation type.</p> <p>Valid values: <code>LINEAR_INTERPOLATION | LOCF_INTERPOLATION</code> </p> <ul> <li> <p> <code>LINEAR_INTERPOLATION</code> – Estimates missing data using <a href=\"https://en.wikipedia.org/wiki/Linear_interpolation\">linear interpolation</a>.</p> <p>For example, you can use this operation to return the interpolated temperature values for a wind turbine every 24 hours over a duration of 7 days. If the interpolation starts on July 1, 2021, at 9 AM, IoT SiteWise returns the first interpolated value on July 2, 2021, at 9 AM, the second interpolated value on July 3, 2021, at 9 AM, and so on.</p> </li> <li> <p> <code>LOCF_INTERPOLATION</code> – Estimates missing data using last observation carried forward interpolation</p> <p>If no data point is found for an interval, IoT SiteWise returns the last observed data point for the previous interval and carries forward this interpolated value until a new data point is found.</p> <p>For example, you can get the state of an on-off valve every 24 hours over a duration of 7 days. If the interpolation starts on July 1, 2021, at 9 AM, IoT SiteWise returns the last observed data point between July 1, 2021, at 9 AM and July 2, 2021, at 9 AM as the first interpolated value. If no data point is found after 9 AM on July 2, 2021, IoT SiteWise uses the same interpolated value for the rest of the days.</p> </li> </ul>"
       }
     },
     "Interval": {
       "base": null,
       "refs": {
-        "TumblingWindow$interval": "<p>The time interval for the tumbling window. Note that <code>w</code> represents weeks, <code>d</code> represents days, <code>h</code> represents hours, and <code>m</code> represents minutes. IoT SiteWise computes the <code>1w</code> interval the end of Sunday at midnight each week (UTC), the <code>1d</code> interval at the end of each day at midnight (UTC), the <code>1h</code> interval at the end of each hour, and so on. </p> <p>When IoT SiteWise aggregates data points for metric computations, the start of each interval is exclusive and the end of each interval is inclusive. IoT SiteWise places the computed data point at the end of the interval.</p>"
+        "TumblingWindow$interval": "<p>The time interval for the tumbling window. The interval time must be between 1 minute and 1 week.</p> <p>IoT SiteWise computes the <code>1w</code> interval the end of Sunday at midnight each week (UTC), the <code>1d</code> interval at the end of each day at midnight (UTC), the <code>1h</code> interval at the end of each hour, and so on. </p> <p>When IoT SiteWise aggregates data points for metric computations, the start of each interval is exclusive and the end of each interval is inclusive. IoT SiteWise places the computed data point at the end of the interval.</p>"
       }
     },
     "IntervalInSeconds": {
       "base": null,
       "refs": {
         "GetInterpolatedAssetPropertyValuesRequest$intervalInSeconds": "<p>The time interval in seconds over which to interpolate data. Each interval starts when the previous one ends.</p>"
+      }
+    },
+    "IntervalWindowInSeconds": {
+      "base": null,
+      "refs": {
+        "GetInterpolatedAssetPropertyValuesRequest$intervalWindowInSeconds": "<p>The query interval for the window in seconds. IoT SiteWise computes each interpolated value by using data points from the timestamp of each interval minus the window to the timestamp of each interval plus the window. If not specified, the window is between the start time minus the interval and the end time plus the interval. </p> <note> <ul> <li> <p>If you specify a value for the <code>intervalWindowInSeconds</code> parameter, the <code>type</code> parameter must be <code>LINEAR_INTERPOLATION</code>.</p> </li> <li> <p>If no data point is found during the specified query window, IoT SiteWise won't return an interpolated value for the interval. This indicates that there's a gap in the ingested data points.</p> </li> </ul> </note> <p>For example, you can get the interpolated temperature values for a wind turbine every 24 hours over a duration of 7 days. If the interpolation starts on July 1, 2021, at 9 AM with a window of 2 hours, IoT SiteWise uses the data points from 7 AM (9 AM - 2 hours) to 11 AM (9 AM + 2 hours) on July 2, 2021 to compute the first interpolated value, uses the data points from 7 AM (9 AM - 2 hours) to 11 AM (9 AM + 2 hours) on July 3, 2021 to compute the second interpolated value, and so on. </p>"
       }
     },
     "InvalidRequestException": {
@@ -1488,10 +1551,22 @@
         "PropertyType$measurement": "<p>Specifies an asset measurement property. A measurement represents a device's raw sensor data stream, such as timestamped temperature values or timestamped power values.</p>"
       }
     },
+    "MeasurementProcessingConfig": {
+      "base": "<p>The processing configuration for the given measurement property. You can configure measurements to be kept at the edge or forwarded to the Amazon Web Services Cloud. By default, measurements are forwarded to the cloud.</p>",
+      "refs": {
+        "Measurement$processingConfig": "<p>The processing configuration for the given measurement property. You can configure measurements to be kept at the edge or forwarded to the Amazon Web Services Cloud. By default, measurements are forwarded to the cloud.</p>"
+      }
+    },
     "Metric": {
       "base": "<p>Contains an asset metric property. With metrics, you can calculate aggregate functions, such as an average, maximum, or minimum, as specified through an expression. A metric maps several values to a single value (such as a sum).</p> <p>The maximum number of dependent/cascading variables used in any one metric calculation is 10. Therefore, a <i>root</i> metric can have up to 10 cascading metrics in its computational dependency tree. Additionally, a metric can only have a data type of <code>DOUBLE</code> and consume properties with data types of <code>INTEGER</code> or <code>DOUBLE</code>.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/iot-sitewise/latest/userguide/asset-properties.html#metrics\">Metrics</a> in the <i>IoT SiteWise User Guide</i>.</p>",
       "refs": {
         "PropertyType$metric": "<p>Specifies an asset metric property. A metric contains a mathematical expression that uses aggregate functions to process all input data points over a time interval and output a single data point, such as to calculate the average hourly temperature.</p>"
+      }
+    },
+    "MetricProcessingConfig": {
+      "base": "<p>The processing configuration for the given metric property. You can configure metrics to be computed at the edge or in the Amazon Web Services Cloud. By default, metrics are forwarded to the cloud.</p>",
+      "refs": {
+        "Metric$processingConfig": "<p>The processing configuration for the given metric property. You can configure metrics to be computed at the edge or in the Amazon Web Services Cloud. By default, metrics are forwarded to the cloud.</p>"
       }
     },
     "MetricWindow": {
@@ -1604,6 +1679,12 @@
         "ListProjectAssetsResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>",
         "ListProjectsRequest$nextToken": "<p>The token to be used for the next set of paginated results.</p>",
         "ListProjectsResponse$nextToken": "<p>The token for the next set of results, or null if there are no additional results.</p>"
+      }
+    },
+    "Offset": {
+      "base": null,
+      "refs": {
+        "TumblingWindow$offset": "<p>The offset for the tumbling window. The <code>offset</code> parameter accepts the following:</p> <ul> <li> <p>The offset time.</p> <p>For example, if you specify <code>18h</code> for <code>offset</code> and <code>1d</code> for <code>interval</code>, IoT SiteWise aggregates data in one of the following ways:</p> <ul> <li> <p>If you create the metric before or at 6:00 PM (UTC), you get the first aggregation result at 6 PM (UTC) on the day when you create the metric.</p> </li> <li> <p>If you create the metric after 6:00 PM (UTC), you get the first aggregation result at 6 PM (UTC) the next day.</p> </li> </ul> </li> <li> <p>The ISO 8601 format.</p> <p>For example, if you specify <code>PT18H</code> for <code>offset</code> and <code>1d</code> for <code>interval</code>, IoT SiteWise aggregates data in one of the following ways:</p> <ul> <li> <p>If you create the metric before or at 6:00 PM (UTC), you get the first aggregation result at 6 PM (UTC) on the day when you create the metric.</p> </li> <li> <p>If you create the metric after 6:00 PM (UTC), you get the first aggregation result at 6 PM (UTC) the next day.</p> </li> </ul> </li> <li> <p>The 24-hour clock.</p> <p>For example, if you specify <code>00:03:00</code> for <code>offset</code> and <code>5m</code> for <code>interval</code>, and you create the metric at 2 PM (UTC), you get the first aggregation result at 2:03 PM (UTC). You get the second aggregation result at 2:08 PM (UTC). </p> </li> <li> <p>The offset time zone.</p> <p>For example, if you specify <code>2021-07-23T18:00-08</code> for <code>offset</code> and <code>1d</code> for <code>interval</code>, IoT SiteWise aggregates data in one of the following ways:</p> <ul> <li> <p>If you create the metric before or at 6:00 PM (PST), you get the first aggregation result at 6 PM (PST) on the day when you create the metric.</p> </li> <li> <p>If you create the metric after 6:00 PM (PST), you get the first aggregation result at 6 PM (PST) the next day.</p> </li> </ul> </li> </ul>"
       }
     },
     "OffsetInNanos": {
@@ -2017,6 +2098,12 @@
         "PropertyType$transform": "<p>Specifies an asset transform property. A transform contains a mathematical expression that maps a property's data points from one form to another, such as a unit conversion from Celsius to Fahrenheit.</p>"
       }
     },
+    "TransformProcessingConfig": {
+      "base": "<p>The processing configuration for the given transform property. You can configure transforms to be kept at the edge or forwarded to the Amazon Web Services Cloud. You can also configure transforms to be computed at the edge or in the cloud.</p>",
+      "refs": {
+        "Transform$processingConfig": "<p>The processing configuration for the given transform property. You can configure transforms to be kept at the edge or forwarded to the Amazon Web Services Cloud. You can also configure transforms to be computed at the edge or in the cloud.</p>"
+      }
+    },
     "TraversalDirection": {
       "base": null,
       "refs": {
@@ -2030,7 +2117,7 @@
       }
     },
     "TumblingWindow": {
-      "base": "<p>Contains a tumbling window, which is a repeating fixed-sized, non-overlapping, and contiguous time interval. This window is used in metric and aggregation computations.</p>",
+      "base": "<p>Contains a tumbling window, which is a repeating fixed-sized, non-overlapping, and contiguous time window. You use this window in metrics to aggregate data from properties and other assets.</p> <p>You can use <code>m</code>, <code>h</code>, <code>d</code>, and <code>w</code> when you specify an interval or offset. Note that <code>m</code> represents minutes, and <code>w</code> represents weeks. You can also use <code>s</code> to represent seconds in <code>offset</code>.</p> <p>The <code>interval</code> and <code>offset</code> parameters support the <a href=\"https://en.wikipedia.org/wiki/ISO_8601\">ISO 8601 format</a>. For example, <code>PT5S</code> represents five seconds, <code>PT5M</code> represents five minutes, and <code>PT5H</code> represents five hours.</p>",
       "refs": {
         "MetricWindow$tumbling": "<p>The tumbling time interval window.</p>"
       }

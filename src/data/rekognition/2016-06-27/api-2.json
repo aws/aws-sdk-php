@@ -1023,6 +1023,13 @@
         "Confidence":{"shape":"Percent"}
       }
     },
+    "BlackFrame":{
+      "type":"structure",
+      "members":{
+        "MaxPixelThreshold":{"shape":"MaxPixelThreshold"},
+        "MinCoveragePercentage":{"shape":"MinCoveragePercentage"}
+      }
+    },
     "BodyPart":{
       "type":"string",
       "enum":[
@@ -1063,7 +1070,8 @@
         "Name":{"shape":"String"},
         "Id":{"shape":"RekognitionUniqueId"},
         "Face":{"shape":"ComparedFace"},
-        "MatchConfidence":{"shape":"Percent"}
+        "MatchConfidence":{"shape":"Percent"},
+        "KnownGender":{"shape":"KnownGender"}
       }
     },
     "CelebrityDetail":{
@@ -1160,7 +1168,9 @@
         "Confidence":{"shape":"Percent"},
         "Landmarks":{"shape":"Landmarks"},
         "Pose":{"shape":"Pose"},
-        "Quality":{"shape":"ImageQuality"}
+        "Quality":{"shape":"ImageQuality"},
+        "Emotions":{"shape":"Emotions"},
+        "Smile":{"shape":"Smile"}
       }
     },
     "ComparedFaceList":{
@@ -1770,7 +1780,8 @@
       "type":"structure",
       "members":{
         "Urls":{"shape":"Urls"},
-        "Name":{"shape":"String"}
+        "Name":{"shape":"String"},
+        "KnownGender":{"shape":"KnownGender"}
       }
     },
     "GetCelebrityRecognitionRequest":{
@@ -2142,6 +2153,19 @@
       "min":1,
       "pattern":"^[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,2048}$"
     },
+    "KnownGender":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"KnownGenderType"}
+      }
+    },
+    "KnownGenderType":{
+      "type":"string",
+      "enum":[
+        "Male",
+        "Female"
+      ]
+    },
     "Label":{
       "type":"structure",
       "members":{
@@ -2294,9 +2318,19 @@
       "type":"integer",
       "min":1
     },
+    "MaxPixelThreshold":{
+      "type":"float",
+      "max":1,
+      "min":0
+    },
     "MaxResults":{
       "type":"integer",
       "min":1
+    },
+    "MinCoveragePercentage":{
+      "type":"float",
+      "max":100,
+      "min":0
     },
     "ModerationLabel":{
       "type":"structure",
@@ -2761,7 +2795,10 @@
         "EndTimecodeSMPTE":{"shape":"Timecode"},
         "DurationSMPTE":{"shape":"Timecode"},
         "TechnicalCueSegment":{"shape":"TechnicalCueSegment"},
-        "ShotSegment":{"shape":"ShotSegment"}
+        "ShotSegment":{"shape":"ShotSegment"},
+        "StartFrameNumber":{"shape":"ULong"},
+        "EndFrameNumber":{"shape":"ULong"},
+        "DurationFrames":{"shape":"ULong"}
       }
     },
     "SegmentDetections":{
@@ -2981,7 +3018,8 @@
     "StartTechnicalCueDetectionFilter":{
       "type":"structure",
       "members":{
-        "MinSegmentConfidence":{"shape":"SegmentConfidence"}
+        "MinSegmentConfidence":{"shape":"SegmentConfidence"},
+        "BlackFrame":{"shape":"BlackFrame"}
       }
     },
     "StartTextDetectionFilters":{
@@ -3150,7 +3188,11 @@
       "enum":[
         "ColorBars",
         "EndCredits",
-        "BlackFrames"
+        "BlackFrames",
+        "OpeningCredits",
+        "StudioLogo",
+        "Slate",
+        "Content"
       ]
     },
     "TestingData":{
@@ -3262,7 +3304,9 @@
     "Url":{"type":"string"},
     "Urls":{
       "type":"list",
-      "member":{"shape":"Url"}
+      "member":{"shape":"Url"},
+      "max":255,
+      "min":0
     },
     "ValidationData":{
       "type":"structure",
@@ -3288,6 +3332,13 @@
         "S3Object":{"shape":"S3Object"}
       }
     },
+    "VideoColorRange":{
+      "type":"string",
+      "enum":[
+        "FULL",
+        "LIMITED"
+      ]
+    },
     "VideoJobStatus":{
       "type":"string",
       "enum":[
@@ -3304,7 +3355,8 @@
         "Format":{"shape":"String"},
         "FrameRate":{"shape":"Float"},
         "FrameHeight":{"shape":"ULong"},
-        "FrameWidth":{"shape":"ULong"}
+        "FrameWidth":{"shape":"ULong"},
+        "ColorRange":{"shape":"VideoColorRange"}
       }
     },
     "VideoMetadataList":{
