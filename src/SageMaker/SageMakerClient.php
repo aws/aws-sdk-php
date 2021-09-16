@@ -401,6 +401,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise registerDevicesAsync(array $args = [])
  * @method \Aws\Result renderUiTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise renderUiTemplateAsync(array $args = [])
+ * @method \Aws\Result retryPipelineExecution(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise retryPipelineExecutionAsync(array $args = [])
  * @method \Aws\Result search(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchAsync(array $args = [])
  * @method \Aws\Result sendPipelineExecutionStepFailure(array $args = [])

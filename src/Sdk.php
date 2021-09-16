@@ -284,6 +284,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionIotDataPlane(array $args = [])
  * @method \Aws\Kafka\KafkaClient createKafka(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionKafka(array $args = [])
+ * @method \Aws\KafkaConnect\KafkaConnectClient createKafkaConnect(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionKafkaConnect(array $args = [])
  * @method \Aws\Kinesis\KinesisClient createKinesis(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionKinesis(array $args = [])
  * @method \Aws\KinesisAnalytics\KinesisAnalyticsClient createKinesisAnalytics(array $args = [])
