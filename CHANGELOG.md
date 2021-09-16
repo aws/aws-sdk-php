@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.194.0 - 2021-09-16
 
 * `Aws\KafkaConnect` - This is the initial SDK release for Amazon Managed Streaming for Apache Kafka Connect (MSK Connect).
 * `Aws\Macie2` - This release adds support for specifying which managed data identifiers are used by a classification job, and retrieving a list of managed data identifiers that are available.
