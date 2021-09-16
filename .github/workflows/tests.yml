@@ -68,7 +68,7 @@ jobs:
         vendor/bin/phpstan analyse src
 
     #generate package
-    - if:  ${{ matrix.composer-options == '--prefer-lowest' }}
+    - if:  ${{ matrix.composer-options == '' }}
       name: Package generation
       run: |
         composer require guzzlehttp/psr7:1.7.0
