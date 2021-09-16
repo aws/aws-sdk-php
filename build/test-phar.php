@@ -20,6 +20,8 @@ Aws\DynamoDb\DynamoDbClient::factory($conf);
 
 // React autoloader
 $checks = [
+    'GuzzleHttp\\Psr7\\stream_for',
+    'GuzzleHttp\\Promise\\inspect',
     'JmesPath\\search',
     'Aws\\dir_iterator',
 ];
