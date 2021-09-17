@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.194.1 - 2021-09-17
 
 * `Aws\DatabaseMigrationService` - Optional flag force-planned-failover added to reboot-replication-instance API call. This flag can be used to test a planned failover scenario used during some maintenance operations.
 * `Aws\ElasticsearchService` - This release adds an optional parameter in the ListDomainNames API to filter domains based on the engine type (OpenSearch/Elasticsearch).
