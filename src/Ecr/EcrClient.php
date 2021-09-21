@@ -24,6 +24,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteRepositoryAsync(array $args = [])
  * @method \Aws\Result deleteRepositoryPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteRepositoryPolicyAsync(array $args = [])
+ * @method \Aws\Result describeImageReplicationStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeImageReplicationStatusAsync(array $args = [])
  * @method \Aws\Result describeImageScanFindings(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeImageScanFindingsAsync(array $args = [])
  * @method \Aws\Result describeImages(array $args = [])

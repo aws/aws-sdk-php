@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Comprehend` - Amazon Comprehend now supports versioning of custom models, improved training with ONE_DOC_PER_FILE text documents for custom entity recognition, ability to provide specific test sets during training, and live migration to new model endpoints.
+* `Aws\EC2` - This update adds support for downloading configuration templates using new APIs (GetVpnConnectionDeviceTypes and GetVpnConnectionDeviceSampleConfiguration) and Internet Key Exchange version 2 (IKEv2) parameters for many popular CGW devices.
+* `Aws\ECR` - This release adds additional support for repository replication
+* `Aws\IoT` - This release adds support for verifying, viewing and filtering AWS IoT Device Defender detect violations with four verification states.
+* `Aws\Kafka` - Added StateInfo to ClusterInfo
+
 ## 3.194.1 - 2021-09-17
 
 * `Aws\DatabaseMigrationService` - Optional flag force-planned-failover added to reboot-replication-instance API call. This flag can be used to test a planned failover scenario used during some maintenance operations.
