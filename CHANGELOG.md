@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.194.3 - 2021-09-22
 
 * `Aws\IAM` - Added changes to OIDC API about not using port numbers in the URL.
 * `Aws\LexModelsV2` - This release adds support for utterances statistics for bots built using Lex V2 console and APIs. For details, see: https://docs.aws.amazon.com/lexv2/latest/dg/monitoring-utterances.html
