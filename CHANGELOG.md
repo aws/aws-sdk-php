@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppSync` - Documented the new OpenSearchServiceDataSourceConfig data type. Added deprecation notes to the ElasticsearchDataSourceConfig data type.
+* `Aws\MediaConvert` - This release adds style and positioning support for caption or subtitle burn-in from rich text sources such as TTML. This release also introduces configurable image-based trick play track generation.
+* `Aws\SSM` - Added cutoff behavior support for preventing new task invocations from starting when the maintenance window cutoff time is reached.
+
 ## 3.194.3 - 2021-09-22
 
 * `Aws\IAM` - Added changes to OIDC API about not using port numbers in the URL.
