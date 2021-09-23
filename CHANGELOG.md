@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.194.4 - 2021-09-23
 
 * `Aws\AppSync` - Documented the new OpenSearchServiceDataSourceConfig data type. Added deprecation notes to the ElasticsearchDataSourceConfig data type.
 * `Aws\MediaConvert` - This release adds style and positioning support for caption or subtitle burn-in from rich text sources such as TTML. This release also introduces configurable image-based trick play track generation.
