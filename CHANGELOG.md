@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - DescribeInstances now returns Platform Details, Usage Operation, and Usage Operation Update Time.
+* `Aws\LicenseManager` - AWS License Manager now allows customers to get the LicenseArn in the Checkout API Response.
+
 ## 3.194.4 - 2021-09-23
 
 * `Aws\AppSync` - Documented the new OpenSearchServiceDataSourceConfig data type. Added deprecation notes to the ElasticsearchDataSourceConfig data type.
