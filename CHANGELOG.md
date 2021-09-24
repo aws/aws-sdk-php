@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.194.5 - 2021-09-24
 
 * `Aws\EC2` - DescribeInstances now returns Platform Details, Usage Operation, and Usage Operation Update Time.
 * `Aws\LicenseManager` - AWS License Manager now allows customers to get the LicenseArn in the Checkout API Response.
