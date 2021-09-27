@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.195.0 - 2021-09-27
 
 * `Aws\AppIntegrationsService` - The Amazon AppIntegrations service enables you to configure and reuse connections to external applications.
 * `Aws\Connect` - This release updates a set of APIs: CreateIntegrationAssociation, ListIntegrationAssociations, CreateUseCase, and StartOutboundVoiceContact. You can use it to create integrations with Amazon Pinpoint for the Amazon Connect Campaigns use case, Amazon Connect Voice ID, and Amazon Connect Wisdom.
