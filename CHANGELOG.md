@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Transfer` - Added changes for managed workflows feature APIs.
+* `Aws\imagebuilder` - Fix description for AmiDistributionConfiguration Name property, which actually refers to the output AMI name. Also updated for consistent terminology to use "base" image, and another update to fix description text.
+
 ## 3.195.0 - 2021-09-27
 
 * `Aws\AppIntegrationsService` - The Amazon AppIntegrations service enables you to configure and reuse connections to external applications.
