@@ -134,6 +134,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionConnectContactLens(array $args = [])
  * @method \Aws\ConnectParticipant\ConnectParticipantClient createConnectParticipant(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionConnectParticipant(array $args = [])
+ * @method \Aws\ConnectWisdomService\ConnectWisdomServiceClient createConnectWisdomService(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionConnectWisdomService(array $args = [])
  * @method \Aws\CostExplorer\CostExplorerClient createCostExplorer(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCostExplorer(array $args = [])
  * @method \Aws\CostandUsageReportService\CostandUsageReportServiceClient createCostandUsageReportService(array $args = [])
@@ -284,6 +286,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionIotDataPlane(array $args = [])
  * @method \Aws\Kafka\KafkaClient createKafka(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionKafka(array $args = [])
+ * @method \Aws\KafkaConnect\KafkaConnectClient createKafkaConnect(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionKafkaConnect(array $args = [])
  * @method \Aws\Kinesis\KinesisClient createKinesis(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionKinesis(array $args = [])
  * @method \Aws\KinesisAnalytics\KinesisAnalyticsClient createKinesisAnalytics(array $args = [])
@@ -528,6 +532,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionTransfer(array $args = [])
  * @method \Aws\Translate\TranslateClient createTranslate(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionTranslate(array $args = [])
+ * @method \Aws\VoiceID\VoiceIDClient createVoiceID(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionVoiceID(array $args = [])
  * @method \Aws\WAFV2\WAFV2Client createWAFV2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionWAFV2(array $args = [])
  * @method \Aws\Waf\WafClient createWaf(array $args = [])
@@ -561,7 +567,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.193.0';
+    const VERSION = '3.195.0';
 
     /** @var array Arguments for creating clients */
     private $args;

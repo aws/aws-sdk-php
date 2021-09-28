@@ -3180,6 +3180,24 @@
       "input":{"shape":"GetTransitGatewayRouteTablePropagationsRequest"},
       "output":{"shape":"GetTransitGatewayRouteTablePropagationsResult"}
     },
+    "GetVpnConnectionDeviceSampleConfiguration":{
+      "name":"GetVpnConnectionDeviceSampleConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetVpnConnectionDeviceSampleConfigurationRequest"},
+      "output":{"shape":"GetVpnConnectionDeviceSampleConfigurationResult"}
+    },
+    "GetVpnConnectionDeviceTypes":{
+      "name":"GetVpnConnectionDeviceTypes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetVpnConnectionDeviceTypesRequest"},
+      "output":{"shape":"GetVpnConnectionDeviceTypesResult"}
+    },
     "ImportClientVpnClientCertificateRevocationList":{
       "name":"ImportClientVpnClientCertificateRevocationList",
       "http":{
@@ -4919,7 +4937,8 @@
       "enum":[
         "i386",
         "x86_64",
-        "arm64"
+        "arm64",
+        "x86_64_mac"
       ]
     },
     "ArnList":{
@@ -9559,6 +9578,7 @@
       "type":"structure",
       "required":["CidrBlock"],
       "members":{
+        "CidrBlock":{"shape":"String"},
         "AmazonProvidedIpv6CidrBlock":{
           "shape":"Boolean",
           "locationName":"amazonProvidedIpv6CidrBlock"
@@ -9577,8 +9597,7 @@
         "TagSpecifications":{
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
-        },
-        "CidrBlock":{"shape":"String"}
+        }
       }
     },
     "CreateVpcResult":{
@@ -15787,7 +15806,7 @@
           "locationName":"iops"
         },
         "SnapshotId":{
-          "shape":"String",
+          "shape":"SnapshotId",
           "locationName":"snapshotId"
         },
         "VolumeSize":{
@@ -17687,6 +17706,11 @@
       }
     },
     "FreeTierEligibleFlag":{"type":"boolean"},
+    "GVCDMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":200
+    },
     "GatewayType":{
       "type":"string",
       "enum":["ipsec.1"]
@@ -18331,6 +18355,49 @@
         }
       }
     },
+    "GetVpnConnectionDeviceSampleConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "VpnConnectionId",
+        "VpnConnectionDeviceTypeId"
+      ],
+      "members":{
+        "VpnConnectionId":{"shape":"VpnConnectionId"},
+        "VpnConnectionDeviceTypeId":{"shape":"VpnConnectionDeviceTypeId"},
+        "InternetKeyExchangeVersion":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetVpnConnectionDeviceSampleConfigurationResult":{
+      "type":"structure",
+      "members":{
+        "VpnConnectionDeviceSampleConfiguration":{
+          "shape":"VpnConnectionDeviceSampleConfiguration",
+          "locationName":"vpnConnectionDeviceSampleConfiguration"
+        }
+      }
+    },
+    "GetVpnConnectionDeviceTypesRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"GVCDMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetVpnConnectionDeviceTypesResult":{
+      "type":"structure",
+      "members":{
+        "VpnConnectionDeviceTypes":{
+          "shape":"VpnConnectionDeviceTypeList",
+          "locationName":"vpnConnectionDeviceTypeSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
     "GpuDeviceCount":{"type":"integer"},
     "GpuDeviceInfo":{
       "type":"structure",
@@ -18388,7 +18455,7 @@
     "GroupIdStringList":{
       "type":"list",
       "member":{
-        "shape":"String",
+        "shape":"SecurityGroupId",
         "locationName":"groupId"
       }
     },
@@ -19950,6 +20017,18 @@
         "BootMode":{
           "shape":"BootModeValues",
           "locationName":"bootMode"
+        },
+        "PlatformDetails":{
+          "shape":"String",
+          "locationName":"platformDetails"
+        },
+        "UsageOperation":{
+          "shape":"String",
+          "locationName":"usageOperation"
+        },
+        "UsageOperationUpdateTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"usageOperationUpdateTime"
         }
       }
     },
@@ -21428,7 +21507,10 @@
         "x2gd.8xlarge",
         "x2gd.12xlarge",
         "x2gd.16xlarge",
-        "x2gd.metal"
+        "x2gd.metal",
+        "vt1.3xlarge",
+        "vt1.6xlarge",
+        "vt1.24xlarge"
       ]
     },
     "InstanceTypeHypervisor":{
@@ -26036,7 +26118,7 @@
           "locationName":"affinity"
         },
         "GroupName":{
-          "shape":"String",
+          "shape":"PlacementGroupName",
           "locationName":"groupName"
         },
         "PartitionNumber":{
@@ -26147,7 +26229,7 @@
       "type":"structure",
       "members":{
         "GroupName":{
-          "shape":"String",
+          "shape":"PlacementGroupName",
           "locationName":"groupName"
         }
       }
@@ -28462,8 +28544,10 @@
     "ResourceType":{
       "type":"string",
       "enum":[
+        "capacity-reservation",
         "client-vpn-endpoint",
         "customer-gateway",
+        "carrier-gateway",
         "dedicated-host",
         "dhcp-options",
         "egress-only-internet-gateway",
@@ -28480,15 +28564,24 @@
         "instance",
         "instance-event-window",
         "internet-gateway",
+        "ipv4pool-ec2",
+        "ipv6pool-ec2",
         "key-pair",
         "launch-template",
+        "local-gateway",
+        "local-gateway-route-table",
+        "local-gateway-virtual-interface",
+        "local-gateway-virtual-interface-group",
         "local-gateway-route-table-vpc-association",
+        "local-gateway-route-table-virtual-interface-group-association",
         "natgateway",
         "network-acl",
         "network-interface",
         "network-insights-analysis",
         "network-insights-path",
         "placement-group",
+        "prefix-list",
+        "replace-root-volume-task",
         "reserved-instances",
         "route-table",
         "security-group",
@@ -28507,6 +28600,8 @@
         "transit-gateway-route-table",
         "volume",
         "vpc",
+        "vpc-endpoint",
+        "vpc-endpoint-service",
         "vpc-peering-connection",
         "vpn-connection",
         "vpn-gateway",
@@ -29539,13 +29634,13 @@
       ],
       "members":{
         "LocalGatewayRouteTableId":{"shape":"LocalGatewayRoutetableId"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"String"},
+        "DryRun":{"shape":"Boolean"},
         "Filters":{
           "shape":"FilterList",
           "locationName":"Filter"
-        },
-        "MaxResults":{"shape":"MaxResults"},
-        "NextToken":{"shape":"String"},
-        "DryRun":{"shape":"Boolean"}
+        }
       }
     },
     "SearchLocalGatewayRoutesResult":{
@@ -30360,7 +30455,7 @@
           "locationName":"iamInstanceProfile"
         },
         "ImageId":{
-          "shape":"String",
+          "shape":"ImageId",
           "locationName":"imageId"
         },
         "InstanceType":{
@@ -30372,7 +30467,7 @@
           "locationName":"kernelId"
         },
         "KeyName":{
-          "shape":"String",
+          "shape":"KeyPairName",
           "locationName":"keyName"
         },
         "Monitoring":{
@@ -30396,7 +30491,7 @@
           "locationName":"spotPrice"
         },
         "SubnetId":{
-          "shape":"String",
+          "shape":"SubnetId",
           "locationName":"subnetId"
         },
         "UserData":{
@@ -30823,7 +30918,7 @@
           "locationName":"availabilityZone"
         },
         "GroupName":{
-          "shape":"String",
+          "shape":"PlacementGroupName",
           "locationName":"groupName"
         },
         "Tenancy":{
@@ -34705,6 +34800,39 @@
           "shape":"VgwTelemetryList",
           "locationName":"vgwTelemetry"
         }
+      }
+    },
+    "VpnConnectionDeviceSampleConfiguration":{
+      "type":"string",
+      "sensitive":true
+    },
+    "VpnConnectionDeviceType":{
+      "type":"structure",
+      "members":{
+        "VpnConnectionDeviceTypeId":{
+          "shape":"String",
+          "locationName":"vpnConnectionDeviceTypeId"
+        },
+        "Vendor":{
+          "shape":"String",
+          "locationName":"vendor"
+        },
+        "Platform":{
+          "shape":"String",
+          "locationName":"platform"
+        },
+        "Software":{
+          "shape":"String",
+          "locationName":"software"
+        }
+      }
+    },
+    "VpnConnectionDeviceTypeId":{"type":"string"},
+    "VpnConnectionDeviceTypeList":{
+      "type":"list",
+      "member":{
+        "shape":"VpnConnectionDeviceType",
+        "locationName":"item"
       }
     },
     "VpnConnectionId":{"type":"string"},
