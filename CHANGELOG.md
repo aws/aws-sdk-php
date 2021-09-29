@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Lambda` - Adds support for Lambda functions powered by AWS Graviton2 processors. Customers can now select the CPU architecture for their functions.
+* `Aws\PrometheusService` - This release adds alert manager and rule group namespace APIs
+* `Aws\SesV2` - This release includes the ability to use 2048 bits RSA key pairs for DKIM in SES, either with Easy DKIM or Bring Your Own DKIM.
+
 ## 3.195.1 - 2021-09-28
 
 * `Aws\Transfer` - Added changes for managed workflows feature APIs.
