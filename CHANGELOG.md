@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.195.2 - 2021-09-29
 
 * `Aws\Lambda` - Adds support for Lambda functions powered by AWS Graviton2 processors. Customers can now select the CPU architecture for their functions.
 * `Aws\PrometheusService` - This release adds alert manager and rule group namespace APIs
