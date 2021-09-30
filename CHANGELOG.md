@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.196.0 - 2021-09-30
 
 * `Aws\Account` - This release of the Account Management API enables customers to manage the alternate contacts for their AWS accounts. For more information, see https://docs.aws.amazon.com/accounts/latest/reference/accounts-welcome.html
 * `Aws\CloudControlApi` - Initial release of the SDK for AWS Cloud Control API
