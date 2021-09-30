@@ -91,9 +91,15 @@ class Validator
     private function check_structure(StructureShape $shape, $value)
     {
         $isDocument = (isset($shape['document']) && $shape['document']);
+        $isUnion = (isset($shape['union']) && $shape['union']);
         if ($isDocument) {
             if (!$this->checkDocumentType($value)) {
                 $this->addError("is not a valid document type");
+                return;
+            }
+        } elseif ($isUnion) {
+            if (!$this->checkUnion($value)) {
+                $this->addError("is a union type and must have exactly one non null value");
                 return;
             }
         } elseif (!$this->checkAssociativeArray($value)) {
@@ -308,6 +314,20 @@ class Validator
             || is_numeric($value)
             || is_string($value)
             || is_bool($value);
+    }
+
+    private function checkUnion($value)
+    {
+        if (is_array($value)) {
+            $nonNullCount = 0;
+            foreach ($value as $key => $val) {
+                if (!is_null($val) && !(strpos($key, "@") === 0)) {
+                    $nonNullCount++;
+                }
+            }
+            return $nonNullCount == 1;
+        }
+        return !is_null($value);
     }
 
     private function addError($message)

@@ -547,6 +547,60 @@ class ValidatorTest extends TestCase
                 "Found 1 error while validating the input provided for the Foo operation:\n"
                 . "[documentVal] is not a valid document type"
             ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' => ["nestedVal" => [0]]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' => ["nestedVal" => ["doubleNestedVal" => [0]]]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' =>  null],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[unionVal] is a union type and must have exactly one non null value"
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' =>  ['nestedVal' => true, 'nestedVal2' => false], ],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[unionVal] is a union type and must have exactly one non null value"
+            ],
         ];
     }
 
