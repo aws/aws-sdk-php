@@ -117,6 +117,17 @@ class CredentialProvider
                 ? $_SERVER[EcsCredentialProvider::ENV_URI]
                 : false;
         }
+        
+        if($shouldUseEcsCredentialsProvider === false){
+        //check along ENV_FULL_URI
+        $shouldUseEcsCredentialsProvider = getenv(EcsCredentialProvider::ENV_FULL_URI);
+        // getenv() is not thread safe - fall back to $_SERVER
+        if ($shouldUseEcsCredentialsProvider === false) {
+            $shouldUseEcsCredentialsProvider = isset($_SERVER[EcsCredentialProvider::ENV_FULL_URI])
+                ? $_SERVER[EcsCredentialProvider::ENV_FULL_URI]
+                : false;
+        }
+        }
 
         if (!empty($shouldUseEcsCredentialsProvider)) {
             $defaultChain['ecs'] = self::ecsCredentials($config);
