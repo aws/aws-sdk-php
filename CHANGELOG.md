@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.196.1 - 2021-10-01
 
 * `Aws\AppRunner` - This release contains several minor bug fixes.
 * `Aws\SSM` - When "AutoApprovable" is true for a Change Template, then specifying --auto-approve (boolean) in Start-Change-Request-Execution will create a change request that bypasses approver review. (except for change calendar restrictions)
