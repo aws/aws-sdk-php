@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CodeBuild` - CodeBuild now allows you to select how batch build statuses are sent to the source provider for a project.
+* `Aws\EFS` - EFS adds a new exception for short identifiers to be thrown after its migration to long resource identifiers.
+* `Aws\KMS` - Added SDK examples for ConnectCustomKeyStore, CreateCustomKeyStore, CreateKey, DeleteCustomKeyStore, DescribeCustomKeyStores, DisconnectCustomKeyStore, GenerateDataKeyPair, GenerateDataKeyPairWithoutPlaintext, GetPublicKey, ReplicateKey, Sign, UpdateCustomKeyStore and Verify APIs
+
 ## 3.196.1 - 2021-10-01
 
 * `Aws\AppRunner` - This release contains several minor bug fixes.
