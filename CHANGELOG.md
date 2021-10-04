@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.196.2 - 2021-10-04
 
 * `Aws\CodeBuild` - CodeBuild now allows you to select how batch build statuses are sent to the source provider for a project.
 * `Aws\EFS` - EFS adds a new exception for short identifiers to be thrown after its migration to long resource identifiers.
