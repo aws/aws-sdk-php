@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.197.0 - 2021-10-05
 
 * `Aws\` - Added support for internal union types, allowing services to specify that exactly one of a number of input options needs to be non null
 * `Aws\ApplicationAutoScaling` - With this release, Application Auto Scaling adds support for Amazon Neptune. Customers can now automatically add or remove Read Replicas of their Neptune clusters to keep the average CPU Utilization at the target value specified by the customers.
