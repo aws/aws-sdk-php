@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.197.1 - 2021-10-06
 
 * `Aws\AmplifyBackend` - Adding a new field 'AmplifyFeatureFlags' to the response of the GetBackend operation. It will return a stringified version of the cli.json file for the given Amplify project.
 * `Aws\FSx` - This release adds support for Lustre 2.12 to FSx for Lustre.
