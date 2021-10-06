@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AmplifyBackend` - Adding a new field 'AmplifyFeatureFlags' to the response of the GetBackend operation. It will return a stringified version of the cli.json file for the given Amplify project.
+* `Aws\FSx` - This release adds support for Lustre 2.12 to FSx for Lustre.
+* `Aws\SageMaker` - This release adds a new TrainingInputMode FastFile for SageMaker Training APIs.
+* `Aws\kendra` - Amazon Kendra now supports integration with AWS SSO
+
 ## 3.197.0 - 2021-10-05
 
 * `Aws\` - Added support for internal union types, allowing services to specify that exactly one of a number of input options needs to be non null
