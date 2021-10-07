@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.198.0 - 2021-10-07
 
 * `Aws\Backup` - Launch of AWS Backup Vault Lock, which protects your backups from malicious and accidental actions, works with existing backup policies, and helps you meet compliance requirements.
 * `Aws\Chime` - This release enables customers to configure Chime MediaCapturePipeline via API.
