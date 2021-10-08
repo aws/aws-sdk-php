@@ -21,7 +21,7 @@ class SignatureV4 implements SignatureInterface
     private $service;
 
     /** @var string */
-    private $region;
+    protected $region;
 
     /** @var bool */
     private $unsigned;

@@ -62,6 +62,40 @@
       ],
       "idempotent":true
     },
+    "CreateFramework":{
+      "name":"CreateFramework",
+      "http":{
+        "method":"POST",
+        "requestUri":"/audit/frameworks"
+      },
+      "input":{"shape":"CreateFrameworkInput"},
+      "output":{"shape":"CreateFrameworkOutput"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
+    "CreateReportPlan":{
+      "name":"CreateReportPlan",
+      "http":{
+        "method":"POST",
+        "requestUri":"/audit/report-plans"
+      },
+      "input":{"shape":"CreateReportPlanInput"},
+      "output":{"shape":"CreateReportPlanOutput"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"MissingParameterValueException"}
+      ],
+      "idempotent":true
+    },
     "DeleteBackupPlan":{
       "name":"DeleteBackupPlan",
       "http":{
@@ -122,6 +156,22 @@
       ],
       "idempotent":true
     },
+    "DeleteBackupVaultLockConfiguration":{
+      "name":"DeleteBackupVaultLockConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/backup-vaults/{backupVaultName}/vault-lock"
+      },
+      "input":{"shape":"DeleteBackupVaultLockConfigurationInput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "DeleteBackupVaultNotifications":{
       "name":"DeleteBackupVaultNotifications",
       "http":{
@@ -137,6 +187,21 @@
       ],
       "idempotent":true
     },
+    "DeleteFramework":{
+      "name":"DeleteFramework",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/audit/frameworks/{frameworkName}"
+      },
+      "input":{"shape":"DeleteFrameworkInput"},
+      "errors":[
+        {"shape":"MissingParameterValueException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "DeleteRecoveryPoint":{
       "name":"DeleteRecoveryPoint",
       "http":{
@@ -151,6 +216,22 @@
         {"shape":"InvalidResourceStateException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"InvalidRequestException"}
+      ],
+      "idempotent":true
+    },
+    "DeleteReportPlan":{
+      "name":"DeleteReportPlan",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/audit/report-plans/{reportPlanName}"
+      },
+      "input":{"shape":"DeleteReportPlanInput"},
+      "errors":[
+        {"shape":"MissingParameterValueException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     },
@@ -202,6 +283,21 @@
         {"shape":"ServiceUnavailableException"}
       ],
       "idempotent":true
+    },
+    "DescribeFramework":{
+      "name":"DescribeFramework",
+      "http":{
+        "method":"GET",
+        "requestUri":"/audit/frameworks/{frameworkName}"
+      },
+      "input":{"shape":"DescribeFrameworkInput"},
+      "output":{"shape":"DescribeFrameworkOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
     },
     "DescribeGlobalSettings":{
       "name":"DescribeGlobalSettings",
@@ -257,6 +353,35 @@
       "input":{"shape":"DescribeRegionSettingsInput"},
       "output":{"shape":"DescribeRegionSettingsOutput"},
       "errors":[
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "DescribeReportJob":{
+      "name":"DescribeReportJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/audit/report-jobs/{reportJobId}"
+      },
+      "input":{"shape":"DescribeReportJobInput"},
+      "output":{"shape":"DescribeReportJobOutput"},
+      "errors":[
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DescribeReportPlan":{
+      "name":"DescribeReportPlan",
+      "http":{
+        "method":"GET",
+        "requestUri":"/audit/report-plans/{reportPlanName}"
+      },
+      "input":{"shape":"DescribeReportPlanInput"},
+      "output":{"shape":"DescribeReportPlanOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"ServiceUnavailableException"}
       ]
     },
@@ -536,6 +661,19 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "ListFrameworks":{
+      "name":"ListFrameworks",
+      "http":{
+        "method":"GET",
+        "requestUri":"/audit/frameworks"
+      },
+      "input":{"shape":"ListFrameworksInput"},
+      "output":{"shape":"ListFrameworksOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "ListProtectedResources":{
       "name":"ListProtectedResources",
       "http":{
@@ -582,6 +720,32 @@
       ],
       "idempotent":true
     },
+    "ListReportJobs":{
+      "name":"ListReportJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/audit/report-jobs"
+      },
+      "input":{"shape":"ListReportJobsInput"},
+      "output":{"shape":"ListReportJobsOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "ListReportPlans":{
+      "name":"ListReportPlans",
+      "http":{
+        "method":"GET",
+        "requestUri":"/audit/report-plans"
+      },
+      "input":{"shape":"ListReportPlansInput"},
+      "output":{"shape":"ListReportPlansOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "ListRestoreJobs":{
       "name":"ListRestoreJobs",
       "http":{
@@ -625,6 +789,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"MissingParameterValueException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
+    "PutBackupVaultLockConfiguration":{
+      "name":"PutBackupVaultLockConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/backup-vaults/{backupVaultName}/vault-lock"
+      },
+      "input":{"shape":"PutBackupVaultLockConfigurationInput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"InvalidRequestException"},
         {"shape":"ServiceUnavailableException"}
       ],
       "idempotent":true
@@ -677,6 +857,22 @@
         {"shape":"ServiceUnavailableException"},
         {"shape":"LimitExceededException"},
         {"shape":"InvalidRequestException"}
+      ],
+      "idempotent":true
+    },
+    "StartReportJob":{
+      "name":"StartReportJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/audit/report-jobs/{reportPlanName}"
+      },
+      "input":{"shape":"StartReportJobInput"},
+      "output":{"shape":"StartReportJobOutput"},
+      "errors":[
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ResourceNotFoundException"}
       ],
       "idempotent":true
     },
@@ -758,6 +954,25 @@
       ],
       "idempotent":true
     },
+    "UpdateFramework":{
+      "name":"UpdateFramework",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/audit/frameworks/{frameworkName}"
+      },
+      "input":{"shape":"UpdateFrameworkInput"},
+      "output":{"shape":"UpdateFrameworkOutput"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ConflictException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "UpdateGlobalSettings":{
       "name":"UpdateGlobalSettings",
       "http":{
@@ -800,6 +1015,23 @@
         {"shape":"MissingParameterValueException"},
         {"shape":"InvalidParameterValueException"}
       ]
+    },
+    "UpdateReportPlan":{
+      "name":"UpdateReportPlan",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/audit/report-plans/{reportPlanName}"
+      },
+      "input":{"shape":"UpdateReportPlanInput"},
+      "output":{"shape":"UpdateReportPlanOutput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"ConflictException"}
+      ],
+      "idempotent":true
     }
   },
   "shapes":{
@@ -1061,7 +1293,11 @@
         "CreationDate":{"shape":"timestamp"},
         "EncryptionKeyArn":{"shape":"ARN"},
         "CreatorRequestId":{"shape":"string"},
-        "NumberOfRecoveryPoints":{"shape":"long"}
+        "NumberOfRecoveryPoints":{"shape":"long"},
+        "Locked":{"shape":"Boolean"},
+        "MinRetentionDays":{"shape":"Long"},
+        "MaxRetentionDays":{"shape":"Long"},
+        "LockDate":{"shape":"timestamp"}
       }
     },
     "BackupVaultName":{
@@ -1075,6 +1311,12 @@
         "MoveToColdStorageAt":{"shape":"timestamp"},
         "DeleteAt":{"shape":"timestamp"}
       }
+    },
+    "ComplianceResourceIdList":{
+      "type":"list",
+      "member":{"shape":"string"},
+      "max":100,
+      "min":1
     },
     "Condition":{
       "type":"structure",
@@ -1095,6 +1337,36 @@
       "enum":["STRINGEQUALS"]
     },
     "ConditionValue":{"type":"string"},
+    "ConflictException":{
+      "type":"structure",
+      "members":{
+        "Code":{"shape":"string"},
+        "Message":{"shape":"string"},
+        "Type":{"shape":"string"},
+        "Context":{"shape":"string"}
+      },
+      "exception":true
+    },
+    "ControlInputParameter":{
+      "type":"structure",
+      "members":{
+        "ParameterName":{"shape":"ParameterName"},
+        "ParameterValue":{"shape":"ParameterValue"}
+      }
+    },
+    "ControlInputParameters":{
+      "type":"list",
+      "member":{"shape":"ControlInputParameter"}
+    },
+    "ControlName":{"type":"string"},
+    "ControlScope":{
+      "type":"structure",
+      "members":{
+        "ComplianceResourceIds":{"shape":"ComplianceResourceIdList"},
+        "ComplianceResourceTypes":{"shape":"ResourceTypeList"},
+        "Tags":{"shape":"stringMap"}
+      }
+    },
     "CopyAction":{
       "type":"structure",
       "required":["DestinationBackupVaultArn"],
@@ -1205,6 +1477,57 @@
         "CreationDate":{"shape":"timestamp"}
       }
     },
+    "CreateFrameworkInput":{
+      "type":"structure",
+      "required":[
+        "FrameworkName",
+        "FrameworkControls"
+      ],
+      "members":{
+        "FrameworkName":{"shape":"FrameworkName"},
+        "FrameworkDescription":{"shape":"FrameworkDescription"},
+        "FrameworkControls":{"shape":"FrameworkControls"},
+        "IdempotencyToken":{
+          "shape":"string",
+          "idempotencyToken":true
+        },
+        "FrameworkTags":{"shape":"stringMap"}
+      }
+    },
+    "CreateFrameworkOutput":{
+      "type":"structure",
+      "members":{
+        "FrameworkName":{"shape":"FrameworkName"},
+        "FrameworkArn":{"shape":"ARN"}
+      }
+    },
+    "CreateReportPlanInput":{
+      "type":"structure",
+      "required":[
+        "ReportPlanName",
+        "ReportDeliveryChannel",
+        "ReportSetting"
+      ],
+      "members":{
+        "ReportPlanName":{"shape":"ReportPlanName"},
+        "ReportPlanDescription":{"shape":"ReportPlanDescription"},
+        "ReportDeliveryChannel":{"shape":"ReportDeliveryChannel"},
+        "ReportSetting":{"shape":"ReportSetting"},
+        "ReportPlanTags":{"shape":"stringMap"},
+        "IdempotencyToken":{
+          "shape":"string",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateReportPlanOutput":{
+      "type":"structure",
+      "members":{
+        "ReportPlanName":{"shape":"ReportPlanName"},
+        "ReportPlanArn":{"shape":"ARN"},
+        "CreationTime":{"shape":"timestamp"}
+      }
+    },
     "CronExpression":{"type":"string"},
     "DeleteBackupPlanInput":{
       "type":"structure",
@@ -1267,6 +1590,17 @@
         }
       }
     },
+    "DeleteBackupVaultLockConfigurationInput":{
+      "type":"structure",
+      "required":["BackupVaultName"],
+      "members":{
+        "BackupVaultName":{
+          "shape":"BackupVaultName",
+          "location":"uri",
+          "locationName":"backupVaultName"
+        }
+      }
+    },
     "DeleteBackupVaultNotificationsInput":{
       "type":"structure",
       "required":["BackupVaultName"],
@@ -1275,6 +1609,17 @@
           "shape":"BackupVaultName",
           "location":"uri",
           "locationName":"backupVaultName"
+        }
+      }
+    },
+    "DeleteFrameworkInput":{
+      "type":"structure",
+      "required":["FrameworkName"],
+      "members":{
+        "FrameworkName":{
+          "shape":"FrameworkName",
+          "location":"uri",
+          "locationName":"frameworkName"
         }
       }
     },
@@ -1294,6 +1639,17 @@
           "shape":"ARN",
           "location":"uri",
           "locationName":"recoveryPointArn"
+        }
+      }
+    },
+    "DeleteReportPlanInput":{
+      "type":"structure",
+      "required":["ReportPlanName"],
+      "members":{
+        "ReportPlanName":{
+          "shape":"ReportPlanName",
+          "location":"uri",
+          "locationName":"reportPlanName"
         }
       }
     },
@@ -1363,7 +1719,11 @@
         "EncryptionKeyArn":{"shape":"ARN"},
         "CreationDate":{"shape":"timestamp"},
         "CreatorRequestId":{"shape":"string"},
-        "NumberOfRecoveryPoints":{"shape":"long"}
+        "NumberOfRecoveryPoints":{"shape":"long"},
+        "Locked":{"shape":"Boolean"},
+        "MinRetentionDays":{"shape":"Long"},
+        "MaxRetentionDays":{"shape":"Long"},
+        "LockDate":{"shape":"timestamp"}
       }
     },
     "DescribeCopyJobInput":{
@@ -1381,6 +1741,30 @@
       "type":"structure",
       "members":{
         "CopyJob":{"shape":"CopyJob"}
+      }
+    },
+    "DescribeFrameworkInput":{
+      "type":"structure",
+      "required":["FrameworkName"],
+      "members":{
+        "FrameworkName":{
+          "shape":"FrameworkName",
+          "location":"uri",
+          "locationName":"frameworkName"
+        }
+      }
+    },
+    "DescribeFrameworkOutput":{
+      "type":"structure",
+      "members":{
+        "FrameworkName":{"shape":"FrameworkName"},
+        "FrameworkArn":{"shape":"ARN"},
+        "FrameworkDescription":{"shape":"FrameworkDescription"},
+        "FrameworkControls":{"shape":"FrameworkControls"},
+        "CreationTime":{"shape":"timestamp"},
+        "DeploymentStatus":{"shape":"string"},
+        "FrameworkStatus":{"shape":"string"},
+        "IdempotencyToken":{"shape":"string"}
       }
     },
     "DescribeGlobalSettingsInput":{
@@ -1445,6 +1829,7 @@
         "CreatedBy":{"shape":"RecoveryPointCreator"},
         "IamRoleArn":{"shape":"IAMRoleArn"},
         "Status":{"shape":"RecoveryPointStatus"},
+        "StatusMessage":{"shape":"string"},
         "CreationDate":{"shape":"timestamp"},
         "CompletionDate":{"shape":"timestamp"},
         "BackupSizeInBytes":{"shape":"Long"},
@@ -1465,6 +1850,40 @@
       "type":"structure",
       "members":{
         "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"}
+      }
+    },
+    "DescribeReportJobInput":{
+      "type":"structure",
+      "required":["ReportJobId"],
+      "members":{
+        "ReportJobId":{
+          "shape":"ReportJobId",
+          "location":"uri",
+          "locationName":"reportJobId"
+        }
+      }
+    },
+    "DescribeReportJobOutput":{
+      "type":"structure",
+      "members":{
+        "ReportJob":{"shape":"ReportJob"}
+      }
+    },
+    "DescribeReportPlanInput":{
+      "type":"structure",
+      "required":["ReportPlanName"],
+      "members":{
+        "ReportPlanName":{
+          "shape":"ReportPlanName",
+          "location":"uri",
+          "locationName":"reportPlanName"
+        }
+      }
+    },
+    "DescribeReportPlanOutput":{
+      "type":"structure",
+      "members":{
+        "ReportPlan":{"shape":"ReportPlan"}
       }
     },
     "DescribeRestoreJobInput":{
@@ -1531,6 +1950,50 @@
       "members":{
         "BackupPlanTemplateJson":{"shape":"string"}
       }
+    },
+    "FormatList":{
+      "type":"list",
+      "member":{"shape":"string"}
+    },
+    "Framework":{
+      "type":"structure",
+      "members":{
+        "FrameworkName":{"shape":"FrameworkName"},
+        "FrameworkArn":{"shape":"ARN"},
+        "FrameworkDescription":{"shape":"FrameworkDescription"},
+        "NumberOfControls":{"shape":"integer"},
+        "CreationTime":{"shape":"timestamp"},
+        "DeploymentStatus":{"shape":"string"}
+      }
+    },
+    "FrameworkControl":{
+      "type":"structure",
+      "required":["ControlName"],
+      "members":{
+        "ControlName":{"shape":"ControlName"},
+        "ControlInputParameters":{"shape":"ControlInputParameters"},
+        "ControlScope":{"shape":"ControlScope"}
+      }
+    },
+    "FrameworkControls":{
+      "type":"list",
+      "member":{"shape":"FrameworkControl"}
+    },
+    "FrameworkDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":".*\\S.*"
+    },
+    "FrameworkList":{
+      "type":"list",
+      "member":{"shape":"Framework"}
+    },
+    "FrameworkName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z][_a-zA-Z0-9]*"
     },
     "GetBackupPlanFromJSONInput":{
       "type":"structure",
@@ -1991,6 +2454,28 @@
         "NextToken":{"shape":"string"}
       }
     },
+    "ListFrameworksInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"MaxFrameworkInputs",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListFrameworksOutput":{
+      "type":"structure",
+      "members":{
+        "Frameworks":{"shape":"FrameworkList"},
+        "NextToken":{"shape":"string"}
+      }
+    },
     "ListOfTags":{
       "type":"list",
       "member":{"shape":"Condition"}
@@ -2098,6 +2583,70 @@
         "RecoveryPoints":{"shape":"RecoveryPointByResourceList"}
       }
     },
+    "ListReportJobsInput":{
+      "type":"structure",
+      "members":{
+        "ByReportPlanName":{
+          "shape":"ReportPlanName",
+          "location":"querystring",
+          "locationName":"ReportPlanName"
+        },
+        "ByCreationBefore":{
+          "shape":"timestamp",
+          "location":"querystring",
+          "locationName":"CreationBefore"
+        },
+        "ByCreationAfter":{
+          "shape":"timestamp",
+          "location":"querystring",
+          "locationName":"CreationAfter"
+        },
+        "ByStatus":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Status"
+        },
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListReportJobsOutput":{
+      "type":"structure",
+      "members":{
+        "ReportJobs":{"shape":"ReportJobList"},
+        "NextToken":{"shape":"string"}
+      }
+    },
+    "ListReportPlansInput":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"MaxResults"
+        },
+        "NextToken":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"NextToken"
+        }
+      }
+    },
+    "ListReportPlansOutput":{
+      "type":"structure",
+      "members":{
+        "ReportPlans":{"shape":"ReportPlanList"},
+        "NextToken":{"shape":"string"}
+      }
+    },
     "ListRestoreJobsInput":{
       "type":"structure",
       "members":{
@@ -2169,6 +2718,11 @@
       }
     },
     "Long":{"type":"long"},
+    "MaxFrameworkInputs":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
     "MaxResults":{
       "type":"integer",
       "max":1000,
@@ -2192,6 +2746,8 @@
       },
       "exception":true
     },
+    "ParameterName":{"type":"string"},
+    "ParameterValue":{"type":"string"},
     "ProtectedResource":{
       "type":"structure",
       "members":{
@@ -2214,6 +2770,20 @@
           "locationName":"backupVaultName"
         },
         "Policy":{"shape":"IAMPolicy"}
+      }
+    },
+    "PutBackupVaultLockConfigurationInput":{
+      "type":"structure",
+      "required":["BackupVaultName"],
+      "members":{
+        "BackupVaultName":{
+          "shape":"BackupVaultName",
+          "location":"uri",
+          "locationName":"backupVaultName"
+        },
+        "MinRetentionDays":{"shape":"Long"},
+        "MaxRetentionDays":{"shape":"Long"},
+        "ChangeableForDays":{"shape":"Long"}
       }
     },
     "PutBackupVaultNotificationsInput":{
@@ -2245,6 +2815,7 @@
         "CreatedBy":{"shape":"RecoveryPointCreator"},
         "IamRoleArn":{"shape":"IAMRoleArn"},
         "Status":{"shape":"RecoveryPointStatus"},
+        "StatusMessage":{"shape":"string"},
         "CreationDate":{"shape":"timestamp"},
         "CompletionDate":{"shape":"timestamp"},
         "BackupSizeInBytes":{"shape":"Long"},
@@ -2265,6 +2836,7 @@
         "RecoveryPointArn":{"shape":"ARN"},
         "CreationDate":{"shape":"timestamp"},
         "Status":{"shape":"RecoveryPointStatus"},
+        "StatusMessage":{"shape":"string"},
         "EncryptionKeyArn":{"shape":"ARN"},
         "BackupSizeBytes":{"shape":"Long"},
         "BackupVaultName":{"shape":"BackupVaultName"}
@@ -2292,6 +2864,79 @@
         "EXPIRED"
       ]
     },
+    "ReportDeliveryChannel":{
+      "type":"structure",
+      "required":["S3BucketName"],
+      "members":{
+        "S3BucketName":{"shape":"string"},
+        "S3KeyPrefix":{"shape":"string"},
+        "Formats":{"shape":"FormatList"}
+      }
+    },
+    "ReportDestination":{
+      "type":"structure",
+      "members":{
+        "S3BucketName":{"shape":"string"},
+        "S3Keys":{"shape":"stringList"}
+      }
+    },
+    "ReportJob":{
+      "type":"structure",
+      "members":{
+        "ReportJobId":{"shape":"ReportJobId"},
+        "ReportPlanArn":{"shape":"ARN"},
+        "ReportTemplate":{"shape":"string"},
+        "CreationTime":{"shape":"timestamp"},
+        "CompletionTime":{"shape":"timestamp"},
+        "Status":{"shape":"string"},
+        "StatusMessage":{"shape":"string"},
+        "ReportDestination":{"shape":"ReportDestination"}
+      }
+    },
+    "ReportJobId":{"type":"string"},
+    "ReportJobList":{
+      "type":"list",
+      "member":{"shape":"ReportJob"}
+    },
+    "ReportPlan":{
+      "type":"structure",
+      "members":{
+        "ReportPlanArn":{"shape":"ARN"},
+        "ReportPlanName":{"shape":"ReportPlanName"},
+        "ReportPlanDescription":{"shape":"ReportPlanDescription"},
+        "ReportSetting":{"shape":"ReportSetting"},
+        "ReportDeliveryChannel":{"shape":"ReportDeliveryChannel"},
+        "DeploymentStatus":{"shape":"string"},
+        "CreationTime":{"shape":"timestamp"},
+        "LastAttemptedExecutionTime":{"shape":"timestamp"},
+        "LastSuccessfulExecutionTime":{"shape":"timestamp"}
+      }
+    },
+    "ReportPlanDescription":{
+      "type":"string",
+      "max":1024,
+      "min":0,
+      "pattern":".*\\S.*"
+    },
+    "ReportPlanList":{
+      "type":"list",
+      "member":{"shape":"ReportPlan"}
+    },
+    "ReportPlanName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z][_a-zA-Z0-9]*"
+    },
+    "ReportSetting":{
+      "type":"structure",
+      "required":["ReportTemplate"],
+      "members":{
+        "ReportTemplate":{"shape":"string"},
+        "FrameworkArns":{"shape":"stringList"},
+        "NumberOfFrameworks":{"shape":"integer"}
+      }
+    },
     "ResourceArns":{
       "type":"list",
       "member":{"shape":"ARN"}
@@ -2309,6 +2954,10 @@
     "ResourceType":{
       "type":"string",
       "pattern":"^[a-zA-Z0-9\\-\\_\\.]{1,50}$"
+    },
+    "ResourceTypeList":{
+      "type":"list",
+      "member":{"shape":"ARN"}
     },
     "ResourceTypeOptInPreference":{
       "type":"map",
@@ -2412,6 +3061,27 @@
       "members":{
         "CopyJobId":{"shape":"string"},
         "CreationDate":{"shape":"timestamp"}
+      }
+    },
+    "StartReportJobInput":{
+      "type":"structure",
+      "required":["ReportPlanName"],
+      "members":{
+        "ReportPlanName":{
+          "shape":"ReportPlanName",
+          "location":"uri",
+          "locationName":"reportPlanName"
+        },
+        "IdempotencyToken":{
+          "shape":"string",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartReportJobOutput":{
+      "type":"structure",
+      "members":{
+        "ReportJobId":{"shape":"ReportJobId"}
       }
     },
     "StartRestoreJobInput":{
@@ -2522,6 +3192,31 @@
         "AdvancedBackupSettings":{"shape":"AdvancedBackupSettings"}
       }
     },
+    "UpdateFrameworkInput":{
+      "type":"structure",
+      "required":["FrameworkName"],
+      "members":{
+        "FrameworkName":{
+          "shape":"FrameworkName",
+          "location":"uri",
+          "locationName":"frameworkName"
+        },
+        "FrameworkDescription":{"shape":"FrameworkDescription"},
+        "FrameworkControls":{"shape":"FrameworkControls"},
+        "IdempotencyToken":{
+          "shape":"string",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateFrameworkOutput":{
+      "type":"structure",
+      "members":{
+        "FrameworkName":{"shape":"FrameworkName"},
+        "FrameworkArn":{"shape":"ARN"},
+        "CreationTime":{"shape":"timestamp"}
+      }
+    },
     "UpdateGlobalSettingsInput":{
       "type":"structure",
       "members":{
@@ -2563,10 +3258,46 @@
         "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"}
       }
     },
+    "UpdateReportPlanInput":{
+      "type":"structure",
+      "required":["ReportPlanName"],
+      "members":{
+        "ReportPlanName":{
+          "shape":"ReportPlanName",
+          "location":"uri",
+          "locationName":"reportPlanName"
+        },
+        "ReportPlanDescription":{"shape":"ReportPlanDescription"},
+        "ReportDeliveryChannel":{"shape":"ReportDeliveryChannel"},
+        "ReportSetting":{"shape":"ReportSetting"},
+        "IdempotencyToken":{
+          "shape":"string",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdateReportPlanOutput":{
+      "type":"structure",
+      "members":{
+        "ReportPlanName":{"shape":"ReportPlanName"},
+        "ReportPlanArn":{"shape":"ARN"},
+        "CreationTime":{"shape":"timestamp"}
+      }
+    },
     "WindowMinutes":{"type":"long"},
     "boolean":{"type":"boolean"},
+    "integer":{"type":"integer"},
     "long":{"type":"long"},
     "string":{"type":"string"},
+    "stringList":{
+      "type":"list",
+      "member":{"shape":"string"}
+    },
+    "stringMap":{
+      "type":"map",
+      "key":{"shape":"string"},
+      "value":{"shape":"string"}
+    },
     "timestamp":{"type":"timestamp"}
   }
 }

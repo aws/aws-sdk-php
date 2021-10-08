@@ -181,6 +181,22 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DeregisterCluster":{
+      "name":"DeregisterCluster",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/cluster-registrations/{name}"
+      },
+      "input":{"shape":"DeregisterClusterRequest"},
+      "output":{"shape":"DeregisterClusterResponse"},
+      "errors":[
+        {"shape":"ResourceInUseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ClientException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "DescribeAddon":{
       "name":"DescribeAddon",
       "http":{
@@ -411,6 +427,22 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "RegisterCluster":{
+      "name":"RegisterCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cluster-registrations"
+      },
+      "input":{"shape":"RegisterClusterRequest"},
+      "output":{"shape":"RegisterClusterResponse"},
+      "errors":[
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -579,7 +611,8 @@
         "InsufficientNumberOfReplicas",
         "ConfigurationConflict",
         "AdmissionRequestDenied",
-        "UnsupportedAddonModification"
+        "UnsupportedAddonModification",
+        "K8sResourceNotFound"
       ]
     },
     "AddonIssueList":{
@@ -740,7 +773,8 @@
         "clientRequestToken":{"shape":"String"},
         "platformVersion":{"shape":"String"},
         "tags":{"shape":"TagMap"},
-        "encryptionConfig":{"shape":"EncryptionConfigList"}
+        "encryptionConfig":{"shape":"EncryptionConfigList"},
+        "connectorConfig":{"shape":"ConnectorConfigResponse"}
       }
     },
     "ClusterName":{
@@ -756,7 +790,8 @@
         "ACTIVE",
         "DELETING",
         "FAILED",
-        "UPDATING"
+        "UPDATING",
+        "PENDING"
       ]
     },
     "Compatibilities":{
@@ -769,6 +804,41 @@
         "clusterVersion":{"shape":"String"},
         "platformVersions":{"shape":"StringList"},
         "defaultVersion":{"shape":"Boolean"}
+      }
+    },
+    "ConnectorConfigProvider":{
+      "type":"string",
+      "enum":[
+        "EKS_ANYWHERE",
+        "ANTHOS",
+        "GKE",
+        "AKS",
+        "OPENSHIFT",
+        "TANZU",
+        "RANCHER",
+        "EC2",
+        "OTHER"
+      ]
+    },
+    "ConnectorConfigRequest":{
+      "type":"structure",
+      "required":[
+        "roleArn",
+        "provider"
+      ],
+      "members":{
+        "roleArn":{"shape":"String"},
+        "provider":{"shape":"ConnectorConfigProvider"}
+      }
+    },
+    "ConnectorConfigResponse":{
+      "type":"structure",
+      "members":{
+        "activationId":{"shape":"String"},
+        "activationCode":{"shape":"String"},
+        "activationExpiry":{"shape":"Timestamp"},
+        "provider":{"shape":"String"},
+        "roleArn":{"shape":"String"}
       }
     },
     "CreateAddonRequest":{
@@ -916,6 +986,11 @@
           "shape":"String",
           "location":"uri",
           "locationName":"addonName"
+        },
+        "preserve":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"preserve"
         }
       }
     },
@@ -990,6 +1065,23 @@
       "type":"structure",
       "members":{
         "nodegroup":{"shape":"Nodegroup"}
+      }
+    },
+    "DeregisterClusterRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DeregisterClusterResponse":{
+      "type":"structure",
+      "members":{
+        "cluster":{"shape":"Cluster"}
       }
     },
     "DescribeAddonRequest":{
@@ -1233,7 +1325,8 @@
         "InsufficientNumberOfReplicas",
         "ConfigurationConflict",
         "AdmissionRequestDenied",
-        "UnsupportedAddonModification"
+        "UnsupportedAddonModification",
+        "K8sResourceNotFound"
       ]
     },
     "ErrorDetail":{
@@ -1320,6 +1413,10 @@
     "IdentityProviderConfigs":{
       "type":"list",
       "member":{"shape":"IdentityProviderConfig"}
+    },
+    "IncludeClustersList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "InvalidParameterException":{
       "type":"structure",
@@ -1422,6 +1519,11 @@
           "shape":"String",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "include":{
+          "shape":"IncludeClustersList",
+          "location":"querystring",
+          "locationName":"include"
         }
       }
     },
@@ -1781,6 +1883,27 @@
       "type":"structure",
       "members":{
         "keyArn":{"shape":"String"}
+      }
+    },
+    "RegisterClusterRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "connectorConfig"
+      ],
+      "members":{
+        "name":{"shape":"ClusterName"},
+        "connectorConfig":{"shape":"ConnectorConfigRequest"},
+        "clientRequestToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "RegisterClusterResponse":{
+      "type":"structure",
+      "members":{
+        "cluster":{"shape":"Cluster"}
       }
     },
     "RemoteAccessConfig":{

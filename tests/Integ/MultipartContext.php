@@ -5,7 +5,9 @@ namespace Aws\Test\Integ;
 use Aws\Exception\MultipartUploadException;
 use Aws\Glacier\MultipartUploader as GlacierMultipartUploader;
 use Aws\ResultInterface;
+use Aws\S3\MultipartCopy;
 use Aws\S3\MultipartUploader as S3MultipartUploader;
+use Aws\S3\S3Client;
 use Behat\Behat\Tester\Exception\PendingException;
 use Aws\S3\BatchDelete;
 use Behat\Behat\Context\Context;
@@ -32,6 +34,10 @@ class MultipartContext implements Context, SnippetAcceptingContext
     private $stream;
     /** @var ResultInterface */
     private $result;
+    /** @var S3Client */
+    private $s3Client;
+    /** @var string */
+    private $filename;
 
     /**
      * @Given I have a seekable read stream
@@ -39,6 +45,23 @@ class MultipartContext implements Context, SnippetAcceptingContext
     public function iHaveASeekableReadStream()
     {
         $this->stream = Psr7\Utils::streamFor(Psr7\Utils::tryFopen(self::$tempFile, 'r'));
+    }
+
+    /**
+     * @Given I have an s3 client and an uploaded file named :filename
+     */
+    public function iHaveAnS3ClientAndAnUploadedFileNamed($filename)
+    {
+        $this->s3Client = self::getSdk()->createS3();
+        $this->filename = $filename;
+        $this->s3Client->putObject([
+            'Bucket' => self::getResourceName(),
+            'Key' => $filename,
+            'Body' => 'foo'
+        ]);
+        $ex = $this->s3Client->getObject( [
+            'Bucket' => self::getResourceName(),
+            'Key' => $filename])['Body'];
     }
 
     /**
@@ -94,12 +117,56 @@ class MultipartContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @When I call multipartCopy on :filename to a new key in the same bucket
+     */
+    public function iCallMultipartCopyOnToANewKeyInTheSameBucket($filename)
+    {
+        $bucketName = self::getResourceName();
+        //if it has a question mark, use overloaded source parameter
+        $source = strpos($filename, '?') !== false
+            ? ['source_key' => $filename, 'source_bucket' => $bucketName]
+            : '/' . $bucketName . '/' . $filename;
+
+        $copier = new MultipartCopy(
+            $this->s3Client,
+            $source,
+            ['bucket' => $bucketName, 'key' => $filename . "-copy"]
+        );
+
+        try {
+            $this->result = $copier->copy();
+        } catch (MultipartUploadException $e) {
+            $this->s3Client->abortMultipartUpload($e->getState()->getId());
+            $message = "=====\n";
+            while ($e) {
+                $message .= $e->getMessage() . "\n";
+                $e = $e->getPrevious();
+            }
+            $message .= "=====\n";
+            Assert::fail($message);
+        }
+    }
+
+    /**
      * @Then /^the result should contain a\(n\) "([^"]+)"$/
      */
     public function theResultShouldContainA($key)
     {
         Assert::assertArrayHasKey($key, $this->result);
     }
+
+    /**
+     * @Then the new file should be in the bucket copied from :filename
+     */
+    public function theNewFileShouldBeInTheBucket($filename)
+    {
+        Assert::assertEquals(
+            'foo',
+            $this->s3Client->getObject([
+                'Bucket' => self::getResourceName(),
+                'Key' => $filename . '-copy',
+            ])['Body']->getContents()
+        );    }
 
     /**
      * @Given I have a non-seekable read stream

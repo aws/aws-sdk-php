@@ -1565,6 +1565,21 @@
         }
       ]
     },
+    "ListManagedDataIdentifiers": {
+      "name": "ListManagedDataIdentifiers",
+      "http": {
+        "method": "POST",
+        "requestUri": "/managed-data-identifiers/list",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListManagedDataIdentifiersRequest"
+      },
+      "output": {
+        "shape": "ListManagedDataIdentifiersResponse"
+      },
+      "errors": []
+    },
     "ListMembers": {
       "name": "ListMembers",
       "http": {
@@ -2433,6 +2448,14 @@
           "shape": "__long",
           "locationName": "classifiableSizeInBytes"
         },
+        "errorCode": {
+          "shape": "BucketMetadataErrorCode",
+          "locationName": "errorCode"
+        },
+        "errorMessage": {
+          "shape": "__string",
+          "locationName": "errorMessage"
+        },
         "jobDetails": {
           "shape": "JobDetails",
           "locationName": "jobDetails"
@@ -2494,6 +2517,12 @@
           "locationName": "versioning"
         }
       }
+    },
+    "BucketMetadataErrorCode": {
+      "type": "string",
+      "enum": [
+        "ACCESS_DENIED"
+      ]
     },
     "BucketPermissionConfiguration": {
       "type": "structure",
@@ -2695,6 +2724,14 @@
         "jobType": {
           "shape": "JobType",
           "locationName": "jobType"
+        },
+        "managedDataIdentifierIds": {
+          "shape": "__listOf__string",
+          "locationName": "managedDataIdentifierIds"
+        },
+        "managedDataIdentifierSelector": {
+          "shape": "ManagedDataIdentifierSelector",
+          "locationName": "managedDataIdentifierSelector"
         },
         "name": {
           "shape": "__string",
@@ -3264,6 +3301,14 @@
         "lastRunTime": {
           "shape": "__timestampIso8601",
           "locationName": "lastRunTime"
+        },
+        "managedDataIdentifierIds": {
+          "shape": "__listOf__string",
+          "locationName": "managedDataIdentifierIds"
+        },
+        "managedDataIdentifierSelector": {
+          "shape": "ManagedDataIdentifierSelector",
+          "locationName": "managedDataIdentifierSelector"
         },
         "name": {
           "shape": "__string",
@@ -4680,6 +4725,28 @@
         }
       }
     },
+    "ListManagedDataIdentifiersRequest": {
+      "type": "structure",
+      "members": {
+        "nextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListManagedDataIdentifiersResponse": {
+      "type": "structure",
+      "members": {
+        "items": {
+          "shape": "__listOfManagedDataIdentifierSummary",
+          "locationName": "items"
+        },
+        "nextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
     "ListMembersRequest": {
       "type": "structure",
       "members": {
@@ -4770,6 +4837,28 @@
         "ENABLED"
       ]
     },
+    "ManagedDataIdentifierSelector": {
+      "type": "string",
+      "enum": [
+        "ALL",
+        "EXCLUDE",
+        "INCLUDE",
+        "NONE"
+      ]
+    },
+    "ManagedDataIdentifierSummary": {
+      "type": "structure",
+      "members": {
+        "category": {
+          "shape": "SensitiveDataItemCategory",
+          "locationName": "category"
+        },
+        "id": {
+          "shape": "__string",
+          "locationName": "id"
+        }
+      }
+    },
     "MatchingBucket": {
       "type": "structure",
       "members": {
@@ -4788,6 +4877,14 @@
         "classifiableSizeInBytes": {
           "shape": "__long",
           "locationName": "classifiableSizeInBytes"
+        },
+        "errorCode": {
+          "shape": "BucketMetadataErrorCode",
+          "locationName": "errorCode"
+        },
+        "errorMessage": {
+          "shape": "__string",
+          "locationName": "errorMessage"
         },
         "jobDetails": {
           "shape": "JobDetails",
@@ -6379,6 +6476,12 @@
       "type": "list",
       "member": {
         "shape": "ListJobsFilterTerm"
+      }
+    },
+    "__listOfManagedDataIdentifierSummary": {
+      "type": "list",
+      "member": {
+        "shape": "ManagedDataIdentifierSummary"
       }
     },
     "__listOfMatchingResource": {

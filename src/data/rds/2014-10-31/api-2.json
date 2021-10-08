@@ -3339,6 +3339,7 @@
         "DBClusterParameterGroup":{"shape":"String"},
         "DBSubnetGroup":{"shape":"String"},
         "Status":{"shape":"String"},
+        "AutomaticRestartTime":{"shape":"TStamp"},
         "PercentProgress":{"shape":"String"},
         "EarliestRestorableTime":{"shape":"TStamp"},
         "Endpoint":{"shape":"String"},
@@ -3807,6 +3808,7 @@
         "DBInstanceClass":{"shape":"String"},
         "Engine":{"shape":"String"},
         "DBInstanceStatus":{"shape":"String"},
+        "AutomaticRestartTime":{"shape":"TStamp"},
         "MasterUsername":{"shape":"String"},
         "DBName":{"shape":"String"},
         "Endpoint":{"shape":"Endpoint"},
@@ -4487,7 +4489,8 @@
         "IAMDatabaseAuthenticationEnabled":{"shape":"Boolean"},
         "ProcessorFeatures":{"shape":"ProcessorFeatureList"},
         "DbiResourceId":{"shape":"String"},
-        "TagList":{"shape":"TagList"}
+        "TagList":{"shape":"TagList"},
+        "OriginalSnapshotCreateTime":{"shape":"TStamp"}
       },
       "wrapper":true
     },
@@ -7668,7 +7671,8 @@
         "MaxCapacity":{"shape":"IntegerOptional"},
         "AutoPause":{"shape":"BooleanOptional"},
         "SecondsUntilAutoPause":{"shape":"IntegerOptional"},
-        "TimeoutAction":{"shape":"String"}
+        "TimeoutAction":{"shape":"String"},
+        "SecondsBeforeTimeout":{"shape":"IntegerOptional"}
       }
     },
     "ScalingConfigurationInfo":{
@@ -7678,7 +7682,8 @@
         "MaxCapacity":{"shape":"IntegerOptional"},
         "AutoPause":{"shape":"BooleanOptional"},
         "SecondsUntilAutoPause":{"shape":"IntegerOptional"},
-        "TimeoutAction":{"shape":"String"}
+        "TimeoutAction":{"shape":"String"},
+        "SecondsBeforeTimeout":{"shape":"IntegerOptional"}
       }
     },
     "SharedSnapshotQuotaExceededFault":{

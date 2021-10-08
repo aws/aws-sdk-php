@@ -196,6 +196,40 @@
     }
   },
   "shapes":{
+    "ArtifactConfigInput":{
+      "type":"structure",
+      "members":{
+        "S3Encryption":{"shape":"S3EncryptionConfig"}
+      }
+    },
+    "ArtifactConfigOutput":{
+      "type":"structure",
+      "members":{
+        "S3Encryption":{"shape":"S3EncryptionConfig"}
+      }
+    },
+    "BaseScreenshot":{
+      "type":"structure",
+      "required":["ScreenshotName"],
+      "members":{
+        "ScreenshotName":{"shape":"String"},
+        "IgnoreCoordinates":{"shape":"BaseScreenshotIgnoreCoordinates"}
+      }
+    },
+    "BaseScreenshotConfigIgnoreCoordinate":{
+      "type":"string",
+      "pattern":"^(-?\\d{1,5}\\.?\\d{0,2},){3}(-?\\d{1,5}\\.?\\d{0,2}){1}$"
+    },
+    "BaseScreenshotIgnoreCoordinates":{
+      "type":"list",
+      "member":{"shape":"BaseScreenshotConfigIgnoreCoordinate"},
+      "max":20,
+      "min":0
+    },
+    "BaseScreenshots":{
+      "type":"list",
+      "member":{"shape":"BaseScreenshot"}
+    },
     "Blob":{
       "type":"blob",
       "max":10000000,
@@ -226,7 +260,9 @@
         "EngineArn":{"shape":"FunctionArn"},
         "RuntimeVersion":{"shape":"String"},
         "VpcConfig":{"shape":"VpcConfigOutput"},
-        "Tags":{"shape":"TagMap"}
+        "VisualReference":{"shape":"VisualReferenceOutput"},
+        "Tags":{"shape":"TagMap"},
+        "ArtifactConfig":{"shape":"ArtifactConfigOutput"}
       }
     },
     "CanaryArn":{
@@ -406,7 +442,8 @@
         "FailureRetentionPeriodInDays":{"shape":"MaxSize1024"},
         "RuntimeVersion":{"shape":"String"},
         "VpcConfig":{"shape":"VpcConfigInput"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "ArtifactConfig":{"shape":"ArtifactConfigInput"}
       }
     },
     "CreateCanaryResponse":{
@@ -473,6 +510,13 @@
         "NextToken":{"shape":"Token"}
       }
     },
+    "EncryptionMode":{
+      "type":"string",
+      "enum":[
+        "SSE_S3",
+        "SSE_KMS"
+      ]
+    },
     "EnvironmentVariableName":{
       "type":"string",
       "pattern":"[a-zA-Z]([a-zA-Z0-9_])+"
@@ -534,6 +578,12 @@
       },
       "error":{"httpStatusCode":500},
       "exception":true
+    },
+    "KmsKeyArn":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"arn:(aws[a-zA-Z-]*)?:kms:[a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:\\d{12}:key/[\\w\\-\\/]+"
     },
     "ListTagsForResourceRequest":{
       "type":"structure",
@@ -609,6 +659,13 @@
     "RuntimeVersionList":{
       "type":"list",
       "member":{"shape":"RuntimeVersion"}
+    },
+    "S3EncryptionConfig":{
+      "type":"structure",
+      "members":{
+        "EncryptionMode":{"shape":"EncryptionMode"},
+        "KmsKeyArn":{"shape":"KmsKeyArn"}
+      }
     },
     "SecurityGroupId":{"type":"string"},
     "SecurityGroupIds":{
@@ -754,7 +811,10 @@
         "RunConfig":{"shape":"CanaryRunConfigInput"},
         "SuccessRetentionPeriodInDays":{"shape":"MaxSize1024"},
         "FailureRetentionPeriodInDays":{"shape":"MaxSize1024"},
-        "VpcConfig":{"shape":"VpcConfigInput"}
+        "VpcConfig":{"shape":"VpcConfigInput"},
+        "VisualReference":{"shape":"VisualReferenceInput"},
+        "ArtifactS3Location":{"shape":"String"},
+        "ArtifactConfig":{"shape":"ArtifactConfigInput"}
       }
     },
     "UpdateCanaryResponse":{
@@ -769,6 +829,21 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "VisualReferenceInput":{
+      "type":"structure",
+      "required":["BaseCanaryRunId"],
+      "members":{
+        "BaseScreenshots":{"shape":"BaseScreenshots"},
+        "BaseCanaryRunId":{"shape":"String"}
+      }
+    },
+    "VisualReferenceOutput":{
+      "type":"structure",
+      "members":{
+        "BaseScreenshots":{"shape":"BaseScreenshots"},
+        "BaseCanaryRunId":{"shape":"String"}
+      }
     },
     "VpcConfigInput":{
       "type":"structure",

@@ -12,6 +12,21 @@
     "uid": "mediatailor-2018-04-23"
   },
   "operations": {
+    "ConfigureLogsForPlaybackConfiguration": {
+      "errors": [],
+      "http": {
+        "method": "PUT",
+        "requestUri": "/configureLogs/playbackConfiguration",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ConfigureLogsForPlaybackConfigurationRequest"
+      },
+      "name": "ConfigureLogsForPlaybackConfiguration",
+      "output": {
+        "shape": "ConfigureLogsForPlaybackConfigurationResponse"
+      }
+    },
     "CreateChannel": {
       "errors": [],
       "http": {
@@ -629,6 +644,9 @@
         "CreationTime": {
           "shape": "__timestampUnix"
         },
+        "FillerSlate": {
+          "shape": "SlateSource"
+        },
         "LastModifiedTime": {
           "shape": "__timestampUnix"
         },
@@ -677,12 +695,41 @@
         "shape": "__mapOf__string"
       }
     },
+    "ConfigureLogsForPlaybackConfigurationRequest": {
+      "members": {
+        "PercentEnabled": {
+          "shape": "__integer"
+        },
+        "PlaybackConfigurationName": {
+          "shape": "__string"
+        }
+      },
+      "required": [
+        "PercentEnabled",
+        "PlaybackConfigurationName"
+      ],
+      "type": "structure"
+    },
+    "ConfigureLogsForPlaybackConfigurationResponse": {
+      "members": {
+        "PercentEnabled": {
+          "shape": "__integer"
+        },
+        "PlaybackConfigurationName": {
+          "shape": "__string"
+        }
+      },
+      "type": "structure"
+    },
     "CreateChannelRequest": {
       "members": {
         "ChannelName": {
           "location": "uri",
           "locationName": "channelName",
           "shape": "__string"
+        },
+        "FillerSlate": {
+          "shape": "SlateSource"
         },
         "Outputs": {
           "shape": "RequestOutputs"
@@ -715,6 +762,9 @@
         },
         "CreationTime": {
           "shape": "__timestampUnix"
+        },
+        "FillerSlate": {
+          "shape": "SlateSource"
         },
         "LastModifiedTime": {
           "shape": "__timestampUnix"
@@ -782,6 +832,9 @@
         },
         "ProgramName": {
           "shape": "__string"
+        },
+        "ScheduledStartTime": {
+          "shape": "__timestampUnix"
         },
         "SourceLocationName": {
           "shape": "__string"
@@ -1094,6 +1147,9 @@
         "CreationTime": {
           "shape": "__timestampUnix"
         },
+        "FillerSlate": {
+          "shape": "SlateSource"
+        },
         "LastModifiedTime": {
           "shape": "__timestampUnix"
         },
@@ -1145,6 +1201,9 @@
         },
         "ProgramName": {
           "shape": "__string"
+        },
+        "ScheduledStartTime": {
+          "shape": "__timestampUnix"
         },
         "SourceLocationName": {
           "shape": "__string"
@@ -1342,6 +1401,9 @@
         },
         "LivePreRollConfiguration": {
           "shape": "LivePreRollConfiguration"
+        },
+        "LogConfiguration": {
+          "shape": "LogConfiguration"
         },
         "ManifestProcessingRules": {
           "shape": "ManifestProcessingRules"
@@ -1608,6 +1670,17 @@
       },
       "type": "structure"
     },
+    "LogConfiguration": {
+      "members": {
+        "PercentEnabled": {
+          "shape": "__integer"
+        }
+      },
+      "required": [
+        "PercentEnabled"
+      ],
+      "type": "structure"
+    },
     "ManifestProcessingRules": {
       "members": {
         "AdMarkerPassthrough": {
@@ -1667,6 +1740,9 @@
         "LivePreRollConfiguration": {
           "shape": "LivePreRollConfiguration"
         },
+        "LogConfiguration": {
+          "shape": "LogConfiguration"
+        },
         "ManifestProcessingRules": {
           "shape": "ManifestProcessingRules"
         },
@@ -1703,7 +1779,8 @@
     },
     "PlaybackMode": {
       "enum": [
-        "LOOP"
+        "LOOP",
+        "LINEAR"
       ],
       "type": "string"
     },
@@ -1801,6 +1878,9 @@
         },
         "LivePreRollConfiguration": {
           "shape": "LivePreRollConfiguration"
+        },
+        "LogConfiguration": {
+          "shape": "LogConfiguration"
         },
         "ManifestProcessingRules": {
           "shape": "ManifestProcessingRules"
@@ -1949,6 +2029,9 @@
         "ScheduleAdBreaks": {
           "shape": "__listOfScheduleAdBreak"
         },
+        "ScheduleEntryType": {
+          "shape": "ScheduleEntryType"
+        },
         "SourceLocationName": {
           "shape": "__string"
         },
@@ -1964,6 +2047,13 @@
         "ProgramName"
       ],
       "type": "structure"
+    },
+    "ScheduleEntryType": {
+      "enum": [
+        "PROGRAM",
+        "FILLER_SLATE"
+      ],
+      "type": "string"
     },
     "SecretsManagerAccessTokenConfiguration": {
       "members": {
@@ -2102,6 +2192,9 @@
         "RelativeProgram": {
           "shape": "__string"
         },
+        "ScheduledStartTimeMillis": {
+          "shape": "__long"
+        },
         "Type": {
           "shape": "__string"
         }
@@ -2168,6 +2261,9 @@
         },
         "CreationTime": {
           "shape": "__timestampUnix"
+        },
+        "FillerSlate": {
+          "shape": "SlateSource"
         },
         "LastModifiedTime": {
           "shape": "__timestampUnix"

@@ -9,12 +9,14 @@
     "CreatePreset": "Create a new preset. For information about job templates see the User Guide at http://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
     "CreateQueue": "Create a new transcoding queue. For information about queues, see Working With Queues in the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/working-with-queues.html",
     "DeleteJobTemplate": "Permanently delete a job template you have created.",
+    "DeletePolicy": "Permanently delete a policy that you created.",
     "DeletePreset": "Permanently delete a preset you have created.",
     "DeleteQueue": "Permanently delete a queue you have created.",
     "DescribeEndpoints": "Send an request with an empty body to the regional API endpoint to get your account API endpoint.",
     "DisassociateCertificate": "Removes an association between the Amazon Resource Name (ARN) of an AWS Certificate Manager (ACM) certificate and an AWS Elemental MediaConvert resource.",
     "GetJob": "Retrieve the JSON for a specific completed transcoding job.",
     "GetJobTemplate": "Retrieve the JSON for a specific job template.",
+    "GetPolicy": "Retrieve the JSON for your policy.",
     "GetPreset": "Retrieve the JSON for a specific preset.",
     "GetQueue": "Retrieve the JSON for a specific queue.",
     "ListJobTemplates": "Retrieve a JSON array of up to twenty of your job templates. This will return the templates themselves, not just a list of them. To retrieve the next twenty templates, use the nextToken string returned with the array",
@@ -22,6 +24,7 @@
     "ListPresets": "Retrieve a JSON array of up to twenty of your presets. This will return the presets themselves, not just a list of them. To retrieve the next twenty presets, use the nextToken string returned with the array.",
     "ListQueues": "Retrieve a JSON array of up to twenty of your queues. This will return the queues themselves, not just a list of them. To retrieve the next twenty queues, use the nextToken string returned with the array.",
     "ListTagsForResource": "Retrieve the tags for a MediaConvert resource.",
+    "PutPolicy": "Create or change your policy. For more information about policies, see the user guide at http://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
     "TagResource": "Add tags to a MediaConvert queue, preset, or job template. For information about tagging, see the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/tagging-resources.html",
     "UntagResource": "Remove tags from a MediaConvert queue, preset, or job template. For information about tagging, see the User Guide at https://docs.aws.amazon.com/mediaconvert/latest/ug/tagging-resources.html",
     "UpdateJobTemplate": "Modify one of your existing job templates.",
@@ -428,6 +431,12 @@
         "Job$BillingTagsSource": "The tag type that AWS Billing and Cost Management will use to sort your AWS Elemental MediaConvert costs on any billing report that you set up."
       }
     },
+    "BurnInSubtitleStylePassthrough": {
+      "base": "Ignore this setting unless your output captions are burned in. Choose which set of style and position values the service applies to your output captions. When you choose ENABLED, the service uses the input style and position information from your input. When you choose DISABLED, the service uses any style values that you specify in your output settings. If you don't specify values, the service uses default style and position values. When you choose DISABLED, the service ignores all style and position values from your input.",
+      "refs": {
+        "BurninDestinationSettings$StylePassthrough": "Ignore this setting unless your output captions are burned in. Choose which set of style and position values the service applies to your output captions. When you choose ENABLED, the service uses the input style and position information from your input. When you choose DISABLED, the service uses any style values that you specify in your output settings. If you don't specify values, the service uses default style and position values. When you choose DISABLED, the service ignores all style and position values from your input."
+      }
+    },
     "BurninDestinationSettings": {
       "base": "Settings related to burn-in captions. Set up burn-in captions in the same output as your video. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/burn-in-output-captions.html. When you work directly in your JSON job specification, include this object and any required children when you set destinationType to BURN_IN.",
       "refs": {
@@ -440,10 +449,22 @@
         "BurninDestinationSettings$Alignment": "If no explicit x_position or y_position is provided, setting alignment to centered will place the captions at the bottom center of the output. Similarly, setting a left alignment will align captions to the bottom left of the output. If x and y positions are given in conjunction with the alignment parameter, the font will be justified (either left or centered) relative to those coordinates. This option is not valid for source captions that are STL, 608/embedded or teletext. These source settings are already pre-defined by the caption stream. All burn-in and DVB-Sub font settings must match."
       }
     },
+    "BurninSubtitleApplyFontColor": {
+      "base": "Ignore this setting unless your input captions are STL, any type of 608, teletext, or TTML, and your output captions are burned in. Specify how the service applies the color specified in the setting Font color (BurninSubtitleFontColor). By default, this color is white. When you choose WHITE_TEXT_ONLY, the service uses the specified font color only for text that is white in the input. When you choose ALL_TEXT, the service uses the specified font color for all output captions text. If you leave both settings at their default value, your output font color is the same as your input font color.",
+      "refs": {
+        "BurninDestinationSettings$ApplyFontColor": "Ignore this setting unless your input captions are STL, any type of 608, teletext, or TTML, and your output captions are burned in. Specify how the service applies the color specified in the setting Font color (BurninSubtitleFontColor). By default, this color is white. When you choose WHITE_TEXT_ONLY, the service uses the specified font color only for text that is white in the input. When you choose ALL_TEXT, the service uses the specified font color for all output captions text. If you leave both settings at their default value, your output font color is the same as your input font color."
+      }
+    },
     "BurninSubtitleBackgroundColor": {
       "base": "Specifies the color of the rectangle behind the captions.\nAll burn-in and DVB-Sub font settings must match.",
       "refs": {
         "BurninDestinationSettings$BackgroundColor": "Specifies the color of the rectangle behind the captions.\nAll burn-in and DVB-Sub font settings must match."
+      }
+    },
+    "BurninSubtitleFallbackFont": {
+      "base": "Specify the font that you want the service to use for your burn in captions when your input captions specify a font that MediaConvert doesn't support. When you keep the default value, Best match (BEST_MATCH), MediaConvert uses a supported font that most closely matches the font that your input captions specify. When there are multiple unsupported fonts in your input captions, MediaConvert matches each font with the supported font that matches best. When you explicitly choose a replacement font, MediaConvert uses that font to replace all unsupported fonts from your input.",
+      "refs": {
+        "BurninDestinationSettings$FallbackFont": "Specify the font that you want the service to use for your burn in captions when your input captions specify a font that MediaConvert doesn't support. When you keep the default value, Best match (BEST_MATCH), MediaConvert uses a supported font that most closely matches the font that your input captions specify. When there are multiple unsupported fonts in your input captions, MediaConvert matches each font with the supported font that matches best. When you explicitly choose a replacement font, MediaConvert uses that font to replace all unsupported fonts from your input."
       }
     },
     "BurninSubtitleFontColor": {
@@ -577,10 +598,22 @@
         "CmafGroupSettings$ImageBasedTrickPlay": "Specify whether MediaConvert generates images for trick play. Keep the default value, None (NONE), to not generate any images. Choose Thumbnail (THUMBNAIL) to generate tiled thumbnails. Choose Thumbnail and full frame (THUMBNAIL_AND_FULLFRAME) to generate tiled thumbnails and full-resolution images of single frames. When you enable Write HLS manifest (WriteHlsManifest), MediaConvert creates a child manifest for each set of images that you generate and adds corresponding entries to the parent manifest. When you enable Write DASH manifest (WriteDashManifest), MediaConvert adds an entry in the .mpd manifest for each set of images that you generate. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md"
       }
     },
+    "CmafImageBasedTrickPlaySettings": {
+      "base": "Tile and thumbnail settings applicable when imageBasedTrickPlay is ADVANCED",
+      "refs": {
+        "CmafGroupSettings$ImageBasedTrickPlaySettings": "Tile and thumbnail settings applicable when imageBasedTrickPlay is ADVANCED"
+      }
+    },
     "CmafInitializationVectorInManifest": {
       "base": "When you use DRM with CMAF outputs, choose whether the service writes the 128-bit encryption initialization vector in the HLS and DASH manifests.",
       "refs": {
         "CmafEncryptionSettings$InitializationVectorInManifest": "When you use DRM with CMAF outputs, choose whether the service writes the 128-bit encryption initialization vector in the HLS and DASH manifests."
+      }
+    },
+    "CmafIntervalCadence": {
+      "base": "The cadence MediaConvert follows for generating thumbnails.  If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence).  If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval.",
+      "refs": {
+        "CmafImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails.  If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence).  If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval."
       }
     },
     "CmafKeyProviderType": {
@@ -617,6 +650,12 @@
       "base": "When set to SINGLE_FILE, a single output file is generated, which is internally segmented using the Fragment Length and Segment Length. When set to SEGMENTED_FILES, separate segment files will be created.",
       "refs": {
         "CmafGroupSettings$SegmentControl": "When set to SINGLE_FILE, a single output file is generated, which is internally segmented using the Fragment Length and Segment Length. When set to SEGMENTED_FILES, separate segment files will be created."
+      }
+    },
+    "CmafSegmentLengthControl": {
+      "base": "Specify how you want MediaConvert to determine the segment length. Choose Exact (EXACT) to have the encoder use the exact length that you specify with the setting Segment length (SegmentLength). This might result in extra I-frames. Choose Multiple of GOP (GOP_MULTIPLE) to have the encoder round up the segment lengths to match the next GOP boundary.",
+      "refs": {
+        "CmafGroupSettings$SegmentLengthControl": "Specify how you want MediaConvert to determine the segment length. Choose Exact (EXACT) to have the encoder use the exact length that you specify with the setting Segment length (SegmentLength). This might result in extra I-frames. Choose Multiple of GOP (GOP_MULTIPLE) to have the encoder round up the segment lengths to match the next GOP boundary."
       }
     },
     "CmafStreamInfResolution": {
@@ -747,6 +786,12 @@
         "ContainerSettings$Container": "Container for this output. Some containers require a container settings object. If not specified, the default object will be created."
       }
     },
+    "CopyProtectionAction": {
+      "base": "The action to take on copy and redistribution control XDS packets.  If you select PASSTHROUGH, packets will not be changed. If you select STRIP, any packets will be removed in output captions.",
+      "refs": {
+        "ExtendedDataServices$CopyProtectionAction": "The action to take on copy and redistribution control XDS packets.  If you select PASSTHROUGH, packets will not be changed. If you select STRIP, any packets will be removed in output captions."
+      }
+    },
     "CreateJobRequest": {
       "base": "Send your create job request with your job settings and IAM role. Optionally, include user metadata and the ARN for the queue.",
       "refs": {
@@ -823,6 +868,18 @@
         "DashIsoGroupSettings$ImageBasedTrickPlay": "Specify whether MediaConvert generates images for trick play. Keep the default value, None (NONE), to not generate any images. Choose Thumbnail (THUMBNAIL) to generate tiled thumbnails. Choose Thumbnail and full frame (THUMBNAIL_AND_FULLFRAME) to generate tiled thumbnails and full-resolution images of single frames. MediaConvert adds an entry in the .mpd manifest for each set of images that you generate. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md"
       }
     },
+    "DashIsoImageBasedTrickPlaySettings": {
+      "base": "Tile and thumbnail settings applicable when imageBasedTrickPlay is ADVANCED",
+      "refs": {
+        "DashIsoGroupSettings$ImageBasedTrickPlaySettings": "Tile and thumbnail settings applicable when imageBasedTrickPlay is ADVANCED"
+      }
+    },
+    "DashIsoIntervalCadence": {
+      "base": "The cadence MediaConvert follows for generating thumbnails.  If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence).  If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval.",
+      "refs": {
+        "DashIsoImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails.  If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence).  If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval."
+      }
+    },
     "DashIsoMpdProfile": {
       "base": "Specify whether your DASH profile is on-demand or main. When you choose Main profile (MAIN_PROFILE), the service signals  urn:mpeg:dash:profile:isoff-main:2011 in your .mpd DASH manifest. When you choose On-demand (ON_DEMAND_PROFILE), the service signals urn:mpeg:dash:profile:isoff-on-demand:2011 in your .mpd. When you choose On-demand, you must also set the output group setting Segment control (SegmentControl) to Single file (SINGLE_FILE).",
       "refs": {
@@ -845,6 +902,12 @@
       "base": "When set to SINGLE_FILE, a single output file is generated, which is internally segmented using the Fragment Length and Segment Length. When set to SEGMENTED_FILES, separate segment files will be created.",
       "refs": {
         "DashIsoGroupSettings$SegmentControl": "When set to SINGLE_FILE, a single output file is generated, which is internally segmented using the Fragment Length and Segment Length. When set to SEGMENTED_FILES, separate segment files will be created."
+      }
+    },
+    "DashIsoSegmentLengthControl": {
+      "base": "Specify how you want MediaConvert to determine the segment length. Choose Exact (EXACT) to have the encoder use the exact length that you specify with the setting Segment length (SegmentLength). This might result in extra I-frames. Choose Multiple of GOP (GOP_MULTIPLE) to have the encoder round up the segment lengths to match the next GOP boundary.",
+      "refs": {
+        "DashIsoGroupSettings$SegmentLengthControl": "Specify how you want MediaConvert to determine the segment length. Choose Exact (EXACT) to have the encoder use the exact length that you specify with the setting Segment length (SegmentLength). This might result in extra I-frames. Choose Multiple of GOP (GOP_MULTIPLE) to have the encoder round up the segment lengths to match the next GOP boundary."
       }
     },
     "DashIsoWriteSegmentTimelineInRepresentation": {
@@ -890,6 +953,16 @@
     },
     "DeleteJobTemplateResponse": {
       "base": "Delete job template requests will return an OK message or error message with an empty body.",
+      "refs": {
+      }
+    },
+    "DeletePolicyRequest": {
+      "base": "Send a request to permanently delete a policy that you created.",
+      "refs": {
+      }
+    },
+    "DeletePolicyResponse": {
+      "base": "Successful DELETE policy requests will return an OK message.",
       "refs": {
       }
     },
@@ -1003,10 +1076,22 @@
         "CaptionSourceSettings$DvbSubSourceSettings": "DVB Sub Source Settings"
       }
     },
+    "DvbSubSubtitleFallbackFont": {
+      "base": "Specify the font that you want the service to use for your burn in captions when your input captions specify a font that MediaConvert doesn't support. When you keep the default value, Best match (BEST_MATCH), MediaConvert uses a supported font that most closely matches the font that your input captions specify. When there are multiple unsupported fonts in your input captions, MediaConvert matches each font with the supported font that matches best. When you explicitly choose a replacement font, MediaConvert uses that font to replace all unsupported fonts from your input.",
+      "refs": {
+        "DvbSubDestinationSettings$FallbackFont": "Specify the font that you want the service to use for your burn in captions when your input captions specify a font that MediaConvert doesn't support. When you keep the default value, Best match (BEST_MATCH), MediaConvert uses a supported font that most closely matches the font that your input captions specify. When there are multiple unsupported fonts in your input captions, MediaConvert matches each font with the supported font that matches best. When you explicitly choose a replacement font, MediaConvert uses that font to replace all unsupported fonts from your input."
+      }
+    },
     "DvbSubtitleAlignment": {
       "base": "If no explicit x_position or y_position is provided, setting alignment to centered will place the captions at the bottom center of the output. Similarly, setting a left alignment will align captions to the bottom left of the output. If x and y positions are given in conjunction with the alignment parameter, the font will be justified (either left or centered) relative to those coordinates. This option is not valid for source captions that are STL, 608/embedded or teletext. These source settings are already pre-defined by the caption stream. All burn-in and DVB-Sub font settings must match.",
       "refs": {
         "DvbSubDestinationSettings$Alignment": "If no explicit x_position or y_position is provided, setting alignment to centered will place the captions at the bottom center of the output. Similarly, setting a left alignment will align captions to the bottom left of the output. If x and y positions are given in conjunction with the alignment parameter, the font will be justified (either left or centered) relative to those coordinates. This option is not valid for source captions that are STL, 608/embedded or teletext. These source settings are already pre-defined by the caption stream. All burn-in and DVB-Sub font settings must match."
+      }
+    },
+    "DvbSubtitleApplyFontColor": {
+      "base": "Ignore this setting unless your input captions are STL, any type of 608, teletext, or TTML, and your output captions are DVB-SUB. Specify how the service applies the color specified in the setting Font color (DvbSubtitleFontColor). By default, this color is white. When you choose WHITE_TEXT_ONLY, the service uses the specified font color only for text that is white in the input. When you choose ALL_TEXT, the service uses the specified font color for all output captions text. If you leave both settings at their default value, your output font color is the same as your input font color.",
+      "refs": {
+        "DvbSubDestinationSettings$ApplyFontColor": "Ignore this setting unless your input captions are STL, any type of 608, teletext, or TTML, and your output captions are DVB-SUB. Specify how the service applies the color specified in the setting Font color (DvbSubtitleFontColor). By default, this color is white. When you choose WHITE_TEXT_ONLY, the service uses the specified font color only for text that is white in the input. When you choose ALL_TEXT, the service uses the specified font color for all output captions text. If you leave both settings at their default value, your output font color is the same as your input font color."
       }
     },
     "DvbSubtitleBackgroundColor": {
@@ -1031,6 +1116,12 @@
       "base": "Specifies the color of the shadow cast by the captions.\nAll burn-in and DVB-Sub font settings must match.",
       "refs": {
         "DvbSubDestinationSettings$ShadowColor": "Specifies the color of the shadow cast by the captions.\nAll burn-in and DVB-Sub font settings must match."
+      }
+    },
+    "DvbSubtitleStylePassthrough": {
+      "base": "Choose which set of style and position values the service applies to your output captions. When you choose ENABLED, the service uses the input style and position information from your input. When you choose DISABLED, the service uses any style values that you specify in your output settings. If you don't specify values, the service uses default style and position values. When you choose DISABLED, the service ignores all style and position values from your input.",
+      "refs": {
+        "DvbSubDestinationSettings$StylePassthrough": "Choose which set of style and position values the service applies to your output captions. When you choose ENABLED, the service uses the input style and position information from your input. When you choose DISABLED, the service uses any style values that you specify in your output settings. If you don't specify values, the service uses default style and position values. When you choose DISABLED, the service ignores all style and position values from your input."
       }
     },
     "DvbSubtitleTeletextSpacing": {
@@ -1267,6 +1358,13 @@
       "refs": {
       }
     },
+    "ExtendedDataServices": {
+      "base": "If your source content has EIA-608 Line 21 Data Services, enable this feature to specify what MediaConvert does with the Extended Data Services (XDS) packets. You can choose to pass through XDS packets, or remove them from the output. For more information about XDS, see EIA-608 Line Data Services, section 9.5.1.5 05h Content Advisory.",
+      "refs": {
+        "JobSettings$ExtendedDataServices": "If your source content has EIA-608 Line 21 Data Services, enable this feature to specify what MediaConvert does with the Extended Data Services (XDS) packets. You can choose to pass through XDS packets, or remove them from the output. For more information about XDS, see EIA-608 Line Data Services, section 9.5.1.5 05h Content Advisory.",
+        "JobTemplateSettings$ExtendedDataServices": "If your source content has EIA-608 Line 21 Data Services, enable this feature to specify what MediaConvert does with the Extended Data Services (XDS) packets. You can choose to pass through XDS packets, or remove them from the output. For more information about XDS, see EIA-608 Line Data Services, section 9.5.1.5 05h Content Advisory."
+      }
+    },
     "F4vMoovPlacement": {
       "base": "If set to PROGRESSIVE_DOWNLOAD, the MOOV atom is relocated to the beginning of the archive as required for progressive downloading. Otherwise it is placed normally at the end.",
       "refs": {
@@ -1335,6 +1433,16 @@
       "refs": {
       }
     },
+    "GetPolicyRequest": {
+      "base": "Send a request to retrieve the JSON for your policy.",
+      "refs": {
+      }
+    },
+    "GetPolicyResponse": {
+      "base": "Successful GET policy requests will return the JSON for your policy.",
+      "refs": {
+      }
+    },
     "GetPresetRequest": {
       "base": "Query a preset by sending a request with the preset name.",
       "refs": {
@@ -1386,9 +1494,9 @@
       }
     },
     "H264FieldEncoding": {
-      "base": "Keep the default value, PAFF, to have MediaConvert use PAFF encoding for interlaced outputs. Choose Force field (FORCE_FIELD) to disable PAFF encoding and create separate interlaced fields.",
+      "base": "The video encoding method for your MPEG-4 AVC output. Keep the default value, PAFF, to have MediaConvert use PAFF encoding for interlaced outputs. Choose Force field (FORCE_FIELD) to disable PAFF encoding and create separate interlaced fields. Choose MBAFF to disable PAFF and have MediaConvert use MBAFF encoding for interlaced outputs.",
       "refs": {
-        "H264Settings$FieldEncoding": "Keep the default value, PAFF, to have MediaConvert use PAFF encoding for interlaced outputs. Choose Force field (FORCE_FIELD) to disable PAFF encoding and create separate interlaced fields."
+        "H264Settings$FieldEncoding": "The video encoding method for your MPEG-4 AVC output. Keep the default value, PAFF, to have MediaConvert use PAFF encoding for interlaced outputs. Choose Force field (FORCE_FIELD) to disable PAFF encoding and create separate interlaced fields. Choose MBAFF to disable PAFF and have MediaConvert use MBAFF encoding for interlaced outputs."
       }
     },
     "H264FlickerAdaptiveQuantization": {
@@ -1782,10 +1890,22 @@
         "HlsGroupSettings$ImageBasedTrickPlay": "Specify whether MediaConvert generates images for trick play. Keep the default value, None (NONE), to not generate any images. Choose Thumbnail (THUMBNAIL) to generate tiled thumbnails. Choose Thumbnail and full frame (THUMBNAIL_AND_FULLFRAME) to generate tiled thumbnails and full-resolution images of single frames. MediaConvert creates a child manifest for each set of images that you generate and adds corresponding entries to the parent manifest. A common application for these images is Roku trick mode. The thumbnails and full-frame images that MediaConvert creates with this feature are compatible with this Roku specification: https://developer.roku.com/docs/developer-program/media-playback/trick-mode/hls-and-dash.md"
       }
     },
+    "HlsImageBasedTrickPlaySettings": {
+      "base": "Tile and thumbnail settings applicable when imageBasedTrickPlay is ADVANCED",
+      "refs": {
+        "HlsGroupSettings$ImageBasedTrickPlaySettings": "Tile and thumbnail settings applicable when imageBasedTrickPlay is ADVANCED"
+      }
+    },
     "HlsInitializationVectorInManifest": {
       "base": "The Initialization Vector is a 128-bit number used in conjunction with the key for encrypting blocks. If set to INCLUDE, Initialization Vector is listed in the manifest. Otherwise Initialization Vector is not in the manifest.",
       "refs": {
         "HlsEncryptionSettings$InitializationVectorInManifest": "The Initialization Vector is a 128-bit number used in conjunction with the key for encrypting blocks. If set to INCLUDE, Initialization Vector is listed in the manifest. Otherwise Initialization Vector is not in the manifest."
+      }
+    },
+    "HlsIntervalCadence": {
+      "base": "The cadence MediaConvert follows for generating thumbnails.  If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence).  If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval.",
+      "refs": {
+        "HlsImageBasedTrickPlaySettings$IntervalCadence": "The cadence MediaConvert follows for generating thumbnails.  If set to FOLLOW_IFRAME, MediaConvert generates thumbnails for each IDR frame in the output (matching the GOP cadence).  If set to FOLLOW_CUSTOM, MediaConvert generates thumbnails according to the interval you specify in thumbnailInterval."
       }
     },
     "HlsKeyProviderType": {
@@ -1834,6 +1954,12 @@
       "base": "When set to SINGLE_FILE, emits program as a single media resource (.ts) file, uses #EXT-X-BYTERANGE tags to index segment for playback.",
       "refs": {
         "HlsGroupSettings$SegmentControl": "When set to SINGLE_FILE, emits program as a single media resource (.ts) file, uses #EXT-X-BYTERANGE tags to index segment for playback."
+      }
+    },
+    "HlsSegmentLengthControl": {
+      "base": "Specify how you want MediaConvert to determine the segment length. Choose Exact (EXACT) to have the encoder use the exact length that you specify with the setting Segment length (SegmentLength). This might result in extra I-frames. Choose Multiple of GOP (GOP_MULTIPLE) to have the encoder round up the segment lengths to match the next GOP boundary.",
+      "refs": {
+        "HlsGroupSettings$SegmentLengthControl": "Specify how you want MediaConvert to determine the segment length. Choose Exact (EXACT) to have the encoder use the exact length that you specify with the setting Segment length (SegmentLength). This might result in extra I-frames. Choose Multiple of GOP (GOP_MULTIPLE) to have the encoder round up the segment lengths to match the next GOP boundary."
       }
     },
     "HlsSettings": {
@@ -1929,6 +2055,14 @@
       "refs": {
         "Input$FilterEnable": "Specify how the transcoding service applies the denoise and deblock filters. You must also enable the filters separately, with Denoise (InputDenoiseFilter) and Deblock (InputDeblockFilter). * Auto - The transcoding service determines whether to apply filtering, depending on input type and quality. * Disable - The input is not filtered. This is true even if you use the API to enable them in (InputDeblockFilter) and (InputDeblockFilter). * Force - The input is filtered regardless of input type.",
         "InputTemplate$FilterEnable": "Specify how the transcoding service applies the denoise and deblock filters. You must also enable the filters separately, with Denoise (InputDenoiseFilter) and Deblock (InputDeblockFilter). * Auto - The transcoding service determines whether to apply filtering, depending on input type and quality. * Disable - The input is not filtered. This is true even if you use the API to enable them in (InputDeblockFilter) and (InputDeblockFilter). * Force - The input is filtered regardless of input type."
+      }
+    },
+    "InputPolicy": {
+      "base": "An input policy allows or disallows a job you submit to run based on the conditions that you specify.",
+      "refs": {
+        "Policy$HttpInputs": "Allow or disallow jobs that specify HTTP inputs.",
+        "Policy$HttpsInputs": "Allow or disallow jobs that specify HTTPS inputs.",
+        "Policy$S3Inputs": "Allow or disallow jobs that specify Amazon S3 inputs."
       }
     },
     "InputPsiControl": {
@@ -2126,6 +2260,12 @@
         "M2tsSettings$BufferModel": "Controls what buffer model to use for accurate interleaving. If set to MULTIPLEX, use multiplex  buffer model. If set to NONE, this can lead to lower latency, but low-memory devices may not be able to play back the stream without interruptions."
       }
     },
+    "M2tsDataPtsControl": {
+      "base": "If you select ALIGN_TO_VIDEO, MediaConvert writes captions and data packets with Presentation Timestamp (PTS) values greater than or equal to the first video packet PTS (MediaConvert drops captions and data packets with lesser PTS values). Keep the default value (AUTO) to allow all PTS values.",
+      "refs": {
+        "M2tsSettings$DataPTSControl": "If you select ALIGN_TO_VIDEO, MediaConvert writes captions and data packets with Presentation Timestamp (PTS) values greater than or equal to the first video packet PTS (MediaConvert drops captions and data packets with lesser PTS values). Keep the default value (AUTO) to allow all PTS values."
+      }
+    },
     "M2tsEbpAudioInterval": {
       "base": "When set to VIDEO_AND_FIXED_INTERVALS, audio EBP markers will be added to partitions 3 and 4. The interval between these additional markers will be fixed, and will be slightly shorter than the video EBP marker interval. When set to VIDEO_INTERVAL, these additional markers will not be inserted. Only applicable when EBP segmentation markers are is selected (segmentationMarkers is EBP or EBP_LEGACY).",
       "refs": {
@@ -2202,6 +2342,12 @@
       "base": "Specify this setting only when your output will be consumed by a downstream repackaging workflow that is sensitive to very small duration differences between video and audio. For this situation, choose Match video duration (MATCH_VIDEO_DURATION). In all other cases, keep the default value, Default codec duration (DEFAULT_CODEC_DURATION). When you choose Match video duration, MediaConvert pads the output audio streams with silence or trims them to ensure that the total duration of each audio stream is at least as long as the total duration of the video stream. After padding or trimming, the audio stream duration is no more than one frame longer than the video stream. MediaConvert applies audio padding or trimming only to the end of the last segment of the output. For unsegmented outputs, MediaConvert adds padding only to the end of the file. When you keep the default value, any minor discrepancies between audio and video duration will depend on your output audio codec.",
       "refs": {
         "M3u8Settings$AudioDuration": "Specify this setting only when your output will be consumed by a downstream repackaging workflow that is sensitive to very small duration differences between video and audio. For this situation, choose Match video duration (MATCH_VIDEO_DURATION). In all other cases, keep the default value, Default codec duration (DEFAULT_CODEC_DURATION). When you choose Match video duration, MediaConvert pads the output audio streams with silence or trims them to ensure that the total duration of each audio stream is at least as long as the total duration of the video stream. After padding or trimming, the audio stream duration is no more than one frame longer than the video stream. MediaConvert applies audio padding or trimming only to the end of the last segment of the output. For unsegmented outputs, MediaConvert adds padding only to the end of the file. When you keep the default value, any minor discrepancies between audio and video duration will depend on your output audio codec."
+      }
+    },
+    "M3u8DataPtsControl": {
+      "base": "If you select ALIGN_TO_VIDEO, MediaConvert writes captions and data packets with Presentation Timestamp (PTS) values greater than or equal to the first video packet PTS (MediaConvert drops captions and data packets with lesser PTS values). Keep the default value (AUTO) to allow all PTS values.",
+      "refs": {
+        "M3u8Settings$DataPTSControl": "If you select ALIGN_TO_VIDEO, MediaConvert writes captions and data packets with Presentation Timestamp (PTS) values greater than or equal to the first video packet PTS (MediaConvert drops captions and data packets with lesser PTS values). Keep the default value (AUTO) to allow all PTS values."
       }
     },
     "M3u8NielsenId3": {
@@ -2410,9 +2556,9 @@
       }
     },
     "Mpeg2GopSizeUnits": {
-      "base": "Indicates if the GOP Size in MPEG2 is specified in frames or seconds. If seconds the system will convert the GOP Size into a frame count at run time.",
+      "base": "Specify the units for GOP size (GopSize). If you don't specify a value here, by default the encoder measures GOP size in frames.",
       "refs": {
-        "Mpeg2Settings$GopSizeUnits": "Indicates if the GOP Size in MPEG2 is specified in frames or seconds. If seconds the system will convert the GOP Size into a frame count at run time."
+        "Mpeg2Settings$GopSizeUnits": "Specify the units for GOP size (GopSize). If you don't specify a value here, by default the encoder measures GOP size in frames."
       }
     },
     "Mpeg2InterlaceMode": {
@@ -2509,6 +2655,12 @@
       "base": "If you are using DRM, set DRM System (MsSmoothEncryptionSettings) to specify the value SpekeKeyProvider.",
       "refs": {
         "MsSmoothGroupSettings$Encryption": "If you are using DRM, set DRM System (MsSmoothEncryptionSettings) to specify the value SpekeKeyProvider."
+      }
+    },
+    "MsSmoothFragmentLengthControl": {
+      "base": "Specify how you want MediaConvert to determine the fragment length. Choose Exact (EXACT) to have the encoder use the exact length that you specify with the setting Fragment length (FragmentLength). This might result in extra I-frames. Choose Multiple of GOP (GOP_MULTIPLE) to have the encoder round up the segment lengths to match the next GOP boundary.",
+      "refs": {
+        "MsSmoothGroupSettings$FragmentLengthControl": "Specify how you want MediaConvert to determine the fragment length. Choose Exact (EXACT) to have the encoder use the exact length that you specify with the setting Fragment length (FragmentLength). This might result in extra I-frames. Choose Multiple of GOP (GOP_MULTIPLE) to have the encoder round up the segment lengths to match the next GOP boundary."
       }
     },
     "MsSmoothGroupSettings": {
@@ -2707,6 +2859,14 @@
         "VideoPreprocessor$PartnerWatermarking": "If you work with a third party video watermarking partner, use the group of settings that correspond with your watermarking partner to include watermarks in your output."
       }
     },
+    "Policy": {
+      "base": "A policy configures behavior that you allow or disallow for your account. For information about MediaConvert policies, see the user guide at http://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
+      "refs": {
+        "GetPolicyResponse$Policy": "A policy configures behavior that you allow or disallow for your account. For information about MediaConvert policies, see the user guide at http://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
+        "PutPolicyRequest$Policy": "A policy configures behavior that you allow or disallow for your account. For information about MediaConvert policies, see the user guide at http://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html",
+        "PutPolicyResponse$Policy": "A policy configures behavior that you allow or disallow for your account. For information about MediaConvert policies, see the user guide at http://docs.aws.amazon.com/mediaconvert/latest/ug/what-is.html"
+      }
+    },
     "Preset": {
       "base": "A preset is a collection of preconfigured media conversion settings that you want MediaConvert to apply to the output during the conversion process.",
       "refs": {
@@ -2795,6 +2955,16 @@
       "base": "When you do frame rate conversion from 23.976 frames per second (fps) to 29.97 fps, and your output scan type is interlaced, you can optionally enable hard telecine (HARD) to create a smoother picture. When you keep the default value, None (NONE), MediaConvert does a standard frame rate conversion to 29.97 without doing anything with the field polarity to create a smoother picture.",
       "refs": {
         "ProresSettings$Telecine": "When you do frame rate conversion from 23.976 frames per second (fps) to 29.97 fps, and your output scan type is interlaced, you can optionally enable hard telecine (HARD) to create a smoother picture. When you keep the default value, None (NONE), MediaConvert does a standard frame rate conversion to 29.97 without doing anything with the field polarity to create a smoother picture."
+      }
+    },
+    "PutPolicyRequest": {
+      "base": "Create or change a policy by sending a request that includes your policy in JSON.",
+      "refs": {
+      }
+    },
+    "PutPolicyResponse": {
+      "base": "Successful PUT policy requests will return your policy.",
+      "refs": {
       }
     },
     "Queue": {
@@ -3177,6 +3347,12 @@
         "Vc3Settings$Telecine": "When you do frame rate conversion from 23.976 frames per second (fps) to 29.97 fps, and your output scan type is interlaced, you can optionally enable hard telecine (HARD) to create a smoother picture. When you keep the default value, None (NONE), MediaConvert does a standard frame rate conversion to 29.97 without doing anything with the field polarity to create a smoother picture."
       }
     },
+    "VchipAction": {
+      "base": "The action to take on content advisory XDS packets.  If you select PASSTHROUGH, packets will not be changed. If you select STRIP, any packets will be removed in output captions.",
+      "refs": {
+        "ExtendedDataServices$VchipAction": "The action to take on content advisory XDS packets.  If you select PASSTHROUGH, packets will not be changed. If you select STRIP, any packets will be removed in output captions."
+      }
+    },
     "VideoCodec": {
       "base": "Type of video codec",
       "refs": {
@@ -3503,7 +3679,7 @@
         "M2tsSettings$FragmentTime": "The length, in seconds, of each fragment. Only used with EBP markers.",
         "M2tsSettings$NullPacketBitrate": "Value in bits per second of extra null packets to insert into the transport stream. This can be used if a downstream encryption system requires periodic null packets.",
         "M2tsSettings$SegmentationTime": "Specify the length, in seconds, of each segment. Required unless markers is set to _none_.",
-        "Mpeg2Settings$GopSize": "GOP Length (keyframe interval) in frames or seconds. Must be greater than zero.",
+        "Mpeg2Settings$GopSize": "Specify the interval between keyframes, in seconds or frames, for this output. Default: 12 Related settings: When you specify the GOP size in seconds, set GOP mode control (GopSizeUnits) to Specified, seconds (SECONDS). The default value for GOP mode control (GopSizeUnits) is Frames (FRAMES).",
         "Vp8Settings$GopSize": "GOP Length (keyframe interval) in frames. Must be greater than zero.",
         "Vp9Settings$GopSize": "GOP Length (keyframe interval) in frames. Must be greater than zero."
       }
@@ -3520,8 +3696,11 @@
       "base": null,
       "refs": {
         "CmafGroupSettings$MinFinalSegmentLength": "Keep this setting at the default value of 0, unless you are troubleshooting a problem with how devices play back the end of your video asset. If you know that player devices are hanging on the final segment of your video because the length of your final segment is too short, use this setting to specify a minimum final segment length, in seconds. Choose a value that is greater than or equal to 1 and less than your segment length. When you specify a value for this setting, the encoder will combine any final segment that is shorter than the length that you specify with the previous segment. For example, your segment length is 3 seconds and your final segment is .5 seconds without a minimum final segment length; when you set the minimum final segment length to 1, your final segment is 3.5 seconds.",
+        "CmafImageBasedTrickPlaySettings$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails.  If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate.  For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails.",
         "DashIsoGroupSettings$MinFinalSegmentLength": "Keep this setting at the default value of 0, unless you are troubleshooting a problem with how devices play back the end of your video asset. If you know that player devices are hanging on the final segment of your video because the length of your final segment is too short, use this setting to specify a minimum final segment length, in seconds. Choose a value that is greater than or equal to 1 and less than your segment length. When you specify a value for this setting, the encoder will combine any final segment that is shorter than the length that you specify with the previous segment. For example, your segment length is 3 seconds and your final segment is .5 seconds without a minimum final segment length; when you set the minimum final segment length to 1, your final segment is 3.5 seconds.",
-        "HlsGroupSettings$MinFinalSegmentLength": "Keep this setting at the default value of 0, unless you are troubleshooting a problem with how devices play back the end of your video asset. If you know that player devices are hanging on the final segment of your video because the length of your final segment is too short, use this setting to specify a minimum final segment length, in seconds. Choose a value that is greater than or equal to 1 and less than your segment length. When you specify a value for this setting, the encoder will combine any final segment that is shorter than the length that you specify with the previous segment. For example, your segment length is 3 seconds and your final segment is .5 seconds without a minimum final segment length; when you set the minimum final segment length to 1, your final segment is 3.5 seconds."
+        "DashIsoImageBasedTrickPlaySettings$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails.  If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate.  For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails.",
+        "HlsGroupSettings$MinFinalSegmentLength": "Keep this setting at the default value of 0, unless you are troubleshooting a problem with how devices play back the end of your video asset. If you know that player devices are hanging on the final segment of your video because the length of your final segment is too short, use this setting to specify a minimum final segment length, in seconds. Choose a value that is greater than or equal to 1 and less than your segment length. When you specify a value for this setting, the encoder will combine any final segment that is shorter than the length that you specify with the previous segment. For example, your segment length is 3 seconds and your final segment is .5 seconds without a minimum final segment length; when you set the minimum final segment length to 1, your final segment is 3.5 seconds.",
+        "HlsImageBasedTrickPlaySettings$ThumbnailInterval": "Enter the interval, in seconds, that MediaConvert uses to generate thumbnails.  If the interval you enter doesn't align with the output frame rate, MediaConvert automatically rounds the interval to align with the output frame rate.  For example, if the output frame rate is 29.97 frames per second and you enter 5, MediaConvert uses a 150 frame interval to generate thumbnails."
       }
     },
     "__doubleMinNegative59Max0": {
@@ -3803,9 +3982,9 @@
     "__integerMin0Max7": {
       "base": null,
       "refs": {
-        "H264Settings$NumberBFramesBetweenReferenceFrames": "Number of B-frames between reference frames.",
-        "H265Settings$NumberBFramesBetweenReferenceFrames": "Number of B-frames between reference frames.",
-        "Mpeg2Settings$NumberBFramesBetweenReferenceFrames": "Number of B-frames between reference frames."
+        "H264Settings$NumberBFramesBetweenReferenceFrames": "Specify the number of B-frames that MediaConvert puts between reference frames in this output. Valid values are whole numbers from 0 through 7. When you don't specify a value, MediaConvert defaults to 2.",
+        "H265Settings$NumberBFramesBetweenReferenceFrames": "Specify the number of B-frames that MediaConvert puts between reference frames in this output. Valid values are whole numbers from 0 through 7. When you don't specify a value, MediaConvert defaults to 2.",
+        "Mpeg2Settings$NumberBFramesBetweenReferenceFrames": "Specify the number of B-frames that MediaConvert puts between reference frames in this output. Valid values are whole numbers from 0 through 7. When you don't specify a value, MediaConvert defaults to 2."
       }
     },
     "__integerMin0Max8": {
@@ -3972,6 +4151,14 @@
         "ListQueuesRequest$MaxResults": "Optional. Number of queues, up to twenty, that will be returned at one time."
       }
     },
+    "__integerMin1Max2048": {
+      "base": null,
+      "refs": {
+        "CmafImageBasedTrickPlaySettings$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 2 and 2048. Must be divisible by 2.",
+        "DashIsoImageBasedTrickPlaySettings$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 2 and 2048. Must be divisible by 2.",
+        "HlsImageBasedTrickPlaySettings$TileHeight": "Number of thumbnails in each column of a tile image. Set a value between 2 and 2048. Must be divisible by 2."
+      }
+    },
     "__integerMin1Max2147483640": {
       "base": null,
       "refs": {
@@ -3983,10 +4170,10 @@
       "refs": {
         "Av1Settings$FramerateDenominator": "When you use the API for transcode jobs that use frame rate conversion, specify the frame rate as a fraction. For example,  24000 / 1001 = 23.976 fps. Use FramerateDenominator to specify the denominator of this fraction. In this example, use 1001 for the value of FramerateDenominator. When you use the console for transcode jobs that use frame rate conversion, provide the value as a decimal number for Framerate. In this example, specify 23.976.",
         "Av1Settings$FramerateNumerator": "When you use the API for transcode jobs that use frame rate conversion, specify the frame rate as a fraction. For example,  24000 / 1001 = 23.976 fps. Use FramerateNumerator to specify the numerator of this fraction. In this example, use 24000 for the value of FramerateNumerator. When you use the console for transcode jobs that use frame rate conversion, provide the value as a decimal number for Framerate. In this example, specify 23.976.",
-        "CmafGroupSettings$FragmentLength": "Length of fragments to generate (in seconds). Fragment length must be compatible with GOP size and Framerate. Note that fragments will end on the next keyframe after this number of seconds, so actual fragment length may be longer. When Emit Single File is checked, the fragmentation is internal to a single output file and it does not cause the creation of many output files as in other output types.",
-        "CmafGroupSettings$SegmentLength": "Use this setting to specify the length, in seconds, of each individual CMAF segment. This value applies to the whole package; that is, to every output in the output group. Note that segments end on the first keyframe after this number of seconds, so the actual segment length might be slightly longer. If you set Segment control (CmafSegmentControl) to single file, the service puts the content of each output in a single file that has metadata that marks these segments. If you set it to segmented files, the service creates multiple files for each output, each with the content of one segment.",
+        "CmafGroupSettings$FragmentLength": "Specify the length, in whole seconds, of the mp4 fragments. When you don't specify a value, MediaConvert defaults to 2. Related setting: Use Fragment length control (FragmentLengthControl) to specify whether the encoder enforces this value strictly.",
+        "CmafGroupSettings$SegmentLength": "Specify the length, in whole seconds, of each segment. When you don't specify a value, MediaConvert defaults to 10. Related settings: Use Segment length control (SegmentLengthControl) to specify whether the encoder enforces this value strictly. Use Segment control (CmafSegmentControl) to specify whether MediaConvert creates separate segment files or one content file that has metadata to mark the segment boundaries.",
         "DashIsoGroupSettings$FragmentLength": "Length of fragments to generate (in seconds). Fragment length must be compatible with GOP size and Framerate. Note that fragments will end on the next keyframe after this number of seconds, so actual fragment length may be longer. When Emit Single File is checked, the fragmentation is internal to a single output file and it does not cause the creation of many output files as in other output types.",
-        "DashIsoGroupSettings$SegmentLength": "Length of mpd segments to create (in seconds). Note that segments will end on the next keyframe after this number of seconds, so actual segment length may be longer. When Emit Single File is checked, the segmentation is internal to a single output file and it does not cause the creation of many output files as in other output types.",
+        "DashIsoGroupSettings$SegmentLength": "Specify the length, in whole seconds, of each segment. When you don't specify a value, MediaConvert defaults to 30. Related settings: Use Segment length control (SegmentLengthControl) to specify whether the encoder enforces this value strictly. Use Segment control (DashIsoSegmentControl) to specify whether MediaConvert creates separate segment files or one content file that has metadata to mark the segment boundaries.",
         "DvbSubDestinationSettings$Height": "Specify the height, in pixels, of this set of DVB-Sub captions. The default value is 576 pixels. Related setting: When you use this setting, you must set DDS handling (ddsHandling) to a value other than None (NONE). All burn-in and DVB-Sub font settings must match.",
         "DvbSubDestinationSettings$Width": "Specify the width, in pixels, of this set of DVB-Sub captions. The default value is 720 pixels. Related setting: When you use this setting, you must set DDS handling (ddsHandling) to a value other than None (NONE). All burn-in and DVB-Sub font settings must match.",
         "DvbSubSourceSettings$Pid": "When using DVB-Sub with Burn-In or SMPTE-TT, use this PID for the source content. Unused for DVB-Sub passthrough. All DVB-Sub content is passed through, regardless of selectors.",
@@ -4000,13 +4187,13 @@
         "H265Settings$FramerateNumerator": "When you use the API for transcode jobs that use frame rate conversion, specify the frame rate as a fraction. For example,  24000 / 1001 = 23.976 fps. Use FramerateNumerator to specify the numerator of this fraction. In this example, use 24000 for the value of FramerateNumerator. When you use the console for transcode jobs that use frame rate conversion, provide the value as a decimal number for Framerate. In this example, specify 23.976.",
         "H265Settings$ParDenominator": "Required when you set Pixel aspect ratio (parControl) to SPECIFIED. On the console, this corresponds to any value other than Follow source. When you specify an output pixel aspect ratio (PAR) that is different from your input video PAR, provide your output PAR as a ratio. For example, for D1/DV NTSC widescreen, you would specify the ratio 40:33. In this example, the value for parDenominator is 33.",
         "H265Settings$ParNumerator": "Required when you set Pixel aspect ratio (parControl) to SPECIFIED. On the console, this corresponds to any value other than Follow source. When you specify an output pixel aspect ratio (PAR) that is different from your input video PAR, provide your output PAR as a ratio. For example, for D1/DV NTSC widescreen, you would specify the ratio 40:33. In this example, the value for parNumerator is 40.",
-        "HlsGroupSettings$SegmentLength": "Length of MPEG-2 Transport Stream segments to create (in seconds). Note that segments will end on the next keyframe after this number of seconds, so actual segment length may be longer.",
+        "HlsGroupSettings$SegmentLength": "Specify the length, in whole seconds, of each segment. When you don't specify a value, MediaConvert defaults to 10. Related settings: Use Segment length control (SegmentLengthControl) to specify whether the encoder enforces this value strictly. Use Segment control (HlsSegmentControl) to specify whether MediaConvert creates separate segment files or one content file that has metadata to mark the segment boundaries.",
         "HlsGroupSettings$SegmentsPerSubdirectory": "Number of segments to write to a subdirectory before starting a new one. directoryStructure must be SINGLE_DIRECTORY for this setting to have an effect.",
         "Input$ProgramNumber": "Use Program (programNumber) to select a specific program from within a multi-program transport stream. Note that Quad 4K is not currently supported. Default is the first program within the transport stream. If the program you specify doesn't exist, the transcoding service will use this default.",
         "InputTemplate$ProgramNumber": "Use Program (programNumber) to select a specific program from within a multi-program transport stream. Note that Quad 4K is not currently supported. Default is the first program within the transport stream. If the program you specify doesn't exist, the transcoding service will use this default.",
         "Mpeg2Settings$ParDenominator": "Required when you set Pixel aspect ratio (parControl) to SPECIFIED. On the console, this corresponds to any value other than Follow source. When you specify an output pixel aspect ratio (PAR) that is different from your input video PAR, provide your output PAR as a ratio. For example, for D1/DV NTSC widescreen, you would specify the ratio 40:33. In this example, the value for parDenominator is 33.",
         "Mpeg2Settings$ParNumerator": "Required when you set Pixel aspect ratio (parControl) to SPECIFIED. On the console, this corresponds to any value other than Follow source. When you specify an output pixel aspect ratio (PAR) that is different from your input video PAR, provide your output PAR as a ratio. For example, for D1/DV NTSC widescreen, you would specify the ratio 40:33. In this example, the value for parNumerator is 40.",
-        "MsSmoothGroupSettings$FragmentLength": "Use Fragment length (FragmentLength) to specify the mp4 fragment sizes in seconds. Fragment length must be compatible with GOP size and frame rate.",
+        "MsSmoothGroupSettings$FragmentLength": "Specify how you want MediaConvert to determine the fragment length. Choose Exact (EXACT) to have the encoder use the exact length that you specify with the setting Fragment length (FragmentLength). This might result in extra I-frames. Choose Multiple of GOP (GOP_MULTIPLE) to have the encoder round up the segment lengths to match the next GOP boundary.",
         "ProresSettings$FramerateDenominator": "When you use the API for transcode jobs that use frame rate conversion, specify the frame rate as a fraction. For example,  24000 / 1001 = 23.976 fps. Use FramerateDenominator to specify the denominator of this fraction. In this example, use 1001 for the value of FramerateDenominator. When you use the console for transcode jobs that use frame rate conversion, provide the value as a decimal number for Framerate. In this example, specify 23.976.",
         "ProresSettings$FramerateNumerator": "When you use the API for transcode jobs that use frame rate conversion, specify the frame rate as a fraction. For example,  24000 / 1001 = 23.976 fps. Use FramerateNumerator to specify the numerator of this fraction. In this example, use 24000 for the value of FramerateNumerator. When you use the console for transcode jobs that use frame rate conversion, provide the value as a decimal number for Framerate. In this example, specify 23.976.",
         "ProresSettings$ParDenominator": "Required when you set Pixel aspect ratio (parControl) to SPECIFIED. On the console, this corresponds to any value other than Follow source. When you specify an output pixel aspect ratio (PAR) that is different from your input video PAR, provide your output PAR as a ratio. For example, for D1/DV NTSC widescreen, you would specify the ratio 40:33. In this example, the value for parDenominator is 33.",
@@ -4045,6 +4232,20 @@
         "AncillarySourceSettings$SourceAncillaryChannelNumber": "Specifies the 608 channel number in the ancillary data track from which to extract captions. Unused for passthrough.",
         "EmbeddedDestinationSettings$Destination608ChannelNumber": "Ignore this setting unless your input captions are SCC format and your output captions are embedded in the video stream. Specify a CC number for each captions channel in this output. If you have two channels, choose CC numbers that aren't in the same field. For example, choose 1 and 3. For more information, see https://docs.aws.amazon.com/console/mediaconvert/dual-scc-to-embedded.",
         "EmbeddedSourceSettings$Source608ChannelNumber": "Specifies the 608/708 channel number within the video track from which to extract captions. Unused for passthrough."
+      }
+    },
+    "__integerMin1Max4096": {
+      "base": null,
+      "refs": {
+        "DashIsoImageBasedTrickPlaySettings$ThumbnailHeight": "Height of each thumbnail within each tile image, in pixels.  Leave blank to maintain aspect ratio with thumbnail width.  If following the aspect ratio would lead to a total tile height greater than 4096, then the job will be rejected.  Must be divisible by 2."
+      }
+    },
+    "__integerMin1Max512": {
+      "base": null,
+      "refs": {
+        "CmafImageBasedTrickPlaySettings$TileWidth": "Number of thumbnails in each row of a tile image.  Set a value between 1 and 512.",
+        "DashIsoImageBasedTrickPlaySettings$TileWidth": "Number of thumbnails in each row of a tile image.  Set a value between 1 and 512.",
+        "HlsImageBasedTrickPlaySettings$TileWidth": "Number of thumbnails in each row of a tile image.  Set a value between 1 and 512."
       }
     },
     "__integerMin1Max6": {
@@ -4103,6 +4304,13 @@
       "refs": {
         "Rectangle$Height": "Height of rectangle in pixels. Specify only even numbers.",
         "Rectangle$Width": "Width of rectangle in pixels. Specify only even numbers."
+      }
+    },
+    "__integerMin2Max4096": {
+      "base": null,
+      "refs": {
+        "CmafImageBasedTrickPlaySettings$ThumbnailHeight": "Height of each thumbnail within each tile image, in pixels.  Leave blank to maintain aspect ratio with thumbnail width.  If following the aspect ratio would lead to a total tile height greater than 4096, then the job will be rejected.  Must be divisible by 2.",
+        "HlsImageBasedTrickPlaySettings$ThumbnailHeight": "Height of each thumbnail within each tile image, in pixels.  Leave blank to maintain aspect ratio with thumbnail width.  If following the aspect ratio would lead to a total tile height greater than 4096, then the job will be rejected.  Must be divisible by 2."
       }
     },
     "__integerMin32000Max192000": {
@@ -4206,6 +4414,14 @@
       "base": null,
       "refs": {
         "Xavc4kProfileSettings$Slices": "Number of slices per picture. Must be less than or equal to the number of macroblock rows for progressive pictures, and less than or equal to half the number of macroblock rows for interlaced pictures."
+      }
+    },
+    "__integerMin8Max4096": {
+      "base": null,
+      "refs": {
+        "CmafImageBasedTrickPlaySettings$ThumbnailWidth": "Width of each thumbnail within each tile image, in pixels.  Default is 312.  Must be divisible by 8.",
+        "DashIsoImageBasedTrickPlaySettings$ThumbnailWidth": "Width of each thumbnail within each tile image, in pixels.  Default is 312.  Must be divisible by 8.",
+        "HlsImageBasedTrickPlaySettings$ThumbnailWidth": "Width of each thumbnail within each tile image, in pixels.  Default is 312.  Must be divisible by 8."
       }
     },
     "__integerMin96Max600": {
@@ -4797,6 +5013,13 @@
         "HlsCaptionLanguageMapping$CustomLanguageCode": "Specify the language for this captions channel, using the ISO 639-2 or ISO 639-3 three-letter language code"
       }
     },
+    "__stringMin6Max8Pattern09aFAF609aFAF2": {
+      "base": null,
+      "refs": {
+        "BurninDestinationSettings$HexFontColor": "Ignore this setting unless your BurninSubtitleFontColor setting is HEX. Format is six or eight hexidecimal digits, representing the red, green, and blue components, with the two extra digits used for an optional alpha value. For example a value of 1122AABB is a red value of 0x11, a green value of 0x22, a blue value of 0xAA, and an alpha value of 0xBB.",
+        "DvbSubDestinationSettings$HexFontColor": "Ignore this setting unless your DvbSubtitleFontColor setting is HEX. Format is six or eight hexidecimal digits, representing the red, green, and blue components, with the two extra digits used for an optional alpha value. For example a value of 1122AABB is a red value of 0x11, a green value of 0x22, a blue value of 0xAA, and an alpha value of 0xBB."
+      }
+    },
     "__stringMin9Max19PatternAZ26EastWestCentralNorthSouthEastWest1912": {
       "base": null,
       "refs": {
@@ -4846,7 +5069,8 @@
     "__stringPatternAZaZ0902": {
       "base": null,
       "refs": {
-        "Id3Insertion$Id3": "Use ID3 tag (Id3) to provide a tag value in base64-encode format."
+        "Id3Insertion$Id3": "Use ID3 tag (Id3) to provide a tag value in base64-encode format.",
+        "S3EncryptionSettings$KmsEncryptionContext": "Optionally, specify the encryption context that you want to use alongside your KMS key. AWS KMS uses this encryption context as additional authenticated data (AAD) to support authenticated encryption. This value must be a base64-encoded UTF-8 string holding JSON which represents a string-string map. To use this setting, you must also set Server-side encryption (S3ServerSideEncryptionType) to AWS KMS (SERVER_SIDE_ENCRYPTION_KMS). For more information about encryption context, see: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context."
       }
     },
     "__stringPatternAZaZ0932": {

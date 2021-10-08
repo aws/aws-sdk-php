@@ -640,6 +640,7 @@
         {"shape":"ResourceLimitExceededException"},
         {"shape":"ThrottledClientException"},
         {"shape":"UnauthorizedClientException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -3068,6 +3069,47 @@
       ],
       "endpoint":{"hostPrefix":"messaging-"}
     },
+    "StartMeetingTranscription":{
+      "name":"StartMeetingTranscription",
+      "http":{
+        "method":"POST",
+        "requestUri":"/meetings/{meetingId}/transcription?operation=start",
+        "responseCode":200
+      },
+      "input":{"shape":"StartMeetingTranscriptionRequest"},
+      "output":{"shape":"StartMeetingTranscriptionResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"UnprocessableEntityException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "StopMeetingTranscription":{
+      "name":"StopMeetingTranscription",
+      "http":{
+        "method":"POST",
+        "requestUri":"/meetings/{meetingId}/transcription?operation=stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopMeetingTranscriptionRequest"},
+      "output":{"shape":"StopMeetingTranscriptionResponse"},
+      "errors":[
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"UnprocessableEntityException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "TagAttendee":{
       "name":"TagAttendee",
       "http":{
@@ -3366,6 +3408,7 @@
         {"shape":"ForbiddenException"},
         {"shape":"BadRequestException"},
         {"shape":"ThrottledClientException"},
+        {"shape":"ConflictException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -3765,6 +3808,26 @@
       "pattern":"^arn[\\/\\:\\-\\_\\.a-zA-Z0-9]+$",
       "sensitive":true
     },
+    "ArtifactsConfiguration":{
+      "type":"structure",
+      "required":[
+        "Audio",
+        "Video",
+        "Content"
+      ],
+      "members":{
+        "Audio":{"shape":"AudioArtifactsConfiguration"},
+        "Video":{"shape":"VideoArtifactsConfiguration"},
+        "Content":{"shape":"ContentArtifactsConfiguration"}
+      }
+    },
+    "ArtifactsState":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
+    },
     "AssociatePhoneNumberWithUserRequest":{
       "type":"structure",
       "required":[
@@ -3863,6 +3926,11 @@
         "JoinToken":{"shape":"JoinTokenString"}
       }
     },
+    "AttendeeIdList":{
+      "type":"list",
+      "member":{"shape":"GuidString"},
+      "min":1
+    },
     "AttendeeList":{
       "type":"list",
       "member":{"shape":"Attendee"}
@@ -3878,6 +3946,20 @@
       "member":{"shape":"Tag"},
       "max":10,
       "min":1
+    },
+    "AudioArtifactsConfiguration":{
+      "type":"structure",
+      "required":["MuxType"],
+      "members":{
+        "MuxType":{"shape":"AudioMuxType"}
+      }
+    },
+    "AudioMuxType":{
+      "type":"string",
+      "enum":[
+        "AudioOnly",
+        "AudioWithActiveSpeakerVideo"
+      ]
     },
     "BadRequestException":{
       "type":"structure",
@@ -4331,6 +4413,13 @@
       "min":5,
       "pattern":"arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^/].{0,1023}"
     },
+    "ChimeSdkMeetingConfiguration":{
+      "type":"structure",
+      "members":{
+        "SourceConfiguration":{"shape":"SourceConfiguration"},
+        "ArtifactsConfiguration":{"shape":"ArtifactsConfiguration"}
+      }
+    },
     "ClientRequestToken":{
       "type":"string",
       "max":64,
@@ -4353,6 +4442,18 @@
       "min":0,
       "pattern":"[\\s\\S]*",
       "sensitive":true
+    },
+    "ContentArtifactsConfiguration":{
+      "type":"structure",
+      "required":["State"],
+      "members":{
+        "State":{"shape":"ArtifactsState"},
+        "MuxType":{"shape":"ContentMuxType"}
+      }
+    },
+    "ContentMuxType":{
+      "type":"string",
+      "enum":["ContentOnly"]
     },
     "ConversationRetentionSettings":{
       "type":"structure",
@@ -4651,7 +4752,8 @@
         "ClientRequestToken":{
           "shape":"ClientRequestToken",
           "idempotencyToken":true
-        }
+        },
+        "ChimeSdkMeetingConfiguration":{"shape":"ChimeSdkMeetingConfiguration"}
       }
     },
     "CreateMediaCapturePipelineResponse":{
@@ -4848,7 +4950,8 @@
           "shape":"NonEmptyString",
           "location":"uri",
           "locationName":"sipMediaApplicationId"
-        }
+        },
+        "SipHeaders":{"shape":"SipHeadersMap"}
       }
     },
     "CreateSipMediaApplicationCallResponse":{
@@ -5754,6 +5857,32 @@
         "DNIS":{"shape":"DNISEmergencyCallingConfigurationList"}
       }
     },
+    "EngineTranscribeMedicalSettings":{
+      "type":"structure",
+      "required":[
+        "LanguageCode",
+        "Specialty",
+        "Type"
+      ],
+      "members":{
+        "LanguageCode":{"shape":"TranscribeMedicalLanguageCode"},
+        "Specialty":{"shape":"TranscribeMedicalSpecialty"},
+        "Type":{"shape":"TranscribeMedicalType"},
+        "VocabularyName":{"shape":"String"},
+        "Region":{"shape":"TranscribeMedicalRegion"}
+      }
+    },
+    "EngineTranscribeSettings":{
+      "type":"structure",
+      "required":["LanguageCode"],
+      "members":{
+        "LanguageCode":{"shape":"TranscribeLanguageCode"},
+        "VocabularyFilterMethod":{"shape":"TranscribeVocabularyFilterMethod"},
+        "VocabularyFilterName":{"shape":"String"},
+        "VocabularyName":{"shape":"String"},
+        "Region":{"shape":"TranscribeRegion"}
+      }
+    },
     "ErrorCode":{
       "type":"string",
       "enum":[
@@ -5787,6 +5916,11 @@
       "max":64,
       "min":2,
       "sensitive":true
+    },
+    "ExternalUserIdList":{
+      "type":"list",
+      "member":{"shape":"ExternalUserIdType"},
+      "min":1
     },
     "ExternalUserIdType":{
       "type":"string",
@@ -7400,7 +7534,8 @@
         "SinkType":{"shape":"MediaPipelineSinkType"},
         "SinkArn":{"shape":"Arn"},
         "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
-        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"}
+        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
+        "ChimeSdkMeetingConfiguration":{"shape":"ChimeSdkMeetingConfiguration"}
       }
     },
     "MediaCapturePipelineList":{
@@ -8429,6 +8564,13 @@
         "NextToken":{"shape":"String"}
       }
     },
+    "SelectedVideoStreams":{
+      "type":"structure",
+      "members":{
+        "AttendeeIds":{"shape":"AttendeeIdList"},
+        "ExternalUserIds":{"shape":"ExternalUserIdList"}
+      }
+    },
     "SendChannelMessageRequest":{
       "type":"structure",
       "required":[
@@ -8507,6 +8649,13 @@
     "SipApplicationPriority":{
       "type":"integer",
       "min":1
+    },
+    "SipHeadersMap":{
+      "type":"map",
+      "key":{"shape":"SensitiveString"},
+      "value":{"shape":"SensitiveString"},
+      "max":20,
+      "min":0
     },
     "SipMediaApplication":{
       "type":"structure",
@@ -8601,6 +8750,48 @@
         "ASCENDING",
         "DESCENDING"
       ]
+    },
+    "SourceConfiguration":{
+      "type":"structure",
+      "members":{
+        "SelectedVideoStreams":{"shape":"SelectedVideoStreams"}
+      }
+    },
+    "StartMeetingTranscriptionRequest":{
+      "type":"structure",
+      "required":[
+        "MeetingId",
+        "TranscriptionConfiguration"
+      ],
+      "members":{
+        "MeetingId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"meetingId"
+        },
+        "TranscriptionConfiguration":{"shape":"TranscriptionConfiguration"}
+      }
+    },
+    "StartMeetingTranscriptionResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "StopMeetingTranscriptionRequest":{
+      "type":"structure",
+      "required":["MeetingId"],
+      "members":{
+        "MeetingId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"meetingId"
+        }
+      }
+    },
+    "StopMeetingTranscriptionResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "StreamingConfiguration":{
       "type":"structure",
@@ -8760,6 +8951,89 @@
       "max":3,
       "min":3,
       "pattern":"^8(00|33|44|55|66|77|88)$"
+    },
+    "TranscribeLanguageCode":{
+      "type":"string",
+      "enum":[
+        "en-US",
+        "en-GB",
+        "es-US",
+        "fr-CA",
+        "fr-FR",
+        "en-AU",
+        "it-IT",
+        "de-DE",
+        "pt-BR",
+        "ja-JP",
+        "ko-KR",
+        "zh-CN"
+      ]
+    },
+    "TranscribeMedicalLanguageCode":{
+      "type":"string",
+      "enum":["en-US"]
+    },
+    "TranscribeMedicalRegion":{
+      "type":"string",
+      "enum":[
+        "us-east-1",
+        "us-east-2",
+        "us-west-2",
+        "ap-southeast-2",
+        "ca-central-1",
+        "eu-west-1",
+        "auto"
+      ]
+    },
+    "TranscribeMedicalSpecialty":{
+      "type":"string",
+      "enum":[
+        "PRIMARYCARE",
+        "CARDIOLOGY",
+        "NEUROLOGY",
+        "ONCOLOGY",
+        "RADIOLOGY",
+        "UROLOGY"
+      ]
+    },
+    "TranscribeMedicalType":{
+      "type":"string",
+      "enum":[
+        "CONVERSATION",
+        "DICTATION"
+      ]
+    },
+    "TranscribeRegion":{
+      "type":"string",
+      "enum":[
+        "us-east-2",
+        "us-east-1",
+        "us-west-2",
+        "ap-northeast-2",
+        "ap-southeast-2",
+        "ap-northeast-1",
+        "ca-central-1",
+        "eu-central-1",
+        "eu-west-1",
+        "eu-west-2",
+        "sa-east-1",
+        "auto"
+      ]
+    },
+    "TranscribeVocabularyFilterMethod":{
+      "type":"string",
+      "enum":[
+        "remove",
+        "mask",
+        "tag"
+      ]
+    },
+    "TranscriptionConfiguration":{
+      "type":"structure",
+      "members":{
+        "EngineTranscribeSettings":{"shape":"EngineTranscribeSettings"},
+        "EngineTranscribeMedicalSettings":{"shape":"EngineTranscribeMedicalSettings"}
+      }
     },
     "UnauthorizedClientException":{
       "type":"structure",
@@ -9021,10 +9295,6 @@
     },
     "UpdateGlobalSettingsRequest":{
       "type":"structure",
-      "required":[
-        "BusinessCalling",
-        "VoiceConnector"
-      ],
       "members":{
         "BusinessCalling":{"shape":"BusinessCallingSettings"},
         "VoiceConnector":{"shape":"VoiceConnectorSettings"}
@@ -9414,6 +9684,18 @@
         "PrivateUser",
         "SharedDevice"
       ]
+    },
+    "VideoArtifactsConfiguration":{
+      "type":"structure",
+      "required":["State"],
+      "members":{
+        "State":{"shape":"ArtifactsState"},
+        "MuxType":{"shape":"VideoMuxType"}
+      }
+    },
+    "VideoMuxType":{
+      "type":"string",
+      "enum":["VideoOnly"]
     },
     "VoiceConnector":{
       "type":"structure",
