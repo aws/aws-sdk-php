@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.198.1 - 2021-10-08
 
 * `Aws\EC2` - This release removes a requirement for filters on SearchLocalGatewayRoutes operations.
 * `Aws\LexModelsV2` - Added configuration support for an Amazon Lex bot to provide fulfillment progress updates to users while their requests are being processed. See documentation for more details: https://docs.aws.amazon.com/lexv2/latest/dg/streaming-progress.html
