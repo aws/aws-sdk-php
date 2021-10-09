@@ -23,7 +23,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
      */
     public static function fromEpoch($unixTimestamp)
     {
-        return new self(gmdate('c', $unixTimestamp));
+        return new self(gmdate('c', (int) $unixTimestamp));
     }
 
     /**
