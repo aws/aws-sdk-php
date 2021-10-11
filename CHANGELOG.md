@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Documentation update for Amazon EC2.
+* `Aws\ElasticLoadBalancingv2` - Enable support for ALB IPv6 Target Groups (IP Address Type)
+* `Aws\FraudDetector` - New model type: Transaction Fraud Insights, which is optimized for online transaction fraud. Stored Events, which allows customers to send and store data directly within Amazon Fraud Detector. Batch Import, which allows customers to upload a CSV file of historic event data for processing and storage
+* `Aws\MediaLive` - This release adds support for Transport Stream files as an input type to MediaLive encoders.
+
 ## 3.198.1 - 2021-10-08
 
 * `Aws\EC2` - This release removes a requirement for filters on SearchLocalGatewayRoutes operations.
