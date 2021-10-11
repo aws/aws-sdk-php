@@ -5,6 +5,7 @@ namespace Aws\Test;
 use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\ResultInterface;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
 
@@ -13,6 +14,8 @@ use PHPUnit\Framework\TestCase;
  */
 class AbstractConfigurationProviderTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $provider;
 
@@ -65,11 +68,9 @@ class AbstractConfigurationProviderTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testChainThrowsExceptionOnEmptyArgs()
     {
+        $this->expectException(\InvalidArgumentException::class);
         call_user_func([$this->provider, 'chain']);
     }
 

@@ -6,6 +6,7 @@ use Aws\Credentials\Credentials;
 use Aws\Rds\RdsClient;
 use Aws\MockHandler;
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 require_once __DIR__ . '/../Signature/sig_hack.php';
@@ -15,13 +16,15 @@ require_once __DIR__ . '/../Signature/sig_hack.php';
  */
 class RdsClientTest extends TestCase
 {
-    public static function setUpBeforeClass()
+    use PHPUnitCompatTrait;
+
+    public static function _setUpBeforeClass()
     {
         $_SERVER['aws_time'] = 1598486400;
         $_SERVER['formatAwsTime'] = true;
     }
 
-    public static function tearDownAfterClass()
+    public static function _tearDownAfterClass()
     {
         $_SERVER['aws_time'] = null;
         $_SERVER['formatAwsTime'] = null;
@@ -37,7 +40,7 @@ class RdsClientTest extends TestCase
         $mock = new MockHandler([
             function ($command, $request) {
                 $this->assertNotNull($command['PreSignedUrl']);
-                $this->assertContains('us-west-2', $command['PreSignedUrl']);
+                $this->assertStringContainsString('us-west-2', $command['PreSignedUrl']);
                 $this->assertSame('us-east-1', $command['DestinationRegion']);
                 return new Result();
             }
@@ -101,7 +104,7 @@ class RdsClientTest extends TestCase
                 if (!empty($expectedUrl)) {
                     self::assertSame($expectedUrl, $url);
                 } else if (!empty($expectedSignature)) {
-                    $this->assertContains("X-Amz-Signature={$expectedSignature}", $url);
+                    $this->assertStringContainsString("X-Amz-Signature={$expectedSignature}", $url);
                 } else {
                     self::assertNull($url);
                 }

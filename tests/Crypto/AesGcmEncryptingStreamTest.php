@@ -2,15 +2,17 @@
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\AesGcmEncryptingStream;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use PHPUnit\Framework\TestCase;
 
 class AesGcmEncryptingStreamTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use AesEncryptionStreamTestTrait;
 
-    protected function setUp()
+    protected function _setUp()
     {
         if (version_compare(PHP_VERSION, '7.1', '<')) {
             $this->markTestSkipped(

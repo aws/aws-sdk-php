@@ -1,33 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="./tests/bootstrap.php"
-         colors="true">
-
-    <php>
-        <!-- Specify the path to your CloudFront private key -->
-        <server name="CF_PRIVATE_KEY" value="changeme" />
-        <!-- Specify the CloudFront key pair ID to use when testing -->
-        <server name="CF_KEY_PAIR_ID" value="change_me" />
-    </php>
-
-    <testsuites>
-        <testsuite name="unit">
-            <directory suffix="Test.php">tests/</directory>
-            <exclude>tests/Integ</exclude>
-        </testsuite>
-        <testsuite name="integ">
-            <directory suffix="Test.php">tests/Integ</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src</directory>
-            <exclude>
-                <directory>src/data</directory>
-            </exclude>
-        </whitelist>
-    </filter>
-    <logging>
-        <log type="coverage-clover" target="clover.xml"/>
-    </logging>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./tests/bootstrap.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+    <exclude>
+      <directory>src/data</directory>
+    </exclude>
+    <report>
+      <clover outputFile="clover.xml"/>
+    </report>
+  </coverage>
+  <testsuites>
+    <testsuite name="unit">
+      <directory suffix="Test.php">tests/</directory>
+      <exclude>tests/Integ</exclude>
+    </testsuite>
+    <testsuite name="integ">
+      <directory suffix="Test.php">tests/Integ</directory>
+    </testsuite>
+  </testsuites>
+  <logging/>
 </phpunit>

@@ -7,6 +7,7 @@ use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\Sts\StsClient;
 use Aws\Api\DateTimeResult;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\RejectedPromise;
 use Aws\Test\UsesServiceTrait;
@@ -19,17 +20,18 @@ class AssumeRoleCredentialProviderTest extends TestCase
 {
     const SAMPLE_ROLE_ARN = 'arn:aws:iam::012345678910:role/role_name';
 
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     /**
      * @dataProvider insufficientArguments
      *
      * @param array $config
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage  Missing required 'AssumeRoleCredentialProvider' configuration option:
      */
     public function testEnsureSourceProfileProvidedForAssumeRole($config)
     {
+        $this->expectExceptionMessage("Missing required 'AssumeRoleCredentialProvider' configuration option:");
+        $this->expectException(\InvalidArgumentException::class);
         new AssumeRoleCredentialProvider($config);
     }
 
@@ -90,16 +92,14 @@ class AssumeRoleCredentialProviderTest extends TestCase
         $this->assertSame('foo', $creds->getAccessKeyId());
         $this->assertSame('bar', $creds->getSecretKey());
         $this->assertNull($creds->getSecurityToken());
-        $this->assertInternalType('int', $creds->getExpiration());
+        $this->assertIsInt($creds->getExpiration());
         $this->assertFalse($creds->isExpired());
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error in retrieving assume role credentials.
-     */
     public function testThrowsExceptionWhenRetrievingAssumeRoleCredentialFails()
     {
+        $this->expectExceptionMessage("Error in retrieving assume role credentials.");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $sts = new StsClient([
             'region' => 'us-west-2',
             'version' => 'latest',

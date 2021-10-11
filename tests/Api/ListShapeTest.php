@@ -3,6 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\ListShape;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ListShapeTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testReturnsMember()
     {
         $s = new ListShape(
@@ -23,11 +26,9 @@ class ListShapeTest extends TestCase
         $this->assertSame('string', $m->getType());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testFailsWhenMemberIsMissing()
     {
+        $this->expectException(\RuntimeException::class);
         (new ListShape([], new ShapeMap([])))->getMember();
     }
 }

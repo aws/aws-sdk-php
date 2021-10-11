@@ -12,6 +12,7 @@ use Aws\Retry\Configuration;
 use Aws\Retry\QuotaManager;
 use Aws\Retry\RateLimiter;
 use Aws\RetryMiddlewareV2;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
@@ -24,6 +25,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RetryMiddlewareV2Test extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     /**
@@ -764,7 +766,7 @@ class RetryMiddlewareV2Test extends TestCase
             $this->fail();
         } catch (AwsException $e) {
             $this->assertSame(3, $attempts);
-            $this->assertContains('foo', $e->getMessage());
+            $this->assertStringContainsString('foo', $e->getMessage());
         }
     }
 
@@ -885,7 +887,7 @@ class RetryMiddlewareV2Test extends TestCase
             $this->fail();
         } catch (AwsException $e) {
             $this->assertCount(1, $called);
-            $this->assertContains('foo', $e->getMessage());
+            $this->assertStringContainsString('foo', $e->getMessage());
         }
     }
 

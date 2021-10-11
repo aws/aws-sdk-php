@@ -4,6 +4,7 @@ namespace Aws\Test\Api\Serializer;
 use Aws\Api\Service;
 use Aws\Command;
 use Aws\Api\Serializer\RestJsonSerializer;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -12,6 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RestJsonSerializerTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     private function getTestService()
@@ -221,11 +223,9 @@ class RestJsonSerializerTest extends TestCase
         $this->assertSame('', $request->getHeaderLine('Content-Type'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testPreparesRequestsWithJsonValueTraitThrowsException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $obj = new \stdClass();
         $obj->obj = $obj;
         $this->getRequest('foobar', ['baz' => $obj]);

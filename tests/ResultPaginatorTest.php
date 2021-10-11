@@ -5,6 +5,7 @@ use Aws\Api\ApiProvider;
 use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
@@ -14,6 +15,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ResultPaginatorTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     private function getCustomClientProvider(array $config)

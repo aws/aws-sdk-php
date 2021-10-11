@@ -2,6 +2,7 @@
 namespace Aws\Test\Handler\GuzzleV6;
 
 use Aws\Handler\GuzzleV6\GuzzleHandler;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Handler\MockHandler;
@@ -17,7 +18,9 @@ use PHPUnit\Framework\TestCase;
  */
 class HandlerTest extends TestCase
 {
-    public function setUp()
+    use PHPUnitCompatTrait;
+
+    public function _setUp()
     {
         if (!class_exists('GuzzleHttp\HandlerStack')) {
             $this->markTestSkipped();
@@ -140,7 +143,7 @@ class HandlerTest extends TestCase
             $error = $e->getReason();
             $this->assertInstanceOf(\Error::class, $error['exception']);
             $this->assertFalse($error['connection_error']);
-            $this->assertContains("error message", $error['exception']->getMessage());
+            $this->assertStringContainsString("error message", $error['exception']->getMessage());
         }
 
         $this->assertTrue($wasRejected, 'Reject callback was not triggered.');

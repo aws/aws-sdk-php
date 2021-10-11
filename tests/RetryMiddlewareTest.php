@@ -7,6 +7,7 @@ use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\RetryMiddleware;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\RejectedPromise;
@@ -20,6 +21,8 @@ use PHPUnit\Framework\TestCase;
  */
 class RetryMiddlewareTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testAddRetryHeader()
     {
         $nextHandler = function (CommandInterface $command, RequestInterface $request) {
@@ -380,7 +383,7 @@ class RetryMiddlewareTest extends TestCase
             $this->fail();
         } catch (AwsException $e) {
             $this->assertCount(1, $called);
-            $this->assertContains('foo', $e->getMessage());
+            $this->assertStringContainsString('foo', $e->getMessage());
         }
     }
 

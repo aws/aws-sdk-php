@@ -7,6 +7,7 @@ use Aws\Api\Parser\JsonRpcParser;
 use Aws\Api\Service;
 use Aws\Command;
 use Aws\Exception\AwsException;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 
@@ -15,6 +16,8 @@ use PHPUnit\Framework\TestCase;
  */
 class Crc32ValidatingParserTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     private function getWrapped()
     {
         $provider = ApiProvider::defaultProvider();
@@ -40,7 +43,7 @@ class Crc32ValidatingParserTest extends TestCase
             $wrapped($command, $response);
             $this->fail();
         } catch (AwsException $e) {
-            $this->assertContains('crc32 mismatch. Expected 123, found 11124959', $e->getMessage());
+            $this->assertStringContainsString('crc32 mismatch. Expected 123, found 11124959', $e->getMessage());
             $this->assertTrue($e->isConnectionError());
         }
     }

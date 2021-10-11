@@ -3,6 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ApiProvider;
 use Aws\Exception\UnresolvedApiException;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ApiProviderTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     /**
      * @return ApiProvider;
      */
@@ -30,7 +33,7 @@ class ApiProviderTest extends TestCase
         $this->assertEquals($result, ApiProvider::resolve($p, 't', 's', 'v'));
 
         $p = function ($a, $b, $c) {return null;};
-        $this->setExpectedException(UnresolvedApiException::class);
+        $this->expectException(UnresolvedApiException::class);
         ApiProvider::resolve($p, 't', 's', 'v');
     }
 
@@ -66,15 +69,13 @@ class ApiProviderTest extends TestCase
     {
         $p = $this->getTestApiProvider();
         $data = $p('api', 'dynamodb', 'latest');
-        $this->assertInternalType('array', $data);
+        $this->assertIsArray($data);
         $this->assertArrayHasKey('foo', $data);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testFilesystemProviderEnsuresDirectoryIsValid()
     {
+        $this->expectException(\InvalidArgumentException::class);
         ApiProvider::filesystem('/path/to/invalid/dir');
     }
 
@@ -116,21 +117,21 @@ class ApiProviderTest extends TestCase
 
     public function testThrowsOnBadType()
     {
-        $this->setExpectedException(UnresolvedApiException::class);
+        $this->expectException(UnresolvedApiException::class);
         $p = $this->getTestApiProvider();
         ApiProvider::resolve($p, 'foo', 's3', 'latest');
     }
 
     public function testThrowsOnBadService()
     {
-        $this->setExpectedException(UnresolvedApiException::class);
+        $this->expectException(UnresolvedApiException::class);
         $p = $this->getTestApiProvider();
         ApiProvider::resolve($p, 'api', '', 'latest');
     }
 
     public function testThrowsOnBadVersion()
     {
-        $this->setExpectedException(UnresolvedApiException::class);
+        $this->expectException(UnresolvedApiException::class);
         $p = $this->getTestApiProvider();
         ApiProvider::resolve($p, 'api', 'dynamodb', 'derp');
     }

@@ -5,6 +5,7 @@ use Aws\DynamoDb\Marshaler;
 use Aws\DynamoDb\BinaryValue;
 use Aws\DynamoDb\NumberValue;
 use Aws\DynamoDb\SetValue;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 
@@ -13,6 +14,8 @@ use PHPUnit\Framework\TestCase;
  */
 class MarshalerTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     const ERROR = 'ERROR';
 
     /**
@@ -233,11 +236,9 @@ JSON;
         $this->assertEquals($expected, $m->marshalItem($array));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testErrorIfMarshalingBadJsonDoc()
     {
+        $this->expectException(\InvalidArgumentException::class);
         (new Marshaler)->marshalJson('foo');
     }
 
@@ -297,11 +298,9 @@ JSON;
         $this->assertSame('b', $result->a);
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testErrorIfUnmarshalingUnknownType()
     {
+        $this->expectException(\UnexpectedValueException::class);
         $m = new Marshaler;
         $m->unmarshalValue(['BOMB' => 'BOOM']);
     }

@@ -2,6 +2,7 @@
 namespace Aws\Test\Build\Changelog;
 
 use Aws\Build\Changelog\ChangelogBuilder;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -9,25 +10,22 @@ use PHPUnit\Framework\TestCase;
  */
 class ChangelogBuilderTest extends TestCase
 {
+    use PHPUnitCompatTrait;
 
     private $RESOURCE_DIR = "tests/Build/Changelog/resources/";
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testBuildChangelogNoDirectory()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $params = [];
         $params['base_dir'] = 'wrong-folder';
         $obj = new ChangelogBuilder($params);
         $obj->buildChangelog();
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testBuildChangelogNoReleaseNotes()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $tempDir = sys_get_temp_dir() . "/";
         if (!file_exists($tempDir . "/.changes/nextrelease/")) {
             mkdir($tempDir . "/.changes/nextrelease/", 0777, true);
@@ -40,11 +38,9 @@ class ChangelogBuilderTest extends TestCase
         unlink($tempDir . "/.changes/nextrelease/");
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testBuildChangelogInvalidChangelog()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $params = [];
         $params['base_dir'] = $this->RESOURCE_DIR;
         $params['release_notes_output_dir'] = sys_get_temp_dir() . "/";

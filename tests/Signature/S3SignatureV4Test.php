@@ -3,6 +3,7 @@ namespace Aws\Test\Signature;
 
 use Aws\Credentials\Credentials;
 use Aws\Signature\S3SignatureV4;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7\Request;
 
 require_once __DIR__ . '/sig_hack.php';
@@ -13,9 +14,16 @@ use PHPUnit\Framework\TestCase;
  */
 class S3SignatureV4Test extends TestCase
 {
-    public static function setUpBeforeClass()
+    use PHPUnitCompatTrait;
+
+    public static function _setUpBeforeClass()
     {
         $_SERVER['aws_time'] = strtotime('December 5, 2013 00:00:00 UTC');
+    }
+
+    public static function _tearDownAfterClass()
+    {
+        unset($_SERVER['aws_time']);
     }
 
     private function getFixtures()
@@ -90,7 +98,7 @@ class S3SignatureV4Test extends TestCase
             $credentials,
             new \DateTime('December 11, 2013 00:00:00 UTC')
         )->getUri();
-        $this->assertContains('X-Amz-Expires=518400', $url);
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
     public function testCreatesPresignedDatesFromUnixTimestamp()
@@ -101,7 +109,7 @@ class S3SignatureV4Test extends TestCase
             $credentials,
             1386720000
         )->getUri();
-        $this->assertContains('X-Amz-Expires=518400', $url);
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
     public function testCreatesPresignedDateFromStrtotime()
@@ -112,7 +120,7 @@ class S3SignatureV4Test extends TestCase
             $credentials,
             'December 11, 2013 00:00:00 UTC'
         )->getUri();
-        $this->assertContains('X-Amz-Expires=518400', $url);
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
     public function testCreatesPresignedDateFromStrtotimeRelativeTimeBase()
@@ -124,7 +132,7 @@ class S3SignatureV4Test extends TestCase
             '+6 days',
             ['start_time' => $_SERVER['aws_time']]
         )->getUri();
-        $this->assertContains('X-Amz-Expires=518400', $url);
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
     public function testAddsSecurityTokenIfPresent()
@@ -140,8 +148,8 @@ class S3SignatureV4Test extends TestCase
             $credentials,
             1386720000
         )->getUri();
-        $this->assertContains('X-Amz-Security-Token=123', $url);
-        $this->assertContains('X-Amz-Expires=518400', $url);
+        $this->assertStringContainsString('X-Amz-Security-Token=123', $url);
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
     public function testUsesStartDateIfSpecified()
@@ -152,15 +160,13 @@ class S3SignatureV4Test extends TestCase
         list($request, $credentials, $signature) = $this->getFixtures();
         $credentials = new Credentials('foo', 'bar', '123');
         $url = (string) $signature->presign($request, $credentials, 1386720000, $options)->getUri();
-        $this->assertContains('X-Amz-Date=20131205T000000Z', $url);
-        $this->assertContains('X-Amz-Expires=518400', $url);
+        $this->assertStringContainsString('X-Amz-Date=20131205T000000Z', $url);
+        $this->assertStringContainsString('X-Amz-Expires=518400', $url);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testEnsuresSigV4DurationIsLessThanOneWeek()
     {
+        $this->expectException(\InvalidArgumentException::class);
         list($request, $credentials, $signature) = $this->getFixtures();
         $signature->presign(
             $request,

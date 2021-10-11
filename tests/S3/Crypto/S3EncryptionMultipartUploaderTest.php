@@ -7,6 +7,7 @@ use Aws\Result;
 use Aws\Crypto\KmsMaterialsProvider;
 use Aws\S3\Crypto\InstructionFileMetadataStrategy;
 use Aws\Test\Crypto\UsesCryptoParamsTrait;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use Aws\Test\Crypto\UsesMetadataEnvelopeTrait;
 use GuzzleHttp\Psr7;
@@ -14,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class S3EncryptionMultipartUploaderTest extends TestCase
 {
-    use UsesServiceTrait, UsesMetadataEnvelopeTrait, UsesCryptoParamsTrait;
+    use PHPUnitCompatTrait, UsesServiceTrait, UsesMetadataEnvelopeTrait, UsesCryptoParamsTrait;
 
     const MB = 1048576;
     const TEST_URL = 'http://foo.s3.amazonaws.com/bar';
@@ -451,7 +452,7 @@ class S3EncryptionMultipartUploaderTest extends TestCase
         ]);
         $list = $s3->getHandlerList();
         $list->appendSign(Middleware::tap(function($cmd, $req) {
-            $this->assertContains(
+            $this->assertStringContainsString(
                 'feat/s3-encrypt/' . S3EncryptionMultipartUploader::CRYPTO_VERSION,
                 $req->getHeaderLine('User-Agent')
             );

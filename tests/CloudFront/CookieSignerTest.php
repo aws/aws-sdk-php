@@ -3,43 +3,41 @@ namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CookieSigner;
 use Aws\CloudFront\Policy;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 class CookieSignerTest extends TestCase
 {
-    public function setUp()
+    use PHPUnitCompatTrait;
+
+    protected $key;
+    protected $kp;
+
+    public function _setUp()
     {
-        foreach (['CF_PRIVATE_KEY', 'CF_KEY_PAIR_ID'] as $k) {
-            if (!isset($_SERVER[$k]) || $_SERVER[$k] == 'change_me') {
-                $this->markTestSkipped('$_SERVER[\'' . $k . '\'] not set in '
-                    . 'phpunit.xml');
-            }
-        }
+        $this->key = realpath(__DIR__.'/fixtures/test2.pem');
+        $this->kp  = 'test';
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid or missing URI scheme
-     */
     public function testEnsuresUriSchemeIsPresent()
     {
-        $s = new CookieSigner('a', $_SERVER['CF_PRIVATE_KEY']);
+        $this->expectExceptionMessage("Invalid or missing URI scheme");
+        $this->expectException(\InvalidArgumentException::class);
+        $s = new CookieSigner('a', $this->key);
         $s->getSignedCookie('bar.com');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid or missing URI scheme
-     */
     public function testEnsuresUriSchemeIsValid()
     {
-        $s = new CookieSigner('a', $_SERVER['CF_PRIVATE_KEY']);
+        $this->expectExceptionMessage("Invalid or missing URI scheme");
+        $this->expectException(\InvalidArgumentException::class);
+        $s = new CookieSigner('a', $this->key);
         $s->getSignedCookie('foo://bar.com', strtotime('+10 minutes'));
     }
 
     public function testAllowsHttpScheme()
     {
-        $s = new CookieSigner('a', $_SERVER['CF_PRIVATE_KEY']);
+        $s = new CookieSigner('a', $this->key);
         $cookie = $s->getSignedCookie('http://bar.com', strtotime('+10 minutes'));
 
         $this->assertNotEmpty($cookie);
@@ -47,7 +45,7 @@ class CookieSignerTest extends TestCase
 
     public function testAllowsHttpsScheme()
     {
-        $s = new CookieSigner('a', $_SERVER['CF_PRIVATE_KEY']);
+        $s = new CookieSigner('a', $this->key);
         $cookie = $s->getSignedCookie('https://bar.com', strtotime('+10 minutes'));
 
         $this->assertNotEmpty($cookie);
@@ -55,7 +53,7 @@ class CookieSignerTest extends TestCase
 
     public function testAllowsWildcardScheme()
     {
-        $s = new CookieSigner('a', $_SERVER['CF_PRIVATE_KEY']);
+        $s = new CookieSigner('a', $this->key);
         $cookie = $s->getSignedCookie(
             'http*://bar.com/*',
             null,
@@ -67,7 +65,7 @@ class CookieSignerTest extends TestCase
 
     public function testReturnsHashWithCookieParameterNamesForCannedPolicy()
     {
-        $s = new CookieSigner('a', $_SERVER['CF_PRIVATE_KEY']);
+        $s = new CookieSigner('a', $this->key);
         $cookie = $s->getSignedCookie('https://bar.com', strtotime('+10 minutes'));
 
         $this->assertArrayHasKey('CloudFront-Signature', $cookie);
@@ -78,7 +76,7 @@ class CookieSignerTest extends TestCase
 
     public function testReturnsHashWithCookieParameterNamesForCustomPolicy()
     {
-        $s = new CookieSigner('a', $_SERVER['CF_PRIVATE_KEY']);
+        $s = new CookieSigner('a', $this->key);
         $cookie = $s->getSignedCookie(
             'http*://bar.com/*',
             null,

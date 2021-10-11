@@ -4,6 +4,7 @@ namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\DecodingEventStreamIterator;
 use Aws\Api\Parser\Exception\ParserException;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Stream;
 use PHPUnit\Framework\TestCase;
@@ -13,6 +14,8 @@ use PHPUnit\Framework\TestCase;
  */
 class DecodingEventStreamIteratorTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function complianceTests()
     {
         $cases = [];
@@ -130,11 +133,10 @@ class DecodingEventStreamIteratorTest extends TestCase
                 $this->fail('Unsuccessful parse of event from valid source.');
             }
 
-            $this->assertContains(
+            $this->assertStringContainsStringIgnoringCase(
                 (string) $decodedData,
                 $e->getMessage(),
-                '',
-                true
+                ''
             );
         }
     }

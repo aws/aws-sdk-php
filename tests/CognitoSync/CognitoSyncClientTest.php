@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\CognitoSync;
 
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
@@ -9,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class CognitoSyncClientTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testRequestSucceedsWithColon()
@@ -21,7 +23,7 @@ class CognitoSyncClientTest extends TestCase
                 $identityPoolId
             ) {
                 foreach ([$identityId, $identityPoolId] as $unencodedString) {
-                    $this->assertContains(
+                    $this->assertStringContainsString(
                         urlencode($unencodedString),
                         (string) $request->getUri()
                     );

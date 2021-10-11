@@ -7,15 +7,18 @@ use Aws\Command;
 use Aws\CommandInterface;
 use Aws\S3\AmbiguousSuccessParser;
 use Aws\S3\Exception\S3Exception;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use PHPUnit\Framework\TestCase;
 
 class AmbiguousSuccessParserTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     private $instance;
 
-    public function setUp()
+    public function _setUp()
     {
         $parser = function () {};
         $errorParser = function () {
@@ -31,13 +34,13 @@ class AmbiguousSuccessParserTest extends TestCase
 
     /**
      * @dataProvider opsWithAmbiguousSuccessesProvider
-     * @param string $operation
      *
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessage Sorry!
+     * @param string $operation
      */
     public function testConvertsAmbiguousSuccessesToExceptions($operation)
     {
+        $this->expectExceptionMessage("Sorry!");
+        $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $command = $this->getMockBuilder(CommandInterface::class)->getMock();
         $command->expects($this->any())
             ->method('getName')
@@ -54,6 +57,7 @@ class AmbiguousSuccessParserTest extends TestCase
     /**
      * @dataProvider opsWithoutAmbiguousSuccessesProvider
      * @param string $operation
+     * @doesNotPerformAssertions
      */
     public function testIgnoresAmbiguousSuccessesOnUnaffectedOperations($operation)
     {
@@ -72,12 +76,11 @@ class AmbiguousSuccessParserTest extends TestCase
 
     /**
      * @dataProvider opsWithAmbiguousSuccessesProvider
-     *
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessage An error connecting to the service occurred while performing the
      */
     public function testThrowsConnectionErrorForEmptyBody($operation)
     {
+        $this->expectExceptionMessage("An error connecting to the service occurred while performing the");
+        $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $parser = function() {};
         $errorParser = new XmlErrorParser();
         $instance = new AmbiguousSuccessParser(

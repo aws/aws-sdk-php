@@ -15,6 +15,7 @@ use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Signature\SignatureV4;
 use Aws\Sts\StsClient;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
@@ -25,6 +26,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AwsClientTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     private function getApiProvider()
@@ -61,12 +63,10 @@ class AwsClientTest extends TestCase
         $this->assertSame('foo', $client->getApi()->getEndpointPrefix());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Operation not found: Foo
-     */
     public function testEnsuresOperationIsFoundWhenCreatingCommands()
     {
+        $this->expectExceptionMessage("Operation not found: Foo");
+        $this->expectException(\InvalidArgumentException::class);
         $this->createClient()->getCommand('foo');
     }
 
@@ -86,12 +86,10 @@ class AwsClientTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \Aws\S3\Exception\S3Exception
-     * @expectedExceptionMessage Error executing "foo" on "http://us-east-1.foo.amazonaws.com"; AWS HTTP error: Baz Bar!
-     */
     public function testWrapsExceptions()
     {
+        $this->expectExceptionMessage("Error executing \"foo\" on \"http://us-east-1.foo.amazonaws.com\"; AWS HTTP error: Baz Bar!");
+        $this->expectException(\Aws\S3\Exception\S3Exception::class);
         $parser = function () {};
         $errorParser = new JsonRpcErrorParser();
         $h = new WrappedHttpHandler(
@@ -163,11 +161,9 @@ class AwsClientTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testGetIteratorFailsForMissingConfig()
     {
+        $this->expectException(\UnexpectedValueException::class);
         $client = $this->createClient();
         $client->getIterator('ListObjects');
     }
@@ -187,21 +183,17 @@ class AwsClientTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testGetPaginatorFailsForMissingConfig()
     {
+        $this->expectException(\UnexpectedValueException::class);
         $client = $this->createClient();
         $client->getPaginator('ListObjects');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Operation not found
-     */
     public function testCanWaitSynchronously()
     {
+        $this->expectExceptionMessage("Operation not found");
+        $this->expectException(\InvalidArgumentException::class);
         $client = $this->createClient(['waiters' => ['PigsFly' => [
             'acceptors'   => [],
             'delay'       => 1,
@@ -212,11 +204,9 @@ class AwsClientTest extends TestCase
         $client->waitUntil('PigsFly');
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testGetWaiterFailsForMissingConfig()
     {
+        $this->expectException(\UnexpectedValueException::class);
         $client = $this->createClient();
         $client->waitUntil('PigsFly');
     }
@@ -269,9 +259,10 @@ class AwsClientTest extends TestCase
         $client->describeInstances();
         $request = $mock->getLastRequest();
         $str = \GuzzleHttp\Psr7\Message::toString($request);
-        $this->assertContains('AWS4-HMAC-SHA256', $str);
+        $this->assertStringContainsString('AWS4-HMAC-SHA256', $str);
     }
 
+    /** @doesNotPerformAssertions */
     public function testAllowsFactoryMethodForBc()
     {
         Ec2Client::factory([
@@ -280,6 +271,7 @@ class AwsClientTest extends TestCase
         ]);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanInstantiateAliasedClients()
     {
         new SesClient([
@@ -294,15 +286,13 @@ class AwsClientTest extends TestCase
         $ref = new \ReflectionMethod($client, 'getSignatureProvider');
         $ref->setAccessible(true);
         $provider = $ref->invoke($client);
-        $this->assertInternalType('callable', $provider);
+        $this->assertIsCallable($provider);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Instances of Aws\AwsClient cannot be serialized
-     */
     public function testDoesNotPermitSerialization()
     {
+        $this->expectExceptionMessage("Instances of Aws\AwsClient cannot be serialized");
+        $this->expectException(\RuntimeException::class);
         $client = $this->createClient();
         \serialize($client);
     }
@@ -395,7 +385,7 @@ class AwsClientTest extends TestCase
                     CommandInterface $command,
                     RequestInterface $request
                 ) {
-                    $this->assertContains('ap-southeast-1/custom-service', $request->getHeader('Authorization')[0]);
+                    $this->assertStringContainsString('ap-southeast-1/custom-service', $request->getHeader('Authorization')[0]);
                     return new Result;
                 }
             ]
@@ -436,12 +426,10 @@ class AwsClientTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     * @expectedExceptionMessage Operation not found: GetConfig
-     */
     public function testCallsAliasedFunction()
     {
+        $this->expectExceptionMessage("Operation not found: GetConfig");
+        $this->expectException(\InvalidArgumentException::class);
         $client = $this->createClient([
             'metadata' => [
                 'serviceId' => 'TestService',

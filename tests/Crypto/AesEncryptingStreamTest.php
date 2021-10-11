@@ -5,6 +5,7 @@ use Aws\Crypto\AesDecryptingStream;
 use Aws\Crypto\AesEncryptingStream;
 use Aws\Crypto\Cipher\Cbc;
 use Aws\Crypto\Cipher\CipherMethod;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use PHPUnit\Framework\TestCase;
@@ -14,6 +15,7 @@ class AesEncryptingStreamTest extends TestCase
     const KB = 1024;
     const MB = 1048576;
 
+    use PHPUnitCompatTrait;
     use AesEncryptionStreamTestTrait;
 
     /**
@@ -172,11 +174,10 @@ class AesEncryptingStreamTest extends TestCase
      * @dataProvider cipherMethodProvider
      *
      * @param CipherMethod $cipherMethod
-     *
-     * @expectedException \LogicException
      */
     public function testDoesNotSupportSeekingFromEnd(CipherMethod $cipherMethod)
     {
+        $this->expectException(\LogicException::class);
         $stream = new AesEncryptingStream(Psr7\Utils::streamFor('foo'), 'foo', $cipherMethod);
 
         $stream->seek(1, SEEK_END);

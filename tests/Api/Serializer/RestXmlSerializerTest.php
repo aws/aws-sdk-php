@@ -2,6 +2,7 @@
 namespace Aws\Test\Api\Serializer;
 
 use Aws\Api\Serializer\RestXmlSerializer;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -10,6 +11,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RestXmlSerializerTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     private function getRequest($commandName, $input)
@@ -42,7 +44,7 @@ class RestXmlSerializerTest extends TestCase
             ],
         ]);
         $contents = $request->getBody()->getContents();
-        $this->assertContains(
+        $this->assertStringContainsString(
             "<Key>/@/#/=/;/:/ /,/?/&apos;/&quot;/&lt;/&gt;/&amp;/&#13;/&#10;/",
             $contents
         );

@@ -3,17 +3,20 @@ namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\Policy;
 use Aws\CloudFront\Signer;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 class SignerTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     /** @var Signer */
     private $instance;
     private $testKeyFile;
 
     const PASSPHRASE = "1234";
 
-    public function setUp()
+    public function _setUp()
     {
         $this->testKeyFile =__DIR__ . '/fixtures/test.pem';
         $this->instance = new Signer(
@@ -25,11 +28,10 @@ class SignerTest extends TestCase
 
     /**
      * Assert that the key variable contents are parsed during construction
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp /PK .*Not a real private key/
      */
     public function testBadPrivateKeyContents() {
+        $this->expectExceptionMessageMatches("/PK .*Not a real private key/");
+        $this->expectException(\InvalidArgumentException::class);
         $privateKey = "Not a real private key";
         $s = new Signer(
             "not a real keypair id",
@@ -39,11 +41,10 @@ class SignerTest extends TestCase
 
     /**
      * Assert that the key file is parsed during construction
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp /PEM .*no start line/
      */
     public function testBadPrivateKeyPath() {
+        $this->expectExceptionMessageMatches("/PEM .*no start line/");
+        $this->expectException(\InvalidArgumentException::class);
         $filename = tempnam(sys_get_temp_dir(), 'cloudfront-fake-key');
         file_put_contents($filename, "Not a real private key");
         try {
@@ -56,21 +57,17 @@ class SignerTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage PK file not found
-     */
     public function testEnsuresPkFileExists()
     {
+        $this->expectExceptionMessage("PK file not found");
+        $this->expectException(\InvalidArgumentException::class);
         $s = new Signer('a', 'b');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Either a policy or a resource and an expiration time must be provided.
-     */
     public function testEnsuresExpiresIsSetWhenUsingCannedPolicy()
     {
+        $this->expectExceptionMessage("Either a policy or a resource and an expiration time must be provided.");
+        $this->expectException(\InvalidArgumentException::class);
         $s = new Signer('a', $this->testKeyFile, self::PASSPHRASE);
         $s->getSignature('http://foo/bar');
     }
@@ -103,7 +100,7 @@ class SignerTest extends TestCase
         $signature = $this->instance->getSignature('test.mp4', $expires);
 
         $this->assertArrayHasKey('Expires', $signature);
-        $this->assertInternalType('int', $signature['Expires']);
+        $this->assertIsInt($signature['Expires']);
     }
 
     public function testReturnsPolicyForCustomPolicies()
@@ -134,7 +131,7 @@ class SignerTest extends TestCase
     {
         $signature = $this->instance->getSignature('test.mp4', time() + 1000);
 
-        $this->assertNotRegExp('/[\+\=\/]/', $signature['Signature']);
+        $this->assertDoesNotMatchRegularExpression('/[\+\=\/]/', $signature['Signature']);
     }
 
     public function testPolicyContainsNoForbiddenCharacters()
@@ -142,7 +139,7 @@ class SignerTest extends TestCase
         $signature = $this->instance
             ->getSignature(null, null, $this->getCustomPolicy());
 
-        $this->assertNotRegExp('/[\+\=\/]/', $signature['Policy']);
+        $this->assertDoesNotMatchRegularExpression('/[\+\=\/]/', $signature['Policy']);
     }
 
     /**

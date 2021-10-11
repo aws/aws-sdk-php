@@ -4,6 +4,7 @@ namespace Aws\Test\Api;
 use Aws\Api\Parser\QueryParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\TestServiceTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
@@ -13,6 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ServiceTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
     use TestServiceTrait;
 
@@ -63,7 +65,7 @@ class ServiceTest extends TestCase
     public function testReturnsMetadata()
     {
         $s = new Service([], function () { return []; });
-        $this->assertInternalType('array', $s->getMetadata());
+        $this->assertIsArray($s->getMetadata());
         $s['metadata'] = [
             'serviceFullName' => 'foo',
             'endpointPrefix'  => 'bar',
@@ -94,11 +96,9 @@ class ServiceTest extends TestCase
         $this->assertArrayHasKey('foo', $s->getOperations());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testEnsuresOperationExists()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $s = new Service([], function () { return []; });
         $s->getOperation('foo');
     }
@@ -159,11 +159,9 @@ class ServiceTest extends TestCase
         $this->assertInstanceOf($cl, Service::createErrorParser($p));
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testThrowsOnUnexpectedProtocol()
     {
+        $this->expectException(\UnexpectedValueException::class);
         Service::createErrorParser('undefined_protocol');
     }
 
@@ -180,6 +178,7 @@ class ServiceTest extends TestCase
 
     /**
      * @dataProvider serializerDataProvider
+     * @doesNotPerformAssertions
      */
     public function testCreatesSerializer($type, $cl)
     {
@@ -204,6 +203,7 @@ class ServiceTest extends TestCase
 
     /**
      * @dataProvider parserDataProvider
+     * @doesNotPerformAssertions
      */
     public function testCreatesParsers($type, $cl)
     {
