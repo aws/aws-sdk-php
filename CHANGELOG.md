@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.198.2 - 2021-10-11
 
 * `Aws\EC2` - Documentation update for Amazon EC2.
 * `Aws\ElasticLoadBalancingv2` - Enable support for ALB IPv6 Target Groups (IP Address Type)
