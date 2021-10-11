@@ -5,6 +5,7 @@ use Aws\AwsClientInterface;
 use Aws\MultiRegionClient;
 use Aws\S3\S3MultiRegionClient;
 use Aws\Sdk;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -12,11 +13,11 @@ use PHPUnit\Framework\TestCase;
  */
 class SdkTest extends TestCase
 {
-    /**
-     * @expectedException \BadMethodCallException
-     */
+    use PHPUnitCompatTrait;
+
     public function testEnsuresMissingMethodThrowsException()
     {
+        $this->expectException(\BadMethodCallException::class);
         (new Sdk)->foo();
     }
 

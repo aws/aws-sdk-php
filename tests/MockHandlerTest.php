@@ -6,6 +6,7 @@ use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Psr\Http\Message\RequestInterface;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
@@ -16,12 +17,12 @@ use PHPUnit\Framework\TestCase;
  */
 class MockHandlerTest extends TestCase
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected an Aws\ResultInterface or Exception
-     */
+    use PHPUnitCompatTrait;
+
     public function testValidatesEachResult()
     {
+        $this->expectExceptionMessage("Expected an Aws\ResultInterface or Exception");
+        $this->expectException(\InvalidArgumentException::class);
         new MockHandler(['foo']);
     }
 
@@ -44,24 +45,20 @@ class MockHandlerTest extends TestCase
         $this->assertSame($r2, $h($cmd, $request)->wait());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Mock queue is empty
-     */
     public function testThrowsWhenNoResultsInQueue()
     {
+        $this->expectExceptionMessage("Mock queue is empty");
+        $this->expectException(\RuntimeException::class);
         $h = new MockHandler();
         $cmd = new Command('foo');
         $request = new Request('GET', 'http://www.example.com');
         $h($cmd, $request);
     }
 
-    /**
-     * @expectedException \Aws\Exception\AwsException
-     * @expectedExceptionMessage Error
-     */
     public function testThrowsExceptionsFromQueue()
     {
+        $this->expectExceptionMessage("Error");
+        $this->expectException(\Aws\Exception\AwsException::class);
         $cmd = new Command('foo');
         $e = new AwsException('Error', $cmd);
         $request = new Request('GET', 'http://www.example.com');

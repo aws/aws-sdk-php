@@ -6,6 +6,7 @@ use Aws\CommandInterface;
 use Aws\DynamoDb\DynamoDbClient;
 use Aws\Exception\AwsException;
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\FulfilledPromise;
@@ -21,13 +22,12 @@ use PHPUnit\Framework\TestCase;
  */
 class WaiterTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testErrorOnBadConfig()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $provider = ApiProvider::defaultProvider();
         $client = new DynamoDbClient([
             'region' => 'foo',
@@ -44,11 +44,9 @@ class WaiterTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testErrorOnBadBeforeCallback()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $client = $this->getTestClient('DynamoDb');
         $client->waitUntil(
             'TableExists',
@@ -59,6 +57,7 @@ class WaiterTest extends TestCase
         );
     }
 
+    /** @doesNotPerformAssertions */
     public function testContinueWaitingOnHandlerError()
     {
         $retries = 10;
@@ -91,6 +90,7 @@ class WaiterTest extends TestCase
         ]);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanCancel()
     {
         $client = $this->getTestClient('DynamoDb');

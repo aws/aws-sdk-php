@@ -3,6 +3,7 @@
 namespace Aws\Test\EndpointDiscovery;
 
 use Aws\EndpointDiscovery\Configuration;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\InvalidArgumentException;
 
@@ -11,6 +12,8 @@ use Psr\Log\InvalidArgumentException;
  */
 class ConfigurationTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testGetsCorrectValues()
     {
         $config = new Configuration(true, 2000);
@@ -28,11 +31,9 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $config->toArray());
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testHandlesInvalidCacheLimit()
     {
+        $this->expectException(\InvalidArgumentException::class);
         new Configuration(true, 'not_a_cache_limit');
     }
 

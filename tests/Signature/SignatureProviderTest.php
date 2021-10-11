@@ -2,6 +2,7 @@
 namespace Aws\Test\Signature;
 
 use Aws\Signature\SignatureProvider;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -9,6 +10,8 @@ use PHPUnit\Framework\TestCase;
  */
 class SignatureProviderTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function versionProvider()
     {
         return [
@@ -52,11 +55,9 @@ class SignatureProviderTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \Aws\Exception\UnresolvedSignatureException
-     */
     public function testResolvesSignaturesWithException()
     {
+        $this->expectException(\Aws\Exception\UnresolvedSignatureException::class);
         $fn = SignatureProvider::defaultProvider();
         SignatureProvider::resolve($fn, 'foooo', '', '');
     }

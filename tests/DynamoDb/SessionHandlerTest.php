@@ -2,6 +2,7 @@
 namespace Aws\Test\DynamoDb;
 
 use Aws\DynamoDb\SessionHandler;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -10,6 +11,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SessionHandlerTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testCanCreateSessionHandler()

@@ -3,6 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
 use Aws\Api\MapShape;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class MapShapeTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testReturnsValue()
     {
         $s = new MapShape(['value' => ['type' => 'string']], new ShapeMap([]));
@@ -19,11 +22,9 @@ class MapShapeTest extends TestCase
         $this->assertSame($v, $s->getValue());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testFailsWhenValueIsMissing()
     {
+        $this->expectException(\RuntimeException::class);
         (new MapShape([], new ShapeMap([])))->getValue();
     }
 

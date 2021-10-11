@@ -3,6 +3,7 @@ namespace Aws\Test\S3;
 
 use Aws\Arn\Exception\InvalidArnException;
 use Aws\S3\S3UriParser;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class S3UriParserTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function uriProvider()
     {
         return [
@@ -101,10 +104,12 @@ class S3UriParserTest extends TestCase
             ksort($actual);
             $this->assertSame($result, $actual);
         } catch (\InvalidArgumentException $e) {
+            $this->expectNotToPerformAssertions();
             if (!$isError) {
                 throw $e;
             }
         } catch (InvalidArnException $e) {
+            $this->expectNotToPerformAssertions();
             if (!$isError) {
                 throw $e;
             }

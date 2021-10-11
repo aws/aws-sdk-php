@@ -9,6 +9,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\Sdk;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
@@ -22,15 +23,17 @@ use Psr\Http\Message\RequestInterface;
  */
 class InstanceProfileProviderTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     static $originalFlag;
 
-    public static function setUpBeforeClass()
+    public static function _setUpBeforeClass()
     {
         self::$originalFlag = getenv(InstanceProfileProvider::ENV_DISABLE) ?: '';
         putenv(InstanceProfileProvider::ENV_DISABLE. '=false');
     }
 
-    public static function tearDownAfterClass()
+    public static function _tearDownAfterClass()
     {
         putenv(InstanceProfileProvider::ENV_DISABLE. '=' . self::$originalFlag);
     }
@@ -178,7 +181,7 @@ class InstanceProfileProviderTest extends TestCase
                                 Psr7\Utils::streamFor(
                                     json_encode(call_user_func_array(
                                         [$this, 'getCredentialArray'],
-                                        $creds
+                                        array_values($creds)
                                     ))
                                 )
                             )
@@ -797,12 +800,10 @@ class InstanceProfileProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Error retrieving credentials from the instance profile metadata service. (999 Expected Exception)
-     */
     public function testSwitchesBackToSecureModeOn401()
     {
+        $this->expectExceptionMessage("Error retrieving credentials from the instance profile metadata service. (999 Expected Exception)");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $requestClass = $this->getRequestClass();
         $responseClass = $this->getResponseClass();
         $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
@@ -899,23 +900,23 @@ class InstanceProfileProviderTest extends TestCase
         $this->assertSame($t, $c->getExpiration());
     }
 
-    /**
-     * @expectedException \Aws\Exception\CredentialsException
-     * @expectedExceptionMessage Unexpected instance profile response
-     */
     public function testThrowsExceptionOnInvalidMetadata()
     {
+        $this->expectExceptionMessage("Unexpected instance profile response");
+        $this->expectException(\Aws\Exception\CredentialsException::class);
         $this->getTestCreds(
             $this->getCredentialArray(null, null, null, null, false),
             'foo'
         )->wait();
     }
 
+    /** @doesNotPerformAssertions */
     public function testDoesNotRequireConfig()
     {
         new InstanceProfileProvider();
     }
 
+    /** @doesNotPerformAssertions */
     public function testEnvDisableFlag()
     {
         $flag = getenv(InstanceProfileProvider::ENV_DISABLE);

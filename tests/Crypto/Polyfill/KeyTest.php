@@ -2,6 +2,7 @@
 namespace Aws\Test\Crypto\Polyfill;
 
 use Aws\Crypto\Polyfill\Key;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class KeyTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testConstructor()
     {
         $this->assertInstanceOf(Key::class, new Key('test'));
@@ -26,7 +29,7 @@ class KeyTest extends TestCase
         ob_start();
         var_dump($key);
         $output = ob_get_clean();
-        $this->assertNotContains($test, $output, 'debugInfo() did not suppress output');
+        $this->assertStringNotContainsString($test, $output, 'debugInfo() did not suppress output');
     }
 
     public function testReturnTypeValue()
@@ -34,7 +37,7 @@ class KeyTest extends TestCase
         $test = 'some unique test string';
         $key = new Key($test);
 
-        $this->assertInternalType('string', $key->get());
+        $this->assertIsString($key->get());
         $this->assertSame($test, $key->get());
     }
 }

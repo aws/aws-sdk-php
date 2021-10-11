@@ -3,6 +3,7 @@ namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\EndpointProvider;
 use Aws\Endpoint\PartitionEndpointProvider;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,19 +11,17 @@ use PHPUnit\Framework\TestCase;
  */
 class EndpointProviderTest extends TestCase
 {
-    /**
-     * @expectedException \Aws\Exception\UnresolvedEndpointException
-     */
+    use PHPUnitCompatTrait;
+
     public function testThrowsWhenUnresolved()
     {
+        $this->expectException(\Aws\Exception\UnresolvedEndpointException::class);
         EndpointProvider::resolve(function() {}, []);
     }
 
-    /**
-     * @expectedException \Aws\Exception\UnresolvedEndpointException
-     */
     public function testThrowsWhenNotArray()
     {
+        $this->expectException(\Aws\Exception\UnresolvedEndpointException::class);
         EndpointProvider::resolve(function() { return 'foo'; }, []);
     }
 

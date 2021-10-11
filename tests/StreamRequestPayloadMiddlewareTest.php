@@ -9,6 +9,7 @@ use Aws\HandlerList;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\StreamRequestPayloadMiddleware;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
@@ -19,6 +20,7 @@ use Psr\Http\Message\RequestInterface;
  */
 class StreamRequestPayloadMiddlewareTest extends TestCase
 {
+    use PHPUnitCompatTrait;
 
     /**
      * @dataProvider generateTestCases
@@ -112,12 +114,10 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @expectedException \Aws\Exception\IncalculablePayloadException
-     * @expectedExceptionMessage Payload content length is required and can not be calculated.
-     */
     public function testThrowsExceptionOnIncalculableSize()
     {
+        $this->expectExceptionMessage("Payload content length is required and can not be calculated.");
+        $this->expectException(\Aws\Exception\IncalculablePayloadException::class);
         $service = $this->generateTestService();
         $client = $this->generateTestClient($service);
         $command = $client->getCommand(

@@ -8,6 +8,7 @@ use Aws\LruArrayCache;
 use Aws\Result;
 use Aws\Sts\RegionalEndpoints\Configuration;
 use Aws\Sts\StsClient;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
 
@@ -16,6 +17,8 @@ use PHPUnit\Framework\TestCase;
  */
 class StsClientTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testCanCreateCredentialsObjectFromStsResult()
     {
         $result = new Result([
@@ -36,26 +39,22 @@ class StsClientTest extends TestCase
         $this->assertSame('foo', $credentials->getAccessKeyId());
         $this->assertSame('bar', $credentials->getSecretKey());
         $this->assertSame('baz', $credentials->getSecurityToken());
-        $this->assertInternalType('int', $credentials->getExpiration());
+        $this->assertIsInt($credentials->getExpiration());
         $this->assertFalse($credentials->isExpired());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Result contains no credentials
-     */
     public function testThrowsExceptionWhenCreatingCredentialsFromInvalidInput()
     {
+        $this->expectExceptionMessage("Result contains no credentials");
+        $this->expectException(\InvalidArgumentException::class);
         $client = new StsClient(['region' => 'us-east-1', 'version' => 'latest']);
         $client->createCredentials(new Result());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Configuration parameter must either be 'legacy' or 'regional'.
-     */
     public function testAddsStsRegionalEndpointsArgument()
     {
+        $this->expectExceptionMessage("Configuration parameter must either be 'legacy' or 'regional'.");
+        $this->expectException(\InvalidArgumentException::class);
         new StsClient([
             'region' => 'us-east-1',
             'version' => 'latest',

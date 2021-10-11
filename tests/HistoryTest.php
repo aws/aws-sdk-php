@@ -13,6 +13,8 @@ use PHPUnit\Framework\TestCase;
  */
 class HistoryTest extends TestCase
 {
+    use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
+
     public function testIsCountable()
     {
         $h = new History();
@@ -64,41 +66,33 @@ class HistoryTest extends TestCase
         $this->assertSame($e, $h->getLastReturn());
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testThrowsWhenNoEntriesForLastResult()
     {
+        $this->expectException(\LogicException::class);
         $h = new History();
         $h->getLastReturn();
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testThrowsWhenNoReturnForLastReturn()
     {
+        $this->expectException(\LogicException::class);
         $h = new History();
         $h->start(new Command('foo'), new Request('GET', 'http://foo.com'));
         $h->getLastReturn();
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testThrowsWhenTicketAlreadyComplete()
     {
+        $this->expectException(\LogicException::class);
         $h = new History();
         $t = $h->start(new Command('foo'), new Request('GET', 'http://foo.com'));
         $h->finish($t, new Aws\Result());
         $h->finish($t, new Aws\Result());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testThrowsWhenTicketIsNotFound()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $h = new History();
         $h->finish('foo', new Aws\Result());
     }
@@ -135,20 +129,16 @@ class HistoryTest extends TestCase
         $this->assertSame($r, $h->getLastRequest());
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testThrowsWhenNoCommands()
     {
+        $this->expectException(\LogicException::class);
         $h = new History();
         $h->getLastCommand();
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testThrowsWhenNoRequests()
     {
+        $this->expectException(\LogicException::class);
         $h = new History();
         $h->getLastRequest();
     }

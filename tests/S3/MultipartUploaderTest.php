@@ -4,6 +4,7 @@ namespace Aws\Test\S3;
 use Aws\S3\MultipartUploader;
 use Aws\Result;
 use Aws\S3\S3Client;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Psr7;
@@ -15,12 +16,13 @@ use PHPUnit\Framework\TestCase;
  */
 class MultipartUploaderTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     const MB = 1048576;
     const FILENAME = '_aws-sdk-php-s3-mup-test-dots.txt';
 
-    public static function tearDownAfterClass()
+    public static function _tearDownAfterClass()
     {
         @unlink(sys_get_temp_dir() . '/' . self::FILENAME);
     }
@@ -31,7 +33,7 @@ class MultipartUploaderTest extends TestCase
     public function testS3MultipartUploadWorkflow(
         array $clientOptions = [],
         array $uploadOptions = [],
-        StreamInterface $source,
+        StreamInterface $source = null,
         $error = false
     ) {
         $client = $this->getTestClient('s3', $clientOptions);
@@ -135,6 +137,7 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($configProp->getValue($classicMup), $configProp->getValue($putObjectMup));
     }
 
+    /** @doesNotPerformAssertions */
     public function testMultipartSuccessStreams()
     {
         $size = 12 * self::MB;
@@ -265,12 +268,10 @@ class MultipartUploaderTest extends TestCase
         $this->assertSame($url, $result['ObjectURL']);
     }
 
-    /**
-     * @expectedException \Aws\S3\Exception\S3MultipartUploadException
-     * @expectedExceptionMessage An exception occurred while uploading parts to a multipart upload
-     */
     public function testAppliesAmbiguousSuccessParsing()
     {
+        $this->expectExceptionMessage("An exception occurred while uploading parts to a multipart upload");
+        $this->expectException(\Aws\S3\Exception\S3MultipartUploadException::class);
         $counter = 0;
 
         $httpHandler = function ($request, array $options) use (&$counter) {

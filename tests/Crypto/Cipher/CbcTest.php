@@ -2,10 +2,13 @@
 namespace Aws\Test\Crypto\Cipher;
 
 use Aws\Crypto\Cipher\Cbc;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 class CbcTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testShouldReportCipherMethodOfCBC()
     {
         $ivString = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
@@ -35,11 +38,9 @@ class CbcTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testShouldThrowWhenIvOfInvalidLengthProvided()
     {
+        $this->expectException(\InvalidArgumentException::class);
         new Cbc(openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc') + 1));
     }
 
@@ -54,11 +55,9 @@ class CbcTest extends TestCase
         $this->assertSame($ivString, $iv->getCurrentIv());
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testShouldThrowWhenNonZeroOffsetProvidedToSeek()
     {
+        $this->expectException(\LogicException::class);
         $ivString = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
         $iv = new Cbc($ivString);
         $cipherTextBlock = openssl_random_pseudo_bytes(1024);
@@ -67,11 +66,9 @@ class CbcTest extends TestCase
         $iv->seek(1);
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testShouldThrowWhenSeekCurProvidedToSeek()
     {
+        $this->expectException(\LogicException::class);
         $ivString = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
         $iv = new Cbc($ivString);
         $cipherTextBlock = openssl_random_pseudo_bytes(1024);
@@ -80,11 +77,9 @@ class CbcTest extends TestCase
         $iv->seek(0, SEEK_CUR);
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testShouldThrowWhenSeekEndProvidedToSeek()
     {
+        $this->expectException(\LogicException::class);
         $ivString = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
         $iv = new Cbc($ivString);
         $cipherTextBlock = openssl_random_pseudo_bytes(1024);

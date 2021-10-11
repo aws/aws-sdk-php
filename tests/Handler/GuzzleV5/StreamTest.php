@@ -3,6 +3,7 @@ namespace Aws\Test\Handler\GuzzleV5;
 
 use Aws\Handler\GuzzleV5\GuzzleStream as GuzzleStreamAdapter;
 use Aws\Handler\GuzzleV5\PsrStream as PsrStreamAdapter;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Stream\Stream as GuzzleStream;
 use PHPUnit\Framework\TestCase;
@@ -13,7 +14,9 @@ use PHPUnit\Framework\TestCase;
  */
 class StreamTest extends TestCase
 {
-    public function setUp()
+    use PHPUnitCompatTrait;
+
+    public function _setUp()
     {
         if (!class_exists('GuzzleHttp\Ring\Core')) {
             $this->markTestSkipped();
