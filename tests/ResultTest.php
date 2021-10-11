@@ -2,6 +2,7 @@
 namespace Aws\Test;
 
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -9,6 +10,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ResultTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testHasData()
     {
         $c = new Result(['a' => 'b', 'c' => 'd']);
@@ -18,7 +21,7 @@ class ResultTest extends TestCase
         $this->assertTrue($c->hasKey('c'));
         $this->assertFalse($c->hasKey('f'));
         $this->assertSame('b', $c->search('a'));
-        $this->assertContains('Model Data', (string) $c);
+        $this->assertStringContainsString('Model Data', (string) $c);
     }
 
     public function testCanIndirectlyModifyLikeAnArray()

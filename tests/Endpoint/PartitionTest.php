@@ -3,6 +3,7 @@ namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\Partition;
 use Aws\Endpoint\PartitionInterface;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class PartitionTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     /**
      * @dataProvider partitionDefinitionProvider
      *
@@ -27,12 +30,11 @@ class PartitionTest extends TestCase
      * @dataProvider invalidPartitionDefinitionProvider
      *
      * @param array $invalidDefinition
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp /missing required \w+ field/
      */
     public function testRejectsInvalidDefinitions(array $invalidDefinition)
     {
+        $this->expectExceptionMessageMatches("/missing required \w+ field/");
+        $this->expectException(\InvalidArgumentException::class);
         new Partition($invalidDefinition);
     }
 
@@ -61,7 +63,7 @@ class PartitionTest extends TestCase
     {
         $partition = new Partition($definition);
         $resolved = $partition(['region' => 'fips-aws-global', 'service' => 'service']);
-        self::assertContains('service-fips.amazonaws.com', $resolved['endpoint']);
+        self::assertStringContainsString('service-fips.amazonaws.com', $resolved['endpoint']);
     }
 
     public function partitionDefinitionProvider()

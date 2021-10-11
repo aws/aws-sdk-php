@@ -4,6 +4,7 @@ namespace Aws\Test\Sqs;
 use Aws\Middleware;
 use Aws\Result;
 use Aws\Sqs\SqsClient;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -12,6 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SqsClientTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testGetQueueArn()
@@ -36,12 +38,10 @@ class SqsClientTest extends TestCase
         $this->assertSame($arn, $sqs->getQueueArn($url));
     }
 
-    /**
-     * @expectedException \Aws\Sqs\Exception\SqsException
-     * @expectedExceptionMessage MD5 mismatch. Expected foo, found ddc35f88fa71b6ef142ae61f35364653
-     */
     public function testValidatesMd5OfBody()
     {
+        $this->expectExceptionMessage("MD5 mismatch. Expected foo, found ddc35f88fa71b6ef142ae61f35364653");
+        $this->expectException(\Aws\Sqs\Exception\SqsException::class);
         $client = new SqsClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
@@ -52,12 +52,10 @@ class SqsClientTest extends TestCase
         $client->receiveMessage(['QueueUrl' => 'http://foo.com']);
     }
 
-    /**
-     * @expectedException \Aws\Sqs\Exception\SqsException
-     * @expectedExceptionMessage Attribute MD5 mismatch. Expected foo, found ee5a4b60facbcc4723c1b5b8baca2593
-     */
     public function testValidatesMd5OfMessageAttributes()
     {
+        $this->expectExceptionMessage("Attribute MD5 mismatch. Expected foo, found ee5a4b60facbcc4723c1b5b8baca2593");
+        $this->expectException(\Aws\Sqs\Exception\SqsException::class);
         $client = new SqsClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
@@ -110,12 +108,10 @@ class SqsClientTest extends TestCase
         ]);
     }
 
-    /**
-     * @expectedException \Aws\Sqs\Exception\SqsException
-     * @expectedExceptionMessage No Attribute MD5 found. Expected 0408bb33aa149494a6a4683d58a7133f
-     */
     public function testValidatesMd5OfMessageAttributesExists()
     {
+        $this->expectExceptionMessage("No Attribute MD5 found. Expected 0408bb33aa149494a6a4683d58a7133f");
+        $this->expectException(\Aws\Sqs\Exception\SqsException::class);
         $client = new SqsClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
@@ -139,12 +135,10 @@ class SqsClientTest extends TestCase
         ]);
     }
 
-    /**
-     * @expectedException \Aws\Sqs\Exception\SqsException
-     * @expectedExceptionMessage Attribute MD5 mismatch. Expected foo, found No Attributes
-     */
     public function testValidatesMessageAttributesExistWithMd5()
     {
+        $this->expectExceptionMessage("Attribute MD5 mismatch. Expected foo, found No Attributes");
+        $this->expectException(\Aws\Sqs\Exception\SqsException::class);
         $client = new SqsClient([
             'region'  => 'us-west-2',
             'version' => 'latest'
@@ -163,6 +157,7 @@ class SqsClientTest extends TestCase
         ]);
     }
 
+    /** @doesNotPerformAssertions */
     public function testSkipsCommandsThatAreNotReceiveMessage()
     {
         $client = new SqsClient([

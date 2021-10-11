@@ -2,18 +2,21 @@
 namespace Aws\Test;
 
 use Aws\PsrCacheAdapter;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use PHPUnit\Framework\TestCase;
 
 class PsrCacheAdapterTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     /** @var CacheItemPoolInterface|\PHPUnit_Framework_MockObject_MockObject $wrappedCache */
     private $wrapped;
     /** @var PsrCacheAdapter */
     private $instance;
 
-    public function setUp()
+    public function _setUp()
     {
         $this->wrapped = $this->getMockBuilder(CacheItemPoolInterface::class)->getMock();
         $this->instance = new PsrCacheAdapter($this->wrapped);

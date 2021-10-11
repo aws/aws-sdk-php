@@ -2,6 +2,7 @@
 namespace Aws\Test\Api\Parser;
 
 use Aws\Api\Parser\Exception\ParserException;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 ;
@@ -14,6 +15,7 @@ use PHPUnit\Framework\TestCase;
  */
 class XmlParserTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use ParserTestServiceTrait;
 
     public function timeStampModelProvider()
@@ -117,7 +119,7 @@ class XmlParserTest extends TestCase
         $command = $client->getCommand($commandName);
         $list = $client->getHandlerList();
         $handler = $list->resolve();
-        $this->setExpectedException($expectedException, $expectedMessage);
+        $this->expectException($expectedException, $expectedMessage);
         $handler($command)->wait();
     }
 

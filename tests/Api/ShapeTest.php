@@ -3,6 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -11,6 +12,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ShapeTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testImplementsArray()
     {
         $s = new Shape(['metadata' => ['foo' => 'bar']], new ShapeMap([]));
@@ -27,11 +30,9 @@ class ShapeTest extends TestCase
         $this->assertArrayNotHasKey('abc', $s);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testValidatesShapeAt()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $s = new Shape([], new ShapeMap([]));
         $m = new \ReflectionMethod($s, 'shapeAt');
         $m->setAccessible(true);
@@ -69,12 +70,10 @@ class ShapeTest extends TestCase
         $this->assertSame('float', $s->getType());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Invalid type
-     */
     public function testValidatesShapeTypes()
     {
+        $this->expectExceptionMessage("Invalid type");
+        $this->expectException(\RuntimeException::class);
         $s = new Shape(
             ['foo' => ['type' => 'what?']],
             new ShapeMap([])

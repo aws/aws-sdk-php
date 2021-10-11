@@ -2,12 +2,14 @@
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\AesGcmDecryptingStream;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\StreamInterface;
 use PHPUnit\Framework\TestCase;
 
 class AesGcmDecryptingStreamTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use AesEncryptionStreamTestTrait;
 
     /**
@@ -61,8 +63,6 @@ class AesGcmDecryptingStreamTest extends TestCase
 
     /**
      * @dataProvider cartesianJoinInputKeySizeProvider
-     * @expectedException \Aws\Exception\CryptoException
-     * @expectedExceptionMessage The requested object could not be decrypted due to an invalid authentication tag
      *
      * @param StreamInterface $plainText
      * @param int $keySize
@@ -71,6 +71,8 @@ class AesGcmDecryptingStreamTest extends TestCase
         StreamInterface $plainText,
         $keySize
     ) {
+        $this->expectExceptionMessage("The requested object could not be decrypted due to an invalid authentication tag");
+        $this->expectException(\Aws\Exception\CryptoException::class);
         if (version_compare(PHP_VERSION, '7.1', '<')) {
             $this->markTestSkipped(
                 'AES-GCM decryption is only supported in PHP 7.1 or greater'

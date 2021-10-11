@@ -8,6 +8,7 @@ use Aws\CommandInterface;
 use Aws\HandlerList;
 use Aws\MultiRegionClient;
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise\FulfilledPromise;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
@@ -15,12 +16,14 @@ use PHPUnit\Framework\TestCase;
 
 class MultiRegionClientTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     /** @var MultiRegionClient */
     private $instance;
     /** @var \PHPUnit_Framework_MockObject_MockObject */
     private $mockRegionalClient;
 
-    public function setUp()
+    public function _setUp()
     {
         $this->mockRegionalClient = $this->getMockBuilder(AwsClient::class)
             ->disableOriginalConstructor()
@@ -136,11 +139,9 @@ class MultiRegionClientTest extends TestCase
         $this->assertSame('aws', $mrc->getConfig('partition')->getName());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRejectsUnrecognizedPartitions()
     {
+        $this->expectException(\InvalidArgumentException::class);
         new MultiRegionClient([
             'service' => 'ec2',
             'partition' => 'foo',

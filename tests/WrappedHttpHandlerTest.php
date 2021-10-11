@@ -10,6 +10,7 @@ use Aws\Command;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\WrappedHttpHandler;
 use GuzzleHttp\Promise\RejectedPromise;
 use Psr\Http\Message\RequestInterface;
@@ -23,6 +24,7 @@ use PHPUnit\Framework\TestCase;
  */
 class WrappedHttpHandlerTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use TestServiceTrait;
 
     public function testParsesResponses()
@@ -59,12 +61,10 @@ class WrappedHttpHandlerTest extends TestCase
         ], $result['@metadata']);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage The HTTP handler was rejected without an "exception" key value pair.
-     */
     public function testEnsuresErrorHasExceptionKey()
     {
+        $this->expectExceptionMessage("The HTTP handler was rejected without an \"exception\" key value pair.");
+        $this->expectException(\RuntimeException::class);
         $cmd = new Command('foo');
         $req = new Request('GET', 'http://foo.com');
         $handler = function () { return new RejectedPromise([]); };
@@ -373,7 +373,7 @@ class WrappedHttpHandlerTest extends TestCase
     {
         $handler = function ($request, array $options) {
             $this->assertArrayHasKey('http_stats_receiver', $options);
-            $this->assertInternalType('callable', $options['http_stats_receiver']);
+            $this->assertIsCallable($options['http_stats_receiver']);
             return new Response;
         };
 

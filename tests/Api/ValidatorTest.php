@@ -4,6 +4,7 @@ namespace Aws\Test\Api;
 use Aws\Api\Shape;
 use Aws\Api\ShapeMap;
 use Aws\Api\Validator;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
 
@@ -12,6 +13,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ValidatorTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function validationProvider()
     {
         return [
@@ -619,6 +622,7 @@ class ValidatorTest extends TestCase
 
         try {
             $validator->validate('Foo', $shape, $input);
+            $this->expectNotToPerformAssertions();
             if ($result !== true) {
                 $this->fail('Should have failed with ' . $result);
             }
@@ -631,12 +635,10 @@ class ValidatorTest extends TestCase
         }
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage expected string length to be >= 1, but found string length of 0
-     */
     public function testValidatesMinByDefault()
     {
+        $this->expectExceptionMessage("expected string length to be >= 1, but found string length of 0");
+        $this->expectException(\InvalidArgumentException::class);
         $shape = Shape::create(
             [
                 'type' => 'structure',
@@ -648,6 +650,7 @@ class ValidatorTest extends TestCase
         $validator->validate('Foo', $shape, ['foo' => '']);
     }
 
+    /** @doesNotPerformAssertions */
     public function testDoesNotValidateMaxByDefault()
     {
         $shape = Shape::create(
@@ -661,6 +664,7 @@ class ValidatorTest extends TestCase
         $validator->validate('Foo', $shape, ['foo' => '1234567890']);
     }
 
+    /** @doesNotPerformAssertions */
     public function testDoesNotValidatePatternsByDefault()
     {
         $validator = new Validator();
@@ -679,6 +683,7 @@ class ValidatorTest extends TestCase
         $validator->validate('Foo', $shape, ['caps' => 'abc']);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanDisableRequiredTrait()
     {
         $validator = new Validator(['required' => false]);

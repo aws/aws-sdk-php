@@ -6,30 +6,28 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\S3\BatchDelete;
 use Aws\S3\Exception\DeleteMultipleObjectsException;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Aws\S3\BatchDelete
+ * @covers \Aws\S3\BatchDelete
  */
 class BatchDeleteTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testValidatesBatchSizeIsGreatherThanZero()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $client = $this->getTestClient('s3');
         BatchDelete::fromIterator($client, 'foo', new \ArrayIterator(), ['batch_size' => 0]);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testValidatesBeforeIsCallable()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $client = $this->getTestClient('s3');
         BatchDelete::fromIterator($client, 'foo', new \ArrayIterator(), ['before' => 0]);
     }

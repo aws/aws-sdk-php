@@ -6,6 +6,7 @@ use Aws\Exception\AwsException;
 use Aws\MockHandler;
 use Aws\Result;
 use Aws\DynamoDb\WriteRequestBatch;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -14,6 +15,7 @@ use PHPUnit\Framework\TestCase;
  */
 class WriteRequestBatchTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     public function testInstantiateWriteRequestBatch()
@@ -25,10 +27,10 @@ class WriteRequestBatchTest extends TestCase
 
     /**
      * @dataProvider getInvalidArgUseCases
-     * @expectedException \InvalidArgumentException
      */
     public function testInstantiationFailsOnInvalidArgs($config)
     {
+        $this->expectException(\InvalidArgumentException::class);
         new WriteRequestBatch($this->getTestClient('DynamoDb'), $config);
     }
 
@@ -65,11 +67,9 @@ class WriteRequestBatchTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testMustProvideTable()
     {
+        $this->expectException(\RuntimeException::class);
         $batch = new WriteRequestBatch($this->getTestClient('DynamoDb'));
         $batch->put(['a' => 'b']);
     }

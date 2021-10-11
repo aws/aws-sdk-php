@@ -3,6 +3,7 @@ namespace Aws\Test\Api;
 
 use Aws\Api\TimestampShape;
 use Aws\Api\ShapeMap;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class TimestampShapeTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function formatProvider()
     {
         $t = strtotime('january 5, 1999');
@@ -35,20 +38,16 @@ class TimestampShapeTest extends TestCase
         $this->assertEquals($result, $s->format($value, $format));
     }
 
-    /**
-     * @expectedException \UnexpectedValueException
-     */
     public function testValidatesTimestampFormat()
     {
+        $this->expectException(\UnexpectedValueException::class);
         $s = new TimestampShape([], new ShapeMap([]));
         $s->format('now', 'foo');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testValidatesTimestampValue()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $s = new TimestampShape([], new ShapeMap([]));
         $s->format(true, 'iso8601');
     }

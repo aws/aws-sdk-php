@@ -2,6 +2,7 @@
 namespace Aws\Test\Api\ErrorParser;
 
 use Aws\Api\ErrorParser\XmlErrorParser;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\TestServiceTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
@@ -11,6 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class XmlErrorParserTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use TestServiceTrait;
 
     /**

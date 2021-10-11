@@ -16,6 +16,7 @@ use Aws\S3\S3Client;
 use Aws\HandlerList;
 use Aws\Sdk;
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -24,18 +25,18 @@ use PHPUnit\Framework\TestCase;
  */
 class ClientResolverTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Missing required client configuration options
-     */
     public function testEnsuresRequiredArgumentsAreProvided()
     {
+        $this->expectExceptionMessage("Missing required client configuration options");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $r->resolve([], new HandlerList());
     }
 
+    /** @doesNotPerformAssertions */
     public function testAddsValidationSubscriber()
     {
         $c = new DynamoDbClient([
@@ -50,6 +51,7 @@ class ClientResolverTest extends TestCase
         } catch (\InvalidArgumentException $e) {}
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanDisableValidation()
     {
         $c = new DynamoDbClient([
@@ -63,6 +65,7 @@ class ClientResolverTest extends TestCase
         $c->execute($command);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanDisableSpecificValidationConstraints()
     {
         $c = new DynamoDbClient([
@@ -151,12 +154,10 @@ class ClientResolverTest extends TestCase
         $this->assertSame($conf['config']['signing_name'], $signingName);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid configuration value provided for "foo". Expected string, but got int(-1)
-     */
     public function testValidatesInput()
     {
+        $this->expectExceptionMessage("Invalid configuration value provided for \"foo\". Expected string, but got int(-1)");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver([
             'foo' => [
                 'type'  => 'value',
@@ -166,12 +167,10 @@ class ClientResolverTest extends TestCase
         $r->resolve(['foo' => -1], new HandlerList());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Invalid configuration value provided for "foo". Expected callable, but got string(1) "c"
-     */
     public function testValidatesCallables()
     {
+        $this->expectExceptionMessage("Invalid configuration value provided for \"foo\". Expected callable, but got string(1) \"c\"");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver([
             'foo' => [
                 'type'   => 'value',
@@ -196,14 +195,14 @@ class ClientResolverTest extends TestCase
         $this->assertSame('callable_test', $res['foo']);
     }
 
-    public function checkCallable()
+    public static function checkCallable()
     {
         return "testcall";
     }
 
     public function testValidatesNotInvokeStringCallable()
     {
-        $callableFunction = '\Aws\test\ClientResolverTest::checkCallable';
+        $callableFunction = '\Aws\Test\ClientResolverTest::checkCallable';
         $r = new ClientResolver([
             'foo' => [
                 'type'    => 'value',
@@ -212,19 +211,17 @@ class ClientResolverTest extends TestCase
             ]
         ]);
         $res = $r->resolve([], new HandlerList());
-        $this->assertInternalType('callable', $callableFunction);
+        $this->assertIsCallable($callableFunction);
         $this->assertSame(
-            '\Aws\test\ClientResolverTest::checkCallable',
+            '\Aws\Test\ClientResolverTest::checkCallable',
             $res['foo']
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Credentials must be an
-     */
     public function testValidatesCredentials()
     {
+        $this->expectExceptionMessage("Credentials must be an");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver([
             'credentials' => ClientResolver::getDefaultArguments()['credentials']
         ]);
@@ -273,6 +270,7 @@ class ClientResolverTest extends TestCase
         $this->assertSame($exp, $creds->getExpiration());
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanDisableRetries()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -284,6 +282,7 @@ class ClientResolverTest extends TestCase
         ], new HandlerList());
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanEnableRetries()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -295,6 +294,7 @@ class ClientResolverTest extends TestCase
         ], new HandlerList());
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanEnableRetriesStandardMode()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -309,6 +309,7 @@ class ClientResolverTest extends TestCase
         ], new HandlerList());
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanEnableRetriesAdaptivedMode()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -549,6 +550,7 @@ EOT;
         ];
     }
 
+    /** @doesNotPerformAssertions */
     public function testAddsLoggerWithDebugSettings()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -561,6 +563,7 @@ EOT;
         ], new HandlerList());
     }
 
+    /** @doesNotPerformAssertions */
     public function testAddsDebugListener()
     {
         $em = new HandlerList();
@@ -609,6 +612,7 @@ EOT;
         $this->assertTrue($c->getConfig('bucket_endpoint'));
     }
 
+    /** @doesNotPerformAssertions */
     public function testSkipsNonRequiredKeys()
     {
         $r = new ClientResolver([
@@ -620,23 +624,19 @@ EOT;
         $r->resolve([], new HandlerList());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage A "version" configuration value is required
-     */
     public function testHasSpecificMessageForMissingVersion()
     {
+        $this->expectExceptionMessage("A \"version\" configuration value is required");
+        $this->expectException(\InvalidArgumentException::class);
         $args = ClientResolver::getDefaultArguments()['version'];
         $r = new ClientResolver(['version' => $args]);
         $r->resolve(['service' => 'foo'], new HandlerList());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage A "version" configuration value is required
-     */
     public function testHasSpecificMessageForNullRequiredVersion()
     {
+        $this->expectExceptionMessage("A \"version\" configuration value is required");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $list = new HandlerList();
         $r->resolve([
@@ -647,23 +647,19 @@ EOT;
         ], $list);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage A "region" configuration value is required for the "foo" service
-     */
     public function testHasSpecificMessageForMissingRegion()
     {
+        $this->expectExceptionMessage("A \"region\" configuration value is required for the \"foo\" service");
+        $this->expectException(\InvalidArgumentException::class);
         $args = ClientResolver::getDefaultArguments()['region'];
         $r = new ClientResolver(['region' => $args]);
         $r->resolve(['service' => 'foo'], new HandlerList());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage A "region" configuration value is required for the "foo" service
-     */
     public function testHasSpecificMessageForNullRequiredRegion()
     {
+        $this->expectExceptionMessage("A \"region\" configuration value is required for the \"foo\" service");
+        $this->expectException(\InvalidArgumentException::class);
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
         $list = new HandlerList();
         $r->resolve([
@@ -686,7 +682,7 @@ EOT;
             'debug'       => ['logfn' => function ($value) use (&$str) { $str .= $value; }]
         ], $list);
         $value = $this->readAttribute($list, 'interposeFn');
-        $this->assertInternalType('callable', $value);
+        $this->assertIsCallable($value);
     }
 
     public function testAppliesUserAgent()
@@ -701,7 +697,7 @@ EOT;
             'ua_append' => 'PHPUnit/Unit',
         ], $list);
         $this->assertArrayHasKey('ua_append', $conf);
-        $this->assertInternalType('array', $conf['ua_append']);
+        $this->assertIsArray($conf['ua_append']);
         $this->assertContains('PHPUnit/Unit', $conf['ua_append']);
         $this->assertContains('aws-sdk-php/' . Sdk::VERSION, $conf['ua_append']);
     }

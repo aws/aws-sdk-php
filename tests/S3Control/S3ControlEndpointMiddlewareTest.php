@@ -4,6 +4,7 @@ namespace Aws\Test\S3Control;
 use Aws\Command;
 use Aws\CommandInterface;
 use Aws\S3Control\S3ControlEndpointMiddleware;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
@@ -14,6 +15,7 @@ use PHPUnit\Framework\TestCase;
  */
 class S3ControlEndpointMiddlewareTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     const REGION = 'us-west-2';
@@ -88,8 +90,8 @@ class S3ControlEndpointMiddlewareTest extends TestCase
             CommandInterface $cmd,
             RequestInterface $req
         ) use ($command) {
-            $this->assertContains('.dualstack.', (string) $req->getUri());
-            $this->assertContains('key=query', $req->getUri()->getQuery());
+            $this->assertStringContainsString('.dualstack.', (string) $req->getUri());
+            $this->assertStringContainsString('key=query', $req->getUri()->getQuery());
         };
     }
 
@@ -99,8 +101,8 @@ class S3ControlEndpointMiddlewareTest extends TestCase
             CommandInterface $cmd,
             RequestInterface $req
         ) use ($command) {
-            $this->assertNotContains('.dualstack.', (string) $req->getUri());
-            $this->assertContains('key=query', $req->getUri()->getQuery());
+            $this->assertStringNotContainsString('.dualstack.', (string) $req->getUri());
+            $this->assertStringContainsString('key=query', $req->getUri()->getQuery());
         };
     }
 

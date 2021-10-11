@@ -4,6 +4,7 @@ namespace Aws\Test\S3;
 use Aws\Credentials\Credentials;
 use Aws\S3\PostObject;
 use Aws\S3\S3Client;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -12,12 +13,13 @@ use PHPUnit\Framework\TestCase;
  */
 class PostObjectTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     /** @var S3Client */
     protected $client;
 
-    public function setUp()
+    public function _setUp()
     {
         $this->client = $this->getTestClient(
             's3',

@@ -2,6 +2,7 @@
 namespace Aws\Test\Crypto;
 
 use Aws\Crypto\MetadataEnvelope;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -9,6 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 class MetadataEnvelopeTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesMetadataEnvelopeTrait;
 
     /**
@@ -40,11 +42,10 @@ class MetadataEnvelopeTest extends TestCase
 
     /**
      * @dataProvider getIndividualInvalidMetadataFields
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testThrowsOnInvalidMetadataField($field, $value)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $envelope = new MetadataEnvelope();
         $envelope[$field] = $value;
     }

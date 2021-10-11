@@ -5,6 +5,7 @@ use Aws\CommandInterface;
 use Aws\Credentials\Credentials;
 use Aws\DocDB\DocDBClient;
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 require_once __DIR__ . '/../Signature/sig_hack.php';
@@ -14,13 +15,15 @@ require_once __DIR__ . '/../Signature/sig_hack.php';
  */
 class DocDbClientTestClientTest extends TestCase
 {
-    public static function setUpBeforeClass()
+    use PHPUnitCompatTrait;
+
+    public static function _setUpBeforeClass()
     {
         $_SERVER['aws_time'] = 1598486400;
         $_SERVER['formatAwsTime'] = true;
     }
 
-    public static function tearDownAfterClass()
+    public static function _tearDownAfterClass()
     {
         $_SERVER['aws_time'] = null;
         $_SERVER['formatAwsTime'] = null;
@@ -67,7 +70,7 @@ class DocDbClientTestClientTest extends TestCase
                 if (!empty($expectedUrl)) {
                     self::assertSame($expectedUrl, $url);
                 } else if (!empty($expectedSignature)) {
-                    $this->assertContains("X-Amz-Signature={$expectedSignature}", $url);
+                    $this->assertStringContainsString("X-Amz-Signature={$expectedSignature}", $url);
                 } else {
                     self::assertNull($url);
                 }

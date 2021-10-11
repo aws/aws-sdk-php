@@ -4,6 +4,7 @@ namespace Aws\Test\S3;
 use Aws\Credentials\Credentials;
 use Aws\S3\PostObjectV4;
 use Aws\S3\S3Client;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 
 require_once __DIR__ . '/sig_hack.php';
@@ -14,12 +15,13 @@ use PHPUnit\Framework\TestCase;
  */
 class PostObjectV4Test extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     /** @var S3Client */
     protected $client;
 
-    public function setUp()
+    public function _setUp()
     {
         $this->client = new S3Client([
             'version' => 'latest',
@@ -30,6 +32,14 @@ class PostObjectV4Test extends TestCase
             ],
         ]);
     }
+
+    public function _tearDown()
+    {
+        parent::tearDown();
+
+        unset($_SERVER['aws_time']);
+    }
+
     /**
      * Executes the SigV4 POST example from the S3 documentation.
      *

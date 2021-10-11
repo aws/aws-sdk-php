@@ -1,14 +1,16 @@
 <?php
 namespace Aws\Test\Integ;
 
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Handler\StreamHandler;
 use PHPUnit\Framework\TestCase;
 
 class GuzzleV6StreamHandlerTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use IntegUtils;
 
-    public function setUp()
+    public function _setUp()
     {
         if (!class_exists('GuzzleHttp\Handler\StreamHandler')) {
             $this->markTestSkipped();

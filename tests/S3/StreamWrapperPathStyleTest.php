@@ -9,6 +9,7 @@ use Aws\Result;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Aws\S3\StreamWrapper;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase;
@@ -18,6 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class StreamWrapperPathStyleTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     /** @var S3Client */
@@ -26,7 +28,7 @@ class StreamWrapperPathStyleTest extends TestCase
     /** @var LruArrayCache */
     private $cache;
 
-    public function setUp()
+    public function _setUp()
     {
         // use a fresh LRU cache for each test.
         $this->cache = new LruArrayCache();
@@ -38,7 +40,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->client->registerStreamWrapper();
     }
 
-    public function tearDown()
+    public function _tearDown()
     {
         stream_wrapper_unregister('s3');
         $this->client = null;
@@ -51,34 +53,29 @@ class StreamWrapperPathStyleTest extends TestCase
         StreamWrapper::register($this->client);
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage Cannot open a bucket
-     */
     public function testCannotOpenBuckets()
     {
+        $this->expectExceptionMessage("Cannot open a bucket");
+        $this->expectWarning();
         fopen('s3://bucket', 'r');
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage Mode not supported
-     */
     public function testSupportsOnlyReadWriteXA()
     {
+        $this->expectExceptionMessage("Mode not supported");
+        $this->expectWarning();
         fopen('s3://bucket/key', 'c');
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage s3://bucket/key already exists on Amazon S3
-     */
     public function testValidatesXMode()
     {
+        $this->expectExceptionMessage("s3://bucket/key already exists on Amazon S3");
+        $this->expectWarning();
         $this->addMockResults($this->client, [new Result()]);
         fopen('s3://bucket/key', 'x');
     }
 
+    /** @doesNotPerformAssertions */
     public function testSuccessfulXMode()
     {
         $this->addMockResults(
@@ -173,12 +170,10 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertSame('test', (string) $cmd['Body']);
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage 403 Forbidden
-     */
     public function testTriggersErrorInsteadOfExceptionWhenWriteFlushFails()
     {
+        $this->expectExceptionMessage("403 Forbidden");
+        $this->expectWarning();
         $this->addMockResults($this->client, [
             function ($cmd, $req) { return new S3Exception('403 Forbidden', $cmd); }
         ]);
@@ -244,12 +239,10 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertSame('s3.amazonaws.com', $entries[0]['request']->getUri()->getHost());
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage 403 Forbidden
-     */
     public function testThrowsErrorsWhenUnlinkFails()
     {
+        $this->expectExceptionMessage("403 Forbidden");
+        $this->expectWarning();
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
         ]);
@@ -261,22 +254,18 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertFalse(mkdir('s3://'));
     }
 
-    /**
-     * @expectedExceptionMessage Bucket already exists: s3://already-existing-bucket
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     */
     public function testCreatingAlreadyExistingBucketRaisesError()
     {
+        $this->expectWarning();
+        $this->expectExceptionMessage("Bucket already exists: s3://already-existing-bucket");
         $this->addMockResults($this->client, [new Result()]);
         mkdir('s3://already-existing-bucket');
     }
 
-    /**
-     * @expectedExceptionMessage Subfolder already exists: s3://already-existing-bucket/key
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     */
     public function testCreatingAlreadyExistingBucketForKeyRaisesError()
     {
+        $this->expectWarning();
+        $this->expectExceptionMessage("Subfolder already exists: s3://already-existing-bucket/key");
         $this->addMockResults($this->client, [new Result()]);
         mkdir('s3://already-existing-bucket/key');
     }
@@ -329,24 +318,20 @@ class StreamWrapperPathStyleTest extends TestCase
         $entries = $history->toArray();
         $this->assertSame('HEAD', $entries[0]['request']->getMethod());
         $this->assertSame('PUT', $entries[1]['request']->getMethod());
-        $this->assertContains('public-read', $entries[1]['request']->getHeaderLine('x-amz-acl'));
+        $this->assertStringContainsString('public-read', $entries[1]['request']->getHeaderLine('x-amz-acl'));
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage specify a bucket
-     */
     public function testCannotDeleteS3()
     {
+        $this->expectExceptionMessage("specify a bucket");
+        $this->expectWarning();
         rmdir('s3://');
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage 403 Forbidden
-     */
     public function testRmDirWithExceptionTriggersError()
     {
+        $this->expectExceptionMessage("403 Forbidden");
+        $this->expectWarning();
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
         ]);
@@ -386,7 +371,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertCount(1, $history);
         $entries = $history->toArray();
         $this->assertSame('GET', $entries[0]['request']->getMethod());
-        $this->assertContains('prefix=object%2F', $entries[0]['request']->getUri()->getQuery());
+        $this->assertStringContainsString('prefix=object%2F', $entries[0]['request']->getUri()->getQuery());
     }
 
     public function testCanDeleteNestedFolderWithRmDir()
@@ -406,36 +391,30 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertCount(2, $history);
         $entries = $history->toArray();
         $this->assertSame('GET', $entries[0]['request']->getMethod());
-        $this->assertContains('prefix=bar%2F', $entries[0]['request']->getUri()->getQuery());
+        $this->assertStringContainsString('prefix=bar%2F', $entries[0]['request']->getUri()->getQuery());
         $this->assertSame('DELETE', $entries[1]['request']->getMethod());
         $this->assertSame('/foo/bar/', $entries[1]['request']->getUri()->getPath());
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage rename(): Cannot rename a file across wrapper types
-     */
     public function testRenameEnsuresProtocolsMatch()
     {
+        $this->expectExceptionMessage("rename(): Cannot rename a file across wrapper types");
+        $this->expectWarning();
         StreamWrapper::register($this->client, 'baz');
         rename('s3://foo/bar', 'baz://qux/quux');
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage The Amazon S3 stream wrapper only supports copying objects
-     */
     public function testRenameEnsuresKeyIsSet()
     {
+        $this->expectExceptionMessage("The Amazon S3 stream wrapper only supports copying objects");
+        $this->expectWarning();
         rename('s3://foo/bar', 's3://baz');
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage Forbidden
-     */
     public function testRenameWithExceptionThrowsError()
     {
+        $this->expectExceptionMessage("Forbidden");
+        $this->expectWarning();
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
         ]);
@@ -532,12 +511,10 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertSame(123, filesize('s3://foo/bar'));
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage Forbidden
-     */
     public function testFailingStatTriggersError()
     {
+        $this->expectExceptionMessage("Forbidden");
+        $this->expectWarning();
         // Sends one request for HeadObject, then another for ListObjects
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('403 Forbidden', $cmd); },
@@ -547,12 +524,10 @@ class StreamWrapperPathStyleTest extends TestCase
         stat('s3://bucket/key');
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage File or directory not found: s3://bucket
-     */
     public function testBucketNotFoundTriggersError()
     {
+        $this->expectExceptionMessage("File or directory not found: s3://bucket");
+        $this->expectWarning();
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('404', $cmd); },
         ]);
@@ -594,12 +569,10 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertSame(0040777, $stat['mode']);
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage File or directory not found: s3://bucket/prefix
-     */
     public function testCannotStatPrefixWithNoResults()
     {
+        $this->expectExceptionMessage("File or directory not found: s3://bucket/prefix");
+        $this->expectWarning();
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('404', $cmd); },
             new Result()
@@ -669,12 +642,16 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->assertCount(count($queue), $history);
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage cannot represent a stream of type user-space
-     */
     public function testStreamCastIsNotPossible()
     {
+        if (PHP_VERSION_ID < 80000) {
+            $this->expectExceptionMessage("cannot represent a stream of type user-space");
+            $this->expectWarning();
+        } else {
+            $this->expectExceptionMessage('No stream arrays were passed');
+            $this->expectException(\ValueError::class);
+        }
+
         $this->addMockResults($this->client, [
             new Result(['Body' => Psr7\Utils::streamFor('')])
         ]);
@@ -684,12 +661,10 @@ class StreamWrapperPathStyleTest extends TestCase
         stream_select($read, $write, $except, 0);
     }
 
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage No client in stream context
-     */
     public function testEnsuresClientIsSet()
     {
+        $this->expectExceptionMessage("No client in stream context");
+        $this->expectWarning();
         fopen('s3://bucket/key', 'r', false, stream_context_create([
             's3' => ['client' => null]
         ]));
@@ -708,7 +683,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $this->addMockResults($this->client, [
             function ($cmd, $r) { return new S3Exception('404', $cmd); },
         ]);
-        $this->assertFileNotExists('s3://bucket/key');
+        $this->assertFileDoesNotExist('s3://bucket/key');
     }
 
     public function testProvidesDirectoriesForS3()
@@ -775,7 +750,7 @@ class StreamWrapperPathStyleTest extends TestCase
 
         $dir = 's3://bucket/key/';
         $r = opendir($dir);
-        $this->assertInternalType('resource', $r);
+        $this->assertIsResource($r);
 
         $files = [];
         while (($file = readdir($r)) !== false) {
@@ -793,6 +768,7 @@ class StreamWrapperPathStyleTest extends TestCase
         closedir($r);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanSetDelimiterStreamContext()
     {
         $this->addMockResults($this->client, [

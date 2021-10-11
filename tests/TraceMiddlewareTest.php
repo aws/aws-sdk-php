@@ -7,6 +7,7 @@ use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\TraceMiddleware;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Request;
@@ -19,6 +20,8 @@ use PHPUnit\Framework\TestCase;
  */
 class TraceMiddlewareTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testEmitsDebugInfo()
     {
         $str = '';
@@ -48,15 +51,15 @@ class TraceMiddlewareTest extends TestCase
         $request = new Request('GET', 'http://foo.com');
         $handler($command, $request);
         Promise\queue()->run();
-        $this->assertContains("-> Entering step init, name ''", $str);
-        $this->assertContains('command was set to array', $str);
-        $this->assertContains('request was set to array', $str);
-        $this->assertContains("<- Leaving step init, name ''", $str);
-        $this->assertContains('result was set to array', $str);
-        $this->assertContains('Inclusive step time: ', $str);
-        $this->assertContains('command.params.b was unset', $str);
-        $this->assertContains('no changes', $str);
-        $this->assertContains("<- Leaving step validate, name ''", $str);
+        $this->assertStringContainsString("-> Entering step init, name ''", $str);
+        $this->assertStringContainsString('command was set to array', $str);
+        $this->assertStringContainsString('request was set to array', $str);
+        $this->assertStringContainsString("<- Leaving step init, name ''", $str);
+        $this->assertStringContainsString('result was set to array', $str);
+        $this->assertStringContainsString('Inclusive step time: ', $str);
+        $this->assertStringContainsString('command.params.b was unset', $str);
+        $this->assertStringContainsString('no changes', $str);
+        $this->assertStringContainsString("<- Leaving step validate, name ''", $str);
     }
 
     public function testTracksExceptions()
@@ -84,11 +87,11 @@ class TraceMiddlewareTest extends TestCase
         $request = new Request('GET', 'http://foo.com');
         $handler($command, $request);
         Promise\queue()->run();
-        $this->assertContains('error was set to array', $str);
-        $this->assertContains('trace', $str);
-        $this->assertContains('class', $str);
-        $this->assertContains('message', $str);
-        $this->assertContains('string(6) "Oh no!"', $str);
+        $this->assertStringContainsString('error was set to array', $str);
+        $this->assertStringContainsString('trace', $str);
+        $this->assertStringContainsString('class', $str);
+        $this->assertStringContainsString('message', $str);
+        $this->assertStringContainsString('string(6) "Oh no!"', $str);
     }
 
     public function testTracksAwsSpecificExceptions()
@@ -119,11 +122,11 @@ class TraceMiddlewareTest extends TestCase
         $request = new Request('GET', 'http://foo.com');
         $handler($command, $request);
         Promise\queue()->run();
-        $this->assertContains('error was set to array', $str);
-        $this->assertContains('trace', $str);
-        $this->assertContains('class', $str);
-        $this->assertContains('message', $str);
-        $this->assertContains('string(5) "error"', $str);
+        $this->assertStringContainsString('error was set to array', $str);
+        $this->assertStringContainsString('trace', $str);
+        $this->assertStringContainsString('class', $str);
+        $this->assertStringContainsString('message', $str);
+        $this->assertStringContainsString('string(5) "error"', $str);
     }
 
     /**
@@ -160,11 +163,11 @@ class TraceMiddlewareTest extends TestCase
         );
         $handler($command, $request);
 
-        $this->assertNotContains($key, $str);
-        $this->assertNotContains($signature, $str);
+        $this->assertStringNotContainsString($key, $str);
+        $this->assertStringNotContainsString($signature, $str);
         foreach ($headers as $header) {
-            $this->assertNotContains($header['raw'], $str);
-            $this->assertContains($header['scrubbed'], $str);
+            $this->assertStringNotContainsString($header['raw'], $str);
+            $this->assertStringContainsString($header['scrubbed'], $str);
         }
     }
 
@@ -206,14 +209,14 @@ class TraceMiddlewareTest extends TestCase
         $request = new Request('post', "/");
         $handler($command, $request);
 
-        $this->assertContains("NestedParams also not redacted", $str);
-        $this->assertContains("PublicParameter not redacted", $str);
-        $this->assertContains("[SensitiveParameter]", $str);
-        $this->assertNotContains("SensitiveParameter was redacted", $str);
-        $this->assertContains("[NestedSensitiveParameter]", $str);
-        $this->assertNotContains("NestedSensitiveParameter was also redacted", $str);
-        $this->assertContains("[SensitiveArray]", $str);
-        $this->assertNotContains("SensitiveArray contents also redacted", $str);
+        $this->assertStringContainsString("NestedParams also not redacted", $str);
+        $this->assertStringContainsString("PublicParameter not redacted", $str);
+        $this->assertStringContainsString("[SensitiveParameter]", $str);
+        $this->assertStringNotContainsString("SensitiveParameter was redacted", $str);
+        $this->assertStringContainsString("[NestedSensitiveParameter]", $str);
+        $this->assertStringNotContainsString("NestedSensitiveParameter was also redacted", $str);
+        $this->assertStringContainsString("[SensitiveArray]", $str);
+        $this->assertStringNotContainsString("SensitiveArray contents also redacted", $str);
     }
 
     public function authStringProvider()
@@ -273,9 +276,9 @@ class TraceMiddlewareTest extends TestCase
         );
         $handler($command, $request);
 
-        $this->assertNotContains($toScrub, $str);
+        $this->assertStringNotContainsString($toScrub, $str);
         foreach (array_values($scrubPatterns) as $scrubbed) {
-            $this->assertContains($scrubbed, $str);
+            $this->assertStringContainsString($scrubbed, $str);
         }
     }
 

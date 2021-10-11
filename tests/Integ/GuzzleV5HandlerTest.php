@@ -2,6 +2,7 @@
 namespace Aws\Test\Integ;
 
 use Aws\Handler\GuzzleV5\GuzzleHandler;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise\RejectionException;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
@@ -10,7 +11,9 @@ use PHPUnit\Framework\TestCase;
 
 class GuzzleV5HandlerTest extends TestCase
 {
-    public function setUp()
+    use PHPUnitCompatTrait;
+
+    public function _setUp()
     {
         if (!class_exists('GuzzleHttp\Ring\Core')) {
             $this->markTestSkipped();

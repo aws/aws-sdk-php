@@ -2,6 +2,7 @@
 namespace Aws\Test\Api;
 
 use Aws\Api\ShapeMap;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -9,17 +10,17 @@ use PHPUnit\Framework\TestCase;
  */
 class ShapeMapTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testReturnsShapeName()
     {
         $sm = new ShapeMap(['foo' => [], 'baz' => []]);
         $this->assertEquals(['foo', 'baz'], $sm->getShapeNames());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testEnsuresShapeExists()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $sm = new ShapeMap([]);
         $sm->resolve(['shape' => 'missing']);
     }

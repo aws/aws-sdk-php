@@ -21,6 +21,7 @@ class ComplianceTest extends TestCase
 {
     use UsesServiceTrait;
 
+    /** @doesNotPerformAssertions */
     public function testCaseProvider()
     {
         $cases = [];

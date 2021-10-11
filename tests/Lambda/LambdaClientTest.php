@@ -3,11 +3,14 @@ namespace Aws\Test\Lambda;
 
 use Aws\Lambda\LambdaClient;
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
 
 class LambdaClientTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     function testsAddsDefaultCurlOptions()
     {
         if (!extension_loaded('curl')) {

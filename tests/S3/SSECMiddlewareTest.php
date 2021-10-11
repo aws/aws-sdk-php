@@ -3,6 +3,7 @@ namespace Aws\Test\S3;
 
 use Aws\Middleware;
 use Aws\Result;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -11,6 +12,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SSECMiddlewareTest extends TestCase
 {
+    use PHPUnitCompatTrait;
     use UsesServiceTrait;
 
     /**
@@ -75,11 +77,9 @@ class SSECMiddlewareTest extends TestCase
         ];
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testCannotUseWithoutHttps()
     {
+        $this->expectException(\RuntimeException::class);
         $client = $this->getTestClient('s3', ['scheme' => 'http']);
         $client->listBuckets([
             'SSECustomerKey' => 'foo',
@@ -87,6 +87,7 @@ class SSECMiddlewareTest extends TestCase
         ]);
     }
 
+    /** @doesNotPerformAssertions */
     public function testCanUseWithoutHttpsForNonSse()
     {
         $client = $this->getTestClient('s3', ['scheme' => 'http']);

@@ -15,6 +15,7 @@ use Aws\MockHandler;
 use Aws\Result;
 use Aws\ResultInterface;
 use Aws\Signature\SignatureV4;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise;
@@ -26,7 +27,9 @@ use PHPUnit\Framework\TestCase;
  */
 class MiddlewareTest extends TestCase
 {
-    public function setup()
+    use PHPUnitCompatTrait;
+
+    public function _setUp()
     {
         \GuzzleHttp\Promise\queue()->run();
     }
@@ -123,12 +126,10 @@ class MiddlewareTest extends TestCase
         $this->assertTrue($called);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage [a] is missing and is a required parameter
-     */
     public function testValidatesCommands()
     {
+        $this->expectExceptionMessage("[a] is missing and is a required parameter");
+        $this->expectException(\InvalidArgumentException::class);
         $list = new HandlerList();
         $list->setHandler(new MockHandler([new Result()]));
         $api = new Service(
