@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.198.3 - 2021-10-12
 
 * `Aws\CloudSearch` - Adds an additional validation exception for Amazon CloudSearch configuration APIs for better error handling.
 * `Aws\EC2` - EncryptionSupport for InstanceStorageInfo added to DescribeInstanceTypes API
