@@ -156,6 +156,22 @@
       ],
       "idempotent":true
     },
+    "DeleteBackupVaultLockConfiguration":{
+      "name":"DeleteBackupVaultLockConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/backup-vaults/{backupVaultName}/vault-lock"
+      },
+      "input":{"shape":"DeleteBackupVaultLockConfigurationInput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "DeleteBackupVaultNotifications":{
       "name":"DeleteBackupVaultNotifications",
       "http":{
@@ -777,6 +793,22 @@
       ],
       "idempotent":true
     },
+    "PutBackupVaultLockConfiguration":{
+      "name":"PutBackupVaultLockConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/backup-vaults/{backupVaultName}/vault-lock"
+      },
+      "input":{"shape":"PutBackupVaultLockConfigurationInput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "PutBackupVaultNotifications":{
       "name":"PutBackupVaultNotifications",
       "http":{
@@ -931,6 +963,7 @@
       "input":{"shape":"UpdateFrameworkInput"},
       "output":{"shape":"UpdateFrameworkOutput"},
       "errors":[
+        {"shape":"AlreadyExistsException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"LimitExceededException"},
         {"shape":"InvalidParameterValueException"},
@@ -1260,7 +1293,11 @@
         "CreationDate":{"shape":"timestamp"},
         "EncryptionKeyArn":{"shape":"ARN"},
         "CreatorRequestId":{"shape":"string"},
-        "NumberOfRecoveryPoints":{"shape":"long"}
+        "NumberOfRecoveryPoints":{"shape":"long"},
+        "Locked":{"shape":"Boolean"},
+        "MinRetentionDays":{"shape":"Long"},
+        "MaxRetentionDays":{"shape":"Long"},
+        "LockDate":{"shape":"timestamp"}
       }
     },
     "BackupVaultName":{
@@ -1487,7 +1524,8 @@
       "type":"structure",
       "members":{
         "ReportPlanName":{"shape":"ReportPlanName"},
-        "ReportPlanArn":{"shape":"ARN"}
+        "ReportPlanArn":{"shape":"ARN"},
+        "CreationTime":{"shape":"timestamp"}
       }
     },
     "CronExpression":{"type":"string"},
@@ -1547,6 +1585,17 @@
       "members":{
         "BackupVaultName":{
           "shape":"string",
+          "location":"uri",
+          "locationName":"backupVaultName"
+        }
+      }
+    },
+    "DeleteBackupVaultLockConfigurationInput":{
+      "type":"structure",
+      "required":["BackupVaultName"],
+      "members":{
+        "BackupVaultName":{
+          "shape":"BackupVaultName",
           "location":"uri",
           "locationName":"backupVaultName"
         }
@@ -1670,7 +1719,11 @@
         "EncryptionKeyArn":{"shape":"ARN"},
         "CreationDate":{"shape":"timestamp"},
         "CreatorRequestId":{"shape":"string"},
-        "NumberOfRecoveryPoints":{"shape":"long"}
+        "NumberOfRecoveryPoints":{"shape":"long"},
+        "Locked":{"shape":"Boolean"},
+        "MinRetentionDays":{"shape":"Long"},
+        "MaxRetentionDays":{"shape":"Long"},
+        "LockDate":{"shape":"timestamp"}
       }
     },
     "DescribeCopyJobInput":{
@@ -2719,6 +2772,20 @@
         "Policy":{"shape":"IAMPolicy"}
       }
     },
+    "PutBackupVaultLockConfigurationInput":{
+      "type":"structure",
+      "required":["BackupVaultName"],
+      "members":{
+        "BackupVaultName":{
+          "shape":"BackupVaultName",
+          "location":"uri",
+          "locationName":"backupVaultName"
+        },
+        "MinRetentionDays":{"shape":"Long"},
+        "MaxRetentionDays":{"shape":"Long"},
+        "ChangeableForDays":{"shape":"Long"}
+      }
+    },
     "PutBackupVaultNotificationsInput":{
       "type":"structure",
       "required":[
@@ -2865,7 +2932,9 @@
       "type":"structure",
       "required":["ReportTemplate"],
       "members":{
-        "ReportTemplate":{"shape":"string"}
+        "ReportTemplate":{"shape":"string"},
+        "FrameworkArns":{"shape":"stringList"},
+        "NumberOfFrameworks":{"shape":"integer"}
       }
     },
     "ResourceArns":{

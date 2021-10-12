@@ -8,6 +8,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionACMPCA(array $args = [])
  * @method \Aws\AccessAnalyzer\AccessAnalyzerClient createAccessAnalyzer(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAccessAnalyzer(array $args = [])
+ * @method \Aws\Account\AccountClient createAccount(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAccount(array $args = [])
  * @method \Aws\Acm\AcmClient createAcm(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAcm(array $args = [])
  * @method \Aws\AlexaForBusiness\AlexaForBusinessClient createAlexaForBusiness(array $args = [])
@@ -72,6 +74,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionChimeSDKMessaging(array $args = [])
  * @method \Aws\Cloud9\Cloud9Client createCloud9(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloud9(array $args = [])
+ * @method \Aws\CloudControlApi\CloudControlApiClient createCloudControlApi(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCloudControlApi(array $args = [])
  * @method \Aws\CloudDirectory\CloudDirectoryClient createCloudDirectory(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudDirectory(array $args = [])
  * @method \Aws\CloudFormation\CloudFormationClient createCloudFormation(array $args = [])
@@ -342,6 +346,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMacie2(array $args = [])
  * @method \Aws\ManagedBlockchain\ManagedBlockchainClient createManagedBlockchain(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionManagedBlockchain(array $args = [])
+ * @method \Aws\ManagedGrafana\ManagedGrafanaClient createManagedGrafana(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionManagedGrafana(array $args = [])
  * @method \Aws\MarketplaceCatalog\MarketplaceCatalogClient createMarketplaceCatalog(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMarketplaceCatalog(array $args = [])
  * @method \Aws\MarketplaceCommerceAnalytics\MarketplaceCommerceAnalyticsClient createMarketplaceCommerceAnalytics(array $args = [])
@@ -567,7 +573,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.195.0';
+    const VERSION = '3.198.2';
 
     /** @var array Arguments for creating clients */
     private $args;

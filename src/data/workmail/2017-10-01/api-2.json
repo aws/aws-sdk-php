@@ -244,6 +244,21 @@
       ],
       "idempotent":true
     },
+    "DeleteMobileDeviceAccessOverride":{
+      "name":"DeleteMobileDeviceAccessOverride",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteMobileDeviceAccessOverrideRequest"},
+      "output":{"shape":"DeleteMobileDeviceAccessOverrideResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"EntityNotFoundException"}
+      ]
+    },
     "DeleteMobileDeviceAccessRule":{
       "name":"DeleteMobileDeviceAccessRule",
       "http":{
@@ -351,6 +366,20 @@
       "errors":[
         {"shape":"EntityNotFoundException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"}
+      ],
+      "idempotent":true
+    },
+    "DescribeInboundDmarcSettings":{
+      "name":"DescribeInboundDmarcSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeInboundDmarcSettingsRequest"},
+      "output":{"shape":"DescribeInboundDmarcSettingsResponse"},
+      "errors":[
         {"shape":"OrganizationNotFoundException"},
         {"shape":"OrganizationStateException"}
       ],
@@ -515,6 +544,22 @@
         {"shape":"OrganizationStateException"}
       ]
     },
+    "GetMobileDeviceAccessOverride":{
+      "name":"GetMobileDeviceAccessOverride",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetMobileDeviceAccessOverrideRequest"},
+      "output":{"shape":"GetMobileDeviceAccessOverrideResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListAccessControlRules":{
       "name":"ListAccessControlRules",
       "http":{
@@ -608,6 +653,21 @@
         {"shape":"OrganizationStateException"}
       ],
       "idempotent":true
+    },
+    "ListMobileDeviceAccessOverrides":{
+      "name":"ListMobileDeviceAccessOverrides",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListMobileDeviceAccessOverridesRequest"},
+      "output":{"shape":"ListMobileDeviceAccessOverridesResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"EntityNotFoundException"}
+      ]
     },
     "ListMobileDeviceAccessRules":{
       "name":"ListMobileDeviceAccessRules",
@@ -711,6 +771,20 @@
         {"shape":"OrganizationStateException"}
       ]
     },
+    "PutInboundDmarcSettings":{
+      "name":"PutInboundDmarcSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutInboundDmarcSettingsRequest"},
+      "output":{"shape":"PutInboundDmarcSettingsResponse"},
+      "errors":[
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"}
+      ],
+      "idempotent":true
+    },
     "PutMailboxPermissions":{
       "name":"PutMailboxPermissions",
       "http":{
@@ -727,6 +801,22 @@
         {"shape":"OrganizationStateException"}
       ],
       "idempotent":true
+    },
+    "PutMobileDeviceAccessOverride":{
+      "name":"PutMobileDeviceAccessOverride",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutMobileDeviceAccessOverrideRequest"},
+      "output":{"shape":"PutMobileDeviceAccessOverrideResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"EntityStateException"}
+      ]
     },
     "PutRetentionPolicy":{
       "name":"PutRetentionPolicy",
@@ -1024,6 +1114,7 @@
       }
     },
     "Boolean":{"type":"boolean"},
+    "BooleanObject":{"type":"boolean"},
     "CancelMailboxExportJobRequest":{
       "type":"structure",
       "required":[
@@ -1252,6 +1343,24 @@
       "members":{
       }
     },
+    "DeleteMobileDeviceAccessOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "UserId",
+        "DeviceId"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "UserId":{"shape":"EntityIdentifier"},
+        "DeviceId":{"shape":"DeviceId"}
+      }
+    },
+    "DeleteMobileDeviceAccessOverrideResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteMobileDeviceAccessRuleRequest":{
       "type":"structure",
       "required":[
@@ -1376,6 +1485,19 @@
         "DisabledDate":{"shape":"Timestamp"}
       }
     },
+    "DescribeInboundDmarcSettingsRequest":{
+      "type":"structure",
+      "required":["OrganizationId"],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"}
+      }
+    },
+    "DescribeInboundDmarcSettingsResponse":{
+      "type":"structure",
+      "members":{
+        "Enforced":{"shape":"Boolean"}
+      }
+    },
     "DescribeMailboxExportJobRequest":{
       "type":"structure",
       "required":[
@@ -1478,6 +1600,12 @@
       "max":1023,
       "min":0,
       "pattern":"[\\S\\s]*"
+    },
+    "DeviceId":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[A-Za-z0-9]+"
     },
     "DeviceModel":{
       "type":"string",
@@ -1629,6 +1757,12 @@
       },
       "exception":true
     },
+    "EntityIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9._%+@-]+"
+    },
     "EntityNotFoundException":{
       "type":"structure",
       "members":{
@@ -1749,6 +1883,30 @@
       "members":{
         "Effect":{"shape":"MobileDeviceAccessRuleEffect"},
         "MatchedRules":{"shape":"MobileDeviceAccessMatchedRuleList"}
+      }
+    },
+    "GetMobileDeviceAccessOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "UserId",
+        "DeviceId"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "UserId":{"shape":"EntityIdentifier"},
+        "DeviceId":{"shape":"DeviceId"}
+      }
+    },
+    "GetMobileDeviceAccessOverrideResponse":{
+      "type":"structure",
+      "members":{
+        "UserId":{"shape":"WorkMailIdentifier"},
+        "DeviceId":{"shape":"DeviceId"},
+        "Effect":{"shape":"MobileDeviceAccessRuleEffect"},
+        "Description":{"shape":"MobileDeviceAccessRuleDescription"},
+        "DateCreated":{"shape":"Timestamp"},
+        "DateModified":{"shape":"Timestamp"}
       }
     },
     "Group":{
@@ -1945,6 +2103,24 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListMobileDeviceAccessOverridesRequest":{
+      "type":"structure",
+      "required":["OrganizationId"],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "UserId":{"shape":"EntityIdentifier"},
+        "DeviceId":{"shape":"DeviceId"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListMobileDeviceAccessOverridesResponse":{
+      "type":"structure",
+      "members":{
+        "Overrides":{"shape":"MobileDeviceAccessOverridesList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListMobileDeviceAccessRulesRequest":{
       "type":"structure",
       "required":["OrganizationId"],
@@ -2136,6 +2312,21 @@
       "max":10,
       "min":0
     },
+    "MobileDeviceAccessOverride":{
+      "type":"structure",
+      "members":{
+        "UserId":{"shape":"WorkMailIdentifier"},
+        "DeviceId":{"shape":"DeviceId"},
+        "Effect":{"shape":"MobileDeviceAccessRuleEffect"},
+        "Description":{"shape":"MobileDeviceAccessRuleDescription"},
+        "DateCreated":{"shape":"Timestamp"},
+        "DateModified":{"shape":"Timestamp"}
+      }
+    },
+    "MobileDeviceAccessOverridesList":{
+      "type":"list",
+      "member":{"shape":"MobileDeviceAccessOverride"}
+    },
     "MobileDeviceAccessRule":{
       "type":"structure",
       "members":{
@@ -2311,6 +2502,22 @@
       "members":{
       }
     },
+    "PutInboundDmarcSettingsRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "Enforced"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "Enforced":{"shape":"BooleanObject"}
+      }
+    },
+    "PutInboundDmarcSettingsResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "PutMailboxPermissionsRequest":{
       "type":"structure",
       "required":[
@@ -2327,6 +2534,27 @@
       }
     },
     "PutMailboxPermissionsResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "PutMobileDeviceAccessOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "UserId",
+        "DeviceId",
+        "Effect"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "UserId":{"shape":"EntityIdentifier"},
+        "DeviceId":{"shape":"DeviceId"},
+        "Effect":{"shape":"MobileDeviceAccessRuleEffect"},
+        "Description":{"shape":"MobileDeviceAccessRuleDescription"}
+      }
+    },
+    "PutMobileDeviceAccessOverrideResponse":{
       "type":"structure",
       "members":{
       }

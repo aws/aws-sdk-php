@@ -1123,5 +1123,104 @@
         }
       }
     ]
+  },
+  {
+    "description": "Unions",
+    "metadata": {
+      "protocol": "rest-json",
+      "apiVersion": "2014-01-01"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "UnionMember": {
+            "shape": "UnionType"
+          }
+        }
+      },
+      "UnionType": {
+        "type": "structure",
+        "members": {
+          "S": {
+            "shape": "StringType"
+          },
+          "L": {
+            "shape": "ListType"
+          }
+        },
+        "union": true
+      },
+      "ListType": {
+        "type": "list",
+        "member": {
+          "shape": "StringType"
+        }
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "UnionMember": {
+            "S": "string value"
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"UnionMember\": {\"S\": \"string value\"}}"
+        }
+      },
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "UnionMember": {
+            "L": [
+              "a",
+              "b"
+            ]
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"UnionMember\": {\"L\": [\"a\", \"b\"]}}"
+        }
+      },
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "UnionMember": {
+            "Unknown": {
+              "SomeUnknownMember": "un-modeled member"
+            }
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "{\"UnionMember\": {\"SomeUnknownMember\": \"un-modeled member\"}}"
+        }
+      }
+    ]
   }
 ]
