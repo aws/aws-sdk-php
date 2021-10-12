@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudSearch` - Adds an additional validation exception for Amazon CloudSearch configuration APIs for better error handling.
+* `Aws\EC2` - EncryptionSupport for InstanceStorageInfo added to DescribeInstanceTypes API
+* `Aws\ECS` - Documentation only update to address tickets.
+* `Aws\MediaTailor` - MediaTailor now supports ad prefetching.
+
 ## 3.198.2 - 2021-10-11
 
 * `Aws\EC2` - Documentation update for Amazon EC2.
