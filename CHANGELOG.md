@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.198.4 - 2021-10-13
 
 * `Aws\ConfigService` - Adding Config support for AWS::OpenSearch::Domain
 * `Aws\EC2` - This release adds support for additional VPC Flow Logs delivery options to S3, such as Apache Parquet formatted files, Hourly partitions and Hive-compatible S3 prefixes
