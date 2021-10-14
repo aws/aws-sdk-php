@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.198.5 - 2021-10-14
 
 * `Aws\AutoScaling` - Amazon EC2 Auto Scaling now supports filtering describe Auto Scaling groups API using tags
 * `Aws\ElasticLoadBalancingv2` - Adds new option to filter by availability on each type of load balancer when describing ssl policies.
