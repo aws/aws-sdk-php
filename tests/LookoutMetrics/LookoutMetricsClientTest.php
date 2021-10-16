@@ -16,24 +16,6 @@ class LookoutMetricsClientTest extends TestCase
 {
     use UsesServiceTrait;
 
-    public function testUpdatesContentTypeWithBody()
-    {
-        $client = new LookoutMetricsClient([
-            'region'  => 'us-west-2',
-            'version' => 'latest'
-        ]);
-
-        $command = $client->getCommand('ListAnomalyDetectors', [
-            'MaxResults' => 1
-        ]);
-        $request = \Aws\serialize($command);
-
-        // Corrected the header in a post request
-        $contentType = $request->getHeader('Content-Type');
-        $this->assertNotEmpty($contentType);
-        $this->assertSame('application/x-amz-json-1.1', $contentType[0]);
-    }
-
     public function testNoContentTypeWithoutBody()
     {
         $client = new LookoutMetricsClient([
