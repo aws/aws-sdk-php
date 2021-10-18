@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.198.7 - 2021-10-18
 
 * `Aws\IVS` - Bug fix: remove unsupported maxResults and nextToken pagination parameters from ListTagsForResource
 * `Aws\QuickSight` - AWS QuickSight Service Features - Add IP Restriction UI and public APIs support.
