@@ -221,10 +221,11 @@ class S3EndpointMiddleware
 
             $uri = $request->getUri();
             $request = $request->withUri(
-                $uri->withPath($this->getBucketlessPath(
+                $uri->withHost($host)
+                    ->withPath($this->getBucketlessPath(
                         $uri->getPath(),
                         $command
-                    ))->withHost($host)
+                    ))
             );
         }
         return $request;
