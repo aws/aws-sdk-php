@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.199.0 - 2021-10-20
 
 * `Aws\` - Adds support for guzzlehttp/psr7 V2
 * `Aws\Appflow` - Feature to add support for JSON-L format for S3 as a source.
