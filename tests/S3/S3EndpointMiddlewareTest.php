@@ -521,7 +521,7 @@ class S3EndpointMiddlewareTest extends TestCase
                 RequestInterface $req
             ) use ($key, $expectedUri) {
                 $this->assertEquals($expectedUri . '/' . $key, trim($req->getUri(), '/'));
-                return Promise\promise_for(new Result());
+                return Promise\Create::promiseFor(new Result());
             },
         ]);
 

@@ -51,7 +51,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         ) use ($expected, $describeResult) {
             // Simulate the DescribeEndpoints API with the supplied result
             if ($cmd->getName() === 'DescribeEndpoints') {
-                return Promise\promise_for($describeResult);
+                return Promise\Create::promiseFor($describeResult);
             }
             $expectedUserAgentParts = explode(' ', $expected->getHeader('User-Agent')[0]);
             foreach ($expectedUserAgentParts as $expectedUserAgentPart) {
@@ -64,7 +64,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
             $expectedUri = $expected->getUri();
             $this->assertSame($expectedUri->getHost(), $uri->getHost());
             $this->assertSame($expectedUri->getPath(), $uri->getPath());
-            return Promise\promise_for(new Result([]));
+            return Promise\Create::promiseFor(new Result([]));
         });
         $command = $client->getCommand($commandArgs[0], $commandArgs[1]);
         $client->execute($command);
@@ -334,7 +334,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
         $list->setHandler(function (CommandInterface $cmd, RequestInterface $req) {
             if ($cmd->getName() === 'DescribeEndpoints') {
-                return Promise\promise_for(new Result([
+                return Promise\Create::promiseFor(new Result([
                     'Endpoints' => [
                         [
                             'Address' => '#!@$',
@@ -418,7 +418,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
         ) use (&$operationCounter, &$describeCounter) {
             if ($cmd->getName() === 'DescribeEndpoints') {
                 $describeCounter++;
-                return Promise\promise_for(new Result([
+                return Promise\Create::promiseFor(new Result([
                     'Endpoints' => [
                         [
                             'Address' => "discovered.com/{$cmd['Identifiers']['Sdk']}",
@@ -839,7 +839,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     private function generateDescribeException(CommandInterface $cmd)
     {
-        return Promise\rejection_for(new AwsException(
+        return Promise\Create::rejectionFor(new AwsException(
            'Test describe endpoints exception',
            $cmd
         ));
@@ -847,13 +847,13 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     private function generateGenericResult()
     {
-        return Promise\promise_for(new Result([]));
+        return Promise\Create::promiseFor(new Result([]));
     }
 
     private function generateInvalidEndpointException()
     {
         $message = 'Test invalid endpoint exception';
-        return Promise\rejection_for(new AwsException(
+        return Promise\Create::rejectionFor(new AwsException(
             $message,
             new Command('', []),
             [
@@ -866,7 +866,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
     private function generate421Exception()
     {
         $message = 'Test invalid endpoint exception';
-        return Promise\rejection_for(new AwsException(
+        return Promise\Create::rejectionFor(new AwsException(
             $message,
             new Command('', []),
             [
@@ -879,7 +879,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     private function generateMultiDescribeResults()
     {
-        return Promise\promise_for(new Result([
+        return Promise\Create::promiseFor(new Result([
             'Endpoints' => [
                 [
                     'Address' => "discovered.com/some/path",
@@ -895,7 +895,7 @@ class EndpointDiscoveryMiddlewareTest extends TestCase
 
     private function generateSingleDescribeResult()
     {
-        return Promise\promise_for(new Result([
+        return Promise\Create::promiseFor(new Result([
             'Endpoints' => [
                 [
                     'Address' => 'discovered.com/some/path',

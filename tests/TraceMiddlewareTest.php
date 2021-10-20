@@ -25,7 +25,7 @@ class TraceMiddlewareTest extends TestCase
         $logfn = function ($value) use (&$str) { $str .= $value; };
         $list = new HandlerList();
         $list->setHandler(function ($cmd, $req) {
-            return Promise\promise_for(new Result([
+            return Promise\Create::promiseFor(new Result([
                 'baz' => 'bar',
                 'bam' => 'qux'
             ]));
@@ -65,7 +65,7 @@ class TraceMiddlewareTest extends TestCase
         $logfn = function ($value) use (&$str) { $str .= $value; };
         $list = new HandlerList();
         $list->setHandler(function ($cmd, $req) {
-            return Promise\promise_for(new Result());
+            return Promise\Create::promiseFor(new Result());
         });
         $list->appendInit(function ($handler) {
             return function ($cmd, $req = null) use ($handler) {
@@ -97,7 +97,7 @@ class TraceMiddlewareTest extends TestCase
         $logfn = function ($value) use (&$str) { $str .= $value; };
         $list = new HandlerList();
         $list->setHandler(function ($cmd, $req) {
-            return Promise\promise_for(new Result());
+            return Promise\Create::promiseFor(new Result());
         });
         $list->appendInit(function ($handler) {
             return function ($cmd, $req = null) use ($handler) {
@@ -142,7 +142,7 @@ class TraceMiddlewareTest extends TestCase
         $list->setHandler(function ($cmd, $req) use ($key) {
             // ensure that http level debug information is filtered as well.
             fwrite($cmd['@http']['debug'], "Credential=$key/...\n");
-            return Promise\promise_for(new Result());
+            return Promise\Create::promiseFor(new Result());
         });
 
         $list->appendInit(function ($handler) {
@@ -193,7 +193,7 @@ class TraceMiddlewareTest extends TestCase
         $logfn = function ($value) use (&$str) { $str .= $value; };
         $list = new HandlerList();
         $list->setHandler(function () {
-            return Promise\promise_for(new Result());
+            return Promise\Create::promiseFor(new Result());
         });
         $list->appendInit(function ($handler) {
             return function ($cmd, $req) use ($handler) {
@@ -252,7 +252,7 @@ class TraceMiddlewareTest extends TestCase
         $list = new HandlerList();
 
         $list->setHandler(function ($cmd, $req) {
-            return Promise\promise_for(new Result());
+            return Promise\Create::promiseFor(new Result());
         });
 
         $list->appendInit(function ($handler) {

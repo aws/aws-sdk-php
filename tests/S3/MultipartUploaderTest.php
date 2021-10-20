@@ -281,7 +281,7 @@ class MultipartUploaderTest extends TestCase
             }
             $counter++;
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Psr7\Response(200, [], $body)
             );
         };
