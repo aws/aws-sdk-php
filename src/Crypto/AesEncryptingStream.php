@@ -126,7 +126,7 @@ class AesEncryptingStream implements AesStreamInterface
 
         $plainText = '';
         do {
-            $plainText .= $this->stream->read((int)($length - strlen($plainText)));
+            $plainText .= $this->stream->read((int) ($length - strlen($plainText)));
         } while (strlen($plainText) < $length && !$this->stream->eof());
 
         $options = OPENSSL_RAW_DATA;
