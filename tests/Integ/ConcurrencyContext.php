@@ -116,7 +116,7 @@ class ConcurrencyContext extends \PHPUnit_Framework_Assert implements
      */
     public function aPromiseComposedOfTheFollowingAsynchronousOperations(TableNode $table)
     {
-        $this->promise = promise\Utils::all(array_map(function (array $row) {
+        $this->promise = Promise\Utils::all(array_map(function (array $row) {
             return call_user_func(
                 [
                     self::getSdk()->createClient($row['service']),

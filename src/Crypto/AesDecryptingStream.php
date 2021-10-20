@@ -89,9 +89,9 @@ class AesDecryptingStream implements AesStreamInterface
     {
         if ($length > strlen($this->buffer)) {
             $this->buffer .= $this->decryptBlock(
-                    intval(
+                (int) (
                         self::BLOCK_SIZE * ceil(($length - strlen($this->buffer)) / self::BLOCK_SIZE)
-                    )
+                )
             );
         }
 

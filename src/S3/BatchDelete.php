@@ -76,7 +76,7 @@ class BatchDelete implements PromisorInterface
                         }
                     }
                 }
-                return $promises ? promise\Utils::all($promises) : null;
+                return $promises ? Promise\Utils::all($promises) : null;
             });
         };
 
