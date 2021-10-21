@@ -176,7 +176,7 @@ class S3EncryptionClientV2 extends AbstractCryptoClientV2
 
         $envelope = new MetadataEnvelope();
 
-        return Promise\promise_for($this->encrypt(
+        return Promise\Create::promiseFor($this->encrypt(
             Psr7\Utils::streamFor($args['Body']),
             $args,
             $provider,

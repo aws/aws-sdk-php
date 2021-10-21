@@ -4958,7 +4958,8 @@
       "enum":[
         "i386",
         "x86_64",
-        "arm64"
+        "arm64",
+        "x86_64_mac"
       ]
     },
     "ArchitectureTypeList":{
@@ -8263,7 +8264,8 @@
           "shape":"TagSpecificationList",
           "locationName":"TagSpecification"
         },
-        "MaxAggregationInterval":{"shape":"Integer"}
+        "MaxAggregationInterval":{"shape":"Integer"},
+        "DestinationOptions":{"shape":"DestinationOptionsRequest"}
       }
     },
     "CreateFlowLogsResult":{
@@ -15271,6 +15273,38 @@
         }
       }
     },
+    "DestinationFileFormat":{
+      "type":"string",
+      "enum":[
+        "plain-text",
+        "parquet"
+      ]
+    },
+    "DestinationOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "FileFormat":{"shape":"DestinationFileFormat"},
+        "HiveCompatiblePartitions":{"shape":"Boolean"},
+        "PerHourPartition":{"shape":"Boolean"}
+      }
+    },
+    "DestinationOptionsResponse":{
+      "type":"structure",
+      "members":{
+        "FileFormat":{
+          "shape":"DestinationFileFormat",
+          "locationName":"fileFormat"
+        },
+        "HiveCompatiblePartitions":{
+          "shape":"Boolean",
+          "locationName":"hiveCompatiblePartitions"
+        },
+        "PerHourPartition":{
+          "shape":"Boolean",
+          "locationName":"perHourPartition"
+        }
+      }
+    },
     "DetachClassicLinkVpcRequest":{
       "type":"structure",
       "required":[
@@ -17866,6 +17900,10 @@
         "MaxAggregationInterval":{
           "shape":"Integer",
           "locationName":"maxAggregationInterval"
+        },
+        "DestinationOptions":{
+          "shape":"DestinationOptionsResponse",
+          "locationName":"destinationOptions"
         }
       }
     },
@@ -21434,6 +21472,13 @@
         }
       }
     },
+    "InstanceStorageEncryptionSupport":{
+      "type":"string",
+      "enum":[
+        "unsupported",
+        "required"
+      ]
+    },
     "InstanceStorageFlag":{"type":"boolean"},
     "InstanceStorageInfo":{
       "type":"structure",
@@ -21449,6 +21494,10 @@
         "NvmeSupport":{
           "shape":"EphemeralNvmeSupport",
           "locationName":"nvmeSupport"
+        },
+        "EncryptionSupport":{
+          "shape":"InstanceStorageEncryptionSupport",
+          "locationName":"encryptionSupport"
         }
       }
     },

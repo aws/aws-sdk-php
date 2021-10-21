@@ -400,6 +400,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionOutposts(array $args = [])
  * @method \Aws\PI\PIClient createPI(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPI(array $args = [])
+ * @method \Aws\Panorama\PanoramaClient createPanorama(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPanorama(array $args = [])
  * @method \Aws\Personalize\PersonalizeClient createPersonalize(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPersonalize(array $args = [])
  * @method \Aws\PersonalizeEvents\PersonalizeEventsClient createPersonalizeEvents(array $args = [])
@@ -573,7 +575,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.198.2';
+    const VERSION = '3.199.0';
 
     /** @var array Arguments for creating clients */
     private $args;

@@ -76,7 +76,7 @@ class AssumeRoleCredentialProviderTest extends TestCase
         $sts = $this->getTestClient('Sts');
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
-                return Promise\promise_for(new Result($result));
+                return Promise\Create::promiseFor(new Result($result));
             }
         );
         $args['client'] = $sts;

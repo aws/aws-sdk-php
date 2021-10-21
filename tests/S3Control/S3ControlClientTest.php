@@ -25,7 +25,7 @@ class S3ControlClientTest extends TestCase
                 '111222333444.s3-control.us-west-2.amazonaws.com',
                 $req->getUri()->getHost()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $client = $this->getTestClient([
@@ -44,7 +44,7 @@ class S3ControlClientTest extends TestCase
                 '111222333444.s3-control.dualstack.us-west-2.amazonaws.com',
                 $req->getUri()->getHost()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $dualStackClient = $this->getTestClient([

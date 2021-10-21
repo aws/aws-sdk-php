@@ -265,7 +265,7 @@ final class Middleware
                         },
                         function ($reason) use ($history, $ticket) {
                             $history->finish($ticket, $reason);
-                            return Promise\rejection_for($reason);
+                            return Promise\Create::rejectionFor($reason);
                         }
                     );
             };
@@ -363,7 +363,7 @@ final class Middleware
                                     'total_time' => microtime(true) - $start,
                                 ] + $err->getTransferInfo());
                             }
-                            return Promise\rejection_for($err);
+                            return Promise\Create::rejectionFor($err);
                         }
                     );
             };

@@ -155,7 +155,7 @@ class CredentialProvider
      */
     public static function fromCredentials(CredentialsInterface $creds)
     {
-        $promise = Promise\promise_for($creds);
+        $promise = Promise\Create::promiseFor($creds);
 
         return function () use ($promise) {
             return $promise;
@@ -258,7 +258,7 @@ class CredentialProvider
         return function () use ($provider, $cache, $cacheKey) {
             $found = $cache->get($cacheKey);
             if ($found instanceof CredentialsInterface && !$found->isExpired()) {
-                return Promise\promise_for($found);
+                return Promise\Create::promiseFor($found);
             }
 
             return $provider()
@@ -291,7 +291,7 @@ class CredentialProvider
             $key = getenv(self::ENV_KEY);
             $secret = getenv(self::ENV_SECRET);
             if ($key && $secret) {
-                return Promise\promise_for(
+                return Promise\Create::promiseFor(
                     new Credentials($key, $secret, getenv(self::ENV_SESSION) ?: NULL)
                 );
             }
@@ -386,7 +386,7 @@ class CredentialProvider
             ]);
 
             $ssoCredentials = $ssoResponse['roleCredentials'];
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Credentials(
                     $ssoCredentials['accessKeyId'],
                     $ssoCredentials['secretAccessKey'],
@@ -584,7 +584,7 @@ class CredentialProvider
                         : null;
             }
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Credentials(
                     $data[$profile]['aws_access_key_id'],
                     $data[$profile]['aws_secret_access_key'],
@@ -663,7 +663,7 @@ class CredentialProvider
                 $processData['SessionToken'] = null;
             }
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Credentials(
                     $processData['AccessKeyId'],
                     $processData['SecretAccessKey'],
@@ -753,7 +753,7 @@ class CredentialProvider
         ]);
 
         $credentials = $stsClient->createCredentials($result);
-        return Promise\promise_for($credentials);
+        return Promise\Create::promiseFor($credentials);
     }
 
     /**
@@ -864,7 +864,7 @@ class CredentialProvider
             );
         }
         return function () use ($credentialsResult) {
-            return Promise\promise_for($credentialsResult);
+            return Promise\Create::promiseFor($credentialsResult);
         };
     }
 

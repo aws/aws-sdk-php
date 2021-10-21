@@ -284,7 +284,11 @@ class S3EndpointMiddleware
     private function getBucketlessPath($path, CommandInterface $command)
     {
         $pattern = '/^\\/' . preg_quote($command['Bucket'], '/') . '/';
-        return preg_replace($pattern, '', $path) ?: '/';
+        $path = preg_replace($pattern, '', $path) ?: '/';
+        if (substr($path, 0 , 1) !== '/') {
+            $path = '/' . $path;
+        }
+        return $path;
     }
 
     private function applyEndpoint(
