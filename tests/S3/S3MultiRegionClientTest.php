@@ -100,7 +100,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
         ]);
 
@@ -131,7 +131,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
         ]);
 
@@ -159,7 +159,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
         ]);
 
@@ -187,7 +187,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             }
         ]);
 
@@ -207,10 +207,10 @@ EOXML;
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 's3.amazonaws.com') {
-                    return Promise\promise_for(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
+                    return Promise\Create::promiseFor(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
             'use_path_style_endpoint' => true
         ]);
@@ -239,7 +239,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
         ]);
 
@@ -255,10 +255,10 @@ EOXML;
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 's3.amazonaws.com') {
-                    return Promise\promise_for(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
+                    return Promise\Create::promiseFor(new Response(301, ['X-Amz-Bucket-Region' => 'us-west-2']));
                 }
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
             'use_path_style_endpoint' => true
         ]);
@@ -283,7 +283,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 
@@ -311,7 +311,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 
@@ -338,7 +338,7 @@ EOXML;
                     ]);
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 
@@ -356,14 +356,14 @@ EOXML;
                 if ($request->getUri()->getHost() === 's3.amazonaws.com') {
                     if (!$redirected) {
                         $redirected = true;
-                        return Promise\promise_for(new Response(301));
+                        return Promise\Create::promiseFor(new Response(301));
                     }
-                    return Promise\promise_for(new Response(301, [
+                    return Promise\Create::promiseFor(new Response(301, [
                         'X-Amz-Bucket-Region' => 'us-west-2',
                     ]));
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
             'use_path_style_endpoint' => true
         ]);
@@ -380,12 +380,12 @@ EOXML;
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 's3.amazonaws.com') {
-                    return Promise\promise_for(new Response(301, [
+                    return Promise\Create::promiseFor(new Response(301, [
                         'X-Amz-Bucket-Region' => 'us-west-2',
                     ]));
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
             'use_path_style_endpoint' => true
         ]);
@@ -412,7 +412,7 @@ EOXML;
                     $this->fail('The us-east-1 endpoint should never have been called.');
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 
@@ -437,7 +437,7 @@ EOXML;
                     $this->fail('The us-east-1 endpoint should never have been called.');
                 }
 
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
             'use_path_style_endpoint' => true
         ]);
@@ -457,7 +457,7 @@ EOXML;
             'bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 'foo.s3.us-west-2.amazonaws.com') {
-                    return Promise\promise_for(new Response(200, [], 'object!'));
+                    return Promise\Create::promiseFor(new Response(200, [], 'object!'));
                 }
 
                 return new RejectedPromise([
@@ -485,10 +485,10 @@ EOXML;
             'bucket_region_cache' => $cache,
             'http_handler' => function (RequestInterface $request) {
                 if ($request->getUri()->getHost() === 's3.us-west-2.amazonaws.com') {
-                    return Promise\promise_for(new Response(200, [], 'object!'));
+                    return Promise\Create::promiseFor(new Response(200, [], 'object!'));
                 }
 
-                return Promise\promise_for(new Response(301, [
+                return Promise\Create::promiseFor(new Response(301, [
                     'X-Amz-Bucket-Region' => 'us-west-2',
                 ]));
             },
@@ -528,7 +528,7 @@ EOXML;
             'http_handler' => function (RequestInterface $request) {
                 $this->assertSame('https', $request->getUri()->getScheme());
                 $this->assertSame('foo.s3.foo-region.amazonaws.test', $request->getUri()->getHost());
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 
@@ -564,7 +564,7 @@ EOXML;
             'http_handler' => function (RequestInterface $request) {
                 $this->assertSame('https', $request->getUri()->getScheme());
                 $this->assertSame('s3.foo-region.amazonaws.test', $request->getUri()->getHost());
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
             'use_path_style_endpoint' => true
         ]);
@@ -584,7 +584,7 @@ EOXML;
             'version' => 'latest',
             'credentials' => ['key' => 'foo', 'secret' => 'bar'],
             'http_handler' => function (RequestInterface $request) {
-                return Promise\promise_for(new Response(200, [], 'object!'));
+                return Promise\Create::promiseFor(new Response(200, [], 'object!'));
             },
         ]);
 

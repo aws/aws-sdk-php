@@ -116,14 +116,14 @@ class InstanceProfileProviderTest extends TestCase
                 && $request->getUri()->getPath() === '/latest/api/token'
             ) {
                 if (empty($request->getHeader('x-aws-ec2-metadata-token-ttl-seconds'))) {
-                    return Promise\rejection_for([
+                    return Promise\Create::rejectionFor([
                         'exception' => new \Exception('400 Bad Request - TTL header required')
                     ]);
                 }
                 if (isset($responses['put'])) {
                     return $responses['put'][$putRequests++];
                 } else {
-                    return Promise\promise_for(
+                    return Promise\Create::promiseFor(
                         new Response(
                             200,
                             [],
@@ -150,7 +150,7 @@ class InstanceProfileProviderTest extends TestCase
                         );
                     }
 
-                    return Promise\rejection_for(['exception' => $exception]);
+                    return Promise\Create::rejectionFor(['exception' => $exception]);
                 }
                 switch ($request->getUri()->getPath()) {
                     case '/latest/meta-data/iam/security-credentials':
@@ -158,7 +158,7 @@ class InstanceProfileProviderTest extends TestCase
                         if (isset($responses['get_profile'])) {
                             return $responses['get_profile'][$getProfileRequests++];
                         }
-                        return Promise\promise_for(
+                        return Promise\Create::promiseFor(
                             new Response(200, [], Psr7\Utils::streamFor($profile))
                         );
                         break;
@@ -168,7 +168,7 @@ class InstanceProfileProviderTest extends TestCase
                         if (isset($responses['get_creds'])) {
                             return $responses['get_creds'][$getCredsRequests++];
                         }
-                        return Promise\promise_for(
+                        return Promise\Create::promiseFor(
                             new Response(
                                 200,
                                 [],
@@ -184,7 +184,7 @@ class InstanceProfileProviderTest extends TestCase
                 }
             }
 
-            return Promise\rejection_for([
+            return Promise\Create::rejectionFor([
                 'exception' => new \Exception(
                     'Invalid path passed to test server'
                 )
@@ -246,7 +246,7 @@ class InstanceProfileProviderTest extends TestCase
                     );
                 }
 
-                return Promise\rejection_for(['exception' => $exception]);
+                return Promise\Create::rejectionFor(['exception' => $exception]);
             }
             if ($request->getMethod() === 'GET') {
                 switch ($request->getUri()->getPath()) {
@@ -255,7 +255,7 @@ class InstanceProfileProviderTest extends TestCase
                         if (isset($responses['get_profile'])) {
                             return $responses['get_profile'][$getProfileRequests++];
                         }
-                        return Promise\promise_for(
+                        return Promise\Create::promiseFor(
                             new Response(200, [], Psr7\Utils::streamFor($profile))
                         );
                         break;
@@ -265,7 +265,7 @@ class InstanceProfileProviderTest extends TestCase
                         if (isset($responses['get_creds'])) {
                             return $responses['get_creds'][$getCredsRequests++];
                         }
-                        return Promise\promise_for(
+                        return Promise\Create::promiseFor(
                             new Response(
                                 200,
                                 [],
@@ -281,7 +281,7 @@ class InstanceProfileProviderTest extends TestCase
                 }
             }
 
-            return Promise\rejection_for([
+            return Promise\Create::rejectionFor([
                 'exception' => new \Exception(
                     'Invalid path passed to test server'
                 )
@@ -347,10 +347,10 @@ class InstanceProfileProviderTest extends TestCase
             $throttledResponse
         );
 
-        $promiseProfile = Promise\promise_for(
+        $promiseProfile = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor('MockProfile'))
         );
-        $promiseCreds = Promise\promise_for(
+        $promiseCreds = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor(
                 json_encode(call_user_func_array(
                     [$this, 'getCredentialArray'],
@@ -358,14 +358,14 @@ class InstanceProfileProviderTest extends TestCase
                 )))
             )
         );
-        $promiseBadJsonCreds = Promise\promise_for(
+        $promiseBadJsonCreds = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor('{'))
         );
 
-        $rejectionThrottleProfile = Promise\rejection_for([
+        $rejectionThrottleProfile = Promise\Create::rejectionFor([
             'exception' => $getThrottleException
         ]);
-        $rejectionThrottleCreds = Promise\rejection_for([
+        $rejectionThrottleCreds = Promise\Create::rejectionFor([
             'exception' => $getThrottleException
         ]);
 
@@ -387,10 +387,10 @@ class InstanceProfileProviderTest extends TestCase
                 $this->getSecureTestClient(
                     [
                         'put' => [
-                            Promise\rejection_for([
+                            Promise\Create::rejectionFor([
                                 'exception' => $putThrottleException
                             ]),
-                            Promise\promise_for(
+                            Promise\Create::promiseFor(
                                 new Response(200, [], Psr7\Utils::streamFor('MOCK_TOKEN_VALUE'))
                             )
                         ],
@@ -463,10 +463,10 @@ class InstanceProfileProviderTest extends TestCase
                 $this->getSecureTestClient(
                     [
                         'put' => [
-                            Promise\rejection_for([
+                            Promise\Create::rejectionFor([
                                 'exception' => $putThrottleException
                             ]),
-                            Promise\promise_for(
+                            Promise\Create::promiseFor(
                                 new Response(200, [], Psr7\Utils::streamFor('MOCK_TOKEN_VALUE'))
                             )
                         ],
@@ -537,38 +537,38 @@ class InstanceProfileProviderTest extends TestCase
         $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
         $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
 
-        $promiseBadJsonCreds = Promise\promise_for(
+        $promiseBadJsonCreds = Promise\Create::promiseFor(
             new Response(200, [], Psr7\Utils::streamFor('{'))
         );
-        $rejectionThrottleToken = Promise\rejection_for([
+        $rejectionThrottleToken = Promise\Create::rejectionFor([
             'exception' => new RequestException(
                 '503 ThrottlingException',
                 $putRequest,
                 new $responseClass(503)
             )
         ]);
-        $rejectionProfile = Promise\rejection_for([
+        $rejectionProfile = Promise\Create::rejectionFor([
             'exception' => new RequestException(
                 '401 Unathorized',
                 $getRequest,
                 new $responseClass(401)
             )
         ]);
-        $rejectionThrottleProfile = Promise\rejection_for([
+        $rejectionThrottleProfile = Promise\Create::rejectionFor([
             'exception' => new RequestException(
                 '503 ThrottlingException',
                 $getRequest,
                 new $responseClass(503)
             )
         ]);
-        $rejectionCreds = Promise\rejection_for([
+        $rejectionCreds = Promise\Create::rejectionFor([
             'exception' => new RequestException(
                 '401 Unathorized',
                 $getRequest,
                 new $responseClass(401)
             )
         ]);
-        $rejectionThrottleCreds = Promise\rejection_for([
+        $rejectionThrottleCreds = Promise\Create::rejectionFor([
             'exception' => new RequestException(
                 '503 ThrottlingException',
                 $getRequest,
@@ -817,7 +817,7 @@ class InstanceProfileProviderTest extends TestCase
                 && $request->getUri()->getPath() === '/latest/api/token'
             ) {
                 if ($reqNumber === 1) {
-                    return Promise\rejection_for([
+                    return Promise\Create::rejectionFor([
                         'exception' => new RequestException('404 Not Found',
                             $putRequest,
                             new $responseClass(404)
@@ -825,12 +825,12 @@ class InstanceProfileProviderTest extends TestCase
                     ]);
                 }
 
-                return Promise\rejection_for([
+                return Promise\Create::rejectionFor([
                     'exception' => new \Exception('999 Expected Exception')
                 ]);
             }
             if ($request->getMethod() === 'GET') {
-                return Promise\rejection_for([
+                return Promise\Create::rejectionFor([
                     'exception' => new RequestException(
                         '401 Unauthorized - Valid unexpired token required',
                         $getRequest,
@@ -877,7 +877,7 @@ class InstanceProfileProviderTest extends TestCase
                 $request->getHeader('User-Agent')[0]
             );
 
-            return Promise\promise_for($response);
+            return Promise\Create::promiseFor($response);
         };
         $provider = new InstanceProfileProvider(['client' => $client]);
         return $provider();
@@ -945,10 +945,10 @@ class InstanceProfileProviderTest extends TestCase
 
         $client = function () use (&$retries, $responses) {
             if (0 === $retries--) {
-                return Promise\promise_for(array_shift($responses));
+                return Promise\Create::promiseFor(array_shift($responses));
             }
 
-            return Promise\rejection_for([
+            return Promise\Create::rejectionFor([
                 'exception' => $this->getRequestException()
             ]);
         };

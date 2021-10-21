@@ -1,5 +1,54 @@
 # CHANGELOG
 
+## 3.199.0 - 2021-10-20
+
+* `Aws\` - Adds support for guzzlehttp/psr7 V2
+* `Aws\Appflow` - Feature to add support for JSON-L format for S3 as a source.
+* `Aws\DirectConnect` - This release adds 4 new APIS, which needs to be public able
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for specifying caption time delta in milliseconds and the ability to apply color range legalization to source content other than AVC video.
+* `Aws\MediaPackage` - When enabled, MediaPackage passes through digital video broadcasting (DVB) subtitles into the output.
+* `Aws\MediaPackageVod` - MediaPackage passes through digital video broadcasting (DVB) subtitles into the output.
+* `Aws\Panorama` - General availability for AWS Panorama. AWS SDK for Panorama includes APIs to manage your devices and nodes, and deploy computer vision applications to the edge. For more information, see the AWS Panorama documentation at http://docs.aws.amazon.com/panorama
+* `Aws\SecurityHub` - Added support for cross-Region finding aggregation, which replicates findings from linked Regions to a single aggregation Region. Added operations to view, enable, update, and delete the finding aggregation.
+* `Aws\TranscribeStreamingService` - This release adds custom language support for streaming transcription.
+
+## 3.198.8 - 2021-10-19
+
+* `Aws\ChimeSDKMessaging` - The Amazon Chime SDK now allows developers to execute business logic on in-flight messages before they are delivered to members of a messaging channel with channel flows.
+* `Aws\DataExchange` - This release adds support for our public preview of AWS Data Exchange for Amazon Redshift. This enables data providers to list products including AWS Data Exchange datashares for Amazon Redshift, giving subscribers read-only access to provider data in Amazon Redshift.
+
+## 3.198.7 - 2021-10-18
+
+* `Aws\IVS` - Bug fix: remove unsupported maxResults and nextToken pagination parameters from ListTagsForResource
+* `Aws\QuickSight` - AWS QuickSight Service Features - Add IP Restriction UI and public APIs support.
+
+## 3.198.6 - 2021-10-15
+
+* `Aws\EFS` - EFS adds documentation for a new exception for short identifiers to be thrown after its migration to long resource identifiers.
+* `Aws\Glue` - Enable S3 event base crawler API.
+
+## 3.198.5 - 2021-10-14
+
+* `Aws\AutoScaling` - Amazon EC2 Auto Scaling now supports filtering describe Auto Scaling groups API using tags
+* `Aws\ElasticLoadBalancingv2` - Adds new option to filter by availability on each type of load balancer when describing ssl policies.
+* `Aws\RoboMaker` - Adding support to GPU simulation jobs as well as non-ROS simulation jobs.
+* `Aws\SageMaker` - This release updates the provisioning artifact ID to an optional parameter in CreateProject API. The provisioning artifact ID defaults to the latest provisioning artifact ID of the product if you don't provide one.
+
+## 3.198.4 - 2021-10-13
+
+* `Aws\ConfigService` - Adding Config support for AWS::OpenSearch::Domain
+* `Aws\EC2` - This release adds support for additional VPC Flow Logs delivery options to S3, such as Apache Parquet formatted files, Hourly partitions and Hive-compatible S3 prefixes
+* `Aws\KinesisAnalyticsV2` - Support for Apache Flink 1.13 in Kinesis Data Analytics. Changed the required status of some Update properties to better fit the corresponding Create properties.
+* `Aws\StorageGateway` - Adding support for Audit Logs on NFS shares and Force Closing Files on SMB shares.
+* `Aws\WorkMail` - This release adds APIs for adding, removing and retrieving details of mail domains
+
+## 3.198.3 - 2021-10-12
+
+* `Aws\CloudSearch` - Adds an additional validation exception for Amazon CloudSearch configuration APIs for better error handling.
+* `Aws\EC2` - EncryptionSupport for InstanceStorageInfo added to DescribeInstanceTypes API
+* `Aws\ECS` - Documentation only update to address tickets.
+* `Aws\MediaTailor` - MediaTailor now supports ad prefetching.
+
 ## 3.198.2 - 2021-10-11
 
 * `Aws\EC2` - Documentation update for Amazon EC2.

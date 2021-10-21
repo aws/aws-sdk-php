@@ -43,7 +43,7 @@ class EndpointArnMiddlewareTest extends TestCase
         $signingService
     ) {
         $options['http_handler'] = function($req) {
-            return Promise\promise_for(new Response());
+            return Promise\Create::promiseFor(new Response());
         };
         $s3control = $this->getTestClient($options);
         $command = $s3control->getCommand($cmdName, $cmdParams);
@@ -395,7 +395,7 @@ class EndpointArnMiddlewareTest extends TestCase
         \Exception $expectedException
     ) {
         $options['http_handler'] = function($req) {
-            return Promise\promise_for(new Response());
+            return Promise\Create::promiseFor(new Response());
         };
         $s3control = $this->getTestClient($options);
         $command = $s3control->getCommand($cmdName, $cmdParams);

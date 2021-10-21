@@ -35,7 +35,7 @@ class AuthTokenGeneratorTest extends TestCase
         $accessKeyId = 'AKID';
         $secretKeyId = 'SECRET';
         $provider = function () use ($accessKeyId, $secretKeyId) {
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Credentials($accessKeyId, $secretKeyId)
             );
         };
