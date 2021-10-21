@@ -284,49 +284,26 @@ class RestJsonSerializerTest extends TestCase
      * @dataProvider restJsonContentTypeProvider
      * @param string $operation
      * @param string $input
-     * @param string $expectedOutput
-     * @param int $expectedLength
-     * @param string $expectedContentType
-     *
      */
-    public function testRestJsonContentType(
-        $operation,
-        $input,
-        $expectedOutput,
-        $expectedLength,
-        $expectedContentType
-    ) {
+    public function testRestJsonContentTypeNoPayload($operation, $input) {
         $request = $this->getRequest($operation, $input);
         $this->assertSame('http://foo.com/', (string) $request->getUri());
-        $this->assertSame($expectedOutput, $request->getBody()->getContents());
+        $this->assertSame("", $request->getBody()->getContents());
         $this->assertSame(
-            $expectedContentType,
+            "",
             $request->getHeaderLine('Content-Type')
         );
-        if ($operation == 'noPayload') {
-            self::assertEmpty($request->getHeader("Content-length"));
-        } else {
-            $this->assertSame($expectedLength, $request->getHeader("Content-length")[0]);
-        }
+        self::assertEmpty($request->getHeader("Content-length"));
     }
 
 
     public function restJsonContentTypeProvider() {
         return [
             [
-               "qux", ['baz' => 'bar' ], '{"baz":"bar"}', "13", "application/json"
+                "noPayload", ['baz' => 'bar'],
             ],
             [
-                "qux", ["a"=>"b"], '{}', "2", "application/json"
-            ],
-            [
-                "qux", [], '{}', "2", "application/json"
-            ],
-            [
-                "noPayload", ['baz' => 'bar'], "", "0", ""
-            ],
-            [
-                "noPayload", [], "", "0", ""
+                "noPayload", [],
             ],
         ];
     }
