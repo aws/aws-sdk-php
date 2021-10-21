@@ -240,10 +240,8 @@ abstract class RestSerializer
                 return false;
             }
         }
-        $nonPayloadLocations = ['header', 'headers', 'querystring'];
         foreach ($input->getMembers() as $member) {
-            $location = $member['location'];
-            if (!$location && !in_array($location, $nonPayloadLocations)) {
+            if (!isset($member['location'])) {
                 return true;
             }
         }

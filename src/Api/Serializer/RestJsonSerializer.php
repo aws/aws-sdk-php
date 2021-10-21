@@ -37,7 +37,6 @@ class RestJsonSerializer extends RestSerializer
             ((string) $this->jsonFormatter->build($member, $value))
             : "{}";
         $opts['headers']['Content-Type'] = $this->contentType;
-        $opts['headers']['Content-Length'] = strlen($body);
         $opts['body'] = $body;
     }
 }
