@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.199.1 - 2021-10-21
 
 * `Aws\Connect` - Released Amazon Connect hours of operation API for general availability (GA). This API also supports AWS CloudFormation. For more information, see Amazon Connect Resource Type Reference in the AWS CloudFormation User Guide.
 
