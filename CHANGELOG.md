@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - Released Amazon Connect hours of operation API for general availability (GA). This API also supports AWS CloudFormation. For more information, see Amazon Connect Resource Type Reference in the AWS CloudFormation User Guide.
+
 ## 3.199.0 - 2021-10-20
 
 * `Aws\` - Adds support for guzzlehttp/psr7 V2
