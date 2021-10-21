@@ -66,8 +66,8 @@ class StreamRequestPayloadMiddlewareTest extends TestCase
                         'InputString' => 'teststring',
                     ]
                 ),
-                ['content-length' => [4]],
-                [ 'transfer-encoding' ],
+                [],
+                [ 'transfer-encoding', 'content-length'],
             ],
             [
                 $client->getCommand(
