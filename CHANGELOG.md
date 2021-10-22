@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.199.2 - 2021-10-22
 
 * `Aws\` - Fixed bugs that would arise from sending an incorrect content-type header to some services.
 * `Aws\AuditManager` - This release introduces character restrictions for ControlSet names. We updated regex patterns for the following attributes: ControlSet, CreateAssessmentFrameworkControlSet, and UpdateAssessmentFrameworkControlSet.
