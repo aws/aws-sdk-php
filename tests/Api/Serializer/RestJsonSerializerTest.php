@@ -24,24 +24,32 @@ class RestJsonSerializerTest extends TestCase
                 ],
                 'operations' => [
                     'foo' => [
-                        'http' => ['httpMethod' => 'POST'],
+                        'http' => ['method' => 'POST'],
                         'input' => ['shape' => 'FooInput'],
                     ],
                     'doctype' => [
-                        'http' => ['httpMethod' => 'POST'],
+                        'http' => ['method' => 'POST'],
                         'input' => ['shape' => 'DocTypeInput'],
                     ],
                     'bar' => [
-                        'http' => ['httpMethod' => 'POST'],
+                        'http' => ['method' => 'POST'],
                         'input' => ['shape' => 'BarInput'],
                     ],
                     'baz' => [
-                        'http' => ['httpMethod' => 'POST'],
+                        'http' => ['method' => 'POST'],
                         'input' => ['shape' => 'BazInput']
                     ],
                     'foobar' => [
-                        'http' => ['httpMethod' => 'POST'],
+                        'http' => ['method' => 'POST'],
                         'input' => ['shape' => 'FooBarInput']
+                    ],
+                    'qux' => [
+                        'http' => ['method' => 'POST'],
+                        'input' => ['shape' => 'QuxInput']
+                    ],
+                    'noPayload' => [
+                        'http' => ['method' => 'GET'],
+                        'input' => ['shape' => 'NoPayloadInput']
                     ]
                 ],
                 'shapes' => [
@@ -76,6 +84,29 @@ class RestJsonSerializerTest extends TestCase
                         'payload' => 'baz'
                     ],
                     'FooBarInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'baz' => [
+                                'shape' => 'BazShape',
+                                'location' => 'header',
+                                'locationname' => 'Bar',
+                                'jsonvalue' => true
+                            ],
+                        ]
+                    ],
+                    'QuxInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'bar' => [
+                                'shape' => 'BazShape',
+                                'location' => 'header',
+                                'locationname' => 'Bar',
+                                'jsonvalue' => true
+                            ],
+                            'baz' => ['shape' => 'BazShape']
+                        ]
+                    ],
+                    'NoPayloadInput' => [
                         'type' => 'structure',
                         'members' => [
                             'baz' => [
@@ -244,6 +275,35 @@ class RestJsonSerializerTest extends TestCase
                     ]
                 ],
                 '{"DocumentValue":{"DocumentType":2}}'
+            ],
+        ];
+    }
+
+
+    /**
+     * @dataProvider restJsonContentTypeProvider
+     * @param string $operation
+     * @param string $input
+     */
+    public function testRestJsonContentTypeNoPayload($operation, $input) {
+        $request = $this->getRequest($operation, $input);
+        $this->assertSame('http://foo.com/', (string) $request->getUri());
+        $this->assertSame("", $request->getBody()->getContents());
+        $this->assertSame(
+            "",
+            $request->getHeaderLine('Content-Type')
+        );
+        self::assertEmpty($request->getHeader("Content-length"));
+    }
+
+
+    public function restJsonContentTypeProvider() {
+        return [
+            [
+                "noPayload", ['baz' => 'bar'],
+            ],
+            [
+                "noPayload", [],
             ],
         ];
     }
