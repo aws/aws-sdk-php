@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Fixed bugs that would arise from sending an incorrect content-type header to some services.
+* `Aws\AuditManager` - This release introduces character restrictions for ControlSet names. We updated regex patterns for the following attributes: ControlSet, CreateAssessmentFrameworkControlSet, and UpdateAssessmentFrameworkControlSet.
+* `Aws\Chime` - Chime VoiceConnector and VoiceConnectorGroup APIs will now return an ARN.
+* `Aws\QuickSight` - Added QSearchBar option for GenerateEmbedUrlForRegisteredUser ExperienceConfiguration to support Q search bar embedding
+
 ## 3.199.1 - 2021-10-21
 
 * `Aws\Connect` - Released Amazon Connect hours of operation API for general availability (GA). This API also supports AWS CloudFormation. For more information, see Amazon Connect Resource Type Reference in the AWS CloudFormation User Guide.
