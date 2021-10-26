@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKIdentity` - The Amazon Chime SDK now supports push notifications through Amazon Pinpoint
+* `Aws\ChimeSDKMessaging` - The Amazon Chime SDK now supports push notifications through Amazon Pinpoint
+* `Aws\Credentials` - Respect the AWS_PROFILE environment variable when using the default provider chain
+* `Aws\EMRContainers` - This feature enables auto-generation of certificate to secure the managed-endpoint and removes the need for customer provided certificate-arn during managed-endpoint setup.
+
 ## 3.199.3 - 2021-10-25
 
 * `Aws\AuditManager` - This release introduces a new feature for Audit Manager: Custom framework sharing. You can now share your custom frameworks with another AWS account, or replicate them into another AWS Region under your own account.
