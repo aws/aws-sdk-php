@@ -85,6 +85,8 @@ class CredentialProvider
             'instance'
         ];
 
+        $profileName = getenv(self::ENV_PROFILE) ?: 'default';
+
         $defaultChain = [
             'env' => self::env(),
             'web_identity' => self::assumeRoleWithWebIdentityCredentialProvider($config),
@@ -94,18 +96,18 @@ class CredentialProvider
             || $config['use_aws_shared_config_files'] !== false
         ) {
             $defaultChain['sso'] = self::sso(
-                'profile default',
+                'profile '. $profileName,
                 self::getHomeDir() . '/.aws/config',
                 $config
             );
             $defaultChain['process_credentials'] = self::process();
             $defaultChain['ini'] = self::ini();
             $defaultChain['process_config'] = self::process(
-                'profile default',
+                'profile ' . $profileName,
                 self::getHomeDir() . '/.aws/config'
             );
             $defaultChain['ini_config'] = self::ini(
-                'profile default',
+                'profile '. $profileName,
                 self::getHomeDir() . '/.aws/config'
             );
         }
