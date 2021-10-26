@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.199.4 - 2021-10-26
 
 * `Aws\ChimeSDKIdentity` - The Amazon Chime SDK now supports push notifications through Amazon Pinpoint
 * `Aws\ChimeSDKMessaging` - The Amazon Chime SDK now supports push notifications through Amazon Pinpoint
