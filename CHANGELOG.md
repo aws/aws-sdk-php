@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.199.5 - 2021-10-27
 
 * `Aws\AutoScaling` - This release adds support for attribute-based instance type selection, a new EC2 Auto Scaling feature that lets customers express their instance requirements as a set of attributes, such as vCPU, memory, and storage.
 * `Aws\Credentials` - Deletes an unused symlink that is breaking some containers.
