@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.199.7 - 2021-10-29
 
 * `Aws\ApplicationInsights` - Added Monitoring support for SQL Server Failover Cluster Instance. Additionally, added a new API to allow one-click monitoring of containers resources.
 * `Aws\Connect` - Amazon Connect Chat now supports real-time message streaming.
