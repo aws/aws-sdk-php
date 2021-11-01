@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.199.8 - 2021-11-01
 
 * `Aws\Lightsail` - This release adds support to enable access logging for buckets in the Lightsail object storage service.
 * `Aws\Neptune` - Adds support for major version upgrades to ModifyDbCluster API
