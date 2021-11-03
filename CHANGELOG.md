@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.199.10 - 2021-11-03
 
 * `Aws\ConnectParticipant` - This release adds a new boolean attribute - Connect Participant - to the CreateParticipantConnection API, which can be used to mark the participant as connected.
 * `Aws\DataSync` - AWS DataSync now supports Hadoop Distributed File System (HDFS) Locations
