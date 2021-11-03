@@ -1,5 +1,44 @@
 # CHANGELOG
 
+## 3.199.9 - 2021-11-02
+
+* `Aws\CloudFront` - CloudFront now supports response headers policies to add HTTP headers to the responses that CloudFront sends to viewers. You can use these policies to add CORS headers, control browser caching, and more, without modifying your origin or writing any code.
+* `Aws\Connect` - Amazon Connect Chat now supports real-time message streaming.
+* `Aws\NimbleStudio` - Amazon Nimble Studio adds support for users to stop and start streaming sessions.
+
+## 3.199.8 - 2021-11-01
+
+* `Aws\Lightsail` - This release adds support to enable access logging for buckets in the Lightsail object storage service.
+* `Aws\Neptune` - Adds support for major version upgrades to ModifyDbCluster API
+* `Aws\NetworkManager` - This release adds API support to aggregate resources, routes, and telemetry data across a Global Network.
+* `Aws\Rekognition` - This Amazon Rekognition Custom Labels release introduces the management of datasets with projects
+
+## 3.199.7 - 2021-10-29
+
+* `Aws\ApplicationInsights` - Added Monitoring support for SQL Server Failover Cluster Instance. Additionally, added a new API to allow one-click monitoring of containers resources.
+* `Aws\Connect` - Amazon Connect Chat now supports real-time message streaming.
+* `Aws\EC2` - Support added for AMI sharing with organizations and organizational units in ModifyImageAttribute API
+* `Aws\Rekognition` - This release added new attributes to Rekognition Video GetCelebrityRecognition API operations.
+* `Aws\TranscribeService` - Transcribe and Transcribe Call Analytics now support automatic language identification along with custom vocabulary, vocabulary filter, custom language model and PII redaction.
+
+## 3.199.6 - 2021-10-28
+
+* `Aws\ConnectParticipant` - This release adds a new boolean attribute - Connect Participant - to the CreateParticipantConnection API, which can be used to mark the participant as connected.
+* `Aws\EC2` - Added new read-only DenyAllIGWTraffic network interface attribute. Added support for DL1 24xlarge instances powered by Habana Gaudi Accelerators for deep learning model training workloads
+* `Aws\ECS` - Amazon ECS now supports running Fargate tasks on Windows Operating Systems Families which includes Windows Server 2019 Core and Windows Server 2019 Full.
+* `Aws\GameLift` - Added support for Arm-based AWS Graviton2 instances, such as M6g, C6g, and R6g.
+* `Aws\SSMIncidents` - Updating documentation, adding new field to ConflictException to indicate earliest retry timestamp for some operations, increase maximum length of nextToken fields
+* `Aws\SageMaker` - This release adds support for RStudio on SageMaker.
+
+## 3.199.5 - 2021-10-27
+
+* `Aws\AutoScaling` - This release adds support for attribute-based instance type selection, a new EC2 Auto Scaling feature that lets customers express their instance requirements as a set of attributes, such as vCPU, memory, and storage.
+* `Aws\Credentials` - Deletes an unused symlink that is breaking some containers.
+* `Aws\EC2` - This release adds: attribute-based instance type selection for EC2 Fleet, Spot Fleet, a feature that lets customers express instance requirements as attributes like vCPU, memory, and storage; and Spot placement score, a feature that helps customers identify an optimal location to run Spot workloads.
+* `Aws\EKS` - EKS managed node groups now support BOTTLEROCKET_x86_64 and BOTTLEROCKET_ARM_64 AMI types.
+* `Aws\SageMaker` - This release allows customers to describe one or more versioned model packages through BatchDescribeModelPackage, update project via UpdateProject, modify and read customer metadata properties using Create, Update and Describe ModelPackage and enables cross account registration of model packages.
+* `Aws\Textract` - This release adds support for asynchronously analyzing invoice and receipt documents through two new APIs: StartExpenseAnalysis and GetExpenseAnalysis
+
 ## 3.199.4 - 2021-10-26
 
 * `Aws\ChimeSDKIdentity` - The Amazon Chime SDK now supports push notifications through Amazon Pinpoint

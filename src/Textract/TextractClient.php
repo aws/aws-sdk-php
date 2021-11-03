@@ -15,9 +15,13 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getDocumentAnalysisAsync(array $args = [])
  * @method \Aws\Result getDocumentTextDetection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getDocumentTextDetectionAsync(array $args = [])
+ * @method \Aws\Result getExpenseAnalysis(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getExpenseAnalysisAsync(array $args = [])
  * @method \Aws\Result startDocumentAnalysis(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startDocumentAnalysisAsync(array $args = [])
  * @method \Aws\Result startDocumentTextDetection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startDocumentTextDetectionAsync(array $args = [])
+ * @method \Aws\Result startExpenseAnalysis(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startExpenseAnalysisAsync(array $args = [])
  */
 class TextractClient extends AwsClient {}

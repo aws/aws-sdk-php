@@ -1238,6 +1238,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "StartContactStreaming":{
+      "name":"StartContactStreaming",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact/start-streaming"
+      },
+      "input":{"shape":"StartContactStreamingRequest"},
+      "output":{"shape":"StartContactStreamingResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "StartOutboundVoiceContact":{
       "name":"StartOutboundVoiceContact",
       "http":{
@@ -1299,6 +1315,21 @@
       "output":{"shape":"StopContactRecordingResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "StopContactStreaming":{
+      "name":"StopContactStreaming",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact/stop-streaming"
+      },
+      "input":{"shape":"StopContactStreamingRequest"},
+      "output":{"shape":"StopContactStreamingResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"}
       ]
@@ -2051,6 +2082,18 @@
         "ContentType":{"shape":"ChatContentType"},
         "Content":{"shape":"ChatContent"}
       }
+    },
+    "ChatStreamingConfiguration":{
+      "type":"structure",
+      "required":["StreamingEndpointArn"],
+      "members":{
+        "StreamingEndpointArn":{"shape":"ChatStreamingEndpointARN"}
+      }
+    },
+    "ChatStreamingEndpointARN":{
+      "type":"string",
+      "max":350,
+      "min":1
     },
     "ClientToken":{
       "type":"string",
@@ -5436,6 +5479,31 @@
       "members":{
       }
     },
+    "StartContactStreamingRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "ChatStreamingConfiguration",
+        "ClientToken"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "ContactId":{"shape":"ContactId"},
+        "ChatStreamingConfiguration":{"shape":"ChatStreamingConfiguration"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartContactStreamingResponse":{
+      "type":"structure",
+      "required":["StreamingId"],
+      "members":{
+        "StreamingId":{"shape":"StreamingId"}
+      }
+    },
     "StartOutboundVoiceContactRequest":{
       "type":"structure",
       "required":[
@@ -5534,6 +5602,24 @@
       "members":{
       }
     },
+    "StopContactStreamingRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "StreamingId"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "ContactId":{"shape":"ContactId"},
+        "StreamingId":{"shape":"StreamingId"}
+      }
+    },
+    "StopContactStreamingResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "StorageType":{
       "type":"string",
       "enum":[
@@ -5542,6 +5628,11 @@
         "KINESIS_STREAM",
         "KINESIS_FIREHOSE"
       ]
+    },
+    "StreamingId":{
+      "type":"string",
+      "max":100,
+      "min":1
     },
     "String":{"type":"string"},
     "SuspendContactRecordingRequest":{

@@ -40,6 +40,10 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         $signingRegion,
         $signingService
     ) {
+        $isMvpRegion = getenv('AIRGAPPED_REGION') == 'LCK';
+        if ($isMvpRegion) {
+            $this->markTestSkipped();
+        }
         $s3 = $this->getTestClient('s3', $options);
         $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand(
@@ -140,7 +144,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myendpoint-123456789012.s3-accesspoint-fips.dualstack.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
-                'fips-us-gov-east-1',
+                'us-gov-east-1',
                 null,
             ],
             // Non-aws partition, use_arn_region true
@@ -200,7 +204,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myendpoint-123456789012.s3-accesspoint-fips.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
-                'fips-us-gov-east-1',
+                'us-gov-east-1',
                 null,
             ],
             // Fips region with dualstack
@@ -213,7 +217,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myendpoint-123456789012.s3-accesspoint-fips.dualstack.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
-                'fips-us-gov-east-1',
+                'us-gov-east-1',
                 null,
             ],
             // S3 outposts, standard case
