@@ -70,6 +70,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionChime(array $args = [])
  * @method \Aws\ChimeSDKIdentity\ChimeSDKIdentityClient createChimeSDKIdentity(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionChimeSDKIdentity(array $args = [])
+ * @method \Aws\ChimeSDKMeetings\ChimeSDKMeetingsClient createChimeSDKMeetings(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionChimeSDKMeetings(array $args = [])
  * @method \Aws\ChimeSDKMessaging\ChimeSDKMessagingClient createChimeSDKMessaging(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionChimeSDKMessaging(array $args = [])
  * @method \Aws\Cloud9\Cloud9Client createCloud9(array $args = [])

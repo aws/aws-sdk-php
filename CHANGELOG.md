@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKMeetings` - The Amazon Chime SDK Meetings APIs allow software developers to create meetings and attendees for interactive audio, video, screen and content sharing in custom meeting applications which use the Amazon Chime SDK.
+* `Aws\Connect` - This release adds CRUD operation support for Security profile resource in Amazon Connect
+* `Aws\EC2` - This release adds a new instance replacement strategy for EC2 Fleet, Spot Fleet. Now you can select an action to perform when your instance gets a rebalance notification. EC2 Fleet, Spot Fleet can launch a replacement then terminate the instance that received notification after a termination delay
+* `Aws\IoTWireless` - Adding APIs for the FUOTA (firmware update over the air) and multicast for LoRaWAN devices and APIs to support event notification opt-in feature for Sidewalk related events. A few existing APIs need to be modified for this new feature.
+* `Aws\SageMaker` - ListDevices and DescribeDevice now show Edge Manager agent version.
+
 ## 3.199.10 - 2021-11-03
 
 * `Aws\ConnectParticipant` - This release adds a new boolean attribute - Connect Participant - to the CreateParticipantConnection API, which can be used to mark the participant as connected.
