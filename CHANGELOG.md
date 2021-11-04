@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.200.0 - 2021-11-04
 
 * `Aws\ChimeSDKMeetings` - The Amazon Chime SDK Meetings APIs allow software developers to create meetings and attendees for interactive audio, video, screen and content sharing in custom meeting applications which use the Amazon Chime SDK.
 * `Aws\Connect` - This release adds CRUD operation support for Security profile resource in Amazon Connect
