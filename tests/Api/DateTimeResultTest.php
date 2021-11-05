@@ -31,6 +31,7 @@ class DateTimeResultTest extends TestCase
         $t = 16344171.123432;
         $d = DateTimeResult::fromEpoch($t);
         $this->assertSame('16344171', $d->format('U'));
+        $this->assertSame('1970-07-09T04:02:51+00:00', (string)$d);
         $this->assertSame(\PHP_VERSION_ID < 56000 ? '16344171.000000' : '16344171.123432', $d->format('U.u'));
         setlocale(LC_ALL, $oldLocale);
     }

@@ -33,7 +33,7 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
             return new self(gmdate('c', $unixTimestamp));
         }
 
-        $decimalSeparator = localeconv()['decimal_point'];
+        $decimalSeparator = isset(localeconv()['decimal_point']) ? localeconv()['decimal_point'] : ".";
         $formatString = "U" . $decimalSeparator . "u";
         $dateTime = DateTime::createFromFormat(
             $formatString,
