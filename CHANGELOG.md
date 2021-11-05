@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Api` - Fixed issue where comma delimited unix timestamps could not be parsed
+* `Aws\EC2` - DescribeInstances now returns customer-owned IP addresses for instances running on an AWS Outpost.
+* `Aws\ResourceGroupsTaggingAPI` - Documentation updates and improvements.
+* `Aws\Translate` - This release enable customers to use their own KMS keys to encrypt output files when they submit a batch transform job.
+
 ## 3.200.0 - 2021-11-04
 
 * `Aws\ChimeSDKMeetings` - The Amazon Chime SDK Meetings APIs allow software developers to create meetings and attendees for interactive audio, video, screen and content sharing in custom meeting applications which use the Amazon Chime SDK.
