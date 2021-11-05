@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.200.1 - 2021-11-05
 
 * `Aws\Api` - Fixed issue where comma delimited unix timestamps could not be parsed
 * `Aws\EC2` - DescribeInstances now returns customer-owned IP addresses for instances running on an AWS Outpost.
