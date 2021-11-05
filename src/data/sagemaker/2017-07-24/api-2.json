@@ -49,6 +49,15 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "BatchDescribeModelPackage":{
+      "name":"BatchDescribeModelPackage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchDescribeModelPackageInput"},
+      "output":{"shape":"BatchDescribeModelPackageOutput"}
+    },
     "CreateAction":{
       "name":"CreateAction",
       "http":{
@@ -2586,6 +2595,15 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "UpdateProject":{
+      "name":"UpdateProject",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateProjectInput"},
+      "output":{"shape":"UpdateProjectOutput"}
+    },
     "UpdateTrainingJob":{
       "name":"UpdateTrainingJob",
       "http":{
@@ -3022,6 +3040,13 @@
         "VpcOnly"
       ]
     },
+    "AppSecurityGroupManagement":{
+      "type":"string",
+      "enum":[
+        "Service",
+        "Customer"
+      ]
+    },
     "AppSortKey":{
       "type":"string",
       "enum":["CreationTime"]
@@ -3050,7 +3075,9 @@
       "enum":[
         "JupyterServer",
         "KernelGateway",
-        "TensorBoard"
+        "TensorBoard",
+        "RStudioServerPro",
+        "RSessionGateway"
       ]
     },
     "ApprovalDescription":{
@@ -3572,6 +3599,56 @@
         "AWS/Rekognition/DetectModerationLabels/Image/V3",
         "AWS/Textract/AnalyzeDocument/Forms/V1"
       ]
+    },
+    "BatchDescribeModelPackageError":{
+      "type":"structure",
+      "required":[
+        "ErrorCode",
+        "ErrorResponse"
+      ],
+      "members":{
+        "ErrorCode":{"shape":"String"},
+        "ErrorResponse":{"shape":"String"}
+      }
+    },
+    "BatchDescribeModelPackageErrorMap":{
+      "type":"map",
+      "key":{"shape":"ModelPackageArn"},
+      "value":{"shape":"BatchDescribeModelPackageError"}
+    },
+    "BatchDescribeModelPackageInput":{
+      "type":"structure",
+      "required":["ModelPackageArnList"],
+      "members":{
+        "ModelPackageArnList":{"shape":"ModelPackageArnList"}
+      }
+    },
+    "BatchDescribeModelPackageOutput":{
+      "type":"structure",
+      "members":{
+        "ModelPackageSummaries":{"shape":"ModelPackageSummaries"},
+        "BatchDescribeModelPackageErrorMap":{"shape":"BatchDescribeModelPackageErrorMap"}
+      }
+    },
+    "BatchDescribeModelPackageSummary":{
+      "type":"structure",
+      "required":[
+        "ModelPackageGroupName",
+        "ModelPackageArn",
+        "CreationTime",
+        "InferenceSpecification",
+        "ModelPackageStatus"
+      ],
+      "members":{
+        "ModelPackageGroupName":{"shape":"EntityName"},
+        "ModelPackageVersion":{"shape":"ModelPackageVersion"},
+        "ModelPackageArn":{"shape":"ModelPackageArn"},
+        "ModelPackageDescription":{"shape":"EntityDescription"},
+        "CreationTime":{"shape":"CreationTime"},
+        "InferenceSpecification":{"shape":"InferenceSpecification"},
+        "ModelPackageStatus":{"shape":"ModelPackageStatus"},
+        "ModelApprovalStatus":{"shape":"ModelApprovalStatus"}
+      }
     },
     "BatchStrategy":{
       "type":"string",
@@ -4494,7 +4571,9 @@
           "deprecated":true,
           "deprecatedMessage":"This property is deprecated, use KmsKeyId instead."
         },
-        "KmsKeyId":{"shape":"KmsKeyId"}
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
+        "DomainSettings":{"shape":"DomainSettings"}
       }
     },
     "CreateDomainResponse":{
@@ -4851,7 +4930,7 @@
       "type":"structure",
       "members":{
         "ModelPackageName":{"shape":"EntityName"},
-        "ModelPackageGroupName":{"shape":"EntityName"},
+        "ModelPackageGroupName":{"shape":"ArnOrName"},
         "ModelPackageDescription":{"shape":"EntityDescription"},
         "InferenceSpecification":{"shape":"InferenceSpecification"},
         "ValidationSpecification":{"shape":"ModelPackageValidationSpecification"},
@@ -4864,7 +4943,8 @@
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "CustomerMetadataProperties":{"shape":"CustomerMetadataMap"}
       }
     },
     "CreateModelPackageOutput":{
@@ -5311,6 +5391,29 @@
       "type":"list",
       "member":{"shape":"CustomImage"},
       "max":30
+    },
+    "CustomerMetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]*)${1,128}"
+    },
+    "CustomerMetadataKeyList":{
+      "type":"list",
+      "member":{"shape":"CustomerMetadataKey"}
+    },
+    "CustomerMetadataMap":{
+      "type":"map",
+      "key":{"shape":"CustomerMetadataKey"},
+      "value":{"shape":"CustomerMetadataValue"},
+      "max":50,
+      "min":1
+    },
+    "CustomerMetadataValue":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]*)${1,256}"
     },
     "DataCaptureConfig":{
       "type":"structure",
@@ -6250,7 +6353,8 @@
         "LatestHeartbeat":{"shape":"Timestamp"},
         "Models":{"shape":"EdgeModels"},
         "MaxModels":{"shape":"Integer"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "AgentVersion":{"shape":"EdgeVersion"}
       }
     },
     "DescribeDomainRequest":{
@@ -6283,7 +6387,10 @@
         "SubnetIds":{"shape":"Subnets"},
         "Url":{"shape":"String1024"},
         "VpcId":{"shape":"VpcId"},
-        "KmsKeyId":{"shape":"KmsKeyId"}
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "DomainSettings":{"shape":"DomainSettings"},
+        "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
+        "SecurityGroupIdForDomainBoundary":{"shape":"SecurityGroupId"}
       }
     },
     "DescribeEdgePackagingJobRequest":{
@@ -6760,7 +6867,8 @@
         "ModelMetrics":{"shape":"ModelMetrics"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedBy":{"shape":"UserContext"},
-        "ApprovalDescription":{"shape":"ApprovalDescription"}
+        "ApprovalDescription":{"shape":"ApprovalDescription"},
+        "CustomerMetadataProperties":{"shape":"CustomerMetadataMap"}
       }
     },
     "DescribeModelQualityJobDefinitionRequest":{
@@ -7005,7 +7113,9 @@
         "ServiceCatalogProvisionedProductDetails":{"shape":"ServiceCatalogProvisionedProductDetails"},
         "ProjectStatus":{"shape":"ProjectStatus"},
         "CreatedBy":{"shape":"UserContext"},
-        "CreationTime":{"shape":"Timestamp"}
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedBy":{"shape":"UserContext"}
       }
     },
     "DescribeStudioLifecycleConfigRequest":{
@@ -7377,7 +7487,8 @@
         "IotThingName":{"shape":"ThingName"},
         "RegistrationTime":{"shape":"Timestamp"},
         "LatestHeartbeat":{"shape":"Timestamp"},
-        "Models":{"shape":"EdgeModelSummaries"}
+        "Models":{"shape":"EdgeModelSummaries"},
+        "AgentVersion":{"shape":"EdgeVersion"}
       }
     },
     "Devices":{
@@ -7463,6 +7574,24 @@
       "type":"string",
       "max":63,
       "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+    },
+    "DomainSecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"},
+      "max":3
+    },
+    "DomainSettings":{
+      "type":"structure",
+      "members":{
+        "SecurityGroupIds":{"shape":"DomainSecurityGroupIds"},
+        "RStudioServerProDomainSettings":{"shape":"RStudioServerProDomainSettings"}
+      }
+    },
+    "DomainSettingsForUpdate":{
+      "type":"structure",
+      "members":{
+        "RStudioServerProDomainSettingsForUpdate":{"shape":"RStudioServerProDomainSettingsForUpdate"}
+      }
     },
     "DomainStatus":{
       "type":"string",
@@ -10884,7 +11013,8 @@
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedBy":{"shape":"UserContext"},
         "ApprovalDescription":{"shape":"ApprovalDescription"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "CustomerMetadataProperties":{"shape":"CustomerMetadataMap"}
       }
     },
     "ModelPackageArn":{
@@ -10892,6 +11022,12 @@
       "max":2048,
       "min":1,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:model-package/.*"
+    },
+    "ModelPackageArnList":{
+      "type":"list",
+      "member":{"shape":"ModelPackageArn"},
+      "max":100,
+      "min":1
     },
     "ModelPackageContainerDefinition":{
       "type":"structure",
@@ -11007,6 +11143,11 @@
     "ModelPackageStatusItemList":{
       "type":"list",
       "member":{"shape":"ModelPackageStatusItem"}
+    },
+    "ModelPackageSummaries":{
+      "type":"map",
+      "key":{"shape":"ModelPackageArn"},
+      "value":{"shape":"BatchDescribeModelPackageSummary"}
     },
     "ModelPackageSummary":{
       "type":"structure",
@@ -12694,7 +12835,9 @@
         "ProjectStatus":{"shape":"ProjectStatus"},
         "CreatedBy":{"shape":"UserContext"},
         "CreationTime":{"shape":"Timestamp"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedBy":{"shape":"UserContext"}
       }
     },
     "ProjectArn":{
@@ -12738,7 +12881,10 @@
         "CreateFailed",
         "DeleteInProgress",
         "DeleteFailed",
-        "DeleteCompleted"
+        "DeleteCompleted",
+        "UpdateInProgress",
+        "UpdateCompleted",
+        "UpdateFailed"
       ]
     },
     "ProjectSummary":{
@@ -12835,6 +12981,50 @@
       "members":{
         "ModelPackageGroupArn":{"shape":"ModelPackageGroupArn"}
       }
+    },
+    "RSessionAppSettings":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "RStudioServerProAccessStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "RStudioServerProAppSettings":{
+      "type":"structure",
+      "members":{
+        "AccessStatus":{"shape":"RStudioServerProAccessStatus"},
+        "UserGroup":{"shape":"RStudioServerProUserGroup"}
+      }
+    },
+    "RStudioServerProDomainSettings":{
+      "type":"structure",
+      "required":["DomainExecutionRoleArn"],
+      "members":{
+        "DomainExecutionRoleArn":{"shape":"RoleArn"},
+        "RStudioConnectUrl":{"shape":"String"},
+        "RStudioPackageManagerUrl":{"shape":"String"},
+        "DefaultResourceSpec":{"shape":"ResourceSpec"}
+      }
+    },
+    "RStudioServerProDomainSettingsForUpdate":{
+      "type":"structure",
+      "required":["DomainExecutionRoleArn"],
+      "members":{
+        "DomainExecutionRoleArn":{"shape":"RoleArn"},
+        "DefaultResourceSpec":{"shape":"ResourceSpec"}
+      }
+    },
+    "RStudioServerProUserGroup":{
+      "type":"string",
+      "enum":[
+        "R_STUDIO_ADMIN",
+        "R_STUDIO_USER"
+      ]
     },
     "RealtimeInferenceInstanceTypes":{
       "type":"list",
@@ -13425,6 +13615,13 @@
         "ProductId":{"shape":"ServiceCatalogEntityId"},
         "ProvisioningArtifactId":{"shape":"ServiceCatalogEntityId"},
         "PathId":{"shape":"ServiceCatalogEntityId"},
+        "ProvisioningParameters":{"shape":"ProvisioningParameters"}
+      }
+    },
+    "ServiceCatalogProvisioningUpdateDetails":{
+      "type":"structure",
+      "members":{
+        "ProvisioningArtifactId":{"shape":"ServiceCatalogEntityId"},
         "ProvisioningParameters":{"shape":"ProvisioningParameters"}
       }
     },
@@ -14876,7 +15073,8 @@
       "required":["DomainId"],
       "members":{
         "DomainId":{"shape":"DomainId"},
-        "DefaultUserSettings":{"shape":"UserSettings"}
+        "DefaultUserSettings":{"shape":"UserSettings"},
+        "DomainSettingsForUpdate":{"shape":"DomainSettingsForUpdate"}
       }
     },
     "UpdateDomainResponse":{
@@ -14958,14 +15156,13 @@
     },
     "UpdateModelPackageInput":{
       "type":"structure",
-      "required":[
-        "ModelPackageArn",
-        "ModelApprovalStatus"
-      ],
+      "required":["ModelPackageArn"],
       "members":{
         "ModelPackageArn":{"shape":"ModelPackageArn"},
         "ModelApprovalStatus":{"shape":"ModelApprovalStatus"},
-        "ApprovalDescription":{"shape":"ApprovalDescription"}
+        "ApprovalDescription":{"shape":"ApprovalDescription"},
+        "CustomerMetadataProperties":{"shape":"CustomerMetadataMap"},
+        "CustomerMetadataPropertiesToRemove":{"shape":"CustomerMetadataKeyList"}
       }
     },
     "UpdateModelPackageOutput":{
@@ -15061,6 +15258,23 @@
       "type":"structure",
       "members":{
         "PipelineArn":{"shape":"PipelineArn"}
+      }
+    },
+    "UpdateProjectInput":{
+      "type":"structure",
+      "required":["ProjectName"],
+      "members":{
+        "ProjectName":{"shape":"ProjectEntityName"},
+        "ProjectDescription":{"shape":"EntityDescription"},
+        "ServiceCatalogProvisioningUpdateDetails":{"shape":"ServiceCatalogProvisioningUpdateDetails"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "UpdateProjectOutput":{
+      "type":"structure",
+      "required":["ProjectArn"],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"}
       }
     },
     "UpdateTrainingJobRequest":{
@@ -15231,7 +15445,9 @@
         "SharingSettings":{"shape":"SharingSettings"},
         "JupyterServerAppSettings":{"shape":"JupyterServerAppSettings"},
         "KernelGatewayAppSettings":{"shape":"KernelGatewayAppSettings"},
-        "TensorBoardAppSettings":{"shape":"TensorBoardAppSettings"}
+        "TensorBoardAppSettings":{"shape":"TensorBoardAppSettings"},
+        "RStudioServerProAppSettings":{"shape":"RStudioServerProAppSettings"},
+        "RSessionAppSettings":{"shape":"RSessionAppSettings"}
       }
     },
     "VariantName":{

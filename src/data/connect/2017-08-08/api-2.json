@@ -288,6 +288,24 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreateSecurityProfile":{
+      "name":"CreateSecurityProfile",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/security-profiles/{InstanceId}"
+      },
+      "input":{"shape":"CreateSecurityProfileRequest"},
+      "output":{"shape":"CreateSecurityProfileResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"DuplicateResourceException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "CreateUseCase":{
       "name":"CreateUseCase",
       "http":{
@@ -395,6 +413,23 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
+      ]
+    },
+    "DeleteSecurityProfile":{
+      "name":"DeleteSecurityProfile",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/security-profiles/{InstanceId}/{SecurityProfileId}"
+      },
+      "input":{"shape":"DeleteSecurityProfileRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceInUseException"}
       ]
     },
     "DeleteUseCase":{
@@ -577,6 +612,22 @@
       },
       "input":{"shape":"DescribeRoutingProfileRequest"},
       "output":{"shape":"DescribeRoutingProfileResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "DescribeSecurityProfile":{
+      "name":"DescribeSecurityProfile",
+      "http":{
+        "method":"GET",
+        "requestUri":"/security-profiles/{InstanceId}/{SecurityProfileId}"
+      },
+      "input":{"shape":"DescribeSecurityProfileRequest"},
+      "output":{"shape":"DescribeSecurityProfileResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
@@ -1114,6 +1165,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "ListSecurityProfilePermissions":{
+      "name":"ListSecurityProfilePermissions",
+      "http":{
+        "method":"GET",
+        "requestUri":"/security-profiles-permissions/{InstanceId}/{SecurityProfileId}"
+      },
+      "input":{"shape":"ListSecurityProfilePermissionsRequest"},
+      "output":{"shape":"ListSecurityProfilePermissionsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "ListSecurityProfiles":{
       "name":"ListSecurityProfiles",
       "http":{
@@ -1238,6 +1305,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "StartContactStreaming":{
+      "name":"StartContactStreaming",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact/start-streaming"
+      },
+      "input":{"shape":"StartContactStreamingRequest"},
+      "output":{"shape":"StartContactStreamingResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
     "StartOutboundVoiceContact":{
       "name":"StartOutboundVoiceContact",
       "http":{
@@ -1299,6 +1382,21 @@
       "output":{"shape":"StopContactRecordingResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "StopContactStreaming":{
+      "name":"StopContactStreaming",
+      "http":{
+        "method":"POST",
+        "requestUri":"/contact/stop-streaming"
+      },
+      "input":{"shape":"StopContactStreamingRequest"},
+      "output":{"shape":"StopContactStreamingResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceException"}
       ]
@@ -1624,6 +1722,21 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "UpdateSecurityProfile":{
+      "name":"UpdateSecurityProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/security-profiles/{InstanceId}/{SecurityProfileId}"
+      },
+      "input":{"shape":"UpdateSecurityProfileRequest"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
     "UpdateUserHierarchy":{
       "name":"UpdateUserHierarchy",
       "http":{
@@ -1734,6 +1847,14 @@
   },
   "shapes":{
     "ARN":{"type":"string"},
+    "AccessDeniedException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"Message"}
+      },
+      "error":{"httpStatusCode":403},
+      "exception":true
+    },
     "AfterContactWorkTimeLimit":{
       "type":"integer",
       "min":0
@@ -2051,6 +2172,18 @@
         "ContentType":{"shape":"ChatContentType"},
         "Content":{"shape":"ChatContent"}
       }
+    },
+    "ChatStreamingConfiguration":{
+      "type":"structure",
+      "required":["StreamingEndpointArn"],
+      "members":{
+        "StreamingEndpointArn":{"shape":"ChatStreamingEndpointARN"}
+      }
+    },
+    "ChatStreamingEndpointARN":{
+      "type":"string",
+      "max":350,
+      "min":1
     },
     "ClientToken":{
       "type":"string",
@@ -2375,6 +2508,31 @@
         "RoutingProfileId":{"shape":"RoutingProfileId"}
       }
     },
+    "CreateSecurityProfileRequest":{
+      "type":"structure",
+      "required":[
+        "SecurityProfileName",
+        "InstanceId"
+      ],
+      "members":{
+        "SecurityProfileName":{"shape":"SecurityProfileName"},
+        "Description":{"shape":"SecurityProfileDescription"},
+        "Permissions":{"shape":"PermissionsList"},
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateSecurityProfileResponse":{
+      "type":"structure",
+      "members":{
+        "SecurityProfileId":{"shape":"SecurityProfileId"},
+        "SecurityProfileArn":{"shape":"ARN"}
+      }
+    },
     "CreateUseCaseRequest":{
       "type":"structure",
       "required":[
@@ -2593,6 +2751,25 @@
           "shape":"QuickConnectId",
           "location":"uri",
           "locationName":"QuickConnectId"
+        }
+      }
+    },
+    "DeleteSecurityProfileRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "SecurityProfileId"
+      ],
+      "members":{
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "SecurityProfileId":{
+          "shape":"SecurityProfileId",
+          "location":"uri",
+          "locationName":"SecurityProfileId"
         }
       }
     },
@@ -2880,6 +3057,31 @@
       "type":"structure",
       "members":{
         "RoutingProfile":{"shape":"RoutingProfile"}
+      }
+    },
+    "DescribeSecurityProfileRequest":{
+      "type":"structure",
+      "required":[
+        "SecurityProfileId",
+        "InstanceId"
+      ],
+      "members":{
+        "SecurityProfileId":{
+          "shape":"SecurityProfileId",
+          "location":"uri",
+          "locationName":"SecurityProfileId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        }
+      }
+    },
+    "DescribeSecurityProfileResponse":{
+      "type":"structure",
+      "members":{
+        "SecurityProfile":{"shape":"SecurityProfile"}
       }
     },
     "DescribeUserHierarchyGroupRequest":{
@@ -4396,6 +4598,43 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListSecurityProfilePermissionsRequest":{
+      "type":"structure",
+      "required":[
+        "SecurityProfileId",
+        "InstanceId"
+      ],
+      "members":{
+        "SecurityProfileId":{
+          "shape":"SecurityProfileId",
+          "location":"uri",
+          "locationName":"SecurityProfileId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListSecurityProfilePermissionsResponse":{
+      "type":"structure",
+      "members":{
+        "Permissions":{"shape":"PermissionsList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListSecurityProfilesRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -4649,6 +4888,11 @@
     "Password":{
       "type":"string",
       "pattern":"/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d\\S]{8,64}$/"
+    },
+    "PermissionsList":{
+      "type":"list",
+      "member":{"shape":"SecurityProfilePermission"},
+      "max":500
     },
     "PhoneNumber":{"type":"string"},
     "PhoneNumberCountryCode":{
@@ -5344,6 +5588,21 @@
       "type":"list",
       "member":{"shape":"SecurityKey"}
     },
+    "SecurityProfile":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"SecurityProfileId"},
+        "OrganizationResourceId":{"shape":"InstanceId"},
+        "Arn":{"shape":"ARN"},
+        "SecurityProfileName":{"shape":"SecurityProfileName"},
+        "Description":{"shape":"SecurityProfileDescription"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "SecurityProfileDescription":{
+      "type":"string",
+      "max":250
+    },
     "SecurityProfileId":{"type":"string"},
     "SecurityProfileIds":{
       "type":"list",
@@ -5352,6 +5611,11 @@
       "min":1
     },
     "SecurityProfileName":{"type":"string"},
+    "SecurityProfilePermission":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
     "SecurityProfileSummary":{
       "type":"structure",
       "members":{
@@ -5434,6 +5698,31 @@
     "StartContactRecordingResponse":{
       "type":"structure",
       "members":{
+      }
+    },
+    "StartContactStreamingRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "ChatStreamingConfiguration",
+        "ClientToken"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "ContactId":{"shape":"ContactId"},
+        "ChatStreamingConfiguration":{"shape":"ChatStreamingConfiguration"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartContactStreamingResponse":{
+      "type":"structure",
+      "required":["StreamingId"],
+      "members":{
+        "StreamingId":{"shape":"StreamingId"}
       }
     },
     "StartOutboundVoiceContactRequest":{
@@ -5534,6 +5823,24 @@
       "members":{
       }
     },
+    "StopContactStreamingRequest":{
+      "type":"structure",
+      "required":[
+        "InstanceId",
+        "ContactId",
+        "StreamingId"
+      ],
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "ContactId":{"shape":"ContactId"},
+        "StreamingId":{"shape":"StreamingId"}
+      }
+    },
+    "StopContactStreamingResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "StorageType":{
       "type":"string",
       "enum":[
@@ -5542,6 +5849,11 @@
         "KINESIS_STREAM",
         "KINESIS_FIREHOSE"
       ]
+    },
+    "StreamingId":{
+      "type":"string",
+      "max":100,
+      "min":1
     },
     "String":{"type":"string"},
     "SuspendContactRecordingRequest":{
@@ -6064,6 +6376,27 @@
           "locationName":"RoutingProfileId"
         },
         "QueueConfigs":{"shape":"RoutingProfileQueueConfigList"}
+      }
+    },
+    "UpdateSecurityProfileRequest":{
+      "type":"structure",
+      "required":[
+        "SecurityProfileId",
+        "InstanceId"
+      ],
+      "members":{
+        "Description":{"shape":"SecurityProfileDescription"},
+        "Permissions":{"shape":"PermissionsList"},
+        "SecurityProfileId":{
+          "shape":"SecurityProfileId",
+          "location":"uri",
+          "locationName":"SecurityProfileId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        }
       }
     },
     "UpdateUserHierarchyGroupNameRequest":{
