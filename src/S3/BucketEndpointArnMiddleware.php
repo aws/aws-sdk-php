@@ -119,7 +119,7 @@ class BucketEndpointArnMiddleware
 
                         // Update signing region based on ARN data if configured to do so
                         if ($this->config['use_arn_region']->isUseArnRegion()
-                            && !$this->isFipsPseudoRegion($this->region)
+                            && !$this->config['use_fips_endpoint']->isUseFipsEndpoint()
                         ) {
                             $region = $arn->getRegion();
                         } else {
@@ -174,7 +174,9 @@ class BucketEndpointArnMiddleware
         }
 
         $host = "{$accesspointName}-" . $arn->getAccountId();
-        $fips = $this->isFipsPseudoRegion($this->region) ? "-fips" : "";
+        
+        $useFips = $this->config['use_fips_endpoint']->isUseFipsEndpoint();
+        $fipsString = $useFips ? "-fips" : "";
 
         if ($arn instanceof OutpostsAccessPointArn) {
             $host .= '.' . $arn->getOutpostId() . '.s3-outposts';
@@ -182,10 +184,10 @@ class BucketEndpointArnMiddleware
             if (!empty($this->config['endpoint'])) {
                return $host . '.' . $this->config['endpoint'];
             } else {
-                $host .= ".s3-object-lambda{$fips}";
+                $host .= ".s3-object-lambda{$fipsString}";
             }
         } else {
-            $host .= ".s3-accesspoint{$fips}";
+            $host .= ".s3-accesspoint{$fipsString}";
             if (!empty($this->config['dual_stack'])) {
                 $host .= '.dualstack';
             }
@@ -197,6 +199,20 @@ class BucketEndpointArnMiddleware
             $region = $this->region;
         }
         $region = $this->stripPseudoRegions($region);
+
+//        if ($useFips) {
+//            $serviceName = $this->service->getServiceName();
+//            if (isset($partition['services'][$serviceName]['endpoints'])) {
+//                $endpoints = $partition['services'][$serviceName]['endpoints'];
+//                if (isset($endpoints[$region]['variants'])) {
+//                    foreach ($endpoints[$region]['variants'] as $variant) {
+//                        if (in_array("fips", $variant['tags'])) {
+//                            return $host
+//                        }
+//                    }
+//                }
+//            }
+//        }
         $host .= '.' . $region . '.' . $this->getPartitionSuffix($arn, $this->partitionProvider);
         return $host;
     }

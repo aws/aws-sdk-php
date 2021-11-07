@@ -213,7 +213,8 @@ class S3ControlClient extends AwsClient
                     'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
                     'endpoint' => isset($args['endpoint'])
                         ? $args['endpoint']
-                        : null
+                        : null,
+                    'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
                 ]
             ),
             's3control.endpoint_arn_middleware'

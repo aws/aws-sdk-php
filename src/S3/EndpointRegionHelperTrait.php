@@ -4,6 +4,7 @@ namespace Aws\S3;
 use Aws\Api\Service;
 use Aws\Arn\ArnInterface;
 use Aws\Arn\S3\OutpostsArnInterface;
+use Aws\ClientResolver;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\InvalidRegionException;
 
@@ -48,11 +49,6 @@ trait EndpointRegionHelperTrait
         return $region;
     }
 
-    private function isFipsPseudoRegion($region)
-    {
-        return strpos($region, 'fips-') !== false || strpos($region, '-fips') !== false;
-    }
-
     private function isMatchingSigningRegion(
         $arnRegion,
         $clientRegion,
@@ -60,7 +56,7 @@ trait EndpointRegionHelperTrait
         PartitionEndpointProvider $provider
     ) {
         $arnRegion = $this->stripPseudoRegions(strtolower($arnRegion));
-        $clientRegion = $this->stripPseudoRegions(strtolower($clientRegion));
+        $clientRegion = strtolower($clientRegion);
         if ($arnRegion === $clientRegion) {
             return true;
         }
@@ -77,6 +73,7 @@ trait EndpointRegionHelperTrait
 
     private function validateFipsConfigurations(ArnInterface $arn)
     {
+        $useFipsEndpoint = !empty($this->config['use_fips_endpoint']);
         if ($arn instanceof OutpostsArnInterface) {
             if (empty($this->config['use_arn_region'])
                 || !($this->config['use_arn_region']->isUseArnRegion())
@@ -85,21 +82,12 @@ trait EndpointRegionHelperTrait
             } else {
                 $region = $arn->getRegion();
             }
-
-            if ($this->isFipsPseudoRegion($region)) {
+            if (\Aws\is_fips_pseudo_region($region)) {
                 throw new InvalidRegionException(
                     'Fips is currently not supported with S3 Outposts access'
                     . ' points. Please provide a non-fips region or do not supply an'
                     . ' access point ARN.');
             }
-        }
-        if ($this->isFipsPseudoRegion($this->region)
-            && $this->stripPseudoRegions($this->region) != $arn->getRegion()
-        ) {
-            throw new InvalidRegionException(
-                'Fips is currently not supported with cross region'
-                . ' requests. Please provide a non-fips region or supply a matching'
-                . ' access point ARN region and client region.');
         }
     }
 

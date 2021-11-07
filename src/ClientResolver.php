@@ -10,14 +10,17 @@ use Aws\ClientSideMonitoring\Configuration;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
+use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider as UseFipsConfigProvider;
+use Aws\Endpoint\UseFipsEndpoint\Configuration as UseFipsEndpointConfiguration;
+use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface as UseFipsEndpointConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
-use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
+use GuzzleHttp\Promise\PromiseInterface;
 use Aws\Credentials\CredentialProvider;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\RequestInterface;
@@ -98,6 +101,13 @@ class ClientResolver
             'doc'      => 'An optional PHP callable that accepts a type, service, and version argument, and returns an array of corresponding configuration data. The type value can be one of api, waiter, or paginator.',
             'fn'       => [__CLASS__, '_apply_api_provider'],
             'default'  => [ApiProvider::class, 'defaultProvider'],
+        ],
+        'use_fips_endpoint' => [
+            'type'      => 'value',
+            'valid'   => ['bool', UseFipsEndpointConfiguration::class, CacheInterface::class, 'callable'],
+            'doc'       => 'Set to true to enable the use of FIPS pseudo regions',
+            'fn'        => [__CLASS__, '_apply_use_fips_endpoint'],
+            'default' => [__CLASS__, '_default_use_fips_endpoint'],
         ],
         'endpoint_provider' => [
             'type'     => 'value',
@@ -543,6 +553,18 @@ class ClientResolver
                 throw new InvalidRegionException('Region must be a valid RFC'
                     . ' host label.');
             }
+            $serviceEndpoints =
+                is_array($value) && isset($value['services'][$args['service']]['endpoints'])
+                    ? $value['services'][$args['service']]['endpoints']
+                    : null;
+            if (isset($serviceEndpoints[$args['region']]['deprecated'])) {
+                trigger_error("The service " . $args['service'] . "has "
+                    . " deprecated the region " . $args['region'] . ".",
+                    E_USER_WARNING
+                );
+            }
+
+            $args['region'] = \Aws\strip_fips_pseudo_regions($args['region']);
 
             // Invoke the endpoint provider and throw if it does not resolve.
             $result = EndpointProvider::resolve($value, [
@@ -585,6 +607,28 @@ class ClientResolver
     public static function _default_endpoint_discovery_provider(array $args)
     {
         return ConfigurationProvider::defaultProvider($args);
+    }
+
+    public static function _apply_use_fips_endpoint($value, array &$args) {
+        if ($value instanceof CacheInterface) {
+            $value = UseFipsConfigProvider::defaultProvider($args);
+        }
+        if (is_callable($value)) {
+            $value = $value();
+        }
+        if ($value instanceof PromiseInterface) {
+            $value = $value->wait();
+        }
+        if ($value instanceof UseFipsEndpointConfigurationInterface) {
+            $args['config']['use_fips_endpoint'] = $value;
+        } else {
+            // The Configuration class itself will validate other inputs
+            $args['config']['use_fips_endpoint'] = new UseFipsEndpointConfiguration($value);
+        }
+    }
+
+    public static function _default_use_fips_endpoint(array &$args) {
+        return UseFipsConfigProvider::defaultProvider($args);
     }
 
     public static function _apply_serializer($value, array &$args, HandlerList $list)
@@ -915,4 +959,5 @@ EOT;
     {
         return is_valid_hostlabel($region);
     }
+
 }
