@@ -200,19 +200,6 @@ class BucketEndpointArnMiddleware
         }
         $region = $this->stripPseudoRegions($region);
 
-//        if ($useFips) {
-//            $serviceName = $this->service->getServiceName();
-//            if (isset($partition['services'][$serviceName]['endpoints'])) {
-//                $endpoints = $partition['services'][$serviceName]['endpoints'];
-//                if (isset($endpoints[$region]['variants'])) {
-//                    foreach ($endpoints[$region]['variants'] as $variant) {
-//                        if (in_array("fips", $variant['tags'])) {
-//                            return $host
-//                        }
-//                    }
-//                }
-//            }
-//        }
         $host .= '.' . $region . '.' . $this->getPartitionSuffix($arn, $this->partitionProvider);
         return $host;
     }
