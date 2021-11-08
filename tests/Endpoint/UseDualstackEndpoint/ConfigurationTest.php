@@ -1,11 +1,11 @@
 <?php
-namespace Aws\Test\Endpoint\UseFipsEndpoint;
+namespace Aws\Test\Endpoint\UseDualstackEndpoint;
 
-use Aws\Endpoint\UseFipsEndpoint\Configuration;
+use Aws\Endpoint\UseDualstackEndpoint\Configuration;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Aws\Endpoint\UseFipsEndpoint\Configuration
+ * @covers \Aws\Endpoint\UseDualstackEndpoint\Configuration
  */
 class ConfigurationTest extends TestCase
 {
@@ -17,8 +17,8 @@ class ConfigurationTest extends TestCase
      */
     public function testGetsCorrectValues($param, $expected)
     {
-        $config = new Configuration($param);
-        $this->assertEquals($expected, $config->isuseFipsEndpoint());
+        $config = new Configuration($param, 'us-east-1');
+        $this->assertEquals($expected, $config->isuseDualstackEndpoint());
     }
 
     public function correctValueCases()
@@ -37,19 +37,27 @@ class ConfigurationTest extends TestCase
 
     public function testToArray()
     {
-        $config = new Configuration(true);
+        $config = new Configuration(true, 'us-east-1');
         $expected = [
-            'use_fips_endpoint' => true,
+            'use_dual_stack_endpoint' => true,
         ];
         $this->assertEquals($expected, $config->toArray());
     }
 
     /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
-     * @expectedExceptionMessage 'use_fips_endpoint' config option must be a boolean value.
+     * @expectedException \Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException
+     * @expectedExceptionMessage 'use_dual_stack_endpoint' config option must be a boolean value
      */
     public function testThrowsOnInvalidEndpointsType()
     {
-        new Configuration('not a boolean');
+        new Configuration('not a boolean', 'us-east-1');
+    }
+    /**
+     * @expectedException \Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException
+     * @expectedExceptionMessage Dual-stack is not supported in ISO regions
+     */
+    public function testThrowsOnInvalidRegion()
+    {
+        new Configuration(true, 'something-iso-something');
     }
 }
