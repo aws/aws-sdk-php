@@ -1004,5 +1004,4 @@ EOT;
     {
         return is_valid_hostlabel($region);
     }
-
 }

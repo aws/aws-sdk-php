@@ -6,7 +6,6 @@ use Aws\HasDataTrait;
 use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
 use Aws\S3\RegionalEndpoint\ConfigurationProvider as S3ConfigurationProvider;
 use InvalidArgumentException as Iae;
-use phpDocumentor\Reflection\Types\Callable_;
 
 /**
  * Default implementation of an AWS partition.
@@ -315,9 +314,4 @@ final class Partition implements ArrayAccess, PartitionInterface
         }
     }
 
-    private function getBooleanConfig($variable) {
-        if ($variable instanceof Callable_) {
-
-        }
-    }
 }

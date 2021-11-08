@@ -316,7 +316,7 @@ class EndpointArnMiddleware
         // If client partition not found, try removing pseudo-region qualifiers
         if (!($clientPart->isRegionMatch($this->region, 's3'))) {
             $clientPart = $this->partitionProvider->getPartition(
-                $this->stripPseudoRegions($this->region),
+                \Aws\strip_fips_pseudo_regions($this->region),
                 's3'
             );
         }

@@ -55,7 +55,7 @@ trait EndpointRegionHelperTrait
         $service,
         PartitionEndpointProvider $provider
     ) {
-        $arnRegion = $this->stripPseudoRegions(strtolower($arnRegion));
+        $arnRegion = \Aws\strip_fips_pseudo_regions(strtolower($arnRegion));
         $clientRegion = strtolower($clientRegion);
         if ($arnRegion === $clientRegion) {
             return true;
@@ -64,11 +64,6 @@ trait EndpointRegionHelperTrait
             return true;
         }
         return false;
-    }
-
-    private function stripPseudoRegions($region)
-    {
-        return str_replace(['fips-', '-fips'], ['', ''], $region);
     }
 
     private function validateFipsConfigurations(ArnInterface $arn)
