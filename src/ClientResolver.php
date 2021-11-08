@@ -10,9 +10,12 @@ use Aws\ClientSideMonitoring\Configuration;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
-use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider as UseFipsConfigProvider;
 use Aws\Endpoint\UseFipsEndpoint\Configuration as UseFipsEndpointConfiguration;
+use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider as UseFipsConfigProvider;
 use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface as UseFipsEndpointConfigurationInterface;
+use Aws\Endpoint\UseDualStackEndpoint\Configuration as UseDualStackEndpointConfiguration;
+use Aws\Endpoint\UseDualStackEndpoint\ConfigurationProvider as UseDualStackConfigProvider;
+use Aws\Endpoint\UseDualStackEndpoint\ConfigurationInterface as UseDualStackEndpointConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\Exception\InvalidRegionException;
@@ -108,6 +111,13 @@ class ClientResolver
             'doc'       => 'Set to true to enable the use of FIPS pseudo regions',
             'fn'        => [__CLASS__, '_apply_use_fips_endpoint'],
             'default' => [__CLASS__, '_default_use_fips_endpoint'],
+        ],
+        'use_dual_stack_endpoint' => [
+            'type'      => 'value',
+            'valid'   => ['bool', UseDualStackEndpointConfiguration::class, CacheInterface::class, 'callable'],
+            'doc'       => 'Set to true to enable the use of dual-stack endpoints',
+            'fn'        => [__CLASS__, '_apply_use_dual_stack_endpoint'],
+            'default' => [__CLASS__, '_default_use_dual_stack_endpoint'],
         ],
         'endpoint_provider' => [
             'type'     => 'value',
@@ -631,6 +641,29 @@ class ClientResolver
         return UseFipsConfigProvider::defaultProvider($args);
     }
 
+    public static function _apply_use_dual_stack_endpoint($value, array &$args) {
+        if ($value instanceof CacheInterface) {
+            $value = UseDualStackConfigProvider::defaultProvider($args);
+        }
+        if (is_callable($value)) {
+            $value = $value();
+        }
+        if ($value instanceof PromiseInterface) {
+            $value = $value->wait();
+        }
+        if ($value instanceof UseDualStackEndpointConfigurationInterface) {
+            $args['config']['use_dual_stack_endpoint'] = $value;
+        } else {
+            // The Configuration class itself will validate other inputs
+            $args['config']['use_dual_stack_endpoint'] =
+                new UseDualStackEndpointConfiguration($value, $args['region']);
+        }
+    }
+
+    public static function _default_use_dual_stack_endpoint(array &$args) {
+        return UseDualStackConfigProvider::defaultProvider($args);
+    }
+
     public static function _apply_serializer($value, array &$args, HandlerList $list)
     {
         $list->prependBuild(Middleware::requestBuilder($value), 'builder');
@@ -940,10 +973,22 @@ EOT;
     private static function getEndpointProviderOptions(array $args)
     {
         $options = [];
-        $optionKeys = ['sts_regional_endpoints', 's3_us_east_1_regional_endpoint'];
+        $optionKeys = [
+            'sts_regional_endpoints',
+            's3_us_east_1_regional_endpoint',
+            ];
+        $configKeys = [
+            'use_dual_stack_endpoint',
+            'use_fips_endpoint',
+        ];
         foreach ($optionKeys as $key) {
             if (isset($args[$key])) {
                 $options[$key] = $args[$key];
+            }
+        }
+        foreach ($configKeys as $key) {
+            if (isset($args['config'][$key])) {
+                $options[$key] = $args['config'][$key];
             }
         }
         return $options;

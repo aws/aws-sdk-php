@@ -6,6 +6,7 @@ use Aws\HasDataTrait;
 use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
 use Aws\S3\RegionalEndpoint\ConfigurationProvider as S3ConfigurationProvider;
 use InvalidArgumentException as Iae;
+use phpDocumentor\Reflection\Types\Callable_;
 
 /**
  * Default implementation of an AWS partition.
@@ -130,12 +131,21 @@ final class Partition implements ArrayAccess, PartitionInterface
         $scheme = isset($args['scheme']) ? $args['scheme'] : 'https';
         $options = isset($args['options']) ? $args['options'] : [];
         $data = $this->getEndpointData($service, $region, $options);
-
+        $variant = $this->getVariant($options, $data);
+        if (isset($variant['hostname'])) {
+            $template = $variant['hostname'];
+        } else {
+            $template = isset($data['hostname']) ? $data['hostname'] : '';
+        }
+        $dnsSuffix = isset($variant['dnsSuffix'])
+            ? $variant['dnsSuffix']
+            : $this->data['dnsSuffix'];
         return [
             'endpoint' => "{$scheme}://" . $this->formatEndpoint(
-                    isset($data['hostname']) ? $data['hostname'] : '',
+                    $template,
                     $service,
-                    $region
+                    $region,
+                    $dnsSuffix
                 ),
             'signatureVersion' => $this->getSignatureVersion($data),
             'signingRegion' => isset($data['credentialScope']['region'])
@@ -251,12 +261,12 @@ final class Partition implements ArrayAccess, PartitionInterface
         return $this->data['services'][$service]['partitionEndpoint'];
     }
 
-    private function formatEndpoint($template, $service, $region)
+    private function formatEndpoint($template, $service, $region, $dnsSuffix)
     {
         return strtr($template, [
             '{service}' => $service,
             '{region}' => $region,
-            '{dnsSuffix}' => $this->data['dnsSuffix'],
+            '{dnsSuffix}' => $dnsSuffix,
         ]);
     }
 
@@ -267,5 +277,47 @@ final class Partition implements ArrayAccess, PartitionInterface
     private function isFipsEndpointUsed($region)
     {
         return strpos($region, "fips") !== false;
+    }
+
+    /**
+     * @param array $options
+     * @param array $data
+     * @return array
+     */
+    private function getVariant(array $options, array $data)
+    {
+        $variantTags = [];
+        if (isset($options['use_fips_endpoint'])) {
+            if ($options['use_fips_endpoint']->isUseFipsEndpoint()) {
+                $variantTags[] = 'fips';
+            }
+        }
+        if (isset($options['use_dual_stack_endpoint'])) {
+            if ($options['use_dual_stack_endpoint']->isUseDualStackEndpoint()) {
+                $variantTags[] = 'dualstack';
+            }
+        }
+        if (!empty($variantTags)) {
+            if (isset($data['variants'])) {
+                foreach ($data['variants'] as $variant) {
+                    if ($variant['tags'] == $variantTags) {
+                        return $variant;
+                    }
+                }
+            }
+            if (isset($this->data['defaults']['variants'])) {
+                foreach ($this->data['defaults']['variants'] as $variant) {
+                    if ($variant['tags'] == $variantTags) {
+                        return $variant;
+                    }
+                }
+            }
+        }
+    }
+
+    private function getBooleanConfig($variable) {
+        if ($variable instanceof Callable_) {
+
+        }
     }
 }

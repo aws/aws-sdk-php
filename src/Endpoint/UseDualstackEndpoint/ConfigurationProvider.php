@@ -1,19 +1,19 @@
 <?php
-namespace Aws\Endpoint\UseFipsEndpoint;
+namespace Aws\Endpoint\UseDualstackEndpoint;
 
 use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
 use Aws\ConfigurationProviderInterface;
-use Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException;
+use Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 
 /**
  * A configuration provider is a function that returns a promise that is
- * fulfilled with a {@see \Aws\Endpoint\UseFipsEndpoint\onfigurationInterface}
- * or rejected with an {@see \Aws\Endpoint\UseFipsEndpoint\ConfigurationException}.
+ * fulfilled with a {@see \Aws\Endpoint\UseDualstackEndpoint\onfigurationInterface}
+ * or rejected with an {@see \Aws\Endpoint\UseDualstackEndpoint\ConfigurationException}.
  *
  * <code>
- * use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider;
+ * use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider;
  * $provider = ConfigurationProvider::defaultProvider();
  * // Returns a ConfigurationInterface or throws.
  * $config = $provider()->wait();
@@ -22,7 +22,7 @@ use GuzzleHttp\Promise;
  * Configuration providers can be composed to create configuration using
  * conditional logic that can create different configurations in different
  * environments. You can compose multiple providers into a single provider using
- * {@see Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider::chain}. This function
+ * {@see Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider::chain}. This function
  * accepts providers as variadic arguments and returns a new function that will
  * invoke each provider until a successful configuration is returned.
  *
@@ -44,10 +44,10 @@ use GuzzleHttp\Promise;
 class ConfigurationProvider extends AbstractConfigurationProvider
     implements ConfigurationProviderInterface
 {
-    const ENV_USE_FIPS_ENDPOINT = 'AWS_USE_FIPS_ENDPOINT';
-    const INI_USE_FIPS_ENDPOINT = 'use_fips_endpoint';
+    const ENV_USE_DUAL_STACK_ENDPOINT = 'AWS_USE_DUALSTACK_ENDPOINT';
+    const INI_USE_DUAL_STACK_ENDPOINT = 'use_dualstack_endpoint';
 
-    public static $cacheKey = 'aws_cached_use_fips_endpoint_config';
+    public static $cacheKey = 'aws_cached_use_dualstack_endpoint_config';
 
     protected static $interfaceClass = ConfigurationInterface::class;
     protected static $exceptionClass = ConfigurationException::class;
@@ -69,23 +69,24 @@ class ConfigurationProvider extends AbstractConfigurationProvider
      */
     public static function defaultProvider(array $config = [])
     {
-        $configProviders = [self::env()];
+        $region = $config['region'];
+        $configProviders = [self::env($region)];
         if (
             !isset($config['use_aws_shared_config_files'])
             || $config['use_aws_shared_config_files'] != false
         ) {
-            $configProviders[] = self::ini();
+            $configProviders[] = self::ini($region);
         }
-        $configProviders[] = self::fallback($config['region']);
+        $configProviders[] = self::fallback($region);
 
         $memo = self::memoize(
             call_user_func_array('self::chain', $configProviders)
         );
 
-        if (isset($config['use_fips_endpoint'])
-            && $config['use_fips_endpoint'] instanceof CacheInterface
+        if (isset($config['use_dual_stack_endpoint'])
+            && $config['use_dual_stack_endpoint'] instanceof CacheInterface
         ) {
-            return self::cache($memo, $config['use_fips_endpoint'], self::$cacheKey);
+            return self::cache($memo, $config['use_dual_stack_endpoint'], self::$cacheKey);
         }
 
         return $memo;
@@ -96,19 +97,20 @@ class ConfigurationProvider extends AbstractConfigurationProvider
      *
      * @return callable
      */
-    public static function env()
+    public static function env($region)
     {
-        return function () {
+        return function () use ($region) {
             // Use config from environment variables, if available
-            $useFipsEndpoint = getenv(self::ENV_USE_FIPS_ENDPOINT);
-            if (!empty($useFipsEndpoint)) {
+            $useDualstackEndpoint = getenv(self::ENV_USE_DUAL_STACK_ENDPOINT);
+            if (!empty($useDualstackEndpoint)) {
                 return Promise\Create::promiseFor(
-                    new Configuration($useFipsEndpoint)
+                    new Configuration($useDualstackEndpoint),
+                    $region
                 );
             }
 
             return self::reject('Could not find environment variable config'
-                . ' in ' . self::ENV_USE_FIPS_ENDPOINT);
+                . ' in ' . self::ENV_USE_DUAL_STACK_ENDPOINT);
         };
     }
 
@@ -124,12 +126,12 @@ class ConfigurationProvider extends AbstractConfigurationProvider
      *
      * @return callable
      */
-    public static function ini($profile = null, $filename = null)
+    public static function ini($region, $profile = null, $filename = null)
     {
         $filename = $filename ?: (self::getDefaultConfigFilename());
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
-        return function () use ($profile, $filename) {
+        return function () use ($region, $profile, $filename) {
             if (!is_readable($filename)) {
                 return self::reject("Cannot read configuration from $filename");
             }
@@ -142,18 +144,18 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             if (!isset($data[$profile])) {
                 return self::reject("'$profile' not found in config file");
             }
-            if (!isset($data[$profile][self::INI_USE_FIPS_ENDPOINT])) {
-                return self::reject("Required use fips endpoint config values 
+            if (!isset($data[$profile][self::INI_USE_DUAL_STACK_ENDPOINT])) {
+                return self::reject("Required use dualstack endpoint config values 
                     not present in INI profile '{$profile}' ({$filename})");
             }
 
             // INI_SCANNER_NORMAL parses false-y values as an empty string
-            if ($data[$profile][self::INI_USE_FIPS_ENDPOINT] === "") {
-                $data[$profile][self::INI_USE_FIPS_ENDPOINT] = false;
+            if ($data[$profile][self::INI_USE_DUAL_STACK_ENDPOINT] === "") {
+                $data[$profile][self::INI_USE_DUAL_STACK_ENDPOINT] = false;
             }
 
             return Promise\Create::promiseFor(
-                new Configuration($data[$profile][self::INI_USE_FIPS_ENDPOINT])
+                new Configuration($data[$profile][self::INI_USE_DUAL_STACK_ENDPOINT], $region)
             );
         };
     }
@@ -166,12 +168,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function fallback($region)
     {
         return function () use ($region) {
-            if (\Aws\is_fips_pseudo_region($region)){
-                $configuration = new Configuration(true);
-            } else {
-                $configuration = new Configuration(false);
-            }
-            return Promise\Create::promiseFor($configuration);
+            return Promise\Create::promiseFor(new Configuration(false, $region));
         };
     }
 }
