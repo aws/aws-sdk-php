@@ -1,16 +1,17 @@
 <?php
-namespace Aws\Endpoint\UseFipsEndpoint;
+namespace Aws\Endpoint\UseDualstackEndpoint;
 
-use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider;
+
 use Aws\LruArrayCache;
-use Aws\Endpoint\UseFipsEndpoint\Configuration;
-use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface;
-use Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException;
+use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider;
+use Aws\Endpoint\UseDualstackEndpoint\Configuration;
+use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface;
+use Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider
+ * @covers \Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
@@ -18,22 +19,22 @@ class ConfigurationProviderTest extends TestCase
 
     private $iniFile = <<<EOT
 [custom]
-use_fips_endpoint = true
+use_dualstack_endpoint = true
 [default]
-use_fips_endpoint = false
+use_dualstack_endpoint = false
 EOT;
 
     private $altIniFile = <<<EOT
 [custom]
-use_fips_endpoint = false
+use_dualstack_endpoint = false
 [default]
-use_fips_endpoint = true
+use_dualstack_endpoint = true
 EOT;
 
     public static function setUpBeforeClass()
     {
         self::$originalEnv = [
-            'use_fips_endpoint' => getenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT) ?: '',
+            'use_dualstack_endpoint' => getenv(ConfigurationProvider::ENV_USE_DUAL_STACK_ENDPOINT) ?: '',
             'home' => getenv('HOME') ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
         ];
@@ -41,7 +42,7 @@ EOT;
 
     private function clearEnv()
     {
-        putenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT . '=');
+        putenv(ConfigurationProvider::ENV_USE_DUAL_STACK_ENDPOINT . '=');
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
 
         $dir = sys_get_temp_dir() . '/.aws';
@@ -55,8 +56,8 @@ EOT;
 
     public static function tearDownAfterClass()
     {
-        putenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT . '=' .
-            self::$originalEnv['use_fips_endpoint']);
+        putenv(ConfigurationProvider::ENV_USE_DUAL_STACK_ENDPOINT . '=' .
+            self::$originalEnv['use_dualstack_endpoint']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
         putenv('HOME=' . self::$originalEnv['home']);
@@ -65,27 +66,18 @@ EOT;
     public function testCreatesFromEnvironmentVariables()
     {
         $this->clearEnv();
-        putenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT . '=true');
-        $expected = new Configuration(true);
+        putenv(ConfigurationProvider::ENV_USE_DUAL_STACK_ENDPOINT . '=true');
+        $expected = new Configuration(true, "us-east-1");
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::defaultProvider(['region' => 'us-east-1']))->wait();
-        $this->assertSame($expected->toArray(), $result->toArray());
-    }
-
-    public function testCreatesFromFipsRegion()
-    {
-        $this->clearEnv();
-        $expected = new Configuration(true);
-        /** @var ConfigurationInterface $result */
-        $result = call_user_func(ConfigurationProvider::defaultProvider(['region' => 'fips-us-east-1']))->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
     }
 
     public function testRejectsOnNoEnvironmentVars()
     {
         $this->clearEnv();
-        putenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT);
-        $promise = call_user_func(ConfigurationProvider::env())->then(
+        putenv(ConfigurationProvider::ENV_USE_DUAL_STACK_ENDPOINT);
+        $promise = call_user_func(ConfigurationProvider::env('us-east-1'))->then(
             function () {
                 $this->fail('Should have received a rejection.');
             },
@@ -102,7 +94,7 @@ EOT;
     public function testCreatesDefaultFromFallback()
     {
         $this->clearEnv();
-        $expected  = new Configuration(false);
+        $expected  = new Configuration(false, "us-east-1");
         /** @var ConfigurationInterface $result */
         $result = call_user_func(ConfigurationProvider::fallback("us-east-1"))->wait();
         $this->assertSame($expected->toArray(), $result->toArray());
@@ -112,7 +104,7 @@ EOT;
     {
         $dir = $this->clearEnv();
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' . $dir . "/alt_config");
-        $expected = new Configuration(true);
+        $expected = new Configuration(true, "us-east-1");
         file_put_contents($dir . '/alt_config', $this->altIniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
@@ -126,7 +118,7 @@ EOT;
     public function testIgnoresIniWithUseAwsConfigFileFalse()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration(false);
+        $expected = new Configuration(false, "us-east-1");
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
@@ -140,7 +132,7 @@ EOT;
     public function testCreatesFromIniFileWithDefaultProfile()
     {
         $dir = $this->clearEnv();
-        $expected  = new Configuration(false);
+        $expected  = new Configuration(false, "us-east-1");
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         /** @var ConfigurationInterface $result */
@@ -153,7 +145,7 @@ EOT;
     {
         $dir = $this->clearEnv();
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' . $dir . "/alt_config");
-        $expected  = new Configuration(true);
+        $expected  = new Configuration(true, "us-east-1");
         file_put_contents($dir . '/config', $this->iniFile);
         file_put_contents($dir . '/alt_config', $this->altIniFile);
         putenv('HOME=' . dirname($dir));
@@ -167,28 +159,28 @@ EOT;
     public function testCreatesFromIniFileWithSpecifiedProfile()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration(true);
+        $expected = new Configuration(true, "us-east-1");
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         putenv(ConfigurationProvider::ENV_PROFILE . '=custom');
         /** @var ConfigurationInterface $result */
-        $result = call_user_func(ConfigurationProvider::ini())->wait();
+        $result = call_user_func(ConfigurationProvider::ini('us-east-1`'))->wait();
         $this->assertEquals($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
     }
 
     /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
+     * @expectedException \Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException
      */
     public function testEnsuresIniFileExists()
     {
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
-        call_user_func(ConfigurationProvider::ini())->wait();
+        call_user_func(ConfigurationProvider::ini('us-east-1'))->wait();
     }
 
     /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
+     * @expectedException \Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException
      */
     public function testEnsuresProfileIsNotEmpty()
     {
@@ -206,7 +198,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
+     * @expectedException \Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException
      * @expectedExceptionMessage 'foo' not found in
      */
     public function testEnsuresFileIsNotEmpty()
@@ -216,7 +208,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
 
         try {
-            call_user_func(ConfigurationProvider::ini('foo'))->wait();
+            call_user_func(ConfigurationProvider::ini('us-east-1', 'foo'))->wait();
         } catch (\Exception $e) {
             unlink($dir . '/config');
             throw $e;
@@ -224,7 +216,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
+     * @expectedException \Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException
      * @expectedExceptionMessage Invalid config file:
      */
     public function testEnsuresIniFileIsValid()
@@ -234,7 +226,7 @@ EOT;
         putenv('HOME=' . dirname($dir));
 
         try {
-            @call_user_func(ConfigurationProvider::ini())->wait();
+            @call_user_func(ConfigurationProvider::ini('us-east-1'))->wait();
         } catch (\Exception $e) {
             unlink($dir . '/config');
             throw $e;
@@ -245,7 +237,8 @@ EOT;
     {
         $this->clearEnv();
         $expected = new Configuration(
-            false
+            false,
+            "us-east-1"
         );
         $provider = ConfigurationProvider::defaultProvider(['region' => 'us-east-1']);
         /** @var ConfigurationInterface $result */
@@ -258,7 +251,7 @@ EOT;
         putenv('HOME=');
         putenv('HOMEDRIVE=C:');
         putenv('HOMEPATH=\\My\\Home');
-        $ref = new \ReflectionClass('Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider');
+        $ref = new \ReflectionClass('Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider');
         $meth = $ref->getMethod('getHomeDir');
         $meth->setAccessible(true);
         $this->assertSame('C:\\My\\Home', $meth->invoke(null));
@@ -267,7 +260,7 @@ EOT;
     public function testMemoizes()
     {
         $called = 0;
-        $expected = new Configuration(true);
+        $expected = new Configuration(true, "us-east-1");
         $f = function () use (&$called, $expected) {
             $called++;
             return Promise\Create::promiseFor($expected);
@@ -282,11 +275,11 @@ EOT;
     public function testChainsConfiguration()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration(true);
+        $expected = new Configuration(true, "us-east-1");
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
-        $a = ConfigurationProvider::ini('custom', null);
-        $b = ConfigurationProvider::ini();
+        $a = ConfigurationProvider::ini('us-east-1', 'custom', null);
+        $b = ConfigurationProvider::ini('us-east-1');
         $c = function () {
             $this->fail('Should not have called');
         };
@@ -308,8 +301,8 @@ EOT;
     public function testSelectsEnvironmentOverIniConfiguration()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration(false);
-        putenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT . '=false');
+        $expected = new Configuration(false, "us-east-1");
+        putenv(ConfigurationProvider::ENV_USE_DUAL_STACK_ENDPOINT . '=false');
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         putenv(ConfigurationProvider::ENV_PROFILE . '=custom');
@@ -324,7 +317,7 @@ EOT;
     public function testsPersistsToCache()
     {
         $cache = new LruArrayCache();
-        $expected = new Configuration(true);
+        $expected = new Configuration(true, "us-east-1");
 
         $timesCalled = 0;
         $volatileProvider = function () use ($expected, &$timesCalled) {
@@ -351,7 +344,7 @@ EOT;
 
     public function testCreatesFromCache()
     {
-        $expected = new Configuration(true);
+        $expected = new Configuration(true, "us-east-1");
         $cacheBuilder = $this->getMockBuilder('Aws\CacheInterface');
         $cacheBuilder->setMethods(['get', 'set', 'remove']);
         $cache = $cacheBuilder->getMock();
@@ -360,7 +353,7 @@ EOT;
             ->with(ConfigurationProvider::$cacheKey)
             ->willReturn($expected);
 
-        $provider = ConfigurationProvider::defaultProvider(['use_fips_endpoint' => $cache, 'region' => 'us-east-1']);
+        $provider = ConfigurationProvider::defaultProvider(['use_dual_stack_endpoint' => $cache, 'region' => 'us-east-1']);
         /** @var ConfigurationInterface $result */
         $result = $provider()->wait();
         $this->assertInstanceOf(Configuration::class, $result);

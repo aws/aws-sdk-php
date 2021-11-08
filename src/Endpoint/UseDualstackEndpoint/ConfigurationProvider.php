@@ -104,8 +104,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             $useDualstackEndpoint = getenv(self::ENV_USE_DUAL_STACK_ENDPOINT);
             if (!empty($useDualstackEndpoint)) {
                 return Promise\Create::promiseFor(
-                    new Configuration($useDualstackEndpoint),
-                    $region
+                    new Configuration($useDualstackEndpoint, $region)
                 );
             }
 
