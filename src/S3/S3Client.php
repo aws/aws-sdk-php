@@ -277,12 +277,6 @@ class S3Client extends AwsClient implements S3ClientInterface
                     . ' \'@use_path_style_endpoint\' to true or false.',
                 'default' => false,
             ],
-            'use_fips_endpoint' => [
-                'type' => 'config',
-                'valid' => ['bool'],
-                'doc' => 'Set to true to send requests to a FIPS region',
-                'default' => false,
-            ],
             'disable_multiregion_access_points' => [
                 'type' => 'config',
                 'valid' => ['bool'],
@@ -376,7 +370,8 @@ class S3Client extends AwsClient implements S3ClientInterface
                     [
                         'accelerate' => $this->getConfig('use_accelerate_endpoint'),
                         'path_style' => $this->getConfig('use_path_style_endpoint'),
-                        'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
+                        'use_fips_endpoint' =>
+                            $this->getConfig('use_fips_endpoint')->isUseFipsEndpoint(),
                         'dual_stack' =>
                             $this->getConfig('use_dual_stack_endpoint')->isUseDualStackEndpoint(),
 
