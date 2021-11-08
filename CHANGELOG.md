@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.200.2 - 2021-11-08
 
 * `Aws\ChimeSDKMeetings` - Updated format validation for ids and regions.
 * `Aws\EC2` - This release adds internal validation on the GatewayAssociationState field
