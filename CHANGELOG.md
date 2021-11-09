@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Added support for services to add fips and dualstack endpoint information to the endpoints.json file and have it resolve a custom endpoint.
+* `Aws\Batch` - Adds support for scheduling policy APIs.
+* `Aws\GreengrassV2` - This release adds support for Greengrass core devices running Windows. You can now specify name of a Windows user to run a component.
+* `Aws\Health` - Documentation updates for AWS Health.
+
 ## 3.200.2 - 2021-11-08
 
 * `Aws\ChimeSDKMeetings` - Updated format validation for ids and regions.
