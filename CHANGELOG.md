@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.201.0 - 2021-11-09
 
 * `Aws\` - Added support for services to add fips and dualstack endpoint information to the endpoints.json file and have it resolve a custom endpoint.
 * `Aws\Batch` - Adds support for scheduling policy APIs.
