@@ -206,7 +206,7 @@ class S3ControlClient extends AwsClient
                     'endpoint' => isset($args['endpoint'])
                         ? $args['endpoint']
                         : null,
-                    'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
+                    'use_fips_endpoint' => $this->getConfig('use_fips_endpoint')->isUseFipsEndpoint(),
                 ]
             ),
             's3control.endpoint_arn_middleware'
