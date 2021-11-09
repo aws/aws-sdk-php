@@ -370,8 +370,7 @@ class S3Client extends AwsClient implements S3ClientInterface
                     [
                         'accelerate' => $this->getConfig('use_accelerate_endpoint'),
                         'path_style' => $this->getConfig('use_path_style_endpoint'),
-                        'use_fips_endpoint' =>
-                            $this->getConfig('use_fips_endpoint')->isUseFipsEndpoint(),
+                        'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
                         'dual_stack' =>
                             $this->getConfig('use_dual_stack_endpoint')->isUseDualStackEndpoint(),
 
@@ -391,8 +390,7 @@ class S3Client extends AwsClient implements S3ClientInterface
                     'path_style' => $this->getConfig('use_path_style_endpoint'),
                     'dual_stack' =>
                         $this->getConfig('use_dual_stack_endpoint')->isUseDualStackEndpoint(),
-                    'use_fips_endpoint' =>
-                        $this->getConfig('use_fips_endpoint')->isUseFipsEndpoint(),
+                    'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
                     'disable_multiregion_access_points' =>
                         $this->getConfig('disable_multiregion_access_points'),
                     'endpoint' => isset($args['endpoint'])
