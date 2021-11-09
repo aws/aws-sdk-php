@@ -196,24 +196,17 @@ class S3ControlClient extends AwsClient
         parent::__construct($args);
         $stack = $this->getHandlerList();
         $stack->appendBuild(
-            S3ControlEndpointMiddleware::wrap(
-                $this->getRegion(),
-                [
-                    'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
-                ]
-            ),
-            's3control.endpoint_middleware'
-        );
-        $stack->appendBuild(
             EndpointArnMiddleware::wrap(
                 $this->getApi(),
                 $this->getRegion(),
                 [
                     'use_arn_region' => $this->getConfig('use_arn_region'),
-                    'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
+                    'dual_stack' =>
+                        $this->getConfig('use_dual_stack_endpoint')->isUseDualStackEndpoint(),
                     'endpoint' => isset($args['endpoint'])
                         ? $args['endpoint']
-                        : null
+                        : null,
+                    'use_fips_endpoint' => $this->getConfig('use_fips_endpoint'),
                 ]
             ),
             's3control.endpoint_arn_middleware'
