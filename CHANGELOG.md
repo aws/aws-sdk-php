@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Backup` - AWS Backup SDK provides new options when scheduling backups: select supported services and resources that are assigned to a particular tag, linked to a combination of tags, or can be identified by a partial tag value, and exclude resources from their assignments.
+* `Aws\ECS` - This release adds support for container instance health.
+* `Aws\ResilienceHub` - Initial release of AWS Resilience Hub, a managed service that enables you to define, validate, and track the resilience of your applications on AWS
+
 ## 3.201.0 - 2021-11-09
 
 * `Aws\` - Added support for services to add fips and dualstack endpoint information to the endpoints.json file and have it resolve a custom endpoint.
