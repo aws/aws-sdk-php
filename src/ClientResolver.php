@@ -10,14 +10,20 @@ use Aws\ClientSideMonitoring\Configuration;
 use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Endpoint\PartitionEndpointProvider;
+use Aws\Endpoint\UseFipsEndpoint\Configuration as UseFipsEndpointConfiguration;
+use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider as UseFipsConfigProvider;
+use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface as UseFipsEndpointConfigurationInterface;
+use Aws\Endpoint\UseDualstackEndpoint\Configuration as UseDualStackEndpointConfiguration;
+use Aws\Endpoint\UseDualstackEndpoint\ConfigurationProvider as UseDualStackConfigProvider;
+use Aws\Endpoint\UseDualstackEndpoint\ConfigurationInterface as UseDualStackEndpointConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationInterface;
 use Aws\EndpointDiscovery\ConfigurationProvider;
-use Aws\EndpointDiscovery\EndpointDiscoveryMiddleware;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
+use GuzzleHttp\Promise\PromiseInterface;
 use Aws\Credentials\CredentialProvider;
 use InvalidArgumentException as IAE;
 use Psr\Http\Message\RequestInterface;
@@ -99,12 +105,26 @@ class ClientResolver
             'fn'       => [__CLASS__, '_apply_api_provider'],
             'default'  => [ApiProvider::class, 'defaultProvider'],
         ],
+        'use_fips_endpoint' => [
+            'type'      => 'value',
+            'valid'     => ['bool', UseFipsEndpointConfiguration::class, CacheInterface::class, 'callable'],
+            'doc'       => 'Set to true to enable the use of FIPS pseudo regions',
+            'fn'        => [__CLASS__, '_apply_use_fips_endpoint'],
+            'default'   => [__CLASS__, '_default_use_fips_endpoint'],
+        ],
+        'use_dual_stack_endpoint' => [
+            'type'      => 'value',
+            'valid'     => ['bool', UseDualStackEndpointConfiguration::class, CacheInterface::class, 'callable'],
+            'doc'       => 'Set to true to enable the use of dual-stack endpoints',
+            'fn'        => [__CLASS__, '_apply_use_dual_stack_endpoint'],
+            'default'   => [__CLASS__, '_default_use_dual_stack_endpoint'],
+        ],
         'endpoint_provider' => [
             'type'     => 'value',
             'valid'    => ['callable'],
             'fn'       => [__CLASS__, '_apply_endpoint_provider'],
             'doc'      => 'An optional PHP callable that accepts a hash of options including a "service" and "region" key and returns NULL or a hash of endpoint data, of which the "endpoint" key is required. See Aws\\Endpoint\\EndpointProvider for a list of built-in providers.',
-            'default' => [__CLASS__, '_default_endpoint_provider'],
+            'default'  => [__CLASS__, '_default_endpoint_provider'],
         ],
         'serializer' => [
             'default'   => [__CLASS__, '_default_serializer'],
@@ -543,6 +563,18 @@ class ClientResolver
                 throw new InvalidRegionException('Region must be a valid RFC'
                     . ' host label.');
             }
+            $serviceEndpoints =
+                is_array($value) && isset($value['services'][$args['service']]['endpoints'])
+                    ? $value['services'][$args['service']]['endpoints']
+                    : null;
+            if (isset($serviceEndpoints[$args['region']]['deprecated'])) {
+                trigger_error("The service " . $args['service'] . "has "
+                    . " deprecated the region " . $args['region'] . ".",
+                    E_USER_WARNING
+                );
+            }
+
+            $args['region'] = \Aws\strip_fips_pseudo_regions($args['region']);
 
             // Invoke the endpoint provider and throw if it does not resolve.
             $result = EndpointProvider::resolve($value, [
@@ -585,6 +617,51 @@ class ClientResolver
     public static function _default_endpoint_discovery_provider(array $args)
     {
         return ConfigurationProvider::defaultProvider($args);
+    }
+
+    public static function _apply_use_fips_endpoint($value, array &$args) {
+        if ($value instanceof CacheInterface) {
+            $value = UseFipsConfigProvider::defaultProvider($args);
+        }
+        if (is_callable($value)) {
+            $value = $value();
+        }
+        if ($value instanceof PromiseInterface) {
+            $value = $value->wait();
+        }
+        if ($value instanceof UseFipsEndpointConfigurationInterface) {
+            $args['config']['use_fips_endpoint'] = $value;
+        } else {
+            // The Configuration class itself will validate other inputs
+            $args['config']['use_fips_endpoint'] = new UseFipsEndpointConfiguration($value);
+        }
+    }
+
+    public static function _default_use_fips_endpoint(array &$args) {
+        return UseFipsConfigProvider::defaultProvider($args);
+    }
+
+    public static function _apply_use_dual_stack_endpoint($value, array &$args) {
+        if ($value instanceof CacheInterface) {
+            $value = UseDualStackConfigProvider::defaultProvider($args);
+        }
+        if (is_callable($value)) {
+            $value = $value();
+        }
+        if ($value instanceof PromiseInterface) {
+            $value = $value->wait();
+        }
+        if ($value instanceof UseDualStackEndpointConfigurationInterface) {
+            $args['config']['use_dual_stack_endpoint'] = $value;
+        } else {
+            // The Configuration class itself will validate other inputs
+            $args['config']['use_dual_stack_endpoint'] =
+                new UseDualStackEndpointConfiguration($value, $args['region']);
+        }
+    }
+
+    public static function _default_use_dual_stack_endpoint(array &$args) {
+        return UseDualStackConfigProvider::defaultProvider($args);
     }
 
     public static function _apply_serializer($value, array &$args, HandlerList $list)
@@ -896,10 +973,22 @@ EOT;
     private static function getEndpointProviderOptions(array $args)
     {
         $options = [];
-        $optionKeys = ['sts_regional_endpoints', 's3_us_east_1_regional_endpoint'];
+        $optionKeys = [
+            'sts_regional_endpoints',
+            's3_us_east_1_regional_endpoint',
+            ];
+        $configKeys = [
+            'use_dual_stack_endpoint',
+            'use_fips_endpoint',
+        ];
         foreach ($optionKeys as $key) {
             if (isset($args[$key])) {
                 $options[$key] = $args[$key];
+            }
+        }
+        foreach ($configKeys as $key) {
+            if (isset($args['config'][$key])) {
+                $options[$key] = $args['config'][$key];
             }
         }
         return $options;

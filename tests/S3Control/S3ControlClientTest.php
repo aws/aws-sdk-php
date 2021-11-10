@@ -36,32 +36,4 @@ class S3ControlClientTest extends TestCase
         ]);
     }
 
-    public function testAppliesS3ControlEndpointMiddlewareDualstack()
-    {
-        // test applies dualstack
-        $handler = function (RequestInterface $req) {
-            $this->assertSame(
-                '111222333444.s3-control.dualstack.us-west-2.amazonaws.com',
-                $req->getUri()->getHost()
-            );
-            return Promise\Create::promiseFor(new Response);
-        };
-
-        $dualStackClient = $this->getTestClient([
-            'http_handler' => $handler,
-            'use_dual_stack_endpoint' => true,
-        ]);
-        $dualStackClient->deletePublicAccessBlock([
-            'AccountId' => '111222333444',
-        ]);
-
-        $client = $this->getTestClient([
-            'http_handler' => $handler,
-        ]);
-        $client->deletePublicAccessBlock([
-            'AccountId' => '111222333444',
-            '@use_dual_stack_endpoint' => true,
-        ]);
-    }
-
 }

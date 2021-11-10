@@ -18329,6 +18329,15 @@
       "max":1000,
       "min":200
     },
+    "GatewayAssociationState":{
+      "type":"string",
+      "enum":[
+        "associated",
+        "not-associated",
+        "associating",
+        "disassociating"
+      ]
+    },
     "GatewayType":{
       "type":"string",
       "enum":["ipsec.1"]
@@ -21429,6 +21438,10 @@
         "CarrierIp":{
           "shape":"String",
           "locationName":"carrierIp"
+        },
+        "CustomerOwnedIp":{
+          "shape":"String",
+          "locationName":"customerOwnedIp"
         },
         "IpOwnerId":{
           "shape":"String",
@@ -35964,7 +35977,7 @@
           "locationName":"coreNetworkAttachmentArn"
         },
         "GatewayAssociationState":{
-          "shape":"String",
+          "shape":"GatewayAssociationState",
           "locationName":"gatewayAssociationState"
         },
         "Options":{

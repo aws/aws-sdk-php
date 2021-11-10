@@ -33,7 +33,13 @@ class DateTimeResult extends \DateTime implements \JsonSerializable
             return new self(gmdate('c', $unixTimestamp));
         }
 
-        $dateTime = DateTime::createFromFormat('U.u', sprintf('%0.6f', $unixTimestamp), new DateTimeZone('UTC'));
+        $decimalSeparator = isset(localeconv()['decimal_point']) ? localeconv()['decimal_point'] : ".";
+        $formatString = "U" . $decimalSeparator . "u";
+        $dateTime = DateTime::createFromFormat(
+            $formatString,
+            sprintf('%0.6f', $unixTimestamp),
+            new DateTimeZone('UTC')
+        );
 
         if (false === $dateTime) {
             throw new ParserException('Invalid timestamp value passed to DateTimeResult::fromEpoch');
