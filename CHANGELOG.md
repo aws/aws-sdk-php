@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.202.1 - 2021-11-11
 
 * `Aws\DynamoDB` - Updated Help section for "dynamodb update-contributor-insights" API
 * `Aws\EC2` - This release provides an additional route target for the VPC route table.
