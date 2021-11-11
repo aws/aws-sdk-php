@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DynamoDB` - Updated Help section for "dynamodb update-contributor-insights" API
+* `Aws\EC2` - This release provides an additional route target for the VPC route table.
+* `Aws\Translate` - This release enables customers to import Multi-Directional Custom Terminology and use Multi-Directional Custom Terminology in both real-time translation and asynchronous batch translation.
+
 ## 3.202.0 - 2021-11-10
 
 * `Aws\Backup` - AWS Backup SDK provides new options when scheduling backups: select supported services and resources that are assigned to a particular tag, linked to a combination of tags, or can be identified by a partial tag value, and exclude resources from their assignments.
