@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.202.2 - 2021-11-12
 
 * `Aws\Connect` - This release adds APIs for creating and managing scheduled tasks. Additionally, adds APIs to describe and update a contact and list associated references.
 * `Aws\DevOpsGuru` - Add support for cross account APIs.

@@ -579,7 +579,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.202.1';
+    const VERSION = '3.202.2';
 
     /** @var array Arguments for creating clients */
     private $args;
