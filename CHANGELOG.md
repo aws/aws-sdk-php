@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - This release includes support for images of AmazonLinux2 platform type.
+* `Aws\DatabaseMigrationService` - Add Settings in JSON format for the source GCP MySQL endpoint
+* `Aws\EC2` - Adds a new VPC Subnet attribute "EnableDns64." When enabled on IPv6 Subnets, the Amazon-Provided DNS Resolver returns synthetic IPv6 addresses for IPv4-only destinations.
+* `Aws\EKS` - Adding Tags support to Cluster Registrations.
+* `Aws\MigrationHubStrategyRecommendations` - AWS SDK for Migration Hub Strategy Recommendations. It includes APIs to start the portfolio assessment, import portfolio data for assessment, and to retrieve recommendations. For more information, see the AWS Migration Hub documentation at https://docs.aws.amazon.com/migrationhub/index.html
+* `Aws\SSM` - Adds support for Session Reason and Max Session Duration for Systems Manager Session Manager.
+* `Aws\Transfer` - AWS Transfer Family now supports integrating a custom identity provider using AWS Lambda
+* `Aws\WAFV2` - Your options for logging web ACL traffic now include Amazon CloudWatch Logs log groups and Amazon S3 buckets.
+
 ## 3.202.2 - 2021-11-12
 
 * `Aws\Connect` - This release adds APIs for creating and managing scheduled tasks. Additionally, adds APIs to describe and update a contact and list associated references.
