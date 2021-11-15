@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.203.0 - 2021-11-15
 
 * `Aws\AppStream` - This release includes support for images of AmazonLinux2 platform type.
 * `Aws\DatabaseMigrationService` - Add Settings in JSON format for the source GCP MySQL endpoint
