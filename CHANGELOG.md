@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudTrail` - CloudTrail Insights now supports ApiErrorRateInsight, which enables customers to identify unusual activity in their AWS account based on API error codes and their rate.
+* `Aws\LocationService` - This release adds the support for Relevance, Distance, Time Zone, Language and Interpolated Address for Geocoding and Reverse Geocoding.
+
 ## 3.203.0 - 2021-11-15
 
 * `Aws\AppStream` - This release includes support for images of AmazonLinux2 platform type.
