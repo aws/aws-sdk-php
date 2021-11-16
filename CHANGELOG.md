@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.203.1 - 2021-11-16
 
 * `Aws\CloudTrail` - CloudTrail Insights now supports ApiErrorRateInsight, which enables customers to identify unusual activity in their AWS account based on API error codes and their rate.
 * `Aws\LocationService` - This release adds the support for Relevance, Distance, Time Zone, Language and Interpolated Address for Geocoding and Reverse Geocoding.
