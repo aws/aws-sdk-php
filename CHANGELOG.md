@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.204.0 - 2021-11-17
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway.
 * `Aws\AmplifyBackend` - New APIs to support the Amplify Storage category. Add and manage file storage in your Amplify app backend.
