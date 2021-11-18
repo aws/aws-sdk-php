@@ -63,6 +63,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateClusterConfigurationAsync(array $args = [])
  * @method \Aws\Result updateClusterKafkaVersion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateClusterKafkaVersionAsync(array $args = [])
+ * @method \Aws\Result updateConnectivity(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateConnectivityAsync(array $args = [])
  * @method \Aws\Result updateMonitoring(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateMonitoringAsync(array $args = [])
  * @method \Aws\Result updateSecurity(array $args = [])
