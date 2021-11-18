@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.204.1 - 2021-11-18
 
 * `Aws\AppConfig` - Add Type to support feature flag configuration profiles
 * `Aws\AuditManager` - This release introduces a new feature for Audit Manager: Dashboard views. You can now view insights data for your active assessments, and quickly identify non-compliant evidence that needs to be remediated.
