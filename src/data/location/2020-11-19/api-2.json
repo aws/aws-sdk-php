@@ -1537,6 +1537,7 @@
       "members":{
         "Description":{"shape":"ResourceDescription"},
         "KmsKeyId":{"shape":"KmsKeyId"},
+        "PositionFiltering":{"shape":"PositionFiltering"},
         "PricingPlan":{"shape":"PricingPlan"},
         "PricingPlanDataSource":{"shape":"String"},
         "Tags":{"shape":"TagMap"},
@@ -1803,6 +1804,7 @@
         "CreateTime":{"shape":"Timestamp"},
         "Description":{"shape":"ResourceDescription"},
         "KmsKeyId":{"shape":"KmsKeyId"},
+        "PositionFiltering":{"shape":"PositionFiltering"},
         "PricingPlan":{"shape":"PricingPlan"},
         "PricingPlanDataSource":{"shape":"String"},
         "Tags":{"shape":"TagMap"},
@@ -2149,6 +2151,10 @@
       "min":1,
       "pattern":"^[-._\\p{L}\\p{N}]+$"
     },
+    "Integer":{
+      "type":"integer",
+      "box":true
+    },
     "IntendedUse":{
       "type":"string",
       "enum":[
@@ -2174,6 +2180,11 @@
       "type":"string",
       "max":2048,
       "min":1
+    },
+    "LanguageTag":{
+      "type":"string",
+      "max":35,
+      "min":2
     },
     "Leg":{
       "type":"structure",
@@ -2595,13 +2606,15 @@
         "AddressNumber":{"shape":"String"},
         "Country":{"shape":"String"},
         "Geometry":{"shape":"PlaceGeometry"},
+        "Interpolated":{"shape":"Boolean"},
         "Label":{"shape":"String"},
         "Municipality":{"shape":"String"},
         "Neighborhood":{"shape":"String"},
         "PostalCode":{"shape":"String"},
         "Region":{"shape":"String"},
         "Street":{"shape":"String"},
-        "SubRegion":{"shape":"String"}
+        "SubRegion":{"shape":"String"},
+        "TimeZone":{"shape":"TimeZone"}
       }
     },
     "PlaceGeometry":{
@@ -2621,6 +2634,14 @@
       "max":2,
       "min":2,
       "sensitive":true
+    },
+    "PositionFiltering":{
+      "type":"string",
+      "enum":[
+        "TimeBased",
+        "DistanceBased",
+        "AccuracyBased"
+      ]
     },
     "PricingPlan":{
       "type":"string",
@@ -2692,10 +2713,19 @@
     },
     "SearchForPositionResult":{
       "type":"structure",
-      "required":["Place"],
+      "required":[
+        "Distance",
+        "Place"
+      ],
       "members":{
+        "Distance":{"shape":"SearchForPositionResultDistanceDouble"},
         "Place":{"shape":"Place"}
       }
+    },
+    "SearchForPositionResultDistanceDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
     },
     "SearchForPositionResultList":{
       "type":"list",
@@ -2705,12 +2735,25 @@
       "type":"structure",
       "required":["Place"],
       "members":{
-        "Place":{"shape":"Place"}
+        "Distance":{"shape":"SearchForTextResultDistanceDouble"},
+        "Place":{"shape":"Place"},
+        "Relevance":{"shape":"SearchForTextResultRelevanceDouble"}
       }
+    },
+    "SearchForTextResultDistanceDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
     },
     "SearchForTextResultList":{
       "type":"list",
       "member":{"shape":"SearchForTextResult"}
+    },
+    "SearchForTextResultRelevanceDouble":{
+      "type":"double",
+      "box":true,
+      "max":1,
+      "min":0
     },
     "SearchPlaceIndexForPositionRequest":{
       "type":"structure",
@@ -2724,6 +2767,7 @@
           "location":"uri",
           "locationName":"IndexName"
         },
+        "Language":{"shape":"LanguageTag"},
         "MaxResults":{"shape":"PlaceIndexSearchResultLimit"},
         "Position":{"shape":"Position"}
       }
@@ -2747,6 +2791,7 @@
       ],
       "members":{
         "DataSource":{"shape":"String"},
+        "Language":{"shape":"LanguageTag"},
         "MaxResults":{"shape":"PlaceIndexSearchResultLimit"},
         "Position":{"shape":"Position"}
       }
@@ -2766,6 +2811,7 @@
           "location":"uri",
           "locationName":"IndexName"
         },
+        "Language":{"shape":"LanguageTag"},
         "MaxResults":{"shape":"PlaceIndexSearchResultLimit"},
         "Text":{"shape":"SyntheticSearchPlaceIndexForTextRequestString"}
       }
@@ -2792,6 +2838,7 @@
         "DataSource":{"shape":"String"},
         "FilterBBox":{"shape":"BoundingBox"},
         "FilterCountries":{"shape":"CountryCodeList"},
+        "Language":{"shape":"LanguageTag"},
         "MaxResults":{"shape":"PlaceIndexSearchResultLimit"},
         "ResultBBox":{"shape":"BoundingBox"},
         "Text":{"shape":"SyntheticSearchPlaceIndexForTextSummaryString"}
@@ -2862,7 +2909,7 @@
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"^[a-zA-Z+-=._:/]+$"
     },
     "TagKeys":{
       "type":"list",
@@ -2918,6 +2965,14 @@
       },
       "exception":true,
       "retryable":{"throttling":false}
+    },
+    "TimeZone":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"String"},
+        "Offset":{"shape":"Integer"}
+      }
     },
     "Timestamp":{
       "type":"timestamp",
@@ -3107,6 +3162,7 @@
       "required":["TrackerName"],
       "members":{
         "Description":{"shape":"ResourceDescription"},
+        "PositionFiltering":{"shape":"PositionFiltering"},
         "PricingPlan":{"shape":"PricingPlan"},
         "PricingPlanDataSource":{"shape":"String"},
         "TrackerName":{

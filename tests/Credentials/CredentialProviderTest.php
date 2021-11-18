@@ -113,7 +113,7 @@ EOT;
         $timesCalled = 0;
         $recordKeepingProvider = function () use (&$timesCalled) {
             ++$timesCalled;
-            return Promise\promise_for(new Credentials('foo', 'bar', 'baz', PHP_INT_MAX));
+            return Promise\Create::promiseFor(new Credentials('foo', 'bar', 'baz', PHP_INT_MAX));
         };
 
         call_user_func(
@@ -135,7 +135,7 @@ EOT;
             if (0 === $timesCalled) {
                 ++$timesCalled;
 
-                return Promise\promise_for($creds);
+                return Promise\Create::promiseFor($creds);
             }
 
             throw new \BadFunctionCallException('I was called too many times!');
@@ -1522,7 +1522,7 @@ EOT;
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
                 $this->assertSame('fooEnv', $c->toArray()['RoleSessionName']);
-                return Promise\promise_for(new Result($result));
+                return Promise\Create::promiseFor(new Result($result));
             }
         );
 
@@ -1574,7 +1574,7 @@ EOT;
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
                 $this->assertSame('fooCreds', $c->toArray()['RoleSessionName']);
-                return Promise\promise_for(new Result($result));
+                return Promise\Create::promiseFor(new Result($result));
             }
         );
 
@@ -1626,7 +1626,7 @@ EOT;
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
                 $this->assertSame('fooConfig', $c->toArray()['RoleSessionName']);
-                return Promise\promise_for(new Result($result));
+                return Promise\Create::promiseFor(new Result($result));
             }
         );
 
@@ -1677,7 +1677,7 @@ EOT;
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
                 $this->assertSame('fooRole', $c->toArray()['RoleSessionName']);
-                return Promise\promise_for(new Result($result));
+                return Promise\Create::promiseFor(new Result($result));
             }
         );
 
@@ -1769,7 +1769,7 @@ EOT;
         $creds = new Credentials('foo', 'bar');
         $f = function () use (&$called, $creds) {
             $called++;
-            return Promise\promise_for($creds);
+            return Promise\Create::promiseFor($creds);
         };
         $p = CredentialProvider::memoize($f);
         $this->assertSame($creds, $p()->wait());
@@ -1783,7 +1783,7 @@ EOT;
         $called = 0;
         $f = function () use (&$called) {
             $called++;
-            return Promise\rejection_for('Error');
+            return Promise\Create::rejectionFor('Error');
         };
         $p = CredentialProvider::memoize($f);
         $p()->wait(false);

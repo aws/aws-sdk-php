@@ -70,6 +70,37 @@
         }
       ]
     },
+    "CreateEventAction": {
+      "name": "CreateEventAction",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v1/event-actions",
+        "responseCode": 201
+      },
+      "input": {
+        "shape": "CreateEventActionRequest"
+      },
+      "output": {
+        "shape": "CreateEventActionResponse"
+      },
+      "errors": [
+        {
+          "shape": "ThrottlingException"
+        },
+        {
+          "shape": "ValidationException"
+        },
+        {
+          "shape": "InternalServerException"
+        },
+        {
+          "shape": "ServiceLimitExceededException"
+        },
+        {
+          "shape": "AccessDeniedException"
+        }
+      ]
+    },
     "CreateJob": {
       "name": "CreateJob",
       "http": {
@@ -194,6 +225,31 @@
         }
       ]
     },
+    "DeleteEventAction": {
+      "name": "DeleteEventAction",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/v1/event-actions/{EventActionId}",
+        "responseCode": 204
+      },
+      "input": {
+        "shape": "DeleteEventActionRequest"
+      },
+      "errors": [
+        {
+          "shape": "ResourceNotFoundException"
+        },
+        {
+          "shape": "ThrottlingException"
+        },
+        {
+          "shape": "ValidationException"
+        },
+        {
+          "shape": "InternalServerException"
+        }
+      ]
+    },
     "DeleteRevision": {
       "name": "DeleteRevision",
       "http": {
@@ -265,6 +321,34 @@
       },
       "output": {
         "shape": "GetDataSetResponse"
+      },
+      "errors": [
+        {
+          "shape": "ResourceNotFoundException"
+        },
+        {
+          "shape": "ThrottlingException"
+        },
+        {
+          "shape": "ValidationException"
+        },
+        {
+          "shape": "InternalServerException"
+        }
+      ]
+    },
+    "GetEventAction": {
+      "name": "GetEventAction",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/event-actions/{EventActionId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetEventActionRequest"
+      },
+      "output": {
+        "shape": "GetEventActionResponse"
       },
       "errors": [
         {
@@ -377,6 +461,34 @@
       },
       "output": {
         "shape": "ListDataSetsResponse"
+      },
+      "errors": [
+        {
+          "shape": "ResourceNotFoundException"
+        },
+        {
+          "shape": "ThrottlingException"
+        },
+        {
+          "shape": "ValidationException"
+        },
+        {
+          "shape": "InternalServerException"
+        }
+      ]
+    },
+    "ListEventActions": {
+      "name": "ListEventActions",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/event-actions",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListEventActionsRequest"
+      },
+      "output": {
+        "shape": "ListEventActionsResponse"
       },
       "errors": [
         {
@@ -587,6 +699,37 @@
         }
       ]
     },
+    "UpdateEventAction": {
+      "name": "UpdateEventAction",
+      "http": {
+        "method": "PATCH",
+        "requestUri": "/v1/event-actions/{EventActionId}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateEventActionRequest"
+      },
+      "output": {
+        "shape": "UpdateEventActionResponse"
+      },
+      "errors": [
+        {
+          "shape": "ResourceNotFoundException"
+        },
+        {
+          "shape": "ThrottlingException"
+        },
+        {
+          "shape": "ValidationException"
+        },
+        {
+          "shape": "InternalServerException"
+        },
+        {
+          "shape": "AccessDeniedException"
+        }
+      ]
+    },
     "UpdateRevision": {
       "name": "UpdateRevision",
       "http": {
@@ -638,6 +781,14 @@
         "httpStatusCode": 403
       }
     },
+    "Action": {
+      "type": "structure",
+      "members": {
+        "ExportRevisionToS3": {
+          "shape": "AutoExportRevisionToS3RequestDetails"
+        }
+      }
+    },
     "Arn": {
       "type": "string"
     },
@@ -664,6 +815,9 @@
       "members": {
         "S3SnapshotAsset": {
           "shape": "S3SnapshotAsset"
+        },
+        "RedshiftDataShareAsset": {
+          "shape": "RedshiftDataShareAsset"
         }
       }
     },
@@ -734,7 +888,36 @@
     "AssetType": {
       "type": "string",
       "enum": [
-        "S3_SNAPSHOT"
+        "S3_SNAPSHOT",
+        "REDSHIFT_DATA_SHARE"
+      ]
+    },
+    "AutoExportRevisionDestinationEntry": {
+      "type": "structure",
+      "members": {
+        "Bucket": {
+          "shape": "__string"
+        },
+        "KeyPattern": {
+          "shape": "__string"
+        }
+      },
+      "required": [
+        "Bucket"
+      ]
+    },
+    "AutoExportRevisionToS3RequestDetails": {
+      "type": "structure",
+      "members": {
+        "Encryption": {
+          "shape": "ExportServerSideEncryption"
+        },
+        "RevisionDestination": {
+          "shape": "AutoExportRevisionDestinationEntry"
+        }
+      },
+      "required": [
+        "RevisionDestination"
       ]
     },
     "CancelJobRequest": {
@@ -837,6 +1020,44 @@
         },
         "Tags": {
           "shape": "MapOf__string"
+        },
+        "UpdatedAt": {
+          "shape": "Timestamp"
+        }
+      }
+    },
+    "CreateEventActionRequest": {
+      "type": "structure",
+      "members": {
+        "Action": {
+          "shape": "Action"
+        },
+        "Event": {
+          "shape": "Event"
+        }
+      },
+      "required": [
+        "Action",
+        "Event"
+      ]
+    },
+    "CreateEventActionResponse": {
+      "type": "structure",
+      "members": {
+        "Action": {
+          "shape": "Action"
+        },
+        "Arn": {
+          "shape": "Arn"
+        },
+        "CreatedAt": {
+          "shape": "Timestamp"
+        },
+        "Event": {
+          "shape": "Event"
+        },
+        "Id": {
+          "shape": "Id"
         },
         "UpdatedAt": {
           "shape": "Timestamp"
@@ -1021,6 +1242,19 @@
         "DataSetId"
       ]
     },
+    "DeleteEventActionRequest": {
+      "type": "structure",
+      "members": {
+        "EventActionId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "EventActionId"
+        }
+      },
+      "required": [
+        "EventActionId"
+      ]
+    },
     "DeleteRevisionRequest": {
       "type": "structure",
       "members": {
@@ -1053,6 +1287,52 @@
           "shape": "ListOfAssetSourceEntry"
         }
       }
+    },
+    "Event": {
+      "type": "structure",
+      "members": {
+        "RevisionPublished": {
+          "shape": "RevisionPublished"
+        }
+      }
+    },
+    "EventActionEntry": {
+      "type": "structure",
+      "members": {
+        "Action": {
+          "shape": "Action"
+        },
+        "Arn": {
+          "shape": "Arn"
+        },
+        "CreatedAt": {
+          "shape": "Timestamp"
+        },
+        "Event": {
+          "shape": "Event"
+        },
+        "Id": {
+          "shape": "Id"
+        },
+        "UpdatedAt": {
+          "shape": "Timestamp"
+        }
+      },
+      "required": [
+        "Action",
+        "CreatedAt",
+        "Event",
+        "Id",
+        "Arn",
+        "UpdatedAt"
+      ]
+    },
+    "ExceptionCause": {
+      "type": "string",
+      "enum": [
+        "InsufficientS3BucketPolicy",
+        "S3AccessDenied"
+      ]
     },
     "ExportAssetToSignedUrlRequestDetails": {
       "type": "structure",
@@ -1171,6 +1451,9 @@
         },
         "RevisionDestinations": {
           "shape": "ListOfRevisionDestinationEntry"
+        },
+        "EventActionArn": {
+          "shape": "__string"
         }
       },
       "required": [
@@ -1303,6 +1586,42 @@
         }
       }
     },
+    "GetEventActionRequest": {
+      "type": "structure",
+      "members": {
+        "EventActionId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "EventActionId"
+        }
+      },
+      "required": [
+        "EventActionId"
+      ]
+    },
+    "GetEventActionResponse": {
+      "type": "structure",
+      "members": {
+        "Action": {
+          "shape": "Action"
+        },
+        "Arn": {
+          "shape": "Arn"
+        },
+        "CreatedAt": {
+          "shape": "Timestamp"
+        },
+        "Event": {
+          "shape": "Event"
+        },
+        "Id": {
+          "shape": "Id"
+        },
+        "UpdatedAt": {
+          "shape": "Timestamp"
+        }
+      }
+    },
     "GetJobRequest": {
       "type": "structure",
       "members": {
@@ -1429,8 +1748,8 @@
       "required": [
         "DataSetId",
         "Md5Hash",
-        "RevisionId",
-        "AssetName"
+        "AssetName",
+        "RevisionId"
       ]
     },
     "ImportAssetFromSignedUrlResponseDetails": {
@@ -1458,6 +1777,44 @@
       "required": [
         "DataSetId",
         "AssetName",
+        "RevisionId"
+      ]
+    },
+    "ImportAssetsFromRedshiftDataSharesRequestDetails": {
+      "type": "structure",
+      "members": {
+        "AssetSources": {
+          "shape": "ListOfRedshiftDataShareAssetSourceEntry"
+        },
+        "DataSetId": {
+          "shape": "Id"
+        },
+        "RevisionId": {
+          "shape": "Id"
+        }
+      },
+      "required": [
+        "DataSetId",
+        "AssetSources",
+        "RevisionId"
+      ]
+    },
+    "ImportAssetsFromRedshiftDataSharesResponseDetails": {
+      "type": "structure",
+      "members": {
+        "AssetSources": {
+          "shape": "ListOfRedshiftDataShareAssetSourceEntry"
+        },
+        "DataSetId": {
+          "shape": "Id"
+        },
+        "RevisionId": {
+          "shape": "Id"
+        }
+      },
+      "required": [
+        "DataSetId",
+        "AssetSources",
         "RevisionId"
       ]
     },
@@ -1586,14 +1943,16 @@
       "type": "string",
       "enum": [
         "Assets per revision",
-        "Asset size in GB"
+        "Asset size in GB",
+        "Amazon Redshift datashare assets per revision"
       ]
     },
     "JobErrorResourceTypes": {
       "type": "string",
       "enum": [
         "REVISION",
-        "ASSET"
+        "ASSET",
+        "DATA_SET"
       ]
     },
     "LimitName": {
@@ -1607,10 +1966,17 @@
         "Assets per import job from Amazon S3",
         "Asset per export job from Amazon S3",
         "Asset size in GB",
+        "Concurrent in progress jobs to export assets to Amazon S3",
+        "Concurrent in progress jobs to export assets to a signed URL",
         "Concurrent in progress jobs to import assets from Amazon S3",
         "Concurrent in progress jobs to import assets from a signed URL",
-        "Concurrent in progress jobs to export assets to Amazon S3",
-        "Concurrent in progress jobs to export assets to a signed URL"
+        "Concurrent in progress jobs to export revisions to Amazon S3",
+        "Event actions per account",
+        "Auto export event actions per data set",
+        "Amazon Redshift datashare assets per import job from Redshift",
+        "Concurrent in progress jobs to import assets from Amazon Redshift datashares",
+        "Revisions per Amazon Redshift datashare data set",
+        "Amazon Redshift datashare assets per revision"
       ]
     },
     "ListDataSetRevisionsRequest": {
@@ -1678,6 +2044,37 @@
         }
       }
     },
+    "ListEventActionsRequest": {
+      "type": "structure",
+      "members": {
+        "EventSourceId": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "eventSourceId"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListEventActionsResponse": {
+      "type": "structure",
+      "members": {
+        "EventActions": {
+          "shape": "ListOfEventActionEntry"
+        },
+        "NextToken": {
+          "shape": "NextToken"
+        }
+      }
+    },
     "ListJobsRequest": {
       "type": "structure",
       "members": {
@@ -1724,6 +2121,12 @@
       "type": "list",
       "member": {
         "shape": "AssetSourceEntry"
+      }
+    },
+    "ListOfRedshiftDataShareAssetSourceEntry": {
+      "type": "list",
+      "member": {
+        "shape": "RedshiftDataShareAssetSourceEntry"
       }
     },
     "ListOfRevisionDestinationEntry": {
@@ -1823,6 +2226,28 @@
         "ProductId"
       ]
     },
+    "RedshiftDataShareAsset": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string"
+        }
+      },
+      "required": [
+        "Arn"
+      ]
+    },
+    "RedshiftDataShareAssetSourceEntry": {
+      "type": "structure",
+      "members": {
+        "DataShareArn": {
+          "shape": "__string"
+        }
+      },
+      "required": [
+        "DataShareArn"
+      ]
+    },
     "RequestDetails": {
       "type": "structure",
       "members": {
@@ -1840,6 +2265,9 @@
         },
         "ImportAssetsFromS3": {
           "shape": "ImportAssetsFromS3RequestDetails"
+        },
+        "ImportAssetsFromRedshiftDataShares": {
+          "shape": "ImportAssetsFromRedshiftDataSharesRequestDetails"
         }
       }
     },
@@ -1870,7 +2298,8 @@
         "DATA_SET",
         "REVISION",
         "ASSET",
-        "JOB"
+        "JOB",
+        "EVENT_ACTION"
       ]
     },
     "ResponseDetails": {
@@ -1890,6 +2319,9 @@
         },
         "ImportAssetsFromS3": {
           "shape": "ImportAssetsFromS3ResponseDetails"
+        },
+        "ImportAssetsFromRedshiftDataShares": {
+          "shape": "ImportAssetsFromRedshiftDataSharesResponseDetails"
         }
       }
     },
@@ -1945,6 +2377,17 @@
         "Id",
         "Arn",
         "UpdatedAt"
+      ]
+    },
+    "RevisionPublished": {
+      "type": "structure",
+      "members": {
+        "DataSetId": {
+          "shape": "Id"
+        }
+      },
+      "required": [
+        "DataSetId"
       ]
     },
     "S3SnapshotAsset": {
@@ -2058,7 +2501,8 @@
         "IMPORT_ASSET_FROM_SIGNED_URL",
         "EXPORT_ASSETS_TO_S3",
         "EXPORT_ASSET_TO_SIGNED_URL",
-        "EXPORT_REVISIONS_TO_S3"
+        "EXPORT_REVISIONS_TO_S3",
+        "IMPORT_ASSETS_FROM_REDSHIFT_DATA_SHARES"
       ]
     },
     "UntagResourceRequest": {
@@ -2198,6 +2642,45 @@
         }
       }
     },
+    "UpdateEventActionRequest": {
+      "type": "structure",
+      "members": {
+        "Action": {
+          "shape": "Action"
+        },
+        "EventActionId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "EventActionId"
+        }
+      },
+      "required": [
+        "EventActionId"
+      ]
+    },
+    "UpdateEventActionResponse": {
+      "type": "structure",
+      "members": {
+        "Action": {
+          "shape": "Action"
+        },
+        "Arn": {
+          "shape": "Arn"
+        },
+        "CreatedAt": {
+          "shape": "Timestamp"
+        },
+        "Event": {
+          "shape": "Event"
+        },
+        "Id": {
+          "shape": "Id"
+        },
+        "UpdatedAt": {
+          "shape": "Timestamp"
+        }
+      }
+    },
     "UpdateRevisionRequest": {
       "type": "structure",
       "members": {
@@ -2257,6 +2740,9 @@
       "members": {
         "Message": {
           "shape": "__string"
+        },
+        "ExceptionCause": {
+          "shape": "ExceptionCause"
         }
       },
       "required": [
@@ -2286,6 +2772,12 @@
       "type": "list",
       "member": {
         "shape": "DataSetEntry"
+      }
+    },
+    "ListOfEventActionEntry": {
+      "type": "list",
+      "member": {
+        "shape": "EventActionEntry"
       }
     },
     "ListOfJobEntry": {

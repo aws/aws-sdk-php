@@ -40,6 +40,10 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         $signingRegion,
         $signingService
     ) {
+        $isMvpRegion = getenv('AIRGAPPED_REGION') == 'LCK';
+        if ($isMvpRegion) {
+            $this->markTestSkipped();
+        }
         $s3 = $this->getTestClient('s3', $options);
         $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand(
@@ -140,7 +144,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myendpoint-123456789012.s3-accesspoint-fips.dualstack.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
-                'fips-us-gov-east-1',
+                'us-gov-east-1',
                 null,
             ],
             // Non-aws partition, use_arn_region true
@@ -200,7 +204,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myendpoint-123456789012.s3-accesspoint-fips.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
-                'fips-us-gov-east-1',
+                'us-gov-east-1',
                 null,
             ],
             // Fips region with dualstack
@@ -213,7 +217,44 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myendpoint-123456789012.s3-accesspoint-fips.dualstack.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
-                'fips-us-gov-east-1',
+                'us-gov-east-1',
+                null,
+            ],
+            // Fips region, use arn region
+            [
+                'arn:aws-us-gov:s3:us-gov-west-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'fips-us-gov-east-1',
+                    'use_arn_region' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint-fips.us-gov-west-1.amazonaws.com',
+                'Bar/Baz',
+                'us-gov-east-1',
+                null,
+            ],
+            // Fips region with dualstack and use fips region
+            [
+                'arn:aws-us-gov:s3:us-gov-east-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'us-gov-east-1',
+                    'use_fips_endpoint' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint-fips.us-gov-east-1.amazonaws.com',
+                'Bar/Baz',
+                'us-gov-east-1',
+                null,
+            ],
+            // Fips region with dualstack and use fips region and use arn region
+            [
+                'arn:aws-us-gov:s3:us-gov-west-1:123456789012:accesspoint:myendpoint',
+                [
+                    'region' => 'us-gov-east-1',
+                    'use_arn_region' => true,
+                    'use_fips_endpoint' => true,
+                ],
+                'myendpoint-123456789012.s3-accesspoint-fips.us-gov-west-1.amazonaws.com',
+                'Bar/Baz',
+                'us-gov-east-1',
                 null,
             ],
             // S3 outposts, standard case
@@ -271,7 +312,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 ],
                 'myaccesspoint-123456789012.op-01234567890123456.s3-outposts.us-gov-east-1.amazonaws.com',
                 'Bar/Baz',
-                'fips-us-gov-east-1',
+                'us-gov-east-1',
                 's3-outposts',
             ],
             // S3 Outposts, non-aws partition
@@ -507,20 +548,6 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                 new InvalidRegionException('The supplied ARN partition does not'
                     . " match the client's partition.")
             ],
-            // S3 Outposts, fips region
-            [
-                new Command(
-                    'GetObject',
-                    [
-                        'Bucket' => 'arn:aws-us-gov:s3-outposts:fips-us-gov-west-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
-                        'Key' => 'Bar/Baz',
-                    ]
-                ),
-                ['region' => 'fips-us-gov-west-1'],
-                new InvalidRegionException('Fips is currently not supported with S3 Outposts access'
-                    . ' points. Please provide a non-fips region or do not supply an'
-                    . ' access point ARN.')
-            ],
             // S3 Outposts, dualstack
             [
                 new Command(
@@ -626,7 +653,7 @@ class BucketEndpointArnMiddlewareTest extends TestCase
                     'arn:aws:s3:us-west-2:123456789012:accesspoint:myendpoint/myobject',
                     $req->getHeader('x-amz-copy-source')[0]
                 );
-                return Promise\promise_for(new Result([]));
+                return Promise\Create::promiseFor(new Result([]));
             }
         ]);
         $command = $s3->getCommand(

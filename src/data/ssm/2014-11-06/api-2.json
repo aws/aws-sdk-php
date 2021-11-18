@@ -5168,7 +5168,11 @@
         "MaxErrors":{"shape":"MaxErrors"},
         "LoggingInfo":{"shape":"LoggingInfo"},
         "Name":{"shape":"MaintenanceWindowName"},
-        "Description":{"shape":"MaintenanceWindowDescription"}
+        "Description":{"shape":"MaintenanceWindowDescription"},
+        "CutoffBehavior":{
+          "shape":"MaintenanceWindowTaskCutoffBehavior",
+          "box":true
+        }
       }
     },
     "GetOpsItemRequest":{
@@ -7025,13 +7029,24 @@
         "MaxConcurrency":{"shape":"MaxConcurrency"},
         "MaxErrors":{"shape":"MaxErrors"},
         "Name":{"shape":"MaintenanceWindowName"},
-        "Description":{"shape":"MaintenanceWindowDescription"}
+        "Description":{"shape":"MaintenanceWindowDescription"},
+        "CutoffBehavior":{
+          "shape":"MaintenanceWindowTaskCutoffBehavior",
+          "box":true
+        }
       }
     },
     "MaintenanceWindowTaskArn":{
       "type":"string",
       "max":1600,
       "min":1
+    },
+    "MaintenanceWindowTaskCutoffBehavior":{
+      "type":"string",
+      "enum":[
+        "CONTINUE_TASK",
+        "CANCEL_TASK"
+      ]
     },
     "MaintenanceWindowTaskId":{
       "type":"string",
@@ -7141,6 +7156,12 @@
       "max":50,
       "min":5
     },
+    "MaxSessionDuration":{
+      "type":"string",
+      "max":4,
+      "min":1,
+      "pattern":"^([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-4][0-3][0-9]|1440)$"
+    },
     "MetadataKey":{
       "type":"string",
       "max":256,
@@ -7246,7 +7267,8 @@
         "CENTOS",
         "ORACLE_LINUX",
         "DEBIAN",
-        "MACOS"
+        "MACOS",
+        "RASPBIAN"
       ]
     },
     "OpsAggregator":{
@@ -8816,6 +8838,10 @@
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
+        },
+        "CutoffBehavior":{
+          "shape":"MaintenanceWindowTaskCutoffBehavior",
+          "box":true
         }
       }
     },
@@ -9351,8 +9377,10 @@
         "EndDate":{"shape":"DateTime"},
         "DocumentName":{"shape":"DocumentName"},
         "Owner":{"shape":"SessionOwner"},
+        "Reason":{"shape":"SessionReason"},
         "Details":{"shape":"SessionDetails"},
-        "OutputUrl":{"shape":"SessionManagerOutputUrl"}
+        "OutputUrl":{"shape":"SessionManagerOutputUrl"},
+        "MaxSessionDuration":{"shape":"MaxSessionDuration"}
       }
     },
     "SessionDetails":{
@@ -9447,6 +9475,12 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "SessionReason":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^.{1,256}$"
     },
     "SessionState":{
       "type":"string",
@@ -9570,6 +9604,7 @@
         "Parameters":{"shape":"AutomationParameterMap"},
         "ChangeRequestName":{"shape":"ChangeRequestName"},
         "ClientToken":{"shape":"IdempotencyToken"},
+        "AutoApprove":{"shape":"Boolean"},
         "Runbooks":{"shape":"Runbooks"},
         "Tags":{"shape":"TagList"},
         "ScheduledEndTime":{"shape":"DateTime"},
@@ -9588,6 +9623,7 @@
       "members":{
         "Target":{"shape":"SessionTarget"},
         "DocumentName":{"shape":"DocumentARN"},
+        "Reason":{"shape":"SessionReason"},
         "Parameters":{"shape":"SessionManagerParameters"}
       }
     },
@@ -10219,6 +10255,10 @@
         "Replace":{
           "shape":"Boolean",
           "box":true
+        },
+        "CutoffBehavior":{
+          "shape":"MaintenanceWindowTaskCutoffBehavior",
+          "box":true
         }
       }
     },
@@ -10237,7 +10277,11 @@
         "MaxErrors":{"shape":"MaxErrors"},
         "LoggingInfo":{"shape":"LoggingInfo"},
         "Name":{"shape":"MaintenanceWindowName"},
-        "Description":{"shape":"MaintenanceWindowDescription"}
+        "Description":{"shape":"MaintenanceWindowDescription"},
+        "CutoffBehavior":{
+          "shape":"MaintenanceWindowTaskCutoffBehavior",
+          "box":true
+        }
       }
     },
     "UpdateManagedInstanceRoleRequest":{

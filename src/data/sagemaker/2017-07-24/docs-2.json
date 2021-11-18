@@ -5,6 +5,7 @@
     "AddAssociation": "<p>Creates an <i>association</i> between the source and the destination. A source can be associated with multiple destinations, and a destination can be associated with multiple sources. An association is a lineage tracking entity. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/lineage-tracking.html\">Amazon SageMaker ML Lineage Tracking</a>.</p>",
     "AddTags": "<p>Adds or overwrites one or more tags for the specified Amazon SageMaker resource. You can add tags to notebook instances, training jobs, hyperparameter tuning jobs, batch transform jobs, models, labeling jobs, work teams, endpoint configurations, and endpoints.</p> <p>Each tag consists of a key and an optional value. Tag keys must be unique per resource. For more information about tags, see For more information, see <a href=\"https://aws.amazon.com/answers/account-management/aws-tagging-strategies/\">Amazon Web Services Tagging Strategies</a>.</p> <note> <p>Tags that you add to a hyperparameter tuning job by calling this API are also added to any training jobs that the hyperparameter tuning job launches after you call this API, but not to training jobs that the hyperparameter tuning job launched before you called this API. To make sure that the tags associated with a hyperparameter tuning job are also added to all training jobs that the hyperparameter tuning job launches, add the tags when you first create the tuning job by specifying them in the <code>Tags</code> parameter of <a>CreateHyperParameterTuningJob</a> </p> </note> <note> <p>Tags that you add to a SageMaker Studio Domain or User Profile by calling this API are also added to any Apps that the Domain or User Profile launches after you call this API, but not to Apps that the Domain or User Profile launched before you called this API. To make sure that the tags associated with a Domain or User Profile are also added to all Apps that the Domain or User Profile launches, add the tags when you first create the Domain or User Profile by specifying them in the <code>Tags</code> parameter of <a>CreateDomain</a> or <a>CreateUserProfile</a>.</p> </note>",
     "AssociateTrialComponent": "<p>Associates a trial component with a trial. A trial component can be associated with multiple trials. To disassociate a trial component from a trial, call the <a>DisassociateTrialComponent</a> API.</p>",
+    "BatchDescribeModelPackage": "<p>This action batch describes a list of versioned model packages</p>",
     "CreateAction": "<p>Creates an <i>action</i>. An action is a lineage tracking entity that represents an action or activity. For example, a model deployment or an HPO job. Generally, an action involves at least one input or output artifact. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/lineage-tracking.html\">Amazon SageMaker ML Lineage Tracking</a>.</p>",
     "CreateAlgorithm": "<p>Create a machine learning algorithm that you can use in Amazon SageMaker and list in the Amazon Web Services Marketplace.</p>",
     "CreateApp": "<p>Creates a running app for the specified UserProfile. Supported apps are <code>JupyterServer</code> and <code>KernelGateway</code>. This operation is automatically invoked by Amazon SageMaker Studio upon access to the associated Domain, and when new kernel configurations are selected by the user. A user may have multiple Apps active simultaneously.</p>",
@@ -18,7 +19,7 @@
     "CreateDeviceFleet": "<p>Creates a device fleet.</p>",
     "CreateDomain": "<p>Creates a <code>Domain</code> used by Amazon SageMaker Studio. A domain consists of an associated Amazon Elastic File System (EFS) volume, a list of authorized users, and a variety of security, application, policy, and Amazon Virtual Private Cloud (VPC) configurations. An Amazon Web Services account is limited to one domain per region. Users within a domain can share notebook files and other artifacts with each other.</p> <p> <b>EFS storage</b> </p> <p>When a domain is created, an EFS volume is created for use by all of the users within the domain. Each user receives a private home directory within the EFS volume for notebooks, Git repositories, and data files.</p> <p>SageMaker uses the Amazon Web Services Key Management Service (Amazon Web Services KMS) to encrypt the EFS volume attached to the domain with an Amazon Web Services managed key by default. For more control, you can specify a customer managed key. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/encryption-at-rest.html\">Protect Data at Rest Using Encryption</a>.</p> <p> <b>VPC configuration</b> </p> <p>All SageMaker Studio traffic between the domain and the EFS volume is through the specified VPC and subnets. For other Studio traffic, you can specify the <code>AppNetworkAccessType</code> parameter. <code>AppNetworkAccessType</code> corresponds to the network access type that you choose when you onboard to Studio. The following options are available:</p> <ul> <li> <p> <code>PublicInternetOnly</code> - Non-EFS traffic goes through a VPC managed by Amazon SageMaker, which allows internet access. This is the default value.</p> </li> <li> <p> <code>VpcOnly</code> - All Studio traffic is through the specified VPC and subnets. Internet access is disabled by default. To allow internet access, you must specify a NAT gateway.</p> <p>When internet access is disabled, you won't be able to run a Studio notebook or to train or host models unless your VPC has an interface endpoint to the SageMaker API and runtime or a NAT gateway and your security groups allow outbound connections.</p> </li> </ul> <important> <p>NFS traffic over TCP on port 2049 needs to be allowed in both inbound and outbound rules in order to launch a SageMaker Studio app successfully.</p> </important> <p>For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/studio-notebooks-and-internet-access.html\">Connect SageMaker Studio Notebooks to Resources in a VPC</a>.</p>",
     "CreateEdgePackagingJob": "<p>Starts a SageMaker Edge Manager model packaging job. Edge Manager will use the model artifacts from the Amazon Simple Storage Service bucket that you specify. After the model has been packaged, Amazon SageMaker saves the resulting artifacts to an S3 bucket that you specify.</p>",
-    "CreateEndpoint": "<p>Creates an endpoint using the endpoint configuration specified in the request. Amazon SageMaker uses the endpoint to provision resources and deploy models. You create the endpoint configuration with the <a>CreateEndpointConfig</a> API. </p> <p> Use this API to deploy models using Amazon SageMaker hosting services. </p> <p>For an example that calls this method when deploying a model to Amazon SageMaker hosting services, see the <a href=\"https://github.com/aws/amazon-sagemaker-examples/blob/master/sagemaker-fundamentals/create-endpoint/create_endpoint.ipynb\">Create Endpoint example notebook.</a> </p> <note> <p> You must not delete an <code>EndpointConfig</code> that is in use by an endpoint that is live or while the <code>UpdateEndpoint</code> or <code>CreateEndpoint</code> operations are being performed on the endpoint. To update an endpoint, you must create a new <code>EndpointConfig</code>.</p> </note> <p>The endpoint name must be unique within an Amazon Web Services Region in your Amazon Web Services account. </p> <p>When it receives the request, Amazon SageMaker creates the endpoint, launches the resources (ML compute instances), and deploys the model(s) on them. </p> <note> <p>When you call <a>CreateEndpoint</a>, a load call is made to DynamoDB to verify that your endpoint configuration exists. When you read data from a DynamoDB table supporting <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html\"> <code>Eventually Consistent Reads</code> </a>, the response might not reflect the results of a recently completed write operation. The response might include some stale data. If the dependent entities are not yet in DynamoDB, this causes a validation error. If you repeat your read request after a short time, the response should return the latest data. So retry logic is recommended to handle these possible issues. We also recommend that customers call <a>DescribeEndpointConfig</a> before calling <a>CreateEndpoint</a> to minimize the potential impact of a DynamoDB eventually consistent read.</p> </note> <p>When Amazon SageMaker receives the request, it sets the endpoint status to <code>Creating</code>. After it creates the endpoint, it sets the status to <code>InService</code>. Amazon SageMaker can then process incoming requests for inferences. To check the status of an endpoint, use the <a>DescribeEndpoint</a> API.</p> <p>If any of the models hosted at this endpoint get model data from an Amazon S3 location, Amazon SageMaker uses Amazon Web Services Security Token Service to download model artifacts from the S3 path you provided. Amazon Web Services STS is activated in your IAM user account by default. If you previously deactivated Amazon Web Services STS for a region, you need to reactivate Amazon Web Services STS for that region. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_enable-regions.html\">Activating and Deactivating Amazon Web Services STS in an Amazon Web Services Region</a> in the <i>Amazon Web Services Identity and Access Management User Guide</i>.</p> <note> <p> To add the IAM role policies for using this API operation, go to the <a href=\"https://console.aws.amazon.com/iam/\">IAM console</a>, and choose Roles in the left navigation pane. Search the IAM role that you want to grant access to use the <a>CreateEndpoint</a> and <a>CreateEndpointConfig</a> API operations, add the following policies to the role. </p> <ul> <li> <p>Option 1: For a full Amazon SageMaker access, search and attach the <code>AmazonSageMakerFullAccess</code> policy.</p> </li> <li> <p>Option 2: For granting a limited access to an IAM role, paste the following Action elements manually into the JSON file of the IAM role: </p> <p> <code>\"Action\": [\"sagemaker:CreateEndpoint\", \"sagemaker:CreateEndpointConfig\"]</code> </p> <p> <code>\"Resource\": [</code> </p> <p> <code>\"arn:aws:sagemaker:region:account-id:endpoint/endpointName\"</code> </p> <p> <code>\"arn:aws:sagemaker:region:account-id:endpoint-config/endpointConfigName\"</code> </p> <p> <code>]</code> </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/api-permissions-reference.html\">Amazon SageMaker API Permissions: Actions, Permissions, and Resources Reference</a>.</p> </li> </ul> </note>",
+    "CreateEndpoint": "<p>Creates an endpoint using the endpoint configuration specified in the request. Amazon SageMaker uses the endpoint to provision resources and deploy models. You create the endpoint configuration with the <a>CreateEndpointConfig</a> API. </p> <p> Use this API to deploy models using Amazon SageMaker hosting services. </p> <p>For an example that calls this method when deploying a model to Amazon SageMaker hosting services, see the <a href=\"https://github.com/aws/amazon-sagemaker-examples/blob/master/sagemaker-fundamentals/create-endpoint/create_endpoint.ipynb\">Create Endpoint example notebook.</a> </p> <note> <p> You must not delete an <code>EndpointConfig</code> that is in use by an endpoint that is live or while the <code>UpdateEndpoint</code> or <code>CreateEndpoint</code> operations are being performed on the endpoint. To update an endpoint, you must create a new <code>EndpointConfig</code>.</p> </note> <p>The endpoint name must be unique within an Amazon Web Services Region in your Amazon Web Services account. </p> <p>When it receives the request, Amazon SageMaker creates the endpoint, launches the resources (ML compute instances), and deploys the model(s) on them. </p> <note> <p>When you call <a>CreateEndpoint</a>, a load call is made to DynamoDB to verify that your endpoint configuration exists. When you read data from a DynamoDB table supporting <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html\"> <code>Eventually Consistent Reads</code> </a>, the response might not reflect the results of a recently completed write operation. The response might include some stale data. If the dependent entities are not yet in DynamoDB, this causes a validation error. If you repeat your read request after a short time, the response should return the latest data. So retry logic is recommended to handle these possible issues. We also recommend that customers call <a>DescribeEndpointConfig</a> before calling <a>CreateEndpoint</a> to minimize the potential impact of a DynamoDB eventually consistent read.</p> </note> <p>When Amazon SageMaker receives the request, it sets the endpoint status to <code>Creating</code>. After it creates the endpoint, it sets the status to <code>InService</code>. Amazon SageMaker can then process incoming requests for inferences. To check the status of an endpoint, use the <a>DescribeEndpoint</a> API.</p> <p>If any of the models hosted at this endpoint get model data from an Amazon S3 location, Amazon SageMaker uses Amazon Web Services Security Token Service to download model artifacts from the S3 path you provided. Amazon Web Services STS is activated in your IAM user account by default. If you previously deactivated Amazon Web Services STS for a region, you need to reactivate Amazon Web Services STS for that region. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_enable-regions.html\">Activating and Deactivating Amazon Web Services STS in an Amazon Web Services Region</a> in the <i>Amazon Web Services Identity and Access Management User Guide</i>.</p> <note> <p> To add the IAM role policies for using this API operation, go to the <a href=\"https://console.aws.amazon.com/iam/\">IAM console</a>, and choose Roles in the left navigation pane. Search the IAM role that you want to grant access to use the <a>CreateEndpoint</a> and <a>CreateEndpointConfig</a> API operations, add the following policies to the role. </p> <ul> <li> <p>Option 1: For a full SageMaker access, search and attach the <code>AmazonSageMakerFullAccess</code> policy.</p> </li> <li> <p>Option 2: For granting a limited access to an IAM role, paste the following Action elements manually into the JSON file of the IAM role: </p> <p> <code>\"Action\": [\"sagemaker:CreateEndpoint\", \"sagemaker:CreateEndpointConfig\"]</code> </p> <p> <code>\"Resource\": [</code> </p> <p> <code>\"arn:aws:sagemaker:region:account-id:endpoint/endpointName\"</code> </p> <p> <code>\"arn:aws:sagemaker:region:account-id:endpoint-config/endpointConfigName\"</code> </p> <p> <code>]</code> </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/api-permissions-reference.html\">SageMaker API Permissions: Actions, Permissions, and Resources Reference</a>.</p> </li> </ul> </note>",
     "CreateEndpointConfig": "<p>Creates an endpoint configuration that Amazon SageMaker hosting services uses to deploy models. In the configuration, you identify one or more models, created using the <code>CreateModel</code> API, to deploy and the resources that you want Amazon SageMaker to provision. Then you call the <a>CreateEndpoint</a> API.</p> <note> <p> Use this API if you want to use Amazon SageMaker hosting services to deploy models into production. </p> </note> <p>In the request, you define a <code>ProductionVariant</code>, for each model that you want to deploy. Each <code>ProductionVariant</code> parameter also describes the resources that you want Amazon SageMaker to provision. This includes the number and type of ML compute instances to deploy. </p> <p>If you are hosting multiple models, you also assign a <code>VariantWeight</code> to specify how much traffic you want to allocate to each model. For example, suppose that you want to host two models, A and B, and you assign traffic weight 2 for model A and 1 for model B. Amazon SageMaker distributes two-thirds of the traffic to Model A, and one-third to model B. </p> <note> <p>When you call <a>CreateEndpoint</a>, a load call is made to DynamoDB to verify that your endpoint configuration exists. When you read data from a DynamoDB table supporting <a href=\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html\"> <code>Eventually Consistent Reads</code> </a>, the response might not reflect the results of a recently completed write operation. The response might include some stale data. If the dependent entities are not yet in DynamoDB, this causes a validation error. If you repeat your read request after a short time, the response should return the latest data. So retry logic is recommended to handle these possible issues. We also recommend that customers call <a>DescribeEndpointConfig</a> before calling <a>CreateEndpoint</a> to minimize the potential impact of a DynamoDB eventually consistent read.</p> </note>",
     "CreateExperiment": "<p>Creates an SageMaker <i>experiment</i>. An experiment is a collection of <i>trials</i> that are observed, compared and evaluated as a group. A trial is a set of steps, called <i>trial components</i>, that produce a machine learning model.</p> <p>The goal of an experiment is to determine the components that produce the best model. Multiple trials are performed, each one isolating and measuring the impact of a change to one or more inputs, while keeping the remaining inputs constant.</p> <p>When you use SageMaker Studio or the SageMaker Python SDK, all experiments, trials, and trial components are automatically tracked, logged, and indexed. When you use the Amazon Web Services SDK for Python (Boto), you must use the logging APIs provided by the SDK.</p> <p>You can add tags to experiments, trials, trial components and then use the <a>Search</a> API to search for the tags.</p> <p>To add a description to an experiment, specify the optional <code>Description</code> parameter. To add a description later, or to change the description, call the <a>UpdateExperiment</a> API.</p> <p>To get a list of all your experiments, call the <a>ListExperiments</a> API. To view an experiment's properties, call the <a>DescribeExperiment</a> API. To get a list of all the trials associated with an experiment, call the <a>ListTrials</a> API. To create a trial call the <a>CreateTrial</a> API.</p>",
     "CreateFeatureGroup": "<p>Create a new <code>FeatureGroup</code>. A <code>FeatureGroup</code> is a group of <code>Features</code> defined in the <code>FeatureStore</code> to describe a <code>Record</code>. </p> <p>The <code>FeatureGroup</code> defines the schema and features contained in the FeatureGroup. A <code>FeatureGroup</code> definition is composed of a list of <code>Features</code>, a <code>RecordIdentifierFeatureName</code>, an <code>EventTimeFeatureName</code> and configurations for its <code>OnlineStore</code> and <code>OfflineStore</code>. Check <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html\">Amazon Web Services service quotas</a> to see the <code>FeatureGroup</code>s quota for your Amazon Web Services account.</p> <important> <p>You must include at least one of <code>OnlineStoreConfig</code> and <code>OfflineStoreConfig</code> to create a <code>FeatureGroup</code>.</p> </important>",
@@ -116,7 +117,7 @@
     "DescribeModel": "<p>Describes a model that you created using the <code>CreateModel</code> API.</p>",
     "DescribeModelBiasJobDefinition": "<p>Returns a description of a model bias job definition.</p>",
     "DescribeModelExplainabilityJobDefinition": "<p>Returns a description of a model explainability job definition.</p>",
-    "DescribeModelPackage": "<p>Returns a description of the specified model package, which is used to create Amazon SageMaker models or list them on Amazon Web Services Marketplace.</p> <p>To create models in Amazon SageMaker, buyers can subscribe to model packages listed on Amazon Web Services Marketplace.</p>",
+    "DescribeModelPackage": "<p>Returns a description of the specified model package, which is used to create SageMaker models or list them on Amazon Web Services Marketplace.</p> <p>To create models in SageMaker, buyers can subscribe to model packages listed on Amazon Web Services Marketplace.</p>",
     "DescribeModelPackageGroup": "<p>Gets a description for the specified model group.</p>",
     "DescribeModelQualityJobDefinition": "<p>Returns a description of a model quality job definition.</p>",
     "DescribeMonitoringSchedule": "<p>Describes the schedule for a monitoring job.</p>",
@@ -200,6 +201,7 @@
     "PutModelPackageGroupPolicy": "<p>Adds a resouce policy to control access to a model group. For information about resoure policies, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_identity-vs-resource.html\">Identity-based policies and resource-based policies</a> in the <i>Amazon Web Services Identity and Access Management User Guide.</i>.</p>",
     "RegisterDevices": "<p>Register devices.</p>",
     "RenderUiTemplate": "<p>Renders the UI template so that you can preview the worker's experience. </p>",
+    "RetryPipelineExecution": "<p>Retry the execution of the pipeline.</p>",
     "Search": "<p>Finds Amazon SageMaker resources that match a search query. Matching resources are returned as a list of <code>SearchRecord</code> objects in the response. You can sort the search results by any resource property in a ascending or descending order.</p> <p>You can query against the following value types: numeric, text, Boolean, and timestamp.</p>",
     "SendPipelineExecutionStepFailure": "<p>Notifies the pipeline that the execution of a callback step failed, along with a message describing why. When a callback step is run, the pipeline generates a callback token and includes the token in a message sent to Amazon Simple Queue Service (Amazon SQS).</p>",
     "SendPipelineExecutionStepSuccess": "<p>Notifies the pipeline that the execution of a callback step succeeded and provides a list of the step's output parameters. When a callback step is run, the pipeline generates a callback token and includes the token in a message sent to Amazon Simple Queue Service (Amazon SQS).</p>",
@@ -235,6 +237,7 @@
     "UpdateNotebookInstanceLifecycleConfig": "<p>Updates a notebook instance lifecycle configuration created with the <a>CreateNotebookInstanceLifecycleConfig</a> API.</p>",
     "UpdatePipeline": "<p>Updates a pipeline.</p>",
     "UpdatePipelineExecution": "<p>Updates a pipeline execution.</p>",
+    "UpdateProject": "<p>Updates a machine learning (ML) project that is created from a template that sets up an ML pipeline from training to deploying an approved model.</p> <note> <p>You must not update a project that is in use. If you update the <code>ServiceCatalogProvisioningUpdateDetails</code> of a project that is active or being created, or updated, you may lose resources already created by the project.</p> </note>",
     "UpdateTrainingJob": "<p>Update a model training job to request a new Debugger profiling configuration.</p>",
     "UpdateTrial": "<p>Updates the display name of a trial.</p>",
     "UpdateTrialComponent": "<p>Updates one or more properties of a trial component.</p>",
@@ -336,7 +339,7 @@
       }
     },
     "Alarm": {
-      "base": "<p>This API is not supported.</p>",
+      "base": "<p>An Amazon CloudWatch alarm configured to monitor metrics on an endpoint.</p>",
       "refs": {
         "AlarmList$member": null
       }
@@ -344,13 +347,13 @@
     "AlarmList": {
       "base": null,
       "refs": {
-        "AutoRollbackConfig$Alarms": "<p/>"
+        "AutoRollbackConfig$Alarms": "<p>List of CloudWatch alarms in your account that are configured to monitor metrics on an endpoint. If any alarms are tripped during a deployment, SageMaker rolls back the deployment.</p>"
       }
     },
     "AlarmName": {
       "base": null,
       "refs": {
-        "Alarm$AlarmName": "<p/>"
+        "Alarm$AlarmName": "<p>The name of a CloudWatch alarm in your account.</p>"
       }
     },
     "AlgorithmArn": {
@@ -536,6 +539,13 @@
         "DescribeDomainResponse$AppNetworkAccessType": "<p>Specifies the VPC used for non-EFS traffic. The default value is <code>PublicInternetOnly</code>.</p> <ul> <li> <p> <code>PublicInternetOnly</code> - Non-EFS traffic is through a VPC managed by Amazon SageMaker, which allows direct internet access</p> </li> <li> <p> <code>VpcOnly</code> - All Studio traffic is through the specified VPC and subnets</p> </li> </ul>"
       }
     },
+    "AppSecurityGroupManagement": {
+      "base": null,
+      "refs": {
+        "CreateDomainRequest$AppSecurityGroupManagement": "<p>The entity that creates and manages the required security groups for inter-app communication in <code>VPCOnly</code> mode. Required when <code>CreateDomain.AppNetworkAccessType</code> is <code>VPCOnly</code> and <code>DomainSettings.RStudioServerProDomainSettings.DomainExecutionRoleArn</code> is provided.</p>",
+        "DescribeDomainResponse$AppSecurityGroupManagement": "<p>The entity that creates and manages the required security groups for inter-app communication in <code>VPCOnly</code> mode. Required when <code>CreateDomain.AppNetworkAccessType</code> is <code>VPCOnly</code> and <code>DomainSettings.RStudioServerProDomainSettings.DomainExecutionRoleArn</code> is provided.</p>"
+      }
+    },
     "AppSortKey": {
       "base": null,
       "refs": {
@@ -579,6 +589,7 @@
       "base": null,
       "refs": {
         "AlgorithmSpecification$AlgorithmName": "<p>The name of the algorithm resource to use for the training job. This must be an algorithm resource that you created or subscribe to on Amazon Web Services Marketplace. If you specify a value for this parameter, you can't specify a value for <code>TrainingImage</code>.</p>",
+        "CreateModelPackageInput$ModelPackageGroupName": "<p>The name or Amazon Resource Name (ARN) of the model package group that this model version belongs to.</p> <p>This parameter is required for versioned models, and does not apply to unversioned models.</p>",
         "DeleteModelPackageGroupInput$ModelPackageGroupName": "<p>The name of the model group to delete.</p>",
         "DescribeAlgorithmInput$AlgorithmName": "<p>The name of the algorithm to describe.</p>",
         "DescribeModelPackageGroupInput$ModelPackageGroupName": "<p>The name of the model group to describe.</p>",
@@ -1009,15 +1020,43 @@
       }
     },
     "AutoRollbackConfig": {
-      "base": "<p>Currently, the <code>AutoRollbackConfig</code> API is not supported.</p>",
+      "base": "<p>Automatic rollback configuration for handling endpoint deployment failures and recovery.</p>",
       "refs": {
-        "DeploymentConfig$AutoRollbackConfiguration": "<p/>"
+        "DeploymentConfig$AutoRollbackConfiguration": "<p>Automatic rollback configuration for handling endpoint deployment failures and recovery.</p>"
       }
     },
     "AwsManagedHumanLoopRequestSource": {
       "base": null,
       "refs": {
         "HumanLoopRequestSource$AwsManagedHumanLoopRequestSource": "<p>Specifies whether Amazon Rekognition or Amazon Textract are used as the integration source. The default field settings and JSON parsing rules are different based on the integration source. Valid values:</p>"
+      }
+    },
+    "BatchDescribeModelPackageError": {
+      "base": "<p>The error code and error description associated with the resource.</p>",
+      "refs": {
+        "BatchDescribeModelPackageErrorMap$value": null
+      }
+    },
+    "BatchDescribeModelPackageErrorMap": {
+      "base": null,
+      "refs": {
+        "BatchDescribeModelPackageOutput$BatchDescribeModelPackageErrorMap": "<p>A map of the resource and BatchDescribeModelPackageError objects reporting the error associated with describing the model package.</p>"
+      }
+    },
+    "BatchDescribeModelPackageInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchDescribeModelPackageOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchDescribeModelPackageSummary": {
+      "base": "<p>Provides summary information about the model package.</p>",
+      "refs": {
+        "ModelPackageSummaries$value": null
       }
     },
     "BatchStrategy": {
@@ -1038,7 +1077,7 @@
     "BillableTimeInSeconds": {
       "base": null,
       "refs": {
-        "DescribeTrainingJobResponse$BillableTimeInSeconds": "<p>The billable time in seconds. Billable time refers to the absolute wall-clock time.</p> <p>Multiply <code>BillableTimeInSeconds</code> by the number of instances (<code>InstanceCount</code>) in your training cluster to get the total compute time Amazon SageMaker will bill you if you run distributed training. The formula is as follows: <code>BillableTimeInSeconds * InstanceCount</code> .</p> <p>You can calculate the savings from using managed spot training using the formula <code>(1 - BillableTimeInSeconds / TrainingTimeInSeconds) * 100</code>. For example, if <code>BillableTimeInSeconds</code> is 100 and <code>TrainingTimeInSeconds</code> is 500, the savings is 80%.</p>",
+        "DescribeTrainingJobResponse$BillableTimeInSeconds": "<p>The billable time in seconds. Billable time refers to the absolute wall-clock time.</p> <p>Multiply <code>BillableTimeInSeconds</code> by the number of instances (<code>InstanceCount</code>) in your training cluster to get the total compute time SageMaker will bill you if you run distributed training. The formula is as follows: <code>BillableTimeInSeconds * InstanceCount</code> .</p> <p>You can calculate the savings from using managed spot training using the formula <code>(1 - BillableTimeInSeconds / TrainingTimeInSeconds) * 100</code>. For example, if <code>BillableTimeInSeconds</code> is 100 and <code>TrainingTimeInSeconds</code> is 500, the savings is 80%.</p>",
         "TrainingJob$BillableTimeInSeconds": "<p>The billable time in seconds.</p>"
       }
     },
@@ -1049,9 +1088,9 @@
       }
     },
     "BlueGreenUpdatePolicy": {
-      "base": "<p>Currently, the <code>BlueGreenUpdatePolicy</code> API is not supported.</p>",
+      "base": "<p>Update policy for a blue/green deployment. If this update policy is specified, SageMaker creates a new fleet during the deployment while maintaining the old fleet. SageMaker flips traffic to the new fleet according to the specified traffic routing configuration. Only one update policy should be used in the deployment configuration. If no update policy is specified, SageMaker uses a blue/green deployment strategy with all at once traffic shifting by default.</p>",
       "refs": {
-        "DeploymentConfig$BlueGreenUpdatePolicy": "<p/>"
+        "DeploymentConfig$BlueGreenUpdatePolicy": "<p>Update policy for a blue/green deployment. If this update policy is specified, SageMaker creates a new fleet during the deployment while maintaining the old fleet. SageMaker flips traffic to the new fleet according to the specified traffic routing configuration. Only one update policy should be used in the deployment configuration. If no update policy is specified, SageMaker uses a blue/green deployment strategy with all at once traffic shifting by default.</p>"
       }
     },
     "Boolean": {
@@ -1083,7 +1122,8 @@
         "TrainingJob$EnableInterContainerTrafficEncryption": "<p>To encrypt all communications between ML compute instances in distributed training, choose <code>True</code>. Encryption provides greater security for distributed training, but training might take longer. How long it takes depends on the amount of communication between compute instances, especially if you use a deep learning algorithm in distributed training.</p>",
         "TrainingJob$EnableManagedSpotTraining": "<p>When true, enables managed spot training using Amazon EC2 Spot instances to run training jobs instead of on-demand instances. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html\">Managed Spot Training</a>.</p>",
         "TrainingSpecification$SupportsDistributedTraining": "<p>Indicates whether the algorithm supports distributed training. If set to false, buyers can't request more than one instance during training.</p>",
-        "UpdateEndpointInput$RetainAllVariantProperties": "<p>When updating endpoint resources, enables or disables the retention of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VariantProperty.html\">variant properties</a>, such as the instance count or the variant weight. To retain the variant properties of an endpoint when updating it, set <code>RetainAllVariantProperties</code> to <code>true</code>. To use the variant properties specified in a new <code>EndpointConfig</code> call when updating an endpoint, set <code>RetainAllVariantProperties</code> to <code>false</code>. The default is <code>false</code>.</p>"
+        "UpdateEndpointInput$RetainAllVariantProperties": "<p>When updating endpoint resources, enables or disables the retention of <a href=\"https://docs.aws.amazon.com/sagemaker/latest/APIReference/API_VariantProperty.html\">variant properties</a>, such as the instance count or the variant weight. To retain the variant properties of an endpoint when updating it, set <code>RetainAllVariantProperties</code> to <code>true</code>. To use the variant properties specified in a new <code>EndpointConfig</code> call when updating an endpoint, set <code>RetainAllVariantProperties</code> to <code>false</code>. The default is <code>false</code>.</p>",
+        "UpdateEndpointInput$RetainDeploymentConfig": "<p>Specifies whether to reuse the last deployment configuration. The default value is false (the configuration is not reused).</p>"
       }
     },
     "BooleanOperator": {
@@ -1181,21 +1221,22 @@
       }
     },
     "CapacitySize": {
-      "base": "<p>Currently, the <code>CapacitySize</code> API is not supported.</p>",
+      "base": "<p>Specifies the endpoint capacity to activate for production.</p>",
       "refs": {
-        "TrafficRoutingConfig$CanarySize": "<p/>"
+        "TrafficRoutingConfig$CanarySize": "<p>Batch size for the first step to turn on traffic on the new endpoint fleet. <code>Value</code> must be less than or equal to 50% of the variant's total instance count.</p>",
+        "TrafficRoutingConfig$LinearStepSize": "<p>Batch size for each step to turn on traffic on the new endpoint fleet. <code>Value</code> must be 10-50% of the variant's total instance count.</p>"
       }
     },
     "CapacitySizeType": {
       "base": null,
       "refs": {
-        "CapacitySize$Type": "<p>This API is not supported.</p>"
+        "CapacitySize$Type": "<p>Specifies the endpoint capacity type.</p> <ul> <li> <p> <code>INSTANCE_COUNT</code>: The endpoint activates based on the number of instances.</p> </li> <li> <p> <code>CAPACITY_PERCENT</code>: The endpoint activates based on the specified percentage of capacity.</p> </li> </ul>"
       }
     },
     "CapacitySizeValue": {
       "base": null,
       "refs": {
-        "CapacitySize$Value": "<p/>"
+        "CapacitySize$Value": "<p>Defines the capacity size, either as a number of instances or a capacity percentage.</p>"
       }
     },
     "CaptureContentTypeHeader": {
@@ -2120,6 +2161,7 @@
       "refs": {
         "AlgorithmSummary$CreationTime": "<p>A timestamp that shows when the algorithm was created.</p>",
         "AppDetails$CreationTime": "<p>The creation time.</p>",
+        "BatchDescribeModelPackageSummary$CreationTime": "<p>The creation time of the mortgage package summary.</p>",
         "CodeRepositorySummary$CreationTime": "<p>The date and time that the Git repository was created.</p>",
         "CompilationJobSummary$CreationTime": "<p>The time when the model compilation job was created.</p>",
         "DescribeAlgorithmOutput$CreationTime": "<p>A timestamp specifying when the algorithm was created.</p>",
@@ -2182,6 +2224,34 @@
       "base": null,
       "refs": {
         "KernelGatewayAppSettings$CustomImages": "<p>A list of custom SageMaker images that are configured to run as a KernelGateway app.</p>"
+      }
+    },
+    "CustomerMetadataKey": {
+      "base": null,
+      "refs": {
+        "CustomerMetadataKeyList$member": null,
+        "CustomerMetadataMap$key": null
+      }
+    },
+    "CustomerMetadataKeyList": {
+      "base": null,
+      "refs": {
+        "UpdateModelPackageInput$CustomerMetadataPropertiesToRemove": "<p>The metadata properties associated with the model package versions to remove.</p>"
+      }
+    },
+    "CustomerMetadataMap": {
+      "base": null,
+      "refs": {
+        "CreateModelPackageInput$CustomerMetadataProperties": "<p>The metadata properties associated with the model package versions.</p>",
+        "DescribeModelPackageOutput$CustomerMetadataProperties": "<p>The metadata properties associated with the model package versions.</p>",
+        "ModelPackage$CustomerMetadataProperties": "<p>The metadata properties for the model package. </p>",
+        "UpdateModelPackageInput$CustomerMetadataProperties": "<p>The metadata properties associated with the model package versions.</p>"
+      }
+    },
+    "CustomerMetadataValue": {
+      "base": null,
+      "refs": {
+        "CustomerMetadataMap$value": null
       }
     },
     "DataCaptureConfig": {
@@ -2590,14 +2660,16 @@
     "DeployedImages": {
       "base": null,
       "refs": {
+        "PendingProductionVariantSummary$DeployedImages": "<p>An array of <code>DeployedImage</code> objects that specify the Amazon EC2 Container Registry paths of the inference images deployed on instances of this <code>ProductionVariant</code>.</p>",
         "ProductionVariantSummary$DeployedImages": "<p>An array of <code>DeployedImage</code> objects that specify the Amazon EC2 Container Registry paths of the inference images deployed on instances of this <code>ProductionVariant</code>.</p>"
       }
     },
     "DeploymentConfig": {
-      "base": "<p>Currently, the <code>DeploymentConfig</code> API is not supported.</p>",
+      "base": "<p>The deployment configuration for an endpoint, which contains the desired deployment strategy and rollback configurations.</p>",
       "refs": {
+        "CreateEndpointInput$DeploymentConfig": null,
         "DescribeEndpointOutput$LastDeploymentConfig": "<p>The most recent deployment configuration for the endpoint.</p>",
-        "UpdateEndpointInput$DeploymentConfig": "<p>The deployment configuration for the endpoint to be updated.</p>"
+        "UpdateEndpointInput$DeploymentConfig": "<p>The deployment configuration for an endpoint, which contains the desired deployment strategy and rollback configurations.</p>"
       }
     },
     "DeregisterDevicesRequest": {
@@ -3331,6 +3403,25 @@
         "DomainDetails$DomainName": "<p>The domain name.</p>"
       }
     },
+    "DomainSecurityGroupIds": {
+      "base": null,
+      "refs": {
+        "DomainSettings$SecurityGroupIds": "<p>The security groups for the Amazon Virtual Private Cloud that the <code>Domain</code> uses for communication between Domain-level apps and user apps.</p>"
+      }
+    },
+    "DomainSettings": {
+      "base": "<p>A collection of settings that apply to the <code>SageMaker Domain</code>. These settings are specified through the <code>CreateDomain</code> API call.</p>",
+      "refs": {
+        "CreateDomainRequest$DomainSettings": "<p>A collection of <code>Domain</code> settings.</p>",
+        "DescribeDomainResponse$DomainSettings": "<p>A collection of <code>Domain</code> settings.</p>"
+      }
+    },
+    "DomainSettingsForUpdate": {
+      "base": "<p>A collection of <code>Domain</code> configuration settings to update.</p>",
+      "refs": {
+        "UpdateDomainRequest$DomainSettingsForUpdate": "<p>A collection of <code>DomainSettings</code> configuration values to update.</p>"
+      }
+    },
     "DomainStatus": {
       "base": null,
       "refs": {
@@ -3448,7 +3539,9 @@
       "refs": {
         "AgentVersion$Version": "<p>Version of the agent.</p>",
         "CreateEdgePackagingJobRequest$ModelVersion": "<p>The version of the model.</p>",
+        "DescribeDeviceResponse$AgentVersion": "<p>Edge Manager agent version.</p>",
         "DescribeEdgePackagingJobResponse$ModelVersion": "<p>The version of the model.</p>",
+        "DeviceSummary$AgentVersion": "<p>Edge Manager agent version.</p>",
         "EdgeModel$ModelVersion": "<p>The model version.</p>",
         "EdgeModelStat$ModelVersion": "<p>The model version.</p>",
         "EdgeModelSummary$ModelVersion": "<p>The version model.</p>",
@@ -3521,6 +3614,7 @@
         "DescribeEndpointOutput$EndpointConfigName": "<p>The name of the endpoint configuration associated with this endpoint.</p>",
         "Endpoint$EndpointConfigName": "<p>The endpoint configuration associated with the endpoint.</p>",
         "EndpointConfigSummary$EndpointConfigName": "<p>The name of the endpoint configuration.</p>",
+        "PendingDeploymentSummary$EndpointConfigName": "<p>The name of the endpoint configuration used in the deployment. </p>",
         "UpdateEndpointInput$EndpointConfigName": "<p>The name of the new endpoint configuration.</p>"
       }
     },
@@ -3622,6 +3716,7 @@
       "base": null,
       "refs": {
         "AlgorithmSummary$AlgorithmDescription": "<p>A brief description of the algorithm.</p>",
+        "BatchDescribeModelPackageSummary$ModelPackageDescription": "<p>The description of the model package.</p>",
         "ChannelSpecification$Description": "<p>A brief description of the channel.</p>",
         "CreateAlgorithmInput$AlgorithmDescription": "<p>A description of the algorithm.</p>",
         "CreateModelPackageGroupInput$ModelPackageGroupDescription": "<p>A description for the model group.</p>",
@@ -3637,7 +3732,8 @@
         "ModelPackageGroupSummary$ModelPackageGroupDescription": "<p>A description of the model group.</p>",
         "ModelPackageSummary$ModelPackageDescription": "<p>A brief description of the model package.</p>",
         "Project$ProjectDescription": "<p>The description of the project.</p>",
-        "ProjectSummary$ProjectDescription": "<p>The description of the project.</p>"
+        "ProjectSummary$ProjectDescription": "<p>The description of the project.</p>",
+        "UpdateProjectInput$ProjectDescription": "<p>The description for the project.</p>"
       }
     },
     "EntityName": {
@@ -3646,6 +3742,7 @@
         "AlgorithmStatusItem$Name": "<p>The name of the algorithm for which the overall status is being reported.</p>",
         "AlgorithmSummary$AlgorithmName": "<p>The name of the algorithm that is described by the summary.</p>",
         "AlgorithmValidationProfile$ProfileName": "<p>The name of the profile for the algorithm. The name must have 1 to 63 characters. Valid characters are a-z, A-Z, 0-9, and - (hyphen).</p>",
+        "BatchDescribeModelPackageSummary$ModelPackageGroupName": "<p>The group name for the model package</p>",
         "CodeRepositorySummary$CodeRepositoryName": "<p>The name of the Git repository.</p>",
         "CompilationJobSummary$CompilationJobName": "<p>The name of the model compilation job that you want a summary for.</p>",
         "CreateAlgorithmInput$AlgorithmName": "<p>The name of the algorithm.</p>",
@@ -3657,7 +3754,6 @@
         "CreateEdgePackagingJobRequest$ModelName": "<p>The name of the model.</p>",
         "CreateModelPackageGroupInput$ModelPackageGroupName": "<p>The name of the model group.</p>",
         "CreateModelPackageInput$ModelPackageName": "<p>The name of the model package. The name must have 1 to 63 characters. Valid characters are a-z, A-Z, 0-9, and - (hyphen).</p> <p>This parameter is required for unversioned models. It is not applicable to versioned models.</p>",
-        "CreateModelPackageInput$ModelPackageGroupName": "<p>The name of the model group that this model version belongs to.</p> <p>This parameter is required for versioned models, and does not apply to unversioned models.</p>",
         "DeleteAlgorithmInput$AlgorithmName": "<p>The name of the algorithm to delete.</p>",
         "DeleteCodeRepositoryInput$CodeRepositoryName": "<p>The name of the Git repository to delete.</p>",
         "DeleteDeviceFleetRequest$DeviceFleetName": "<p>The name of the fleet to delete.</p>",
@@ -4584,10 +4680,11 @@
       "refs": {
         "CreatePipelineRequest$ClientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the operation. An idempotent operation completes no more than one time.</p>",
         "DeletePipelineRequest$ClientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the operation. An idempotent operation completes no more than one time.</p>",
+        "RetryPipelineExecutionRequest$ClientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the operation. An idempotent operation completes no more than once.</p>",
         "SendPipelineExecutionStepFailureRequest$ClientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the operation. An idempotent operation completes no more than one time.</p>",
         "SendPipelineExecutionStepSuccessRequest$ClientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the operation. An idempotent operation completes no more than one time.</p>",
-        "StartPipelineExecutionRequest$ClientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the operation. An idempotent operation completes no more than one time.</p>",
-        "StopPipelineExecutionRequest$ClientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the operation. An idempotent operation completes no more than one time.</p>"
+        "StartPipelineExecutionRequest$ClientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the operation. An idempotent operation completes no more than once.</p>",
+        "StopPipelineExecutionRequest$ClientRequestToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the operation. An idempotent operation completes no more than once.</p>"
       }
     },
     "Image": {
@@ -4794,6 +4891,7 @@
     "InferenceSpecification": {
       "base": "<p>Defines how to perform inference generation after a training job is run.</p>",
       "refs": {
+        "BatchDescribeModelPackageSummary$InferenceSpecification": null,
         "CreateAlgorithmInput$InferenceSpecification": "<p>Specifies details about inference jobs that the algorithm runs, including the following:</p> <ul> <li> <p>The Amazon ECR paths of containers that contain the inference code and model artifacts.</p> </li> <li> <p>The instance types that the algorithm supports for transform jobs and real-time endpoints used for inference.</p> </li> <li> <p>The input and output content formats that the algorithm supports for inference.</p> </li> </ul>",
         "CreateModelPackageInput$InferenceSpecification": "<p>Specifies details about inference jobs that can be run with models based on this model package, including the following:</p> <ul> <li> <p>The Amazon ECR paths of containers that contain the inference code and model artifacts.</p> </li> <li> <p>The instance types that the model package supports for transform jobs and real-time endpoints used for inference.</p> </li> <li> <p>The input and output content formats that the model package supports for inference.</p> </li> </ul>",
         "DescribeAlgorithmOutput$InferenceSpecification": "<p>Details about inference jobs that the algorithm runs.</p>",
@@ -4903,7 +5001,7 @@
     "JoinSource": {
       "base": null,
       "refs": {
-        "DataProcessing$JoinSource": "<p>Specifies the source of the data to join with the transformed data. The valid values are <code>None</code> and <code>Input</code>. The default value is <code>None</code>, which specifies not to join the input with the transformed data. If you want the batch transform job to join the original input data with the transformed data, set <code>JoinSource</code> to <code>Input</code>. You can specify <code>OutputFilter</code> as an additional filter to select a portion of the joined dataset and store it in the output file.</p> <p>For JSON or JSONLines objects, such as a JSON array, Amazon SageMaker adds the transformed data to the input JSON object in an attribute called <code>SageMakerOutput</code>. The joined result for JSON must be a key-value pair object. If the input is not a key-value pair object, Amazon SageMaker creates a new JSON file. In the new JSON file, and the input data is stored under the <code>SageMakerInput</code> key and the results are stored in <code>SageMakerOutput</code>.</p> <p>For CSV data, Amazon SageMaker takes each row as a JSON array and joins the transformed data with the input by appending each transformed row to the end of the input. The joined data has the original input data followed by the transformed data and the output is a CSV file.</p> <p>For information on how joining in applied, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/batch-transform-data-processing.html#batch-transform-data-processing-workflow\">Workflow for Associating Inferences with Input Records</a>.</p>"
+        "DataProcessing$JoinSource": "<p>Specifies the source of the data to join with the transformed data. The valid values are <code>None</code> and <code>Input</code>. The default value is <code>None</code>, which specifies not to join the input with the transformed data. If you want the batch transform job to join the original input data with the transformed data, set <code>JoinSource</code> to <code>Input</code>. You can specify <code>OutputFilter</code> as an additional filter to select a portion of the joined dataset and store it in the output file.</p> <p>For JSON or JSONLines objects, such as a JSON array, SageMaker adds the transformed data to the input JSON object in an attribute called <code>SageMakerOutput</code>. The joined result for JSON must be a key-value pair object. If the input is not a key-value pair object, SageMaker creates a new JSON file. In the new JSON file, and the input data is stored under the <code>SageMakerInput</code> key and the results are stored in <code>SageMakerOutput</code>.</p> <p>For CSV data, SageMaker takes each row as a JSON array and joins the transformed data with the input by appending each transformed row to the end of the input. The joined data has the original input data followed by the transformed data and the output is a CSV file.</p> <p>For information on how joining in applied, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/batch-transform-data-processing.html#batch-transform-data-processing-workflow\">Workflow for Associating Inferences with Input Records</a>.</p>"
       }
     },
     "JsonContentType": {
@@ -5849,7 +5947,7 @@
     "MaxAutoMLJobRuntimeInSeconds": {
       "base": null,
       "refs": {
-        "AutoMLJobCompletionCriteria$MaxAutoMLJobRuntimeInSeconds": "<p>The maximum runtime, in seconds, an AutoML job has to complete.</p>"
+        "AutoMLJobCompletionCriteria$MaxAutoMLJobRuntimeInSeconds": "<p>The maximum runtime, in seconds, an AutoML job has to complete.</p> <p>If an AutoML job exceeds the maximum runtime, the job is stopped automatically and its processing is ended gracefully. The AutoML job identifies the best model whose training was completed and marks it as the best-performing model. Any unfinished steps of the job, such as automatic one-click Autopilot model deployment, will not be completed. </p>"
       }
     },
     "MaxCandidates": {
@@ -5974,7 +6072,7 @@
     "MaxRuntimePerTrainingJobInSeconds": {
       "base": null,
       "refs": {
-        "AutoMLJobCompletionCriteria$MaxRuntimePerTrainingJobInSeconds": "<p>The maximum time, in seconds, a training job is allowed to run as part of an AutoML job.</p>"
+        "AutoMLJobCompletionCriteria$MaxRuntimePerTrainingJobInSeconds": "<p>The maximum time, in seconds, that each training job is allowed to run as part of a hyperparameter tuning job. For more information, see the used by the action.</p>"
       }
     },
     "MaxWaitTimeInSeconds": {
@@ -5986,7 +6084,7 @@
     "MaximumExecutionTimeoutInSeconds": {
       "base": null,
       "refs": {
-        "BlueGreenUpdatePolicy$MaximumExecutionTimeoutInSeconds": "<p/>"
+        "BlueGreenUpdatePolicy$MaximumExecutionTimeoutInSeconds": "<p>Maximum execution timeout for the deployment. Note that the timeout value should be larger than the total waiting time specified in <code>TerminationWaitInSeconds</code> and <code>WaitIntervalInSeconds</code>.</p>"
       }
     },
     "MaximumRetryAttempts": {
@@ -6117,6 +6215,7 @@
     "ModelApprovalStatus": {
       "base": null,
       "refs": {
+        "BatchDescribeModelPackageSummary$ModelApprovalStatus": "<p>The approval status of the model.</p>",
         "CreateModelPackageInput$ModelApprovalStatus": "<p>Whether the model is approved for deployment.</p> <p>This parameter is optional for versioned models, and does not apply to unversioned models.</p> <p>For versioned models, the value of this parameter must be set to <code>Approved</code> to deploy the model.</p>",
         "DescribeModelPackageOutput$ModelApprovalStatus": "<p>The approval status of the model package.</p>",
         "ListModelPackagesInput$ModelApprovalStatus": "<p>A filter that returns only the model packages with the specified approval status.</p>",
@@ -6136,7 +6235,7 @@
       }
     },
     "ModelArtifacts": {
-      "base": "<p>Provides information about the location that is configured for storing model artifacts. </p> <p>Model artifacts are the output that results from training a model, and typically consist of trained parameters, a model defintion that describes how to compute inferences, and other metadata.</p>",
+      "base": "<p>Provides information about the location that is configured for storing model artifacts. </p> <p>Model artifacts are the output that results from training a model, and typically consist of trained parameters, a model definition that describes how to compute inferences, and other metadata.</p>",
       "refs": {
         "DescribeCompilationJobResponse$ModelArtifacts": "<p>Information about the location in Amazon S3 that has been configured for storing the model artifacts used in the compilation job.</p>",
         "DescribeTrainingJobResponse$ModelArtifacts": "<p>Information about the Amazon S3 location that is configured for storing model artifacts. </p>",
@@ -6261,12 +6360,22 @@
     "ModelPackageArn": {
       "base": null,
       "refs": {
+        "BatchDescribeModelPackageErrorMap$key": null,
+        "BatchDescribeModelPackageSummary$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "CreateModelPackageOutput$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the new model package.</p>",
         "DescribeModelPackageOutput$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "ModelPackage$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
+        "ModelPackageArnList$member": null,
+        "ModelPackageSummaries$key": null,
         "ModelPackageSummary$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
-        "UpdateModelPackageInput$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model.</p>",
+        "UpdateModelPackageInput$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model package.</p>",
         "UpdateModelPackageOutput$ModelPackageArn": "<p>The Amazon Resource Name (ARN) of the model.</p>"
+      }
+    },
+    "ModelPackageArnList": {
+      "base": null,
+      "refs": {
+        "BatchDescribeModelPackageInput$ModelPackageArnList": "<p>The list of Amazon Resource Name (ARN) of the model package groups.</p>"
       }
     },
     "ModelPackageContainerDefinition": {
@@ -6332,6 +6441,7 @@
     "ModelPackageStatus": {
       "base": null,
       "refs": {
+        "BatchDescribeModelPackageSummary$ModelPackageStatus": "<p>The status of the mortgage package.</p>",
         "DescribeModelPackageOutput$ModelPackageStatus": "<p>The current status of the model package.</p>",
         "ModelPackage$ModelPackageStatus": "<p>The status of the model package. This can be one of the following values.</p> <ul> <li> <p> <code>PENDING</code> - The model package is pending being created.</p> </li> <li> <p> <code>IN_PROGRESS</code> - The model package is in the process of being created.</p> </li> <li> <p> <code>COMPLETED</code> - The model package was successfully created.</p> </li> <li> <p> <code>FAILED</code> - The model package failed.</p> </li> <li> <p> <code>DELETING</code> - The model package is in the process of being deleted.</p> </li> </ul>",
         "ModelPackageSummary$ModelPackageStatus": "<p>The overall status of the model package.</p>"
@@ -6355,6 +6465,12 @@
       "refs": {
         "ModelPackageStatusDetails$ValidationStatuses": "<p>The validation status of the model package.</p>",
         "ModelPackageStatusDetails$ImageScanStatuses": "<p>The status of the scan of the Docker image container for the model package.</p>"
+      }
+    },
+    "ModelPackageSummaries": {
+      "base": null,
+      "refs": {
+        "BatchDescribeModelPackageOutput$ModelPackageSummaries": "<p>The summaries for the model package versions</p>"
       }
     },
     "ModelPackageSummary": {
@@ -6391,13 +6507,14 @@
       "base": "<p>Specifies batch transform jobs that Amazon SageMaker runs to validate your model package.</p>",
       "refs": {
         "CreateModelPackageInput$ValidationSpecification": "<p>Specifies configurations for one or more transform jobs that Amazon SageMaker runs to test the model package.</p>",
-        "DescribeModelPackageOutput$ValidationSpecification": "<p>Configurations for one or more transform jobs that Amazon SageMaker runs to test the model package.</p>",
+        "DescribeModelPackageOutput$ValidationSpecification": "<p>Configurations for one or more transform jobs that SageMaker runs to test the model package.</p>",
         "ModelPackage$ValidationSpecification": null
       }
     },
     "ModelPackageVersion": {
       "base": null,
       "refs": {
+        "BatchDescribeModelPackageSummary$ModelPackageVersion": "<p>The version number of a versioned model.</p>",
         "DescribeModelPackageOutput$ModelPackageVersion": "<p>The version of the model package.</p>",
         "ModelPackage$ModelPackageVersion": "<p>The version number of a versioned model.</p>",
         "ModelPackageSummary$ModelPackageVersion": "<p>If the model package is a versioned model, the version of the model.</p>"
@@ -7218,7 +7335,7 @@
     "OfflineStoreConfig": {
       "base": "<p>The configuration of an <code>OfflineStore</code>.</p> <p>Provide an <code>OfflineStoreConfig</code> in a request to <code>CreateFeatureGroup</code> to create an <code>OfflineStore</code>.</p> <p>To encrypt an <code>OfflineStore</code> using at rest data encryption, specify Amazon Web Services Key Management Service (KMS) key ID, or <code>KMSKeyId</code>, in <code>S3StorageConfig</code>.</p>",
       "refs": {
-        "CreateFeatureGroupRequest$OfflineStoreConfig": "<p>Use this to configure an <code>OfflineFeatureStore</code>. This parameter allows you to specify:</p> <ul> <li> <p>The Amazon Simple Storage Service (Amazon S3) location of an <code>OfflineStore</code>.</p> </li> <li> <p>A configuration for an Amazon Web Services Glue or Amazon Web Services Hive data cataolgue. </p> </li> <li> <p>An KMS encryption key to encrypt the Amazon S3 location used for <code>OfflineStore</code>.</p> </li> </ul> <p>To learn more about this parameter, see <a>OfflineStoreConfig</a>.</p>",
+        "CreateFeatureGroupRequest$OfflineStoreConfig": "<p>Use this to configure an <code>OfflineFeatureStore</code>. This parameter allows you to specify:</p> <ul> <li> <p>The Amazon Simple Storage Service (Amazon S3) location of an <code>OfflineStore</code>.</p> </li> <li> <p>A configuration for an Amazon Web Services Glue or Amazon Web Services Hive data catalog. </p> </li> <li> <p>An KMS encryption key to encrypt the Amazon S3 location used for <code>OfflineStore</code>. If KMS encryption key is not specified, by default we encrypt all data at rest using Amazon Web Services KMS key. By defining your <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html\">bucket-level key</a> for SSE, you can reduce Amazon Web Services KMS requests costs by up to 99 percent.</p> </li> </ul> <p>To learn more about this parameter, see <a>OfflineStoreConfig</a>.</p>",
         "DescribeFeatureGroupResponse$OfflineStoreConfig": "<p>The configuration of the <code>OfflineStore</code>, inducing the S3 location of the <code>OfflineStore</code>, Amazon Web Services Glue or Amazon Web Services Hive data catalogue configurations, and the security configuration.</p>",
         "FeatureGroup$OfflineStoreConfig": null
       }
@@ -7459,6 +7576,24 @@
         "TrialComponent$Parents": "<p>An array of the parents of the component. A parent is a trial the component is associated with and the experiment the trial is part of. A component might not have any parents.</p>"
       }
     },
+    "PendingDeploymentSummary": {
+      "base": "<p>The summary of an in-progress deployment when an endpoint is creating or updating with a new endpoint configuration.</p>",
+      "refs": {
+        "DescribeEndpointOutput$PendingDeploymentSummary": "<p>Returns the summary of an in-progress deployment. This field is only returned when the endpoint is creating or updating with a new endpoint configuration.</p>"
+      }
+    },
+    "PendingProductionVariantSummary": {
+      "base": "<p>The production variant summary for a deployment when an endpoint is creating or updating with the <code> <a>CreateEndpoint</a> </code> or <code> <a>UpdateEndpoint</a> </code> operations. Describes the <code>VariantStatus </code>, weight and capacity for a production variant associated with an endpoint. </p>",
+      "refs": {
+        "PendingProductionVariantSummaryList$member": null
+      }
+    },
+    "PendingProductionVariantSummaryList": {
+      "base": null,
+      "refs": {
+        "PendingDeploymentSummary$ProductionVariants": "<p>List of <code>PendingProductionVariantSummary</code> objects.</p>"
+      }
+    },
     "Pipeline": {
       "base": "<p>A SageMaker Model Building Pipeline instance.</p>",
       "refs": {
@@ -7514,6 +7649,8 @@
         "ListPipelineParametersForExecutionRequest$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
         "PipelineExecution$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
         "PipelineExecutionSummary$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
+        "RetryPipelineExecutionRequest$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
+        "RetryPipelineExecutionResponse$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
         "SendPipelineExecutionStepFailureResponse$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
         "SendPipelineExecutionStepSuccessResponse$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
         "StartPipelineExecutionResponse$PipelineExecutionArn": "<p>The Amazon Resource Name (ARN) of the pipeline execution.</p>",
@@ -7872,7 +8009,7 @@
     "ProcessingS3InputMode": {
       "base": null,
       "refs": {
-        "EndpointInput$S3InputMode": "<p>Whether the <code>Pipe</code> or <code>File</code> is used as the input mode for transfering data for the monitoring job. <code>Pipe</code> mode is recommended for large datasets. <code>File</code> mode is useful for small files that fit in memory. Defaults to <code>File</code>.</p>",
+        "EndpointInput$S3InputMode": "<p>Whether the <code>Pipe</code> or <code>File</code> is used as the input mode for transferring data for the monitoring job. <code>Pipe</code> mode is recommended for large datasets. <code>File</code> mode is useful for small files that fit in memory. Defaults to <code>File</code>.</p>",
         "ProcessingS3Input$S3InputMode": "<p>Whether to use <code>File</code> or <code>Pipe</code> input mode. In File mode, Amazon SageMaker copies the data from the input source onto the local ML storage volume before starting your processing container. This is the most commonly used input mode. In <code>Pipe</code> mode, Amazon SageMaker streams input data from the source directly to your processing container into named pipes without using the ML storage volume.</p>"
       }
     },
@@ -7926,6 +8063,7 @@
     "ProductionVariantAcceleratorType": {
       "base": null,
       "refs": {
+        "PendingProductionVariantSummary$AcceleratorType": "<p>The size of the Elastic Inference (EI) instance to use for the production variant. EI instances provide on-demand GPU computing for inference. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html\">Using Elastic Inference in Amazon SageMaker</a>.</p>",
         "ProductionVariant$AcceleratorType": "<p>The size of the Elastic Inference (EI) instance to use for the production variant. EI instances provide on-demand GPU computing for inference. For more information, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html\">Using Elastic Inference in Amazon SageMaker</a>.</p>"
       }
     },
@@ -7938,6 +8076,7 @@
     "ProductionVariantInstanceType": {
       "base": null,
       "refs": {
+        "PendingProductionVariantSummary$InstanceType": "<p>The type of instances associated with the variant.</p>",
         "ProductionVariant$InstanceType": "<p>The ML compute instance type.</p>",
         "RealtimeInferenceInstanceTypes$member": null
       }
@@ -7947,6 +8086,19 @@
       "refs": {
         "CreateEndpointConfigInput$ProductionVariants": "<p>An list of <code>ProductionVariant</code> objects, one for each model that you want to host at this endpoint.</p>",
         "DescribeEndpointConfigOutput$ProductionVariants": "<p>An array of <code>ProductionVariant</code> objects, one for each model that you want to host at this endpoint.</p>"
+      }
+    },
+    "ProductionVariantStatus": {
+      "base": "<p>Describes the status of the production variant.</p>",
+      "refs": {
+        "ProductionVariantStatusList$member": null
+      }
+    },
+    "ProductionVariantStatusList": {
+      "base": null,
+      "refs": {
+        "PendingProductionVariantSummary$VariantStatus": "<p>The endpoint variant status which describes the current deployment stage status or operational status.</p>",
+        "ProductionVariantSummary$VariantStatus": "<p>The endpoint variant status which describes the current deployment stage status or operational status.</p>"
       }
     },
     "ProductionVariantSummary": {
@@ -8033,7 +8185,8 @@
         "CreateProjectOutput$ProjectArn": "<p>The Amazon Resource Name (ARN) of the project.</p>",
         "DescribeProjectOutput$ProjectArn": "<p>The Amazon Resource Name (ARN) of the project.</p>",
         "Project$ProjectArn": "<p>The Amazon Resource Name (ARN) of the project.</p>",
-        "ProjectSummary$ProjectArn": "<p>The Amazon Resource Name (ARN) of the project.</p>"
+        "ProjectSummary$ProjectArn": "<p>The Amazon Resource Name (ARN) of the project.</p>",
+        "UpdateProjectOutput$ProjectArn": "<p>The Amazon Resource Name (ARN) of the project.</p>"
       }
     },
     "ProjectEntityName": {
@@ -8045,7 +8198,8 @@
         "DescribeProjectOutput$ProjectName": "<p>The name of the project.</p>",
         "ListProjectsInput$NameContains": "<p>A filter that returns the projects whose name contains a specified string.</p>",
         "Project$ProjectName": "<p>The name of the project.</p>",
-        "ProjectSummary$ProjectName": "<p>The name of the project.</p>"
+        "ProjectSummary$ProjectName": "<p>The name of the project.</p>",
+        "UpdateProjectInput$ProjectName": "<p>The name of the project.</p>"
       }
     },
     "ProjectId": {
@@ -8140,7 +8294,8 @@
     "ProvisioningParameters": {
       "base": null,
       "refs": {
-        "ServiceCatalogProvisioningDetails$ProvisioningParameters": "<p>A list of key value pairs that you specify when you provision a product.</p>"
+        "ServiceCatalogProvisioningDetails$ProvisioningParameters": "<p>A list of key value pairs that you specify when you provision a product.</p>",
+        "ServiceCatalogProvisioningUpdateDetails$ProvisioningParameters": "<p>A list of key value pairs that you specify when you provision a product.</p>"
       }
     },
     "PublicWorkforceTaskPrice": {
@@ -8158,6 +8313,42 @@
     "PutModelPackageGroupPolicyOutput": {
       "base": null,
       "refs": {
+      }
+    },
+    "RSessionAppSettings": {
+      "base": "<p>A collection of settings that apply to an <code>RSessionGateway</code> app.</p>",
+      "refs": {
+        "UserSettings$RSessionAppSettings": "<p>A collection of settings that configure the <code>RSessionGateway</code> app.</p>"
+      }
+    },
+    "RStudioServerProAccessStatus": {
+      "base": null,
+      "refs": {
+        "RStudioServerProAppSettings$AccessStatus": "<p>Indicates whether the current user has access to the <code>RStudioServerPro</code> app.</p>"
+      }
+    },
+    "RStudioServerProAppSettings": {
+      "base": "<p>A collection of settings that configure user interaction with the <code>RStudioServerPro</code> app. <code>RStudioServerProAppSettings</code> cannot be updated. The <code>RStudioServerPro</code> app must be deleted and a new one created to make any changes.</p>",
+      "refs": {
+        "UserSettings$RStudioServerProAppSettings": "<p>A collection of settings that configure user interaction with the <code>RStudioServerPro</code> app.</p>"
+      }
+    },
+    "RStudioServerProDomainSettings": {
+      "base": "<p>A collection of settings that configure the <code>RStudioServerPro</code> Domain-level app.</p>",
+      "refs": {
+        "DomainSettings$RStudioServerProDomainSettings": "<p>A collection of settings that configure the <code>RStudioServerPro</code> Domain-level app.</p>"
+      }
+    },
+    "RStudioServerProDomainSettingsForUpdate": {
+      "base": "<p>A collection of settings that update the current configuration for the <code>RStudioServerPro</code> Domain-level app.</p>",
+      "refs": {
+        "DomainSettingsForUpdate$RStudioServerProDomainSettingsForUpdate": "<p>A collection of <code>RStudioServerPro</code> Domain-level app settings to update.</p>"
+      }
+    },
+    "RStudioServerProUserGroup": {
+      "base": null,
+      "refs": {
+        "RStudioServerProAppSettings$UserGroup": "<p>The level of permissions that the user has within the <code>RStudioServerPro</code> app. This value defaults to `User`. The `Admin` value allows the user access to the RStudio Administrative Dashboard.</p>"
       }
     },
     "RealtimeInferenceInstanceTypes": {
@@ -8339,6 +8530,8 @@
         "DescribeAppResponse$ResourceSpec": "<p>The instance type and the Amazon Resource Name (ARN) of the SageMaker image created on the instance.</p>",
         "JupyterServerAppSettings$DefaultResourceSpec": "<p>The default instance type and the Amazon Resource Name (ARN) of the default SageMaker image used by the JupyterServer app.</p>",
         "KernelGatewayAppSettings$DefaultResourceSpec": "<p>The default instance type and the Amazon Resource Name (ARN) of the default SageMaker image used by the KernelGateway app.</p>",
+        "RStudioServerProDomainSettings$DefaultResourceSpec": null,
+        "RStudioServerProDomainSettingsForUpdate$DefaultResourceSpec": null,
         "TensorBoardAppSettings$DefaultResourceSpec": "<p>The default instance type and the Amazon Resource Name (ARN) of the SageMaker image created on the instance.</p>"
       }
     },
@@ -8371,6 +8564,16 @@
       "base": null,
       "refs": {
         "RetentionPolicy$HomeEfsFileSystem": "<p>The default is <code>Retain</code>, which specifies to keep the data stored on the EFS volume.</p> <p>Specify <code>Delete</code> to delete the data stored on the EFS volume.</p>"
+      }
+    },
+    "RetryPipelineExecutionRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RetryPipelineExecutionResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "RetryStrategy": {
@@ -8427,6 +8630,8 @@
         "Pipeline$RoleArn": "<p>The Amazon Resource Name (ARN) of the role that created the pipeline.</p>",
         "PipelineSummary$RoleArn": "<p>The Amazon Resource Name (ARN) that the pipeline used to execute.</p>",
         "ProcessingJob$RoleArn": "<p>The ARN of the role used to create the processing job.</p>",
+        "RStudioServerProDomainSettings$DomainExecutionRoleArn": "<p>The ARN of the execution role for the <code>RStudioServerPro</code> Domain-level app.</p>",
+        "RStudioServerProDomainSettingsForUpdate$DomainExecutionRoleArn": "<p>The execution role for the <code>RStudioServerPro</code> Domain-level app.</p>",
         "RedshiftDatasetDefinition$ClusterRoleArn": "<p>The IAM role attached to your Redshift cluster that Amazon SageMaker uses to generate datasets.</p>",
         "RenderUiTemplateRequest$RoleArn": "<p>The Amazon Resource Name (ARN) that has access to the S3 objects that are used by the template.</p>",
         "TrainingJob$RoleArn": "<p>The Amazon Web Services Identity and Access Management (IAM) role configured for the training job.</p>",
@@ -8647,6 +8852,8 @@
     "SecurityGroupId": {
       "base": null,
       "refs": {
+        "DescribeDomainResponse$SecurityGroupIdForDomainBoundary": "<p>The ID of the security group that authorizes traffic between the <code>RSessionGateway</code> apps and the <code>RStudioServerPro</code> app.</p>",
+        "DomainSecurityGroupIds$member": null,
         "SecurityGroupIds$member": null,
         "VpcSecurityGroupIds$member": null
       }
@@ -8691,7 +8898,8 @@
         "ServiceCatalogProvisionedProductDetails$ProvisionedProductId": "<p>The ID of the provisioned product.</p>",
         "ServiceCatalogProvisioningDetails$ProductId": "<p>The ID of the product to provision.</p>",
         "ServiceCatalogProvisioningDetails$ProvisioningArtifactId": "<p>The ID of the provisioning artifact.</p>",
-        "ServiceCatalogProvisioningDetails$PathId": "<p>The path identifier of the product. This value is optional if the product has a default path, and required if the product has more than one path. </p>"
+        "ServiceCatalogProvisioningDetails$PathId": "<p>The path identifier of the product. This value is optional if the product has a default path, and required if the product has more than one path. </p>",
+        "ServiceCatalogProvisioningUpdateDetails$ProvisioningArtifactId": "<p>The ID of the provisioning artifact.</p>"
       }
     },
     "ServiceCatalogProvisionedProductDetails": {
@@ -8702,11 +8910,17 @@
       }
     },
     "ServiceCatalogProvisioningDetails": {
-      "base": "<p>Details that you specify to provision a service catalog product. For information about service catalog, see .<a href=\"https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html\">What is Amazon Web Services Service Catalog</a>.</p>",
+      "base": "<p>Details that you specify to provision a service catalog product. For information about service catalog, see <a href=\"https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html\">What is Amazon Web Services Service Catalog</a>.</p>",
       "refs": {
-        "CreateProjectInput$ServiceCatalogProvisioningDetails": "<p>The product ID and provisioning artifact ID to provision a service catalog. For information, see <a href=\"https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html\">What is Amazon Web Services Service Catalog</a>.</p>",
+        "CreateProjectInput$ServiceCatalogProvisioningDetails": "<p>The product ID and provisioning artifact ID to provision a service catalog. The provisioning artifact ID will default to the latest provisioning artifact ID of the product, if you don't provide the provisioning artifact ID. For more information, see <a href=\"https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html\">What is Amazon Web Services Service Catalog</a>.</p>",
         "DescribeProjectOutput$ServiceCatalogProvisioningDetails": "<p>Information used to provision a service catalog product. For information, see <a href=\"https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html\">What is Amazon Web Services Service Catalog</a>.</p>",
         "Project$ServiceCatalogProvisioningDetails": null
+      }
+    },
+    "ServiceCatalogProvisioningUpdateDetails": {
+      "base": "<p>Details that you specify to provision a service catalog product. For information about service catalog, see <a href=\"https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html\">What is Amazon Web Services Service Catalog</a>. </p>",
+      "refs": {
+        "UpdateProjectInput$ServiceCatalogProvisioningUpdateDetails": "<p>The product ID and provisioning artifact ID to provision a service catalog. The provisioning artifact ID will default to the latest provisioning artifact ID of the product, if you don't provide the provisioning artifact ID. For more information, see <a href=\"https://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html\">What is Amazon Web Services Service Catalog</a>. </p>"
       }
     },
     "SessionExpirationDurationInSeconds": {
@@ -9005,7 +9219,7 @@
       }
     },
     "StoppingCondition": {
-      "base": "<p>Specifies a limit to how long a model training job, model compilation job, or hyperparameter tuning job can run. It also specifies how long a managed Spot training job has to complete. When the job reaches the time limit, Amazon SageMaker ends the training or compilation job. Use this API to cap model training costs.</p> <p>To stop a training job, Amazon SageMaker sends the algorithm the <code>SIGTERM</code> signal, which delays job termination for 120 seconds. Algorithms can use this 120-second window to save the model artifacts, so the results of training are not lost. </p> <p>The training algorithms provided by Amazon SageMaker automatically save the intermediate results of a model training job when possible. This attempt to save artifacts is only a best effort case as model might not be in a state from which it can be saved. For example, if training has just started, the model might not be ready to save. When saved, this intermediate data is a valid model artifact. You can use it to create a model with <code>CreateModel</code>.</p> <note> <p>The Neural Topic Model (NTM) currently does not support saving intermediate model artifacts. When training NTMs, make sure that the maximum runtime is sufficient for the training job to complete.</p> </note>",
+      "base": "<p>Specifies a limit to how long a model training job or model compilation job can run. It also specifies how long a managed spot training job has to complete. When the job reaches the time limit, Amazon SageMaker ends the training or compilation job. Use this API to cap model training costs.</p> <p>To stop a training job, Amazon SageMaker sends the algorithm the <code>SIGTERM</code> signal, which delays job termination for 120 seconds. Algorithms can use this 120-second window to save the model artifacts, so the results of training are not lost. </p> <p>The training algorithms provided by Amazon SageMaker automatically save the intermediate results of a model training job when possible. This attempt to save artifacts is only a best effort case as model might not be in a state from which it can be saved. For example, if training has just started, the model might not be ready to save. When saved, this intermediate data is a valid model artifact. You can use it to create a model with <code>CreateModel</code>.</p> <note> <p>The Neural Topic Model (NTM) currently does not support saving intermediate model artifacts. When training NTMs, make sure that the maximum runtime is sufficient for the training job to complete.</p> </note>",
       "refs": {
         "CreateCompilationJobRequest$StoppingCondition": "<p>Specifies a limit to how long a model compilation job can run. When the job reaches the time limit, Amazon SageMaker ends the compilation job. Use this API to cap model training costs.</p>",
         "CreateTrainingJobRequest$StoppingCondition": "<p>Specifies a limit to how long a model training job can run. It also specifies how long a managed Spot training job has to complete. When the job reaches the time limit, Amazon SageMaker ends the training job. Use this API to cap model training costs.</p> <p>To stop a job, Amazon SageMaker sends the algorithm the <code>SIGTERM</code> signal, which delays job termination for 120 seconds. Algorithms can use this 120-second window to save the model artifacts, so the results of training are not lost. </p>",
@@ -9020,6 +9234,8 @@
       "base": null,
       "refs": {
         "AlgorithmStatusItem$FailureReason": "<p>if the overall status is <code>Failed</code>, the reason for the failure.</p>",
+        "BatchDescribeModelPackageError$ErrorCode": "<p/>",
+        "BatchDescribeModelPackageError$ErrorResponse": "<p/>",
         "DescribeEdgePackagingJobResponse$EdgePackagingJobStatusMessage": "<p>Returns a message describing the job status and error messages.</p>",
         "DescribeEdgePackagingJobResponse$ModelSignature": "<p>The signature document of files in the model artifact.</p>",
         "EdgeOutputConfig$PresetDeploymentConfig": "<p>The configuration used to create deployment artifacts. Specify configuration options with a JSON string. The available configuration options for each type are:</p> <ul> <li> <p> <code>ComponentName</code> (optional) - Name of the GreenGrass V2 component. If not specified, the default name generated consists of \"SagemakerEdgeManager\" and the name of your SageMaker Edge Manager packaging job.</p> </li> <li> <p> <code>ComponentDescription</code> (optional) - Description of the component.</p> </li> <li> <p> <code>ComponentVersion</code> (optional) - The version of the component.</p> <note> <p>Amazon Web Services IoT Greengrass uses semantic versions for components. Semantic versions follow a<i> major.minor.patch</i> number system. For example, version 1.0.0 represents the first major release for a component. For more information, see the <a href=\"https://semver.org/\">semantic version specification</a>.</p> </note> </li> <li> <p> <code>PlatformOS</code> (optional) - The name of the operating system for the platform. Supported platforms include Windows and Linux.</p> </li> <li> <p> <code>PlatformArchitecture</code> (optional) - The processor architecture for the platform. </p> <p>Supported architectures Windows include: Windows32_x86, Windows64_x64.</p> <p>Supported architectures for Linux include: Linux x86_64, Linux ARMV8.</p> </li> </ul>",
@@ -9032,6 +9248,8 @@
         "ProcessingInput$InputName": "<p>The name for the processing job input.</p>",
         "ProcessingOutput$OutputName": "<p>The name for the processing job output.</p>",
         "ProductListings$member": null,
+        "RStudioServerProDomainSettings$RStudioConnectUrl": "<p>A URL pointing to an RStudio Connect server.</p>",
+        "RStudioServerProDomainSettings$RStudioPackageManagerUrl": "<p>A URL pointing to an RStudio Package Manager server.</p>",
         "RenderUiTemplateResponse$RenderedContent": "<p>A Liquid template that renders the HTML for the worker UI.</p>",
         "RenderingError$Code": "<p>A unique identifier for a specific class of errors.</p>",
         "RenderingError$Message": "<p>A human-readable message describing the error.</p>",
@@ -9225,7 +9443,7 @@
       }
     },
     "Tag": {
-      "base": "<p>A tag object that consists of a key and an optional value, used to manage metadata for Amazon SageMaker Amazon Web Services resources.</p> <p>You can add tags to notebook instances, training jobs, hyperparameter tuning jobs, batch transform jobs, models, labeling jobs, work teams, endpoint configurations, and endpoints. For more information on adding tags to Amazon SageMaker resources, see <a>AddTags</a>.</p> <p>For more information on adding metadata to your Amazon Web Services resources with tagging, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a>. For advice on best practices for managing Amazon Web Services resources with tagging, see <a href=\"https://d1.awsstatic.com/whitepapers/aws-tagging-best-practices.pdf\">Tagging Best Practices: Implement an Effective Amazon Web Services Resource Tagging Strategy</a>.</p>",
+      "base": "<p>A tag object that consists of a key and an optional value, used to manage metadata for SageMaker Amazon Web Services resources.</p> <p>You can add tags to notebook instances, training jobs, hyperparameter tuning jobs, batch transform jobs, models, labeling jobs, work teams, endpoint configurations, and endpoints. For more information on adding tags to SageMaker resources, see <a>AddTags</a>.</p> <p>For more information on adding metadata to your Amazon Web Services resources with tagging, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services resources</a>. For advice on best practices for managing Amazon Web Services resources with tagging, see <a href=\"https://d1.awsstatic.com/whitepapers/aws-tagging-best-practices.pdf\">Tagging Best Practices: Implement an Effective Amazon Web Services Resource Tagging Strategy</a>.</p>",
       "refs": {
         "TagList$member": null
       }
@@ -9304,7 +9522,8 @@
         "TrainingJob$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>",
         "TransformJob$Tags": "<p>A list of tags associated with the transform job.</p>",
         "Trial$Tags": "<p>The list of tags that are associated with the trial. You can use <a>Search</a> API to search on the tags.</p>",
-        "TrialComponent$Tags": "<p>The list of tags that are associated with the component. You can use <a>Search</a> API to search on the tags.</p>"
+        "TrialComponent$Tags": "<p>The list of tags that are associated with the component. You can use <a>Search</a> API to search on the tags.</p>",
+        "UpdateProjectInput$Tags": "<p>An array of key-value pairs. You can use tags to categorize your Amazon Web Services resources in different ways, for example, by purpose, owner, or environment. For more information, see <a href=\"https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html\">Tagging Amazon Web Services Resources</a>.</p>"
       }
     },
     "TagValue": {
@@ -9362,13 +9581,15 @@
     "TaskAvailabilityLifetimeInSeconds": {
       "base": null,
       "refs": {
-        "HumanTaskConfig$TaskAvailabilityLifetimeInSeconds": "<p>The length of time that a task remains available for labeling by human workers. The default and maximum values for this parameter depend on the type of workforce you use.</p> <ul> <li> <p>If you choose the Amazon Mechanical Turk workforce, the maximum is 12 hours (43,200 seconds). The default is 6 hours (21,600 seconds).</p> </li> <li> <p>If you choose a private or vendor workforce, the default value is 10 days (864,000 seconds). For most users, the maximum is also 10 days. If you want to change this limit, contact Amazon Web Services Support.</p> </li> </ul>"
+        "HumanTaskConfig$TaskAvailabilityLifetimeInSeconds": "<p>The length of time that a task remains available for labeling by human workers. The default and maximum values for this parameter depend on the type of workforce you use.</p> <ul> <li> <p>If you choose the Amazon Mechanical Turk workforce, the maximum is 12 hours (43,200 seconds). The default is 6 hours (21,600 seconds).</p> </li> <li> <p>If you choose a private or vendor workforce, the default value is 30 days (2592,000 seconds) for non-AL mode. For most users, the maximum is also 30 days. If you want to change this limit, contact Amazon Web Services Support.</p> </li> </ul>"
       }
     },
     "TaskCount": {
       "base": null,
       "refs": {
         "DesiredWeightAndCapacity$DesiredInstanceCount": "<p>The variant's capacity.</p>",
+        "PendingProductionVariantSummary$CurrentInstanceCount": "<p>The number of instances associated with the variant.</p>",
+        "PendingProductionVariantSummary$DesiredInstanceCount": "<p>The number of instances requested in this deployment, as specified in the endpoint configuration for the endpoint. The value is taken from the request to the <code> <a>CreateEndpointConfig</a> </code> operation.</p>",
         "ProductionVariantSummary$CurrentInstanceCount": "<p>The number of instances associated with the variant.</p>",
         "ProductionVariantSummary$DesiredInstanceCount": "<p>The number of instances requested in the <code>UpdateEndpointWeightsAndCapacities</code> request. </p>"
       }
@@ -9400,7 +9621,7 @@
     "TaskTimeLimitInSeconds": {
       "base": null,
       "refs": {
-        "HumanTaskConfig$TaskTimeLimitInSeconds": "<p>The amount of time that a worker has to complete a task. </p> <p>If you create a custom labeling job, the maximum value for this parameter is 8 hours (28,800 seconds).</p> <p>If you create a labeling job using a <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-task-types.html\">built-in task type</a> the maximum for this parameter depends on the task type you use:</p> <ul> <li> <p>For <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-label-images.html\">image</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-label-text.html\">text</a> labeling jobs, the maximum is 8 hours (28,800 seconds).</p> </li> <li> <p>For <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-point-cloud.html\">3D point cloud</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-video.html\">video frame</a> labeling jobs, the maximum is 7 days (604,800 seconds). If you want to change these limits, contact Amazon Web Services Support.</p> </li> </ul>"
+        "HumanTaskConfig$TaskTimeLimitInSeconds": "<p>The amount of time that a worker has to complete a task. </p> <p>If you create a custom labeling job, the maximum value for this parameter is 8 hours (28,800 seconds).</p> <p>If you create a labeling job using a <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-task-types.html\">built-in task type</a> the maximum for this parameter depends on the task type you use:</p> <ul> <li> <p>For <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-label-images.html\">image</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-label-text.html\">text</a> labeling jobs, the maximum is 8 hours (28,800 seconds).</p> </li> <li> <p>For <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-point-cloud.html\">3D point cloud</a> and <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/sms-video.html\">video frame</a> labeling jobs, the maximum is 30 days (2952,000 seconds) for non-AL mode. For most users, the maximum is also 30 days. If you want to change these limits, contact Amazon Web Services Support.</p> </li> </ul>"
       }
     },
     "TaskTitle": {
@@ -9450,7 +9671,7 @@
     "TerminationWaitInSeconds": {
       "base": null,
       "refs": {
-        "BlueGreenUpdatePolicy$TerminationWaitInSeconds": "<p/>"
+        "BlueGreenUpdatePolicy$TerminationWaitInSeconds": "<p>Additional waiting time in seconds after the completion of an endpoint deployment before terminating the old endpoint fleet. Default is 0.</p>"
       }
     },
     "ThingName": {
@@ -9490,7 +9711,7 @@
         "DescribeAppImageConfigResponse$CreationTime": "<p>When the AppImageConfig was created.</p>",
         "DescribeAppImageConfigResponse$LastModifiedTime": "<p>When the AppImageConfig was last modified.</p>",
         "DescribeAppResponse$LastHealthCheckTimestamp": "<p>The timestamp of the last health check.</p>",
-        "DescribeAppResponse$LastUserActivityTimestamp": "<p>The timestamp of the last user's activity.</p>",
+        "DescribeAppResponse$LastUserActivityTimestamp": "<p>The timestamp of the last user's activity. <code>LastUserActivityTimestamp</code> is also updated when SageMaker performs health checks without user activity. As a result, this value is set to the same value as <code>LastHealthCheckTimestamp</code>.</p>",
         "DescribeArtifactResponse$CreationTime": "<p>When the artifact was created.</p>",
         "DescribeArtifactResponse$LastModifiedTime": "<p>When the artifact was last modified.</p>",
         "DescribeAutoMLJobResponse$CreationTime": "<p>Returns the creation time of the AutoML job.</p>",
@@ -9541,6 +9762,7 @@
         "DescribeProcessingJobResponse$LastModifiedTime": "<p>The time at which the processing job was last modified.</p>",
         "DescribeProcessingJobResponse$CreationTime": "<p>The time at which the processing job was created.</p>",
         "DescribeProjectOutput$CreationTime": "<p>The time when the project was created.</p>",
+        "DescribeProjectOutput$LastModifiedTime": "<p>The timestamp when project was last modified.</p>",
         "DescribeStudioLifecycleConfigResponse$CreationTime": "<p>The creation time of the Studio Lifecycle Configuration.</p>",
         "DescribeStudioLifecycleConfigResponse$LastModifiedTime": "<p>This value is equivalent to CreationTime because Studio Lifecycle Configurations are immutable.</p>",
         "DescribeTrainingJobResponse$CreationTime": "<p>A timestamp that indicates when the training job was created.</p>",
@@ -9704,6 +9926,7 @@
         "MonitoringSchedule$LastModifiedTime": "<p>The last time the monitoring schedule was changed.</p>",
         "MonitoringScheduleSummary$CreationTime": "<p>The creation time of the monitoring schedule.</p>",
         "MonitoringScheduleSummary$LastModifiedTime": "<p>The last time the monitoring schedule was modified.</p>",
+        "PendingDeploymentSummary$StartTime": "<p>The start time of the deployment.</p>",
         "Pipeline$CreationTime": "<p>The creation time of the pipeline.</p>",
         "Pipeline$LastModifiedTime": "<p>The time that the pipeline was last modified.</p>",
         "Pipeline$LastRunTime": "<p>The time when the pipeline was last run.</p>",
@@ -9722,8 +9945,10 @@
         "ProcessingJobSummary$CreationTime": "<p>The time at which the processing job was created.</p>",
         "ProcessingJobSummary$ProcessingEndTime": "<p>The time at which the processing job completed.</p>",
         "ProcessingJobSummary$LastModifiedTime": "<p>A timestamp that indicates the last time the processing job was modified.</p>",
+        "ProductionVariantStatus$StartTime": "<p>The start time of the current status change.</p>",
         "ProfilerRuleEvaluationStatus$LastModifiedTime": "<p>Timestamp when the rule evaluation status was last modified.</p>",
         "Project$CreationTime": "<p>A timestamp specifying when the project was created.</p>",
+        "Project$LastModifiedTime": "<p>A timestamp container for when the project was last modified.</p>",
         "ProjectSummary$CreationTime": "<p>The time that the project was created.</p>",
         "SecondaryStatusTransition$StartTime": "<p>A timestamp that shows when the training job transitioned to the current secondary status state.</p>",
         "SecondaryStatusTransition$EndTime": "<p>A timestamp that shows when the training job transitioned out of this secondary status state into another secondary status state or when the training job has ended.</p>",
@@ -9765,15 +9990,15 @@
       }
     },
     "TrafficRoutingConfig": {
-      "base": "<p>Currently, the <code>TrafficRoutingConfig</code> API is not supported.</p>",
+      "base": "<p>Defines the traffic routing strategy during an endpoint deployment to shift traffic from the old fleet to the new fleet.</p>",
       "refs": {
-        "BlueGreenUpdatePolicy$TrafficRoutingConfiguration": "<p/>"
+        "BlueGreenUpdatePolicy$TrafficRoutingConfiguration": "<p>Defines the traffic routing strategy to shift traffic from the old fleet to the new fleet during an endpoint deployment.</p>"
       }
     },
     "TrafficRoutingConfigType": {
       "base": null,
       "refs": {
-        "TrafficRoutingConfig$Type": "<p/>"
+        "TrafficRoutingConfig$Type": "<p>Traffic routing strategy type.</p> <ul> <li> <p> <code>ALL_AT_ONCE</code>: Endpoint traffic shifts to the new fleet in a single step. </p> </li> <li> <p> <code>CANARY</code>: Endpoint traffic shifts to the new fleet in two steps. The first step is the canary, which is a small portion of the traffic. The second step is the remainder of the traffic. </p> </li> <li> <p> <code>LINEAR</code>: Endpoint traffic shifts to the new fleet in n steps of a configurable size. </p> </li> </ul>"
       }
     },
     "TrainingEnvironmentKey": {
@@ -9797,13 +10022,13 @@
       }
     },
     "TrainingInputMode": {
-      "base": null,
+      "base": "<p>The training input mode that the algorithm supports. For more information about input modes, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>.</p> <p> <b>Pipe mode</b> </p> <p>If an algorithm supports <code>Pipe</code> mode, Amazon SageMaker streams data directly from Amazon S3 to the container.</p> <p> <b>File mode</b> </p> <p>If an algorithm supports <code>File</code> mode, SageMaker downloads the training data from S3 to the provisioned ML storage volume, and mounts the directory to the Docker volume for the training container.</p> <p>You must provision the ML storage volume with sufficient capacity to accommodate the data downloaded from S3. In addition to the training data, the ML storage volume also stores the output model. The algorithm container uses the ML storage volume to also store intermediate information, if any.</p> <p>For distributed algorithms, training data is distributed uniformly. Your training duration is predictable if the input data objects sizes are approximately the same. SageMaker does not split the files any further for model training. If the object sizes are skewed, training won't be optimal as the data distribution is also skewed when one host in a training cluster is overloaded, thus becoming a bottleneck in training.</p> <p> <b>FastFile mode</b> </p> <p>If an algorithm supports <code>FastFile</code> mode, SageMaker streams data directly from S3 to the container with no code changes, and provides file system access to the data. Users can author their training script to interact with these files as if they were stored on disk.</p> <p> <code>FastFile</code> mode works best when the data is read sequentially. Augmented manifest files aren't supported. The startup time is lower when there are fewer files in the S3 bucket provided.</p>",
       "refs": {
-        "AlgorithmSpecification$TrainingInputMode": "<p>The input mode that the algorithm supports. For the input modes that Amazon SageMaker algorithms support, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>. If an algorithm supports the <code>File</code> input mode, Amazon SageMaker downloads the training data from S3 to the provisioned ML storage Volume, and mounts the directory to docker volume for training container. If an algorithm supports the <code>Pipe</code> input mode, Amazon SageMaker streams data directly from S3 to the container. </p> <p> In File mode, make sure you provision ML storage volume with sufficient capacity to accommodate the data download from S3. In addition to the training data, the ML storage volume also stores the output model. The algorithm container use ML storage volume to also store intermediate information, if any. </p> <p> For distributed algorithms using File mode, training data is distributed uniformly, and your training duration is predictable if the input data objects size is approximately same. Amazon SageMaker does not split the files any further for model training. If the object sizes are skewed, training won't be optimal as the data distribution is also skewed where one host in a training cluster is overloaded, thus becoming bottleneck in training. </p>",
+        "AlgorithmSpecification$TrainingInputMode": null,
         "Channel$InputMode": "<p>(Optional) The input mode to use for the data channel in a training job. If you don't set a value for <code>InputMode</code>, Amazon SageMaker uses the value set for <code>TrainingInputMode</code>. Use this parameter to override the <code>TrainingInputMode</code> setting in a <a>AlgorithmSpecification</a> request when you have a channel that needs a different input mode from the training job's general setting. To download the data from Amazon Simple Storage Service (Amazon S3) to the provisioned ML storage volume, and mount the directory to a Docker volume, use <code>File</code> input mode. To stream data directly from Amazon S3 to the container, choose <code>Pipe</code> input mode.</p> <p>To use a model for incremental training, choose <code>File</code> input model.</p>",
-        "HyperParameterAlgorithmSpecification$TrainingInputMode": "<p>The input mode that the algorithm supports: File or Pipe. In File input mode, Amazon SageMaker downloads the training data from Amazon S3 to the storage volume that is attached to the training instance and mounts the directory to the Docker volume for the training container. In Pipe input mode, Amazon SageMaker streams data directly from Amazon S3 to the container. </p> <p>If you specify File mode, make sure that you provision the storage volume that is attached to the training instance with enough capacity to accommodate the training data downloaded from Amazon S3, the model artifacts, and intermediate information.</p> <p/> <p>For more information about input modes, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>. </p>",
+        "HyperParameterAlgorithmSpecification$TrainingInputMode": null,
         "InputModes$member": null,
-        "TrainingJobDefinition$TrainingInputMode": "<p>The input mode used by the algorithm for the training job. For the input modes that Amazon SageMaker algorithms support, see <a href=\"https://docs.aws.amazon.com/sagemaker/latest/dg/algos.html\">Algorithms</a>.</p> <p>If an algorithm supports the <code>File</code> input mode, Amazon SageMaker downloads the training data from S3 to the provisioned ML storage Volume, and mounts the directory to docker volume for training container. If an algorithm supports the <code>Pipe</code> input mode, Amazon SageMaker streams data directly from S3 to the container.</p>"
+        "TrainingJobDefinition$TrainingInputMode": null
       }
     },
     "TrainingInstanceCount": {
@@ -10484,6 +10709,16 @@
       "refs": {
       }
     },
+    "UpdateProjectInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateProjectOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateTrainingJobRequest": {
       "base": null,
       "refs": {
@@ -10554,7 +10789,7 @@
       }
     },
     "UserContext": {
-      "base": "<p>Information about the user who created or modified an experiment, trial, or trial component.</p>",
+      "base": "<p>Information about the user who created or modified an experiment, trial, trial component, or project.</p>",
       "refs": {
         "AssociationSummary$CreatedBy": null,
         "DescribeActionResponse$CreatedBy": null,
@@ -10573,11 +10808,12 @@
         "DescribePipelineResponse$CreatedBy": null,
         "DescribePipelineResponse$LastModifiedBy": null,
         "DescribeProjectOutput$CreatedBy": null,
-        "DescribeTrialComponentResponse$CreatedBy": "<p>Who created the component.</p>",
+        "DescribeProjectOutput$LastModifiedBy": null,
+        "DescribeTrialComponentResponse$CreatedBy": "<p>Who created the trial component.</p>",
         "DescribeTrialComponentResponse$LastModifiedBy": "<p>Who last modified the component.</p>",
         "DescribeTrialResponse$CreatedBy": "<p>Who created the trial.</p>",
         "DescribeTrialResponse$LastModifiedBy": "<p>Who last modified the trial.</p>",
-        "Experiment$CreatedBy": null,
+        "Experiment$CreatedBy": "<p>Who created the experiment.</p>",
         "Experiment$LastModifiedBy": null,
         "ModelPackage$CreatedBy": null,
         "ModelPackage$LastModifiedBy": null,
@@ -10586,13 +10822,14 @@
         "Pipeline$LastModifiedBy": null,
         "PipelineExecution$CreatedBy": null,
         "PipelineExecution$LastModifiedBy": null,
-        "Project$CreatedBy": null,
-        "Trial$CreatedBy": null,
+        "Project$CreatedBy": "<p>Who created the project.</p>",
+        "Project$LastModifiedBy": null,
+        "Trial$CreatedBy": "<p>Who created the trial.</p>",
         "Trial$LastModifiedBy": null,
-        "TrialComponent$CreatedBy": null,
+        "TrialComponent$CreatedBy": "<p>Who created the trial component.</p>",
         "TrialComponent$LastModifiedBy": null,
         "TrialComponentSimpleSummary$CreatedBy": null,
-        "TrialComponentSummary$CreatedBy": "<p>Who created the component.</p>",
+        "TrialComponentSummary$CreatedBy": "<p>Who created the trial component.</p>",
         "TrialComponentSummary$LastModifiedBy": "<p>Who last modified the component.</p>"
       }
     },
@@ -10663,6 +10900,7 @@
       "base": null,
       "refs": {
         "DesiredWeightAndCapacity$VariantName": "<p>The name of the variant to update.</p>",
+        "PendingProductionVariantSummary$VariantName": "<p>The name of the variant.</p>",
         "ProductionVariant$VariantName": "<p>The name of the production variant.</p>",
         "ProductionVariantSummary$VariantName": "<p>The name of the variant.</p>"
       }
@@ -10685,10 +10923,24 @@
         "VariantProperty$VariantPropertyType": "<p>The type of variant property. The supported values are:</p> <ul> <li> <p> <code>DesiredInstanceCount</code>: Overrides the existing variant instance counts using the <a>ProductionVariant$InitialInstanceCount</a> values in the <a>CreateEndpointConfigInput$ProductionVariants</a>.</p> </li> <li> <p> <code>DesiredWeight</code>: Overrides the existing variant weights using the <a>ProductionVariant$InitialVariantWeight</a> values in the <a>CreateEndpointConfigInput$ProductionVariants</a>.</p> </li> <li> <p> <code>DataCaptureConfig</code>: (Not currently supported.)</p> </li> </ul>"
       }
     },
+    "VariantStatus": {
+      "base": null,
+      "refs": {
+        "ProductionVariantStatus$Status": "<p>The endpoint variant status which describes the current deployment stage status or operational status.</p> <ul> <li> <p> <code>Creating</code>: Creating inference resources for the production variant.</p> </li> <li> <p> <code>Deleting</code>: Terminating inference resources for the production variant.</p> </li> <li> <p> <code>Updating</code>: Updating capacity for the production variant.</p> </li> <li> <p> <code>ActivatingTraffic</code>: Turning on traffic for the production variant.</p> </li> <li> <p> <code>Baking</code>: Waiting period to monitor the CloudWatch alarms in the automatic rollback configuration.</p> </li> </ul>"
+      }
+    },
+    "VariantStatusMessage": {
+      "base": null,
+      "refs": {
+        "ProductionVariantStatus$StatusMessage": "<p>A message that describes the status of the production variant.</p>"
+      }
+    },
     "VariantWeight": {
       "base": null,
       "refs": {
         "DesiredWeightAndCapacity$DesiredWeight": "<p>The variant's weight.</p>",
+        "PendingProductionVariantSummary$CurrentWeight": "<p>The weight associated with the variant.</p>",
+        "PendingProductionVariantSummary$DesiredWeight": "<p>The requested weight for the variant in this deployment, as specified in the endpoint configuration for the endpoint. The value is taken from the request to the <code> <a>CreateEndpointConfig</a> </code> operation.</p>",
         "ProductionVariant$InitialVariantWeight": "<p>Determines initial traffic distribution among all of the models that you specify in the endpoint configuration. The traffic to a production variant is determined by the ratio of the <code>VariantWeight</code> to the sum of all <code>VariantWeight</code> values across all ProductionVariants. If unspecified, it defaults to 1.0. </p>",
         "ProductionVariantSummary$CurrentWeight": "<p>The weight associated with the variant.</p>",
         "ProductionVariantSummary$DesiredWeight": "<p>The requested weight, as specified in the <code>UpdateEndpointWeightsAndCapacities</code> request. </p>"
@@ -10738,7 +10990,7 @@
     "WaitIntervalInSeconds": {
       "base": null,
       "refs": {
-        "TrafficRoutingConfig$WaitIntervalInSeconds": "<p/>"
+        "TrafficRoutingConfig$WaitIntervalInSeconds": "<p>The waiting time (in seconds) between incremental steps to turn on traffic on the new endpoint fleet.</p>"
       }
     },
     "Workforce": {

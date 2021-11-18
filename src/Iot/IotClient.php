@@ -374,6 +374,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listV2LoggingLevelsAsync(array $args = [])
  * @method \Aws\Result listViolationEvents(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listViolationEventsAsync(array $args = [])
+ * @method \Aws\Result putVerificationStateOnViolation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putVerificationStateOnViolationAsync(array $args = [])
  * @method \Aws\Result registerCACertificate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise registerCACertificateAsync(array $args = [])
  * @method \Aws\Result registerCertificate(array $args = [])

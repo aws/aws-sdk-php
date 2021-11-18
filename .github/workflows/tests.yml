@@ -59,7 +59,7 @@ jobs:
     - name: Run test suite
       run: make test
 
-      #static analysis
+    #static analysis
     - if: ${{ matrix.php-versions >= '7.1' && matrix.php-versions <= 7.4 && matrix.composer-options == '' }}
       name: Static analysis
       run: |
@@ -70,7 +70,10 @@ jobs:
     #generate package
     - if:  ${{ matrix.composer-options == '' }}
       name: Package generation
-      run: make package
+      run: |
+        composer require guzzlehttp/psr7 "^1.7.0"
+        composer update
+        make package
 
     #generate code coverage
     - if: ${{ matrix.php-versions == '7.1' && matrix.composer-options == '' }}

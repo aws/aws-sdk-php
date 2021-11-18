@@ -521,7 +521,7 @@ class S3EndpointMiddlewareTest extends TestCase
                 RequestInterface $req
             ) use ($key, $expectedUri) {
                 $this->assertEquals($expectedUri . '/' . $key, trim($req->getUri(), '/'));
-                return Promise\promise_for(new Result());
+                return Promise\Create::promiseFor(new Result());
             },
         ]);
 
@@ -574,6 +574,9 @@ class S3EndpointMiddlewareTest extends TestCase
         if (!empty($endpointUrl)) {
             $clientConfig['endpoint'] = $endpointUrl;
         }
+        if (is_array($additionalFlags) && in_array('fips', $additionalFlags)) {
+            $clientConfig['use_fips_endpoint'] = true;
+        }
         $client = new S3Client($clientConfig);
         $command = $client->getCommand(
             'GetObject',
@@ -600,6 +603,9 @@ class S3EndpointMiddlewareTest extends TestCase
             ["arn:aws-us-gov:s3-object-lambda:us-gov-east-1:123456789012:accesspoint/mybanner", "us-gov-east-1", "none", true, null, "mybanner-123456789012.s3-object-lambda.us-gov-east-1.amazonaws.com"],
             ["arn:aws-us-gov:s3-object-lambda:us-gov-east-1:123456789012:accesspoint/mybanner", "fips-us-gov-east-1", "none", true, null, "mybanner-123456789012.s3-object-lambda-fips.us-gov-east-1.amazonaws.com"],
             ["arn:aws-us-gov:s3-object-lambda:us-gov-east-1:123456789012:accesspoint/mybanner", "fips-us-gov-east-1", "none", false, null, "mybanner-123456789012.s3-object-lambda-fips.us-gov-east-1.amazonaws.com"],
+            ["arn:aws-us-gov:s3-object-lambda:us-gov-east-1:123456789012:accesspoint/mybanner", "us-gov-east-1", ["fips"], false, null, "mybanner-123456789012.s3-object-lambda-fips.us-gov-east-1.amazonaws.com"],
+            ["arn:aws-us-gov:s3-object-lambda:us-gov-west-1:123456789012:accesspoint/mybanner", "fips-us-gov-east-1", "none", true, null, "mybanner-123456789012.s3-object-lambda-fips.us-gov-west-1.amazonaws.com"],
+            ["arn:aws-us-gov:s3-object-lambda:us-gov-west-1:123456789012:accesspoint/mybanner", "us-gov-east-1", ["fips"], true, null, "mybanner-123456789012.s3-object-lambda-fips.us-gov-west-1.amazonaws.com"],
             ["arn:aws:s3-object-lambda:us-west-2:123456789012:accesspoint/mybanner", "us-west-2", "none", false, "my-endpoint.com", "mybanner-123456789012.my-endpoint.com"],
         ];
     }
@@ -680,8 +686,7 @@ class S3EndpointMiddlewareTest extends TestCase
             ["arn:aws:s3-object-lambda:us-west-2:123456789012:accesspoint:mybucket:object:foo", "us-west-2", "n/a", null, null, "The resource ID component of an access point ARN must not contain additional components (delimited by ':')"],
             ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "s3-external-1", "none", false, null, "Global endpoints do not support cross region requests. Please enable use_arn_region or do not supply a global region with a different region in the ARN."],
             ["arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/mybanner", "aws-global", "none", false, null, "Global endpoints do not support cross region requests. Please enable use_arn_region or do not supply a global region with a different region in the ARN."],
-            ["arn:aws-us-gov:s3-object-lambda:us-gov-west-1:123456789012:accesspoint/mybanner", "fips-us-gov-east-1", "none", true, null, "Fips is currently not supported with cross region requests. Please provide a non-fips region or supply a matching access point ARN region and client region"],
-            ["arn:aws-us-gov:s3-object-lambda:us-gov-west-1:123456789012:accesspoint/mybanner", "fips-us-gov-east-1", "none", false, null, "The region specified in the ARN (us-gov-west-1) does not match the client region (fips-us-gov-east-1)."],
+            ["arn:aws-us-gov:s3-object-lambda:us-gov-west-1:123456789012:accesspoint/mybanner", "fips-us-gov-east-1", "none", false, null, "The region specified in the ARN (us-gov-west-1) does not match the client region (us-gov-east-1)."],
         ];
     }
 
@@ -701,7 +706,6 @@ class S3EndpointMiddlewareTest extends TestCase
         $expectedEndpoint
     )
     {
-        //additional flags is not used yet, will be in the future if dualstack support is added
         $clientConfig = [
             'region' => $clientRegion,
             'version' => 'latest',

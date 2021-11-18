@@ -255,7 +255,7 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
                     $command['@region'] = $region;
                 }
 
-                return Promise\coroutine(function () use (
+                return Promise\Coroutine::of(function () use (
                     $handler,
                     $command,
                     $cacheKey
@@ -333,7 +333,7 @@ class S3MultiRegionClient extends BaseClient implements S3ClientInterface
     {
         $cacheKey = $this->getCacheKey($bucketName);
         if ($cached = $this->cache->get($cacheKey)) {
-            return Promise\promise_for($cached);
+            return Promise\Create::promiseFor($cached);
         }
 
         /** @var S3ClientInterface $regionalClient */

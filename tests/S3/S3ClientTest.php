@@ -176,7 +176,7 @@ class S3ClientTest extends TestCase
                 foreach (['X-Amz-Date', 'Authorization'] as $signatureHeader) {
                     $this->assertTrue($request->hasHeader($signatureHeader));
                 }
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             },
         ]);
         $command = $client->getCommand('GetObject', ['Bucket' => 'foo', 'Key' => 'bar']);
@@ -370,7 +370,7 @@ class S3ClientTest extends TestCase
         $client = $this->getTestClient('S3');
         $client->getHandlerList()->setHandler(function ($c, $r) {
             $this->assertSame('bucket', $c['Bucket']);
-            return Promise\promise_for(new Result([
+            return Promise\Create::promiseFor(new Result([
                 'IsTruncated' => false,
                 'Marker' => '',
                 'Contents' => [
@@ -473,7 +473,7 @@ class S3ClientTest extends TestCase
         $client = $this->getTestClient('S3', [
             'http_handler' => function ($request, array $options) {
                 $this->assertArrayHasKey('sink', $options);
-                return Promise\promise_for(
+                return Promise\Create::promiseFor(
                     new Psr7\Response(200, [], 'sink=' . $options['sink'])
                 );
             }
@@ -498,7 +498,7 @@ class S3ClientTest extends TestCase
                     (string) $request->getUri()
                 );
 
-                return Promise\promise_for(new Psr7\Response);
+                return Promise\Create::promiseFor(new Psr7\Response);
             }
         ]);
 
@@ -1083,7 +1083,7 @@ EOXML;
                 $this->assertArrayHasKey('decode_content', $opts);
                 $this->assertFalse($opts['decode_content']);
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             }
         ]);
 
@@ -1100,7 +1100,7 @@ EOXML;
                 $this->assertArrayHasKey('decode_content', $opts);
                 $this->assertFalse($opts['decode_content']);
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             }
         ]);
 
@@ -1116,7 +1116,7 @@ EOXML;
                 $this->assertArrayHasKey('decode_content', $opts);
                 $this->assertFalse($opts['decode_content']);
 
-                return Promise\promise_for(new Response);
+                return Promise\Create::promiseFor(new Response);
             }
         ]);
 
@@ -1191,7 +1191,7 @@ EOXML;
                 '/key',
                 $req->getUri()->getPath()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $accelerateClient = new S3Client([
@@ -1232,7 +1232,7 @@ EOXML;
                 '/',
                 $req->getUri()->getPath()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $accelerateClient = new S3Client([
@@ -1267,7 +1267,7 @@ EOXML;
                 's3.dualstack.us-west-2.amazonaws.com',
                 $req->getUri()->getHost()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $accelerateClient = new S3Client([
@@ -1303,7 +1303,7 @@ EOXML;
                 'bucket.s3-accelerate.amazonaws.com',
                 $req->getUri()->getHost()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $accelerateClient = new S3Client([
@@ -1341,7 +1341,7 @@ EOXML;
                 '/',
                 $req->getUri()->getPath()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $dualStackClient = new S3Client([
@@ -1377,7 +1377,7 @@ EOXML;
                 '/bucket',
                 $req->getUri()->getPath()
             );
-            return Promise\promise_for(new Response);
+            return Promise\Create::promiseFor(new Response);
         };
 
         $dualStackClient = new S3Client([
@@ -1540,7 +1540,7 @@ EOXML;
     public function optionsToEndpointsCases()
     {
         $handler = function ($cmd, $req) {
-            return Promise\promise_for(new Result([]));
+            return Promise\Create::promiseFor(new Result([]));
         };
         $data = json_decode(
             file_get_contents(__DIR__ . '/../Endpoint/fixtures/s3_us_east_1_regional_endpoint.json'),
@@ -1628,7 +1628,7 @@ EOXML;
     public function testAppliesAmbiguousSuccessParsing()
     {
         $httpHandler = function ($request, array $options) {
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Psr7\Response(200, [], "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n\n")
             );
         };
@@ -1657,7 +1657,7 @@ EOXML;
             }
             $counter++;
 
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Psr7\Response(200, [], $body)
             );
         };

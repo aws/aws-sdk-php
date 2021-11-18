@@ -25,6 +25,7 @@
     "DeleteResourcePolicyStatement": "<p>Deletes a policy statement from a resource policy. If you delete the last statement from a policy, the policy is deleted. If you specify a statement ID that doesn't exist in the policy, or if the bot or bot alias doesn't have a policy attached, Amazon Lex returns an exception.</p>",
     "DeleteSlot": "<p>Deletes the specified slot from an intent.</p>",
     "DeleteSlotType": "<p>Deletes a slot type from a bot locale.</p> <p>If a slot is using the slot type, Amazon Lex throws a <code>ResourceInUseException</code> exception. To avoid the exception, set the <code>skipResourceInUseCheck</code> parameter to <code>true</code>.</p>",
+    "DeleteUtterances": "<p>Deletes stored utterances.</p> <p>Amazon Lex stores the utterances that users send to your bot. Utterances are stored for 15 days for use with the operation, and then stored indefinitely for use in improving the ability of your bot to respond to user input..</p> <p>Use the <code>DeleteUtterances</code> operation to manually delete utterances for a specific session. When you use the <code>DeleteUtterances</code> operation, utterances stored for improving your bot's ability to respond to user input are deleted immediately. Utterances stored for use with the <code>ListAggregatedUtterances</code> operation are deleted after 15 days.</p>",
     "DescribeBot": "<p>Provides metadata information about a bot. </p>",
     "DescribeBotAlias": "<p>Get information about a specific bot alias.</p>",
     "DescribeBotLocale": "<p>Describes the settings that a bot has for a specific locale. </p>",
@@ -35,6 +36,7 @@
     "DescribeResourcePolicy": "<p>Gets the resource policy and policy revision for a bot or bot alias.</p>",
     "DescribeSlot": "<p>Gets metadata information about a slot.</p>",
     "DescribeSlotType": "<p>Gets metadata information about a slot type.</p>",
+    "ListAggregatedUtterances": "<p>Provides a list of utterances that users have sent to the bot.</p> <p>Utterances are aggregated by the text of the utterance. For example, all instances where customers used the phrase \"I want to order pizza\" are aggregated into the same line in the response.</p> <p>You can see both detected utterances and missed utterances. A detected utterance is where the bot properly recognized the utterance and activated the associated intent. A missed utterance was not recognized by the bot and didn't activate an intent.</p> <p>Utterances can be aggregated for a bot alias or for a bot version, but not both at the same time.</p> <p>Utterances statistics are not generated under the following conditions:</p> <ul> <li> <p>The <code>childDirected</code> field was set to true when the bot was created.</p> </li> <li> <p>You are using slot obfuscation with one or more slots.</p> </li> <li> <p>You opted out of participating in improving Amazon Lex.</p> </li> </ul>",
     "ListBotAliases": "<p>Gets a list of aliases for the specified bot.</p>",
     "ListBotLocales": "<p>Gets a list of locales for the specified bot.</p>",
     "ListBotVersions": "<p>Gets information about all of the versions of a bot.</p> <p>The <code>ListBotVersions</code> operation returns a summary of each version of a bot. For example, if a bot has three numbered versions, the <code>ListBotVersions</code> operation returns for summaries, one for each numbered version and one for the <code>DRAFT</code> version.</p> <p>The <code>ListBotVersions</code> operation always returns at least one version, the <code>DRAFT</code> version.</p>",
@@ -60,6 +62,54 @@
     "UpdateSlotType": "<p>Updates the configuration of an existing slot type.</p>"
   },
   "shapes": {
+    "AggregatedUtterancesFilter": {
+      "base": "<p>Filters responses returned by the <code>ListAggregatedUtterances</code> operation.</p>",
+      "refs": {
+        "AggregatedUtterancesFilters$member": null
+      }
+    },
+    "AggregatedUtterancesFilterName": {
+      "base": null,
+      "refs": {
+        "AggregatedUtterancesFilter$name": "<p>The name of the field to filter the utterance list.</p>"
+      }
+    },
+    "AggregatedUtterancesFilterOperator": {
+      "base": null,
+      "refs": {
+        "AggregatedUtterancesFilter$operator": "<p>The operator to use for the filter. Specify <code>EQ</code> when the <code>ListAggregatedUtterances</code> operation should return only utterances that equal the specified value. Specify <code>CO</code> when the <code>ListAggregatedUtterances</code> operation should return utterances that contain the specified value.</p>"
+      }
+    },
+    "AggregatedUtterancesFilters": {
+      "base": null,
+      "refs": {
+        "ListAggregatedUtterancesRequest$filters": "<p>Provides the specification of a filter used to limit the utterances in the response to only those that match the filter specification. You can only specify one filter and one string to filter on.</p>"
+      }
+    },
+    "AggregatedUtterancesSortAttribute": {
+      "base": null,
+      "refs": {
+        "AggregatedUtterancesSortBy$attribute": "<p>The utterance attribute to sort by.</p>"
+      }
+    },
+    "AggregatedUtterancesSortBy": {
+      "base": "<p>Specifies attributes for sorting a list of utterances.</p>",
+      "refs": {
+        "ListAggregatedUtterancesRequest$sortBy": "<p>Specifies sorting parameters for the list of utterances. You can sort by the hit count, the missed count, or the number of distinct sessions the utterance appeared in.</p>"
+      }
+    },
+    "AggregatedUtterancesSummary": {
+      "base": "<p>Provides summary information for aggregated utterances. The <code>ListAggregatedUtterances</code> operations combines all instances of the same utterance into a single aggregated summary.</p>",
+      "refs": {
+        "AggregatedUtterancesSummaryList$member": null
+      }
+    },
+    "AggregatedUtterancesSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAggregatedUtterancesResponse$aggregatedUtterancesSummaries": "<p>Summaries of the aggregated utterance data. Each response contains information about the number of times that the utterance was seen during the time period, whether it was detected or missed, and when it was seen during the time period.</p>"
+      }
+    },
     "AmazonResourceName": {
       "base": null,
       "refs": {
@@ -145,6 +195,8 @@
         "DeleteBotAliasResponse$botAliasId": "<p>The unique identifier of the bot alias to delete.</p>",
         "DescribeBotAliasRequest$botAliasId": "<p>The identifier of the bot alias to describe.</p>",
         "DescribeBotAliasResponse$botAliasId": "<p>The identifier of the bot alias.</p>",
+        "ListAggregatedUtterancesRequest$botAliasId": "<p>The identifier of the bot alias associated with this request. If you specify the bot alias, you can't specify the bot version.</p>",
+        "ListAggregatedUtterancesResponse$botAliasId": "<p>The identifier of the bot alias that contains the utterances. If you specified the bot version, the bot alias ID isn't returned.</p>",
         "UpdateBotAliasRequest$botAliasId": "<p>The unique identifier of the bot alias.</p>",
         "UpdateBotAliasResponse$botAliasId": "<p>The identifier of the updated bot alias.</p>"
       }
@@ -367,6 +419,8 @@
         "DescribeSlotResponse$botVersion": "<p>The version of the bot associated with the slot.</p>",
         "DescribeSlotTypeRequest$botVersion": "<p>The version of the bot associated with the slot type.</p>",
         "DescribeSlotTypeResponse$botVersion": "<p>The version of the bot associated with the slot type.</p>",
+        "ListAggregatedUtterancesRequest$botVersion": "<p>The identifier of the bot version associated with this request. If you specify the bot version, you can't specify the bot alias.</p>",
+        "ListAggregatedUtterancesResponse$botVersion": "<p>The identifier of the bot version that contains the utterances. If you specified the bot alias, the bot version isn't returned.</p>",
         "ListBotLocalesRequest$botVersion": "<p>The version of the bot to list locales for.</p>",
         "ListBotLocalesResponse$botVersion": "<p>The version of the bot.</p>",
         "ListExportsRequest$botVersion": "<p>The version of the bot to list exports for. </p>",
@@ -421,12 +475,16 @@
     "BoxedBoolean": {
       "base": null,
       "refs": {
-        "IntentClosingSetting$active": "<p>Specifies whether an intent's closing response is used. When this field is false, the closing response isn't sent to the user and no closing input from the user is used. If the <code>active</code> field isn't specified, the default is true.</p>",
-        "IntentConfirmationSetting$active": "<p>Specifies whether the intent's confirmation is sent to the user. When this field is false, confirmation and declination responses aren't sent and processing continues as if the responses aren't present. If the <code>active</code> field isn't specified, the default is true.</p>",
+        "AggregatedUtterancesSummary$containsDataFromDeletedResources": "<p>Aggregated utterance data may contain utterances from versions of your bot that have since been deleted. When the aggregated contains this kind of data, this field is set to true.</p>",
+        "FulfillmentStartResponseSpecification$allowInterrupt": "<p>Determines whether the user can interrupt the start message while it is playing.</p>",
+        "FulfillmentUpdateResponseSpecification$allowInterrupt": "<p>Determines whether the user can interrupt an update message while it is playing.</p>",
+        "FulfillmentUpdatesSpecification$active": "<p>Determines whether fulfillment updates are sent to the user. When this field is true, updates are sent.</p> <p>If the <code>active</code> field is set to true, the <code>startResponse</code>, <code>updateResponse</code>, and <code>timeoutInSeconds</code> fields are required.</p>",
+        "IntentClosingSetting$active": "<p>Specifies whether an intent's closing response is used. When this field is false, the closing response isn't sent to the user. If the <code>active</code> field isn't specified, the default is true.</p>",
+        "IntentConfirmationSetting$active": "<p>Specifies whether the intent's confirmation is sent to the user. When this field is false, confirmation and declination responses aren't sent. If the <code>active</code> field isn't specified, the default is true.</p>",
         "PromptSpecification$allowInterrupt": "<p>Indicates whether the user can interrupt a speech prompt from the bot.</p>",
         "ResponseSpecification$allowInterrupt": "<p>Indicates whether the user can interrupt a speech response from Amazon Lex.</p>",
         "StillWaitingResponseSpecification$allowInterrupt": "<p>Indicates that the user can interrupt the response by speaking while the message is being played.</p>",
-        "WaitAndContinueSpecification$active": "<p>Specifies whether the bot will wait for a user to respond. When this field is false, wait and continue responses for a slot aren't used and the bot expects an appropriate response within the configured timeout. If the <code>active</code> field isn't specified, the default is true.</p>"
+        "WaitAndContinueSpecification$active": "<p>Specifies whether the bot will wait for a user to respond. When this field is false, wait and continue responses for a slot aren't used. If the <code>active</code> field isn't specified, the default is true.</p>"
       }
     },
     "BuildBotLocaleRequest": {
@@ -593,7 +651,7 @@
       "base": null,
       "refs": {
         "BotLocaleImportSpecification$nluIntentConfidenceThreshold": "<p>Determines the threshold where Amazon Lex will insert the <code>AMAZON.FallbackIntent</code>, <code>AMAZON.KendraSearchIntent</code>, or both when returning alternative intents. <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> are only inserted if they are configured for the bot. </p> <p>For example, suppose a bot is configured with the confidence threshold of 0.80 and the <code>AMAZON.FallbackIntent</code>. Amazon Lex returns three alternative intents with the following confidence scores: IntentA (0.70), IntentB (0.60), IntentC (0.50). The response from the <code>PostText</code> operation would be:</p> <ul> <li> <p> <code>AMAZON.FallbackIntent</code> </p> </li> <li> <p> <code>IntentA</code> </p> </li> <li> <p> <code>IntentB</code> </p> </li> <li> <p> <code>IntentC</code> </p> </li> </ul>",
-        "CreateBotLocaleRequest$nluIntentConfidenceThreshold": "<p>Determines the threshold where Amazon Lex will insert the <code>AMAZON.FallbackIntent</code>, <code>AMAZON.KendraSearchIntent</code>, or both when returning alternative intents. <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> are only inserted if they are configured for the bot.</p> <p>For example, suppose a bot is configured with the confidence threshold of 0.80 and the <code>AMAZON.FallbackIntent</code>. Amazon Lex returns three alternative intents with the following confidence scores: IntentA (0.70), IntentB (0.60), IntentC (0.50). The response from the PostText operation would be:</p> <ul> <li> <p>AMAZON.FallbackIntent</p> </li> <li> <p>IntentA</p> </li> <li> <p>IntentB</p> </li> <li> <p>IntentC</p> </li> </ul>",
+        "CreateBotLocaleRequest$nluIntentConfidenceThreshold": "<p>Determines the threshold where Amazon Lex will insert the <code>AMAZON.FallbackIntent</code>, <code>AMAZON.KendraSearchIntent</code>, or both when returning alternative intents. <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> are only inserted if they are configured for the bot.</p> <p>For example, suppose a bot is configured with the confidence threshold of 0.80 and the <code>AMAZON.FallbackIntent</code>. Amazon Lex returns three alternative intents with the following confidence scores: IntentA (0.70), IntentB (0.60), IntentC (0.50). The response from the <code>RecognizeText</code> operation would be:</p> <ul> <li> <p>AMAZON.FallbackIntent</p> </li> <li> <p>IntentA</p> </li> <li> <p>IntentB</p> </li> <li> <p>IntentC</p> </li> </ul>",
         "CreateBotLocaleResponse$nluIntentConfidenceThreshold": "<p>The specified confidence threshold for inserting the <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> intents.</p>",
         "DescribeBotLocaleResponse$nluIntentConfidenceThreshold": "<p>The confidence threshold where Amazon Lex inserts the <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> intents in the list of possible intents for an utterance.</p>",
         "UpdateBotLocaleRequest$nluIntentConfidenceThreshold": "<p>The new confidence threshold where Amazon Lex inserts the <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> intents in the list of possible intents for an utterance.</p>",
@@ -601,7 +659,7 @@
       }
     },
     "ConflictException": {
-      "base": "<p/>",
+      "base": "<p>The action that you tried to perform couldn't be completed because the resource is in a conflicting state. For example, deleting a bot that is in the CREATING state. Try your request again. </p>",
       "refs": {
       }
     },
@@ -856,6 +914,16 @@
       "refs": {
       }
     },
+    "DeleteUtterancesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteUtterancesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeBotAliasRequest": {
       "base": null,
       "refs": {
@@ -1064,7 +1132,7 @@
       }
     },
     "ExportFilter": {
-      "base": "<p>Filtes the response form the operation</p>",
+      "base": "<p>Filters the response form the operation</p>",
       "refs": {
         "ExportFilters$member": null
       }
@@ -1143,7 +1211,7 @@
         "DescribeBotLocaleResponse$failureReasons": "<p>if <code>botLocaleStatus</code> is <code>Failed</code>, Amazon Lex explains why it failed to build the bot.</p>",
         "DescribeBotVersionResponse$failureReasons": "<p>If the <code>botStatus</code> is <code>Failed</code>, this contains a list of reasons that the version couldn't be built.</p>",
         "DescribeExportResponse$failureReasons": "<p>If the <code>exportStatus</code> is failed, contains one or more reasons why the export could not be completed.</p>",
-        "DescribeImportResponse$failureReasons": "<p>If the <code>importStatus</code> field is <code>Failed</code>, this provides one or more reasons for the failture.</p>",
+        "DescribeImportResponse$failureReasons": "<p>If the <code>importStatus</code> field is <code>Failed</code>, this provides one or more reasons for the failure.</p>",
         "UpdateBotLocaleResponse$failureReasons": "<p>If the <code>botLocaleStatus</code> is <code>Failed</code>, the <code>failureReasons</code> field lists the errors that occurred while building the bot.</p>"
       }
     },
@@ -1156,9 +1224,10 @@
     "FilterValues": {
       "base": null,
       "refs": {
+        "AggregatedUtterancesFilter$values": "<p>The value to use for filtering the list of bots.</p>",
         "BotFilter$values": "<p>The value to use for filtering the list of bots.</p>",
         "BotLocaleFilter$values": "<p>The value to use for filtering the list of bots.</p>",
-        "ExportFilter$values": "<p>The values to use to fileter the response.</p>",
+        "ExportFilter$values": "<p>The values to use to filter the response.</p>",
         "ImportFilter$values": "<p>The values to use to filter the response.</p>",
         "IntentFilter$values": "<p>The value to use for the filter.</p>",
         "SlotFilter$values": "<p>The value to use to filter the response.</p>",
@@ -1173,6 +1242,48 @@
         "DescribeIntentResponse$fulfillmentCodeHook": "<p>The Lambda function called when the intent is complete and ready for fulfillment.</p>",
         "UpdateIntentRequest$fulfillmentCodeHook": "<p>The new Lambda function to call when all of the intents required slots are provided and the intent is ready for fulfillment.</p>",
         "UpdateIntentResponse$fulfillmentCodeHook": "<p>The updated Lambda function called when the intent is ready for fulfillment.</p>"
+      }
+    },
+    "FulfillmentStartResponseDelay": {
+      "base": null,
+      "refs": {
+        "FulfillmentStartResponseSpecification$delayInSeconds": "<p>The delay between when the Lambda fulfillment function starts running and the start message is played. If the Lambda function returns before the delay is over, the start message isn't played.</p>"
+      }
+    },
+    "FulfillmentStartResponseSpecification": {
+      "base": "<p>Provides settings for a message that is sent to the user when a fulfillment Lambda function starts running.</p>",
+      "refs": {
+        "FulfillmentUpdatesSpecification$startResponse": "<p>Provides configuration information for the message sent to users when the fulfillment Lambda functions starts running.</p>"
+      }
+    },
+    "FulfillmentTimeout": {
+      "base": null,
+      "refs": {
+        "FulfillmentUpdatesSpecification$timeoutInSeconds": "<p>The length of time that the fulfillment Lambda function should run before it times out.</p>"
+      }
+    },
+    "FulfillmentUpdateResponseFrequency": {
+      "base": null,
+      "refs": {
+        "FulfillmentUpdateResponseSpecification$frequencyInSeconds": "<p>The frequency that a message is sent to the user. When the period ends, Amazon Lex chooses a message from the message groups and plays it to the user. If the fulfillment Lambda returns before the first period ends, an update message is not played to the user.</p>"
+      }
+    },
+    "FulfillmentUpdateResponseSpecification": {
+      "base": "<p>Provides settings for a message that is sent periodically to the user while a fulfillment Lambda function is running.</p>",
+      "refs": {
+        "FulfillmentUpdatesSpecification$updateResponse": "<p>Provides configuration information for messages sent periodically to the user while the fulfillment Lambda function is running.</p>"
+      }
+    },
+    "FulfillmentUpdatesSpecification": {
+      "base": "<p>Provides information for updating the user on the progress of fulfilling an intent.</p>",
+      "refs": {
+        "FulfillmentCodeHookSettings$fulfillmentUpdatesSpecification": "<p>Provides settings for update messages sent to the user for long-running Lambda fulfillment functions. Fulfillment updates can be used only with streaming conversations.</p>"
+      }
+    },
+    "HitCount": {
+      "base": null,
+      "refs": {
+        "AggregatedUtterancesSummary$hitCount": "<p>The number of times that the utterance was detected by Amazon Lex during the time period. When an utterance is detected, it activates an intent or a slot.</p>"
       }
     },
     "Id": {
@@ -1223,6 +1334,7 @@
         "DeleteSlotRequest$intentId": "<p>The identifier of the intent associated with the slot.</p>",
         "DeleteSlotTypeRequest$slotTypeId": "<p>The identifier of the slot type to delete.</p>",
         "DeleteSlotTypeRequest$botId": "<p>The identifier of the bot associated with the slot type.</p>",
+        "DeleteUtterancesRequest$botId": "<p>The unique identifier of the bot that contains the utterances.</p>",
         "DescribeBotAliasRequest$botId": "<p>The identifier of the bot associated with the bot alias to describe.</p>",
         "DescribeBotAliasResponse$botId": "<p>The identifier of the bot associated with the bot alias.</p>",
         "DescribeBotLocaleRequest$botId": "<p>The identifier of the bot associated with the locale.</p>",
@@ -1252,6 +1364,8 @@
         "ExportSummary$exportId": "<p>The unique identifier that Amazon Lex assigned to the export.</p>",
         "ImportSummary$importId": "<p>The unique identifier that Amazon Lex assigned to the import.</p>",
         "IntentSummary$intentId": "<p>The unique identifier assigned to the intent. Use this ID to get detailed information about the intent with the <code>DescribeIntent</code> operation.</p>",
+        "ListAggregatedUtterancesRequest$botId": "<p>The unique identifier of the bot associated with this request.</p>",
+        "ListAggregatedUtterancesResponse$botId": "<p>The identifier of the bot that contains the utterances.</p>",
         "ListBotAliasesRequest$botId": "<p>The identifier of the bot to list aliases for.</p>",
         "ListBotAliasesResponse$botId": "<p>The identifier of the bot associated with the aliases.</p>",
         "ListBotLocalesRequest$botId": "<p>The identifier of the bot to list locales for.</p>",
@@ -1348,7 +1462,7 @@
       }
     },
     "ImportResourceSpecification": {
-      "base": "<p>Provides information about the bot or bot locale that you want to import. You can sepcifiy the <code>botImportSpecification</code> or the <code>botLocaleImportSpecification</code>, but not both.</p>",
+      "base": "<p>Provides information about the bot or bot locale that you want to import. You can specify the <code>botImportSpecification</code> or the <code>botLocaleImportSpecification</code>, but not both.</p>",
       "refs": {
         "DescribeImportResponse$resourceSpecification": "<p>The specifications of the imported bot or bot locale.</p>",
         "StartImportRequest$resourceSpecification": "<p>Parameters for creating the bot or bot locale.</p>",
@@ -1493,7 +1607,7 @@
       }
     },
     "InternalServerException": {
-      "base": "<p/>",
+      "base": "<p>The service encountered an unexpected condition. Try your request again.</p>",
       "refs": {
       }
     },
@@ -1526,9 +1640,19 @@
       }
     },
     "LambdaCodeHook": {
-      "base": "<p>Specifies a Lambda function that verifies requests to a bot or fulfilles the user's request to a bot.</p>",
+      "base": "<p>Specifies a Lambda function that verifies requests to a bot or fulfills the user's request to a bot.</p>",
       "refs": {
         "CodeHookSpecification$lambdaCodeHook": null
+      }
+    },
+    "ListAggregatedUtterancesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAggregatedUtterancesResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "ListBotAliasesRequest": {
@@ -1674,6 +1798,7 @@
         "DeleteIntentRequest$localeId": "<p>The identifier of the language and locale where the bot will be deleted. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "DeleteSlotRequest$localeId": "<p>The identifier of the language and locale that the slot will be deleted from. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "DeleteSlotTypeRequest$localeId": "<p>The identifier of the language and locale that the slot type will be deleted from. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
+        "DeleteUtterancesRequest$localeId": "<p>The identifier of the language and locale where the utterances were collected. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "DescribeBotLocaleRequest$localeId": "<p>The unique identifier of the locale to describe. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>. </p>",
         "DescribeBotLocaleResponse$localeId": "<p>The unique identifier of the described locale.</p>",
         "DescribeIntentRequest$localeId": "<p>The identifier of the language and locale of the intent to describe. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
@@ -1682,6 +1807,8 @@
         "DescribeSlotResponse$localeId": "<p>The language and locale specified for the slot.</p>",
         "DescribeSlotTypeRequest$localeId": "<p>The identifier of the language and locale of the slot type to describe. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "DescribeSlotTypeResponse$localeId": "<p>The language and locale specified for the slot type.</p>",
+        "ListAggregatedUtterancesRequest$localeId": "<p>The identifier of the language and locale where the utterances were collected. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
+        "ListAggregatedUtterancesResponse$localeId": "<p>The identifier of the language and locale that the utterances are in.</p>",
         "ListBuiltInIntentsRequest$localeId": "<p>The identifier of the language and locale of the intents to list. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "ListBuiltInIntentsResponse$localeId": "<p>The language and locale of the intents in the list.</p>",
         "ListBuiltInSlotTypesRequest$localeId": "<p>The identifier of the language and locale of the slot types to list. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
@@ -1721,6 +1848,7 @@
     "MaxResults": {
       "base": null,
       "refs": {
+        "ListAggregatedUtterancesRequest$maxResults": "<p>The maximum number of utterances to return in each page of results. If there are fewer results than the maximum page size, only the actual number of results are returned. If you don't specify the <code>maxResults</code> parameter, 1,000 results are returned.</p>",
         "ListBotAliasesRequest$maxResults": "<p>The maximum number of aliases to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListBotLocalesRequest$maxResults": "<p>The maximum number of aliases to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListBotVersionsRequest$maxResults": "<p>The maximum number of versions to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
@@ -1757,6 +1885,8 @@
     "MessageGroupsList": {
       "base": null,
       "refs": {
+        "FulfillmentStartResponseSpecification$messageGroups": "<p>One to 5 message groups that contain start messages. Amazon Lex chooses one of the messages to play to the user.</p>",
+        "FulfillmentUpdateResponseSpecification$messageGroups": "<p>One to 5 message groups that contain update messages. Amazon Lex chooses one of the messages to play to the user.</p>",
         "PromptSpecification$messageGroups": "<p>A collection of messages that Amazon Lex can send to the user. Amazon Lex chooses the actual message to send at runtime.</p>",
         "ResponseSpecification$messageGroups": "<p>A collection of responses that Amazon Lex can send to the user. Amazon Lex chooses the actual response to send at runtime.</p>",
         "StillWaitingResponseSpecification$messageGroups": "<p>One or more message groups, each containing one or more messages, that define the prompts that Amazon Lex sends to the user.</p>"
@@ -1766,6 +1896,12 @@
       "base": null,
       "refs": {
         "MessageGroup$variations": "<p>Message variations to send to the user. When variations are defined, Amazon Lex chooses the primary message or one of the variations to send to the user.</p>"
+      }
+    },
+    "MissedCount": {
+      "base": null,
+      "refs": {
+        "AggregatedUtterancesSummary$missedCount": "<p>The number of times that the utterance was missed by Amazon Lex An utterance is missed when it doesn't activate an intent or slot.</p>"
       }
     },
     "MultipleValuesSetting": {
@@ -1825,6 +1961,8 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "ListAggregatedUtterancesRequest$nextToken": "<p>If the response from the <code>ListAggregatedUtterances</code> operation contains more results that specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
+        "ListAggregatedUtterancesResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListAggregatedUtterances</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListAggregatedUtterances</code> operation request to get the next page of results.</p>",
         "ListBotAliasesRequest$nextToken": "<p>If the response from the <code>ListBotAliases</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListBotAliasesResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListBotAliases</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListBotAliases</code> operation request to get the next page of results.</p>",
         "ListBotLocalesRequest$nextToken": "<p>If the response from the <code>ListBotLocales</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token as the <code>nextToken</code> parameter to return the next page of results. </p>",
@@ -1837,7 +1975,7 @@
         "ListBuiltInIntentsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListBuiltInIntents</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListBotAliases</code> operation request to get the next page of results.</p>",
         "ListBuiltInSlotTypesRequest$nextToken": "<p>If the response from the <code>ListBuiltInSlotTypes</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListBuiltInSlotTypesResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListBuiltInSlotTypes</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>LIstBuiltInSlotTypes</code> operation request to get the next page of results.</p>",
-        "ListExportsRequest$nextToken": "<p>If the response from the <code>ListExports</code> operation contans more results that specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
+        "ListExportsRequest$nextToken": "<p>If the response from the <code>ListExports</code> operation contains more results that specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListExportsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListExports</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListExports</code> operation request to get the next page of results.</p>",
         "ListImportsRequest$nextToken": "<p>If the response from the <code>ListImports</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListImportsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListImports</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListImports</code> operation request to get the next page of results.</p>",
@@ -1927,8 +2065,14 @@
         "UpdateResourcePolicyRequest$policy": "<p>A resource policy to add to the resource. The policy is a JSON structure that contains one or more statements that define the policy. The policy must follow the IAM syntax. For more information about the contents of a JSON policy document, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html\"> IAM JSON policy reference </a>. </p> <p>If the policy isn't valid, Amazon Lex returns a validation exception.</p>"
       }
     },
+    "PostFulfillmentStatusSpecification": {
+      "base": "<p>Provides a setting that determines whether the post-fulfillment response is sent to the user. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/streaming-progress.html#progress-complete\">https://docs.aws.amazon.com/lexv2/latest/dg/streaming-progress.html#progress-complete</a> </p>",
+      "refs": {
+        "FulfillmentCodeHookSettings$postFulfillmentStatusSpecification": "<p>Provides settings for messages sent to the user for after the Lambda fulfillment function completes. Post-fulfillment messages can be sent for both streaming and non-streaming conversations.</p>"
+      }
+    },
     "PreconditionFailedException": {
-      "base": "<p/>",
+      "base": "<p>Your request couldn't be completed because one or more request fields aren't valid. Check the fields in your request and try again.</p>",
       "refs": {
       }
     },
@@ -1966,7 +2110,7 @@
     "PromptMaxRetries": {
       "base": null,
       "refs": {
-        "PromptSpecification$maxRetries": "<p>The maximum number of times the bot tries to elicit a resonse from the user using this prompt.</p>"
+        "PromptSpecification$maxRetries": "<p>The maximum number of times the bot tries to elicit a response from the user using this prompt.</p>"
       }
     },
     "PromptSpecification": {
@@ -1989,6 +2133,12 @@
         "SlotValueRegexFilter$pattern": "<p>A regular expression used to validate the value of a slot.</p> <p> Use a standard regular expression. Amazon Lex supports the following characters in the regular expression: </p> <ul> <li> <p>A-Z, a-z</p> </li> <li> <p>0-9</p> </li> <li> <p>Unicode characters (\"\\ u&lt;Unicode&gt;\")</p> </li> </ul> <p> Represent Unicode characters with four digits, for example \"\\u0041\" or \"\\u005A\". </p> <p> The following regular expression operators are not supported: </p> <ul> <li> <p>Infinite repeaters: *, +, or {x,} with no upper bound.</p> </li> <li> <p>Wild card (.)</p> </li> </ul>"
       }
     },
+    "RelativeAggregationDuration": {
+      "base": "<p>Specifies the time window that utterance statistics are returned for. The time window is always relative to the last time that the that utterances were aggregated. For example, if the <code>ListAggregatedUtterances</code> operation is called at 1600, the time window is set to 1 hour, and the last refresh time was 1530, only utterances made between 1430 and 1530 are returned.</p> <p>You can choose the time window that statistics should be returned for.</p> <ul> <li> <p> <b>Hours</b> - You can request utterance statistics for 1, 3, 6, 12, or 24 hour time windows. Statistics are refreshed every half hour for 1 hour time windows, and hourly for the other time windows.</p> </li> <li> <p> <b>Days</b> - You can request utterance statistics for 3 days. Statistics are refreshed every 6 hours.</p> </li> <li> <p> <b>Weeks</b> - You can see statistics for one or two weeks. Statistics are refreshed every 12 hours for one week time windows, and once per day for two week time windows.</p> </li> </ul>",
+      "refs": {
+        "UtteranceAggregationDuration$relativeAggregationDuration": "<p>The desired time window for aggregating utterances. </p>"
+      }
+    },
     "ResourceCount": {
       "base": null,
       "refs": {
@@ -1997,7 +2147,7 @@
       }
     },
     "ResourceNotFoundException": {
-      "base": "<p/>",
+      "base": "<p>You asked to describe a resource that doesn't exist. Check the resource that you are requesting and try again.</p>",
       "refs": {
       }
     },
@@ -2006,6 +2156,9 @@
       "refs": {
         "IntentClosingSetting$closingResponse": "<p>The response that Amazon Lex sends to the user when the intent is complete.</p>",
         "IntentConfirmationSetting$declinationResponse": "<p>When the user answers \"no\" to the question defined in <code>promptSpecification</code>, Amazon Lex responds with this response to acknowledge that the intent was canceled. </p>",
+        "PostFulfillmentStatusSpecification$successResponse": null,
+        "PostFulfillmentStatusSpecification$failureResponse": null,
+        "PostFulfillmentStatusSpecification$timeoutResponse": null,
         "WaitAndContinueSpecification$waitingResponse": "<p>The response that Amazon Lex sends to indicate that the bot is waiting for the conversation to continue.</p>",
         "WaitAndContinueSpecification$continueResponse": "<p>The response that Amazon Lex sends to indicate that the bot is ready to continue the conversation.</p>"
       }
@@ -2108,8 +2261,14 @@
       }
     },
     "ServiceQuotaExceededException": {
-      "base": "<p/>",
+      "base": "<p>You have reached a quota for your bot. </p>",
       "refs": {
+      }
+    },
+    "SessionId": {
+      "base": null,
+      "refs": {
+        "DeleteUtterancesRequest$sessionId": "<p>The unique identifier of the session with the user. The ID is returned in the response from the and operations.</p>"
       }
     },
     "SessionTTL": {
@@ -2155,7 +2314,7 @@
     "SlotDefaultValueSpecification": {
       "base": "<p>Defines a list of values that Amazon Lex should use as the default value for a slot.</p>",
       "refs": {
-        "SlotValueElicitationSetting$defaultValueSpecification": "<p>A list of default values for a slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, sesion attributes, and defined values.</p>"
+        "SlotValueElicitationSetting$defaultValueSpecification": "<p>A list of default values for a slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, session attributes, and defined values.</p>"
       }
     },
     "SlotDefaultValueString": {
@@ -2337,6 +2496,7 @@
     "SortOrder": {
       "base": null,
       "refs": {
+        "AggregatedUtterancesSortBy$order": "<p>Specifies whether to sort the aggregated utterances in ascending or descending order.</p>",
         "BotLocaleSortBy$order": "<p>Specifies whether to sort the bot locales in ascending or descending order.</p>",
         "BotSortBy$order": "<p>The order to sort the list. You can choose ascending or descending.</p>",
         "BotVersionSortBy$order": "<p>The order to sort the list. You can specify ascending or descending order.</p>",
@@ -2380,7 +2540,7 @@
     "SynonymList": {
       "base": null,
       "refs": {
-        "SlotTypeValue$synonyms": "<p>Additional values releated to the slot type entry.</p>"
+        "SlotTypeValue$synonyms": "<p>Additional values related to the slot type entry.</p>"
       }
     },
     "TagKey": {
@@ -2446,13 +2606,27 @@
       }
     },
     "ThrottlingException": {
-      "base": "<p/>",
+      "base": "<p>Your request rate is too high. Reduce the frequency of requests.</p>",
       "refs": {
+      }
+    },
+    "TimeDimension": {
+      "base": null,
+      "refs": {
+        "RelativeAggregationDuration$timeDimension": "<p>The type of time period that the <code>timeValue</code> field represents. </p>"
+      }
+    },
+    "TimeValue": {
+      "base": null,
+      "refs": {
+        "RelativeAggregationDuration$timeValue": "<p>The period of the time window to gather statistics for. The valid value depends on the setting of the <code>timeDimension</code> field.</p> <ul> <li> <p> <code>Hours</code> - 1/3/6/12/24</p> </li> <li> <p> <code>Days</code> - 3</p> </li> <li> <p> <code>Weeks</code> - 1/2</p> </li> </ul>"
       }
     },
     "Timestamp": {
       "base": null,
       "refs": {
+        "AggregatedUtterancesSummary$utteranceFirstRecordedInAggregationDuration": "<p>The date and time that the utterance was first recorded in the time window for aggregation. An utterance may have been sent to Amazon Lex before that time, but only utterances within the time window are counted.</p>",
+        "AggregatedUtterancesSummary$utteranceLastRecordedInAggregationDuration": "<p>The last date and time that an utterance was recorded in the time window for aggregation. An utterance may be sent to Amazon Lex after that time, but only utterances within the time window are counted.</p>",
         "BotAliasHistoryEvent$startDate": "<p>The date and time that the event started.</p>",
         "BotAliasHistoryEvent$endDate": "<p>The date and time that the event ended.</p>",
         "BotAliasSummary$creationDateTime": "<p>A timestamp of the date and time that the bot alias was created.</p>",
@@ -2494,6 +2668,9 @@
         "ImportSummary$creationDateTime": "<p>The date and time that the import was created.</p>",
         "ImportSummary$lastUpdatedDateTime": "<p>The date and time that the import was last updated.</p>",
         "IntentSummary$lastUpdatedDateTime": "<p>The timestamp of the date and time that the intent was last updated.</p>",
+        "ListAggregatedUtterancesResponse$aggregationWindowStartTime": "<p>The date and time that the aggregation window begins. Only data collected after this time is returned in the results.</p>",
+        "ListAggregatedUtterancesResponse$aggregationWindowEndTime": "<p>The date and time that the aggregation window ends. Only data collected between the start time and the end time are returned in the results. </p>",
+        "ListAggregatedUtterancesResponse$aggregationLastRefreshedDateTime": "<p>The last date and time that the aggregated data was collected. The time period depends on the length of the aggregation window.</p> <ul> <li> <p> <b>Hours</b> - for 1 hour time window, every half hour; otherwise every hour.</p> </li> <li> <p> <b>Days</b> - every 6 hours</p> </li> <li> <p> <b>Weeks</b> - for a one week time window, every 12 hours; otherwise, every day</p> </li> </ul>",
         "SlotSummary$lastUpdatedDateTime": "<p>The timestamp of the last date and time that the slot was updated.</p>",
         "SlotTypeSummary$lastUpdatedDateTime": "<p>A timestamp of the date and time that the slot type was last updated.</p>",
         "StartImportResponse$creationDateTime": "<p>The date and time that the import request was created.</p>",
@@ -2606,11 +2783,19 @@
     "Utterance": {
       "base": null,
       "refs": {
+        "AggregatedUtterancesSummary$utterance": "<p>The text of the utterance. If the utterance was used with the <code>RecognizeUtterance</code> operation, the text is the transcription of the audio utterance.</p>",
         "SampleUtterance$utterance": "<p>The sample utterance that Amazon Lex uses to build its machine-learning model to recognize intents.</p>"
       }
     },
+    "UtteranceAggregationDuration": {
+      "base": "<p>Provides parameters for setting the time window and duration for aggregating utterance data.</p>",
+      "refs": {
+        "ListAggregatedUtterancesRequest$aggregationDuration": "<p>The time window for aggregating the utterance information. You can specify a time between one hour and two weeks.</p>",
+        "ListAggregatedUtterancesResponse$aggregationDuration": "<p>The time period used to aggregate the utterance data.</p>"
+      }
+    },
     "ValidationException": {
-      "base": "<p/>",
+      "base": "<p>One of the input parameters in your request isn't valid. Check the parameters and try your request again.</p>",
       "refs": {
       }
     },

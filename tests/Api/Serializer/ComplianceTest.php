@@ -128,5 +128,10 @@ class ComplianceTest extends TestCase
                 $this->assertSame($value, $request->getHeaderLine($key));
             }
         }
+        if (isset($serialized['forbidHeaders'])) {
+            foreach ($serialized['forbidHeaders'] as $key => $value) {
+                $this->assertTrue(!isset($request->getHeaders()[$key]));
+            }
+        }
     }
 }

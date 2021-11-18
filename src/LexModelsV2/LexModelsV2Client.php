@@ -53,6 +53,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise deleteSlotAsync(array $args = [])
  * @method \Aws\Result deleteSlotType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteSlotTypeAsync(array $args = [])
+ * @method \Aws\Result deleteUtterances(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteUtterancesAsync(array $args = [])
  * @method \Aws\Result describeBot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBotAsync(array $args = [])
  * @method \Aws\Result describeBotAlias(array $args = [])
@@ -73,6 +75,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise describeSlotAsync(array $args = [])
  * @method \Aws\Result describeSlotType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeSlotTypeAsync(array $args = [])
+ * @method \Aws\Result listAggregatedUtterances(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAggregatedUtterancesAsync(array $args = [])
  * @method \Aws\Result listBotAliases(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBotAliasesAsync(array $args = [])
  * @method \Aws\Result listBotLocales(array $args = [])
@@ -120,40 +124,4 @@ use Psr\Http\Message\RequestInterface;
  * @method \Aws\Result updateSlotType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSlotTypeAsync(array $args = [])
  */
-class LexModelsV2Client extends AwsClient {
-    public function __construct(array $args)
-    {
-        parent::__construct($args);
-
-        // Setup middleware.
-        $stack = $this->getHandlerList();
-        $stack->appendBuild($this->updateContentType(), 'models.lex.v2.updateContentType');
-    }
-
-    /**
-     * Creates a middleware that updates the Content-Type header when it is present;
-     * this is necessary because the service protocol is rest-json which by default
-     * sets the content-type to 'application/json', but interacting with the service
-     * requires it to be set to x-amz-json-1.1
-     *
-     * @return callable
-     */
-    private function updateContentType()
-    {
-        return function (callable $handler) {
-            return function (
-                CommandInterface $command,
-                RequestInterface $request = null
-            ) use ($handler) {
-                $contentType = $request->getHeader('Content-Type');
-                if (!empty($contentType) && $contentType[0] == 'application/json') {
-                    return $handler($command, $request->withHeader(
-                        'Content-Type',
-                        'application/x-amz-json-1.1'
-                    ));
-                }
-                return $handler($command, $request);
-            };
-        };
-    }
-}
+class LexModelsV2Client extends AwsClient {}
