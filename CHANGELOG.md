@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.204.2 - 2021-11-19
 
 * `Aws\AppStream` - Includes APIs for managing resources for Elastic fleets: applications, app blocks, and application-fleet associations.
 * `Aws\ApplicationInsights` - Application Insights now supports monitoring for HANA
