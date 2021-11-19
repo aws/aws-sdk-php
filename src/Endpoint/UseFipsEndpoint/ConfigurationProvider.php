@@ -166,7 +166,9 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function fallback($region)
     {
         return function () use ($region) {
-            if (\Aws\is_fips_pseudo_region($region)){
+            $isFipsPseudoRegion = strpos($region, 'fips-') !== false
+                || strpos($region, '-fips') !== false;
+            if ($isFipsPseudoRegion){
                 $configuration = new Configuration(true);
             } else {
                 $configuration = new Configuration(false);
