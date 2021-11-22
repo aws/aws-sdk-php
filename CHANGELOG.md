@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.204.3 - 2021-11-22
 
 * `Aws\Braket` - This release adds support for Amazon Braket Hybrid Jobs.
 * `Aws\ChimeSDKMeetings` - Added new APIs for enabling Echo Reduction with Voice Focus.
