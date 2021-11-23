@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Backup` - This release adds new opt-in settings for advanced features for DynamoDB backups
+* `Aws\DynamoDB` - DynamoDB PartiQL now supports ReturnConsumedCapacity, which returns capacity units consumed by PartiQL APIs if the request specified returnConsumedCapacity parameter. PartiQL APIs include ExecuteStatement, BatchExecuteStatement, and ExecuteTransaction.
+* `Aws\EC2` - This release adds a new parameter ipv6Native to the allow creation of IPv6-only subnets using the CreateSubnet operation, and the operation ModifySubnetAttribute includes new parameters to modify subnet attributes to use resource-based naming and enable DNS resolutions for Private DNS name.
+* `Aws\ECS` - Documentation update for ARM support on Amazon ECS.
+* `Aws\ElastiCache` - Adding support for r6gd instances for Redis with data tiering. In a cluster with data tiering enabled, when available memory capacity is exhausted, the least recently used data is automatically tiered to solid state drives for cost-effective capacity scaling with minimal performance impact.
+* `Aws\ElasticLoadBalancingv2` - This release allows you to create internal Application and Network Load Balancers in dualstack mode. This release also adds an attribute to block internet gateway (IGW) access to the load balancer, preventing unintended access to your internal load balancers through an internet gateway.
+* `Aws\FinSpaceData` - Update documentation for createChangeset API.
+* `Aws\IoT` - This release introduces a new feature, Managed Job Template, for AWS IoT Jobs Service. Customers can now use service provided managed job templates to easily create jobs for supported standard job actions.
+* `Aws\IoTDeviceAdvisor` - This release introduces a new feature for Device Advisor: ability to execute multiple test suites in parallel for given customer account. You can use GetEndpoint API to get the device-level test endpoint and call StartSuiteRun with "parallelRun=true" to run suites in parallel.
+* `Aws\IoTWireless` - Two new APIs, GetNetworkAnalyzerConfiguration and UpdateNetworkAnalyzerConfiguration, are added for the newly released Network Analyzer feature which enables customers to view real-time frame information and logs from LoRaWAN devices and gateways.
+* `Aws\Lambda` - Release Lambda event source filtering for SQS, Kinesis Streams, and DynamoDB Streams.
+* `Aws\Macie2` - Documentation updates for Amazon Macie
+* `Aws\OpenSearchService` - This release adds an optional parameter dry-run for the UpdateDomainConfig API to perform basic validation checks, and detect the deployment type that will be required for the configuration change, without actually applying the change.
+* `Aws\RDS` - Adds support for Multi-AZ DB clusters for RDS for MySQL and RDS for PostgreSQL.
+* `Aws\Redshift` - This release adds support for reserved node exchange with restore/resize
+* `Aws\S3` - Introduce two new Filters to S3 Lifecycle configurations - ObjectSizeGreaterThan and ObjectSizeLessThan. Introduce a new way to trigger actions on noncurrent versions by providing the number of newer noncurrent versions along with noncurrent days.
+* `Aws\SQS` - Amazon SQS adds a new queue attribute, SqsManagedSseEnabled, which enables server-side queue encryption using SQS owned encryption keys.
+* `Aws\STS` - Documentation updates for AWS Security Token Service.
+* `Aws\WorkSpaces` - Documentation updates for Amazon WorkSpaces
+
 ## 3.204.3 - 2021-11-22
 
 * `Aws\Braket` - This release adds support for Amazon Braket Hybrid Jobs.
