@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.204.4 - 2021-11-23
 
 * `Aws\Backup` - This release adds new opt-in settings for advanced features for DynamoDB backups
 * `Aws\DynamoDB` - DynamoDB PartiQL now supports ReturnConsumedCapacity, which returns capacity units consumed by PartiQL APIs if the request specified returnConsumedCapacity parameter. PartiQL APIs include ExecuteStatement, BatchExecuteStatement, and ExecuteTransaction.
