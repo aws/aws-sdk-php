@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling.
+* `Aws\EC2` - Documentation updates for EC2.
+* `Aws\IoTDeviceAdvisor` - Documentation update for Device Advisor GetEndpoint API
+* `Aws\Outposts` - This release adds new APIs for working with Outpost sites and orders.
+* `Aws\Pinpoint` - Added a One-Time Password (OTP) management feature. You can use the Amazon Pinpoint API to generate OTP codes and send them to your users as SMS messages. Your apps can then call the API to verify the OTP codes that your users input
+* `Aws\mgn` - Application Migration Service now supports an additional replication method that does not require agent installation on each source server. This option is available for source servers running on VMware vCenter versions 6.7 and 7.0.
+
 ## 3.204.5 - 2021-11-24
 
 * `Aws\AutoScaling` - Customers can now configure predictive scaling policies to proactively scale EC2 Auto Scaling groups based on any CloudWatch metrics that more accurately represent the load on the group than the four predefined metrics. They can also use math expressions to further customize the metrics.
