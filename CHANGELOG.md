@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.204.6 - 2021-11-26
 
 * `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling.
 * `Aws\EC2` - Documentation updates for EC2.
