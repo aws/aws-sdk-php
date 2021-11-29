@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchEvidently` - Introducing Amazon CloudWatch Evidently. This is the first public release of Amazon CloudWatch Evidently.
+* `Aws\CloudWatchRUM` - This is the first public release of CloudWatch RUM
+* `Aws\ComputeOptimizer` - Adds support for the enhanced infrastructure metrics paid feature. Also adds support for two new sets of resource efficiency metrics, including savings opportunity metrics and performance improvement opportunity metrics.
+* `Aws\DataExchange` - This release enables providers and subscribers to use Data Set, Job, and Asset operations to work with API assets from Amazon API Gateway. In addition, this release enables subscribers to use the SendApiAsset operation to invoke a provider's Amazon API Gateway API that they are entitled to.
+* `Aws\EC2` - This release adds support for G5g and M6a instances. This release also adds support for Amazon EBS Snapshots Archive, a feature that enables you to archive your EBS snapshots; and Recycle Bin, a feature that enables you to protect your EBS snapshots against accidental deletion.
+* `Aws\ECR` - This release adds supports for pull through cache rules and enhanced scanning.
+* `Aws\Inspector2` - This release adds support for the new Amazon Inspector API. The new Amazon Inspector can automatically discover and scan Amazon EC2 instances and Amazon ECR container images for software vulnerabilities and unintended network exposure, and report centralized findings across multiple AWS accounts.
+* `Aws\IoTSiteWise` - AWS IoT SiteWise now supports retention configuration for the hot tier storage.
+* `Aws\RecycleBin` - This release adds support for Recycle Bin.
+* `Aws\S3` - Amazon S3 Event Notifications adds Amazon EventBridge as a destination and supports additional event types. The PutBucketNotificationConfiguration API can now skip validation of Amazon SQS, Amazon SNS and AWS Lambda destinations.
+* `Aws\SSM` - Added two new attributes to DescribeInstanceInformation called SourceId and SourceType along with new string filters SourceIds and SourceTypes to filter instance records.
+* `Aws\WellArchitected` - This update provides support for Well-Architected API users to use custom lens features.
+
 ## 3.205.0 - 2021-11-29
 
 * `Aws\MigrationHubRefactorSpaces` - This is the initial SDK release for AWS Migration Hub Refactor Spaces
