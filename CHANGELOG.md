@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MigrationHubRefactorSpaces` - This is the initial SDK release for AWS Migration Hub Refactor Spaces
+* `Aws\Personalize` - This release adds API support for Recommenders and BatchSegmentJobs.
+* `Aws\PersonalizeRuntime` - This release adds inference support for Recommenders.
+* `Aws\Textract` - This release adds support for synchronously analyzing identity documents through a new API: AnalyzeID
+
 ## 3.204.6 - 2021-11-26
 
 * `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling.
