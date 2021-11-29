@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.205.0 - 2021-11-29
 
 * `Aws\MigrationHubRefactorSpaces` - This is the initial SDK release for AWS Migration Hub Refactor Spaces
 * `Aws\Personalize` - This release adds API support for Recommenders and BatchSegmentJobs.
