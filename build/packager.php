@@ -6,7 +6,7 @@ $projectRoot = __DIR__ . '/../';
 $burgomaster = new \Burgomaster($stageDirectory, $projectRoot);
 $autoloaderFilename = 'aws-autoloader.php';
 
-$metaFiles = ['README.md', 'LICENSE.md', 'NOTICE.md', 'CHANGELOG.md'];
+$metaFiles = ['README.md', 'LICENSE', 'NOTICE', 'CHANGELOG.md'];
 foreach ($metaFiles as $file) {
     $burgomaster->deepCopy($file, $file);
 }

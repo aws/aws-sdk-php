@@ -68,7 +68,7 @@ class ResultPaginator implements \Iterator
      */
     public function each(callable $handleResult)
     {
-        return Promise\coroutine(function () use ($handleResult) {
+        return Promise\Coroutine::of(function () use ($handleResult) {
             $nextToken = null;
             do {
                 $command = $this->createNextCommand($this->args, $nextToken);
@@ -76,7 +76,7 @@ class ResultPaginator implements \Iterator
                 $nextToken = $this->determineNextToken($result);
                 $retVal = $handleResult($result);
                 if ($retVal !== null) {
-                    yield Promise\promise_for($retVal);
+                    yield Promise\Create::promiseFor($retVal);
                 }
             } while ($nextToken);
         });

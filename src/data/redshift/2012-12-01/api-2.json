@@ -49,6 +49,22 @@
         {"shape":"UnauthorizedPartnerIntegrationFault"}
       ]
     },
+    "AssociateDataShareConsumer":{
+      "name":"AssociateDataShareConsumer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AssociateDataShareConsumerMessage"},
+      "output":{
+        "shape":"DataShare",
+        "resultWrapper":"AssociateDataShareConsumerResult"
+      },
+      "errors":[
+        {"shape":"InvalidDataShareFault"},
+        {"shape":"InvalidNamespaceFault"}
+      ]
+    },
     "AuthorizeClusterSecurityGroupIngress":{
       "name":"AuthorizeClusterSecurityGroupIngress",
       "http":{
@@ -65,6 +81,21 @@
         {"shape":"InvalidClusterSecurityGroupStateFault"},
         {"shape":"AuthorizationAlreadyExistsFault"},
         {"shape":"AuthorizationQuotaExceededFault"}
+      ]
+    },
+    "AuthorizeDataShare":{
+      "name":"AuthorizeDataShare",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AuthorizeDataShareMessage"},
+      "output":{
+        "shape":"DataShare",
+        "resultWrapper":"AuthorizeDataShareResult"
+      },
+      "errors":[
+        {"shape":"InvalidDataShareFault"}
       ]
     },
     "AuthorizeEndpointAccess":{
@@ -173,6 +204,23 @@
         {"shape":"InvalidClusterSnapshotStateFault"},
         {"shape":"ClusterSnapshotQuotaExceededFault"},
         {"shape":"InvalidRetentionPeriodFault"}
+      ]
+    },
+    "CreateAuthenticationProfile":{
+      "name":"CreateAuthenticationProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateAuthenticationProfileMessage"},
+      "output":{
+        "shape":"CreateAuthenticationProfileResult",
+        "resultWrapper":"CreateAuthenticationProfileResult"
+      },
+      "errors":[
+        {"shape":"AuthenticationProfileAlreadyExistsFault"},
+        {"shape":"AuthenticationProfileQuotaExceededFault"},
+        {"shape":"InvalidAuthenticationProfileRequestFault"}
       ]
     },
     "CreateCluster":{
@@ -470,6 +518,37 @@
         {"shape":"UnsupportedOperationFault"}
       ]
     },
+    "DeauthorizeDataShare":{
+      "name":"DeauthorizeDataShare",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeauthorizeDataShareMessage"},
+      "output":{
+        "shape":"DataShare",
+        "resultWrapper":"DeauthorizeDataShareResult"
+      },
+      "errors":[
+        {"shape":"InvalidDataShareFault"}
+      ]
+    },
+    "DeleteAuthenticationProfile":{
+      "name":"DeleteAuthenticationProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteAuthenticationProfileMessage"},
+      "output":{
+        "shape":"DeleteAuthenticationProfileResult",
+        "resultWrapper":"DeleteAuthenticationProfileResult"
+      },
+      "errors":[
+        {"shape":"AuthenticationProfileNotFoundFault"},
+        {"shape":"InvalidAuthenticationProfileRequestFault"}
+      ]
+    },
     "DeleteCluster":{
       "name":"DeleteCluster",
       "http":{
@@ -686,6 +765,22 @@
         "resultWrapper":"DescribeAccountAttributesResult"
       }
     },
+    "DescribeAuthenticationProfiles":{
+      "name":"DescribeAuthenticationProfiles",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeAuthenticationProfilesMessage"},
+      "output":{
+        "shape":"DescribeAuthenticationProfilesResult",
+        "resultWrapper":"DescribeAuthenticationProfilesResult"
+      },
+      "errors":[
+        {"shape":"AuthenticationProfileNotFoundFault"},
+        {"shape":"InvalidAuthenticationProfileRequestFault"}
+      ]
+    },
     "DescribeClusterDbRevisions":{
       "name":"DescribeClusterDbRevisions",
       "http":{
@@ -824,6 +919,51 @@
       "errors":[
         {"shape":"ClusterNotFoundFault"},
         {"shape":"InvalidTagFault"}
+      ]
+    },
+    "DescribeDataShares":{
+      "name":"DescribeDataShares",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDataSharesMessage"},
+      "output":{
+        "shape":"DescribeDataSharesResult",
+        "resultWrapper":"DescribeDataSharesResult"
+      },
+      "errors":[
+        {"shape":"InvalidDataShareFault"}
+      ]
+    },
+    "DescribeDataSharesForConsumer":{
+      "name":"DescribeDataSharesForConsumer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDataSharesForConsumerMessage"},
+      "output":{
+        "shape":"DescribeDataSharesForConsumerResult",
+        "resultWrapper":"DescribeDataSharesForConsumerResult"
+      },
+      "errors":[
+        {"shape":"InvalidNamespaceFault"}
+      ]
+    },
+    "DescribeDataSharesForProducer":{
+      "name":"DescribeDataSharesForProducer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDataSharesForProducerMessage"},
+      "output":{
+        "shape":"DescribeDataSharesForProducerResult",
+        "resultWrapper":"DescribeDataSharesForProducerResult"
+      },
+      "errors":[
+        {"shape":"InvalidNamespaceFault"}
       ]
     },
     "DescribeDefaultClusterParameters":{
@@ -1004,6 +1144,23 @@
         {"shape":"UnauthorizedPartnerIntegrationFault"}
       ]
     },
+    "DescribeReservedNodeExchangeStatus":{
+      "name":"DescribeReservedNodeExchangeStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeReservedNodeExchangeStatusInputMessage"},
+      "output":{
+        "shape":"DescribeReservedNodeExchangeStatusOutputMessage",
+        "resultWrapper":"DescribeReservedNodeExchangeStatusResult"
+      },
+      "errors":[
+        {"shape":"ReservedNodeNotFoundFault"},
+        {"shape":"ReservedNodeExchangeNotFoundFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
     "DescribeReservedNodeOfferings":{
       "name":"DescribeReservedNodeOfferings",
       "http":{
@@ -1168,7 +1325,8 @@
         "resultWrapper":"DisableLoggingResult"
       },
       "errors":[
-        {"shape":"ClusterNotFoundFault"}
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidClusterStateFault"}
       ]
     },
     "DisableSnapshotCopy":{
@@ -1187,6 +1345,22 @@
         {"shape":"SnapshotCopyAlreadyDisabledFault"},
         {"shape":"InvalidClusterStateFault"},
         {"shape":"UnauthorizedOperation"}
+      ]
+    },
+    "DisassociateDataShareConsumer":{
+      "name":"DisassociateDataShareConsumer",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisassociateDataShareConsumerMessage"},
+      "output":{
+        "shape":"DataShare",
+        "resultWrapper":"DisassociateDataShareConsumerResult"
+      },
+      "errors":[
+        {"shape":"InvalidDataShareFault"},
+        {"shape":"InvalidNamespaceFault"}
       ]
     },
     "EnableLogging":{
@@ -1250,6 +1424,28 @@
         {"shape":"UnsupportedOperationFault"}
       ]
     },
+    "GetReservedNodeExchangeConfigurationOptions":{
+      "name":"GetReservedNodeExchangeConfigurationOptions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetReservedNodeExchangeConfigurationOptionsInputMessage"},
+      "output":{
+        "shape":"GetReservedNodeExchangeConfigurationOptionsOutputMessage",
+        "resultWrapper":"GetReservedNodeExchangeConfigurationOptionsResult"
+      },
+      "errors":[
+        {"shape":"ReservedNodeNotFoundFault"},
+        {"shape":"InvalidReservedNodeStateFault"},
+        {"shape":"ReservedNodeAlreadyMigratedFault"},
+        {"shape":"ReservedNodeOfferingNotFoundFault"},
+        {"shape":"UnsupportedOperationFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"ClusterSnapshotNotFoundFault"}
+      ]
+    },
     "GetReservedNodeExchangeOfferings":{
       "name":"GetReservedNodeExchangeOfferings",
       "http":{
@@ -1283,7 +1479,25 @@
       },
       "errors":[
         {"shape":"ClusterNotFoundFault"},
+        {"shape":"InvalidClusterStateFault"},
         {"shape":"UnsupportedOperationFault"}
+      ]
+    },
+    "ModifyAuthenticationProfile":{
+      "name":"ModifyAuthenticationProfile",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyAuthenticationProfileMessage"},
+      "output":{
+        "shape":"ModifyAuthenticationProfileResult",
+        "resultWrapper":"ModifyAuthenticationProfileResult"
+      },
+      "errors":[
+        {"shape":"AuthenticationProfileNotFoundFault"},
+        {"shape":"AuthenticationProfileQuotaExceededFault"},
+        {"shape":"InvalidAuthenticationProfileRequestFault"}
       ]
     },
     "ModifyCluster":{
@@ -1599,6 +1813,21 @@
         {"shape":"ClusterNotFoundFault"}
       ]
     },
+    "RejectDataShare":{
+      "name":"RejectDataShare",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RejectDataShareMessage"},
+      "output":{
+        "shape":"DataShare",
+        "resultWrapper":"RejectDataShareResult"
+      },
+      "errors":[
+        {"shape":"InvalidDataShareFault"}
+      ]
+    },
     "ResetClusterParameterGroup":{
       "name":"ResetClusterParameterGroup",
       "http":{
@@ -1635,7 +1864,13 @@
         {"shape":"UnsupportedOptionFault"},
         {"shape":"UnsupportedOperationFault"},
         {"shape":"UnauthorizedOperation"},
-        {"shape":"LimitExceededFault"}
+        {"shape":"LimitExceededFault"},
+        {"shape":"ReservedNodeNotFoundFault"},
+        {"shape":"InvalidReservedNodeStateFault"},
+        {"shape":"ReservedNodeAlreadyMigratedFault"},
+        {"shape":"ReservedNodeOfferingNotFoundFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"ReservedNodeAlreadyExistsFault"}
       ]
     },
     "RestoreFromClusterSnapshot":{
@@ -1674,7 +1909,14 @@
         {"shape":"InvalidClusterTrackFault"},
         {"shape":"SnapshotScheduleNotFoundFault"},
         {"shape":"TagLimitExceededFault"},
-        {"shape":"InvalidTagFault"}
+        {"shape":"InvalidTagFault"},
+        {"shape":"ReservedNodeNotFoundFault"},
+        {"shape":"InvalidReservedNodeStateFault"},
+        {"shape":"ReservedNodeAlreadyMigratedFault"},
+        {"shape":"ReservedNodeOfferingNotFoundFault"},
+        {"shape":"DependentServiceUnavailableFault"},
+        {"shape":"ReservedNodeAlreadyExistsFault"},
+        {"shape":"UnsupportedOperationFault"}
       ]
     },
     "RestoreTableFromClusterSnapshot":{
@@ -1903,6 +2145,15 @@
         "applying"
       ]
     },
+    "AssociateDataShareConsumerMessage":{
+      "type":"structure",
+      "required":["DataShareArn"],
+      "members":{
+        "DataShareArn":{"shape":"String"},
+        "AssociateEntireAccount":{"shape":"BooleanOptional"},
+        "ConsumerArn":{"shape":"String"}
+      }
+    },
     "AssociatedClusterList":{
       "type":"list",
       "member":{
@@ -1936,6 +2187,55 @@
       "members":{
         "AttributeValue":{"shape":"String"}
       }
+    },
+    "AuthenticationProfile":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfileName":{"shape":"AuthenticationProfileNameString"},
+        "AuthenticationProfileContent":{"shape":"String"}
+      }
+    },
+    "AuthenticationProfileAlreadyExistsFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"AuthenticationProfileAlreadyExistsFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "AuthenticationProfileList":{
+      "type":"list",
+      "member":{"shape":"AuthenticationProfile"}
+    },
+    "AuthenticationProfileNameString":{
+      "type":"string",
+      "max":63,
+      "pattern":"^[a-zA-Z0-9\\-]+$"
+    },
+    "AuthenticationProfileNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"AuthenticationProfileNotFoundFault",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "AuthenticationProfileQuotaExceededFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"AuthenticationProfileQuotaExceededFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
     },
     "AuthorizationAlreadyExistsFault":{
       "type":"structure",
@@ -1991,6 +2291,17 @@
       "type":"structure",
       "members":{
         "ClusterSecurityGroup":{"shape":"ClusterSecurityGroup"}
+      }
+    },
+    "AuthorizeDataShareMessage":{
+      "type":"structure",
+      "required":[
+        "DataShareArn",
+        "ConsumerIdentifier"
+      ],
+      "members":{
+        "DataShareArn":{"shape":"String"},
+        "ConsumerIdentifier":{"shape":"String"}
       }
     },
     "AuthorizeEndpointAccessMessage":{
@@ -2173,7 +2484,9 @@
         "AvailabilityZoneRelocationStatus":{"shape":"String"},
         "ClusterNamespaceArn":{"shape":"String"},
         "TotalStorageCapacityInMegaBytes":{"shape":"LongOptional"},
-        "AquaConfiguration":{"shape":"AquaConfiguration"}
+        "AquaConfiguration":{"shape":"AquaConfiguration"},
+        "DefaultIamRoleArn":{"shape":"String"},
+        "ReservedNodeExchangeStatus":{"shape":"ReservedNodeExchangeStatus"}
       },
       "wrapper":true
     },
@@ -2633,6 +2946,24 @@
       },
       "exception":true
     },
+    "CreateAuthenticationProfileMessage":{
+      "type":"structure",
+      "required":[
+        "AuthenticationProfileName",
+        "AuthenticationProfileContent"
+      ],
+      "members":{
+        "AuthenticationProfileName":{"shape":"AuthenticationProfileNameString"},
+        "AuthenticationProfileContent":{"shape":"String"}
+      }
+    },
+    "CreateAuthenticationProfileResult":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfileName":{"shape":"AuthenticationProfileNameString"},
+        "AuthenticationProfileContent":{"shape":"String"}
+      }
+    },
     "CreateClusterMessage":{
       "type":"structure",
       "required":[
@@ -2673,7 +3004,8 @@
         "MaintenanceTrackName":{"shape":"String"},
         "SnapshotScheduleIdentifier":{"shape":"String"},
         "AvailabilityZoneRelocation":{"shape":"BooleanOptional"},
-        "AquaConfigurationStatus":{"shape":"AquaConfigurationStatus"}
+        "AquaConfigurationStatus":{"shape":"AquaConfigurationStatus"},
+        "DefaultIamRoleArn":{"shape":"String"}
       }
     },
     "CreateClusterParameterGroupMessage":{
@@ -2917,6 +3249,60 @@
         "TotalProvisionedStorageInMegaBytes":{"shape":"Double"}
       }
     },
+    "DataShare":{
+      "type":"structure",
+      "members":{
+        "DataShareArn":{"shape":"String"},
+        "ProducerArn":{"shape":"String"},
+        "AllowPubliclyAccessibleConsumers":{"shape":"Boolean"},
+        "DataShareAssociations":{"shape":"DataShareAssociationList"}
+      }
+    },
+    "DataShareAssociation":{
+      "type":"structure",
+      "members":{
+        "ConsumerIdentifier":{"shape":"String"},
+        "Status":{"shape":"DataShareStatus"},
+        "CreatedDate":{"shape":"TStamp"},
+        "StatusChangeDate":{"shape":"TStamp"}
+      }
+    },
+    "DataShareAssociationList":{
+      "type":"list",
+      "member":{"shape":"DataShareAssociation"}
+    },
+    "DataShareList":{
+      "type":"list",
+      "member":{"shape":"DataShare"}
+    },
+    "DataShareStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "PENDING_AUTHORIZATION",
+        "AUTHORIZED",
+        "DEAUTHORIZED",
+        "REJECTED",
+        "AVAILABLE"
+      ]
+    },
+    "DataShareStatusForConsumer":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "AVAILABLE"
+      ]
+    },
+    "DataShareStatusForProducer":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "AUTHORIZED",
+        "PENDING_AUTHORIZATION",
+        "DEAUTHORIZED",
+        "REJECTED"
+      ]
+    },
     "DataTransferProgress":{
       "type":"structure",
       "members":{
@@ -2933,6 +3319,17 @@
       "member":{
         "shape":"String",
         "locationName":"DbGroup"
+      }
+    },
+    "DeauthorizeDataShareMessage":{
+      "type":"structure",
+      "required":[
+        "DataShareArn",
+        "ConsumerIdentifier"
+      ],
+      "members":{
+        "DataShareArn":{"shape":"String"},
+        "ConsumerIdentifier":{"shape":"String"}
       }
     },
     "DefaultClusterParameters":{
@@ -2957,6 +3354,19 @@
       "member":{
         "shape":"DeferredMaintenanceWindow",
         "locationName":"DeferredMaintenanceWindow"
+      }
+    },
+    "DeleteAuthenticationProfileMessage":{
+      "type":"structure",
+      "required":["AuthenticationProfileName"],
+      "members":{
+        "AuthenticationProfileName":{"shape":"AuthenticationProfileNameString"}
+      }
+    },
+    "DeleteAuthenticationProfileResult":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfileName":{"shape":"AuthenticationProfileNameString"}
       }
     },
     "DeleteClusterMessage":{
@@ -3112,6 +3522,18 @@
         "AttributeNames":{"shape":"AttributeNameList"}
       }
     },
+    "DescribeAuthenticationProfilesMessage":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfileName":{"shape":"AuthenticationProfileNameString"}
+      }
+    },
+    "DescribeAuthenticationProfilesResult":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfiles":{"shape":"AuthenticationProfileList"}
+      }
+    },
     "DescribeClusterDbRevisionsMessage":{
       "type":"structure",
       "members":{
@@ -3202,6 +3624,53 @@
         "Marker":{"shape":"String"},
         "TagKeys":{"shape":"TagKeyList"},
         "TagValues":{"shape":"TagValueList"}
+      }
+    },
+    "DescribeDataSharesForConsumerMessage":{
+      "type":"structure",
+      "members":{
+        "ConsumerArn":{"shape":"String"},
+        "Status":{"shape":"DataShareStatusForConsumer"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeDataSharesForConsumerResult":{
+      "type":"structure",
+      "members":{
+        "DataShares":{"shape":"DataShareList"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeDataSharesForProducerMessage":{
+      "type":"structure",
+      "members":{
+        "ProducerArn":{"shape":"String"},
+        "Status":{"shape":"DataShareStatusForProducer"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeDataSharesForProducerResult":{
+      "type":"structure",
+      "members":{
+        "DataShares":{"shape":"DataShareList"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeDataSharesMessage":{
+      "type":"structure",
+      "members":{
+        "DataShareArn":{"shape":"String"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeDataSharesResult":{
+      "type":"structure",
+      "members":{
+        "DataShares":{"shape":"DataShareList"},
+        "Marker":{"shape":"String"}
       }
     },
     "DescribeDefaultClusterParametersMessage":{
@@ -3339,6 +3808,22 @@
         "PartnerIntegrationInfoList":{"shape":"PartnerIntegrationInfoList"}
       }
     },
+    "DescribeReservedNodeExchangeStatusInputMessage":{
+      "type":"structure",
+      "members":{
+        "ReservedNodeId":{"shape":"String"},
+        "ReservedNodeExchangeRequestId":{"shape":"String"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "DescribeReservedNodeExchangeStatusOutputMessage":{
+      "type":"structure",
+      "members":{
+        "ReservedNodeExchangeStatusDetails":{"shape":"ReservedNodeExchangeStatusList"},
+        "Marker":{"shape":"String"}
+      }
+    },
     "DescribeReservedNodeOfferingsMessage":{
       "type":"structure",
       "members":{
@@ -3453,6 +3938,15 @@
       "type":"structure",
       "members":{
         "Cluster":{"shape":"Cluster"}
+      }
+    },
+    "DisassociateDataShareConsumerMessage":{
+      "type":"structure",
+      "required":["DataShareArn"],
+      "members":{
+        "DataShareArn":{"shape":"String"},
+        "DisassociateEntireAccount":{"shape":"BooleanOptional"},
+        "ConsumerArn":{"shape":"String"}
       }
     },
     "Double":{"type":"double"},
@@ -3783,6 +4277,24 @@
         "DbGroups":{"shape":"DbGroupList"}
       }
     },
+    "GetReservedNodeExchangeConfigurationOptionsInputMessage":{
+      "type":"structure",
+      "required":["ActionType"],
+      "members":{
+        "ActionType":{"shape":"ReservedNodeExchangeActionType"},
+        "ClusterIdentifier":{"shape":"String"},
+        "SnapshotIdentifier":{"shape":"String"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "GetReservedNodeExchangeConfigurationOptionsOutputMessage":{
+      "type":"structure",
+      "members":{
+        "Marker":{"shape":"String"},
+        "ReservedNodeConfigurationOptionList":{"shape":"ReservedNodeConfigurationOptionList"}
+      }
+    },
     "GetReservedNodeExchangeOfferingsInputMessage":{
       "type":"structure",
       "required":["ReservedNodeId"],
@@ -4001,6 +4513,17 @@
     },
     "Integer":{"type":"integer"},
     "IntegerOptional":{"type":"integer"},
+    "InvalidAuthenticationProfileRequestFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InvalidAuthenticationProfileRequestFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "InvalidAuthorizationStateFault":{
       "type":"structure",
       "members":{
@@ -4100,6 +4623,17 @@
       },
       "exception":true
     },
+    "InvalidDataShareFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InvalidDataShareFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
     "InvalidElasticIpFault":{
       "type":"structure",
       "members":{
@@ -4139,6 +4673,17 @@
       },
       "error":{
         "code":"InvalidHsmConfigurationStateFault",
+        "httpStatusCode":400,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "InvalidNamespaceFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"InvalidNamespaceFault",
         "httpStatusCode":400,
         "senderFault":true
       },
@@ -4351,6 +4896,24 @@
         "AquaConfiguration":{"shape":"AquaConfiguration"}
       }
     },
+    "ModifyAuthenticationProfileMessage":{
+      "type":"structure",
+      "required":[
+        "AuthenticationProfileName",
+        "AuthenticationProfileContent"
+      ],
+      "members":{
+        "AuthenticationProfileName":{"shape":"AuthenticationProfileNameString"},
+        "AuthenticationProfileContent":{"shape":"String"}
+      }
+    },
+    "ModifyAuthenticationProfileResult":{
+      "type":"structure",
+      "members":{
+        "AuthenticationProfileName":{"shape":"AuthenticationProfileNameString"},
+        "AuthenticationProfileContent":{"shape":"String"}
+      }
+    },
     "ModifyClusterDbRevisionMessage":{
       "type":"structure",
       "required":[
@@ -4374,7 +4937,8 @@
       "members":{
         "ClusterIdentifier":{"shape":"String"},
         "AddIamRoles":{"shape":"IamRoleArnList"},
-        "RemoveIamRoles":{"shape":"IamRoleArnList"}
+        "RemoveIamRoles":{"shape":"IamRoleArnList"},
+        "DefaultIamRoleArn":{"shape":"String"}
       }
     },
     "ModifyClusterIamRolesResult":{
@@ -4890,6 +5454,13 @@
         "locationName":"RecurringCharge"
       }
     },
+    "RejectDataShareMessage":{
+      "type":"structure",
+      "required":["DataShareArn"],
+      "members":{
+        "DataShareArn":{"shape":"String"}
+      }
+    },
     "ReservedNode":{
       "type":"structure",
       "members":{
@@ -4930,6 +5501,73 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ReservedNodeConfigurationOption":{
+      "type":"structure",
+      "members":{
+        "SourceReservedNode":{"shape":"ReservedNode"},
+        "TargetReservedNodeCount":{"shape":"Integer"},
+        "TargetReservedNodeOffering":{"shape":"ReservedNodeOffering"}
+      },
+      "wrapper":true
+    },
+    "ReservedNodeConfigurationOptionList":{
+      "type":"list",
+      "member":{
+        "shape":"ReservedNodeConfigurationOption",
+        "locationName":"ReservedNodeConfigurationOption"
+      }
+    },
+    "ReservedNodeExchangeActionType":{
+      "type":"string",
+      "enum":[
+        "restore-cluster",
+        "resize-cluster"
+      ]
+    },
+    "ReservedNodeExchangeNotFoundFault":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"ReservedNodeExchangeNotFond",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
+    },
+    "ReservedNodeExchangeStatus":{
+      "type":"structure",
+      "members":{
+        "ReservedNodeExchangeRequestId":{"shape":"String"},
+        "Status":{"shape":"ReservedNodeExchangeStatusType"},
+        "RequestTime":{"shape":"TStamp"},
+        "SourceReservedNodeId":{"shape":"String"},
+        "SourceReservedNodeType":{"shape":"String"},
+        "SourceReservedNodeCount":{"shape":"Integer"},
+        "TargetReservedNodeOfferingId":{"shape":"String"},
+        "TargetReservedNodeType":{"shape":"String"},
+        "TargetReservedNodeCount":{"shape":"Integer"}
+      },
+      "wrapper":true
+    },
+    "ReservedNodeExchangeStatusList":{
+      "type":"list",
+      "member":{
+        "shape":"ReservedNodeExchangeStatus",
+        "locationName":"ReservedNodeExchangeStatus"
+      }
+    },
+    "ReservedNodeExchangeStatusType":{
+      "type":"string",
+      "enum":[
+        "REQUESTED",
+        "PENDING",
+        "IN_PROGRESS",
+        "RETRYING",
+        "SUCCEEDED",
+        "FAILED"
+      ]
     },
     "ReservedNodeList":{
       "type":"list",
@@ -5031,7 +5669,9 @@
         "ClusterType":{"shape":"String"},
         "NodeType":{"shape":"String"},
         "NumberOfNodes":{"shape":"IntegerOptional"},
-        "Classic":{"shape":"BooleanOptional"}
+        "Classic":{"shape":"BooleanOptional"},
+        "ReservedNodeId":{"shape":"String"},
+        "TargetReservedNodeOfferingId":{"shape":"String"}
       }
     },
     "ResizeClusterResult":{
@@ -5131,7 +5771,10 @@
         "SnapshotScheduleIdentifier":{"shape":"String"},
         "NumberOfNodes":{"shape":"IntegerOptional"},
         "AvailabilityZoneRelocation":{"shape":"BooleanOptional"},
-        "AquaConfigurationStatus":{"shape":"AquaConfigurationStatus"}
+        "AquaConfigurationStatus":{"shape":"AquaConfigurationStatus"},
+        "DefaultIamRoleArn":{"shape":"String"},
+        "ReservedNodeId":{"shape":"String"},
+        "TargetReservedNodeOfferingId":{"shape":"String"}
       }
     },
     "RestoreFromClusterSnapshotResult":{

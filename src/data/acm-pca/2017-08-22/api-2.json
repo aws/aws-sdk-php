@@ -649,7 +649,8 @@
           "box":true
         },
         "CustomCname":{"shape":"String253"},
-        "S3BucketName":{"shape":"String3To255"}
+        "S3BucketName":{"shape":"String3To255"},
+        "S3ObjectAcl":{"shape":"S3ObjectAcl"}
       }
     },
     "CsrBlob":{
@@ -1072,6 +1073,17 @@
       "max":500,
       "min":1
     },
+    "OcspConfiguration":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "OcspCustomCname":{"shape":"String253"}
+      }
+    },
     "OtherName":{
       "type":"structure",
       "required":[
@@ -1213,7 +1225,8 @@
     "RevocationConfiguration":{
       "type":"structure",
       "members":{
-        "CrlConfiguration":{"shape":"CrlConfiguration"}
+        "CrlConfiguration":{"shape":"CrlConfiguration"},
+        "OcspConfiguration":{"shape":"OcspConfiguration"}
       }
     },
     "RevocationReason":{
@@ -1250,6 +1263,13 @@
     "S3Key":{
       "type":"string",
       "max":1024
+    },
+    "S3ObjectAcl":{
+      "type":"string",
+      "enum":[
+        "PUBLIC_READ",
+        "BUCKET_OWNER_FULL_CONTROL"
+      ]
     },
     "SigningAlgorithm":{
       "type":"string",

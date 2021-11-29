@@ -218,7 +218,8 @@
             "type": "structure",
             "required": [
                 "name",
-                "timeToLive"
+                "timeToLive",
+                "contextAttributes"
             ],
             "members": {
                 "name": {
@@ -562,6 +563,9 @@
                 },
                 "slotToElicit": {
                     "shape": "NonEmptyString"
+                },
+                "slotElicitationStyle": {
+                    "shape": "StyleType"
                 }
             }
         },
@@ -572,7 +576,8 @@
                 "ConfirmIntent",
                 "Delegate",
                 "ElicitIntent",
-                "ElicitSlot"
+                "ElicitSlot",
+                "None"
             ]
         },
         "DisconnectionEvent": {
@@ -735,7 +740,8 @@
                 "Fulfilled",
                 "InProgress",
                 "ReadyForFulfillment",
-                "Waiting"
+                "Waiting",
+                "FulfillmentInProgress"
             ]
         },
         "InternalServerException": {
@@ -781,6 +787,9 @@
         },
         "Message": {
             "type": "structure",
+            "required": [
+                "contentType"
+            ],
             "members": {
                 "content": {
                     "shape": "Text"
@@ -1181,11 +1190,24 @@
                 }
             }
         },
+        "Shape": {
+            "type": "string",
+            "enum": [
+                "Scalar",
+                "List"
+            ]
+        },
         "Slot": {
             "type": "structure",
             "members": {
                 "value": {
                     "shape": "Value"
+                },
+                "shape": {
+                    "shape": "Shape"
+                },
+                "values": {
+                    "shape": "Values"
                 }
             }
         },
@@ -1338,6 +1360,14 @@
                 "shape": "String"
             }
         },
+        "StyleType": {
+            "type": "string",
+            "enum": [
+                "Default",
+                "SpellByLetter",
+                "SpellByWord"
+            ]
+        },
         "Text": {
             "type": "string",
             "max": 1024,
@@ -1431,6 +1461,12 @@
                 "resolvedValues": {
                     "shape": "StringList"
                 }
+            }
+        },
+        "Values": {
+            "type": "list",
+            "member": {
+                "shape": "Slot"
             }
         }
     }

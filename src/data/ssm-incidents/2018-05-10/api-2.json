@@ -620,7 +620,8 @@
       "members":{
         "message":{"shape":"ExceptionMessage"},
         "resourceIdentifier":{"shape":"String"},
-        "resourceType":{"shape":"ResourceType"}
+        "resourceType":{"shape":"ResourceType"},
+        "retryAfter":{"shape":"Timestamp"}
       },
       "error":{
         "httpStatusCode":409,
@@ -676,7 +677,6 @@
     "CreateTimelineEventInput":{
       "type":"structure",
       "required":[
-        "clientToken",
         "eventData",
         "eventTime",
         "eventType",
@@ -1237,7 +1237,7 @@
     },
     "NextToken":{
       "type":"string",
-      "max":1000,
+      "max":2000,
       "min":0
     },
     "NotificationTargetItem":{
@@ -1370,6 +1370,7 @@
         "status"
       ],
       "members":{
+        "arn":{"shape":"Arn"},
         "createdBy":{"shape":"Arn"},
         "createdTime":{"shape":"Timestamp"},
         "deletionProtected":{"shape":"Boolean"},
@@ -1863,7 +1864,6 @@
     "UpdateTimelineEventInput":{
       "type":"structure",
       "required":[
-        "clientToken",
         "eventId",
         "incidentRecordArn"
       ],

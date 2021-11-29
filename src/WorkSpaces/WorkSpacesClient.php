@@ -20,6 +20,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createIpGroupAsync(array $args = [])
  * @method \Aws\Result createTags(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createTagsAsync(array $args = [])
+ * @method \Aws\Result createUpdatedWorkspaceImage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createUpdatedWorkspaceImageAsync(array $args = [])
  * @method \Aws\Result createWorkspaceBundle(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createWorkspaceBundleAsync(array $args = [])
  * @method \Aws\Result createWorkspaces(array $args = [])

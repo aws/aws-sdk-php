@@ -585,6 +585,7 @@
         "Name":{"shape":"CostCategoryName"},
         "RuleVersion":{"shape":"CostCategoryRuleVersion"},
         "Rules":{"shape":"CostCategoryRulesList"},
+        "SplitChargeRules":{"shape":"CostCategorySplitChargeRulesList"},
         "ProcessingStatus":{"shape":"CostCategoryProcessingStatusList"},
         "DefaultValue":{"shape":"CostCategoryValue"}
       }
@@ -670,6 +671,67 @@
       "type":"list",
       "member":{"shape":"CostCategoryRule"},
       "max":500,
+      "min":1
+    },
+    "CostCategorySplitChargeMethod":{
+      "type":"string",
+      "enum":[
+        "FIXED",
+        "PROPORTIONAL",
+        "EVEN"
+      ]
+    },
+    "CostCategorySplitChargeRule":{
+      "type":"structure",
+      "required":[
+        "Source",
+        "Targets",
+        "Method"
+      ],
+      "members":{
+        "Source":{"shape":"GenericString"},
+        "Targets":{"shape":"CostCategorySplitChargeRuleTargetsList"},
+        "Method":{"shape":"CostCategorySplitChargeMethod"},
+        "Parameters":{"shape":"CostCategorySplitChargeRuleParametersList"}
+      }
+    },
+    "CostCategorySplitChargeRuleParameter":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "Values"
+      ],
+      "members":{
+        "Type":{"shape":"CostCategorySplitChargeRuleParameterType"},
+        "Values":{"shape":"CostCategorySplitChargeRuleParameterValuesList"}
+      }
+    },
+    "CostCategorySplitChargeRuleParameterType":{
+      "type":"string",
+      "enum":["ALLOCATION_PERCENTAGES"]
+    },
+    "CostCategorySplitChargeRuleParameterValuesList":{
+      "type":"list",
+      "member":{"shape":"GenericString"},
+      "max":500,
+      "min":1
+    },
+    "CostCategorySplitChargeRuleParametersList":{
+      "type":"list",
+      "member":{"shape":"CostCategorySplitChargeRuleParameter"},
+      "max":10,
+      "min":1
+    },
+    "CostCategorySplitChargeRuleTargetsList":{
+      "type":"list",
+      "member":{"shape":"GenericString"},
+      "max":500,
+      "min":1
+    },
+    "CostCategorySplitChargeRulesList":{
+      "type":"list",
+      "member":{"shape":"CostCategorySplitChargeRule"},
+      "max":10,
       "min":1
     },
     "CostCategoryStatus":{
@@ -786,7 +848,8 @@
         "Name":{"shape":"CostCategoryName"},
         "RuleVersion":{"shape":"CostCategoryRuleVersion"},
         "Rules":{"shape":"CostCategoryRulesList"},
-        "DefaultValue":{"shape":"CostCategoryValue"}
+        "DefaultValue":{"shape":"CostCategoryValue"},
+        "SplitChargeRules":{"shape":"CostCategorySplitChargeRulesList"}
       }
     },
     "CreateCostCategoryDefinitionResponse":{
@@ -937,6 +1000,15 @@
       "type":"list",
       "member":{"shape":"DimensionValuesWithAttributes"}
     },
+    "DiskResourceUtilization":{
+      "type":"structure",
+      "members":{
+        "DiskReadOpsPerSecond":{"shape":"GenericString"},
+        "DiskWriteOpsPerSecond":{"shape":"GenericString"},
+        "DiskReadBytesPerSecond":{"shape":"GenericString"},
+        "DiskWriteBytesPerSecond":{"shape":"GenericString"}
+      }
+    },
     "EBSResourceUtilization":{
       "type":"structure",
       "members":{
@@ -979,7 +1051,9 @@
         "MaxCpuUtilizationPercentage":{"shape":"GenericString"},
         "MaxMemoryUtilizationPercentage":{"shape":"GenericString"},
         "MaxStorageUtilizationPercentage":{"shape":"GenericString"},
-        "EBSResourceUtilization":{"shape":"EBSResourceUtilization"}
+        "EBSResourceUtilization":{"shape":"EBSResourceUtilization"},
+        "DiskResourceUtilization":{"shape":"DiskResourceUtilization"},
+        "NetworkResourceUtilization":{"shape":"NetworkResourceUtilization"}
       }
     },
     "EC2Specification":{
@@ -1026,6 +1100,31 @@
     "Expressions":{
       "type":"list",
       "member":{"shape":"Expression"}
+    },
+    "FindingReasonCode":{
+      "type":"string",
+      "enum":[
+        "CPU_OVER_PROVISIONED",
+        "CPU_UNDER_PROVISIONED",
+        "MEMORY_OVER_PROVISIONED",
+        "MEMORY_UNDER_PROVISIONED",
+        "EBS_THROUGHPUT_OVER_PROVISIONED",
+        "EBS_THROUGHPUT_UNDER_PROVISIONED",
+        "EBS_IOPS_OVER_PROVISIONED",
+        "EBS_IOPS_UNDER_PROVISIONED",
+        "NETWORK_BANDWIDTH_OVER_PROVISIONED",
+        "NETWORK_BANDWIDTH_UNDER_PROVISIONED",
+        "NETWORK_PPS_OVER_PROVISIONED",
+        "NETWORK_PPS_UNDER_PROVISIONED",
+        "DISK_IOPS_OVER_PROVISIONED",
+        "DISK_IOPS_UNDER_PROVISIONED",
+        "DISK_THROUGHPUT_OVER_PROVISIONED",
+        "DISK_THROUGHPUT_UNDER_PROVISIONED"
+      ]
+    },
+    "FindingReasonCodes":{
+      "type":"list",
+      "member":{"shape":"FindingReasonCode"}
     },
     "ForecastResult":{
       "type":"structure",
@@ -1659,6 +1758,15 @@
       ]
     },
     "NetRISavings":{"type":"string"},
+    "NetworkResourceUtilization":{
+      "type":"structure",
+      "members":{
+        "NetworkInBytesPerSecond":{"shape":"GenericString"},
+        "NetworkOutBytesPerSecond":{"shape":"GenericString"},
+        "NetworkPacketsInPerSecond":{"shape":"GenericString"},
+        "NetworkPacketsOutPerSecond":{"shape":"GenericString"}
+      }
+    },
     "NextPageToken":{
       "type":"string",
       "max":8192,
@@ -1706,6 +1814,20 @@
         "MEDIUM_UTILIZATION",
         "HEAVY_UTILIZATION"
       ]
+    },
+    "PlatformDifference":{
+      "type":"string",
+      "enum":[
+        "HYPERVISOR",
+        "NETWORK_INTERFACE",
+        "STORAGE_INTERFACE",
+        "INSTANCE_STORE_AVAILABILITY",
+        "VIRTUALIZATION_TYPE"
+      ]
+    },
+    "PlatformDifferences":{
+      "type":"list",
+      "member":{"shape":"PlatformDifference"}
     },
     "PredictionIntervalLevel":{
       "type":"integer",
@@ -1920,7 +2042,8 @@
         "CurrentInstance":{"shape":"CurrentInstance"},
         "RightsizingType":{"shape":"RightsizingType"},
         "ModifyRecommendationDetail":{"shape":"ModifyRecommendationDetail"},
-        "TerminateRecommendationDetail":{"shape":"TerminateRecommendationDetail"}
+        "TerminateRecommendationDetail":{"shape":"TerminateRecommendationDetail"},
+        "FindingReasonCodes":{"shape":"FindingReasonCodes"}
       }
     },
     "RightsizingRecommendationConfiguration":{
@@ -2258,7 +2381,8 @@
         "CurrencyCode":{"shape":"GenericString"},
         "DefaultTargetInstance":{"shape":"GenericBoolean"},
         "ResourceDetails":{"shape":"ResourceDetails"},
-        "ExpectedResourceUtilization":{"shape":"ResourceUtilization"}
+        "ExpectedResourceUtilization":{"shape":"ResourceUtilization"},
+        "PlatformDifferences":{"shape":"PlatformDifferences"}
       }
     },
     "TargetInstancesList":{
@@ -2366,7 +2490,8 @@
         "CostCategoryArn":{"shape":"Arn"},
         "RuleVersion":{"shape":"CostCategoryRuleVersion"},
         "Rules":{"shape":"CostCategoryRulesList"},
-        "DefaultValue":{"shape":"CostCategoryValue"}
+        "DefaultValue":{"shape":"CostCategoryValue"},
+        "SplitChargeRules":{"shape":"CostCategorySplitChargeRulesList"}
       }
     },
     "UpdateCostCategoryDefinitionResponse":{

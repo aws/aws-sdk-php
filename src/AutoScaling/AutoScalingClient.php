@@ -98,6 +98,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise executePolicyAsync(array $args = [])
  * @method \Aws\Result exitStandby(array $args = [])
  * @method \GuzzleHttp\Promise\Promise exitStandbyAsync(array $args = [])
+ * @method \Aws\Result getPredictiveScalingForecast(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getPredictiveScalingForecastAsync(array $args = [])
  * @method \Aws\Result putLifecycleHook(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putLifecycleHookAsync(array $args = [])
  * @method \Aws\Result putNotificationConfiguration(array $args = [])

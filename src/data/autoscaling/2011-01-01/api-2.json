@@ -411,7 +411,8 @@
         "resultWrapper":"DescribeLoadBalancerTargetGroupsResult"
       },
       "errors":[
-        {"shape":"ResourceContentionFault"}
+        {"shape":"ResourceContentionFault"},
+        {"shape":"InvalidNextToken"}
       ]
     },
     "DescribeLoadBalancers":{
@@ -426,7 +427,8 @@
         "resultWrapper":"DescribeLoadBalancersResult"
       },
       "errors":[
-        {"shape":"ResourceContentionFault"}
+        {"shape":"ResourceContentionFault"},
+        {"shape":"InvalidNextToken"}
       ]
     },
     "DescribeMetricCollectionTypes":{
@@ -678,6 +680,21 @@
         {"shape":"ResourceContentionFault"}
       ]
     },
+    "GetPredictiveScalingForecast":{
+      "name":"GetPredictiveScalingForecast",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetPredictiveScalingForecastType"},
+      "output":{
+        "shape":"GetPredictiveScalingForecastAnswer",
+        "resultWrapper":"GetPredictiveScalingForecastResult"
+      },
+      "errors":[
+        {"shape":"ResourceContentionFault"}
+      ]
+    },
     "PutLifecycleHook":{
       "name":"PutLifecycleHook",
       "http":{
@@ -879,6 +896,61 @@
     }
   },
   "shapes":{
+    "AcceleratorCountRequest":{
+      "type":"structure",
+      "members":{
+        "Min":{"shape":"NullablePositiveInteger"},
+        "Max":{"shape":"NullablePositiveInteger"}
+      }
+    },
+    "AcceleratorManufacturer":{
+      "type":"string",
+      "enum":[
+        "nvidia",
+        "amd",
+        "amazon-web-services",
+        "xilinx"
+      ]
+    },
+    "AcceleratorManufacturers":{
+      "type":"list",
+      "member":{"shape":"AcceleratorManufacturer"}
+    },
+    "AcceleratorName":{
+      "type":"string",
+      "enum":[
+        "a100",
+        "v100",
+        "k80",
+        "t4",
+        "m60",
+        "radeon-pro-v520",
+        "vu9p"
+      ]
+    },
+    "AcceleratorNames":{
+      "type":"list",
+      "member":{"shape":"AcceleratorName"}
+    },
+    "AcceleratorTotalMemoryMiBRequest":{
+      "type":"structure",
+      "members":{
+        "Min":{"shape":"NullablePositiveInteger"},
+        "Max":{"shape":"NullablePositiveInteger"}
+      }
+    },
+    "AcceleratorType":{
+      "type":"string",
+      "enum":[
+        "gpu",
+        "fpga",
+        "inference"
+      ]
+    },
+    "AcceleratorTypes":{
+      "type":"list",
+      "member":{"shape":"AcceleratorType"}
+    },
     "ActiveInstanceRefreshNotFoundFault":{
       "type":"structure",
       "members":{
@@ -1038,6 +1110,7 @@
         "MinSize":{"shape":"AutoScalingGroupMinSize"},
         "MaxSize":{"shape":"AutoScalingGroupMaxSize"},
         "DesiredCapacity":{"shape":"AutoScalingGroupDesiredCapacity"},
+        "PredictedCapacity":{"shape":"AutoScalingGroupPredictedCapacity"},
         "DefaultCooldown":{"shape":"Cooldown"},
         "AvailabilityZones":{"shape":"AvailabilityZones"},
         "LoadBalancerNames":{"shape":"LoadBalancerNames"},
@@ -1058,7 +1131,9 @@
         "MaxInstanceLifetime":{"shape":"MaxInstanceLifetime"},
         "CapacityRebalance":{"shape":"CapacityRebalanceEnabled"},
         "WarmPoolConfiguration":{"shape":"WarmPoolConfiguration"},
-        "WarmPoolSize":{"shape":"WarmPoolSize"}
+        "WarmPoolSize":{"shape":"WarmPoolSize"},
+        "Context":{"shape":"Context"},
+        "DesiredCapacityType":{"shape":"XmlStringMaxLen255"}
       }
     },
     "AutoScalingGroupDesiredCapacity":{"type":"integer"},
@@ -1073,9 +1148,11 @@
       "members":{
         "AutoScalingGroupNames":{"shape":"AutoScalingGroupNames"},
         "NextToken":{"shape":"XmlString"},
-        "MaxRecords":{"shape":"MaxRecords"}
+        "MaxRecords":{"shape":"MaxRecords"},
+        "Filters":{"shape":"Filters"}
       }
     },
+    "AutoScalingGroupPredictedCapacity":{"type":"integer"},
     "AutoScalingGroupState":{
       "type":"string",
       "max":32,
@@ -1135,6 +1212,21 @@
       "type":"list",
       "member":{"shape":"XmlStringMaxLen255"}
     },
+    "BareMetal":{
+      "type":"string",
+      "enum":[
+        "included",
+        "excluded",
+        "required"
+      ]
+    },
+    "BaselineEbsBandwidthMbpsRequest":{
+      "type":"structure",
+      "members":{
+        "Min":{"shape":"NullablePositiveInteger"},
+        "Max":{"shape":"NullablePositiveInteger"}
+      }
+    },
     "BatchDeleteScheduledActionAnswer":{
       "type":"structure",
       "members":{
@@ -1176,6 +1268,11 @@
       "max":20000,
       "min":100
     },
+    "BlockDeviceEbsThroughput":{
+      "type":"integer",
+      "max":1000,
+      "min":125
+    },
     "BlockDeviceEbsVolumeSize":{
       "type":"integer",
       "max":16384,
@@ -1200,6 +1297,14 @@
       "type":"list",
       "member":{"shape":"BlockDeviceMapping"}
     },
+    "BurstablePerformance":{
+      "type":"string",
+      "enum":[
+        "included",
+        "excluded",
+        "required"
+      ]
+    },
     "CancelInstanceRefreshAnswer":{
       "type":"structure",
       "members":{
@@ -1211,6 +1316,17 @@
       "required":["AutoScalingGroupName"],
       "members":{
         "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"}
+      }
+    },
+    "CapacityForecast":{
+      "type":"structure",
+      "required":[
+        "Timestamps",
+        "Values"
+      ],
+      "members":{
+        "Timestamps":{"shape":"PredictiveScalingForecastTimestamps"},
+        "Values":{"shape":"PredictiveScalingForecastValues"}
       }
     },
     "CapacityRebalanceEnabled":{"type":"boolean"},
@@ -1247,7 +1363,20 @@
         "InstanceId":{"shape":"XmlStringMaxLen19"}
       }
     },
+    "Context":{"type":"string"},
     "Cooldown":{"type":"integer"},
+    "CpuManufacturer":{
+      "type":"string",
+      "enum":[
+        "intel",
+        "amd",
+        "amazon-web-services"
+      ]
+    },
+    "CpuManufacturers":{
+      "type":"list",
+      "member":{"shape":"CpuManufacturer"}
+    },
     "CreateAutoScalingGroupType":{
       "type":"structure",
       "required":[
@@ -1278,7 +1407,9 @@
         "LifecycleHookSpecificationList":{"shape":"LifecycleHookSpecifications"},
         "Tags":{"shape":"Tags"},
         "ServiceLinkedRoleARN":{"shape":"ResourceName"},
-        "MaxInstanceLifetime":{"shape":"MaxInstanceLifetime"}
+        "MaxInstanceLifetime":{"shape":"MaxInstanceLifetime"},
+        "Context":{"shape":"Context"},
+        "DesiredCapacityType":{"shape":"XmlStringMaxLen255"}
       }
     },
     "CreateLaunchConfigurationType":{
@@ -1585,6 +1716,13 @@
         "NextToken":{"shape":"XmlString"}
       }
     },
+    "DesiredConfiguration":{
+      "type":"structure",
+      "members":{
+        "LaunchTemplate":{"shape":"LaunchTemplateSpecification"},
+        "MixedInstancesPolicy":{"shape":"MixedInstancesPolicy"}
+      }
+    },
     "DetachInstancesAnswer":{
       "type":"structure",
       "members":{
@@ -1652,7 +1790,8 @@
         "VolumeType":{"shape":"BlockDeviceEbsVolumeType"},
         "DeleteOnTermination":{"shape":"BlockDeviceEbsDeleteOnTermination"},
         "Iops":{"shape":"BlockDeviceEbsIops"},
-        "Encrypted":{"shape":"BlockDeviceEbsEncrypted"}
+        "Encrypted":{"shape":"BlockDeviceEbsEncrypted"},
+        "Throughput":{"shape":"BlockDeviceEbsThroughput"}
       }
     },
     "EbsOptimized":{"type":"boolean"},
@@ -1698,6 +1837,17 @@
       }
     },
     "EstimatedInstanceWarmup":{"type":"integer"},
+    "ExcludedInstance":{
+      "type":"string",
+      "max":30,
+      "min":1,
+      "pattern":"[a-zA-Z0-9\\.\\*]+"
+    },
+    "ExcludedInstanceTypes":{
+      "type":"list",
+      "member":{"shape":"ExcludedInstance"},
+      "max":400
+    },
     "ExecutePolicyType":{
       "type":"structure",
       "required":["PolicyName"],
@@ -1748,6 +1898,34 @@
       "member":{"shape":"Filter"}
     },
     "ForceDelete":{"type":"boolean"},
+    "GetPredictiveScalingForecastAnswer":{
+      "type":"structure",
+      "required":[
+        "LoadForecast",
+        "CapacityForecast",
+        "UpdateTime"
+      ],
+      "members":{
+        "LoadForecast":{"shape":"LoadForecasts"},
+        "CapacityForecast":{"shape":"CapacityForecast"},
+        "UpdateTime":{"shape":"TimestampType"}
+      }
+    },
+    "GetPredictiveScalingForecastType":{
+      "type":"structure",
+      "required":[
+        "AutoScalingGroupName",
+        "PolicyName",
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
+        "PolicyName":{"shape":"XmlStringMaxLen255"},
+        "StartTime":{"shape":"TimestampType"},
+        "EndTime":{"shape":"TimestampType"}
+      }
+    },
     "GlobalTimeout":{"type":"integer"},
     "HealthCheckGracePeriod":{"type":"integer"},
     "HeartbeatTimeout":{"type":"integer"},
@@ -1773,6 +1951,17 @@
         "ProtectedFromScaleIn":{"shape":"InstanceProtected"},
         "WeightedCapacity":{"shape":"XmlStringMaxLen32"}
       }
+    },
+    "InstanceGeneration":{
+      "type":"string",
+      "enum":[
+        "current",
+        "previous"
+      ]
+    },
+    "InstanceGenerations":{
+      "type":"list",
+      "member":{"shape":"InstanceGeneration"}
     },
     "InstanceIds":{
       "type":"list",
@@ -1823,7 +2012,9 @@
         "EndTime":{"shape":"TimestampType"},
         "PercentageComplete":{"shape":"IntPercent"},
         "InstancesToUpdate":{"shape":"InstancesToUpdate"},
-        "ProgressDetails":{"shape":"InstanceRefreshProgressDetails"}
+        "ProgressDetails":{"shape":"InstanceRefreshProgressDetails"},
+        "Preferences":{"shape":"RefreshPreferences"},
+        "DesiredConfiguration":{"shape":"DesiredConfiguration"}
       }
     },
     "InstanceRefreshIds":{
@@ -1877,6 +2068,36 @@
     "InstanceRefreshes":{
       "type":"list",
       "member":{"shape":"InstanceRefresh"}
+    },
+    "InstanceRequirements":{
+      "type":"structure",
+      "required":[
+        "VCpuCount",
+        "MemoryMiB"
+      ],
+      "members":{
+        "VCpuCount":{"shape":"VCpuCountRequest"},
+        "MemoryMiB":{"shape":"MemoryMiBRequest"},
+        "CpuManufacturers":{"shape":"CpuManufacturers"},
+        "MemoryGiBPerVCpu":{"shape":"MemoryGiBPerVCpuRequest"},
+        "ExcludedInstanceTypes":{"shape":"ExcludedInstanceTypes"},
+        "InstanceGenerations":{"shape":"InstanceGenerations"},
+        "SpotMaxPricePercentageOverLowestPrice":{"shape":"NullablePositiveInteger"},
+        "OnDemandMaxPricePercentageOverLowestPrice":{"shape":"NullablePositiveInteger"},
+        "BareMetal":{"shape":"BareMetal"},
+        "BurstablePerformance":{"shape":"BurstablePerformance"},
+        "RequireHibernateSupport":{"shape":"NullableBoolean"},
+        "NetworkInterfaceCount":{"shape":"NetworkInterfaceCountRequest"},
+        "LocalStorage":{"shape":"LocalStorage"},
+        "LocalStorageTypes":{"shape":"LocalStorageTypes"},
+        "TotalLocalStorageGB":{"shape":"TotalLocalStorageGBRequest"},
+        "BaselineEbsBandwidthMbps":{"shape":"BaselineEbsBandwidthMbpsRequest"},
+        "AcceleratorTypes":{"shape":"AcceleratorTypes"},
+        "AcceleratorCount":{"shape":"AcceleratorCountRequest"},
+        "AcceleratorManufacturers":{"shape":"AcceleratorManufacturers"},
+        "AcceleratorNames":{"shape":"AcceleratorNames"},
+        "AcceleratorTotalMemoryMiB":{"shape":"AcceleratorTotalMemoryMiBRequest"}
+      }
     },
     "Instances":{
       "type":"list",
@@ -1994,7 +2215,8 @@
       "members":{
         "InstanceType":{"shape":"XmlStringMaxLen255"},
         "WeightedCapacity":{"shape":"XmlStringMaxLen32"},
-        "LaunchTemplateSpecification":{"shape":"LaunchTemplateSpecification"}
+        "LaunchTemplateSpecification":{"shape":"LaunchTemplateSpecification"},
+        "InstanceRequirements":{"shape":"InstanceRequirements"}
       }
     },
     "LaunchTemplateSpecification":{
@@ -2120,6 +2342,42 @@
       "type":"list",
       "member":{"shape":"LoadBalancerTargetGroupState"}
     },
+    "LoadForecast":{
+      "type":"structure",
+      "required":[
+        "Timestamps",
+        "Values",
+        "MetricSpecification"
+      ],
+      "members":{
+        "Timestamps":{"shape":"PredictiveScalingForecastTimestamps"},
+        "Values":{"shape":"PredictiveScalingForecastValues"},
+        "MetricSpecification":{"shape":"PredictiveScalingMetricSpecification"}
+      }
+    },
+    "LoadForecasts":{
+      "type":"list",
+      "member":{"shape":"LoadForecast"}
+    },
+    "LocalStorage":{
+      "type":"string",
+      "enum":[
+        "included",
+        "excluded",
+        "required"
+      ]
+    },
+    "LocalStorageType":{
+      "type":"string",
+      "enum":[
+        "hdd",
+        "ssd"
+      ]
+    },
+    "LocalStorageTypes":{
+      "type":"list",
+      "member":{"shape":"LocalStorageType"}
+    },
     "MaxGroupPreparedCapacity":{
       "type":"integer",
       "min":-1
@@ -2128,6 +2386,33 @@
     "MaxNumberOfAutoScalingGroups":{"type":"integer"},
     "MaxNumberOfLaunchConfigurations":{"type":"integer"},
     "MaxRecords":{"type":"integer"},
+    "MemoryGiBPerVCpuRequest":{
+      "type":"structure",
+      "members":{
+        "Min":{"shape":"NullablePositiveDouble"},
+        "Max":{"shape":"NullablePositiveDouble"}
+      }
+    },
+    "MemoryMiBRequest":{
+      "type":"structure",
+      "required":["Min"],
+      "members":{
+        "Min":{"shape":"NullablePositiveInteger"},
+        "Max":{"shape":"NullablePositiveInteger"}
+      }
+    },
+    "Metric":{
+      "type":"structure",
+      "required":[
+        "Namespace",
+        "MetricName"
+      ],
+      "members":{
+        "Namespace":{"shape":"MetricNamespace"},
+        "MetricName":{"shape":"MetricName"},
+        "Dimensions":{"shape":"MetricDimensions"}
+      }
+    },
     "MetricCollectionType":{
       "type":"structure",
       "members":{
@@ -2137,6 +2422,21 @@
     "MetricCollectionTypes":{
       "type":"list",
       "member":{"shape":"MetricCollectionType"}
+    },
+    "MetricDataQueries":{
+      "type":"list",
+      "member":{"shape":"MetricDataQuery"}
+    },
+    "MetricDataQuery":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{"shape":"XmlStringMaxLen255"},
+        "Expression":{"shape":"XmlStringMaxLen1023"},
+        "MetricStat":{"shape":"MetricStat"},
+        "Label":{"shape":"XmlStringMetricLabel"},
+        "ReturnData":{"shape":"ReturnData"}
+      }
     },
     "MetricDimension":{
       "type":"structure",
@@ -2168,6 +2468,18 @@
     "MetricName":{"type":"string"},
     "MetricNamespace":{"type":"string"},
     "MetricScale":{"type":"double"},
+    "MetricStat":{
+      "type":"structure",
+      "required":[
+        "Metric",
+        "Stat"
+      ],
+      "members":{
+        "Metric":{"shape":"Metric"},
+        "Stat":{"shape":"XmlStringMetricStat"},
+        "Unit":{"shape":"MetricUnit"}
+      }
+    },
     "MetricStatistic":{
       "type":"string",
       "enum":[
@@ -2210,6 +2522,13 @@
       }
     },
     "MonitoringEnabled":{"type":"boolean"},
+    "NetworkInterfaceCountRequest":{
+      "type":"structure",
+      "members":{
+        "Min":{"shape":"NullablePositiveInteger"},
+        "Max":{"shape":"NullablePositiveInteger"}
+      }
+    },
     "NoDevice":{"type":"boolean"},
     "NonZeroIntPercent":{
       "type":"integer",
@@ -2233,6 +2552,15 @@
       "max":255,
       "min":0,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "NullableBoolean":{"type":"boolean"},
+    "NullablePositiveDouble":{
+      "type":"double",
+      "min":0
+    },
+    "NullablePositiveInteger":{
+      "type":"integer",
+      "min":0
     },
     "NumberOfAutoScalingGroups":{"type":"integer"},
     "NumberOfLaunchConfigurations":{"type":"integer"},
@@ -2265,6 +2593,24 @@
       "type":"list",
       "member":{"shape":"XmlStringMaxLen64"}
     },
+    "PredefinedLoadMetricType":{
+      "type":"string",
+      "enum":[
+        "ASGTotalCPUUtilization",
+        "ASGTotalNetworkIn",
+        "ASGTotalNetworkOut",
+        "ALBTargetGroupRequestCount"
+      ]
+    },
+    "PredefinedMetricPairType":{
+      "type":"string",
+      "enum":[
+        "ASGCPUUtilization",
+        "ASGNetworkIn",
+        "ASGNetworkOut",
+        "ALBRequestCount"
+      ]
+    },
     "PredefinedMetricSpecification":{
       "type":"structure",
       "required":["PredefinedMetricType"],
@@ -2272,6 +2618,119 @@
         "PredefinedMetricType":{"shape":"MetricType"},
         "ResourceLabel":{"shape":"XmlStringMaxLen1023"}
       }
+    },
+    "PredefinedScalingMetricType":{
+      "type":"string",
+      "enum":[
+        "ASGAverageCPUUtilization",
+        "ASGAverageNetworkIn",
+        "ASGAverageNetworkOut",
+        "ALBRequestCountPerTarget"
+      ]
+    },
+    "PredictiveScalingConfiguration":{
+      "type":"structure",
+      "required":["MetricSpecifications"],
+      "members":{
+        "MetricSpecifications":{"shape":"PredictiveScalingMetricSpecifications"},
+        "Mode":{"shape":"PredictiveScalingMode"},
+        "SchedulingBufferTime":{"shape":"PredictiveScalingSchedulingBufferTime"},
+        "MaxCapacityBreachBehavior":{"shape":"PredictiveScalingMaxCapacityBreachBehavior"},
+        "MaxCapacityBuffer":{"shape":"PredictiveScalingMaxCapacityBuffer"}
+      }
+    },
+    "PredictiveScalingCustomizedCapacityMetric":{
+      "type":"structure",
+      "required":["MetricDataQueries"],
+      "members":{
+        "MetricDataQueries":{"shape":"MetricDataQueries"}
+      }
+    },
+    "PredictiveScalingCustomizedLoadMetric":{
+      "type":"structure",
+      "required":["MetricDataQueries"],
+      "members":{
+        "MetricDataQueries":{"shape":"MetricDataQueries"}
+      }
+    },
+    "PredictiveScalingCustomizedScalingMetric":{
+      "type":"structure",
+      "required":["MetricDataQueries"],
+      "members":{
+        "MetricDataQueries":{"shape":"MetricDataQueries"}
+      }
+    },
+    "PredictiveScalingForecastTimestamps":{
+      "type":"list",
+      "member":{"shape":"TimestampType"}
+    },
+    "PredictiveScalingForecastValues":{
+      "type":"list",
+      "member":{"shape":"MetricScale"}
+    },
+    "PredictiveScalingMaxCapacityBreachBehavior":{
+      "type":"string",
+      "enum":[
+        "HonorMaxCapacity",
+        "IncreaseMaxCapacity"
+      ]
+    },
+    "PredictiveScalingMaxCapacityBuffer":{
+      "type":"integer",
+      "max":100,
+      "min":0
+    },
+    "PredictiveScalingMetricSpecification":{
+      "type":"structure",
+      "required":["TargetValue"],
+      "members":{
+        "TargetValue":{"shape":"MetricScale"},
+        "PredefinedMetricPairSpecification":{"shape":"PredictiveScalingPredefinedMetricPair"},
+        "PredefinedScalingMetricSpecification":{"shape":"PredictiveScalingPredefinedScalingMetric"},
+        "PredefinedLoadMetricSpecification":{"shape":"PredictiveScalingPredefinedLoadMetric"},
+        "CustomizedScalingMetricSpecification":{"shape":"PredictiveScalingCustomizedScalingMetric"},
+        "CustomizedLoadMetricSpecification":{"shape":"PredictiveScalingCustomizedLoadMetric"},
+        "CustomizedCapacityMetricSpecification":{"shape":"PredictiveScalingCustomizedCapacityMetric"}
+      }
+    },
+    "PredictiveScalingMetricSpecifications":{
+      "type":"list",
+      "member":{"shape":"PredictiveScalingMetricSpecification"}
+    },
+    "PredictiveScalingMode":{
+      "type":"string",
+      "enum":[
+        "ForecastAndScale",
+        "ForecastOnly"
+      ]
+    },
+    "PredictiveScalingPredefinedLoadMetric":{
+      "type":"structure",
+      "required":["PredefinedMetricType"],
+      "members":{
+        "PredefinedMetricType":{"shape":"PredefinedLoadMetricType"},
+        "ResourceLabel":{"shape":"XmlStringMaxLen1023"}
+      }
+    },
+    "PredictiveScalingPredefinedMetricPair":{
+      "type":"structure",
+      "required":["PredefinedMetricType"],
+      "members":{
+        "PredefinedMetricType":{"shape":"PredefinedMetricPairType"},
+        "ResourceLabel":{"shape":"XmlStringMaxLen1023"}
+      }
+    },
+    "PredictiveScalingPredefinedScalingMetric":{
+      "type":"structure",
+      "required":["PredefinedMetricType"],
+      "members":{
+        "PredefinedMetricType":{"shape":"PredefinedScalingMetricType"},
+        "ResourceLabel":{"shape":"XmlStringMaxLen1023"}
+      }
+    },
+    "PredictiveScalingSchedulingBufferTime":{
+      "type":"integer",
+      "min":0
     },
     "ProcessNames":{
       "type":"list",
@@ -2351,7 +2810,8 @@
         "StepAdjustments":{"shape":"StepAdjustments"},
         "EstimatedInstanceWarmup":{"shape":"EstimatedInstanceWarmup"},
         "TargetTrackingConfiguration":{"shape":"TargetTrackingConfiguration"},
-        "Enabled":{"shape":"ScalingPolicyEnabled"}
+        "Enabled":{"shape":"ScalingPolicyEnabled"},
+        "PredictiveScalingConfiguration":{"shape":"PredictiveScalingConfiguration"}
       }
     },
     "PutScheduledUpdateGroupActionType":{
@@ -2416,7 +2876,8 @@
         "MinHealthyPercentage":{"shape":"IntPercent"},
         "InstanceWarmup":{"shape":"RefreshInstanceWarmup"},
         "CheckpointPercentages":{"shape":"CheckpointPercentages"},
-        "CheckpointDelay":{"shape":"CheckpointDelay"}
+        "CheckpointDelay":{"shape":"CheckpointDelay"},
+        "SkipMatching":{"shape":"SkipMatching"}
       }
     },
     "RefreshStrategy":{
@@ -2453,6 +2914,7 @@
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },
+    "ReturnData":{"type":"boolean"},
     "ScalingActivityInProgressFault":{
       "type":"structure",
       "members":{
@@ -2503,7 +2965,8 @@
         "EstimatedInstanceWarmup":{"shape":"EstimatedInstanceWarmup"},
         "Alarms":{"shape":"Alarms"},
         "TargetTrackingConfiguration":{"shape":"TargetTrackingConfiguration"},
-        "Enabled":{"shape":"ScalingPolicyEnabled"}
+        "Enabled":{"shape":"ScalingPolicyEnabled"},
+        "PredictiveScalingConfiguration":{"shape":"PredictiveScalingConfiguration"}
       }
     },
     "ScalingPolicyEnabled":{"type":"boolean"},
@@ -2624,6 +3087,7 @@
     },
     "ShouldDecrementDesiredCapacity":{"type":"boolean"},
     "ShouldRespectGracePeriod":{"type":"boolean"},
+    "SkipMatching":{"type":"boolean"},
     "SpotInstancePools":{"type":"integer"},
     "SpotPrice":{
       "type":"string",
@@ -2642,6 +3106,7 @@
       "members":{
         "AutoScalingGroupName":{"shape":"XmlStringMaxLen255"},
         "Strategy":{"shape":"RefreshStrategy"},
+        "DesiredConfiguration":{"shape":"DesiredConfiguration"},
         "Preferences":{"shape":"RefreshPreferences"}
       }
     },
@@ -2747,6 +3212,13 @@
       "member":{"shape":"XmlStringMaxLen1600"}
     },
     "TimestampType":{"type":"timestamp"},
+    "TotalLocalStorageGBRequest":{
+      "type":"structure",
+      "members":{
+        "Min":{"shape":"NullablePositiveDouble"},
+        "Max":{"shape":"NullablePositiveDouble"}
+      }
+    },
     "UpdateAutoScalingGroupType":{
       "type":"structure",
       "required":["AutoScalingGroupName"],
@@ -2768,7 +3240,17 @@
         "NewInstancesProtectedFromScaleIn":{"shape":"InstanceProtected"},
         "ServiceLinkedRoleARN":{"shape":"ResourceName"},
         "MaxInstanceLifetime":{"shape":"MaxInstanceLifetime"},
-        "CapacityRebalance":{"shape":"CapacityRebalanceEnabled"}
+        "CapacityRebalance":{"shape":"CapacityRebalanceEnabled"},
+        "Context":{"shape":"Context"},
+        "DesiredCapacityType":{"shape":"XmlStringMaxLen255"}
+      }
+    },
+    "VCpuCountRequest":{
+      "type":"structure",
+      "required":["Min"],
+      "members":{
+        "Min":{"shape":"NullablePositiveInteger"},
+        "Max":{"shape":"NullablePositiveInteger"}
       }
     },
     "Values":{
@@ -2849,6 +3331,17 @@
     "XmlStringMaxLen64":{
       "type":"string",
       "max":64,
+      "min":1,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "XmlStringMetricLabel":{
+      "type":"string",
+      "max":2047,
+      "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "XmlStringMetricStat":{
+      "type":"string",
+      "max":100,
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
     },

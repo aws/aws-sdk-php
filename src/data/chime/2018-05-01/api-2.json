@@ -448,6 +448,25 @@
       ],
       "endpoint":{"hostPrefix":"messaging-"}
     },
+    "CreateMediaCapturePipeline":{
+      "name":"CreateMediaCapturePipeline",
+      "http":{
+        "method":"POST",
+        "requestUri":"/media-capture-pipelines",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateMediaCapturePipelineRequest"},
+      "output":{"shape":"CreateMediaCapturePipelineResponse"},
+      "errors":[
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "CreateMeeting":{
       "name":"CreateMeeting",
       "http":{
@@ -621,6 +640,7 @@
         {"shape":"ResourceLimitExceededException"},
         {"shape":"ThrottledClientException"},
         {"shape":"UnauthorizedClientException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -923,6 +943,24 @@
         {"shape":"BadRequestException"},
         {"shape":"UnauthorizedClientException"},
         {"shape":"ResourceLimitExceededException"}
+      ]
+    },
+    "DeleteMediaCapturePipeline":{
+      "name":"DeleteMediaCapturePipeline",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/media-capture-pipelines/{mediaPipelineId}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteMediaCapturePipelineRequest"},
+      "errors":[
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
       ]
     },
     "DeleteMeeting":{
@@ -1613,6 +1651,25 @@
         {"shape":"UnauthorizedClientException"},
         {"shape":"ForbiddenException"},
         {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "GetMediaCapturePipeline":{
+      "name":"GetMediaCapturePipeline",
+      "http":{
+        "method":"GET",
+        "requestUri":"/media-capture-pipelines/{mediaPipelineId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetMediaCapturePipelineRequest"},
+      "output":{"shape":"GetMediaCapturePipelineResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"UnauthorizedClientException"},
         {"shape":"ThrottledClientException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
@@ -2315,6 +2372,24 @@
       ],
       "endpoint":{"hostPrefix":"messaging-"}
     },
+    "ListMediaCapturePipelines":{
+      "name":"ListMediaCapturePipelines",
+      "http":{
+        "method":"GET",
+        "requestUri":"/media-capture-pipelines",
+        "responseCode":200
+      },
+      "input":{"shape":"ListMediaCapturePipelinesRequest"},
+      "output":{"shape":"ListMediaCapturePipelinesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "ListMeetingTags":{
       "name":"ListMeetingTags",
       "http":{
@@ -2994,6 +3069,47 @@
       ],
       "endpoint":{"hostPrefix":"messaging-"}
     },
+    "StartMeetingTranscription":{
+      "name":"StartMeetingTranscription",
+      "http":{
+        "method":"POST",
+        "requestUri":"/meetings/{meetingId}/transcription?operation=start",
+        "responseCode":200
+      },
+      "input":{"shape":"StartMeetingTranscriptionRequest"},
+      "output":{"shape":"StartMeetingTranscriptionResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"UnprocessableEntityException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "StopMeetingTranscription":{
+      "name":"StopMeetingTranscription",
+      "http":{
+        "method":"POST",
+        "requestUri":"/meetings/{meetingId}/transcription?operation=stop",
+        "responseCode":200
+      },
+      "input":{"shape":"StopMeetingTranscriptionRequest"},
+      "output":{"shape":"StopMeetingTranscriptionResponse"},
+      "errors":[
+        {"shape":"ForbiddenException"},
+        {"shape":"NotFoundException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
+        {"shape":"UnprocessableEntityException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
     "TagAttendee":{
       "name":"TagAttendee",
       "http":{
@@ -3292,6 +3408,7 @@
         {"shape":"ForbiddenException"},
         {"shape":"BadRequestException"},
         {"shape":"ThrottledClientException"},
+        {"shape":"ConflictException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -3386,6 +3503,26 @@
         {"shape":"BadRequestException"},
         {"shape":"ConflictException"},
         {"shape":"ThrottledClientException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"ServiceFailureException"}
+      ]
+    },
+    "UpdateSipMediaApplicationCall":{
+      "name":"UpdateSipMediaApplicationCall",
+      "http":{
+        "method":"POST",
+        "requestUri":"/sip-media-applications/{sipMediaApplicationId}/calls/{transactionId}",
+        "responseCode":202
+      },
+      "input":{"shape":"UpdateSipMediaApplicationCallRequest"},
+      "output":{"shape":"UpdateSipMediaApplicationCallResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ForbiddenException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ThrottledClientException"},
+        {"shape":"UnauthorizedClientException"},
         {"shape":"ServiceUnavailableException"},
         {"shape":"ServiceFailureException"}
       ]
@@ -3513,6 +3650,7 @@
         "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
         "DefaultLicense":{"shape":"License"},
         "SupportedLicenses":{"shape":"LicenseList"},
+        "AccountStatus":{"shape":"AccountStatus"},
         "SigninDelegateGroups":{"shape":"SigninDelegateGroupList"}
       }
     },
@@ -3532,6 +3670,13 @@
         "DisableRemoteControl":{"shape":"Boolean"},
         "EnableDialOut":{"shape":"Boolean"}
       }
+    },
+    "AccountStatus":{
+      "type":"string",
+      "enum":[
+        "Suspended",
+        "Active"
+      ]
     },
     "AccountType":{
       "type":"string",
@@ -3663,6 +3808,26 @@
       "pattern":"^arn[\\/\\:\\-\\_\\.a-zA-Z0-9]+$",
       "sensitive":true
     },
+    "ArtifactsConfiguration":{
+      "type":"structure",
+      "required":[
+        "Audio",
+        "Video",
+        "Content"
+      ],
+      "members":{
+        "Audio":{"shape":"AudioArtifactsConfiguration"},
+        "Video":{"shape":"VideoArtifactsConfiguration"},
+        "Content":{"shape":"ContentArtifactsConfiguration"}
+      }
+    },
+    "ArtifactsState":{
+      "type":"string",
+      "enum":[
+        "Enabled",
+        "Disabled"
+      ]
+    },
     "AssociatePhoneNumberWithUserRequest":{
       "type":"structure",
       "required":[
@@ -3761,6 +3926,11 @@
         "JoinToken":{"shape":"JoinTokenString"}
       }
     },
+    "AttendeeIdList":{
+      "type":"list",
+      "member":{"shape":"GuidString"},
+      "min":1
+    },
     "AttendeeList":{
       "type":"list",
       "member":{"shape":"Attendee"}
@@ -3776,6 +3946,20 @@
       "member":{"shape":"Tag"},
       "max":10,
       "min":1
+    },
+    "AudioArtifactsConfiguration":{
+      "type":"structure",
+      "required":["MuxType"],
+      "members":{
+        "MuxType":{"shape":"AudioMuxType"}
+      }
+    },
+    "AudioMuxType":{
+      "type":"string",
+      "enum":[
+        "AudioOnly",
+        "AudioWithActiveSpeakerVideo"
+      ]
     },
     "BadRequestException":{
       "type":"structure",
@@ -4229,6 +4413,13 @@
       "min":5,
       "pattern":"arn:[a-z0-9-\\.]{1,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[a-z0-9-\\.]{0,63}:[^/].{0,1023}"
     },
+    "ChimeSdkMeetingConfiguration":{
+      "type":"structure",
+      "members":{
+        "SourceConfiguration":{"shape":"SourceConfiguration"},
+        "ArtifactsConfiguration":{"shape":"ArtifactsConfiguration"}
+      }
+    },
     "ClientRequestToken":{
       "type":"string",
       "max":64,
@@ -4251,6 +4442,18 @@
       "min":0,
       "pattern":"[\\s\\S]*",
       "sensitive":true
+    },
+    "ContentArtifactsConfiguration":{
+      "type":"structure",
+      "required":["State"],
+      "members":{
+        "State":{"shape":"ArtifactsState"},
+        "MuxType":{"shape":"ContentMuxType"}
+      }
+    },
+    "ContentMuxType":{
+      "type":"string",
+      "enum":["ContentOnly"]
     },
     "ConversationRetentionSettings":{
       "type":"structure",
@@ -4533,6 +4736,32 @@
         "ChannelArn":{"shape":"ChimeArn"}
       }
     },
+    "CreateMediaCapturePipelineRequest":{
+      "type":"structure",
+      "required":[
+        "SourceType",
+        "SourceArn",
+        "SinkType",
+        "SinkArn"
+      ],
+      "members":{
+        "SourceType":{"shape":"MediaPipelineSourceType"},
+        "SourceArn":{"shape":"Arn"},
+        "SinkType":{"shape":"MediaPipelineSinkType"},
+        "SinkArn":{"shape":"Arn"},
+        "ClientRequestToken":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "ChimeSdkMeetingConfiguration":{"shape":"ChimeSdkMeetingConfiguration"}
+      }
+    },
+    "CreateMediaCapturePipelineResponse":{
+      "type":"structure",
+      "members":{
+        "MediaCapturePipeline":{"shape":"MediaCapturePipeline"}
+      }
+    },
     "CreateMeetingDialOutRequest":{
       "type":"structure",
       "required":[
@@ -4721,7 +4950,8 @@
           "shape":"NonEmptyString",
           "location":"uri",
           "locationName":"sipMediaApplicationId"
-        }
+        },
+        "SipHeaders":{"shape":"SipHeadersMap"}
       }
     },
     "CreateSipMediaApplicationCallResponse":{
@@ -5069,6 +5299,17 @@
           "shape":"NonEmptyString",
           "location":"uri",
           "locationName":"botId"
+        }
+      }
+    },
+    "DeleteMediaCapturePipelineRequest":{
+      "type":"structure",
+      "required":["MediaPipelineId"],
+      "members":{
+        "MediaPipelineId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"mediaPipelineId"
         }
       }
     },
@@ -5616,6 +5857,39 @@
         "DNIS":{"shape":"DNISEmergencyCallingConfigurationList"}
       }
     },
+    "EngineTranscribeMedicalSettings":{
+      "type":"structure",
+      "required":[
+        "LanguageCode",
+        "Specialty",
+        "Type"
+      ],
+      "members":{
+        "LanguageCode":{"shape":"TranscribeMedicalLanguageCode"},
+        "Specialty":{"shape":"TranscribeMedicalSpecialty"},
+        "Type":{"shape":"TranscribeMedicalType"},
+        "VocabularyName":{"shape":"String"},
+        "Region":{"shape":"TranscribeMedicalRegion"},
+        "ContentIdentificationType":{"shape":"TranscribeMedicalContentIdentificationType"}
+      }
+    },
+    "EngineTranscribeSettings":{
+      "type":"structure",
+      "required":["LanguageCode"],
+      "members":{
+        "LanguageCode":{"shape":"TranscribeLanguageCode"},
+        "VocabularyFilterMethod":{"shape":"TranscribeVocabularyFilterMethod"},
+        "VocabularyFilterName":{"shape":"String"},
+        "VocabularyName":{"shape":"String"},
+        "Region":{"shape":"TranscribeRegion"},
+        "EnablePartialResultsStabilization":{"shape":"Boolean"},
+        "PartialResultsStability":{"shape":"TranscribePartialResultsStability"},
+        "ContentIdentificationType":{"shape":"TranscribeContentIdentificationType"},
+        "ContentRedactionType":{"shape":"TranscribeContentRedactionType"},
+        "PiiEntityTypes":{"shape":"TranscribePiiEntityTypes"},
+        "LanguageModelName":{"shape":"TranscribeLanguageModelName"}
+      }
+    },
     "ErrorCode":{
       "type":"string",
       "enum":[
@@ -5649,6 +5923,11 @@
       "max":64,
       "min":2,
       "sensitive":true
+    },
+    "ExternalUserIdList":{
+      "type":"list",
+      "member":{"shape":"ExternalUserIdType"},
+      "min":1
     },
     "ExternalUserIdType":{
       "type":"string",
@@ -5868,6 +6147,23 @@
       "members":{
         "BusinessCalling":{"shape":"BusinessCallingSettings"},
         "VoiceConnector":{"shape":"VoiceConnectorSettings"}
+      }
+    },
+    "GetMediaCapturePipelineRequest":{
+      "type":"structure",
+      "required":["MediaPipelineId"],
+      "members":{
+        "MediaPipelineId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"mediaPipelineId"
+        }
+      }
+    },
+    "GetMediaCapturePipelineResponse":{
+      "type":"structure",
+      "members":{
+        "MediaCapturePipeline":{"shape":"MediaCapturePipeline"}
       }
     },
     "GetMeetingRequest":{
@@ -6791,6 +7087,28 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListMediaCapturePipelinesRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"String",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"ResultMax",
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListMediaCapturePipelinesResponse":{
+      "type":"structure",
+      "members":{
+        "MediaCapturePipelines":{"shape":"MediaCapturePipelineList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListMeetingTagsRequest":{
       "type":"structure",
       "required":["MeetingId"],
@@ -7213,6 +7531,42 @@
       "max":50,
       "min":1
     },
+    "MediaCapturePipeline":{
+      "type":"structure",
+      "members":{
+        "MediaPipelineId":{"shape":"GuidString"},
+        "SourceType":{"shape":"MediaPipelineSourceType"},
+        "SourceArn":{"shape":"Arn"},
+        "Status":{"shape":"MediaPipelineStatus"},
+        "SinkType":{"shape":"MediaPipelineSinkType"},
+        "SinkArn":{"shape":"Arn"},
+        "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
+        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
+        "ChimeSdkMeetingConfiguration":{"shape":"ChimeSdkMeetingConfiguration"}
+      }
+    },
+    "MediaCapturePipelineList":{
+      "type":"list",
+      "member":{"shape":"MediaCapturePipeline"}
+    },
+    "MediaPipelineSinkType":{
+      "type":"string",
+      "enum":["S3Bucket"]
+    },
+    "MediaPipelineSourceType":{
+      "type":"string",
+      "enum":["ChimeSdkMeeting"]
+    },
+    "MediaPipelineStatus":{
+      "type":"string",
+      "enum":[
+        "Initializing",
+        "InProgress",
+        "Failed",
+        "Stopping",
+        "Stopped"
+      ]
+    },
     "MediaPlacement":{
       "type":"structure",
       "members":{
@@ -7222,7 +7576,8 @@
         "ScreenSharingUrl":{"shape":"UriType"},
         "ScreenViewingUrl":{"shape":"UriType"},
         "SignalingUrl":{"shape":"UriType"},
-        "TurnControlUrl":{"shape":"UriType"}
+        "TurnControlUrl":{"shape":"UriType"},
+        "EventIngestionUrl":{"shape":"UriType"}
       }
     },
     "Meeting":{
@@ -8157,6 +8512,13 @@
         "RetentionDays":{"shape":"RetentionDays"}
       }
     },
+    "SMAUpdateCallArgumentsMap":{
+      "type":"map",
+      "key":{"shape":"SensitiveString"},
+      "value":{"shape":"SensitiveString"},
+      "max":20,
+      "min":0
+    },
     "SearchAvailablePhoneNumbersRequest":{
       "type":"structure",
       "members":{
@@ -8207,6 +8569,13 @@
       "members":{
         "E164PhoneNumbers":{"shape":"E164PhoneNumberList"},
         "NextToken":{"shape":"String"}
+      }
+    },
+    "SelectedVideoStreams":{
+      "type":"structure",
+      "members":{
+        "AttendeeIds":{"shape":"AttendeeIdList"},
+        "ExternalUserIds":{"shape":"ExternalUserIdList"}
       }
     },
     "SendChannelMessageRequest":{
@@ -8287,6 +8656,13 @@
     "SipApplicationPriority":{
       "type":"integer",
       "min":1
+    },
+    "SipHeadersMap":{
+      "type":"map",
+      "key":{"shape":"SensitiveString"},
+      "value":{"shape":"SensitiveString"},
+      "max":20,
+      "min":0
     },
     "SipMediaApplication":{
       "type":"structure",
@@ -8381,6 +8757,48 @@
         "ASCENDING",
         "DESCENDING"
       ]
+    },
+    "SourceConfiguration":{
+      "type":"structure",
+      "members":{
+        "SelectedVideoStreams":{"shape":"SelectedVideoStreams"}
+      }
+    },
+    "StartMeetingTranscriptionRequest":{
+      "type":"structure",
+      "required":[
+        "MeetingId",
+        "TranscriptionConfiguration"
+      ],
+      "members":{
+        "MeetingId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"meetingId"
+        },
+        "TranscriptionConfiguration":{"shape":"TranscriptionConfiguration"}
+      }
+    },
+    "StartMeetingTranscriptionResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "StopMeetingTranscriptionRequest":{
+      "type":"structure",
+      "required":["MeetingId"],
+      "members":{
+        "MeetingId":{
+          "shape":"GuidString",
+          "location":"uri",
+          "locationName":"meetingId"
+        }
+      }
+    },
+    "StopMeetingTranscriptionResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "StreamingConfiguration":{
       "type":"structure",
@@ -8541,6 +8959,121 @@
       "min":3,
       "pattern":"^8(00|33|44|55|66|77|88)$"
     },
+    "TranscribeContentIdentificationType":{
+      "type":"string",
+      "enum":["PII"]
+    },
+    "TranscribeContentRedactionType":{
+      "type":"string",
+      "enum":["PII"]
+    },
+    "TranscribeLanguageCode":{
+      "type":"string",
+      "enum":[
+        "en-US",
+        "en-GB",
+        "es-US",
+        "fr-CA",
+        "fr-FR",
+        "en-AU",
+        "it-IT",
+        "de-DE",
+        "pt-BR",
+        "ja-JP",
+        "ko-KR",
+        "zh-CN"
+      ]
+    },
+    "TranscribeLanguageModelName":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z._-]+"
+    },
+    "TranscribeMedicalContentIdentificationType":{
+      "type":"string",
+      "enum":["PHI"]
+    },
+    "TranscribeMedicalLanguageCode":{
+      "type":"string",
+      "enum":["en-US"]
+    },
+    "TranscribeMedicalRegion":{
+      "type":"string",
+      "enum":[
+        "us-east-1",
+        "us-east-2",
+        "us-west-2",
+        "ap-southeast-2",
+        "ca-central-1",
+        "eu-west-1",
+        "auto"
+      ]
+    },
+    "TranscribeMedicalSpecialty":{
+      "type":"string",
+      "enum":[
+        "PRIMARYCARE",
+        "CARDIOLOGY",
+        "NEUROLOGY",
+        "ONCOLOGY",
+        "RADIOLOGY",
+        "UROLOGY"
+      ]
+    },
+    "TranscribeMedicalType":{
+      "type":"string",
+      "enum":[
+        "CONVERSATION",
+        "DICTATION"
+      ]
+    },
+    "TranscribePartialResultsStability":{
+      "type":"string",
+      "enum":[
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "TranscribePiiEntityTypes":{
+      "type":"string",
+      "max":300,
+      "min":1,
+      "pattern":"^[A-Z_, ]+"
+    },
+    "TranscribeRegion":{
+      "type":"string",
+      "enum":[
+        "us-east-2",
+        "us-east-1",
+        "us-west-2",
+        "ap-northeast-2",
+        "ap-southeast-2",
+        "ap-northeast-1",
+        "ca-central-1",
+        "eu-central-1",
+        "eu-west-1",
+        "eu-west-2",
+        "sa-east-1",
+        "auto"
+      ]
+    },
+    "TranscribeVocabularyFilterMethod":{
+      "type":"string",
+      "enum":[
+        "remove",
+        "mask",
+        "tag"
+      ]
+    },
+    "TranscriptionConfiguration":{
+      "type":"structure",
+      "members":{
+        "EngineTranscribeSettings":{"shape":"EngineTranscribeSettings"},
+        "EngineTranscribeMedicalSettings":{"shape":"EngineTranscribeMedicalSettings"}
+      }
+    },
     "UnauthorizedClientException":{
       "type":"structure",
       "members":{
@@ -8615,7 +9148,8 @@
           "location":"uri",
           "locationName":"accountId"
         },
-        "Name":{"shape":"AccountName"}
+        "Name":{"shape":"AccountName"},
+        "DefaultLicense":{"shape":"License"}
       }
     },
     "UpdateAccountResponse":{
@@ -8800,10 +9334,6 @@
     },
     "UpdateGlobalSettingsRequest":{
       "type":"structure",
-      "required":[
-        "BusinessCalling",
-        "VoiceConnector"
-      ],
       "members":{
         "BusinessCalling":{"shape":"BusinessCallingSettings"},
         "VoiceConnector":{"shape":"VoiceConnectorSettings"}
@@ -8932,6 +9462,33 @@
       "type":"structure",
       "members":{
         "Room":{"shape":"Room"}
+      }
+    },
+    "UpdateSipMediaApplicationCallRequest":{
+      "type":"structure",
+      "required":[
+        "SipMediaApplicationId",
+        "TransactionId",
+        "Arguments"
+      ],
+      "members":{
+        "SipMediaApplicationId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"sipMediaApplicationId"
+        },
+        "TransactionId":{
+          "shape":"NonEmptyString",
+          "location":"uri",
+          "locationName":"transactionId"
+        },
+        "Arguments":{"shape":"SMAUpdateCallArgumentsMap"}
+      }
+    },
+    "UpdateSipMediaApplicationCallResponse":{
+      "type":"structure",
+      "members":{
+        "SipMediaApplicationCall":{"shape":"SipMediaApplicationCall"}
       }
     },
     "UpdateSipMediaApplicationRequest":{
@@ -9167,6 +9724,18 @@
         "SharedDevice"
       ]
     },
+    "VideoArtifactsConfiguration":{
+      "type":"structure",
+      "required":["State"],
+      "members":{
+        "State":{"shape":"ArtifactsState"},
+        "MuxType":{"shape":"VideoMuxType"}
+      }
+    },
+    "VideoMuxType":{
+      "type":"string",
+      "enum":["VideoOnly"]
+    },
     "VoiceConnector":{
       "type":"structure",
       "members":{
@@ -9176,7 +9745,8 @@
         "OutboundHostName":{"shape":"String"},
         "RequireEncryption":{"shape":"Boolean"},
         "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
-        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"}
+        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
+        "VoiceConnectorArn":{"shape":"NonEmptyString"}
       }
     },
     "VoiceConnectorAwsRegion":{
@@ -9193,7 +9763,8 @@
         "Name":{"shape":"VoiceConnectorGroupName"},
         "VoiceConnectorItems":{"shape":"VoiceConnectorItemList"},
         "CreatedTimestamp":{"shape":"Iso8601Timestamp"},
-        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"}
+        "UpdatedTimestamp":{"shape":"Iso8601Timestamp"},
+        "VoiceConnectorGroupArn":{"shape":"NonEmptyString"}
       }
     },
     "VoiceConnectorGroupList":{

@@ -244,6 +244,21 @@
       ],
       "idempotent":true
     },
+    "DeleteMobileDeviceAccessOverride":{
+      "name":"DeleteMobileDeviceAccessOverride",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteMobileDeviceAccessOverrideRequest"},
+      "output":{"shape":"DeleteMobileDeviceAccessOverrideResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"EntityNotFoundException"}
+      ]
+    },
     "DeleteMobileDeviceAccessRule":{
       "name":"DeleteMobileDeviceAccessRule",
       "http":{
@@ -340,6 +355,23 @@
       ],
       "idempotent":true
     },
+    "DeregisterMailDomain":{
+      "name":"DeregisterMailDomain",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeregisterMailDomainRequest"},
+      "output":{"shape":"DeregisterMailDomainResponse"},
+      "errors":[
+        {"shape":"MailDomainInUseException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidCustomSesConfigurationException"}
+      ],
+      "idempotent":true
+    },
     "DescribeGroup":{
       "name":"DescribeGroup",
       "http":{
@@ -351,6 +383,20 @@
       "errors":[
         {"shape":"EntityNotFoundException"},
         {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"}
+      ],
+      "idempotent":true
+    },
+    "DescribeInboundDmarcSettings":{
+      "name":"DescribeInboundDmarcSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeInboundDmarcSettingsRequest"},
+      "output":{"shape":"DescribeInboundDmarcSettingsResponse"},
+      "errors":[
         {"shape":"OrganizationNotFoundException"},
         {"shape":"OrganizationStateException"}
       ],
@@ -486,6 +532,22 @@
       ],
       "idempotent":true
     },
+    "GetMailDomain":{
+      "name":"GetMailDomain",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetMailDomainRequest"},
+      "output":{"shape":"GetMailDomainResponse"},
+      "errors":[
+        {"shape":"MailDomainNotFoundException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"InvalidParameterException"}
+      ],
+      "idempotent":true
+    },
     "GetMailboxDetails":{
       "name":"GetMailboxDetails",
       "http":{
@@ -513,6 +575,22 @@
         {"shape":"InvalidParameterException"},
         {"shape":"OrganizationNotFoundException"},
         {"shape":"OrganizationStateException"}
+      ]
+    },
+    "GetMobileDeviceAccessOverride":{
+      "name":"GetMobileDeviceAccessOverride",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetMobileDeviceAccessOverrideRequest"},
+      "output":{"shape":"GetMobileDeviceAccessOverrideResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"ResourceNotFoundException"}
       ]
     },
     "ListAccessControlRules":{
@@ -578,6 +656,21 @@
       ],
       "idempotent":true
     },
+    "ListMailDomains":{
+      "name":"ListMailDomains",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListMailDomainsRequest"},
+      "output":{"shape":"ListMailDomainsResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"}
+      ],
+      "idempotent":true
+    },
     "ListMailboxExportJobs":{
       "name":"ListMailboxExportJobs",
       "http":{
@@ -608,6 +701,21 @@
         {"shape":"OrganizationStateException"}
       ],
       "idempotent":true
+    },
+    "ListMobileDeviceAccessOverrides":{
+      "name":"ListMobileDeviceAccessOverrides",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListMobileDeviceAccessOverridesRequest"},
+      "output":{"shape":"ListMobileDeviceAccessOverridesResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"EntityNotFoundException"}
+      ]
     },
     "ListMobileDeviceAccessRules":{
       "name":"ListMobileDeviceAccessRules",
@@ -711,6 +819,20 @@
         {"shape":"OrganizationStateException"}
       ]
     },
+    "PutInboundDmarcSettings":{
+      "name":"PutInboundDmarcSettings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutInboundDmarcSettingsRequest"},
+      "output":{"shape":"PutInboundDmarcSettingsResponse"},
+      "errors":[
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"}
+      ],
+      "idempotent":true
+    },
     "PutMailboxPermissions":{
       "name":"PutMailboxPermissions",
       "http":{
@@ -728,6 +850,22 @@
       ],
       "idempotent":true
     },
+    "PutMobileDeviceAccessOverride":{
+      "name":"PutMobileDeviceAccessOverride",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutMobileDeviceAccessOverrideRequest"},
+      "output":{"shape":"PutMobileDeviceAccessOverrideResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"EntityStateException"}
+      ]
+    },
     "PutRetentionPolicy":{
       "name":"PutRetentionPolicy",
       "http":{
@@ -741,6 +879,23 @@
         {"shape":"OrganizationNotFoundException"},
         {"shape":"OrganizationStateException"},
         {"shape":"LimitExceededException"}
+      ],
+      "idempotent":true
+    },
+    "RegisterMailDomain":{
+      "name":"RegisterMailDomain",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RegisterMailDomainRequest"},
+      "output":{"shape":"RegisterMailDomainResponse"},
+      "errors":[
+        {"shape":"MailDomainInUseException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidParameterException"}
       ],
       "idempotent":true
     },
@@ -830,6 +985,23 @@
       "errors":[
         {"shape":"ResourceNotFoundException"}
       ]
+    },
+    "UpdateDefaultMailDomain":{
+      "name":"UpdateDefaultMailDomain",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateDefaultMailDomainRequest"},
+      "output":{"shape":"UpdateDefaultMailDomainResponse"},
+      "errors":[
+        {"shape":"MailDomainNotFoundException"},
+        {"shape":"MailDomainStateException"},
+        {"shape":"OrganizationNotFoundException"},
+        {"shape":"OrganizationStateException"},
+        {"shape":"InvalidParameterException"}
+      ],
+      "idempotent":true
     },
     "UpdateMailboxQuota":{
       "name":"UpdateMailboxQuota",
@@ -1024,6 +1196,7 @@
       }
     },
     "Boolean":{"type":"boolean"},
+    "BooleanObject":{"type":"boolean"},
     "CancelMailboxExportJobRequest":{
       "type":"structure",
       "required":[
@@ -1252,6 +1425,24 @@
       "members":{
       }
     },
+    "DeleteMobileDeviceAccessOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "UserId",
+        "DeviceId"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "UserId":{"shape":"EntityIdentifier"},
+        "DeviceId":{"shape":"DeviceId"}
+      }
+    },
+    "DeleteMobileDeviceAccessOverrideResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteMobileDeviceAccessRuleRequest":{
       "type":"structure",
       "required":[
@@ -1354,6 +1545,22 @@
       "members":{
       }
     },
+    "DeregisterMailDomainRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "DomainName"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "DomainName":{"shape":"WorkMailDomainName"}
+      }
+    },
+    "DeregisterMailDomainResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DescribeGroupRequest":{
       "type":"structure",
       "required":[
@@ -1374,6 +1581,19 @@
         "State":{"shape":"EntityState"},
         "EnabledDate":{"shape":"Timestamp"},
         "DisabledDate":{"shape":"Timestamp"}
+      }
+    },
+    "DescribeInboundDmarcSettingsRequest":{
+      "type":"structure",
+      "required":["OrganizationId"],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"}
+      }
+    },
+    "DescribeInboundDmarcSettingsResponse":{
+      "type":"structure",
+      "members":{
+        "Enforced":{"shape":"Boolean"}
       }
     },
     "DescribeMailboxExportJobRequest":{
@@ -1478,6 +1698,12 @@
       "max":1023,
       "min":0,
       "pattern":"[\\S\\s]*"
+    },
+    "DeviceId":{
+      "type":"string",
+      "max":32,
+      "min":1,
+      "pattern":"[A-Za-z0-9]+"
     },
     "DeviceModel":{
       "type":"string",
@@ -1590,6 +1816,26 @@
       "members":{
       }
     },
+    "DnsRecord":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"String"},
+        "Hostname":{"shape":"String"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "DnsRecordVerificationStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "VERIFIED",
+        "FAILED"
+      ]
+    },
+    "DnsRecords":{
+      "type":"list",
+      "member":{"shape":"DnsRecord"}
+    },
     "Domain":{
       "type":"structure",
       "members":{
@@ -1628,6 +1874,12 @@
         "Message":{"shape":"String"}
       },
       "exception":true
+    },
+    "EntityIdentifier":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[a-zA-Z0-9._%+@-]+"
     },
     "EntityNotFoundException":{
       "type":"structure",
@@ -1715,6 +1967,27 @@
         "FolderConfigurations":{"shape":"FolderConfigurations"}
       }
     },
+    "GetMailDomainRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "DomainName"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "DomainName":{"shape":"WorkMailDomainName"}
+      }
+    },
+    "GetMailDomainResponse":{
+      "type":"structure",
+      "members":{
+        "Records":{"shape":"DnsRecords"},
+        "IsTestDomain":{"shape":"Boolean"},
+        "IsDefault":{"shape":"Boolean"},
+        "OwnershipVerificationStatus":{"shape":"DnsRecordVerificationStatus"},
+        "DkimVerificationStatus":{"shape":"DnsRecordVerificationStatus"}
+      }
+    },
     "GetMailboxDetailsRequest":{
       "type":"structure",
       "required":[
@@ -1751,6 +2024,30 @@
         "MatchedRules":{"shape":"MobileDeviceAccessMatchedRuleList"}
       }
     },
+    "GetMobileDeviceAccessOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "UserId",
+        "DeviceId"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "UserId":{"shape":"EntityIdentifier"},
+        "DeviceId":{"shape":"DeviceId"}
+      }
+    },
+    "GetMobileDeviceAccessOverrideResponse":{
+      "type":"structure",
+      "members":{
+        "UserId":{"shape":"WorkMailIdentifier"},
+        "DeviceId":{"shape":"DeviceId"},
+        "Effect":{"shape":"MobileDeviceAccessRuleEffect"},
+        "Description":{"shape":"MobileDeviceAccessRuleDescription"},
+        "DateCreated":{"shape":"Timestamp"},
+        "DateModified":{"shape":"Timestamp"}
+      }
+    },
     "Group":{
       "type":"structure",
       "members":{
@@ -1785,6 +2082,13 @@
       "pattern":"[\\x21-\\x7e]+"
     },
     "InvalidConfigurationException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "InvalidCustomSesConfigurationException":{
       "type":"structure",
       "members":{
         "Message":{"shape":"String"}
@@ -1909,6 +2213,22 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListMailDomainsRequest":{
+      "type":"structure",
+      "required":["OrganizationId"],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListMailDomainsResponse":{
+      "type":"structure",
+      "members":{
+        "MailDomains":{"shape":"MailDomains"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
     "ListMailboxExportJobsRequest":{
       "type":"structure",
       "required":["OrganizationId"],
@@ -1942,6 +2262,24 @@
       "type":"structure",
       "members":{
         "Permissions":{"shape":"Permissions"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListMobileDeviceAccessOverridesRequest":{
+      "type":"structure",
+      "required":["OrganizationId"],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "UserId":{"shape":"EntityIdentifier"},
+        "DeviceId":{"shape":"DeviceId"},
+        "NextToken":{"shape":"NextToken"},
+        "MaxResults":{"shape":"MaxResults"}
+      }
+    },
+    "ListMobileDeviceAccessOverridesResponse":{
+      "type":"structure",
+      "members":{
+        "Overrides":{"shape":"MobileDeviceAccessOverridesList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -2037,6 +2375,13 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "MailDomainInUseException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
     "MailDomainNotFoundException":{
       "type":"structure",
       "members":{
@@ -2050,6 +2395,17 @@
         "Message":{"shape":"String"}
       },
       "exception":true
+    },
+    "MailDomainSummary":{
+      "type":"structure",
+      "members":{
+        "DomainName":{"shape":"DomainName"},
+        "DefaultDomain":{"shape":"Boolean"}
+      }
+    },
+    "MailDomains":{
+      "type":"list",
+      "member":{"shape":"MailDomainSummary"}
     },
     "MailboxExportErrorInfo":{
       "type":"string",
@@ -2135,6 +2491,21 @@
       "member":{"shape":"MobileDeviceAccessMatchedRule"},
       "max":10,
       "min":0
+    },
+    "MobileDeviceAccessOverride":{
+      "type":"structure",
+      "members":{
+        "UserId":{"shape":"WorkMailIdentifier"},
+        "DeviceId":{"shape":"DeviceId"},
+        "Effect":{"shape":"MobileDeviceAccessRuleEffect"},
+        "Description":{"shape":"MobileDeviceAccessRuleDescription"},
+        "DateCreated":{"shape":"Timestamp"},
+        "DateModified":{"shape":"Timestamp"}
+      }
+    },
+    "MobileDeviceAccessOverridesList":{
+      "type":"list",
+      "member":{"shape":"MobileDeviceAccessOverride"}
     },
     "MobileDeviceAccessRule":{
       "type":"structure",
@@ -2311,6 +2682,22 @@
       "members":{
       }
     },
+    "PutInboundDmarcSettingsRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "Enforced"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "Enforced":{"shape":"BooleanObject"}
+      }
+    },
+    "PutInboundDmarcSettingsResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "PutMailboxPermissionsRequest":{
       "type":"structure",
       "required":[
@@ -2331,6 +2718,27 @@
       "members":{
       }
     },
+    "PutMobileDeviceAccessOverrideRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "UserId",
+        "DeviceId",
+        "Effect"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "UserId":{"shape":"EntityIdentifier"},
+        "DeviceId":{"shape":"DeviceId"},
+        "Effect":{"shape":"MobileDeviceAccessRuleEffect"},
+        "Description":{"shape":"MobileDeviceAccessRuleDescription"}
+      }
+    },
+    "PutMobileDeviceAccessOverrideResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "PutRetentionPolicyRequest":{
       "type":"structure",
       "required":[
@@ -2347,6 +2755,26 @@
       }
     },
     "PutRetentionPolicyResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "RegisterMailDomainRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "DomainName"
+      ],
+      "members":{
+        "ClientToken":{
+          "shape":"IdempotencyClientToken",
+          "idempotencyToken":true
+        },
+        "OrganizationId":{"shape":"OrganizationId"},
+        "DomainName":{"shape":"WorkMailDomainName"}
+      }
+    },
+    "RegisterMailDomainResponse":{
       "type":"structure",
       "members":{
       }
@@ -2592,6 +3020,22 @@
       "members":{
       }
     },
+    "UpdateDefaultMailDomainRequest":{
+      "type":"structure",
+      "required":[
+        "OrganizationId",
+        "DomainName"
+      ],
+      "members":{
+        "OrganizationId":{"shape":"OrganizationId"},
+        "DomainName":{"shape":"WorkMailDomainName"}
+      }
+    },
+    "UpdateDefaultMailDomainResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UpdateMailboxQuotaRequest":{
       "type":"structure",
       "required":[
@@ -2711,6 +3155,12 @@
     "Users":{
       "type":"list",
       "member":{"shape":"User"}
+    },
+    "WorkMailDomainName":{
+      "type":"string",
+      "max":209,
+      "min":3,
+      "pattern":"[a-zA-Z0-9.-]+\\.[a-zA-Z-]{2,}"
     },
     "WorkMailIdentifier":{
       "type":"string",

@@ -1002,5 +1002,103 @@
         }
       }
     ]
+  },
+  {
+    "description": "Unions",
+    "metadata": {
+      "protocol": "rest-xml"
+    },
+    "shapes": {
+      "OutputShape": {
+        "type": "structure",
+        "members": {
+          "UnionMember": {
+            "shape": "UnionType"
+          }
+        }
+      },
+      "UnionType": {
+        "type": "structure",
+        "members": {
+          "S": {
+            "shape": "StringType"
+          },
+          "L": {
+            "shape": "ListType"
+          }
+        },
+        "union": true
+      },
+      "ListType": {
+        "type": "list",
+        "member": {
+          "shape": "StringType"
+        }
+      },
+      "StringType": {
+        "type": "string"
+      }
+    },
+    "cases": [
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "UnionMember": {
+            "S": "string value"
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResponse><UnionMember><S>string value</S></UnionMember></OperationNameResponse>"
+        }
+      },
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "UnionMember": {
+            "L": [
+              "a",
+              "b"
+            ]
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResponse><UnionMember><L><member>a</member><member>b</member></L></UnionMember></OperationNameResponse>"
+        }
+      },
+      {
+        "given": {
+          "output": {
+            "shape": "OutputShape"
+          },
+          "name": "OperationName"
+        },
+        "result": {
+          "UnionMember": {
+            "Unknown": {
+              "SomeUnknownMember": "un-modeled member"
+            }
+          }
+        },
+        "response": {
+          "status_code": 200,
+          "headers": {},
+          "body": "<OperationNameResponse><UnionMember><SomeUnknownMember>un-modeled member</SomeUnknownMember></UnionMember></OperationNameResponse>"
+        }
+      }
+    ]
   }
 ]

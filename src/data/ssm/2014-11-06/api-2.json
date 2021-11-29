@@ -82,6 +82,7 @@
       "input":{"shape":"CreateActivationRequest"},
       "output":{"shape":"CreateActivationResult"},
       "errors":[
+        {"shape":"InvalidParameters"},
         {"shape":"InternalServerError"}
       ]
     },
@@ -3248,7 +3249,8 @@
           "box":true
         },
         "ExpirationDate":{"shape":"ExpirationDate"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "RegistrationMetadata":{"shape":"RegistrationMetadataList"}
       }
     },
     "CreateActivationResult":{
@@ -5168,7 +5170,11 @@
         "MaxErrors":{"shape":"MaxErrors"},
         "LoggingInfo":{"shape":"LoggingInfo"},
         "Name":{"shape":"MaintenanceWindowName"},
-        "Description":{"shape":"MaintenanceWindowDescription"}
+        "Description":{"shape":"MaintenanceWindowDescription"},
+        "CutoffBehavior":{
+          "shape":"MaintenanceWindowTaskCutoffBehavior",
+          "box":true
+        }
       }
     },
     "GetOpsItemRequest":{
@@ -7025,13 +7031,24 @@
         "MaxConcurrency":{"shape":"MaxConcurrency"},
         "MaxErrors":{"shape":"MaxErrors"},
         "Name":{"shape":"MaintenanceWindowName"},
-        "Description":{"shape":"MaintenanceWindowDescription"}
+        "Description":{"shape":"MaintenanceWindowDescription"},
+        "CutoffBehavior":{
+          "shape":"MaintenanceWindowTaskCutoffBehavior",
+          "box":true
+        }
       }
     },
     "MaintenanceWindowTaskArn":{
       "type":"string",
       "max":1600,
       "min":1
+    },
+    "MaintenanceWindowTaskCutoffBehavior":{
+      "type":"string",
+      "enum":[
+        "CONTINUE_TASK",
+        "CANCEL_TASK"
+      ]
     },
     "MaintenanceWindowTaskId":{
       "type":"string",
@@ -7110,7 +7127,9 @@
     },
     "ManagedInstanceId":{
       "type":"string",
-      "pattern":"^mi-[0-9a-f]{17}$"
+      "max":124,
+      "min":20,
+      "pattern":"(^mi-[0-9a-f]{17}$)|(^eks_c:[0-9A-Za-z][A-Za-z0-9\\-_]{0,99}_\\w{17}$)"
     },
     "MaxConcurrency":{
       "type":"string",
@@ -7140,6 +7159,12 @@
       "type":"integer",
       "max":50,
       "min":5
+    },
+    "MaxSessionDuration":{
+      "type":"string",
+      "max":4,
+      "min":1,
+      "pattern":"^([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-4][0-3][0-9]|1440)$"
     },
     "MetadataKey":{
       "type":"string",
@@ -7246,7 +7271,8 @@
         "CENTOS",
         "ORACLE_LINUX",
         "DEBIAN",
-        "MACOS"
+        "MACOS",
+        "RASPBIAN"
       ]
     },
     "OpsAggregator":{
@@ -7554,7 +7580,8 @@
         "ChangeRequestByApproverArn",
         "ChangeRequestByApproverName",
         "ChangeRequestByTemplate",
-        "ChangeRequestByTargetsResourceGroup"
+        "ChangeRequestByTargetsResourceGroup",
+        "InsightByType"
       ]
     },
     "OpsItemFilterOperator":{
@@ -7752,7 +7779,8 @@
         "ChangeCalendarOverrideRejected",
         "PendingApproval",
         "Approved",
-        "Rejected"
+        "Rejected",
+        "Closed"
       ]
     },
     "OpsItemSummaries":{
@@ -7933,7 +7961,10 @@
       "max":128,
       "min":0
     },
-    "PSParameterValue":{"type":"string"},
+    "PSParameterValue":{
+      "type":"string",
+      "sensitive":true
+    },
     "PSParameterVersion":{"type":"long"},
     "Parameter":{
       "type":"structure",
@@ -8154,7 +8185,8 @@
     "Parameters":{
       "type":"map",
       "key":{"shape":"ParameterName"},
-      "value":{"shape":"ParameterValueList"}
+      "value":{"shape":"ParameterValueList"},
+      "sensitive":true
     },
     "ParametersFilter":{
       "type":"structure",
@@ -8811,6 +8843,10 @@
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
+        },
+        "CutoffBehavior":{
+          "shape":"MaintenanceWindowTaskCutoffBehavior",
+          "box":true
         }
       }
     },
@@ -8824,6 +8860,33 @@
       "type":"integer",
       "max":1000,
       "min":1
+    },
+    "RegistrationMetadataItem":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Key":{"shape":"RegistrationMetadataKey"},
+        "Value":{"shape":"RegistrationMetadataValue"}
+      }
+    },
+    "RegistrationMetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
+    },
+    "RegistrationMetadataList":{
+      "type":"list",
+      "member":{"shape":"RegistrationMetadataItem"}
+    },
+    "RegistrationMetadataValue":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
     },
     "RegistrationsCount":{
       "type":"integer",
@@ -9346,8 +9409,10 @@
         "EndDate":{"shape":"DateTime"},
         "DocumentName":{"shape":"DocumentName"},
         "Owner":{"shape":"SessionOwner"},
+        "Reason":{"shape":"SessionReason"},
         "Details":{"shape":"SessionDetails"},
-        "OutputUrl":{"shape":"SessionManagerOutputUrl"}
+        "OutputUrl":{"shape":"SessionManagerOutputUrl"},
+        "MaxSessionDuration":{"shape":"MaxSessionDuration"}
       }
     },
     "SessionDetails":{
@@ -9442,6 +9507,12 @@
       "type":"string",
       "max":256,
       "min":1
+    },
+    "SessionReason":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^.{1,256}$"
     },
     "SessionState":{
       "type":"string",
@@ -9565,6 +9636,7 @@
         "Parameters":{"shape":"AutomationParameterMap"},
         "ChangeRequestName":{"shape":"ChangeRequestName"},
         "ClientToken":{"shape":"IdempotencyToken"},
+        "AutoApprove":{"shape":"Boolean"},
         "Runbooks":{"shape":"Runbooks"},
         "Tags":{"shape":"TagList"},
         "ScheduledEndTime":{"shape":"DateTime"},
@@ -9583,6 +9655,7 @@
       "members":{
         "Target":{"shape":"SessionTarget"},
         "DocumentName":{"shape":"DocumentARN"},
+        "Reason":{"shape":"SessionReason"},
         "Parameters":{"shape":"SessionManagerParameters"}
       }
     },
@@ -10214,6 +10287,10 @@
         "Replace":{
           "shape":"Boolean",
           "box":true
+        },
+        "CutoffBehavior":{
+          "shape":"MaintenanceWindowTaskCutoffBehavior",
+          "box":true
         }
       }
     },
@@ -10232,7 +10309,11 @@
         "MaxErrors":{"shape":"MaxErrors"},
         "LoggingInfo":{"shape":"LoggingInfo"},
         "Name":{"shape":"MaintenanceWindowName"},
-        "Description":{"shape":"MaintenanceWindowDescription"}
+        "Description":{"shape":"MaintenanceWindowDescription"},
+        "CutoffBehavior":{
+          "shape":"MaintenanceWindowTaskCutoffBehavior",
+          "box":true
+        }
       }
     },
     "UpdateManagedInstanceRoleRequest":{

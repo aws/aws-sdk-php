@@ -435,7 +435,11 @@
         "LambdaProvisionedConcurrencyUtilization",
         "CassandraReadCapacityUtilization",
         "CassandraWriteCapacityUtilization",
-        "KafkaBrokerStorageUtilization"
+        "KafkaBrokerStorageUtilization",
+        "ElastiCachePrimaryEngineCPUUtilization",
+        "ElastiCacheReplicaEngineCPUUtilization",
+        "ElastiCacheDatabaseMemoryUsageCountedForEvictPercentage",
+        "NeptuneReaderAverageCPUUtilization"
       ]
     },
     "MetricUnit":{"type":"string"},
@@ -581,7 +585,10 @@
         "lambda:function:ProvisionedConcurrency",
         "cassandra:table:ReadCapacityUnits",
         "cassandra:table:WriteCapacityUnits",
-        "kafka:broker-storage:VolumeSize"
+        "kafka:broker-storage:VolumeSize",
+        "elasticache:replication-group:NodeGroups",
+        "elasticache:replication-group:Replicas",
+        "neptune:cluster:ReadReplicaCount"
       ]
     },
     "ScalableTarget":{
@@ -736,7 +743,9 @@
         "comprehend",
         "lambda",
         "cassandra",
-        "kafka"
+        "kafka",
+        "elasticache",
+        "neptune"
       ]
     },
     "StepAdjustment":{

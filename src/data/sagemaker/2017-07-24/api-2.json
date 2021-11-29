@@ -49,6 +49,15 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "BatchDescribeModelPackage":{
+      "name":"BatchDescribeModelPackage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchDescribeModelPackageInput"},
+      "output":{"shape":"BatchDescribeModelPackageOutput"}
+    },
     "CreateAction":{
       "name":"CreateAction",
       "http":{
@@ -504,6 +513,18 @@
         {"shape":"ResourceLimitExceeded"}
       ]
     },
+    "CreateStudioLifecycleConfig":{
+      "name":"CreateStudioLifecycleConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateStudioLifecycleConfigRequest"},
+      "output":{"shape":"CreateStudioLifecycleConfigResponse"},
+      "errors":[
+        {"shape":"ResourceInUse"}
+      ]
+    },
     "CreateTrainingJob":{
       "name":"CreateTrainingJob",
       "http":{
@@ -850,7 +871,10 @@
         "method":"POST",
         "requestUri":"/"
       },
-      "input":{"shape":"DeleteModelPackageGroupInput"}
+      "input":{"shape":"DeleteModelPackageGroupInput"},
+      "errors":[
+        {"shape":"ConflictException"}
+      ]
     },
     "DeleteModelPackageGroupPolicy":{
       "name":"DeleteModelPackageGroupPolicy",
@@ -916,7 +940,22 @@
         "method":"POST",
         "requestUri":"/"
       },
-      "input":{"shape":"DeleteProjectInput"}
+      "input":{"shape":"DeleteProjectInput"},
+      "errors":[
+        {"shape":"ConflictException"}
+      ]
+    },
+    "DeleteStudioLifecycleConfig":{
+      "name":"DeleteStudioLifecycleConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteStudioLifecycleConfigRequest"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceInUse"}
+      ]
     },
     "DeleteTags":{
       "name":"DeleteTags",
@@ -1417,6 +1456,18 @@
       },
       "input":{"shape":"DescribeProjectInput"},
       "output":{"shape":"DescribeProjectOutput"}
+    },
+    "DescribeStudioLifecycleConfig":{
+      "name":"DescribeStudioLifecycleConfig",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeStudioLifecycleConfigRequest"},
+      "output":{"shape":"DescribeStudioLifecycleConfigResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
     },
     "DescribeSubscribedWorkteam":{
       "name":"DescribeSubscribedWorkteam",
@@ -1988,6 +2039,18 @@
       "input":{"shape":"ListProjectsInput"},
       "output":{"shape":"ListProjectsOutput"}
     },
+    "ListStudioLifecycleConfigs":{
+      "name":"ListStudioLifecycleConfigs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListStudioLifecycleConfigsRequest"},
+      "output":{"shape":"ListStudioLifecycleConfigsResponse"},
+      "errors":[
+        {"shape":"ResourceInUse"}
+      ]
+    },
     "ListSubscribedWorkteams":{
       "name":"ListSubscribedWorkteams",
       "http":{
@@ -2119,6 +2182,20 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "RetryPipelineExecution":{
+      "name":"RetryPipelineExecution",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RetryPipelineExecutionRequest"},
+      "output":{"shape":"RetryPipelineExecutionResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceLimitExceeded"},
+        {"shape":"ConflictException"}
+      ]
+    },
     "Search":{
       "name":"Search",
       "http":{
@@ -2127,6 +2204,32 @@
       },
       "input":{"shape":"SearchRequest"},
       "output":{"shape":"SearchResponse"}
+    },
+    "SendPipelineExecutionStepFailure":{
+      "name":"SendPipelineExecutionStepFailure",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SendPipelineExecutionStepFailureRequest"},
+      "output":{"shape":"SendPipelineExecutionStepFailureResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceLimitExceeded"}
+      ]
+    },
+    "SendPipelineExecutionStepSuccess":{
+      "name":"SendPipelineExecutionStepSuccess",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SendPipelineExecutionStepSuccessRequest"},
+      "output":{"shape":"SendPipelineExecutionStepSuccessResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"},
+        {"shape":"ResourceLimitExceeded"}
+      ]
     },
     "StartMonitoringSchedule":{
       "name":"StartMonitoringSchedule",
@@ -2491,6 +2594,15 @@
       "errors":[
         {"shape":"ResourceNotFound"}
       ]
+    },
+    "UpdateProject":{
+      "name":"UpdateProject",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateProjectInput"},
+      "output":{"shape":"UpdateProjectOutput"}
     },
     "UpdateTrainingJob":{
       "name":"UpdateTrainingJob",
@@ -2875,6 +2987,14 @@
         "ml.m5.12xlarge",
         "ml.m5.16xlarge",
         "ml.m5.24xlarge",
+        "ml.m5d.large",
+        "ml.m5d.xlarge",
+        "ml.m5d.2xlarge",
+        "ml.m5d.4xlarge",
+        "ml.m5d.8xlarge",
+        "ml.m5d.12xlarge",
+        "ml.m5d.16xlarge",
+        "ml.m5d.24xlarge",
         "ml.c5.large",
         "ml.c5.xlarge",
         "ml.c5.2xlarge",
@@ -2886,12 +3006,21 @@
         "ml.p3.2xlarge",
         "ml.p3.8xlarge",
         "ml.p3.16xlarge",
+        "ml.p3dn.24xlarge",
         "ml.g4dn.xlarge",
         "ml.g4dn.2xlarge",
         "ml.g4dn.4xlarge",
         "ml.g4dn.8xlarge",
         "ml.g4dn.12xlarge",
-        "ml.g4dn.16xlarge"
+        "ml.g4dn.16xlarge",
+        "ml.r5.large",
+        "ml.r5.xlarge",
+        "ml.r5.2xlarge",
+        "ml.r5.4xlarge",
+        "ml.r5.8xlarge",
+        "ml.r5.12xlarge",
+        "ml.r5.16xlarge",
+        "ml.r5.24xlarge"
       ]
     },
     "AppList":{
@@ -2909,6 +3038,13 @@
       "enum":[
         "PublicInternetOnly",
         "VpcOnly"
+      ]
+    },
+    "AppSecurityGroupManagement":{
+      "type":"string",
+      "enum":[
+        "Service",
+        "Customer"
       ]
     },
     "AppSortKey":{
@@ -2939,7 +3075,9 @@
       "enum":[
         "JupyterServer",
         "KernelGateway",
-        "TensorBoard"
+        "TensorBoard",
+        "RStudioServerPro",
+        "RSessionGateway"
       ]
     },
     "ApprovalDescription":{
@@ -3064,6 +3202,36 @@
         "DestinationName":{"shape":"ExperimentEntityName"},
         "CreationTime":{"shape":"Timestamp"},
         "CreatedBy":{"shape":"UserContext"}
+      }
+    },
+    "AsyncInferenceClientConfig":{
+      "type":"structure",
+      "members":{
+        "MaxConcurrentInvocationsPerInstance":{"shape":"MaxConcurrentInvocationsPerInstance"}
+      }
+    },
+    "AsyncInferenceConfig":{
+      "type":"structure",
+      "required":["OutputConfig"],
+      "members":{
+        "ClientConfig":{"shape":"AsyncInferenceClientConfig"},
+        "OutputConfig":{"shape":"AsyncInferenceOutputConfig"}
+      }
+    },
+    "AsyncInferenceNotificationConfig":{
+      "type":"structure",
+      "members":{
+        "SuccessTopic":{"shape":"SnsTopicArn"},
+        "ErrorTopic":{"shape":"SnsTopicArn"}
+      }
+    },
+    "AsyncInferenceOutputConfig":{
+      "type":"structure",
+      "required":["S3OutputPath"],
+      "members":{
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "S3OutputPath":{"shape":"DestinationS3Uri"},
+        "NotificationConfig":{"shape":"AsyncInferenceNotificationConfig"}
       }
     },
     "AthenaCatalog":{
@@ -3432,6 +3600,56 @@
         "AWS/Textract/AnalyzeDocument/Forms/V1"
       ]
     },
+    "BatchDescribeModelPackageError":{
+      "type":"structure",
+      "required":[
+        "ErrorCode",
+        "ErrorResponse"
+      ],
+      "members":{
+        "ErrorCode":{"shape":"String"},
+        "ErrorResponse":{"shape":"String"}
+      }
+    },
+    "BatchDescribeModelPackageErrorMap":{
+      "type":"map",
+      "key":{"shape":"ModelPackageArn"},
+      "value":{"shape":"BatchDescribeModelPackageError"}
+    },
+    "BatchDescribeModelPackageInput":{
+      "type":"structure",
+      "required":["ModelPackageArnList"],
+      "members":{
+        "ModelPackageArnList":{"shape":"ModelPackageArnList"}
+      }
+    },
+    "BatchDescribeModelPackageOutput":{
+      "type":"structure",
+      "members":{
+        "ModelPackageSummaries":{"shape":"ModelPackageSummaries"},
+        "BatchDescribeModelPackageErrorMap":{"shape":"BatchDescribeModelPackageErrorMap"}
+      }
+    },
+    "BatchDescribeModelPackageSummary":{
+      "type":"structure",
+      "required":[
+        "ModelPackageGroupName",
+        "ModelPackageArn",
+        "CreationTime",
+        "InferenceSpecification",
+        "ModelPackageStatus"
+      ],
+      "members":{
+        "ModelPackageGroupName":{"shape":"EntityName"},
+        "ModelPackageVersion":{"shape":"ModelPackageVersion"},
+        "ModelPackageArn":{"shape":"ModelPackageArn"},
+        "ModelPackageDescription":{"shape":"EntityDescription"},
+        "CreationTime":{"shape":"CreationTime"},
+        "InferenceSpecification":{"shape":"InferenceSpecification"},
+        "ModelPackageStatus":{"shape":"ModelPackageStatus"},
+        "ModelApprovalStatus":{"shape":"ModelApprovalStatus"}
+      }
+    },
     "BatchStrategy":{
       "type":"string",
       "enum":[
@@ -3482,6 +3700,20 @@
         "SourcePipelineExecutionArn":{"shape":"PipelineExecutionArn"}
       }
     },
+    "CallbackStepMetadata":{
+      "type":"structure",
+      "members":{
+        "CallbackToken":{"shape":"CallbackToken"},
+        "SqsQueueUrl":{"shape":"String256"},
+        "OutputParameters":{"shape":"OutputParameterList"}
+      }
+    },
+    "CallbackToken":{
+      "type":"string",
+      "max":10,
+      "min":10,
+      "pattern":"^[a-zA-Z0-9]+$"
+    },
     "CandidateArtifactLocations":{
       "type":"structure",
       "required":["Explainability"],
@@ -3501,7 +3733,8 @@
     "CandidateProperties":{
       "type":"structure",
       "members":{
-        "CandidateArtifactLocations":{"shape":"CandidateArtifactLocations"}
+        "CandidateArtifactLocations":{"shape":"CandidateArtifactLocations"},
+        "CandidateMetrics":{"shape":"MetricDataList"}
       }
     },
     "CandidateSortBy":{
@@ -3954,7 +4187,7 @@
     "ContainerDefinitionList":{
       "type":"list",
       "member":{"shape":"ContainerDefinition"},
-      "max":5
+      "max":15
     },
     "ContainerEntrypoint":{
       "type":"list",
@@ -4237,6 +4470,7 @@
         "RoleArn":{"shape":"RoleArn"},
         "InputConfig":{"shape":"InputConfig"},
         "OutputConfig":{"shape":"OutputConfig"},
+        "VpcConfig":{"shape":"NeoVpcConfig"},
         "StoppingCondition":{"shape":"StoppingCondition"},
         "Tags":{"shape":"TagList"}
       }
@@ -4311,7 +4545,8 @@
         "RoleArn":{"shape":"RoleArn"},
         "Description":{"shape":"DeviceFleetDescription"},
         "OutputConfig":{"shape":"EdgeOutputConfig"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "EnableIotRoleAlias":{"shape":"EnableIotRoleAlias"}
       }
     },
     "CreateDomainRequest":{
@@ -4336,7 +4571,9 @@
           "deprecated":true,
           "deprecatedMessage":"This property is deprecated, use KmsKeyId instead."
         },
-        "KmsKeyId":{"shape":"KmsKeyId"}
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
+        "DomainSettings":{"shape":"DomainSettings"}
       }
     },
     "CreateDomainResponse":{
@@ -4378,7 +4615,8 @@
         "ProductionVariants":{"shape":"ProductionVariantList"},
         "DataCaptureConfig":{"shape":"DataCaptureConfig"},
         "Tags":{"shape":"TagList"},
-        "KmsKeyId":{"shape":"KmsKeyId"}
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "AsyncInferenceConfig":{"shape":"AsyncInferenceConfig"}
       }
     },
     "CreateEndpointConfigOutput":{
@@ -4397,6 +4635,7 @@
       "members":{
         "EndpointName":{"shape":"EndpointName"},
         "EndpointConfigName":{"shape":"EndpointConfigName"},
+        "DeploymentConfig":{"shape":"DeploymentConfig"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -4692,7 +4931,7 @@
       "type":"structure",
       "members":{
         "ModelPackageName":{"shape":"EntityName"},
-        "ModelPackageGroupName":{"shape":"EntityName"},
+        "ModelPackageGroupName":{"shape":"ArnOrName"},
         "ModelPackageDescription":{"shape":"EntityDescription"},
         "InferenceSpecification":{"shape":"InferenceSpecification"},
         "ValidationSpecification":{"shape":"ModelPackageValidationSpecification"},
@@ -4705,7 +4944,8 @@
         "ClientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
-        }
+        },
+        "CustomerMetadataProperties":{"shape":"CustomerMetadataMap"}
       }
     },
     "CreateModelPackageOutput":{
@@ -4785,7 +5025,8 @@
         "AcceleratorTypes":{"shape":"NotebookInstanceAcceleratorTypes"},
         "DefaultCodeRepository":{"shape":"CodeRepositoryNameOrUrl"},
         "AdditionalCodeRepositories":{"shape":"AdditionalCodeRepositoryNamesOrUrls"},
-        "RootAccess":{"shape":"RootAccess"}
+        "RootAccess":{"shape":"RootAccess"},
+        "PlatformIdentifier":{"shape":"PlatformIdentifier"}
       }
     },
     "CreateNotebookInstanceLifecycleConfigInput":{
@@ -4920,6 +5161,26 @@
       "members":{
         "ProjectArn":{"shape":"ProjectArn"},
         "ProjectId":{"shape":"ProjectId"}
+      }
+    },
+    "CreateStudioLifecycleConfigRequest":{
+      "type":"structure",
+      "required":[
+        "StudioLifecycleConfigName",
+        "StudioLifecycleConfigContent",
+        "StudioLifecycleConfigAppType"
+      ],
+      "members":{
+        "StudioLifecycleConfigName":{"shape":"StudioLifecycleConfigName"},
+        "StudioLifecycleConfigContent":{"shape":"StudioLifecycleConfigContent"},
+        "StudioLifecycleConfigAppType":{"shape":"StudioLifecycleConfigAppType"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateStudioLifecycleConfigResponse":{
+      "type":"structure",
+      "members":{
+        "StudioLifecycleConfigArn":{"shape":"StudioLifecycleConfigArn"}
       }
     },
     "CreateTrainingJobRequest":{
@@ -5131,6 +5392,29 @@
       "type":"list",
       "member":{"shape":"CustomImage"},
       "max":30
+    },
+    "CustomerMetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]*)${1,128}"
+    },
+    "CustomerMetadataKeyList":{
+      "type":"list",
+      "member":{"shape":"CustomerMetadataKey"}
+    },
+    "CustomerMetadataMap":{
+      "type":"map",
+      "key":{"shape":"CustomerMetadataKey"},
+      "value":{"shape":"CustomerMetadataValue"},
+      "max":50,
+      "min":1
+    },
+    "CustomerMetadataValue":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:\\/=+\\-@]*)${1,256}"
     },
     "DataCaptureConfig":{
       "type":"structure",
@@ -5609,6 +5893,13 @@
         "ProjectName":{"shape":"ProjectEntityName"}
       }
     },
+    "DeleteStudioLifecycleConfigRequest":{
+      "type":"structure",
+      "required":["StudioLifecycleConfigName"],
+      "members":{
+        "StudioLifecycleConfigName":{"shape":"StudioLifecycleConfigName"}
+      }
+    },
     "DeleteTagsInput":{
       "type":"structure",
       "required":[
@@ -5940,6 +6231,7 @@
         "CompilationStartTime":{"shape":"Timestamp"},
         "CompilationEndTime":{"shape":"Timestamp"},
         "StoppingCondition":{"shape":"StoppingCondition"},
+        "InferenceImage":{"shape":"InferenceImage"},
         "CreationTime":{"shape":"CreationTime"},
         "LastModifiedTime":{"shape":"LastModifiedTime"},
         "FailureReason":{"shape":"FailureReason"},
@@ -5947,7 +6239,8 @@
         "ModelDigests":{"shape":"ModelDigests"},
         "RoleArn":{"shape":"RoleArn"},
         "InputConfig":{"shape":"InputConfig"},
-        "OutputConfig":{"shape":"OutputConfig"}
+        "OutputConfig":{"shape":"OutputConfig"},
+        "VpcConfig":{"shape":"NeoVpcConfig"}
       }
     },
     "DescribeContextRequest":{
@@ -6061,7 +6354,8 @@
         "LatestHeartbeat":{"shape":"Timestamp"},
         "Models":{"shape":"EdgeModels"},
         "MaxModels":{"shape":"Integer"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "AgentVersion":{"shape":"EdgeVersion"}
       }
     },
     "DescribeDomainRequest":{
@@ -6094,7 +6388,10 @@
         "SubnetIds":{"shape":"Subnets"},
         "Url":{"shape":"String1024"},
         "VpcId":{"shape":"VpcId"},
-        "KmsKeyId":{"shape":"KmsKeyId"}
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "DomainSettings":{"shape":"DomainSettings"},
+        "AppSecurityGroupManagement":{"shape":"AppSecurityGroupManagement"},
+        "SecurityGroupIdForDomainBoundary":{"shape":"SecurityGroupId"}
       }
     },
     "DescribeEdgePackagingJobRequest":{
@@ -6125,7 +6422,8 @@
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "ModelArtifact":{"shape":"S3Uri"},
-        "ModelSignature":{"shape":"String"}
+        "ModelSignature":{"shape":"String"},
+        "PresetDeploymentOutput":{"shape":"EdgePresetDeploymentOutput"}
       }
     },
     "DescribeEndpointConfigInput":{
@@ -6149,7 +6447,8 @@
         "ProductionVariants":{"shape":"ProductionVariantList"},
         "DataCaptureConfig":{"shape":"DataCaptureConfig"},
         "KmsKeyId":{"shape":"KmsKeyId"},
-        "CreationTime":{"shape":"Timestamp"}
+        "CreationTime":{"shape":"Timestamp"},
+        "AsyncInferenceConfig":{"shape":"AsyncInferenceConfig"}
       }
     },
     "DescribeEndpointInput":{
@@ -6179,7 +6478,9 @@
         "FailureReason":{"shape":"FailureReason"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
-        "LastDeploymentConfig":{"shape":"DeploymentConfig"}
+        "LastDeploymentConfig":{"shape":"DeploymentConfig"},
+        "AsyncInferenceConfig":{"shape":"AsyncInferenceConfig"},
+        "PendingDeploymentSummary":{"shape":"PendingDeploymentSummary"}
       }
     },
     "DescribeExperimentRequest":{
@@ -6568,7 +6869,8 @@
         "ModelMetrics":{"shape":"ModelMetrics"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedBy":{"shape":"UserContext"},
-        "ApprovalDescription":{"shape":"ApprovalDescription"}
+        "ApprovalDescription":{"shape":"ApprovalDescription"},
+        "CustomerMetadataProperties":{"shape":"CustomerMetadataMap"}
       }
     },
     "DescribeModelQualityJobDefinitionRequest":{
@@ -6681,7 +6983,8 @@
         "AcceleratorTypes":{"shape":"NotebookInstanceAcceleratorTypes"},
         "DefaultCodeRepository":{"shape":"CodeRepositoryNameOrUrl"},
         "AdditionalCodeRepositories":{"shape":"AdditionalCodeRepositoryNamesOrUrls"},
-        "RootAccess":{"shape":"RootAccess"}
+        "RootAccess":{"shape":"RootAccess"},
+        "PlatformIdentifier":{"shape":"PlatformIdentifier"}
       }
     },
     "DescribePipelineDefinitionForExecutionRequest":{
@@ -6713,6 +7016,8 @@
         "PipelineExecutionDisplayName":{"shape":"PipelineExecutionName"},
         "PipelineExecutionStatus":{"shape":"PipelineExecutionStatus"},
         "PipelineExecutionDescription":{"shape":"PipelineExecutionDescription"},
+        "PipelineExperimentConfig":{"shape":"PipelineExperimentConfig"},
+        "FailureReason":{"shape":"PipelineExecutionFailureReason"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "CreatedBy":{"shape":"UserContext"},
@@ -6810,7 +7115,27 @@
         "ServiceCatalogProvisionedProductDetails":{"shape":"ServiceCatalogProvisionedProductDetails"},
         "ProjectStatus":{"shape":"ProjectStatus"},
         "CreatedBy":{"shape":"UserContext"},
-        "CreationTime":{"shape":"Timestamp"}
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedBy":{"shape":"UserContext"}
+      }
+    },
+    "DescribeStudioLifecycleConfigRequest":{
+      "type":"structure",
+      "required":["StudioLifecycleConfigName"],
+      "members":{
+        "StudioLifecycleConfigName":{"shape":"StudioLifecycleConfigName"}
+      }
+    },
+    "DescribeStudioLifecycleConfigResponse":{
+      "type":"structure",
+      "members":{
+        "StudioLifecycleConfigArn":{"shape":"StudioLifecycleConfigArn"},
+        "StudioLifecycleConfigName":{"shape":"StudioLifecycleConfigName"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "StudioLifecycleConfigContent":{"shape":"StudioLifecycleConfigContent"},
+        "StudioLifecycleConfigAppType":{"shape":"StudioLifecycleConfigAppType"}
       }
     },
     "DescribeSubscribedWorkteamRequest":{
@@ -7164,7 +7489,8 @@
         "IotThingName":{"shape":"ThingName"},
         "RegistrationTime":{"shape":"Timestamp"},
         "LatestHeartbeat":{"shape":"Timestamp"},
-        "Models":{"shape":"EdgeModelSummaries"}
+        "Models":{"shape":"EdgeModelSummaries"},
+        "AgentVersion":{"shape":"EdgeVersion"}
       }
     },
     "Devices":{
@@ -7251,6 +7577,24 @@
       "max":63,
       "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
     },
+    "DomainSecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"SecurityGroupId"},
+      "max":3
+    },
+    "DomainSettings":{
+      "type":"structure",
+      "members":{
+        "SecurityGroupIds":{"shape":"DomainSecurityGroupIds"},
+        "RStudioServerProDomainSettings":{"shape":"RStudioServerProDomainSettings"}
+      }
+    },
+    "DomainSettingsForUpdate":{
+      "type":"structure",
+      "members":{
+        "RStudioServerProDomainSettingsForUpdate":{"shape":"RStudioServerProDomainSettingsForUpdate"}
+      }
+    },
     "DomainStatus":{
       "type":"string",
       "enum":[
@@ -7324,7 +7668,9 @@
       "required":["S3OutputLocation"],
       "members":{
         "S3OutputLocation":{"shape":"S3Uri"},
-        "KmsKeyId":{"shape":"KmsKeyId"}
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "PresetDeploymentType":{"shape":"EdgePresetDeploymentType"},
+        "PresetDeploymentConfig":{"shape":"String"}
       }
     },
     "EdgePackagingJobArn":{
@@ -7366,6 +7712,32 @@
         "LastModifiedTime":{"shape":"Timestamp"}
       }
     },
+    "EdgePresetDeploymentArtifact":{
+      "type":"string",
+      "max":2048,
+      "min":20
+    },
+    "EdgePresetDeploymentOutput":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "Type":{"shape":"EdgePresetDeploymentType"},
+        "Artifact":{"shape":"EdgePresetDeploymentArtifact"},
+        "Status":{"shape":"EdgePresetDeploymentStatus"},
+        "StatusMessage":{"shape":"String"}
+      }
+    },
+    "EdgePresetDeploymentStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
+    "EdgePresetDeploymentType":{
+      "type":"string",
+      "enum":["GreengrassV2Component"]
+    },
     "EdgeVersion":{
       "type":"string",
       "max":30,
@@ -7378,6 +7750,7 @@
       "pattern":"\\d+"
     },
     "EnableCapture":{"type":"boolean"},
+    "EnableIotRoleAlias":{"type":"boolean"},
     "EnableSagemakerServicecatalogPortfolioInput":{
       "type":"structure",
       "members":{
@@ -8632,6 +9005,10 @@
         "Direct"
       ]
     },
+    "InferenceImage":{
+      "type":"string",
+      "max":256
+    },
     "InferenceSpecification":{
       "type":"structure",
       "required":[
@@ -8646,6 +9023,10 @@
         "SupportedContentTypes":{"shape":"ContentTypes"},
         "SupportedResponseMIMETypes":{"shape":"ResponseMIMETypes"}
       }
+    },
+    "InitialTaskCount":{
+      "type":"integer",
+      "min":1
     },
     "InputConfig":{
       "type":"structure",
@@ -8700,6 +9081,14 @@
         "ml.m5.4xlarge",
         "ml.m5.12xlarge",
         "ml.m5.24xlarge",
+        "ml.m5d.large",
+        "ml.m5d.xlarge",
+        "ml.m5d.2xlarge",
+        "ml.m5d.4xlarge",
+        "ml.m5d.8xlarge",
+        "ml.m5d.12xlarge",
+        "ml.m5d.16xlarge",
+        "ml.m5d.24xlarge",
         "ml.c4.xlarge",
         "ml.c4.2xlarge",
         "ml.c4.4xlarge",
@@ -8719,7 +9108,22 @@
         "ml.p2.16xlarge",
         "ml.p3.2xlarge",
         "ml.p3.8xlarge",
-        "ml.p3.16xlarge"
+        "ml.p3.16xlarge",
+        "ml.p3dn.24xlarge",
+        "ml.g4dn.xlarge",
+        "ml.g4dn.2xlarge",
+        "ml.g4dn.4xlarge",
+        "ml.g4dn.8xlarge",
+        "ml.g4dn.12xlarge",
+        "ml.g4dn.16xlarge",
+        "ml.r5.large",
+        "ml.r5.xlarge",
+        "ml.r5.2xlarge",
+        "ml.r5.4xlarge",
+        "ml.r5.8xlarge",
+        "ml.r5.12xlarge",
+        "ml.r5.16xlarge",
+        "ml.r5.24xlarge"
       ]
     },
     "Integer":{"type":"integer"},
@@ -8806,7 +9210,8 @@
     "JupyterServerAppSettings":{
       "type":"structure",
       "members":{
-        "DefaultResourceSpec":{"shape":"ResourceSpec"}
+        "DefaultResourceSpec":{"shape":"ResourceSpec"},
+        "LifecycleConfigArns":{"shape":"LifecycleConfigArns"}
       }
     },
     "KernelDisplayName":{
@@ -8817,7 +9222,8 @@
       "type":"structure",
       "members":{
         "DefaultResourceSpec":{"shape":"ResourceSpec"},
-        "CustomImages":{"shape":"CustomImages"}
+        "CustomImages":{"shape":"CustomImages"},
+        "LifecycleConfigArns":{"shape":"LifecycleConfigArns"}
       }
     },
     "KernelGatewayImageConfig":{
@@ -9036,7 +9442,18 @@
       "max":2048,
       "pattern":"arn:aws[a-z\\-]*:lambda:[a-z0-9\\-]*:[0-9]{12}:function:.*"
     },
+    "LambdaStepMetadata":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"String256"},
+        "OutputParameters":{"shape":"OutputParameterList"}
+      }
+    },
     "LastModifiedTime":{"type":"timestamp"},
+    "LifecycleConfigArns":{
+      "type":"list",
+      "member":{"shape":"StudioLifecycleConfigArn"}
+    },
     "LineageEntityParameters":{
       "type":"map",
       "key":{"shape":"StringParameterValue"},
@@ -10013,6 +10430,28 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListStudioLifecycleConfigsRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "NameContains":{"shape":"StudioLifecycleConfigName"},
+        "AppTypeEquals":{"shape":"StudioLifecycleConfigAppType"},
+        "CreationTimeBefore":{"shape":"Timestamp"},
+        "CreationTimeAfter":{"shape":"Timestamp"},
+        "ModifiedTimeBefore":{"shape":"Timestamp"},
+        "ModifiedTimeAfter":{"shape":"Timestamp"},
+        "SortBy":{"shape":"StudioLifecycleConfigSortKey"},
+        "SortOrder":{"shape":"SortOrder"}
+      }
+    },
+    "ListStudioLifecycleConfigsResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"NextToken"},
+        "StudioLifecycleConfigs":{"shape":"StudioLifecycleConfigsList"}
+      }
+    },
     "ListSubscribedWorkteamsRequest":{
       "type":"structure",
       "members":{
@@ -10252,6 +10691,11 @@
       "type":"integer",
       "min":1
     },
+    "MaxConcurrentInvocationsPerInstance":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
     "MaxConcurrentTaskCount":{
       "type":"integer",
       "max":1000,
@@ -10349,6 +10793,20 @@
         "Timestamp":{"shape":"Timestamp"}
       }
     },
+    "MetricDataList":{
+      "type":"list",
+      "member":{"shape":"MetricDatum"},
+      "max":40,
+      "min":0
+    },
+    "MetricDatum":{
+      "type":"structure",
+      "members":{
+        "MetricName":{"shape":"AutoMLMetricEnum"},
+        "Value":{"shape":"Float"},
+        "Set":{"shape":"MetricSetSource"}
+      }
+    },
     "MetricDefinition":{
       "type":"structure",
       "required":[
@@ -10377,6 +10835,14 @@
       "max":500,
       "min":1,
       "pattern":".+"
+    },
+    "MetricSetSource":{
+      "type":"string",
+      "enum":[
+        "Train",
+        "Validation",
+        "Test"
+      ]
     },
     "MetricValue":{"type":"float"},
     "MetricsSource":{
@@ -10549,7 +11015,8 @@
         "LastModifiedTime":{"shape":"Timestamp"},
         "LastModifiedBy":{"shape":"UserContext"},
         "ApprovalDescription":{"shape":"ApprovalDescription"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "CustomerMetadataProperties":{"shape":"CustomerMetadataMap"}
       }
     },
     "ModelPackageArn":{
@@ -10557,6 +11024,12 @@
       "max":2048,
       "min":1,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:model-package/.*"
+    },
+    "ModelPackageArnList":{
+      "type":"list",
+      "member":{"shape":"ModelPackageArn"},
+      "max":100,
+      "min":1
     },
     "ModelPackageContainerDefinition":{
       "type":"structure",
@@ -10566,13 +11039,14 @@
         "Image":{"shape":"ContainerImage"},
         "ImageDigest":{"shape":"ImageDigest"},
         "ModelDataUrl":{"shape":"Url"},
-        "ProductId":{"shape":"ProductId"}
+        "ProductId":{"shape":"ProductId"},
+        "Environment":{"shape":"EnvironmentMap"}
       }
     },
     "ModelPackageContainerDefinitionList":{
       "type":"list",
       "member":{"shape":"ModelPackageContainerDefinition"},
-      "max":1,
+      "max":15,
       "min":1
     },
     "ModelPackageGroup":{
@@ -10671,6 +11145,11 @@
     "ModelPackageStatusItemList":{
       "type":"list",
       "member":{"shape":"ModelPackageStatusItem"}
+    },
+    "ModelPackageSummaries":{
+      "type":"map",
+      "key":{"shape":"ModelPackageArn"},
+      "value":{"shape":"BatchDescribeModelPackageSummary"}
     },
     "ModelPackageSummary":{
       "type":"structure",
@@ -11147,6 +11626,39 @@
       "max":63,
       "pattern":"[a-zA-Z0-9\\-]+"
     },
+    "NeoVpcConfig":{
+      "type":"structure",
+      "required":[
+        "SecurityGroupIds",
+        "Subnets"
+      ],
+      "members":{
+        "SecurityGroupIds":{"shape":"NeoVpcSecurityGroupIds"},
+        "Subnets":{"shape":"NeoVpcSubnets"}
+      }
+    },
+    "NeoVpcSecurityGroupId":{
+      "type":"string",
+      "max":32,
+      "pattern":"[-0-9a-zA-Z]+"
+    },
+    "NeoVpcSecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"NeoVpcSecurityGroupId"},
+      "max":5,
+      "min":1
+    },
+    "NeoVpcSubnetId":{
+      "type":"string",
+      "max":32,
+      "pattern":"[-0-9a-zA-Z]+"
+    },
+    "NeoVpcSubnets":{
+      "type":"list",
+      "member":{"shape":"NeoVpcSubnetId"},
+      "max":16,
+      "min":1
+    },
     "NestedFilters":{
       "type":"structure",
       "required":[
@@ -11500,6 +12012,23 @@
         "S3OutputPath":{"shape":"S3Uri"}
       }
     },
+    "OutputParameter":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Value"
+      ],
+      "members":{
+        "Name":{"shape":"String256"},
+        "Value":{"shape":"String1024"}
+      }
+    },
+    "OutputParameterList":{
+      "type":"list",
+      "member":{"shape":"OutputParameter"},
+      "max":50,
+      "min":0
+    },
     "PaginationToken":{
       "type":"string",
       "max":8192,
@@ -11591,6 +12120,35 @@
       "type":"list",
       "member":{"shape":"Parent"}
     },
+    "PendingDeploymentSummary":{
+      "type":"structure",
+      "required":["EndpointConfigName"],
+      "members":{
+        "EndpointConfigName":{"shape":"EndpointConfigName"},
+        "ProductionVariants":{"shape":"PendingProductionVariantSummaryList"},
+        "StartTime":{"shape":"Timestamp"}
+      }
+    },
+    "PendingProductionVariantSummary":{
+      "type":"structure",
+      "required":["VariantName"],
+      "members":{
+        "VariantName":{"shape":"VariantName"},
+        "DeployedImages":{"shape":"DeployedImages"},
+        "CurrentWeight":{"shape":"VariantWeight"},
+        "DesiredWeight":{"shape":"VariantWeight"},
+        "CurrentInstanceCount":{"shape":"TaskCount"},
+        "DesiredInstanceCount":{"shape":"TaskCount"},
+        "InstanceType":{"shape":"ProductionVariantInstanceType"},
+        "AcceleratorType":{"shape":"ProductionVariantAcceleratorType"},
+        "VariantStatus":{"shape":"ProductionVariantStatusList"}
+      }
+    },
+    "PendingProductionVariantSummaryList":{
+      "type":"list",
+      "member":{"shape":"PendingProductionVariantSummary"},
+      "min":1
+    },
     "Pipeline":{
       "type":"structure",
       "members":{
@@ -11633,6 +12191,8 @@
         "PipelineExecutionDisplayName":{"shape":"PipelineExecutionName"},
         "PipelineExecutionStatus":{"shape":"PipelineExecutionStatus"},
         "PipelineExecutionDescription":{"shape":"PipelineExecutionDescription"},
+        "PipelineExperimentConfig":{"shape":"PipelineExperimentConfig"},
+        "FailureReason":{"shape":"PipelineExecutionFailureReason"},
         "CreationTime":{"shape":"Timestamp"},
         "LastModifiedTime":{"shape":"Timestamp"},
         "CreatedBy":{"shape":"UserContext"},
@@ -11649,6 +12209,11 @@
       "type":"string",
       "max":3072,
       "min":0,
+      "pattern":".*"
+    },
+    "PipelineExecutionFailureReason":{
+      "type":"string",
+      "max":1300,
       "pattern":".*"
     },
     "PipelineExecutionName":{
@@ -11691,9 +12256,12 @@
         "TrainingJob":{"shape":"TrainingJobStepMetadata"},
         "ProcessingJob":{"shape":"ProcessingJobStepMetadata"},
         "TransformJob":{"shape":"TransformJobStepMetadata"},
+        "TuningJob":{"shape":"TuningJobStepMetaData"},
         "Model":{"shape":"ModelStepMetadata"},
         "RegisterModel":{"shape":"RegisterModelStepMetadata"},
-        "Condition":{"shape":"ConditionStepMetadata"}
+        "Condition":{"shape":"ConditionStepMetadata"},
+        "Callback":{"shape":"CallbackStepMetadata"},
+        "Lambda":{"shape":"LambdaStepMetadata"}
       }
     },
     "PipelineExecutionSummary":{
@@ -11711,6 +12279,13 @@
       "member":{"shape":"PipelineExecutionSummary"},
       "max":100,
       "min":0
+    },
+    "PipelineExperimentConfig":{
+      "type":"structure",
+      "members":{
+        "ExperimentName":{"shape":"ExperimentEntityName"},
+        "TrialName":{"shape":"ExperimentEntityName"}
+      }
     },
     "PipelineName":{
       "type":"string",
@@ -11746,6 +12321,11 @@
       "member":{"shape":"PipelineSummary"},
       "max":100,
       "min":0
+    },
+    "PlatformIdentifier":{
+      "type":"string",
+      "max":15,
+      "pattern":"^(notebook-al1-v1|notebook-al2-v1)$"
     },
     "PolicyString":{
       "type":"string",
@@ -11861,7 +12441,13 @@
         "ml.r5.8xlarge",
         "ml.r5.12xlarge",
         "ml.r5.16xlarge",
-        "ml.r5.24xlarge"
+        "ml.r5.24xlarge",
+        "ml.g4dn.xlarge",
+        "ml.g4dn.2xlarge",
+        "ml.g4dn.4xlarge",
+        "ml.g4dn.8xlarge",
+        "ml.g4dn.12xlarge",
+        "ml.g4dn.16xlarge"
       ]
     },
     "ProcessingJob":{
@@ -12077,7 +12663,7 @@
       "members":{
         "VariantName":{"shape":"VariantName"},
         "ModelName":{"shape":"ModelName"},
-        "InitialInstanceCount":{"shape":"TaskCount"},
+        "InitialInstanceCount":{"shape":"InitialTaskCount"},
         "InstanceType":{"shape":"ProductionVariantInstanceType"},
         "InitialVariantWeight":{"shape":"VariantWeight"},
         "AcceleratorType":{"shape":"ProductionVariantAcceleratorType"},
@@ -12180,6 +12766,21 @@
       "max":10,
       "min":1
     },
+    "ProductionVariantStatus":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"VariantStatus"},
+        "StatusMessage":{"shape":"VariantStatusMessage"},
+        "StartTime":{"shape":"Timestamp"}
+      }
+    },
+    "ProductionVariantStatusList":{
+      "type":"list",
+      "member":{"shape":"ProductionVariantStatus"},
+      "max":5,
+      "min":0
+    },
     "ProductionVariantSummary":{
       "type":"structure",
       "required":["VariantName"],
@@ -12189,7 +12790,8 @@
         "CurrentWeight":{"shape":"VariantWeight"},
         "DesiredWeight":{"shape":"VariantWeight"},
         "CurrentInstanceCount":{"shape":"TaskCount"},
-        "DesiredInstanceCount":{"shape":"TaskCount"}
+        "DesiredInstanceCount":{"shape":"TaskCount"},
+        "VariantStatus":{"shape":"ProductionVariantStatusList"}
       }
     },
     "ProductionVariantSummaryList":{
@@ -12268,6 +12870,23 @@
         "Disabled"
       ]
     },
+    "Project":{
+      "type":"structure",
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"},
+        "ProjectName":{"shape":"ProjectEntityName"},
+        "ProjectId":{"shape":"ProjectId"},
+        "ProjectDescription":{"shape":"EntityDescription"},
+        "ServiceCatalogProvisioningDetails":{"shape":"ServiceCatalogProvisioningDetails"},
+        "ServiceCatalogProvisionedProductDetails":{"shape":"ServiceCatalogProvisionedProductDetails"},
+        "ProjectStatus":{"shape":"ProjectStatus"},
+        "CreatedBy":{"shape":"UserContext"},
+        "CreationTime":{"shape":"Timestamp"},
+        "Tags":{"shape":"TagList"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "LastModifiedBy":{"shape":"UserContext"}
+      }
+    },
     "ProjectArn":{
       "type":"string",
       "max":2048,
@@ -12309,7 +12928,10 @@
         "CreateFailed",
         "DeleteInProgress",
         "DeleteFailed",
-        "DeleteCompleted"
+        "DeleteCompleted",
+        "UpdateInProgress",
+        "UpdateCompleted",
+        "UpdateFailed"
       ]
     },
     "ProjectSummary":{
@@ -12406,6 +13028,50 @@
       "members":{
         "ModelPackageGroupArn":{"shape":"ModelPackageGroupArn"}
       }
+    },
+    "RSessionAppSettings":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "RStudioServerProAccessStatus":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "RStudioServerProAppSettings":{
+      "type":"structure",
+      "members":{
+        "AccessStatus":{"shape":"RStudioServerProAccessStatus"},
+        "UserGroup":{"shape":"RStudioServerProUserGroup"}
+      }
+    },
+    "RStudioServerProDomainSettings":{
+      "type":"structure",
+      "required":["DomainExecutionRoleArn"],
+      "members":{
+        "DomainExecutionRoleArn":{"shape":"RoleArn"},
+        "RStudioConnectUrl":{"shape":"String"},
+        "RStudioPackageManagerUrl":{"shape":"String"},
+        "DefaultResourceSpec":{"shape":"ResourceSpec"}
+      }
+    },
+    "RStudioServerProDomainSettingsForUpdate":{
+      "type":"structure",
+      "required":["DomainExecutionRoleArn"],
+      "members":{
+        "DomainExecutionRoleArn":{"shape":"RoleArn"},
+        "DefaultResourceSpec":{"shape":"ResourceSpec"}
+      }
+    },
+    "RStudioServerProUserGroup":{
+      "type":"string",
+      "enum":[
+        "R_STUDIO_ADMIN",
+        "R_STUDIO_USER"
+      ]
     },
     "RealtimeInferenceInstanceTypes":{
       "type":"list",
@@ -12640,7 +13306,8 @@
       "members":{
         "SageMakerImageArn":{"shape":"ImageArn"},
         "SageMakerImageVersionArn":{"shape":"ImageVersionArn"},
-        "InstanceType":{"shape":"AppInstanceType"}
+        "InstanceType":{"shape":"AppInstanceType"},
+        "LifecycleConfigArn":{"shape":"StudioLifecycleConfigArn"}
       }
     },
     "ResourceType":{
@@ -12655,7 +13322,8 @@
         "ModelPackageGroup",
         "Pipeline",
         "PipelineExecution",
-        "FeatureGroup"
+        "FeatureGroup",
+        "Project"
       ]
     },
     "ResponseMIMEType":{
@@ -12679,6 +13347,26 @@
         "Retain",
         "Delete"
       ]
+    },
+    "RetryPipelineExecutionRequest":{
+      "type":"structure",
+      "required":[
+        "PipelineExecutionArn",
+        "ClientRequestToken"
+      ],
+      "members":{
+        "PipelineExecutionArn":{"shape":"PipelineExecutionArn"},
+        "ClientRequestToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "RetryPipelineExecutionResponse":{
+      "type":"structure",
+      "members":{
+        "PipelineExecutionArn":{"shape":"PipelineExecutionArn"}
+      }
     },
     "RetryStrategy":{
       "type":"structure",
@@ -12826,7 +13514,8 @@
         "ModelPackageGroup":{"shape":"ModelPackageGroup"},
         "Pipeline":{"shape":"Pipeline"},
         "PipelineExecution":{"shape":"PipelineExecution"},
-        "FeatureGroup":{"shape":"FeatureGroup"}
+        "FeatureGroup":{"shape":"FeatureGroup"},
+        "Project":{"shape":"Project"}
       }
     },
     "SearchRequest":{
@@ -12917,6 +13606,42 @@
       "max":5
     },
     "Seed":{"type":"long"},
+    "SendPipelineExecutionStepFailureRequest":{
+      "type":"structure",
+      "required":["CallbackToken"],
+      "members":{
+        "CallbackToken":{"shape":"CallbackToken"},
+        "FailureReason":{"shape":"String256"},
+        "ClientRequestToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "SendPipelineExecutionStepFailureResponse":{
+      "type":"structure",
+      "members":{
+        "PipelineExecutionArn":{"shape":"PipelineExecutionArn"}
+      }
+    },
+    "SendPipelineExecutionStepSuccessRequest":{
+      "type":"structure",
+      "required":["CallbackToken"],
+      "members":{
+        "CallbackToken":{"shape":"CallbackToken"},
+        "OutputParameters":{"shape":"OutputParameterList"},
+        "ClientRequestToken":{
+          "shape":"IdempotencyToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "SendPipelineExecutionStepSuccessResponse":{
+      "type":"structure",
+      "members":{
+        "PipelineExecutionArn":{"shape":"PipelineExecutionArn"}
+      }
+    },
     "ServiceCatalogEntityId":{
       "type":"string",
       "max":100,
@@ -12932,14 +13657,18 @@
     },
     "ServiceCatalogProvisioningDetails":{
       "type":"structure",
-      "required":[
-        "ProductId",
-        "ProvisioningArtifactId"
-      ],
+      "required":["ProductId"],
       "members":{
         "ProductId":{"shape":"ServiceCatalogEntityId"},
         "ProvisioningArtifactId":{"shape":"ServiceCatalogEntityId"},
         "PathId":{"shape":"ServiceCatalogEntityId"},
+        "ProvisioningParameters":{"shape":"ProvisioningParameters"}
+      }
+    },
+    "ServiceCatalogProvisioningUpdateDetails":{
+      "type":"structure",
+      "members":{
+        "ProvisioningArtifactId":{"shape":"ServiceCatalogEntityId"},
         "ProvisioningParameters":{"shape":"ProvisioningParameters"}
       }
     },
@@ -13280,6 +14009,51 @@
       "max":256,
       "pattern":".*"
     },
+    "StudioLifecycleConfigAppType":{
+      "type":"string",
+      "enum":[
+        "JupyterServer",
+        "KernelGateway"
+      ]
+    },
+    "StudioLifecycleConfigArn":{
+      "type":"string",
+      "max":256,
+      "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:studio-lifecycle-config/.*"
+    },
+    "StudioLifecycleConfigContent":{
+      "type":"string",
+      "max":16384,
+      "min":1,
+      "pattern":"[\\S\\s]+"
+    },
+    "StudioLifecycleConfigDetails":{
+      "type":"structure",
+      "members":{
+        "StudioLifecycleConfigArn":{"shape":"StudioLifecycleConfigArn"},
+        "StudioLifecycleConfigName":{"shape":"StudioLifecycleConfigName"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "StudioLifecycleConfigAppType":{"shape":"StudioLifecycleConfigAppType"}
+      }
+    },
+    "StudioLifecycleConfigName":{
+      "type":"string",
+      "max":63,
+      "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,62}"
+    },
+    "StudioLifecycleConfigSortKey":{
+      "type":"string",
+      "enum":[
+        "CreationTime",
+        "LastModifiedTime",
+        "Name"
+      ]
+    },
+    "StudioLifecycleConfigsList":{
+      "type":"list",
+      "member":{"shape":"StudioLifecycleConfigDetails"}
+    },
     "SubnetId":{
       "type":"string",
       "max":32,
@@ -13386,10 +14160,12 @@
         "qcs603",
         "sitara_am57x",
         "amba_cv22",
+        "amba_cv25",
         "x86_win32",
         "x86_win64",
         "coreml",
-        "jacinto_tda4vm"
+        "jacinto_tda4vm",
+        "imx8mplus"
       ]
     },
     "TargetObjectiveMetricValue":{"type":"float"},
@@ -13436,7 +14212,7 @@
     },
     "TaskCount":{
       "type":"integer",
-      "min":1
+      "min":0
     },
     "TaskDescription":{
       "type":"string",
@@ -13527,14 +14303,16 @@
       "members":{
         "Type":{"shape":"TrafficRoutingConfigType"},
         "WaitIntervalInSeconds":{"shape":"WaitIntervalInSeconds"},
-        "CanarySize":{"shape":"CapacitySize"}
+        "CanarySize":{"shape":"CapacitySize"},
+        "LinearStepSize":{"shape":"CapacitySize"}
       }
     },
     "TrafficRoutingConfigType":{
       "type":"string",
       "enum":[
         "ALL_AT_ONCE",
-        "CANARY"
+        "CANARY",
+        "LINEAR"
       ]
     },
     "TrainingEnvironmentKey":{
@@ -13557,7 +14335,8 @@
       "type":"string",
       "enum":[
         "Pipe",
-        "File"
+        "File",
+        "FastFile"
       ]
     },
     "TrainingInstanceCount":{
@@ -13837,7 +14616,13 @@
         "ml.m5.2xlarge",
         "ml.m5.4xlarge",
         "ml.m5.12xlarge",
-        "ml.m5.24xlarge"
+        "ml.m5.24xlarge",
+        "ml.g4dn.xlarge",
+        "ml.g4dn.2xlarge",
+        "ml.g4dn.4xlarge",
+        "ml.g4dn.8xlarge",
+        "ml.g4dn.12xlarge",
+        "ml.g4dn.16xlarge"
       ]
     },
     "TransformInstanceTypes":{
@@ -14194,6 +14979,12 @@
         "TargetObjectiveMetricValue":{"shape":"TargetObjectiveMetricValue"}
       }
     },
+    "TuningJobStepMetaData":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"HyperParameterTuningJobArn"}
+      }
+    },
     "USD":{
       "type":"structure",
       "members":{
@@ -14311,7 +15102,8 @@
         "DeviceFleetName":{"shape":"EntityName"},
         "RoleArn":{"shape":"RoleArn"},
         "Description":{"shape":"DeviceFleetDescription"},
-        "OutputConfig":{"shape":"EdgeOutputConfig"}
+        "OutputConfig":{"shape":"EdgeOutputConfig"},
+        "EnableIotRoleAlias":{"shape":"EnableIotRoleAlias"}
       }
     },
     "UpdateDevicesRequest":{
@@ -14330,7 +15122,8 @@
       "required":["DomainId"],
       "members":{
         "DomainId":{"shape":"DomainId"},
-        "DefaultUserSettings":{"shape":"UserSettings"}
+        "DefaultUserSettings":{"shape":"UserSettings"},
+        "DomainSettingsForUpdate":{"shape":"DomainSettingsForUpdate"}
       }
     },
     "UpdateDomainResponse":{
@@ -14350,7 +15143,8 @@
         "EndpointConfigName":{"shape":"EndpointConfigName"},
         "RetainAllVariantProperties":{"shape":"Boolean"},
         "ExcludeRetainedVariantProperties":{"shape":"VariantPropertyList"},
-        "DeploymentConfig":{"shape":"DeploymentConfig"}
+        "DeploymentConfig":{"shape":"DeploymentConfig"},
+        "RetainDeploymentConfig":{"shape":"Boolean"}
       }
     },
     "UpdateEndpointOutput":{
@@ -14412,14 +15206,13 @@
     },
     "UpdateModelPackageInput":{
       "type":"structure",
-      "required":[
-        "ModelPackageArn",
-        "ModelApprovalStatus"
-      ],
+      "required":["ModelPackageArn"],
       "members":{
         "ModelPackageArn":{"shape":"ModelPackageArn"},
         "ModelApprovalStatus":{"shape":"ModelApprovalStatus"},
-        "ApprovalDescription":{"shape":"ApprovalDescription"}
+        "ApprovalDescription":{"shape":"ApprovalDescription"},
+        "CustomerMetadataProperties":{"shape":"CustomerMetadataMap"},
+        "CustomerMetadataPropertiesToRemove":{"shape":"CustomerMetadataKeyList"}
       }
     },
     "UpdateModelPackageOutput":{
@@ -14515,6 +15308,23 @@
       "type":"structure",
       "members":{
         "PipelineArn":{"shape":"PipelineArn"}
+      }
+    },
+    "UpdateProjectInput":{
+      "type":"structure",
+      "required":["ProjectName"],
+      "members":{
+        "ProjectName":{"shape":"ProjectEntityName"},
+        "ProjectDescription":{"shape":"EntityDescription"},
+        "ServiceCatalogProvisioningUpdateDetails":{"shape":"ServiceCatalogProvisioningUpdateDetails"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "UpdateProjectOutput":{
+      "type":"structure",
+      "required":["ProjectArn"],
+      "members":{
+        "ProjectArn":{"shape":"ProjectArn"}
       }
     },
     "UpdateTrainingJobRequest":{
@@ -14685,7 +15495,9 @@
         "SharingSettings":{"shape":"SharingSettings"},
         "JupyterServerAppSettings":{"shape":"JupyterServerAppSettings"},
         "KernelGatewayAppSettings":{"shape":"KernelGatewayAppSettings"},
-        "TensorBoardAppSettings":{"shape":"TensorBoardAppSettings"}
+        "TensorBoardAppSettings":{"shape":"TensorBoardAppSettings"},
+        "RStudioServerProAppSettings":{"shape":"RStudioServerProAppSettings"},
+        "RSessionAppSettings":{"shape":"RSessionAppSettings"}
       }
     },
     "VariantName":{
@@ -14713,6 +15525,20 @@
         "DesiredWeight",
         "DataCaptureConfig"
       ]
+    },
+    "VariantStatus":{
+      "type":"string",
+      "enum":[
+        "Creating",
+        "Updating",
+        "Deleting",
+        "ActivatingTraffic",
+        "Baking"
+      ]
+    },
+    "VariantStatusMessage":{
+      "type":"string",
+      "max":1024
     },
     "VariantWeight":{
       "type":"float",

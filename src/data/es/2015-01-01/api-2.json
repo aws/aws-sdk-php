@@ -426,6 +426,7 @@
         "method":"GET",
         "requestUri":"/2015-01-01/domain"
       },
+      "input":{"shape":"ListDomainNamesRequest"},
       "output":{"shape":"ListDomainNamesResponse"},
       "errors":[
         {"shape":"BaseException"},
@@ -1081,6 +1082,11 @@
         "ELIGIBLE"
       ]
     },
+    "DeploymentType":{
+      "type":"string",
+      "max":128,
+      "min":2
+    },
     "DescribeDomainAutoTunesRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -1368,7 +1374,8 @@
     "DomainInfo":{
       "type":"structure",
       "members":{
-        "DomainName":{"shape":"DomainName"}
+        "DomainName":{"shape":"DomainName"},
+        "EngineType":{"shape":"EngineType"}
       }
     },
     "DomainInfoList":{
@@ -1429,6 +1436,14 @@
       ]
     },
     "Double":{"type":"double"},
+    "DryRun":{"type":"boolean"},
+    "DryRunResults":{
+      "type":"structure",
+      "members":{
+        "DeploymentType":{"shape":"DeploymentType"},
+        "Message":{"shape":"Message"}
+      }
+    },
     "Duration":{
       "type":"structure",
       "members":{
@@ -1635,7 +1650,10 @@
         "Status":{"shape":"OptionStatus"}
       }
     },
-    "ElasticsearchVersionString":{"type":"string"},
+    "ElasticsearchVersionString":{
+      "type":"string",
+      "pattern":"^[0-9]{1}\\.[0-9]{1,2}$|^OpenSearch_[0-9]{1,2}\\.[0-9]{1,2}$"
+    },
     "EncryptionAtRestOptions":{
       "type":"structure",
       "members":{
@@ -1658,6 +1676,13 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"ServiceUrl"}
+    },
+    "EngineType":{
+      "type":"string",
+      "enum":[
+        "OpenSearch",
+        "Elasticsearch"
+      ]
     },
     "ErrorDetails":{
       "type":"structure",
@@ -1890,6 +1915,16 @@
       "key":{"shape":"InstanceRole"},
       "value":{"shape":"Limits"}
     },
+    "ListDomainNamesRequest":{
+      "type":"structure",
+      "members":{
+        "EngineType":{
+          "shape":"EngineType",
+          "location":"querystring",
+          "locationName":"engineType"
+        }
+      }
+    },
     "ListDomainNamesResponse":{
       "type":"structure",
       "members":{
@@ -2065,6 +2100,11 @@
       "max":100
     },
     "MaximumInstanceCount":{"type":"integer"},
+    "Message":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "MinimumInstanceCount":{"type":"integer"},
     "NextToken":{"type":"string"},
     "NodeToNodeEncryptionOptions":{
@@ -2571,14 +2611,16 @@
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},
         "EncryptionAtRestOptions":{"shape":"EncryptionAtRestOptions"},
-        "AutoTuneOptions":{"shape":"AutoTuneOptions"}
+        "AutoTuneOptions":{"shape":"AutoTuneOptions"},
+        "DryRun":{"shape":"DryRun"}
       }
     },
     "UpdateElasticsearchDomainConfigResponse":{
       "type":"structure",
       "required":["DomainConfig"],
       "members":{
-        "DomainConfig":{"shape":"ElasticsearchDomainConfig"}
+        "DomainConfig":{"shape":"ElasticsearchDomainConfig"},
+        "DryRunResults":{"shape":"DryRunResults"}
       }
     },
     "UpdatePackageRequest":{

@@ -89,6 +89,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listFindingsFiltersAsync(array $args = [])
  * @method \Aws\Result listInvitations(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listInvitationsAsync(array $args = [])
+ * @method \Aws\Result listManagedDataIdentifiers(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listManagedDataIdentifiersAsync(array $args = [])
  * @method \Aws\Result listMembers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listMembersAsync(array $args = [])
  * @method \Aws\Result listOrganizationAdminAccounts(array $args = [])

@@ -12,3 +12,14 @@ Feature: S3 Multipart Uploads
       | non-seekable | 1           |
       | seekable     | 3           |
       | non-seekable | 3           |
+
+  Scenario Outline: Copying a file
+    Given I have an s3 client and an uploaded file named "<filename>"
+    When I call multipartCopy on "<filename>" to a new key in the same bucket
+    Then the new file should be in the bucket copied from "<filename>"
+
+    Examples:
+      | filename     |
+      | the-file     |
+      | the-?-file   |
+

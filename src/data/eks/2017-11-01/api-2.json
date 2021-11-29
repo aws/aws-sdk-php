@@ -181,6 +181,23 @@
         {"shape":"ServiceUnavailableException"}
       ]
     },
+    "DeregisterCluster":{
+      "name":"DeregisterCluster",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/cluster-registrations/{name}"
+      },
+      "input":{"shape":"DeregisterClusterRequest"},
+      "output":{"shape":"DeregisterClusterResponse"},
+      "errors":[
+        {"shape":"ResourceInUseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ClientException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DescribeAddon":{
       "name":"DescribeAddon",
       "http":{
@@ -411,6 +428,25 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "RegisterCluster":{
+      "name":"RegisterCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/cluster-registrations"
+      },
+      "input":{"shape":"RegisterClusterRequest"},
+      "output":{"shape":"RegisterClusterResponse"},
+      "errors":[
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ClientException"},
+        {"shape":"ServerException"},
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"ResourcePropagationDelayException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -530,8 +566,18 @@
         "AL2_x86_64",
         "AL2_x86_64_GPU",
         "AL2_ARM_64",
-        "CUSTOM"
+        "CUSTOM",
+        "BOTTLEROCKET_ARM_64",
+        "BOTTLEROCKET_x86_64"
       ]
+    },
+    "AccessDeniedException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":403},
+      "exception":true
     },
     "Addon":{
       "type":"structure",
@@ -578,7 +624,9 @@
         "ClusterUnreachable",
         "InsufficientNumberOfReplicas",
         "ConfigurationConflict",
-        "AdmissionRequestDenied"
+        "AdmissionRequestDenied",
+        "UnsupportedAddonModification",
+        "K8sResourceNotFound"
       ]
     },
     "AddonIssueList":{
@@ -739,7 +787,8 @@
         "clientRequestToken":{"shape":"String"},
         "platformVersion":{"shape":"String"},
         "tags":{"shape":"TagMap"},
-        "encryptionConfig":{"shape":"EncryptionConfigList"}
+        "encryptionConfig":{"shape":"EncryptionConfigList"},
+        "connectorConfig":{"shape":"ConnectorConfigResponse"}
       }
     },
     "ClusterName":{
@@ -755,7 +804,8 @@
         "ACTIVE",
         "DELETING",
         "FAILED",
-        "UPDATING"
+        "UPDATING",
+        "PENDING"
       ]
     },
     "Compatibilities":{
@@ -768,6 +818,41 @@
         "clusterVersion":{"shape":"String"},
         "platformVersions":{"shape":"StringList"},
         "defaultVersion":{"shape":"Boolean"}
+      }
+    },
+    "ConnectorConfigProvider":{
+      "type":"string",
+      "enum":[
+        "EKS_ANYWHERE",
+        "ANTHOS",
+        "GKE",
+        "AKS",
+        "OPENSHIFT",
+        "TANZU",
+        "RANCHER",
+        "EC2",
+        "OTHER"
+      ]
+    },
+    "ConnectorConfigRequest":{
+      "type":"structure",
+      "required":[
+        "roleArn",
+        "provider"
+      ],
+      "members":{
+        "roleArn":{"shape":"String"},
+        "provider":{"shape":"ConnectorConfigProvider"}
+      }
+    },
+    "ConnectorConfigResponse":{
+      "type":"structure",
+      "members":{
+        "activationId":{"shape":"String"},
+        "activationCode":{"shape":"String"},
+        "activationExpiry":{"shape":"Timestamp"},
+        "provider":{"shape":"String"},
+        "roleArn":{"shape":"String"}
       }
     },
     "CreateAddonRequest":{
@@ -887,6 +972,7 @@
           "idempotencyToken":true
         },
         "launchTemplate":{"shape":"LaunchTemplateSpecification"},
+        "updateConfig":{"shape":"NodegroupUpdateConfig"},
         "capacityType":{"shape":"CapacityTypes"},
         "version":{"shape":"String"},
         "releaseVersion":{"shape":"String"}
@@ -914,6 +1000,11 @@
           "shape":"String",
           "location":"uri",
           "locationName":"addonName"
+        },
+        "preserve":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"preserve"
         }
       }
     },
@@ -988,6 +1079,23 @@
       "type":"structure",
       "members":{
         "nodegroup":{"shape":"Nodegroup"}
+      }
+    },
+    "DeregisterClusterRequest":{
+      "type":"structure",
+      "required":["name"],
+      "members":{
+        "name":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"name"
+        }
+      }
+    },
+    "DeregisterClusterResponse":{
+      "type":"structure",
+      "members":{
+        "cluster":{"shape":"Cluster"}
       }
     },
     "DescribeAddonRequest":{
@@ -1230,7 +1338,9 @@
         "ClusterUnreachable",
         "InsufficientNumberOfReplicas",
         "ConfigurationConflict",
-        "AdmissionRequestDenied"
+        "AdmissionRequestDenied",
+        "UnsupportedAddonModification",
+        "K8sResourceNotFound"
       ]
     },
     "ErrorDetail":{
@@ -1317,6 +1427,10 @@
     "IdentityProviderConfigs":{
       "type":"list",
       "member":{"shape":"IdentityProviderConfig"}
+    },
+    "IncludeClustersList":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "InvalidParameterException":{
       "type":"structure",
@@ -1419,6 +1533,11 @@
           "shape":"String",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "include":{
+          "shape":"IncludeClustersList",
+          "location":"querystring",
+          "locationName":"include"
         }
       }
     },
@@ -1646,6 +1765,7 @@
         "resources":{"shape":"NodegroupResources"},
         "diskSize":{"shape":"BoxedInteger"},
         "health":{"shape":"NodegroupHealth"},
+        "updateConfig":{"shape":"NodegroupUpdateConfig"},
         "launchTemplate":{"shape":"LaunchTemplateSpecification"},
         "tags":{"shape":"TagMap"}
       }
@@ -1706,6 +1826,18 @@
         "DEGRADED"
       ]
     },
+    "NodegroupUpdateConfig":{
+      "type":"structure",
+      "members":{
+        "maxUnavailable":{"shape":"NonZeroInteger"},
+        "maxUnavailablePercentage":{"shape":"PercentCapacity"}
+      }
+    },
+    "NonZeroInteger":{
+      "type":"integer",
+      "box":true,
+      "min":1
+    },
     "NotFoundException":{
       "type":"structure",
       "members":{
@@ -1755,10 +1887,38 @@
         "requiredClaims":{"shape":"requiredClaimsMap"}
       }
     },
+    "PercentCapacity":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
     "Provider":{
       "type":"structure",
       "members":{
         "keyArn":{"shape":"String"}
+      }
+    },
+    "RegisterClusterRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "connectorConfig"
+      ],
+      "members":{
+        "name":{"shape":"ClusterName"},
+        "connectorConfig":{"shape":"ConnectorConfigRequest"},
+        "clientRequestToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "tags":{"shape":"TagMap"}
+      }
+    },
+    "RegisterClusterResponse":{
+      "type":"structure",
+      "members":{
+        "cluster":{"shape":"Cluster"}
       }
     },
     "RemoteAccessConfig":{
@@ -1806,6 +1966,14 @@
         "message":{"shape":"String"}
       },
       "error":{"httpStatusCode":404},
+      "exception":true
+    },
+    "ResourcePropagationDelayException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"String"}
+      },
+      "error":{"httpStatusCode":428},
       "exception":true
     },
     "RoleArn":{
@@ -2051,6 +2219,7 @@
         "labels":{"shape":"UpdateLabelsPayload"},
         "taints":{"shape":"UpdateTaintsPayload"},
         "scalingConfig":{"shape":"NodegroupScalingConfig"},
+        "updateConfig":{"shape":"NodegroupUpdateConfig"},
         "clientRequestToken":{
           "shape":"String",
           "idempotencyToken":true
@@ -2126,7 +2295,9 @@
         "EncryptionConfig",
         "AddonVersion",
         "ServiceAccountRoleArn",
-        "ResolveConflicts"
+        "ResolveConflicts",
+        "MaxUnavailable",
+        "MaxUnavailablePercentage"
       ]
     },
     "UpdateParams":{

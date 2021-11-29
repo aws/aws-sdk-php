@@ -9,18 +9,23 @@
     "CreateBotVersion": "<p>Creates a new version of the bot based on the <code>DRAFT</code> version. If the <code>DRAFT</code> version of this resource hasn't changed since you created the last version, Amazon Lex doesn't create a new version, it returns the last created version.</p> <p>When you create the first version of a bot, Amazon Lex sets the version to 1. Subsequent versions increment by 1.</p>",
     "CreateExport": "<p>Creates a zip archive containing the contents of a bot or a bot locale. The archive contains a directory structure that contains JSON files that define the bot.</p> <p>You can create an archive that contains the complete definition of a bot, or you can specify that the archive contain only the definition of a single bot locale.</p> <p>For more information about exporting bots, and about the structure of the export archive, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/importing-exporting.html\"> Importing and exporting bots </a> </p>",
     "CreateIntent": "<p>Creates an intent.</p> <p>To define the interaction between the user and your bot, you define one or more intents. For example, for a pizza ordering bot you would create an <code>OrderPizza</code> intent.</p> <p>When you create an intent, you must provide a name. You can optionally provide the following:</p> <ul> <li> <p>Sample utterances. For example, \"I want to order a pizza\" and \"Can I order a pizza.\" You can't provide utterances for built-in intents.</p> </li> <li> <p>Information to be gathered. You specify slots for the information that you bot requests from the user. You can specify standard slot types, such as date and time, or custom slot types for your application.</p> </li> <li> <p>How the intent is fulfilled. You can provide a Lambda function or configure the intent to return the intent information to your client application. If you use a Lambda function, Amazon Lex invokes the function when all of the intent information is available.</p> </li> <li> <p>A confirmation prompt to send to the user to confirm an intent. For example, \"Shall I order your pizza?\"</p> </li> <li> <p>A conclusion statement to send to the user after the intent is fulfilled. For example, \"I ordered your pizza.\"</p> </li> <li> <p>A follow-up prompt that asks the user for additional activity. For example, \"Do you want a drink with your pizza?\"</p> </li> </ul>",
+    "CreateResourcePolicy": "<p>Creates a new resource policy with the specified policy statements.</p>",
+    "CreateResourcePolicyStatement": "<p>Adds a new resource policy statement to a bot or bot alias. If a resource policy exists, the statement is added to the current resource policy. If a policy doesn't exist, a new policy is created.</p> <p>You can't create a resource policy statement that allows cross-account access.</p>",
     "CreateSlot": "<p>Creates a slot in an intent. A slot is a variable needed to fulfill an intent. For example, an <code>OrderPizza</code> intent might need slots for size, crust, and number of pizzas. For each slot, you define one or more utterances that Amazon Lex uses to elicit a response from the user. </p>",
     "CreateSlotType": "<p>Creates a custom slot type</p> <p> To create a custom slot type, specify a name for the slot type and a set of enumeration values, the values that a slot of this type can assume. </p>",
     "CreateUploadUrl": "<p>Gets a pre-signed S3 write URL that you use to upload the zip archive when importing a bot or a bot locale. </p>",
     "DeleteBot": "<p>Deletes all versions of a bot, including the <code>Draft</code> version. To delete a specific version, use the <code>DeleteBotVersion</code> operation.</p> <p>When you delete a bot, all of the resources contained in the bot are also deleted. Deleting a bot removes all locales, intents, slot, and slot types defined for the bot.</p> <p>If a bot has an alias, the <code>DeleteBot</code> operation returns a <code>ResourceInUseException</code> exception. If you want to delete the bot and the alias, set the <code>skipResourceInUseCheck</code> parameter to <code>true</code>.</p>",
     "DeleteBotAlias": "<p>Deletes the specified bot alias.</p>",
     "DeleteBotLocale": "<p>Removes a locale from a bot.</p> <p>When you delete a locale, all intents, slots, and slot types defined for the locale are also deleted.</p>",
-    "DeleteBotVersion": "<p>Deletes a specific version of a bot. To delete all version of a bot, use the <a>DeleteBot</a> operation.</p>",
+    "DeleteBotVersion": "<p>Deletes a specific version of a bot. To delete all version of a bot, use the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_DeleteBot.html\">DeleteBot</a> operation.</p>",
     "DeleteExport": "<p>Removes a previous export and the associated files stored in an S3 bucket.</p>",
     "DeleteImport": "<p>Removes a previous import and the associated file stored in an S3 bucket.</p>",
     "DeleteIntent": "<p>Removes the specified intent.</p> <p>Deleting an intent also deletes the slots associated with the intent.</p>",
+    "DeleteResourcePolicy": "<p>Removes an existing policy from a bot or bot alias. If the resource doesn't have a policy attached, Amazon Lex returns an exception.</p>",
+    "DeleteResourcePolicyStatement": "<p>Deletes a policy statement from a resource policy. If you delete the last statement from a policy, the policy is deleted. If you specify a statement ID that doesn't exist in the policy, or if the bot or bot alias doesn't have a policy attached, Amazon Lex returns an exception.</p>",
     "DeleteSlot": "<p>Deletes the specified slot from an intent.</p>",
     "DeleteSlotType": "<p>Deletes a slot type from a bot locale.</p> <p>If a slot is using the slot type, Amazon Lex throws a <code>ResourceInUseException</code> exception. To avoid the exception, set the <code>skipResourceInUseCheck</code> parameter to <code>true</code>.</p>",
+    "DeleteUtterances": "<p>Deletes stored utterances.</p> <p>Amazon Lex stores the utterances that users send to your bot. Utterances are stored for 15 days for use with the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_ListAggregatedUtterances.html\">ListAggregatedUtterances</a> operation, and then stored indefinitely for use in improving the ability of your bot to respond to user input..</p> <p>Use the <code>DeleteUtterances</code> operation to manually delete utterances for a specific session. When you use the <code>DeleteUtterances</code> operation, utterances stored for improving your bot's ability to respond to user input are deleted immediately. Utterances stored for use with the <code>ListAggregatedUtterances</code> operation are deleted after 15 days.</p>",
     "DescribeBot": "<p>Provides metadata information about a bot. </p>",
     "DescribeBotAlias": "<p>Get information about a specific bot alias.</p>",
     "DescribeBotLocale": "<p>Describes the settings that a bot has for a specific locale. </p>",
@@ -28,13 +33,15 @@
     "DescribeExport": "<p>Gets information about a specific export.</p>",
     "DescribeImport": "<p>Gets information about a specific import.</p>",
     "DescribeIntent": "<p>Returns metadata about an intent.</p>",
+    "DescribeResourcePolicy": "<p>Gets the resource policy and policy revision for a bot or bot alias.</p>",
     "DescribeSlot": "<p>Gets metadata information about a slot.</p>",
     "DescribeSlotType": "<p>Gets metadata information about a slot type.</p>",
+    "ListAggregatedUtterances": "<p>Provides a list of utterances that users have sent to the bot.</p> <p>Utterances are aggregated by the text of the utterance. For example, all instances where customers used the phrase \"I want to order pizza\" are aggregated into the same line in the response.</p> <p>You can see both detected utterances and missed utterances. A detected utterance is where the bot properly recognized the utterance and activated the associated intent. A missed utterance was not recognized by the bot and didn't activate an intent.</p> <p>Utterances can be aggregated for a bot alias or for a bot version, but not both at the same time.</p> <p>Utterances statistics are not generated under the following conditions:</p> <ul> <li> <p>The <code>childDirected</code> field was set to true when the bot was created.</p> </li> <li> <p>You are using slot obfuscation with one or more slots.</p> </li> <li> <p>You opted out of participating in improving Amazon Lex.</p> </li> </ul>",
     "ListBotAliases": "<p>Gets a list of aliases for the specified bot.</p>",
     "ListBotLocales": "<p>Gets a list of locales for the specified bot.</p>",
     "ListBotVersions": "<p>Gets information about all of the versions of a bot.</p> <p>The <code>ListBotVersions</code> operation returns a summary of each version of a bot. For example, if a bot has three numbered versions, the <code>ListBotVersions</code> operation returns for summaries, one for each numbered version and one for the <code>DRAFT</code> version.</p> <p>The <code>ListBotVersions</code> operation always returns at least one version, the <code>DRAFT</code> version.</p>",
     "ListBots": "<p>Gets a list of available bots.</p>",
-    "ListBuiltInIntents": "<p>Gets a list of built-in intents provided by Amazon Lex that you can use in your bot. </p> <p>To use a built-in intent as a the base for your own intent, include the built-in intent signature in the <code>parentIntentSignature</code> parameter when you call the <code>CreateIntent</code> operation. For more information, see <a>CreateIntent</a>.</p>",
+    "ListBuiltInIntents": "<p>Gets a list of built-in intents provided by Amazon Lex that you can use in your bot. </p> <p>To use a built-in intent as a the base for your own intent, include the built-in intent signature in the <code>parentIntentSignature</code> parameter when you call the <code>CreateIntent</code> operation. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_CreateIntent.html\">CreateIntent</a>.</p>",
     "ListBuiltInSlotTypes": "<p>Gets a list of built-in slot types that meet the specified criteria.</p>",
     "ListExports": "<p>Lists the exports for a bot or bot locale. Exports are kept in the list for 7 days.</p>",
     "ListImports": "<p>Lists the imports for a bot or bot locale. Imports are kept in the list for 7 days.</p>",
@@ -48,18 +55,79 @@
     "UpdateBot": "<p>Updates the configuration of an existing bot. </p>",
     "UpdateBotAlias": "<p>Updates the configuration of an existing bot alias.</p>",
     "UpdateBotLocale": "<p>Updates the settings that a bot has for a specific locale.</p>",
-    "UpdateExport": "<p>Updates the password used to encrypt an export zip archive.</p>",
+    "UpdateExport": "<p>Updates the password used to protect an export zip archive.</p> <p>The password is not required. If you don't supply a password, Amazon Lex generates a zip file that is not protected by a password. This is the archive that is available at the pre-signed S3 URL provided by the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_DescribeExport.html\">DescribeExport</a> operation.</p>",
     "UpdateIntent": "<p>Updates the settings for an intent.</p>",
+    "UpdateResourcePolicy": "<p>Replaces the existing resource policy for a bot or bot alias with a new one. If the policy doesn't exist, Amazon Lex returns an exception.</p>",
     "UpdateSlot": "<p>Updates the settings for a slot.</p>",
     "UpdateSlotType": "<p>Updates the configuration of an existing slot type.</p>"
   },
   "shapes": {
+    "AggregatedUtterancesFilter": {
+      "base": "<p>Filters responses returned by the <code>ListAggregatedUtterances</code> operation.</p>",
+      "refs": {
+        "AggregatedUtterancesFilters$member": null
+      }
+    },
+    "AggregatedUtterancesFilterName": {
+      "base": null,
+      "refs": {
+        "AggregatedUtterancesFilter$name": "<p>The name of the field to filter the utterance list.</p>"
+      }
+    },
+    "AggregatedUtterancesFilterOperator": {
+      "base": null,
+      "refs": {
+        "AggregatedUtterancesFilter$operator": "<p>The operator to use for the filter. Specify <code>EQ</code> when the <code>ListAggregatedUtterances</code> operation should return only utterances that equal the specified value. Specify <code>CO</code> when the <code>ListAggregatedUtterances</code> operation should return utterances that contain the specified value.</p>"
+      }
+    },
+    "AggregatedUtterancesFilters": {
+      "base": null,
+      "refs": {
+        "ListAggregatedUtterancesRequest$filters": "<p>Provides the specification of a filter used to limit the utterances in the response to only those that match the filter specification. You can only specify one filter and one string to filter on.</p>"
+      }
+    },
+    "AggregatedUtterancesSortAttribute": {
+      "base": null,
+      "refs": {
+        "AggregatedUtterancesSortBy$attribute": "<p>The utterance attribute to sort by.</p>"
+      }
+    },
+    "AggregatedUtterancesSortBy": {
+      "base": "<p>Specifies attributes for sorting a list of utterances.</p>",
+      "refs": {
+        "ListAggregatedUtterancesRequest$sortBy": "<p>Specifies sorting parameters for the list of utterances. You can sort by the hit count, the missed count, or the number of distinct sessions the utterance appeared in.</p>"
+      }
+    },
+    "AggregatedUtterancesSummary": {
+      "base": "<p>Provides summary information for aggregated utterances. The <code>ListAggregatedUtterances</code> operations combines all instances of the same utterance into a single aggregated summary.</p>",
+      "refs": {
+        "AggregatedUtterancesSummaryList$member": null
+      }
+    },
+    "AggregatedUtterancesSummaryList": {
+      "base": null,
+      "refs": {
+        "ListAggregatedUtterancesResponse$aggregatedUtterancesSummaries": "<p>Summaries of the aggregated utterance data. Each response contains information about the number of times that the utterance was seen during the time period, whether it was detected or missed, and when it was seen during the time period.</p>"
+      }
+    },
     "AmazonResourceName": {
       "base": null,
       "refs": {
+        "CreateResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy is attached to.</p>",
+        "CreateResourcePolicyResponse$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy was attached to.</p>",
+        "CreateResourcePolicyStatementRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy is attached to.</p>",
+        "CreateResourcePolicyStatementResponse$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy is attached to.</p>",
+        "DeleteResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that has the resource policy attached.</p>",
+        "DeleteResourcePolicyResponse$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy was deleted from.</p>",
+        "DeleteResourcePolicyStatementRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy is attached to.</p>",
+        "DeleteResourcePolicyStatementResponse$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy statement was removed from.</p>",
+        "DescribeResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy is attached to.</p>",
+        "DescribeResourcePolicyResponse$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy is attached to.</p>",
         "ListTagsForResourceRequest$resourceARN": "<p>The Amazon Resource Name (ARN) of the resource to get a list of tags for.</p>",
         "TagResourceRequest$resourceARN": "<p>The Amazon Resource Name (ARN) of the bot, bot alias, or bot channel to tag.</p>",
-        "UntagResourceRequest$resourceARN": "<p>The Amazon Resource Name (ARN) of the resource to remove the tags from.</p>"
+        "UntagResourceRequest$resourceARN": "<p>The Amazon Resource Name (ARN) of the resource to remove the tags from.</p>",
+        "UpdateResourcePolicyRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy is attached to.</p>",
+        "UpdateResourcePolicyResponse$resourceArn": "<p>The Amazon Resource Name (ARN) of the bot or bot alias that the resource policy is attached to.</p>"
       }
     },
     "AttachmentTitle": {
@@ -101,6 +169,7 @@
         "DialogCodeHookSettings$enabled": "<p>Enables the dialog code hook so that it processes user requests.</p>",
         "FulfillmentCodeHookSettings$enabled": "<p>Indicates whether a Lambda function should be invoked to fulfill a specific intent.</p>",
         "KendraConfiguration$queryFilterStringEnabled": "<p>Determines whether the AMAZON.KendraSearchIntent intent uses a custom query string to query the Amazon Kendra index.</p>",
+        "MultipleValuesSetting$allowMultipleValues": "<p>Indicates whether a slot can return multiple values. When <code>true</code>, the slot may return more than one value in a response. When <code>false</code>, the slot returns only a single value.</p> <p>Multi-value slots are only available in the en-US locale. If you set this value to <code>true</code> in any other locale, Amazon Lex throws a <code>ValidationException</code>.</p> <p>If the <code>allowMutlipleValues</code> is not set, the default value is <code>false</code>.</p>",
         "SentimentAnalysisSettings$detectSentiment": "<p>Sets whether Amazon Lex uses Amazon Comprehend to detect the sentiment of user utterances.</p>",
         "TextLogSetting$enabled": "<p>Determines whether conversation logs should be stored for an alias.</p>"
       }
@@ -120,12 +189,14 @@
     "BotAliasId": {
       "base": null,
       "refs": {
-        "BotAliasSummary$botAliasId": "<p>The unique identifier assigned to the bot alias. You can use this ID to get detailed information about the alias using the <a>DescribeBotAlias</a> operation.</p>",
+        "BotAliasSummary$botAliasId": "<p>The unique identifier assigned to the bot alias. You can use this ID to get detailed information about the alias using the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_DescribeBotAlias.html\">DescribeBotAlias</a> operation.</p>",
         "CreateBotAliasResponse$botAliasId": "<p>The unique identifier of the bot alias.</p>",
         "DeleteBotAliasRequest$botAliasId": "<p>The unique identifier of the bot alias to delete.</p>",
         "DeleteBotAliasResponse$botAliasId": "<p>The unique identifier of the bot alias to delete.</p>",
         "DescribeBotAliasRequest$botAliasId": "<p>The identifier of the bot alias to describe.</p>",
         "DescribeBotAliasResponse$botAliasId": "<p>The identifier of the bot alias.</p>",
+        "ListAggregatedUtterancesRequest$botAliasId": "<p>The identifier of the bot alias associated with this request. If you specify the bot alias, you can't specify the bot version.</p>",
+        "ListAggregatedUtterancesResponse$botAliasId": "<p>The identifier of the bot alias that contains the utterances. If you specified the bot version, the bot alias ID isn't returned.</p>",
         "UpdateBotAliasRequest$botAliasId": "<p>The unique identifier of the bot alias.</p>",
         "UpdateBotAliasResponse$botAliasId": "<p>The identifier of the updated bot alias.</p>"
       }
@@ -157,7 +228,7 @@
       }
     },
     "BotAliasSummary": {
-      "base": "<p>Summary information about bot aliases returned from the <a>ListBotAliases</a> operation.</p>",
+      "base": "<p>Summary information about bot aliases returned from the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_ListBotAliases.html\">ListBotAliases</a> operation.</p>",
       "refs": {
         "BotAliasSummaryList$member": null
       }
@@ -169,7 +240,7 @@
       }
     },
     "BotExportSpecification": {
-      "base": "<p>Provided the identity of a the bot that was exported.</p>",
+      "base": "<p>Provides the identity of a the bot that was exported.</p>",
       "refs": {
         "ExportResourceSpecification$botExportSpecification": "<p>Parameters for exporting a bot.</p>"
       }
@@ -282,7 +353,7 @@
       }
     },
     "BotLocaleSummary": {
-      "base": "<p>Summary information about bot locales returned by the <a>ListBotLocales</a> operation.</p>",
+      "base": "<p>Summary information about bot locales returned by the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_ListBotLocales.html\">ListBotLocales</a> operation.</p>",
       "refs": {
         "BotLocaleSummaryList$member": null
       }
@@ -320,7 +391,7 @@
       }
     },
     "BotSummary": {
-      "base": "<p>Summary information about a bot returned by the <a>ListBots</a> operation.</p>",
+      "base": "<p>Summary information about a bot returned by the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_ListBots.html\">ListBots</a> operation.</p>",
       "refs": {
         "BotSummaryList$member": null
       }
@@ -348,6 +419,8 @@
         "DescribeSlotResponse$botVersion": "<p>The version of the bot associated with the slot.</p>",
         "DescribeSlotTypeRequest$botVersion": "<p>The version of the bot associated with the slot type.</p>",
         "DescribeSlotTypeResponse$botVersion": "<p>The version of the bot associated with the slot type.</p>",
+        "ListAggregatedUtterancesRequest$botVersion": "<p>The identifier of the bot version associated with this request. If you specify the bot version, you can't specify the bot alias.</p>",
+        "ListAggregatedUtterancesResponse$botVersion": "<p>The identifier of the bot version that contains the utterances. If you specified the bot alias, the bot version isn't returned.</p>",
         "ListBotLocalesRequest$botVersion": "<p>The version of the bot to list locales for.</p>",
         "ListBotLocalesResponse$botVersion": "<p>The version of the bot.</p>",
         "ListExportsRequest$botVersion": "<p>The version of the bot to list exports for. </p>",
@@ -388,7 +461,7 @@
       }
     },
     "BotVersionSummary": {
-      "base": "<p>Summary information about a bot version returned by the <a>ListBotVersions</a> operation.</p>",
+      "base": "<p>Summary information about a bot version returned by the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_ListBotVersions.html\">ListBotVersions</a> operation.</p>",
       "refs": {
         "BotVersionSummaryList$member": null
       }
@@ -402,9 +475,16 @@
     "BoxedBoolean": {
       "base": null,
       "refs": {
+        "AggregatedUtterancesSummary$containsDataFromDeletedResources": "<p>Aggregated utterance data may contain utterances from versions of your bot that have since been deleted. When the aggregated contains this kind of data, this field is set to true.</p>",
+        "FulfillmentStartResponseSpecification$allowInterrupt": "<p>Determines whether the user can interrupt the start message while it is playing.</p>",
+        "FulfillmentUpdateResponseSpecification$allowInterrupt": "<p>Determines whether the user can interrupt an update message while it is playing.</p>",
+        "FulfillmentUpdatesSpecification$active": "<p>Determines whether fulfillment updates are sent to the user. When this field is true, updates are sent.</p> <p>If the <code>active</code> field is set to true, the <code>startResponse</code>, <code>updateResponse</code>, and <code>timeoutInSeconds</code> fields are required.</p>",
+        "IntentClosingSetting$active": "<p>Specifies whether an intent's closing response is used. When this field is false, the closing response isn't sent to the user. If the <code>active</code> field isn't specified, the default is true.</p>",
+        "IntentConfirmationSetting$active": "<p>Specifies whether the intent's confirmation is sent to the user. When this field is false, confirmation and declination responses aren't sent. If the <code>active</code> field isn't specified, the default is true.</p>",
         "PromptSpecification$allowInterrupt": "<p>Indicates whether the user can interrupt a speech prompt from the bot.</p>",
         "ResponseSpecification$allowInterrupt": "<p>Indicates whether the user can interrupt a speech response from Amazon Lex.</p>",
-        "StillWaitingResponseSpecification$allowInterrupt": "<p>Indicates that the user can interrupt the response by speaking while the message is being played.</p>"
+        "StillWaitingResponseSpecification$allowInterrupt": "<p>Indicates that the user can interrupt the response by speaking while the message is being played.</p>",
+        "WaitAndContinueSpecification$active": "<p>Specifies whether the bot will wait for a user to respond. When this field is false, wait and continue responses for a slot aren't used. If the <code>active</code> field isn't specified, the default is true.</p>"
       }
     },
     "BuildBotLocaleRequest": {
@@ -430,7 +510,7 @@
       }
     },
     "BuiltInIntentSummary": {
-      "base": "<p>Provides summary information about a built-in intent for the <a>ListBuiltInIntents</a> operation.</p>",
+      "base": "<p>Provides summary information about a built-in intent for the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_ListBuiltInIntents.html\"> ListBuiltInIntents </a> operation.</p>",
       "refs": {
         "BuiltInIntentSummaryList$member": null
       }
@@ -465,7 +545,7 @@
       }
     },
     "BuiltInSlotTypeSummary": {
-      "base": "<p>Provides summary information about a built-in slot type for the <a>ListBuiltInSlotTypes</a> operation.</p>",
+      "base": "<p>Provides summary information about a built-in slot type for the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_ListBuiltInSlotTypes.html\"> ListBuiltInSlotTypes </a> operation.</p>",
       "refs": {
         "BuiltInSlotTypeSummaryList$member": null
       }
@@ -537,11 +617,41 @@
         "BotAliasLocaleSettings$codeHookSpecification": "<p>Specifies the Lambda function that should be used in the locale.</p>"
       }
     },
+    "ConditionKey": {
+      "base": null,
+      "refs": {
+        "ConditionKeyValueMap$key": null
+      }
+    },
+    "ConditionKeyValueMap": {
+      "base": null,
+      "refs": {
+        "ConditionMap$value": null
+      }
+    },
+    "ConditionMap": {
+      "base": null,
+      "refs": {
+        "CreateResourcePolicyStatementRequest$condition": "<p>Specifies a condition when the policy is in effect. If the principal of the policy is a service principal, you must provide two condition blocks, one with a SourceAccount global condition key and one with a SourceArn global condition key.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html\">IAM JSON policy elements: Condition </a>.</p>"
+      }
+    },
+    "ConditionOperator": {
+      "base": null,
+      "refs": {
+        "ConditionMap$key": null
+      }
+    },
+    "ConditionValue": {
+      "base": null,
+      "refs": {
+        "ConditionKeyValueMap$value": null
+      }
+    },
     "ConfidenceThreshold": {
       "base": null,
       "refs": {
         "BotLocaleImportSpecification$nluIntentConfidenceThreshold": "<p>Determines the threshold where Amazon Lex will insert the <code>AMAZON.FallbackIntent</code>, <code>AMAZON.KendraSearchIntent</code>, or both when returning alternative intents. <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> are only inserted if they are configured for the bot. </p> <p>For example, suppose a bot is configured with the confidence threshold of 0.80 and the <code>AMAZON.FallbackIntent</code>. Amazon Lex returns three alternative intents with the following confidence scores: IntentA (0.70), IntentB (0.60), IntentC (0.50). The response from the <code>PostText</code> operation would be:</p> <ul> <li> <p> <code>AMAZON.FallbackIntent</code> </p> </li> <li> <p> <code>IntentA</code> </p> </li> <li> <p> <code>IntentB</code> </p> </li> <li> <p> <code>IntentC</code> </p> </li> </ul>",
-        "CreateBotLocaleRequest$nluIntentConfidenceThreshold": "<p>Determines the threshold where Amazon Lex will insert the <code>AMAZON.FallbackIntent</code>, <code>AMAZON.KendraSearchIntent</code>, or both when returning alternative intents. <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> are only inserted if they are configured for the bot.</p> <p>For example, suppose a bot is configured with the confidence threshold of 0.80 and the <code>AMAZON.FallbackIntent</code>. Amazon Lex returns three alternative intents with the following confidence scores: IntentA (0.70), IntentB (0.60), IntentC (0.50). The response from the PostText operation would be:</p> <ul> <li> <p>AMAZON.FallbackIntent</p> </li> <li> <p>IntentA</p> </li> <li> <p>IntentB</p> </li> <li> <p>IntentC</p> </li> </ul>",
+        "CreateBotLocaleRequest$nluIntentConfidenceThreshold": "<p>Determines the threshold where Amazon Lex will insert the <code>AMAZON.FallbackIntent</code>, <code>AMAZON.KendraSearchIntent</code>, or both when returning alternative intents. <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> are only inserted if they are configured for the bot.</p> <p>For example, suppose a bot is configured with the confidence threshold of 0.80 and the <code>AMAZON.FallbackIntent</code>. Amazon Lex returns three alternative intents with the following confidence scores: IntentA (0.70), IntentB (0.60), IntentC (0.50). The response from the <code>RecognizeText</code> operation would be:</p> <ul> <li> <p>AMAZON.FallbackIntent</p> </li> <li> <p>IntentA</p> </li> <li> <p>IntentB</p> </li> <li> <p>IntentC</p> </li> </ul>",
         "CreateBotLocaleResponse$nluIntentConfidenceThreshold": "<p>The specified confidence threshold for inserting the <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> intents.</p>",
         "DescribeBotLocaleResponse$nluIntentConfidenceThreshold": "<p>The confidence threshold where Amazon Lex inserts the <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> intents in the list of possible intents for an utterance.</p>",
         "UpdateBotLocaleRequest$nluIntentConfidenceThreshold": "<p>The new confidence threshold where Amazon Lex inserts the <code>AMAZON.FallbackIntent</code> and <code>AMAZON.KendraSearchIntent</code> intents in the list of possible intents for an utterance.</p>",
@@ -549,7 +659,7 @@
       }
     },
     "ConflictException": {
-      "base": "<p/>",
+      "base": "<p>The action that you tried to perform couldn't be completed because the resource is in a conflicting state. For example, deleting a bot that is in the CREATING state. Try your request again. </p>",
       "refs": {
       }
     },
@@ -631,6 +741,26 @@
       }
     },
     "CreateIntentResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateResourcePolicyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateResourcePolicyStatementRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateResourcePolicyStatementResponse": {
       "base": null,
       "refs": {
       }
@@ -754,12 +884,42 @@
       "refs": {
       }
     },
+    "DeleteResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteResourcePolicyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteResourcePolicyStatementRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteResourcePolicyStatementResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DeleteSlotRequest": {
       "base": null,
       "refs": {
       }
     },
     "DeleteSlotTypeRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteUtterancesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteUtterancesResponse": {
       "base": null,
       "refs": {
       }
@@ -830,6 +990,16 @@
       }
     },
     "DescribeIntentResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeResourcePolicyResponse": {
       "base": null,
       "refs": {
       }
@@ -943,6 +1113,12 @@
         "UpdateSlotTypeResponse$botVersion": "<p>The version of the bot that contains the slot type. This is always <code>DRAFT</code>.</p>"
       }
     },
+    "Effect": {
+      "base": null,
+      "refs": {
+        "CreateResourcePolicyStatementRequest$effect": "<p>Determines whether the statement allows or denies access to the resource.</p>"
+      }
+    },
     "ExceptionMessage": {
       "base": null,
       "refs": {
@@ -956,7 +1132,7 @@
       }
     },
     "ExportFilter": {
-      "base": "<p>Filtes the response form the operation</p>",
+      "base": "<p>Filters the response form the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_ListExports.html\">ListExports</a> operation</p>",
       "refs": {
         "ExportFilters$member": null
       }
@@ -1004,8 +1180,8 @@
     "ExportStatus": {
       "base": null,
       "refs": {
-        "CreateExportResponse$exportStatus": "<p>The status of the export. When the status is <code>Completed</code>, you can use the operation to get the pre-signed S3 URL link to your exported bot or bot locale.</p>",
-        "DeleteExportResponse$exportStatus": "<p>The current status of the deletion. When the deletion is complete, the export will no longer be returned by the operation and calls to the with the export identifier will fail.</p>",
+        "CreateExportResponse$exportStatus": "<p>The status of the export. When the status is <code>Completed</code>, you can use the <a href=\"https://docs.aws.amazon.com/latest/dg/API_DescribeExport.html\">DescribeExport</a> operation to get the pre-signed S3 URL link to your exported bot or bot locale.</p>",
+        "DeleteExportResponse$exportStatus": "<p>The current status of the deletion. When the deletion is complete, the export will no longer be returned by the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_ListExports.html\">ListExports</a> operation and calls to the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_DescribeExport.html\"> DescribeExport</a> operation with the export identifier will fail.</p>",
         "DescribeExportResponse$exportStatus": "<p>The status of the export. When the status is <code>Complete</code> the export archive file is available for download.</p>",
         "ExportSummary$exportStatus": "<p>The status of the export. When the status is <code>Completed</code> the export is ready to download.</p>",
         "UpdateExportResponse$exportStatus": "<p>The status of the export. When the status is <code>Completed</code> the export archive is available for download.</p>"
@@ -1035,7 +1211,7 @@
         "DescribeBotLocaleResponse$failureReasons": "<p>if <code>botLocaleStatus</code> is <code>Failed</code>, Amazon Lex explains why it failed to build the bot.</p>",
         "DescribeBotVersionResponse$failureReasons": "<p>If the <code>botStatus</code> is <code>Failed</code>, this contains a list of reasons that the version couldn't be built.</p>",
         "DescribeExportResponse$failureReasons": "<p>If the <code>exportStatus</code> is failed, contains one or more reasons why the export could not be completed.</p>",
-        "DescribeImportResponse$failureReasons": "<p>If the <code>importStatus</code> field is <code>Failed</code>, this provides one or more reasons for the failture.</p>",
+        "DescribeImportResponse$failureReasons": "<p>If the <code>importStatus</code> field is <code>Failed</code>, this provides one or more reasons for the failure.</p>",
         "UpdateBotLocaleResponse$failureReasons": "<p>If the <code>botLocaleStatus</code> is <code>Failed</code>, the <code>failureReasons</code> field lists the errors that occurred while building the bot.</p>"
       }
     },
@@ -1048,9 +1224,10 @@
     "FilterValues": {
       "base": null,
       "refs": {
+        "AggregatedUtterancesFilter$values": "<p>The value to use for filtering the list of bots.</p>",
         "BotFilter$values": "<p>The value to use for filtering the list of bots.</p>",
         "BotLocaleFilter$values": "<p>The value to use for filtering the list of bots.</p>",
-        "ExportFilter$values": "<p>The values to use to fileter the response.</p>",
+        "ExportFilter$values": "<p>The values to use to filter the response.</p>",
         "ImportFilter$values": "<p>The values to use to filter the response.</p>",
         "IntentFilter$values": "<p>The value to use for the filter.</p>",
         "SlotFilter$values": "<p>The value to use to filter the response.</p>",
@@ -1067,14 +1244,56 @@
         "UpdateIntentResponse$fulfillmentCodeHook": "<p>The updated Lambda function called when the intent is ready for fulfillment.</p>"
       }
     },
+    "FulfillmentStartResponseDelay": {
+      "base": null,
+      "refs": {
+        "FulfillmentStartResponseSpecification$delayInSeconds": "<p>The delay between when the Lambda fulfillment function starts running and the start message is played. If the Lambda function returns before the delay is over, the start message isn't played.</p>"
+      }
+    },
+    "FulfillmentStartResponseSpecification": {
+      "base": "<p>Provides settings for a message that is sent to the user when a fulfillment Lambda function starts running.</p>",
+      "refs": {
+        "FulfillmentUpdatesSpecification$startResponse": "<p>Provides configuration information for the message sent to users when the fulfillment Lambda functions starts running.</p>"
+      }
+    },
+    "FulfillmentTimeout": {
+      "base": null,
+      "refs": {
+        "FulfillmentUpdatesSpecification$timeoutInSeconds": "<p>The length of time that the fulfillment Lambda function should run before it times out.</p>"
+      }
+    },
+    "FulfillmentUpdateResponseFrequency": {
+      "base": null,
+      "refs": {
+        "FulfillmentUpdateResponseSpecification$frequencyInSeconds": "<p>The frequency that a message is sent to the user. When the period ends, Amazon Lex chooses a message from the message groups and plays it to the user. If the fulfillment Lambda returns before the first period ends, an update message is not played to the user.</p>"
+      }
+    },
+    "FulfillmentUpdateResponseSpecification": {
+      "base": "<p>Provides settings for a message that is sent periodically to the user while a fulfillment Lambda function is running.</p>",
+      "refs": {
+        "FulfillmentUpdatesSpecification$updateResponse": "<p>Provides configuration information for messages sent periodically to the user while the fulfillment Lambda function is running.</p>"
+      }
+    },
+    "FulfillmentUpdatesSpecification": {
+      "base": "<p>Provides information for updating the user on the progress of fulfilling an intent.</p>",
+      "refs": {
+        "FulfillmentCodeHookSettings$fulfillmentUpdatesSpecification": "<p>Provides settings for update messages sent to the user for long-running Lambda fulfillment functions. Fulfillment updates can be used only with streaming conversations.</p>"
+      }
+    },
+    "HitCount": {
+      "base": null,
+      "refs": {
+        "AggregatedUtterancesSummary$hitCount": "<p>The number of times that the utterance was detected by Amazon Lex during the time period. When an utterance is detected, it activates an intent or a slot.</p>"
+      }
+    },
     "Id": {
       "base": null,
       "refs": {
         "BotExportSpecification$botId": "<p>The identifier of the bot assigned by Amazon Lex.</p>",
         "BotLocaleExportSpecification$botId": "<p>The identifier of the bot to create the locale for.</p>",
         "BotLocaleImportSpecification$botId": "<p>The identifier of the bot to import the locale to.</p>",
-        "BotSummary$botId": "<p>The unique identifier assigned to the bot. Use this ID to get detailed information about the bot with the <a>DescribeBot</a> operation.</p>",
-        "BuildBotLocaleRequest$botId": "<p>The identifier of the bot to build. The identifier is returned in the response from the operation.</p>",
+        "BotSummary$botId": "<p>The unique identifier assigned to the bot. Use this ID to get detailed information about the bot with the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_DescribeBot.html\">DescribeBot</a> operation.</p>",
+        "BuildBotLocaleRequest$botId": "<p>The identifier of the bot to build. The identifier is returned in the response from the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_CreateBot.html\">CreateBot</a> operation.</p>",
         "BuildBotLocaleResponse$botId": "<p>The identifier of the specified bot.</p>",
         "CreateBotAliasRequest$botId": "<p>The unique identifier of the bot that the alias applies to.</p>",
         "CreateBotAliasResponse$botId": "<p>The unique identifier of the bot that this alias applies to.</p>",
@@ -1095,7 +1314,7 @@
         "CreateSlotTypeRequest$botId": "<p>The identifier of the bot associated with this slot type.</p>",
         "CreateSlotTypeResponse$slotTypeId": "<p>The unique identifier assigned to the slot type. Use this to identify the slot type in the <code>UpdateSlotType</code> and <code>DeleteSlotType</code> operations.</p>",
         "CreateSlotTypeResponse$botId": "<p>The identifier for the bot associated with the slot type.</p>",
-        "CreateUploadUrlResponse$importId": "<p>An identifier for a unique import job. Use it when you call the operation.</p>",
+        "CreateUploadUrlResponse$importId": "<p>An identifier for a unique import job. Use it when you call the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_StartImport.html\">StartImport</a> operation.</p>",
         "DeleteBotAliasRequest$botId": "<p>The unique identifier of the bot associated with the alias to delete.</p>",
         "DeleteBotAliasResponse$botId": "<p>The unique identifier of the bot that contains the alias to delete.</p>",
         "DeleteBotLocaleRequest$botId": "<p>The unique identifier of the bot that contains the locale.</p>",
@@ -1115,6 +1334,7 @@
         "DeleteSlotRequest$intentId": "<p>The identifier of the intent associated with the slot.</p>",
         "DeleteSlotTypeRequest$slotTypeId": "<p>The identifier of the slot type to delete.</p>",
         "DeleteSlotTypeRequest$botId": "<p>The identifier of the bot associated with the slot type.</p>",
+        "DeleteUtterancesRequest$botId": "<p>The unique identifier of the bot that contains the utterances.</p>",
         "DescribeBotAliasRequest$botId": "<p>The identifier of the bot associated with the bot alias to describe.</p>",
         "DescribeBotAliasResponse$botId": "<p>The identifier of the bot associated with the bot alias.</p>",
         "DescribeBotLocaleRequest$botId": "<p>The identifier of the bot associated with the locale.</p>",
@@ -1144,6 +1364,8 @@
         "ExportSummary$exportId": "<p>The unique identifier that Amazon Lex assigned to the export.</p>",
         "ImportSummary$importId": "<p>The unique identifier that Amazon Lex assigned to the import.</p>",
         "IntentSummary$intentId": "<p>The unique identifier assigned to the intent. Use this ID to get detailed information about the intent with the <code>DescribeIntent</code> operation.</p>",
+        "ListAggregatedUtterancesRequest$botId": "<p>The unique identifier of the bot associated with this request.</p>",
+        "ListAggregatedUtterancesResponse$botId": "<p>The identifier of the bot that contains the utterances.</p>",
         "ListBotAliasesRequest$botId": "<p>The identifier of the bot to list aliases for.</p>",
         "ListBotAliasesResponse$botId": "<p>The identifier of the bot associated with the aliases.</p>",
         "ListBotLocalesRequest$botId": "<p>The identifier of the bot to list locales for.</p>",
@@ -1165,13 +1387,13 @@
         "SlotPriority$slotId": "<p>The unique identifier of the slot.</p>",
         "SlotSummary$slotId": "<p>The unique identifier of the slot.</p>",
         "SlotTypeSummary$slotTypeId": "<p>The unique identifier assigned to the slot type.</p>",
-        "StartImportRequest$importId": "<p>The unique identifier for the import. It is included in the response from the operation.</p>",
+        "StartImportRequest$importId": "<p>The unique identifier for the import. It is included in the response from the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_CreateUploadUrl.html\">CreateUploadUrl</a> operation.</p>",
         "StartImportResponse$importId": "<p>A unique identifier for the import.</p>",
         "UpdateBotAliasRequest$botId": "<p>The identifier of the bot with the updated alias.</p>",
         "UpdateBotAliasResponse$botId": "<p>The identifier of the bot with the updated alias.</p>",
         "UpdateBotLocaleRequest$botId": "<p>The unique identifier of the bot that contains the locale.</p>",
         "UpdateBotLocaleResponse$botId": "<p>The identifier of the bot that contains the updated locale.</p>",
-        "UpdateBotRequest$botId": "<p>The unique identifier of the bot to update. This identifier is returned by the <a>CreateBot</a> operation.</p>",
+        "UpdateBotRequest$botId": "<p>The unique identifier of the bot to update. This identifier is returned by the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_CreateBot.html\">CreateBot</a> operation.</p>",
         "UpdateBotResponse$botId": "<p>The unique identifier of the bot that was updated.</p>",
         "UpdateExportRequest$exportId": "<p>The unique identifier Amazon Lex assigned to the export.</p>",
         "UpdateExportResponse$exportId": "<p>The unique identifier Amazon Lex assigned to the export.</p>",
@@ -1216,7 +1438,7 @@
       }
     },
     "ImportFilter": {
-      "base": "<p>Filters the response from the operation.</p>",
+      "base": "<p>Filters the response from the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_ListImports.html\">ListImports</a> operation.</p>",
       "refs": {
         "ImportFilters$member": null
       }
@@ -1240,7 +1462,7 @@
       }
     },
     "ImportResourceSpecification": {
-      "base": "<p>Provides information about the bot or bot locale that you want to import. You can sepcifiy the <code>botImportSpecification</code> or the <code>botLocaleImportSpecification</code>, but not both.</p>",
+      "base": "<p>Provides information about the bot or bot locale that you want to import. You can specify the <code>botImportSpecification</code> or the <code>botLocaleImportSpecification</code>, but not both.</p>",
       "refs": {
         "DescribeImportResponse$resourceSpecification": "<p>The specifications of the imported bot or bot locale.</p>",
         "StartImportRequest$resourceSpecification": "<p>Parameters for creating the bot or bot locale.</p>",
@@ -1262,7 +1484,7 @@
     "ImportStatus": {
       "base": null,
       "refs": {
-        "DeleteImportResponse$importStatus": "<p>The current status of the deletion. When the deletion is complete, the import will no longer be returned by the operation and calls to the with the import identifier will fail.</p>",
+        "DeleteImportResponse$importStatus": "<p>The current status of the deletion. When the deletion is complete, the import will no longer be returned by the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_ListImports.html\">ListImports</a> operation and calls to the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_DescribeImport.html\">DescribeImport</a> operation with the import identifier will fail.</p>",
         "DescribeImportResponse$importStatus": "<p>The status of the import process. When the status is <code>Completed</code> the resource is imported and ready for use.</p>",
         "ImportSummary$importStatus": "<p>The status of the resource. When the status is <code>Completed</code> the resource is ready to build.</p>",
         "StartImportResponse$importStatus": "<p>The current status of the import. When the status is <code>Complete</code> the bot or bot alias is ready to use.</p>"
@@ -1385,7 +1607,7 @@
       }
     },
     "InternalServerException": {
-      "base": "<p/>",
+      "base": "<p>The service encountered an unexpected condition. Try your request again.</p>",
       "refs": {
       }
     },
@@ -1418,9 +1640,19 @@
       }
     },
     "LambdaCodeHook": {
-      "base": "<p>Specifies a Lambda function that verifies requests to a bot or fulfilles the user's request to a bot.</p>",
+      "base": "<p>Specifies a Lambda function that verifies requests to a bot or fulfills the user's request to a bot.</p>",
       "refs": {
         "CodeHookSpecification$lambdaCodeHook": null
+      }
+    },
+    "ListAggregatedUtterancesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListAggregatedUtterancesResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "ListBotAliasesRequest": {
@@ -1566,6 +1798,7 @@
         "DeleteIntentRequest$localeId": "<p>The identifier of the language and locale where the bot will be deleted. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "DeleteSlotRequest$localeId": "<p>The identifier of the language and locale that the slot will be deleted from. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "DeleteSlotTypeRequest$localeId": "<p>The identifier of the language and locale that the slot type will be deleted from. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
+        "DeleteUtterancesRequest$localeId": "<p>The identifier of the language and locale where the utterances were collected. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "DescribeBotLocaleRequest$localeId": "<p>The unique identifier of the locale to describe. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>. </p>",
         "DescribeBotLocaleResponse$localeId": "<p>The unique identifier of the described locale.</p>",
         "DescribeIntentRequest$localeId": "<p>The identifier of the language and locale of the intent to describe. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
@@ -1574,6 +1807,8 @@
         "DescribeSlotResponse$localeId": "<p>The language and locale specified for the slot.</p>",
         "DescribeSlotTypeRequest$localeId": "<p>The identifier of the language and locale of the slot type to describe. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "DescribeSlotTypeResponse$localeId": "<p>The language and locale specified for the slot type.</p>",
+        "ListAggregatedUtterancesRequest$localeId": "<p>The identifier of the language and locale where the utterances were collected. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
+        "ListAggregatedUtterancesResponse$localeId": "<p>The identifier of the language and locale that the utterances are in.</p>",
         "ListBuiltInIntentsRequest$localeId": "<p>The identifier of the language and locale of the intents to list. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
         "ListBuiltInIntentsResponse$localeId": "<p>The language and locale of the intents in the list.</p>",
         "ListBuiltInSlotTypesRequest$localeId": "<p>The identifier of the language and locale of the slot types to list. The string must match one of the supported locales. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html\">Supported languages</a>.</p>",
@@ -1613,6 +1848,7 @@
     "MaxResults": {
       "base": null,
       "refs": {
+        "ListAggregatedUtterancesRequest$maxResults": "<p>The maximum number of utterances to return in each page of results. If there are fewer results than the maximum page size, only the actual number of results are returned. If you don't specify the <code>maxResults</code> parameter, 1,000 results are returned.</p>",
         "ListBotAliasesRequest$maxResults": "<p>The maximum number of aliases to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListBotLocalesRequest$maxResults": "<p>The maximum number of aliases to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
         "ListBotVersionsRequest$maxResults": "<p>The maximum number of versions to return in each page of results. If there are fewer results than the max page size, only the actual number of results are returned.</p>",
@@ -1649,6 +1885,8 @@
     "MessageGroupsList": {
       "base": null,
       "refs": {
+        "FulfillmentStartResponseSpecification$messageGroups": "<p>One to 5 message groups that contain start messages. Amazon Lex chooses one of the messages to play to the user.</p>",
+        "FulfillmentUpdateResponseSpecification$messageGroups": "<p>One to 5 message groups that contain update messages. Amazon Lex chooses one of the messages to play to the user.</p>",
         "PromptSpecification$messageGroups": "<p>A collection of messages that Amazon Lex can send to the user. Amazon Lex chooses the actual message to send at runtime.</p>",
         "ResponseSpecification$messageGroups": "<p>A collection of responses that Amazon Lex can send to the user. Amazon Lex chooses the actual response to send at runtime.</p>",
         "StillWaitingResponseSpecification$messageGroups": "<p>One or more message groups, each containing one or more messages, that define the prompts that Amazon Lex sends to the user.</p>"
@@ -1658,6 +1896,22 @@
       "base": null,
       "refs": {
         "MessageGroup$variations": "<p>Message variations to send to the user. When variations are defined, Amazon Lex chooses the primary message or one of the variations to send to the user.</p>"
+      }
+    },
+    "MissedCount": {
+      "base": null,
+      "refs": {
+        "AggregatedUtterancesSummary$missedCount": "<p>The number of times that the utterance was missed by Amazon Lex An utterance is missed when it doesn't activate an intent or slot.</p>"
+      }
+    },
+    "MultipleValuesSetting": {
+      "base": "<p>Indicates whether a slot can return multiple values.</p>",
+      "refs": {
+        "CreateSlotRequest$multipleValuesSetting": "<p>Indicates whether the slot returns multiple values in one response. Multi-value slots are only available in the en-US locale. If you set this value to <code>true</code> in any other locale, Amazon Lex throws a <code>ValidationException</code>. </p> <p>If the <code>multipleValuesSetting</code> is not set, the default value is <code>false</code>.</p>",
+        "CreateSlotResponse$multipleValuesSetting": "<p>Indicates whether the slot returns multiple values in one response.</p>",
+        "DescribeSlotResponse$multipleValuesSetting": "<p>Indicates whether the slot accepts multiple values in a single utterance.</p> <p>If the <code>multipleValuesSetting</code> is not set, the default value is <code>false</code>.</p>",
+        "UpdateSlotRequest$multipleValuesSetting": "<p>Determines whether the slot accepts multiple values in one response. Multiple value slots are only available in the en-US locale. If you set this value to <code>true</code> in any other locale, Amazon Lex throws a <code>ValidationException</code>.</p> <p>If the <code>multipleValuesSetting</code> is not set, the default value is <code>false</code>.</p>",
+        "UpdateSlotResponse$multipleValuesSetting": "<p>Indicates whether the slot accepts multiple values in one response.</p>"
       }
     },
     "Name": {
@@ -1673,10 +1927,12 @@
         "CreateBotResponse$botName": "<p>The name specified for the bot.</p>",
         "CreateIntentRequest$intentName": "<p>The name of the intent. Intent names must be unique in the locale that contains the intent and cannot match the name of any built-in intent.</p>",
         "CreateIntentResponse$intentName": "<p>The name specified for the intent.</p>",
+        "CreateResourcePolicyStatementRequest$statementId": "<p>The name of the statement. The ID is the same as the <code>Sid</code> IAM property. The statement name must be unique within the policy. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_sid.html\">IAM JSON policy elements: Sid</a>. </p>",
         "CreateSlotRequest$slotName": "<p>The name of the slot. Slot names must be unique within the bot that contains the slot.</p>",
         "CreateSlotResponse$slotName": "<p>The name specified for the slot.</p>",
         "CreateSlotTypeRequest$slotTypeName": "<p>The name for the slot. A slot type name must be unique within the account.</p>",
         "CreateSlotTypeResponse$slotTypeName": "<p>The name specified for the slot type.</p>",
+        "DeleteResourcePolicyStatementRequest$statementId": "<p>The name of the statement (SID) to delete from the policy.</p>",
         "DescribeBotAliasResponse$botAliasName": "<p>The name of the bot alias.</p>",
         "DescribeBotResponse$botName": "<p>The name of the bot.</p>",
         "DescribeBotVersionResponse$botName": "<p>The name of the bot that contains the version.</p>",
@@ -1705,6 +1961,8 @@
     "NextToken": {
       "base": null,
       "refs": {
+        "ListAggregatedUtterancesRequest$nextToken": "<p>If the response from the <code>ListAggregatedUtterances</code> operation contains more results that specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
+        "ListAggregatedUtterancesResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListAggregatedUtterances</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListAggregatedUtterances</code> operation request to get the next page of results.</p>",
         "ListBotAliasesRequest$nextToken": "<p>If the response from the <code>ListBotAliases</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListBotAliasesResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListBotAliases</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListBotAliases</code> operation request to get the next page of results.</p>",
         "ListBotLocalesRequest$nextToken": "<p>If the response from the <code>ListBotLocales</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token as the <code>nextToken</code> parameter to return the next page of results. </p>",
@@ -1717,7 +1975,7 @@
         "ListBuiltInIntentsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListBuiltInIntents</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListBotAliases</code> operation request to get the next page of results.</p>",
         "ListBuiltInSlotTypesRequest$nextToken": "<p>If the response from the <code>ListBuiltInSlotTypes</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListBuiltInSlotTypesResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListBuiltInSlotTypes</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>LIstBuiltInSlotTypes</code> operation request to get the next page of results.</p>",
-        "ListExportsRequest$nextToken": "<p>If the response from the <code>ListExports</code> operation contans more results that specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
+        "ListExportsRequest$nextToken": "<p>If the response from the <code>ListExports</code> operation contains more results that specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListExportsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListExports</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListExports</code> operation request to get the next page of results.</p>",
         "ListImportsRequest$nextToken": "<p>If the response from the <code>ListImports</code> operation contains more results than specified in the <code>maxResults</code> parameter, a token is returned in the response. Use that token in the <code>nextToken</code> parameter to return the next page of results.</p>",
         "ListImportsResponse$nextToken": "<p>A token that indicates whether there are more results to return in a response to the <code>ListImports</code> operation. If the <code>nextToken</code> field is present, you send the contents as the <code>nextToken</code> parameter of a <code>ListImports</code> operation request to get the next page of results.</p>",
@@ -1733,7 +1991,7 @@
       "base": null,
       "refs": {
         "BotSummary$latestBotVersion": "<p>The latest numerical version in use for the bot.</p>",
-        "CreateBotAliasRequest$botVersion": "<p>The version of the bot that this alias points to. You can use the operation to change the bot version associated with the alias.</p>",
+        "CreateBotAliasRequest$botVersion": "<p>The version of the bot that this alias points to. You can use the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_UpdateBotAlias.html\">UpdateBotAlias</a> operation to change the bot version associated with the alias.</p>",
         "CreateBotAliasResponse$botVersion": "<p>The version of the bot associated with this alias.</p>",
         "CreateBotVersionResponse$botVersion": "<p>The version number assigned to the version.</p>",
         "DeleteBotVersionRequest$botVersion": "<p>The version of the bot to delete.</p>",
@@ -1756,6 +2014,18 @@
       "base": null,
       "refs": {
         "ObfuscationSetting$obfuscationSettingType": "<p>Value that determines whether Amazon Lex obscures slot values in conversation logs. The default is to obscure the values.</p>"
+      }
+    },
+    "Operation": {
+      "base": null,
+      "refs": {
+        "OperationList$member": null
+      }
+    },
+    "OperationList": {
+      "base": null,
+      "refs": {
+        "CreateResourcePolicyStatementRequest$action": "<p>The Amazon Lex action that this policy either allows or denies. The action must apply to the resource type of the specified ARN. For more information, see <a href=\"https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonlexv2.html\"> Actions, resources, and condition keys for Amazon Lex V2</a>.</p>"
       }
     },
     "OutputContext": {
@@ -1787,8 +2057,22 @@
         "PlainTextMessage$value": "<p>The message to send to the user.</p>"
       }
     },
+    "Policy": {
+      "base": null,
+      "refs": {
+        "CreateResourcePolicyRequest$policy": "<p>A resource policy to add to the resource. The policy is a JSON structure that contains one or more statements that define the policy. The policy must follow the IAM syntax. For more information about the contents of a JSON policy document, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html\"> IAM JSON policy reference </a>. </p> <p>If the policy isn't valid, Amazon Lex returns a validation exception.</p>",
+        "DescribeResourcePolicyResponse$policy": "<p>The JSON structure that contains the resource policy. For more information about the contents of a JSON policy document, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html\"> IAM JSON policy reference </a>.</p>",
+        "UpdateResourcePolicyRequest$policy": "<p>A resource policy to add to the resource. The policy is a JSON structure that contains one or more statements that define the policy. The policy must follow the IAM syntax. For more information about the contents of a JSON policy document, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html\"> IAM JSON policy reference </a>. </p> <p>If the policy isn't valid, Amazon Lex returns a validation exception.</p>"
+      }
+    },
+    "PostFulfillmentStatusSpecification": {
+      "base": "<p>Provides a setting that determines whether the post-fulfillment response is sent to the user. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/streaming-progress.html#progress-complete\">https://docs.aws.amazon.com/lexv2/latest/dg/streaming-progress.html#progress-complete</a> </p>",
+      "refs": {
+        "FulfillmentCodeHookSettings$postFulfillmentStatusSpecification": "<p>Provides settings for messages sent to the user for after the Lambda fulfillment function completes. Post-fulfillment messages can be sent for both streaming and non-streaming conversations.</p>"
+      }
+    },
     "PreconditionFailedException": {
-      "base": "<p/>",
+      "base": "<p>Your request couldn't be completed because one or more request fields aren't valid. Check the fields in your request and try again.</p>",
       "refs": {
       }
     },
@@ -1797,6 +2081,24 @@
       "refs": {
         "CreateUploadUrlResponse$uploadUrl": "<p>A pre-signed S3 write URL. Upload the zip archive file that contains the definition of your bot or bot locale.</p>",
         "DescribeExportResponse$downloadUrl": "<p>A pre-signed S3 URL that points to the bot or bot locale archive. The URL is only available for 5 minutes after calling the <code>DescribeExport</code> operation.</p>"
+      }
+    },
+    "Principal": {
+      "base": "<p>The IAM principal that you allowing or denying access to an Amazon Lex action. You must provide a <code>service</code> or an <code>arn</code>, but not both in the same statement. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html\"> AWS JSON policy elements: Principal </a>.</p>",
+      "refs": {
+        "PrincipalList$member": null
+      }
+    },
+    "PrincipalArn": {
+      "base": null,
+      "refs": {
+        "Principal$arn": "<p>The Amazon Resource Name (ARN) of the principal.</p>"
+      }
+    },
+    "PrincipalList": {
+      "base": null,
+      "refs": {
+        "CreateResourcePolicyStatementRequest$principal": "<p>An IAM principal, such as an IAM users, IAM roles, or AWS services that is allowed or denied access to a resource. For more information, see <a href=\"https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html\">AWS JSON policy elements: Principal</a>.</p>"
       }
     },
     "PriorityValue": {
@@ -1808,7 +2110,7 @@
     "PromptMaxRetries": {
       "base": null,
       "refs": {
-        "PromptSpecification$maxRetries": "<p>The maximum number of times the bot tries to elicit a resonse from the user using this prompt.</p>"
+        "PromptSpecification$maxRetries": "<p>The maximum number of times the bot tries to elicit a response from the user using this prompt.</p>"
       }
     },
     "PromptSpecification": {
@@ -1831,6 +2133,12 @@
         "SlotValueRegexFilter$pattern": "<p>A regular expression used to validate the value of a slot.</p> <p> Use a standard regular expression. Amazon Lex supports the following characters in the regular expression: </p> <ul> <li> <p>A-Z, a-z</p> </li> <li> <p>0-9</p> </li> <li> <p>Unicode characters (\"\\ u&lt;Unicode&gt;\")</p> </li> </ul> <p> Represent Unicode characters with four digits, for example \"\\u0041\" or \"\\u005A\". </p> <p> The following regular expression operators are not supported: </p> <ul> <li> <p>Infinite repeaters: *, +, or {x,} with no upper bound.</p> </li> <li> <p>Wild card (.)</p> </li> </ul>"
       }
     },
+    "RelativeAggregationDuration": {
+      "base": "<p>Specifies the time window that utterance statistics are returned for. The time window is always relative to the last time that the that utterances were aggregated. For example, if the <code>ListAggregatedUtterances</code> operation is called at 1600, the time window is set to 1 hour, and the last refresh time was 1530, only utterances made between 1430 and 1530 are returned.</p> <p>You can choose the time window that statistics should be returned for.</p> <ul> <li> <p> <b>Hours</b> - You can request utterance statistics for 1, 3, 6, 12, or 24 hour time windows. Statistics are refreshed every half hour for 1 hour time windows, and hourly for the other time windows.</p> </li> <li> <p> <b>Days</b> - You can request utterance statistics for 3 days. Statistics are refreshed every 6 hours.</p> </li> <li> <p> <b>Weeks</b> - You can see statistics for one or two weeks. Statistics are refreshed every 12 hours for one week time windows, and once per day for two week time windows.</p> </li> </ul>",
+      "refs": {
+        "UtteranceAggregationDuration$relativeAggregationDuration": "<p>The desired time window for aggregating utterances. </p>"
+      }
+    },
     "ResourceCount": {
       "base": null,
       "refs": {
@@ -1839,7 +2147,7 @@
       }
     },
     "ResourceNotFoundException": {
-      "base": "<p/>",
+      "base": "<p>You asked to describe a resource that doesn't exist. Check the resource that you are requesting and try again.</p>",
       "refs": {
       }
     },
@@ -1848,6 +2156,9 @@
       "refs": {
         "IntentClosingSetting$closingResponse": "<p>The response that Amazon Lex sends to the user when the intent is complete.</p>",
         "IntentConfirmationSetting$declinationResponse": "<p>When the user answers \"no\" to the question defined in <code>promptSpecification</code>, Amazon Lex responds with this response to acknowledge that the intent was canceled. </p>",
+        "PostFulfillmentStatusSpecification$successResponse": null,
+        "PostFulfillmentStatusSpecification$failureResponse": null,
+        "PostFulfillmentStatusSpecification$timeoutResponse": null,
         "WaitAndContinueSpecification$waitingResponse": "<p>The response that Amazon Lex sends to indicate that the bot is waiting for the conversation to continue.</p>",
         "WaitAndContinueSpecification$continueResponse": "<p>The response that Amazon Lex sends to indicate that the bot is ready to continue the conversation.</p>"
       }
@@ -1856,6 +2167,21 @@
       "base": null,
       "refs": {
         "ThrottlingException$retryAfterSeconds": null
+      }
+    },
+    "RevisionId": {
+      "base": null,
+      "refs": {
+        "CreateResourcePolicyResponse$revisionId": "<p>The current revision of the resource policy. Use the revision ID to make sure that you are updating the most current version of a resource policy when you add a policy statement to a resource, delete a resource, or update a resource.</p>",
+        "CreateResourcePolicyStatementRequest$expectedRevisionId": "<p>The identifier of the revision of the policy to edit. If this revision ID doesn't match the current revision ID, Amazon Lex throws an exception.</p> <p>If you don't specify a revision, Amazon Lex overwrites the contents of the policy with the new values.</p>",
+        "CreateResourcePolicyStatementResponse$revisionId": "<p>The current revision of the resource policy. Use the revision ID to make sure that you are updating the most current version of a resource policy when you add a policy statement to a resource, delete a resource, or update a resource.</p>",
+        "DeleteResourcePolicyRequest$expectedRevisionId": "<p>The identifier of the revision to edit. If this ID doesn't match the current revision number, Amazon Lex returns an exception</p> <p>If you don't specify a revision ID, Amazon Lex will delete the current policy.</p>",
+        "DeleteResourcePolicyResponse$revisionId": "<p>The current revision of the resource policy. Use the revision ID to make sure that you are updating the most current version of a resource policy when you add a policy statement to a resource, delete a resource, or update a resource.</p>",
+        "DeleteResourcePolicyStatementRequest$expectedRevisionId": "<p>The identifier of the revision of the policy to delete the statement from. If this revision ID doesn't match the current revision ID, Amazon Lex throws an exception.</p> <p>If you don't specify a revision, Amazon Lex removes the current contents of the statement. </p>",
+        "DeleteResourcePolicyStatementResponse$revisionId": "<p>The current revision of the resource policy. Use the revision ID to make sure that you are updating the most current version of a resource policy when you add a policy statement to a resource, delete a resource, or update a resource.</p>",
+        "DescribeResourcePolicyResponse$revisionId": "<p>The current revision of the resource policy. Use the revision ID to make sure that you are updating the most current version of a resource policy when you add a policy statement to a resource, delete a resource, or update a resource.</p>",
+        "UpdateResourcePolicyRequest$expectedRevisionId": "<p>The identifier of the revision of the policy to update. If this revision ID doesn't match the current revision ID, Amazon Lex throws an exception.</p> <p>If you don't specify a revision, Amazon Lex overwrites the contents of the policy with the new values.</p>",
+        "UpdateResourcePolicyResponse$revisionId": "<p>The current revision of the resource policy. Use the revision ID to make sure that you are updating the most current version of a resource policy when you add a policy statement to a resource, delete a resource, or update a resource.</p>"
       }
     },
     "RoleArn": {
@@ -1879,7 +2205,7 @@
     "S3BucketLogDestination": {
       "base": "<p>Specifies an Amazon S3 bucket for logging audio conversations</p>",
       "refs": {
-        "AudioLogDestination$s3Bucket": "<p>The Amazon S3 bucket where the audio log files are stored. The IAM role specified in the <code>roleArn</code> parameter of the <a>CreateBot</a> operation must have permission to write to this bucket.</p>"
+        "AudioLogDestination$s3Bucket": "<p>The Amazon S3 bucket where the audio log files are stored. The IAM role specified in the <code>roleArn</code> parameter of the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_CreateBot.html\">CreateBot</a> operation must have permission to write to this bucket.</p>"
       }
     },
     "SSMLMessage": {
@@ -1928,9 +2254,21 @@
         "UpdateBotAliasResponse$sentimentAnalysisSettings": null
       }
     },
-    "ServiceQuotaExceededException": {
-      "base": "<p/>",
+    "ServicePrincipal": {
+      "base": null,
       "refs": {
+        "Principal$service": "<p>The name of the AWS service that should allowed or denied access to an Amazon Lex action.</p>"
+      }
+    },
+    "ServiceQuotaExceededException": {
+      "base": "<p>You have reached a quota for your bot. </p>",
+      "refs": {
+      }
+    },
+    "SessionId": {
+      "base": null,
+      "refs": {
+        "DeleteUtterancesRequest$sessionId": "<p>The unique identifier of the session with the user. The ID is returned in the response from the <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_runtime_RecognizeText.html\">RecognizeText</a> and <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_runtime_RecognizeUtterance.html\">RecognizeUtterance</a> operations.</p>"
       }
     },
     "SessionTTL": {
@@ -1976,7 +2314,7 @@
     "SlotDefaultValueSpecification": {
       "base": "<p>Defines a list of values that Amazon Lex should use as the default value for a slot.</p>",
       "refs": {
-        "SlotValueElicitationSetting$defaultValueSpecification": "<p>A list of default values for a slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, sesion attributes, and defined values.</p>"
+        "SlotValueElicitationSetting$defaultValueSpecification": "<p>A list of default values for a slot. Default values are used when Amazon Lex hasn't determined a value for a slot. You can specify default values from context variables, session attributes, and defined values.</p>"
       }
     },
     "SlotDefaultValueString": {
@@ -2158,6 +2496,7 @@
     "SortOrder": {
       "base": null,
       "refs": {
+        "AggregatedUtterancesSortBy$order": "<p>Specifies whether to sort the aggregated utterances in ascending or descending order.</p>",
         "BotLocaleSortBy$order": "<p>Specifies whether to sort the bot locales in ascending or descending order.</p>",
         "BotSortBy$order": "<p>The order to sort the list. You can choose ascending or descending.</p>",
         "BotVersionSortBy$order": "<p>The order to sort the list. You can specify ascending or descending order.</p>",
@@ -2201,7 +2540,7 @@
     "SynonymList": {
       "base": null,
       "refs": {
-        "SlotTypeValue$synonyms": "<p>Additional values releated to the slot type entry.</p>"
+        "SlotTypeValue$synonyms": "<p>Additional values related to the slot type entry.</p>"
       }
     },
     "TagKey": {
@@ -2267,13 +2606,27 @@
       }
     },
     "ThrottlingException": {
-      "base": "<p/>",
+      "base": "<p>Your request rate is too high. Reduce the frequency of requests.</p>",
       "refs": {
+      }
+    },
+    "TimeDimension": {
+      "base": null,
+      "refs": {
+        "RelativeAggregationDuration$timeDimension": "<p>The type of time period that the <code>timeValue</code> field represents. </p>"
+      }
+    },
+    "TimeValue": {
+      "base": null,
+      "refs": {
+        "RelativeAggregationDuration$timeValue": "<p>The period of the time window to gather statistics for. The valid value depends on the setting of the <code>timeDimension</code> field.</p> <ul> <li> <p> <code>Hours</code> - 1/3/6/12/24</p> </li> <li> <p> <code>Days</code> - 3</p> </li> <li> <p> <code>Weeks</code> - 1/2</p> </li> </ul>"
       }
     },
     "Timestamp": {
       "base": null,
       "refs": {
+        "AggregatedUtterancesSummary$utteranceFirstRecordedInAggregationDuration": "<p>The date and time that the utterance was first recorded in the time window for aggregation. An utterance may have been sent to Amazon Lex before that time, but only utterances within the time window are counted.</p>",
+        "AggregatedUtterancesSummary$utteranceLastRecordedInAggregationDuration": "<p>The last date and time that an utterance was recorded in the time window for aggregation. An utterance may be sent to Amazon Lex after that time, but only utterances within the time window are counted.</p>",
         "BotAliasHistoryEvent$startDate": "<p>The date and time that the event started.</p>",
         "BotAliasHistoryEvent$endDate": "<p>The date and time that the event ended.</p>",
         "BotAliasSummary$creationDateTime": "<p>A timestamp of the date and time that the bot alias was created.</p>",
@@ -2315,6 +2668,9 @@
         "ImportSummary$creationDateTime": "<p>The date and time that the import was created.</p>",
         "ImportSummary$lastUpdatedDateTime": "<p>The date and time that the import was last updated.</p>",
         "IntentSummary$lastUpdatedDateTime": "<p>The timestamp of the date and time that the intent was last updated.</p>",
+        "ListAggregatedUtterancesResponse$aggregationWindowStartTime": "<p>The date and time that the aggregation window begins. Only data collected after this time is returned in the results.</p>",
+        "ListAggregatedUtterancesResponse$aggregationWindowEndTime": "<p>The date and time that the aggregation window ends. Only data collected between the start time and the end time are returned in the results. </p>",
+        "ListAggregatedUtterancesResponse$aggregationLastRefreshedDateTime": "<p>The last date and time that the aggregated data was collected. The time period depends on the length of the aggregation window.</p> <ul> <li> <p> <b>Hours</b> - for 1 hour time window, every half hour; otherwise every hour.</p> </li> <li> <p> <b>Days</b> - every 6 hours</p> </li> <li> <p> <b>Weeks</b> - for a one week time window, every 12 hours; otherwise, every day</p> </li> </ul>",
         "SlotSummary$lastUpdatedDateTime": "<p>The timestamp of the last date and time that the slot was updated.</p>",
         "SlotTypeSummary$lastUpdatedDateTime": "<p>A timestamp of the date and time that the slot type was last updated.</p>",
         "StartImportResponse$creationDateTime": "<p>The date and time that the import request was created.</p>",
@@ -2394,6 +2750,16 @@
       "refs": {
       }
     },
+    "UpdateResourcePolicyRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateResourcePolicyResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "UpdateSlotRequest": {
       "base": null,
       "refs": {
@@ -2417,11 +2783,19 @@
     "Utterance": {
       "base": null,
       "refs": {
+        "AggregatedUtterancesSummary$utterance": "<p>The text of the utterance. If the utterance was used with the <code>RecognizeUtterance</code> operation, the text is the transcription of the audio utterance.</p>",
         "SampleUtterance$utterance": "<p>The sample utterance that Amazon Lex uses to build its machine-learning model to recognize intents.</p>"
       }
     },
+    "UtteranceAggregationDuration": {
+      "base": "<p>Provides parameters for setting the time window and duration for aggregating utterance data.</p>",
+      "refs": {
+        "ListAggregatedUtterancesRequest$aggregationDuration": "<p>The time window for aggregating the utterance information. You can specify a time between one hour and two weeks.</p>",
+        "ListAggregatedUtterancesResponse$aggregationDuration": "<p>The time period used to aggregate the utterance data.</p>"
+      }
+    },
     "ValidationException": {
-      "base": "<p/>",
+      "base": "<p>One of the input parameters in your request isn't valid. Check the parameters and try your request again.</p>",
       "refs": {
       }
     },
@@ -2429,6 +2803,12 @@
       "base": null,
       "refs": {
         "SampleValue$value": "<p>The value that can be used for a slot type.</p>"
+      }
+    },
+    "VoiceEngine": {
+      "base": null,
+      "refs": {
+        "VoiceSettings$engine": "<p>Indicates the type of Amazon Polly voice that Amazon Lex should use for voice interaction with the user. For more information, see <a href=\"https://docs.aws.amazon.com/polly/latest/dg/voicelist.html\">Voices in Amazon Polly</a>.</p>"
       }
     },
     "VoiceId": {

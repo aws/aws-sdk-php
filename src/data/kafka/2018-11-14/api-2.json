@@ -911,6 +911,43 @@
         } 
       ]
     },
+    "UpdateConnectivity":{
+      "name":"UpdateConnectivity",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/clusters/{clusterArn}/connectivity",
+        "responseCode":200
+      },
+      "input":{
+        "shape":"UpdateConnectivityRequest"
+      },
+      "output":{
+        "shape":"UpdateConnectivityResponse"
+      },
+      "errors":[
+        {
+          "shape":"BadRequestException"
+        },
+        {
+          "shape":"UnauthorizedException"
+        },
+        {
+          "shape":"InternalServerErrorException"
+        },
+        {
+          "shape":"ForbiddenException"
+        },
+        {
+          "shape":"NotFoundException"
+        },
+        {
+          "shape":"ServiceUnavailableException"
+        },
+        {
+          "shape":"TooManyRequestsException"
+        }
+      ]
+    },
     "UpdateMonitoring" : {
       "name" : "UpdateMonitoring",
       "http" : {
@@ -934,6 +971,35 @@
         "shape" : "InternalServerErrorException"
       }, {
         "shape" : "ForbiddenException"
+      } ]
+    },
+    "UpdateSecurity" : {
+      "name" : "UpdateSecurity",
+      "http" : {
+        "method" : "PATCH",
+        "requestUri" : "/v1/clusters/{clusterArn}/security",
+        "responseCode" : 200
+      },
+      "input" : {
+        "shape" : "UpdateSecurityRequest"
+      },
+      "output" : {
+        "shape" : "UpdateSecurityResponse"
+      },
+      "errors" : [ {
+        "shape" : "BadRequestException"
+      }, {
+        "shape" : "UnauthorizedException"
+      }, {
+        "shape" : "InternalServerErrorException"
+      }, {
+        "shape" : "ForbiddenException"
+      }, {
+        "shape" : "NotFoundException"
+      }, {
+        "shape" : "ServiceUnavailableException"
+      }, {
+        "shape" : "TooManyRequestsException"
       } ]
     }
   },
@@ -1045,6 +1111,10 @@
         "StorageInfo": {
           "shape": "StorageInfo",
           "locationName": "storageInfo"
+        },
+        "ConnectivityInfo":{
+          "shape":"ConnectivityInfo",
+          "locationName":"connectivityInfo"
         }
       },
       "required": [
@@ -1108,6 +1178,10 @@
         "Tls" : {
           "shape" : "Tls",
           "locationName" : "tls"
+        },
+        "Unauthenticated" : {
+          "shape" : "Unauthenticated",
+          "locationName" : "unauthenticated"
         }
       }
     },
@@ -1191,6 +1265,10 @@
         "State": {
           "shape": "ClusterState",
           "locationName": "state"
+        },
+        "StateInfo": {
+          "shape": "StateInfo",
+          "locationName": "stateInfo"
         },
         "Tags": {
           "shape": "__mapOf__string",
@@ -1406,6 +1484,15 @@
       "exception": true,
       "error": {
         "httpStatusCode": 409
+      }
+    },
+    "ConnectivityInfo":{
+      "type":"structure",
+      "members":{
+        "PublicAccess":{
+          "shape":"PublicAccess",
+          "locationName":"publicAccess"
+        }
       }
     },
     "CreateClusterRequest": {
@@ -1882,6 +1969,18 @@
           "shape": "__string",
           "locationName": "bootstrapBrokerString"
         },
+        "BootstrapBrokerStringPublicSaslIam" : {
+          "shape" : "__string",
+          "locationName" : "bootstrapBrokerStringPublicSaslIam"
+        },
+        "BootstrapBrokerStringPublicSaslScram" : {
+          "shape" : "__string",
+          "locationName" : "bootstrapBrokerStringPublicSaslScram"
+        },
+        "BootstrapBrokerStringPublicTls" : {
+          "shape" : "__string",
+          "locationName" : "bootstrapBrokerStringPublicTls"
+        },
         "BootstrapBrokerStringTls": {
           "shape": "__string",
           "locationName": "bootstrapBrokerStringTls"
@@ -2220,20 +2319,20 @@
       },
      "required": [ "BrokerLogs" ]
     },
-    "MutableClusterInfo": {
-      "type": "structure",
-      "members": {
-        "BrokerEBSVolumeInfo": {
-          "shape": "__listOfBrokerEBSVolumeInfo",
-          "locationName": "brokerEBSVolumeInfo"
+    "MutableClusterInfo" : {
+      "type" : "structure",
+      "members" : {
+        "BrokerEBSVolumeInfo" : {
+          "shape" : "__listOfBrokerEBSVolumeInfo",
+          "locationName" : "brokerEBSVolumeInfo"
         },
-        "ConfigurationInfo": {
-          "shape": "ConfigurationInfo",
-          "locationName": "configurationInfo"
+        "ConfigurationInfo" : {
+          "shape" : "ConfigurationInfo",
+          "locationName" : "configurationInfo"
         },
-        "NumberOfBrokerNodes": {
-          "shape": "__integer",
-          "locationName": "numberOfBrokerNodes"
+        "NumberOfBrokerNodes" : {
+          "shape" : "__integer",
+          "locationName" : "numberOfBrokerNodes"
         },
         "OpenMonitoring" : {
           "shape" : "OpenMonitoring",
@@ -2247,13 +2346,25 @@
           "shape" : "__string",
           "locationName" : "kafkaVersion"
         },
-        "LoggingInfo": {
-          "shape": "LoggingInfo",
-          "locationName": "loggingInfo"
+        "LoggingInfo" : {
+          "shape" : "LoggingInfo",
+          "locationName" : "loggingInfo"
         },
-        "InstanceType": {
-          "shape": "__stringMin5Max32",
-          "locationName": "instanceType"
+        "InstanceType" : {
+          "shape" : "__string",
+          "locationName" : "instanceType"
+        },
+        "ClientAuthentication" : {
+          "shape" : "ClientAuthentication",
+          "locationName" : "clientAuthentication"
+        },
+        "EncryptionInfo" : {
+          "shape" : "EncryptionInfo",
+          "locationName" : "encryptionInfo"
+        },
+        "ConnectivityInfo":{
+          "shape":"ConnectivityInfo",
+          "locationName":"connectivityInfo"
         }
       }
     },
@@ -2397,12 +2508,16 @@
         "Tags"
       ]
     },
-    "Tls": {
-      "type": "structure",
-      "members": {
-        "CertificateAuthorityArnList": {
-          "shape": "__listOf__string",
-          "locationName": "certificateAuthorityArnList"
+    "Tls" : {
+      "type" : "structure",
+      "members" : {
+        "CertificateAuthorityArnList" : {
+          "shape" : "__listOf__string",
+          "locationName" : "certificateAuthorityArnList"
+        },
+        "Enabled" : {
+          "shape" : "__boolean",
+          "locationName" : "enabled"
         }
       }
     },
@@ -2421,6 +2536,15 @@
       "exception": true,
       "error": {
         "httpStatusCode": 429
+      }
+    },
+    "Unauthenticated" : {
+      "type" : "structure",
+      "members" : {
+        "Enabled" : {
+          "shape" : "__boolean",
+          "locationName" : "enabled"
+        }
       }
     },
     "UnauthorizedException": {
@@ -2691,6 +2815,42 @@
         }
       }
     },
+    "UpdateConnectivityRequest":{
+      "type":"structure",
+      "members":{
+        "ClusterArn":{
+          "shape":"__string",
+          "location":"uri",
+          "locationName":"clusterArn"
+        },
+        "ConnectivityInfo":{
+          "shape":"ConnectivityInfo",
+          "locationName":"connectivityInfo"
+        },
+        "CurrentVersion":{
+          "shape":"__string",
+          "locationName":"currentVersion"
+        }
+      },
+      "required":[
+        "ClusterArn",
+        "ConnectivityInfo",
+        "CurrentVersion"
+      ]
+    },
+    "UpdateConnectivityResponse":{
+      "type":"structure",
+      "members":{
+        "ClusterArn":{
+          "shape":"__string",
+          "locationName":"clusterArn"
+        },
+        "ClusterOperationArn":{
+          "shape":"__string",
+          "locationName":"clusterOperationArn"
+        }
+      }
+    },
     "UpdateMonitoringRequest" : {
       "type" : "structure",
       "members" : {
@@ -2719,6 +2879,42 @@
       "required" : [ "ClusterArn", "CurrentVersion" ]
     },
     "UpdateMonitoringResponse" : {
+      "type" : "structure",
+      "members" : {
+        "ClusterArn" : {
+          "shape" : "__string",
+          "locationName" : "clusterArn"
+        },
+        "ClusterOperationArn" : {
+          "shape" : "__string",
+          "locationName" : "clusterOperationArn"
+        }
+      }
+    },
+    "UpdateSecurityRequest" : {
+      "type" : "structure",
+      "members" : {
+        "ClientAuthentication" : {
+          "shape" : "ClientAuthentication",
+          "locationName" : "clientAuthentication"
+        },
+        "ClusterArn" : {
+          "shape" : "__string",
+          "location" : "uri",
+          "locationName" : "clusterArn"
+        },
+        "CurrentVersion" : {
+          "shape" : "__string",
+          "locationName" : "currentVersion"
+        },
+        "EncryptionInfo" : {
+          "shape" : "EncryptionInfo",
+          "locationName" : "encryptionInfo"
+        }
+      },
+      "required" : [ "ClusterArn", "CurrentVersion" ]
+    },
+    "UpdateSecurityResponse" : {
       "type" : "structure",
       "members" : {
         "ClusterArn" : {
@@ -2799,6 +2995,15 @@
         "NodeExporter" : {
           "shape" : "NodeExporterInfo",
           "locationName" : "nodeExporter"
+        }
+      }
+    },
+    "PublicAccess":{
+      "type":"structure",
+      "members":{
+        "Type":{
+          "shape":"__string",
+          "locationName":"type"
         }
       }
     },

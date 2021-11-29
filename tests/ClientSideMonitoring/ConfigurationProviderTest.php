@@ -331,7 +331,7 @@ EOT;
         $expected = new Configuration(true, '123.4.5.6', 555, 'FooApp');
         $f = function () use (&$called, $expected) {
             $called++;
-            return Promise\promise_for($expected);
+            return Promise\Create::promiseFor($expected);
         };
         $p = ConfigurationProvider::memoize($f);
         $this->assertSame($expected, $p()->wait());
@@ -400,7 +400,7 @@ EOT;
         $volatileProvider = function () use ($expected, &$timesCalled) {
             if (0 === $timesCalled) {
                 ++$timesCalled;
-                return Promise\promise_for($expected);
+                return Promise\Create::promiseFor($expected);
             }
 
             throw new \BadFunctionCallException('I was called too many times!');
@@ -448,7 +448,7 @@ EOT;
                 $expected
             ],
             [
-                Promise\promise_for($expected),
+                Promise\Create::promiseFor($expected),
                 $expected
             ],
             [

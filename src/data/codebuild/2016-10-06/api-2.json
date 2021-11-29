@@ -542,6 +542,19 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "UpdateProjectVisibility":{
+      "name":"UpdateProjectVisibility",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateProjectVisibilityInput"},
+      "output":{"shape":"UpdateProjectVisibilityOutput"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "UpdateReportGroup":{
       "name":"UpdateReportGroup",
       "http":{
@@ -690,6 +703,13 @@
         "reports":{"shape":"Reports"},
         "reportsNotFound":{"shape":"ReportArns"}
       }
+    },
+    "BatchReportModeType":{
+      "type":"string",
+      "enum":[
+        "REPORT_INDIVIDUAL_BUILDS",
+        "REPORT_AGGREGATED_BATCH"
+      ]
     },
     "BatchRestrictions":{
       "type":"structure",
@@ -1709,7 +1729,10 @@
         "logsConfig":{"shape":"LogsConfig"},
         "fileSystemLocations":{"shape":"ProjectFileSystemLocations"},
         "buildBatchConfig":{"shape":"ProjectBuildBatchConfig"},
-        "concurrentBuildLimit":{"shape":"WrapperInt"}
+        "concurrentBuildLimit":{"shape":"WrapperInt"},
+        "projectVisibility":{"shape":"ProjectVisibilityType"},
+        "publicProjectAlias":{"shape":"NonEmptyString"},
+        "resourceAccessRole":{"shape":"NonEmptyString"}
       }
     },
     "ProjectArns":{
@@ -1753,7 +1776,8 @@
         "serviceRole":{"shape":"NonEmptyString"},
         "combineArtifacts":{"shape":"WrapperBoolean"},
         "restrictions":{"shape":"BatchRestrictions"},
-        "timeoutInMins":{"shape":"WrapperInt"}
+        "timeoutInMins":{"shape":"WrapperInt"},
+        "batchReportMode":{"shape":"BatchReportModeType"}
       }
     },
     "ProjectCache":{
@@ -1864,6 +1888,13 @@
       "member":{"shape":"ProjectSource"},
       "max":12,
       "min":0
+    },
+    "ProjectVisibilityType":{
+      "type":"string",
+      "enum":[
+        "PUBLIC_READ",
+        "PRIVATE"
+      ]
     },
     "Projects":{
       "type":"list",
@@ -2423,6 +2454,26 @@
       "type":"structure",
       "members":{
         "project":{"shape":"Project"}
+      }
+    },
+    "UpdateProjectVisibilityInput":{
+      "type":"structure",
+      "required":[
+        "projectArn",
+        "projectVisibility"
+      ],
+      "members":{
+        "projectArn":{"shape":"NonEmptyString"},
+        "projectVisibility":{"shape":"ProjectVisibilityType"},
+        "resourceAccessRole":{"shape":"NonEmptyString"}
+      }
+    },
+    "UpdateProjectVisibilityOutput":{
+      "type":"structure",
+      "members":{
+        "projectArn":{"shape":"NonEmptyString"},
+        "publicProjectAlias":{"shape":"NonEmptyString"},
+        "projectVisibility":{"shape":"ProjectVisibilityType"}
       }
     },
     "UpdateReportGroupInput":{
