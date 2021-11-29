@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.206.0 - 2021-11-29
 
 * `Aws\CloudWatchEvidently` - Introducing Amazon CloudWatch Evidently. This is the first public release of Amazon CloudWatch Evidently.
 * `Aws\CloudWatchRUM` - This is the first public release of CloudWatch RUM
