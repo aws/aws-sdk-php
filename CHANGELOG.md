@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.207.0 - 2021-11-30
 
 * `Aws\AccessAnalyzer` - AWS IAM Access Analyzer now supports policy validation for resource policies attached to S3 buckets and access points. You can run additional policy checks by specifying the S3 resource type you want to attach to your resource policy.
 * `Aws\BackupGateway` - Initial release of AWS Backup gateway which enables you to centralize and automate protection of on-premises VMware and VMware Cloud on AWS workloads using AWS Backup.
