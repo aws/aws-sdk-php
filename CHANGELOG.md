@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.207.1 - 2021-12-01
 
 * `Aws\DevOpsGuru` - DevOps Guru now provides detailed, database-specific analyses of performance issues and recommends corrective actions for Amazon Aurora database instances with Performance Insights turned on. You can also use AWS tags to choose which resources to analyze and define your applications.
 * `Aws\DirectConnect` - Adds SiteLink support to private and transit virtual interfaces. SiteLink is a new Direct Connect feature that allows routing between Direct Connect points of presence.
