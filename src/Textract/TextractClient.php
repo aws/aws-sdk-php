@@ -9,6 +9,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise analyzeDocumentAsync(array $args = [])
  * @method \Aws\Result analyzeExpense(array $args = [])
  * @method \GuzzleHttp\Promise\Promise analyzeExpenseAsync(array $args = [])
+ * @method \Aws\Result analyzeID(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise analyzeIDAsync(array $args = [])
  * @method \Aws\Result detectDocumentText(array $args = [])
  * @method \GuzzleHttp\Promise\Promise detectDocumentTextAsync(array $args = [])
  * @method \Aws\Result getDocumentAnalysis(array $args = [])

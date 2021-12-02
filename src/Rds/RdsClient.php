@@ -254,6 +254,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyGlobalClusterAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result promoteReadReplicaDBCluster(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise promoteReadReplicaDBClusterAsync(array $args = []) (supported in versions 2014-10-31)
+ * @method \Aws\Result rebootDBCluster(array $args = []) (supported in versions 2014-10-31)
+ * @method \GuzzleHttp\Promise\Promise rebootDBClusterAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result registerDBProxyTargets(array $args = []) (supported in versions 2014-10-31)
  * @method \GuzzleHttp\Promise\Promise registerDBProxyTargetsAsync(array $args = []) (supported in versions 2014-10-31)
  * @method \Aws\Result removeFromGlobalCluster(array $args = []) (supported in versions 2014-10-31)

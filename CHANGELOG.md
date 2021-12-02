@@ -1,5 +1,166 @@
 # CHANGELOG
 
+## 3.208.0 - 2021-12-02
+
+* `Aws\AmplifyUIBuilder` - This release introduces the actions and data types for the new Amplify UI Builder API. The Amplify UI Builder API provides a programmatic interface for creating and configuring user interface (UI) component libraries and themes for use in Amplify applications.
+* `Aws\NetworkManager` - This release adds API support for AWS Cloud WAN.
+* `Aws\RAM` - This release adds the ability to use the new ResourceRegionScope parameter on List operations that return lists of resources or resource types. This new parameter filters the results by letting you differentiate between global or regional resource types.
+
+## 3.207.1 - 2021-12-01
+
+* `Aws\DevOpsGuru` - DevOps Guru now provides detailed, database-specific analyses of performance issues and recommends corrective actions for Amazon Aurora database instances with Performance Insights turned on. You can also use AWS tags to choose which resources to analyze and define your applications.
+* `Aws\DirectConnect` - Adds SiteLink support to private and transit virtual interfaces. SiteLink is a new Direct Connect feature that allows routing between Direct Connect points of presence.
+* `Aws\DynamoDB` - Add support for Table Classes and introduce the Standard Infrequent Access table class.
+* `Aws\EC2` - This release adds support for Amazon VPC IP Address Manager (IPAM), which enables you to plan, track, and monitor IP addresses for your workloads. This release also adds support for VPC Network Access Analyzer, which enables you to analyze network access to resources in your Virtual Private Clouds.
+* `Aws\LexModelsV2` - This release introduces a new feature, Automated Chatbot Designer, that helps customers automatically create a bot design from existing conversation transcripts. The feature uses machine learning to discover most common intents and the information needed to fulfill them.
+* `Aws\SageMaker` - This release enables - 1/ Inference endpoint configuration recommendations and ability to run custom load tests to meet performance needs. 2/ Deploy serverless inference endpoints. 3/ Query, filter and retrieve end-to-end ML lineage graph, and incorporate model quality/bias detection in ML workflow.
+* `Aws\SageMakerRuntime` - Adding new exception types for InvokeEndpoint
+* `Aws\Shield` - This release adds API support for Automatic Application Layer DDoS Mitigation for AWS Shield Advanced. Customers can now enable automatic DDoS mitigation in count or block mode for layer 7 protected resources.
+* `Aws\kendra` - Experience Builder allows customers to build search applications without writing code. Analytics Dashboard provides quality and usability metrics for Kendra indexes. Custom Document Enrichment allows customers to build a custom ingestion pipeline to pre-process documents and generate metadata.
+
+## 3.207.0 - 2021-11-30
+
+* `Aws\AccessAnalyzer` - AWS IAM Access Analyzer now supports policy validation for resource policies attached to S3 buckets and access points. You can run additional policy checks by specifying the S3 resource type you want to attach to your resource policy.
+* `Aws\BackupGateway` - Initial release of AWS Backup gateway which enables you to centralize and automate protection of on-premises VMware and VMware Cloud on AWS workloads using AWS Backup.
+* `Aws\EC2` - This release adds support for Is4gen and Im4gn instances. This release also adds a new subnet attribute, enableLniAtDeviceIndex, to support local network interfaces, which are logical networking components that connect an EC2 instance to your on-premises network.
+* `Aws\FSx` - This release adds support for the FSx for OpenZFS file system type, FSx for Lustre file systems with the Persistent_2 deployment type, and FSx for Lustre file systems with Amazon S3 data repository associations and automatic export policies.
+* `Aws\Glue` - Support for DataLake transactions
+* `Aws\IoT` - Added the ability to enable/disable IoT Fleet Indexing for Device Defender and Named Shadow information, and search them through IoT Fleet Indexing APIs.
+* `Aws\IoTTwinMaker` - AWS IoT TwinMaker makes it faster and easier to create, visualize and monitor digital twins of real-world systems like buildings, factories and industrial equipment to optimize operations. Learn more: https://docs.aws.amazon.com/iot-twinmaker/latest/apireference/Welcome.html (New Service) (Preview)
+* `Aws\Kafka` - This release adds three new V2 APIs. CreateClusterV2 for creating both provisioned and serverless clusters. DescribeClusterV2 for getting information about provisioned and serverless clusters and ListClustersV2 for listing all clusters (both provisioned and serverless) in your account.
+* `Aws\Kinesis` - Amazon Kinesis Data Streams now supports on demand streams.
+* `Aws\LakeFormation` - This release adds support for row and cell-based access control in Lake Formation. It also adds support for Lake Formation Governed Tables, which support ACID transactions and automatic storage optimizations.
+* `Aws\Outposts` - This release adds the SupportedHardwareType parameter to CreateOutpost.
+* `Aws\RedshiftDataAPIService` - Data API now supports serverless queries.
+* `Aws\S3` - Introduce Amazon S3 Glacier Instant Retrieval storage class and a new setting in S3 Object Ownership to disable ACLs for bucket and the objects in it.
+* `Aws\Snowball` - Tapeball is to integrate tape gateway onto snowball, it enables customer to transfer local data on the tape to snowball,and then ingest the data into tape gateway on the cloud.
+* `Aws\StorageGateway` - Added gateway type VTL_SNOW. Added new SNOWBALL HostEnvironment for gateways running on a Snowball device. Added new field HostEnvironmentId to serve as an identifier for the HostEnvironment on which the gateway is running.
+* `Aws\WorkSpacesWeb` - This is the initial SDK release for Amazon WorkSpaces Web. Amazon WorkSpaces Web is a low-cost, fully managed WorkSpace built to deliver secure web-based workloads and software-as-a-service (SaaS) application access to users within existing web browsers.
+
+## 3.206.0 - 2021-11-29
+
+* `Aws\CloudWatchEvidently` - Introducing Amazon CloudWatch Evidently. This is the first public release of Amazon CloudWatch Evidently.
+* `Aws\CloudWatchRUM` - This is the first public release of CloudWatch RUM
+* `Aws\ComputeOptimizer` - Adds support for the enhanced infrastructure metrics paid feature. Also adds support for two new sets of resource efficiency metrics, including savings opportunity metrics and performance improvement opportunity metrics.
+* `Aws\DataExchange` - This release enables providers and subscribers to use Data Set, Job, and Asset operations to work with API assets from Amazon API Gateway. In addition, this release enables subscribers to use the SendApiAsset operation to invoke a provider's Amazon API Gateway API that they are entitled to.
+* `Aws\EC2` - This release adds support for G5g and M6a instances. This release also adds support for Amazon EBS Snapshots Archive, a feature that enables you to archive your EBS snapshots; and Recycle Bin, a feature that enables you to protect your EBS snapshots against accidental deletion.
+* `Aws\ECR` - This release adds supports for pull through cache rules and enhanced scanning.
+* `Aws\Inspector2` - This release adds support for the new Amazon Inspector API. The new Amazon Inspector can automatically discover and scan Amazon EC2 instances and Amazon ECR container images for software vulnerabilities and unintended network exposure, and report centralized findings across multiple AWS accounts.
+* `Aws\IoTSiteWise` - AWS IoT SiteWise now supports retention configuration for the hot tier storage.
+* `Aws\RecycleBin` - This release adds support for Recycle Bin.
+* `Aws\S3` - Amazon S3 Event Notifications adds Amazon EventBridge as a destination and supports additional event types. The PutBucketNotificationConfiguration API can now skip validation of Amazon SQS, Amazon SNS and AWS Lambda destinations.
+* `Aws\SSM` - Added two new attributes to DescribeInstanceInformation called SourceId and SourceType along with new string filters SourceIds and SourceTypes to filter instance records.
+* `Aws\WellArchitected` - This update provides support for Well-Architected API users to use custom lens features.
+
+## 3.205.0 - 2021-11-29
+
+* `Aws\MigrationHubRefactorSpaces` - This is the initial SDK release for AWS Migration Hub Refactor Spaces
+* `Aws\Personalize` - This release adds API support for Recommenders and BatchSegmentJobs.
+* `Aws\PersonalizeRuntime` - This release adds inference support for Recommenders.
+* `Aws\Textract` - This release adds support for synchronously analyzing identity documents through a new API: AnalyzeID
+
+## 3.204.6 - 2021-11-26
+
+* `Aws\AutoScaling` - Documentation updates for Amazon EC2 Auto Scaling.
+* `Aws\EC2` - Documentation updates for EC2.
+* `Aws\IoTDeviceAdvisor` - Documentation update for Device Advisor GetEndpoint API
+* `Aws\Outposts` - This release adds new APIs for working with Outpost sites and orders.
+* `Aws\Pinpoint` - Added a One-Time Password (OTP) management feature. You can use the Amazon Pinpoint API to generate OTP codes and send them to your users as SMS messages. Your apps can then call the API to verify the OTP codes that your users input
+* `Aws\mgn` - Application Migration Service now supports an additional replication method that does not require agent installation on each source server. This option is available for source servers running on VMware vCenter versions 6.7 and 7.0.
+
+## 3.204.5 - 2021-11-24
+
+* `Aws\AutoScaling` - Customers can now configure predictive scaling policies to proactively scale EC2 Auto Scaling groups based on any CloudWatch metrics that more accurately represent the load on the group than the four predefined metrics. They can also use math expressions to further customize the metrics.
+* `Aws\CustomerProfiles` - This release introduces a new auto-merging feature for profile matching. The auto-merging configurations can be set via CreateDomain API or UpdateDomain API. You can use GetIdentityResolutionJob API and ListIdentityResolutionJobs API to fetch job status.
+* `Aws\ElastiCache` - Doc only update for ElastiCache
+* `Aws\IoTSiteWise` - AWS IoT SiteWise now accepts data streams that aren't associated with any asset properties. You can organize data by updating data stream associations.
+* `Aws\Lambda` - Remove Lambda function url apis
+* `Aws\Proton` - This release adds APIs for getting the outputs and provisioned stacks for Environments, Pipelines, and ServiceInstances. You can now add tags to EnvironmentAccountConnections. It also adds APIs for working with PR-based provisioning. Also, it adds APIs for syncing templates with a git repository.
+* `Aws\TimestreamQuery` - Releasing Amazon Timestream Scheduled Queries. It makes real-time analytics more performant and cost-effective for customers by calculating and storing frequently accessed aggregates, and other computations, typically used in operational dashboards, business reports, and other analytics applications
+* `Aws\TimestreamWrite` - This release adds support for multi-measure records and magnetic store writes. Multi-measure records allow customers to store multiple measures in a single table row. Magnetic store writes enable customers to write late arrival data (data with timestamp in the past) directly into the magnetic store.
+* `Aws\Translate` - This release enables customers to use translation settings to mask profane words and phrases in their translation output.
+* `Aws\imagebuilder` - This release adds support for sharing AMIs with Organizations within an EC2 Image Builder Distribution Configuration.
+
+## 3.204.4 - 2021-11-23
+
+* `Aws\Backup` - This release adds new opt-in settings for advanced features for DynamoDB backups
+* `Aws\DynamoDB` - DynamoDB PartiQL now supports ReturnConsumedCapacity, which returns capacity units consumed by PartiQL APIs if the request specified returnConsumedCapacity parameter. PartiQL APIs include ExecuteStatement, BatchExecuteStatement, and ExecuteTransaction.
+* `Aws\EC2` - This release adds a new parameter ipv6Native to the allow creation of IPv6-only subnets using the CreateSubnet operation, and the operation ModifySubnetAttribute includes new parameters to modify subnet attributes to use resource-based naming and enable DNS resolutions for Private DNS name.
+* `Aws\ECS` - Documentation update for ARM support on Amazon ECS.
+* `Aws\ElastiCache` - Adding support for r6gd instances for Redis with data tiering. In a cluster with data tiering enabled, when available memory capacity is exhausted, the least recently used data is automatically tiered to solid state drives for cost-effective capacity scaling with minimal performance impact.
+* `Aws\ElasticLoadBalancingv2` - This release allows you to create internal Application and Network Load Balancers in dualstack mode. This release also adds an attribute to block internet gateway (IGW) access to the load balancer, preventing unintended access to your internal load balancers through an internet gateway.
+* `Aws\FinSpaceData` - Update documentation for createChangeset API.
+* `Aws\IoT` - This release introduces a new feature, Managed Job Template, for AWS IoT Jobs Service. Customers can now use service provided managed job templates to easily create jobs for supported standard job actions.
+* `Aws\IoTDeviceAdvisor` - This release introduces a new feature for Device Advisor: ability to execute multiple test suites in parallel for given customer account. You can use GetEndpoint API to get the device-level test endpoint and call StartSuiteRun with "parallelRun=true" to run suites in parallel.
+* `Aws\IoTWireless` - Two new APIs, GetNetworkAnalyzerConfiguration and UpdateNetworkAnalyzerConfiguration, are added for the newly released Network Analyzer feature which enables customers to view real-time frame information and logs from LoRaWAN devices and gateways.
+* `Aws\Lambda` - Release Lambda event source filtering for SQS, Kinesis Streams, and DynamoDB Streams.
+* `Aws\Macie2` - Documentation updates for Amazon Macie
+* `Aws\OpenSearchService` - This release adds an optional parameter dry-run for the UpdateDomainConfig API to perform basic validation checks, and detect the deployment type that will be required for the configuration change, without actually applying the change.
+* `Aws\RDS` - Adds support for Multi-AZ DB clusters for RDS for MySQL and RDS for PostgreSQL.
+* `Aws\Redshift` - This release adds support for reserved node exchange with restore/resize
+* `Aws\S3` - Introduce two new Filters to S3 Lifecycle configurations - ObjectSizeGreaterThan and ObjectSizeLessThan. Introduce a new way to trigger actions on noncurrent versions by providing the number of newer noncurrent versions along with noncurrent days.
+* `Aws\SQS` - Amazon SQS adds a new queue attribute, SqsManagedSseEnabled, which enables server-side queue encryption using SQS owned encryption keys.
+* `Aws\STS` - Documentation updates for AWS Security Token Service.
+* `Aws\WorkSpaces` - Documentation updates for Amazon WorkSpaces
+
+## 3.204.3 - 2021-11-22
+
+* `Aws\Braket` - This release adds support for Amazon Braket Hybrid Jobs.
+* `Aws\ChimeSDKMeetings` - Added new APIs for enabling Echo Reduction with Voice Focus.
+* `Aws\CloudFormation` - This release include SDK changes for the feature launch of Stack Import to Service Managed StackSet.
+* `Aws\Connect` - This release adds support for UpdateContactFlowMetadata, DeleteContactFlow and module APIs. For details, see the Release Notes in the Amazon Connect Administrator Guide.
+* `Aws\DatabaseMigrationService` - Added new S3 endpoint settings to allow to convert the current UTC time into a specified time zone when a date partition folder is created. Using with 'DatePartitionedEnabled'.
+* `Aws\EKS` - Adding missing exceptions to RegisterCluster operation
+* `Aws\ElasticsearchService` - This release adds an optional parameter dry-run for the UpdateElasticsearchDomainConfig API to perform basic validation checks, and detect the deployment type that will be required for the configuration change, without actually applying the change.
+* `Aws\FinSpaceData` - Add new APIs for managing Datasets, Changesets, and Dataviews.
+* `Aws\QuickSight` - Add support for Exasol data source, 1 click enterprise embedding and email customization.
+* `Aws\RDS` - Adds local backup support to Amazon RDS on AWS Outposts.
+* `Aws\S3Control` - Added Amazon CloudWatch publishing option for S3 Storage Lens metrics.
+* `Aws\SSM` - Adds new parameter to CreateActivation API . This parameter is for "internal use only".
+* `Aws\TranscribeStreamingService` - This release adds language identification support for streaming transcription.
+
+## 3.204.2 - 2021-11-19
+
+* `Aws\AppStream` - Includes APIs for managing resources for Elastic fleets: applications, app blocks, and application-fleet associations.
+* `Aws\ApplicationInsights` - Application Insights now supports monitoring for HANA
+* `Aws\Batch` - Documentation updates for AWS Batch.
+* `Aws\CloudFormation` - The StackSets ManagedExecution feature will allow concurrency for non-conflicting StackSet operations and queuing the StackSet operations that conflict at a given time for later execution.
+* `Aws\Endpoints` - Fixes exception that some customers were getting with the new fips configuration provider where it couldn't find the is_fips_pseudo_region function
+* `Aws\Lambda` - Add support for Lambda Function URLs. Customers can use Function URLs to create built-in HTTPS endpoints on their functions.
+* `Aws\LexRuntimeV2` - Now supports styled slots in Lex V2 runtime. Customers can provide inputs like "a as in apple b for beta" which will be resolved to "ab" as slot value.
+* `Aws\MediaLive` - This release adds support for specifying a SCTE-35 PID on input. MediaLive now supports SCTE-35 PID selection on inputs containing one or more active SCTE-35 PIDs.
+* `Aws\Redshift` - Added support of default IAM role for CreateCluster, RestoreFromClusterSnapshot and ModifyClusterIamRoles APIs
+
+## 3.204.1 - 2021-11-18
+
+* `Aws\AppConfig` - Add Type to support feature flag configuration profiles
+* `Aws\AuditManager` - This release introduces a new feature for Audit Manager: Dashboard views. You can now view insights data for your active assessments, and quickly identify non-compliant evidence that needs to be remediated.
+* `Aws\Chime` - Adds new Transcribe API parameters to StartMeetingTranscription, including support for content identification and redaction (PII & PHI), partial results stabilization, and custom language models.
+* `Aws\ChimeSDKMeetings` - Adds new Transcribe API parameters to StartMeetingTranscription, including support for content identification and redaction (PII & PHI), partial results stabilization, and custom language models.
+* `Aws\CloudWatch` - CloudWatch Anomaly Detection now supports anomaly detectors that use metric math as input.
+* `Aws\ForecastService` - NEW CreateExplanability API that helps you understand how attributes such as price, promotion, etc. contributes to your forecasted values; NEW CreateAutoPredictor API that trains up to 40% more accurate forecasting model, saves up to 50% of retraining time, and provides model level explainability.
+* `Aws\GlueDataBrew` - This SDK release adds the following new features: 1) PII detection in profile jobs, 2) Data quality rules, enabling validation of data quality in profile jobs, 3) SQL query-based datasets for Amazon Redshift and Snowflake data sources, and 4) Connecting DataBrew datasets with Amazon AppFlow flows.
+* `Aws\IVS` - Add APIs for retrieving stream session information and support for filtering live streams by health. For more information, see https://docs.aws.amazon.com/ivs/latest/userguide/stream-health.html
+* `Aws\Kafka` - Amazon MSK has added a new API that allows you to update the connectivity settings for an existing cluster to enable public accessibility.
+* `Aws\Lambda` - Added support for CLIENT_CERTIFICATE_TLS_AUTH and SERVER_ROOT_CA_CERTIFICATE as SourceAccessType for MSK and Kafka event source mappings.
+* `Aws\LexModelsV2` - Added support for Polly Neural TTS (NTTS) voices. Customers can choose between 'standard' and 'neural' for Polly Engine configuration per locale when creating or updating an Amazon Lex bot.
+* `Aws\RedshiftDataAPIService` - Rolling back Data API serverless features until dependencies are live.
+
+## 3.204.0 - 2021-11-17
+
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway.
+* `Aws\AmplifyBackend` - New APIs to support the Amplify Storage category. Add and manage file storage in your Amplify app backend.
+* `Aws\AppConfigData` - AWS AppConfig Data is a new service that allows you to retrieve configuration deployed by AWS AppConfig. See the AppConfig user guide for more details on getting started. https://docs.aws.amazon.com/appconfig/latest/userguide/what-is-appconfig.html
+* `Aws\DevOpsGuru` - Add paginator for DescribeResourceCollectionHealth
+* `Aws\RedshiftDataAPIService` - Data API now supports serverless requests.
+* `Aws\SNS` - Amazon SNS introduces the PublishBatch API, which enables customers to publish up to 10 messages per API request. The new API is valid for Standard and FIFO topics.
+* `Aws\drs` - Introducing AWS Elastic Disaster Recovery (AWS DRS), a new service that minimizes downtime and data loss with fast, reliable recovery of on-premises and cloud-based applications using affordable storage, minimal compute, and point-in-time recovery.
+
+## 3.203.1 - 2021-11-16
+
+* `Aws\CloudTrail` - CloudTrail Insights now supports ApiErrorRateInsight, which enables customers to identify unusual activity in their AWS account based on API error codes and their rate.
+* `Aws\LocationService` - This release adds the support for Relevance, Distance, Time Zone, Language and Interpolated Address for Geocoding and Reverse Geocoding.
+
 ## 3.203.0 - 2021-11-15
 
 * `Aws\AppStream` - This release includes support for images of AmazonLinux2 platform type.
