@@ -18,6 +18,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAmplify(array $args = [])
  * @method \Aws\AmplifyBackend\AmplifyBackendClient createAmplifyBackend(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAmplifyBackend(array $args = [])
+ * @method \Aws\AmplifyUIBuilder\AmplifyUIBuilderClient createAmplifyUIBuilder(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAmplifyUIBuilder(array $args = [])
  * @method \Aws\ApiGateway\ApiGatewayClient createApiGateway(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionApiGateway(array $args = [])
  * @method \Aws\ApiGatewayManagementApi\ApiGatewayManagementApiClient createApiGatewayManagementApi(array $args = [])
