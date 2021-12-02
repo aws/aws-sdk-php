@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.208.0 - 2021-12-02
 
 * `Aws\AmplifyUIBuilder` - This release introduces the actions and data types for the new Amplify UI Builder API. The Amplify UI Builder API provides a programmatic interface for creating and configuring user interface (UI) component libraries and themes for use in Amplify applications.
 * `Aws\NetworkManager` - This release adds API support for AWS Cloud WAN.
