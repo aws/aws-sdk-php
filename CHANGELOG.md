@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Rekognition` - This release added new KnownGender types for Celebrity Recognition.
+
 ## 3.208.0 - 2021-12-02
 
 * `Aws\AmplifyUIBuilder` - This release introduces the actions and data types for the new Amplify UI Builder API. The Amplify UI Builder API provides a programmatic interface for creating and configuring user interface (UI) component libraries and themes for use in Amplify applications.
