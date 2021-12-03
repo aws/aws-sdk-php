@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.208.1 - 2021-12-03
 
 * `Aws\Rekognition` - This release added new KnownGender types for Celebrity Recognition.
 
