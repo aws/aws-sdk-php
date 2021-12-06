@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.208.2 - 2021-12-06
 
 * `Aws\AppSync` - AWS AppSync now supports custom domain names, allowing you to associate a domain name that you own with an AppSync API in your account.
 * `Aws\LocationService` - This release adds support for Accuracy position filtering, position metadata and autocomplete for addresses and points of interest based on partial or misspelled free-form text.
