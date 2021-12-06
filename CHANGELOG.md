@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppSync` - AWS AppSync now supports custom domain names, allowing you to associate a domain name that you own with an AppSync API in your account.
+* `Aws\LocationService` - This release adds support for Accuracy position filtering, position metadata and autocomplete for addresses and points of interest based on partial or misspelled free-form text.
+* `Aws\Route53` - Add PriorRequestNotComplete exception to UpdateHostedZoneComment API
+
 ## 3.208.1 - 2021-12-03
 
 * `Aws\Rekognition` - This release added new KnownGender types for Celebrity Recognition.
