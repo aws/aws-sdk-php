@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatchLogs` - This release adds AWS Organizations support as condition key in destination policy for cross account Subscriptions in CloudWatch Logs.
+* `Aws\ComprehendMedical` - This release adds a new set of APIs (synchronous and batch) to support the SNOMED-CT ontology.
+* `Aws\Health` - Documentation updates for AWS Health
+* `Aws\IoT` - This release allows customer to enable caching of custom authorizer on HTTP protocol for clients that use persistent or Keep-Alive connection in order to reduce the number of Lambda invocations.
+* `Aws\LookoutforVision` - This release adds new APIs for packaging an Amazon Lookout for Vision model as an AWS IoT Greengrass component.
+* `Aws\Outposts` - This release adds the UpdateOutpost API.
+* `Aws\SageMaker` - This release added a new Ambarella device(amba_cv2) compilation support for Sagemaker Neo.
+* `Aws\Support` - Documentation updates for AWS Support.
+
 ## 3.208.2 - 2021-12-06
 
 * `Aws\AppSync` - AWS AppSync now supports custom domain names, allowing you to associate a domain name that you own with an AppSync API in your account.
