@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.208.3 - 2021-12-08
 
 * `Aws\CloudWatchLogs` - This release adds AWS Organizations support as condition key in destination policy for cross account Subscriptions in CloudWatch Logs.
 * `Aws\ComprehendMedical` - This release adds a new set of APIs (synchronous and batch) to support the SNOMED-CT ontology.
