@@ -318,11 +318,6 @@ class SignatureV4 implements SignatureInterface
     private function getCanonicalizedQuery(array $query)
     {
         unset($query['X-Amz-Signature']);
-        if (isset($query["X-Amz-Content-Sha256"][0])
-            && $query["X-Amz-Content-Sha256"][0] == self::UNSIGNED_PAYLOAD
-        ) {
-            unset($query['X-Amz-Content-Sha256']);
-        }
 
         if (!$query) {
             return '';
