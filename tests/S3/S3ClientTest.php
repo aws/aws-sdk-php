@@ -130,7 +130,7 @@ class S3ClientTest extends TestCase
         $this->assertStringStartsWith('https://foo.s3.amazonaws.com/bar?', $url);
         $this->assertContains('X-Amz-Expires=1200', $url);
         $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=61a9940ecdd901be8e36833f6d47123c0c719fc6aa82042144a6c5cf44a25988', $url);
+        $this->assertContains('X-Amz-Signature=4a1061a32c495cd91a95be6a6b70bbd38cbd0a104090fa8237a3576d09067953', $url);
     }
 
     public function testCreatesPresignedRequestsWithPathStyleFallback()
