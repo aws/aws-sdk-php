@@ -1861,7 +1861,6 @@ EOXML;
         $presigned = $client->createPresignedRequest($command, time() + 10000);
         self::assertSame($expectedEndpoint, $presigned->getUri()->getHost());
         self::assertSame("*", $presigned->getHeader("x-amz-region-set")[0]);
-
     }
 
     public function testPresignedMrapFailure (){
@@ -1888,6 +1887,50 @@ EOXML;
         }
     }
 
+    public function outpostsPresignedSuccessProvider()
+    {
+        return [
+            [
+                'arn:aws:s3-outposts:us-west-2:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
+                '20210827%2Fus-west-2%2Fs3-outposts%2Faws4_request',
+                'a944fbe2bfbae429f922746546d1c6f890649c88ba7826bd1d258ac13f327e09'
+            ],
+            [
+                'arn:aws:s3-outposts:us-east-1:123456789012:outpost:op-01234567890123456:accesspoint:myaccesspoint',
+                '20210827%2Fus-east-1%2Fs3-outposts%2Faws4_request',
+                '7f93df0b81f80e590d95442d579bd6cf749a35ff4bbdc6373fa669b89c7fce4e'
+            ],
+        ];
+    }
 
+    /**
+     * @dataProvider outpostsPresignedSuccessProvider
+     */
+    public function testPresignedOutpostSuccess ($bucket, $scope, $signature)
+    {
+        $client = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'use_arn_region' => true,
+            'credentials' => [
+                'key' => 'ACCESS_KEY_ID',
+                'secret' => 'SECRET_ACCESS_KEY',
+            ],
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => $bucket,
+                'Key' => 'obj',
+            ]
+        );
+        $url = (string)$client->createPresignedRequest(
+            $command,
+            '+15 minutes',
+            ['start_time' => 1630022400]
+        )->getUri();
+        self::assertContains($scope, $url);
+        self::assertContains($signature, $url);
+    }
 
 }

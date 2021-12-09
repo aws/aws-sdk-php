@@ -160,7 +160,10 @@ class SignatureV4 implements SignatureInterface
         $payload = $this->getPresignedPayload($request);
         $httpDate = gmdate(self::ISO8601_BASIC, $startTimestamp);
         $shortDate = substr($httpDate, 0, 8);
-        $scope = $this->createScope($shortDate, $this->region, $this->service);
+        $signingService = isset($options['signing_service'])
+            ? $options['signing_service']
+            : $this->service;
+        $scope = $this->createScope($shortDate, $this->region, $signingService);
         $credential = $credentials->getAccessKeyId() . '/' . $scope;
         if ($credentials->getSecurityToken()) {
             unset($parsed['headers']['X-Amz-Security-Token']);
@@ -175,7 +178,7 @@ class SignatureV4 implements SignatureInterface
         $key = $this->getSigningKey(
             $shortDate,
             $this->region,
-            $this->service,
+            $signingService,
             $credentials->getSecretKey()
         );
         $parsed['query']['X-Amz-Signature'] = hash_hmac('sha256', $stringToSign, $key);
@@ -315,6 +318,11 @@ class SignatureV4 implements SignatureInterface
     private function getCanonicalizedQuery(array $query)
     {
         unset($query['X-Amz-Signature']);
+        if (isset($query["X-Amz-Content-Sha256"][0])
+            && $query["X-Amz-Content-Sha256"][0] == self::UNSIGNED_PAYLOAD
+        ) {
+            unset($query['X-Amz-Content-Sha256']);
+        }
 
         if (!$query) {
             return '';

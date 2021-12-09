@@ -69,6 +69,12 @@ class S3SignatureV4 extends SignatureV4
             $request = $request->withHeader("x-amz-region-set", "*");
         }
 
+        if (strpos($request->getUri()->getHost(), "s3-object-lambda")) {
+            $options['signing_service'] = 's3-object-lambda';
+        } else if (strpos($request->getUri()->getHost(), "s3-outposts")) {
+            $options['signing_service'] = 's3-outposts';
+        }
+
         return parent::presign($request, $credentials, $expires, $options);
     }
 

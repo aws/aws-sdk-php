@@ -4,6 +4,7 @@ namespace Aws\S3;
 use Aws\Api\ApiProvider;
 use Aws\Api\DocModel;
 use Aws\Api\Service;
+use Aws\Arn\ArnParser;
 use Aws\AwsClient;
 use Aws\CacheInterface;
 use Aws\ClientResolver;
@@ -464,12 +465,32 @@ class S3Client extends AwsClient implements S3ClientInterface
         $command = clone $command;
         $command->getHandlerList()->remove('signer');
 
+        $signing_region = $this->getConfig('signing_region');
+        $op = $this->getApi()->getOperation($command->getName())->toArray();
+        if ($this->getConfig('use_arn_region')->isUseArnRegion()) {
+            if (!empty($op['input']['shape'])) {
+                $service = $this->getApi()->toArray();
+                if (!empty($input = $service['shapes'][$op['input']['shape']])) {
+                    foreach ($input['members'] as $key => $member) {
+                        if ($member['shape'] === 'BucketName') {
+                            $arnableKey = $key;
+                            break;
+                        }
+                    }
+                }
+            if (!empty($arnableKey)) {}
+                if (ArnParser::isArn($command[$arnableKey])) {
+                    $parsedArn = ArnParser::parse($command[$arnableKey]);
+                    $signing_region = $parsedArn->getRegion();
+                }
+            }
+        }
         /** @var \Aws\Signature\SignatureInterface $signer */
         $signer = call_user_func(
             $this->getSignatureProvider(),
             $this->getConfig('signature_version'),
             $this->getConfig('signing_name'),
-            $this->getConfig('signing_region')
+            $signing_region
         );
 
         return $signer->presign(
