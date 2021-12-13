@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.208.5 - 2021-12-13
 
 * `Aws\SecretsManager` - Documentation updates for Secrets Manager
 
