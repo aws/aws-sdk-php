@@ -38,6 +38,7 @@ class MetadataEnvelope implements ArrayAccess, IteratorAggregate, JsonSerializab
         return array_keys(self::$constants);
     }
 
+    #[\ReturnTypeWillChange]
     public function offsetSet($name, $value)
     {
         $constants = self::getConstantValues();
