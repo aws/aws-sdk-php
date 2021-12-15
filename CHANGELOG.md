@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## 3.208.5 - 2021-12-13
+
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+
+## 3.208.4 - 2021-12-09
+
+* `Aws\` - This release adds #[ReturnTypeWillChange] attribute where it is needed and fixes a deprecation notice when pass null to rawurlencode() for PHP 8.1 compatibility
+* `Aws\EC2` - Adds waiters support for internet gateways.
+* `Aws\LexModelsV2` - Added support for grammar slot type in Amazon Lex. You can author your own grammar in the XML format per the SRGS specification to collect information in a conversation.
+* `Aws\NetworkFirewall` - This release adds support for managed rule groups.
+* `Aws\Route53Domains` - Amazon Route 53 domain registration APIs now support filtering and sorting in the ListDomains API, deleting a domain by using the DeleteDomain API and getting domain pricing information by using the ListPrices API.
+* `Aws\Route53RecoveryControlConfig` - This release adds tagging supports to Route53 Recovery Control Configuration. New APIs: TagResource, UntagResource and ListTagsForResource. Updates: add optional field `tags` to support tagging while calling CreateCluster, CreateControlPanel and CreateSafetyRule.
+* `Aws\SMS` - This release adds SMS discontinuation information to the API and CLI references.
+* `Aws\SavingsPlans` - Adds the ability to specify Savings Plans hourly commitments using five digits after the decimal point.
+
 ## 3.208.3 - 2021-12-08
 
 * `Aws\CloudWatchLogs` - This release adds AWS Organizations support as condition key in destination policy for cross account Subscriptions in CloudWatch Logs.
