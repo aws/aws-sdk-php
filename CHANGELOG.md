@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.208.6 - 2021-12-20
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway
 * `Aws\CustomerProfiles` - This release adds an optional parameter, ObjectTypeNames to the PutIntegration API to support multiple object types per integration option. Besides, this release introduces Standard Order Objects which contain data from third party systems and each order object belongs to a specific profile.
