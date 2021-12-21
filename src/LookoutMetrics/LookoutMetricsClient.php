@@ -39,6 +39,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise listAlertsAsync(array $args = [])
  * @method \Aws\Result listAnomalyDetectors(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAnomalyDetectorsAsync(array $args = [])
+ * @method \Aws\Result listAnomalyGroupRelatedMetrics(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAnomalyGroupRelatedMetricsAsync(array $args = [])
  * @method \Aws\Result listAnomalyGroupSummaries(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listAnomalyGroupSummariesAsync(array $args = [])
  * @method \Aws\Result listAnomalyGroupTimeSeries(array $args = [])
