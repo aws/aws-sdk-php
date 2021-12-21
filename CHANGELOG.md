@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.208.7 - 2021-12-21
 
 * `Aws\ChimeSDKMessaging` - The Amazon Chime SDK now supports updating message attributes via channel flows
 * `Aws\LookoutMetrics` - This release adds support for Causal Relationships. Added new ListAnomalyGroupRelatedMetrics API operation and InterMetricImpactDetails API data type
