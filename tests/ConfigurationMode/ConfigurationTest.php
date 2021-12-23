@@ -13,7 +13,7 @@ class ConfigurationTest extends TestCase
     public function testGetsCorrectValues()
     {
         $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configurations.json'
+            __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
         $config = new Configuration($data, 'standard');
         $this->assertSame('standard', $config->getMode());
@@ -22,7 +22,7 @@ class ConfigurationTest extends TestCase
     public function testToArray()
     {
         $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configurations.json'
+            __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
         $config = new Configuration($data,'standard');
         $expected = [
@@ -39,7 +39,7 @@ class ConfigurationTest extends TestCase
     public function testToArrayWithLegacy()
     {
         $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configurations.json'
+            __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
         $config = new Configuration($data,'legacy');
         $expected = [
@@ -60,7 +60,7 @@ class ConfigurationTest extends TestCase
     public function testHandlesInvalidMode()
     {
         $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configurations.json'
+            __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
         new Configuration($data, 'foo');
     }

@@ -182,7 +182,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function unwrap($config)
     {
         $data = \Aws\load_compiled_json(
-            __DIR__ . '/../data/sdk-default-configurations.json'
+            __DIR__ . '/../data/sdk-default-configuration.json'
         );
 
         if (is_callable($config)) {

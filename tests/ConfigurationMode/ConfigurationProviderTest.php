@@ -235,7 +235,7 @@ EOT;
     {
         $this->clearEnv();
         $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configurations.json'
+            __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
         $expected = new Configuration(
             $data,
@@ -262,7 +262,7 @@ EOT;
     {
         $called = 0;
         $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configurations.json'
+            __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
         $expected = new Configuration($data, 'standard');
         $f = function () use (&$called, $expected) {
@@ -280,7 +280,7 @@ EOT;
     {
         $dir = $this->clearEnv();
         $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configurations.json'
+            __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
         $expected = new Configuration($data,'legacy');
         file_put_contents($dir . '/config', $this->iniFile);
@@ -309,7 +309,7 @@ EOT;
     {
         $dir = $this->clearEnv();
         $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configurations.json'
+            __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
         $expected = new Configuration($data, 'standard');
         putenv(ConfigurationProvider::ENV_MODE . '=standard');
@@ -328,7 +328,7 @@ EOT;
     {
         $cache = new LruArrayCache();
         $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configurations.json'
+            __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
         $expected = new Configuration($data,'standard');
 
@@ -376,7 +376,7 @@ EOT;
     public function getSuccessfulUnwrapData()
     {
         $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configurations.json'
+            __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
         $expected = new Configuration($data, 'standard');
         return [
