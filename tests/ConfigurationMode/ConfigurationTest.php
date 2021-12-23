@@ -54,7 +54,7 @@ class ConfigurationTest extends TestCase
     }
 
     /**
-     * @expectedException \Aws\ConfigurationMode\Exception\ConfigurationException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage 'foo' is not a valid mode
      */
     public function testHandlesInvalidMode()

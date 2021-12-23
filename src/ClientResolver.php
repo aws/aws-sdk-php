@@ -466,18 +466,18 @@ class ClientResolver
     {
         $config = ConfigModeProvider::unwrap($value);
         if ($config->getMode() !== 'legacy') {
-            if (!isset($args['retries']) && !isNull($config->getRetryMode())) {
+            if (!isset($args['retries']) && !is_null($config->getRetryMode())) {
                 $args['retries'] = ['mode' => $config->getRetryMode()];
             }
             if (
                 !isset($args['sts_regional_endpoints'])
-                && !isNull($config->getStsRegionalEndpoints())
+                && !is_null($config->getStsRegionalEndpoints())
             ) {
                 $args['sts_regional_endpoints'] = ['mode' => $config->getStsRegionalEndpoints()];
             }
             if (
                 !isset($args['s3_us_east_1_regional_endpoint'])
-                && !isNull($config->getS3UsEast1RegionalEndpoints())
+                && !is_null($config->getS3UsEast1RegionalEndpoints())
             ) {
                 $args['s3_us_east_1_regional_endpoint'] = ['mode' => $config->getS3UsEast1RegionalEndpoints()];
             }
@@ -487,13 +487,13 @@ class ClientResolver
             }
             if (
                 !isset($args['http']['connect_timeout'])
-                && !isNull($config->getConnectTimeoutInMillis())
+                && !is_null($config->getConnectTimeoutInMillis())
             ) {
                 $args['http']['connect_timeout'] = $config->getConnectTimeoutInMillis() / 1000;
             }
             if (
                 !isset($args['http']['timeout'])
-                && !isNull($config->getHttpRequestTimeoutInMillis())
+                && !is_null($config->getHttpRequestTimeoutInMillis())
             ) {
                 $args['http']['timeout'] = $config->getHttpRequestTimeoutInMillis() / 1000;
             }

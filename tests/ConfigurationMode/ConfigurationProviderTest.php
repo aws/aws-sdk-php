@@ -396,17 +396,8 @@ EOT;
             ],
             [
 
-                'standard',
-                $expected
-            ],
-            [
-                'standard',
-                new Configuration($data, 'standard')
-            ],
-            [
-
-                'standard',
-                new Configuration($data, 'standard')
+                'legacy',
+                new Configuration($data, 'legacy')
             ],
         ];
     }
@@ -422,6 +413,21 @@ EOT;
             $expected->toArray(),
             ConfigurationProvider::unwrap($toUnwrap)->toArray()
         );
+    }
+
+
+    public function testCreatesLegacy()
+    {
+        $data = \Aws\load_compiled_json(
+            __DIR__ . '/fixtures/sdk-default-configuration.json'
+        );
+        $config = new Configuration($data);
+        self::assertEquals('legacy', $config->getMode());
+        self::assertNull($config->getRetryMode());
+        self::assertNull($config->getHttpRequestTimeoutInMillis());
+        self::assertNull($config->getConnectTimeoutInMillis());
+        self::assertNull($config->getS3UsEast1RegionalEndpoints());
+        self::assertNull($config->getStsRegionalEndpoints());
     }
 
     /**
