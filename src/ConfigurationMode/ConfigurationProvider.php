@@ -50,7 +50,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     const ENV_PROFILE = 'AWS_PROFILE';
     const INI_MODE = 'defaults_mode';
 
-    public static $cacheKey = 'aws_retries_config';
+    public static $cacheKey = 'aws_defaults_mode';
 
     protected static $interfaceClass = ConfigurationInterface::class;
     protected static $exceptionClass = ConfigurationException::class;
@@ -124,7 +124,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     {
         return function () {
             return Promise\Create::promiseFor(
-                new Configuration(self::DEFAULT_MODE)
+                new Configuration( self::DEFAULT_MODE)
             );
         };
     }
@@ -181,10 +181,6 @@ class ConfigurationProvider extends AbstractConfigurationProvider
      */
     public static function unwrap($config)
     {
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/../data/sdk-default-configuration.json'
-        );
-
         if (is_callable($config)) {
             $config = $config();
         }
@@ -195,9 +191,8 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             return $config;
         }
 
-        // An integer value for this config indicates the legacy 'retries'
         if (is_string($config)) {
-            return new Configuration($data, $config);
+            return new Configuration($config);
         }
 
         throw new \InvalidArgumentException('Not a valid configurationMode configuration'

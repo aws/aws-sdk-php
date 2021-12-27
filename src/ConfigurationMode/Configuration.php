@@ -20,8 +20,11 @@ class Configuration implements ConfigurationInterface
         'auto',
     ];
 
-    public function __construct($data, $mode = 'legacy')
+    public function __construct($mode = 'legacy')
     {
+        $data = \Aws\load_compiled_json(
+            __DIR__ . '/../data/sdk-default-configuration.json'
+        );
         $mode = strtolower($mode);
         if (!in_array($mode, $this->validModes)) {
             throw new \InvalidArgumentException("'{$mode}' is not a valid mode."

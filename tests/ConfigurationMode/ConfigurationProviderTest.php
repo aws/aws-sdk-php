@@ -157,12 +157,12 @@ EOT;
     public function testCreatesFromIniFileWithSpecifiedProfile()
     {
         $dir = $this->clearEnv();
-        $expected = new Configuration('legacy');
+        $expected = new Configuration('standard');
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         putenv(ConfigurationProvider::ENV_PROFILE . '=custom');
         /** @var ConfigurationInterface $result */
-        $result = call_user_func(ConfigurationProvider::ini())->wait();
+        $result = call_user_func(ConfigurationProvider::ini('default'))->wait();
         $this->assertEquals($expected->toArray(), $result->toArray());
         unlink($dir . '/config');
     }
@@ -234,13 +234,7 @@ EOT;
     public function testUsesClassDefaultOptions()
     {
         $this->clearEnv();
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configuration.json'
-        );
-        $expected = new Configuration(
-            $data,
-            ConfigurationProvider::DEFAULT_MODE
-        );
+        $expected = new Configuration(ConfigurationProvider::DEFAULT_MODE);
         $provider = ConfigurationProvider::defaultProvider();
         /** @var ConfigurationInterface $result */
         $result = $provider()->wait();
@@ -264,7 +258,7 @@ EOT;
         $data = \Aws\load_compiled_json(
             __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
-        $expected = new Configuration($data, 'standard');
+        $expected = new Configuration('standard');
         $f = function () use (&$called, $expected) {
             $called++;
             return Promise\Create::promiseFor($expected);
@@ -282,11 +276,11 @@ EOT;
         $data = \Aws\load_compiled_json(
             __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
-        $expected = new Configuration($data,'legacy');
+        $expected = new Configuration('legacy');
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
         $a = ConfigurationProvider::ini('custom', null);
-        $b = ConfigurationProvider::ini();
+        $b = ConfigurationProvider::env();
         $c = function () {
             $this->fail('Should not have called');
         };
@@ -311,7 +305,7 @@ EOT;
         $data = \Aws\load_compiled_json(
             __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
-        $expected = new Configuration($data, 'standard');
+        $expected = new Configuration('standard');
         putenv(ConfigurationProvider::ENV_MODE . '=standard');
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
@@ -330,7 +324,7 @@ EOT;
         $data = \Aws\load_compiled_json(
             __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
-        $expected = new Configuration($data,'standard');
+        $expected = new Configuration('standard');
 
         $timesCalled = 0;
         $volatileProvider = function () use ($expected, &$timesCalled) {
@@ -378,7 +372,7 @@ EOT;
         $data = \Aws\load_compiled_json(
             __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
-        $expected = new Configuration($data, 'standard');
+        $expected = new Configuration('standard');
         return [
             [
                 function () use ($expected) {
@@ -397,7 +391,7 @@ EOT;
             [
 
                 'legacy',
-                new Configuration($data, 'legacy')
+                new Configuration('legacy')
             ],
         ];
     }
@@ -421,7 +415,7 @@ EOT;
         $data = \Aws\load_compiled_json(
             __DIR__ . '/fixtures/sdk-default-configuration.json'
         );
-        $config = new Configuration($data);
+        $config = new Configuration();
         self::assertEquals('legacy', $config->getMode());
         self::assertNull($config->getRetryMode());
         self::assertNull($config->getHttpRequestTimeoutInMillis());
