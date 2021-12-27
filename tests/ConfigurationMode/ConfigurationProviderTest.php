@@ -255,9 +255,6 @@ EOT;
     public function testMemoizes()
     {
         $called = 0;
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configuration.json'
-        );
         $expected = new Configuration('standard');
         $f = function () use (&$called, $expected) {
             $called++;
@@ -273,9 +270,6 @@ EOT;
     public function testChainsConfiguration()
     {
         $dir = $this->clearEnv();
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configuration.json'
-        );
         $expected = new Configuration('legacy');
         file_put_contents($dir . '/config', $this->iniFile);
         putenv('HOME=' . dirname($dir));
@@ -302,9 +296,6 @@ EOT;
     public function testSelectsEnvironmentOverIniConfiguration()
     {
         $dir = $this->clearEnv();
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configuration.json'
-        );
         $expected = new Configuration('standard');
         putenv(ConfigurationProvider::ENV_MODE . '=standard');
         file_put_contents($dir . '/config', $this->iniFile);
@@ -321,9 +312,6 @@ EOT;
     public function testsPersistsToCache()
     {
         $cache = new LruArrayCache();
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configuration.json'
-        );
         $expected = new Configuration('standard');
 
         $timesCalled = 0;
@@ -369,9 +357,6 @@ EOT;
 
     public function getSuccessfulUnwrapData()
     {
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configuration.json'
-        );
         $expected = new Configuration('standard');
         return [
             [
@@ -412,9 +397,6 @@ EOT;
 
     public function testCreatesLegacy()
     {
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configuration.json'
-        );
         $config = new Configuration();
         self::assertEquals('legacy', $config->getMode());
         self::assertNull($config->getRetryMode());

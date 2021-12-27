@@ -12,36 +12,25 @@ class ConfigurationTest extends TestCase
 {
     public function testGetsCorrectValues()
     {
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configuration.json'
-        );
-        $config = new Configuration($data, 'standard');
+        $config = new Configuration('standard');
         $this->assertSame('standard', $config->getMode());
     }
 
     public function testToArray()
     {
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configuration.json'
-        );
-        $config = new Configuration($data,'standard');
-        $expected = [
-            'mode' => 'standard',
-            'retry_mode' => 'standard',
-            'sts_regional_endpoints' => 'regional',
-            's3_us_east_1_regional_endpoint' => 'regional',
-            'connect_timeout_in_milliseconds' => 2000,
-            'http_request_timeout_in_milliseconds' => null,
-        ];
-        $this->assertEquals($expected, $config->toArray());
+        $config = new Configuration('standard');
+        $configArray = $config->toArray();
+        $this->assertArrayHasKey('mode', $configArray);
+        $this->assertArrayHasKey('retry_mode', $configArray);
+        $this->assertArrayHasKey('sts_regional_endpoints', $configArray);
+        $this->assertArrayHasKey('s3_us_east_1_regional_endpoint', $configArray);
+        $this->assertArrayHasKey('connect_timeout_in_milliseconds', $configArray);
+        $this->assertArrayHasKey('http_request_timeout_in_milliseconds', $configArray);
     }
 
     public function testToArrayWithLegacy()
     {
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configuration.json'
-        );
-        $config = new Configuration($data,'legacy');
+        $config = new Configuration('legacy');
         $expected = [
             'mode' => 'legacy',
             'retry_mode' => null,
@@ -59,9 +48,6 @@ class ConfigurationTest extends TestCase
      */
     public function testHandlesInvalidMode()
     {
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/fixtures/sdk-default-configuration.json'
-        );
-        new Configuration($data, 'foo');
+        new Configuration('foo');
     }
 }
