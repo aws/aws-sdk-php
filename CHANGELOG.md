@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.208.8 - 2022-01-03
 
 * `Aws\Detective` - Added and updated API operations to support the Detective integration with AWS Organizations. New actions are used to manage the delegated administrator account and the integration configuration.
 * `Aws\GreengrassV2` - This release adds the API operations to manage the Greengrass role associated with your account and to manage the core device connectivity information. Greengrass V2 customers can now depend solely on Greengrass V2 SDK for all the API operations needed to manage their fleets.
