@@ -1,17 +1,17 @@
 <?php
-namespace Aws\ConfigurationMode;
+namespace Aws\DefaultsMode;
 
 use Aws\AbstractConfigurationProvider;
 use Aws\CacheInterface;
 use Aws\ConfigurationProviderInterface;
-use Aws\ConfigurationMode\Exception\ConfigurationException;
+use Aws\DefaultsMode\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 
 /**
  * A configuration provider is a function that returns a promise that is
- * fulfilled with a {@see \Aws\ConfigurationMode\ConfigurationInterface}
- * or rejected with an {@see \Aws\ConfigurationMode\Exception\ConfigurationException}.
+ * fulfilled with a {@see \Aws\DefaultsMode\ConfigurationInterface}
+ * or rejected with an {@see \Aws\DefaultsMode\Exception\ConfigurationException}.
  *
  * <code>
  * use Aws\Sts\RegionalEndpoints\ConfigurationProvider;
@@ -23,7 +23,7 @@ use GuzzleHttp\Promise\PromiseInterface;
  * Configuration providers can be composed to create configuration using
  * conditional logic that can create different configurations in different
  * environments. You can compose multiple providers into a single provider using
- * {@see \Aws\ConfigurationMode\ConfigurationProvider::chain}. This function
+ * {@see \Aws\DefaultsMode\ConfigurationProvider::chain}. This function
  * accepts providers as variadic arguments and returns a new function that will
  * invoke each provider until a successful configuration is returned.
  *
@@ -160,7 +160,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
                 return self::reject("'$profile' not found in config file");
             }
             if (!isset($data[$profile][self::INI_MODE])) {
-                return self::reject("Required configurationMode config values
+                return self::reject("Required defaults mode config values
                     not present in INI profile '{$profile}' ({$filename})");
             }
             return Promise\Create::promiseFor(
@@ -195,7 +195,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
             return new Configuration($config);
         }
 
-        throw new \InvalidArgumentException('Not a valid configurationMode configuration'
+        throw new \InvalidArgumentException('Not a valid defaults mode configuration'
             . ' argument.');
     }
 }

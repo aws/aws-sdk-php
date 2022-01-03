@@ -1,12 +1,12 @@
 <?php
 
-namespace Aws\Test\ConfigurationMode;
+namespace Aws\Test\DefaultsMode;
 
-use Aws\ConfigurationMode\Configuration;
+use Aws\DefaultsMode\Configuration;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Aws\ConfigurationMode\Configuration
+ * @covers \Aws\DefaultsMode\Configuration
  */
 class ConfigurationTest extends TestCase
 {

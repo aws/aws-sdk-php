@@ -1,16 +1,16 @@
 <?php
-namespace Aws\Test\ConfigurationMode;
+namespace Aws\Test\DefaultsMode;
 
 use Aws\LruArrayCache;
-use Aws\ConfigurationMode\Configuration;
-use Aws\ConfigurationMode\ConfigurationInterface;
-use Aws\ConfigurationMode\ConfigurationProvider;
-use Aws\ConfigurationMode\Exception\ConfigurationException;
+use Aws\DefaultsMode\Configuration;
+use Aws\DefaultsMode\ConfigurationInterface;
+use Aws\DefaultsMode\ConfigurationProvider;
+use Aws\DefaultsMode\Exception\ConfigurationException;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Aws\ConfigurationMode\ConfigurationProvider
+ * @covers \Aws\DefaultsMode\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {
@@ -168,7 +168,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\ConfigurationMode\Exception\ConfigurationException
+     * @expectedException \Aws\DefaultsMode\Exception\ConfigurationException
      */
     public function testEnsuresIniFileExists()
     {
@@ -178,7 +178,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\ConfigurationMode\Exception\ConfigurationException
+     * @expectedException \Aws\DefaultsMode\Exception\ConfigurationException
      */
     public function testEnsuresProfileIsNotEmpty()
     {
@@ -196,7 +196,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\ConfigurationMode\Exception\ConfigurationException
+     * @expectedException \Aws\DefaultsMode\Exception\ConfigurationException
      * @expectedExceptionMessage 'foo' not found in
      */
     public function testEnsuresFileIsNotEmpty()
@@ -214,7 +214,7 @@ EOT;
     }
 
     /**
-     * @expectedException \Aws\ConfigurationMode\Exception\ConfigurationException
+     * @expectedException \Aws\DefaultsMode\Exception\ConfigurationException
      * @expectedExceptionMessage Invalid config file:
      */
     public function testEnsuresIniFileIsValid()

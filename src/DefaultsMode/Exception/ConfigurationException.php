@@ -1,5 +1,5 @@
 <?php
-namespace Aws\ConfigurationMode\Exception;
+namespace Aws\DefaultsMode\Exception;
 
 use Aws\HasMonitoringEventsTrait;
 use Aws\MonitoringEventsInterface;

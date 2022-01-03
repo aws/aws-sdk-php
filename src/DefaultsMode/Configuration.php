@@ -1,7 +1,7 @@
 <?php
-namespace Aws\ConfigurationMode;
+namespace Aws\DefaultsMode;
 
-use Aws\ConfigurationMode\Exception\ConfigurationException;
+use Aws\DefaultsMode\Exception\ConfigurationException;
 
 class Configuration implements ConfigurationInterface
 {
@@ -41,7 +41,6 @@ class Configuration implements ConfigurationInterface
         $this->stsRegionalEndpoints = $data['base']['stsRegionalEndpoints'];
         $this->s3UsEast1RegionalEndpoints = $data['base']['s3UsEast1RegionalEndpoints'];
         $this->connectTimeoutInMillis = $data['base']['connectTimeoutInMillis'];
-        $this->tlsNegotiationTimeoutInMillis = $data['base']['tlsNegotiationTimeoutInMillis'];
 
         if (isset($data['modes'][$mode])) {
             $modeData = $data['modes'][$mode];

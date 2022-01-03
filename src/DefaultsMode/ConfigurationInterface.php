@@ -1,8 +1,8 @@
 <?php
-namespace Aws\ConfigurationMode;
+namespace Aws\DefaultsMode;
 
 /**
- * Provides access to configurationMode configuration
+ * Provides access to defaultsMode configuration
  */
 interface ConfigurationInterface
 {

@@ -21,8 +21,8 @@ use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
-use Aws\ConfigurationMode\ConfigurationInterface as ConfigModeInterface;
-use Aws\ConfigurationMode\ConfigurationProvider as ConfigModeProvider;
+use Aws\DefaultsMode\ConfigurationInterface as ConfigModeInterface;
+use Aws\DefaultsMode\ConfigurationProvider as ConfigModeProvider;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -110,7 +110,7 @@ class ClientResolver
         'configuration_mode' => [
             'type'    => 'value',
             'valid'   => [ConfigModeInterface::class, CacheInterface::class, 'string', 'closure'],
-            'doc'     => "Sets the default configuration mode. Otherwise provide an instance of Aws\ConfigurationMode\ConfigurationInterface, an instance of  Aws\CacheInterface, or a string containing a valid mode",
+            'doc'     => "Sets the default configuration mode. Otherwise provide an instance of Aws\DefaultsMode\ConfigurationInterface, an instance of  Aws\CacheInterface, or a string containing a valid mode",
             'fn'      => [__CLASS__, '_apply_defaults'],
             'default' => [ConfigModeProvider::class, 'defaultProvider']
         ],
