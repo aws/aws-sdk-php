@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.208.9 - 2022-01-04
 
 * `Aws\Rekognition` - This release introduces a new field IndexFacesModelVersion, which is the version of the face detect and storage model that was used when indexing the face vector.
 * `Aws\S3` - Minor doc-based updates based on feedback bugs received.
