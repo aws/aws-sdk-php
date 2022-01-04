@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Rekognition` - This release introduces a new field IndexFacesModelVersion, which is the version of the face detect and storage model that was used when indexing the face vector.
+* `Aws\S3` - Minor doc-based updates based on feedback bugs received.
+* `Aws\S3Control` - Documentation updates for the renaming of Glacier to Glacier Flexible Retrieval.
+
 ## 3.208.8 - 2022-01-03
 
 * `Aws\Detective` - Added and updated API operations to support the Detective integration with AWS Organizations. New actions are used to manage the delegated administrator account and the integration configuration.
