@@ -962,6 +962,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyVpcEndpointConnectionNotificationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyVpcEndpointServiceConfiguration(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyVpcEndpointServiceConfigurationAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyVpcEndpointServicePayerResponsibility(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyVpcEndpointServicePayerResponsibilityAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyVpcEndpointServicePermissions(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyVpcEndpointServicePermissionsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyVpcTenancy(array $args = []) (supported in versions 2016-11-15)

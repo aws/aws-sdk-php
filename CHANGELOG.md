@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Includes APIs for App Entitlement management regarding entitlement and entitled application association.
+* `Aws\CloudTrail` - This release adds support for CloudTrail Lake, a new feature that lets you run SQL-based queries on events that you have aggregated into event data stores. New APIs have been added for creating and managing event data stores, and creating, running, and managing queries in CloudTrail Lake.
+* `Aws\EC2` - This release adds a new API called ModifyVpcEndpointServicePayerResponsibility which allows VPC endpoint service owners to take payer responsibility of their VPC Endpoint connections.
+* `Aws\ECS` - Documentation update for ticket fixes.
+* `Aws\EKS` - Amazon EKS now supports running applications using IPv6 address space
+* `Aws\Glue` - Add Delta Lake target support for Glue Crawler and 3rd Party Support for Lake Formation
+* `Aws\IoT` - This release adds an automatic retry mechanism for AWS IoT Jobs. You can now define a maximum number of retries for each Job rollout, along with the criteria to trigger the retry for FAILED/TIMED_OUT/ALL(both FAILED an TIMED_OUT) job.
+* `Aws\LakeFormation` - Add new APIs for 3rd Party Support for Lake Formation
+* `Aws\QuickSight` - Multiple Doc-only updates for Amazon QuickSight.
+* `Aws\SageMaker` - Amazon SageMaker now supports running training jobs on ml.g5 instance types.
+* `Aws\Snowball` - Updating validation rules for interfaces used in the Snowball API to tighten security of service.
+
 ## 3.208.9 - 2022-01-04
 
 * `Aws\Rekognition` - This release introduces a new field IndexFacesModelVersion, which is the version of the face detect and storage model that was used when indexing the face vector.
