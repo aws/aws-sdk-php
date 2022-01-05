@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.208.10 - 2022-01-05
 
 * `Aws\AppStream` - Includes APIs for App Entitlement management regarding entitlement and entitled application association.
 * `Aws\CloudTrail` - This release adds support for CloudTrail Lake, a new feature that lets you run SQL-based queries on events that you have aggregated into event data stores. New APIs have been added for creating and managing event data stores, and creating, running, and managing queries in CloudTrail Lake.
