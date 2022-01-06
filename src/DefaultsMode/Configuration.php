@@ -22,9 +22,6 @@ class Configuration implements ConfigurationInterface
 
     public function __construct($mode = 'legacy')
     {
-        $data = \Aws\load_compiled_json(
-            __DIR__ . '/../data/sdk-default-configuration.json'
-        );
         $mode = strtolower($mode);
         if (!in_array($mode, $this->validModes)) {
             throw new \InvalidArgumentException("'{$mode}' is not a valid mode."
@@ -36,6 +33,10 @@ class Configuration implements ConfigurationInterface
         if ($this->mode == 'legacy') {
             return;
         }
+
+        $data = \Aws\load_compiled_json(
+            __DIR__ . '/../data/sdk-default-configuration.json'
+        );
 
         $this->retryMode = $data['base']['retryMode'];
         $this->stsRegionalEndpoints = $data['base']['stsRegionalEndpoints'];
