@@ -80,6 +80,16 @@ class ClientResolverTest extends TestCase
         $c->execute($command);
     }
 
+    public function testAppliesLegacyDefaults()
+    {
+        $c = new DynamoDbClient([
+            'region'   => 'us-east-1',
+            'version'  => 'latest',
+        ]);
+        self::assertFalse(isset($c->getConfig()['retries']));
+        self::assertFalse(isset($c->getConfig()['sts_regional_endpoints']));
+    }
+
     public function testAppliesApiProvider()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
