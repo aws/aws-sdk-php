@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.0 - 2022-01-06
 
 * `Aws\` - This commit adds defaults config: an opt-in feature which allows users to specify default configuration options to be loaded from a shared file
 * `Aws\AppSync` - AppSync: AWS AppSync now supports configurable batching sizes for AWS Lambda resolvers, Direct AWS Lambda resolvers and pipeline functions
