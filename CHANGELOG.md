@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.1 - 2022-01-07
 
 * `Aws\MediaLive` - This release adds support for selecting the Program Date Time (PDT) Clock source algorithm for HLS outputs.
 
