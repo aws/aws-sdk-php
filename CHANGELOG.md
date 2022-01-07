@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaLive` - This release adds support for selecting the Program Date Time (PDT) Clock source algorithm for HLS outputs.
+
 ## 3.209.0 - 2022-01-06
 
 * `Aws\` - This commit adds defaults config: an opt-in feature which allows users to specify default configuration options to be loaded from a shared file
