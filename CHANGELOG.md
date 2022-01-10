@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.2 - 2022-01-10
 
 * `Aws\ComputeOptimizer` - Adds support for new Compute Optimizer capability that makes it easier for customers to optimize their EC2 instances by leveraging multiple CPU architectures.
 * `Aws\EC2` - New feature: Updated EC2 API to support faster launching for Windows images. Optimized images are pre-provisioned, using snapshots to launch instances up to 65% faster.
