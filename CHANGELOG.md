@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.4 - 2022-01-12
 
 * `Aws\EC2` - Hpc6a instances are powered by a third-generation AMD EPYC processors (Milan) delivering all-core turbo frequency of 3.4 GHz
 * `Aws\ElastiCache` - Doc only update for ElastiCache
