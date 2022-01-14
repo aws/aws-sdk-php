@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.6 - 2022-01-14
 
 * `Aws\ApplicationInsights` - Application Insights support for Active Directory and SharePoint
 * `Aws\ConfigService` - Update ResourceType enum with values for CodeDeploy, EC2 and Kinesis resources
