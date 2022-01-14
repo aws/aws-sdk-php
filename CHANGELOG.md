@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationInsights` - Application Insights support for Active Directory and SharePoint
+* `Aws\ConfigService` - Update ResourceType enum with values for CodeDeploy, EC2 and Kinesis resources
+* `Aws\Honeycode` - Added read and write api support for multi-select picklist. And added errorcode field to DescribeTableDataImportJob API output, when import job fails.
+* `Aws\LookoutMetrics` - This release adds a new DeactivateAnomalyDetector API operation.
+* `Aws\RAM` - This release adds the ListPermissionVersions API which lists the versions for a given permission.
+
 ## 3.209.5 - 2022-01-13
 
 * `Aws\ElastiCache` - AWS ElastiCache for Redis has added a new Engine Log LogType in LogDelivery feature. You can now publish the Engine Log from your Amazon ElastiCache for Redis clusters to Amazon CloudWatch Logs and Amazon Kinesis Data Firehose.
