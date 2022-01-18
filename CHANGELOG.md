@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.7 - 2022-01-18
 
 * `Aws\CloudTrail` - This release fixes a documentation bug in the description for the readOnly field selector in advanced event selectors. The description now clarifies that users omit the readOnly field selector to select both Read and Write management events.
 * `Aws\EC2` - Add support for AWS Client VPN client login banner and session timeout.
