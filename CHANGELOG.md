@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.9 - 2022-01-20
 
 * `Aws\` - Add missing PHPDoc annotations for ArrayAccess and Countable implementations.
 * `Aws\Connect` - This release adds tagging support for UserHierarchyGroups resource.
