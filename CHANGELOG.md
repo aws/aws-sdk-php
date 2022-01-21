@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for 4K AV1 output resolutions & 10-bit AV1 color, the ability to ingest sidecar Dolby Vision XML metadata files, and the ability to flag WebVTT and IMSC tracks for accessibility in HLS.
+* `Aws\TranscribeService` - Add support for granular PIIEntityTypes when using Batch ContentRedaction.
+
 ## 3.209.9 - 2022-01-20
 
 * `Aws\` - Add missing PHPDoc annotations for ArrayAccess and Countable implementations.
