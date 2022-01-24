@@ -158,6 +158,24 @@
       ],
       "endpoint":{"hostPrefix":"routes."}
     },
+    "CalculateRouteMatrix":{
+      "name":"CalculateRouteMatrix",
+      "http":{
+        "method":"POST",
+        "requestUri":"/routes/v0/calculators/{CalculatorName}/calculate/route-matrix",
+        "responseCode":200
+      },
+      "input":{"shape":"CalculateRouteMatrixRequest"},
+      "output":{"shape":"CalculateRouteMatrixResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"routes."}
+    },
     "CreateGeofenceCollection":{
       "name":"CreateGeofenceCollection",
       "http":{
@@ -775,6 +793,24 @@
       ],
       "endpoint":{"hostPrefix":"places."}
     },
+    "SearchPlaceIndexForSuggestions":{
+      "name":"SearchPlaceIndexForSuggestions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/places/v0/indexes/{IndexName}/search/suggestions",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchPlaceIndexForSuggestionsRequest"},
+      "output":{"shape":"SearchPlaceIndexForSuggestionsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"places."}
+    },
     "SearchPlaceIndexForText":{
       "name":"SearchPlaceIndexForText",
       "http":{
@@ -1312,6 +1348,93 @@
         "AvoidTolls":{"shape":"Boolean"}
       }
     },
+    "CalculateRouteMatrixRequest":{
+      "type":"structure",
+      "required":[
+        "CalculatorName",
+        "DeparturePositions",
+        "DestinationPositions"
+      ],
+      "members":{
+        "CalculatorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"CalculatorName"
+        },
+        "CarModeOptions":{"shape":"CalculateRouteCarModeOptions"},
+        "DepartNow":{"shape":"Boolean"},
+        "DeparturePositions":{"shape":"CalculateRouteMatrixRequestDeparturePositionsList"},
+        "DepartureTime":{"shape":"Timestamp"},
+        "DestinationPositions":{"shape":"CalculateRouteMatrixRequestDestinationPositionsList"},
+        "DistanceUnit":{"shape":"DistanceUnit"},
+        "TravelMode":{"shape":"TravelMode"},
+        "TruckModeOptions":{"shape":"CalculateRouteTruckModeOptions"}
+      }
+    },
+    "CalculateRouteMatrixRequestDeparturePositionsList":{
+      "type":"list",
+      "member":{"shape":"Position"},
+      "max":350,
+      "min":1
+    },
+    "CalculateRouteMatrixRequestDestinationPositionsList":{
+      "type":"list",
+      "member":{"shape":"Position"},
+      "max":350,
+      "min":1
+    },
+    "CalculateRouteMatrixResponse":{
+      "type":"structure",
+      "required":[
+        "RouteMatrix",
+        "Summary"
+      ],
+      "members":{
+        "RouteMatrix":{"shape":"RouteMatrix"},
+        "SnappedDeparturePositions":{"shape":"CalculateRouteMatrixResponseSnappedDeparturePositionsList"},
+        "SnappedDestinationPositions":{"shape":"CalculateRouteMatrixResponseSnappedDestinationPositionsList"},
+        "Summary":{"shape":"CalculateRouteMatrixSummary"}
+      }
+    },
+    "CalculateRouteMatrixResponseSnappedDeparturePositionsList":{
+      "type":"list",
+      "member":{"shape":"Position"},
+      "max":350,
+      "min":1
+    },
+    "CalculateRouteMatrixResponseSnappedDestinationPositionsList":{
+      "type":"list",
+      "member":{"shape":"Position"},
+      "max":350,
+      "min":1
+    },
+    "CalculateRouteMatrixSummary":{
+      "type":"structure",
+      "required":[
+        "DataSource",
+        "DistanceUnit",
+        "ErrorCount",
+        "RouteCount"
+      ],
+      "members":{
+        "DataSource":{"shape":"String"},
+        "DistanceUnit":{"shape":"DistanceUnit"},
+        "ErrorCount":{"shape":"CalculateRouteMatrixSummaryErrorCountInteger"},
+        "RouteCount":{"shape":"CalculateRouteMatrixSummaryRouteCountInteger"}
+      }
+    },
+    "CalculateRouteMatrixSummaryErrorCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":160000,
+      "min":1
+    },
+    "CalculateRouteMatrixSummaryRouteCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":160000,
+      "min":1
+    },
     "CalculateRouteRequest":{
       "type":"structure",
       "required":[
@@ -1417,16 +1540,21 @@
     },
     "CreateGeofenceCollectionRequest":{
       "type":"structure",
-      "required":[
-        "CollectionName",
-        "PricingPlan"
-      ],
+      "required":["CollectionName"],
       "members":{
         "CollectionName":{"shape":"ResourceName"},
         "Description":{"shape":"ResourceDescription"},
         "KmsKeyId":{"shape":"KmsKeyId"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. No longer allowed."
+        },
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -1447,14 +1575,17 @@
       "type":"structure",
       "required":[
         "Configuration",
-        "MapName",
-        "PricingPlan"
+        "MapName"
       ],
       "members":{
         "Configuration":{"shape":"MapConfiguration"},
         "Description":{"shape":"ResourceDescription"},
         "MapName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -1475,15 +1606,18 @@
       "type":"structure",
       "required":[
         "DataSource",
-        "IndexName",
-        "PricingPlan"
+        "IndexName"
       ],
       "members":{
         "DataSource":{"shape":"String"},
         "DataSourceConfiguration":{"shape":"DataSourceConfiguration"},
         "Description":{"shape":"ResourceDescription"},
         "IndexName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -1504,14 +1638,17 @@
       "type":"structure",
       "required":[
         "CalculatorName",
-        "DataSource",
-        "PricingPlan"
+        "DataSource"
       ],
       "members":{
         "CalculatorName":{"shape":"ResourceName"},
         "DataSource":{"shape":"String"},
         "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
         "Tags":{"shape":"TagMap"}
       }
     },
@@ -1530,16 +1667,21 @@
     },
     "CreateTrackerRequest":{
       "type":"structure",
-      "required":[
-        "PricingPlan",
-        "TrackerName"
-      ],
+      "required":["TrackerName"],
       "members":{
         "Description":{"shape":"ResourceDescription"},
         "KmsKeyId":{"shape":"KmsKeyId"},
         "PositionFiltering":{"shape":"PositionFiltering"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. No longer allowed."
+        },
         "Tags":{"shape":"TagMap"},
         "TrackerName":{"shape":"ResourceName"}
       }
@@ -1661,7 +1803,6 @@
         "CollectionName",
         "CreateTime",
         "Description",
-        "PricingPlan",
         "UpdateTime"
       ],
       "members":{
@@ -1670,8 +1811,16 @@
         "CreateTime":{"shape":"Timestamp"},
         "Description":{"shape":"ResourceDescription"},
         "KmsKeyId":{"shape":"KmsKeyId"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Unused."
+        },
         "Tags":{"shape":"TagMap"},
         "UpdateTime":{"shape":"Timestamp"}
       }
@@ -1696,7 +1845,6 @@
         "Description",
         "MapArn",
         "MapName",
-        "PricingPlan",
         "UpdateTime"
       ],
       "members":{
@@ -1706,7 +1854,11 @@
         "Description":{"shape":"ResourceDescription"},
         "MapArn":{"shape":"Arn"},
         "MapName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
         "Tags":{"shape":"TagMap"},
         "UpdateTime":{"shape":"Timestamp"}
       }
@@ -1731,7 +1883,6 @@
         "Description",
         "IndexArn",
         "IndexName",
-        "PricingPlan",
         "UpdateTime"
       ],
       "members":{
@@ -1741,7 +1892,11 @@
         "Description":{"shape":"ResourceDescription"},
         "IndexArn":{"shape":"Arn"},
         "IndexName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
         "Tags":{"shape":"TagMap"},
         "UpdateTime":{"shape":"Timestamp"}
       }
@@ -1765,7 +1920,6 @@
         "CreateTime",
         "DataSource",
         "Description",
-        "PricingPlan",
         "UpdateTime"
       ],
       "members":{
@@ -1774,7 +1928,11 @@
         "CreateTime":{"shape":"Timestamp"},
         "DataSource":{"shape":"String"},
         "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
         "Tags":{"shape":"TagMap"},
         "UpdateTime":{"shape":"Timestamp"}
       }
@@ -1795,7 +1953,6 @@
       "required":[
         "CreateTime",
         "Description",
-        "PricingPlan",
         "TrackerArn",
         "TrackerName",
         "UpdateTime"
@@ -1805,8 +1962,16 @@
         "Description":{"shape":"ResourceDescription"},
         "KmsKeyId":{"shape":"KmsKeyId"},
         "PositionFiltering":{"shape":"PositionFiltering"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Unused."
+        },
         "Tags":{"shape":"TagMap"},
         "TrackerArn":{"shape":"Arn"},
         "TrackerName":{"shape":"ResourceName"},
@@ -1821,8 +1986,10 @@
         "SampleTime"
       ],
       "members":{
+        "Accuracy":{"shape":"PositionalAccuracy"},
         "DeviceId":{"shape":"Id"},
         "Position":{"shape":"Position"},
+        "PositionProperties":{"shape":"PropertyMap"},
         "ReceivedTime":{"shape":"Timestamp"},
         "SampleTime":{"shape":"Timestamp"}
       }
@@ -1839,8 +2006,10 @@
         "SampleTime"
       ],
       "members":{
+        "Accuracy":{"shape":"PositionalAccuracy"},
         "DeviceId":{"shape":"Id"},
         "Position":{"shape":"Position"},
+        "PositionProperties":{"shape":"PropertyMap"},
         "SampleTime":{"shape":"Timestamp"}
       }
     },
@@ -1949,8 +2118,10 @@
         "SampleTime"
       ],
       "members":{
+        "Accuracy":{"shape":"PositionalAccuracy"},
         "DeviceId":{"shape":"Id"},
         "Position":{"shape":"Position"},
+        "PositionProperties":{"shape":"PropertyMap"},
         "ReceivedTime":{"shape":"Timestamp"},
         "SampleTime":{"shape":"Timestamp"}
       }
@@ -2274,8 +2445,10 @@
         "SampleTime"
       ],
       "members":{
+        "Accuracy":{"shape":"PositionalAccuracy"},
         "DeviceId":{"shape":"Id"},
         "Position":{"shape":"Position"},
+        "PositionProperties":{"shape":"PropertyMap"},
         "SampleTime":{"shape":"Timestamp"}
       }
     },
@@ -2310,15 +2483,22 @@
         "CollectionName",
         "CreateTime",
         "Description",
-        "PricingPlan",
         "UpdateTime"
       ],
       "members":{
         "CollectionName":{"shape":"ResourceName"},
         "CreateTime":{"shape":"Timestamp"},
         "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Unused."
+        },
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -2395,7 +2575,6 @@
         "DataSource",
         "Description",
         "MapName",
-        "PricingPlan",
         "UpdateTime"
       ],
       "members":{
@@ -2403,7 +2582,11 @@
         "DataSource":{"shape":"String"},
         "Description":{"shape":"ResourceDescription"},
         "MapName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -2439,7 +2622,6 @@
         "DataSource",
         "Description",
         "IndexName",
-        "PricingPlan",
         "UpdateTime"
       ],
       "members":{
@@ -2447,7 +2629,11 @@
         "DataSource":{"shape":"String"},
         "Description":{"shape":"ResourceDescription"},
         "IndexName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -2483,7 +2669,6 @@
         "CreateTime",
         "DataSource",
         "Description",
-        "PricingPlan",
         "UpdateTime"
       ],
       "members":{
@@ -2491,7 +2676,11 @@
         "CreateTime":{"shape":"Timestamp"},
         "DataSource":{"shape":"String"},
         "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -2569,15 +2758,22 @@
       "required":[
         "CreateTime",
         "Description",
-        "PricingPlan",
         "TrackerName",
         "UpdateTime"
       ],
       "members":{
         "CreateTime":{"shape":"Timestamp"},
         "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Unused."
+        },
         "TrackerName":{"shape":"ResourceName"},
         "UpdateTime":{"shape":"Timestamp"}
       }
@@ -2643,6 +2839,19 @@
         "AccuracyBased"
       ]
     },
+    "PositionalAccuracy":{
+      "type":"structure",
+      "required":["Horizontal"],
+      "members":{
+        "Horizontal":{"shape":"PositionalAccuracyHorizontalDouble"}
+      }
+    },
+    "PositionalAccuracyHorizontalDouble":{
+      "type":"double",
+      "box":true,
+      "max":10000,
+      "min":0
+    },
     "PricingPlan":{
       "type":"string",
       "enum":[
@@ -2650,6 +2859,24 @@
         "MobileAssetTracking",
         "MobileAssetManagement"
       ]
+    },
+    "PropertyMap":{
+      "type":"map",
+      "key":{"shape":"PropertyMapKeyString"},
+      "value":{"shape":"PropertyMapValueString"},
+      "max":3,
+      "min":0,
+      "sensitive":true
+    },
+    "PropertyMapKeyString":{
+      "type":"string",
+      "max":20,
+      "min":1
+    },
+    "PropertyMapValueString":{
+      "type":"string",
+      "max":40,
+      "min":1
     },
     "PutGeofenceRequest":{
       "type":"structure",
@@ -2711,6 +2938,51 @@
       },
       "exception":true
     },
+    "RouteMatrix":{
+      "type":"list",
+      "member":{"shape":"RouteMatrixRow"}
+    },
+    "RouteMatrixEntry":{
+      "type":"structure",
+      "members":{
+        "Distance":{"shape":"RouteMatrixEntryDistanceDouble"},
+        "DurationSeconds":{"shape":"RouteMatrixEntryDurationSecondsDouble"},
+        "Error":{"shape":"RouteMatrixEntryError"}
+      }
+    },
+    "RouteMatrixEntryDistanceDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "RouteMatrixEntryDurationSecondsDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "RouteMatrixEntryError":{
+      "type":"structure",
+      "required":["Code"],
+      "members":{
+        "Code":{"shape":"RouteMatrixErrorCode"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "RouteMatrixErrorCode":{
+      "type":"string",
+      "enum":[
+        "RouteNotFound",
+        "RouteTooLong",
+        "PositionsNotFound",
+        "DestinationPositionNotFound",
+        "DeparturePositionNotFound",
+        "OtherValidationError"
+      ]
+    },
+    "RouteMatrixRow":{
+      "type":"list",
+      "member":{"shape":"RouteMatrixEntry"}
+    },
     "SearchForPositionResult":{
       "type":"structure",
       "required":[
@@ -2730,6 +3002,17 @@
     "SearchForPositionResultList":{
       "type":"list",
       "member":{"shape":"SearchForPositionResult"}
+    },
+    "SearchForSuggestionsResult":{
+      "type":"structure",
+      "required":["Text"],
+      "members":{
+        "Text":{"shape":"String"}
+      }
+    },
+    "SearchForSuggestionsResultList":{
+      "type":"list",
+      "member":{"shape":"SearchForSuggestionsResult"}
     },
     "SearchForTextResult":{
       "type":"structure",
@@ -2794,6 +3077,59 @@
         "Language":{"shape":"LanguageTag"},
         "MaxResults":{"shape":"PlaceIndexSearchResultLimit"},
         "Position":{"shape":"Position"}
+      }
+    },
+    "SearchPlaceIndexForSuggestionsRequest":{
+      "type":"structure",
+      "required":[
+        "IndexName",
+        "Text"
+      ],
+      "members":{
+        "BiasPosition":{"shape":"Position"},
+        "FilterBBox":{"shape":"BoundingBox"},
+        "FilterCountries":{"shape":"CountryCodeList"},
+        "IndexName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"IndexName"
+        },
+        "Language":{"shape":"LanguageTag"},
+        "MaxResults":{"shape":"SearchPlaceIndexForSuggestionsRequestMaxResultsInteger"},
+        "Text":{"shape":"SyntheticSearchPlaceIndexForSuggestionsRequestString"}
+      }
+    },
+    "SearchPlaceIndexForSuggestionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":15,
+      "min":1
+    },
+    "SearchPlaceIndexForSuggestionsResponse":{
+      "type":"structure",
+      "required":[
+        "Results",
+        "Summary"
+      ],
+      "members":{
+        "Results":{"shape":"SearchForSuggestionsResultList"},
+        "Summary":{"shape":"SearchPlaceIndexForSuggestionsSummary"}
+      }
+    },
+    "SearchPlaceIndexForSuggestionsSummary":{
+      "type":"structure",
+      "required":[
+        "DataSource",
+        "Text"
+      ],
+      "members":{
+        "BiasPosition":{"shape":"Position"},
+        "DataSource":{"shape":"String"},
+        "FilterBBox":{"shape":"BoundingBox"},
+        "FilterCountries":{"shape":"CountryCodeList"},
+        "Language":{"shape":"LanguageTag"},
+        "MaxResults":{"shape":"Integer"},
+        "Text":{"shape":"SyntheticSearchPlaceIndexForSuggestionsSummaryString"}
       }
     },
     "SearchPlaceIndexForTextRequest":{
@@ -2895,6 +3231,16 @@
       "member":{"shape":"Step"}
     },
     "String":{"type":"string"},
+    "SyntheticSearchPlaceIndexForSuggestionsRequestString":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "sensitive":true
+    },
+    "SyntheticSearchPlaceIndexForSuggestionsSummaryString":{
+      "type":"string",
+      "sensitive":true
+    },
     "SyntheticSearchPlaceIndexForTextRequestString":{
       "type":"string",
       "max":200,
@@ -3061,8 +3407,16 @@
           "locationName":"CollectionName"
         },
         "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"}
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. No longer allowed."
+        }
       }
     },
     "UpdateGeofenceCollectionResponse":{
@@ -3088,7 +3442,11 @@
           "location":"uri",
           "locationName":"MapName"
         },
-        "PricingPlan":{"shape":"PricingPlan"}
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        }
       }
     },
     "UpdateMapResponse":{
@@ -3115,7 +3473,11 @@
           "location":"uri",
           "locationName":"IndexName"
         },
-        "PricingPlan":{"shape":"PricingPlan"}
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        }
       }
     },
     "UpdatePlaceIndexResponse":{
@@ -3141,7 +3503,11 @@
           "locationName":"CalculatorName"
         },
         "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"}
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        }
       }
     },
     "UpdateRouteCalculatorResponse":{
@@ -3163,8 +3529,16 @@
       "members":{
         "Description":{"shape":"ResourceDescription"},
         "PositionFiltering":{"shape":"PositionFiltering"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. No longer allowed."
+        },
         "TrackerName":{
           "shape":"ResourceName",
           "location":"uri",

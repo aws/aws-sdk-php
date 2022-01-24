@@ -93,6 +93,15 @@
       "input":{"shape":"AllocateHostsRequest"},
       "output":{"shape":"AllocateHostsResult"}
     },
+    "AllocateIpamPoolCidr":{
+      "name":"AllocateIpamPoolCidr",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AllocateIpamPoolCidrRequest"},
+      "output":{"shape":"AllocateIpamPoolCidrResult"}
+    },
     "ApplySecurityGroupsToClientVpnTargetNetwork":{
       "name":"ApplySecurityGroupsToClientVpnTargetNetwork",
       "http":{
@@ -575,6 +584,33 @@
       "input":{"shape":"CreateInternetGatewayRequest"},
       "output":{"shape":"CreateInternetGatewayResult"}
     },
+    "CreateIpam":{
+      "name":"CreateIpam",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIpamRequest"},
+      "output":{"shape":"CreateIpamResult"}
+    },
+    "CreateIpamPool":{
+      "name":"CreateIpamPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIpamPoolRequest"},
+      "output":{"shape":"CreateIpamPoolResult"}
+    },
+    "CreateIpamScope":{
+      "name":"CreateIpamScope",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateIpamScopeRequest"},
+      "output":{"shape":"CreateIpamScopeResult"}
+    },
     "CreateKeyPair":{
       "name":"CreateKeyPair",
       "http":{
@@ -655,6 +691,15 @@
       },
       "input":{"shape":"CreateNetworkAclEntryRequest"}
     },
+    "CreateNetworkInsightsAccessScope":{
+      "name":"CreateNetworkInsightsAccessScope",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateNetworkInsightsAccessScopeRequest"},
+      "output":{"shape":"CreateNetworkInsightsAccessScopeResult"}
+    },
     "CreateNetworkInsightsPath":{
       "name":"CreateNetworkInsightsPath",
       "http":{
@@ -690,6 +735,15 @@
       },
       "input":{"shape":"CreatePlacementGroupRequest"},
       "output":{"shape":"CreatePlacementGroupResult"}
+    },
+    "CreatePublicIpv4Pool":{
+      "name":"CreatePublicIpv4Pool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreatePublicIpv4PoolRequest"},
+      "output":{"shape":"CreatePublicIpv4PoolResult"}
     },
     "CreateReplaceRootVolumeTask":{
       "name":"CreateReplaceRootVolumeTask",
@@ -1100,6 +1154,33 @@
       },
       "input":{"shape":"DeleteInternetGatewayRequest"}
     },
+    "DeleteIpam":{
+      "name":"DeleteIpam",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIpamRequest"},
+      "output":{"shape":"DeleteIpamResult"}
+    },
+    "DeleteIpamPool":{
+      "name":"DeleteIpamPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIpamPoolRequest"},
+      "output":{"shape":"DeleteIpamPoolResult"}
+    },
+    "DeleteIpamScope":{
+      "name":"DeleteIpamScope",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteIpamScopeRequest"},
+      "output":{"shape":"DeleteIpamScopeResult"}
+    },
     "DeleteKeyPair":{
       "name":"DeleteKeyPair",
       "http":{
@@ -1178,6 +1259,24 @@
       },
       "input":{"shape":"DeleteNetworkAclEntryRequest"}
     },
+    "DeleteNetworkInsightsAccessScope":{
+      "name":"DeleteNetworkInsightsAccessScope",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteNetworkInsightsAccessScopeRequest"},
+      "output":{"shape":"DeleteNetworkInsightsAccessScopeResult"}
+    },
+    "DeleteNetworkInsightsAccessScopeAnalysis":{
+      "name":"DeleteNetworkInsightsAccessScopeAnalysis",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteNetworkInsightsAccessScopeAnalysisRequest"},
+      "output":{"shape":"DeleteNetworkInsightsAccessScopeAnalysisResult"}
+    },
     "DeleteNetworkInsightsAnalysis":{
       "name":"DeleteNetworkInsightsAnalysis",
       "http":{
@@ -1220,6 +1319,15 @@
         "requestUri":"/"
       },
       "input":{"shape":"DeletePlacementGroupRequest"}
+    },
+    "DeletePublicIpv4Pool":{
+      "name":"DeletePublicIpv4Pool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeletePublicIpv4PoolRequest"},
+      "output":{"shape":"DeletePublicIpv4PoolResult"}
     },
     "DeleteQueuedReservedInstances":{
       "name":"DeleteQueuedReservedInstances",
@@ -1497,6 +1605,24 @@
       "input":{"shape":"DeprovisionByoipCidrRequest"},
       "output":{"shape":"DeprovisionByoipCidrResult"}
     },
+    "DeprovisionIpamPoolCidr":{
+      "name":"DeprovisionIpamPoolCidr",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeprovisionIpamPoolCidrRequest"},
+      "output":{"shape":"DeprovisionIpamPoolCidrResult"}
+    },
+    "DeprovisionPublicIpv4PoolCidr":{
+      "name":"DeprovisionPublicIpv4PoolCidr",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeprovisionPublicIpv4PoolCidrRequest"},
+      "output":{"shape":"DeprovisionPublicIpv4PoolCidrResult"}
+    },
     "DeregisterImage":{
       "name":"DeregisterImage",
       "http":{
@@ -1748,6 +1874,15 @@
       "input":{"shape":"DescribeExportTasksRequest"},
       "output":{"shape":"DescribeExportTasksResult"}
     },
+    "DescribeFastLaunchImages":{
+      "name":"DescribeFastLaunchImages",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeFastLaunchImagesRequest"},
+      "output":{"shape":"DescribeFastLaunchImagesResult"}
+    },
     "DescribeFastSnapshotRestores":{
       "name":"DescribeFastSnapshotRestores",
       "http":{
@@ -1982,6 +2117,33 @@
       "input":{"shape":"DescribeInternetGatewaysRequest"},
       "output":{"shape":"DescribeInternetGatewaysResult"}
     },
+    "DescribeIpamPools":{
+      "name":"DescribeIpamPools",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIpamPoolsRequest"},
+      "output":{"shape":"DescribeIpamPoolsResult"}
+    },
+    "DescribeIpamScopes":{
+      "name":"DescribeIpamScopes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIpamScopesRequest"},
+      "output":{"shape":"DescribeIpamScopesResult"}
+    },
+    "DescribeIpams":{
+      "name":"DescribeIpams",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeIpamsRequest"},
+      "output":{"shape":"DescribeIpamsResult"}
+    },
     "DescribeIpv6Pools":{
       "name":"DescribeIpv6Pools",
       "http":{
@@ -2107,6 +2269,24 @@
       },
       "input":{"shape":"DescribeNetworkAclsRequest"},
       "output":{"shape":"DescribeNetworkAclsResult"}
+    },
+    "DescribeNetworkInsightsAccessScopeAnalyses":{
+      "name":"DescribeNetworkInsightsAccessScopeAnalyses",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeNetworkInsightsAccessScopeAnalysesRequest"},
+      "output":{"shape":"DescribeNetworkInsightsAccessScopeAnalysesResult"}
+    },
+    "DescribeNetworkInsightsAccessScopes":{
+      "name":"DescribeNetworkInsightsAccessScopes",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeNetworkInsightsAccessScopesRequest"},
+      "output":{"shape":"DescribeNetworkInsightsAccessScopesResult"}
     },
     "DescribeNetworkInsightsAnalyses":{
       "name":"DescribeNetworkInsightsAnalyses",
@@ -2305,6 +2485,15 @@
       },
       "input":{"shape":"DescribeSnapshotAttributeRequest"},
       "output":{"shape":"DescribeSnapshotAttributeResult"}
+    },
+    "DescribeSnapshotTierStatus":{
+      "name":"DescribeSnapshotTierStatus",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeSnapshotTierStatusRequest"},
+      "output":{"shape":"DescribeSnapshotTierStatusResult"}
     },
     "DescribeSnapshots":{
       "name":"DescribeSnapshots",
@@ -2717,6 +2906,15 @@
       "input":{"shape":"DisableEbsEncryptionByDefaultRequest"},
       "output":{"shape":"DisableEbsEncryptionByDefaultResult"}
     },
+    "DisableFastLaunch":{
+      "name":"DisableFastLaunch",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableFastLaunchRequest"},
+      "output":{"shape":"DisableFastLaunchResult"}
+    },
     "DisableFastSnapshotRestores":{
       "name":"DisableFastSnapshotRestores",
       "http":{
@@ -2734,6 +2932,15 @@
       },
       "input":{"shape":"DisableImageDeprecationRequest"},
       "output":{"shape":"DisableImageDeprecationResult"}
+    },
+    "DisableIpamOrganizationAdminAccount":{
+      "name":"DisableIpamOrganizationAdminAccount",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DisableIpamOrganizationAdminAccountRequest"},
+      "output":{"shape":"DisableIpamOrganizationAdminAccountResult"}
     },
     "DisableSerialConsoleAccess":{
       "name":"DisableSerialConsoleAccess",
@@ -2885,6 +3092,15 @@
       "input":{"shape":"EnableEbsEncryptionByDefaultRequest"},
       "output":{"shape":"EnableEbsEncryptionByDefaultResult"}
     },
+    "EnableFastLaunch":{
+      "name":"EnableFastLaunch",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableFastLaunchRequest"},
+      "output":{"shape":"EnableFastLaunchResult"}
+    },
     "EnableFastSnapshotRestores":{
       "name":"EnableFastSnapshotRestores",
       "http":{
@@ -2902,6 +3118,15 @@
       },
       "input":{"shape":"EnableImageDeprecationRequest"},
       "output":{"shape":"EnableImageDeprecationResult"}
+    },
+    "EnableIpamOrganizationAdminAccount":{
+      "name":"EnableIpamOrganizationAdminAccount",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"EnableIpamOrganizationAdminAccountRequest"},
+      "output":{"shape":"EnableIpamOrganizationAdminAccountResult"}
     },
     "EnableSerialConsoleAccess":{
       "name":"EnableSerialConsoleAccess",
@@ -3108,6 +3333,42 @@
       "input":{"shape":"GetInstanceTypesFromInstanceRequirementsRequest"},
       "output":{"shape":"GetInstanceTypesFromInstanceRequirementsResult"}
     },
+    "GetIpamAddressHistory":{
+      "name":"GetIpamAddressHistory",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamAddressHistoryRequest"},
+      "output":{"shape":"GetIpamAddressHistoryResult"}
+    },
+    "GetIpamPoolAllocations":{
+      "name":"GetIpamPoolAllocations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamPoolAllocationsRequest"},
+      "output":{"shape":"GetIpamPoolAllocationsResult"}
+    },
+    "GetIpamPoolCidrs":{
+      "name":"GetIpamPoolCidrs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamPoolCidrsRequest"},
+      "output":{"shape":"GetIpamPoolCidrsResult"}
+    },
+    "GetIpamResourceCidrs":{
+      "name":"GetIpamResourceCidrs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetIpamResourceCidrsRequest"},
+      "output":{"shape":"GetIpamResourceCidrsResult"}
+    },
     "GetLaunchTemplateData":{
       "name":"GetLaunchTemplateData",
       "http":{
@@ -3134,6 +3395,24 @@
       },
       "input":{"shape":"GetManagedPrefixListEntriesRequest"},
       "output":{"shape":"GetManagedPrefixListEntriesResult"}
+    },
+    "GetNetworkInsightsAccessScopeAnalysisFindings":{
+      "name":"GetNetworkInsightsAccessScopeAnalysisFindings",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetNetworkInsightsAccessScopeAnalysisFindingsRequest"},
+      "output":{"shape":"GetNetworkInsightsAccessScopeAnalysisFindingsResult"}
+    },
+    "GetNetworkInsightsAccessScopeContent":{
+      "name":"GetNetworkInsightsAccessScopeContent",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetNetworkInsightsAccessScopeContentRequest"},
+      "output":{"shape":"GetNetworkInsightsAccessScopeContentResult"}
     },
     "GetPasswordData":{
       "name":"GetPasswordData",
@@ -3296,6 +3575,15 @@
       },
       "input":{"shape":"ImportVolumeRequest"},
       "output":{"shape":"ImportVolumeResult"}
+    },
+    "ListSnapshotsInRecycleBin":{
+      "name":"ListSnapshotsInRecycleBin",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListSnapshotsInRecycleBinRequest"},
+      "output":{"shape":"ListSnapshotsInRecycleBinResult"}
     },
     "ModifyAddressAttribute":{
       "name":"ModifyAddressAttribute",
@@ -3473,6 +3761,42 @@
       "input":{"shape":"ModifyInstancePlacementRequest"},
       "output":{"shape":"ModifyInstancePlacementResult"}
     },
+    "ModifyIpam":{
+      "name":"ModifyIpam",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyIpamRequest"},
+      "output":{"shape":"ModifyIpamResult"}
+    },
+    "ModifyIpamPool":{
+      "name":"ModifyIpamPool",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyIpamPoolRequest"},
+      "output":{"shape":"ModifyIpamPoolResult"}
+    },
+    "ModifyIpamResourceCidr":{
+      "name":"ModifyIpamResourceCidr",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyIpamResourceCidrRequest"},
+      "output":{"shape":"ModifyIpamResourceCidrResult"}
+    },
+    "ModifyIpamScope":{
+      "name":"ModifyIpamScope",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyIpamScopeRequest"},
+      "output":{"shape":"ModifyIpamScopeResult"}
+    },
     "ModifyLaunchTemplate":{
       "name":"ModifyLaunchTemplate",
       "http":{
@@ -3499,6 +3823,15 @@
       },
       "input":{"shape":"ModifyNetworkInterfaceAttributeRequest"}
     },
+    "ModifyPrivateDnsNameOptions":{
+      "name":"ModifyPrivateDnsNameOptions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyPrivateDnsNameOptionsRequest"},
+      "output":{"shape":"ModifyPrivateDnsNameOptionsResult"}
+    },
     "ModifyReservedInstances":{
       "name":"ModifyReservedInstances",
       "http":{
@@ -3524,6 +3857,15 @@
         "requestUri":"/"
       },
       "input":{"shape":"ModifySnapshotAttributeRequest"}
+    },
+    "ModifySnapshotTier":{
+      "name":"ModifySnapshotTier",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifySnapshotTierRequest"},
+      "output":{"shape":"ModifySnapshotTierResult"}
     },
     "ModifySpotFleetRequest":{
       "name":"ModifySpotFleetRequest",
@@ -3648,6 +3990,15 @@
       "input":{"shape":"ModifyVpcEndpointServiceConfigurationRequest"},
       "output":{"shape":"ModifyVpcEndpointServiceConfigurationResult"}
     },
+    "ModifyVpcEndpointServicePayerResponsibility":{
+      "name":"ModifyVpcEndpointServicePayerResponsibility",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ModifyVpcEndpointServicePayerResponsibilityRequest"},
+      "output":{"shape":"ModifyVpcEndpointServicePayerResponsibilityResult"}
+    },
     "ModifyVpcEndpointServicePermissions":{
       "name":"ModifyVpcEndpointServicePermissions",
       "http":{
@@ -3729,6 +4080,15 @@
       "input":{"shape":"MoveAddressToVpcRequest"},
       "output":{"shape":"MoveAddressToVpcResult"}
     },
+    "MoveByoipCidrToIpam":{
+      "name":"MoveByoipCidrToIpam",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"MoveByoipCidrToIpamRequest"},
+      "output":{"shape":"MoveByoipCidrToIpamResult"}
+    },
     "ProvisionByoipCidr":{
       "name":"ProvisionByoipCidr",
       "http":{
@@ -3737,6 +4097,24 @@
       },
       "input":{"shape":"ProvisionByoipCidrRequest"},
       "output":{"shape":"ProvisionByoipCidrResult"}
+    },
+    "ProvisionIpamPoolCidr":{
+      "name":"ProvisionIpamPoolCidr",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ProvisionIpamPoolCidrRequest"},
+      "output":{"shape":"ProvisionIpamPoolCidrResult"}
+    },
+    "ProvisionPublicIpv4PoolCidr":{
+      "name":"ProvisionPublicIpv4PoolCidr",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ProvisionPublicIpv4PoolCidrRequest"},
+      "output":{"shape":"ProvisionPublicIpv4PoolCidrResult"}
     },
     "PurchaseHostReservation":{
       "name":"PurchaseHostReservation",
@@ -3870,6 +4248,15 @@
       },
       "input":{"shape":"ReleaseHostsRequest"},
       "output":{"shape":"ReleaseHostsResult"}
+    },
+    "ReleaseIpamPoolAllocation":{
+      "name":"ReleaseIpamPoolAllocation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ReleaseIpamPoolAllocationRequest"},
+      "output":{"shape":"ReleaseIpamPoolAllocationResult"}
     },
     "ReplaceIamInstanceProfileAssociation":{
       "name":"ReplaceIamInstanceProfileAssociation",
@@ -4026,6 +4413,24 @@
       "input":{"shape":"RestoreManagedPrefixListVersionRequest"},
       "output":{"shape":"RestoreManagedPrefixListVersionResult"}
     },
+    "RestoreSnapshotFromRecycleBin":{
+      "name":"RestoreSnapshotFromRecycleBin",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RestoreSnapshotFromRecycleBinRequest"},
+      "output":{"shape":"RestoreSnapshotFromRecycleBinResult"}
+    },
+    "RestoreSnapshotTier":{
+      "name":"RestoreSnapshotTier",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RestoreSnapshotTierRequest"},
+      "output":{"shape":"RestoreSnapshotTierResult"}
+    },
     "RevokeClientVpnIngress":{
       "name":"RevokeClientVpnIngress",
       "http":{
@@ -4114,6 +4519,15 @@
       },
       "input":{"shape":"StartInstancesRequest"},
       "output":{"shape":"StartInstancesResult"}
+    },
+    "StartNetworkInsightsAccessScopeAnalysis":{
+      "name":"StartNetworkInsightsAccessScopeAnalysis",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartNetworkInsightsAccessScopeAnalysisRequest"},
+      "output":{"shape":"StartNetworkInsightsAccessScopeAnalysisResult"}
     },
     "StartNetworkInsightsAnalysis":{
       "name":"StartNetworkInsightsAnalysis",
@@ -4427,6 +4841,76 @@
         }
       }
     },
+    "AccessScopeAnalysisFinding":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeAnalysisId":{
+          "shape":"NetworkInsightsAccessScopeAnalysisId",
+          "locationName":"networkInsightsAccessScopeAnalysisId"
+        },
+        "NetworkInsightsAccessScopeId":{
+          "shape":"NetworkInsightsAccessScopeId",
+          "locationName":"networkInsightsAccessScopeId"
+        },
+        "FindingId":{
+          "shape":"String",
+          "locationName":"findingId"
+        },
+        "FindingComponents":{
+          "shape":"PathComponentList",
+          "locationName":"findingComponentSet"
+        }
+      }
+    },
+    "AccessScopeAnalysisFindingList":{
+      "type":"list",
+      "member":{
+        "shape":"AccessScopeAnalysisFinding",
+        "locationName":"item"
+      }
+    },
+    "AccessScopePath":{
+      "type":"structure",
+      "members":{
+        "Source":{
+          "shape":"PathStatement",
+          "locationName":"source"
+        },
+        "Destination":{
+          "shape":"PathStatement",
+          "locationName":"destination"
+        },
+        "ThroughResources":{
+          "shape":"ThroughResourcesStatementList",
+          "locationName":"throughResourceSet"
+        }
+      }
+    },
+    "AccessScopePathList":{
+      "type":"list",
+      "member":{
+        "shape":"AccessScopePath",
+        "locationName":"item"
+      }
+    },
+    "AccessScopePathListRequest":{
+      "type":"list",
+      "member":{
+        "shape":"AccessScopePathRequest",
+        "locationName":"item"
+      }
+    },
+    "AccessScopePathRequest":{
+      "type":"structure",
+      "members":{
+        "Source":{"shape":"PathStatementRequest"},
+        "Destination":{"shape":"PathStatementRequest"},
+        "ThroughResources":{
+          "shape":"ThroughResourcesStatementRequestList",
+          "locationName":"ThroughResource"
+        }
+      }
+    },
     "AccountAttribute":{
       "type":"structure",
       "members":{
@@ -4513,6 +4997,18 @@
         "pending_termination",
         "fulfilled"
       ]
+    },
+    "AddIpamOperatingRegion":{
+      "type":"structure",
+      "members":{
+        "RegionName":{"shape":"String"}
+      }
+    },
+    "AddIpamOperatingRegionSet":{
+      "type":"list",
+      "member":{"shape":"AddIpamOperatingRegion"},
+      "max":50,
+      "min":0
     },
     "AddPrefixListEntries":{
       "type":"list",
@@ -4613,6 +5109,13 @@
     "AddressAttributeName":{
       "type":"string",
       "enum":["domain-name"]
+    },
+    "AddressFamily":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6"
+      ]
     },
     "AddressList":{
       "type":"list",
@@ -4756,6 +5259,35 @@
         }
       }
     },
+    "AllocateIpamPoolCidrRequest":{
+      "type":"structure",
+      "required":["IpamPoolId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPoolId":{"shape":"IpamPoolId"},
+        "Cidr":{"shape":"String"},
+        "NetmaskLength":{"shape":"Integer"},
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "Description":{"shape":"String"},
+        "PreviewNextCidr":{"shape":"Boolean"},
+        "DisallowedCidrs":{
+          "shape":"IpamPoolAllocationDisallowedCidrs",
+          "locationName":"DisallowedCidr"
+        }
+      }
+    },
+    "AllocateIpamPoolCidrResult":{
+      "type":"structure",
+      "members":{
+        "IpamPoolAllocation":{
+          "shape":"IpamPoolAllocation",
+          "locationName":"ipamPoolAllocation"
+        }
+      }
+    },
     "AllocationId":{"type":"string"},
     "AllocationIdList":{
       "type":"list",
@@ -4877,6 +5409,10 @@
         "Arn":{
           "shape":"String",
           "locationName":"arn"
+        },
+        "Name":{
+          "shape":"String",
+          "locationName":"name"
         }
       }
     },
@@ -5492,7 +6028,11 @@
         },
         "Ipv6CidrBlockNetworkBorderGroup":{"shape":"String"},
         "Ipv6Pool":{"shape":"Ipv6PoolEc2Id"},
-        "Ipv6CidrBlock":{"shape":"String"}
+        "Ipv6CidrBlock":{"shape":"String"},
+        "Ipv4IpamPoolId":{"shape":"IpamPoolId"},
+        "Ipv4NetmaskLength":{"shape":"NetmaskLength"},
+        "Ipv6IpamPoolId":{"shape":"IpamPoolId"},
+        "Ipv6NetmaskLength":{"shape":"NetmaskLength"}
       }
     },
     "AssociateVpcCidrBlockResult":{
@@ -6201,6 +6741,7 @@
         "uefi"
       ]
     },
+    "BoxedDouble":{"type":"double"},
     "BundleId":{"type":"string"},
     "BundleIdStringList":{
       "type":"list",
@@ -6739,6 +7280,10 @@
         "CapacityReservationFleetId":{
           "shape":"String",
           "locationName":"capacityReservationFleetId"
+        },
+        "PlacementGroupArn":{
+          "shape":"PlacementGroupArn",
+          "locationName":"placementGroupArn"
         }
       }
     },
@@ -6889,7 +7434,13 @@
         "Windows with SQL Server Web",
         "Linux with SQL Server Standard",
         "Linux with SQL Server Web",
-        "Linux with SQL Server Enterprise"
+        "Linux with SQL Server Enterprise",
+        "RHEL with SQL Server Standard",
+        "RHEL with SQL Server Enterprise",
+        "RHEL with SQL Server Web",
+        "RHEL with HA",
+        "RHEL with HA and SQL Server Standard",
+        "RHEL with HA and SQL Server Enterprise"
       ]
     },
     "CapacityReservationOptions":{
@@ -7199,6 +7750,26 @@
         "UploadStart":{"shape":"DateTime"}
       }
     },
+    "ClientLoginBannerOptions":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "BannerText":{"shape":"String"}
+      }
+    },
+    "ClientLoginBannerResponseOptions":{
+      "type":"structure",
+      "members":{
+        "Enabled":{
+          "shape":"Boolean",
+          "locationName":"enabled"
+        },
+        "BannerText":{
+          "shape":"String",
+          "locationName":"bannerText"
+        }
+      }
+    },
     "ClientVpnAssociationId":{"type":"string"},
     "ClientVpnAuthentication":{
       "type":"structure",
@@ -7449,6 +8020,14 @@
         "ClientConnectOptions":{
           "shape":"ClientConnectResponseOptions",
           "locationName":"clientConnectOptions"
+        },
+        "SessionTimeoutHours":{
+          "shape":"Integer",
+          "locationName":"sessionTimeoutHours"
+        },
+        "ClientLoginBannerOptions":{
+          "shape":"ClientLoginBannerResponseOptions",
+          "locationName":"clientLoginBannerOptions"
         }
       }
     },
@@ -8065,7 +8644,8 @@
         "InstanceMatchCriteria":{"shape":"InstanceMatchCriteria"},
         "TagSpecifications":{"shape":"TagSpecificationList"},
         "DryRun":{"shape":"Boolean"},
-        "OutpostArn":{"shape":"OutpostArn"}
+        "OutpostArn":{"shape":"OutpostArn"},
+        "PlacementGroupArn":{"shape":"PlacementGroupArn"}
       }
     },
     "CreateCapacityReservationResult":{
@@ -8138,7 +8718,9 @@
         },
         "VpcId":{"shape":"VpcId"},
         "SelfServicePortal":{"shape":"SelfServicePortal"},
-        "ClientConnectOptions":{"shape":"ClientConnectOptions"}
+        "ClientConnectOptions":{"shape":"ClientConnectOptions"},
+        "SessionTimeoutHours":{"shape":"Integer"},
+        "ClientLoginBannerOptions":{"shape":"ClientLoginBannerOptions"}
       }
     },
     "CreateClientVpnEndpointResult":{
@@ -8225,7 +8807,8 @@
       "required":["AvailabilityZone"],
       "members":{
         "AvailabilityZone":{"shape":"String"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "Ipv6Native":{"shape":"Boolean"}
       }
     },
     "CreateDefaultSubnetResult":{
@@ -8615,6 +9198,99 @@
         }
       }
     },
+    "CreateIpamPoolRequest":{
+      "type":"structure",
+      "required":["IpamScopeId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamScopeId":{"shape":"IpamScopeId"},
+        "Locale":{"shape":"String"},
+        "SourceIpamPoolId":{"shape":"IpamPoolId"},
+        "Description":{"shape":"String"},
+        "AddressFamily":{"shape":"AddressFamily"},
+        "AutoImport":{"shape":"Boolean"},
+        "PubliclyAdvertisable":{"shape":"Boolean"},
+        "AllocationMinNetmaskLength":{"shape":"IpamNetmaskLength"},
+        "AllocationMaxNetmaskLength":{"shape":"IpamNetmaskLength"},
+        "AllocationDefaultNetmaskLength":{"shape":"IpamNetmaskLength"},
+        "AllocationResourceTags":{
+          "shape":"RequestIpamResourceTagList",
+          "locationName":"AllocationResourceTag"
+        },
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "AwsService":{"shape":"IpamPoolAwsService"}
+      }
+    },
+    "CreateIpamPoolResult":{
+      "type":"structure",
+      "members":{
+        "IpamPool":{
+          "shape":"IpamPool",
+          "locationName":"ipamPool"
+        }
+      }
+    },
+    "CreateIpamRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Description":{"shape":"String"},
+        "OperatingRegions":{
+          "shape":"AddIpamOperatingRegionSet",
+          "locationName":"OperatingRegion"
+        },
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateIpamResult":{
+      "type":"structure",
+      "members":{
+        "Ipam":{
+          "shape":"Ipam",
+          "locationName":"ipam"
+        }
+      }
+    },
+    "CreateIpamScopeRequest":{
+      "type":"structure",
+      "required":["IpamId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamId":{"shape":"IpamId"},
+        "Description":{"shape":"String"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "CreateIpamScopeResult":{
+      "type":"structure",
+      "members":{
+        "IpamScope":{
+          "shape":"IpamScope",
+          "locationName":"ipamScope"
+        }
+      }
+    },
     "CreateKeyPairRequest":{
       "type":"structure",
       "required":["KeyName"],
@@ -8881,6 +9557,42 @@
         }
       }
     },
+    "CreateNetworkInsightsAccessScopeRequest":{
+      "type":"structure",
+      "required":["ClientToken"],
+      "members":{
+        "MatchPaths":{
+          "shape":"AccessScopePathListRequest",
+          "locationName":"MatchPath"
+        },
+        "ExcludePaths":{
+          "shape":"AccessScopePathListRequest",
+          "locationName":"ExcludePath"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        },
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "CreateNetworkInsightsAccessScopeResult":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScope":{
+          "shape":"NetworkInsightsAccessScope",
+          "locationName":"networkInsightsAccessScope"
+        },
+        "NetworkInsightsAccessScopeContent":{
+          "shape":"NetworkInsightsAccessScopeContent",
+          "locationName":"networkInsightsAccessScopeContent"
+        }
+      }
+    },
     "CreateNetworkInsightsPathRequest":{
       "type":"structure",
       "required":[
@@ -8892,8 +9604,8 @@
       "members":{
         "SourceIp":{"shape":"IpAddress"},
         "DestinationIp":{"shape":"IpAddress"},
-        "Source":{"shape":"String"},
-        "Destination":{"shape":"String"},
+        "Source":{"shape":"NetworkInsightsResourceId"},
+        "Destination":{"shape":"NetworkInsightsResourceId"},
         "Protocol":{"shape":"Protocol"},
         "DestinationPort":{"shape":"Port"},
         "TagSpecifications":{
@@ -9041,6 +9753,25 @@
         "PlacementGroup":{
           "shape":"PlacementGroup",
           "locationName":"placementGroup"
+        }
+      }
+    },
+    "CreatePublicIpv4PoolRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        }
+      }
+    },
+    "CreatePublicIpv4PoolResult":{
+      "type":"structure",
+      "members":{
+        "PoolId":{
+          "shape":"Ipv4PoolEc2Id",
+          "locationName":"poolId"
         }
       }
     },
@@ -9379,10 +10110,7 @@
     },
     "CreateSubnetRequest":{
       "type":"structure",
-      "required":[
-        "CidrBlock",
-        "VpcId"
-      ],
+      "required":["VpcId"],
       "members":{
         "TagSpecifications":{
           "shape":"TagSpecificationList",
@@ -9397,7 +10125,8 @@
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
-        }
+        },
+        "Ipv6Native":{"shape":"Boolean"}
       }
     },
     "CreateSubnetResult":{
@@ -10009,7 +10738,6 @@
     },
     "CreateVpcRequest":{
       "type":"structure",
-      "required":["CidrBlock"],
       "members":{
         "CidrBlock":{"shape":"String"},
         "AmazonProvidedIpv6CidrBlock":{
@@ -10018,6 +10746,10 @@
         },
         "Ipv6Pool":{"shape":"Ipv6PoolEc2Id"},
         "Ipv6CidrBlock":{"shape":"String"},
+        "Ipv4IpamPoolId":{"shape":"IpamPoolId"},
+        "Ipv4NetmaskLength":{"shape":"NetmaskLength"},
+        "Ipv6IpamPoolId":{"shape":"IpamPoolId"},
+        "Ipv6NetmaskLength":{"shape":"NetmaskLength"},
         "DryRun":{
           "shape":"Boolean",
           "locationName":"dryRun"
@@ -10494,6 +11226,57 @@
         }
       }
     },
+    "DeleteIpamPoolRequest":{
+      "type":"structure",
+      "required":["IpamPoolId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPoolId":{"shape":"IpamPoolId"}
+      }
+    },
+    "DeleteIpamPoolResult":{
+      "type":"structure",
+      "members":{
+        "IpamPool":{
+          "shape":"IpamPool",
+          "locationName":"ipamPool"
+        }
+      }
+    },
+    "DeleteIpamRequest":{
+      "type":"structure",
+      "required":["IpamId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamId":{"shape":"IpamId"}
+      }
+    },
+    "DeleteIpamResult":{
+      "type":"structure",
+      "members":{
+        "Ipam":{
+          "shape":"Ipam",
+          "locationName":"ipam"
+        }
+      }
+    },
+    "DeleteIpamScopeRequest":{
+      "type":"structure",
+      "required":["IpamScopeId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamScopeId":{"shape":"IpamScopeId"}
+      }
+    },
+    "DeleteIpamScopeResult":{
+      "type":"structure",
+      "members":{
+        "IpamScope":{
+          "shape":"IpamScope",
+          "locationName":"ipamScope"
+        }
+      }
+    },
     "DeleteKeyPairRequest":{
       "type":"structure",
       "members":{
@@ -10712,6 +11495,40 @@
         }
       }
     },
+    "DeleteNetworkInsightsAccessScopeAnalysisRequest":{
+      "type":"structure",
+      "required":["NetworkInsightsAccessScopeAnalysisId"],
+      "members":{
+        "NetworkInsightsAccessScopeAnalysisId":{"shape":"NetworkInsightsAccessScopeAnalysisId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DeleteNetworkInsightsAccessScopeAnalysisResult":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeAnalysisId":{
+          "shape":"NetworkInsightsAccessScopeAnalysisId",
+          "locationName":"networkInsightsAccessScopeAnalysisId"
+        }
+      }
+    },
+    "DeleteNetworkInsightsAccessScopeRequest":{
+      "type":"structure",
+      "required":["NetworkInsightsAccessScopeId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "NetworkInsightsAccessScopeId":{"shape":"NetworkInsightsAccessScopeId"}
+      }
+    },
+    "DeleteNetworkInsightsAccessScopeResult":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeId":{
+          "shape":"NetworkInsightsAccessScopeId",
+          "locationName":"networkInsightsAccessScopeId"
+        }
+      }
+    },
     "DeleteNetworkInsightsAnalysisRequest":{
       "type":"structure",
       "required":["NetworkInsightsAnalysisId"],
@@ -10789,6 +11606,23 @@
         "GroupName":{
           "shape":"PlacementGroupName",
           "locationName":"groupName"
+        }
+      }
+    },
+    "DeletePublicIpv4PoolRequest":{
+      "type":"structure",
+      "required":["PoolId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "PoolId":{"shape":"Ipv4PoolEc2Id"}
+      }
+    },
+    "DeletePublicIpv4PoolResult":{
+      "type":"structure",
+      "members":{
+        "ReturnValue":{
+          "shape":"Boolean",
+          "locationName":"returnValue"
         }
       }
     },
@@ -11342,6 +12176,56 @@
           "shape":"ByoipCidr",
           "locationName":"byoipCidr"
         }
+      }
+    },
+    "DeprovisionIpamPoolCidrRequest":{
+      "type":"structure",
+      "required":["IpamPoolId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPoolId":{"shape":"IpamPoolId"},
+        "Cidr":{"shape":"String"}
+      }
+    },
+    "DeprovisionIpamPoolCidrResult":{
+      "type":"structure",
+      "members":{
+        "IpamPoolCidr":{
+          "shape":"IpamPoolCidr",
+          "locationName":"ipamPoolCidr"
+        }
+      }
+    },
+    "DeprovisionPublicIpv4PoolCidrRequest":{
+      "type":"structure",
+      "required":[
+        "PoolId",
+        "Cidr"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "PoolId":{"shape":"Ipv4PoolEc2Id"},
+        "Cidr":{"shape":"String"}
+      }
+    },
+    "DeprovisionPublicIpv4PoolCidrResult":{
+      "type":"structure",
+      "members":{
+        "PoolId":{
+          "shape":"Ipv4PoolEc2Id",
+          "locationName":"poolId"
+        },
+        "DeprovisionedAddresses":{
+          "shape":"DeprovisionedAddressSet",
+          "locationName":"deprovisionedAddressSet"
+        }
+      }
+    },
+    "DeprovisionedAddressSet":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"item"
       }
     },
     "DeregisterImageRequest":{
@@ -12148,6 +13032,88 @@
           "shape":"ExportTaskList",
           "locationName":"exportTaskSet"
         }
+      }
+    },
+    "DescribeFastLaunchImagesRequest":{
+      "type":"structure",
+      "members":{
+        "ImageIds":{
+          "shape":"FastLaunchImageIdList",
+          "locationName":"ImageId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"DescribeFastLaunchImagesRequestMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DescribeFastLaunchImagesRequestMaxResults":{
+      "type":"integer",
+      "max":200,
+      "min":0
+    },
+    "DescribeFastLaunchImagesResult":{
+      "type":"structure",
+      "members":{
+        "FastLaunchImages":{
+          "shape":"DescribeFastLaunchImagesSuccessSet",
+          "locationName":"fastLaunchImageSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeFastLaunchImagesSuccessItem":{
+      "type":"structure",
+      "members":{
+        "ImageId":{
+          "shape":"ImageId",
+          "locationName":"imageId"
+        },
+        "ResourceType":{
+          "shape":"FastLaunchResourceType",
+          "locationName":"resourceType"
+        },
+        "SnapshotConfiguration":{
+          "shape":"FastLaunchSnapshotConfigurationResponse",
+          "locationName":"snapshotConfiguration"
+        },
+        "LaunchTemplate":{
+          "shape":"FastLaunchLaunchTemplateSpecificationResponse",
+          "locationName":"launchTemplate"
+        },
+        "MaxParallelLaunches":{
+          "shape":"Integer",
+          "locationName":"maxParallelLaunches"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "State":{
+          "shape":"FastLaunchStateCode",
+          "locationName":"state"
+        },
+        "StateTransitionReason":{
+          "shape":"String",
+          "locationName":"stateTransitionReason"
+        },
+        "StateTransitionTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"stateTransitionTime"
+        }
+      }
+    },
+    "DescribeFastLaunchImagesSuccessSet":{
+      "type":"list",
+      "member":{
+        "shape":"DescribeFastLaunchImagesSuccessItem",
+        "locationName":"item"
       }
     },
     "DescribeFastSnapshotRestoreSuccessItem":{
@@ -13004,6 +13970,93 @@
         }
       }
     },
+    "DescribeIpamPoolsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "IpamPoolIds":{
+          "shape":"ValueStringList",
+          "locationName":"IpamPoolId"
+        }
+      }
+    },
+    "DescribeIpamPoolsResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        },
+        "IpamPools":{
+          "shape":"IpamPoolSet",
+          "locationName":"ipamPoolSet"
+        }
+      }
+    },
+    "DescribeIpamScopesRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "IpamScopeIds":{
+          "shape":"ValueStringList",
+          "locationName":"IpamScopeId"
+        }
+      }
+    },
+    "DescribeIpamScopesResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        },
+        "IpamScopes":{
+          "shape":"IpamScopeSet",
+          "locationName":"ipamScopeSet"
+        }
+      }
+    },
+    "DescribeIpamsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "IpamIds":{
+          "shape":"ValueStringList",
+          "locationName":"IpamId"
+        }
+      }
+    },
+    "DescribeIpamsResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        },
+        "Ipams":{
+          "shape":"IpamSet",
+          "locationName":"ipamSet"
+        }
+      }
+    },
     "DescribeIpv6PoolsRequest":{
       "type":"structure",
       "members":{
@@ -13441,6 +14494,67 @@
         "NetworkAcls":{
           "shape":"NetworkAclList",
           "locationName":"networkAclSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeNetworkInsightsAccessScopeAnalysesRequest":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeAnalysisIds":{
+          "shape":"NetworkInsightsAccessScopeAnalysisIdList",
+          "locationName":"NetworkInsightsAccessScopeAnalysisId"
+        },
+        "NetworkInsightsAccessScopeId":{"shape":"NetworkInsightsAccessScopeId"},
+        "AnalysisStartTimeBegin":{"shape":"MillisecondDateTime"},
+        "AnalysisStartTimeEnd":{"shape":"MillisecondDateTime"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"NetworkInsightsMaxResults"},
+        "DryRun":{"shape":"Boolean"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeNetworkInsightsAccessScopeAnalysesResult":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeAnalyses":{
+          "shape":"NetworkInsightsAccessScopeAnalysisList",
+          "locationName":"networkInsightsAccessScopeAnalysisSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeNetworkInsightsAccessScopesRequest":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeIds":{
+          "shape":"NetworkInsightsAccessScopeIdList",
+          "locationName":"NetworkInsightsAccessScopeId"
+        },
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"NetworkInsightsMaxResults"},
+        "DryRun":{"shape":"Boolean"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeNetworkInsightsAccessScopesResult":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopes":{
+          "shape":"NetworkInsightsAccessScopeList",
+          "locationName":"networkInsightsAccessScopeSet"
         },
         "NextToken":{
           "shape":"String",
@@ -14167,6 +15281,32 @@
         "SnapshotId":{
           "shape":"String",
           "locationName":"snapshotId"
+        }
+      }
+    },
+    "DescribeSnapshotTierStatusMaxResults":{"type":"integer"},
+    "DescribeSnapshotTierStatusRequest":{
+      "type":"structure",
+      "members":{
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "DryRun":{"shape":"Boolean"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"DescribeSnapshotTierStatusMaxResults"}
+      }
+    },
+    "DescribeSnapshotTierStatusResult":{
+      "type":"structure",
+      "members":{
+        "SnapshotTierStatuses":{
+          "shape":"snapshotTierStatusSet",
+          "locationName":"snapshotTierStatusSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
         }
       }
     },
@@ -15673,6 +16813,56 @@
         }
       }
     },
+    "DisableFastLaunchRequest":{
+      "type":"structure",
+      "required":["ImageId"],
+      "members":{
+        "ImageId":{"shape":"ImageId"},
+        "Force":{"shape":"Boolean"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "DisableFastLaunchResult":{
+      "type":"structure",
+      "members":{
+        "ImageId":{
+          "shape":"ImageId",
+          "locationName":"imageId"
+        },
+        "ResourceType":{
+          "shape":"FastLaunchResourceType",
+          "locationName":"resourceType"
+        },
+        "SnapshotConfiguration":{
+          "shape":"FastLaunchSnapshotConfigurationResponse",
+          "locationName":"snapshotConfiguration"
+        },
+        "LaunchTemplate":{
+          "shape":"FastLaunchLaunchTemplateSpecificationResponse",
+          "locationName":"launchTemplate"
+        },
+        "MaxParallelLaunches":{
+          "shape":"Integer",
+          "locationName":"maxParallelLaunches"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "State":{
+          "shape":"FastLaunchStateCode",
+          "locationName":"state"
+        },
+        "StateTransitionReason":{
+          "shape":"String",
+          "locationName":"stateTransitionReason"
+        },
+        "StateTransitionTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"stateTransitionTime"
+        }
+      }
+    },
     "DisableFastSnapshotRestoreErrorItem":{
       "type":"structure",
       "members":{
@@ -15827,6 +17017,23 @@
         "Return":{
           "shape":"Boolean",
           "locationName":"return"
+        }
+      }
+    },
+    "DisableIpamOrganizationAdminAccountRequest":{
+      "type":"structure",
+      "required":["DelegatedAdminAccountId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "DelegatedAdminAccountId":{"shape":"String"}
+      }
+    },
+    "DisableIpamOrganizationAdminAccountResult":{
+      "type":"structure",
+      "members":{
+        "Success":{
+          "shape":"Boolean",
+          "locationName":"success"
         }
       }
     },
@@ -16489,7 +17696,7 @@
       "type":"structure",
       "members":{
         "ElasticGpuId":{
-          "shape":"String",
+          "shape":"ElasticGpuId",
           "locationName":"elasticGpuId"
         },
         "ElasticGpuAssociationId":{
@@ -16689,6 +17896,59 @@
         }
       }
     },
+    "EnableFastLaunchRequest":{
+      "type":"structure",
+      "required":["ImageId"],
+      "members":{
+        "ImageId":{"shape":"ImageId"},
+        "ResourceType":{"shape":"String"},
+        "SnapshotConfiguration":{"shape":"FastLaunchSnapshotConfigurationRequest"},
+        "LaunchTemplate":{"shape":"FastLaunchLaunchTemplateSpecificationRequest"},
+        "MaxParallelLaunches":{"shape":"Integer"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "EnableFastLaunchResult":{
+      "type":"structure",
+      "members":{
+        "ImageId":{
+          "shape":"ImageId",
+          "locationName":"imageId"
+        },
+        "ResourceType":{
+          "shape":"FastLaunchResourceType",
+          "locationName":"resourceType"
+        },
+        "SnapshotConfiguration":{
+          "shape":"FastLaunchSnapshotConfigurationResponse",
+          "locationName":"snapshotConfiguration"
+        },
+        "LaunchTemplate":{
+          "shape":"FastLaunchLaunchTemplateSpecificationResponse",
+          "locationName":"launchTemplate"
+        },
+        "MaxParallelLaunches":{
+          "shape":"Integer",
+          "locationName":"maxParallelLaunches"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "State":{
+          "shape":"FastLaunchStateCode",
+          "locationName":"state"
+        },
+        "StateTransitionReason":{
+          "shape":"String",
+          "locationName":"stateTransitionReason"
+        },
+        "StateTransitionTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"stateTransitionTime"
+        }
+      }
+    },
     "EnableFastSnapshotRestoreErrorItem":{
       "type":"structure",
       "members":{
@@ -16847,6 +18107,23 @@
         "Return":{
           "shape":"Boolean",
           "locationName":"return"
+        }
+      }
+    },
+    "EnableIpamOrganizationAdminAccountRequest":{
+      "type":"structure",
+      "required":["DelegatedAdminAccountId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "DelegatedAdminAccountId":{"shape":"String"}
+      }
+    },
+    "EnableIpamOrganizationAdminAccountResult":{
+      "type":"structure",
+      "members":{
+        "Success":{
+          "shape":"Boolean",
+          "locationName":"success"
         }
       }
     },
@@ -17605,6 +18882,69 @@
         "locationName":"item"
       }
     },
+    "FastLaunchImageIdList":{
+      "type":"list",
+      "member":{
+        "shape":"ImageId",
+        "locationName":"ImageId"
+      }
+    },
+    "FastLaunchLaunchTemplateSpecificationRequest":{
+      "type":"structure",
+      "required":["Version"],
+      "members":{
+        "LaunchTemplateId":{"shape":"LaunchTemplateId"},
+        "LaunchTemplateName":{"shape":"String"},
+        "Version":{"shape":"String"}
+      }
+    },
+    "FastLaunchLaunchTemplateSpecificationResponse":{
+      "type":"structure",
+      "members":{
+        "LaunchTemplateId":{
+          "shape":"LaunchTemplateId",
+          "locationName":"launchTemplateId"
+        },
+        "LaunchTemplateName":{
+          "shape":"String",
+          "locationName":"launchTemplateName"
+        },
+        "Version":{
+          "shape":"String",
+          "locationName":"version"
+        }
+      }
+    },
+    "FastLaunchResourceType":{
+      "type":"string",
+      "enum":["snapshot"]
+    },
+    "FastLaunchSnapshotConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "TargetResourceCount":{"shape":"Integer"}
+      }
+    },
+    "FastLaunchSnapshotConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "TargetResourceCount":{
+          "shape":"Integer",
+          "locationName":"targetResourceCount"
+        }
+      }
+    },
+    "FastLaunchStateCode":{
+      "type":"string",
+      "enum":[
+        "enabling",
+        "enabling-failed",
+        "enabled",
+        "enabled-failed",
+        "disabling",
+        "disabling-failed"
+      ]
+    },
     "FastSnapshotRestoreStateCode":{
       "type":"string",
       "enum":[
@@ -17651,6 +18991,14 @@
         "shape":"Filter",
         "locationName":"Filter"
       }
+    },
+    "FindingsFound":{
+      "type":"string",
+      "enum":[
+        "true",
+        "false",
+        "unknown"
+      ]
     },
     "FleetActivityStatus":{
       "type":"string",
@@ -18681,6 +20029,128 @@
         }
       }
     },
+    "GetIpamAddressHistoryRequest":{
+      "type":"structure",
+      "required":[
+        "Cidr",
+        "IpamScopeId"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Cidr":{"shape":"String"},
+        "IpamScopeId":{"shape":"IpamScopeId"},
+        "VpcId":{"shape":"String"},
+        "StartTime":{"shape":"MillisecondDateTime"},
+        "EndTime":{"shape":"MillisecondDateTime"},
+        "MaxResults":{"shape":"IpamAddressHistoryMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetIpamAddressHistoryResult":{
+      "type":"structure",
+      "members":{
+        "HistoryRecords":{
+          "shape":"IpamAddressHistoryRecordSet",
+          "locationName":"historyRecordSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetIpamPoolAllocationsMaxResults":{
+      "type":"integer",
+      "max":100000,
+      "min":1000
+    },
+    "GetIpamPoolAllocationsRequest":{
+      "type":"structure",
+      "required":["IpamPoolId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPoolId":{"shape":"IpamPoolId"},
+        "IpamPoolAllocationId":{"shape":"IpamPoolAllocationId"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"GetIpamPoolAllocationsMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetIpamPoolAllocationsResult":{
+      "type":"structure",
+      "members":{
+        "IpamPoolAllocations":{
+          "shape":"IpamPoolAllocationSet",
+          "locationName":"ipamPoolAllocationSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetIpamPoolCidrsRequest":{
+      "type":"structure",
+      "required":["IpamPoolId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPoolId":{"shape":"IpamPoolId"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GetIpamPoolCidrsResult":{
+      "type":"structure",
+      "members":{
+        "IpamPoolCidrs":{
+          "shape":"IpamPoolCidrSet",
+          "locationName":"ipamPoolCidrSet"
+        },
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetIpamResourceCidrsRequest":{
+      "type":"structure",
+      "required":["IpamScopeId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Filters":{
+          "shape":"FilterList",
+          "locationName":"Filter"
+        },
+        "MaxResults":{"shape":"IpamMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "IpamScopeId":{"shape":"IpamScopeId"},
+        "IpamPoolId":{"shape":"IpamPoolId"},
+        "ResourceId":{"shape":"String"},
+        "ResourceType":{"shape":"IpamResourceType"},
+        "ResourceTag":{"shape":"RequestIpamResourceTag"},
+        "ResourceOwner":{"shape":"String"}
+      }
+    },
+    "GetIpamResourceCidrsResult":{
+      "type":"structure",
+      "members":{
+        "NextToken":{
+          "shape":"NextToken",
+          "locationName":"nextToken"
+        },
+        "IpamResourceCidrs":{
+          "shape":"IpamResourceCidrSet",
+          "locationName":"ipamResourceCidrSet"
+        }
+      }
+    },
     "GetLaunchTemplateDataRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -18747,6 +20217,54 @@
         "NextToken":{
           "shape":"NextToken",
           "locationName":"nextToken"
+        }
+      }
+    },
+    "GetNetworkInsightsAccessScopeAnalysisFindingsRequest":{
+      "type":"structure",
+      "required":["NetworkInsightsAccessScopeAnalysisId"],
+      "members":{
+        "NetworkInsightsAccessScopeAnalysisId":{"shape":"NetworkInsightsAccessScopeAnalysisId"},
+        "MaxResults":{"shape":"NetworkInsightsMaxResults"},
+        "NextToken":{"shape":"NextToken"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetNetworkInsightsAccessScopeAnalysisFindingsResult":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeAnalysisId":{
+          "shape":"NetworkInsightsAccessScopeAnalysisId",
+          "locationName":"networkInsightsAccessScopeAnalysisId"
+        },
+        "AnalysisStatus":{
+          "shape":"AnalysisStatus",
+          "locationName":"analysisStatus"
+        },
+        "AnalysisFindings":{
+          "shape":"AccessScopeAnalysisFindingList",
+          "locationName":"analysisFindingSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "GetNetworkInsightsAccessScopeContentRequest":{
+      "type":"structure",
+      "required":["NetworkInsightsAccessScopeId"],
+      "members":{
+        "NetworkInsightsAccessScopeId":{"shape":"NetworkInsightsAccessScopeId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "GetNetworkInsightsAccessScopeContentResult":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeContent":{
+          "shape":"NetworkInsightsAccessScopeContent",
+          "locationName":"networkInsightsAccessScopeContent"
         }
       }
     },
@@ -19386,7 +20904,7 @@
           "locationName":"instanceFamily"
         },
         "OfferingId":{
-          "shape":"String",
+          "shape":"OfferingId",
           "locationName":"offeringId"
         },
         "PaymentOption":{
@@ -19462,7 +20980,7 @@
           "locationName":"hostIdSet"
         },
         "HostReservationId":{
-          "shape":"String",
+          "shape":"HostReservationId",
           "locationName":"hostReservationId"
         },
         "HourlyPrice":{
@@ -19474,7 +20992,7 @@
           "locationName":"instanceFamily"
         },
         "OfferingId":{
-          "shape":"String",
+          "shape":"OfferingId",
           "locationName":"offeringId"
         },
         "PaymentOption":{
@@ -19519,6 +21037,13 @@
       "enum":[
         "dedicated",
         "host"
+      ]
+    },
+    "HostnameType":{
+      "type":"string",
+      "enum":[
+        "ip-name",
+        "resource-name"
       ]
     },
     "Hour":{
@@ -20727,6 +22252,14 @@
         "UsageOperationUpdateTime":{
           "shape":"MillisecondDateTime",
           "locationName":"usageOperationUpdateTime"
+        },
+        "PrivateDnsNameOptions":{
+          "shape":"PrivateDnsNameOptionsResponse",
+          "locationName":"privateDnsNameOptions"
+        },
+        "Ipv6Address":{
+          "shape":"String",
+          "locationName":"ipv6Address"
         }
       }
     },
@@ -21295,7 +22828,8 @@
         "HttpTokens":{"shape":"HttpTokensState"},
         "HttpPutResponseHopLimit":{"shape":"Integer"},
         "HttpEndpoint":{"shape":"InstanceMetadataEndpointState"},
-        "HttpProtocolIpv6":{"shape":"InstanceMetadataProtocolState"}
+        "HttpProtocolIpv6":{"shape":"InstanceMetadataProtocolState"},
+        "InstanceMetadataTags":{"shape":"InstanceMetadataTagsState"}
       }
     },
     "InstanceMetadataOptionsResponse":{
@@ -21320,6 +22854,10 @@
         "HttpProtocolIpv6":{
           "shape":"InstanceMetadataProtocolState",
           "locationName":"httpProtocolIpv6"
+        },
+        "InstanceMetadataTags":{
+          "shape":"InstanceMetadataTagsState",
+          "locationName":"instanceMetadataTags"
         }
       }
     },
@@ -21331,6 +22869,13 @@
       ]
     },
     "InstanceMetadataProtocolState":{
+      "type":"string",
+      "enum":[
+        "disabled",
+        "enabled"
+      ]
+    },
+    "InstanceMetadataTagsState":{
       "type":"string",
       "enum":[
         "disabled",
@@ -21972,154 +23517,12 @@
     "InstanceType":{
       "type":"string",
       "enum":[
-        "t1.micro",
-        "t2.nano",
-        "t2.micro",
-        "t2.small",
-        "t2.medium",
-        "t2.large",
-        "t2.xlarge",
-        "t2.2xlarge",
-        "t3.nano",
-        "t3.micro",
-        "t3.small",
-        "t3.medium",
-        "t3.large",
-        "t3.xlarge",
-        "t3.2xlarge",
-        "t3a.nano",
-        "t3a.micro",
-        "t3a.small",
-        "t3a.medium",
-        "t3a.large",
-        "t3a.xlarge",
-        "t3a.2xlarge",
-        "t4g.nano",
-        "t4g.micro",
-        "t4g.small",
-        "t4g.medium",
-        "t4g.large",
-        "t4g.xlarge",
-        "t4g.2xlarge",
-        "m1.small",
-        "m1.medium",
-        "m1.large",
-        "m1.xlarge",
-        "m3.medium",
-        "m3.large",
-        "m3.xlarge",
-        "m3.2xlarge",
-        "m4.large",
-        "m4.xlarge",
-        "m4.2xlarge",
-        "m4.4xlarge",
-        "m4.10xlarge",
-        "m4.16xlarge",
-        "m2.xlarge",
-        "m2.2xlarge",
-        "m2.4xlarge",
-        "cr1.8xlarge",
-        "r3.large",
-        "r3.xlarge",
-        "r3.2xlarge",
-        "r3.4xlarge",
-        "r3.8xlarge",
-        "r4.large",
-        "r4.xlarge",
-        "r4.2xlarge",
-        "r4.4xlarge",
-        "r4.8xlarge",
-        "r4.16xlarge",
-        "r5.large",
-        "r5.xlarge",
-        "r5.2xlarge",
-        "r5.4xlarge",
-        "r5.8xlarge",
-        "r5.12xlarge",
-        "r5.16xlarge",
-        "r5.24xlarge",
-        "r5.metal",
-        "r5a.large",
-        "r5a.xlarge",
-        "r5a.2xlarge",
-        "r5a.4xlarge",
-        "r5a.8xlarge",
-        "r5a.12xlarge",
-        "r5a.16xlarge",
-        "r5a.24xlarge",
-        "r5b.large",
-        "r5b.xlarge",
-        "r5b.2xlarge",
-        "r5b.4xlarge",
-        "r5b.8xlarge",
-        "r5b.12xlarge",
-        "r5b.16xlarge",
-        "r5b.24xlarge",
-        "r5b.metal",
-        "r5d.large",
-        "r5d.xlarge",
-        "r5d.2xlarge",
-        "r5d.4xlarge",
-        "r5d.8xlarge",
-        "r5d.12xlarge",
-        "r5d.16xlarge",
-        "r5d.24xlarge",
-        "r5d.metal",
-        "r5ad.large",
-        "r5ad.xlarge",
-        "r5ad.2xlarge",
-        "r5ad.4xlarge",
-        "r5ad.8xlarge",
-        "r5ad.12xlarge",
-        "r5ad.16xlarge",
-        "r5ad.24xlarge",
-        "r6g.metal",
-        "r6g.medium",
-        "r6g.large",
-        "r6g.xlarge",
-        "r6g.2xlarge",
-        "r6g.4xlarge",
-        "r6g.8xlarge",
-        "r6g.12xlarge",
-        "r6g.16xlarge",
-        "r6gd.metal",
-        "r6gd.medium",
-        "r6gd.large",
-        "r6gd.xlarge",
-        "r6gd.2xlarge",
-        "r6gd.4xlarge",
-        "r6gd.8xlarge",
-        "r6gd.12xlarge",
-        "r6gd.16xlarge",
-        "x1.16xlarge",
-        "x1.32xlarge",
-        "x1e.xlarge",
-        "x1e.2xlarge",
-        "x1e.4xlarge",
-        "x1e.8xlarge",
-        "x1e.16xlarge",
-        "x1e.32xlarge",
-        "i2.xlarge",
-        "i2.2xlarge",
-        "i2.4xlarge",
-        "i2.8xlarge",
-        "i3.large",
-        "i3.xlarge",
-        "i3.2xlarge",
-        "i3.4xlarge",
-        "i3.8xlarge",
-        "i3.16xlarge",
-        "i3.metal",
-        "i3en.large",
-        "i3en.xlarge",
-        "i3en.2xlarge",
-        "i3en.3xlarge",
-        "i3en.6xlarge",
-        "i3en.12xlarge",
-        "i3en.24xlarge",
-        "i3en.metal",
-        "hi1.4xlarge",
-        "hs1.8xlarge",
+        "a1.medium",
+        "a1.large",
+        "a1.xlarge",
+        "a1.2xlarge",
+        "a1.4xlarge",
+        "a1.metal",
         "c1.medium",
         "c1.xlarge",
         "c3.large",
@@ -22173,7 +23576,6 @@
         "c5n.9xlarge",
         "c5n.18xlarge",
         "c5n.metal",
-        "c6g.metal",
         "c6g.medium",
         "c6g.large",
         "c6g.xlarge",
@@ -22182,7 +23584,7 @@
         "c6g.8xlarge",
         "c6g.12xlarge",
         "c6g.16xlarge",
-        "c6gd.metal",
+        "c6g.metal",
         "c6gd.medium",
         "c6gd.large",
         "c6gd.xlarge",
@@ -22191,6 +23593,7 @@
         "c6gd.8xlarge",
         "c6gd.12xlarge",
         "c6gd.16xlarge",
+        "c6gd.metal",
         "c6gn.medium",
         "c6gn.large",
         "c6gn.xlarge",
@@ -22208,35 +23611,11 @@
         "c6i.16xlarge",
         "c6i.24xlarge",
         "c6i.32xlarge",
+        "c6i.metal",
         "cc1.4xlarge",
         "cc2.8xlarge",
-        "g2.2xlarge",
-        "g2.8xlarge",
-        "g3.4xlarge",
-        "g3.8xlarge",
-        "g3.16xlarge",
-        "g3s.xlarge",
-        "g4ad.xlarge",
-        "g4ad.2xlarge",
-        "g4ad.4xlarge",
-        "g4ad.8xlarge",
-        "g4ad.16xlarge",
-        "g4dn.xlarge",
-        "g4dn.2xlarge",
-        "g4dn.4xlarge",
-        "g4dn.8xlarge",
-        "g4dn.12xlarge",
-        "g4dn.16xlarge",
-        "g4dn.metal",
         "cg1.4xlarge",
-        "p2.xlarge",
-        "p2.8xlarge",
-        "p2.16xlarge",
-        "p3.2xlarge",
-        "p3.8xlarge",
-        "p3.16xlarge",
-        "p3dn.24xlarge",
-        "p4d.24xlarge",
+        "cr1.8xlarge",
         "d2.xlarge",
         "d2.2xlarge",
         "d2.4xlarge",
@@ -22255,6 +23634,97 @@
         "f1.2xlarge",
         "f1.4xlarge",
         "f1.16xlarge",
+        "g2.2xlarge",
+        "g2.8xlarge",
+        "g3.4xlarge",
+        "g3.8xlarge",
+        "g3.16xlarge",
+        "g3s.xlarge",
+        "g4ad.xlarge",
+        "g4ad.2xlarge",
+        "g4ad.4xlarge",
+        "g4ad.8xlarge",
+        "g4ad.16xlarge",
+        "g4dn.xlarge",
+        "g4dn.2xlarge",
+        "g4dn.4xlarge",
+        "g4dn.8xlarge",
+        "g4dn.12xlarge",
+        "g4dn.16xlarge",
+        "g4dn.metal",
+        "g5.xlarge",
+        "g5.2xlarge",
+        "g5.4xlarge",
+        "g5.8xlarge",
+        "g5.12xlarge",
+        "g5.16xlarge",
+        "g5.24xlarge",
+        "g5.48xlarge",
+        "g5g.xlarge",
+        "g5g.2xlarge",
+        "g5g.4xlarge",
+        "g5g.8xlarge",
+        "g5g.16xlarge",
+        "g5g.metal",
+        "hi1.4xlarge",
+        "hpc6a.48xlarge",
+        "hs1.8xlarge",
+        "h1.2xlarge",
+        "h1.4xlarge",
+        "h1.8xlarge",
+        "h1.16xlarge",
+        "i2.xlarge",
+        "i2.2xlarge",
+        "i2.4xlarge",
+        "i2.8xlarge",
+        "i3.large",
+        "i3.xlarge",
+        "i3.2xlarge",
+        "i3.4xlarge",
+        "i3.8xlarge",
+        "i3.16xlarge",
+        "i3.metal",
+        "i3en.large",
+        "i3en.xlarge",
+        "i3en.2xlarge",
+        "i3en.3xlarge",
+        "i3en.6xlarge",
+        "i3en.12xlarge",
+        "i3en.24xlarge",
+        "i3en.metal",
+        "im4gn.large",
+        "im4gn.xlarge",
+        "im4gn.2xlarge",
+        "im4gn.4xlarge",
+        "im4gn.8xlarge",
+        "im4gn.16xlarge",
+        "inf1.xlarge",
+        "inf1.2xlarge",
+        "inf1.6xlarge",
+        "inf1.24xlarge",
+        "is4gen.medium",
+        "is4gen.large",
+        "is4gen.xlarge",
+        "is4gen.2xlarge",
+        "is4gen.4xlarge",
+        "is4gen.8xlarge",
+        "m1.small",
+        "m1.medium",
+        "m1.large",
+        "m1.xlarge",
+        "m2.xlarge",
+        "m2.2xlarge",
+        "m2.4xlarge",
+        "m3.medium",
+        "m3.large",
+        "m3.xlarge",
+        "m3.2xlarge",
+        "m4.large",
+        "m4.xlarge",
+        "m4.2xlarge",
+        "m4.4xlarge",
+        "m4.10xlarge",
+        "m4.16xlarge",
         "m5.large",
         "m5.xlarge",
         "m5.2xlarge",
@@ -22272,6 +23742,14 @@
         "m5a.12xlarge",
         "m5a.16xlarge",
         "m5a.24xlarge",
+        "m5ad.large",
+        "m5ad.xlarge",
+        "m5ad.2xlarge",
+        "m5ad.4xlarge",
+        "m5ad.8xlarge",
+        "m5ad.12xlarge",
+        "m5ad.16xlarge",
+        "m5ad.24xlarge",
         "m5d.large",
         "m5d.xlarge",
         "m5d.2xlarge",
@@ -22281,47 +23759,6 @@
         "m5d.16xlarge",
         "m5d.24xlarge",
         "m5d.metal",
-        "m5ad.large",
-        "m5ad.xlarge",
-        "m5ad.2xlarge",
-        "m5ad.4xlarge",
-        "m5ad.8xlarge",
-        "m5ad.12xlarge",
-        "m5ad.16xlarge",
-        "m5ad.24xlarge",
-        "m5zn.large",
-        "m5zn.xlarge",
-        "m5zn.2xlarge",
-        "m5zn.3xlarge",
-        "m5zn.6xlarge",
-        "m5zn.12xlarge",
-        "m5zn.metal",
-        "h1.2xlarge",
-        "h1.4xlarge",
-        "h1.8xlarge",
-        "h1.16xlarge",
-        "z1d.large",
-        "z1d.xlarge",
-        "z1d.2xlarge",
-        "z1d.3xlarge",
-        "z1d.6xlarge",
-        "z1d.12xlarge",
-        "z1d.metal",
-        "u-6tb1.56xlarge",
-        "u-6tb1.112xlarge",
-        "u-9tb1.112xlarge",
-        "u-12tb1.112xlarge",
-        "u-6tb1.metal",
-        "u-9tb1.metal",
-        "u-12tb1.metal",
-        "u-18tb1.metal",
-        "u-24tb1.metal",
-        "a1.medium",
-        "a1.large",
-        "a1.xlarge",
-        "a1.2xlarge",
-        "a1.4xlarge",
-        "a1.metal",
         "m5dn.large",
         "m5dn.xlarge",
         "m5dn.2xlarge",
@@ -22340,28 +23777,23 @@
         "m5n.16xlarge",
         "m5n.24xlarge",
         "m5n.metal",
-        "r5dn.large",
-        "r5dn.xlarge",
-        "r5dn.2xlarge",
-        "r5dn.4xlarge",
-        "r5dn.8xlarge",
-        "r5dn.12xlarge",
-        "r5dn.16xlarge",
-        "r5dn.24xlarge",
-        "r5dn.metal",
-        "r5n.large",
-        "r5n.xlarge",
-        "r5n.2xlarge",
-        "r5n.4xlarge",
-        "r5n.8xlarge",
-        "r5n.12xlarge",
-        "r5n.16xlarge",
-        "r5n.24xlarge",
-        "r5n.metal",
-        "inf1.xlarge",
-        "inf1.2xlarge",
-        "inf1.6xlarge",
-        "inf1.24xlarge",
+        "m5zn.large",
+        "m5zn.xlarge",
+        "m5zn.2xlarge",
+        "m5zn.3xlarge",
+        "m5zn.6xlarge",
+        "m5zn.12xlarge",
+        "m5zn.metal",
+        "m6a.large",
+        "m6a.xlarge",
+        "m6a.2xlarge",
+        "m6a.4xlarge",
+        "m6a.8xlarge",
+        "m6a.12xlarge",
+        "m6a.16xlarge",
+        "m6a.24xlarge",
+        "m6a.32xlarge",
+        "m6a.48xlarge",
         "m6g.metal",
         "m6g.medium",
         "m6g.large",
@@ -22389,7 +23821,165 @@
         "m6i.16xlarge",
         "m6i.24xlarge",
         "m6i.32xlarge",
+        "m6i.metal",
         "mac1.metal",
+        "p2.xlarge",
+        "p2.8xlarge",
+        "p2.16xlarge",
+        "p3.2xlarge",
+        "p3.8xlarge",
+        "p3.16xlarge",
+        "p3dn.24xlarge",
+        "p4d.24xlarge",
+        "r3.large",
+        "r3.xlarge",
+        "r3.2xlarge",
+        "r3.4xlarge",
+        "r3.8xlarge",
+        "r4.large",
+        "r4.xlarge",
+        "r4.2xlarge",
+        "r4.4xlarge",
+        "r4.8xlarge",
+        "r4.16xlarge",
+        "r5.large",
+        "r5.xlarge",
+        "r5.2xlarge",
+        "r5.4xlarge",
+        "r5.8xlarge",
+        "r5.12xlarge",
+        "r5.16xlarge",
+        "r5.24xlarge",
+        "r5.metal",
+        "r5a.large",
+        "r5a.xlarge",
+        "r5a.2xlarge",
+        "r5a.4xlarge",
+        "r5a.8xlarge",
+        "r5a.12xlarge",
+        "r5a.16xlarge",
+        "r5a.24xlarge",
+        "r5ad.large",
+        "r5ad.xlarge",
+        "r5ad.2xlarge",
+        "r5ad.4xlarge",
+        "r5ad.8xlarge",
+        "r5ad.12xlarge",
+        "r5ad.16xlarge",
+        "r5ad.24xlarge",
+        "r5b.large",
+        "r5b.xlarge",
+        "r5b.2xlarge",
+        "r5b.4xlarge",
+        "r5b.8xlarge",
+        "r5b.12xlarge",
+        "r5b.16xlarge",
+        "r5b.24xlarge",
+        "r5b.metal",
+        "r5d.large",
+        "r5d.xlarge",
+        "r5d.2xlarge",
+        "r5d.4xlarge",
+        "r5d.8xlarge",
+        "r5d.12xlarge",
+        "r5d.16xlarge",
+        "r5d.24xlarge",
+        "r5d.metal",
+        "r5dn.large",
+        "r5dn.xlarge",
+        "r5dn.2xlarge",
+        "r5dn.4xlarge",
+        "r5dn.8xlarge",
+        "r5dn.12xlarge",
+        "r5dn.16xlarge",
+        "r5dn.24xlarge",
+        "r5dn.metal",
+        "r5n.large",
+        "r5n.xlarge",
+        "r5n.2xlarge",
+        "r5n.4xlarge",
+        "r5n.8xlarge",
+        "r5n.12xlarge",
+        "r5n.16xlarge",
+        "r5n.24xlarge",
+        "r5n.metal",
+        "r6g.medium",
+        "r6g.large",
+        "r6g.xlarge",
+        "r6g.2xlarge",
+        "r6g.4xlarge",
+        "r6g.8xlarge",
+        "r6g.12xlarge",
+        "r6g.16xlarge",
+        "r6g.metal",
+        "r6gd.medium",
+        "r6gd.large",
+        "r6gd.xlarge",
+        "r6gd.2xlarge",
+        "r6gd.4xlarge",
+        "r6gd.8xlarge",
+        "r6gd.12xlarge",
+        "r6gd.16xlarge",
+        "r6gd.metal",
+        "r6i.large",
+        "r6i.xlarge",
+        "r6i.2xlarge",
+        "r6i.4xlarge",
+        "r6i.8xlarge",
+        "r6i.12xlarge",
+        "r6i.16xlarge",
+        "r6i.24xlarge",
+        "r6i.32xlarge",
+        "r6i.metal",
+        "t1.micro",
+        "t2.nano",
+        "t2.micro",
+        "t2.small",
+        "t2.medium",
+        "t2.large",
+        "t2.xlarge",
+        "t2.2xlarge",
+        "t3.nano",
+        "t3.micro",
+        "t3.small",
+        "t3.medium",
+        "t3.large",
+        "t3.xlarge",
+        "t3.2xlarge",
+        "t3a.nano",
+        "t3a.micro",
+        "t3a.small",
+        "t3a.medium",
+        "t3a.large",
+        "t3a.xlarge",
+        "t3a.2xlarge",
+        "t4g.nano",
+        "t4g.micro",
+        "t4g.small",
+        "t4g.medium",
+        "t4g.large",
+        "t4g.xlarge",
+        "t4g.2xlarge",
+        "u-6tb1.56xlarge",
+        "u-6tb1.112xlarge",
+        "u-9tb1.112xlarge",
+        "u-12tb1.112xlarge",
+        "u-6tb1.metal",
+        "u-9tb1.metal",
+        "u-12tb1.metal",
+        "u-18tb1.metal",
+        "u-24tb1.metal",
+        "vt1.3xlarge",
+        "vt1.6xlarge",
+        "vt1.24xlarge",
+        "x1.16xlarge",
+        "x1.32xlarge",
+        "x1e.xlarge",
+        "x1e.2xlarge",
+        "x1e.4xlarge",
+        "x1e.8xlarge",
+        "x1e.16xlarge",
+        "x1e.32xlarge",
         "x2gd.medium",
         "x2gd.large",
         "x2gd.xlarge",
@@ -22399,17 +23989,13 @@
         "x2gd.12xlarge",
         "x2gd.16xlarge",
         "x2gd.metal",
-        "vt1.3xlarge",
-        "vt1.6xlarge",
-        "vt1.24xlarge",
-        "g5.xlarge",
-        "g5.2xlarge",
-        "g5.4xlarge",
-        "g5.8xlarge",
-        "g5.12xlarge",
-        "g5.16xlarge",
-        "g5.24xlarge",
-        "g5.48xlarge"
+        "z1d.large",
+        "z1d.xlarge",
+        "z1d.2xlarge",
+        "z1d.3xlarge",
+        "z1d.6xlarge",
+        "z1d.12xlarge",
+        "z1d.metal"
       ]
     },
     "InstanceTypeHypervisor":{
@@ -22767,6 +24353,616 @@
         "shape":"String",
         "locationName":"item"
       }
+    },
+    "Ipam":{
+      "type":"structure",
+      "members":{
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "IpamId":{
+          "shape":"IpamId",
+          "locationName":"ipamId"
+        },
+        "IpamArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamArn"
+        },
+        "IpamRegion":{
+          "shape":"String",
+          "locationName":"ipamRegion"
+        },
+        "PublicDefaultScopeId":{
+          "shape":"IpamScopeId",
+          "locationName":"publicDefaultScopeId"
+        },
+        "PrivateDefaultScopeId":{
+          "shape":"IpamScopeId",
+          "locationName":"privateDefaultScopeId"
+        },
+        "ScopeCount":{
+          "shape":"Integer",
+          "locationName":"scopeCount"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "OperatingRegions":{
+          "shape":"IpamOperatingRegionSet",
+          "locationName":"operatingRegionSet"
+        },
+        "State":{
+          "shape":"IpamState",
+          "locationName":"state"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "IpamAddressHistoryMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "IpamAddressHistoryRecord":{
+      "type":"structure",
+      "members":{
+        "ResourceOwnerId":{
+          "shape":"String",
+          "locationName":"resourceOwnerId"
+        },
+        "ResourceRegion":{
+          "shape":"String",
+          "locationName":"resourceRegion"
+        },
+        "ResourceType":{
+          "shape":"IpamAddressHistoryResourceType",
+          "locationName":"resourceType"
+        },
+        "ResourceId":{
+          "shape":"String",
+          "locationName":"resourceId"
+        },
+        "ResourceCidr":{
+          "shape":"String",
+          "locationName":"resourceCidr"
+        },
+        "ResourceName":{
+          "shape":"String",
+          "locationName":"resourceName"
+        },
+        "ResourceComplianceStatus":{
+          "shape":"IpamComplianceStatus",
+          "locationName":"resourceComplianceStatus"
+        },
+        "ResourceOverlapStatus":{
+          "shape":"IpamOverlapStatus",
+          "locationName":"resourceOverlapStatus"
+        },
+        "VpcId":{
+          "shape":"String",
+          "locationName":"vpcId"
+        },
+        "SampledStartTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"sampledStartTime"
+        },
+        "SampledEndTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"sampledEndTime"
+        }
+      }
+    },
+    "IpamAddressHistoryRecordSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamAddressHistoryRecord",
+        "locationName":"item"
+      }
+    },
+    "IpamAddressHistoryResourceType":{
+      "type":"string",
+      "enum":[
+        "eip",
+        "vpc",
+        "subnet",
+        "network-interface",
+        "instance"
+      ]
+    },
+    "IpamCidrAuthorizationContext":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"},
+        "Signature":{"shape":"String"}
+      }
+    },
+    "IpamComplianceStatus":{
+      "type":"string",
+      "enum":[
+        "compliant",
+        "noncompliant",
+        "unmanaged",
+        "ignored"
+      ]
+    },
+    "IpamId":{"type":"string"},
+    "IpamManagementState":{
+      "type":"string",
+      "enum":[
+        "managed",
+        "unmanaged",
+        "ignored"
+      ]
+    },
+    "IpamMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "IpamNetmaskLength":{
+      "type":"integer",
+      "max":128,
+      "min":0
+    },
+    "IpamOperatingRegion":{
+      "type":"structure",
+      "members":{
+        "RegionName":{
+          "shape":"String",
+          "locationName":"regionName"
+        }
+      }
+    },
+    "IpamOperatingRegionSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamOperatingRegion",
+        "locationName":"item"
+      }
+    },
+    "IpamOverlapStatus":{
+      "type":"string",
+      "enum":[
+        "overlapping",
+        "nonoverlapping",
+        "ignored"
+      ]
+    },
+    "IpamPool":{
+      "type":"structure",
+      "members":{
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "IpamPoolId":{
+          "shape":"IpamPoolId",
+          "locationName":"ipamPoolId"
+        },
+        "SourceIpamPoolId":{
+          "shape":"IpamPoolId",
+          "locationName":"sourceIpamPoolId"
+        },
+        "IpamPoolArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamPoolArn"
+        },
+        "IpamScopeArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamScopeArn"
+        },
+        "IpamScopeType":{
+          "shape":"IpamScopeType",
+          "locationName":"ipamScopeType"
+        },
+        "IpamArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamArn"
+        },
+        "IpamRegion":{
+          "shape":"String",
+          "locationName":"ipamRegion"
+        },
+        "Locale":{
+          "shape":"String",
+          "locationName":"locale"
+        },
+        "PoolDepth":{
+          "shape":"Integer",
+          "locationName":"poolDepth"
+        },
+        "State":{
+          "shape":"IpamPoolState",
+          "locationName":"state"
+        },
+        "StateMessage":{
+          "shape":"String",
+          "locationName":"stateMessage"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "AutoImport":{
+          "shape":"Boolean",
+          "locationName":"autoImport"
+        },
+        "PubliclyAdvertisable":{
+          "shape":"Boolean",
+          "locationName":"publiclyAdvertisable"
+        },
+        "AddressFamily":{
+          "shape":"AddressFamily",
+          "locationName":"addressFamily"
+        },
+        "AllocationMinNetmaskLength":{
+          "shape":"IpamNetmaskLength",
+          "locationName":"allocationMinNetmaskLength"
+        },
+        "AllocationMaxNetmaskLength":{
+          "shape":"IpamNetmaskLength",
+          "locationName":"allocationMaxNetmaskLength"
+        },
+        "AllocationDefaultNetmaskLength":{
+          "shape":"IpamNetmaskLength",
+          "locationName":"allocationDefaultNetmaskLength"
+        },
+        "AllocationResourceTags":{
+          "shape":"IpamResourceTagList",
+          "locationName":"allocationResourceTagSet"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        },
+        "AwsService":{
+          "shape":"IpamPoolAwsService",
+          "locationName":"awsService"
+        }
+      }
+    },
+    "IpamPoolAllocation":{
+      "type":"structure",
+      "members":{
+        "Cidr":{
+          "shape":"String",
+          "locationName":"cidr"
+        },
+        "IpamPoolAllocationId":{
+          "shape":"IpamPoolAllocationId",
+          "locationName":"ipamPoolAllocationId"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "ResourceId":{
+          "shape":"String",
+          "locationName":"resourceId"
+        },
+        "ResourceType":{
+          "shape":"IpamPoolAllocationResourceType",
+          "locationName":"resourceType"
+        },
+        "ResourceRegion":{
+          "shape":"String",
+          "locationName":"resourceRegion"
+        },
+        "ResourceOwner":{
+          "shape":"String",
+          "locationName":"resourceOwner"
+        }
+      }
+    },
+    "IpamPoolAllocationDisallowedCidrs":{
+      "type":"list",
+      "member":{
+        "shape":"String",
+        "locationName":"item"
+      }
+    },
+    "IpamPoolAllocationId":{"type":"string"},
+    "IpamPoolAllocationResourceType":{
+      "type":"string",
+      "enum":[
+        "ipam-pool",
+        "vpc",
+        "ec2-public-ipv4-pool",
+        "custom"
+      ]
+    },
+    "IpamPoolAllocationSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPoolAllocation",
+        "locationName":"item"
+      }
+    },
+    "IpamPoolAwsService":{
+      "type":"string",
+      "enum":["ec2"]
+    },
+    "IpamPoolCidr":{
+      "type":"structure",
+      "members":{
+        "Cidr":{
+          "shape":"String",
+          "locationName":"cidr"
+        },
+        "State":{
+          "shape":"IpamPoolCidrState",
+          "locationName":"state"
+        },
+        "FailureReason":{
+          "shape":"IpamPoolCidrFailureReason",
+          "locationName":"failureReason"
+        }
+      }
+    },
+    "IpamPoolCidrFailureCode":{
+      "type":"string",
+      "enum":["cidr-not-available"]
+    },
+    "IpamPoolCidrFailureReason":{
+      "type":"structure",
+      "members":{
+        "Code":{
+          "shape":"IpamPoolCidrFailureCode",
+          "locationName":"code"
+        },
+        "Message":{
+          "shape":"String",
+          "locationName":"message"
+        }
+      }
+    },
+    "IpamPoolCidrSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPoolCidr",
+        "locationName":"item"
+      }
+    },
+    "IpamPoolCidrState":{
+      "type":"string",
+      "enum":[
+        "pending-provision",
+        "provisioned",
+        "failed-provision",
+        "pending-deprovision",
+        "deprovisioned",
+        "failed-deprovision",
+        "pending-import",
+        "failed-import"
+      ]
+    },
+    "IpamPoolId":{"type":"string"},
+    "IpamPoolSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamPool",
+        "locationName":"item"
+      }
+    },
+    "IpamPoolState":{
+      "type":"string",
+      "enum":[
+        "create-in-progress",
+        "create-complete",
+        "create-failed",
+        "modify-in-progress",
+        "modify-complete",
+        "modify-failed",
+        "delete-in-progress",
+        "delete-complete",
+        "delete-failed"
+      ]
+    },
+    "IpamResourceCidr":{
+      "type":"structure",
+      "members":{
+        "IpamId":{
+          "shape":"IpamId",
+          "locationName":"ipamId"
+        },
+        "IpamScopeId":{
+          "shape":"IpamScopeId",
+          "locationName":"ipamScopeId"
+        },
+        "IpamPoolId":{
+          "shape":"IpamPoolId",
+          "locationName":"ipamPoolId"
+        },
+        "ResourceRegion":{
+          "shape":"String",
+          "locationName":"resourceRegion"
+        },
+        "ResourceOwnerId":{
+          "shape":"String",
+          "locationName":"resourceOwnerId"
+        },
+        "ResourceId":{
+          "shape":"String",
+          "locationName":"resourceId"
+        },
+        "ResourceName":{
+          "shape":"String",
+          "locationName":"resourceName"
+        },
+        "ResourceCidr":{
+          "shape":"String",
+          "locationName":"resourceCidr"
+        },
+        "ResourceType":{
+          "shape":"IpamResourceType",
+          "locationName":"resourceType"
+        },
+        "ResourceTags":{
+          "shape":"IpamResourceTagList",
+          "locationName":"resourceTagSet"
+        },
+        "IpUsage":{
+          "shape":"BoxedDouble",
+          "locationName":"ipUsage"
+        },
+        "ComplianceStatus":{
+          "shape":"IpamComplianceStatus",
+          "locationName":"complianceStatus"
+        },
+        "ManagementState":{
+          "shape":"IpamManagementState",
+          "locationName":"managementState"
+        },
+        "OverlapStatus":{
+          "shape":"IpamOverlapStatus",
+          "locationName":"overlapStatus"
+        },
+        "VpcId":{
+          "shape":"String",
+          "locationName":"vpcId"
+        }
+      }
+    },
+    "IpamResourceCidrSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamResourceCidr",
+        "locationName":"item"
+      }
+    },
+    "IpamResourceTag":{
+      "type":"structure",
+      "members":{
+        "Key":{
+          "shape":"String",
+          "locationName":"key"
+        },
+        "Value":{
+          "shape":"String",
+          "locationName":"value"
+        }
+      }
+    },
+    "IpamResourceTagList":{
+      "type":"list",
+      "member":{
+        "shape":"IpamResourceTag",
+        "locationName":"item"
+      }
+    },
+    "IpamResourceType":{
+      "type":"string",
+      "enum":[
+        "vpc",
+        "subnet",
+        "eip",
+        "public-ipv4-pool",
+        "ipv6-pool"
+      ]
+    },
+    "IpamScope":{
+      "type":"structure",
+      "members":{
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "IpamScopeId":{
+          "shape":"IpamScopeId",
+          "locationName":"ipamScopeId"
+        },
+        "IpamScopeArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamScopeArn"
+        },
+        "IpamArn":{
+          "shape":"ResourceArn",
+          "locationName":"ipamArn"
+        },
+        "IpamRegion":{
+          "shape":"String",
+          "locationName":"ipamRegion"
+        },
+        "IpamScopeType":{
+          "shape":"IpamScopeType",
+          "locationName":"ipamScopeType"
+        },
+        "IsDefault":{
+          "shape":"Boolean",
+          "locationName":"isDefault"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "PoolCount":{
+          "shape":"Integer",
+          "locationName":"poolCount"
+        },
+        "State":{
+          "shape":"IpamScopeState",
+          "locationName":"state"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "IpamScopeId":{"type":"string"},
+    "IpamScopeSet":{
+      "type":"list",
+      "member":{
+        "shape":"IpamScope",
+        "locationName":"item"
+      }
+    },
+    "IpamScopeState":{
+      "type":"string",
+      "enum":[
+        "create-in-progress",
+        "create-complete",
+        "create-failed",
+        "modify-in-progress",
+        "modify-complete",
+        "modify-failed",
+        "delete-in-progress",
+        "delete-complete",
+        "delete-failed"
+      ]
+    },
+    "IpamScopeType":{
+      "type":"string",
+      "enum":[
+        "public",
+        "private"
+      ]
+    },
+    "IpamSet":{
+      "type":"list",
+      "member":{
+        "shape":"Ipam",
+        "locationName":"item"
+      }
+    },
+    "IpamState":{
+      "type":"string",
+      "enum":[
+        "create-in-progress",
+        "create-complete",
+        "create-failed",
+        "modify-in-progress",
+        "modify-complete",
+        "modify-failed",
+        "delete-in-progress",
+        "delete-complete",
+        "delete-failed"
+      ]
     },
     "Ipv4PoolEc2Id":{"type":"string"},
     "Ipv4PrefixList":{
@@ -23538,6 +25734,10 @@
         "HttpProtocolIpv6":{
           "shape":"LaunchTemplateInstanceMetadataProtocolIpv6",
           "locationName":"httpProtocolIpv6"
+        },
+        "InstanceMetadataTags":{
+          "shape":"LaunchTemplateInstanceMetadataTagsState",
+          "locationName":"instanceMetadataTags"
         }
       }
     },
@@ -23547,7 +25747,8 @@
         "HttpTokens":{"shape":"LaunchTemplateHttpTokensState"},
         "HttpPutResponseHopLimit":{"shape":"Integer"},
         "HttpEndpoint":{"shape":"LaunchTemplateInstanceMetadataEndpointState"},
-        "HttpProtocolIpv6":{"shape":"LaunchTemplateInstanceMetadataProtocolIpv6"}
+        "HttpProtocolIpv6":{"shape":"LaunchTemplateInstanceMetadataProtocolIpv6"},
+        "InstanceMetadataTags":{"shape":"LaunchTemplateInstanceMetadataTagsState"}
       }
     },
     "LaunchTemplateInstanceMetadataOptionsState":{
@@ -23558,6 +25759,13 @@
       ]
     },
     "LaunchTemplateInstanceMetadataProtocolIpv6":{
+      "type":"string",
+      "enum":[
+        "disabled",
+        "enabled"
+      ]
+    },
+    "LaunchTemplateInstanceMetadataTagsState":{
       "type":"string",
       "enum":[
         "disabled",
@@ -23824,6 +26032,31 @@
         "PartitionNumber":{"shape":"Integer"}
       }
     },
+    "LaunchTemplatePrivateDnsNameOptions":{
+      "type":"structure",
+      "members":{
+        "HostnameType":{
+          "shape":"HostnameType",
+          "locationName":"hostnameType"
+        },
+        "EnableResourceNameDnsARecord":{
+          "shape":"Boolean",
+          "locationName":"enableResourceNameDnsARecord"
+        },
+        "EnableResourceNameDnsAAAARecord":{
+          "shape":"Boolean",
+          "locationName":"enableResourceNameDnsAAAARecord"
+        }
+      }
+    },
+    "LaunchTemplatePrivateDnsNameOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "HostnameType":{"shape":"HostnameType"},
+        "EnableResourceNameDnsARecord":{"shape":"Boolean"},
+        "EnableResourceNameDnsAAAARecord":{"shape":"Boolean"}
+      }
+    },
     "LaunchTemplateSet":{
       "type":"list",
       "member":{
@@ -23997,6 +26230,36 @@
       "member":{
         "shape":"LicenseConfigurationRequest",
         "locationName":"item"
+      }
+    },
+    "ListSnapshotsInRecycleBinMaxResults":{
+      "type":"integer",
+      "max":1000,
+      "min":5
+    },
+    "ListSnapshotsInRecycleBinRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListSnapshotsInRecycleBinMaxResults"},
+        "NextToken":{"shape":"String"},
+        "SnapshotIds":{
+          "shape":"SnapshotIdStringList",
+          "locationName":"SnapshotId"
+        },
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ListSnapshotsInRecycleBinResult":{
+      "type":"structure",
+      "members":{
+        "Snapshots":{
+          "shape":"SnapshotRecycleBinInfoList",
+          "locationName":"snapshotSet"
+        },
+        "NextToken":{
+          "shape":"String",
+          "locationName":"nextToken"
+        }
       }
     },
     "ListingState":{
@@ -24690,7 +26953,9 @@
         },
         "VpcId":{"shape":"VpcId"},
         "SelfServicePortal":{"shape":"SelfServicePortal"},
-        "ClientConnectOptions":{"shape":"ClientConnectOptions"}
+        "ClientConnectOptions":{"shape":"ClientConnectOptions"},
+        "SessionTimeoutHours":{"shape":"Integer"},
+        "ClientLoginBannerOptions":{"shape":"ClientLoginBannerOptions"}
       }
     },
     "ModifyClientVpnEndpointResult":{
@@ -25065,7 +27330,8 @@
         "HttpPutResponseHopLimit":{"shape":"Integer"},
         "HttpEndpoint":{"shape":"InstanceMetadataEndpointState"},
         "DryRun":{"shape":"Boolean"},
-        "HttpProtocolIpv6":{"shape":"InstanceMetadataProtocolState"}
+        "HttpProtocolIpv6":{"shape":"InstanceMetadataProtocolState"},
+        "InstanceMetadataTags":{"shape":"InstanceMetadataTagsState"}
       }
     },
     "ModifyInstanceMetadataOptionsResult":{
@@ -25112,6 +27378,109 @@
         "Return":{
           "shape":"Boolean",
           "locationName":"return"
+        }
+      }
+    },
+    "ModifyIpamPoolRequest":{
+      "type":"structure",
+      "required":["IpamPoolId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPoolId":{"shape":"IpamPoolId"},
+        "Description":{"shape":"String"},
+        "AutoImport":{"shape":"Boolean"},
+        "AllocationMinNetmaskLength":{"shape":"IpamNetmaskLength"},
+        "AllocationMaxNetmaskLength":{"shape":"IpamNetmaskLength"},
+        "AllocationDefaultNetmaskLength":{"shape":"IpamNetmaskLength"},
+        "ClearAllocationDefaultNetmaskLength":{"shape":"Boolean"},
+        "AddAllocationResourceTags":{
+          "shape":"RequestIpamResourceTagList",
+          "locationName":"AddAllocationResourceTag"
+        },
+        "RemoveAllocationResourceTags":{
+          "shape":"RequestIpamResourceTagList",
+          "locationName":"RemoveAllocationResourceTag"
+        }
+      }
+    },
+    "ModifyIpamPoolResult":{
+      "type":"structure",
+      "members":{
+        "IpamPool":{
+          "shape":"IpamPool",
+          "locationName":"ipamPool"
+        }
+      }
+    },
+    "ModifyIpamRequest":{
+      "type":"structure",
+      "required":["IpamId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamId":{"shape":"IpamId"},
+        "Description":{"shape":"String"},
+        "AddOperatingRegions":{
+          "shape":"AddIpamOperatingRegionSet",
+          "locationName":"AddOperatingRegion"
+        },
+        "RemoveOperatingRegions":{
+          "shape":"RemoveIpamOperatingRegionSet",
+          "locationName":"RemoveOperatingRegion"
+        }
+      }
+    },
+    "ModifyIpamResourceCidrRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceId",
+        "ResourceCidr",
+        "ResourceRegion",
+        "CurrentIpamScopeId",
+        "Monitored"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ResourceId":{"shape":"String"},
+        "ResourceCidr":{"shape":"String"},
+        "ResourceRegion":{"shape":"String"},
+        "CurrentIpamScopeId":{"shape":"IpamScopeId"},
+        "DestinationIpamScopeId":{"shape":"IpamScopeId"},
+        "Monitored":{"shape":"Boolean"}
+      }
+    },
+    "ModifyIpamResourceCidrResult":{
+      "type":"structure",
+      "members":{
+        "IpamResourceCidr":{
+          "shape":"IpamResourceCidr",
+          "locationName":"ipamResourceCidr"
+        }
+      }
+    },
+    "ModifyIpamResult":{
+      "type":"structure",
+      "members":{
+        "Ipam":{
+          "shape":"Ipam",
+          "locationName":"ipam"
+        }
+      }
+    },
+    "ModifyIpamScopeRequest":{
+      "type":"structure",
+      "required":["IpamScopeId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamScopeId":{"shape":"IpamScopeId"},
+        "Description":{"shape":"String"}
+      }
+    },
+    "ModifyIpamScopeResult":{
+      "type":"structure",
+      "members":{
+        "IpamScope":{
+          "shape":"IpamScope",
+          "locationName":"ipamScope"
         }
       }
     },
@@ -25195,6 +27564,25 @@
         }
       }
     },
+    "ModifyPrivateDnsNameOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "InstanceId":{"shape":"InstanceId"},
+        "PrivateDnsHostnameType":{"shape":"HostnameType"},
+        "EnableResourceNameDnsARecord":{"shape":"Boolean"},
+        "EnableResourceNameDnsAAAARecord":{"shape":"Boolean"}
+      }
+    },
+    "ModifyPrivateDnsNameOptionsResult":{
+      "type":"structure",
+      "members":{
+        "Return":{
+          "shape":"Boolean",
+          "locationName":"return"
+        }
+      }
+    },
     "ModifyReservedInstancesRequest":{
       "type":"structure",
       "required":[
@@ -25271,6 +27659,28 @@
         }
       }
     },
+    "ModifySnapshotTierRequest":{
+      "type":"structure",
+      "required":["SnapshotId"],
+      "members":{
+        "SnapshotId":{"shape":"SnapshotId"},
+        "StorageTier":{"shape":"TargetStorageTier"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "ModifySnapshotTierResult":{
+      "type":"structure",
+      "members":{
+        "SnapshotId":{
+          "shape":"String",
+          "locationName":"snapshotId"
+        },
+        "TieringStartTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"tieringStartTime"
+        }
+      }
+    },
     "ModifySpotFleetRequestRequest":{
       "type":"structure",
       "required":["SpotFleetRequestId"],
@@ -25316,7 +27726,12 @@
         },
         "MapCustomerOwnedIpOnLaunch":{"shape":"AttributeBooleanValue"},
         "CustomerOwnedIpv4Pool":{"shape":"CoipPoolId"},
-        "EnableDns64":{"shape":"AttributeBooleanValue"}
+        "EnableDns64":{"shape":"AttributeBooleanValue"},
+        "PrivateDnsHostnameTypeOnLaunch":{"shape":"HostnameType"},
+        "EnableResourceNameDnsARecordOnLaunch":{"shape":"AttributeBooleanValue"},
+        "EnableResourceNameDnsAAAARecordOnLaunch":{"shape":"AttributeBooleanValue"},
+        "EnableLniAtDeviceIndex":{"shape":"Integer"},
+        "DisableLniAtDeviceIndex":{"shape":"AttributeBooleanValue"}
       }
     },
     "ModifyTrafficMirrorFilterNetworkServicesRequest":{
@@ -25630,6 +28045,27 @@
         }
       }
     },
+    "ModifyVpcEndpointServicePayerResponsibilityRequest":{
+      "type":"structure",
+      "required":[
+        "ServiceId",
+        "PayerResponsibility"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "ServiceId":{"shape":"VpcEndpointServiceId"},
+        "PayerResponsibility":{"shape":"PayerResponsibility"}
+      }
+    },
+    "ModifyVpcEndpointServicePayerResponsibilityResult":{
+      "type":"structure",
+      "members":{
+        "ReturnValue":{
+          "shape":"Boolean",
+          "locationName":"return"
+        }
+      }
+    },
     "ModifyVpcEndpointServicePermissionsRequest":{
       "type":"structure",
       "required":["ServiceId"],
@@ -25890,6 +28326,29 @@
         }
       }
     },
+    "MoveByoipCidrToIpamRequest":{
+      "type":"structure",
+      "required":[
+        "Cidr",
+        "IpamPoolId",
+        "IpamPoolOwner"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "Cidr":{"shape":"String"},
+        "IpamPoolId":{"shape":"IpamPoolId"},
+        "IpamPoolOwner":{"shape":"String"}
+      }
+    },
+    "MoveByoipCidrToIpamResult":{
+      "type":"structure",
+      "members":{
+        "ByoipCidr":{
+          "shape":"ByoipCidr",
+          "locationName":"byoipCidr"
+        }
+      }
+    },
     "MoveStatus":{
       "type":"string",
       "enum":[
@@ -26030,6 +28489,7 @@
         "deleted"
       ]
     },
+    "NetmaskLength":{"type":"integer"},
     "NetworkAcl":{
       "type":"structure",
       "members":{
@@ -26225,6 +28685,127 @@
         }
       }
     },
+    "NetworkInsightsAccessScope":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeId":{
+          "shape":"NetworkInsightsAccessScopeId",
+          "locationName":"networkInsightsAccessScopeId"
+        },
+        "NetworkInsightsAccessScopeArn":{
+          "shape":"ResourceArn",
+          "locationName":"networkInsightsAccessScopeArn"
+        },
+        "CreatedDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"createdDate"
+        },
+        "UpdatedDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"updatedDate"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "NetworkInsightsAccessScopeAnalysis":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeAnalysisId":{
+          "shape":"NetworkInsightsAccessScopeAnalysisId",
+          "locationName":"networkInsightsAccessScopeAnalysisId"
+        },
+        "NetworkInsightsAccessScopeAnalysisArn":{
+          "shape":"ResourceArn",
+          "locationName":"networkInsightsAccessScopeAnalysisArn"
+        },
+        "NetworkInsightsAccessScopeId":{
+          "shape":"NetworkInsightsAccessScopeId",
+          "locationName":"networkInsightsAccessScopeId"
+        },
+        "Status":{
+          "shape":"AnalysisStatus",
+          "locationName":"status"
+        },
+        "StatusMessage":{
+          "shape":"String",
+          "locationName":"statusMessage"
+        },
+        "WarningMessage":{
+          "shape":"String",
+          "locationName":"warningMessage"
+        },
+        "StartDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"startDate"
+        },
+        "EndDate":{
+          "shape":"MillisecondDateTime",
+          "locationName":"endDate"
+        },
+        "FindingsFound":{
+          "shape":"FindingsFound",
+          "locationName":"findingsFound"
+        },
+        "AnalyzedEniCount":{
+          "shape":"Integer",
+          "locationName":"analyzedEniCount"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        }
+      }
+    },
+    "NetworkInsightsAccessScopeAnalysisId":{"type":"string"},
+    "NetworkInsightsAccessScopeAnalysisIdList":{
+      "type":"list",
+      "member":{
+        "shape":"NetworkInsightsAccessScopeAnalysisId",
+        "locationName":"item"
+      }
+    },
+    "NetworkInsightsAccessScopeAnalysisList":{
+      "type":"list",
+      "member":{
+        "shape":"NetworkInsightsAccessScopeAnalysis",
+        "locationName":"item"
+      }
+    },
+    "NetworkInsightsAccessScopeContent":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeId":{
+          "shape":"NetworkInsightsAccessScopeId",
+          "locationName":"networkInsightsAccessScopeId"
+        },
+        "MatchPaths":{
+          "shape":"AccessScopePathList",
+          "locationName":"matchPathSet"
+        },
+        "ExcludePaths":{
+          "shape":"AccessScopePathList",
+          "locationName":"excludePathSet"
+        }
+      }
+    },
+    "NetworkInsightsAccessScopeId":{"type":"string"},
+    "NetworkInsightsAccessScopeIdList":{
+      "type":"list",
+      "member":{
+        "shape":"NetworkInsightsAccessScopeId",
+        "locationName":"item"
+      }
+    },
+    "NetworkInsightsAccessScopeList":{
+      "type":"list",
+      "member":{
+        "shape":"NetworkInsightsAccessScope",
+        "locationName":"item"
+      }
+    },
     "NetworkInsightsAnalysis":{
       "type":"structure",
       "members":{
@@ -26255,6 +28836,10 @@
         "StatusMessage":{
           "shape":"String",
           "locationName":"statusMessage"
+        },
+        "WarningMessage":{
+          "shape":"String",
+          "locationName":"warningMessage"
         },
         "NetworkPathFound":{
           "shape":"Boolean",
@@ -26362,6 +28947,7 @@
         "locationName":"item"
       }
     },
+    "NetworkInsightsResourceId":{"type":"string"},
     "NetworkInterface":{
       "type":"structure",
       "members":{
@@ -26460,6 +29046,14 @@
         "DenyAllIgwTraffic":{
           "shape":"Boolean",
           "locationName":"denyAllIgwTraffic"
+        },
+        "Ipv6Native":{
+          "shape":"Boolean",
+          "locationName":"ipv6Native"
+        },
+        "Ipv6Address":{
+          "shape":"String",
+          "locationName":"ipv6Address"
         }
       }
     },
@@ -26859,6 +29453,72 @@
         "locationName":"Owner"
       }
     },
+    "PacketHeaderStatement":{
+      "type":"structure",
+      "members":{
+        "SourceAddresses":{
+          "shape":"ValueStringList",
+          "locationName":"sourceAddressSet"
+        },
+        "DestinationAddresses":{
+          "shape":"ValueStringList",
+          "locationName":"destinationAddressSet"
+        },
+        "SourcePorts":{
+          "shape":"ValueStringList",
+          "locationName":"sourcePortSet"
+        },
+        "DestinationPorts":{
+          "shape":"ValueStringList",
+          "locationName":"destinationPortSet"
+        },
+        "SourcePrefixLists":{
+          "shape":"ValueStringList",
+          "locationName":"sourcePrefixListSet"
+        },
+        "DestinationPrefixLists":{
+          "shape":"ValueStringList",
+          "locationName":"destinationPrefixListSet"
+        },
+        "Protocols":{
+          "shape":"ProtocolList",
+          "locationName":"protocolSet"
+        }
+      }
+    },
+    "PacketHeaderStatementRequest":{
+      "type":"structure",
+      "members":{
+        "SourceAddresses":{
+          "shape":"ValueStringList",
+          "locationName":"SourceAddress"
+        },
+        "DestinationAddresses":{
+          "shape":"ValueStringList",
+          "locationName":"DestinationAddress"
+        },
+        "SourcePorts":{
+          "shape":"ValueStringList",
+          "locationName":"SourcePort"
+        },
+        "DestinationPorts":{
+          "shape":"ValueStringList",
+          "locationName":"DestinationPort"
+        },
+        "SourcePrefixLists":{
+          "shape":"ValueStringList",
+          "locationName":"SourcePrefixList"
+        },
+        "DestinationPrefixLists":{
+          "shape":"ValueStringList",
+          "locationName":"DestinationPrefixList"
+        },
+        "Protocols":{
+          "shape":"ProtocolList",
+          "locationName":"Protocol"
+        }
+      }
+    },
     "PartitionLoadFrequency":{
       "type":"string",
       "enum":[
@@ -26878,6 +29538,10 @@
         "AclRule":{
           "shape":"AnalysisAclRule",
           "locationName":"aclRule"
+        },
+        "AttachedTo":{
+          "shape":"AnalysisComponent",
+          "locationName":"attachedTo"
         },
         "Component":{
           "shape":"AnalysisComponent",
@@ -26923,6 +29587,30 @@
         "shape":"PathComponent",
         "locationName":"item"
       }
+    },
+    "PathStatement":{
+      "type":"structure",
+      "members":{
+        "PacketHeaderStatement":{
+          "shape":"PacketHeaderStatement",
+          "locationName":"packetHeaderStatement"
+        },
+        "ResourceStatement":{
+          "shape":"ResourceStatement",
+          "locationName":"resourceStatement"
+        }
+      }
+    },
+    "PathStatementRequest":{
+      "type":"structure",
+      "members":{
+        "PacketHeaderStatement":{"shape":"PacketHeaderStatementRequest"},
+        "ResourceStatement":{"shape":"ResourceStatementRequest"}
+      }
+    },
+    "PayerResponsibility":{
+      "type":"string",
+      "enum":["ServiceOwner"]
     },
     "PaymentOption":{
       "type":"string",
@@ -27237,8 +29925,16 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "GroupArn":{
+          "shape":"String",
+          "locationName":"groupArn"
         }
       }
+    },
+    "PlacementGroupArn":{
+      "type":"string",
+      "pattern":"^arn:aws([a-z-]+)?:ec2:[a-z\\d-]+:\\d{12}:placement-group/([^\\s].+[^\\s]){1,255}$"
     },
     "PlacementGroupId":{"type":"string"},
     "PlacementGroupIdStringList":{
@@ -27621,6 +30317,48 @@
         }
       }
     },
+    "PrivateDnsNameOptionsOnLaunch":{
+      "type":"structure",
+      "members":{
+        "HostnameType":{
+          "shape":"HostnameType",
+          "locationName":"hostnameType"
+        },
+        "EnableResourceNameDnsARecord":{
+          "shape":"Boolean",
+          "locationName":"enableResourceNameDnsARecord"
+        },
+        "EnableResourceNameDnsAAAARecord":{
+          "shape":"Boolean",
+          "locationName":"enableResourceNameDnsAAAARecord"
+        }
+      }
+    },
+    "PrivateDnsNameOptionsRequest":{
+      "type":"structure",
+      "members":{
+        "HostnameType":{"shape":"HostnameType"},
+        "EnableResourceNameDnsARecord":{"shape":"Boolean"},
+        "EnableResourceNameDnsAAAARecord":{"shape":"Boolean"}
+      }
+    },
+    "PrivateDnsNameOptionsResponse":{
+      "type":"structure",
+      "members":{
+        "HostnameType":{
+          "shape":"HostnameType",
+          "locationName":"hostnameType"
+        },
+        "EnableResourceNameDnsARecord":{
+          "shape":"Boolean",
+          "locationName":"enableResourceNameDnsARecord"
+        },
+        "EnableResourceNameDnsAAAARecord":{
+          "shape":"Boolean",
+          "locationName":"enableResourceNameDnsAAAARecord"
+        }
+      }
+    },
     "PrivateIpAddressConfigSet":{
       "type":"list",
       "member":{
@@ -27730,6 +30468,13 @@
         "udp"
       ]
     },
+    "ProtocolList":{
+      "type":"list",
+      "member":{
+        "shape":"Protocol",
+        "locationName":"item"
+      }
+    },
     "ProtocolValue":{
       "type":"string",
       "enum":["gre"]
@@ -27756,6 +30501,52 @@
         "ByoipCidr":{
           "shape":"ByoipCidr",
           "locationName":"byoipCidr"
+        }
+      }
+    },
+    "ProvisionIpamPoolCidrRequest":{
+      "type":"structure",
+      "required":["IpamPoolId"],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPoolId":{"shape":"IpamPoolId"},
+        "Cidr":{"shape":"String"},
+        "CidrAuthorizationContext":{"shape":"IpamCidrAuthorizationContext"}
+      }
+    },
+    "ProvisionIpamPoolCidrResult":{
+      "type":"structure",
+      "members":{
+        "IpamPoolCidr":{
+          "shape":"IpamPoolCidr",
+          "locationName":"ipamPoolCidr"
+        }
+      }
+    },
+    "ProvisionPublicIpv4PoolCidrRequest":{
+      "type":"structure",
+      "required":[
+        "IpamPoolId",
+        "PoolId",
+        "NetmaskLength"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPoolId":{"shape":"IpamPoolId"},
+        "PoolId":{"shape":"Ipv4PoolEc2Id"},
+        "NetmaskLength":{"shape":"Integer"}
+      }
+    },
+    "ProvisionPublicIpv4PoolCidrResult":{
+      "type":"structure",
+      "members":{
+        "PoolId":{
+          "shape":"Ipv4PoolEc2Id",
+          "locationName":"poolId"
+        },
+        "PoolAddressRange":{
+          "shape":"PublicIpv4PoolRange",
+          "locationName":"poolAddressRange"
         }
       }
     },
@@ -27900,7 +30691,7 @@
           "locationName":"hostIdSet"
         },
         "HostReservationId":{
-          "shape":"String",
+          "shape":"HostReservationId",
           "locationName":"hostReservationId"
         },
         "HourlyPrice":{
@@ -28428,6 +31219,40 @@
         }
       }
     },
+    "ReleaseIpamPoolAllocationRequest":{
+      "type":"structure",
+      "required":[
+        "IpamPoolId",
+        "Cidr"
+      ],
+      "members":{
+        "DryRun":{"shape":"Boolean"},
+        "IpamPoolId":{"shape":"IpamPoolId"},
+        "Cidr":{"shape":"String"},
+        "IpamPoolAllocationId":{"shape":"IpamPoolAllocationId"}
+      }
+    },
+    "ReleaseIpamPoolAllocationResult":{
+      "type":"structure",
+      "members":{
+        "Success":{
+          "shape":"Boolean",
+          "locationName":"success"
+        }
+      }
+    },
+    "RemoveIpamOperatingRegion":{
+      "type":"structure",
+      "members":{
+        "RegionName":{"shape":"String"}
+      }
+    },
+    "RemoveIpamOperatingRegionSet":{
+      "type":"list",
+      "member":{"shape":"RemoveIpamOperatingRegion"},
+      "max":50,
+      "min":0
+    },
     "RemovePrefixListEntries":{
       "type":"list",
       "member":{"shape":"RemovePrefixListEntry"},
@@ -28795,6 +31620,20 @@
       "max":100,
       "min":0
     },
+    "RequestIpamResourceTag":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"String"},
+        "Value":{"shape":"String"}
+      }
+    },
+    "RequestIpamResourceTagList":{
+      "type":"list",
+      "member":{
+        "shape":"RequestIpamResourceTag",
+        "locationName":"item"
+      }
+    },
     "RequestLaunchTemplateData":{
       "type":"structure",
       "members":{
@@ -28849,7 +31688,8 @@
         "HibernationOptions":{"shape":"LaunchTemplateHibernationOptionsRequest"},
         "MetadataOptions":{"shape":"LaunchTemplateInstanceMetadataOptionsRequest"},
         "EnclaveOptions":{"shape":"LaunchTemplateEnclaveOptionsRequest"},
-        "InstanceRequirements":{"shape":"InstanceRequirementsRequest"}
+        "InstanceRequirements":{"shape":"InstanceRequirementsRequest"},
+        "PrivateDnsNameOptions":{"shape":"LaunchTemplatePrivateDnsNameOptionsRequest"}
       }
     },
     "RequestSpotFleetRequest":{
@@ -29636,6 +32476,32 @@
         "locationName":"item"
       }
     },
+    "ResourceStatement":{
+      "type":"structure",
+      "members":{
+        "Resources":{
+          "shape":"ValueStringList",
+          "locationName":"resourceSet"
+        },
+        "ResourceTypes":{
+          "shape":"ValueStringList",
+          "locationName":"resourceTypeSet"
+        }
+      }
+    },
+    "ResourceStatementRequest":{
+      "type":"structure",
+      "members":{
+        "Resources":{
+          "shape":"ValueStringList",
+          "locationName":"Resource"
+        },
+        "ResourceTypes":{
+          "shape":"ValueStringList",
+          "locationName":"ResourceType"
+        }
+      }
+    },
     "ResourceType":{
       "type":"string",
       "enum":[
@@ -29659,6 +32525,9 @@
         "instance",
         "instance-event-window",
         "internet-gateway",
+        "ipam",
+        "ipam-pool",
+        "ipam-scope",
         "ipv4pool-ec2",
         "ipv6pool-ec2",
         "key-pair",
@@ -29674,6 +32543,8 @@
         "network-interface",
         "network-insights-analysis",
         "network-insights-path",
+        "network-insights-access-scope",
+        "network-insights-access-scope-analysis",
         "placement-group",
         "prefix-list",
         "replace-root-volume-task",
@@ -29844,6 +32715,10 @@
         "InstanceRequirements":{
           "shape":"InstanceRequirements",
           "locationName":"instanceRequirements"
+        },
+        "PrivateDnsNameOptions":{
+          "shape":"LaunchTemplatePrivateDnsNameOptions",
+          "locationName":"privateDnsNameOptions"
         }
       }
     },
@@ -29898,6 +32773,91 @@
         "PrefixList":{
           "shape":"ManagedPrefixList",
           "locationName":"prefixList"
+        }
+      }
+    },
+    "RestoreSnapshotFromRecycleBinRequest":{
+      "type":"structure",
+      "required":["SnapshotId"],
+      "members":{
+        "SnapshotId":{"shape":"SnapshotId"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "RestoreSnapshotFromRecycleBinResult":{
+      "type":"structure",
+      "members":{
+        "SnapshotId":{
+          "shape":"String",
+          "locationName":"snapshotId"
+        },
+        "OutpostArn":{
+          "shape":"String",
+          "locationName":"outpostArn"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "Encrypted":{
+          "shape":"Boolean",
+          "locationName":"encrypted"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "Progress":{
+          "shape":"String",
+          "locationName":"progress"
+        },
+        "StartTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"startTime"
+        },
+        "State":{
+          "shape":"SnapshotState",
+          "locationName":"status"
+        },
+        "VolumeId":{
+          "shape":"String",
+          "locationName":"volumeId"
+        },
+        "VolumeSize":{
+          "shape":"Integer",
+          "locationName":"volumeSize"
+        }
+      }
+    },
+    "RestoreSnapshotTierRequest":{
+      "type":"structure",
+      "required":["SnapshotId"],
+      "members":{
+        "SnapshotId":{"shape":"SnapshotId"},
+        "TemporaryRestoreDays":{"shape":"RestoreSnapshotTierRequestTemporaryRestoreDays"},
+        "PermanentRestore":{"shape":"Boolean"},
+        "DryRun":{"shape":"Boolean"}
+      }
+    },
+    "RestoreSnapshotTierRequestTemporaryRestoreDays":{"type":"integer"},
+    "RestoreSnapshotTierResult":{
+      "type":"structure",
+      "members":{
+        "SnapshotId":{
+          "shape":"String",
+          "locationName":"snapshotId"
+        },
+        "RestoreStartTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"restoreStartTime"
+        },
+        "RestoreDuration":{
+          "shape":"Integer",
+          "locationName":"restoreDuration"
+        },
+        "IsPermanentRestore":{
+          "shape":"Boolean",
+          "locationName":"isPermanentRestore"
         }
       }
     },
@@ -30346,7 +33306,8 @@
           "locationName":"LicenseSpecification"
         },
         "MetadataOptions":{"shape":"InstanceMetadataOptionsRequest"},
-        "EnclaveOptions":{"shape":"EnclaveOptionsRequest"}
+        "EnclaveOptions":{"shape":"EnclaveOptionsRequest"},
+        "PrivateDnsNameOptions":{"shape":"PrivateDnsNameOptionsRequest"}
       }
     },
     "RunScheduledInstancesRequest":{
@@ -31091,6 +34052,10 @@
           "shape":"PrivateDnsNameConfiguration",
           "locationName":"privateDnsNameConfiguration"
         },
+        "PayerResponsibility":{
+          "shape":"PayerResponsibility",
+          "locationName":"payerResponsibility"
+        },
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
@@ -31150,6 +34115,10 @@
         "ManagesVpcEndpoints":{
           "shape":"Boolean",
           "locationName":"managesVpcEndpoints"
+        },
+        "PayerResponsibility":{
+          "shape":"PayerResponsibility",
+          "locationName":"payerResponsibility"
         },
         "Tags":{
           "shape":"TagList",
@@ -31289,6 +34258,14 @@
         "Tags":{
           "shape":"TagList",
           "locationName":"tagSet"
+        },
+        "StorageTier":{
+          "shape":"StorageTier",
+          "locationName":"storageTier"
+        },
+        "RestoreExpiryTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"restoreExpiryTime"
         }
       }
     },
@@ -31424,6 +34401,38 @@
         "locationName":"item"
       }
     },
+    "SnapshotRecycleBinInfo":{
+      "type":"structure",
+      "members":{
+        "SnapshotId":{
+          "shape":"String",
+          "locationName":"snapshotId"
+        },
+        "RecycleBinEnterTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"recycleBinEnterTime"
+        },
+        "RecycleBinExitTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"recycleBinExitTime"
+        },
+        "Description":{
+          "shape":"String",
+          "locationName":"description"
+        },
+        "VolumeId":{
+          "shape":"String",
+          "locationName":"volumeId"
+        }
+      }
+    },
+    "SnapshotRecycleBinInfoList":{
+      "type":"list",
+      "member":{
+        "shape":"SnapshotRecycleBinInfo",
+        "locationName":"item"
+      }
+    },
     "SnapshotSet":{
       "type":"list",
       "member":{
@@ -31436,7 +34445,9 @@
       "enum":[
         "pending",
         "completed",
-        "error"
+        "error",
+        "recoverable",
+        "recovering"
       ]
     },
     "SnapshotTaskDetail":{
@@ -31485,6 +34496,59 @@
         "UserBucket":{
           "shape":"UserBucketDetails",
           "locationName":"userBucket"
+        }
+      }
+    },
+    "SnapshotTierStatus":{
+      "type":"structure",
+      "members":{
+        "SnapshotId":{
+          "shape":"SnapshotId",
+          "locationName":"snapshotId"
+        },
+        "VolumeId":{
+          "shape":"VolumeId",
+          "locationName":"volumeId"
+        },
+        "Status":{
+          "shape":"SnapshotState",
+          "locationName":"status"
+        },
+        "OwnerId":{
+          "shape":"String",
+          "locationName":"ownerId"
+        },
+        "Tags":{
+          "shape":"TagList",
+          "locationName":"tagSet"
+        },
+        "StorageTier":{
+          "shape":"StorageTier",
+          "locationName":"storageTier"
+        },
+        "LastTieringStartTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"lastTieringStartTime"
+        },
+        "LastTieringProgress":{
+          "shape":"Integer",
+          "locationName":"lastTieringProgress"
+        },
+        "LastTieringOperationStatus":{
+          "shape":"TieringOperationStatus",
+          "locationName":"lastTieringOperationStatus"
+        },
+        "LastTieringOperationStatusDetail":{
+          "shape":"String",
+          "locationName":"lastTieringOperationStatusDetail"
+        },
+        "ArchivalCompleteTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"archivalCompleteTime"
+        },
+        "RestoreExpiryTime":{
+          "shape":"MillisecondDateTime",
+          "locationName":"restoreExpiryTime"
         }
       }
     },
@@ -32204,6 +35268,34 @@
         }
       }
     },
+    "StartNetworkInsightsAccessScopeAnalysisRequest":{
+      "type":"structure",
+      "required":[
+        "NetworkInsightsAccessScopeId",
+        "ClientToken"
+      ],
+      "members":{
+        "NetworkInsightsAccessScopeId":{"shape":"NetworkInsightsAccessScopeId"},
+        "DryRun":{"shape":"Boolean"},
+        "TagSpecifications":{
+          "shape":"TagSpecificationList",
+          "locationName":"TagSpecification"
+        },
+        "ClientToken":{
+          "shape":"String",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "StartNetworkInsightsAccessScopeAnalysisResult":{
+      "type":"structure",
+      "members":{
+        "NetworkInsightsAccessScopeAnalysis":{
+          "shape":"NetworkInsightsAccessScopeAnalysis",
+          "locationName":"networkInsightsAccessScopeAnalysis"
+        }
+      }
+    },
     "StartNetworkInsightsAnalysisRequest":{
       "type":"structure",
       "required":[
@@ -32348,6 +35440,13 @@
         "Key":{"shape":"String"}
       }
     },
+    "StorageTier":{
+      "type":"string",
+      "enum":[
+        "archive",
+        "standard"
+      ]
+    },
     "StoreImageTaskResult":{
       "type":"structure",
       "members":{
@@ -32419,6 +35518,10 @@
           "shape":"Boolean",
           "locationName":"defaultForAz"
         },
+        "EnableLniAtDeviceIndex":{
+          "shape":"Integer",
+          "locationName":"enableLniAtDeviceIndex"
+        },
         "MapPublicIpOnLaunch":{
           "shape":"Boolean",
           "locationName":"mapPublicIpOnLaunch"
@@ -32470,6 +35573,14 @@
         "EnableDns64":{
           "shape":"Boolean",
           "locationName":"enableDns64"
+        },
+        "Ipv6Native":{
+          "shape":"Boolean",
+          "locationName":"ipv6Native"
+        },
+        "PrivateDnsNameOptionsOnLaunch":{
+          "shape":"PrivateDnsNameOptionsOnLaunch",
+          "locationName":"privateDnsNameOptionsOnLaunch"
         }
       }
     },
@@ -32878,6 +35989,10 @@
         "locationName":"item"
       }
     },
+    "TargetStorageTier":{
+      "type":"string",
+      "enum":["archive"]
+    },
     "TelemetryStatus":{
       "type":"string",
       "enum":[
@@ -32974,6 +36089,49 @@
         "shape":"ThreadsPerCore",
         "locationName":"item"
       }
+    },
+    "ThroughResourcesStatement":{
+      "type":"structure",
+      "members":{
+        "ResourceStatement":{
+          "shape":"ResourceStatement",
+          "locationName":"resourceStatement"
+        }
+      }
+    },
+    "ThroughResourcesStatementList":{
+      "type":"list",
+      "member":{
+        "shape":"ThroughResourcesStatement",
+        "locationName":"item"
+      }
+    },
+    "ThroughResourcesStatementRequest":{
+      "type":"structure",
+      "members":{
+        "ResourceStatement":{"shape":"ResourceStatementRequest"}
+      }
+    },
+    "ThroughResourcesStatementRequestList":{
+      "type":"list",
+      "member":{
+        "shape":"ThroughResourcesStatementRequest",
+        "locationName":"item"
+      }
+    },
+    "TieringOperationStatus":{
+      "type":"string",
+      "enum":[
+        "archival-in-progress",
+        "archival-completed",
+        "archival-failed",
+        "temporary-restore-in-progress",
+        "temporary-restore-completed",
+        "temporary-restore-failed",
+        "permanent-restore-in-progress",
+        "permanent-restore-completed",
+        "permanent-restore-failed"
+      ]
     },
     "TotalLocalStorageGB":{
       "type":"structure",
@@ -36321,6 +39479,13 @@
         "Availability Zone",
         "Region"
       ]
+    },
+    "snapshotTierStatusSet":{
+      "type":"list",
+      "member":{
+        "shape":"SnapshotTierStatus",
+        "locationName":"item"
+      }
     },
     "totalFpgaMemory":{"type":"integer"},
     "totalGpuMemory":{"type":"integer"}

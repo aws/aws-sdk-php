@@ -201,6 +201,12 @@
       "type":"list",
       "member":{"shape":"Attendee"}
     },
+    "AudioFeatures":{
+      "type":"structure",
+      "members":{
+        "EchoReduction":{"shape":"MeetingFeatureStatus"}
+      }
+    },
     "BadRequestException":{
       "type":"structure",
       "members":{
@@ -237,6 +243,7 @@
         "Errors":{"shape":"BatchCreateAttendeeErrorList"}
       }
     },
+    "Boolean":{"type":"boolean"},
     "ClientRequestToken":{
       "type":"string",
       "max":64,
@@ -301,7 +308,8 @@
         "MediaRegion":{"shape":"MediaRegion"},
         "MeetingHostId":{"shape":"ExternalUserId"},
         "ExternalMeetingId":{"shape":"ExternalMeetingId"},
-        "NotificationsConfiguration":{"shape":"NotificationsConfiguration"}
+        "NotificationsConfiguration":{"shape":"NotificationsConfiguration"},
+        "MeetingFeatures":{"shape":"MeetingFeaturesConfiguration"}
       }
     },
     "CreateMeetingResponse":{
@@ -326,6 +334,7 @@
         "MediaRegion":{"shape":"MediaRegion"},
         "MeetingHostId":{"shape":"ExternalUserId"},
         "ExternalMeetingId":{"shape":"ExternalMeetingId"},
+        "MeetingFeatures":{"shape":"MeetingFeaturesConfiguration"},
         "NotificationsConfiguration":{"shape":"NotificationsConfiguration"},
         "Attendees":{"shape":"CreateMeetingWithAttendeesRequestItemList"}
       }
@@ -386,7 +395,8 @@
         "Specialty":{"shape":"TranscribeMedicalSpecialty"},
         "Type":{"shape":"TranscribeMedicalType"},
         "VocabularyName":{"shape":"String"},
-        "Region":{"shape":"TranscribeMedicalRegion"}
+        "Region":{"shape":"TranscribeMedicalRegion"},
+        "ContentIdentificationType":{"shape":"TranscribeMedicalContentIdentificationType"}
       }
     },
     "EngineTranscribeSettings":{
@@ -397,7 +407,13 @@
         "VocabularyFilterMethod":{"shape":"TranscribeVocabularyFilterMethod"},
         "VocabularyFilterName":{"shape":"String"},
         "VocabularyName":{"shape":"String"},
-        "Region":{"shape":"TranscribeRegion"}
+        "Region":{"shape":"TranscribeRegion"},
+        "EnablePartialResultsStabilization":{"shape":"Boolean"},
+        "PartialResultsStability":{"shape":"TranscribePartialResultsStability"},
+        "ContentIdentificationType":{"shape":"TranscribeContentIdentificationType"},
+        "ContentRedactionType":{"shape":"TranscribeContentRedactionType"},
+        "PiiEntityTypes":{"shape":"TranscribePiiEntityTypes"},
+        "LanguageModelName":{"shape":"TranscribeLanguageModelName"}
       }
     },
     "ExternalMeetingId":{
@@ -537,7 +553,21 @@
         "MeetingHostId":{"shape":"ExternalUserId"},
         "ExternalMeetingId":{"shape":"ExternalMeetingId"},
         "MediaRegion":{"shape":"MediaRegion"},
-        "MediaPlacement":{"shape":"MediaPlacement"}
+        "MediaPlacement":{"shape":"MediaPlacement"},
+        "MeetingFeatures":{"shape":"MeetingFeaturesConfiguration"}
+      }
+    },
+    "MeetingFeatureStatus":{
+      "type":"string",
+      "enum":[
+        "AVAILABLE",
+        "UNAVAILABLE"
+      ]
+    },
+    "MeetingFeaturesConfiguration":{
+      "type":"structure",
+      "members":{
+        "Audio":{"shape":"AudioFeatures"}
       }
     },
     "NotFoundException":{
@@ -610,6 +640,14 @@
       "type":"string",
       "max":4096
     },
+    "TranscribeContentIdentificationType":{
+      "type":"string",
+      "enum":["PII"]
+    },
+    "TranscribeContentRedactionType":{
+      "type":"string",
+      "enum":["PII"]
+    },
     "TranscribeLanguageCode":{
       "type":"string",
       "enum":[
@@ -626,6 +664,16 @@
         "ko-KR",
         "zh-CN"
       ]
+    },
+    "TranscribeLanguageModelName":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "pattern":"^[0-9a-zA-Z._-]+"
+    },
+    "TranscribeMedicalContentIdentificationType":{
+      "type":"string",
+      "enum":["PHI"]
     },
     "TranscribeMedicalLanguageCode":{
       "type":"string",
@@ -660,6 +708,20 @@
         "CONVERSATION",
         "DICTATION"
       ]
+    },
+    "TranscribePartialResultsStability":{
+      "type":"string",
+      "enum":[
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "TranscribePiiEntityTypes":{
+      "type":"string",
+      "max":300,
+      "min":1,
+      "pattern":"^[A-Z_, ]+"
     },
     "TranscribeRegion":{
       "type":"string",

@@ -130,7 +130,7 @@ class ConfigurationProvider extends AbstractConfigurationProvider
         $profile = $profile ?: (getenv(self::ENV_PROFILE) ?: 'default');
 
         return function () use ($profile, $filename) {
-            if (!is_readable($filename)) {
+            if (!@is_readable($filename)) {
                 return self::reject("Cannot read configuration from $filename");
             }
 
@@ -166,7 +166,9 @@ class ConfigurationProvider extends AbstractConfigurationProvider
     public static function fallback($region)
     {
         return function () use ($region) {
-            if (\Aws\is_fips_pseudo_region($region)){
+            $isFipsPseudoRegion = strpos($region, 'fips-') !== false
+                || strpos($region, '-fips') !== false;
+            if ($isFipsPseudoRegion){
                 $configuration = new Configuration(true);
             } else {
                 $configuration = new Configuration(false);

@@ -100,6 +100,23 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DeactivateAnomalyDetector":{
+      "name":"DeactivateAnomalyDetector",
+      "http":{
+        "method":"POST",
+        "requestUri":"/DeactivateAnomalyDetector"
+      },
+      "input":{"shape":"DeactivateAnomalyDetectorRequest"},
+      "output":{"shape":"DeactivateAnomalyDetectorResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DeleteAlert":{
       "name":"DeleteAlert",
       "http":{
@@ -277,6 +294,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListAnomalyGroupRelatedMetrics":{
+      "name":"ListAnomalyGroupRelatedMetrics",
+      "http":{
+        "method":"POST",
+        "requestUri":"/ListAnomalyGroupRelatedMetrics"
+      },
+      "input":{"shape":"ListAnomalyGroupRelatedMetricsRequest"},
+      "output":{"shape":"ListAnomalyGroupRelatedMetricsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"TooManyRequestsException"}
+      ]
+    },
     "ListAnomalyGroupSummaries":{
       "name":"ListAnomalyGroupSummaries",
       "http":{
@@ -415,7 +448,8 @@
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"},
         {"shape":"AccessDeniedException"},
-        {"shape":"TooManyRequestsException"}
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ServiceQuotaExceededException"}
       ]
     }
   },
@@ -547,6 +581,15 @@
       "min":1,
       "pattern":".*\\S.*"
     },
+    "AnomalyDetectorFailureType":{
+      "type":"string",
+      "enum":[
+        "ACTIVATION_FAILURE",
+        "BACK_TEST_ACTIVATION_FAILURE",
+        "DELETION_FAILURE",
+        "DEACTIVATION_FAILURE"
+      ]
+    },
     "AnomalyDetectorName":{
       "type":"string",
       "max":63,
@@ -564,7 +607,9 @@
         "LEARNING",
         "BACK_TEST_ACTIVATING",
         "BACK_TEST_ACTIVE",
-        "BACK_TEST_COMPLETE"
+        "BACK_TEST_COMPLETE",
+        "DEACTIVATED",
+        "DEACTIVATING"
       ]
     },
     "AnomalyDetectorSummary":{
@@ -639,10 +684,6 @@
     },
     "AppFlowConfig":{
       "type":"structure",
-      "required":[
-        "RoleArn",
-        "FlowName"
-      ],
       "members":{
         "RoleArn":{"shape":"Arn"},
         "FlowName":{"shape":"FlowName"}
@@ -680,7 +721,6 @@
     },
     "CloudWatchConfig":{
       "type":"structure",
-      "required":["RoleArn"],
       "members":{
         "RoleArn":{"shape":"Arn"}
       }
@@ -810,6 +850,18 @@
       "max":63,
       "pattern":".*\\S.*"
     },
+    "DeactivateAnomalyDetectorRequest":{
+      "type":"structure",
+      "required":["AnomalyDetectorArn"],
+      "members":{
+        "AnomalyDetectorArn":{"shape":"Arn"}
+      }
+    },
+    "DeactivateAnomalyDetectorResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteAlertRequest":{
       "type":"structure",
       "required":["AlertArn"],
@@ -890,7 +942,8 @@
         "LastModificationTime":{"shape":"Timestamp"},
         "Status":{"shape":"AnomalyDetectorStatus"},
         "FailureReason":{"shape":"ErrorMessage"},
-        "KmsKeyArn":{"shape":"KmsKeyArn"}
+        "KmsKeyArn":{"shape":"KmsKeyArn"},
+        "FailureType":{"shape":"AnomalyDetectorFailureType"}
       }
     },
     "DescribeMetricSetRequest":{
@@ -1076,6 +1129,19 @@
       "min":1
     },
     "Integer":{"type":"integer"},
+    "InterMetricImpactDetails":{
+      "type":"structure",
+      "members":{
+        "MetricName":{"shape":"MetricName"},
+        "AnomalyGroupId":{"shape":"UUID"},
+        "RelationshipType":{"shape":"RelationshipType"},
+        "ContributionPercentage":{"shape":"MetricChangePercentage"}
+      }
+    },
+    "InterMetricImpactList":{
+      "type":"list",
+      "member":{"shape":"InterMetricImpactDetails"}
+    },
     "InternalServerException":{
       "type":"structure",
       "required":["Message"],
@@ -1160,6 +1226,30 @@
       "type":"structure",
       "members":{
         "AnomalyDetectorSummaryList":{"shape":"AnomalyDetectorSummaryList"},
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAnomalyGroupRelatedMetricsRequest":{
+      "type":"structure",
+      "required":[
+        "AnomalyDetectorArn",
+        "AnomalyGroupId"
+      ],
+      "members":{
+        "AnomalyDetectorArn":{"shape":"Arn"},
+        "AnomalyGroupId":{"shape":"UUID"},
+        "RelationshipTypeFilter":{"shape":"RelationshipType"},
+        "MaxResults":{
+          "shape":"MaxResults",
+          "box":true
+        },
+        "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListAnomalyGroupRelatedMetricsResponse":{
+      "type":"structure",
+      "members":{
+        "InterMetricImpactList":{"shape":"InterMetricImpactList"},
         "NextToken":{"shape":"NextToken"}
       }
     },
@@ -1270,6 +1360,11 @@
         "AggregationFunction":{"shape":"AggregationFunction"},
         "Namespace":{"shape":"Namespace"}
       }
+    },
+    "MetricChangePercentage":{
+      "type":"double",
+      "max":100.0,
+      "min":0.0
     },
     "MetricLevelImpact":{
       "type":"structure",
@@ -1394,16 +1489,6 @@
     },
     "RDSSourceConfig":{
       "type":"structure",
-      "required":[
-        "DBInstanceIdentifier",
-        "DatabaseHost",
-        "DatabasePort",
-        "SecretManagerArn",
-        "DatabaseName",
-        "TableName",
-        "RoleArn",
-        "VpcConfiguration"
-      ],
       "members":{
         "DBInstanceIdentifier":{"shape":"RDSDatabaseIdentifier"},
         "DatabaseHost":{"shape":"DatabaseHost"},
@@ -1432,16 +1517,6 @@
     },
     "RedshiftSourceConfig":{
       "type":"structure",
-      "required":[
-        "ClusterIdentifier",
-        "DatabaseHost",
-        "DatabasePort",
-        "SecretManagerArn",
-        "DatabaseName",
-        "TableName",
-        "RoleArn",
-        "VpcConfiguration"
-      ],
       "members":{
         "ClusterIdentifier":{"shape":"RedshiftClusterIdentifier"},
         "DatabaseHost":{"shape":"DatabaseHost"},
@@ -1455,6 +1530,13 @@
         "RoleArn":{"shape":"Arn"},
         "VpcConfiguration":{"shape":"VpcConfiguration"}
       }
+    },
+    "RelationshipType":{
+      "type":"string",
+      "enum":[
+        "CAUSE_OF_INPUT_ANOMALY_GROUP",
+        "EFFECT_OF_INPUT_ANOMALY_GROUP"
+      ]
     },
     "ResourceId":{"type":"string"},
     "ResourceNotFoundException":{
@@ -1471,7 +1553,6 @@
     "ResourceType":{"type":"string"},
     "S3SourceConfig":{
       "type":"structure",
-      "required":["RoleArn"],
       "members":{
         "RoleArn":{"shape":"Arn"},
         "TemplatedPathList":{"shape":"TemplatedPathList"},

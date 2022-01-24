@@ -1967,7 +1967,8 @@
         "BoundingBox":{"shape":"BoundingBox"},
         "ImageId":{"shape":"ImageId"},
         "ExternalImageId":{"shape":"ExternalImageId"},
-        "Confidence":{"shape":"Percent"}
+        "Confidence":{"shape":"Percent"},
+        "IndexFacesModelVersion":{"shape":"IndexFacesModelVersion"}
       }
     },
     "FaceAttributes":{
@@ -2374,6 +2375,10 @@
       },
       "exception":true
     },
+    "IndexFacesModelVersion":{
+      "type":"string",
+      "pattern":"[0-9\\.]+"
+    },
     "IndexFacesRequest":{
       "type":"structure",
       "required":[
@@ -2493,7 +2498,9 @@
       "type":"string",
       "enum":[
         "Male",
-        "Female"
+        "Female",
+        "Nonbinary",
+        "Unlisted"
       ]
     },
     "Label":{

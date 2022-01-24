@@ -1588,6 +1588,21 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeManagedJobTemplate":{
+      "name":"DescribeManagedJobTemplate",
+      "http":{
+        "method":"GET",
+        "requestUri":"/managed-job-templates/{templateName}"
+      },
+      "input":{"shape":"DescribeManagedJobTemplateRequest"},
+      "output":{"shape":"DescribeManagedJobTemplateResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DescribeMitigationAction":{
       "name":"DescribeMitigationAction",
       "http":{
@@ -2471,6 +2486,21 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ServiceUnavailableException"}
+      ]
+    },
+    "ListManagedJobTemplates":{
+      "name":"ListManagedJobTemplates",
+      "http":{
+        "method":"GET",
+        "requestUri":"/managed-job-templates"
+      },
+      "input":{"shape":"ListManagedJobTemplatesRequest"},
+      "output":{"shape":"ListManagedJobTemplatesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "ListMitigationActions":{
@@ -4478,12 +4508,14 @@
         "status":{"shape":"AuthorizerStatus"},
         "creationDate":{"shape":"DateType"},
         "lastModifiedDate":{"shape":"DateType"},
-        "signingDisabled":{"shape":"BooleanKey"}
+        "signingDisabled":{"shape":"BooleanKey"},
+        "enableCachingForHttp":{"shape":"EnableCachingForHttp"}
       }
     },
     "AuthorizerFunctionArn":{
       "type":"string",
-      "max":2048
+      "max":2048,
+      "pattern":"[\\s\\S]*"
     },
     "AuthorizerName":{
       "type":"string",
@@ -4962,11 +4994,14 @@
     "CertificatePem":{
       "type":"string",
       "max":65536,
-      "min":1
+      "min":1,
+      "pattern":"[\\s\\S]*"
     },
     "CertificateSigningRequest":{
       "type":"string",
-      "min":1
+      "max":4096,
+      "min":1,
+      "pattern":"[\\s\\S]*"
     },
     "CertificateStateException":{
       "type":"structure",
@@ -5232,7 +5267,8 @@
         "tokenSigningPublicKeys":{"shape":"PublicKeyMap"},
         "status":{"shape":"AuthorizerStatus"},
         "tags":{"shape":"TagList"},
-        "signingDisabled":{"shape":"BooleanKey"}
+        "signingDisabled":{"shape":"BooleanKey"},
+        "enableCachingForHttp":{"shape":"EnableCachingForHttp"}
       }
     },
     "CreateAuthorizerResponse":{
@@ -5452,7 +5488,9 @@
         "timeoutConfig":{"shape":"TimeoutConfig"},
         "tags":{"shape":"TagList"},
         "namespaceId":{"shape":"NamespaceId"},
-        "jobTemplateArn":{"shape":"JobTemplateArn"}
+        "jobTemplateArn":{"shape":"JobTemplateArn"},
+        "jobExecutionsRetryConfig":{"shape":"JobExecutionsRetryConfig"},
+        "documentParameters":{"shape":"ParameterMap"}
       }
     },
     "CreateJobResponse":{
@@ -5483,7 +5521,8 @@
         "jobExecutionsRolloutConfig":{"shape":"JobExecutionsRolloutConfig"},
         "abortConfig":{"shape":"AbortConfig"},
         "timeoutConfig":{"shape":"TimeoutConfig"},
-        "tags":{"shape":"TagList"}
+        "tags":{"shape":"TagList"},
+        "jobExecutionsRetryConfig":{"shape":"JobExecutionsRetryConfig"}
       }
     },
     "CreateJobTemplateResponse":{
@@ -6966,7 +7005,36 @@
         "presignedUrlConfig":{"shape":"PresignedUrlConfig"},
         "jobExecutionsRolloutConfig":{"shape":"JobExecutionsRolloutConfig"},
         "abortConfig":{"shape":"AbortConfig"},
-        "timeoutConfig":{"shape":"TimeoutConfig"}
+        "timeoutConfig":{"shape":"TimeoutConfig"},
+        "jobExecutionsRetryConfig":{"shape":"JobExecutionsRetryConfig"}
+      }
+    },
+    "DescribeManagedJobTemplateRequest":{
+      "type":"structure",
+      "required":["templateName"],
+      "members":{
+        "templateName":{
+          "shape":"ManagedJobTemplateName",
+          "location":"uri",
+          "locationName":"templateName"
+        },
+        "templateVersion":{
+          "shape":"ManagedTemplateVersion",
+          "location":"querystring",
+          "locationName":"templateVersion"
+        }
+      }
+    },
+    "DescribeManagedJobTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "templateName":{"shape":"ManagedJobTemplateName"},
+        "templateArn":{"shape":"JobTemplateArn"},
+        "description":{"shape":"JobDescription"},
+        "templateVersion":{"shape":"ManagedTemplateVersion"},
+        "environments":{"shape":"Environments"},
+        "documentParameters":{"shape":"DocumentParameters"},
+        "document":{"shape":"JobDocument"}
       }
     },
     "DescribeMitigationActionRequest":{
@@ -7419,6 +7487,13 @@
       "type":"string",
       "enum":["DEACTIVATE"]
     },
+    "DeviceDefenderIndexingMode":{
+      "type":"string",
+      "enum":[
+        "OFF",
+        "VIOLATIONS"
+      ]
+    },
     "DeviceDefenderThingName":{
       "type":"string",
       "max":128,
@@ -7470,6 +7545,20 @@
       }
     },
     "DisconnectReason":{"type":"string"},
+    "DocumentParameter":{
+      "type":"structure",
+      "members":{
+        "key":{"shape":"ParameterKey"},
+        "description":{"shape":"JobDescription"},
+        "regex":{"shape":"Regex"},
+        "example":{"shape":"Example"},
+        "optional":{"shape":"Optional"}
+      }
+    },
+    "DocumentParameters":{
+      "type":"list",
+      "member":{"shape":"DocumentParameter"}
+    },
     "DomainConfigurationArn":{"type":"string"},
     "DomainConfigurationName":{
       "type":"string",
@@ -7499,7 +7588,8 @@
     "DomainName":{
       "type":"string",
       "max":253,
-      "min":1
+      "min":1,
+      "pattern":"[\\s\\S]*"
     },
     "DomainType":{
       "type":"string",
@@ -7594,6 +7684,7 @@
     "ElasticsearchId":{"type":"string"},
     "ElasticsearchIndex":{"type":"string"},
     "ElasticsearchType":{"type":"string"},
+    "EnableCachingForHttp":{"type":"boolean"},
     "EnableIoTLoggingParams":{
       "type":"structure",
       "required":[
@@ -7620,7 +7711,16 @@
     "EndpointAddress":{"type":"string"},
     "EndpointType":{
       "type":"string",
-      "max":128
+      "max":128,
+      "pattern":"[\\s\\S]*"
+    },
+    "Environment":{
+      "type":"string",
+      "pattern":"[^\\p{C}]+"
+    },
+    "Environments":{
+      "type":"list",
+      "member":{"shape":"Environment"}
     },
     "ErrorCode":{"type":"string"},
     "ErrorInfo":{
@@ -7658,6 +7758,10 @@
         "CERTIFICATE",
         "CA_CERTIFICATE"
       ]
+    },
+    "Example":{
+      "type":"string",
+      "pattern":"[^\\p{C}]+"
     },
     "ExecutionNamePrefix":{"type":"string"},
     "ExecutionNumber":{"type":"long"},
@@ -8172,12 +8276,14 @@
     "HttpHeaderName":{
       "type":"string",
       "max":8192,
-      "min":1
+      "min":1,
+      "pattern":"[\\s\\S]*"
     },
     "HttpHeaderValue":{
       "type":"string",
       "max":8192,
-      "min":1
+      "min":1,
+      "pattern":"[\\s\\S]*"
     },
     "HttpHeaders":{
       "type":"map",
@@ -8187,7 +8293,8 @@
     "HttpQueryString":{
       "type":"string",
       "max":4096,
-      "min":1
+      "min":1,
+      "pattern":"[\\s\\S]*"
     },
     "HttpUrlDestinationConfiguration":{
       "type":"structure",
@@ -8220,7 +8327,7 @@
     "IncrementFactor":{
       "type":"double",
       "max":5,
-      "min":1
+      "min":1.1
     },
     "IndexName":{
       "type":"string",
@@ -8265,6 +8372,15 @@
       "fault":true
     },
     "InternalFailureException":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"errorMessage"}
+      },
+      "error":{"httpStatusCode":500},
+      "exception":true,
+      "fault":true
+    },
+    "InternalServerException":{
       "type":"structure",
       "members":{
         "message":{"shape":"errorMessage"}
@@ -8371,7 +8487,9 @@
         "jobProcessDetails":{"shape":"JobProcessDetails"},
         "timeoutConfig":{"shape":"TimeoutConfig"},
         "namespaceId":{"shape":"NamespaceId"},
-        "jobTemplateArn":{"shape":"JobTemplateArn"}
+        "jobTemplateArn":{"shape":"JobTemplateArn"},
+        "jobExecutionsRetryConfig":{"shape":"JobExecutionsRetryConfig"},
+        "documentParameters":{"shape":"ParameterMap"}
       }
     },
     "JobArn":{"type":"string"},
@@ -8440,7 +8558,8 @@
         "queuedAt":{"shape":"DateType"},
         "startedAt":{"shape":"DateType"},
         "lastUpdatedAt":{"shape":"DateType"},
-        "executionNumber":{"shape":"ExecutionNumber"}
+        "executionNumber":{"shape":"ExecutionNumber"},
+        "retryAttempt":{"shape":"RetryAttempt"}
       }
     },
     "JobExecutionSummaryForJob":{
@@ -8464,6 +8583,13 @@
     "JobExecutionSummaryForThingList":{
       "type":"list",
       "member":{"shape":"JobExecutionSummaryForThing"}
+    },
+    "JobExecutionsRetryConfig":{
+      "type":"structure",
+      "required":["criteriaList"],
+      "members":{
+        "criteriaList":{"shape":"RetryCriteriaList"}
+      }
     },
     "JobExecutionsRolloutConfig":{
       "type":"structure",
@@ -8580,7 +8706,8 @@
     },
     "KeyValue":{
       "type":"string",
-      "max":5120
+      "max":5120,
+      "pattern":"[\\s\\S]*"
     },
     "KinesisAction":{
       "type":"structure",
@@ -9276,6 +9403,11 @@
           "shape":"NextToken",
           "location":"querystring",
           "locationName":"nextToken"
+        },
+        "jobId":{
+          "shape":"JobId",
+          "location":"querystring",
+          "locationName":"jobId"
         }
       }
     },
@@ -9352,6 +9484,33 @@
       "type":"structure",
       "members":{
         "jobs":{"shape":"JobSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListManagedJobTemplatesRequest":{
+      "type":"structure",
+      "members":{
+        "templateName":{
+          "shape":"ManagedJobTemplateName",
+          "location":"querystring",
+          "locationName":"templateName"
+        },
+        "maxResults":{
+          "shape":"LaserMaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListManagedJobTemplatesResponse":{
+      "type":"structure",
+      "members":{
+        "managedJobTemplates":{"shape":"ManagedJobTemplatesSummaryList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -10336,6 +10495,29 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "ManagedJobTemplateName":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "ManagedJobTemplateSummary":{
+      "type":"structure",
+      "members":{
+        "templateArn":{"shape":"JobTemplateArn"},
+        "templateName":{"shape":"ManagedJobTemplateName"},
+        "description":{"shape":"JobDescription"},
+        "environments":{"shape":"Environments"},
+        "templateVersion":{"shape":"ManagedTemplateVersion"}
+      }
+    },
+    "ManagedJobTemplatesSummaryList":{
+      "type":"list",
+      "member":{"shape":"ManagedJobTemplateSummary"}
+    },
+    "ManagedTemplateVersion":{
+      "type":"string",
+      "pattern":"^[1-9]+.[0-9]+"
+    },
     "Marker":{
       "type":"string",
       "max":1024,
@@ -10363,7 +10545,8 @@
     },
     "Message":{
       "type":"string",
-      "max":128
+      "max":128,
+      "pattern":"[\\s\\S]*"
     },
     "MessageFormat":{
       "type":"string",
@@ -10500,7 +10683,8 @@
     "MqttClientId":{
       "type":"string",
       "max":65535,
-      "min":1
+      "min":1,
+      "pattern":"[\\s\\S]*"
     },
     "MqttContext":{
       "type":"structure",
@@ -10518,7 +10702,15 @@
     "MqttUsername":{
       "type":"string",
       "max":65535,
-      "min":1
+      "min":1,
+      "pattern":"[\\s\\S]*"
+    },
+    "NamedShadowIndexingMode":{
+      "type":"string",
+      "enum":[
+        "OFF",
+        "ON"
+      ]
     },
     "NamespaceId":{
       "type":"string",
@@ -10550,6 +10742,11 @@
     "NumberList":{
       "type":"list",
       "member":{"shape":"Number"}
+    },
+    "NumberOfRetries":{
+      "type":"integer",
+      "max":10,
+      "min":0
     },
     "NumberOfThings":{
       "type":"integer",
@@ -10645,6 +10842,7 @@
         "id":{"shape":"ElasticsearchId"}
       }
     },
+    "Optional":{"type":"boolean"},
     "OptionalVersion":{"type":"long"},
     "OutgoingCertificate":{
       "type":"structure",
@@ -10667,7 +10865,29 @@
       "max":250,
       "min":1
     },
-    "Parameter":{"type":"string"},
+    "Parameter":{
+      "type":"string",
+      "max":2048,
+      "min":0,
+      "pattern":"[\\s\\S]*"
+    },
+    "ParameterKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[a-zA-Z0-9_-]+"
+    },
+    "ParameterMap":{
+      "type":"map",
+      "key":{"shape":"ParameterKey"},
+      "value":{"shape":"ParameterValue"}
+    },
+    "ParameterValue":{
+      "type":"string",
+      "max":512,
+      "min":1,
+      "pattern":"[^\\p{C}]+"
+    },
     "Parameters":{
       "type":"map",
       "key":{"shape":"Parameter"},
@@ -10720,7 +10940,12 @@
       }
     },
     "PolicyArn":{"type":"string"},
-    "PolicyDocument":{"type":"string"},
+    "PolicyDocument":{
+      "type":"string",
+      "max":404600,
+      "min":0,
+      "pattern":"[\\s\\S]*"
+    },
     "PolicyDocuments":{
       "type":"list",
       "member":{"shape":"PolicyDocument"}
@@ -10956,6 +11181,7 @@
     },
     "Recursive":{"type":"boolean"},
     "RecursiveWithoutDefault":{"type":"boolean"},
+    "Regex":{"type":"string"},
     "RegisterCACertificateRequest":{
       "type":"structure",
       "required":[
@@ -11184,7 +11410,8 @@
     },
     "Resource":{
       "type":"string",
-      "max":2048
+      "max":2048,
+      "pattern":"[\\s\\S]*"
     },
     "ResourceAlreadyExistsException":{
       "type":"structure",
@@ -11248,6 +11475,32 @@
     "Resources":{
       "type":"list",
       "member":{"shape":"Resource"}
+    },
+    "RetryAttempt":{"type":"integer"},
+    "RetryCriteria":{
+      "type":"structure",
+      "required":[
+        "failureType",
+        "numberOfRetries"
+      ],
+      "members":{
+        "failureType":{"shape":"RetryableFailureType"},
+        "numberOfRetries":{"shape":"NumberOfRetries"}
+      }
+    },
+    "RetryCriteriaList":{
+      "type":"list",
+      "member":{"shape":"RetryCriteria"},
+      "max":2,
+      "min":1
+    },
+    "RetryableFailureType":{
+      "type":"string",
+      "enum":[
+        "FAILED",
+        "TIMED_OUT",
+        "ALL"
+      ]
     },
     "RoleAlias":{
       "type":"string",
@@ -11489,7 +11742,8 @@
     "ServerName":{
       "type":"string",
       "max":253,
-      "min":1
+      "min":1,
+      "pattern":"[\\s\\S]*"
     },
     "ServiceName":{"type":"string"},
     "ServiceType":{
@@ -12019,7 +12273,12 @@
       }
     },
     "TemplateArn":{"type":"string"},
-    "TemplateBody":{"type":"string"},
+    "TemplateBody":{
+      "type":"string",
+      "max":10240,
+      "min":0,
+      "pattern":"[\\s\\S]*"
+    },
     "TemplateDescription":{
       "type":"string",
       "max":500,
@@ -12126,6 +12385,7 @@
         "thingGroupNames":{"shape":"ThingGroupNameList"},
         "attributes":{"shape":"Attributes"},
         "shadow":{"shape":"JsonDocument"},
+        "deviceDefender":{"shape":"JsonDocument"},
         "connectivity":{"shape":"ThingConnectivity"}
       }
     },
@@ -12221,6 +12481,8 @@
       "members":{
         "thingIndexingMode":{"shape":"ThingIndexingMode"},
         "thingConnectivityIndexingMode":{"shape":"ThingConnectivityIndexingMode"},
+        "deviceDefenderIndexingMode":{"shape":"DeviceDefenderIndexingMode"},
+        "namedShadowIndexingMode":{"shape":"NamedShadowIndexingMode"},
         "managedFields":{"shape":"Fields"},
         "customFields":{"shape":"Fields"}
       }
@@ -12364,7 +12626,8 @@
     "Token":{
       "type":"string",
       "max":6144,
-      "min":1
+      "min":1,
+      "pattern":"[\\s\\S]*"
     },
     "TokenKeyName":{
       "type":"string",
@@ -12605,7 +12868,8 @@
         "authorizerFunctionArn":{"shape":"AuthorizerFunctionArn"},
         "tokenKeyName":{"shape":"TokenKeyName"},
         "tokenSigningPublicKeys":{"shape":"PublicKeyMap"},
-        "status":{"shape":"AuthorizerStatus"}
+        "status":{"shape":"AuthorizerStatus"},
+        "enableCachingForHttp":{"shape":"EnableCachingForHttp"}
       }
     },
     "UpdateAuthorizerResponse":{
@@ -12855,7 +13119,8 @@
           "shape":"NamespaceId",
           "location":"querystring",
           "locationName":"namespaceId"
-        }
+        },
+        "jobExecutionsRetryConfig":{"shape":"JobExecutionsRetryConfig"}
       }
     },
     "UpdateMitigationActionRequest":{
@@ -13113,7 +13378,12 @@
       "type":"list",
       "member":{"shape":"ValidationError"}
     },
-    "Value":{"type":"string"},
+    "Value":{
+      "type":"string",
+      "max":4096,
+      "min":0,
+      "pattern":"[\\s\\S]*"
+    },
     "Variance":{"type":"double"},
     "VerificationState":{
       "type":"string",

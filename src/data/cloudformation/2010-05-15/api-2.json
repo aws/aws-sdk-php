@@ -1406,7 +1406,8 @@
         "ClientRequestToken":{
           "shape":"ClientRequestToken",
           "idempotencyToken":true
-        }
+        },
+        "ManagedExecution":{"shape":"ManagedExecution"}
       }
     },
     "CreateStackSetOutput":{
@@ -2051,13 +2052,12 @@
     },
     "ImportStacksToStackSetInput":{
       "type":"structure",
-      "required":[
-        "StackSetName",
-        "StackIds"
-      ],
+      "required":["StackSetName"],
       "members":{
         "StackSetName":{"shape":"StackSetNameOrId"},
         "StackIds":{"shape":"StackIdList"},
+        "StackIdsUrl":{"shape":"StackIdsUrl"},
+        "OrganizationalUnitIds":{"shape":"OrganizationalUnitIdList"},
         "OperationPreferences":{"shape":"StackSetOperationPreferences"},
         "OperationId":{
           "shape":"ClientRequestToken",
@@ -2379,6 +2379,13 @@
       "max":100000,
       "min":1
     },
+    "ManagedExecution":{
+      "type":"structure",
+      "members":{
+        "Active":{"shape":"ManagedExecutionNullable"}
+      }
+    },
+    "ManagedExecutionNullable":{"type":"boolean"},
     "MaxConcurrentCount":{
       "type":"integer",
       "min":1
@@ -3177,6 +3184,12 @@
       "type":"list",
       "member":{"shape":"StackId"}
     },
+    "StackIdsUrl":{
+      "type":"string",
+      "max":5120,
+      "min":1,
+      "pattern":"(s3://|http(s?)://).+"
+    },
     "StackInstance":{
       "type":"structure",
       "members":{
@@ -3453,7 +3466,8 @@
         "StackSetDriftDetectionDetails":{"shape":"StackSetDriftDetectionDetails"},
         "AutoDeployment":{"shape":"AutoDeployment"},
         "PermissionModel":{"shape":"PermissionModels"},
-        "OrganizationalUnitIds":{"shape":"OrganizationalUnitIdList"}
+        "OrganizationalUnitIds":{"shape":"OrganizationalUnitIdList"},
+        "ManagedExecution":{"shape":"ManagedExecution"}
       }
     },
     "StackSetARN":{"type":"string"},
@@ -3624,7 +3638,8 @@
         "AutoDeployment":{"shape":"AutoDeployment"},
         "PermissionModel":{"shape":"PermissionModels"},
         "DriftStatus":{"shape":"StackDriftStatus"},
-        "LastDriftCheckTimestamp":{"shape":"Timestamp"}
+        "LastDriftCheckTimestamp":{"shape":"Timestamp"},
+        "ManagedExecution":{"shape":"ManagedExecution"}
       }
     },
     "StackStatus":{
@@ -4088,7 +4103,8 @@
         },
         "Accounts":{"shape":"AccountList"},
         "Regions":{"shape":"RegionList"},
-        "CallAs":{"shape":"CallAs"}
+        "CallAs":{"shape":"CallAs"},
+        "ManagedExecution":{"shape":"ManagedExecution"}
       }
     },
     "UpdateStackSetOutput":{

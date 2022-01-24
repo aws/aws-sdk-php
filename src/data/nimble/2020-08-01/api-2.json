@@ -1820,7 +1820,8 @@
         "studioComponentIds":{"shape":"LaunchProfileStudioComponentIdList"},
         "tags":{"shape":"Tags"},
         "updatedAt":{"shape":"Timestamp"},
-        "updatedBy":{"shape":"String"}
+        "updatedBy":{"shape":"String"},
+        "validationResults":{"shape":"ValidationResults"}
       }
     },
     "LaunchProfileDescription":{
@@ -1937,6 +1938,10 @@
         "UPDATE_FAILED"
       ]
     },
+    "LaunchProfileStateList":{
+      "type":"list",
+      "member":{"shape":"LaunchProfileState"}
+    },
     "LaunchProfileStatusCode":{
       "type":"string",
       "enum":[
@@ -1960,6 +1965,40 @@
       "member":{"shape":"String"},
       "max":100,
       "min":1
+    },
+    "LaunchProfileValidationState":{
+      "type":"string",
+      "enum":[
+        "VALIDATION_NOT_STARTED",
+        "VALIDATION_IN_PROGRESS",
+        "VALIDATION_SUCCESS",
+        "VALIDATION_FAILED",
+        "VALIDATION_FAILED_INTERNAL_SERVER_ERROR"
+      ]
+    },
+    "LaunchProfileValidationStatusCode":{
+      "type":"string",
+      "enum":[
+        "VALIDATION_NOT_STARTED",
+        "VALIDATION_IN_PROGRESS",
+        "VALIDATION_SUCCESS",
+        "VALIDATION_FAILED_INVALID_SUBNET_ROUTE_TABLE_ASSOCIATION",
+        "VALIDATION_FAILED_SUBNET_NOT_FOUND",
+        "VALIDATION_FAILED_INVALID_SECURITY_GROUP_ASSOCIATION",
+        "VALIDATION_FAILED_INVALID_ACTIVE_DIRECTORY",
+        "VALIDATION_FAILED_UNAUTHORIZED",
+        "VALIDATION_FAILED_INTERNAL_SERVER_ERROR"
+      ]
+    },
+    "LaunchProfileValidationStatusMessage":{"type":"string"},
+    "LaunchProfileValidationType":{
+      "type":"string",
+      "enum":[
+        "VALIDATE_ACTIVE_DIRECTORY_STUDIO_COMPONENT",
+        "VALIDATE_SUBNET_ASSOCIATION",
+        "VALIDATE_NETWORK_ACL_ASSOCIATION",
+        "VALIDATE_SECURITY_GROUP_ASSOCIATION"
+      ]
     },
     "LaunchPurpose":{
       "type":"string",
@@ -2086,7 +2125,7 @@
           "locationName":"principalId"
         },
         "states":{
-          "shape":"StringList",
+          "shape":"LaunchProfileStateList",
           "location":"querystring",
           "locationName":"states"
         },
@@ -2185,7 +2224,7 @@
           "locationName":"nextToken"
         },
         "states":{
-          "shape":"StringList",
+          "shape":"StudioComponentStateList",
           "location":"querystring",
           "locationName":"states"
         },
@@ -2195,7 +2234,7 @@
           "locationName":"studioId"
         },
         "types":{
-          "shape":"StringList",
+          "shape":"StudioComponentTypeList",
           "location":"querystring",
           "locationName":"types"
         }
@@ -2531,6 +2570,7 @@
         "ec2InstanceTypes":{"shape":"StreamingInstanceTypeList"},
         "maxSessionLengthInMinutes":{"shape":"StreamConfigurationMaxSessionLengthInMinutes"},
         "maxStoppedSessionLengthInMinutes":{"shape":"StreamConfigurationMaxStoppedSessionLengthInMinutes"},
+        "sessionStorage":{"shape":"StreamConfigurationSessionStorage"},
         "streamingImageIds":{"shape":"StreamingImageIdList"}
       }
     },
@@ -2546,6 +2586,7 @@
         "ec2InstanceTypes":{"shape":"StreamingInstanceTypeList"},
         "maxSessionLengthInMinutes":{"shape":"StreamConfigurationMaxSessionLengthInMinutes"},
         "maxStoppedSessionLengthInMinutes":{"shape":"StreamConfigurationMaxStoppedSessionLengthInMinutes"},
+        "sessionStorage":{"shape":"StreamConfigurationSessionStorage"},
         "streamingImageIds":{"shape":"StreamingImageIdList"}
       }
     },
@@ -2558,6 +2599,14 @@
       "type":"integer",
       "max":5760,
       "min":0
+    },
+    "StreamConfigurationSessionStorage":{
+      "type":"structure",
+      "required":["mode"],
+      "members":{
+        "mode":{"shape":"StreamingSessionStorageModeList"},
+        "root":{"shape":"StreamingSessionStorageRoot"}
+      }
     },
     "StreamingClipboardMode":{
       "type":"string",
@@ -2643,7 +2692,8 @@
         "STREAMING_IMAGE_DELETE_IN_PROGRESS",
         "STREAMING_IMAGE_DELETED",
         "STREAMING_IMAGE_UPDATE_IN_PROGRESS",
-        "INTERNAL_ERROR"
+        "INTERNAL_ERROR",
+        "ACCESS_DENIED"
       ]
     },
     "StreamingInstanceType":{
@@ -2726,8 +2776,39 @@
         "STREAMING_SESSION_STOPPED",
         "STREAMING_SESSION_STARTED",
         "STREAMING_SESSION_STOP_IN_PROGRESS",
-        "STREAMING_SESSION_START_IN_PROGRESS"
+        "STREAMING_SESSION_START_IN_PROGRESS",
+        "AMI_VALIDATION_ERROR"
       ]
+    },
+    "StreamingSessionStorageMode":{
+      "type":"string",
+      "enum":["UPLOAD"]
+    },
+    "StreamingSessionStorageModeList":{
+      "type":"list",
+      "member":{"shape":"StreamingSessionStorageMode"},
+      "min":1
+    },
+    "StreamingSessionStorageRoot":{
+      "type":"structure",
+      "members":{
+        "linux":{"shape":"StreamingSessionStorageRootPathLinux"},
+        "windows":{"shape":"StreamingSessionStorageRootPathWindows"}
+      }
+    },
+    "StreamingSessionStorageRootPathLinux":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(\\$HOME|/)[/]?([A-Za-z0-9-_]+/)*([A-Za-z0-9_-]+)$",
+      "sensitive":true
+    },
+    "StreamingSessionStorageRootPathWindows":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^((\\%HOMEPATH\\%)|[a-zA-Z]:)[\\\\/](?:[a-zA-Z0-9_-]+[\\\\/])*[a-zA-Z0-9_-]+$",
+      "sensitive":true
     },
     "StreamingSessionStream":{
       "type":"structure",
@@ -2889,7 +2970,7 @@
       "type":"list",
       "member":{"shape":"SecurityGroupId"},
       "max":30,
-      "min":1
+      "min":0
     },
     "StudioComponentState":{
       "type":"string",
@@ -2903,6 +2984,10 @@
         "CREATE_FAILED",
         "UPDATE_FAILED"
       ]
+    },
+    "StudioComponentStateList":{
+      "type":"list",
+      "member":{"shape":"StudioComponentState"}
     },
     "StudioComponentStatusCode":{
       "type":"string",
@@ -2955,6 +3040,10 @@
         "LICENSE_SERVICE",
         "CUSTOM"
       ]
+    },
+    "StudioComponentTypeList":{
+      "type":"list",
+      "member":{"shape":"StudioComponentType"}
     },
     "StudioEncryptionConfiguration":{
       "type":"structure",
@@ -3361,6 +3450,25 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ValidationResult":{
+      "type":"structure",
+      "required":[
+        "state",
+        "statusCode",
+        "statusMessage",
+        "type"
+      ],
+      "members":{
+        "state":{"shape":"LaunchProfileValidationState"},
+        "statusCode":{"shape":"LaunchProfileValidationStatusCode"},
+        "statusMessage":{"shape":"LaunchProfileValidationStatusMessage"},
+        "type":{"shape":"LaunchProfileValidationType"}
+      }
+    },
+    "ValidationResults":{
+      "type":"list",
+      "member":{"shape":"ValidationResult"}
     },
     "WindowsMountDrive":{
       "type":"string",

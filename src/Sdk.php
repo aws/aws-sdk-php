@@ -18,6 +18,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAmplify(array $args = [])
  * @method \Aws\AmplifyBackend\AmplifyBackendClient createAmplifyBackend(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionAmplifyBackend(array $args = [])
+ * @method \Aws\AmplifyUIBuilder\AmplifyUIBuilderClient createAmplifyUIBuilder(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionAmplifyUIBuilder(array $args = [])
  * @method \Aws\ApiGateway\ApiGatewayClient createApiGateway(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionApiGateway(array $args = [])
  * @method \Aws\ApiGatewayManagementApi\ApiGatewayManagementApiClient createApiGatewayManagementApi(array $args = [])
@@ -62,6 +64,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionAutoScalingPlans(array $args = [])
  * @method \Aws\Backup\BackupClient createBackup(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBackup(array $args = [])
+ * @method \Aws\BackupGateway\BackupGatewayClient createBackupGateway(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionBackupGateway(array $args = [])
  * @method \Aws\Batch\BatchClient createBatch(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBatch(array $args = [])
  * @method \Aws\Braket\BraketClient createBraket(array $args = [])
@@ -100,8 +104,12 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionCloudWatch(array $args = [])
  * @method \Aws\CloudWatchEvents\CloudWatchEventsClient createCloudWatchEvents(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudWatchEvents(array $args = [])
+ * @method \Aws\CloudWatchEvidently\CloudWatchEvidentlyClient createCloudWatchEvidently(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCloudWatchEvidently(array $args = [])
  * @method \Aws\CloudWatchLogs\CloudWatchLogsClient createCloudWatchLogs(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCloudWatchLogs(array $args = [])
+ * @method \Aws\CloudWatchRUM\CloudWatchRUMClient createCloudWatchRUM(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionCloudWatchRUM(array $args = [])
  * @method \Aws\CodeArtifact\CodeArtifactClient createCodeArtifact(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionCodeArtifact(array $args = [])
  * @method \Aws\CodeBuild\CodeBuildClient createCodeBuild(array $args = [])
@@ -264,6 +272,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionImportExport(array $args = [])
  * @method \Aws\Inspector\InspectorClient createInspector(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionInspector(array $args = [])
+ * @method \Aws\Inspector2\Inspector2Client createInspector2(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionInspector2(array $args = [])
  * @method \Aws\IoT1ClickDevicesService\IoT1ClickDevicesServiceClient createIoT1ClickDevicesService(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoT1ClickDevicesService(array $args = [])
  * @method \Aws\IoT1ClickProjects\IoT1ClickProjectsClient createIoT1ClickProjects(array $args = [])
@@ -286,6 +296,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionIoTSiteWise(array $args = [])
  * @method \Aws\IoTThingsGraph\IoTThingsGraphClient createIoTThingsGraph(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoTThingsGraph(array $args = [])
+ * @method \Aws\IoTTwinMaker\IoTTwinMakerClient createIoTTwinMaker(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionIoTTwinMaker(array $args = [])
  * @method \Aws\IoTWireless\IoTWirelessClient createIoTWireless(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionIoTWireless(array $args = [])
  * @method \Aws\Iot\IotClient createIot(array $args = [])
@@ -382,6 +394,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHub(array $args = [])
  * @method \Aws\MigrationHubConfig\MigrationHubConfigClient createMigrationHubConfig(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHubConfig(array $args = [])
+ * @method \Aws\MigrationHubRefactorSpaces\MigrationHubRefactorSpacesClient createMigrationHubRefactorSpaces(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMigrationHubRefactorSpaces(array $args = [])
  * @method \Aws\MigrationHubStrategyRecommendations\MigrationHubStrategyRecommendationsClient createMigrationHubStrategyRecommendations(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMigrationHubStrategyRecommendations(array $args = [])
  * @method \Aws\Mobile\MobileClient createMobile(array $args = [])
@@ -440,6 +454,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionRDSDataService(array $args = [])
  * @method \Aws\Rds\RdsClient createRds(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionRds(array $args = [])
+ * @method \Aws\RecycleBin\RecycleBinClient createRecycleBin(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionRecycleBin(array $args = [])
  * @method \Aws\Redshift\RedshiftClient createRedshift(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionRedshift(array $args = [])
  * @method \Aws\RedshiftDataAPIService\RedshiftDataAPIServiceClient createRedshiftDataAPIService(array $args = [])
@@ -568,6 +584,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionWorkMailMessageFlow(array $args = [])
  * @method \Aws\WorkSpaces\WorkSpacesClient createWorkSpaces(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionWorkSpaces(array $args = [])
+ * @method \Aws\WorkSpacesWeb\WorkSpacesWebClient createWorkSpacesWeb(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionWorkSpacesWeb(array $args = [])
  * @method \Aws\XRay\XRayClient createXRay(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionXRay(array $args = [])
  * @method \Aws\drs\drsClient createdrs(array $args = [])
@@ -585,7 +603,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.204.0';
+    const VERSION = '3.209.10';
 
     /** @var array Arguments for creating clients */
     private $args;

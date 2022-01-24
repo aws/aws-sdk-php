@@ -882,8 +882,8 @@
       "required": [
         "Name",
         "PlaybackConfigurationName",
-        "Consumption",
-        "Retrieval"
+        "Retrieval",
+        "Consumption"
       ],
       "type": "structure"
     },
@@ -939,8 +939,8 @@
         "ChannelName",
         "ProgramName",
         "VodSourceName",
-        "ScheduleConfiguration",
-        "SourceLocationName"
+        "SourceLocationName",
+        "ScheduleConfiguration"
       ],
       "type": "structure"
     },
@@ -984,6 +984,9 @@
         "HttpConfiguration": {
           "shape": "HttpConfiguration"
         },
+        "SegmentDeliveryConfigurations": {
+          "shape": "__listOfSegmentDeliveryConfiguration"
+        },
         "SourceLocationName": {
           "location": "uri",
           "locationName": "sourceLocationName",
@@ -1019,6 +1022,9 @@
         },
         "LastModifiedTime": {
           "shape": "__timestampUnix"
+        },
+        "SegmentDeliveryConfigurations": {
+          "shape": "__listOfSegmentDeliveryConfiguration"
         },
         "SourceLocationName": {
           "shape": "__string"
@@ -1397,6 +1403,9 @@
         },
         "LastModifiedTime": {
           "shape": "__timestampUnix"
+        },
+        "SegmentDeliveryConfigurations": {
+          "shape": "__listOfSegmentDeliveryConfiguration"
         },
         "SourceLocationName": {
           "shape": "__string"
@@ -2337,8 +2346,8 @@
       },
       "required": [
         "VodSourceName",
-        "ChannelName",
         "SourceLocationName",
+        "ChannelName",
         "Arn",
         "ProgramName"
       ],
@@ -2360,6 +2369,17 @@
           "shape": "__string"
         },
         "SecretStringKey": {
+          "shape": "__string"
+        }
+      },
+      "type": "structure"
+    },
+    "SegmentDeliveryConfiguration": {
+      "members": {
+        "BaseUrl": {
+          "shape": "__string"
+        },
+        "Name": {
           "shape": "__string"
         }
       },
@@ -2395,6 +2415,9 @@
         },
         "LastModifiedTime": {
           "shape": "__timestampUnix"
+        },
+        "SegmentDeliveryConfigurations": {
+          "shape": "__listOfSegmentDeliveryConfiguration"
         },
         "SourceLocationName": {
           "shape": "__string"
@@ -2534,6 +2557,9 @@
           "locationName": "channelName",
           "shape": "__string"
         },
+        "FillerSlate": {
+          "shape": "SlateSource"
+        },
         "Outputs": {
           "shape": "RequestOutputs"
         }
@@ -2588,6 +2614,9 @@
         "HttpConfiguration": {
           "shape": "HttpConfiguration"
         },
+        "SegmentDeliveryConfigurations": {
+          "shape": "__listOfSegmentDeliveryConfiguration"
+        },
         "SourceLocationName": {
           "location": "uri",
           "locationName": "sourceLocationName",
@@ -2619,6 +2648,9 @@
         },
         "LastModifiedTime": {
           "shape": "__timestampUnix"
+        },
+        "SegmentDeliveryConfigurations": {
+          "shape": "__listOfSegmentDeliveryConfiguration"
         },
         "SourceLocationName": {
           "shape": "__string"
@@ -2773,6 +2805,12 @@
     "__listOfScheduleEntry": {
       "member": {
         "shape": "ScheduleEntry"
+      },
+      "type": "list"
+    },
+    "__listOfSegmentDeliveryConfiguration": {
+      "member": {
+        "shape": "SegmentDeliveryConfiguration"
       },
       "type": "list"
     },
