@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Suppress warning generated on is_readable calls to ini files
+* `Aws\Route53RecoveryReadiness` - Updated documentation for Route53 Recovery Readiness APIs.
+
 ## 3.209.10 - 2022-01-21
 
 * `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for 4K AV1 output resolutions & 10-bit AV1 color, the ability to ingest sidecar Dolby Vision XML metadata files, and the ability to flag WebVTT and IMSC tracks for accessibility in HLS.
