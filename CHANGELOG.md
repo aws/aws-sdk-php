@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.11 - 2022-01-24
 
 * `Aws\` - Suppress warning generated on is_readable calls to ini files
 * `Aws\Route53RecoveryReadiness` - Updated documentation for Route53 Recovery Readiness APIs.
