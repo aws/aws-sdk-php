@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.12 - 2022-01-25
 
 * `Aws\Connect` - This release adds support for custom vocabularies to be used with Contact Lens. Custom vocabularies improve transcription accuracy for one or more specific words.
 * `Aws\EFS` - Use Amazon EFS Replication to replicate your Amazon EFS file system in the AWS Region of your preference.
