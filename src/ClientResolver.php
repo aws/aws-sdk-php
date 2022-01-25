@@ -21,6 +21,8 @@ use Aws\EndpointDiscovery\ConfigurationProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\Retry\ConfigurationInterface as RetryConfigInterface;
 use Aws\Retry\ConfigurationProvider as RetryConfigProvider;
+use Aws\DefaultsMode\ConfigurationInterface as ConfigModeInterface;
+use Aws\DefaultsMode\ConfigurationProvider as ConfigModeProvider;
 use Aws\Signature\SignatureProvider;
 use Aws\Endpoint\EndpointProvider;
 use GuzzleHttp\Promise\PromiseInterface;
@@ -104,6 +106,13 @@ class ClientResolver
             'doc'      => 'An optional PHP callable that accepts a type, service, and version argument, and returns an array of corresponding configuration data. The type value can be one of api, waiter, or paginator.',
             'fn'       => [__CLASS__, '_apply_api_provider'],
             'default'  => [ApiProvider::class, 'defaultProvider'],
+        ],
+        'configuration_mode' => [
+            'type'    => 'value',
+            'valid'   => [ConfigModeInterface::class, CacheInterface::class, 'string', 'closure'],
+            'doc'     => "Sets the default configuration mode. Otherwise provide an instance of Aws\DefaultsMode\ConfigurationInterface, an instance of  Aws\CacheInterface, or a string containing a valid mode",
+            'fn'      => [__CLASS__, '_apply_defaults'],
+            'default' => [ConfigModeProvider::class, 'defaultProvider']
         ],
         'use_fips_endpoint' => [
             'type'      => 'value',
@@ -449,6 +458,44 @@ class ClientResolver
                     ),
                     'retry'
                 );
+            }
+        }
+    }
+
+    public static function _apply_defaults($value, array &$args, HandlerList $list)
+    {
+        $config = ConfigModeProvider::unwrap($value);
+        if ($config->getMode() !== 'legacy') {
+            if (!isset($args['retries']) && !is_null($config->getRetryMode())) {
+                $args['retries'] = ['mode' => $config->getRetryMode()];
+            }
+            if (
+                !isset($args['sts_regional_endpoints'])
+                && !is_null($config->getStsRegionalEndpoints())
+            ) {
+                $args['sts_regional_endpoints'] = ['mode' => $config->getStsRegionalEndpoints()];
+            }
+            if (
+                !isset($args['s3_us_east_1_regional_endpoint'])
+                && !is_null($config->getS3UsEast1RegionalEndpoints())
+            ) {
+                $args['s3_us_east_1_regional_endpoint'] = ['mode' => $config->getS3UsEast1RegionalEndpoints()];
+            }
+
+            if (!isset($args['http'])) {
+                $args['http'] = [];
+            }
+            if (
+                !isset($args['http']['connect_timeout'])
+                && !is_null($config->getConnectTimeoutInMillis())
+            ) {
+                $args['http']['connect_timeout'] = $config->getConnectTimeoutInMillis() / 1000;
+            }
+            if (
+                !isset($args['http']['timeout'])
+                && !is_null($config->getHttpRequestTimeoutInMillis())
+            ) {
+                $args['http']['timeout'] = $config->getHttpRequestTimeoutInMillis() / 1000;
             }
         }
     }
