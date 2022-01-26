@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.13 - 2022-01-26
 
 * `Aws\` - Update the API guide docs site to use the latest version of jquery and jquery-migrate.
 * `Aws\CodeGuruReviewer` - Added failure state and adjusted timeout in waiter
