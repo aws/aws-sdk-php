@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.14 - 2022-01-27
 
 * `Aws\Amplify` - Doc only update to the description of basicauthcredentials to describe the required encoding and format.
 * `Aws\Connect` - This release adds support for configuring a custom chat duration when starting a new chat session via the StartChatContact API. The default value for chat duration is 25 hours, minimum configurable value is 1 hour (60 minutes) and maximum configurable value is 7 days (10,080 minutes).
