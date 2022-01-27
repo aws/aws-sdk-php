@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Amplify` - Doc only update to the description of basicauthcredentials to describe the required encoding and format.
+* `Aws\Connect` - This release adds support for configuring a custom chat duration when starting a new chat session via the StartChatContact API. The default value for chat duration is 25 hours, minimum configurable value is 1 hour (60 minutes) and maximum configurable value is 7 days (10,080 minutes).
+* `Aws\EC2` - X2ezn instances are powered by Intel Cascade Lake CPUs that deliver turbo all core frequency of up to 4.5 GHz and up to 100 Gbps of networking bandwidth
+* `Aws\Kafka` - Amazon MSK has updated the CreateCluster and UpdateBrokerStorage API that allows you to specify volume throughput during cluster creation and broker volume updates.
+* `Aws\OpenSearchService` - Allows customers to get progress updates for blue/green deployments
+
 ## 3.209.13 - 2022-01-26
 
 * `Aws\` - Update the API guide docs site to use the latest version of jquery and jquery-migrate.
