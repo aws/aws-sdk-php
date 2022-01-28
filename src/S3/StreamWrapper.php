@@ -132,8 +132,8 @@ class StreamWrapper
     {
         if (!$this->isFlushed
             && empty($this->body->getSize())
-            && $this->mode !== 'r')
-        {
+            && $this->mode !== 'r'
+        ) {
             $this->stream_flush();
         }
         $this->body = $this->cache = null;
