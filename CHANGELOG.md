@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.15 - 2022-01-28
 
 * `Aws\AppConfig` - Documentation updates for AWS AppConfig
 * `Aws\AppConfigData` - Documentation updates for AWS AppConfig Data.
