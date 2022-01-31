@@ -168,7 +168,7 @@ class StreamWrapper
     {
         // Check if stream body size has been
         // calculated via a flush or close
-        if($this->body->getSize() === null) {
+        if($this->body->getSize() === null && $this->mode !== 'r') {
             return $this->triggerError(
                 "Unable to determine stream size. Did you forget to close or flush the stream?"
             );
