@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Appflow` - Launching Amazon AppFlow Custom Connector SDK.
+* `Aws\Comprehend` - Amazon Comprehend now supports sharing and importing custom trained models from one AWS account to another within the same region.
+* `Aws\CostExplorer` - Doc-only update for Cost Explorer API that adds INVOICING_ENTITY dimensions
+* `Aws\DynamoDB` - Documentation update for DynamoDB Java SDK.
+* `Aws\EMR` - Documentation updates for Amazon EMR.
+* `Aws\ElastiCache` - Documentation update for AWS ElastiCache
+* `Aws\ElasticsearchService` - Allows customers to get progress updates for blue/green deployments
+* `Aws\FIS` - Added GetTargetResourceType and ListTargetResourceTypesAPI actions. These actions return additional details about resource types and parameters that can be targeted by FIS actions. Added a parameters field for the targets that can be specified in experiment templates.
+* `Aws\Glue` - Launch Protobuf support for AWS Glue Schema Registry
+* `Aws\IoT` - This release adds support for configuring AWS IoT logging level per client ID, source IP, or principal ID.
+* `Aws\Personalize` - Adding minRecommendationRequestsPerSecond attribute to recommender APIs.
+
 ## 3.209.15 - 2022-01-28
 
 * `Aws\AppConfig` - Documentation updates for AWS AppConfig
