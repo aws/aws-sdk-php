@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.16 - 2022-02-02
 
 * `Aws\Appflow` - Launching Amazon AppFlow Custom Connector SDK.
 * `Aws\Comprehend` - Amazon Comprehend now supports sharing and importing custom trained models from one AWS account to another within the same region.
