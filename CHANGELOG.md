@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.17 - 2022-02-03
 
 * `Aws\EC2` - adds support for AMIs in Recycle Bin
 * `Aws\MarketplaceMetering` - Add CustomerAWSAccountId to ResolveCustomer API response and increase UsageAllocation limit to 2500.
