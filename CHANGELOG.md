@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - adds support for AMIs in Recycle Bin
+* `Aws\MarketplaceMetering` - Add CustomerAWSAccountId to ResolveCustomer API response and increase UsageAllocation limit to 2500.
+* `Aws\RecycleBin` - Add EC2 Image recycle bin support.
+* `Aws\RoboMaker` - The release deprecates the use various APIs of RoboMaker Deployment Service in favor of AWS IoT GreenGrass v2.0.
+
 ## 3.209.16 - 2022-02-02
 
 * `Aws\Appflow` - Launching Amazon AppFlow Custom Connector SDK.
