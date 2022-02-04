@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## 3.209.17 - 2022-02-03
+
+* `Aws\EC2` - adds support for AMIs in Recycle Bin
+* `Aws\MarketplaceMetering` - Add CustomerAWSAccountId to ResolveCustomer API response and increase UsageAllocation limit to 2500.
+* `Aws\RecycleBin` - Add EC2 Image recycle bin support.
+* `Aws\RoboMaker` - The release deprecates the use various APIs of RoboMaker Deployment Service in favor of AWS IoT GreenGrass v2.0.
+
+## 3.209.16 - 2022-02-02
+
+* `Aws\Appflow` - Launching Amazon AppFlow Custom Connector SDK.
+* `Aws\Comprehend` - Amazon Comprehend now supports sharing and importing custom trained models from one AWS account to another within the same region.
+* `Aws\CostExplorer` - Doc-only update for Cost Explorer API that adds INVOICING_ENTITY dimensions
+* `Aws\DynamoDB` - Documentation update for DynamoDB Java SDK.
+* `Aws\EMR` - Documentation updates for Amazon EMR.
+* `Aws\ElastiCache` - Documentation update for AWS ElastiCache
+* `Aws\ElasticsearchService` - Allows customers to get progress updates for blue/green deployments
+* `Aws\FIS` - Added GetTargetResourceType and ListTargetResourceTypesAPI actions. These actions return additional details about resource types and parameters that can be targeted by FIS actions. Added a parameters field for the targets that can be specified in experiment templates.
+* `Aws\Glue` - Launch Protobuf support for AWS Glue Schema Registry
+* `Aws\IoT` - This release adds support for configuring AWS IoT logging level per client ID, source IP, or principal ID.
+* `Aws\Personalize` - Adding minRecommendationRequestsPerSecond attribute to recommender APIs.
+
+## 3.209.15 - 2022-01-28
+
+* `Aws\AppConfig` - Documentation updates for AWS AppConfig
+* `Aws\AppConfigData` - Documentation updates for AWS AppConfig Data.
+* `Aws\Athena` - This release adds a field, AthenaError, to the GetQueryExecution response object when a query fails.
+* `Aws\CognitoIdentityProvider` - Doc updates for Cognito user pools API Reference.
+* `Aws\SageMaker` - This release added a new NNA accelerator compilation support for Sagemaker Neo.
+* `Aws\SecretsManager` - Feature are ready to release on Jan 28th
+
 ## 3.209.14 - 2022-01-27
 
 * `Aws\Amplify` - Doc only update to the description of basicauthcredentials to describe the required encoding and format.
