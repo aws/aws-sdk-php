@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Athena` - You can now optionally specify the account ID that you expect to be the owner of your query results output location bucket in Athena. If the account ID of the query results bucket owner does not match the specified account ID, attempts to output to the bucket will fail with an S3 permissions error.
+* `Aws\LakeFormation` - Add support for calling Update Table Objects without a TransactionId.
+* `Aws\RDS` - updates for RDS Custom for Oracle 12.1 support
+* `Aws\S3` - Improved error handling for failed writes and appends on unclosed streams.
+
 ## 3.209.17 - 2022-02-03
 
 * `Aws\EC2` - adds support for AMIs in Recycle Bin
