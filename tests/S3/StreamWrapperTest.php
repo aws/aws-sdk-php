@@ -1026,37 +1026,4 @@ class StreamWrapperTest extends TestCase
         
         stream_wrapper_unregister('foo');
     }
-
-    public function contentProvider()
-    {
-        return [
-            ['foo'],
-            ['']
-        ];
-    }
-
-    /**
-     * @expectedException \PHPUnit\Framework\Error\Warning
-     * @expectedExceptionMessage Unable to determine stream size. Did you forget to close or flush the stream?
-     * @dataProvider contentProvider
-     */
-    public function testTriggersErrorOnNoFlushOrClose($content)
-    {
-        $stream = $this->getMockBuilder(Psr7\Stream::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $stream->expects($this->any())
-            ->method('getSize')
-            ->willReturn(null);
-
-        $this->addMockResults(
-            $this->client,
-            [
-                new Result(['Body' => $stream]),
-            ]
-        );
-
-        $stream = fopen('s3://bucket/key', 'a');
-        fwrite($stream, $content);
-    }
 }
