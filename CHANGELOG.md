@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.19 - 2022-02-07
 
 * `Aws\AuditManager` - This release updates 3 API parameters. UpdateAssessmentFrameworkControlSet now requires the controls attribute, and CreateAssessmentFrameworkControl requires the id attribute. Additionally, UpdateAssessmentFramework now has a minimum length constraint for the controlSets attribute.
 * `Aws\EventBridge` - Documentation updates for EventBridge
