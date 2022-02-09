@@ -516,6 +516,20 @@
         {"shape":"InvalidParameterCombinationException"}
       ]
     },
+    "ImportVmImage":{
+      "name":"ImportVmImage",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/ImportVmImage"
+      },
+      "input":{"shape":"ImportVmImageRequest"},
+      "output":{"shape":"ImportVmImageResponse"},
+      "errors":[
+        {"shape":"ServiceException"},
+        {"shape":"ClientException"},
+        {"shape":"ServiceUnavailableException"}
+      ]
+    },
     "ListComponentBuildVersions":{
       "name":"ListComponentBuildVersions",
       "http":{
@@ -924,6 +938,13 @@
       "max":1536,
       "min":1
     },
+    "AdditionalInstanceConfiguration":{
+      "type":"structure",
+      "members":{
+        "systemsManagerAgent":{"shape":"SystemsManagerAgent"},
+        "userDataOverride":{"shape":"UserDataOverride"}
+      }
+    },
     "Ami":{
       "type":"structure",
       "members":{
@@ -958,6 +979,14 @@
     },
     "Arn":{"type":"string"},
     "Boolean":{"type":"boolean"},
+    "BuildType":{
+      "type":"string",
+      "enum":[
+        "USER_INITIATED",
+        "SCHEDULED",
+        "IMPORT"
+      ]
+    },
     "CallRateLimitExceededException":{
       "type":"structure",
       "members":{
@@ -1012,6 +1041,8 @@
         "type":{"shape":"ComponentType"},
         "platform":{"shape":"Platform"},
         "supportedOsVersions":{"shape":"OsVersionList"},
+        "state":{"shape":"ComponentState"},
+        "parameters":{"shape":"ComponentParameterDetailList"},
         "owner":{"shape":"NonEmptyString"},
         "data":{"shape":"ComponentData"},
         "kmsKeyId":{"shape":"NonEmptyString"},
@@ -1028,7 +1059,8 @@
       "type":"structure",
       "required":["componentArn"],
       "members":{
-        "componentArn":{"shape":"ComponentVersionArnOrBuildVersionArn"}
+        "componentArn":{"shape":"ComponentVersionArnOrBuildVersionArn"},
+        "parameters":{"shape":"ComponentParameterList"}
       }
     },
     "ComponentConfigurationList":{
@@ -1041,6 +1073,77 @@
       "type":"string",
       "enum":["SHELL"]
     },
+    "ComponentParameter":{
+      "type":"structure",
+      "required":[
+        "name",
+        "value"
+      ],
+      "members":{
+        "name":{"shape":"ComponentParameterName"},
+        "value":{"shape":"ComponentParameterValueList"}
+      }
+    },
+    "ComponentParameterDescription":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[^\\x00]+"
+    },
+    "ComponentParameterDetail":{
+      "type":"structure",
+      "required":[
+        "name",
+        "type"
+      ],
+      "members":{
+        "name":{"shape":"ComponentParameterName"},
+        "type":{"shape":"ComponentParameterType"},
+        "defaultValue":{"shape":"ComponentParameterValueList"},
+        "description":{"shape":"ComponentParameterDescription"}
+      }
+    },
+    "ComponentParameterDetailList":{
+      "type":"list",
+      "member":{"shape":"ComponentParameterDetail"}
+    },
+    "ComponentParameterList":{
+      "type":"list",
+      "member":{"shape":"ComponentParameter"},
+      "min":1
+    },
+    "ComponentParameterName":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[^\\x00]+"
+    },
+    "ComponentParameterType":{
+      "type":"string",
+      "max":20,
+      "min":1,
+      "pattern":"^String|Integer|Boolean|StringList$"
+    },
+    "ComponentParameterValue":{
+      "type":"string",
+      "min":0,
+      "pattern":"[^\\x00]*"
+    },
+    "ComponentParameterValueList":{
+      "type":"list",
+      "member":{"shape":"ComponentParameterValue"}
+    },
+    "ComponentState":{
+      "type":"structure",
+      "members":{
+        "status":{"shape":"ComponentStatus"},
+        "reason":{"shape":"NonEmptyString"}
+      }
+    },
+    "ComponentStatus":{
+      "type":"string",
+      "enum":["DEPRECATED"]
+    },
     "ComponentSummary":{
       "type":"structure",
       "members":{
@@ -1049,6 +1152,7 @@
         "version":{"shape":"VersionNumber"},
         "platform":{"shape":"Platform"},
         "supportedOsVersions":{"shape":"OsVersionList"},
+        "state":{"shape":"ComponentState"},
         "type":{"shape":"ComponentType"},
         "owner":{"shape":"NonEmptyString"},
         "description":{"shape":"NonEmptyString"},
@@ -1316,6 +1420,7 @@
         "blockDeviceMappings":{"shape":"InstanceBlockDeviceMappings"},
         "tags":{"shape":"TagMap"},
         "workingDirectory":{"shape":"NonEmptyString"},
+        "additionalInstanceConfiguration":{"shape":"AdditionalInstanceConfiguration"},
         "clientToken":{
           "shape":"ClientToken",
           "idempotencyToken":true
@@ -1377,6 +1482,7 @@
         "terminateInstanceOnFailure":{"shape":"NullableBoolean"},
         "snsTopicArn":{"shape":"SnsTopicArn"},
         "resourceTags":{"shape":"ResourceTagMap"},
+        "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"},
         "tags":{"shape":"TagMap"},
         "clientToken":{
           "shape":"ClientToken",
@@ -1519,6 +1625,14 @@
         "infrastructureConfigurationArn":{"shape":"InfrastructureConfigurationArn"}
       }
     },
+    "DiskImageFormat":{
+      "type":"string",
+      "enum":[
+        "VMDK",
+        "RAW",
+        "VHD"
+      ]
+    },
     "Distribution":{
       "type":"structure",
       "required":["region"],
@@ -1527,7 +1641,8 @@
         "amiDistributionConfiguration":{"shape":"AmiDistributionConfiguration"},
         "containerDistributionConfiguration":{"shape":"ContainerDistributionConfiguration"},
         "licenseConfigurationArns":{"shape":"LicenseConfigurationArnList"},
-        "launchTemplateConfigurations":{"shape":"LaunchTemplateConfigurationList"}
+        "launchTemplateConfigurations":{"shape":"LaunchTemplateConfigurationList"},
+        "s3ExportConfiguration":{"shape":"S3ExportConfiguration"}
       }
     },
     "DistributionConfiguration":{
@@ -1583,18 +1698,24 @@
         "kmsKeyId":{"shape":"NonEmptyString"},
         "snapshotId":{"shape":"NonEmptyString"},
         "volumeSize":{"shape":"EbsVolumeSizeInteger"},
-        "volumeType":{"shape":"EbsVolumeType"}
+        "volumeType":{"shape":"EbsVolumeType"},
+        "throughput":{"shape":"EbsVolumeThroughput"}
       }
     },
     "EbsIopsInteger":{
       "type":"integer",
-      "max":10000,
+      "max":64000,
       "min":100
     },
     "EbsVolumeSizeInteger":{
       "type":"integer",
       "max":16000,
       "min":1
+    },
+    "EbsVolumeThroughput":{
+      "type":"integer",
+      "max":1000,
+      "min":125
     },
     "EbsVolumeType":{
       "type":"string",
@@ -1847,6 +1968,15 @@
         "infrastructureConfiguration":{"shape":"InfrastructureConfiguration"}
       }
     },
+    "HttpPutResponseHopLimit":{
+      "type":"integer",
+      "max":64,
+      "min":1
+    },
+    "HttpTokens":{
+      "type":"string",
+      "pattern":"optional|required"
+    },
     "IdempotentParameterMismatchException":{
       "type":"structure",
       "members":{
@@ -1875,7 +2005,8 @@
         "imageTestsConfiguration":{"shape":"ImageTestsConfiguration"},
         "dateCreated":{"shape":"DateTime"},
         "outputResources":{"shape":"OutputResources"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "buildType":{"shape":"BuildType"}
       }
     },
     "ImageBuildVersionArn":{
@@ -1942,7 +2073,8 @@
         "blockDeviceMappings":{"shape":"InstanceBlockDeviceMappings"},
         "dateCreated":{"shape":"DateTime"},
         "tags":{"shape":"TagMap"},
-        "workingDirectory":{"shape":"NonEmptyString"}
+        "workingDirectory":{"shape":"NonEmptyString"},
+        "additionalInstanceConfiguration":{"shape":"AdditionalInstanceConfiguration"}
       }
     },
     "ImageRecipeArn":{
@@ -2001,7 +2133,8 @@
         "owner":{"shape":"NonEmptyString"},
         "dateCreated":{"shape":"DateTime"},
         "outputResources":{"shape":"OutputResources"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "buildType":{"shape":"BuildType"}
       }
     },
     "ImageSummaryList":{
@@ -2037,7 +2170,8 @@
         "platform":{"shape":"Platform"},
         "osVersion":{"shape":"OsVersion"},
         "owner":{"shape":"NonEmptyString"},
-        "dateCreated":{"shape":"DateTime"}
+        "dateCreated":{"shape":"DateTime"},
+        "buildType":{"shape":"BuildType"}
       }
     },
     "ImageVersionArn":{
@@ -2088,6 +2222,37 @@
         "componentBuildVersionArn":{"shape":"ComponentBuildVersionArn"}
       }
     },
+    "ImportVmImageRequest":{
+      "type":"structure",
+      "required":[
+        "name",
+        "semanticVersion",
+        "platform",
+        "vmImportTaskId",
+        "clientToken"
+      ],
+      "members":{
+        "name":{"shape":"NonEmptyString"},
+        "semanticVersion":{"shape":"VersionNumber"},
+        "description":{"shape":"NonEmptyString"},
+        "platform":{"shape":"Platform"},
+        "osVersion":{"shape":"OsVersion"},
+        "vmImportTaskId":{"shape":"NonEmptyString"},
+        "tags":{"shape":"TagMap"},
+        "clientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "ImportVmImageResponse":{
+      "type":"structure",
+      "members":{
+        "requestId":{"shape":"NonEmptyString"},
+        "imageArn":{"shape":"Arn"},
+        "clientToken":{"shape":"ClientToken"}
+      }
+    },
     "InfrastructureConfiguration":{
       "type":"structure",
       "members":{
@@ -2105,6 +2270,7 @@
         "dateCreated":{"shape":"DateTime"},
         "dateUpdated":{"shape":"DateTime"},
         "resourceTags":{"shape":"ResourceTagMap"},
+        "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"},
         "tags":{"shape":"TagMap"}
       }
     },
@@ -2160,6 +2326,13 @@
       "members":{
         "image":{"shape":"NonEmptyString"},
         "blockDeviceMappings":{"shape":"InstanceBlockDeviceMappings"}
+      }
+    },
+    "InstanceMetadataOptions":{
+      "type":"structure",
+      "members":{
+        "httpTokens":{"shape":"HttpTokens"},
+        "httpPutResponseHopLimit":{"shape":"HttpPutResponseHopLimit"}
       }
     },
     "InstanceProfileNameType":{
@@ -2225,7 +2398,9 @@
       "type":"structure",
       "members":{
         "userIds":{"shape":"AccountList"},
-        "userGroups":{"shape":"StringList"}
+        "userGroups":{"shape":"StringList"},
+        "organizationArns":{"shape":"OrganizationArnList"},
+        "organizationalUnitArns":{"shape":"OrganizationalUnitArnList"}
       }
     },
     "LaunchTemplateConfiguration":{
@@ -2508,6 +2683,26 @@
       "min":1
     },
     "NullableBoolean":{"type":"boolean"},
+    "OrganizationArn":{
+      "type":"string",
+      "pattern":"^arn:aws[^:]*:organizations::[0-9]{12}:organization/o-[a-z0-9]{10,32}$"
+    },
+    "OrganizationArnList":{
+      "type":"list",
+      "member":{"shape":"OrganizationArn"},
+      "max":25,
+      "min":1
+    },
+    "OrganizationalUnitArn":{
+      "type":"string",
+      "pattern":"^arn:aws[^:]*:organizations::[0-9]{12}:ou/o-[a-z0-9]{10,32}/ou-[0-9a-z]{4,32}-[0-9a-z]{8,32}"
+    },
+    "OrganizationalUnitArnList":{
+      "type":"list",
+      "member":{"shape":"OrganizationalUnitArn"},
+      "max":25,
+      "min":1
+    },
     "OsVersion":{
       "type":"string",
       "min":1
@@ -2688,6 +2883,20 @@
       "max":25,
       "min":1
     },
+    "S3ExportConfiguration":{
+      "type":"structure",
+      "required":[
+        "roleName",
+        "diskImageFormat",
+        "s3Bucket"
+      ],
+      "members":{
+        "roleName":{"shape":"NonEmptyString"},
+        "diskImageFormat":{"shape":"DiskImageFormat"},
+        "s3Bucket":{"shape":"NonEmptyString"},
+        "s3Prefix":{"shape":"NonEmptyString"}
+      }
+    },
     "S3Logs":{
       "type":"structure",
       "members":{
@@ -2760,6 +2969,12 @@
     "StringList":{
       "type":"list",
       "member":{"shape":"NonEmptyString"}
+    },
+    "SystemsManagerAgent":{
+      "type":"structure",
+      "members":{
+        "uninstallAfterBuild":{"shape":"NullableBoolean"}
+      }
     },
     "TagKey":{
       "type":"string",
@@ -2924,7 +3139,8 @@
           "shape":"ClientToken",
           "idempotencyToken":true
         },
-        "resourceTags":{"shape":"ResourceTagMap"}
+        "resourceTags":{"shape":"ResourceTagMap"},
+        "instanceMetadataOptions":{"shape":"InstanceMetadataOptions"}
       }
     },
     "UpdateInfrastructureConfigurationResponse":{
@@ -2936,6 +3152,12 @@
       }
     },
     "Uri":{"type":"string"},
+    "UserDataOverride":{
+      "type":"string",
+      "max":21847,
+      "min":1,
+      "pattern":"^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+    },
     "VersionNumber":{
       "type":"string",
       "pattern":"^[0-9]+\\.[0-9]+\\.[0-9]+$"

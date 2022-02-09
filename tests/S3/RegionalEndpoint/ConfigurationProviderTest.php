@@ -276,7 +276,7 @@ EOT;
                 $expected
             ],
             [
-                Promise\promise_for($expected),
+                Promise\Create::promiseFor($expected),
                 $expected
             ],
             [

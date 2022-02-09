@@ -80,6 +80,16 @@ class ClientResolverTest extends TestCase
         $c->execute($command);
     }
 
+    public function testAppliesLegacyDefaults()
+    {
+        $c = new DynamoDbClient([
+            'region'   => 'us-east-1',
+            'version'  => 'latest',
+        ]);
+        self::assertFalse(isset($c->getConfig()['retries']));
+        self::assertFalse(isset($c->getConfig()['sts_regional_endpoints']));
+    }
+
     public function testAppliesApiProvider()
     {
         $r = new ClientResolver(ClientResolver::getDefaultArguments());
@@ -345,7 +355,7 @@ class ClientResolverTest extends TestCase
             'service'     => 'sqs',
             'region'      => 'x',
             'credentials' => function () use ($c) {
-                return \GuzzleHttp\Promise\promise_for($c);
+                return \GuzzleHttp\Promise\Create::promiseFor($c);
             },
             'version'     => 'latest'
         ], new HandlerList());
@@ -515,6 +525,112 @@ EOT;
             'https://sts.us-west-2.amazonaws.com',
             $conf['endpoint']
         );
+    }
+
+    /**
+     * @dataProvider dualStackEndpointCases
+     *
+     * @param $service
+     * @param $useDualstackEndpoint
+     * @param $useFipsEndpoint
+     * @param $region
+     * @param $expectedEndpoint
+     */
+    public function testDualstackEndpoints(
+        $service,
+        $useDualstackEndpoint,
+        $useFipsEndpoint,
+        $region,
+        $expectedEndpoint
+    )
+    {
+        $data = json_decode(
+            file_get_contents(__DIR__ . '/Endpoint/fixtures/dualstack_endpoints.json'),
+            true
+        );
+        $partition = new Partition($data['partitions'][0]);
+        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $resolver->resolve([
+            'service'                   => $service,
+            'region'                    => $region,
+            'use_dual_stack_endpoint'   => $useDualstackEndpoint,
+            'use_fips_endpoint'         => $useFipsEndpoint,
+            'endpoint_provider'         => $partition,
+            'version'                   => 'latest',
+        ], new HandlerList());
+
+        $this->assertSame(
+            'https://' . $expectedEndpoint,
+            $conf['endpoint']
+        );
+    }
+
+    public function dualStackEndpointCases()
+    {
+        return [
+            ["ec2", false, false, "us-west-2", "ec2.us-west-2.amazonaws.com", ],
+            ["ec2", false, false, "us-east-2", "api.ec2.us-east-2.amazonaws.com", ],
+            ["ec2", true, false, "us-west-2", "ec2.us-west-2.api.aws", ],
+            ["ec2", true, false, "us-east-2", "api.ec2.us-east-2.api.aws", ],
+            ["s3", false, false, "us-west-2", "s3.api.us-west-2.amazonaws.com", ],
+            ["s3", false, false, "us-east-2", "s3.us-east-2.amazonaws.com", ],
+            ["s3", true, false, "us-west-2", "s3.api.dualstack.us-west-2.amazonaws.com", ],
+            ["s3", true, false, "us-east-2", "s3.dualstack.us-east-2.amazonaws.com", ],
+            ["route53", false, false, "us-west-2", "route53.amazonaws.com", ],
+            ["route53", false, false, "us-east-2", "route53.amazonaws.com", ],
+            ["route53", true, false, "us-west-2", "route53.global.api.aws", ],
+            ["route53", true, false, "us-east-2", "route53.global.api.aws", ],
+            ["dynamodb", false, false, "us-west-2", "dynamodb.us-west-2.amazonaws.com", ],
+            ["dynamodb", false, false, "us-east-2", "dynamodb.us-east-2.amazonaws.com", ],
+            ["dynamodb", true, false, "us-west-2", "dynamodb.us-west-2.api.aws", ],
+            ["dynamodb", true, false, "us-east-2", "dynamodb.us-east-2.api.aws", ],
+            ["dynamodb", false, true, "us-west-2", "dynamodb-fips.us-west-2.amazonaws.com", ],
+            ["dynamodb", true, true, "us-west-2", "fips.dynamodb.us-west-2.api.aws", ],
+        ];
+    }
+
+    public function testDualstackEndpointInIsoPartition()
+    {
+        $data = json_decode(
+            file_get_contents(__DIR__ . '/Endpoint/fixtures/dualstack_endpoints.json'),
+            true
+        );
+        $partition = new Partition($data['partitions'][1]);
+        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
+        $conf = $resolver->resolve([
+            'service'                   => 'ec2',
+            'region'                    => 'us-iso-east-1',
+            'use_dual_stack_endpoint'   => false,
+            'use_fips_endpoint'         => false,
+            'endpoint_provider'         => $partition,
+            'version'                   => 'latest',
+        ], new HandlerList());
+        $this->assertSame(
+            'https://ec2.us-iso-east-1.c2s.ic.gov',
+            $conf['endpoint']
+        );
+    }
+
+    /**
+     * @expectedException \Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException
+     * @expectedExceptionMessage Dual-stack is not supported in ISO regions
+     */
+    public function testDualstackEndpointFailureOnDualstackNotSupported()
+    {
+        $data = json_decode(
+            file_get_contents(__DIR__ . '/Endpoint/fixtures/dualstack_endpoints.json'),
+            true
+        );
+        $partition = new Partition($data['partitions'][0]);
+        $resolver = new ClientResolver(ClientResolver::getDefaultArguments());
+        $resolver->resolve([
+            'service'                   => 'ec2',
+            'region'                    => 'us-iso-east-1',
+            'use_dual_stack_endpoint'   => true,
+            'use_fips_endpoint'         => false,
+            'endpoint_provider'         => $partition,
+            'version'                   => 'latest',
+        ], new HandlerList());
     }
 
     /**

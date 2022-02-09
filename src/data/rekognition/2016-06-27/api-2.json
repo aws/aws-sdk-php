@@ -49,6 +49,26 @@
         {"shape":"ServiceQuotaExceededException"}
       ]
     },
+    "CreateDataset":{
+      "name":"CreateDataset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateDatasetRequest"},
+      "output":{"shape":"CreateDatasetResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"InvalidS3ObjectException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "CreateProject":{
       "name":"CreateProject",
       "http":{
@@ -120,6 +140,25 @@
         {"shape":"InternalServerError"},
         {"shape":"ThrottlingException"},
         {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DeleteDataset":{
+      "name":"DeleteDataset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteDatasetRequest"},
+      "output":{"shape":"DeleteDatasetResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceInUseException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -208,6 +247,23 @@
         {"shape":"InternalServerError"},
         {"shape":"ThrottlingException"},
         {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "DescribeDataset":{
+      "name":"DescribeDataset",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeDatasetRequest"},
+      "output":{"shape":"DescribeDatasetResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
         {"shape":"ResourceNotFoundException"}
       ]
     },
@@ -379,6 +435,24 @@
         {"shape":"ThrottlingException"},
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"InvalidImageFormatException"}
+      ]
+    },
+    "DistributeDatasetEntries":{
+      "name":"DistributeDatasetEntries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DistributeDatasetEntriesRequest"},
+      "output":{"shape":"DistributeDatasetEntriesResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"ResourceNotReadyException"}
       ]
     },
     "GetCelebrityInfo":{
@@ -579,6 +653,46 @@
         {"shape":"ProvisionedThroughputExceededException"},
         {"shape":"InvalidPaginationTokenException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ListDatasetEntries":{
+      "name":"ListDatasetEntries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDatasetEntriesRequest"},
+      "output":{"shape":"ListDatasetEntriesResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidPaginationTokenException"},
+        {"shape":"ResourceNotReadyException"}
+      ]
+    },
+    "ListDatasetLabels":{
+      "name":"ListDatasetLabels",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListDatasetLabelsRequest"},
+      "output":{"shape":"ListDatasetLabelsResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"InvalidPaginationTokenException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceNotReadyException"}
       ]
     },
     "ListFaces":{
@@ -966,6 +1080,25 @@
         {"shape":"ThrottlingException"},
         {"shape":"ProvisionedThroughputExceededException"}
       ]
+    },
+    "UpdateDatasetEntries":{
+      "name":"UpdateDatasetEntries",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateDatasetEntriesRequest"},
+      "output":{"shape":"UpdateDatasetEntriesResponse"},
+      "errors":[
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
     }
   },
   "shapes":{
@@ -1023,6 +1156,13 @@
         "Confidence":{"shape":"Percent"}
       }
     },
+    "BlackFrame":{
+      "type":"structure",
+      "members":{
+        "MaxPixelThreshold":{"shape":"MaxPixelThreshold"},
+        "MinCoveragePercentage":{"shape":"MinCoveragePercentage"}
+      }
+    },
     "BodyPart":{
       "type":"string",
       "enum":[
@@ -1063,7 +1203,8 @@
         "Name":{"shape":"String"},
         "Id":{"shape":"RekognitionUniqueId"},
         "Face":{"shape":"ComparedFace"},
-        "MatchConfidence":{"shape":"Percent"}
+        "MatchConfidence":{"shape":"Percent"},
+        "KnownGender":{"shape":"KnownGender"}
       }
     },
     "CelebrityDetail":{
@@ -1074,7 +1215,8 @@
         "Id":{"shape":"RekognitionUniqueId"},
         "Confidence":{"shape":"Percent"},
         "BoundingBox":{"shape":"BoundingBox"},
-        "Face":{"shape":"FaceDetail"}
+        "Face":{"shape":"FaceDetail"},
+        "KnownGender":{"shape":"KnownGender"}
       }
     },
     "CelebrityList":{
@@ -1160,7 +1302,9 @@
         "Confidence":{"shape":"Percent"},
         "Landmarks":{"shape":"Landmarks"},
         "Pose":{"shape":"Pose"},
-        "Quality":{"shape":"ImageQuality"}
+        "Quality":{"shape":"ImageQuality"},
+        "Emotions":{"shape":"Emotions"},
+        "Smile":{"shape":"Smile"}
       }
     },
     "ComparedFaceList":{
@@ -1227,6 +1371,24 @@
         "FaceModelVersion":{"shape":"String"}
       }
     },
+    "CreateDatasetRequest":{
+      "type":"structure",
+      "required":[
+        "DatasetType",
+        "ProjectArn"
+      ],
+      "members":{
+        "DatasetSource":{"shape":"DatasetSource"},
+        "DatasetType":{"shape":"DatasetType"},
+        "ProjectArn":{"shape":"ProjectArn"}
+      }
+    },
+    "CreateDatasetResponse":{
+      "type":"structure",
+      "members":{
+        "DatasetArn":{"shape":"DatasetArn"}
+      }
+    },
     "CreateProjectRequest":{
       "type":"structure",
       "required":["ProjectName"],
@@ -1245,9 +1407,7 @@
       "required":[
         "ProjectArn",
         "VersionName",
-        "OutputConfig",
-        "TrainingData",
-        "TestingData"
+        "OutputConfig"
       ],
       "members":{
         "ProjectArn":{"shape":"ProjectArn"},
@@ -1301,6 +1461,128 @@
       "type":"list",
       "member":{"shape":"CustomLabel"}
     },
+    "DatasetArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"(^arn:[a-z\\d-]+:rekognition:[a-z\\d-]+:\\d{12}:project\\/[a-zA-Z0-9_.\\-]{1,255}\\/dataset\\/(train|test)\\/[0-9]+$)"
+    },
+    "DatasetChanges":{
+      "type":"structure",
+      "required":["GroundTruth"],
+      "members":{
+        "GroundTruth":{"shape":"GroundTruthBlob"}
+      }
+    },
+    "DatasetDescription":{
+      "type":"structure",
+      "members":{
+        "CreationTimestamp":{"shape":"DateTime"},
+        "LastUpdatedTimestamp":{"shape":"DateTime"},
+        "Status":{"shape":"DatasetStatus"},
+        "StatusMessage":{"shape":"StatusMessage"},
+        "StatusMessageCode":{"shape":"DatasetStatusMessageCode"},
+        "DatasetStats":{"shape":"DatasetStats"}
+      }
+    },
+    "DatasetEntries":{
+      "type":"list",
+      "member":{"shape":"DatasetEntry"}
+    },
+    "DatasetEntry":{
+      "type":"string",
+      "max":100000,
+      "min":1,
+      "pattern":"^\\{.*\\}$"
+    },
+    "DatasetLabel":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":".{1,}"
+    },
+    "DatasetLabelDescription":{
+      "type":"structure",
+      "members":{
+        "LabelName":{"shape":"DatasetLabel"},
+        "LabelStats":{"shape":"DatasetLabelStats"}
+      }
+    },
+    "DatasetLabelDescriptions":{
+      "type":"list",
+      "member":{"shape":"DatasetLabelDescription"}
+    },
+    "DatasetLabelStats":{
+      "type":"structure",
+      "members":{
+        "EntryCount":{"shape":"UInteger"},
+        "BoundingBoxCount":{"shape":"UInteger"}
+      }
+    },
+    "DatasetLabels":{
+      "type":"list",
+      "member":{"shape":"DatasetLabel"},
+      "max":10,
+      "min":1
+    },
+    "DatasetMetadata":{
+      "type":"structure",
+      "members":{
+        "CreationTimestamp":{"shape":"DateTime"},
+        "DatasetType":{"shape":"DatasetType"},
+        "DatasetArn":{"shape":"DatasetArn"},
+        "Status":{"shape":"DatasetStatus"},
+        "StatusMessage":{"shape":"StatusMessage"},
+        "StatusMessageCode":{"shape":"DatasetStatusMessageCode"}
+      }
+    },
+    "DatasetMetadataList":{
+      "type":"list",
+      "member":{"shape":"DatasetMetadata"}
+    },
+    "DatasetSource":{
+      "type":"structure",
+      "members":{
+        "GroundTruthManifest":{"shape":"GroundTruthManifest"},
+        "DatasetArn":{"shape":"DatasetArn"}
+      }
+    },
+    "DatasetStats":{
+      "type":"structure",
+      "members":{
+        "LabeledEntries":{"shape":"UInteger"},
+        "TotalEntries":{"shape":"UInteger"},
+        "TotalLabels":{"shape":"UInteger"},
+        "ErrorEntries":{"shape":"UInteger"}
+      }
+    },
+    "DatasetStatus":{
+      "type":"string",
+      "enum":[
+        "CREATE_IN_PROGRESS",
+        "CREATE_COMPLETE",
+        "CREATE_FAILED",
+        "UPDATE_IN_PROGRESS",
+        "UPDATE_COMPLETE",
+        "UPDATE_FAILED",
+        "DELETE_IN_PROGRESS"
+      ]
+    },
+    "DatasetStatusMessageCode":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "SERVICE_ERROR",
+        "CLIENT_ERROR"
+      ]
+    },
+    "DatasetType":{
+      "type":"string",
+      "enum":[
+        "TRAIN",
+        "TEST"
+      ]
+    },
     "DateTime":{"type":"timestamp"},
     "Degree":{
       "type":"float",
@@ -1318,6 +1600,18 @@
       "type":"structure",
       "members":{
         "StatusCode":{"shape":"UInteger"}
+      }
+    },
+    "DeleteDatasetRequest":{
+      "type":"structure",
+      "required":["DatasetArn"],
+      "members":{
+        "DatasetArn":{"shape":"DatasetArn"}
+      }
+    },
+    "DeleteDatasetResponse":{
+      "type":"structure",
+      "members":{
       }
     },
     "DeleteFacesRequest":{
@@ -1391,6 +1685,19 @@
         "CreationTimestamp":{"shape":"DateTime"}
       }
     },
+    "DescribeDatasetRequest":{
+      "type":"structure",
+      "required":["DatasetArn"],
+      "members":{
+        "DatasetArn":{"shape":"DatasetArn"}
+      }
+    },
+    "DescribeDatasetResponse":{
+      "type":"structure",
+      "members":{
+        "DatasetDescription":{"shape":"DatasetDescription"}
+      }
+    },
     "DescribeProjectVersionsRequest":{
       "type":"structure",
       "required":["ProjectArn"],
@@ -1412,7 +1719,8 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"ExtendedPaginationToken"},
-        "MaxResults":{"shape":"ProjectsPageSize"}
+        "MaxResults":{"shape":"ProjectsPageSize"},
+        "ProjectNames":{"shape":"ProjectNames"}
       }
     },
     "DescribeProjectsResponse":{
@@ -1558,6 +1866,31 @@
         "MinBoundingBoxWidth":{"shape":"BoundingBoxWidth"}
       }
     },
+    "DistributeDataset":{
+      "type":"structure",
+      "required":["Arn"],
+      "members":{
+        "Arn":{"shape":"DatasetArn"}
+      }
+    },
+    "DistributeDatasetEntriesRequest":{
+      "type":"structure",
+      "required":["Datasets"],
+      "members":{
+        "Datasets":{"shape":"DistributeDatasetMetadataList"}
+      }
+    },
+    "DistributeDatasetEntriesResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DistributeDatasetMetadataList":{
+      "type":"list",
+      "member":{"shape":"DistributeDataset"},
+      "max":2,
+      "min":2
+    },
     "Emotion":{
       "type":"structure",
       "members":{
@@ -1634,7 +1967,8 @@
         "BoundingBox":{"shape":"BoundingBox"},
         "ImageId":{"shape":"ImageId"},
         "ExternalImageId":{"shape":"ExternalImageId"},
-        "Confidence":{"shape":"Percent"}
+        "Confidence":{"shape":"Percent"},
+        "IndexFacesModelVersion":{"shape":"IndexFacesModelVersion"}
       }
     },
     "FaceAttributes":{
@@ -1770,7 +2104,8 @@
       "type":"structure",
       "members":{
         "Urls":{"shape":"Urls"},
-        "Name":{"shape":"String"}
+        "Name":{"shape":"String"},
+        "KnownGender":{"shape":"KnownGender"}
       }
     },
     "GetCelebrityRecognitionRequest":{
@@ -1935,12 +2270,18 @@
         "TextModelVersion":{"shape":"String"}
       }
     },
+    "GroundTruthBlob":{
+      "type":"blob",
+      "max":5242880,
+      "min":1
+    },
     "GroundTruthManifest":{
       "type":"structure",
       "members":{
         "S3Object":{"shape":"S3Object"}
       }
     },
+    "HasErrors":{"type":"boolean"},
     "HumanLoopActivationConditionsEvaluationResults":{
       "type":"string",
       "max":10240
@@ -2034,6 +2375,10 @@
       },
       "exception":true
     },
+    "IndexFacesModelVersion":{
+      "type":"string",
+      "pattern":"[0-9\\.]+"
+    },
     "IndexFacesRequest":{
       "type":"structure",
       "required":[
@@ -2104,6 +2449,7 @@
       },
       "exception":true
     },
+    "IsLabeled":{"type":"boolean"},
     "JobId":{
       "type":"string",
       "max":64,
@@ -2141,6 +2487,21 @@
       "max":2048,
       "min":1,
       "pattern":"^[A-Za-z0-9][A-Za-z0-9:_/+=,@.-]{0,2048}$"
+    },
+    "KnownGender":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"KnownGenderType"}
+      }
+    },
+    "KnownGenderType":{
+      "type":"string",
+      "enum":[
+        "Male",
+        "Female",
+        "Nonbinary",
+        "Unlisted"
+      ]
     },
     "Label":{
       "type":"structure",
@@ -2241,6 +2602,52 @@
         "FaceModelVersions":{"shape":"FaceModelVersionList"}
       }
     },
+    "ListDatasetEntriesPageSize":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "ListDatasetEntriesRequest":{
+      "type":"structure",
+      "required":["DatasetArn"],
+      "members":{
+        "DatasetArn":{"shape":"DatasetArn"},
+        "ContainsLabels":{"shape":"DatasetLabels"},
+        "Labeled":{"shape":"IsLabeled"},
+        "SourceRefContains":{"shape":"QueryString"},
+        "HasErrors":{"shape":"HasErrors"},
+        "NextToken":{"shape":"ExtendedPaginationToken"},
+        "MaxResults":{"shape":"ListDatasetEntriesPageSize"}
+      }
+    },
+    "ListDatasetEntriesResponse":{
+      "type":"structure",
+      "members":{
+        "DatasetEntries":{"shape":"DatasetEntries"},
+        "NextToken":{"shape":"ExtendedPaginationToken"}
+      }
+    },
+    "ListDatasetLabelsPageSize":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "ListDatasetLabelsRequest":{
+      "type":"structure",
+      "required":["DatasetArn"],
+      "members":{
+        "DatasetArn":{"shape":"DatasetArn"},
+        "NextToken":{"shape":"ExtendedPaginationToken"},
+        "MaxResults":{"shape":"ListDatasetLabelsPageSize"}
+      }
+    },
+    "ListDatasetLabelsResponse":{
+      "type":"structure",
+      "members":{
+        "DatasetLabelDescriptions":{"shape":"DatasetLabelDescriptions"},
+        "NextToken":{"shape":"ExtendedPaginationToken"}
+      }
+    },
     "ListFacesRequest":{
       "type":"structure",
       "required":["CollectionId"],
@@ -2294,9 +2701,19 @@
       "type":"integer",
       "min":1
     },
+    "MaxPixelThreshold":{
+      "type":"float",
+      "max":1,
+      "min":0
+    },
     "MaxResults":{
       "type":"integer",
       "min":1
+    },
+    "MinCoveragePercentage":{
+      "type":"float",
+      "max":100,
+      "min":0
     },
     "ModerationLabel":{
       "type":"structure",
@@ -2444,7 +2861,8 @@
       "members":{
         "ProjectArn":{"shape":"ProjectArn"},
         "CreationTimestamp":{"shape":"DateTime"},
-        "Status":{"shape":"ProjectStatus"}
+        "Status":{"shape":"ProjectStatus"},
+        "Datasets":{"shape":"DatasetMetadataList"}
       }
     },
     "ProjectDescriptions":{
@@ -2456,6 +2874,12 @@
       "max":255,
       "min":1,
       "pattern":"[a-zA-Z0-9_.\\-]+"
+    },
+    "ProjectNames":{
+      "type":"list",
+      "member":{"shape":"ProjectName"},
+      "max":10,
+      "min":1
     },
     "ProjectStatus":{
       "type":"string",
@@ -2588,6 +3012,12 @@
         "MEDIUM",
         "HIGH"
       ]
+    },
+    "QueryString":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":".*\\S.*"
     },
     "Reason":{
       "type":"string",
@@ -2761,7 +3191,10 @@
         "EndTimecodeSMPTE":{"shape":"Timecode"},
         "DurationSMPTE":{"shape":"Timecode"},
         "TechnicalCueSegment":{"shape":"TechnicalCueSegment"},
-        "ShotSegment":{"shape":"ShotSegment"}
+        "ShotSegment":{"shape":"ShotSegment"},
+        "StartFrameNumber":{"shape":"ULong"},
+        "EndFrameNumber":{"shape":"ULong"},
+        "DurationFrames":{"shape":"ULong"}
       }
     },
     "SegmentDetections":{
@@ -2981,7 +3414,8 @@
     "StartTechnicalCueDetectionFilter":{
       "type":"structure",
       "members":{
-        "MinSegmentConfidence":{"shape":"SegmentConfidence"}
+        "MinSegmentConfidence":{"shape":"SegmentConfidence"},
+        "BlackFrame":{"shape":"BlackFrame"}
       }
     },
     "StartTextDetectionFilters":{
@@ -3150,7 +3584,11 @@
       "enum":[
         "ColorBars",
         "EndCredits",
-        "BlackFrames"
+        "BlackFrames",
+        "OpeningCredits",
+        "StudioLogo",
+        "Slate",
+        "Content"
       ]
     },
     "TestingData":{
@@ -3259,10 +3697,28 @@
       "members":{
       }
     },
+    "UpdateDatasetEntriesRequest":{
+      "type":"structure",
+      "required":[
+        "DatasetArn",
+        "Changes"
+      ],
+      "members":{
+        "DatasetArn":{"shape":"DatasetArn"},
+        "Changes":{"shape":"DatasetChanges"}
+      }
+    },
+    "UpdateDatasetEntriesResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "Url":{"type":"string"},
     "Urls":{
       "type":"list",
-      "member":{"shape":"Url"}
+      "member":{"shape":"Url"},
+      "max":255,
+      "min":0
     },
     "ValidationData":{
       "type":"structure",
@@ -3288,6 +3744,13 @@
         "S3Object":{"shape":"S3Object"}
       }
     },
+    "VideoColorRange":{
+      "type":"string",
+      "enum":[
+        "FULL",
+        "LIMITED"
+      ]
+    },
     "VideoJobStatus":{
       "type":"string",
       "enum":[
@@ -3304,7 +3767,8 @@
         "Format":{"shape":"String"},
         "FrameRate":{"shape":"Float"},
         "FrameHeight":{"shape":"ULong"},
-        "FrameWidth":{"shape":"ULong"}
+        "FrameWidth":{"shape":"ULong"},
+        "ColorRange":{"shape":"VideoColorRange"}
       }
     },
     "VideoMetadataList":{

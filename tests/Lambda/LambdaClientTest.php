@@ -29,7 +29,7 @@ class LambdaClientTest extends TestCase
                 ],
                 $command['@http']
             );
-            return Promise\promise_for(new Result([]));
+            return Promise\Create::promiseFor(new Result([]));
         });
 
         $client->listFunctions();

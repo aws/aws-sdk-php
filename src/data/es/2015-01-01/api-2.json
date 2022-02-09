@@ -206,6 +206,21 @@
         {"shape":"ValidationException"}
       ]
     },
+    "DescribeDomainChangeProgress":{
+      "name":"DescribeDomainChangeProgress",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2015-01-01/es/domain/{DomainName}/progress"
+      },
+      "input":{"shape":"DescribeDomainChangeProgressRequest"},
+      "output":{"shape":"DescribeDomainChangeProgressResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"}
+      ]
+    },
     "DescribeElasticsearchDomain":{
       "name":"DescribeElasticsearchDomain",
       "http":{
@@ -426,6 +441,7 @@
         "method":"GET",
         "requestUri":"/2015-01-01/domain"
       },
+      "input":{"shape":"ListDomainNamesRequest"},
       "output":{"shape":"ListDomainNamesResponse"},
       "errors":[
         {"shape":"BaseException"},
@@ -699,7 +715,9 @@
       "members":{
         "Enabled":{"shape":"Boolean"},
         "InternalUserDatabaseEnabled":{"shape":"Boolean"},
-        "SAMLOptions":{"shape":"SAMLOptionsOutput"}
+        "SAMLOptions":{"shape":"SAMLOptionsOutput"},
+        "AnonymousAuthDisableDate":{"shape":"DisableTimestamp"},
+        "AnonymousAuthEnabled":{"shape":"Boolean"}
       }
     },
     "AdvancedSecurityOptionsInput":{
@@ -708,7 +726,8 @@
         "Enabled":{"shape":"Boolean"},
         "InternalUserDatabaseEnabled":{"shape":"Boolean"},
         "MasterUserOptions":{"shape":"MasterUserOptions"},
-        "SAMLOptions":{"shape":"SAMLOptionsInput"}
+        "SAMLOptions":{"shape":"SAMLOptionsInput"},
+        "AnonymousAuthEnabled":{"shape":"Boolean"}
       }
     },
     "AdvancedSecurityOptionsStatus":{
@@ -872,6 +891,48 @@
       "type":"structure",
       "members":{
         "ServiceSoftwareOptions":{"shape":"ServiceSoftwareOptions"}
+      }
+    },
+    "ChangeProgressDetails":{
+      "type":"structure",
+      "members":{
+        "ChangeId":{"shape":"GUID"},
+        "Message":{"shape":"Message"}
+      }
+    },
+    "ChangeProgressStage":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"ChangeProgressStageName"},
+        "Status":{"shape":"ChangeProgressStageStatus"},
+        "Description":{"shape":"Description"},
+        "LastUpdated":{"shape":"LastUpdated"}
+      }
+    },
+    "ChangeProgressStageList":{
+      "type":"list",
+      "member":{"shape":"ChangeProgressStage"}
+    },
+    "ChangeProgressStageName":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
+    "ChangeProgressStageStatus":{
+      "type":"string",
+      "max":256,
+      "min":1
+    },
+    "ChangeProgressStatusDetails":{
+      "type":"structure",
+      "members":{
+        "ChangeId":{"shape":"GUID"},
+        "StartTime":{"shape":"UpdateTimestamp"},
+        "Status":{"shape":"OverallChangeStatus"},
+        "PendingProperties":{"shape":"StringList"},
+        "CompletedProperties":{"shape":"StringList"},
+        "TotalNumberOfStages":{"shape":"TotalNumberOfStages"},
+        "ChangeProgressStages":{"shape":"ChangeProgressStageList"}
       }
     },
     "CloudWatchLogsLogGroupArn":{"type":"string"},
@@ -1081,6 +1142,11 @@
         "ELIGIBLE"
       ]
     },
+    "DeploymentType":{
+      "type":"string",
+      "max":128,
+      "min":2
+    },
     "DescribeDomainAutoTunesRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -1099,6 +1165,28 @@
       "members":{
         "AutoTunes":{"shape":"AutoTuneList"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "DescribeDomainChangeProgressRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "ChangeId":{
+          "shape":"GUID",
+          "location":"querystring",
+          "locationName":"changeid"
+        }
+      }
+    },
+    "DescribeDomainChangeProgressResponse":{
+      "type":"structure",
+      "members":{
+        "ChangeProgressStatus":{"shape":"ChangeProgressStatusDetails"}
       }
     },
     "DescribeElasticsearchDomainConfigRequest":{
@@ -1307,6 +1395,8 @@
         "ReservedElasticsearchInstances":{"shape":"ReservedElasticsearchInstanceList"}
       }
     },
+    "Description":{"type":"string"},
+    "DisableTimestamp":{"type":"timestamp"},
     "DisabledOperationException":{
       "type":"structure",
       "members":{
@@ -1368,7 +1458,8 @@
     "DomainInfo":{
       "type":"structure",
       "members":{
-        "DomainName":{"shape":"DomainName"}
+        "DomainName":{"shape":"DomainName"},
+        "EngineType":{"shape":"EngineType"}
       }
     },
     "DomainInfoList":{
@@ -1429,6 +1520,14 @@
       ]
     },
     "Double":{"type":"double"},
+    "DryRun":{"type":"boolean"},
+    "DryRunResults":{
+      "type":"structure",
+      "members":{
+        "DeploymentType":{"shape":"DeploymentType"},
+        "Message":{"shape":"Message"}
+      }
+    },
     "Duration":{
       "type":"structure",
       "members":{
@@ -1574,7 +1673,8 @@
         "LogPublishingOptions":{"shape":"LogPublishingOptionsStatus"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptionsStatus"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsStatus"},
-        "AutoTuneOptions":{"shape":"AutoTuneOptionsStatus"}
+        "AutoTuneOptions":{"shape":"AutoTuneOptionsStatus"},
+        "ChangeProgressDetails":{"shape":"ChangeProgressDetails"}
       }
     },
     "ElasticsearchDomainStatus":{
@@ -1609,7 +1709,8 @@
         "ServiceSoftwareOptions":{"shape":"ServiceSoftwareOptions"},
         "DomainEndpointOptions":{"shape":"DomainEndpointOptions"},
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptions"},
-        "AutoTuneOptions":{"shape":"AutoTuneOptionsOutput"}
+        "AutoTuneOptions":{"shape":"AutoTuneOptionsOutput"},
+        "ChangeProgressDetails":{"shape":"ChangeProgressDetails"}
       }
     },
     "ElasticsearchDomainStatusList":{
@@ -1635,7 +1736,10 @@
         "Status":{"shape":"OptionStatus"}
       }
     },
-    "ElasticsearchVersionString":{"type":"string"},
+    "ElasticsearchVersionString":{
+      "type":"string",
+      "pattern":"^[0-9]{1}\\.[0-9]{1,2}$|^OpenSearch_[0-9]{1,2}\\.[0-9]{1,2}$"
+    },
     "EncryptionAtRestOptions":{
       "type":"structure",
       "members":{
@@ -1658,6 +1762,13 @@
       "type":"map",
       "key":{"shape":"String"},
       "value":{"shape":"ServiceUrl"}
+    },
+    "EngineType":{
+      "type":"string",
+      "enum":[
+        "OpenSearch",
+        "Elasticsearch"
+      ]
     },
     "ErrorDetails":{
       "type":"structure",
@@ -1890,6 +2001,16 @@
       "key":{"shape":"InstanceRole"},
       "value":{"shape":"Limits"}
     },
+    "ListDomainNamesRequest":{
+      "type":"structure",
+      "members":{
+        "EngineType":{
+          "shape":"EngineType",
+          "location":"querystring",
+          "locationName":"engineType"
+        }
+      }
+    },
     "ListDomainNamesResponse":{
       "type":"structure",
       "members":{
@@ -2065,6 +2186,11 @@
       "max":100
     },
     "MaximumInstanceCount":{"type":"integer"},
+    "Message":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "MinimumInstanceCount":{"type":"integer"},
     "NextToken":{"type":"string"},
     "NodeToNodeEncryptionOptions":{
@@ -2144,6 +2270,15 @@
     "OutboundCrossClusterSearchConnections":{
       "type":"list",
       "member":{"shape":"OutboundCrossClusterSearchConnection"}
+    },
+    "OverallChangeStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "PROCESSING",
+        "COMPLETED",
+        "FAILED"
+      ]
     },
     "OwnerId":{
       "type":"string",
@@ -2546,6 +2681,7 @@
       "type":"string",
       "enum":["HOURS"]
     },
+    "TotalNumberOfStages":{"type":"integer"},
     "UIntValue":{
       "type":"integer",
       "min":0
@@ -2571,14 +2707,16 @@
         "AdvancedSecurityOptions":{"shape":"AdvancedSecurityOptionsInput"},
         "NodeToNodeEncryptionOptions":{"shape":"NodeToNodeEncryptionOptions"},
         "EncryptionAtRestOptions":{"shape":"EncryptionAtRestOptions"},
-        "AutoTuneOptions":{"shape":"AutoTuneOptions"}
+        "AutoTuneOptions":{"shape":"AutoTuneOptions"},
+        "DryRun":{"shape":"DryRun"}
       }
     },
     "UpdateElasticsearchDomainConfigResponse":{
       "type":"structure",
       "required":["DomainConfig"],
       "members":{
-        "DomainConfig":{"shape":"ElasticsearchDomainConfig"}
+        "DomainConfig":{"shape":"ElasticsearchDomainConfig"},
+        "DryRunResults":{"shape":"DryRunResults"}
       }
     },
     "UpdatePackageRequest":{
@@ -2618,7 +2756,8 @@
       "members":{
         "DomainName":{"shape":"DomainName"},
         "TargetVersion":{"shape":"ElasticsearchVersionString"},
-        "PerformCheckOnly":{"shape":"Boolean"}
+        "PerformCheckOnly":{"shape":"Boolean"},
+        "ChangeProgressDetails":{"shape":"ChangeProgressDetails"}
       }
     },
     "UpgradeHistory":{

@@ -45,7 +45,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"MalformedPolicyDocumentException"},
         {"shape":"InternalServiceError"},
-        {"shape":"PreconditionNotMetException"}
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"DecryptionFailure"}
       ]
     },
     "DeleteResourcePolicy":{
@@ -88,7 +89,8 @@
       "output":{"shape":"DescribeSecretResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServiceError"}
+        {"shape":"InternalServiceError"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "GetRandomPassword":{
@@ -116,7 +118,8 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServiceError"},
-        {"shape":"InvalidRequestException"}
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "GetSecretValue":{
@@ -146,7 +149,8 @@
       "errors":[
         {"shape":"InvalidNextTokenException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServiceError"}
+        {"shape":"InternalServiceError"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "ListSecrets":{
@@ -195,7 +199,8 @@
         {"shape":"EncryptionFailure"},
         {"shape":"ResourceExistsException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServiceError"}
+        {"shape":"InternalServiceError"},
+        {"shape":"DecryptionFailure"}
       ]
     },
     "RemoveRegionsFromReplication":{
@@ -318,7 +323,8 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"MalformedPolicyDocumentException"},
         {"shape":"InternalServiceError"},
-        {"shape":"PreconditionNotMetException"}
+        {"shape":"PreconditionNotMetException"},
+        {"shape":"DecryptionFailure"}
       ]
     },
     "UpdateSecretVersionStage":{
@@ -514,6 +520,12 @@
       "type":"string",
       "max":2048
     },
+    "DurationType":{
+      "type":"string",
+      "max":3,
+      "min":2,
+      "pattern":"[0-9h]+"
+    },
     "EncryptionFailure":{
       "type":"structure",
       "members":{
@@ -673,6 +685,10 @@
         "Message":{"shape":"ErrorMessage"}
       },
       "exception":true
+    },
+    "KmsKeyIdListType":{
+      "type":"list",
+      "member":{"shape":"KmsKeyIdType"}
     },
     "KmsKeyIdType":{
       "type":"string",
@@ -944,7 +960,11 @@
           "idempotencyToken":true
         },
         "RotationLambdaARN":{"shape":"RotationLambdaARNType"},
-        "RotationRules":{"shape":"RotationRulesType"}
+        "RotationRules":{"shape":"RotationRulesType"},
+        "RotateImmediately":{
+          "shape":"BooleanType",
+          "box":true
+        }
       }
     },
     "RotateSecretResponse":{
@@ -970,8 +990,16 @@
         "AutomaticallyAfterDays":{
           "shape":"AutomaticallyRotateAfterDaysType",
           "box":true
-        }
+        },
+        "Duration":{"shape":"DurationType"},
+        "ScheduleExpression":{"shape":"ScheduleExpressionType"}
       }
+    },
+    "ScheduleExpressionType":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"[0-9A-Za-z\\(\\)#\\?\\*\\-\\/, ]+"
     },
     "SecretARNType":{
       "type":"string",
@@ -1068,7 +1096,8 @@
         "CreatedDate":{
           "shape":"CreatedDateType",
           "box":true
-        }
+        },
+        "KmsKeyIds":{"shape":"KmsKeyIdListType"}
       }
     },
     "SecretVersionsListType":{

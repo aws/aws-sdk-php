@@ -12,6 +12,22 @@
     "uid":"cloudfront-2020-05-31"
   },
   "operations":{
+    "AssociateAlias":{
+      "name":"AssociateAlias2020_05_31",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2020-05-31/distribution/{TargetDistributionId}/associate-alias",
+        "responseCode":200
+      },
+      "input":{"shape":"AssociateAliasRequest"},
+      "errors":[
+        {"shape":"InvalidArgument"},
+        {"shape":"NoSuchDistribution"},
+        {"shape":"TooManyDistributionCNAMEs"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"AccessDenied"}
+      ]
+    },
     "CreateCachePolicy":{
       "name":"CreateCachePolicy2020_05_31",
       "http":{
@@ -109,6 +125,8 @@
         {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
         {"shape":"NoSuchCachePolicy"},
         {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
         {"shape":"NoSuchOriginRequestPolicy"},
         {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
         {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
@@ -179,6 +197,8 @@
         {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
         {"shape":"NoSuchCachePolicy"},
         {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
         {"shape":"NoSuchOriginRequestPolicy"},
         {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
         {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
@@ -245,7 +265,8 @@
         {"shape":"TooManyFunctions"},
         {"shape":"FunctionAlreadyExists"},
         {"shape":"FunctionSizeLimitExceeded"},
-        {"shape":"InvalidArgument"}
+        {"shape":"InvalidArgument"},
+        {"shape":"UnsupportedOperation"}
       ]
     },
     "CreateInvalidation":{
@@ -350,6 +371,24 @@
         {"shape":"TooManyRealtimeLogConfigs"},
         {"shape":"InvalidArgument"},
         {"shape":"AccessDenied"}
+      ]
+    },
+    "CreateResponseHeadersPolicy":{
+      "name":"CreateResponseHeadersPolicy2020_05_31",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2020-05-31/response-headers-policy",
+        "responseCode":201
+      },
+      "input":{"shape":"CreateResponseHeadersPolicyRequest"},
+      "output":{"shape":"CreateResponseHeadersPolicyResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidArgument"},
+        {"shape":"ResponseHeadersPolicyAlreadyExists"},
+        {"shape":"TooManyResponseHeadersPolicies"},
+        {"shape":"TooManyCustomHeadersInResponseHeadersPolicy"}
       ]
     },
     "CreateStreamingDistribution":{
@@ -494,7 +533,8 @@
         {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchFunctionExists"},
         {"shape":"FunctionInUse"},
-        {"shape":"PreconditionFailed"}
+        {"shape":"PreconditionFailed"},
+        {"shape":"UnsupportedOperation"}
       ]
     },
     "DeleteKeyGroup":{
@@ -578,6 +618,23 @@
         {"shape":"AccessDenied"}
       ]
     },
+    "DeleteResponseHeadersPolicy":{
+      "name":"DeleteResponseHeadersPolicy2020_05_31",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/2020-05-31/response-headers-policy/{Id}",
+        "responseCode":204
+      },
+      "input":{"shape":"DeleteResponseHeadersPolicyRequest"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"IllegalDelete"},
+        {"shape":"ResponseHeadersPolicyInUse"}
+      ]
+    },
     "DeleteStreamingDistribution":{
       "name":"DeleteStreamingDistribution2020_05_31",
       "http":{
@@ -603,7 +660,8 @@
       "input":{"shape":"DescribeFunctionRequest"},
       "output":{"shape":"DescribeFunctionResult"},
       "errors":[
-        {"shape":"NoSuchFunctionExists"}
+        {"shape":"NoSuchFunctionExists"},
+        {"shape":"UnsupportedOperation"}
       ]
     },
     "GetCachePolicy":{
@@ -745,7 +803,8 @@
       "input":{"shape":"GetFunctionRequest"},
       "output":{"shape":"GetFunctionResult"},
       "errors":[
-        {"shape":"NoSuchFunctionExists"}
+        {"shape":"NoSuchFunctionExists"},
+        {"shape":"UnsupportedOperation"}
       ]
     },
     "GetInvalidation":{
@@ -870,6 +929,32 @@
         {"shape":"AccessDenied"}
       ]
     },
+    "GetResponseHeadersPolicy":{
+      "name":"GetResponseHeadersPolicy2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/response-headers-policy/{Id}"
+      },
+      "input":{"shape":"GetResponseHeadersPolicyRequest"},
+      "output":{"shape":"GetResponseHeadersPolicyResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchResponseHeadersPolicy"}
+      ]
+    },
+    "GetResponseHeadersPolicyConfig":{
+      "name":"GetResponseHeadersPolicyConfig2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/response-headers-policy/{Id}/config"
+      },
+      "input":{"shape":"GetResponseHeadersPolicyConfigRequest"},
+      "output":{"shape":"GetResponseHeadersPolicyConfigResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchResponseHeadersPolicy"}
+      ]
+    },
     "GetStreamingDistribution":{
       "name":"GetStreamingDistribution2020_05_31",
       "http":{
@@ -920,6 +1005,20 @@
       "output":{"shape":"ListCloudFrontOriginAccessIdentitiesResult"},
       "errors":[
         {"shape":"InvalidArgument"}
+      ]
+    },
+    "ListConflictingAliases":{
+      "name":"ListConflictingAliases2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/conflicting-alias",
+        "responseCode":200
+      },
+      "input":{"shape":"ListConflictingAliasesRequest"},
+      "output":{"shape":"ListConflictingAliasesResult"},
+      "errors":[
+        {"shape":"InvalidArgument"},
+        {"shape":"NoSuchDistribution"}
       ]
     },
     "ListDistributions":{
@@ -991,6 +1090,20 @@
         {"shape":"InvalidArgument"}
       ]
     },
+    "ListDistributionsByResponseHeadersPolicyId":{
+      "name":"ListDistributionsByResponseHeadersPolicyId2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/distributionsByResponseHeadersPolicyId/{ResponseHeadersPolicyId}"
+      },
+      "input":{"shape":"ListDistributionsByResponseHeadersPolicyIdRequest"},
+      "output":{"shape":"ListDistributionsByResponseHeadersPolicyIdResult"},
+      "errors":[
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"InvalidArgument"},
+        {"shape":"AccessDenied"}
+      ]
+    },
     "ListDistributionsByWebACLId":{
       "name":"ListDistributionsByWebACLId2020_05_31",
       "http":{
@@ -1037,7 +1150,8 @@
       "input":{"shape":"ListFunctionsRequest"},
       "output":{"shape":"ListFunctionsResult"},
       "errors":[
-        {"shape":"InvalidArgument"}
+        {"shape":"InvalidArgument"},
+        {"shape":"UnsupportedOperation"}
       ]
     },
     "ListInvalidations":{
@@ -1106,6 +1220,20 @@
         {"shape":"NoSuchRealtimeLogConfig"}
       ]
     },
+    "ListResponseHeadersPolicies":{
+      "name":"ListResponseHeadersPolicies2020_05_31",
+      "http":{
+        "method":"GET",
+        "requestUri":"/2020-05-31/response-headers-policy"
+      },
+      "input":{"shape":"ListResponseHeadersPoliciesRequest"},
+      "output":{"shape":"ListResponseHeadersPoliciesResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"InvalidArgument"}
+      ]
+    },
     "ListStreamingDistributions":{
       "name":"ListStreamingDistributions2020_05_31",
       "http":{
@@ -1145,7 +1273,8 @@
         {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchFunctionExists"},
-        {"shape":"PreconditionFailed"}
+        {"shape":"PreconditionFailed"},
+        {"shape":"UnsupportedOperation"}
       ]
     },
     "TagResource":{
@@ -1179,7 +1308,8 @@
         {"shape":"InvalidArgument"},
         {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchFunctionExists"},
-        {"shape":"TestFunctionFailed"}
+        {"shape":"TestFunctionFailed"},
+        {"shape":"UnsupportedOperation"}
       ]
     },
     "UntagResource":{
@@ -1297,6 +1427,8 @@
         {"shape":"TooManyDistributionsAssociatedToFieldLevelEncryptionConfig"},
         {"shape":"NoSuchCachePolicy"},
         {"shape":"TooManyDistributionsAssociatedToCachePolicy"},
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"TooManyDistributionsAssociatedToResponseHeadersPolicy"},
         {"shape":"NoSuchOriginRequestPolicy"},
         {"shape":"TooManyDistributionsAssociatedToOriginRequestPolicy"},
         {"shape":"TooManyDistributionsAssociatedToKeyGroup"},
@@ -1368,7 +1500,8 @@
         {"shape":"InvalidIfMatchVersion"},
         {"shape":"NoSuchFunctionExists"},
         {"shape":"PreconditionFailed"},
-        {"shape":"FunctionSizeLimitExceeded"}
+        {"shape":"FunctionSizeLimitExceeded"},
+        {"shape":"UnsupportedOperation"}
       ]
     },
     "UpdateKeyGroup":{
@@ -1446,6 +1579,26 @@
         {"shape":"AccessDenied"}
       ]
     },
+    "UpdateResponseHeadersPolicy":{
+      "name":"UpdateResponseHeadersPolicy2020_05_31",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/2020-05-31/response-headers-policy/{Id}"
+      },
+      "input":{"shape":"UpdateResponseHeadersPolicyRequest"},
+      "output":{"shape":"UpdateResponseHeadersPolicyResult"},
+      "errors":[
+        {"shape":"AccessDenied"},
+        {"shape":"IllegalUpdate"},
+        {"shape":"InconsistentQuantities"},
+        {"shape":"InvalidArgument"},
+        {"shape":"InvalidIfMatchVersion"},
+        {"shape":"NoSuchResponseHeadersPolicy"},
+        {"shape":"PreconditionFailed"},
+        {"shape":"ResponseHeadersPolicyAlreadyExists"},
+        {"shape":"TooManyCustomHeadersInResponseHeadersPolicy"}
+      ]
+    },
     "UpdateStreamingDistribution":{
       "name":"UpdateStreamingDistribution2020_05_31",
       "http":{
@@ -1472,6 +1625,34 @@
     }
   },
   "shapes":{
+    "AccessControlAllowHeadersList":{
+      "type":"list",
+      "member":{
+        "shape":"string",
+        "locationName":"Header"
+      }
+    },
+    "AccessControlAllowMethodsList":{
+      "type":"list",
+      "member":{
+        "shape":"ResponseHeadersPolicyAccessControlAllowMethodsValues",
+        "locationName":"Method"
+      }
+    },
+    "AccessControlAllowOriginsList":{
+      "type":"list",
+      "member":{
+        "shape":"string",
+        "locationName":"Origin"
+      }
+    },
+    "AccessControlExposeHeadersList":{
+      "type":"list",
+      "member":{
+        "shape":"string",
+        "locationName":"Header"
+      }
+    },
     "AccessDenied":{
       "type":"structure",
       "members":{
@@ -1545,6 +1726,25 @@
         "CachedMethods":{"shape":"CachedMethods"}
       }
     },
+    "AssociateAliasRequest":{
+      "type":"structure",
+      "required":[
+        "TargetDistributionId",
+        "Alias"
+      ],
+      "members":{
+        "TargetDistributionId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"TargetDistributionId"
+        },
+        "Alias":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Alias"
+        }
+      }
+    },
     "AwsAccountNumberList":{
       "type":"list",
       "member":{
@@ -1590,6 +1790,7 @@
         "RealtimeLogConfigArn":{"shape":"string"},
         "CachePolicyId":{"shape":"string"},
         "OriginRequestPolicyId":{"shape":"string"},
+        "ResponseHeadersPolicyId":{"shape":"string"},
         "ForwardedValues":{
           "shape":"ForwardedValues",
           "deprecated":true
@@ -1860,6 +2061,30 @@
     "CommentType":{
       "type":"string",
       "sensitive":true
+    },
+    "ConflictingAlias":{
+      "type":"structure",
+      "members":{
+        "Alias":{"shape":"string"},
+        "DistributionId":{"shape":"string"},
+        "AccountId":{"shape":"string"}
+      }
+    },
+    "ConflictingAliases":{
+      "type":"list",
+      "member":{
+        "shape":"ConflictingAlias",
+        "locationName":"ConflictingAlias"
+      }
+    },
+    "ConflictingAliasesList":{
+      "type":"structure",
+      "members":{
+        "NextMarker":{"shape":"string"},
+        "MaxItems":{"shape":"integer"},
+        "Quantity":{"shape":"integer"},
+        "Items":{"shape":"ConflictingAliases"}
+      }
     },
     "ContentTypeProfile":{
       "type":"structure",
@@ -2290,6 +2515,35 @@
         "RealtimeLogConfig":{"shape":"RealtimeLogConfig"}
       }
     },
+    "CreateResponseHeadersPolicyRequest":{
+      "type":"structure",
+      "required":["ResponseHeadersPolicyConfig"],
+      "members":{
+        "ResponseHeadersPolicyConfig":{
+          "shape":"ResponseHeadersPolicyConfig",
+          "locationName":"ResponseHeadersPolicyConfig",
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+        }
+      },
+      "payload":"ResponseHeadersPolicyConfig"
+    },
+    "CreateResponseHeadersPolicyResult":{
+      "type":"structure",
+      "members":{
+        "ResponseHeadersPolicy":{"shape":"ResponseHeadersPolicy"},
+        "Location":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"Location"
+        },
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"ResponseHeadersPolicy"
+    },
     "CreateStreamingDistributionRequest":{
       "type":"structure",
       "required":["StreamingDistributionConfig"],
@@ -2417,6 +2671,7 @@
         "RealtimeLogConfigArn":{"shape":"string"},
         "CachePolicyId":{"shape":"string"},
         "OriginRequestPolicyId":{"shape":"string"},
+        "ResponseHeadersPolicyId":{"shape":"string"},
         "ForwardedValues":{
           "shape":"ForwardedValues",
           "deprecated":true
@@ -2603,6 +2858,22 @@
       "members":{
         "Name":{"shape":"string"},
         "ARN":{"shape":"string"}
+      }
+    },
+    "DeleteResponseHeadersPolicyRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
       }
     },
     "DeleteStreamingDistributionRequest":{
@@ -3070,6 +3341,13 @@
         "QueryStringCacheKeys":{"shape":"QueryStringCacheKeys"}
       }
     },
+    "FrameOptionsList":{
+      "type":"string",
+      "enum":[
+        "DENY",
+        "SAMEORIGIN"
+      ]
+    },
     "FunctionARN":{
       "type":"string",
       "max":108,
@@ -3133,7 +3411,8 @@
     },
     "FunctionExecutionLogList":{
       "type":"list",
-      "member":{"shape":"string"}
+      "member":{"shape":"string"},
+      "sensitive":true
     },
     "FunctionInUse":{
       "type":"structure",
@@ -3693,6 +3972,52 @@
         "RealtimeLogConfig":{"shape":"RealtimeLogConfig"}
       }
     },
+    "GetResponseHeadersPolicyConfigRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        }
+      }
+    },
+    "GetResponseHeadersPolicyConfigResult":{
+      "type":"structure",
+      "members":{
+        "ResponseHeadersPolicyConfig":{"shape":"ResponseHeadersPolicyConfig"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"ResponseHeadersPolicyConfig"
+    },
+    "GetResponseHeadersPolicyRequest":{
+      "type":"structure",
+      "required":["Id"],
+      "members":{
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        }
+      }
+    },
+    "GetResponseHeadersPolicyResult":{
+      "type":"structure",
+      "members":{
+        "ResponseHeadersPolicy":{"shape":"ResponseHeadersPolicy"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"ResponseHeadersPolicy"
+    },
     "GetStreamingDistributionConfigRequest":{
       "type":"structure",
       "required":["Id"],
@@ -4241,6 +4566,42 @@
       },
       "payload":"CloudFrontOriginAccessIdentityList"
     },
+    "ListConflictingAliasesRequest":{
+      "type":"structure",
+      "required":[
+        "DistributionId",
+        "Alias"
+      ],
+      "members":{
+        "DistributionId":{
+          "shape":"distributionIdString",
+          "location":"querystring",
+          "locationName":"DistributionId"
+        },
+        "Alias":{
+          "shape":"aliasString",
+          "location":"querystring",
+          "locationName":"Alias"
+        },
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"listConflictingAliasesMaxItemsInteger",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        }
+      }
+    },
+    "ListConflictingAliasesResult":{
+      "type":"structure",
+      "members":{
+        "ConflictingAliasesList":{"shape":"ConflictingAliasesList"}
+      },
+      "payload":"ConflictingAliasesList"
+    },
     "ListDistributionsByCachePolicyIdRequest":{
       "type":"structure",
       "required":["CachePolicyId"],
@@ -4340,6 +4701,34 @@
         "DistributionList":{"shape":"DistributionList"}
       },
       "payload":"DistributionList"
+    },
+    "ListDistributionsByResponseHeadersPolicyIdRequest":{
+      "type":"structure",
+      "required":["ResponseHeadersPolicyId"],
+      "members":{
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        },
+        "ResponseHeadersPolicyId":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"ResponseHeadersPolicyId"
+        }
+      }
+    },
+    "ListDistributionsByResponseHeadersPolicyIdResult":{
+      "type":"structure",
+      "members":{
+        "DistributionIdList":{"shape":"DistributionIdList"}
+      },
+      "payload":"DistributionIdList"
     },
     "ListDistributionsByWebACLIdRequest":{
       "type":"structure",
@@ -4583,6 +4972,33 @@
       },
       "payload":"RealtimeLogConfigs"
     },
+    "ListResponseHeadersPoliciesRequest":{
+      "type":"structure",
+      "members":{
+        "Type":{
+          "shape":"ResponseHeadersPolicyType",
+          "location":"querystring",
+          "locationName":"Type"
+        },
+        "Marker":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"Marker"
+        },
+        "MaxItems":{
+          "shape":"string",
+          "location":"querystring",
+          "locationName":"MaxItems"
+        }
+      }
+    },
+    "ListResponseHeadersPoliciesResult":{
+      "type":"structure",
+      "members":{
+        "ResponseHeadersPolicyList":{"shape":"ResponseHeadersPolicyList"}
+      },
+      "payload":"ResponseHeadersPolicyList"
+    },
     "ListStreamingDistributionsRequest":{
       "type":"structure",
       "members":{
@@ -4787,6 +5203,14 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
+    "NoSuchResponseHeadersPolicy":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"string"}
+      },
+      "error":{"httpStatusCode":404},
+      "exception":true
+    },
     "NoSuchStreamingDistribution":{
       "type":"structure",
       "members":{
@@ -4821,7 +5245,7 @@
       ],
       "members":{
         "HeaderName":{"shape":"string"},
-        "HeaderValue":{"shape":"string"}
+        "HeaderValue":{"shape":"sensitiveStringType"}
       }
     },
     "OriginCustomHeadersList":{
@@ -5382,6 +5806,19 @@
         "Disabled"
       ]
     },
+    "ReferrerPolicyList":{
+      "type":"string",
+      "enum":[
+        "no-referrer",
+        "no-referrer-when-downgrade",
+        "origin",
+        "origin-when-cross-origin",
+        "same-origin",
+        "strict-origin",
+        "strict-origin-when-cross-origin",
+        "unsafe-url"
+      ]
+    },
     "ResourceARN":{
       "type":"string",
       "pattern":"arn:aws(-cn)?:cloudfront::[0-9]+:.*"
@@ -5393,6 +5830,262 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "ResponseHeadersPolicy":{
+      "type":"structure",
+      "required":[
+        "Id",
+        "LastModifiedTime",
+        "ResponseHeadersPolicyConfig"
+      ],
+      "members":{
+        "Id":{"shape":"string"},
+        "LastModifiedTime":{"shape":"timestamp"},
+        "ResponseHeadersPolicyConfig":{"shape":"ResponseHeadersPolicyConfig"}
+      }
+    },
+    "ResponseHeadersPolicyAccessControlAllowHeaders":{
+      "type":"structure",
+      "required":[
+        "Quantity",
+        "Items"
+      ],
+      "members":{
+        "Quantity":{"shape":"integer"},
+        "Items":{"shape":"AccessControlAllowHeadersList"}
+      }
+    },
+    "ResponseHeadersPolicyAccessControlAllowMethods":{
+      "type":"structure",
+      "required":[
+        "Quantity",
+        "Items"
+      ],
+      "members":{
+        "Quantity":{"shape":"integer"},
+        "Items":{"shape":"AccessControlAllowMethodsList"}
+      }
+    },
+    "ResponseHeadersPolicyAccessControlAllowMethodsValues":{
+      "type":"string",
+      "enum":[
+        "GET",
+        "POST",
+        "OPTIONS",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "HEAD",
+        "ALL"
+      ]
+    },
+    "ResponseHeadersPolicyAccessControlAllowOrigins":{
+      "type":"structure",
+      "required":[
+        "Quantity",
+        "Items"
+      ],
+      "members":{
+        "Quantity":{"shape":"integer"},
+        "Items":{"shape":"AccessControlAllowOriginsList"}
+      }
+    },
+    "ResponseHeadersPolicyAccessControlExposeHeaders":{
+      "type":"structure",
+      "required":["Quantity"],
+      "members":{
+        "Quantity":{"shape":"integer"},
+        "Items":{"shape":"AccessControlExposeHeadersList"}
+      }
+    },
+    "ResponseHeadersPolicyAlreadyExists":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"string"}
+      },
+      "error":{"httpStatusCode":409},
+      "exception":true
+    },
+    "ResponseHeadersPolicyConfig":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Comment":{"shape":"string"},
+        "Name":{"shape":"string"},
+        "CorsConfig":{"shape":"ResponseHeadersPolicyCorsConfig"},
+        "SecurityHeadersConfig":{"shape":"ResponseHeadersPolicySecurityHeadersConfig"},
+        "CustomHeadersConfig":{"shape":"ResponseHeadersPolicyCustomHeadersConfig"}
+      }
+    },
+    "ResponseHeadersPolicyContentSecurityPolicy":{
+      "type":"structure",
+      "required":[
+        "Override",
+        "ContentSecurityPolicy"
+      ],
+      "members":{
+        "Override":{"shape":"boolean"},
+        "ContentSecurityPolicy":{"shape":"string"}
+      }
+    },
+    "ResponseHeadersPolicyContentTypeOptions":{
+      "type":"structure",
+      "required":["Override"],
+      "members":{
+        "Override":{"shape":"boolean"}
+      }
+    },
+    "ResponseHeadersPolicyCorsConfig":{
+      "type":"structure",
+      "required":[
+        "AccessControlAllowOrigins",
+        "AccessControlAllowHeaders",
+        "AccessControlAllowMethods",
+        "AccessControlAllowCredentials",
+        "OriginOverride"
+      ],
+      "members":{
+        "AccessControlAllowOrigins":{"shape":"ResponseHeadersPolicyAccessControlAllowOrigins"},
+        "AccessControlAllowHeaders":{"shape":"ResponseHeadersPolicyAccessControlAllowHeaders"},
+        "AccessControlAllowMethods":{"shape":"ResponseHeadersPolicyAccessControlAllowMethods"},
+        "AccessControlAllowCredentials":{"shape":"boolean"},
+        "AccessControlExposeHeaders":{"shape":"ResponseHeadersPolicyAccessControlExposeHeaders"},
+        "AccessControlMaxAgeSec":{"shape":"integer"},
+        "OriginOverride":{"shape":"boolean"}
+      }
+    },
+    "ResponseHeadersPolicyCustomHeader":{
+      "type":"structure",
+      "required":[
+        "Header",
+        "Value",
+        "Override"
+      ],
+      "members":{
+        "Header":{"shape":"string"},
+        "Value":{"shape":"string"},
+        "Override":{"shape":"boolean"}
+      }
+    },
+    "ResponseHeadersPolicyCustomHeaderList":{
+      "type":"list",
+      "member":{
+        "shape":"ResponseHeadersPolicyCustomHeader",
+        "locationName":"ResponseHeadersPolicyCustomHeader"
+      }
+    },
+    "ResponseHeadersPolicyCustomHeadersConfig":{
+      "type":"structure",
+      "required":["Quantity"],
+      "members":{
+        "Quantity":{"shape":"integer"},
+        "Items":{"shape":"ResponseHeadersPolicyCustomHeaderList"}
+      }
+    },
+    "ResponseHeadersPolicyFrameOptions":{
+      "type":"structure",
+      "required":[
+        "Override",
+        "FrameOption"
+      ],
+      "members":{
+        "Override":{"shape":"boolean"},
+        "FrameOption":{"shape":"FrameOptionsList"}
+      }
+    },
+    "ResponseHeadersPolicyInUse":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"string"}
+      },
+      "error":{"httpStatusCode":409},
+      "exception":true
+    },
+    "ResponseHeadersPolicyList":{
+      "type":"structure",
+      "required":[
+        "MaxItems",
+        "Quantity"
+      ],
+      "members":{
+        "NextMarker":{"shape":"string"},
+        "MaxItems":{"shape":"integer"},
+        "Quantity":{"shape":"integer"},
+        "Items":{"shape":"ResponseHeadersPolicySummaryList"}
+      }
+    },
+    "ResponseHeadersPolicyReferrerPolicy":{
+      "type":"structure",
+      "required":[
+        "Override",
+        "ReferrerPolicy"
+      ],
+      "members":{
+        "Override":{"shape":"boolean"},
+        "ReferrerPolicy":{"shape":"ReferrerPolicyList"}
+      }
+    },
+    "ResponseHeadersPolicySecurityHeadersConfig":{
+      "type":"structure",
+      "members":{
+        "XSSProtection":{"shape":"ResponseHeadersPolicyXSSProtection"},
+        "FrameOptions":{"shape":"ResponseHeadersPolicyFrameOptions"},
+        "ReferrerPolicy":{"shape":"ResponseHeadersPolicyReferrerPolicy"},
+        "ContentSecurityPolicy":{"shape":"ResponseHeadersPolicyContentSecurityPolicy"},
+        "ContentTypeOptions":{"shape":"ResponseHeadersPolicyContentTypeOptions"},
+        "StrictTransportSecurity":{"shape":"ResponseHeadersPolicyStrictTransportSecurity"}
+      }
+    },
+    "ResponseHeadersPolicyStrictTransportSecurity":{
+      "type":"structure",
+      "required":[
+        "Override",
+        "AccessControlMaxAgeSec"
+      ],
+      "members":{
+        "Override":{"shape":"boolean"},
+        "IncludeSubdomains":{"shape":"boolean"},
+        "Preload":{"shape":"boolean"},
+        "AccessControlMaxAgeSec":{"shape":"integer"}
+      }
+    },
+    "ResponseHeadersPolicySummary":{
+      "type":"structure",
+      "required":[
+        "Type",
+        "ResponseHeadersPolicy"
+      ],
+      "members":{
+        "Type":{"shape":"ResponseHeadersPolicyType"},
+        "ResponseHeadersPolicy":{"shape":"ResponseHeadersPolicy"}
+      }
+    },
+    "ResponseHeadersPolicySummaryList":{
+      "type":"list",
+      "member":{
+        "shape":"ResponseHeadersPolicySummary",
+        "locationName":"ResponseHeadersPolicySummary"
+      }
+    },
+    "ResponseHeadersPolicyType":{
+      "type":"string",
+      "enum":[
+        "managed",
+        "custom"
+      ]
+    },
+    "ResponseHeadersPolicyXSSProtection":{
+      "type":"structure",
+      "required":[
+        "Override",
+        "Protection"
+      ],
+      "members":{
+        "Override":{"shape":"boolean"},
+        "Protection":{"shape":"boolean"},
+        "ModeBlock":{"shape":"boolean"},
+        "ReportUri":{"shape":"string"}
+      }
     },
     "Restrictions":{
       "type":"structure",
@@ -5718,8 +6411,8 @@
         "FunctionSummary":{"shape":"FunctionSummary"},
         "ComputeUtilization":{"shape":"string"},
         "FunctionExecutionLogs":{"shape":"FunctionExecutionLogList"},
-        "FunctionErrorMessage":{"shape":"string"},
-        "FunctionOutput":{"shape":"string"}
+        "FunctionErrorMessage":{"shape":"sensitiveStringType"},
+        "FunctionOutput":{"shape":"sensitiveStringType"}
       }
     },
     "TooManyCacheBehaviors":{
@@ -5778,6 +6471,14 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "TooManyCustomHeadersInResponseHeadersPolicy":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"string"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
     "TooManyDistributionCNAMEs":{
       "type":"structure",
       "members":{
@@ -5819,6 +6520,14 @@
       "exception":true
     },
     "TooManyDistributionsAssociatedToOriginRequestPolicy":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"string"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "TooManyDistributionsAssociatedToResponseHeadersPolicy":{
       "type":"structure",
       "members":{
         "Message":{"shape":"string"}
@@ -6043,6 +6752,14 @@
       "exception":true
     },
     "TooManyRealtimeLogConfigs":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"string"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
+    },
+    "TooManyResponseHeadersPolicies":{
       "type":"structure",
       "members":{
         "Message":{"shape":"string"}
@@ -6496,6 +7213,43 @@
         "RealtimeLogConfig":{"shape":"RealtimeLogConfig"}
       }
     },
+    "UpdateResponseHeadersPolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ResponseHeadersPolicyConfig",
+        "Id"
+      ],
+      "members":{
+        "ResponseHeadersPolicyConfig":{
+          "shape":"ResponseHeadersPolicyConfig",
+          "locationName":"ResponseHeadersPolicyConfig",
+          "xmlNamespace":{"uri":"http://cloudfront.amazonaws.com/doc/2020-05-31/"}
+        },
+        "Id":{
+          "shape":"string",
+          "location":"uri",
+          "locationName":"Id"
+        },
+        "IfMatch":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"If-Match"
+        }
+      },
+      "payload":"ResponseHeadersPolicyConfig"
+    },
+    "UpdateResponseHeadersPolicyResult":{
+      "type":"structure",
+      "members":{
+        "ResponseHeadersPolicy":{"shape":"ResponseHeadersPolicy"},
+        "ETag":{
+          "shape":"string",
+          "location":"header",
+          "locationName":"ETag"
+        }
+      },
+      "payload":"ResponseHeadersPolicy"
+    },
     "UpdateStreamingDistributionRequest":{
       "type":"structure",
       "required":[
@@ -6559,9 +7313,25 @@
         "redirect-to-https"
       ]
     },
+    "aliasString":{
+      "type":"string",
+      "max":253
+    },
     "boolean":{"type":"boolean"},
+    "distributionIdString":{
+      "type":"string",
+      "max":25
+    },
     "integer":{"type":"integer"},
+    "listConflictingAliasesMaxItemsInteger":{
+      "type":"integer",
+      "max":100
+    },
     "long":{"type":"long"},
+    "sensitiveStringType":{
+      "type":"string",
+      "sensitive":true
+    },
     "string":{"type":"string"},
     "timestamp":{"type":"timestamp"}
   }

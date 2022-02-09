@@ -40,7 +40,7 @@ class EcsCredentialProviderTest extends TestCase
     public function testRejectsIfUriPathIsNotAvailable()
     {
         $client = function () use (&$responses) {
-            return Promise\rejection_for([
+            return Promise\Create::rejectionFor([
                 'exception' => new \Exception('error')
             ]);
         };
@@ -102,7 +102,7 @@ class EcsCredentialProviderTest extends TestCase
             if (empty($responses)) {
                 throw new \Exception('No responses');
             }
-            return Promise\promise_for(array_shift($responses));
+            return Promise\Create::promiseFor(array_shift($responses));
         };
         $args['client'] = $client;
 
@@ -143,7 +143,7 @@ class EcsCredentialProviderTest extends TestCase
                         array $options
                     ) use ($credentials) {
                         $this->assertSame('', $options['proxy']);
-                        return Promise\promise_for(
+                        return Promise\Create::promiseFor(
                             new Response(
                                 200,
                                 [],

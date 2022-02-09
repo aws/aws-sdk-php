@@ -6,7 +6,7 @@
     "jsonVersion":"1.1",
     "protocol":"json",
     "serviceAbbreviation":"Amazon EMR",
-    "serviceFullName":"Amazon Elastic MapReduce",
+    "serviceFullName":"Amazon EMR",
     "serviceId":"EMR",
     "signatureVersion":"v4",
     "targetPrefix":"ElasticMapReduce",
@@ -190,6 +190,19 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "DescribeReleaseLabel":{
+      "name":"DescribeReleaseLabel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeReleaseLabelInput"},
+      "output":{"shape":"DescribeReleaseLabelOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidRequestException"}
+      ]
+    },
     "DescribeSecurityConfiguration":{
       "name":"DescribeSecurityConfiguration",
       "http":{
@@ -228,6 +241,15 @@
         {"shape":"InternalServerException"},
         {"shape":"InvalidRequestException"}
       ]
+    },
+    "GetAutoTerminationPolicy":{
+      "name":"GetAutoTerminationPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetAutoTerminationPolicyInput"},
+      "output":{"shape":"GetAutoTerminationPolicyOutput"}
     },
     "GetBlockPublicAccessConfiguration":{
       "name":"GetBlockPublicAccessConfiguration",
@@ -342,6 +364,19 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "ListReleaseLabels":{
+      "name":"ListReleaseLabels",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListReleaseLabelsInput"},
+      "output":{"shape":"ListReleaseLabelsOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidRequestException"}
+      ]
+    },
     "ListSecurityConfigurations":{
       "name":"ListSecurityConfigurations",
       "http":{
@@ -439,6 +474,15 @@
       "input":{"shape":"PutAutoScalingPolicyInput"},
       "output":{"shape":"PutAutoScalingPolicyOutput"}
     },
+    "PutAutoTerminationPolicy":{
+      "name":"PutAutoTerminationPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutAutoTerminationPolicyInput"},
+      "output":{"shape":"PutAutoTerminationPolicyOutput"}
+    },
     "PutBlockPublicAccessConfiguration":{
       "name":"PutBlockPublicAccessConfiguration",
       "http":{
@@ -469,6 +513,15 @@
       },
       "input":{"shape":"RemoveAutoScalingPolicyInput"},
       "output":{"shape":"RemoveAutoScalingPolicyOutput"}
+    },
+    "RemoveAutoTerminationPolicy":{
+      "name":"RemoveAutoTerminationPolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RemoveAutoTerminationPolicyInput"},
+      "output":{"shape":"RemoveAutoTerminationPolicyOutput"}
     },
     "RemoveManagedScalingPolicy":{
       "name":"RemoveManagedScalingPolicy",
@@ -751,6 +804,12 @@
       "members":{
         "State":{"shape":"AutoScalingPolicyState"},
         "StateChangeReason":{"shape":"AutoScalingPolicyStateChangeReason"}
+      }
+    },
+    "AutoTerminationPolicy":{
+      "type":"structure",
+      "members":{
+        "IdleTimeout":{"shape":"Long"}
       }
     },
     "BlockPublicAccessConfiguration":{
@@ -1045,7 +1104,6 @@
         "VpcId",
         "SubnetIds",
         "ServiceRole",
-        "UserRole",
         "WorkspaceSecurityGroupId",
         "EngineSecurityGroupId",
         "DefaultS3Location"
@@ -1061,6 +1119,8 @@
         "WorkspaceSecurityGroupId":{"shape":"XmlStringMaxLen256"},
         "EngineSecurityGroupId":{"shape":"XmlStringMaxLen256"},
         "DefaultS3Location":{"shape":"XmlString"},
+        "IdpAuthUrl":{"shape":"XmlString"},
+        "IdpRelayStateParameterName":{"shape":"XmlStringMaxLen256"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -1158,6 +1218,22 @@
       "type":"structure",
       "members":{
         "NotebookExecution":{"shape":"NotebookExecution"}
+      }
+    },
+    "DescribeReleaseLabelInput":{
+      "type":"structure",
+      "members":{
+        "ReleaseLabel":{"shape":"String"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"MaxResultsNumber"}
+      }
+    },
+    "DescribeReleaseLabelOutput":{
+      "type":"structure",
+      "members":{
+        "ReleaseLabel":{"shape":"String"},
+        "Applications":{"shape":"SimplifiedApplicationList"},
+        "NextToken":{"shape":"String"}
       }
     },
     "DescribeSecurityConfigurationInput":{
@@ -1295,6 +1371,19 @@
         "Reason":{"shape":"String"},
         "Message":{"shape":"String"},
         "LogFile":{"shape":"String"}
+      }
+    },
+    "GetAutoTerminationPolicyInput":{
+      "type":"structure",
+      "required":["ClusterId"],
+      "members":{
+        "ClusterId":{"shape":"ClusterId"}
+      }
+    },
+    "GetAutoTerminationPolicyOutput":{
+      "type":"structure",
+      "members":{
+        "AutoTerminationPolicy":{"shape":"AutoTerminationPolicy"}
       }
     },
     "GetBlockPublicAccessConfigurationInput":{
@@ -1518,7 +1607,8 @@
         "EbsBlockDevices":{"shape":"EbsBlockDeviceList"},
         "EbsOptimized":{"shape":"BooleanObject"},
         "ShrinkPolicy":{"shape":"ShrinkPolicy"},
-        "AutoScalingPolicy":{"shape":"AutoScalingPolicyDescription"}
+        "AutoScalingPolicy":{"shape":"AutoScalingPolicyDescription"},
+        "CustomAmiId":{"shape":"XmlStringMaxLen256"}
       }
     },
     "InstanceGroupConfig":{
@@ -1537,7 +1627,8 @@
         "InstanceCount":{"shape":"Integer"},
         "Configurations":{"shape":"ConfigurationList"},
         "EbsConfiguration":{"shape":"EbsConfiguration"},
-        "AutoScalingPolicy":{"shape":"AutoScalingPolicy"}
+        "AutoScalingPolicy":{"shape":"AutoScalingPolicy"},
+        "CustomAmiId":{"shape":"XmlStringMaxLen256"}
       }
     },
     "InstanceGroupConfigList":{
@@ -1569,7 +1660,8 @@
         "CreationDateTime":{"shape":"Date"},
         "StartDateTime":{"shape":"Date"},
         "ReadyDateTime":{"shape":"Date"},
-        "EndDateTime":{"shape":"Date"}
+        "EndDateTime":{"shape":"Date"},
+        "CustomAmiId":{"shape":"XmlStringMaxLen256"}
       }
     },
     "InstanceGroupDetailList":{
@@ -1743,7 +1835,8 @@
         "BidPrice":{"shape":"XmlStringMaxLen256"},
         "BidPriceAsPercentageOfOnDemandPrice":{"shape":"NonNegativeDouble"},
         "EbsConfiguration":{"shape":"EbsConfiguration"},
-        "Configurations":{"shape":"ConfigurationList"}
+        "Configurations":{"shape":"ConfigurationList"},
+        "CustomAmiId":{"shape":"XmlStringMaxLen256"}
       }
     },
     "InstanceTypeConfigList":{
@@ -1759,7 +1852,8 @@
         "BidPriceAsPercentageOfOnDemandPrice":{"shape":"NonNegativeDouble"},
         "Configurations":{"shape":"ConfigurationList"},
         "EbsBlockDevices":{"shape":"EbsBlockDeviceList"},
-        "EbsOptimized":{"shape":"BooleanObject"}
+        "EbsOptimized":{"shape":"BooleanObject"},
+        "CustomAmiId":{"shape":"XmlStringMaxLen256"}
       }
     },
     "InstanceTypeSpecificationList":{
@@ -2019,6 +2113,21 @@
         "Marker":{"shape":"Marker"}
       }
     },
+    "ListReleaseLabelsInput":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"ReleaseLabelFilter"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"MaxResultsNumber"}
+      }
+    },
+    "ListReleaseLabelsOutput":{
+      "type":"structure",
+      "members":{
+        "ReleaseLabels":{"shape":"StringList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListSecurityConfigurationsInput":{
       "type":"structure",
       "members":{
@@ -2091,6 +2200,11 @@
         "ON_DEMAND",
         "SPOT"
       ]
+    },
+    "MaxResultsNumber":{
+      "type":"integer",
+      "max":100,
+      "min":1
     },
     "MetricDimension":{
       "type":"structure",
@@ -2294,6 +2408,19 @@
         "ClusterArn":{"shape":"ArnType"}
       }
     },
+    "PutAutoTerminationPolicyInput":{
+      "type":"structure",
+      "required":["ClusterId"],
+      "members":{
+        "ClusterId":{"shape":"ClusterId"},
+        "AutoTerminationPolicy":{"shape":"AutoTerminationPolicy"}
+      }
+    },
+    "PutAutoTerminationPolicyOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "PutBlockPublicAccessConfigurationInput":{
       "type":"structure",
       "required":["BlockPublicAccessConfiguration"],
@@ -2322,6 +2449,13 @@
       "members":{
       }
     },
+    "ReleaseLabelFilter":{
+      "type":"structure",
+      "members":{
+        "Prefix":{"shape":"String"},
+        "Application":{"shape":"String"}
+      }
+    },
     "RemoveAutoScalingPolicyInput":{
       "type":"structure",
       "required":[
@@ -2334,6 +2468,18 @@
       }
     },
     "RemoveAutoScalingPolicyOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "RemoveAutoTerminationPolicyInput":{
+      "type":"structure",
+      "required":["ClusterId"],
+      "members":{
+        "ClusterId":{"shape":"ClusterId"}
+      }
+    },
+    "RemoveAutoTerminationPolicyOutput":{
       "type":"structure",
       "members":{
       }
@@ -2407,7 +2553,8 @@
         "KerberosAttributes":{"shape":"KerberosAttributes"},
         "StepConcurrencyLevel":{"shape":"Integer"},
         "ManagedScalingPolicy":{"shape":"ManagedScalingPolicy"},
-        "PlacementGroupConfigs":{"shape":"PlacementGroupConfigList"}
+        "PlacementGroupConfigs":{"shape":"PlacementGroupConfigList"},
+        "AutoTerminationPolicy":{"shape":"AutoTerminationPolicy"}
       }
     },
     "RunJobFlowOutput":{
@@ -2555,6 +2702,17 @@
         "ScalingAdjustment":{"shape":"Integer"},
         "CoolDown":{"shape":"Integer"}
       }
+    },
+    "SimplifiedApplication":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "Version":{"shape":"String"}
+      }
+    },
+    "SimplifiedApplicationList":{
+      "type":"list",
+      "member":{"shape":"SimplifiedApplication"}
     },
     "SpotProvisioningAllocationStrategy":{
       "type":"string",
@@ -2786,6 +2944,8 @@
         "Url":{"shape":"XmlString"},
         "CreationTime":{"shape":"Date"},
         "DefaultS3Location":{"shape":"XmlString"},
+        "IdpAuthUrl":{"shape":"XmlString"},
+        "IdpRelayStateParameterName":{"shape":"XmlStringMaxLen256"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -2797,6 +2957,7 @@
         "VpcId":{"shape":"XmlStringMaxLen256"},
         "Description":{"shape":"XmlStringMaxLen256"},
         "Url":{"shape":"XmlStringMaxLen256"},
+        "AuthMode":{"shape":"AuthMode"},
         "CreationTime":{"shape":"Date"}
       }
     },

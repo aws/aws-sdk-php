@@ -234,7 +234,7 @@
         "ImportDocumentationPartsRequest$failOnWarnings": "<p>A query parameter to specify whether to rollback the documentation importation (<code>true</code>) or not (<code>false</code>) when a warning is encountered. The default value is <code>false</code>.</p>",
         "ImportRestApiRequest$failOnWarnings": "<p>A query parameter to indicate whether to rollback the API creation (<code>true</code>) or not (<code>false</code>) when a warning is encountered. The default value is <code>false</code>.</p>",
         "MethodSetting$metricsEnabled": "<p>Specifies whether Amazon CloudWatch metrics are enabled for this method. The PATCH path for this setting is <code>/{method_setting_key}/metrics/enabled</code>, and the value is a Boolean.</p>",
-        "MethodSetting$dataTraceEnabled": "<p>Specifies whether data trace logging is enabled for this method, which affects the log entries pushed to Amazon CloudWatch Logs. The PATCH path for this setting is <code>/{method_setting_key}/logging/dataTrace</code>, and the value is a Boolean.</p>",
+        "MethodSetting$dataTraceEnabled": "<p>Specifies whether full requests and responses are logged for this method, which affects the log entries pushed to Amazon CloudWatch Logs. This can be useful to troubleshoot APIs, but can result in logging sensitive data. We recommend that you don't enable this option for production APIs. The PATCH path for this setting is <code>/{method_setting_key}/logging/dataTrace</code>, and the value is a Boolean.</p>",
         "MethodSetting$cachingEnabled": "<p>Specifies whether responses should be cached and returned for requests. A cache cluster must be enabled on the stage for responses to be cached. The PATCH path for this setting is <code>/{method_setting_key}/caching/enabled</code>, and the value is a Boolean.</p>",
         "MethodSetting$cacheDataEncrypted": "<p>Specifies whether the cached responses are encrypted. The PATCH path for this setting is <code>/{method_setting_key}/caching/dataEncrypted</code>, and the value is a Boolean.</p>",
         "MethodSetting$requireAuthorizationForCacheControl": "<p>Specifies whether authorization is required for a cache invalidation request. The PATCH path for this setting is <code>/{method_setting_key}/caching/requireAuthorizationForCacheControl</code>, and the value is a Boolean.</p>",
@@ -556,7 +556,7 @@
     "DomainNameStatus": {
       "base": null,
       "refs": {
-        "DomainName$domainNameStatus": "<p>The status of the <a>DomainName</a> migration. The valid values are <code>AVAILABLE</code> and <code>UPDATING</code>. If the status is <code>UPDATING</code>, the domain cannot be modified further until the existing operation is complete. If it is <code>AVAILABLE</code>, the domain can be updated.</p>"
+        "DomainName$domainNameStatus": "<p>The status of the <a>DomainName</a> migration. The valid values are <code>AVAILABLE</code>, <code>UPDATING</code>, <code>PENDING_CERTIFICATE_REIMPORT</code>, and <code>PENDING_OWNERSHIP_VERIFICATION</code>. If the status is <code>UPDATING</code>, the domain cannot be modified further until the existing operation is complete. If it is <code>AVAILABLE</code>, the domain can be updated.</p>"
       }
     },
     "DomainNames": {
@@ -570,7 +570,7 @@
         "CanarySettings$percentTraffic": "<p>The percent (0-100) of traffic diverted to a canary deployment.</p>",
         "DeploymentCanarySettings$percentTraffic": "<p>The percentage (0.0-100.0) of traffic routed to the canary deployment.</p>",
         "MethodSetting$throttlingRateLimit": "<p>Specifies the throttling rate limit. The PATCH path for this setting is <code>/{method_setting_key}/throttling/rateLimit</code>, and the value is a double.</p>",
-        "ThrottleSettings$rateLimit": "<p>The API request steady-state rate limit.</p>"
+        "ThrottleSettings$rateLimit": "<p>The API target request rate limit.</p>"
       }
     },
     "EndpointConfiguration": {
@@ -612,11 +612,11 @@
     "GatewayResponseType": {
       "base": null,
       "refs": {
-        "DeleteGatewayResponseRequest$responseType": "<p>[Required] <p>The response type of the associated <a>GatewayResponse</a>. Valid values are <ul><li>ACCESS_DENIED</li><li>API_CONFIGURATION_ERROR</li><li>AUTHORIZER_FAILURE</li><li> AUTHORIZER_CONFIGURATION_ERROR</li><li>BAD_REQUEST_PARAMETERS</li><li>BAD_REQUEST_BODY</li><li>DEFAULT_4XX</li><li>DEFAULT_5XX</li><li>EXPIRED_TOKEN</li><li>INVALID_SIGNATURE</li><li>INTEGRATION_FAILURE</li><li>INTEGRATION_TIMEOUT</li><li>INVALID_API_KEY</li><li>MISSING_AUTHENTICATION_TOKEN</li><li> QUOTA_EXCEEDED</li><li>REQUEST_TOO_LARGE</li><li>RESOURCE_NOT_FOUND</li><li>THROTTLED</li><li>UNAUTHORIZED</li><li>UNSUPPORTED_MEDIA_TYPE</li></ul> </p></p>",
-        "GatewayResponse$responseType": "<p>The response type of the associated <a>GatewayResponse</a>. Valid values are <ul><li>ACCESS_DENIED</li><li>API_CONFIGURATION_ERROR</li><li>AUTHORIZER_FAILURE</li><li> AUTHORIZER_CONFIGURATION_ERROR</li><li>BAD_REQUEST_PARAMETERS</li><li>BAD_REQUEST_BODY</li><li>DEFAULT_4XX</li><li>DEFAULT_5XX</li><li>EXPIRED_TOKEN</li><li>INVALID_SIGNATURE</li><li>INTEGRATION_FAILURE</li><li>INTEGRATION_TIMEOUT</li><li>INVALID_API_KEY</li><li>MISSING_AUTHENTICATION_TOKEN</li><li> QUOTA_EXCEEDED</li><li>REQUEST_TOO_LARGE</li><li>RESOURCE_NOT_FOUND</li><li>THROTTLED</li><li>UNAUTHORIZED</li><li>UNSUPPORTED_MEDIA_TYPE</li></ul> </p>",
-        "GetGatewayResponseRequest$responseType": "<p>[Required] <p>The response type of the associated <a>GatewayResponse</a>. Valid values are <ul><li>ACCESS_DENIED</li><li>API_CONFIGURATION_ERROR</li><li>AUTHORIZER_FAILURE</li><li> AUTHORIZER_CONFIGURATION_ERROR</li><li>BAD_REQUEST_PARAMETERS</li><li>BAD_REQUEST_BODY</li><li>DEFAULT_4XX</li><li>DEFAULT_5XX</li><li>EXPIRED_TOKEN</li><li>INVALID_SIGNATURE</li><li>INTEGRATION_FAILURE</li><li>INTEGRATION_TIMEOUT</li><li>INVALID_API_KEY</li><li>MISSING_AUTHENTICATION_TOKEN</li><li> QUOTA_EXCEEDED</li><li>REQUEST_TOO_LARGE</li><li>RESOURCE_NOT_FOUND</li><li>THROTTLED</li><li>UNAUTHORIZED</li><li>UNSUPPORTED_MEDIA_TYPE</li></ul> </p></p>",
-        "PutGatewayResponseRequest$responseType": "<p>[Required] <p>The response type of the associated <a>GatewayResponse</a>. Valid values are <ul><li>ACCESS_DENIED</li><li>API_CONFIGURATION_ERROR</li><li>AUTHORIZER_FAILURE</li><li> AUTHORIZER_CONFIGURATION_ERROR</li><li>BAD_REQUEST_PARAMETERS</li><li>BAD_REQUEST_BODY</li><li>DEFAULT_4XX</li><li>DEFAULT_5XX</li><li>EXPIRED_TOKEN</li><li>INVALID_SIGNATURE</li><li>INTEGRATION_FAILURE</li><li>INTEGRATION_TIMEOUT</li><li>INVALID_API_KEY</li><li>MISSING_AUTHENTICATION_TOKEN</li><li> QUOTA_EXCEEDED</li><li>REQUEST_TOO_LARGE</li><li>RESOURCE_NOT_FOUND</li><li>THROTTLED</li><li>UNAUTHORIZED</li><li>UNSUPPORTED_MEDIA_TYPE</li></ul> </p></p>",
-        "UpdateGatewayResponseRequest$responseType": "<p>[Required] <p>The response type of the associated <a>GatewayResponse</a>. Valid values are <ul><li>ACCESS_DENIED</li><li>API_CONFIGURATION_ERROR</li><li>AUTHORIZER_FAILURE</li><li> AUTHORIZER_CONFIGURATION_ERROR</li><li>BAD_REQUEST_PARAMETERS</li><li>BAD_REQUEST_BODY</li><li>DEFAULT_4XX</li><li>DEFAULT_5XX</li><li>EXPIRED_TOKEN</li><li>INVALID_SIGNATURE</li><li>INTEGRATION_FAILURE</li><li>INTEGRATION_TIMEOUT</li><li>INVALID_API_KEY</li><li>MISSING_AUTHENTICATION_TOKEN</li><li> QUOTA_EXCEEDED</li><li>REQUEST_TOO_LARGE</li><li>RESOURCE_NOT_FOUND</li><li>THROTTLED</li><li>UNAUTHORIZED</li><li>UNSUPPORTED_MEDIA_TYPE</li></ul> </p></p>"
+        "DeleteGatewayResponseRequest$responseType": "<p>[Required] <p>The response type of the associated <a>GatewayResponse</a>.</p></p>",
+        "GatewayResponse$responseType": "<p>The response type of the associated <a>GatewayResponse</a>.</p>",
+        "GetGatewayResponseRequest$responseType": "<p>[Required] <p>The response type of the associated <a>GatewayResponse</a>.</p></p>",
+        "PutGatewayResponseRequest$responseType": "<p>[Required] <p>The response type of the associated <a>GatewayResponse</a>.</p></p>",
+        "UpdateGatewayResponseRequest$responseType": "<p>[Required] <p>The response type of the associated <a>GatewayResponse</a>.</p></p>"
       }
     },
     "GatewayResponses": {
@@ -880,11 +880,11 @@
         "Integration$timeoutInMillis": "<p>Custom timeout between 50 and 29,000 milliseconds. The default value is 29,000 milliseconds or 29 seconds.</p>",
         "MethodSetting$throttlingBurstLimit": "<p>Specifies the throttling burst limit. The PATCH path for this setting is <code>/{method_setting_key}/throttling/burstLimit</code>, and the value is an integer.</p>",
         "MethodSetting$cacheTtlInSeconds": "<p>Specifies the time to live (TTL), in seconds, for cached responses. The higher the TTL, the longer the response will be cached. The PATCH path for this setting is <code>/{method_setting_key}/caching/ttlInSeconds</code>, and the value is an integer.</p>",
-        "QuotaSettings$limit": "<p>The maximum number of requests that can be made in a given time period.</p>",
+        "QuotaSettings$limit": "<p>The target maximum number of requests that can be made in a given time period.</p>",
         "QuotaSettings$offset": "<p>The day that a time period starts. For example, with a time period of <code>WEEK</code>, an offset of <code>0</code> starts on Sunday, and an offset of <code>1</code> starts on Monday.</p>",
         "TestInvokeAuthorizerResponse$clientStatus": "<p>The HTTP status code that the client would have received. Value is 0 if the authorizer succeeded.</p>",
         "TestInvokeMethodResponse$status": "<p>The HTTP status code.</p>",
-        "ThrottleSettings$burstLimit": "<p>The API request burst limit, the maximum rate limit over a time ranging from one to a few seconds, depending upon whether the underlying token bucket is at its full capacity.</p>"
+        "ThrottleSettings$burstLimit": "<p>The API target request burst rate limit. This allows more requests through for a period of time than the target rate limit.</p>"
       }
     },
     "Integration": {
@@ -1408,7 +1408,7 @@
       "base": "<p>Quotas configured for a usage plan.</p>",
       "refs": {
         "CreateUsagePlanRequest$quota": "<p>The quota of the usage plan.</p>",
-        "UsagePlan$quota": "<p>The maximum number of permitted requests per a given unit time interval.</p>"
+        "UsagePlan$quota": "<p>The target maximum number of permitted requests per a given unit time interval.</p>"
       }
     },
     "RequestValidator": {
@@ -1517,7 +1517,7 @@
       "refs": {
         "AccessLogSettings$format": "<p>A single line format of the access logs of data, as specified by selected <a href=\"https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html#context-variable-reference\">$context variables</a>. The format must include at least <code>$context.requestId</code>.</p>",
         "AccessLogSettings$destinationArn": "<p>The Amazon Resource Name (ARN) of the CloudWatch Logs log group or Kinesis Data Firehose delivery stream to receive access logs. If you specify a Kinesis Data Firehose delivery stream, the stream name must begin with <code>amazon-apigateway-</code>.</p>",
-        "Account$cloudwatchRoleArn": "<p>The ARN of an Amazon CloudWatch role for the current <a>Account</a>. </p>",
+        "Account$cloudwatchRoleArn": "<p>The ARN of an Amazon CloudWatch role for the current <a>Account</a>.</p>",
         "Account$apiKeyVersion": "<p>The version of the API keys used for the account.</p>",
         "ApiKey$id": "<p>The identifier of the API Key.</p>",
         "ApiKey$value": "<p>The value of the API Key.</p>",
@@ -1579,6 +1579,7 @@
         "CreateDomainNameRequest$certificateArn": "<p>The reference to an AWS-managed certificate that will be used by edge-optimized endpoint for this domain name. AWS Certificate Manager is the only supported source.</p>",
         "CreateDomainNameRequest$regionalCertificateName": "<p>The user-friendly name of the certificate that will be used by regional endpoint for this domain name.</p>",
         "CreateDomainNameRequest$regionalCertificateArn": "<p>The reference to an AWS-managed certificate that will be used by regional endpoint for this domain name. AWS Certificate Manager is the only supported source.</p>",
+        "CreateDomainNameRequest$ownershipVerificationCertificateArn": "<p>The ARN of the public certificate issued by ACM to validate ownership of your custom domain. Only required when configuring mutual TLS and using an ACM imported or private CA certificate ARN as the regionalCertificateArn.</p>",
         "CreateModelRequest$restApiId": "<p>[Required] The <a>RestApi</a> identifier under which the <a>Model</a> will be created.</p>",
         "CreateModelRequest$name": "<p>[Required] The name of the model. Must be alphanumeric.</p>",
         "CreateModelRequest$description": "<p>The description of the model.</p>",
@@ -1661,12 +1662,13 @@
         "DomainName$certificateName": "<p>The name of the certificate that will be used by edge-optimized endpoint for this domain name.</p>",
         "DomainName$certificateArn": "<p>The reference to an AWS-managed certificate that will be used by edge-optimized endpoint for this domain name. AWS Certificate Manager is the only supported source.</p>",
         "DomainName$regionalDomainName": "<p>The domain name associated with the regional endpoint for this custom domain name. You set up this association by adding a DNS record that points the custom domain name to this regional domain name. The regional domain name is returned by API Gateway when you create a regional endpoint.</p>",
-        "DomainName$regionalHostedZoneId": "<p>The region-specific Amazon Route 53 Hosted Zone ID of the regional endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-regional-api-custom-domain-create.html\">Set up a Regional Custom Domain Name</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#apigateway_region\">AWS Regions and Endpoints for API Gateway</a>. </p>",
+        "DomainName$regionalHostedZoneId": "<p>The region-specific Amazon Route 53 Hosted Zone ID of the regional endpoint. For more information, see <a href=\"https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-regional-api-custom-domain-create.html\">Set up a Regional Custom Domain Name</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#apigateway_region\">AWS Regions and Endpoints for API Gateway</a>.</p>",
         "DomainName$regionalCertificateName": "<p>The name of the certificate that will be used for validating the regional domain name.</p>",
         "DomainName$regionalCertificateArn": "<p>The reference to an AWS-managed certificate that will be used for validating the regional domain name. AWS Certificate Manager is the only supported source.</p>",
         "DomainName$distributionDomainName": "<p>The domain name of the Amazon CloudFront distribution associated with this custom domain name for an edge-optimized endpoint. You set up this association when adding a DNS record pointing the custom domain name to this distribution name. For more information about CloudFront distributions, see the <a href=\"https://aws.amazon.com/documentation/cloudfront/\" target=\"_blank\">Amazon CloudFront documentation</a>.</p>",
-        "DomainName$distributionHostedZoneId": "<p>The region-agnostic Amazon Route 53 Hosted Zone ID of the edge-optimized endpoint. The valid value is <code>Z2FDTNDATAQYW2</code> for all the regions. For more information, see <a href=\"https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-regional-api-custom-domain-create.html\">Set up a Regional Custom Domain Name</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#apigateway_region\">AWS Regions and Endpoints for API Gateway</a>. </p>",
+        "DomainName$distributionHostedZoneId": "<p>The region-agnostic Amazon Route 53 Hosted Zone ID of the edge-optimized endpoint. The valid value is <code>Z2FDTNDATAQYW2</code> for all the regions. For more information, see <a href=\"https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-regional-api-custom-domain-create.html\">Set up a Regional Custom Domain Name</a> and <a href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#apigateway_region\">AWS Regions and Endpoints for API Gateway</a>.</p>",
         "DomainName$domainNameStatusMessage": "<p>An optional text message containing detailed information about status of the <a>DomainName</a> migration.</p>",
+        "DomainName$ownershipVerificationCertificateArn": "<p>The ARN of the public certificate issued by ACM to validate ownership of your custom domain. Only required when configuring mutual TLS and using an ACM imported or private CA certificate ARN as the regionalCertificateArn.</p>",
         "DomainNames$position": null,
         "ExportResponse$contentType": "<p>The content-type header value in the HTTP response. This will correspond to a valid 'accept' type in the request.</p>",
         "ExportResponse$contentDisposition": "<p>The content-disposition header value in the HTTP response.</p>",
@@ -1992,7 +1994,7 @@
         "Account$throttleSettings": "<p>Specifies the API request limits configured for the current <a>Account</a>.</p>",
         "CreateUsagePlanRequest$throttle": "<p>The throttling limits of the usage plan.</p>",
         "MapOfApiStageThrottleSettings$value": null,
-        "UsagePlan$throttle": "<p>The request throttle limits of a usage plan.</p>"
+        "UsagePlan$throttle": "<p>Map containing method level throttling information for API stage in a usage plan.</p>"
       }
     },
     "Timestamp": {
@@ -2154,7 +2156,7 @@
       }
     },
     "UsagePlan": {
-      "base": "<p>Represents a usage plan than can specify who can assess associated API stages with specified request limits and quotas.</p> <div class=\"remarks\"> <p>In a usage plan, you associate an API by specifying the API's Id and a stage name of the specified API. You add plan customers by adding API keys to the plan. </p> </div> <div class=\"seeAlso\"> <a href=\"https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html\">Create and Use Usage Plans</a> </div>",
+      "base": "<p>Represents a usage plan used to specify who can assess associated API stages. Optionally, target request rate and quota limits can be set. In some cases clients can exceed the targets that you set. Don’t rely on usage plans to control costs. Consider using <a href=\"https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html\">AWS Budgets</a> to monitor costs and <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">AWS WAF</a> to manage API requests.</p> <div class=\"remarks\"> <p>In a usage plan, you associate an API by specifying the API's Id and a stage name of the specified API. You add plan customers by adding API keys to the plan. </p> </div> <div class=\"seeAlso\"> <a href=\"https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-api-usage-plans.html\">Create and Use Usage Plans</a> </div>",
       "refs": {
         "ListOfUsagePlan$member": null
       }

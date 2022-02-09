@@ -39,6 +39,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise deleteBotLocaleAsync(array $args = [])
  * @method \Aws\Result deleteBotVersion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBotVersionAsync(array $args = [])
+ * @method \Aws\Result deleteCustomVocabulary(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteCustomVocabularyAsync(array $args = [])
  * @method \Aws\Result deleteExport(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteExportAsync(array $args = [])
  * @method \Aws\Result deleteImport(array $args = [])
@@ -53,14 +55,20 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise deleteSlotAsync(array $args = [])
  * @method \Aws\Result deleteSlotType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteSlotTypeAsync(array $args = [])
+ * @method \Aws\Result deleteUtterances(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteUtterancesAsync(array $args = [])
  * @method \Aws\Result describeBot(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBotAsync(array $args = [])
  * @method \Aws\Result describeBotAlias(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBotAliasAsync(array $args = [])
  * @method \Aws\Result describeBotLocale(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBotLocaleAsync(array $args = [])
+ * @method \Aws\Result describeBotRecommendation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeBotRecommendationAsync(array $args = [])
  * @method \Aws\Result describeBotVersion(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeBotVersionAsync(array $args = [])
+ * @method \Aws\Result describeCustomVocabularyMetadata(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise describeCustomVocabularyMetadataAsync(array $args = [])
  * @method \Aws\Result describeExport(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeExportAsync(array $args = [])
  * @method \Aws\Result describeImport(array $args = [])
@@ -73,10 +81,14 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise describeSlotAsync(array $args = [])
  * @method \Aws\Result describeSlotType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeSlotTypeAsync(array $args = [])
+ * @method \Aws\Result listAggregatedUtterances(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAggregatedUtterancesAsync(array $args = [])
  * @method \Aws\Result listBotAliases(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBotAliasesAsync(array $args = [])
  * @method \Aws\Result listBotLocales(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBotLocalesAsync(array $args = [])
+ * @method \Aws\Result listBotRecommendations(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listBotRecommendationsAsync(array $args = [])
  * @method \Aws\Result listBotVersions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listBotVersionsAsync(array $args = [])
  * @method \Aws\Result listBots(array $args = [])
@@ -91,12 +103,18 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise listImportsAsync(array $args = [])
  * @method \Aws\Result listIntents(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listIntentsAsync(array $args = [])
+ * @method \Aws\Result listRecommendedIntents(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listRecommendedIntentsAsync(array $args = [])
  * @method \Aws\Result listSlotTypes(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSlotTypesAsync(array $args = [])
  * @method \Aws\Result listSlots(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listSlotsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
+ * @method \Aws\Result searchAssociatedTranscripts(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchAssociatedTranscriptsAsync(array $args = [])
+ * @method \Aws\Result startBotRecommendation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise startBotRecommendationAsync(array $args = [])
  * @method \Aws\Result startImport(array $args = [])
  * @method \GuzzleHttp\Promise\Promise startImportAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
@@ -109,6 +127,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise updateBotAliasAsync(array $args = [])
  * @method \Aws\Result updateBotLocale(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateBotLocaleAsync(array $args = [])
+ * @method \Aws\Result updateBotRecommendation(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateBotRecommendationAsync(array $args = [])
  * @method \Aws\Result updateExport(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateExportAsync(array $args = [])
  * @method \Aws\Result updateIntent(array $args = [])
@@ -120,40 +140,4 @@ use Psr\Http\Message\RequestInterface;
  * @method \Aws\Result updateSlotType(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSlotTypeAsync(array $args = [])
  */
-class LexModelsV2Client extends AwsClient {
-    public function __construct(array $args)
-    {
-        parent::__construct($args);
-
-        // Setup middleware.
-        $stack = $this->getHandlerList();
-        $stack->appendBuild($this->updateContentType(), 'models.lex.v2.updateContentType');
-    }
-
-    /**
-     * Creates a middleware that updates the Content-Type header when it is present;
-     * this is necessary because the service protocol is rest-json which by default
-     * sets the content-type to 'application/json', but interacting with the service
-     * requires it to be set to x-amz-json-1.1
-     *
-     * @return callable
-     */
-    private function updateContentType()
-    {
-        return function (callable $handler) {
-            return function (
-                CommandInterface $command,
-                RequestInterface $request = null
-            ) use ($handler) {
-                $contentType = $request->getHeader('Content-Type');
-                if (!empty($contentType) && $contentType[0] == 'application/json') {
-                    return $handler($command, $request->withHeader(
-                        'Content-Type',
-                        'application/x-amz-json-1.1'
-                    ));
-                }
-                return $handler($command, $request);
-            };
-        };
-    }
-}
+class LexModelsV2Client extends AwsClient {}

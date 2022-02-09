@@ -477,6 +477,12 @@
       "max":1011,
       "min":1
     },
+    "AthenaError":{
+      "type":"structure",
+      "members":{
+        "ErrorCategory":{"shape":"ErrorCategory"}
+      }
+    },
     "BatchGetNamedQueryInput":{
       "type":"structure",
       "required":["NamedQueryIds"],
@@ -791,6 +797,12 @@
       "member":{"shape":"EngineVersion"},
       "max":10,
       "min":0
+    },
+    "ErrorCategory":{
+      "type":"integer",
+      "box":true,
+      "max":3,
+      "min":1
     },
     "ErrorCode":{
       "type":"string",
@@ -1285,7 +1297,8 @@
         "State":{"shape":"QueryExecutionState"},
         "StateChangeReason":{"shape":"String"},
         "SubmissionDateTime":{"shape":"Date"},
-        "CompletionDateTime":{"shape":"Date"}
+        "CompletionDateTime":{"shape":"Date"},
+        "AthenaError":{"shape":"AthenaError"}
       }
     },
     "QueryString":{
@@ -1305,7 +1318,8 @@
       "type":"structure",
       "members":{
         "OutputLocation":{"shape":"String"},
-        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "ExpectedBucketOwner":{"shape":"String"}
       }
     },
     "ResultConfigurationUpdates":{
@@ -1314,7 +1328,9 @@
         "OutputLocation":{"shape":"String"},
         "RemoveOutputLocation":{"shape":"BoxedBoolean"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
-        "RemoveEncryptionConfiguration":{"shape":"BoxedBoolean"}
+        "RemoveEncryptionConfiguration":{"shape":"BoxedBoolean"},
+        "ExpectedBucketOwner":{"shape":"String"},
+        "RemoveExpectedBucketOwner":{"shape":"BoxedBoolean"}
       }
     },
     "ResultSet":{

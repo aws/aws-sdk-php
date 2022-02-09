@@ -38,6 +38,7 @@
       "output":{"shape":"CreateAccountCustomizationResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceExistsException"},
         {"shape":"ResourceNotFoundException"},
@@ -342,6 +343,7 @@
       "output":{"shape":"DeleteAccountCustomizationResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
@@ -895,6 +897,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeIpRestriction":{
+      "name":"DescribeIpRestriction",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/ip-restriction"
+      },
+      "input":{"shape":"DescribeIpRestrictionRequest"},
+      "output":{"shape":"DescribeIpRestrictionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DescribeNamespace":{
       "name":"DescribeNamespace",
       "http":{
@@ -1031,6 +1049,45 @@
         {"shape":"PreconditionNotMetException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceUnavailableException"}
+      ]
+    },
+    "GenerateEmbedUrlForAnonymousUser":{
+      "name":"GenerateEmbedUrlForAnonymousUser",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/embed-url/anonymous-user"
+      },
+      "input":{"shape":"GenerateEmbedUrlForAnonymousUserRequest"},
+      "output":{"shape":"GenerateEmbedUrlForAnonymousUserResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"SessionLifetimeInMinutesInvalidException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"UnsupportedPricingPlanException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "GenerateEmbedUrlForRegisteredUser":{
+      "name":"GenerateEmbedUrlForRegisteredUser",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/embed-url/registered-user"
+      },
+      "input":{"shape":"GenerateEmbedUrlForRegisteredUserRequest"},
+      "output":{"shape":"GenerateEmbedUrlForRegisteredUserResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"QuickSightUserNotFoundException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"SessionLifetimeInMinutesInvalidException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"UnsupportedUserEditionException"},
+        {"shape":"UnsupportedPricingPlanException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "GetDashboardEmbedUrl":{
@@ -1590,6 +1647,7 @@
       "output":{"shape":"UpdateAccountCustomizationResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
@@ -1844,6 +1902,23 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateIpRestriction":{
+      "name":"UpdateIpRestriction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/ip-restriction"
+      },
+      "input":{"shape":"UpdateIpRestrictionRequest"},
+      "output":{"shape":"UpdateIpRestrictionResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdateTemplate":{
       "name":"UpdateTemplate",
       "http":{
@@ -1983,7 +2058,8 @@
     "AccountCustomization":{
       "type":"structure",
       "members":{
-        "DefaultTheme":{"shape":"Arn"}
+        "DefaultTheme":{"shape":"Arn"},
+        "DefaultEmailCustomizationTemplate":{"shape":"Arn"}
       }
     },
     "AccountSettings":{
@@ -2031,6 +2107,13 @@
       "pattern":"[\\w\\-]+|(\\$LATEST)|(\\$PUBLISHED)"
     },
     "AmazonElasticsearchParameters":{
+      "type":"structure",
+      "required":["Domain"],
+      "members":{
+        "Domain":{"shape":"Domain"}
+      }
+    },
+    "AmazonOpenSearchParameters":{
       "type":"structure",
       "required":["Domain"],
       "members":{
@@ -2135,7 +2218,24 @@
       "member":{"shape":"AnalysisSummary"},
       "max":100
     },
+    "AnonymousUserDashboardEmbeddingConfiguration":{
+      "type":"structure",
+      "required":["InitialDashboardId"],
+      "members":{
+        "InitialDashboardId":{"shape":"RestrictiveResourceId"}
+      }
+    },
+    "AnonymousUserEmbeddingExperienceConfiguration":{
+      "type":"structure",
+      "members":{
+        "Dashboard":{"shape":"AnonymousUserDashboardEmbeddingConfiguration"}
+      }
+    },
     "Arn":{"type":"string"},
+    "ArnList":{
+      "type":"list",
+      "member":{"shape":"Arn"}
+    },
     "AssignmentStatus":{
       "type":"string",
       "enum":[
@@ -2203,6 +2303,10 @@
         }
       }
     },
+    "CIDR":{
+      "type":"string",
+      "pattern":"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(3[0-2]|[1-2][0-9]|[1-9]))$"
+    },
     "CalculatedColumn":{
       "type":"structure",
       "required":[
@@ -2236,7 +2340,7 @@
           "locationName":"AwsAccountId"
         },
         "DataSetId":{
-          "shape":"string",
+          "shape":"String",
           "location":"uri",
           "locationName":"DataSetId"
         },
@@ -2252,7 +2356,7 @@
       "members":{
         "Arn":{"shape":"Arn"},
         "IngestionId":{"shape":"IngestionId"},
-        "RequestId":{"shape":"string"},
+        "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -2403,6 +2507,17 @@
       "member":{"shape":"ColumnTag"},
       "max":16,
       "min":1
+    },
+    "ColumnTagName":{
+      "type":"string",
+      "enum":[
+        "COLUMN_GEOGRAPHIC_ROLE",
+        "COLUMN_DESCRIPTION"
+      ]
+    },
+    "ColumnTagNames":{
+      "type":"list",
+      "member":{"shape":"ColumnTagName"}
     },
     "ConcurrentUpdatingException":{
       "type":"structure",
@@ -2575,8 +2690,10 @@
         "FieldFolders":{"shape":"FieldFolderMap"},
         "Permissions":{"shape":"ResourcePermissionList"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
+        "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
         "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"}
       }
     },
     "CreateDataSetResponse":{
@@ -2830,7 +2947,7 @@
       ],
       "members":{
         "DataSetId":{
-          "shape":"string",
+          "shape":"String",
           "location":"uri",
           "locationName":"DataSetId"
         },
@@ -2843,7 +2960,8 @@
           "shape":"AwsAccountId",
           "location":"uri",
           "locationName":"AwsAccountId"
-        }
+        },
+        "IngestionType":{"shape":"IngestionType"}
       }
     },
     "CreateIngestionResponse":{
@@ -2852,7 +2970,7 @@
         "Arn":{"shape":"Arn"},
         "IngestionId":{"shape":"IngestionId"},
         "IngestionStatus":{"shape":"IngestionStatus"},
-        "RequestId":{"shape":"string"},
+        "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -3254,7 +3372,9 @@
         "ColumnGroups":{"shape":"ColumnGroupList"},
         "FieldFolders":{"shape":"FieldFolderMap"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
-        "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"}
+        "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
+        "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
+        "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"}
       }
     },
     "DataSetArnsList":{
@@ -3319,12 +3439,20 @@
         "LastUpdatedTime":{"shape":"Timestamp"},
         "ImportMode":{"shape":"DataSetImportMode"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
+        "RowLevelPermissionTagConfigurationApplied":{"shape":"Boolean"},
         "ColumnLevelPermissionRulesApplied":{"shape":"Boolean"}
       }
     },
     "DataSetSummaryList":{
       "type":"list",
       "member":{"shape":"DataSetSummary"}
+    },
+    "DataSetUsageConfiguration":{
+      "type":"structure",
+      "members":{
+        "DisableUseAsDirectQuerySource":{"shape":"Boolean"},
+        "DisableUseAsImportedSource":{"shape":"Boolean"}
+      }
     },
     "DataSource":{
       "type":"structure",
@@ -3397,7 +3525,9 @@
         "SparkParameters":{"shape":"SparkParameters"},
         "SqlServerParameters":{"shape":"SqlServerParameters"},
         "TeradataParameters":{"shape":"TeradataParameters"},
-        "TwitterParameters":{"shape":"TwitterParameters"}
+        "TwitterParameters":{"shape":"TwitterParameters"},
+        "AmazonOpenSearchParameters":{"shape":"AmazonOpenSearchParameters"},
+        "ExasolParameters":{"shape":"ExasolParameters"}
       }
     },
     "DataSourceParametersList":{
@@ -3431,7 +3561,9 @@
         "SQLSERVER",
         "TERADATA",
         "TWITTER",
-        "TIMESTREAM"
+        "TIMESTREAM",
+        "AMAZON_OPENSEARCH",
+        "EXASOL"
       ]
     },
     "Database":{
@@ -4218,7 +4350,8 @@
           "shape":"StatusCode",
           "location":"statusCode"
         },
-        "RequestId":{"shape":"String"}
+        "RequestId":{"shape":"String"},
+        "LinkSharingConfiguration":{"shape":"LinkSharingConfiguration"}
       }
     },
     "DescribeDashboardRequest":{
@@ -4565,7 +4698,7 @@
           "locationName":"AwsAccountId"
         },
         "DataSetId":{
-          "shape":"string",
+          "shape":"String",
           "location":"uri",
           "locationName":"DataSetId"
         },
@@ -4580,7 +4713,31 @@
       "type":"structure",
       "members":{
         "Ingestion":{"shape":"Ingestion"},
-        "RequestId":{"shape":"string"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DescribeIpRestrictionRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DescribeIpRestrictionResponse":{
+      "type":"structure",
+      "members":{
+        "AwsAccountId":{"shape":"AwsAccountId"},
+        "IpRestrictionRuleMap":{"shape":"IpRestrictionRuleMap"},
+        "Enabled":{"shape":"NullableBoolean"},
+        "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -4907,6 +5064,11 @@
       "type":"string",
       "sensitive":true
     },
+    "EntryPath":{
+      "type":"string",
+      "max":1000,
+      "min":1
+    },
     "EntryPoint":{
       "type":"string",
       "max":1000,
@@ -4916,7 +5078,18 @@
       "type":"structure",
       "members":{
         "Type":{"shape":"IngestionErrorType"},
-        "Message":{"shape":"string"}
+        "Message":{"shape":"String"}
+      }
+    },
+    "ExasolParameters":{
+      "type":"structure",
+      "required":[
+        "Host",
+        "Port"
+      ],
+      "members":{
+        "Host":{"shape":"Host"},
+        "Port":{"shape":"Port"}
       }
     },
     "ExceptionResourceType":{
@@ -5057,6 +5230,77 @@
     "FolderType":{
       "type":"string",
       "enum":["SHARED"]
+    },
+    "GenerateEmbedUrlForAnonymousUserRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "Namespace",
+        "AuthorizedResourceArns",
+        "ExperienceConfiguration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "SessionLifetimeInMinutes":{"shape":"SessionLifetimeInMinutes"},
+        "Namespace":{"shape":"Namespace"},
+        "SessionTags":{"shape":"SessionTagList"},
+        "AuthorizedResourceArns":{"shape":"ArnList"},
+        "ExperienceConfiguration":{"shape":"AnonymousUserEmbeddingExperienceConfiguration"}
+      }
+    },
+    "GenerateEmbedUrlForAnonymousUserResponse":{
+      "type":"structure",
+      "required":[
+        "EmbedUrl",
+        "Status",
+        "RequestId"
+      ],
+      "members":{
+        "EmbedUrl":{"shape":"EmbeddingUrl"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
+    },
+    "GenerateEmbedUrlForRegisteredUserRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "UserArn",
+        "ExperienceConfiguration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "SessionLifetimeInMinutes":{"shape":"SessionLifetimeInMinutes"},
+        "UserArn":{"shape":"Arn"},
+        "ExperienceConfiguration":{"shape":"RegisteredUserEmbeddingExperienceConfiguration"}
+      }
+    },
+    "GenerateEmbedUrlForRegisteredUserResponse":{
+      "type":"structure",
+      "required":[
+        "EmbedUrl",
+        "Status",
+        "RequestId"
+      ],
+      "members":{
+        "EmbedUrl":{"shape":"EmbeddingUrl"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        },
+        "RequestId":{"shape":"String"}
+      }
     },
     "GeoSpatialColumnGroup":{
       "type":"structure",
@@ -5328,13 +5572,13 @@
         "ErrorInfo":{"shape":"ErrorInfo"},
         "RowInfo":{"shape":"RowInfo"},
         "QueueInfo":{"shape":"QueueInfo"},
-        "CreatedTime":{"shape":"timestamp"},
+        "CreatedTime":{"shape":"Timestamp"},
         "IngestionTimeInSeconds":{
-          "shape":"long",
+          "shape":"Long",
           "box":true
         },
         "IngestionSizeInBytes":{
-          "shape":"long",
+          "shape":"Long",
           "box":true
         },
         "RequestSource":{"shape":"IngestionRequestSource"},
@@ -5383,7 +5627,11 @@
         "DATA_SOURCE_AUTH_FAILED",
         "DATA_SOURCE_CONNECTION_FAILED",
         "FAILURE_TO_PROCESS_JSON_FILE",
-        "INTERNAL_SERVICE_ERROR"
+        "INTERNAL_SERVICE_ERROR",
+        "REFRESH_SUPPRESSED_BY_EDIT",
+        "PERMISSION_NOT_FOUND",
+        "ELASTICSEARCH_CURSOR_NOT_ENABLED",
+        "CURSOR_NOT_ENABLED"
       ]
     },
     "IngestionId":{
@@ -5422,6 +5670,13 @@
         "FAILED",
         "COMPLETED",
         "CANCELLED"
+      ]
+    },
+    "IngestionType":{
+      "type":"string",
+      "enum":[
+        "INCREMENTAL_REFRESH",
+        "FULL_REFRESH"
       ]
     },
     "Ingestions":{
@@ -5506,6 +5761,16 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "IpRestrictionRuleDescription":{
+      "type":"string",
+      "max":150,
+      "min":0
+    },
+    "IpRestrictionRuleMap":{
+      "type":"map",
+      "key":{"shape":"CIDR"},
+      "value":{"shape":"IpRestrictionRuleDescription"}
+    },
     "JiraParameters":{
       "type":"structure",
       "required":["SiteBaseUrl"],
@@ -5557,6 +5822,12 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "LinkSharingConfiguration":{
+      "type":"structure",
+      "members":{
+        "Permissions":{"shape":"ResourcePermissionList"}
+      }
     },
     "ListAnalysesRequest":{
       "type":"structure",
@@ -6001,12 +6272,12 @@
       ],
       "members":{
         "DataSetId":{
-          "shape":"string",
+          "shape":"String",
           "location":"uri",
           "locationName":"DataSetId"
         },
         "NextToken":{
-          "shape":"string",
+          "shape":"String",
           "location":"querystring",
           "locationName":"next-token"
         },
@@ -6027,8 +6298,8 @@
       "type":"structure",
       "members":{
         "Ingestions":{"shape":"Ingestions"},
-        "NextToken":{"shape":"string"},
-        "RequestId":{"shape":"string"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -6456,7 +6727,8 @@
       "type":"structure",
       "members":{
         "JoinInstruction":{"shape":"JoinInstruction"},
-        "PhysicalTableId":{"shape":"PhysicalTableId"}
+        "PhysicalTableId":{"shape":"PhysicalTableId"},
+        "DataSetArn":{"shape":"Arn"}
       }
     },
     "Long":{"type":"long"},
@@ -6578,6 +6850,7 @@
       "type":"string",
       "pattern":".*\\S.*"
     },
+    "NullableBoolean":{"type":"boolean"},
     "OnClause":{
       "type":"string",
       "max":512,
@@ -6652,7 +6925,7 @@
       "key":{"shape":"PhysicalTableId"},
       "value":{"shape":"PhysicalTable"},
       "max":32,
-      "min":1
+      "min":0
     },
     "Port":{
       "type":"integer",
@@ -6734,8 +7007,8 @@
         "QueuedIngestion"
       ],
       "members":{
-        "WaitingOnIngestion":{"shape":"string"},
-        "QueuedIngestion":{"shape":"string"}
+        "WaitingOnIngestion":{"shape":"String"},
+        "QueuedIngestion":{"shape":"String"}
       }
     },
     "QuickSightUserNotFoundException":{
@@ -6815,6 +7088,33 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "RegisteredUserDashboardEmbeddingConfiguration":{
+      "type":"structure",
+      "required":["InitialDashboardId"],
+      "members":{
+        "InitialDashboardId":{"shape":"RestrictiveResourceId"}
+      }
+    },
+    "RegisteredUserEmbeddingExperienceConfiguration":{
+      "type":"structure",
+      "members":{
+        "Dashboard":{"shape":"RegisteredUserDashboardEmbeddingConfiguration"},
+        "QuickSightConsole":{"shape":"RegisteredUserQuickSightConsoleEmbeddingConfiguration"},
+        "QSearchBar":{"shape":"RegisteredUserQSearchBarEmbeddingConfiguration"}
+      }
+    },
+    "RegisteredUserQSearchBarEmbeddingConfiguration":{
+      "type":"structure",
+      "members":{
+        "InitialTopicId":{"shape":"RestrictiveResourceId"}
+      }
+    },
+    "RegisteredUserQuickSightConsoleEmbeddingConfiguration":{
+      "type":"structure",
+      "members":{
+        "InitialPath":{"shape":"EntryPath"}
       }
     },
     "RelationalTable":{
@@ -6974,11 +7274,15 @@
       "type":"structure",
       "members":{
         "RowsIngested":{
-          "shape":"long",
+          "shape":"Long",
           "box":true
         },
         "RowsDropped":{
-          "shape":"long",
+          "shape":"Long",
+          "box":true
+        },
+        "TotalRowsInDataset":{
+          "shape":"Long",
           "box":true
         }
       }
@@ -6993,7 +7297,8 @@
         "Namespace":{"shape":"Namespace"},
         "Arn":{"shape":"Arn"},
         "PermissionPolicy":{"shape":"RowLevelPermissionPolicy"},
-        "FormatVersion":{"shape":"RowLevelPermissionFormatVersion"}
+        "FormatVersion":{"shape":"RowLevelPermissionFormatVersion"},
+        "Status":{"shape":"Status"}
       }
     },
     "RowLevelPermissionFormatVersion":{
@@ -7009,6 +7314,37 @@
         "GRANT_ACCESS",
         "DENY_ACCESS"
       ]
+    },
+    "RowLevelPermissionTagConfiguration":{
+      "type":"structure",
+      "required":["TagRules"],
+      "members":{
+        "Status":{"shape":"Status"},
+        "TagRules":{"shape":"RowLevelPermissionTagRuleList"}
+      }
+    },
+    "RowLevelPermissionTagDelimiter":{
+      "type":"string",
+      "max":10
+    },
+    "RowLevelPermissionTagRule":{
+      "type":"structure",
+      "required":[
+        "TagKey",
+        "ColumnName"
+      ],
+      "members":{
+        "TagKey":{"shape":"SessionTagKey"},
+        "ColumnName":{"shape":"String"},
+        "TagMultiValueDelimiter":{"shape":"RowLevelPermissionTagDelimiter"},
+        "MatchAllValue":{"shape":"SessionTagValue"}
+      }
+    },
+    "RowLevelPermissionTagRuleList":{
+      "type":"list",
+      "member":{"shape":"RowLevelPermissionTagRule"},
+      "max":50,
+      "min":1
     },
     "S3Bucket":{
       "type":"string",
@@ -7156,6 +7492,34 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "SessionTag":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Key":{"shape":"SessionTagKey"},
+        "Value":{"shape":"SessionTagValue"}
+      }
+    },
+    "SessionTagKey":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "SessionTagList":{
+      "type":"list",
+      "member":{"shape":"SessionTag"},
+      "max":50,
+      "min":1
+    },
+    "SessionTagValue":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "sensitive":true
+    },
     "Sheet":{
       "type":"structure",
       "members":{
@@ -7233,6 +7597,13 @@
       "members":{
         "DisableSsl":{"shape":"Boolean"}
       }
+    },
+    "Status":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "StatusCode":{"type":"integer"},
     "String":{"type":"string"},
@@ -7606,7 +7977,8 @@
         "CreateColumnsOperation":{"shape":"CreateColumnsOperation"},
         "RenameColumnOperation":{"shape":"RenameColumnOperation"},
         "CastColumnTypeOperation":{"shape":"CastColumnTypeOperation"},
-        "TagColumnOperation":{"shape":"TagColumnOperation"}
+        "TagColumnOperation":{"shape":"TagColumnOperation"},
+        "UntagColumnOperation":{"shape":"UntagColumnOperation"}
       }
     },
     "TransformOperationList":{
@@ -7668,6 +8040,17 @@
       },
       "error":{"httpStatusCode":403},
       "exception":true
+    },
+    "UntagColumnOperation":{
+      "type":"structure",
+      "required":[
+        "ColumnName",
+        "TagNames"
+      ],
+      "members":{
+        "ColumnName":{"shape":"ColumnName"},
+        "TagNames":{"shape":"ColumnTagNames"}
+      }
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -7848,7 +8231,9 @@
           "locationName":"DashboardId"
         },
         "GrantPermissions":{"shape":"UpdateResourcePermissionList"},
-        "RevokePermissions":{"shape":"UpdateResourcePermissionList"}
+        "RevokePermissions":{"shape":"UpdateResourcePermissionList"},
+        "GrantLinkPermissions":{"shape":"UpdateLinkPermissionList"},
+        "RevokeLinkPermissions":{"shape":"UpdateLinkPermissionList"}
       }
     },
     "UpdateDashboardPermissionsResponse":{
@@ -7861,7 +8246,8 @@
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
-        }
+        },
+        "LinkSharingConfiguration":{"shape":"LinkSharingConfiguration"}
       }
     },
     "UpdateDashboardPublishedVersionRequest":{
@@ -7999,7 +8385,9 @@
         "ColumnGroups":{"shape":"ColumnGroupList"},
         "FieldFolders":{"shape":"FieldFolderMap"},
         "RowLevelPermissionDataSet":{"shape":"RowLevelPermissionDataSet"},
-        "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"}
+        "RowLevelPermissionTagConfiguration":{"shape":"RowLevelPermissionTagConfiguration"},
+        "ColumnLevelPermissionRules":{"shape":"ColumnLevelPermissionRuleList"},
+        "DataSetUsageConfiguration":{"shape":"DataSetUsageConfiguration"}
       }
     },
     "UpdateDataSetResponse":{
@@ -8230,6 +8618,35 @@
           "location":"statusCode"
         }
       }
+    },
+    "UpdateIpRestrictionRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "IpRestrictionRuleMap":{"shape":"IpRestrictionRuleMap"},
+        "Enabled":{"shape":"NullableBoolean"}
+      }
+    },
+    "UpdateIpRestrictionResponse":{
+      "type":"structure",
+      "members":{
+        "AwsAccountId":{"shape":"AwsAccountId"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "UpdateLinkPermissionList":{
+      "type":"list",
+      "member":{"shape":"ResourcePermission"},
+      "max":2
     },
     "UpdateResourcePermissionList":{
       "type":"list",
@@ -8581,9 +8998,6 @@
       "max":128,
       "min":1
     },
-    "boolean":{"type":"boolean"},
-    "long":{"type":"long"},
-    "string":{"type":"string"},
-    "timestamp":{"type":"timestamp"}
+    "boolean":{"type":"boolean"}
   }
 }

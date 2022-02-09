@@ -80,6 +80,22 @@
         {"shape":"InvalidParameterValuesException"}
       ]
     },
+    "CreateConnectClientAddIn":{
+      "name":"CreateConnectClientAddIn",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateConnectClientAddInRequest"},
+      "output":{"shape":"CreateConnectClientAddInResult"},
+      "errors":[
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceCreationFailedException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "CreateConnectionAlias":{
       "name":"CreateConnectionAlias",
       "http":{
@@ -127,6 +143,24 @@
         {"shape":"ResourceLimitExceededException"}
       ]
     },
+    "CreateUpdatedWorkspaceImage":{
+      "name":"CreateUpdatedWorkspaceImage",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateUpdatedWorkspaceImageRequest"},
+      "output":{"shape":"CreateUpdatedWorkspaceImageResult"},
+      "errors":[
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"ResourceAlreadyExistsException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"OperationNotSupportedException"},
+        {"shape":"InvalidResourceStateException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValuesException"}
+      ]
+    },
     "CreateWorkspaceBundle":{
       "name":"CreateWorkspaceBundle",
       "http":{
@@ -155,6 +189,20 @@
       "errors":[
         {"shape":"ResourceLimitExceededException"},
         {"shape":"InvalidParameterValuesException"}
+      ]
+    },
+    "DeleteConnectClientAddIn":{
+      "name":"DeleteConnectClientAddIn",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteConnectClientAddInRequest"},
+      "output":{"shape":"DeleteConnectClientAddInResult"},
+      "errors":[
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DeleteConnectionAlias":{
@@ -279,6 +327,20 @@
       },
       "input":{"shape":"DescribeClientPropertiesRequest"},
       "output":{"shape":"DescribeClientPropertiesResult"},
+      "errors":[
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "DescribeConnectClientAddIns":{
+      "name":"DescribeConnectClientAddIns",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeConnectClientAddInsRequest"},
+      "output":{"shape":"DescribeConnectClientAddInsResult"},
       "errors":[
         {"shape":"InvalidParameterValuesException"},
         {"shape":"ResourceNotFoundException"},
@@ -703,6 +765,20 @@
       "input":{"shape":"TerminateWorkspacesRequest"},
       "output":{"shape":"TerminateWorkspacesResult"}
     },
+    "UpdateConnectClientAddIn":{
+      "name":"UpdateConnectClientAddIn",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateConnectClientAddInRequest"},
+      "output":{"shape":"UpdateConnectClientAddInResult"},
+      "errors":[
+        {"shape":"InvalidParameterValuesException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "UpdateConnectionAliasPermission":{
       "name":"UpdateConnectionAliasPermission",
       "http":{
@@ -803,7 +879,25 @@
       "type":"list",
       "member":{"shape":"AccountModification"}
     },
+    "AddInName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^.*$"
+    },
+    "AddInUrl":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^(http|https)\\://\\S+"
+    },
     "Alias":{"type":"string"},
+    "AmazonUuid":{
+      "type":"string",
+      "max":36,
+      "min":36,
+      "pattern":"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
+    },
     "Application":{
       "type":"string",
       "enum":[
@@ -932,6 +1026,19 @@
       }
     },
     "ComputerName":{"type":"string"},
+    "ConnectClientAddIn":{
+      "type":"structure",
+      "members":{
+        "AddInId":{"shape":"AmazonUuid"},
+        "ResourceId":{"shape":"DirectoryId"},
+        "Name":{"shape":"AddInName"},
+        "URL":{"shape":"AddInUrl"}
+      }
+    },
+    "ConnectClientAddInList":{
+      "type":"list",
+      "member":{"shape":"ConnectClientAddIn"}
+    },
     "ConnectionAlias":{
       "type":"structure",
       "members":{
@@ -1041,6 +1148,25 @@
         "ImageId":{"shape":"WorkspaceImageId"}
       }
     },
+    "CreateConnectClientAddInRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceId",
+        "Name",
+        "URL"
+      ],
+      "members":{
+        "ResourceId":{"shape":"DirectoryId"},
+        "Name":{"shape":"AddInName"},
+        "URL":{"shape":"AddInUrl"}
+      }
+    },
+    "CreateConnectClientAddInResult":{
+      "type":"structure",
+      "members":{
+        "AddInId":{"shape":"AmazonUuid"}
+      }
+    },
     "CreateConnectionAliasRequest":{
       "type":"structure",
       "required":["ConnectionString"],
@@ -1085,6 +1211,26 @@
     "CreateTagsResult":{
       "type":"structure",
       "members":{
+      }
+    },
+    "CreateUpdatedWorkspaceImageRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "Description",
+        "SourceImageId"
+      ],
+      "members":{
+        "Name":{"shape":"WorkspaceImageName"},
+        "Description":{"shape":"WorkspaceImageDescription"},
+        "SourceImageId":{"shape":"WorkspaceImageId"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "CreateUpdatedWorkspaceImageResult":{
+      "type":"structure",
+      "members":{
+        "ImageId":{"shape":"WorkspaceImageId"}
       }
     },
     "CreateWorkspaceBundleRequest":{
@@ -1163,6 +1309,22 @@
         "CustomSecurityGroupId":{"shape":"SecurityGroupId"},
         "UserEnabledAsLocalAdministrator":{"shape":"BooleanObject"},
         "EnableMaintenanceMode":{"shape":"BooleanObject"}
+      }
+    },
+    "DeleteConnectClientAddInRequest":{
+      "type":"structure",
+      "required":[
+        "AddInId",
+        "ResourceId"
+      ],
+      "members":{
+        "AddInId":{"shape":"AmazonUuid"},
+        "ResourceId":{"shape":"DirectoryId"}
+      }
+    },
+    "DeleteConnectClientAddInResult":{
+      "type":"structure",
+      "members":{
       }
     },
     "DeleteConnectionAliasRequest":{
@@ -1276,6 +1438,22 @@
       "type":"structure",
       "members":{
         "ClientPropertiesList":{"shape":"ClientPropertiesList"}
+      }
+    },
+    "DescribeConnectClientAddInsRequest":{
+      "type":"structure",
+      "required":["ResourceId"],
+      "members":{
+        "ResourceId":{"shape":"DirectoryId"},
+        "NextToken":{"shape":"PaginationToken"},
+        "MaxResults":{"shape":"Limit"}
+      }
+    },
+    "DescribeConnectClientAddInsResult":{
+      "type":"structure",
+      "members":{
+        "AddIns":{"shape":"ConnectClientAddInList"},
+        "NextToken":{"shape":"PaginationToken"}
       }
     },
     "DescribeConnectionAliasPermissionsRequest":{
@@ -2194,6 +2372,24 @@
       },
       "exception":true
     },
+    "UpdateConnectClientAddInRequest":{
+      "type":"structure",
+      "required":[
+        "AddInId",
+        "ResourceId"
+      ],
+      "members":{
+        "AddInId":{"shape":"AmazonUuid"},
+        "ResourceId":{"shape":"DirectoryId"},
+        "Name":{"shape":"AddInName"},
+        "URL":{"shape":"AddInUrl"}
+      }
+    },
+    "UpdateConnectClientAddInResult":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "UpdateConnectionAliasPermissionRequest":{
       "type":"structure",
       "required":[
@@ -2208,6 +2404,19 @@
     "UpdateConnectionAliasPermissionResult":{
       "type":"structure",
       "members":{
+      }
+    },
+    "UpdateDescription":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^[a-zA-Z0-9_./() -]+$"
+    },
+    "UpdateResult":{
+      "type":"structure",
+      "members":{
+        "UpdateAvailable":{"shape":"BooleanObject"},
+        "Description":{"shape":"UpdateDescription"}
       }
     },
     "UpdateRulesOfIpGroupRequest":{
@@ -2414,7 +2623,8 @@
         "ErrorCode":{"shape":"WorkspaceImageErrorCode"},
         "ErrorMessage":{"shape":"Description"},
         "Created":{"shape":"Timestamp"},
-        "OwnerAccountId":{"shape":"AwsAccount"}
+        "OwnerAccountId":{"shape":"AwsAccount"},
+        "Updates":{"shape":"UpdateResult"}
       }
     },
     "WorkspaceImageDescription":{

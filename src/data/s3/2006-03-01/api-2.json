@@ -1060,6 +1060,7 @@
         "Owner":{"shape":"OwnerOverride"}
       }
     },
+    "AccessPointArn":{"type":"string"},
     "AccountId":{"type":"string"},
     "AllowQuotedRecordDelimiter":{"type":"boolean"},
     "AllowedHeader":{"type":"string"},
@@ -1845,6 +1846,11 @@
           "shape":"ObjectLockEnabledForBucket",
           "location":"header",
           "locationName":"x-amz-bucket-object-lock-enabled"
+        },
+        "ObjectOwnership":{
+          "shape":"ObjectOwnership",
+          "location":"header",
+          "locationName":"x-amz-object-ownership"
         }
       },
       "payload":"CreateBucketConfiguration"
@@ -2625,8 +2631,23 @@
         "s3:Replication:OperationFailedReplication",
         "s3:Replication:OperationNotTracked",
         "s3:Replication:OperationMissedThreshold",
-        "s3:Replication:OperationReplicatedAfterThreshold"
+        "s3:Replication:OperationReplicatedAfterThreshold",
+        "s3:ObjectRestore:Delete",
+        "s3:LifecycleTransition",
+        "s3:IntelligentTiering",
+        "s3:ObjectAcl:Put",
+        "s3:LifecycleExpiration:*",
+        "s3:LifecycleExpiration:Delete",
+        "s3:LifecycleExpiration:DeleteMarkerCreated",
+        "s3:ObjectTagging:*",
+        "s3:ObjectTagging:Put",
+        "s3:ObjectTagging:Delete"
       ]
+    },
+    "EventBridgeConfiguration":{
+      "type":"structure",
+      "members":{
+      }
     },
     "EventList":{
       "type":"list",
@@ -4367,7 +4388,9 @@
           "shape":"TagSet",
           "flattened":true,
           "locationName":"Tag"
-        }
+        },
+        "ObjectSizeGreaterThan":{"shape":"ObjectSizeGreaterThanBytes"},
+        "ObjectSizeLessThan":{"shape":"ObjectSizeLessThanBytes"}
       }
     },
     "LifecycleRuleFilter":{
@@ -4375,6 +4398,8 @@
       "members":{
         "Prefix":{"shape":"Prefix"},
         "Tag":{"shape":"Tag"},
+        "ObjectSizeGreaterThan":{"shape":"ObjectSizeGreaterThanBytes"},
+        "ObjectSizeLessThan":{"shape":"ObjectSizeLessThanBytes"},
         "And":{"shape":"LifecycleRuleAndOperator"}
       }
     },
@@ -4938,7 +4963,8 @@
           "shape":"TagSet",
           "flattened":true,
           "locationName":"Tag"
-        }
+        },
+        "AccessPointArn":{"shape":"AccessPointArn"}
       }
     },
     "MetricsConfiguration":{
@@ -4959,6 +4985,7 @@
       "members":{
         "Prefix":{"shape":"Prefix"},
         "Tag":{"shape":"Tag"},
+        "AccessPointArn":{"shape":"AccessPointArn"},
         "And":{"shape":"MetricsAndOperator"}
       }
     },
@@ -5016,14 +5043,16 @@
     "NoncurrentVersionExpiration":{
       "type":"structure",
       "members":{
-        "NoncurrentDays":{"shape":"Days"}
+        "NoncurrentDays":{"shape":"Days"},
+        "NewerNoncurrentVersions":{"shape":"VersionCount"}
       }
     },
     "NoncurrentVersionTransition":{
       "type":"structure",
       "members":{
         "NoncurrentDays":{"shape":"Days"},
-        "StorageClass":{"shape":"TransitionStorageClass"}
+        "StorageClass":{"shape":"TransitionStorageClass"},
+        "NewerNoncurrentVersions":{"shape":"VersionCount"}
       }
     },
     "NoncurrentVersionTransitionList":{
@@ -5045,7 +5074,8 @@
         "LambdaFunctionConfigurations":{
           "shape":"LambdaFunctionConfigurationList",
           "locationName":"CloudFunctionConfiguration"
-        }
+        },
+        "EventBridgeConfiguration":{"shape":"EventBridgeConfiguration"}
       }
     },
     "NotificationConfigurationDeprecated":{
@@ -5184,9 +5214,12 @@
       "type":"string",
       "enum":[
         "BucketOwnerPreferred",
-        "ObjectWriter"
+        "ObjectWriter",
+        "BucketOwnerEnforced"
       ]
     },
+    "ObjectSizeGreaterThanBytes":{"type":"long"},
+    "ObjectSizeLessThanBytes":{"type":"long"},
     "ObjectStorageClass":{
       "type":"string",
       "enum":[
@@ -5197,7 +5230,8 @@
         "ONEZONE_IA",
         "INTELLIGENT_TIERING",
         "DEEP_ARCHIVE",
-        "OUTPOSTS"
+        "OUTPOSTS",
+        "GLACIER_IR"
       ]
     },
     "ObjectVersion":{
@@ -5727,6 +5761,11 @@
           "shape":"AccountId",
           "location":"header",
           "locationName":"x-amz-expected-bucket-owner"
+        },
+        "SkipDestinationValidation":{
+          "shape":"SkipValidation",
+          "location":"header",
+          "locationName":"x-amz-skip-destination-validation"
         }
       },
       "payload":"NotificationConfiguration"
@@ -7060,6 +7099,7 @@
     },
     "Setting":{"type":"boolean"},
     "Size":{"type":"long"},
+    "SkipValidation":{"type":"boolean"},
     "SourceSelectionCriteria":{
       "type":"structure",
       "members":{
@@ -7111,7 +7151,8 @@
         "INTELLIGENT_TIERING",
         "GLACIER",
         "DEEP_ARCHIVE",
-        "OUTPOSTS"
+        "OUTPOSTS",
+        "GLACIER_IR"
       ]
     },
     "StorageClassAnalysis":{
@@ -7271,7 +7312,8 @@
         "STANDARD_IA",
         "ONEZONE_IA",
         "INTELLIGENT_TIERING",
-        "DEEP_ARCHIVE"
+        "DEEP_ARCHIVE",
+        "GLACIER_IR"
       ]
     },
     "Type":{
@@ -7552,6 +7594,7 @@
       }
     },
     "Value":{"type":"string"},
+    "VersionCount":{"type":"integer"},
     "VersionIdMarker":{"type":"string"},
     "VersioningConfiguration":{
       "type":"structure",

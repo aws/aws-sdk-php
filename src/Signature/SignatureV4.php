@@ -21,7 +21,7 @@ class SignatureV4 implements SignatureInterface
     private $service;
 
     /** @var string */
-    private $region;
+    protected $region;
 
     /** @var bool */
     private $unsigned;
@@ -324,11 +324,11 @@ class SignatureV4 implements SignatureInterface
         ksort($query);
         foreach ($query as $k => $v) {
             if (!is_array($v)) {
-                $qs .= rawurlencode($k) . '=' . rawurlencode($v) . '&';
+                $qs .= rawurlencode($k) . '=' . rawurlencode($v !== null ? $v : '') . '&';
             } else {
                 sort($v);
                 foreach ($v as $value) {
-                    $qs .= rawurlencode($k) . '=' . rawurlencode($value) . '&';
+                    $qs .= rawurlencode($k) . '=' . rawurlencode($value !== null ? $value : '') . '&';
                 }
             }
         }

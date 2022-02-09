@@ -413,7 +413,194 @@ class ValidatorTest extends TestCase
                 ['caps' => 'ABCd'],
                 "Found 1 error while validating the input provided for the Foo operation:\n"
                 . "[caps] Pattern /^[A-Z]+$/ failed to match 'ABCd'"
-            ]
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => null],
+                true
+            ],
+           [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => false],
+                true
+            ],
+           [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => 0],
+                true
+            ],
+           [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => "stringDocument"],
+                true
+            ],
+           [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => ["string"]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => ["nestedArray" => ['nestedAgain' => 0]]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => ["nestedVal" => [0]]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' =>  new \DateTime()],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[documentVal] is not a valid document type"
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => ["nestedArray" => ['badVal1' => new \DateTime(), "badVal2" => new \DateTime()]]],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[documentVal] is not a valid document type"
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'documentVal' => [
+                            'type' => 'structure',
+                            'document' => true,
+                        ]
+                    ]
+                ],
+                ['documentVal' => ["nestedArray" => [0 => "val1", "mixedTypeKey" => "val2"]]],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[documentVal] is not a valid document type"
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' => ["nestedVal" => [0]]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' => ["nestedVal" => ["doubleNestedVal" => [0]]]],
+                true
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' =>  null],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[unionVal] is a union type and must have exactly one non null value"
+            ],
+            [
+                [
+                    'type' => 'structure',
+                    'members' => [
+                        'unionVal' => [
+                            'type' => 'structure',
+                            'union' => true,
+                        ]
+                    ]
+                ],
+                ['unionVal' =>  ['nestedVal' => true, 'nestedVal2' => false], ],
+                "Found 1 error while validating the input provided for the Foo operation:\n"
+                . "[unionVal] is a union type and must have exactly one non null value"
+            ],
         ];
     }
 

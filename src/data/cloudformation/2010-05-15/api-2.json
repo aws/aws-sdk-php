@@ -545,6 +545,27 @@
         {"shape":"StackSetNotFoundException"}
       ]
     },
+    "ImportStacksToStackSet":{
+      "name":"ImportStacksToStackSet",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ImportStacksToStackSetInput"},
+      "output":{
+        "shape":"ImportStacksToStackSetOutput",
+        "resultWrapper":"ImportStacksToStackSetResult"
+      },
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"StackSetNotFoundException"},
+        {"shape":"InvalidOperationException"},
+        {"shape":"OperationInProgressException"},
+        {"shape":"OperationIdAlreadyExistsException"},
+        {"shape":"StackNotFoundException"},
+        {"shape":"StaleRequestException"}
+      ]
+    },
     "ListChangeSets":{
       "name":"ListChangeSets",
       "http":{
@@ -776,6 +797,21 @@
         {"shape":"CFNRegistryException"}
       ],
       "idempotent":true
+    },
+    "RollbackStack":{
+      "name":"RollbackStack",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"RollbackStackInput"},
+      "output":{
+        "shape":"RollbackStackOutput",
+        "resultWrapper":"RollbackStackResult"
+      },
+      "errors":[
+        {"shape":"TokenAlreadyExistsException"}
+      ]
     },
     "SetStackPolicy":{
       "name":"SetStackPolicy",
@@ -1358,6 +1394,7 @@
         "Description":{"shape":"Description"},
         "TemplateBody":{"shape":"TemplateBody"},
         "TemplateURL":{"shape":"TemplateURL"},
+        "StackId":{"shape":"StackId"},
         "Parameters":{"shape":"Parameters"},
         "Capabilities":{"shape":"Capabilities"},
         "Tags":{"shape":"Tags"},
@@ -1369,7 +1406,8 @@
         "ClientRequestToken":{
           "shape":"ClientRequestToken",
           "idempotencyToken":true
-        }
+        },
+        "ManagedExecution":{"shape":"ManagedExecution"}
       }
     },
     "CreateStackSetOutput":{
@@ -1879,7 +1917,8 @@
       "members":{
         "ChangeSetName":{"shape":"ChangeSetNameOrId"},
         "StackName":{"shape":"StackNameOrId"},
-        "ClientRequestToken":{"shape":"ClientRequestToken"}
+        "ClientRequestToken":{"shape":"ClientRequestToken"},
+        "DisableRollback":{"shape":"DisableRollback"}
       }
     },
     "ExecuteChangeSetOutput":{
@@ -2010,6 +2049,28 @@
         "GitHub",
         "Bitbucket"
       ]
+    },
+    "ImportStacksToStackSetInput":{
+      "type":"structure",
+      "required":["StackSetName"],
+      "members":{
+        "StackSetName":{"shape":"StackSetNameOrId"},
+        "StackIds":{"shape":"StackIdList"},
+        "StackIdsUrl":{"shape":"StackIdsUrl"},
+        "OrganizationalUnitIds":{"shape":"OrganizationalUnitIdList"},
+        "OperationPreferences":{"shape":"StackSetOperationPreferences"},
+        "OperationId":{
+          "shape":"ClientRequestToken",
+          "idempotencyToken":true
+        },
+        "CallAs":{"shape":"CallAs"}
+      }
+    },
+    "ImportStacksToStackSetOutput":{
+      "type":"structure",
+      "members":{
+        "OperationId":{"shape":"ClientRequestToken"}
+      }
     },
     "Imports":{
       "type":"list",
@@ -2318,6 +2379,13 @@
       "max":100000,
       "min":1
     },
+    "ManagedExecution":{
+      "type":"structure",
+      "members":{
+        "Active":{"shape":"ManagedExecutionNullable"}
+      }
+    },
+    "ManagedExecutionNullable":{"type":"boolean"},
     "MaxConcurrentCount":{
       "type":"integer",
       "min":1
@@ -2835,7 +2903,13 @@
         "IMPORT_IN_PROGRESS",
         "IMPORT_ROLLBACK_IN_PROGRESS",
         "IMPORT_ROLLBACK_FAILED",
-        "IMPORT_ROLLBACK_COMPLETE"
+        "IMPORT_ROLLBACK_COMPLETE",
+        "UPDATE_ROLLBACK_IN_PROGRESS",
+        "UPDATE_ROLLBACK_COMPLETE",
+        "UPDATE_ROLLBACK_FAILED",
+        "ROLLBACK_IN_PROGRESS",
+        "ROLLBACK_COMPLETE",
+        "ROLLBACK_FAILED"
       ]
     },
     "ResourceStatusReason":{"type":"string"},
@@ -2905,6 +2979,21 @@
       "members":{
         "RollbackTriggers":{"shape":"RollbackTriggers"},
         "MonitoringTimeInMinutes":{"shape":"MonitoringTimeInMinutes"}
+      }
+    },
+    "RollbackStackInput":{
+      "type":"structure",
+      "required":["StackName"],
+      "members":{
+        "StackName":{"shape":"StackNameOrId"},
+        "RoleARN":{"shape":"RoleARN"},
+        "ClientRequestToken":{"shape":"ClientRequestToken"}
+      }
+    },
+    "RollbackStackOutput":{
+      "type":"structure",
+      "members":{
+        "StackId":{"shape":"StackId"}
       }
     },
     "RollbackTrigger":{
@@ -3091,6 +3180,16 @@
       "member":{"shape":"StackEvent"}
     },
     "StackId":{"type":"string"},
+    "StackIdList":{
+      "type":"list",
+      "member":{"shape":"StackId"}
+    },
+    "StackIdsUrl":{
+      "type":"string",
+      "max":5120,
+      "min":1,
+      "pattern":"(s3://|http(s?)://).+"
+    },
     "StackInstance":{
       "type":"structure",
       "members":{
@@ -3188,6 +3287,17 @@
       "type":"string",
       "min":1,
       "pattern":"([a-zA-Z][-a-zA-Z0-9]*)|(arn:\\b(aws|aws-us-gov|aws-cn)\\b:[-a-zA-Z0-9:/._+]*)"
+    },
+    "StackNotFoundException":{
+      "type":"structure",
+      "members":{
+      },
+      "error":{
+        "code":"StackNotFoundException",
+        "httpStatusCode":404,
+        "senderFault":true
+      },
+      "exception":true
     },
     "StackPolicyBody":{
       "type":"string",
@@ -3356,7 +3466,8 @@
         "StackSetDriftDetectionDetails":{"shape":"StackSetDriftDetectionDetails"},
         "AutoDeployment":{"shape":"AutoDeployment"},
         "PermissionModel":{"shape":"PermissionModels"},
-        "OrganizationalUnitIds":{"shape":"OrganizationalUnitIdList"}
+        "OrganizationalUnitIds":{"shape":"OrganizationalUnitIdList"},
+        "ManagedExecution":{"shape":"ManagedExecution"}
       }
     },
     "StackSetARN":{"type":"string"},
@@ -3527,7 +3638,8 @@
         "AutoDeployment":{"shape":"AutoDeployment"},
         "PermissionModel":{"shape":"PermissionModels"},
         "DriftStatus":{"shape":"StackDriftStatus"},
-        "LastDriftCheckTimestamp":{"shape":"Timestamp"}
+        "LastDriftCheckTimestamp":{"shape":"Timestamp"},
+        "ManagedExecution":{"shape":"ManagedExecution"}
       }
     },
     "StackStatus":{
@@ -3545,6 +3657,7 @@
         "UPDATE_IN_PROGRESS",
         "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS",
         "UPDATE_COMPLETE",
+        "UPDATE_FAILED",
         "UPDATE_ROLLBACK_IN_PROGRESS",
         "UPDATE_ROLLBACK_FAILED",
         "UPDATE_ROLLBACK_COMPLETE_CLEANUP_IN_PROGRESS",
@@ -3930,6 +4043,7 @@
         "StackPolicyURL":{"shape":"StackPolicyURL"},
         "NotificationARNs":{"shape":"NotificationARNs"},
         "Tags":{"shape":"Tags"},
+        "DisableRollback":{"shape":"DisableRollback"},
         "ClientRequestToken":{"shape":"ClientRequestToken"}
       }
     },
@@ -3989,7 +4103,8 @@
         },
         "Accounts":{"shape":"AccountList"},
         "Regions":{"shape":"RegionList"},
-        "CallAs":{"shape":"CallAs"}
+        "CallAs":{"shape":"CallAs"},
+        "ManagedExecution":{"shape":"ManagedExecution"}
       }
     },
     "UpdateStackSetOutput":{

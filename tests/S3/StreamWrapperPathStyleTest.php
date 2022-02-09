@@ -148,7 +148,7 @@ class StreamWrapperPathStyleTest extends TestCase
         $h = [];
         $this->client->getHandlerList()->setHandler(function ($c, $r) use (&$h) {
             $h[] = [$c, $r];
-            return \GuzzleHttp\Promise\promise_for(new Result());
+            return \GuzzleHttp\Promise\Create::promiseFor(new Result());
         });
         file_put_contents('s3://foo/bar.xml', 'test');
         $this->assertCount(1, $h);

@@ -120,7 +120,7 @@ class ComplianceTest extends TestCase
     {
         switch (get_class($shape)) {
             case 'Aws\Api\StructureShape':
-                if ($data) {
+                if ($data && !$shape['document']) {
                     foreach ($data as $key => &$value) {
                         if ($shape->hasMember($key)) {
                             $this->fixTimestamps($value, $shape->getMember($key));

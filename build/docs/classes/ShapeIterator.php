@@ -49,26 +49,31 @@ class ShapeIterator implements \Iterator
         $this->rewind();
     }
 
+    #[\ReturnTypeWillChange]
     public function current()
     {
         return $this->shapes[$this->index];
     }
 
+    #[\ReturnTypeWillChange]
     public function next()
     {
         $this->index++;
     }
 
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->index;
     }
 
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return isset($this->shapes[$this->index]);
     }
 
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->index = 0;

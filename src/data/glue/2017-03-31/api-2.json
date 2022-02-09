@@ -70,7 +70,9 @@
         {"shape":"InvalidInputException"},
         {"shape":"EntityNotFoundException"},
         {"shape":"InternalServiceException"},
-        {"shape":"OperationTimeoutException"}
+        {"shape":"OperationTimeoutException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"ResourceNotReadyException"}
       ]
     },
     "BatchDeleteTableVersion":{
@@ -86,6 +88,20 @@
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "BatchGetBlueprints":{
+      "name":"BatchGetBlueprints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchGetBlueprintsRequest"},
+      "output":{"shape":"BatchGetBlueprintsResponse"},
+      "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "BatchGetCrawlers":{
@@ -143,7 +159,8 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InternalServiceException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"InvalidStateException"}
       ]
     },
     "BatchGetTriggers":{
@@ -233,6 +250,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "CreateBlueprint":{
+      "name":"CreateBlueprint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"CreateBlueprintRequest"},
+      "output":{"shape":"CreateBlueprintResponse"},
+      "errors":[
+        {"shape":"AlreadyExistsException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNumberLimitExceededException"}
+      ]
+    },
     "CreateClassifier":{
       "name":"CreateClassifier",
       "http":{
@@ -292,7 +325,8 @@
         {"shape":"ResourceNumberLimitExceededException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "CreateDevEndpoint":{
@@ -399,6 +433,7 @@
         {"shape":"AccessDeniedException"},
         {"shape":"AlreadyExistsException"},
         {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"ConcurrentModificationException"},
         {"shape":"InternalServiceException"}
       ]
     },
@@ -416,6 +451,7 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"AlreadyExistsException"},
         {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"ConcurrentModificationException"},
         {"shape":"InternalServiceException"}
       ]
     },
@@ -464,7 +500,9 @@
         {"shape":"ResourceNumberLimitExceededException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ResourceNotReadyException"}
       ]
     },
     "CreateTrigger":{
@@ -519,6 +557,20 @@
         {"shape":"OperationTimeoutException"},
         {"shape":"ResourceNumberLimitExceededException"},
         {"shape":"ConcurrentModificationException"}
+      ]
+    },
+    "DeleteBlueprint":{
+      "name":"DeleteBlueprint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteBlueprintRequest"},
+      "output":{"shape":"DeleteBlueprintResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"}
       ]
     },
     "DeleteClassifier":{
@@ -606,7 +658,8 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
-        {"shape":"OperationTimeoutException"}
+        {"shape":"OperationTimeoutException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "DeleteDevEndpoint":{
@@ -773,7 +826,9 @@
         {"shape":"EntityNotFoundException"},
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
-        {"shape":"OperationTimeoutException"}
+        {"shape":"OperationTimeoutException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"ResourceNotReadyException"}
       ]
     },
     "DeleteTableVersion":{
@@ -834,6 +889,50 @@
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"ConcurrentModificationException"}
+      ]
+    },
+    "GetBlueprint":{
+      "name":"GetBlueprint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetBlueprintRequest"},
+      "output":{"shape":"GetBlueprintResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "GetBlueprintRun":{
+      "name":"GetBlueprintRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetBlueprintRunRequest"},
+      "output":{"shape":"GetBlueprintRunResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "GetBlueprintRuns":{
+      "name":"GetBlueprintRuns",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetBlueprintRunsRequest"},
+      "output":{"shape":"GetBlueprintRunsResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InvalidInputException"}
       ]
     },
     "GetCatalogImportStatus":{
@@ -1258,7 +1357,9 @@
         {"shape":"InvalidInputException"},
         {"shape":"OperationTimeoutException"},
         {"shape":"InternalServiceException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"InvalidStateException"},
+        {"shape":"ResourceNotReadyException"}
       ]
     },
     "GetPlan":{
@@ -1423,7 +1524,8 @@
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"ResourceNotReadyException"}
       ]
     },
     "GetTableVersion":{
@@ -1517,6 +1619,57 @@
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "GetUnfilteredPartitionMetadata":{
+      "name":"GetUnfilteredPartitionMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetUnfilteredPartitionMetadataRequest"},
+      "output":{"shape":"GetUnfilteredPartitionMetadataResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"PermissionTypeMismatchException"}
+      ]
+    },
+    "GetUnfilteredPartitionsMetadata":{
+      "name":"GetUnfilteredPartitionsMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetUnfilteredPartitionsMetadataRequest"},
+      "output":{"shape":"GetUnfilteredPartitionsMetadataResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"PermissionTypeMismatchException"}
+      ]
+    },
+    "GetUnfilteredTableMetadata":{
+      "name":"GetUnfilteredTableMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetUnfilteredTableMetadataRequest"},
+      "output":{"shape":"GetUnfilteredTableMetadataResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"GlueEncryptionException"},
+        {"shape":"PermissionTypeMismatchException"}
       ]
     },
     "GetUserDefinedFunction":{
@@ -1620,6 +1773,20 @@
       "input":{"shape":"ImportCatalogToGlueRequest"},
       "output":{"shape":"ImportCatalogToGlueResponse"},
       "errors":[
+        {"shape":"InternalServiceException"},
+        {"shape":"OperationTimeoutException"}
+      ]
+    },
+    "ListBlueprints":{
+      "name":"ListBlueprints",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListBlueprintsRequest"},
+      "output":{"shape":"ListBlueprintsResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"}
       ]
@@ -1909,6 +2076,23 @@
         {"shape":"OperationTimeoutException"}
       ]
     },
+    "StartBlueprintRun":{
+      "name":"StartBlueprintRun",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartBlueprintRunRequest"},
+      "output":{"shape":"StartBlueprintRunResponse"},
+      "errors":[
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceNumberLimitExceededException"},
+        {"shape":"EntityNotFoundException"},
+        {"shape":"IllegalBlueprintStateException"}
+      ]
+    },
     "StartCrawler":{
       "name":"StartCrawler",
       "http":{
@@ -2146,6 +2330,23 @@
         {"shape":"EntityNotFoundException"}
       ]
     },
+    "UpdateBlueprint":{
+      "name":"UpdateBlueprint",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateBlueprintRequest"},
+      "output":{"shape":"UpdateBlueprintResponse"},
+      "errors":[
+        {"shape":"EntityNotFoundException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InvalidInputException"},
+        {"shape":"OperationTimeoutException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"IllegalBlueprintStateException"}
+      ]
+    },
     "UpdateClassifier":{
       "name":"UpdateClassifier",
       "http":{
@@ -2254,7 +2455,8 @@
         {"shape":"InvalidInputException"},
         {"shape":"InternalServiceException"},
         {"shape":"OperationTimeoutException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "UpdateDevEndpoint":{
@@ -2368,7 +2570,8 @@
         {"shape":"OperationTimeoutException"},
         {"shape":"ConcurrentModificationException"},
         {"shape":"ResourceNumberLimitExceededException"},
-        {"shape":"GlueEncryptionException"}
+        {"shape":"GlueEncryptionException"},
+        {"shape":"ResourceNotReadyException"}
       ]
     },
     "UpdateTrigger":{
@@ -2428,6 +2631,11 @@
       },
       "exception":true
     },
+    "AccountId":{
+      "type":"string",
+      "max":12,
+      "min":0
+    },
     "Action":{
       "type":"structure",
       "members":{
@@ -2456,6 +2664,17 @@
       "exception":true
     },
     "AttemptCount":{"type":"integer"},
+    "AuditContext":{
+      "type":"structure",
+      "members":{
+        "AdditionalAuditContext":{"shape":"AuditContextString"}
+      }
+    },
+    "AuditContextString":{
+      "type":"string",
+      "max":2048,
+      "min":0
+    },
     "BackfillError":{
       "type":"structure",
       "members":{
@@ -2557,7 +2776,8 @@
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
-        "TablesToDelete":{"shape":"BatchDeleteTableNameList"}
+        "TablesToDelete":{"shape":"BatchDeleteTableNameList"},
+        "TransactionId":{"shape":"TransactionIdString"}
       }
     },
     "BatchDeleteTableResponse":{
@@ -2590,6 +2810,28 @@
       "type":"structure",
       "members":{
         "Errors":{"shape":"TableVersionErrors"}
+      }
+    },
+    "BatchGetBlueprintNames":{
+      "type":"list",
+      "member":{"shape":"OrchestrationNameString"},
+      "max":25,
+      "min":1
+    },
+    "BatchGetBlueprintsRequest":{
+      "type":"structure",
+      "required":["Names"],
+      "members":{
+        "Names":{"shape":"BatchGetBlueprintNames"},
+        "IncludeBlueprint":{"shape":"NullableBoolean"},
+        "IncludeParameterSpec":{"shape":"NullableBoolean"}
+      }
+    },
+    "BatchGetBlueprintsResponse":{
+      "type":"structure",
+      "members":{
+        "Blueprints":{"shape":"Blueprints"},
+        "MissingBlueprints":{"shape":"BlueprintNames"}
       }
     },
     "BatchGetCrawlersRequest":{
@@ -2690,6 +2932,11 @@
         "MissingWorkflows":{"shape":"WorkflowNames"}
       }
     },
+    "BatchSize":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
     "BatchStopJobRunError":{
       "type":"structure",
       "members":{
@@ -2785,6 +3032,12 @@
         "Errors":{"shape":"BatchUpdatePartitionFailureList"}
       }
     },
+    "BatchWindow":{
+      "type":"integer",
+      "box":true,
+      "max":900,
+      "min":1
+    },
     "BinaryColumnStatisticsData":{
       "type":"structure",
       "required":[
@@ -2799,6 +3052,83 @@
       }
     },
     "Blob":{"type":"blob"},
+    "Blueprint":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"OrchestrationNameString"},
+        "Description":{"shape":"Generic512CharString"},
+        "CreatedOn":{"shape":"TimestampValue"},
+        "LastModifiedOn":{"shape":"TimestampValue"},
+        "ParameterSpec":{"shape":"BlueprintParameterSpec"},
+        "BlueprintLocation":{"shape":"GenericString"},
+        "BlueprintServiceLocation":{"shape":"GenericString"},
+        "Status":{"shape":"BlueprintStatus"},
+        "ErrorMessage":{"shape":"ErrorString"},
+        "LastActiveDefinition":{"shape":"LastActiveDefinition"}
+      }
+    },
+    "BlueprintDetails":{
+      "type":"structure",
+      "members":{
+        "BlueprintName":{"shape":"OrchestrationNameString"},
+        "RunId":{"shape":"IdString"}
+      }
+    },
+    "BlueprintNames":{
+      "type":"list",
+      "member":{"shape":"OrchestrationNameString"}
+    },
+    "BlueprintParameterSpec":{
+      "type":"string",
+      "max":131072,
+      "min":1
+    },
+    "BlueprintParameters":{
+      "type":"string",
+      "max":131072,
+      "min":1
+    },
+    "BlueprintRun":{
+      "type":"structure",
+      "members":{
+        "BlueprintName":{"shape":"OrchestrationNameString"},
+        "RunId":{"shape":"IdString"},
+        "WorkflowName":{"shape":"NameString"},
+        "State":{"shape":"BlueprintRunState"},
+        "StartedOn":{"shape":"TimestampValue"},
+        "CompletedOn":{"shape":"TimestampValue"},
+        "ErrorMessage":{"shape":"MessageString"},
+        "RollbackErrorMessage":{"shape":"MessageString"},
+        "Parameters":{"shape":"BlueprintParameters"},
+        "RoleArn":{"shape":"OrchestrationIAMRoleArn"}
+      }
+    },
+    "BlueprintRunState":{
+      "type":"string",
+      "enum":[
+        "RUNNING",
+        "SUCCEEDED",
+        "FAILED",
+        "ROLLING_BACK"
+      ]
+    },
+    "BlueprintRuns":{
+      "type":"list",
+      "member":{"shape":"BlueprintRun"}
+    },
+    "BlueprintStatus":{
+      "type":"string",
+      "enum":[
+        "CREATING",
+        "ACTIVE",
+        "UPDATING",
+        "FAILED"
+      ]
+    },
+    "Blueprints":{
+      "type":"list",
+      "member":{"shape":"Blueprint"}
+    },
     "Boolean":{"type":"boolean"},
     "BooleanColumnStatisticsData":{
       "type":"structure",
@@ -2895,7 +3225,8 @@
       ],
       "members":{
         "DatabaseName":{"shape":"NameString"},
-        "Tables":{"shape":"CatalogTablesList"}
+        "Tables":{"shape":"CatalogTablesList"},
+        "ConnectionName":{"shape":"ConnectionName"}
       }
     },
     "CatalogTargetList":{
@@ -3048,6 +3379,17 @@
       "max":1024,
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
+    },
+    "ColumnRowFilter":{
+      "type":"structure",
+      "members":{
+        "ColumnName":{"shape":"NameString"},
+        "RowFilterExpression":{"shape":"PredicateString"}
+      }
+    },
+    "ColumnRowFilterList":{
+      "type":"list",
+      "member":{"shape":"ColumnRowFilter"}
     },
     "ColumnStatistics":{
       "type":"structure",
@@ -3345,7 +3687,8 @@
         "LastCrawl":{"shape":"LastCrawlInfo"},
         "Version":{"shape":"VersionId"},
         "Configuration":{"shape":"CrawlerConfiguration"},
-        "CrawlerSecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"}
+        "CrawlerSecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"},
+        "LakeFormationConfiguration":{"shape":"LakeFormationConfiguration"}
       }
     },
     "CrawlerConfiguration":{"type":"string"},
@@ -3430,7 +3773,27 @@
         "JdbcTargets":{"shape":"JdbcTargetList"},
         "MongoDBTargets":{"shape":"MongoDBTargetList"},
         "DynamoDBTargets":{"shape":"DynamoDBTargetList"},
-        "CatalogTargets":{"shape":"CatalogTargetList"}
+        "CatalogTargets":{"shape":"CatalogTargetList"},
+        "DeltaTargets":{"shape":"DeltaTargetList"}
+      }
+    },
+    "CreateBlueprintRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "BlueprintLocation"
+      ],
+      "members":{
+        "Name":{"shape":"OrchestrationNameString"},
+        "Description":{"shape":"Generic512CharString"},
+        "BlueprintLocation":{"shape":"OrchestrationS3Location"},
+        "Tags":{"shape":"TagsMap"}
+      }
+    },
+    "CreateBlueprintResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"}
       }
     },
     "CreateClassifierRequest":{
@@ -3452,7 +3815,8 @@
       "required":["ConnectionInput"],
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
-        "ConnectionInput":{"shape":"ConnectionInput"}
+        "ConnectionInput":{"shape":"ConnectionInput"},
+        "Tags":{"shape":"TagsMap"}
       }
     },
     "CreateConnectionResponse":{
@@ -3479,6 +3843,7 @@
         "SchemaChangePolicy":{"shape":"SchemaChangePolicy"},
         "RecrawlPolicy":{"shape":"RecrawlPolicy"},
         "LineageConfiguration":{"shape":"LineageConfiguration"},
+        "LakeFormationConfiguration":{"shape":"LakeFormationConfiguration"},
         "Configuration":{"shape":"CrawlerConfiguration"},
         "CrawlerSecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"},
         "Tags":{"shape":"TagsMap"}
@@ -3791,7 +4156,8 @@
         "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
         "TableInput":{"shape":"TableInput"},
-        "PartitionIndexes":{"shape":"PartitionIndexList"}
+        "PartitionIndexes":{"shape":"PartitionIndexList"},
+        "TransactionId":{"shape":"TransactionIdString"}
       }
     },
     "CreateTableResponse":{
@@ -3815,7 +4181,8 @@
         "Actions":{"shape":"ActionList"},
         "Description":{"shape":"DescriptionString"},
         "StartOnCreation":{"shape":"BooleanValue"},
-        "Tags":{"shape":"TagsMap"}
+        "Tags":{"shape":"TagsMap"},
+        "EventBatchingCondition":{"shape":"EventBatchingCondition"}
       }
     },
     "CreateTriggerResponse":{
@@ -3937,7 +4304,8 @@
       "type":"string",
       "enum":[
         "AVRO",
-        "JSON"
+        "JSON",
+        "PROTOBUF"
       ]
     },
     "DataLakePrincipal":{
@@ -4033,6 +4401,19 @@
         "DELETE_FROM_DATABASE",
         "DEPRECATE_IN_DATABASE"
       ]
+    },
+    "DeleteBlueprintRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"}
+      }
+    },
+    "DeleteBlueprintResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"}
+      }
     },
     "DeleteClassifierRequest":{
       "type":"structure",
@@ -4286,7 +4667,8 @@
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
-        "Name":{"shape":"NameString"}
+        "Name":{"shape":"NameString"},
+        "TransactionId":{"shape":"TransactionIdString"}
       }
     },
     "DeleteTableResponse":{
@@ -4355,6 +4737,18 @@
       "members":{
         "Name":{"shape":"NameString"}
       }
+    },
+    "DeltaTarget":{
+      "type":"structure",
+      "members":{
+        "DeltaTables":{"shape":"PathList"},
+        "ConnectionName":{"shape":"ConnectionName"},
+        "WriteManifest":{"shape":"NullableBoolean"}
+      }
+    },
+    "DeltaTargetList":{
+      "type":"list",
+      "member":{"shape":"DeltaTarget"}
     },
     "DescriptionString":{
       "type":"string",
@@ -4516,6 +4910,15 @@
         "FindMatchesMetrics":{"shape":"FindMatchesMetrics"}
       }
     },
+    "EventBatchingCondition":{
+      "type":"structure",
+      "required":["BatchSize"],
+      "members":{
+        "BatchSize":{"shape":"BatchSize"},
+        "BatchWindow":{"shape":"BatchWindow"}
+      }
+    },
+    "EventQueueArn":{"type":"string"},
     "ExecutionProperty":{
       "type":"structure",
       "members":{
@@ -4577,6 +4980,11 @@
       "max":128,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\t]*"
     },
+    "Generic512CharString":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
     "GenericBoundedDouble":{
       "type":"double",
       "box":true,
@@ -4589,6 +4997,54 @@
       "value":{"shape":"GenericString"}
     },
     "GenericString":{"type":"string"},
+    "GetBlueprintRequest":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"NameString"},
+        "IncludeBlueprint":{"shape":"NullableBoolean"},
+        "IncludeParameterSpec":{"shape":"NullableBoolean"}
+      }
+    },
+    "GetBlueprintResponse":{
+      "type":"structure",
+      "members":{
+        "Blueprint":{"shape":"Blueprint"}
+      }
+    },
+    "GetBlueprintRunRequest":{
+      "type":"structure",
+      "required":[
+        "BlueprintName",
+        "RunId"
+      ],
+      "members":{
+        "BlueprintName":{"shape":"OrchestrationNameString"},
+        "RunId":{"shape":"IdString"}
+      }
+    },
+    "GetBlueprintRunResponse":{
+      "type":"structure",
+      "members":{
+        "BlueprintRun":{"shape":"BlueprintRun"}
+      }
+    },
+    "GetBlueprintRunsRequest":{
+      "type":"structure",
+      "required":["BlueprintName"],
+      "members":{
+        "BlueprintName":{"shape":"NameString"},
+        "NextToken":{"shape":"GenericString"},
+        "MaxResults":{"shape":"PageSize"}
+      }
+    },
+    "GetBlueprintRunsResponse":{
+      "type":"structure",
+      "members":{
+        "BlueprintRuns":{"shape":"BlueprintRuns"},
+        "NextToken":{"shape":"GenericString"}
+      }
+    },
     "GetCatalogImportStatusRequest":{
       "type":"structure",
       "members":{
@@ -5079,7 +5535,9 @@
         "NextToken":{"shape":"Token"},
         "Segment":{"shape":"Segment"},
         "MaxResults":{"shape":"PageSize"},
-        "ExcludeColumnSchema":{"shape":"BooleanNullable"}
+        "ExcludeColumnSchema":{"shape":"BooleanNullable"},
+        "TransactionId":{"shape":"TransactionIdString"},
+        "QueryAsOfTime":{"shape":"Timestamp"}
       }
     },
     "GetPartitionsResponse":{
@@ -5285,7 +5743,9 @@
       "members":{
         "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
-        "Name":{"shape":"NameString"}
+        "Name":{"shape":"NameString"},
+        "TransactionId":{"shape":"TransactionIdString"},
+        "QueryAsOfTime":{"shape":"Timestamp"}
       }
     },
     "GetTableResponse":{
@@ -5346,7 +5806,9 @@
         "DatabaseName":{"shape":"NameString"},
         "Expression":{"shape":"FilterString"},
         "NextToken":{"shape":"Token"},
-        "MaxResults":{"shape":"CatalogGetterPageSize"}
+        "MaxResults":{"shape":"CatalogGetterPageSize"},
+        "TransactionId":{"shape":"TransactionIdString"},
+        "QueryAsOfTime":{"shape":"Timestamp"}
       }
     },
     "GetTablesResponse":{
@@ -5395,6 +5857,84 @@
       "members":{
         "Triggers":{"shape":"TriggerList"},
         "NextToken":{"shape":"GenericString"}
+      }
+    },
+    "GetUnfilteredPartitionMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "CatalogId",
+        "DatabaseName",
+        "TableName",
+        "PartitionValues",
+        "SupportedPermissionTypes"
+      ],
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"},
+        "PartitionValues":{"shape":"ValueStringList"},
+        "AuditContext":{"shape":"AuditContext"},
+        "SupportedPermissionTypes":{"shape":"PermissionTypeList"}
+      }
+    },
+    "GetUnfilteredPartitionMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "Partition":{"shape":"Partition"},
+        "AuthorizedColumns":{"shape":"NameStringList"},
+        "IsRegisteredWithLakeFormation":{"shape":"Boolean"}
+      }
+    },
+    "GetUnfilteredPartitionsMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "CatalogId",
+        "DatabaseName",
+        "TableName",
+        "SupportedPermissionTypes"
+      ],
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "DatabaseName":{"shape":"NameString"},
+        "TableName":{"shape":"NameString"},
+        "Expression":{"shape":"PredicateString"},
+        "AuditContext":{"shape":"AuditContext"},
+        "SupportedPermissionTypes":{"shape":"PermissionTypeList"},
+        "NextToken":{"shape":"Token"},
+        "Segment":{"shape":"Segment"},
+        "MaxResults":{"shape":"PageSize"}
+      }
+    },
+    "GetUnfilteredPartitionsMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "UnfilteredPartitions":{"shape":"UnfilteredPartitionList"},
+        "NextToken":{"shape":"Token"}
+      }
+    },
+    "GetUnfilteredTableMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "CatalogId",
+        "DatabaseName",
+        "Name",
+        "SupportedPermissionTypes"
+      ],
+      "members":{
+        "CatalogId":{"shape":"CatalogIdString"},
+        "DatabaseName":{"shape":"NameString"},
+        "Name":{"shape":"NameString"},
+        "AuditContext":{"shape":"AuditContext"},
+        "SupportedPermissionTypes":{"shape":"PermissionTypeList"}
+      }
+    },
+    "GetUnfilteredTableMetadataResponse":{
+      "type":"structure",
+      "members":{
+        "Table":{"shape":"Table"},
+        "AuthorizedColumns":{"shape":"NameStringList"},
+        "IsRegisteredWithLakeFormation":{"shape":"Boolean"},
+        "CellFilters":{"shape":"ColumnRowFilterList"}
       }
     },
     "GetUserDefinedFunctionRequest":{
@@ -5588,6 +6128,13 @@
       },
       "exception":true
     },
+    "IllegalBlueprintStateException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
+    },
     "IllegalWorkflowStateException":{
       "type":"structure",
       "members":{
@@ -5629,6 +6176,13 @@
       "fault":true
     },
     "InvalidInputException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
+    },
+    "InvalidStateException":{
       "type":"structure",
       "members":{
         "Message":{"shape":"MessageString"}
@@ -5853,12 +6407,29 @@
         "OutputS3Path":{"shape":"UriString"}
       }
     },
+    "LakeFormationConfiguration":{
+      "type":"structure",
+      "members":{
+        "UseLakeFormationCredentials":{"shape":"NullableBoolean"},
+        "AccountId":{"shape":"AccountId"}
+      }
+    },
     "Language":{
       "type":"string",
       "enum":[
         "PYTHON",
         "SCALA"
       ]
+    },
+    "LastActiveDefinition":{
+      "type":"structure",
+      "members":{
+        "Description":{"shape":"Generic512CharString"},
+        "LastModifiedOn":{"shape":"TimestampValue"},
+        "ParameterSpec":{"shape":"BlueprintParameterSpec"},
+        "BlueprintLocation":{"shape":"GenericString"},
+        "BlueprintServiceLocation":{"shape":"GenericString"}
+      }
     },
     "LastCrawlInfo":{
       "type":"structure",
@@ -5884,6 +6455,21 @@
       "type":"structure",
       "members":{
         "CrawlerLineageSettings":{"shape":"CrawlerLineageSettings"}
+      }
+    },
+    "ListBlueprintsRequest":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"GenericString"},
+        "MaxResults":{"shape":"PageSize"},
+        "Tags":{"shape":"TagsMap"}
+      }
+    },
+    "ListBlueprintsResponse":{
+      "type":"structure",
+      "members":{
+        "Blueprints":{"shape":"BlueprintNames"},
+        "NextToken":{"shape":"GenericString"}
       }
     },
     "ListCrawlersRequest":{
@@ -6041,6 +6627,10 @@
       "type":"string",
       "max":2056,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "LocationStringList":{
+      "type":"list",
+      "member":{"shape":"LocationString"}
     },
     "LogGroup":{
       "type":"string",
@@ -6303,6 +6893,24 @@
       },
       "exception":true
     },
+    "OrchestrationIAMRoleArn":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"arn:aws[^:]*:iam::[0-9]*:role/.+"
+    },
+    "OrchestrationNameString":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"[\\.\\-_A-Za-z0-9]+"
+    },
+    "OrchestrationS3Location":{
+      "type":"string",
+      "max":8192,
+      "min":1,
+      "pattern":"^s3://([^/]+)/([^/]+/)*([^/]+)$"
+    },
     "OrchestrationStringList":{
       "type":"list",
       "member":{"shape":"GenericString"}
@@ -6466,6 +7074,26 @@
     "PermissionList":{
       "type":"list",
       "member":{"shape":"Permission"}
+    },
+    "PermissionType":{
+      "type":"string",
+      "enum":[
+        "COLUMN_PERMISSION",
+        "CELL_FILTER_PERMISSION"
+      ]
+    },
+    "PermissionTypeList":{
+      "type":"list",
+      "member":{"shape":"PermissionType"},
+      "max":255,
+      "min":1
+    },
+    "PermissionTypeMismatchException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
     },
     "PhysicalConnectionRequirements":{
       "type":"structure",
@@ -6644,7 +7272,8 @@
       "type":"string",
       "enum":[
         "CRAWL_EVERYTHING",
-        "CRAWL_NEW_FOLDERS_ONLY"
+        "CRAWL_NEW_FOLDERS_ONLY",
+        "CRAWL_EVENT_MODE"
       ]
     },
     "RecrawlPolicy":{
@@ -6739,6 +7368,13 @@
         "JobBookmarkEntry":{"shape":"JobBookmarkEntry"}
       }
     },
+    "ResourceNotReadyException":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"MessageString"}
+      },
+      "exception":true
+    },
     "ResourceNumberLimitExceededException":{
       "type":"structure",
       "members":{
@@ -6827,7 +7463,9 @@
         "Path":{"shape":"Path"},
         "Exclusions":{"shape":"PathList"},
         "ConnectionName":{"shape":"ConnectionName"},
-        "SampleSize":{"shape":"NullableInteger"}
+        "SampleSize":{"shape":"NullableInteger"},
+        "EventQueueArn":{"shape":"EventQueueArn"},
+        "DlqEventQueueArn":{"shape":"EventQueueArn"}
       }
     },
     "S3TargetList":{
@@ -7105,6 +7743,24 @@
         "ASCENDING"
       ]
     },
+    "StartBlueprintRunRequest":{
+      "type":"structure",
+      "required":[
+        "BlueprintName",
+        "RoleArn"
+      ],
+      "members":{
+        "BlueprintName":{"shape":"OrchestrationNameString"},
+        "Parameters":{"shape":"BlueprintParameters"},
+        "RoleArn":{"shape":"OrchestrationIAMRoleArn"}
+      }
+    },
+    "StartBlueprintRunResponse":{
+      "type":"structure",
+      "members":{
+        "RunId":{"shape":"IdString"}
+      }
+    },
     "StartCrawlerRequest":{
       "type":"structure",
       "required":["Name"],
@@ -7237,13 +7893,21 @@
       "type":"structure",
       "required":["Name"],
       "members":{
-        "Name":{"shape":"NameString"}
+        "Name":{"shape":"NameString"},
+        "RunProperties":{"shape":"WorkflowRunProperties"}
       }
     },
     "StartWorkflowRunResponse":{
       "type":"structure",
       "members":{
         "RunId":{"shape":"IdString"}
+      }
+    },
+    "StartingEventBatchCondition":{
+      "type":"structure",
+      "members":{
+        "BatchSize":{"shape":"NullableInteger"},
+        "BatchWindow":{"shape":"NullableInteger"}
       }
     },
     "StopCrawlerRequest":{
@@ -7304,6 +7968,7 @@
       "members":{
         "Columns":{"shape":"ColumnList"},
         "Location":{"shape":"LocationString"},
+        "AdditionalLocations":{"shape":"LocationStringList"},
         "InputFormat":{"shape":"FormatString"},
         "OutputFormat":{"shape":"FormatString"},
         "Compressed":{"shape":"Boolean"},
@@ -7563,6 +8228,12 @@
       "max":10,
       "min":1
     },
+    "TransactionIdString":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"[\\p{L}\\p{N}\\p{P}]*"
+    },
     "TransformEncryption":{
       "type":"structure",
       "members":{
@@ -7649,7 +8320,8 @@
         "Description":{"shape":"DescriptionString"},
         "Schedule":{"shape":"GenericString"},
         "Actions":{"shape":"ActionList"},
-        "Predicate":{"shape":"Predicate"}
+        "Predicate":{"shape":"Predicate"},
+        "EventBatchingCondition":{"shape":"EventBatchingCondition"}
       }
     },
     "TriggerList":{
@@ -7684,7 +8356,8 @@
       "enum":[
         "SCHEDULED",
         "CONDITIONAL",
-        "ON_DEMAND"
+        "ON_DEMAND",
+        "EVENT"
       ]
     },
     "TriggerUpdate":{
@@ -7694,7 +8367,8 @@
         "Description":{"shape":"DescriptionString"},
         "Schedule":{"shape":"GenericString"},
         "Actions":{"shape":"ActionList"},
-        "Predicate":{"shape":"Predicate"}
+        "Predicate":{"shape":"Predicate"},
+        "EventBatchingCondition":{"shape":"EventBatchingCondition"}
       }
     },
     "TypeString":{
@@ -7708,6 +8382,18 @@
       "max":1024,
       "min":1,
       "pattern":"[\\u0020-\\uD7FF\\uE000-\\uFFFD\\uD800\\uDC00-\\uDBFF\\uDFFF\\r\\n\\t]*"
+    },
+    "UnfilteredPartition":{
+      "type":"structure",
+      "members":{
+        "Partition":{"shape":"Partition"},
+        "AuthorizedColumns":{"shape":"NameStringList"},
+        "IsRegisteredWithLakeFormation":{"shape":"Boolean"}
+      }
+    },
+    "UnfilteredPartitionList":{
+      "type":"list",
+      "member":{"shape":"UnfilteredPartition"}
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -7731,6 +8417,24 @@
         "LOG",
         "UPDATE_IN_DATABASE"
       ]
+    },
+    "UpdateBlueprintRequest":{
+      "type":"structure",
+      "required":[
+        "Name",
+        "BlueprintLocation"
+      ],
+      "members":{
+        "Name":{"shape":"OrchestrationNameString"},
+        "Description":{"shape":"Generic512CharString"},
+        "BlueprintLocation":{"shape":"OrchestrationS3Location"}
+      }
+    },
+    "UpdateBlueprintResponse":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"NameString"}
+      }
     },
     "UpdateClassifierRequest":{
       "type":"structure",
@@ -7826,6 +8530,7 @@
         "SchemaChangePolicy":{"shape":"SchemaChangePolicy"},
         "RecrawlPolicy":{"shape":"RecrawlPolicy"},
         "LineageConfiguration":{"shape":"LineageConfiguration"},
+        "LakeFormationConfiguration":{"shape":"LakeFormationConfiguration"},
         "Configuration":{"shape":"CrawlerConfiguration"},
         "CrawlerSecurityConfiguration":{"shape":"CrawlerSecurityConfiguration"}
       }
@@ -8022,7 +8727,8 @@
         "CatalogId":{"shape":"CatalogIdString"},
         "DatabaseName":{"shape":"NameString"},
         "TableInput":{"shape":"TableInput"},
-        "SkipArchive":{"shape":"BooleanNullable"}
+        "SkipArchive":{"shape":"BooleanNullable"},
+        "TransactionId":{"shape":"TransactionIdString"}
       }
     },
     "UpdateTableResponse":{
@@ -8182,7 +8888,8 @@
         "LastModifiedOn":{"shape":"TimestampValue"},
         "LastRun":{"shape":"WorkflowRun"},
         "Graph":{"shape":"WorkflowGraph"},
-        "MaxConcurrentRuns":{"shape":"NullableInteger"}
+        "MaxConcurrentRuns":{"shape":"NullableInteger"},
+        "BlueprintDetails":{"shape":"BlueprintDetails"}
       }
     },
     "WorkflowGraph":{
@@ -8210,7 +8917,8 @@
         "Status":{"shape":"WorkflowRunStatus"},
         "ErrorMessage":{"shape":"ErrorString"},
         "Statistics":{"shape":"WorkflowRunStatistics"},
-        "Graph":{"shape":"WorkflowGraph"}
+        "Graph":{"shape":"WorkflowGraph"},
+        "StartingEventBatchCondition":{"shape":"StartingEventBatchCondition"}
       }
     },
     "WorkflowRunProperties":{

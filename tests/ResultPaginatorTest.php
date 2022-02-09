@@ -260,7 +260,7 @@ class ResultPaginatorTest extends TestCase
 
         $handler = function (CommandInterface $cmd, RequestInterface $request) use (&$results, &$cmds) {
             $cmds[] = $cmd;
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Result(array_shift($results))
             );
         };
@@ -313,7 +313,7 @@ class ResultPaginatorTest extends TestCase
                 }
             }
 
-            return Promise\promise_for(new Result($result));
+            return Promise\Create::promiseFor(new Result($result));
         };
 
         $client->getHandlerList()->setHandler($handler);
@@ -400,7 +400,7 @@ class ResultPaginatorTest extends TestCase
                 $this->assertArrayHasKey($expectedKey, $cmd);
                 $this->assertSame($expectedValue, $cmd[$expectedKey]);
             }
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Result($currentWindow['response'])
             );
         };
