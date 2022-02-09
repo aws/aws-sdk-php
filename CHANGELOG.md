@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.21 - 2022-02-09
 
 * `Aws\CloudFormation` - This SDK release is for the feature launch of AWS CloudFormation Hooks.
 
