@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.22 - 2022-02-10
 
 * `Aws\CloudFormation` - This SDK release adds AWS CloudFormation Hooks HandlerErrorCodes
 * `Aws\LookoutforVision` - This release makes CompilerOptions in Lookout for Vision's StartModelPackagingJob's Configuration object optional.
