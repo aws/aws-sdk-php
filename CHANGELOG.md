@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.209.21 - 2022-02-09
+
+* `Aws\CloudFormation` - This SDK release is for the feature launch of AWS CloudFormation Hooks.
+
 ## 3.209.20 - 2022-02-08
 
 * `Aws\AppRunner` - This release adds support for App Runner to route outbound network traffic of a service through an Amazon VPC. New API: CreateVpcConnector, DescribeVpcConnector, ListVpcConnectors, and DeleteVpcConnector. Updated API: CreateService, DescribeService, and UpdateService.
