@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\SSM` - Documentation updates for AWS Systems Manager.
+
 ## 3.209.22 - 2022-02-10
 
 * `Aws\CloudFormation` - This SDK release adds AWS CloudFormation Hooks HandlerErrorCodes
