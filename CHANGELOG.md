@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.23 - 2022-02-11
 
 * `Aws\SSM` - Documentation updates for AWS Systems Manager.
 
