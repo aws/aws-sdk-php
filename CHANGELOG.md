@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Appflow` - Launching Amazon AppFlow SAP as a destination connector SDK.
+* `Aws\Athena` - This release adds a subfield, ErrorType, to the AthenaError response object in the GetQueryExecution API when a query fails.
+* `Aws\RDS` - Adds support for determining which Aurora PostgreSQL versions support Babelfish.
+
 ## 3.209.23 - 2022-02-11
 
 * `Aws\SSM` - Documentation updates for AWS Systems Manager.
