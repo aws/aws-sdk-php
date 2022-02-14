@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.24 - 2022-02-14
 
 * `Aws\Appflow` - Launching Amazon AppFlow SAP as a destination connector SDK.
 * `Aws\Athena` - This release adds a subfield, ErrorType, to the AthenaError response object in the GetQueryExecution API when a query fails.
