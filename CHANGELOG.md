@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.25 - 2022-02-16
 
 * `Aws\Budgets` - Adds support for auto-adjusting budgets, a new budget method alongside fixed and planned. Auto-adjusting budgets introduces new metadata to configure a budget limit baseline using a historical lookback average or current period forecast.
 * `Aws\CostExplorer` - AWS Cost Anomaly Detection now supports SNS FIFO topic subscribers.
