@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.26 - 2022-02-17
 
 * `Aws\Backup` - AWS Backup add new S3_BACKUP_OBJECT_FAILED and S3_RESTORE_OBJECT_FAILED event types in BackupVaultNotifications events list.
 * `Aws\CloudWatchEvidently` - Add support for filtering list of experiments and launches by status
