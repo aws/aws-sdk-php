@@ -1,5 +1,38 @@
 # CHANGELOG
 
+## 3.209.26 - 2022-02-17
+
+* `Aws\Backup` - AWS Backup add new S3_BACKUP_OBJECT_FAILED and S3_RESTORE_OBJECT_FAILED event types in BackupVaultNotifications events list.
+* `Aws\CloudWatchEvidently` - Add support for filtering list of experiments and launches by status
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+* `Aws\Redshift` - SDK release for Cross region datasharing and cost-control for cross region datasharing
+
+## 3.209.25 - 2022-02-16
+
+* `Aws\Budgets` - Adds support for auto-adjusting budgets, a new budget method alongside fixed and planned. Auto-adjusting budgets introduces new metadata to configure a budget limit baseline using a historical lookback average or current period forecast.
+* `Aws\CostExplorer` - AWS Cost Anomaly Detection now supports SNS FIFO topic subscribers.
+* `Aws\EC2` - Documentation updates for EC2.
+* `Aws\Glue` - Support for optimistic locking in UpdateTable
+* `Aws\SSM` - Assorted ticket fixes and updates for AWS Systems Manager.
+
+## 3.209.24 - 2022-02-14
+
+* `Aws\Appflow` - Launching Amazon AppFlow SAP as a destination connector SDK.
+* `Aws\Athena` - This release adds a subfield, ErrorType, to the AthenaError response object in the GetQueryExecution API when a query fails.
+* `Aws\RDS` - Adds support for determining which Aurora PostgreSQL versions support Babelfish.
+
+## 3.209.23 - 2022-02-11
+
+* `Aws\SSM` - Documentation updates for AWS Systems Manager.
+
+## 3.209.22 - 2022-02-10
+
+* `Aws\CloudFormation` - This SDK release adds AWS CloudFormation Hooks HandlerErrorCodes
+* `Aws\LookoutforVision` - This release makes CompilerOptions in Lookout for Vision's StartModelPackagingJob's Configuration object optional.
+* `Aws\Pinpoint` - This SDK release adds a new paramater creation date for GetApp and GetApps Api call
+* `Aws\SNS` - Customer requested typo fix in API documentation.
+* `Aws\WAFV2` - Adds support for AWS WAF Fraud Control account takeover prevention (ATP), with configuration options for the new managed rule group AWSManagedRulesATPRuleSet and support for application integration SDKs for Android and iOS mobile apps.
+
 ## 3.209.21 - 2022-02-09
 
 * `Aws\CloudFormation` - This SDK release is for the feature launch of AWS CloudFormation Hooks.
