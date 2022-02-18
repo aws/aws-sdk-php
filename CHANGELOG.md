@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.27 - 2022-02-18
 
 * `Aws\Budgets` - This change introduces DescribeBudgetNotificationsForAccount API which returns budget notifications for the specified account
 * `Aws\GameLift` - Increase string list limit from 10 to 100.
