@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.29 - 2022-02-22
 
 * `Aws\AppRunner` - AWS App Runner adds a Java platform (Corretto 8, Corretto 11 runtimes) and a Node.js 14 runtime.
 * `Aws\Translate` - This release enables customers to use translation settings for formality customization in their synchronous translation output.
