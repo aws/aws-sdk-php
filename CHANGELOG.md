@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppRunner` - AWS App Runner adds a Java platform (Corretto 8, Corretto 11 runtimes) and a Node.js 14 runtime.
+* `Aws\Translate` - This release enables customers to use translation settings for formality customization in their synchronous translation output.
+* `Aws\WAFV2` - Updated descriptions for logging configuration.
+
 ## 3.209.28 - 2022-02-21
 
 * `Aws\CustomerProfiles` - This release introduces apis CreateIntegrationWorkflow, DeleteWorkflow, ListWorkflows, GetWorkflow and GetWorkflowSteps. These apis are used to manage and view integration workflows.
