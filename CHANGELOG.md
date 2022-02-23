@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.30 - 2022-02-23
 
 * `Aws\Lambda` - Lambda releases .NET 6 managed runtime to be available in all commercial regions.
 * `Aws\Textract` - Added support for merged cells and column header for table response.
