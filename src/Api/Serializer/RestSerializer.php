@@ -217,7 +217,7 @@ abstract class RestSerializer
         // If endpoint has path, remove leading '/' to preserve URI resolution.
         $path = $this->endpoint->getPath();
         if ($path && $relative[0] === '/') {
-            $relative = substr($relative, 1);
+            $relative = substr($path.$relative, 1);
         }
 
         // Expand path place holders using Amazon's slightly different URI
