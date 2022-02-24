@@ -20,6 +20,9 @@ class DynamoDbClientTest extends TestCase
 {
     use UsesServiceTrait;
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testRegisterSessionHandlerReturnsHandler()
     {
         $this->markTestSkipped();
