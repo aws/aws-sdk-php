@@ -1,5 +1,30 @@
 # CHANGELOG
 
+## 3.209.30 - 2022-02-23
+
+* `Aws\Lambda` - Lambda releases .NET 6 managed runtime to be available in all commercial regions.
+* `Aws\Textract` - Added support for merged cells and column header for table response.
+* `Aws\Transfer` - The file input selection feature provides the ability to use either the originally uploaded file or the output file from the previous workflow step, enabling customers to make multiple copies of the original file while keeping the source file intact for file archival.
+
+## 3.209.29 - 2022-02-22
+
+* `Aws\AppRunner` - AWS App Runner adds a Java platform (Corretto 8, Corretto 11 runtimes) and a Node.js 14 runtime.
+* `Aws\Translate` - This release enables customers to use translation settings for formality customization in their synchronous translation output.
+* `Aws\WAFV2` - Updated descriptions for logging configuration.
+
+## 3.209.28 - 2022-02-21
+
+* `Aws\CustomerProfiles` - This release introduces apis CreateIntegrationWorkflow, DeleteWorkflow, ListWorkflows, GetWorkflow and GetWorkflowSteps. These apis are used to manage and view integration workflows.
+* `Aws\DynamoDB` - DynamoDB ExecuteStatement API now supports Limit as a request parameter to specify the maximum number of items to evaluate. If specified, the service will process up to the Limit and the results will include a LastEvaluatedKey value to continue the read in a subsequent operation.
+* `Aws\imagebuilder` - This release adds support to enable faster launching for Windows AMIs created by EC2 Image Builder.
+
+## 3.209.27 - 2022-02-18
+
+* `Aws\Budgets` - This change introduces DescribeBudgetNotificationsForAccount API which returns budget notifications for the specified account
+* `Aws\GameLift` - Increase string list limit from 10 to 100.
+* `Aws\Handler` - Fixes a bug where the PHP Error class couldn't be successfully caught in GuzzleV6/GuzzleHandler.
+* `Aws\Transfer` - Properties for Transfer Family used with SFTP, FTP, and FTPS protocols. Display Banners are bodies of text that can be displayed before and/or after a user authenticates onto a server using one of the previously mentioned protocols.
+
 ## 3.209.26 - 2022-02-17
 
 * `Aws\Backup` - AWS Backup add new S3_BACKUP_OBJECT_FAILED and S3_RESTORE_OBJECT_FAILED event types in BackupVaultNotifications events list.
