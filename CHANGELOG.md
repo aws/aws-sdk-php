@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.209.31 - 2022-02-24
 
 * `Aws\AutoScaling` - You can now hibernate instances in a warm pool to stop instances without deleting their RAM contents. You can now also return instances to the warm pool on scale in, instead of always terminating capacity that you will need later.
 * `Aws\FMS` - AWS Firewall Manager now supports the configuration of AWS Network Firewall policies with either centralized or distributed deployment models. This release also adds support for custom endpoint configuration, where you can choose which Availability Zones to create firewall endpoints in.
