@@ -84,7 +84,10 @@ class ApplyChecksumMiddleware
                     . implode($supportedAlgorithms, ", ") . "."
                 );
             }
-        } else if (!empty($checksumInfo)) {
+            return $next($command, $request);
+        }
+
+        if (!empty($checksumInfo)) {
         //if the checksum member is absent, check if it's required
         $checksumRequired = isset($op['requestChecksumRequired'])
             ? $op['requestChecksumRequired']
@@ -95,20 +98,19 @@ class ApplyChecksumMiddleware
                     . " {$checksumMemberName}"
                 );
           }
-        } else {
-            if (!empty($op['httpChecksumRequired']) && !$request->hasHeader('Content-MD5')) {
-                // Set the content MD5 header for operations that require it.
-                $request = $request->withHeader(
-                    'Content-MD5',
-                    base64_encode(Psr7\Utils::hash($body, 'md5', true))
-                );
-            } elseif (in_array($name, self::$sha256) && $command['ContentSHA256']) {
-                // Set the content hash header if provided in the parameters.
-                $request = $request->withHeader(
-                    'X-Amz-Content-Sha256',
-                    $command['ContentSHA256']
-                );
-            }
+        }
+        if (!empty($op['httpChecksumRequired']) && !$request->hasHeader('Content-MD5')) {
+            // Set the content MD5 header for operations that require it.
+            $request = $request->withHeader(
+                'Content-MD5',
+                base64_encode(Psr7\Utils::hash($body, 'md5', true))
+            );
+        } elseif (in_array($name, self::$sha256) && $command['ContentSHA256']) {
+            // Set the content hash header if provided in the parameters.
+            $request = $request->withHeader(
+                'X-Amz-Content-Sha256',
+                $command['ContentSHA256']
+            );
         }
 
         return $next($command, $request);
