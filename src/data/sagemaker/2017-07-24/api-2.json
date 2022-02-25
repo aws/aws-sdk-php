@@ -3589,7 +3589,9 @@
         "Completed",
         "ExplainabilityError",
         "DeployingModel",
-        "ModelDeploymentError"
+        "ModelDeploymentError",
+        "GeneratingModelInsightsReport",
+        "ModelInsightsError"
       ]
     },
     "AutoMLJobStatus":{
@@ -3848,7 +3850,8 @@
       "type":"structure",
       "required":["Explainability"],
       "members":{
-        "Explainability":{"shape":"ExplainabilityLocation"}
+        "Explainability":{"shape":"ExplainabilityLocation"},
+        "ModelInsights":{"shape":"ModelInsightsLocation"}
       }
     },
     "CandidateDefinitionNotebookLocation":{
@@ -8421,6 +8424,12 @@
       "type":"string",
       "min":1
     },
+    "FailStepMetadata":{
+      "type":"structure",
+      "members":{
+        "ErrorMessage":{"shape":"String3072"}
+      }
+    },
     "FailureReason":{
       "type":"string",
       "max":1024
@@ -11584,6 +11593,10 @@
         "DataInputConfig":{"shape":"DataInputConfig"}
       }
     },
+    "ModelInsightsLocation":{
+      "type":"string",
+      "min":1
+    },
     "ModelLatencyThreshold":{
       "type":"structure",
       "members":{
@@ -12988,7 +13001,8 @@
         "Lambda":{"shape":"LambdaStepMetadata"},
         "QualityCheck":{"shape":"QualityCheckStepMetadata"},
         "ClarifyCheck":{"shape":"ClarifyCheckStepMetadata"},
-        "EMR":{"shape":"EMRStepMetadata"}
+        "EMR":{"shape":"EMRStepMetadata"},
+        "Fail":{"shape":"FailStepMetadata"}
       }
     },
     "PipelineExecutionSummary":{
@@ -12998,7 +13012,8 @@
         "StartTime":{"shape":"Timestamp"},
         "PipelineExecutionStatus":{"shape":"PipelineExecutionStatus"},
         "PipelineExecutionDescription":{"shape":"PipelineExecutionDescription"},
-        "PipelineExecutionDisplayName":{"shape":"PipelineExecutionName"}
+        "PipelineExecutionDisplayName":{"shape":"PipelineExecutionName"},
+        "PipelineExecutionFailureReason":{"shape":"String3072"}
       }
     },
     "PipelineExecutionSummaryList":{
@@ -14941,6 +14956,10 @@
       "type":"string",
       "max":256
     },
+    "String3072":{
+      "type":"string",
+      "max":3072
+    },
     "String40":{
       "type":"string",
       "max":40
@@ -15136,7 +15155,8 @@
       "enum":[
         "INTEL_GRAPHICS",
         "MALI",
-        "NVIDIA"
+        "NVIDIA",
+        "NNA"
       ]
     },
     "TargetPlatformArch":{
