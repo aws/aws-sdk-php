@@ -41,7 +41,7 @@ class ValidateResponseChecksumParser extends AbstractParser
             return $result;
         }
 
-        //Skip this middleware if the operation doesn't send back a
+        //Skip this middleware if the operation doesn't send back a checksum, or the user doesn't opt in
         $checksumModeEnabledMember = isset($checksumInfo['requestValidationModeMember'])
             ? $checksumInfo['requestValidationModeMember']
             : "";

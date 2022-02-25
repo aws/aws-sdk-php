@@ -76,7 +76,9 @@ class ApplyChecksumMiddleware
             ) {
                 $headerName = "x-amz-checksum-{$requestedAlgorithm}";
                 $encoded = $this->getEncodedValue($requestedAlgorithm, $body);
-                $request = $request->withHeader($headerName, $encoded);
+                if (!$request->hasHeader($headerName)) {
+                    $request = $request->withHeader($headerName, $encoded);
+                }
             } else {
                 throw new InvalidArgumentException(
                     "Unsupported algorithm supplied for input variable {$checksumMemberName}."
@@ -99,6 +101,7 @@ class ApplyChecksumMiddleware
                 );
           }
         }
+
         if (!empty($op['httpChecksumRequired']) && !$request->hasHeader('Content-MD5')) {
             // Set the content MD5 header for operations that require it.
             $request = $request->withHeader(
