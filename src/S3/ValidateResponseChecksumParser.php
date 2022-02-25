@@ -6,7 +6,6 @@ use Aws\Api\Service;
 use Aws\Api\StructureShape;
 use Aws\CommandInterface;
 use Aws\S3\Exception\S3Exception;
-use phpDocumentor\Reflection\Types\False_;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
