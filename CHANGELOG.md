@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.210.0 - 2022-02-25
 
 * `Aws\ElastiCache` - Doc only update for ElastiCache
 * `Aws\Panorama` - Added NTP server configuration parameter to ProvisionDevice operation. Added alternate software fields to DescribeDevice response
