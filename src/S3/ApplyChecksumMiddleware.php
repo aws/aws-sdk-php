@@ -95,7 +95,7 @@ class ApplyChecksumMiddleware
         $checksumRequired = isset($checksumInfo['requestChecksumRequired'])
             ? $checksumInfo['requestChecksumRequired']
             : null;
-            if (!empty($checksumRequired)) {
+            if (!empty($checksumRequired) && !$request->hasHeader('Content-MD5')) {
                 // Set the content MD5 header for operations that require it.
                 $request = $request->withHeader(
                     'Content-MD5',

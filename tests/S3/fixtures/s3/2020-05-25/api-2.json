@@ -23,7 +23,10 @@
       "output":{"shape":"DeleteObjectsOutput"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/multiobjectdeleteapi.html",
       "alias":"DeleteMultipleObjects",
-      "httpChecksumRequired":true
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":true
+      }
     },
     "GetObject":{
       "name":"GetObject",
@@ -58,7 +61,7 @@
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTObjectPUT.html",
       "httpChecksum":{
         "requestAlgorithmMember":"ChecksumAlgorithm",
-        "requestChecksumRequired":false
+        "requestChecksumRequired":true
       }
     },
     "PutBucketLogging":{
@@ -69,7 +72,10 @@
       },
       "input":{"shape":"PutBucketLoggingRequest"},
       "documentationUrl":"http://docs.amazonwebservices.com/AmazonS3/latest/API/RESTBucketPUTlogging.html",
-      "httpChecksumRequired":true
+      "httpChecksum":{
+        "requestAlgorithmMember":"ChecksumAlgorithm",
+        "requestChecksumRequired":true
+      }
     }
   },
   "shapes":{
