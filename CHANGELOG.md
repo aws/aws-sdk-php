@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Amplify` - Add repositoryCloneMethod field for hosting an Amplify app. This field shows what authorization method is used to clone the repo: SSH, TOKEN, or SIGV4.
+* `Aws\AmplifyUIBuilder` - We are adding the ability to configure workflows and actions for components.
+* `Aws\AppRegistry` - AppRegistry is deprecating Application and Attribute-Group Name update feature. In this release, we are marking the name attributes for Update APIs as deprecated to give a heads up to our customers.
+* `Aws\Athena` - This release adds support for updating an existing named query.
+* `Aws\EC2` - This release adds support for new AMI property 'lastLaunchedTime'
+* `Aws\FIS` - This release adds logging support for AWS Fault Injection Simulator experiments. Experiment templates can now be configured to send experiment activity logs to Amazon CloudWatch Logs or to an S3 bucket.
+* `Aws\FSx` - This release adds support for the following FSx for OpenZFS features: snapshot lifecycle transition messages, force flag for deleting file systems with child resources, LZ4 data compression, custom record sizes, and unsetting volume quotas and reservations.
+* `Aws\FinSpaceData` - Add new APIs for managing Users and Permission Groups.
+* `Aws\Route53RecoveryCluster` - This release adds a new API option to enable overriding safety rules to allow routing control state updates.
+* `Aws\S3` - Restores automatic content-md5 calculating as a result of S3 model changes
+
 ## 3.210.0 - 2022-02-25
 
 * `Aws\ElastiCache` - Doc only update for ElastiCache
