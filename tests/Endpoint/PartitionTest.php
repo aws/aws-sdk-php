@@ -672,7 +672,26 @@ class PartitionTest extends TestCase
      * @param array $definition
      * @param $method
      */
-    public function testGetVariantIgnoresVariantTagOrder(array $definition)
+    public function testGetVariantIgnoresVariantTagOrder(
+        array $definition,
+        $fipsConfig,
+        $dualstackConfig
+    )
+    {
+        $partition = new Partition($definition);
+        $resolved = $partition([
+            'region' => 'us-east-1',
+            'service' => 'service',
+            'options' => [
+                'use_fips_endpoint' => $fipsConfig,
+                'use_dual_stack_endpoint' => $dualstackConfig
+            ]
+        ]);
+
+        self::assertContains('testsuffix.com', $resolved['endpoint']);
+    }
+
+    public function variantTagProvider()
     {
         $useFipsEndpointConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
             ->disableOriginalConstructor()
@@ -688,21 +707,6 @@ class PartitionTest extends TestCase
             ->method('isUseDualstackEndpoint')
             ->willReturn(true);
 
-        $partition = new Partition($definition);
-        $resolved = $partition([
-            'region' => 'us-east-1',
-            'service' => 'service',
-            'options' => [
-                'use_fips_endpoint' => $useFipsEndpointConfig,
-                'use_dual_stack_endpoint' => $useDualstackEndpointConfig
-            ]
-        ]);
-
-        self::assertContains('testsuffix.com', $resolved['endpoint']);
-    }
-
-    public function variantTagProvider()
-    {
         return [
             [
                 [
@@ -726,7 +730,9 @@ class PartitionTest extends TestCase
                             ],
                         ],
                     ],
-                ]
+                ],
+                $useFipsEndpointConfig,
+                $useDualstackEndpointConfig
             ],
             [
                 [
@@ -750,9 +756,62 @@ class PartitionTest extends TestCase
                             ],
                         ],
                     ],
-                ]
+                ],
+                $useFipsEndpointConfig,
+                $useDualstackEndpointConfig
+            ],
+            [
+                [
+                    'partition' => 'aws_test',
+                    'dnsSuffix' => 'amazonaws.com',
+                    'regions' => [
+                        'region' => [
+                            'description' => 'A description',
+                        ],
+                    ],
+                    'services' => [
+                        'service' => [
+                            'endpoints' => [
+                                'us-east-1' => [
+                                    'variants' => [[
+                                        'hostname' => 'service-fips.dualstack.testsuffix.com',
+                                        'tags' => ['fips']
+                                    ]]
+                                ],
+                                'us-west-2' => [],
+                            ],
+                        ],
+                    ],
+                ],
+                $useFipsEndpointConfig,
+                null
+            ],
+            [
+                [
+                    'partition' => 'aws_test',
+                    'dnsSuffix' => 'amazonaws.com',
+                    'regions' => [
+                        'region' => [
+                            'description' => 'A description',
+                        ],
+                    ],
+                    'services' => [
+                        'service' => [
+                            'endpoints' => [
+                                'us-east-1' => [
+                                    'variants' => [[
+                                        'hostname' => 'service-fips.dualstack.testsuffix.com',
+                                        'tags' => ['dualstack']
+                                    ]]
+                                ],
+                                'us-west-2' => [],
+                            ],
+                        ],
+                    ],
+                ],
+                null,
+                $useDualstackEndpointConfig
             ]
         ];
     }
-
 }

@@ -313,5 +313,4 @@ final class Partition implements ArrayAccess, PartitionInterface
             }
         }
     }
-
 }
