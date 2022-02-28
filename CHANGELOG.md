@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.211.0 - 2022-02-28
 
 * `Aws\Amplify` - Add repositoryCloneMethod field for hosting an Amplify app. This field shows what authorization method is used to clone the repo: SSH, TOKEN, or SIGV4.
 * `Aws\AmplifyUIBuilder` - We are adding the ability to configure workflows and actions for components.
