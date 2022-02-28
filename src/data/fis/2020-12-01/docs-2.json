@@ -1,16 +1,18 @@
 {
   "version": "2.0",
-  "service": "<p>AWS Fault Injection Simulator is a managed service that enables you to perform fault injection experiments on your AWS workloads. For more information, see the <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/\">AWS Fault Injection Simulator User Guide</a>.</p>",
+  "service": "<p>Fault Injection Simulator is a managed service that enables you to perform fault injection experiments on your Amazon Web Services workloads. For more information, see the <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/\">Fault Injection Simulator User Guide</a>.</p>",
   "operations": {
-    "CreateExperimentTemplate": "<p>Creates an experiment template. </p> <p>To create a template, specify the following information: </p> <ul> <li> <p> <b>Targets</b>: A target can be a specific resource in your AWS environment, or one or more resources that match criteria that you specify, for example, resources that have specific tags.</p> </li> <li> <p> <b>Actions</b>: The actions to carry out on the target. You can specify multiple actions, the duration of each action, and when to start each action during an experiment.</p> </li> <li> <p> <b>Stop conditions</b>: If a stop condition is triggered while an experiment is running, the experiment is automatically stopped. You can define a stop condition as a CloudWatch alarm.</p> </li> </ul> <p>For more information, see the <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/\">AWS Fault Injection Simulator User Guide</a>.</p>",
+    "CreateExperimentTemplate": "<p>Creates an experiment template. </p> <p>An experiment template includes the following components:</p> <ul> <li> <p> <b>Targets</b>: A target can be a specific resource in your Amazon Web Services environment, or one or more resources that match criteria that you specify, for example, resources that have specific tags.</p> </li> <li> <p> <b>Actions</b>: The actions to carry out on the target. You can specify multiple actions, the duration of each action, and when to start each action during an experiment.</p> </li> <li> <p> <b>Stop conditions</b>: If a stop condition is triggered while an experiment is running, the experiment is automatically stopped. You can define a stop condition as a CloudWatch alarm.</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/experiment-templates.html\">Experiment templates</a> in the <i>Fault Injection Simulator User Guide</i>.</p>",
     "DeleteExperimentTemplate": "<p>Deletes the specified experiment template.</p>",
-    "GetAction": "<p>Gets information about the specified AWS FIS action.</p>",
+    "GetAction": "<p>Gets information about the specified FIS action.</p>",
     "GetExperiment": "<p>Gets information about the specified experiment.</p>",
     "GetExperimentTemplate": "<p>Gets information about the specified experiment template.</p>",
-    "ListActions": "<p>Lists the available AWS FIS actions.</p>",
+    "GetTargetResourceType": "<p>Gets information about the specified resource type.</p>",
+    "ListActions": "<p>Lists the available FIS actions.</p>",
     "ListExperimentTemplates": "<p>Lists your experiment templates.</p>",
     "ListExperiments": "<p>Lists your experiments.</p>",
     "ListTagsForResource": "<p>Lists the tags for the specified resource.</p>",
+    "ListTargetResourceTypes": "<p>Lists the target resource types.</p>",
     "StartExperiment": "<p>Starts running an experiment from the specified experiment template.</p>",
     "StopExperiment": "<p>Stops the specified experiment.</p>",
     "TagResource": "<p>Applies the specified tags to the specified resource.</p>",
@@ -19,7 +21,7 @@
   },
   "shapes": {
     "Action": {
-      "base": "<p>Describes an action. For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/fis-actions-reference.html\">AWS FIS actions</a> in the <i>AWS Fault Injection Simulator User Guide</i>.</p>",
+      "base": "<p>Describes an action. For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/fis-actions-reference.html\">FIS actions</a> in the <i>Fault Injection Simulator User Guide</i>.</p>",
       "refs": {
         "GetActionResponse$action": "<p>Information about the action.</p>"
       }
@@ -36,7 +38,7 @@
       "refs": {
         "Action$id": "<p>The ID of the action.</p>",
         "ActionSummary$id": "<p>The ID of the action.</p>",
-        "CreateExperimentTemplateActionInput$actionId": "<p>The ID of the action.</p>",
+        "CreateExperimentTemplateActionInput$actionId": "<p>The ID of the action. The format of the action ID is: aws:<i>service-name</i>:<i>action-type</i>.</p>",
         "ExperimentAction$actionId": "<p>The ID of the action.</p>",
         "ExperimentTemplateAction$actionId": "<p>The ID of the action.</p>",
         "GetActionRequest$id": "<p>The ID of the action.</p>",
@@ -111,13 +113,21 @@
         "StartExperimentRequest$clientToken": "<p>Unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>"
       }
     },
+    "CloudWatchLogGroupArn": {
+      "base": null,
+      "refs": {
+        "ExperimentCloudWatchLogsLogConfiguration$logGroupArn": "<p>The Amazon Resource Name (ARN) of the destination Amazon CloudWatch Logs log group.</p>",
+        "ExperimentTemplateCloudWatchLogsLogConfiguration$logGroupArn": "<p>The Amazon Resource Name (ARN) of the destination Amazon CloudWatch Logs log group.</p>",
+        "ExperimentTemplateCloudWatchLogsLogConfigurationInput$logGroupArn": "<p>The Amazon Resource Name (ARN) of the destination Amazon CloudWatch Logs log group.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>The request could not be processed because of a conflict.</p>",
       "refs": {
       }
     },
     "CreateExperimentTemplateActionInput": {
-      "base": "<p>Specifies an action for an experiment template.</p>",
+      "base": "<p>Specifies an action for an experiment template.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/actions.html\">Actions</a> in the <i>Fault Injection Simulator User Guide</i>.</p>",
       "refs": {
         "CreateExperimentTemplateActionInputMap$value": null
       }
@@ -126,6 +136,12 @@
       "base": null,
       "refs": {
         "CreateExperimentTemplateRequest$actions": "<p>The actions for the experiment.</p>"
+      }
+    },
+    "CreateExperimentTemplateLogConfigurationInput": {
+      "base": "<p>Specifies the configuration for experiment logging.</p>",
+      "refs": {
+        "CreateExperimentTemplateRequest$logConfiguration": "<p>The configuration for experiment logging.</p>"
       }
     },
     "CreateExperimentTemplateRequest": {
@@ -151,7 +167,7 @@
       }
     },
     "CreateExperimentTemplateTargetInput": {
-      "base": "<p>Specifies a target for an experiment. You must specify at least one Amazon Resource Name (ARN) or at least one resource tag. You cannot specify both ARNs and tags.</p>",
+      "base": "<p>Specifies a target for an experiment. You must specify at least one Amazon Resource Name (ARN) or at least one resource tag. You cannot specify both ARNs and tags.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/targets.html\">Targets</a> in the <i>Fault Injection Simulator User Guide</i>.</p>",
       "refs": {
         "CreateExperimentTemplateTargetInputMap$value": null
       }
@@ -165,7 +181,7 @@
     "CreationTime": {
       "base": null,
       "refs": {
-        "Experiment$creationTime": "<p>The time the experiment was created.</p>",
+        "Experiment$creationTime": "<p>The time that the experiment was created.</p>",
         "ExperimentSummary$creationTime": "<p>The time that the experiment was created.</p>",
         "ExperimentTemplate$creationTime": "<p>The time the experiment template was created.</p>",
         "ExperimentTemplateSummary$creationTime": "<p>The time that the experiment template was created.</p>"
@@ -210,6 +226,12 @@
         "ExperimentAction$description": "<p>The description for the action.</p>"
       }
     },
+    "ExperimentActionEndTime": {
+      "base": null,
+      "refs": {
+        "ExperimentAction$endTime": "<p>The time that the action ended.</p>"
+      }
+    },
     "ExperimentActionMap": {
       "base": null,
       "refs": {
@@ -252,6 +274,12 @@
         "ExperimentAction$startAfter": "<p>The name of the action that must be completed before this action starts.</p>"
       }
     },
+    "ExperimentActionStartTime": {
+      "base": null,
+      "refs": {
+        "ExperimentAction$startTime": "<p>The time that the action started.</p>"
+      }
+    },
     "ExperimentActionState": {
       "base": "<p>Describes the state of an action.</p>",
       "refs": {
@@ -282,6 +310,12 @@
         "ExperimentActionTargetMap$key": null
       }
     },
+    "ExperimentCloudWatchLogsLogConfiguration": {
+      "base": "<p>Describes the configuration for experiment logging to Amazon CloudWatch Logs.</p>",
+      "refs": {
+        "ExperimentLogConfiguration$cloudWatchLogsConfiguration": "<p>The configuration for experiment logging to Amazon CloudWatch Logs.</p>"
+      }
+    },
     "ExperimentEndTime": {
       "base": null,
       "refs": {
@@ -297,10 +331,22 @@
         "StopExperimentRequest$id": "<p>The ID of the experiment.</p>"
       }
     },
+    "ExperimentLogConfiguration": {
+      "base": "<p>Describes the configuration for experiment logging.</p>",
+      "refs": {
+        "Experiment$logConfiguration": "<p>The configuration for experiment logging.</p>"
+      }
+    },
+    "ExperimentS3LogConfiguration": {
+      "base": "<p>Describes the configuration for experiment logging to Amazon S3.</p>",
+      "refs": {
+        "ExperimentLogConfiguration$s3Configuration": "<p>The configuration for experiment logging to Amazon S3.</p>"
+      }
+    },
     "ExperimentStartTime": {
       "base": null,
       "refs": {
-        "Experiment$startTime": "<p>The time that the experiment was started.</p>"
+        "Experiment$startTime": "<p>The time that the experiment started.</p>"
       }
     },
     "ExperimentState": {
@@ -395,6 +441,24 @@
         "ExperimentTargetMap$key": null
       }
     },
+    "ExperimentTargetParameterMap": {
+      "base": null,
+      "refs": {
+        "ExperimentTarget$parameters": "<p>The resource type parameters.</p>"
+      }
+    },
+    "ExperimentTargetParameterName": {
+      "base": null,
+      "refs": {
+        "ExperimentTargetParameterMap$key": null
+      }
+    },
+    "ExperimentTargetParameterValue": {
+      "base": null,
+      "refs": {
+        "ExperimentTargetParameterMap$value": null
+      }
+    },
     "ExperimentTargetSelectionMode": {
       "base": null,
       "refs": {
@@ -486,10 +550,23 @@
         "ExperimentTemplateActionTargetMap$key": null
       }
     },
+    "ExperimentTemplateCloudWatchLogsLogConfiguration": {
+      "base": "<p>Describes the configuration for experiment logging to Amazon CloudWatch Logs.</p>",
+      "refs": {
+        "ExperimentTemplateLogConfiguration$cloudWatchLogsConfiguration": "<p>The configuration for experiment logging to Amazon CloudWatch Logs.</p>"
+      }
+    },
+    "ExperimentTemplateCloudWatchLogsLogConfigurationInput": {
+      "base": "<p>Specifies the configuration for experiment logging to Amazon CloudWatch Logs.</p>",
+      "refs": {
+        "CreateExperimentTemplateLogConfigurationInput$cloudWatchLogsConfiguration": "<p>The configuration for experiment logging to Amazon CloudWatch Logs.</p>",
+        "UpdateExperimentTemplateLogConfigurationInput$cloudWatchLogsConfiguration": "<p>The configuration for experiment logging to Amazon CloudWatch Logs.</p>"
+      }
+    },
     "ExperimentTemplateDescription": {
       "base": null,
       "refs": {
-        "CreateExperimentTemplateRequest$description": "<p>A description for the experiment template. Can contain up to 64 letters (A-Z and a-z).</p>",
+        "CreateExperimentTemplateRequest$description": "<p>A description for the experiment template.</p>",
         "ExperimentTemplate$description": "<p>The description for the experiment template.</p>",
         "ExperimentTemplateSummary$description": "<p>The description of the experiment template.</p>",
         "UpdateExperimentTemplateRequest$description": "<p>A description for the template.</p>"
@@ -506,6 +583,25 @@
         "GetExperimentTemplateRequest$id": "<p>The ID of the experiment template.</p>",
         "StartExperimentRequest$experimentTemplateId": "<p>The ID of the experiment template.</p>",
         "UpdateExperimentTemplateRequest$id": "<p>The ID of the experiment template.</p>"
+      }
+    },
+    "ExperimentTemplateLogConfiguration": {
+      "base": "<p>Describes the configuration for experiment logging.</p>",
+      "refs": {
+        "ExperimentTemplate$logConfiguration": "<p>The configuration for experiment logging.</p>"
+      }
+    },
+    "ExperimentTemplateS3LogConfiguration": {
+      "base": "<p>Describes the configuration for experiment logging to Amazon S3.</p>",
+      "refs": {
+        "ExperimentTemplateLogConfiguration$s3Configuration": "<p>The configuration for experiment logging to Amazon S3.</p>"
+      }
+    },
+    "ExperimentTemplateS3LogConfigurationInput": {
+      "base": "<p>Specifies the configuration for experiment logging to Amazon S3.</p>",
+      "refs": {
+        "CreateExperimentTemplateLogConfigurationInput$s3Configuration": "<p>The configuration for experiment logging to Amazon S3.</p>",
+        "UpdateExperimentTemplateLogConfigurationInput$s3Configuration": "<p>The configuration for experiment logging to Amazon S3.</p>"
       }
     },
     "ExperimentTemplateStopCondition": {
@@ -578,7 +674,7 @@
       }
     },
     "ExperimentTemplateTargetInputFilter": {
-      "base": "<p>Describes a filter used for the target resource input in an experiment template.</p>",
+      "base": "<p>Specifies a filter used for the target resource input in an experiment template.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/fis/latest/userguide/targets.html#target-filters\">Resource filters</a> in the <i>Fault Injection Simulator User Guide</i>.</p>",
       "refs": {
         "ExperimentTemplateTargetFilterInputList$member": null
       }
@@ -596,6 +692,26 @@
         "ExperimentTemplateActionTargetMap$value": null,
         "ExperimentTemplateTargetMap$key": null,
         "UpdateExperimentTemplateTargetInputMap$key": null
+      }
+    },
+    "ExperimentTemplateTargetParameterMap": {
+      "base": null,
+      "refs": {
+        "CreateExperimentTemplateTargetInput$parameters": "<p>The resource type parameters.</p>",
+        "ExperimentTemplateTarget$parameters": "<p>The resource type parameters.</p>",
+        "UpdateExperimentTemplateTargetInput$parameters": "<p>The resource type parameters.</p>"
+      }
+    },
+    "ExperimentTemplateTargetParameterName": {
+      "base": null,
+      "refs": {
+        "ExperimentTemplateTargetParameterMap$key": null
+      }
+    },
+    "ExperimentTemplateTargetParameterValue": {
+      "base": null,
+      "refs": {
+        "ExperimentTemplateTargetParameterMap$value": null
       }
     },
     "ExperimentTemplateTargetSelectionMode": {
@@ -632,6 +748,16 @@
       }
     },
     "GetExperimentTemplateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTargetResourceTypeRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetTargetResourceTypeResponse": {
       "base": null,
       "refs": {
       }
@@ -701,6 +827,31 @@
       "refs": {
       }
     },
+    "ListTargetResourceTypesMaxResults": {
+      "base": null,
+      "refs": {
+        "ListTargetResourceTypesRequest$maxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
+      }
+    },
+    "ListTargetResourceTypesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListTargetResourceTypesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "LogSchemaVersion": {
+      "base": null,
+      "refs": {
+        "CreateExperimentTemplateLogConfigurationInput$logSchemaVersion": "<p>The schema version.</p>",
+        "ExperimentLogConfiguration$logSchemaVersion": "<p>The schema version.</p>",
+        "ExperimentTemplateLogConfiguration$logSchemaVersion": "<p>The schema version.</p>",
+        "UpdateExperimentTemplateLogConfigurationInput$logSchemaVersion": "<p>The schema version.</p>"
+      }
+    },
     "NextToken": {
       "base": null,
       "refs": {
@@ -709,7 +860,9 @@
         "ListExperimentTemplatesRequest$nextToken": "<p>The token for the next page of results.</p>",
         "ListExperimentTemplatesResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "ListExperimentsRequest$nextToken": "<p>The token for the next page of results.</p>",
-        "ListExperimentsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"
+        "ListExperimentsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "ListTargetResourceTypesRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListTargetResourceTypesResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>"
       }
     },
     "ResourceArn": {
@@ -735,22 +888,29 @@
       "refs": {
       }
     },
-    "ResourceType": {
-      "base": null,
-      "refs": {
-        "CreateExperimentTemplateTargetInput$resourceType": "<p>The AWS resource type. The resource type must be supported for the specified action.</p>",
-        "ExperimentTarget$resourceType": "<p>The resource type.</p>",
-        "ExperimentTemplateTarget$resourceType": "<p>The resource type.</p>",
-        "UpdateExperimentTemplateTargetInput$resourceType": "<p>The AWS resource type. The resource type must be supported for the specified action.</p>"
-      }
-    },
     "RoleArn": {
       "base": null,
       "refs": {
-        "CreateExperimentTemplateRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that grants the AWS FIS service permission to perform service actions on your behalf.</p>",
-        "Experiment$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that grants the AWS FIS service permission to perform service actions on your behalf.</p>",
+        "CreateExperimentTemplateRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that grants the FIS service permission to perform service actions on your behalf.</p>",
+        "Experiment$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that grants the FIS service permission to perform service actions on your behalf.</p>",
         "ExperimentTemplate$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role.</p>",
-        "UpdateExperimentTemplateRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that grants the AWS FIS service permission to perform service actions on your behalf.</p>"
+        "UpdateExperimentTemplateRequest$roleArn": "<p>The Amazon Resource Name (ARN) of an IAM role that grants the FIS service permission to perform service actions on your behalf.</p>"
+      }
+    },
+    "S3BucketName": {
+      "base": null,
+      "refs": {
+        "ExperimentS3LogConfiguration$bucketName": "<p>The name of the destination bucket.</p>",
+        "ExperimentTemplateS3LogConfiguration$bucketName": "<p>The name of the destination bucket.</p>",
+        "ExperimentTemplateS3LogConfigurationInput$bucketName": "<p>The name of the destination bucket.</p>"
+      }
+    },
+    "S3ObjectKey": {
+      "base": null,
+      "refs": {
+        "ExperimentS3LogConfiguration$prefix": "<p>The bucket prefix.</p>",
+        "ExperimentTemplateS3LogConfiguration$prefix": "<p>The bucket prefix.</p>",
+        "ExperimentTemplateS3LogConfigurationInput$prefix": "<p>The bucket prefix.</p>"
       }
     },
     "ServiceQuotaExceededException": {
@@ -845,9 +1005,71 @@
       }
     },
     "TargetResourceType": {
+      "base": "<p>Describes a resource type.</p>",
+      "refs": {
+        "GetTargetResourceTypeResponse$targetResourceType": "<p>Information about the resource type.</p>"
+      }
+    },
+    "TargetResourceTypeDescription": {
       "base": null,
       "refs": {
-        "ActionTarget$resourceType": "<p>The resource type of the target.</p>"
+        "TargetResourceType$description": "<p>A description of the resource type.</p>",
+        "TargetResourceTypeSummary$description": "<p>A description of the resource type.</p>"
+      }
+    },
+    "TargetResourceTypeId": {
+      "base": null,
+      "refs": {
+        "ActionTarget$resourceType": "<p>The resource type of the target.</p>",
+        "CreateExperimentTemplateTargetInput$resourceType": "<p>The resource type. The resource type must be supported for the specified action.</p>",
+        "ExperimentTarget$resourceType": "<p>The resource type.</p>",
+        "ExperimentTemplateTarget$resourceType": "<p>The resource type.</p>",
+        "GetTargetResourceTypeRequest$resourceType": "<p>The resource type.</p>",
+        "TargetResourceType$resourceType": "<p>The resource type.</p>",
+        "TargetResourceTypeSummary$resourceType": "<p>The resource type.</p>",
+        "UpdateExperimentTemplateTargetInput$resourceType": "<p>The resource type. The resource type must be supported for the specified action.</p>"
+      }
+    },
+    "TargetResourceTypeParameter": {
+      "base": "<p>Describes the parameters for a resource type. Use parameters to determine which tasks are identified during target resolution.</p>",
+      "refs": {
+        "TargetResourceTypeParameterMap$value": null
+      }
+    },
+    "TargetResourceTypeParameterDescription": {
+      "base": null,
+      "refs": {
+        "TargetResourceTypeParameter$description": "<p>A description of the parameter.</p>"
+      }
+    },
+    "TargetResourceTypeParameterMap": {
+      "base": null,
+      "refs": {
+        "TargetResourceType$parameters": "<p>The parameters for the resource type.</p>"
+      }
+    },
+    "TargetResourceTypeParameterName": {
+      "base": null,
+      "refs": {
+        "TargetResourceTypeParameterMap$key": null
+      }
+    },
+    "TargetResourceTypeParameterRequired": {
+      "base": null,
+      "refs": {
+        "TargetResourceTypeParameter$required": "<p>Indicates whether the parameter is required.</p>"
+      }
+    },
+    "TargetResourceTypeSummary": {
+      "base": "<p>Describes a resource type.</p>",
+      "refs": {
+        "TargetResourceTypeSummaryList$member": null
+      }
+    },
+    "TargetResourceTypeSummaryList": {
+      "base": null,
+      "refs": {
+        "ListTargetResourceTypesResponse$targetResourceTypes": "<p>The target resource types.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -870,6 +1092,12 @@
       "base": null,
       "refs": {
         "UpdateExperimentTemplateRequest$actions": "<p>The actions for the experiment.</p>"
+      }
+    },
+    "UpdateExperimentTemplateLogConfigurationInput": {
+      "base": "<p>Specifies the configuration for experiment logging.</p>",
+      "refs": {
+        "UpdateExperimentTemplateRequest$logConfiguration": "<p>The configuration for experiment logging.</p>"
       }
     },
     "UpdateExperimentTemplateRequest": {

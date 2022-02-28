@@ -85,6 +85,20 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "GetTargetResourceType":{
+      "name":"GetTargetResourceType",
+      "http":{
+        "method":"GET",
+        "requestUri":"/targetResourceTypes/{resourceType}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetTargetResourceTypeRequest"},
+      "output":{"shape":"GetTargetResourceTypeResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListActions":{
       "name":"ListActions",
       "http":{
@@ -133,6 +147,19 @@
       },
       "input":{"shape":"ListTagsForResourceRequest"},
       "output":{"shape":"ListTagsForResourceResponse"}
+    },
+    "ListTargetResourceTypes":{
+      "name":"ListTargetResourceTypes",
+      "http":{
+        "method":"GET",
+        "requestUri":"/targetResourceTypes",
+        "responseCode":200
+      },
+      "input":{"shape":"ListTargetResourceTypesRequest"},
+      "output":{"shape":"ListTargetResourceTypesResponse"},
+      "errors":[
+        {"shape":"ValidationException"}
+      ]
     },
     "StartExperiment":{
       "name":"StartExperiment",
@@ -263,7 +290,7 @@
     "ActionTarget":{
       "type":"structure",
       "members":{
-        "resourceType":{"shape":"TargetResourceType"}
+        "resourceType":{"shape":"TargetResourceTypeId"}
       }
     },
     "ActionTargetMap":{
@@ -280,6 +307,12 @@
       "type":"string",
       "max":1024,
       "min":1,
+      "pattern":"[\\S]+"
+    },
+    "CloudWatchLogGroupArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
       "pattern":"[\\S]+"
     },
     "ConflictException":{
@@ -306,6 +339,15 @@
       "key":{"shape":"ExperimentTemplateActionName"},
       "value":{"shape":"CreateExperimentTemplateActionInput"}
     },
+    "CreateExperimentTemplateLogConfigurationInput":{
+      "type":"structure",
+      "required":["logSchemaVersion"],
+      "members":{
+        "cloudWatchLogsConfiguration":{"shape":"ExperimentTemplateCloudWatchLogsLogConfigurationInput"},
+        "s3Configuration":{"shape":"ExperimentTemplateS3LogConfigurationInput"},
+        "logSchemaVersion":{"shape":"LogSchemaVersion"}
+      }
+    },
     "CreateExperimentTemplateRequest":{
       "type":"structure",
       "required":[
@@ -325,7 +367,8 @@
         "targets":{"shape":"CreateExperimentTemplateTargetInputMap"},
         "actions":{"shape":"CreateExperimentTemplateActionInputMap"},
         "roleArn":{"shape":"RoleArn"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "logConfiguration":{"shape":"CreateExperimentTemplateLogConfigurationInput"}
       }
     },
     "CreateExperimentTemplateResponse":{
@@ -353,11 +396,12 @@
         "selectionMode"
       ],
       "members":{
-        "resourceType":{"shape":"ResourceType"},
+        "resourceType":{"shape":"TargetResourceTypeId"},
         "resourceArns":{"shape":"ResourceArnList"},
         "resourceTags":{"shape":"TagMap"},
         "filters":{"shape":"ExperimentTemplateTargetFilterInputList"},
-        "selectionMode":{"shape":"ExperimentTemplateTargetSelectionMode"}
+        "selectionMode":{"shape":"ExperimentTemplateTargetSelectionMode"},
+        "parameters":{"shape":"ExperimentTemplateTargetParameterMap"}
       }
     },
     "CreateExperimentTemplateTargetInputMap":{
@@ -401,7 +445,8 @@
         "creationTime":{"shape":"CreationTime"},
         "startTime":{"shape":"ExperimentStartTime"},
         "endTime":{"shape":"ExperimentEndTime"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "logConfiguration":{"shape":"ExperimentLogConfiguration"}
       }
     },
     "ExperimentAction":{
@@ -412,7 +457,9 @@
         "parameters":{"shape":"ExperimentActionParameterMap"},
         "targets":{"shape":"ExperimentActionTargetMap"},
         "startAfter":{"shape":"ExperimentActionStartAfterList"},
-        "state":{"shape":"ExperimentActionState"}
+        "state":{"shape":"ExperimentActionState"},
+        "startTime":{"shape":"ExperimentActionStartTime"},
+        "endTime":{"shape":"ExperimentActionEndTime"}
       }
     },
     "ExperimentActionDescription":{
@@ -420,6 +467,7 @@
       "max":512,
       "pattern":"[\\s\\S]+"
     },
+    "ExperimentActionEndTime":{"type":"timestamp"},
     "ExperimentActionMap":{
       "type":"map",
       "key":{"shape":"ExperimentActionName"},
@@ -454,6 +502,7 @@
       "type":"list",
       "member":{"shape":"ExperimentActionStartAfter"}
     },
+    "ExperimentActionStartTime":{"type":"timestamp"},
     "ExperimentActionState":{
       "type":"structure",
       "members":{
@@ -489,11 +538,32 @@
       "max":64,
       "pattern":"[\\S]+"
     },
+    "ExperimentCloudWatchLogsLogConfiguration":{
+      "type":"structure",
+      "members":{
+        "logGroupArn":{"shape":"CloudWatchLogGroupArn"}
+      }
+    },
     "ExperimentEndTime":{"type":"timestamp"},
     "ExperimentId":{
       "type":"string",
       "max":64,
       "pattern":"[\\S]+"
+    },
+    "ExperimentLogConfiguration":{
+      "type":"structure",
+      "members":{
+        "cloudWatchLogsConfiguration":{"shape":"ExperimentCloudWatchLogsLogConfiguration"},
+        "s3Configuration":{"shape":"ExperimentS3LogConfiguration"},
+        "logSchemaVersion":{"shape":"LogSchemaVersion"}
+      }
+    },
+    "ExperimentS3LogConfiguration":{
+      "type":"structure",
+      "members":{
+        "bucketName":{"shape":"S3BucketName"},
+        "prefix":{"shape":"S3ObjectKey"}
+      }
     },
     "ExperimentStartTime":{"type":"timestamp"},
     "ExperimentState":{
@@ -548,11 +618,12 @@
     "ExperimentTarget":{
       "type":"structure",
       "members":{
-        "resourceType":{"shape":"ResourceType"},
+        "resourceType":{"shape":"TargetResourceTypeId"},
         "resourceArns":{"shape":"ResourceArnList"},
         "resourceTags":{"shape":"TagMap"},
         "filters":{"shape":"ExperimentTargetFilterList"},
-        "selectionMode":{"shape":"ExperimentTargetSelectionMode"}
+        "selectionMode":{"shape":"ExperimentTargetSelectionMode"},
+        "parameters":{"shape":"ExperimentTargetParameterMap"}
       }
     },
     "ExperimentTargetFilter":{
@@ -590,6 +661,21 @@
       "max":64,
       "pattern":"[\\S]+"
     },
+    "ExperimentTargetParameterMap":{
+      "type":"map",
+      "key":{"shape":"ExperimentTargetParameterName"},
+      "value":{"shape":"ExperimentTargetParameterValue"}
+    },
+    "ExperimentTargetParameterName":{
+      "type":"string",
+      "max":64,
+      "pattern":"[\\S]+"
+    },
+    "ExperimentTargetParameterValue":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
     "ExperimentTargetSelectionMode":{
       "type":"string",
       "max":64,
@@ -606,7 +692,8 @@
         "creationTime":{"shape":"CreationTime"},
         "lastUpdateTime":{"shape":"LastUpdateTime"},
         "roleArn":{"shape":"RoleArn"},
-        "tags":{"shape":"TagMap"}
+        "tags":{"shape":"TagMap"},
+        "logConfiguration":{"shape":"ExperimentTemplateLogConfiguration"}
       }
     },
     "ExperimentTemplateAction":{
@@ -668,6 +755,19 @@
       "max":64,
       "pattern":"[\\S]+"
     },
+    "ExperimentTemplateCloudWatchLogsLogConfiguration":{
+      "type":"structure",
+      "members":{
+        "logGroupArn":{"shape":"CloudWatchLogGroupArn"}
+      }
+    },
+    "ExperimentTemplateCloudWatchLogsLogConfigurationInput":{
+      "type":"structure",
+      "required":["logGroupArn"],
+      "members":{
+        "logGroupArn":{"shape":"CloudWatchLogGroupArn"}
+      }
+    },
     "ExperimentTemplateDescription":{
       "type":"string",
       "max":512,
@@ -677,6 +777,29 @@
       "type":"string",
       "max":64,
       "pattern":"[\\S]+"
+    },
+    "ExperimentTemplateLogConfiguration":{
+      "type":"structure",
+      "members":{
+        "cloudWatchLogsConfiguration":{"shape":"ExperimentTemplateCloudWatchLogsLogConfiguration"},
+        "s3Configuration":{"shape":"ExperimentTemplateS3LogConfiguration"},
+        "logSchemaVersion":{"shape":"LogSchemaVersion"}
+      }
+    },
+    "ExperimentTemplateS3LogConfiguration":{
+      "type":"structure",
+      "members":{
+        "bucketName":{"shape":"S3BucketName"},
+        "prefix":{"shape":"S3ObjectKey"}
+      }
+    },
+    "ExperimentTemplateS3LogConfigurationInput":{
+      "type":"structure",
+      "required":["bucketName"],
+      "members":{
+        "bucketName":{"shape":"S3BucketName"},
+        "prefix":{"shape":"S3ObjectKey"}
+      }
     },
     "ExperimentTemplateStopCondition":{
       "type":"structure",
@@ -706,11 +829,12 @@
     "ExperimentTemplateTarget":{
       "type":"structure",
       "members":{
-        "resourceType":{"shape":"ResourceType"},
+        "resourceType":{"shape":"TargetResourceTypeId"},
         "resourceArns":{"shape":"ResourceArnList"},
         "resourceTags":{"shape":"TagMap"},
         "filters":{"shape":"ExperimentTemplateTargetFilterList"},
-        "selectionMode":{"shape":"ExperimentTemplateTargetSelectionMode"}
+        "selectionMode":{"shape":"ExperimentTemplateTargetSelectionMode"},
+        "parameters":{"shape":"ExperimentTemplateTargetParameterMap"}
       }
     },
     "ExperimentTemplateTargetFilter":{
@@ -762,6 +886,22 @@
       "type":"string",
       "max":64,
       "pattern":"[\\S]+"
+    },
+    "ExperimentTemplateTargetParameterMap":{
+      "type":"map",
+      "key":{"shape":"ExperimentTemplateTargetParameterName"},
+      "value":{"shape":"ExperimentTemplateTargetParameterValue"}
+    },
+    "ExperimentTemplateTargetParameterName":{
+      "type":"string",
+      "max":64,
+      "pattern":"[\\S]+"
+    },
+    "ExperimentTemplateTargetParameterValue":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"^[\\p{L}\\p{Z}\\p{N}_.:/=+\\-@]+$"
     },
     "ExperimentTemplateTargetSelectionMode":{
       "type":"string",
@@ -817,6 +957,23 @@
       "type":"structure",
       "members":{
         "experimentTemplate":{"shape":"ExperimentTemplate"}
+      }
+    },
+    "GetTargetResourceTypeRequest":{
+      "type":"structure",
+      "required":["resourceType"],
+      "members":{
+        "resourceType":{
+          "shape":"TargetResourceTypeId",
+          "location":"uri",
+          "locationName":"resourceType"
+        }
+      }
+    },
+    "GetTargetResourceTypeResponse":{
+      "type":"structure",
+      "members":{
+        "targetResourceType":{"shape":"TargetResourceType"}
       }
     },
     "LastUpdateTime":{"type":"timestamp"},
@@ -921,6 +1078,35 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "ListTargetResourceTypesMaxResults":{
+      "type":"integer",
+      "max":100,
+      "min":1
+    },
+    "ListTargetResourceTypesRequest":{
+      "type":"structure",
+      "members":{
+        "maxResults":{
+          "shape":"ListTargetResourceTypesMaxResults",
+          "box":true,
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListTargetResourceTypesResponse":{
+      "type":"structure",
+      "members":{
+        "targetResourceTypes":{"shape":"TargetResourceTypeSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "LogSchemaVersion":{"type":"integer"},
     "NextToken":{
       "type":"string",
       "max":1024,
@@ -946,16 +1132,23 @@
       "error":{"httpStatusCode":404},
       "exception":true
     },
-    "ResourceType":{
-      "type":"string",
-      "max":64,
-      "pattern":"[\\S]+"
-    },
     "RoleArn":{
       "type":"string",
       "max":2048,
       "min":20,
       "pattern":"[\\S]+"
+    },
+    "S3BucketName":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":"[\\S]+"
+    },
+    "S3ObjectKey":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":"[\\s\\S]+"
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -1055,9 +1248,59 @@
       "pattern":"[\\s\\S]*"
     },
     "TargetResourceType":{
+      "type":"structure",
+      "members":{
+        "resourceType":{"shape":"TargetResourceTypeId"},
+        "description":{"shape":"TargetResourceTypeDescription"},
+        "parameters":{"shape":"TargetResourceTypeParameterMap"}
+      }
+    },
+    "TargetResourceTypeDescription":{
+      "type":"string",
+      "max":512,
+      "pattern":"[\\s\\S]+"
+    },
+    "TargetResourceTypeId":{
       "type":"string",
       "max":128,
       "pattern":"[\\S]+"
+    },
+    "TargetResourceTypeParameter":{
+      "type":"structure",
+      "members":{
+        "description":{"shape":"TargetResourceTypeParameterDescription"},
+        "required":{
+          "shape":"TargetResourceTypeParameterRequired",
+          "box":true
+        }
+      }
+    },
+    "TargetResourceTypeParameterDescription":{
+      "type":"string",
+      "max":512,
+      "pattern":"[\\s\\S]+"
+    },
+    "TargetResourceTypeParameterMap":{
+      "type":"map",
+      "key":{"shape":"TargetResourceTypeParameterName"},
+      "value":{"shape":"TargetResourceTypeParameter"}
+    },
+    "TargetResourceTypeParameterName":{
+      "type":"string",
+      "max":64,
+      "pattern":"[\\S]+"
+    },
+    "TargetResourceTypeParameterRequired":{"type":"boolean"},
+    "TargetResourceTypeSummary":{
+      "type":"structure",
+      "members":{
+        "resourceType":{"shape":"TargetResourceTypeId"},
+        "description":{"shape":"TargetResourceTypeDescription"}
+      }
+    },
+    "TargetResourceTypeSummaryList":{
+      "type":"list",
+      "member":{"shape":"TargetResourceTypeSummary"}
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -1095,6 +1338,14 @@
       "key":{"shape":"ExperimentTemplateActionName"},
       "value":{"shape":"UpdateExperimentTemplateActionInputItem"}
     },
+    "UpdateExperimentTemplateLogConfigurationInput":{
+      "type":"structure",
+      "members":{
+        "cloudWatchLogsConfiguration":{"shape":"ExperimentTemplateCloudWatchLogsLogConfigurationInput"},
+        "s3Configuration":{"shape":"ExperimentTemplateS3LogConfigurationInput"},
+        "logSchemaVersion":{"shape":"LogSchemaVersion"}
+      }
+    },
     "UpdateExperimentTemplateRequest":{
       "type":"structure",
       "required":["id"],
@@ -1108,7 +1359,8 @@
         "stopConditions":{"shape":"UpdateExperimentTemplateStopConditionInputList"},
         "targets":{"shape":"UpdateExperimentTemplateTargetInputMap"},
         "actions":{"shape":"UpdateExperimentTemplateActionInputMap"},
-        "roleArn":{"shape":"RoleArn"}
+        "roleArn":{"shape":"RoleArn"},
+        "logConfiguration":{"shape":"UpdateExperimentTemplateLogConfigurationInput"}
       }
     },
     "UpdateExperimentTemplateResponse":{
@@ -1136,11 +1388,12 @@
         "selectionMode"
       ],
       "members":{
-        "resourceType":{"shape":"ResourceType"},
+        "resourceType":{"shape":"TargetResourceTypeId"},
         "resourceArns":{"shape":"ResourceArnList"},
         "resourceTags":{"shape":"TagMap"},
         "filters":{"shape":"ExperimentTemplateTargetFilterInputList"},
-        "selectionMode":{"shape":"ExperimentTemplateTargetSelectionMode"}
+        "selectionMode":{"shape":"ExperimentTemplateTargetSelectionMode"},
+        "parameters":{"shape":"ExperimentTemplateTargetParameterMap"}
       }
     },
     "UpdateExperimentTemplateTargetInputMap":{

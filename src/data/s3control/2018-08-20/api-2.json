@@ -982,6 +982,13 @@
         "locationName":"Arn"
       }
     },
+    "CloudWatchMetrics":{
+      "type":"structure",
+      "required":["IsEnabled"],
+      "members":{
+        "IsEnabled":{"shape":"IsEnabled"}
+      }
+    },
     "ConfigId":{
       "type":"string",
       "max":64,
@@ -1131,7 +1138,6 @@
         "Operation",
         "Report",
         "ClientRequestToken",
-        "Manifest",
         "Priority",
         "RoleArn"
       ],
@@ -1159,7 +1165,8 @@
           "box":true
         },
         "RoleArn":{"shape":"IAMRoleArn"},
-        "Tags":{"shape":"S3TagSet"}
+        "Tags":{"shape":"S3TagSet"},
+        "ManifestGenerator":{"shape":"JobManifestGenerator"}
       }
     },
     "CreateJobResult":{
@@ -1583,6 +1590,23 @@
       "max":1024,
       "min":1,
       "pattern":"(arn:(aws[a-zA-Z-]*)?:lambda:)?([a-z]{2}((-gov)|(-iso(b?)))?-[a-z]+-\\d{1}:)?(\\d{12}:)?(function:)?([a-zA-Z0-9-_]+)(:(\\$LATEST|[a-zA-Z0-9-_]+))?"
+    },
+    "GeneratedManifestEncryption":{
+      "type":"structure",
+      "members":{
+        "SSES3":{
+          "shape":"SSES3Encryption",
+          "locationName":"SSE-S3"
+        },
+        "SSEKMS":{
+          "shape":"SSEKMSEncryption",
+          "locationName":"SSE-KMS"
+        }
+      }
+    },
+    "GeneratedManifestFormat":{
+      "type":"string",
+      "enum":["S3InventoryReport_CSV_20211130"]
     },
     "GetAccessPointConfigurationForObjectLambdaRequest":{
       "type":"structure",
@@ -2174,7 +2198,9 @@
         "SuspendedCause":{
           "shape":"SuspendedCause",
           "box":true
-        }
+        },
+        "ManifestGenerator":{"shape":"JobManifestGenerator"},
+        "GeneratedManifestDescriptor":{"shape":"S3GeneratedManifestDescriptor"}
       }
     },
     "JobFailure":{
@@ -2252,6 +2278,25 @@
         "S3InventoryReport_CSV_20161130"
       ]
     },
+    "JobManifestGenerator":{
+      "type":"structure",
+      "members":{
+        "S3JobManifestGenerator":{"shape":"S3JobManifestGenerator"}
+      },
+      "union":true
+    },
+    "JobManifestGeneratorFilter":{
+      "type":"structure",
+      "members":{
+        "EligibleForReplication":{
+          "shape":"Boolean",
+          "box":true
+        },
+        "CreatedAfter":{"shape":"ObjectCreationTime"},
+        "CreatedBefore":{"shape":"ObjectCreationTime"},
+        "ObjectReplicationStatuses":{"shape":"ReplicationStatusFilterList"}
+      }
+    },
     "JobManifestLocation":{
       "type":"structure",
       "required":[
@@ -2320,6 +2365,10 @@
         "S3PutObjectRetention":{
           "shape":"S3SetObjectRetentionOperation",
           "box":true
+        },
+        "S3ReplicateObject":{
+          "shape":"S3ReplicateObjectOperation",
+          "box":true
         }
       }
     },
@@ -2342,7 +2391,8 @@
         "NumberOfTasksFailed":{
           "shape":"JobNumberOfTasksFailed",
           "box":true
-        }
+        },
+        "Timers":{"shape":"JobTimers"}
       }
     },
     "JobReport":{
@@ -2414,6 +2464,19 @@
       "min":1
     },
     "JobTerminationDate":{"type":"timestamp"},
+    "JobTimeInStateSeconds":{
+      "type":"long",
+      "min":0
+    },
+    "JobTimers":{
+      "type":"structure",
+      "members":{
+        "ElapsedTimeInActiveSeconds":{
+          "shape":"JobTimeInStateSeconds",
+          "box":true
+        }
+      }
+    },
     "JobTotalNumberOfTasks":{
       "type":"long",
       "min":0
@@ -2679,6 +2742,11 @@
       }
     },
     "Location":{"type":"string"},
+    "ManifestPrefixString":{
+      "type":"string",
+      "max":512,
+      "min":1
+    },
     "MaxLength1024String":{
       "type":"string",
       "max":1024
@@ -2827,6 +2895,7 @@
       },
       "exception":true
     },
+    "ObjectCreationTime":{"type":"timestamp"},
     "ObjectLambdaAccessPoint":{
       "type":"structure",
       "required":["Name"],
@@ -2935,7 +3004,8 @@
         "S3DeleteObjectTagging",
         "S3InitiateRestoreObject",
         "S3PutObjectLegalHold",
-        "S3PutObjectRetention"
+        "S3PutObjectRetention",
+        "S3ReplicateObject"
       ]
     },
     "OutputSchemaVersion":{
@@ -3339,6 +3409,19 @@
         "locationName":"Region"
       }
     },
+    "ReplicationStatus":{
+      "type":"string",
+      "enum":[
+        "COMPLETED",
+        "FAILED",
+        "REPLICA",
+        "NONE"
+      ]
+    },
+    "ReplicationStatusFilterList":{
+      "type":"list",
+      "member":{"shape":"ReplicationStatus"}
+    },
     "ReportPrefixString":{
       "type":"string",
       "max":512,
@@ -3418,6 +3501,15 @@
         "bucket-owner-full-control"
       ]
     },
+    "S3ChecksumAlgorithm":{
+      "type":"string",
+      "enum":[
+        "CRC32",
+        "CRC32C",
+        "SHA1",
+        "SHA256"
+      ]
+    },
     "S3ContentLength":{
       "type":"long",
       "min":0
@@ -3447,7 +3539,8 @@
         "ObjectLockLegalHoldStatus":{"shape":"S3ObjectLockLegalHoldStatus"},
         "ObjectLockMode":{"shape":"S3ObjectLockMode"},
         "ObjectLockRetainUntilDate":{"shape":"TimeStamp"},
-        "BucketKeyEnabled":{"shape":"Boolean"}
+        "BucketKeyEnabled":{"shape":"Boolean"},
+        "ChecksumAlgorithm":{"shape":"S3ChecksumAlgorithm"}
       }
     },
     "S3DeleteObjectTaggingOperation":{
@@ -3458,6 +3551,13 @@
     "S3ExpirationInDays":{
       "type":"integer",
       "min":0
+    },
+    "S3GeneratedManifestDescriptor":{
+      "type":"structure",
+      "members":{
+        "Format":{"shape":"GeneratedManifestFormat"},
+        "Location":{"shape":"JobManifestLocation"}
+      }
     },
     "S3GlacierJobTier":{
       "type":"string",
@@ -3506,11 +3606,39 @@
         "GlacierJobTier":{"shape":"S3GlacierJobTier"}
       }
     },
+    "S3JobManifestGenerator":{
+      "type":"structure",
+      "required":[
+        "SourceBucket",
+        "EnableManifestOutput"
+      ],
+      "members":{
+        "ExpectedBucketOwner":{"shape":"AccountId"},
+        "SourceBucket":{"shape":"S3BucketArnString"},
+        "ManifestOutputLocation":{"shape":"S3ManifestOutputLocation"},
+        "Filter":{"shape":"JobManifestGeneratorFilter"},
+        "EnableManifestOutput":{"shape":"Boolean"}
+      }
+    },
     "S3KeyArnString":{
       "type":"string",
       "max":2000,
       "min":1,
       "pattern":"arn:[^:]+:s3:.*"
+    },
+    "S3ManifestOutputLocation":{
+      "type":"structure",
+      "required":[
+        "Bucket",
+        "ManifestFormat"
+      ],
+      "members":{
+        "ExpectedManifestBucketOwner":{"shape":"AccountId"},
+        "Bucket":{"shape":"S3BucketArnString"},
+        "ManifestPrefix":{"shape":"ManifestPrefixString"},
+        "ManifestEncryption":{"shape":"GeneratedManifestEncryption"},
+        "ManifestFormat":{"shape":"GeneratedManifestFormat"}
+      }
     },
     "S3MetadataDirective":{
       "type":"string",
@@ -3593,6 +3721,11 @@
       "max":128,
       "min":4
     },
+    "S3ReplicateObjectOperation":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "S3Retention":{
       "type":"structure",
       "members":{
@@ -3645,7 +3778,8 @@
         "ONEZONE_IA",
         "GLACIER",
         "INTELLIGENT_TIERING",
-        "DEEP_ARCHIVE"
+        "DEEP_ARCHIVE",
+        "GLACIER_IR"
       ]
     },
     "S3Tag":{
@@ -3677,8 +3811,22 @@
       },
       "locationName":"SSE-KMS"
     },
+    "SSEKMSEncryption":{
+      "type":"structure",
+      "required":["KeyId"],
+      "members":{
+        "KeyId":{"shape":"KmsKeyArnString"}
+      },
+      "locationName":"SSE-KMS"
+    },
     "SSEKMSKeyId":{"type":"string"},
     "SSES3":{
+      "type":"structure",
+      "members":{
+      },
+      "locationName":"SSE-S3"
+    },
+    "SSES3Encryption":{
       "type":"structure",
       "members":{
       },
@@ -3734,9 +3882,9 @@
     },
     "StorageLensDataExport":{
       "type":"structure",
-      "required":["S3BucketDestination"],
       "members":{
-        "S3BucketDestination":{"shape":"S3BucketDestination"}
+        "S3BucketDestination":{"shape":"S3BucketDestination"},
+        "CloudWatchMetrics":{"shape":"CloudWatchMetrics"}
       }
     },
     "StorageLensDataExportEncryption":{

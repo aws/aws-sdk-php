@@ -188,6 +188,7 @@
       "type":"list",
       "member":{"shape":"AttachmentItem"}
     },
+    "Bool":{"type":"boolean"},
     "ChatContent":{
       "type":"string",
       "max":1024,
@@ -297,7 +298,8 @@
           "shape":"ParticipantToken",
           "location":"header",
           "locationName":"X-Amz-Bearer"
-        }
+        },
+        "ConnectParticipant":{"shape":"Bool"}
       }
     },
     "CreateParticipantConnectionResponse":{

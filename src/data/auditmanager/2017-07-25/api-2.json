@@ -192,6 +192,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DeleteAssessmentFrameworkShare":{
+      "name":"DeleteAssessmentFrameworkShare",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/assessmentFrameworkShareRequests/{requestId}"
+      },
+      "input":{"shape":"DeleteAssessmentFrameworkShareRequest"},
+      "output":{"shape":"DeleteAssessmentFrameworkShareResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DeleteAssessmentReport":{
       "name":"DeleteAssessmentReport",
       "http":{
@@ -443,6 +458,34 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetInsights":{
+      "name":"GetInsights",
+      "http":{
+        "method":"GET",
+        "requestUri":"/insights"
+      },
+      "input":{"shape":"GetInsightsRequest"},
+      "output":{"shape":"GetInsightsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetInsightsByAssessment":{
+      "name":"GetInsightsByAssessment",
+      "http":{
+        "method":"GET",
+        "requestUri":"/insights/assessments/{assessmentId}"
+      },
+      "input":{"shape":"GetInsightsByAssessmentRequest"},
+      "output":{"shape":"GetInsightsByAssessmentResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetOrganizationAdminAccount":{
       "name":"GetOrganizationAdminAccount",
       "http":{
@@ -482,6 +525,35 @@
       "output":{"shape":"GetSettingsResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListAssessmentControlInsightsByControlDomain":{
+      "name":"ListAssessmentControlInsightsByControlDomain",
+      "http":{
+        "method":"GET",
+        "requestUri":"/insights/controls-by-assessment"
+      },
+      "input":{"shape":"ListAssessmentControlInsightsByControlDomainRequest"},
+      "output":{"shape":"ListAssessmentControlInsightsByControlDomainResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListAssessmentFrameworkShareRequests":{
+      "name":"ListAssessmentFrameworkShareRequests",
+      "http":{
+        "method":"GET",
+        "requestUri":"/assessmentFrameworkShareRequests"
+      },
+      "input":{"shape":"ListAssessmentFrameworkShareRequestsRequest"},
+      "output":{"shape":"ListAssessmentFrameworkShareRequestsResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -525,6 +597,51 @@
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
         {"shape":"InternalServerException"}
+      ]
+    },
+    "ListControlDomainInsights":{
+      "name":"ListControlDomainInsights",
+      "http":{
+        "method":"GET",
+        "requestUri":"/insights/control-domains"
+      },
+      "input":{"shape":"ListControlDomainInsightsRequest"},
+      "output":{"shape":"ListControlDomainInsightsResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
+      ]
+    },
+    "ListControlDomainInsightsByAssessment":{
+      "name":"ListControlDomainInsightsByAssessment",
+      "http":{
+        "method":"GET",
+        "requestUri":"/insights/control-domains-by-assessment"
+      },
+      "input":{"shape":"ListControlDomainInsightsByAssessmentRequest"},
+      "output":{"shape":"ListControlDomainInsightsByAssessmentResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListControlInsightsByControlDomain":{
+      "name":"ListControlInsightsByControlDomain",
+      "http":{
+        "method":"GET",
+        "requestUri":"/insights/controls"
+      },
+      "input":{"shape":"ListControlInsightsByControlDomainRequest"},
+      "output":{"shape":"ListControlInsightsByControlDomainResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ValidationException"}
       ]
     },
     "ListControls":{
@@ -613,6 +730,21 @@
         {"shape":"ResourceNotFoundException"}
       ]
     },
+    "StartAssessmentFrameworkShare":{
+      "name":"StartAssessmentFrameworkShare",
+      "http":{
+        "method":"POST",
+        "requestUri":"/assessmentFrameworks/{frameworkId}/shareRequests"
+      },
+      "input":{"shape":"StartAssessmentFrameworkShareRequest"},
+      "output":{"shape":"StartAssessmentFrameworkShareResponse"},
+      "errors":[
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "TagResource":{
       "name":"TagResource",
       "http":{
@@ -694,6 +826,21 @@
       },
       "input":{"shape":"UpdateAssessmentFrameworkRequest"},
       "output":{"shape":"UpdateAssessmentFrameworkResponse"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "UpdateAssessmentFrameworkShare":{
+      "name":"UpdateAssessmentFrameworkShare",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/assessmentFrameworkShareRequests/{requestId}"
+      },
+      "input":{"shape":"UpdateAssessmentFrameworkShareRequest"},
+      "output":{"shape":"UpdateAssessmentFrameworkShareResponse"},
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
@@ -955,6 +1102,30 @@
         "createdAt":{"shape":"Timestamp"},
         "lastUpdatedAt":{"shape":"Timestamp"}
       }
+    },
+    "AssessmentFrameworkShareRequest":{
+      "type":"structure",
+      "members":{
+        "id":{"shape":"UUID"},
+        "frameworkId":{"shape":"UUID"},
+        "frameworkName":{"shape":"FrameworkName"},
+        "frameworkDescription":{"shape":"FrameworkDescription"},
+        "status":{"shape":"ShareRequestStatus"},
+        "sourceAccount":{"shape":"AccountId"},
+        "destinationAccount":{"shape":"AccountId"},
+        "destinationRegion":{"shape":"Region"},
+        "expirationTime":{"shape":"Timestamp"},
+        "creationTime":{"shape":"Timestamp"},
+        "lastUpdated":{"shape":"Timestamp"},
+        "comment":{"shape":"ShareRequestComment"},
+        "standardControlsCount":{"shape":"NullableInteger"},
+        "customControlsCount":{"shape":"NullableInteger"},
+        "complianceType":{"shape":"ComplianceType"}
+      }
+    },
+    "AssessmentFrameworkShareRequestList":{
+      "type":"list",
+      "member":{"shape":"AssessmentFrameworkShareRequest"}
     },
     "AssessmentMetadata":{
       "type":"structure",
@@ -1319,6 +1490,48 @@
       "max":1000,
       "pattern":"^[\\w\\W\\s\\S]*$"
     },
+    "ControlDomainInsights":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"NonEmptyString"},
+        "id":{"shape":"UUID"},
+        "controlsCountByNoncompliantEvidence":{"shape":"NullableInteger"},
+        "totalControlsCount":{"shape":"NullableInteger"},
+        "evidenceInsights":{"shape":"EvidenceInsights"},
+        "lastUpdated":{"shape":"Timestamp"}
+      }
+    },
+    "ControlDomainInsightsList":{
+      "type":"list",
+      "member":{"shape":"ControlDomainInsights"}
+    },
+    "ControlInsightsMetadata":{
+      "type":"list",
+      "member":{"shape":"ControlInsightsMetadataItem"}
+    },
+    "ControlInsightsMetadataByAssessment":{
+      "type":"list",
+      "member":{"shape":"ControlInsightsMetadataByAssessmentItem"}
+    },
+    "ControlInsightsMetadataByAssessmentItem":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"NonEmptyString"},
+        "id":{"shape":"UUID"},
+        "evidenceInsights":{"shape":"EvidenceInsights"},
+        "controlSetName":{"shape":"NonEmptyString"},
+        "lastUpdated":{"shape":"Timestamp"}
+      }
+    },
+    "ControlInsightsMetadataItem":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"NonEmptyString"},
+        "id":{"shape":"UUID"},
+        "evidenceInsights":{"shape":"EvidenceInsights"},
+        "lastUpdated":{"shape":"Timestamp"}
+      }
+    },
     "ControlMappingSource":{
       "type":"structure",
       "members":{
@@ -1385,7 +1598,7 @@
       "type":"string",
       "max":300,
       "min":1,
-      "pattern":"^[^\\_]*$"
+      "pattern":"^[^\\\\\\_]*$"
     },
     "ControlSetStatus":{
       "type":"string",
@@ -1430,6 +1643,7 @@
     "ControlsCount":{"type":"integer"},
     "CreateAssessmentFrameworkControl":{
       "type":"structure",
+      "required":["id"],
       "members":{
         "id":{"shape":"UUID"}
       }
@@ -1650,6 +1864,30 @@
       "members":{
       }
     },
+    "DeleteAssessmentFrameworkShareRequest":{
+      "type":"structure",
+      "required":[
+        "requestId",
+        "requestType"
+      ],
+      "members":{
+        "requestId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"requestId"
+        },
+        "requestType":{
+          "shape":"ShareRequestType",
+          "location":"querystring",
+          "locationName":"requestType"
+        }
+      }
+    },
+    "DeleteAssessmentFrameworkShareResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DeleteAssessmentReportRequest":{
       "type":"structure",
       "required":[
@@ -1810,6 +2048,14 @@
       "member":{"shape":"UUID"},
       "max":50,
       "min":0
+    },
+    "EvidenceInsights":{
+      "type":"structure",
+      "members":{
+        "noncompliantEvidenceCount":{"shape":"NullableInteger"},
+        "compliantEvidenceCount":{"shape":"NullableInteger"},
+        "inconclusiveEvidenceCount":{"shape":"NullableInteger"}
+      }
     },
     "EvidenceList":{
       "type":"list",
@@ -2210,6 +2456,34 @@
         "evidence":{"shape":"Evidence"}
       }
     },
+    "GetInsightsByAssessmentRequest":{
+      "type":"structure",
+      "required":["assessmentId"],
+      "members":{
+        "assessmentId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"assessmentId"
+        }
+      }
+    },
+    "GetInsightsByAssessmentResponse":{
+      "type":"structure",
+      "members":{
+        "insights":{"shape":"InsightsByAssessment"}
+      }
+    },
+    "GetInsightsRequest":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "GetInsightsResponse":{
+      "type":"structure",
+      "members":{
+        "insights":{"shape":"Insights"}
+      }
+    },
     "GetOrganizationAdminAccountRequest":{
       "type":"structure",
       "members":{
@@ -2262,6 +2536,29 @@
       "min":20,
       "pattern":"^arn:.*:iam:.*"
     },
+    "Insights":{
+      "type":"structure",
+      "members":{
+        "activeAssessmentsCount":{"shape":"NullableInteger"},
+        "noncompliantEvidenceCount":{"shape":"NullableInteger"},
+        "compliantEvidenceCount":{"shape":"NullableInteger"},
+        "inconclusiveEvidenceCount":{"shape":"NullableInteger"},
+        "assessmentControlsCountByNoncompliantEvidence":{"shape":"NullableInteger"},
+        "totalAssessmentControlsCount":{"shape":"NullableInteger"},
+        "lastUpdated":{"shape":"Timestamp"}
+      }
+    },
+    "InsightsByAssessment":{
+      "type":"structure",
+      "members":{
+        "noncompliantEvidenceCount":{"shape":"NullableInteger"},
+        "compliantEvidenceCount":{"shape":"NullableInteger"},
+        "inconclusiveEvidenceCount":{"shape":"NullableInteger"},
+        "assessmentControlsCountByNoncompliantEvidence":{"shape":"NullableInteger"},
+        "totalAssessmentControlsCount":{"shape":"NullableInteger"},
+        "lastUpdated":{"shape":"Timestamp"}
+      }
+    },
     "Integer":{"type":"integer"},
     "InternalServerException":{
       "type":"structure",
@@ -2298,6 +2595,70 @@
       "max":100,
       "min":1,
       "pattern":"^[a-zA-Z0-9\\s-_()\\[\\]]+$"
+    },
+    "ListAssessmentControlInsightsByControlDomainRequest":{
+      "type":"structure",
+      "required":[
+        "controlDomainId",
+        "assessmentId"
+      ],
+      "members":{
+        "controlDomainId":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"controlDomainId"
+        },
+        "assessmentId":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"assessmentId"
+        },
+        "nextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListAssessmentControlInsightsByControlDomainResponse":{
+      "type":"structure",
+      "members":{
+        "controlInsightsByAssessment":{"shape":"ControlInsightsMetadataByAssessment"},
+        "nextToken":{"shape":"Token"}
+      }
+    },
+    "ListAssessmentFrameworkShareRequestsRequest":{
+      "type":"structure",
+      "required":["requestType"],
+      "members":{
+        "requestType":{
+          "shape":"ShareRequestType",
+          "location":"querystring",
+          "locationName":"requestType"
+        },
+        "nextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListAssessmentFrameworkShareRequestsResponse":{
+      "type":"structure",
+      "members":{
+        "assessmentFrameworkShareRequests":{"shape":"AssessmentFrameworkShareRequestList"},
+        "nextToken":{"shape":"Token"}
+      }
     },
     "ListAssessmentFrameworksRequest":{
       "type":"structure",
@@ -2356,6 +2717,11 @@
     "ListAssessmentsRequest":{
       "type":"structure",
       "members":{
+        "status":{
+          "shape":"AssessmentStatus",
+          "location":"querystring",
+          "locationName":"status"
+        },
         "nextToken":{
           "shape":"Token",
           "location":"querystring",
@@ -2372,6 +2738,84 @@
       "type":"structure",
       "members":{
         "assessmentMetadata":{"shape":"ListAssessmentMetadata"},
+        "nextToken":{"shape":"Token"}
+      }
+    },
+    "ListControlDomainInsightsByAssessmentRequest":{
+      "type":"structure",
+      "required":["assessmentId"],
+      "members":{
+        "assessmentId":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"assessmentId"
+        },
+        "nextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListControlDomainInsightsByAssessmentResponse":{
+      "type":"structure",
+      "members":{
+        "controlDomainInsights":{"shape":"ControlDomainInsightsList"},
+        "nextToken":{"shape":"Token"}
+      }
+    },
+    "ListControlDomainInsightsRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListControlDomainInsightsResponse":{
+      "type":"structure",
+      "members":{
+        "controlDomainInsights":{"shape":"ControlDomainInsightsList"},
+        "nextToken":{"shape":"Token"}
+      }
+    },
+    "ListControlInsightsByControlDomainRequest":{
+      "type":"structure",
+      "required":["controlDomainId"],
+      "members":{
+        "controlDomainId":{
+          "shape":"UUID",
+          "location":"querystring",
+          "locationName":"controlDomainId"
+        },
+        "nextToken":{
+          "shape":"Token",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListControlInsightsByControlDomainResponse":{
+      "type":"structure",
+      "members":{
+        "controlInsightsMetadata":{"shape":"ControlInsightsMetadata"},
         "nextToken":{"shape":"Token"}
       }
     },
@@ -2510,6 +2954,7 @@
       "type":"list",
       "member":{"shape":"Notification"}
     },
+    "NullableInteger":{"type":"integer"},
     "ObjectTypeEnum":{
       "type":"string",
       "enum":[
@@ -2519,6 +2964,10 @@
         "DELEGATION",
         "ASSESSMENT_REPORT"
       ]
+    },
+    "Region":{
+      "type":"string",
+      "pattern":"^[a-z]{2}-[a-z]+-[0-9]{1}$"
     },
     "RegisterAccountRequest":{
       "type":"structure",
@@ -2643,6 +3092,39 @@
         "kmsKey":{"shape":"KmsKey"}
       }
     },
+    "ShareRequestAction":{
+      "type":"string",
+      "enum":[
+        "ACCEPT",
+        "DECLINE",
+        "REVOKE"
+      ]
+    },
+    "ShareRequestComment":{
+      "type":"string",
+      "max":500,
+      "pattern":"^[\\w\\W\\s\\S]*$"
+    },
+    "ShareRequestStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "REPLICATING",
+        "SHARED",
+        "EXPIRING",
+        "FAILED",
+        "EXPIRED",
+        "DECLINED",
+        "REVOKED"
+      ]
+    },
+    "ShareRequestType":{
+      "type":"string",
+      "enum":[
+        "SENT",
+        "RECEIVED"
+      ]
+    },
     "SnsArn":{
       "type":"string",
       "max":2048,
@@ -2690,6 +3172,30 @@
         "AWS_API_Call",
         "MANUAL"
       ]
+    },
+    "StartAssessmentFrameworkShareRequest":{
+      "type":"structure",
+      "required":[
+        "frameworkId",
+        "destinationAccount",
+        "destinationRegion"
+      ],
+      "members":{
+        "frameworkId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"frameworkId"
+        },
+        "destinationAccount":{"shape":"AccountId"},
+        "destinationRegion":{"shape":"Region"},
+        "comment":{"shape":"ShareRequestComment"}
+      }
+    },
+    "StartAssessmentFrameworkShareResponse":{
+      "type":"structure",
+      "members":{
+        "assessmentFrameworkShareRequest":{"shape":"AssessmentFrameworkShareRequest"}
+      }
     },
     "String":{
       "type":"string",
@@ -2866,7 +3372,10 @@
     },
     "UpdateAssessmentFrameworkControlSet":{
       "type":"structure",
-      "required":["name"],
+      "required":[
+        "name",
+        "controls"
+      ],
       "members":{
         "id":{"shape":"ControlSetName"},
         "name":{"shape":"ControlSetName"},
@@ -2875,7 +3384,8 @@
     },
     "UpdateAssessmentFrameworkControlSets":{
       "type":"list",
-      "member":{"shape":"UpdateAssessmentFrameworkControlSet"}
+      "member":{"shape":"UpdateAssessmentFrameworkControlSet"},
+      "min":1
     },
     "UpdateAssessmentFrameworkRequest":{
       "type":"structure",
@@ -2900,6 +3410,29 @@
       "type":"structure",
       "members":{
         "framework":{"shape":"Framework"}
+      }
+    },
+    "UpdateAssessmentFrameworkShareRequest":{
+      "type":"structure",
+      "required":[
+        "requestId",
+        "requestType",
+        "action"
+      ],
+      "members":{
+        "requestId":{
+          "shape":"UUID",
+          "location":"uri",
+          "locationName":"requestId"
+        },
+        "requestType":{"shape":"ShareRequestType"},
+        "action":{"shape":"ShareRequestAction"}
+      }
+    },
+    "UpdateAssessmentFrameworkShareResponse":{
+      "type":"structure",
+      "members":{
+        "assessmentFrameworkShareRequest":{"shape":"AssessmentFrameworkShareRequest"}
       }
     },
     "UpdateAssessmentRequest":{

@@ -62,6 +62,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise optInPhoneNumberAsync(array $args = [])
  * @method \Aws\Result publish(array $args = [])
  * @method \GuzzleHttp\Promise\Promise publishAsync(array $args = [])
+ * @method \Aws\Result publishBatch(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise publishBatchAsync(array $args = [])
  * @method \Aws\Result removePermission(array $args = [])
  * @method \GuzzleHttp\Promise\Promise removePermissionAsync(array $args = [])
  * @method \Aws\Result setEndpointAttributes(array $args = [])

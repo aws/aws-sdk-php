@@ -7,6 +7,8 @@ use Aws\AwsClient;
 use Aws\CommandInterface;
 use Aws\Credentials\Credentials;
 use Aws\Ec2\Ec2Client;
+use Aws\Endpoint\UseFipsEndpoint\Configuration as FipsConfiguration;
+use Aws\Endpoint\UseDualStackEndpoint\Configuration as DualStackConfiguration;
 use Aws\Ses\SesClient;
 use Aws\MockHandler;
 use Aws\Result;
@@ -470,6 +472,8 @@ class AwsClientTest extends TestCase
                 'signature_version' => 'v4',
                 'signing_name' => 'foo',
                 'signing_region' => 'foo',
+                'use_fips_endpoint' => new FipsConfiguration(false),
+                'use_dual_stack_endpoint' => new DualStackConfiguration(false, "foo")
             ],
             $client->getConfig()
         );

@@ -45,6 +45,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "CreateIntegrationWorkflow":{
+      "name":"CreateIntegrationWorkflow",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/workflows/integrations"
+      },
+      "input":{"shape":"CreateIntegrationWorkflowRequest"},
+      "output":{"shape":"CreateIntegrationWorkflowResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "CreateProfile":{
       "name":"CreateProfile",
       "http":{
@@ -157,6 +173,38 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DeleteWorkflow":{
+      "name":"DeleteWorkflow",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/domains/{DomainName}/workflows/{WorkflowId}"
+      },
+      "input":{"shape":"DeleteWorkflowRequest"},
+      "output":{"shape":"DeleteWorkflowResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetAutoMergingPreview":{
+      "name":"GetAutoMergingPreview",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/identity-resolution-jobs/auto-merging-preview"
+      },
+      "input":{"shape":"GetAutoMergingPreviewRequest"},
+      "output":{"shape":"GetAutoMergingPreviewResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetDomain":{
       "name":"GetDomain",
       "http":{
@@ -165,6 +213,22 @@
       },
       "input":{"shape":"GetDomainRequest"},
       "output":{"shape":"GetDomainResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetIdentityResolutionJob":{
+      "name":"GetIdentityResolutionJob",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/identity-resolution-jobs/{JobId}"
+      },
+      "input":{"shape":"GetIdentityResolutionJobRequest"},
+      "output":{"shape":"GetIdentityResolutionJobResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"ResourceNotFoundException"},
@@ -237,6 +301,38 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetWorkflow":{
+      "name":"GetWorkflow",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/workflows/{WorkflowId}"
+      },
+      "input":{"shape":"GetWorkflowRequest"},
+      "output":{"shape":"GetWorkflowResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "GetWorkflowSteps":{
+      "name":"GetWorkflowSteps",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/workflows/{WorkflowId}/steps"
+      },
+      "input":{"shape":"GetWorkflowStepsRequest"},
+      "output":{"shape":"GetWorkflowStepsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListAccountIntegrations":{
       "name":"ListAccountIntegrations",
       "http":{
@@ -261,6 +357,22 @@
       },
       "input":{"shape":"ListDomainsRequest"},
       "output":{"shape":"ListDomainsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ListIdentityResolutionJobs":{
+      "name":"ListIdentityResolutionJobs",
+      "http":{
+        "method":"GET",
+        "requestUri":"/domains/{DomainName}/identity-resolution-jobs"
+      },
+      "input":{"shape":"ListIdentityResolutionJobsRequest"},
+      "output":{"shape":"ListIdentityResolutionJobsResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"ResourceNotFoundException"},
@@ -345,6 +457,22 @@
         {"shape":"InternalServerException"},
         {"shape":"BadRequestException"},
         {"shape":"ResourceNotFoundException"}
+      ]
+    },
+    "ListWorkflows":{
+      "name":"ListWorkflows",
+      "http":{
+        "method":"POST",
+        "requestUri":"/domains/{DomainName}/workflows"
+      },
+      "input":{"shape":"ListWorkflowsRequest"},
+      "output":{"shape":"ListWorkflowsResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "MergeProfiles":{
@@ -543,6 +671,62 @@
         "PostalCode":{"shape":"string1To255"}
       }
     },
+    "AppflowIntegration":{
+      "type":"structure",
+      "required":["FlowDefinition"],
+      "members":{
+        "FlowDefinition":{"shape":"FlowDefinition"},
+        "Batches":{"shape":"Batches"}
+      }
+    },
+    "AppflowIntegrationWorkflowAttributes":{
+      "type":"structure",
+      "required":[
+        "SourceConnectorType",
+        "ConnectorProfileName"
+      ],
+      "members":{
+        "SourceConnectorType":{"shape":"SourceConnectorType"},
+        "ConnectorProfileName":{"shape":"ConnectorProfileName"},
+        "RoleArn":{"shape":"string1To255"}
+      }
+    },
+    "AppflowIntegrationWorkflowMetrics":{
+      "type":"structure",
+      "required":[
+        "RecordsProcessed",
+        "StepsCompleted",
+        "TotalSteps"
+      ],
+      "members":{
+        "RecordsProcessed":{"shape":"long"},
+        "StepsCompleted":{"shape":"long"},
+        "TotalSteps":{"shape":"long"}
+      }
+    },
+    "AppflowIntegrationWorkflowStep":{
+      "type":"structure",
+      "required":[
+        "FlowName",
+        "Status",
+        "ExecutionMessage",
+        "RecordsProcessed",
+        "BatchRecordsStartTime",
+        "BatchRecordsEndTime",
+        "CreatedAt",
+        "LastUpdatedAt"
+      ],
+      "members":{
+        "FlowName":{"shape":"FlowName"},
+        "Status":{"shape":"Status"},
+        "ExecutionMessage":{"shape":"string1To255"},
+        "RecordsProcessed":{"shape":"long"},
+        "BatchRecordsStartTime":{"shape":"string1To255"},
+        "BatchRecordsEndTime":{"shape":"string1To255"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"}
+      }
+    },
     "AttributeSourceIdMap":{
       "type":"map",
       "key":{"shape":"string1To255"},
@@ -553,6 +737,15 @@
       "key":{"shape":"string1To255"},
       "value":{"shape":"string1To255"}
     },
+    "AutoMerging":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"optionalBoolean"},
+        "Consolidation":{"shape":"Consolidation"},
+        "ConflictResolution":{"shape":"ConflictResolution"}
+      }
+    },
     "BadRequestException":{
       "type":"structure",
       "members":{
@@ -560,6 +753,21 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "Batch":{
+      "type":"structure",
+      "required":[
+        "StartTime",
+        "EndTime"
+      ],
+      "members":{
+        "StartTime":{"shape":"timestamp"},
+        "EndTime":{"shape":"timestamp"}
+      }
+    },
+    "Batches":{
+      "type":"list",
+      "member":{"shape":"Batch"}
     },
     "BucketName":{
       "type":"string",
@@ -571,6 +779,21 @@
       "type":"string",
       "max":512,
       "pattern":".*"
+    },
+    "ConflictResolution":{
+      "type":"structure",
+      "required":["ConflictResolvingModel"],
+      "members":{
+        "ConflictResolvingModel":{"shape":"ConflictResolvingModel"},
+        "SourceName":{"shape":"string1To255"}
+      }
+    },
+    "ConflictResolvingModel":{
+      "type":"string",
+      "enum":[
+        "RECENCY",
+        "SOURCE"
+      ]
     },
     "ConnectorOperator":{
       "type":"structure",
@@ -586,6 +809,13 @@
       "type":"string",
       "max":256,
       "pattern":"[\\w/!@#+=.-]+"
+    },
+    "Consolidation":{
+      "type":"structure",
+      "required":["MatchingAttributesList"],
+      "members":{
+        "MatchingAttributesList":{"shape":"MatchingAttributesList"}
+      }
     },
     "CreateDomainRequest":{
       "type":"structure",
@@ -623,6 +853,39 @@
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
         "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateIntegrationWorkflowRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "WorkflowType",
+        "IntegrationConfig",
+        "ObjectTypeName",
+        "RoleArn"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "WorkflowType":{"shape":"WorkflowType"},
+        "IntegrationConfig":{"shape":"IntegrationConfig"},
+        "ObjectTypeName":{"shape":"typeName"},
+        "RoleArn":{"shape":"RoleArn"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateIntegrationWorkflowResponse":{
+      "type":"structure",
+      "required":[
+        "WorkflowId",
+        "Message"
+      ],
+      "members":{
+        "WorkflowId":{"shape":"uuid"},
+        "Message":{"shape":"string1To255"}
       }
     },
     "CreateProfileRequest":{
@@ -814,6 +1077,30 @@
         "Message":{"shape":"message"}
       }
     },
+    "DeleteWorkflowRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "WorkflowId"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "WorkflowId":{
+          "shape":"string1To255",
+          "location":"uri",
+          "locationName":"WorkflowId"
+        }
+      }
+    },
+    "DeleteWorkflowResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
     "DestinationField":{
       "type":"string",
       "max":256,
@@ -830,6 +1117,19 @@
         "MeteringProfileCount":{"shape":"long"},
         "ObjectCount":{"shape":"long"},
         "TotalSize":{"shape":"long"}
+      }
+    },
+    "Double":{"type":"double"},
+    "ExportingConfig":{
+      "type":"structure",
+      "members":{
+        "S3Exporting":{"shape":"S3ExportingConfig"}
+      }
+    },
+    "ExportingLocation":{
+      "type":"structure",
+      "members":{
+        "S3Exporting":{"shape":"S3ExportingLocation"}
       }
     },
     "FieldContentType":{
@@ -913,6 +1213,33 @@
         "UNSPECIFIED"
       ]
     },
+    "GetAutoMergingPreviewRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "Consolidation",
+        "ConflictResolution"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "Consolidation":{"shape":"Consolidation"},
+        "ConflictResolution":{"shape":"ConflictResolution"}
+      }
+    },
+    "GetAutoMergingPreviewResponse":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{"shape":"name"},
+        "NumberOfMatchesInSample":{"shape":"long"},
+        "NumberOfProfilesInSample":{"shape":"long"},
+        "NumberOfProfilesWillBeMerged":{"shape":"long"}
+      }
+    },
     "GetDomainRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -943,6 +1270,41 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "GetIdentityResolutionJobRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "JobId"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "JobId":{
+          "shape":"uuid",
+          "location":"uri",
+          "locationName":"JobId"
+        }
+      }
+    },
+    "GetIdentityResolutionJobResponse":{
+      "type":"structure",
+      "members":{
+        "DomainName":{"shape":"name"},
+        "JobId":{"shape":"uuid"},
+        "Status":{"shape":"IdentityResolutionJobStatus"},
+        "Message":{"shape":"stringTo2048"},
+        "JobStartTime":{"shape":"timestamp"},
+        "JobEndTime":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "JobExpirationTime":{"shape":"timestamp"},
+        "AutoMerging":{"shape":"AutoMerging"},
+        "ExportingLocation":{"shape":"ExportingLocation"},
+        "JobStats":{"shape":"JobStats"}
+      }
+    },
     "GetIntegrationRequest":{
       "type":"structure",
       "required":[
@@ -963,7 +1325,6 @@
       "required":[
         "DomainName",
         "Uri",
-        "ObjectTypeName",
         "CreatedAt",
         "LastUpdatedAt"
       ],
@@ -973,7 +1334,9 @@
         "ObjectTypeName":{"shape":"typeName"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "ObjectTypeNames":{"shape":"ObjectTypeNames"},
+        "WorkflowId":{"shape":"string1To255"}
       }
     },
     "GetMatchesRequest":{
@@ -1038,6 +1401,7 @@
         "ExpirationDays":{"shape":"expirationDaysInteger"},
         "EncryptionKey":{"shape":"encryptionKey"},
         "AllowProfileCreation":{"shape":"boolean"},
+        "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
         "Fields":{"shape":"FieldMap"},
         "Keys":{"shape":"KeyMap"},
         "CreatedAt":{"shape":"timestamp"},
@@ -1063,14 +1427,120 @@
         "SourceName":{"shape":"name"},
         "SourceObject":{"shape":"name"},
         "AllowProfileCreation":{"shape":"boolean"},
+        "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
         "Fields":{"shape":"FieldMap"},
         "Keys":{"shape":"KeyMap"}
       }
+    },
+    "GetWorkflowRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "WorkflowId"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "WorkflowId":{
+          "shape":"uuid",
+          "location":"uri",
+          "locationName":"WorkflowId"
+        }
+      }
+    },
+    "GetWorkflowResponse":{
+      "type":"structure",
+      "members":{
+        "WorkflowId":{"shape":"uuid"},
+        "WorkflowType":{"shape":"WorkflowType"},
+        "Status":{"shape":"Status"},
+        "ErrorDescription":{"shape":"string1To255"},
+        "StartDate":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"},
+        "Attributes":{"shape":"WorkflowAttributes"},
+        "Metrics":{"shape":"WorkflowMetrics"}
+      }
+    },
+    "GetWorkflowStepsRequest":{
+      "type":"structure",
+      "required":[
+        "DomainName",
+        "WorkflowId"
+      ],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "WorkflowId":{
+          "shape":"uuid",
+          "location":"uri",
+          "locationName":"WorkflowId"
+        },
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "GetWorkflowStepsResponse":{
+      "type":"structure",
+      "members":{
+        "WorkflowId":{"shape":"uuid"},
+        "WorkflowType":{"shape":"WorkflowType"},
+        "Items":{"shape":"WorkflowStepsList"},
+        "NextToken":{"shape":"token"}
+      }
+    },
+    "IdentityResolutionJob":{
+      "type":"structure",
+      "members":{
+        "DomainName":{"shape":"name"},
+        "JobId":{"shape":"uuid"},
+        "Status":{"shape":"IdentityResolutionJobStatus"},
+        "JobStartTime":{"shape":"timestamp"},
+        "JobEndTime":{"shape":"timestamp"},
+        "JobStats":{"shape":"JobStats"},
+        "ExportingLocation":{"shape":"ExportingLocation"},
+        "Message":{"shape":"stringTo2048"}
+      }
+    },
+    "IdentityResolutionJobStatus":{
+      "type":"string",
+      "enum":[
+        "PENDING",
+        "PREPROCESSING",
+        "FIND_MATCHING",
+        "MERGING",
+        "COMPLETED",
+        "PARTIAL_SUCCESS",
+        "FAILED"
+      ]
+    },
+    "IdentityResolutionJobsList":{
+      "type":"list",
+      "member":{"shape":"IdentityResolutionJob"}
     },
     "IncrementalPullConfig":{
       "type":"structure",
       "members":{
         "DatetimeTypeFieldName":{"shape":"DatetimeTypeFieldName"}
+      }
+    },
+    "IntegrationConfig":{
+      "type":"structure",
+      "members":{
+        "AppflowIntegration":{"shape":"AppflowIntegration"}
       }
     },
     "IntegrationList":{
@@ -1085,6 +1555,43 @@
       "error":{"httpStatusCode":500},
       "exception":true,
       "fault":true
+    },
+    "JobSchedule":{
+      "type":"structure",
+      "required":[
+        "DayOfTheWeek",
+        "Time"
+      ],
+      "members":{
+        "DayOfTheWeek":{"shape":"JobScheduleDayOfTheWeek"},
+        "Time":{"shape":"JobScheduleTime"}
+      }
+    },
+    "JobScheduleDayOfTheWeek":{
+      "type":"string",
+      "enum":[
+        "SUNDAY",
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY"
+      ]
+    },
+    "JobScheduleTime":{
+      "type":"string",
+      "max":5,
+      "min":3,
+      "pattern":"^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
+    },
+    "JobStats":{
+      "type":"structure",
+      "members":{
+        "NumberOfProfilesReviewed":{"shape":"long"},
+        "NumberOfMatchesFound":{"shape":"long"},
+        "NumberOfMergesDone":{"shape":"long"}
+      }
     },
     "KeyMap":{
       "type":"map",
@@ -1111,6 +1618,11 @@
           "shape":"maxSize100",
           "location":"querystring",
           "locationName":"max-results"
+        },
+        "IncludeHidden":{
+          "shape":"optionalBoolean",
+          "location":"querystring",
+          "locationName":"include-hidden"
         }
       }
     },
@@ -1157,12 +1669,39 @@
         "NextToken":{"shape":"token"}
       }
     },
+    "ListIdentityResolutionJobsRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListIdentityResolutionJobsResponse":{
+      "type":"structure",
+      "members":{
+        "IdentityResolutionJobsList":{"shape":"IdentityResolutionJobsList"},
+        "NextToken":{"shape":"token"}
+      }
+    },
     "ListIntegrationItem":{
       "type":"structure",
       "required":[
         "DomainName",
         "Uri",
-        "ObjectTypeName",
         "CreatedAt",
         "LastUpdatedAt"
       ],
@@ -1172,7 +1711,9 @@
         "ObjectTypeName":{"shape":"typeName"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "ObjectTypeNames":{"shape":"ObjectTypeNames"},
+        "WorkflowId":{"shape":"string1To255"}
       }
     },
     "ListIntegrationsRequest":{
@@ -1193,6 +1734,11 @@
           "shape":"maxSize100",
           "location":"querystring",
           "locationName":"max-results"
+        },
+        "IncludeHidden":{
+          "shape":"optionalBoolean",
+          "location":"querystring",
+          "locationName":"include-hidden"
         }
       }
     },
@@ -1335,6 +1881,57 @@
         "tags":{"shape":"TagMap"}
       }
     },
+    "ListWorkflowsItem":{
+      "type":"structure",
+      "required":[
+        "WorkflowType",
+        "WorkflowId",
+        "Status",
+        "StatusDescription",
+        "CreatedAt",
+        "LastUpdatedAt"
+      ],
+      "members":{
+        "WorkflowType":{"shape":"WorkflowType"},
+        "WorkflowId":{"shape":"string1To255"},
+        "Status":{"shape":"Status"},
+        "StatusDescription":{"shape":"string1To255"},
+        "CreatedAt":{"shape":"timestamp"},
+        "LastUpdatedAt":{"shape":"timestamp"}
+      }
+    },
+    "ListWorkflowsRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"name",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "WorkflowType":{"shape":"WorkflowType"},
+        "Status":{"shape":"Status"},
+        "QueryStartDate":{"shape":"timestamp"},
+        "QueryEndDate":{"shape":"timestamp"},
+        "NextToken":{
+          "shape":"token",
+          "location":"querystring",
+          "locationName":"next-token"
+        },
+        "MaxResults":{
+          "shape":"maxSize100",
+          "location":"querystring",
+          "locationName":"max-results"
+        }
+      }
+    },
+    "ListWorkflowsResponse":{
+      "type":"structure",
+      "members":{
+        "Items":{"shape":"WorkflowList"},
+        "NextToken":{"shape":"token"}
+      }
+    },
     "MarketoConnectorOperator":{
       "type":"string",
       "enum":[
@@ -1367,24 +1964,43 @@
       "type":"structure",
       "members":{
         "MatchId":{"shape":"string1To255"},
-        "ProfileIds":{"shape":"ProfileIdList"}
+        "ProfileIds":{"shape":"ProfileIdList"},
+        "ConfidenceScore":{"shape":"Double"}
       }
     },
     "MatchesList":{
       "type":"list",
       "member":{"shape":"MatchItem"}
     },
+    "MatchingAttributes":{
+      "type":"list",
+      "member":{"shape":"string1To255"},
+      "max":20,
+      "min":1
+    },
+    "MatchingAttributesList":{
+      "type":"list",
+      "member":{"shape":"MatchingAttributes"},
+      "max":10,
+      "min":1
+    },
     "MatchingRequest":{
       "type":"structure",
       "required":["Enabled"],
       "members":{
-        "Enabled":{"shape":"optionalBoolean"}
+        "Enabled":{"shape":"optionalBoolean"},
+        "JobSchedule":{"shape":"JobSchedule"},
+        "AutoMerging":{"shape":"AutoMerging"},
+        "ExportingConfig":{"shape":"ExportingConfig"}
       }
     },
     "MatchingResponse":{
       "type":"structure",
       "members":{
-        "Enabled":{"shape":"optionalBoolean"}
+        "Enabled":{"shape":"optionalBoolean"},
+        "JobSchedule":{"shape":"JobSchedule"},
+        "AutoMerging":{"shape":"AutoMerging"},
+        "ExportingConfig":{"shape":"ExportingConfig"}
       }
     },
     "MergeProfilesRequest":{
@@ -1445,6 +2061,11 @@
     "ObjectTypeKeyList":{
       "type":"list",
       "member":{"shape":"ObjectTypeKey"}
+    },
+    "ObjectTypeNames":{
+      "type":"map",
+      "key":{"shape":"string1To255"},
+      "value":{"shape":"typeName"}
     },
     "OperatorPropertiesKeys":{
       "type":"string",
@@ -1533,10 +2154,7 @@
     },
     "PutIntegrationRequest":{
       "type":"structure",
-      "required":[
-        "DomainName",
-        "ObjectTypeName"
-      ],
+      "required":["DomainName"],
       "members":{
         "DomainName":{
           "shape":"name",
@@ -1546,7 +2164,8 @@
         "Uri":{"shape":"string1To255"},
         "ObjectTypeName":{"shape":"typeName"},
         "Tags":{"shape":"TagMap"},
-        "FlowDefinition":{"shape":"FlowDefinition"}
+        "FlowDefinition":{"shape":"FlowDefinition"},
+        "ObjectTypeNames":{"shape":"ObjectTypeNames"}
       }
     },
     "PutIntegrationResponse":{
@@ -1554,7 +2173,6 @@
       "required":[
         "DomainName",
         "Uri",
-        "ObjectTypeName",
         "CreatedAt",
         "LastUpdatedAt"
       ],
@@ -1564,7 +2182,9 @@
         "ObjectTypeName":{"shape":"typeName"},
         "CreatedAt":{"shape":"timestamp"},
         "LastUpdatedAt":{"shape":"timestamp"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "ObjectTypeNames":{"shape":"ObjectTypeNames"},
+        "WorkflowId":{"shape":"string1To255"}
       }
     },
     "PutProfileObjectRequest":{
@@ -1613,6 +2233,7 @@
         "ExpirationDays":{"shape":"expirationDaysInteger"},
         "EncryptionKey":{"shape":"encryptionKey"},
         "AllowProfileCreation":{"shape":"boolean"},
+        "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
         "Fields":{"shape":"FieldMap"},
         "Keys":{"shape":"KeyMap"},
         "Tags":{"shape":"TagMap"}
@@ -1631,6 +2252,7 @@
         "ExpirationDays":{"shape":"expirationDaysInteger"},
         "EncryptionKey":{"shape":"encryptionKey"},
         "AllowProfileCreation":{"shape":"boolean"},
+        "SourceLastUpdatedTimestampFormat":{"shape":"string1To255"},
         "Fields":{"shape":"FieldMap"},
         "Keys":{"shape":"KeyMap"},
         "CreatedAt":{"shape":"timestamp"},
@@ -1645,6 +2267,11 @@
       },
       "error":{"httpStatusCode":404},
       "exception":true
+    },
+    "RoleArn":{
+      "type":"string",
+      "max":512,
+      "pattern":"arn:aws:iam:.*:[0-9]+:.*"
     },
     "S3ConnectorOperator":{
       "type":"string",
@@ -1670,6 +2297,21 @@
         "VALIDATE_NUMERIC",
         "NO_OP"
       ]
+    },
+    "S3ExportingConfig":{
+      "type":"structure",
+      "required":["S3BucketName"],
+      "members":{
+        "S3BucketName":{"shape":"s3BucketName"},
+        "S3KeyName":{"shape":"s3KeyNameCustomerOutputConfig"}
+      }
+    },
+    "S3ExportingLocation":{
+      "type":"structure",
+      "members":{
+        "S3BucketName":{"shape":"s3BucketName"},
+        "S3KeyName":{"shape":"s3KeyName"}
+      }
     },
     "S3SourceProperties":{
       "type":"structure",
@@ -1853,12 +2495,25 @@
         "UNIQUE",
         "SECONDARY",
         "LOOKUP_ONLY",
-        "NEW_ONLY"
+        "NEW_ONLY",
+        "ORDER"
       ]
     },
     "StandardIdentifierList":{
       "type":"list",
       "member":{"shape":"StandardIdentifier"}
+    },
+    "Status":{
+      "type":"string",
+      "enum":[
+        "NOT_STARTED",
+        "IN_PROGRESS",
+        "COMPLETE",
+        "FAILED",
+        "SPLIT",
+        "RETRY",
+        "CANCELLED"
+      ]
     },
     "TagArn":{
       "type":"string",
@@ -2099,6 +2754,36 @@
         "ProfileId":{"shape":"uuid"}
       }
     },
+    "WorkflowAttributes":{
+      "type":"structure",
+      "members":{
+        "AppflowIntegration":{"shape":"AppflowIntegrationWorkflowAttributes"}
+      }
+    },
+    "WorkflowList":{
+      "type":"list",
+      "member":{"shape":"ListWorkflowsItem"}
+    },
+    "WorkflowMetrics":{
+      "type":"structure",
+      "members":{
+        "AppflowIntegration":{"shape":"AppflowIntegrationWorkflowMetrics"}
+      }
+    },
+    "WorkflowStepItem":{
+      "type":"structure",
+      "members":{
+        "AppflowIntegration":{"shape":"AppflowIntegrationWorkflowStep"}
+      }
+    },
+    "WorkflowStepsList":{
+      "type":"list",
+      "member":{"shape":"WorkflowStepItem"}
+    },
+    "WorkflowType":{
+      "type":"string",
+      "enum":["APPFLOW_INTEGRATION"]
+    },
     "ZendeskConnectorOperator":{
       "type":"string",
       "enum":[
@@ -2151,6 +2836,24 @@
     "requestValueList":{
       "type":"list",
       "member":{"shape":"string1To255"}
+    },
+    "s3BucketName":{
+      "type":"string",
+      "max":63,
+      "min":3,
+      "pattern":"^[a-z0-9.-]+$"
+    },
+    "s3KeyName":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":".*"
+    },
+    "s3KeyNameCustomerOutputConfig":{
+      "type":"string",
+      "max":800,
+      "min":1,
+      "pattern":".*"
     },
     "sqsQueueUrl":{
       "type":"string",

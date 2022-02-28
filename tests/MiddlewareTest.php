@@ -79,7 +79,7 @@ class MiddlewareTest extends TestCase
         $list = new HandlerList();
         $mock = function ($command, $request) {
             $this->assertTrue($request->hasHeader('aws-sdk-invocation-id'));
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Result(['@metadata' => ['statusCode' => 200]])
             );
         };
@@ -94,7 +94,7 @@ class MiddlewareTest extends TestCase
         $list = new HandlerList();
         $mock = function ($command, $request) use (&$req) {
             $req = $request;
-            return Promise\promise_for(
+            return Promise\Create::promiseFor(
                 new Result(['@metadata' => ['statusCode' => 200]])
             );
         };
@@ -270,7 +270,7 @@ class MiddlewareTest extends TestCase
         $list = new HandlerList();
         $list->setHandler(function () {
             usleep(1000); // wait for a millisecond
-            return Promise\promise_for(new Result);
+            return Promise\Create::promiseFor(new Result);
         });
         $list->prependInit(Middleware::timer());
         $handler = $list->resolve();
@@ -289,7 +289,7 @@ class MiddlewareTest extends TestCase
         $list = new HandlerList();
         $list->setHandler(function () use ($command) {
             usleep(1000); // wait for a millisecond
-            return Promise\rejection_for(new AwsException('foo', $command));
+            return Promise\Create::rejectionFor(new AwsException('foo', $command));
         });
         $list->prependInit(Middleware::timer());
         $handler = $list->resolve();

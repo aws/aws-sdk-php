@@ -655,7 +655,8 @@
         "VocabularyFilterMethod":{"shape":"VocabularyFilterMethod"},
         "LanguageModelName":{"shape":"ModelName"},
         "ContentRedaction":{"shape":"ContentRedaction"},
-        "LanguageOptions":{"shape":"LanguageOptions"}
+        "LanguageOptions":{"shape":"LanguageOptions"},
+        "LanguageIdSettings":{"shape":"LanguageIdSettingsMap"}
       }
     },
     "CallAnalyticsJobStatus":{
@@ -735,7 +736,8 @@
       ],
       "members":{
         "RedactionType":{"shape":"RedactionType"},
-        "RedactionOutput":{"shape":"RedactionOutput"}
+        "RedactionOutput":{"shape":"RedactionOutput"},
+        "PiiEntityTypes":{"shape":"PiiEntityTypes"}
       }
     },
     "CreateCallAnalyticsCategoryRequest":{
@@ -1138,6 +1140,21 @@
         "en-NZ"
       ]
     },
+    "LanguageIdSettings":{
+      "type":"structure",
+      "members":{
+        "VocabularyName":{"shape":"VocabularyName"},
+        "VocabularyFilterName":{"shape":"VocabularyFilterName"},
+        "LanguageModelName":{"shape":"ModelName"}
+      }
+    },
+    "LanguageIdSettingsMap":{
+      "type":"map",
+      "key":{"shape":"LanguageCode"},
+      "value":{"shape":"LanguageIdSettings"},
+      "max":5,
+      "min":1
+    },
     "LanguageModel":{
       "type":"structure",
       "members":{
@@ -1500,6 +1517,29 @@
       "type":"list",
       "member":{"shape":"Phrase"}
     },
+    "PiiEntityType":{
+      "type":"string",
+      "enum":[
+        "BANK_ACCOUNT_NUMBER",
+        "BANK_ROUTING",
+        "CREDIT_DEBIT_NUMBER",
+        "CREDIT_DEBIT_CVV",
+        "CREDIT_DEBIT_EXPIRY",
+        "PIN",
+        "EMAIL",
+        "ADDRESS",
+        "NAME",
+        "PHONE",
+        "SSN",
+        "ALL"
+      ]
+    },
+    "PiiEntityTypes":{
+      "type":"list",
+      "member":{"shape":"PiiEntityType"},
+      "max":11,
+      "min":0
+    },
     "RedactionOutput":{
       "type":"string",
       "enum":[
@@ -1657,7 +1697,8 @@
         "IdentifyLanguage":{"shape":"Boolean"},
         "LanguageOptions":{"shape":"LanguageOptions"},
         "Subtitles":{"shape":"Subtitles"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "LanguageIdSettings":{"shape":"LanguageIdSettingsMap"}
       }
     },
     "StartTranscriptionJobResponse":{
@@ -1808,7 +1849,8 @@
         "LanguageOptions":{"shape":"LanguageOptions"},
         "IdentifiedLanguageScore":{"shape":"IdentifiedLanguageScore"},
         "Tags":{"shape":"TagList"},
-        "Subtitles":{"shape":"SubtitlesOutput"}
+        "Subtitles":{"shape":"SubtitlesOutput"},
+        "LanguageIdSettings":{"shape":"LanguageIdSettingsMap"}
       }
     },
     "TranscriptionJobName":{

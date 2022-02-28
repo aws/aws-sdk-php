@@ -17,9 +17,11 @@
     "DeleteWebACL": "<p>Deletes the specified <a>WebACL</a>.</p> <p>You can only use this if <code>ManagedByFirewallManager</code> is false in the specified <a>WebACL</a>. </p>",
     "DescribeManagedRuleGroup": "<p>Provides high-level information for a managed rule group, including descriptions of the rules. </p>",
     "DisassociateWebACL": "<p>Disassociates a web ACL from a regional application resource. A regional application can be an Application Load Balancer (ALB), an Amazon API Gateway REST API, or an AppSync GraphQL API. </p> <p>For Amazon CloudFront, don't use this call. Instead, use your CloudFront distribution configuration. To disassociate a web ACL, provide an empty web ACL ID in the CloudFront call <code>UpdateDistribution</code>. For information, see <a href=\"https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateDistribution.html\">UpdateDistribution</a>.</p>",
+    "GenerateMobileSdkReleaseUrl": "<p>Generates a presigned download URL for the specified release of the mobile SDK.</p> <p>The mobile SDK is not generally available. Customers who have access to the mobile SDK can use it to establish and manage Security Token Service (STS) security tokens for use in HTTP(S) requests from a mobile device to WAF. For more information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-application-integration.html\">WAF client application integration</a> in the <i>WAF Developer Guide</i>.</p>",
     "GetIPSet": "<p>Retrieves the specified <a>IPSet</a>.</p>",
     "GetLoggingConfiguration": "<p>Returns the <a>LoggingConfiguration</a> for the specified web ACL.</p>",
     "GetManagedRuleSet": "<p>Retrieves the specified managed rule set. </p> <note> <p>This is intended for use only by vendors of managed rule sets. Vendors are Amazon Web Services and Amazon Web Services Marketplace sellers. </p> <p>Vendors, you can use the managed rule set APIs to provide controlled rollout of your versioned managed rule group offerings for your customers. The APIs are <code>ListManagedRuleSets</code>, <code>GetManagedRuleSet</code>, <code>PutManagedRuleSetVersions</code>, and <code>UpdateManagedRuleSetVersionExpiryDate</code>.</p> </note>",
+    "GetMobileSdkRelease": "<p>Retrieves information for the specified mobile SDK release, including release notes and tags.</p> <p>The mobile SDK is not generally available. Customers who have access to the mobile SDK can use it to establish and manage Security Token Service (STS) security tokens for use in HTTP(S) requests from a mobile device to WAF. For more information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-application-integration.html\">WAF client application integration</a> in the <i>WAF Developer Guide</i>.</p>",
     "GetPermissionPolicy": "<p>Returns the IAM policy that is attached to the specified rule group.</p> <p>You must be the owner of the rule group to perform this operation.</p>",
     "GetRateBasedStatementManagedKeys": "<p>Retrieves the keys that are currently blocked by a rate-based rule instance. The maximum number of managed keys that can be blocked for a single rate-based rule instance is 10,000. If more than 10,000 addresses exceed the rate limit, those with the highest rates are blocked.</p> <p>For a rate-based rule that you've defined inside a rule group, provide the name of the rule group reference statement in your request, in addition to the rate-based rule name and the web ACL name. </p> <p>WAF monitors web requests and manages keys independently for each unique combination of web ACL, optional rule group, and rate-based rule. For example, if you define a rate-based rule inside a rule group, and then use the rule group in a web ACL, WAF monitors web requests and manages keys for that web ACL, rule group reference statement, and rate-based rule instance. If you use the same rule group in a second web ACL, WAF monitors web requests and manages keys for this second usage completely independent of your first. </p>",
     "GetRegexPatternSet": "<p>Retrieves the specified <a>RegexPatternSet</a>.</p>",
@@ -32,12 +34,13 @@
     "ListIPSets": "<p>Retrieves an array of <a>IPSetSummary</a> objects for the IP sets that you manage.</p>",
     "ListLoggingConfigurations": "<p>Retrieves an array of your <a>LoggingConfiguration</a> objects.</p>",
     "ListManagedRuleSets": "<p>Retrieves the managed rule sets that you own. </p> <note> <p>This is intended for use only by vendors of managed rule sets. Vendors are Amazon Web Services and Amazon Web Services Marketplace sellers. </p> <p>Vendors, you can use the managed rule set APIs to provide controlled rollout of your versioned managed rule group offerings for your customers. The APIs are <code>ListManagedRuleSets</code>, <code>GetManagedRuleSet</code>, <code>PutManagedRuleSetVersions</code>, and <code>UpdateManagedRuleSetVersionExpiryDate</code>.</p> </note>",
+    "ListMobileSdkReleases": "<p>Retrieves a list of the available releases for the mobile SDK and the specified device platform. </p> <p>The mobile SDK is not generally available. Customers who have access to the mobile SDK can use it to establish and manage Security Token Service (STS) security tokens for use in HTTP(S) requests from a mobile device to WAF. For more information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-application-integration.html\">WAF client application integration</a> in the <i>WAF Developer Guide</i>.</p>",
     "ListRegexPatternSets": "<p>Retrieves an array of <a>RegexPatternSetSummary</a> objects for the regex pattern sets that you manage.</p>",
     "ListResourcesForWebACL": "<p>Retrieves an array of the Amazon Resource Names (ARNs) for the regional resources that are associated with the specified web ACL. If you want the list of Amazon CloudFront resources, use the CloudFront call <code>ListDistributionsByWebACLId</code>. </p>",
     "ListRuleGroups": "<p>Retrieves an array of <a>RuleGroupSummary</a> objects for the rule groups that you manage. </p>",
     "ListTagsForResource": "<p>Retrieves the <a>TagInfoForResource</a> for the specified resource. Tags are key:value pairs that you can use to categorize and manage your resources, for purposes like billing. For example, you might set the tag key to \"customer\" and the value to the customer name or ID. You can specify one or more tags to add to each Amazon Web Services resource, up to 50 tags for a resource.</p> <p>You can tag the Amazon Web Services resources that you manage through WAF: web ACLs, rule groups, IP sets, and regex pattern sets. You can't manage or view tags through the WAF console. </p>",
     "ListWebACLs": "<p>Retrieves an array of <a>WebACLSummary</a> objects for the web ACLs that you manage.</p>",
-    "PutLoggingConfiguration": "<p>Enables the specified <a>LoggingConfiguration</a>, to start logging from a web ACL, according to the configuration provided.</p> <p>You can access information about all traffic that WAF inspects using the following steps:</p> <ol> <li> <p>Create an Amazon Kinesis Data Firehose. </p> <p>Create the data firehose with a PUT source and in the Region that you are operating. If you are capturing logs for Amazon CloudFront, always create the firehose in US East (N. Virginia). </p> <p>Give the data firehose a name that starts with the prefix <code>aws-waf-logs-</code>. For example, <code>aws-waf-logs-us-east-2-analytics</code>.</p> <note> <p>Do not create the data firehose using a <code>Kinesis stream</code> as your source.</p> </note> </li> <li> <p>Associate that firehose to your web ACL using a <code>PutLoggingConfiguration</code> request.</p> </li> </ol> <p>When you successfully enable logging using a <code>PutLoggingConfiguration</code> request, WAF will create a service linked role with the necessary permissions to write logs to the Amazon Kinesis Data Firehose. For more information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/logging.html\">Logging Web ACL Traffic Information</a> in the <i>WAF Developer Guide</i>.</p> <note> <p>This operation completely replaces the mutable specifications that you already have for the logging configuration with the ones that you provide to this call. To modify the logging configuration, retrieve it by calling <a>GetLoggingConfiguration</a>, update the settings as needed, and then provide the complete logging configuration specification to this call.</p> </note>",
+    "PutLoggingConfiguration": "<p>Enables the specified <a>LoggingConfiguration</a>, to start logging from a web ACL, according to the configuration provided. </p> <note> <p>You can define one logging destination per web ACL.</p> </note> <p>You can access information about the traffic that WAF inspects using the following steps:</p> <ol> <li> <p>Create your logging destination. You can use an Amazon CloudWatch Logs log group, an Amazon Simple Storage Service (Amazon S3) bucket, or an Amazon Kinesis Data Firehose. For information about configuring logging destinations and the permissions that are required for each, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/logging.html\">Logging web ACL traffic information</a> in the <i>WAF Developer Guide</i>.</p> </li> <li> <p>Associate your logging destination to your web ACL using a <code>PutLoggingConfiguration</code> request.</p> </li> </ol> <p>When you successfully enable logging using a <code>PutLoggingConfiguration</code> request, WAF creates an additional role or policy that is required to write logs to the logging destination. For an Amazon CloudWatch Logs log group, WAF creates a resource policy on the log group. For an Amazon S3 bucket, WAF creates a bucket policy. For an Amazon Kinesis Data Firehose, WAF creates a service-linked role.</p> <p>For additional information about web ACL logging, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/logging.html\">Logging web ACL traffic information</a> in the <i>WAF Developer Guide</i>.</p> <note> <p>This operation completely replaces the mutable specifications that you already have for the logging configuration with the ones that you provide to this call. To modify the logging configuration, retrieve it by calling <a>GetLoggingConfiguration</a>, update the settings as needed, and then provide the complete logging configuration specification to this call.</p> </note>",
     "PutManagedRuleSetVersions": "<p>Defines the versions of your managed rule set that you are offering to the customers. Customers see your offerings as managed rule groups with versioning.</p> <note> <p>This is intended for use only by vendors of managed rule sets. Vendors are Amazon Web Services and Amazon Web Services Marketplace sellers. </p> <p>Vendors, you can use the managed rule set APIs to provide controlled rollout of your versioned managed rule group offerings for your customers. The APIs are <code>ListManagedRuleSets</code>, <code>GetManagedRuleSet</code>, <code>PutManagedRuleSetVersions</code>, and <code>UpdateManagedRuleSetVersionExpiryDate</code>.</p> </note> <p>Customers retrieve their managed rule group list by calling <a>ListAvailableManagedRuleGroups</a>. The name that you provide here for your managed rule set is the name the customer sees for the corresponding managed rule group. Customers can retrieve the available versions for a managed rule group by calling <a>ListAvailableManagedRuleGroupVersions</a>. You provide a rule group specification for each version. For each managed rule set, you must specify a version that you recommend using. </p> <p>To initiate the expiration of a managed rule group version, use <a>UpdateManagedRuleSetVersionExpiryDate</a>.</p>",
     "PutPermissionPolicy": "<p>Attaches an IAM policy to the specified resource. Use this to share a rule group across accounts.</p> <p>You must be the owner of the rule group to perform this operation.</p> <p>This action is subject to the following restrictions:</p> <ul> <li> <p>You can attach only one policy with each <code>PutPermissionPolicy</code> request.</p> </li> <li> <p>The ARN in the request must be a valid WAF <a>RuleGroup</a> ARN and the rule group must exist in the same Region.</p> </li> <li> <p>The user making the request must be the owner of the rule group.</p> </li> </ul>",
     "TagResource": "<p>Associates tags with the specified Amazon Web Services resource. Tags are key:value pairs that you can use to categorize and manage your resources, for purposes like billing. For example, you might set the tag key to \"customer\" and the value to the customer name or ID. You can specify one or more tags to add to each Amazon Web Services resource, up to 50 tags for a resource.</p> <p>You can tag the Amazon Web Services resources that you manage through WAF: web ACLs, rule groups, IP sets, and regex pattern sets. You can't manage or view tags through the WAF console. </p>",
@@ -52,7 +55,7 @@
     "Action": {
       "base": null,
       "refs": {
-        "SampledHTTPRequest$Action": "<p>The action for the <code>Rule</code> that the request matched: <code>ALLOW</code>, <code>BLOCK</code>, or <code>COUNT</code>.</p>"
+        "SampledHTTPRequest$Action": "<p>The action for the <code>Rule</code> that the request matched: <code>Allow</code>, <code>Block</code>, or <code>Count</code>.</p>"
       }
     },
     "ActionCondition": {
@@ -145,6 +148,27 @@
         "RuleGroup$Capacity": "<p>The web ACL capacity units (WCUs) required for this rule group.</p> <p>When you create your own rule group, you define this, and you cannot change it after creation. When you add or modify the rules in a rule group, WAF enforces this limit. You can check the capacity for a set of rules using <a>CheckCapacity</a>.</p> <p>WAF uses WCUs to calculate and control the operating resources that are used to run your rules, rule groups, and web ACLs. WAF calculates capacity differently for each rule type, to reflect the relative cost of each rule. Simple rules that cost little to run use fewer WCUs than more complex rules that use more processing power. Rule group capacity is fixed at creation, which helps users plan their web ACL WCU usage when they use a rule group. The WCU limit for web ACLs is 1,500. </p>"
       }
     },
+    "CaptchaAction": {
+      "base": "<p>Specifies that WAF should run a <code>CAPTCHA</code> check against the request: </p> <ul> <li> <p>If the request includes a valid, unexpired <code>CAPTCHA</code> token, WAF allows the web request inspection to proceed to the next rule, similar to a <code>CountAction</code>. </p> </li> <li> <p>If the request doesn't include a valid, unexpired <code>CAPTCHA</code> token, WAF discontinues the web ACL evaluation of the request and blocks it from going to its intended destination.</p> <p>WAF generates a response that it sends back to the client, which includes the following: </p> <ul> <li> <p>The header <code>x-amzn-waf-action</code> with a value of <code>captcha</code>. </p> </li> <li> <p>The HTTP status code <code>405 Method Not Allowed</code>. </p> </li> <li> <p>If the request contains an <code>Accept</code> header with a value of <code>text/html</code>, the response includes a <code>CAPTCHA</code> challenge. </p> </li> </ul> </li> </ul> <p>You can configure the expiration time in the <code>CaptchaConfig</code> <code>ImmunityTimeProperty</code> setting at the rule and web ACL level. The rule setting overrides the web ACL setting. </p> <p>This action option is available for rules. It isn't available for web ACL default actions. </p> <p>This is used in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p>",
+      "refs": {
+        "RuleAction$Captcha": "<p>Instructs WAF to run a <code>CAPTCHA</code> check against the web request.</p>"
+      }
+    },
+    "CaptchaConfig": {
+      "base": "<p>Specifies how WAF should handle <code>CAPTCHA</code> evaluations. This is available at the web ACL level and in each rule. </p>",
+      "refs": {
+        "CreateWebACLRequest$CaptchaConfig": "<p>Specifies how WAF should handle <code>CAPTCHA</code> evaluations for rules that don't have their own <code>CaptchaConfig</code> settings. If you don't specify this, WAF uses its default settings for <code>CaptchaConfig</code>. </p>",
+        "Rule$CaptchaConfig": "<p>Specifies how WAF should handle <code>CAPTCHA</code> evaluations. If you don't specify this, WAF uses the <code>CAPTCHA</code> configuration that's defined for the web ACL. </p>",
+        "UpdateWebACLRequest$CaptchaConfig": "<p>Specifies how WAF should handle <code>CAPTCHA</code> evaluations for rules that don't have their own <code>CaptchaConfig</code> settings. If you don't specify this, WAF uses its default settings for <code>CaptchaConfig</code>. </p>",
+        "WebACL$CaptchaConfig": "<p>Specifies how WAF should handle <code>CAPTCHA</code> evaluations for rules that don't have their own <code>CaptchaConfig</code> settings. If you don't specify this, WAF uses its default settings for <code>CaptchaConfig</code>. </p>"
+      }
+    },
+    "CaptchaResponse": {
+      "base": "<p>The result from the inspection of the web request for a valid <code>CAPTCHA</code> token. </p>",
+      "refs": {
+        "SampledHTTPRequest$CaptchaResponse": "<p>The <code>CAPTCHA</code> response for the request.</p>"
+      }
+    },
     "CheckCapacityRequest": {
       "base": null,
       "refs": {
@@ -183,7 +207,7 @@
     "CountAction": {
       "base": "<p>Specifies that WAF should count the request. Optionally defines additional custom handling for the request.</p> <p>This is used in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p>",
       "refs": {
-        "OverrideAction$Count": "<p>Override the rule action setting to count.</p>",
+        "OverrideAction$Count": "<p>Override the rule group evaluation result to count only. </p> <note> <p>This option is usually set to none. It does not affect how the rules in the rule group are evaluated. If you want the rules in the rule group to only count matches, do not use this and instead exclude those rules in your rule group reference statement settings. </p> </note>",
         "RuleAction$Count": "<p>Instructs WAF to count the web request and allow it.</p>"
       }
     },
@@ -274,6 +298,7 @@
       "base": "<p>Custom request handling behavior that inserts custom headers into a web request. You can add custom request handling for the rule actions allow and count. </p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">WAF Developer Guide</a>. </p>",
       "refs": {
         "AllowAction$CustomRequestHandling": "<p>Defines custom handling for the web request.</p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">WAF Developer Guide</a>. </p>",
+        "CaptchaAction$CustomRequestHandling": "<p>Defines custom handling for the web request.</p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">WAF Developer Guide</a>. </p>",
         "CountAction$CustomRequestHandling": "<p>Defines custom handling for the web request.</p> <p>For information about customizing web requests and responses, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-custom-request-response.html\">Customizing web requests and responses in WAF</a> in the <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html\">WAF Developer Guide</a>. </p>"
       }
     },
@@ -398,6 +423,12 @@
       "refs": {
       }
     },
+    "DownloadUrl": {
+      "base": null,
+      "refs": {
+        "GenerateMobileSdkReleaseUrlResponse$Url": "<p>The presigned download URL for the specified SDK release.</p>"
+      }
+    },
     "EntityDescription": {
       "base": null,
       "refs": {
@@ -467,7 +498,7 @@
         "DeleteRuleGroupRequest$Name": "<p>The name of the rule group. You cannot change the name of a rule group after you create it.</p>",
         "DeleteWebACLRequest$Name": "<p>The name of the web ACL. You cannot change the name of a web ACL after you create it.</p>",
         "DescribeManagedRuleGroupRequest$Name": "<p>The name of the managed rule group. You use this, along with the vendor name, to identify the rule group.</p>",
-        "ExcludedRule$Name": "<p>The name of the rule to exclude.</p>",
+        "ExcludedRule$Name": "<p>The name of the rule whose action you want to override to <code>Count</code>.</p>",
         "FirewallManagerRuleGroup$Name": "<p>The name of the rule group. You cannot change the name of a rule group after you create it.</p>",
         "GetIPSetRequest$Name": "<p>The name of the IP set. You cannot change the name of an <code>IPSet</code> after you create it.</p>",
         "GetManagedRuleSetRequest$Name": "<p>The name of the managed rule set. You use this, along with the rule set ID, to identify the rule set.</p> <p>This name is assigned to the corresponding managed rule group, which your customers can access and use. </p>",
@@ -513,6 +544,7 @@
         "WAFInvalidPermissionPolicyException$Message": null,
         "WAFInvalidResourceException$Message": null,
         "WAFLimitsExceededException$Message": null,
+        "WAFLogDestinationPermissionIssueException$Message": null,
         "WAFNonexistentItemException$Message": null,
         "WAFOptimisticLockException$Message": null,
         "WAFServiceLinkedRoleErrorException$message": null,
@@ -529,7 +561,7 @@
       }
     },
     "ExcludedRule": {
-      "base": "<p>Specifies a single rule to exclude from the rule group. Excluding a rule overrides its action setting for the rule group in the web ACL, setting it to <code>COUNT</code>. This effectively excludes the rule from acting on web requests. </p>",
+      "base": "<p>Specifies a single rule in a rule group whose action you want to override to <code>Count</code>. When you exclude a rule, WAF evaluates it exactly as it would if the rule action setting were <code>Count</code>. This is a useful option for testing the rules in a rule group without modifying how they handle your web traffic. </p>",
       "refs": {
         "ExcludedRules$member": null
       }
@@ -537,8 +569,14 @@
     "ExcludedRules": {
       "base": null,
       "refs": {
-        "ManagedRuleGroupStatement$ExcludedRules": "<p>The rules whose actions are set to <code>COUNT</code> by the web ACL, regardless of the action that is set on the rule. This effectively excludes the rule from acting on web requests. </p>",
-        "RuleGroupReferenceStatement$ExcludedRules": "<p>The names of rules that are in the referenced rule group, but that you want WAF to exclude from processing for this rule statement. </p>"
+        "ManagedRuleGroupStatement$ExcludedRules": "<p>The rules in the referenced rule group whose actions are set to <code>Count</code>. When you exclude a rule, WAF evaluates it exactly as it would if the rule action setting were <code>Count</code>. This is a useful option for testing the rules in a rule group without modifying how they handle your web traffic.</p>",
+        "RuleGroupReferenceStatement$ExcludedRules": "<p>The rules in the referenced rule group whose actions are set to <code>Count</code>. When you exclude a rule, WAF evaluates it exactly as it would if the rule action setting were <code>Count</code>. This is a useful option for testing the rules in a rule group without modifying how they handle your web traffic.</p>"
+      }
+    },
+    "FailureReason": {
+      "base": null,
+      "refs": {
+        "CaptchaResponse$FailureReason": "<p>The reason for failure, populated when the evaluation of the token fails.</p>"
       }
     },
     "FallbackBehavior": {
@@ -546,6 +584,13 @@
       "refs": {
         "ForwardedIPConfig$FallbackBehavior": "<p>The match status to assign to the web request if the request doesn't have a valid IP address in the specified position.</p> <note> <p>If the specified header isn't present in the request, WAF doesn't apply the rule to the web request at all.</p> </note> <p>You can specify the following fallback behaviors:</p> <ul> <li> <p> <code>MATCH</code> - Treat the web request as matching the rule statement. WAF applies the rule action to the request.</p> </li> <li> <p> <code>NO_MATCH</code> - Treat the web request as not matching the rule statement.</p> </li> </ul>",
         "IPSetForwardedIPConfig$FallbackBehavior": "<p>The match status to assign to the web request if the request doesn't have a valid IP address in the specified position.</p> <note> <p>If the specified header isn't present in the request, WAF doesn't apply the rule to the web request at all.</p> </note> <p>You can specify the following fallback behaviors:</p> <ul> <li> <p> <code>MATCH</code> - Treat the web request as matching the rule statement. WAF applies the rule action to the request.</p> </li> <li> <p> <code>NO_MATCH</code> - Treat the web request as not matching the rule statement.</p> </li> </ul>"
+      }
+    },
+    "FieldIdentifier": {
+      "base": null,
+      "refs": {
+        "PasswordField$Identifier": "<p>The name of the password field. For example <code>/form/password</code>.</p>",
+        "UsernameField$Identifier": "<p>The name of the username field. For example <code>/form/username</code>.</p>"
       }
     },
     "FieldToMatch": {
@@ -631,6 +676,16 @@
         "IPSetForwardedIPConfig$Position": "<p>The position in the header to search for the IP address. The header can contain IP addresses of the original client and also of proxies. For example, the header value could be <code>10.1.1.1, 127.0.0.0, 10.10.10.10</code> where the first IP address identifies the original client and the rest identify proxies that the request went through. </p> <p>The options for this setting are the following: </p> <ul> <li> <p>FIRST - Inspect the first IP address in the list of IP addresses in the header. This is usually the client's original IP.</p> </li> <li> <p>LAST - Inspect the last IP address in the list of IP addresses in the header.</p> </li> <li> <p>ANY - Inspect all IP addresses in the header for a match. If the header contains more than 10 IP addresses, WAF inspects the last 10.</p> </li> </ul>"
       }
     },
+    "GenerateMobileSdkReleaseUrlRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GenerateMobileSdkReleaseUrlResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "GeoMatchStatement": {
       "base": "<p>A rule statement used to identify web requests based on country of origin. </p>",
       "refs": {
@@ -663,6 +718,16 @@
       }
     },
     "GetManagedRuleSetResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMobileSdkReleaseRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetMobileSdkReleaseResponse": {
       "base": null,
       "refs": {
       }
@@ -797,14 +862,14 @@
     "IPAddresses": {
       "base": null,
       "refs": {
-        "CreateIPSetRequest$Addresses": "<p>Contains an array of strings that specify one or more IP addresses or blocks of IP addresses in Classless Inter-Domain Routing (CIDR) notation. WAF supports all IPv4 and IPv6 CIDR ranges except for /0. </p> <p>Examples: </p> <ul> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 192.0.2.44, specify <code>192.0.2.44/32</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses from 192.0.2.0 to 192.0.2.255, specify <code>192.0.2.0/24</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 1111:0000:0000:0000:0000:0000:0000:0111, specify <code>1111:0000:0000:0000:0000:0000:0000:0111/128</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000 to 1111:0000:0000:0000:ffff:ffff:ffff:ffff, specify <code>1111:0000:0000:0000:0000:0000:0000:0000/64</code>.</p> </li> </ul> <p>For more information about CIDR notation, see the Wikipedia entry <a href=\"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing\">Classless Inter-Domain Routing</a>.</p>",
-        "IPSet$Addresses": "<p>Contains an array of strings that specify one or more IP addresses or blocks of IP addresses in Classless Inter-Domain Routing (CIDR) notation. WAF supports all IPv4 and IPv6 CIDR ranges except for /0. </p> <p>Examples: </p> <ul> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 192.0.2.44, specify <code>192.0.2.44/32</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses from 192.0.2.0 to 192.0.2.255, specify <code>192.0.2.0/24</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 1111:0000:0000:0000:0000:0000:0000:0111, specify <code>1111:0000:0000:0000:0000:0000:0000:0111/128</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000 to 1111:0000:0000:0000:ffff:ffff:ffff:ffff, specify <code>1111:0000:0000:0000:0000:0000:0000:0000/64</code>.</p> </li> </ul> <p>For more information about CIDR notation, see the Wikipedia entry <a href=\"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing\">Classless Inter-Domain Routing</a>.</p>",
+        "CreateIPSetRequest$Addresses": "<p>Contains an array of strings that specifies zero or more IP addresses or blocks of IP addresses in Classless Inter-Domain Routing (CIDR) notation. WAF supports all IPv4 and IPv6 CIDR ranges except for /0. </p> <p>Example address strings: </p> <ul> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 192.0.2.44, specify <code>192.0.2.44/32</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses from 192.0.2.0 to 192.0.2.255, specify <code>192.0.2.0/24</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 1111:0000:0000:0000:0000:0000:0000:0111, specify <code>1111:0000:0000:0000:0000:0000:0000:0111/128</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000 to 1111:0000:0000:0000:ffff:ffff:ffff:ffff, specify <code>1111:0000:0000:0000:0000:0000:0000:0000/64</code>.</p> </li> </ul> <p>For more information about CIDR notation, see the Wikipedia entry <a href=\"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing\">Classless Inter-Domain Routing</a>.</p> <p>Example JSON <code>Addresses</code> specifications: </p> <ul> <li> <p>Empty array: <code>\"Addresses\": []</code> </p> </li> <li> <p>Array with one address: <code>\"Addresses\": [\"192.0.2.44/32\"]</code> </p> </li> <li> <p>Array with three addresses: <code>\"Addresses\": [\"192.0.2.44/32\", \"192.0.2.0/24\", \"192.0.0.0/16\"]</code> </p> </li> <li> <p>INVALID specification: <code>\"Addresses\": [\"\"]</code> INVALID </p> </li> </ul>",
+        "IPSet$Addresses": "<p>Contains an array of strings that specifies zero or more IP addresses or blocks of IP addresses in Classless Inter-Domain Routing (CIDR) notation. WAF supports all IPv4 and IPv6 CIDR ranges except for /0. </p> <p>Example address strings: </p> <ul> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 192.0.2.44, specify <code>192.0.2.44/32</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses from 192.0.2.0 to 192.0.2.255, specify <code>192.0.2.0/24</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 1111:0000:0000:0000:0000:0000:0000:0111, specify <code>1111:0000:0000:0000:0000:0000:0000:0111/128</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000 to 1111:0000:0000:0000:ffff:ffff:ffff:ffff, specify <code>1111:0000:0000:0000:0000:0000:0000:0000/64</code>.</p> </li> </ul> <p>For more information about CIDR notation, see the Wikipedia entry <a href=\"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing\">Classless Inter-Domain Routing</a>.</p> <p>Example JSON <code>Addresses</code> specifications: </p> <ul> <li> <p>Empty array: <code>\"Addresses\": []</code> </p> </li> <li> <p>Array with one address: <code>\"Addresses\": [\"192.0.2.44/32\"]</code> </p> </li> <li> <p>Array with three addresses: <code>\"Addresses\": [\"192.0.2.44/32\", \"192.0.2.0/24\", \"192.0.0.0/16\"]</code> </p> </li> <li> <p>INVALID specification: <code>\"Addresses\": [\"\"]</code> INVALID </p> </li> </ul>",
         "RateBasedStatementManagedKeysIPSet$Addresses": "<p>The IP addresses that are currently blocked.</p>",
-        "UpdateIPSetRequest$Addresses": "<p>Contains an array of strings that specify one or more IP addresses or blocks of IP addresses in Classless Inter-Domain Routing (CIDR) notation. WAF supports all IPv4 and IPv6 CIDR ranges except for /0. </p> <p>Examples: </p> <ul> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 192.0.2.44, specify <code>192.0.2.44/32</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses from 192.0.2.0 to 192.0.2.255, specify <code>192.0.2.0/24</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 1111:0000:0000:0000:0000:0000:0000:0111, specify <code>1111:0000:0000:0000:0000:0000:0000:0111/128</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000 to 1111:0000:0000:0000:ffff:ffff:ffff:ffff, specify <code>1111:0000:0000:0000:0000:0000:0000:0000/64</code>.</p> </li> </ul> <p>For more information about CIDR notation, see the Wikipedia entry <a href=\"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing\">Classless Inter-Domain Routing</a>.</p>"
+        "UpdateIPSetRequest$Addresses": "<p>Contains an array of strings that specifies zero or more IP addresses or blocks of IP addresses in Classless Inter-Domain Routing (CIDR) notation. WAF supports all IPv4 and IPv6 CIDR ranges except for /0. </p> <p>Example address strings: </p> <ul> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 192.0.2.44, specify <code>192.0.2.44/32</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses from 192.0.2.0 to 192.0.2.255, specify <code>192.0.2.0/24</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from the IP address 1111:0000:0000:0000:0000:0000:0000:0111, specify <code>1111:0000:0000:0000:0000:0000:0000:0111/128</code>.</p> </li> <li> <p>To configure WAF to allow, block, or count requests that originated from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000 to 1111:0000:0000:0000:ffff:ffff:ffff:ffff, specify <code>1111:0000:0000:0000:0000:0000:0000:0000/64</code>.</p> </li> </ul> <p>For more information about CIDR notation, see the Wikipedia entry <a href=\"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing\">Classless Inter-Domain Routing</a>.</p> <p>Example JSON <code>Addresses</code> specifications: </p> <ul> <li> <p>Empty array: <code>\"Addresses\": []</code> </p> </li> <li> <p>Array with one address: <code>\"Addresses\": [\"192.0.2.44/32\"]</code> </p> </li> <li> <p>Array with three addresses: <code>\"Addresses\": [\"192.0.2.44/32\", \"192.0.2.0/24\", \"192.0.0.0/16\"]</code> </p> </li> <li> <p>INVALID specification: <code>\"Addresses\": [\"\"]</code> INVALID </p> </li> </ul>"
       }
     },
     "IPSet": {
-      "base": "<p>Contains one or more IP addresses or blocks of IP addresses specified in Classless Inter-Domain Routing (CIDR) notation. WAF supports all IPv4 and IPv6 CIDR ranges except for /0. For information about CIDR notation, see the Wikipedia entry <a href=\"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing\">Classless Inter-Domain Routing</a>. </p> <p>WAF assigns an ARN to each <code>IPSet</code> that you create. To use an IP set in a rule, you provide the ARN to the <a>Rule</a> statement <a>IPSetReferenceStatement</a>. </p>",
+      "base": "<p>Contains zero or more IP addresses or blocks of IP addresses specified in Classless Inter-Domain Routing (CIDR) notation. WAF supports all IPv4 and IPv6 CIDR ranges except for /0. For information about CIDR notation, see the Wikipedia entry <a href=\"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing\">Classless Inter-Domain Routing</a>. </p> <p>WAF assigns an ARN to each <code>IPSet</code> that you create. To use an IP set in a rule, you provide the ARN to the <a>Rule</a> statement <a>IPSetReferenceStatement</a>. </p>",
       "refs": {
         "GetIPSetResponse$IPSet": "<p/>"
       }
@@ -838,6 +903,12 @@
       "base": null,
       "refs": {
         "HTTPRequest$ClientIP": "<p>The IP address that the request originated from. If the web ACL is associated with a CloudFront distribution, this is the value of one of the following fields in CloudFront access logs:</p> <ul> <li> <p> <code>c-ip</code>, if the viewer did not use an HTTP proxy or a load balancer to send the request</p> </li> <li> <p> <code>x-forwarded-for</code>, if the viewer did use an HTTP proxy or a load balancer to send the request</p> </li> </ul>"
+      }
+    },
+    "ImmunityTimeProperty": {
+      "base": "<p>Determines how long a <code>CAPTCHA</code> token remains valid after the client successfully solves a <code>CAPTCHA</code> puzzle. </p>",
+      "refs": {
+        "CaptchaConfig$ImmunityTimeProperty": "<p>Determines how long a <code>CAPTCHA</code> token remains valid after the client successfully solves a <code>CAPTCHA</code> puzzle. </p>"
       }
     },
     "JsonBody": {
@@ -991,6 +1062,16 @@
         "GetSampledRequestsRequest$MaxItems": "<p>The number of requests that you want WAF to return from among the first 5,000 requests that your Amazon Web Services resource received during the time range. If your resource received fewer requests than the value of <code>MaxItems</code>, <code>GetSampledRequests</code> returns information about all of them. </p>"
       }
     },
+    "ListMobileSdkReleasesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListMobileSdkReleasesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListRegexPatternSetsRequest": {
       "base": null,
       "refs": {
@@ -1077,11 +1158,11 @@
     "LogDestinationConfigs": {
       "base": null,
       "refs": {
-        "LoggingConfiguration$LogDestinationConfigs": "<p>The Amazon Kinesis Data Firehose Amazon Resource Name (ARNs) that you want to associate with the web ACL.</p>"
+        "LoggingConfiguration$LogDestinationConfigs": "<p>The logging destination configuration that you want to associate with the web ACL.</p> <note> <p>You can associate one logging destination to a web ACL.</p> </note>"
       }
     },
     "LoggingConfiguration": {
-      "base": "<p>Defines an association between Amazon Kinesis Data Firehose destinations and a web ACL resource, for logging from WAF. As part of the association, you can specify parts of the standard logging fields to keep out of the logs and you can specify filters so that you log only a subset of the logging records. </p>",
+      "base": "<p>Defines an association between logging destinations and a web ACL resource, for logging from WAF. As part of the association, you can specify parts of the standard logging fields to keep out of the logs and you can specify filters so that you log only a subset of the logging records. </p> <note> <p>You can define one logging destination per web ACL.</p> </note> <p>You can access information about the traffic that WAF inspects using the following steps:</p> <ol> <li> <p>Create your logging destination. You can use an Amazon CloudWatch Logs log group, an Amazon Simple Storage Service (Amazon S3) bucket, or an Amazon Kinesis Data Firehose. For information about configuring logging destinations and the permissions that are required for each, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/logging.html\">Logging web ACL traffic information</a> in the <i>WAF Developer Guide</i>.</p> </li> <li> <p>Associate your logging destination to your web ACL using a <code>PutLoggingConfiguration</code> request.</p> </li> </ol> <p>When you successfully enable logging using a <code>PutLoggingConfiguration</code> request, WAF creates an additional role or policy that is required to write logs to the logging destination. For an Amazon CloudWatch Logs log group, WAF creates a resource policy on the log group. For an Amazon S3 bucket, WAF creates a bucket policy. For an Amazon Kinesis Data Firehose, WAF creates a service-linked role.</p> <p>For additional information about web ACL logging, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/logging.html\">Logging web ACL traffic information</a> in the <i>WAF Developer Guide</i>.</p>",
       "refs": {
         "GetLoggingConfigurationResponse$LoggingConfiguration": "<p>The <a>LoggingConfiguration</a> for the specified web ACL.</p>",
         "LoggingConfigurations$member": null,
@@ -1099,6 +1180,24 @@
       "base": "<p>Filtering that specifies which web requests are kept in the logs and which are dropped, defined for a web ACL's <a>LoggingConfiguration</a>. </p> <p>You can filter on the rule action and on the web request labels that were applied by matching rules during web ACL evaluation. </p>",
       "refs": {
         "LoggingConfiguration$LoggingFilter": "<p>Filtering that specifies which web requests are kept in the logs and which are dropped. You can filter on the rule action and on the web request labels that were applied by matching rules during web ACL evaluation. </p>"
+      }
+    },
+    "LoginPathString": {
+      "base": null,
+      "refs": {
+        "ManagedRuleGroupConfig$LoginPath": "<p>The path of the login endpoint for your application. For example, for the URL <code>https://example.com/web/login</code>, you would provide the path <code>/web/login</code>.</p>"
+      }
+    },
+    "ManagedRuleGroupConfig": {
+      "base": "<p>Additional information that's used by a managed rule group. Most managed rule groups don't require this.</p> <p>Use this for the account takeover prevention managed rule group <code>AWSManagedRulesATPRuleSet</code>, to provide information about the sign-in page of your application. </p>",
+      "refs": {
+        "ManagedRuleGroupConfigs$member": null
+      }
+    },
+    "ManagedRuleGroupConfigs": {
+      "base": null,
+      "refs": {
+        "ManagedRuleGroupStatement$ManagedRuleGroupConfigs": "<p>Additional information that's used by a managed rule group. Most managed rule groups don't require this.</p> <p>Use this for the account takeover prevention managed rule group <code>AWSManagedRulesATPRuleSet</code>, to provide information about the sign-in page of your application. </p>"
       }
     },
     "ManagedRuleGroupStatement": {
@@ -1169,6 +1268,12 @@
         "VisibilityConfig$MetricName": "<p>A name of the Amazon CloudWatch metric. The name can contain only the characters: A-Z, a-z, 0-9, - (hyphen), and _ (underscore). The name can be from one to 128 characters long. It can't contain whitespace or metric names reserved for WAF, for example \"All\" and \"Default_Action.\" </p>"
       }
     },
+    "MobileSdkRelease": {
+      "base": "<p>Information for a release of the mobile SDK, including release notes and tags.</p> <p>The mobile SDK is not generally available. Customers who have access to the mobile SDK can use it to establish and manage Security Token Service (STS) security tokens for use in HTTP(S) requests from a mobile device to WAF. For more information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-application-integration.html\">WAF client application integration</a> in the <i>WAF Developer Guide</i>.</p>",
+      "refs": {
+        "GetMobileSdkReleaseResponse$MobileSdkRelease": "<p>Information for a specified SDK release, including release notes and tags.</p>"
+      }
+    },
     "NextMarker": {
       "base": null,
       "refs": {
@@ -1182,6 +1287,8 @@
         "ListLoggingConfigurationsResponse$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListManagedRuleSetsRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListManagedRuleSetsResponse$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
+        "ListMobileSdkReleasesRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
+        "ListMobileSdkReleasesResponse$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListRegexPatternSetsRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListRegexPatternSetsResponse$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
         "ListRuleGroupsRequest$NextMarker": "<p>When you request a list of objects with a <code>Limit</code> setting, if the number of objects that are still available for retrieval exceeds the limit, WAF returns a <code>NextMarker</code> value in the response. To retrieve the next batch of objects, provide the marker from the prior call in your next request.</p>",
@@ -1193,9 +1300,9 @@
       }
     },
     "NoneAction": {
-      "base": "<p>Specifies that WAF should do nothing. This is generally used to try out a rule without performing any actions. You set the <code>OverrideAction</code> on the <a>Rule</a>. </p> <p>This is used in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p> <p>JSON specification: <code>\"None\": {}</code> </p>",
+      "base": "<p>Specifies that WAF should do nothing. This is used for the <code>OverrideAction</code> setting on a <a>Rule</a> when the rule uses a rule group reference statement. </p> <p>This is used in the context of other settings, for example to specify values for <a>RuleAction</a> and web ACL <a>DefaultAction</a>. </p> <p>JSON specification: <code>\"None\": {}</code> </p>",
       "refs": {
-        "OverrideAction$None": "<p>Don't override the rule action setting.</p>"
+        "OverrideAction$None": "<p>Don't override the rule group evaluation result. This is the most common setting.</p>"
       }
     },
     "NotStatement": {
@@ -1210,11 +1317,17 @@
         "Statement$OrStatement": "<p>A logical rule statement used to combine other rule statements with OR logic. You provide more than one <a>Statement</a> within the <code>OrStatement</code>. </p>"
       }
     },
-    "OverrideAction": {
-      "base": "<p>The override action to apply to the rules in a rule group. Used only for rule statements that reference a rule group, like <code>RuleGroupReferenceStatement</code> and <code>ManagedRuleGroupStatement</code>. </p> <p>Set the override action to none to leave the rule actions in effect. Set it to count to only count matches, regardless of the rule action settings. </p> <p>In a <a>Rule</a>, you must specify either this <code>OverrideAction</code> setting or the rule <code>Action</code> setting, but not both:</p> <ul> <li> <p>If the rule statement references a rule group, use this override action setting and not the action setting. </p> </li> <li> <p>If the rule statement does not reference a rule group, use the rule action setting and not this rule override action setting. </p> </li> </ul>",
+    "OutputUrl": {
+      "base": null,
       "refs": {
-        "FirewallManagerRuleGroup$OverrideAction": "<p>The override action to apply to the rules in a rule group. Used only for rule statements that reference a rule group, like <code>RuleGroupReferenceStatement</code> and <code>ManagedRuleGroupStatement</code>. </p> <p>Set the override action to none to leave the rule actions in effect. Set it to count to only count matches, regardless of the rule action settings. </p> <p>In a <a>Rule</a>, you must specify either this <code>OverrideAction</code> setting or the rule <code>Action</code> setting, but not both:</p> <ul> <li> <p>If the rule statement references a rule group, use this override action setting and not the action setting. </p> </li> <li> <p>If the rule statement does not reference a rule group, use the rule action setting and not this rule override action setting. </p> </li> </ul>",
-        "Rule$OverrideAction": "<p>The override action to apply to the rules in a rule group. Used only for rule statements that reference a rule group, like <code>RuleGroupReferenceStatement</code> and <code>ManagedRuleGroupStatement</code>. </p> <p>Set the override action to none to leave the rule actions in effect. Set it to count to only count matches, regardless of the rule action settings. </p> <p>In a <a>Rule</a>, you must specify either this <code>OverrideAction</code> setting or the rule <code>Action</code> setting, but not both:</p> <ul> <li> <p>If the rule statement references a rule group, use this override action setting and not the action setting. </p> </li> <li> <p>If the rule statement does not reference a rule group, use the rule action setting and not this rule override action setting. </p> </li> </ul>"
+        "GetWebACLResponse$ApplicationIntegrationURL": "<p>The URL to use in SDK integrations with Amazon Web Services managed rule groups. For example, you can use the integration SDKs with the account takeover prevention managed rule group <code>AWSManagedRulesATPRuleSet</code>. This is only populated if you are using a rule group in your web ACL that integrates with your applications in this way. For more information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/waf-application-integration.html\">WAF client application integration</a> in the <i>WAF Developer Guide</i>.</p>"
+      }
+    },
+    "OverrideAction": {
+      "base": "<p>The action to use in the place of the action that results from the rule group evaluation. Set the override action to none to leave the result of the rule group alone. Set it to count to override the result to count only. </p> <p>You can only use this for rule statements that reference a rule group, like <code>RuleGroupReferenceStatement</code> and <code>ManagedRuleGroupStatement</code>. </p> <note> <p>This option is usually set to none. It does not affect how the rules in the rule group are evaluated. If you want the rules in the rule group to only count matches, do not use this and instead exclude those rules in your rule group reference statement settings. </p> </note>",
+      "refs": {
+        "FirewallManagerRuleGroup$OverrideAction": "<p>The action to use in the place of the action that results from the rule group evaluation. Set the override action to none to leave the result of the rule group alone. Set it to count to override the result to count only. </p> <p>You can only use this for rule statements that reference a rule group, like <code>RuleGroupReferenceStatement</code> and <code>ManagedRuleGroupStatement</code>. </p> <note> <p>This option is usually set to none. It does not affect how the rules in the rule group are evaluated. If you want the rules in the rule group to only count matches, do not use this and instead exclude those rules in your rule group reference statement settings. </p> </note>",
+        "Rule$OverrideAction": "<p>The action to use in the place of the action that results from the rule group evaluation. Set the override action to none to leave the result of the rule group alone. Set it to count to override the result to count only. </p> <p>You can only use this for rule statements that reference a rule group, like <code>RuleGroupReferenceStatement</code> and <code>ManagedRuleGroupStatement</code>. </p> <note> <p>This option is usually set to none. It does not affect how the rules in the rule group are evaluated. If you want the rules in the rule group to only count matches, do not use this and instead exclude those rules in your rule group reference statement settings. </p> </note>"
       }
     },
     "PaginationLimit": {
@@ -1225,6 +1338,7 @@
         "ListIPSetsRequest$Limit": "<p>The maximum number of objects that you want WAF to return for this request. If more objects are available, in the response, WAF provides a <code>NextMarker</code> value that you can use in a subsequent call to get the next batch of objects.</p>",
         "ListLoggingConfigurationsRequest$Limit": "<p>The maximum number of objects that you want WAF to return for this request. If more objects are available, in the response, WAF provides a <code>NextMarker</code> value that you can use in a subsequent call to get the next batch of objects.</p>",
         "ListManagedRuleSetsRequest$Limit": "<p>The maximum number of objects that you want WAF to return for this request. If more objects are available, in the response, WAF provides a <code>NextMarker</code> value that you can use in a subsequent call to get the next batch of objects.</p>",
+        "ListMobileSdkReleasesRequest$Limit": "<p>The maximum number of objects that you want WAF to return for this request. If more objects are available, in the response, WAF provides a <code>NextMarker</code> value that you can use in a subsequent call to get the next batch of objects.</p>",
         "ListRegexPatternSetsRequest$Limit": "<p>The maximum number of objects that you want WAF to return for this request. If more objects are available, in the response, WAF provides a <code>NextMarker</code> value that you can use in a subsequent call to get the next batch of objects.</p>",
         "ListRuleGroupsRequest$Limit": "<p>The maximum number of objects that you want WAF to return for this request. If more objects are available, in the response, WAF provides a <code>NextMarker</code> value that you can use in a subsequent call to get the next batch of objects.</p>",
         "ListTagsForResourceRequest$Limit": "<p>The maximum number of objects that you want WAF to return for this request. If more objects are available, in the response, WAF provides a <code>NextMarker</code> value that you can use in a subsequent call to get the next batch of objects.</p>",
@@ -1241,6 +1355,26 @@
       "base": null,
       "refs": {
         "WAFInvalidParameterException$Parameter": "<p>The invalid parameter that resulted in the exception. </p>"
+      }
+    },
+    "PasswordField": {
+      "base": "<p>Details about your login page password field, used in a <code>ManagedRuleGroupConfig</code>. </p>",
+      "refs": {
+        "ManagedRuleGroupConfig$PasswordField": "<p>Details about your login page password field. </p>"
+      }
+    },
+    "PayloadType": {
+      "base": null,
+      "refs": {
+        "ManagedRuleGroupConfig$PayloadType": "<p>The payload type for your login endpoint, either JSON or form encoded.</p>"
+      }
+    },
+    "Platform": {
+      "base": null,
+      "refs": {
+        "GenerateMobileSdkReleaseUrlRequest$Platform": "<p>The device platform.</p>",
+        "GetMobileSdkReleaseRequest$Platform": "<p>The device platform.</p>",
+        "ListMobileSdkReleasesRequest$Platform": "<p>The device platform to retrieve the list for.</p>"
       }
     },
     "PolicyString": {
@@ -1332,7 +1466,7 @@
     "RedactedFields": {
       "base": null,
       "refs": {
-        "LoggingConfiguration$RedactedFields": "<p>The parts of the request that you want to keep out of the logs. For example, if you redact the <code>SingleHeader</code> field, the <code>HEADER</code> field in the firehose will be <code>xxx</code>. </p> <note> <p>You can specify only the following fields for redaction: <code>UriPath</code>, <code>QueryString</code>, <code>SingleHeader</code>, <code>Method</code>, and <code>JsonBody</code>.</p> </note>"
+        "LoggingConfiguration$RedactedFields": "<p>The parts of the request that you want to keep out of the logs. For example, if you redact the <code>SingleHeader</code> field, the <code>HEADER</code> field in the logs will be <code>xxx</code>. </p> <note> <p>You can specify only the following fields for redaction: <code>UriPath</code>, <code>QueryString</code>, <code>SingleHeader</code>, <code>Method</code>, and <code>JsonBody</code>.</p> </note>"
       }
     },
     "Regex": {
@@ -1387,6 +1521,24 @@
         "UpdateRegexPatternSetRequest$RegularExpressionList": "<p/>"
       }
     },
+    "ReleaseNotes": {
+      "base": null,
+      "refs": {
+        "MobileSdkRelease$ReleaseNotes": "<p>Notes describing the release.</p>"
+      }
+    },
+    "ReleaseSummaries": {
+      "base": null,
+      "refs": {
+        "ListMobileSdkReleasesResponse$ReleaseSummaries": "<p>High level information for the available SDK releases. </p>"
+      }
+    },
+    "ReleaseSummary": {
+      "base": "<p>High level information for an SDK release. </p>",
+      "refs": {
+        "ReleaseSummaries$member": null
+      }
+    },
     "ResourceArn": {
       "base": null,
       "refs": {
@@ -1438,6 +1590,12 @@
       "base": null,
       "refs": {
         "ListResourcesForWebACLRequest$ResourceType": "<p>Used for web ACLs that are scoped for regional applications. A regional application can be an Application Load Balancer (ALB), an Amazon API Gateway REST API, or an AppSync GraphQL API. </p>"
+      }
+    },
+    "ResponseCode": {
+      "base": null,
+      "refs": {
+        "CaptchaResponse$ResponseCode": "<p>The HTTP response code indicating the status of the <code>CAPTCHA</code> token in the web request. If the token is missing, invalid, or expired, this code is <code>405 Method Not Allowed</code>.</p>"
       }
     },
     "ResponseContent": {
@@ -1613,6 +1771,12 @@
         "Statement$SizeConstraintStatement": "<p>A rule statement that compares a number of bytes against the size of a request component, using a comparison operator, such as greater than (&gt;) or less than (&lt;). For example, you can use a size constraint statement to look for query strings that are longer than 100 bytes. </p> <p>If you configure WAF to inspect the request body, WAF inspects only the first 8192 bytes (8 KB). If the request body for your web requests never exceeds 8192 bytes, you can create a size constraint condition and block requests that have a request body greater than 8192 bytes.</p> <p>If you choose URI for the value of Part of the request to filter on, the slash (/) in the URI counts as one character. For example, the URI <code>/logo.jpg</code> is nine characters long.</p>"
       }
     },
+    "SolveTimestamp": {
+      "base": null,
+      "refs": {
+        "CaptchaResponse$SolveTimestamp": "<p>The time that the <code>CAPTCHA</code> puzzle was solved for the supplied token. </p>"
+      }
+    },
     "SqliMatchStatement": {
       "base": "<p>Attackers sometimes insert malicious SQL code into web requests in an effort to extract data from your database. To allow or block web requests that appear to contain malicious SQL code, create one or more SQL injection match conditions. An SQL injection match condition identifies the part of web requests, such as the URI or the query string, that you want WAF to inspect. Later in the process, when you create a web ACL, you specify whether to allow or block requests that appear to contain malicious SQL code.</p>",
       "refs": {
@@ -1668,6 +1832,7 @@
         "CreateRegexPatternSetRequest$Tags": "<p>An array of key:value pairs to associate with the resource.</p>",
         "CreateRuleGroupRequest$Tags": "<p>An array of key:value pairs to associate with the resource.</p>",
         "CreateWebACLRequest$Tags": "<p>An array of key:value pairs to associate with the resource.</p>",
+        "MobileSdkRelease$Tags": "<p>Tags that are associated with the release. </p>",
         "TagInfoForResource$TagList": "<p>The array of <a>Tag</a> objects defined for the resource. </p>",
         "TagResourceRequest$Tags": "<p>An array of key:value pairs to associate with the resource.</p>"
       }
@@ -1731,6 +1896,12 @@
         "VersionToPublish$ForecastedLifetime": "<p>The amount of time the vendor expects this version of the managed rule group to last, in days. </p>"
       }
     },
+    "TimeWindowSecond": {
+      "base": null,
+      "refs": {
+        "ImmunityTimeProperty$ImmunityTime": "<p>The amount of time, in seconds, that a <code>CAPTCHA</code> token is valid. The default setting is 300.</p>"
+      }
+    },
     "Timestamp": {
       "base": null,
       "refs": {
@@ -1738,6 +1909,8 @@
         "ManagedRuleSetVersion$PublishTimestamp": "<p>The time that you first published this version. </p> <p>Times are in Coordinated Universal Time (UTC) format. UTC format includes the special designator, Z. For example, \"2016-09-27T14:50Z\". </p>",
         "ManagedRuleSetVersion$LastUpdateTimestamp": "<p>The last time that you updated this version. </p> <p>Times are in Coordinated Universal Time (UTC) format. UTC format includes the special designator, Z. For example, \"2016-09-27T14:50Z\". </p>",
         "ManagedRuleSetVersion$ExpiryTimestamp": "<p>The time that this version is set to expire.</p> <p>Times are in Coordinated Universal Time (UTC) format. UTC format includes the special designator, Z. For example, \"2016-09-27T14:50Z\". </p>",
+        "MobileSdkRelease$Timestamp": "<p>The timestamp of the release. </p>",
+        "ReleaseSummary$Timestamp": "<p>The timestamp of the release. </p>",
         "SampledHTTPRequest$Timestamp": "<p>The time at which WAF received the request from your Amazon Web Services resource, in Unix time format (in seconds).</p>",
         "TimeWindow$StartTime": "<p>The beginning of the time range from which you want <code>GetSampledRequests</code> to return a sample of the requests that your Amazon Web Services resource received. You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, <code>Z</code>. For example, <code>\"2016-09-27T14:50Z\"</code>. You can specify any time range in the previous three hours.</p>",
         "TimeWindow$EndTime": "<p>The end of the time range from which you want <code>GetSampledRequests</code> to return a sample of the requests that your Amazon Web Services resource received. You must specify the times in Coordinated Universal Time (UTC) format. UTC format includes the special designator, <code>Z</code>. For example, <code>\"2016-09-27T14:50Z\"</code>. You can specify any time range in the previous three hours.</p>",
@@ -1817,6 +1990,12 @@
         "FieldToMatch$UriPath": "<p>Inspect the request URI path. This is the part of a web request that identifies a resource, for example, <code>/images/daily-ad.jpg</code>.</p>"
       }
     },
+    "UsernameField": {
+      "base": "<p>Details about your login page username field, used in a <code>ManagedRuleGroupConfig</code>. </p>",
+      "refs": {
+        "ManagedRuleGroupConfig$UsernameField": "<p>Details about your login page username field. </p>"
+      }
+    },
     "VendorName": {
       "base": null,
       "refs": {
@@ -1831,11 +2010,15 @@
       "refs": {
         "DescribeManagedRuleGroupRequest$VersionName": "<p>The version of the rule group. You can only use a version that is not scheduled for expiration. If you don't provide this, WAF uses the vendor's default version. </p>",
         "DescribeManagedRuleGroupResponse$VersionName": "<p>The managed rule group's version. </p>",
+        "GenerateMobileSdkReleaseUrlRequest$ReleaseVersion": "<p>The release version. For the latest available version, specify <code>LATEST</code>.</p>",
+        "GetMobileSdkReleaseRequest$ReleaseVersion": "<p>The release version. For the latest available version, specify <code>LATEST</code>.</p>",
         "ManagedRuleGroupStatement$Version": "<p>The version of the managed rule group to use. If you specify this, the version setting is fixed until you change it. If you don't specify this, WAF uses the vendor's default version, and then keeps the version at the vendor's default when the vendor updates the managed rule group settings. </p>",
         "ManagedRuleGroupVersion$Name": "<p>The version name. </p>",
         "ManagedRuleSet$RecommendedVersion": "<p>The version that you would like your customers to use.</p>",
+        "MobileSdkRelease$ReleaseVersion": "<p>The release version. </p>",
         "PublishedVersions$key": null,
         "PutManagedRuleSetVersionsRequest$RecommendedVersion": "<p>The version of the named managed rule group that you'd like your customers to choose, from among your version offerings. </p>",
+        "ReleaseSummary$ReleaseVersion": "<p>The release version. </p>",
         "UpdateManagedRuleSetVersionExpiryDateRequest$VersionToExpire": "<p>The version that you want to remove from your list of offerings for the named managed rule group. </p>",
         "UpdateManagedRuleSetVersionExpiryDateResponse$ExpiringVersion": "<p>The version that is set to expire. </p>",
         "VersionsToPublish$key": null
@@ -1908,6 +2091,11 @@
     },
     "WAFLimitsExceededException": {
       "base": "<p>WAF couldn’t perform the operation because you exceeded your resource limit. For example, the maximum number of <code>WebACL</code> objects that you can create for an Amazon Web Services account. For more information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/limits.html\">WAF quotas</a> in the <i>WAF Developer Guide</i>.</p>",
+      "refs": {
+      }
+    },
+    "WAFLogDestinationPermissionIssueException": {
+      "base": "<p>The operation failed because you don't have the permissions that your logging configuration requires. For information, see <a href=\"https://docs.aws.amazon.com/waf/latest/developerguide/logging.html\">Logging web ACL traffic information</a> in the <i>WAF Developer Guide</i>.</p>",
       "refs": {
       }
     },

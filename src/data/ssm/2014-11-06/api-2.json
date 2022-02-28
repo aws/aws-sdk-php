@@ -82,6 +82,7 @@
       "input":{"shape":"CreateActivationRequest"},
       "output":{"shape":"CreateActivationResult"},
       "errors":[
+        {"shape":"InvalidParameters"},
         {"shape":"InternalServerError"}
       ]
     },
@@ -1759,7 +1760,6 @@
       "input":{"shape":"TerminateSessionRequest"},
       "output":{"shape":"TerminateSessionResponse"},
       "errors":[
-        {"shape":"DoesNotExistException"},
         {"shape":"InternalServerError"}
       ]
     },
@@ -2844,6 +2844,22 @@
         "WindowExecutionId":{"shape":"MaintenanceWindowExecutionId"}
       }
     },
+    "Category":{
+      "type":"string",
+      "max":128
+    },
+    "CategoryEnumList":{
+      "type":"list",
+      "member":{"shape":"Category"},
+      "max":3,
+      "min":0
+    },
+    "CategoryList":{
+      "type":"list",
+      "member":{"shape":"Category"},
+      "max":3,
+      "min":0
+    },
     "ChangeDetailsValue":{
       "type":"string",
       "max":32768,
@@ -3248,7 +3264,8 @@
           "box":true
         },
         "ExpirationDate":{"shape":"ExpirationDate"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "RegistrationMetadata":{"shape":"RegistrationMetadataList"}
       }
     },
     "CreateActivationResult":{
@@ -4446,7 +4463,9 @@
         "ReviewInformation":{"shape":"ReviewInformationList"},
         "ApprovedVersion":{"shape":"DocumentVersion"},
         "PendingReviewVersion":{"shape":"DocumentVersion"},
-        "ReviewStatus":{"shape":"ReviewStatus"}
+        "ReviewStatus":{"shape":"ReviewStatus"},
+        "Category":{"shape":"CategoryList"},
+        "CategoryEnum":{"shape":"CategoryEnumList"}
       }
     },
     "DocumentDisplayName":{
@@ -5538,7 +5557,9 @@
         "AssociationStatus":{"shape":"StatusName"},
         "LastAssociationExecutionDate":{"shape":"DateTime"},
         "LastSuccessfulAssociationExecutionDate":{"shape":"DateTime"},
-        "AssociationOverview":{"shape":"InstanceAggregatedAssociationOverview"}
+        "AssociationOverview":{"shape":"InstanceAggregatedAssociationOverview"},
+        "SourceId":{"shape":"SourceId"},
+        "SourceType":{"shape":"SourceType"}
       }
     },
     "InstanceInformationFilter":{
@@ -7125,7 +7146,9 @@
     },
     "ManagedInstanceId":{
       "type":"string",
-      "pattern":"^mi-[0-9a-f]{17}$"
+      "max":124,
+      "min":20,
+      "pattern":"(^mi-[0-9a-f]{17}$)|(^eks_c:[0-9A-Za-z][A-Za-z0-9\\-_]{0,99}_\\w{17}$)"
     },
     "MaxConcurrency":{
       "type":"string",
@@ -7155,6 +7178,12 @@
       "type":"integer",
       "max":50,
       "min":5
+    },
+    "MaxSessionDuration":{
+      "type":"string",
+      "max":4,
+      "min":1,
+      "pattern":"^([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|1[0-4][0-3][0-9]|1440)$"
     },
     "MetadataKey":{
       "type":"string",
@@ -7261,7 +7290,8 @@
         "CENTOS",
         "ORACLE_LINUX",
         "DEBIAN",
-        "MACOS"
+        "MACOS",
+        "RASPBIAN"
       ]
     },
     "OpsAggregator":{
@@ -8174,7 +8204,8 @@
     "Parameters":{
       "type":"map",
       "key":{"shape":"ParameterName"},
-      "value":{"shape":"ParameterValueList"}
+      "value":{"shape":"ParameterValueList"},
+      "sensitive":true
     },
     "ParametersFilter":{
       "type":"structure",
@@ -8624,7 +8655,8 @@
       "type":"string",
       "enum":[
         "Windows",
-        "Linux"
+        "Linux",
+        "MacOS"
       ]
     },
     "PlatformTypeList":{
@@ -8848,6 +8880,33 @@
       "type":"integer",
       "max":1000,
       "min":1
+    },
+    "RegistrationMetadataItem":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "Value"
+      ],
+      "members":{
+        "Key":{"shape":"RegistrationMetadataKey"},
+        "Value":{"shape":"RegistrationMetadataValue"}
+      }
+    },
+    "RegistrationMetadataKey":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
+    },
+    "RegistrationMetadataList":{
+      "type":"list",
+      "member":{"shape":"RegistrationMetadataItem"}
+    },
+    "RegistrationMetadataValue":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^(?!\\s*$).+"
     },
     "RegistrationsCount":{
       "type":"integer",
@@ -9370,8 +9429,10 @@
         "EndDate":{"shape":"DateTime"},
         "DocumentName":{"shape":"DocumentName"},
         "Owner":{"shape":"SessionOwner"},
+        "Reason":{"shape":"SessionReason"},
         "Details":{"shape":"SessionDetails"},
-        "OutputUrl":{"shape":"SessionManagerOutputUrl"}
+        "OutputUrl":{"shape":"SessionManagerOutputUrl"},
+        "MaxSessionDuration":{"shape":"MaxSessionDuration"}
       }
     },
     "SessionDetails":{
@@ -9467,6 +9528,12 @@
       "max":256,
       "min":1
     },
+    "SessionReason":{
+      "type":"string",
+      "max":256,
+      "min":1,
+      "pattern":"^.{1,256}$"
+    },
     "SessionState":{
       "type":"string",
       "enum":[
@@ -9522,6 +9589,20 @@
       "max":36,
       "min":36,
       "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "SourceId":{
+      "type":"string",
+      "max":128,
+      "min":0,
+      "pattern":"^[a-zA-Z0-9:_-]*$"
+    },
+    "SourceType":{
+      "type":"string",
+      "enum":[
+        "AWS::EC2::Instance",
+        "AWS::IoT::Thing",
+        "AWS::SSM::ManagedInstance"
+      ]
     },
     "StandardErrorContent":{
       "type":"string",
@@ -9608,6 +9689,7 @@
       "members":{
         "Target":{"shape":"SessionTarget"},
         "DocumentName":{"shape":"DocumentARN"},
+        "Reason":{"shape":"SessionReason"},
         "Parameters":{"shape":"SessionManagerParameters"}
       }
     },

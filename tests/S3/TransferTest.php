@@ -469,7 +469,7 @@ class TransferTest extends TestCase
                 CommandInterface $command,
                 RequestInterface $request = null
             ) use ($handler, $fn) {
-                return Promise\promise_for($fn($command, $request));
+                return Promise\Create::promiseFor($fn($command, $request));
             };
         };
     }

@@ -998,6 +998,7 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidRequestException"},
         {"shape":"MissingParameterValueException"},
         {"shape":"ServiceUnavailableException"}
       ],
@@ -1235,7 +1236,9 @@
         "SelectionName":{"shape":"BackupSelectionName"},
         "IamRoleArn":{"shape":"IAMRoleArn"},
         "Resources":{"shape":"ResourceArns"},
-        "ListOfTags":{"shape":"ListOfTags"}
+        "ListOfTags":{"shape":"ListOfTags"},
+        "NotResources":{"shape":"ResourceArns"},
+        "Conditions":{"shape":"Conditions"}
       }
     },
     "BackupSelectionName":{
@@ -1274,7 +1277,9 @@
         "COPY_JOB_FAILED",
         "RECOVERY_POINT_MODIFIED",
         "BACKUP_PLAN_CREATED",
-        "BACKUP_PLAN_MODIFIED"
+        "BACKUP_PLAN_MODIFIED",
+        "S3_BACKUP_OBJECT_FAILED",
+        "S3_RESTORE_OBJECT_FAILED"
       ]
     },
     "BackupVaultEvents":{
@@ -1332,11 +1337,31 @@
       }
     },
     "ConditionKey":{"type":"string"},
+    "ConditionParameter":{
+      "type":"structure",
+      "members":{
+        "ConditionKey":{"shape":"ConditionKey"},
+        "ConditionValue":{"shape":"ConditionValue"}
+      }
+    },
+    "ConditionParameters":{
+      "type":"list",
+      "member":{"shape":"ConditionParameter"}
+    },
     "ConditionType":{
       "type":"string",
       "enum":["STRINGEQUALS"]
     },
     "ConditionValue":{"type":"string"},
+    "Conditions":{
+      "type":"structure",
+      "members":{
+        "StringEquals":{"shape":"ConditionParameters"},
+        "StringNotEquals":{"shape":"ConditionParameters"},
+        "StringLike":{"shape":"ConditionParameters"},
+        "StringNotLike":{"shape":"ConditionParameters"}
+      }
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -1849,7 +1874,8 @@
     "DescribeRegionSettingsOutput":{
       "type":"structure",
       "members":{
-        "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"}
+        "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"},
+        "ResourceTypeManagementPreference":{"shape":"ResourceTypeManagementPreference"}
       }
     },
     "DescribeReportJobInput":{
@@ -2959,6 +2985,11 @@
       "type":"list",
       "member":{"shape":"ARN"}
     },
+    "ResourceTypeManagementPreference":{
+      "type":"map",
+      "key":{"shape":"ResourceType"},
+      "value":{"shape":"IsEnabled"}
+    },
     "ResourceTypeOptInPreference":{
       "type":"map",
       "key":{"shape":"ResourceType"},
@@ -3255,7 +3286,8 @@
     "UpdateRegionSettingsInput":{
       "type":"structure",
       "members":{
-        "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"}
+        "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"},
+        "ResourceTypeManagementPreference":{"shape":"ResourceTypeManagementPreference"}
       }
     },
     "UpdateReportPlanInput":{

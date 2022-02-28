@@ -563,6 +563,9 @@
                 },
                 "slotToElicit": {
                     "shape": "NonEmptyString"
+                },
+                "slotElicitationStyle": {
+                    "shape": "StyleType"
                 }
             }
         },
@@ -814,6 +817,12 @@
                 "shape": "Message"
             },
             "max": 10
+        },
+        "Name": {
+            "type": "string",
+            "max": 100,
+            "min": 1,
+            "pattern": "^([0-9a-zA-Z][_-]?)+$"
         },
         "NonEmptyString": {
             "type": "string",
@@ -1120,6 +1129,49 @@
             },
             "exception": true
         },
+        "RuntimeHintDetails": {
+            "type": "structure",
+            "required": [
+                "runtimeHintValues"
+            ],
+            "members": {
+                "runtimeHintValues": {
+                    "shape": "RuntimeHintValuesList"
+                }
+            }
+        },
+        "RuntimeHintPhrase": {
+            "type": "string",
+            "max": 140,
+            "min": 1
+        },
+        "RuntimeHintValue": {
+            "type": "structure",
+            "required": [
+                "phrase"
+            ],
+            "members": {
+                "phrase": {
+                    "shape": "RuntimeHintPhrase"
+                }
+            }
+        },
+        "RuntimeHintValuesList": {
+            "type": "list",
+            "member": {
+                "shape": "RuntimeHintValue"
+            },
+            "max": 100,
+            "min": 1
+        },
+        "RuntimeHints": {
+            "type": "structure",
+            "members": {
+                "slotHints": {
+                    "shape": "SlotHintsIntentMap"
+                }
+            }
+        },
         "SensitiveNonEmptyString": {
             "type": "string",
             "sensitive": true
@@ -1184,6 +1236,9 @@
                 },
                 "originatingRequestId": {
                     "shape": "NonEmptyString"
+                },
+                "runtimeHints": {
+                    "shape": "RuntimeHints"
                 }
             }
         },
@@ -1206,6 +1261,24 @@
                 "values": {
                     "shape": "Values"
                 }
+            }
+        },
+        "SlotHintsIntentMap": {
+            "type": "map",
+            "key": {
+                "shape": "Name"
+            },
+            "value": {
+                "shape": "SlotHintsSlotMap"
+            }
+        },
+        "SlotHintsSlotMap": {
+            "type": "map",
+            "key": {
+                "shape": "Name"
+            },
+            "value": {
+                "shape": "RuntimeHintDetails"
             }
         },
         "Slots": {
@@ -1356,6 +1429,14 @@
             "value": {
                 "shape": "String"
             }
+        },
+        "StyleType": {
+            "type": "string",
+            "enum": [
+                "Default",
+                "SpellByLetter",
+                "SpellByWord"
+            ]
         },
         "Text": {
             "type": "string",

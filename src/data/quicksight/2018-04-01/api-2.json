@@ -38,6 +38,7 @@
       "output":{"shape":"CreateAccountCustomizationResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceExistsException"},
         {"shape":"ResourceNotFoundException"},
@@ -342,6 +343,7 @@
       "output":{"shape":"DeleteAccountCustomizationResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
@@ -892,6 +894,22 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
         {"shape":"ResourceExistsException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "DescribeIpRestriction":{
+      "name":"DescribeIpRestriction",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/ip-restriction"
+      },
+      "input":{"shape":"DescribeIpRestrictionRequest"},
+      "output":{"shape":"DescribeIpRestrictionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -1629,6 +1647,7 @@
       "output":{"shape":"UpdateAccountCustomizationResponse"},
       "errors":[
         {"shape":"AccessDeniedException"},
+        {"shape":"ConflictException"},
         {"shape":"InvalidParameterValueException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
@@ -1883,6 +1902,23 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateIpRestriction":{
+      "name":"UpdateIpRestriction",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/ip-restriction"
+      },
+      "input":{"shape":"UpdateIpRestrictionRequest"},
+      "output":{"shape":"UpdateIpRestrictionResponse"},
+      "errors":[
+        {"shape":"LimitExceededException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdateTemplate":{
       "name":"UpdateTemplate",
       "http":{
@@ -2022,7 +2058,8 @@
     "AccountCustomization":{
       "type":"structure",
       "members":{
-        "DefaultTheme":{"shape":"Arn"}
+        "DefaultTheme":{"shape":"Arn"},
+        "DefaultEmailCustomizationTemplate":{"shape":"Arn"}
       }
     },
     "AccountSettings":{
@@ -2266,6 +2303,10 @@
         }
       }
     },
+    "CIDR":{
+      "type":"string",
+      "pattern":"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(3[0-2]|[1-2][0-9]|[1-9]))$"
+    },
     "CalculatedColumn":{
       "type":"structure",
       "required":[
@@ -2299,7 +2340,7 @@
           "locationName":"AwsAccountId"
         },
         "DataSetId":{
-          "shape":"string",
+          "shape":"String",
           "location":"uri",
           "locationName":"DataSetId"
         },
@@ -2315,7 +2356,7 @@
       "members":{
         "Arn":{"shape":"Arn"},
         "IngestionId":{"shape":"IngestionId"},
-        "RequestId":{"shape":"string"},
+        "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -2906,7 +2947,7 @@
       ],
       "members":{
         "DataSetId":{
-          "shape":"string",
+          "shape":"String",
           "location":"uri",
           "locationName":"DataSetId"
         },
@@ -2919,7 +2960,8 @@
           "shape":"AwsAccountId",
           "location":"uri",
           "locationName":"AwsAccountId"
-        }
+        },
+        "IngestionType":{"shape":"IngestionType"}
       }
     },
     "CreateIngestionResponse":{
@@ -2928,7 +2970,7 @@
         "Arn":{"shape":"Arn"},
         "IngestionId":{"shape":"IngestionId"},
         "IngestionStatus":{"shape":"IngestionStatus"},
-        "RequestId":{"shape":"string"},
+        "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -3484,7 +3526,8 @@
         "SqlServerParameters":{"shape":"SqlServerParameters"},
         "TeradataParameters":{"shape":"TeradataParameters"},
         "TwitterParameters":{"shape":"TwitterParameters"},
-        "AmazonOpenSearchParameters":{"shape":"AmazonOpenSearchParameters"}
+        "AmazonOpenSearchParameters":{"shape":"AmazonOpenSearchParameters"},
+        "ExasolParameters":{"shape":"ExasolParameters"}
       }
     },
     "DataSourceParametersList":{
@@ -3519,7 +3562,8 @@
         "TERADATA",
         "TWITTER",
         "TIMESTREAM",
-        "AMAZON_OPENSEARCH"
+        "AMAZON_OPENSEARCH",
+        "EXASOL"
       ]
     },
     "Database":{
@@ -4306,7 +4350,8 @@
           "shape":"StatusCode",
           "location":"statusCode"
         },
-        "RequestId":{"shape":"String"}
+        "RequestId":{"shape":"String"},
+        "LinkSharingConfiguration":{"shape":"LinkSharingConfiguration"}
       }
     },
     "DescribeDashboardRequest":{
@@ -4653,7 +4698,7 @@
           "locationName":"AwsAccountId"
         },
         "DataSetId":{
-          "shape":"string",
+          "shape":"String",
           "location":"uri",
           "locationName":"DataSetId"
         },
@@ -4668,7 +4713,31 @@
       "type":"structure",
       "members":{
         "Ingestion":{"shape":"Ingestion"},
-        "RequestId":{"shape":"string"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "DescribeIpRestrictionRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        }
+      }
+    },
+    "DescribeIpRestrictionResponse":{
+      "type":"structure",
+      "members":{
+        "AwsAccountId":{"shape":"AwsAccountId"},
+        "IpRestrictionRuleMap":{"shape":"IpRestrictionRuleMap"},
+        "Enabled":{"shape":"NullableBoolean"},
+        "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -5009,7 +5078,18 @@
       "type":"structure",
       "members":{
         "Type":{"shape":"IngestionErrorType"},
-        "Message":{"shape":"string"}
+        "Message":{"shape":"String"}
+      }
+    },
+    "ExasolParameters":{
+      "type":"structure",
+      "required":[
+        "Host",
+        "Port"
+      ],
+      "members":{
+        "Host":{"shape":"Host"},
+        "Port":{"shape":"Port"}
       }
     },
     "ExceptionResourceType":{
@@ -5492,13 +5572,13 @@
         "ErrorInfo":{"shape":"ErrorInfo"},
         "RowInfo":{"shape":"RowInfo"},
         "QueueInfo":{"shape":"QueueInfo"},
-        "CreatedTime":{"shape":"timestamp"},
+        "CreatedTime":{"shape":"Timestamp"},
         "IngestionTimeInSeconds":{
-          "shape":"long",
+          "shape":"Long",
           "box":true
         },
         "IngestionSizeInBytes":{
-          "shape":"long",
+          "shape":"Long",
           "box":true
         },
         "RequestSource":{"shape":"IngestionRequestSource"},
@@ -5547,7 +5627,11 @@
         "DATA_SOURCE_AUTH_FAILED",
         "DATA_SOURCE_CONNECTION_FAILED",
         "FAILURE_TO_PROCESS_JSON_FILE",
-        "INTERNAL_SERVICE_ERROR"
+        "INTERNAL_SERVICE_ERROR",
+        "REFRESH_SUPPRESSED_BY_EDIT",
+        "PERMISSION_NOT_FOUND",
+        "ELASTICSEARCH_CURSOR_NOT_ENABLED",
+        "CURSOR_NOT_ENABLED"
       ]
     },
     "IngestionId":{
@@ -5586,6 +5670,13 @@
         "FAILED",
         "COMPLETED",
         "CANCELLED"
+      ]
+    },
+    "IngestionType":{
+      "type":"string",
+      "enum":[
+        "INCREMENTAL_REFRESH",
+        "FULL_REFRESH"
       ]
     },
     "Ingestions":{
@@ -5670,6 +5761,16 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "IpRestrictionRuleDescription":{
+      "type":"string",
+      "max":150,
+      "min":0
+    },
+    "IpRestrictionRuleMap":{
+      "type":"map",
+      "key":{"shape":"CIDR"},
+      "value":{"shape":"IpRestrictionRuleDescription"}
+    },
     "JiraParameters":{
       "type":"structure",
       "required":["SiteBaseUrl"],
@@ -5721,6 +5822,12 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "LinkSharingConfiguration":{
+      "type":"structure",
+      "members":{
+        "Permissions":{"shape":"ResourcePermissionList"}
+      }
     },
     "ListAnalysesRequest":{
       "type":"structure",
@@ -6165,12 +6272,12 @@
       ],
       "members":{
         "DataSetId":{
-          "shape":"string",
+          "shape":"String",
           "location":"uri",
           "locationName":"DataSetId"
         },
         "NextToken":{
-          "shape":"string",
+          "shape":"String",
           "location":"querystring",
           "locationName":"next-token"
         },
@@ -6191,8 +6298,8 @@
       "type":"structure",
       "members":{
         "Ingestions":{"shape":"Ingestions"},
-        "NextToken":{"shape":"string"},
-        "RequestId":{"shape":"string"},
+        "NextToken":{"shape":"String"},
+        "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
@@ -6743,6 +6850,7 @@
       "type":"string",
       "pattern":".*\\S.*"
     },
+    "NullableBoolean":{"type":"boolean"},
     "OnClause":{
       "type":"string",
       "max":512,
@@ -6899,8 +7007,8 @@
         "QueuedIngestion"
       ],
       "members":{
-        "WaitingOnIngestion":{"shape":"string"},
-        "QueuedIngestion":{"shape":"string"}
+        "WaitingOnIngestion":{"shape":"String"},
+        "QueuedIngestion":{"shape":"String"}
       }
     },
     "QuickSightUserNotFoundException":{
@@ -6993,7 +7101,14 @@
       "type":"structure",
       "members":{
         "Dashboard":{"shape":"RegisteredUserDashboardEmbeddingConfiguration"},
-        "QuickSightConsole":{"shape":"RegisteredUserQuickSightConsoleEmbeddingConfiguration"}
+        "QuickSightConsole":{"shape":"RegisteredUserQuickSightConsoleEmbeddingConfiguration"},
+        "QSearchBar":{"shape":"RegisteredUserQSearchBarEmbeddingConfiguration"}
+      }
+    },
+    "RegisteredUserQSearchBarEmbeddingConfiguration":{
+      "type":"structure",
+      "members":{
+        "InitialTopicId":{"shape":"RestrictiveResourceId"}
       }
     },
     "RegisteredUserQuickSightConsoleEmbeddingConfiguration":{
@@ -7159,11 +7274,15 @@
       "type":"structure",
       "members":{
         "RowsIngested":{
-          "shape":"long",
+          "shape":"Long",
           "box":true
         },
         "RowsDropped":{
-          "shape":"long",
+          "shape":"Long",
+          "box":true
+        },
+        "TotalRowsInDataset":{
+          "shape":"Long",
           "box":true
         }
       }
@@ -8112,7 +8231,9 @@
           "locationName":"DashboardId"
         },
         "GrantPermissions":{"shape":"UpdateResourcePermissionList"},
-        "RevokePermissions":{"shape":"UpdateResourcePermissionList"}
+        "RevokePermissions":{"shape":"UpdateResourcePermissionList"},
+        "GrantLinkPermissions":{"shape":"UpdateLinkPermissionList"},
+        "RevokeLinkPermissions":{"shape":"UpdateLinkPermissionList"}
       }
     },
     "UpdateDashboardPermissionsResponse":{
@@ -8125,7 +8246,8 @@
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
-        }
+        },
+        "LinkSharingConfiguration":{"shape":"LinkSharingConfiguration"}
       }
     },
     "UpdateDashboardPublishedVersionRequest":{
@@ -8497,6 +8619,35 @@
         }
       }
     },
+    "UpdateIpRestrictionRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "IpRestrictionRuleMap":{"shape":"IpRestrictionRuleMap"},
+        "Enabled":{"shape":"NullableBoolean"}
+      }
+    },
+    "UpdateIpRestrictionResponse":{
+      "type":"structure",
+      "members":{
+        "AwsAccountId":{"shape":"AwsAccountId"},
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
+      }
+    },
+    "UpdateLinkPermissionList":{
+      "type":"list",
+      "member":{"shape":"ResourcePermission"},
+      "max":2
+    },
     "UpdateResourcePermissionList":{
       "type":"list",
       "member":{"shape":"ResourcePermission"},
@@ -8847,9 +8998,6 @@
       "max":128,
       "min":1
     },
-    "boolean":{"type":"boolean"},
-    "long":{"type":"long"},
-    "string":{"type":"string"},
-    "timestamp":{"type":"timestamp"}
+    "boolean":{"type":"boolean"}
   }
 }

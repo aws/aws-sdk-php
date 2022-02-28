@@ -91,7 +91,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
                 $this->assertSame('fooSession', $c->toArray()['RoleSessionName']);
-                return Promise\promise_for(new Result($result));
+                return Promise\Create::promiseFor(new Result($result));
             }
         );
 
@@ -134,7 +134,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
         $sts->getHandlerList()->setHandler(
             function ($c, $r) use ($result) {
                 $this->assertContains('aws-sdk-php-', $c->toArray()['RoleSessionName']);
-                return Promise\promise_for(new Result($result));
+                return Promise\Create::promiseFor(new Result($result));
             }
         );
 
@@ -271,7 +271,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
             'credentials' => false,
             'handler' => function () use (&$retries, $result) {
                 if (0 === $retries--) {
-                    return Promise\promise_for(new Result($result));
+                    return Promise\Create::promiseFor(new Result($result));
                 }
 
                 return new StsException(
@@ -326,7 +326,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
             'credentials' => false,
             'handler' => function () use (&$retries, $result) {
                 if (0 === $retries--) {
-                    return Promise\promise_for(new Result($result));
+                    return Promise\Create::promiseFor(new Result($result));
                 }
 
                 return new StsException(
@@ -376,7 +376,7 @@ class AssumeRoleWithWebIdentityCredentialProviderTest extends TestCase
             'credentials' => false,
             'handler' => function () use (&$retries, $result) {
                 if (0 === $retries--) {
-                    return Promise\promise_for(new Result($result));
+                    return Promise\Create::promiseFor(new Result($result));
                 }
 
                 return new StsException(
