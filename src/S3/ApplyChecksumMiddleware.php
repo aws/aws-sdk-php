@@ -79,8 +79,7 @@ class ApplyChecksumMiddleware
                 if (!$request->hasHeader($headerName)) {
                     $request = $request->withHeader($headerName, $encoded);
                 }
-            }
-            else {
+            } else {
                 throw new InvalidArgumentException(
                     "Unsupported algorithm supplied for input variable {$checksumMemberName}."
                     . "  Supported checksums for this operation include: "
