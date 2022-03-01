@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\KafkaConnect` - Adds operation for custom plugin deletion (DeleteCustomPlugin) and adds new StateDescription field to DescribeCustomPlugin and DescribeConnector responses to return errors from asynchronous resource creation.
+* `Aws\MediaPackage` - This release adds Hybridcast as an available profile option for Dash Origin Endpoints.
+* `Aws\RDS` - Documentation updates for Multi-AZ DB clusters.
+* `Aws\mgn` - Add support for GP3 and IO2 volume types. Add bootMode to LaunchConfiguration object (and as a parameter to UpdateLaunchConfigurationRequest).
+
 ## 3.211.0 - 2022-02-28
 
 * `Aws\Amplify` - Add repositoryCloneMethod field for hosting an Amplify app. This field shows what authorization method is used to clone the repo: SSH, TOKEN, or SIGV4.
