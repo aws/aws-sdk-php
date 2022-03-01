@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.211.1 - 2022-03-01
 
 * `Aws\KafkaConnect` - Adds operation for custom plugin deletion (DeleteCustomPlugin) and adds new StateDescription field to DescribeCustomPlugin and DescribeConnector responses to return errors from asynchronous resource creation.
 * `Aws\MediaPackage` - This release adds Hybridcast as an available profile option for Dash Origin Endpoints.
