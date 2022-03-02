@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Athena` - This release adds support for S3 Object Ownership by allowing the S3 bucket owner full control canned ACL to be set when Athena writes query results to S3 buckets.
+* `Aws\CloudTrail` - Add bytesScanned field into responses of DescribeQuery and GetQueryResults.
+* `Aws\ECR` - This release adds support for tracking images lastRecordedPullTime.
+* `Aws\GameLift` - Minor updates to address errors.
+* `Aws\Keyspaces` - This release adds support for data definition language (DDL) operations
+
 ## 3.211.1 - 2022-03-01
 
 * `Aws\KafkaConnect` - Adds operation for custom plugin deletion (DeleteCustomPlugin) and adds new StateDescription field to DescribeCustomPlugin and DescribeConnector responses to return errors from asynchronous resource creation.
