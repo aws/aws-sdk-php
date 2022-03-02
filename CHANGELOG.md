@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.212.0 - 2022-03-02
 
 * `Aws\Athena` - This release adds support for S3 Object Ownership by allowing the S3 bucket owner full control canned ACL to be set when Athena writes query results to S3 buckets.
 * `Aws\CloudTrail` - Add bytesScanned field into responses of DescribeQuery and GetQueryResults.
