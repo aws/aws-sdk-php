@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.212.1 - 2022-03-03
 
 * `Aws\Appflow` - Launching Amazon AppFlow Marketo as a destination connector SDK.
 * `Aws\FSx` - This release adds support for data repository associations to use root ("/") as the file system path
