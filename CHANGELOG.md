@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Appflow` - Launching Amazon AppFlow Marketo as a destination connector SDK.
+* `Aws\FSx` - This release adds support for data repository associations to use root ("/") as the file system path
+* `Aws\GreengrassV2` - Doc only update that clarifies Create Deployment section.
+* `Aws\TimestreamQuery` - Documentation only update for SDK and CLI
+* `Aws\kendra` - Amazon Kendra now suggests spell corrections for a query. For more information, see https://docs.aws.amazon.com/kendra/latest/dg/query-spell-check.html
+
 ## 3.212.0 - 2022-03-02
 
 * `Aws\Athena` - This release adds support for S3 Object Ownership by allowing the S3 bucket owner full control canned ACL to be set when Athena writes query results to S3 buckets.
