@@ -224,12 +224,11 @@ class CredentialProvider
                         return $creds;
                     }
 
-                    // Refresh expired credentials.
                     if (!$creds->isExpired()) {
                         return $creds;
                     }
                     // Refresh the result and forward the promise.
-                    return $result = $provider();
+                    return $result = $provider($creds);
                 })
                 ->otherwise(function($reason) use (&$result) {
                     // Cleanup rejected promise.

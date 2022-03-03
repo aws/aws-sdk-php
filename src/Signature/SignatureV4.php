@@ -26,6 +26,9 @@ class SignatureV4 implements SignatureInterface
     /** @var bool */
     private $unsigned;
 
+    /** @var bool */
+    private $useV4a;
+
     /**
      * The following headers are not signed because signing these headers
      * would potentially cause a signature mismatch when sending a request
@@ -74,6 +77,7 @@ class SignatureV4 implements SignatureInterface
         $this->service = $service;
         $this->region = $region;
         $this->unsigned = isset($options['unsigned-body']) ? $options['unsigned-body'] : false;
+        $this->useV4a = isset($options['use_v4a']) ? $options['use_v4a'] : false;
     }
 
     /**
@@ -93,6 +97,12 @@ class SignatureV4 implements SignatureInterface
             $parsed['headers']['X-Amz-Security-Token'] = [$token];
         }
         $service = isset($signingService) ? $signingService : $this->service;
+
+        if ($this->useV4a) {
+            return $this->signWithV4a($credentials, $request, $service);
+
+        }
+
         $cs = $this->createScope($sdt, $this->region, $service);
         $payload = $this->getPayload($request);
 
