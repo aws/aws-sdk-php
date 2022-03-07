@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKMeetings` - Adds support for Transcribe language identification feature to the StartMeetingTranscription API.
+* `Aws\ECS` - Amazon ECS UpdateService API now supports additional parameters: loadBalancers, propagateTags, enableECSManagedTags, and serviceRegistries
+* `Aws\MigrationHubRefactorSpaces` - AWS Migration Hub Refactor Spaces documentation update.
+
 ## 3.212.2 - 2022-03-04
 
 * `Aws\Connect` - This release updates the *InstanceStorageConfig APIs so they support a new ResourceType: REAL_TIME_CONTACT_ANALYSIS_SEGMENTS. Use this resource type to enable streaming for real-time contact analysis and to associate the Kinesis stream where real-time contact analysis segments will be published.
