@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.212.3 - 2022-03-07
 
 * `Aws\ChimeSDKMeetings` - Adds support for Transcribe language identification feature to the StartMeetingTranscription API.
 * `Aws\ECS` - Amazon ECS UpdateService API now supports additional parameters: loadBalancers, propagateTags, enableECSManagedTags, and serviceRegistries
