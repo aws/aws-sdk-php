@@ -3,6 +3,8 @@ namespace Aws\Test\Endpoint;
 
 use Aws\Endpoint\Partition;
 use Aws\Endpoint\PartitionInterface;
+use Aws\Endpoint\UseDualstackEndpoint;
+use Aws\Endpoint\UseFipsEndpoint;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -661,6 +663,306 @@ class PartitionTest extends TestCase
                 null,
                 'https://s3.amazonaws.com'
             ],
+        ];
+    }
+
+    /**
+     * @dataProvider variantTagProvider
+     *
+     * @param array $definition
+     * @param @fipsConfig
+     * @param @dualstackConfig
+     */
+    public function testGetVariantIgnoresVariantTagOrder(
+        array $definition,
+        $fipsConfig,
+        $dualstackConfig
+    )
+    {
+        $partition = new Partition($definition);
+        $resolved = $partition([
+            'region' => 'us-east-1',
+            'service' => 'service',
+            'options' => [
+                'use_fips_endpoint' => $fipsConfig,
+                'use_dual_stack_endpoint' => $dualstackConfig
+            ]
+        ]);
+
+        self::assertContains('testsuffix.com', $resolved['endpoint']);
+    }
+
+    public function variantTagProvider()
+    {
+        $useFipsEndpointConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $useFipsEndpointConfig->expects($this->any())
+            ->method('isUseFipsEndpoint')
+            ->willReturn(true);
+
+        $useDualstackEndpointConfig = $this->getMockBuilder(UseDualstackEndpoint\Configuration::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $useDualstackEndpointConfig->expects($this->any())
+            ->method('isUseDualstackEndpoint')
+            ->willReturn(true);
+
+        return [
+            [
+                [
+                    'partition' => 'aws_test',
+                    'dnsSuffix' => 'amazonaws.com',
+                    'regions' => [
+                        'region' => [
+                            'description' => 'A description',
+                        ],
+                    ],
+                    'services' => [
+                        'service' => [
+                            'endpoints' => [
+                                'us-east-1' => [
+                                    'variants' => [[
+                                        'hostname' => 'service-fips.dualstack.testsuffix.com',
+                                        'tags' => ['fips', 'dualstack']
+                                    ]]
+                                ],
+                                'us-west-2' => [],
+                            ],
+                        ],
+                    ],
+                ],
+                $useFipsEndpointConfig,
+                $useDualstackEndpointConfig
+            ],
+            [
+                [
+                    'partition' => 'aws_test',
+                    'dnsSuffix' => 'amazonaws.com',
+                    'regions' => [
+                        'region' => [
+                            'description' => 'A description',
+                        ],
+                    ],
+                    'services' => [
+                        'service' => [
+                            'endpoints' => [
+                                'us-east-1' => [
+                                    'variants' => [[
+                                        'hostname' => 'service-fips.dualstack.testsuffix.com',
+                                        'tags' => ['dualstack', 'fips']
+                                    ]]
+                                ],
+                                'us-west-2' => [],
+                            ],
+                        ],
+                    ],
+                ],
+                $useFipsEndpointConfig,
+                $useDualstackEndpointConfig
+            ],
+            [
+                [
+                    'partition' => 'aws_test',
+                    'dnsSuffix' => 'amazonaws.com',
+                    'regions' => [
+                        'region' => [
+                            'description' => 'A description',
+                        ],
+                    ],
+                    'services' => [
+                        'service' => [
+                            'endpoints' => [
+                                'us-east-1' => [
+                                    'variants' => [[
+                                        'hostname' => 'service-fips.dualstack.testsuffix.com',
+                                        'tags' => ['fips']
+                                    ]]
+                                ],
+                                'us-west-2' => [],
+                            ],
+                        ],
+                    ],
+                ],
+                $useFipsEndpointConfig,
+                null
+            ],
+            [
+                [
+                    'partition' => 'aws_test',
+                    'dnsSuffix' => 'amazonaws.com',
+                    'regions' => [
+                        'region' => [
+                            'description' => 'A description',
+                        ],
+                    ],
+                    'services' => [
+                        'service' => [
+                            'endpoints' => [
+                                'us-east-1' => [
+                                    'variants' => [[
+                                        'hostname' => 'service-fips.dualstack.testsuffix.com',
+                                        'tags' => ['dualstack']
+                                    ]]
+                                ],
+                                'us-west-2' => [],
+                            ],
+                        ],
+                    ],
+                ],
+                null,
+                $useDualstackEndpointConfig
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider variantTagEmptyProvider
+     *
+     * @param array $definition
+     * @param @fipsConfig
+     * @param @dualstackConfig
+     */
+    public function testGetVariantNoVariantSelectedIfTagsAreEmpty(
+        array $definition,
+        $fipsConfig,
+        $dualstackConfig
+    )
+    {
+        $partition = new Partition($definition);
+        $resolved = $partition([
+            'region' => 'us-east-1',
+            'service' => 'service',
+            'options' => [
+                'use_fips_endpoint' => $fipsConfig,
+                'use_dual_stack_endpoint' => $dualstackConfig
+            ]
+        ]);
+
+        self::assertNotContains('testsuffix.com', $resolved['endpoint']);
+    }
+
+    public function variantTagEmptyProvider()
+    {
+        $useFipsEndpointConfig = $this->getMockBuilder(UseFipsEndpoint\Configuration::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $useFipsEndpointConfig->expects($this->any())
+            ->method('isUseFipsEndpoint')
+            ->willReturn(true);
+
+        $useDualstackEndpointConfig = $this->getMockBuilder(UseDualstackEndpoint\Configuration::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $useDualstackEndpointConfig->expects($this->any())
+            ->method('isUseDualstackEndpoint')
+            ->willReturn(true);
+
+        return [
+            [
+                [
+                    'partition' => 'aws_test',
+                    'dnsSuffix' => 'amazonaws.com',
+                    'regions' => [
+                        'region' => [
+                            'description' => 'A description',
+                        ],
+                    ],
+                    'services' => [
+                        'service' => [
+                            'endpoints' => [
+                                'us-east-1' => [
+                                    'variants' => [[
+                                        'hostname' => 'service-fips.dualstack.testsuffix.com',
+                                        'tags' => []
+                                    ]]
+                                ],
+                                'us-west-2' => [],
+                            ],
+                        ],
+                    ],
+                ],
+                $useFipsEndpointConfig,
+                $useDualstackEndpointConfig
+            ],
+            [
+                [
+                    'partition' => 'aws_test',
+                    'dnsSuffix' => 'amazonaws.com',
+                    'regions' => [
+                        'region' => [
+                            'description' => 'A description',
+                        ],
+                    ],
+                    'services' => [
+                        'service' => [
+                            'endpoints' => [
+                                'us-east-1' => [
+                                    'variants' => [[
+                                        'hostname' => 'service-fips.dualstack.testsuffix.com',
+                                        'tags' => []
+                                    ]]
+                                ],
+                                'us-west-2' => [],
+                            ],
+                        ],
+                    ],
+                ],
+                $useFipsEndpointConfig,
+                null
+            ],
+            [
+                [
+                    'partition' => 'aws_test',
+                    'dnsSuffix' => 'amazonaws.com',
+                    'regions' => [
+                        'region' => [
+                            'description' => 'A description',
+                        ],
+                    ],
+                    'services' => [
+                        'service' => [
+                            'endpoints' => [
+                                'us-east-1' => [
+                                    'variants' => [[
+                                        'hostname' => 'service-fips.dualstack.testsuffix.com',
+                                        'tags' => []
+                                    ]]
+                                ],
+                                'us-west-2' => [],
+                            ],
+                        ],
+                    ],
+                ],
+                null,
+                $useDualstackEndpointConfig
+            ],
+            [
+                [
+                    'partition' => 'aws_test',
+                    'dnsSuffix' => 'amazonaws.com',
+                    'regions' => [
+                        'region' => [
+                            'description' => 'A description',
+                        ],
+                    ],
+                    'services' => [
+                        'service' => [
+                            'endpoints' => [
+                                'us-east-1' => [
+                                    'variants' => [[
+                                        'hostname' => 'service-fips.dualstack.testsuffix.com',
+                                        'tags' => []
+                                    ]]
+                                ],
+                                'us-west-2' => [],
+                            ],
+                        ],
+                    ],
+                ],
+                null,
+                null
+            ]
         ];
     }
 }
