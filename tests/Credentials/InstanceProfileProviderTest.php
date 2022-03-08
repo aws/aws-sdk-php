@@ -5,6 +5,9 @@ use Aws\Credentials\Credentials;
 use Aws\Credentials\CredentialsInterface;
 use Aws\Credentials\InstanceProfileProvider;
 use Aws\Exception\CredentialsException;
+use Aws\MockHandler;
+use Aws\Result;
+use Aws\S3\S3Client;
 use Aws\Sdk;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Promise;
@@ -963,5 +966,215 @@ class InstanceProfileProviderTest extends TestCase
         $this->assertSame('baz', $c->getSecretKey());
         $this->assertNull($c->getSecurityToken());
         $this->assertSame($t, $c->getExpiration());
+    }
+
+    public function returnsExpiredCredsProvider()
+    {
+        $expiredTime = time() - 1000;
+        $expiredCreds = ['foo', 'baz', null, "@{$expiredTime}"];
+
+        $promiseCreds = Promise\Create::promiseFor(
+            new Response(200, [], Psr7\Utils::streamFor(
+                json_encode(call_user_func_array(
+                    [$this, 'getCredentialArray'],
+                    $expiredCreds
+                )))
+            )
+        );
+
+        return [
+            [
+                $client = $this->getSecureTestClient(
+                    [
+                        'get_creds' => [
+                            $promiseCreds
+                        ]
+                    ],
+                    'MockProfile',
+                    $expiredCreds
+                )
+            ],
+            [
+                $client = $this->getinSecureTestClient(
+                    [
+                        'get_creds' => [
+                            $promiseCreds
+                        ]
+                    ],
+                    'MockProfile',
+                    $expiredCreds
+                )
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider returnsExpiredCredsProvider
+     *
+     * @param $client
+     */
+    public function testExtendsExpirationAndSendsRequestIfImdsYieldsExpiredCreds($client)
+    {
+        //Capture extension message
+        $capture = tmpfile();
+        ini_set('error_log', stream_get_meta_data($capture)['uri']);
+
+        $provider = new InstanceProfileProvider([
+            'client' => $client
+        ]);
+        $creds = $provider()->wait();
+
+        $message = stream_get_contents($capture);
+        $this->assertRegExp('/Attempting credential expiration extension/', $message);
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('baz', $creds->getSecretKey());
+        $this->assertFalse($creds->isExpired());
+
+        $requestHandler = new MockHandler([
+            new Result(['message' => 'Request sent']),
+            new Result(['message' => 'Request sent']),
+            new Result(['message' => 'Request sent'])
+        ]);
+
+        $s3Client = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => $creds,
+            'handler' => $requestHandler
+        ]);
+        $s3Client->listBuckets();
+        $s3Client->listBuckets();
+        $result = $s3Client->listBuckets();
+
+        $this->assertEquals('Request sent', $result['message']);
+        $this->assertAttributeLessThanOrEqual(3, 'attempts', $provider);
+    }
+
+    /**
+     * @dataProvider imdsUnavailableProvider
+     *
+     * @param $client
+     */
+    public function testExtendsExpirationAndSendsRequestIfImdsUnavailable($client)
+    {
+        //Capture extension message
+        $capture = tmpfile();
+        ini_set('error_log', stream_get_meta_data($capture)['uri']);
+
+        $expiredTime = time() - 1000;
+        $expiredCreds = new Credentials('foo', 'baz', null, $expiredTime);
+        $this->assertTrue($expiredCreds->isExpired());
+
+        $provider = new InstanceProfileProvider([
+            'client' => $client
+        ]);
+        $creds = $provider($expiredCreds)->wait();
+
+        $message = stream_get_contents($capture);
+        $this->assertRegExp('/Attempting credential expiration extension/', $message);
+        $this->assertSame('foo', $creds->getAccessKeyId());
+        $this->assertSame('baz', $creds->getSecretKey());
+        $this->assertFalse($expiredCreds->isExpired());
+
+        $requestHandler = new MockHandler([
+            new Result(['message' => 'Request sent']),
+            new Result(['message' => 'Request sent']),
+            new Result(['message' => 'Request sent'])
+        ]);
+
+        $s3Client = new S3Client([
+            'region' => 'us-west-2',
+            'version' => 'latest',
+            'credentials' => $creds,
+            'handler' => $requestHandler
+        ]);
+        $s3Client -> listBuckets();
+        $s3Client -> listBuckets();
+        $result = $s3Client->listBuckets();
+
+        $this->assertEquals('Request sent', $result['message']);
+        $this->assertAttributeLessThanOrEqual(3, 'attempts', $provider);
+    }
+
+    public function imdsUnavailableProvider()
+    {
+        $requestClass = $this->getRequestClass();
+        $responseClass = $this->getResponseClass();
+        $getRequest = new $requestClass('GET', '/latest/meta-data/foo');
+        $putRequest = new $requestClass('PUT', '/latest/meta-data/foo');
+
+        $profileRejection500 = Promise\Create::rejectionFor([
+            'exception' => new RequestException(
+                '500 internal server error',
+                $putRequest,
+                new $responseClass(500)
+            )
+        ]);
+        $credsRejection500 = Promise\Create::rejectionFor([
+            'exception' => new RequestException(
+                '500 internal server error',
+                $getRequest,
+                new $responseClass(500)
+            )
+        ]);
+        $credsRejectionReadTimeout = Promise\Create::rejectionFor([
+            'exception' => new ConnectException(
+                'cURL error 28: Operation timed out',
+                $getRequest
+            )
+        ]);
+
+        return [
+            [
+                $client = $this->getSecureTestClient(
+                    [
+                        'put' => [
+                            $profileRejection500
+                        ]
+                    ],
+                    'MockProfile'
+                )
+            ],
+            [
+                $client = $this->getSecureTestClient(
+                    [
+                        'get_creds' => [
+                            $credsRejection500
+                        ]
+                    ],
+                    'MockProfile'
+                )
+            ],
+            [
+                $client = $this->getSecureTestClient(
+                    [
+                        'get_creds' => [
+                            $credsRejectionReadTimeout
+                        ]
+                    ],
+                    'MockProfile'
+                )
+            ],
+            [
+                $client = $this->getInsecureTestClient(
+                    [
+                        'get_creds' => [
+                            $credsRejection500
+                        ]
+                    ],
+                    'MockProfile'
+                )
+            ],
+            [
+                $client = $this->getInsecureTestClient(
+                    [
+                        'get_creds' => [
+                            $credsRejectionReadTimeout
+                        ]
+                    ],
+                    'MockProfile'
+                )
+            ]
+        ];
     }
 }
