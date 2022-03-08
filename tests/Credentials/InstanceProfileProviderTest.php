@@ -968,46 +968,6 @@ class InstanceProfileProviderTest extends TestCase
         $this->assertSame($t, $c->getExpiration());
     }
 
-    public function returnsExpiredCredsProvider()
-    {
-        $expiredTime = time() - 1000;
-        $expiredCreds = ['foo', 'baz', null, "@{$expiredTime}"];
-
-        $promiseCreds = Promise\Create::promiseFor(
-            new Response(200, [], Psr7\Utils::streamFor(
-                json_encode(call_user_func_array(
-                    [$this, 'getCredentialArray'],
-                    $expiredCreds
-                )))
-            )
-        );
-
-        return [
-            [
-                $client = $this->getSecureTestClient(
-                    [
-                        'get_creds' => [
-                            $promiseCreds
-                        ]
-                    ],
-                    'MockProfile',
-                    $expiredCreds
-                )
-            ],
-            [
-                $client = $this->getinSecureTestClient(
-                    [
-                        'get_creds' => [
-                            $promiseCreds
-                        ]
-                    ],
-                    'MockProfile',
-                    $expiredCreds
-                )
-            ]
-        ];
-    }
-
     /**
      * @dataProvider returnsExpiredCredsProvider
      *
@@ -1048,6 +1008,46 @@ class InstanceProfileProviderTest extends TestCase
 
         $this->assertEquals('Request sent', $result['message']);
         $this->assertAttributeLessThanOrEqual(3, 'attempts', $provider);
+    }
+
+    public function returnsExpiredCredsProvider()
+    {
+        $expiredTime = time() - 1000;
+        $expiredCreds = ['foo', 'baz', null, "@{$expiredTime}"];
+
+        $promiseCreds = Promise\Create::promiseFor(
+            new Response(200, [], Psr7\Utils::streamFor(
+                json_encode(call_user_func_array(
+                    [$this, 'getCredentialArray'],
+                    $expiredCreds
+                )))
+            )
+        );
+
+        return [
+            [
+                $client = $this->getSecureTestClient(
+                    [
+                        'get_creds' => [
+                            $promiseCreds
+                        ]
+                    ],
+                    'MockProfile',
+                    $expiredCreds
+                )
+            ],
+            [
+                $client = $this->getInsecureTestClient(
+                    [
+                        'get_creds' => [
+                            $promiseCreds
+                        ]
+                    ],
+                    'MockProfile',
+                    $expiredCreds
+                )
+            ]
+        ];
     }
 
     /**
