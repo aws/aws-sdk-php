@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.212.4 - 2022-03-08
 
 * `Aws\EKS` - Introducing a new enum for NodeGroup error code: Ec2SubnetMissingIpv6Assignment
 * `Aws\Endpoints` - Fixes an issue where variant tags could be resolved in an order-dependent manner
