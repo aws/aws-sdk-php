@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.212.5 - 2022-03-09
 
 * `Aws\Comprehend` - Amazon Comprehend now supports extracting the sentiment associated with entities such as brands, products and services from text documents.
 
