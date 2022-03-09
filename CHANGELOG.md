@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Comprehend` - Amazon Comprehend now supports extracting the sentiment associated with entities such as brands, products and services from text documents.
+
 ## 3.212.4 - 2022-03-08
 
 * `Aws\EKS` - Introducing a new enum for NodeGroup error code: Ec2SubnetMissingIpv6Assignment
