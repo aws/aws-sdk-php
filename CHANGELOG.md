@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.212.6 - 2022-03-10
 
 * `Aws\` - Passing null to hash_init is deprecated on PHP 8.1.
 * `Aws\LexModelsV2` - This release makes slotTypeId an optional parameter in CreateSlot and UpdateSlot APIs in Amazon Lex V2 for model building. Customers can create and update slots without specifying a slot type id.
