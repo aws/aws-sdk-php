@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Passing null to hash_init is deprecated on PHP 8.1.
+* `Aws\LexModelsV2` - This release makes slotTypeId an optional parameter in CreateSlot and UpdateSlot APIs in Amazon Lex V2 for model building. Customers can create and update slots without specifying a slot type id.
+* `Aws\TranscribeService` - Documentation fix for API `StartMedicalTranscriptionJobRequest`, now showing min sample rate as 16khz
+* `Aws\Transfer` - Adding more descriptive error types for managed workflows
+
 ## 3.212.5 - 2022-03-09
 
 * `Aws\Comprehend` - Amazon Comprehend now supports extracting the sentiment associated with entities such as brands, products and services from text documents.
