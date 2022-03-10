@@ -308,4 +308,70 @@ class MiddlewareTest extends TestCase
 
         $promise->wait();
     }
+
+    /**
+     * @dataProvider recursionDetectionProvider
+     *
+     * @param $mockHandler
+     * @param $name
+     * @param $trace
+     */
+    public function testRecursionDetection($mockHandler, $name, $trace)
+    {
+        putenv("AWS_LAMBDA_FUNCTION_NAME={$name}");
+        putenv("_X_AMZ_TRACE_ID={$trace}");
+        $list = new HandlerList();
+        $list->setHandler($mockHandler);
+        $list->appendBuild(Middleware::recursionDetection());
+        $handler = $list->resolve();
+        $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
+        putenv('AWS_LAMBDA_FUNCTION_NAME');
+        putenv('_X_AMZ_TRACE_ID');
+    }
+
+    public function recursionDetectionProvider()
+    {
+        $addHeaderMock = function ($command, $request) {
+            $this->assertTrue($request->hasHeader('X-Amzn-Trace-Id'));
+            $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
+            $this->assertEquals('bar', $headerValue);
+            return Promise\Create::promiseFor(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+
+        $addHeaderWithEncodingMock = function ($command, $request) {
+            $this->assertTrue($request->hasHeader('X-Amzn-Trace-Id'));
+            $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
+            $this->assertEquals('bar%0Abaz', $headerValue);
+            return Promise\Create::promiseFor(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+
+        $dontAddHeaderMock = function ($command, $request) {
+            $this->assertFalse($request->hasHeader('X-Amzn-Trace-Id'));
+            return Promise\Create::promiseFor(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+
+        $headerAlreadyExistsMock = function ($command, $request) {
+            $request = $request->withHeader('X-Amzn-Trace-Id', 'baz');
+            $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
+            $this->assertNotEquals('bar', $headerValue);
+            return Promise\Create::promiseFor(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+
+        return [
+            [$addHeaderMock, 'foo', 'bar'],
+            [$addHeaderWithEncodingMock, 'foo', 'bar\nbaz'],
+            [$dontAddHeaderMock, '', 'bar'],
+            [$dontAddHeaderMock, 'foo', ''],
+            [$dontAddHeaderMock, '', ''],
+            [$headerAlreadyExistsMock, 'foo', 'bar']
+        ];
+    }
 }
