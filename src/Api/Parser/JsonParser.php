@@ -27,6 +27,15 @@ class JsonParser
                         $target[$name] = $this->parse($member, $value[$locationName]);
                     }
                 }
+                if (isset($shape['union'])
+                    && $shape['union']
+                    && is_array($value)
+                    && empty($target)
+                ) {
+                    foreach ($value as $key => $val) {
+                        $target['Unknown'][$key] = $val;
+                    }
+                }
                 return $target;
 
             case 'list':

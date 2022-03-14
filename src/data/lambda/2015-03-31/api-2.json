@@ -1072,7 +1072,8 @@
           "location":"querystring",
           "locationName":"Qualifier"
         },
-        "RevisionId":{"shape":"String"}
+        "RevisionId":{"shape":"String"},
+        "PrincipalOrgID":{"shape":"PrincipalOrgID"}
       }
     },
     "AddPermissionResponse":{
@@ -1288,6 +1289,7 @@
         "FunctionName":{"shape":"FunctionName"},
         "Enabled":{"shape":"Enabled"},
         "BatchSize":{"shape":"BatchSize"},
+        "FilterCriteria":{"shape":"FilterCriteria"},
         "MaximumBatchingWindowInSeconds":{"shape":"MaximumBatchingWindowInSeconds"},
         "ParallelizationFactor":{"shape":"ParallelizationFactor"},
         "StartingPosition":{"shape":"EventSourcePosition"},
@@ -1640,6 +1642,7 @@
         "MaximumBatchingWindowInSeconds":{"shape":"MaximumBatchingWindowInSeconds"},
         "ParallelizationFactor":{"shape":"ParallelizationFactor"},
         "EventSourceArn":{"shape":"Arn"},
+        "FilterCriteria":{"shape":"FilterCriteria"},
         "FunctionArn":{"shape":"FunctionArn"},
         "LastModified":{"shape":"Date"},
         "LastProcessingResult":{"shape":"String"},
@@ -1695,6 +1698,22 @@
       "type":"list",
       "member":{"shape":"FileSystemConfig"},
       "max":1
+    },
+    "Filter":{
+      "type":"structure",
+      "members":{
+        "Pattern":{"shape":"Pattern"}
+      }
+    },
+    "FilterCriteria":{
+      "type":"structure",
+      "members":{
+        "Filters":{"shape":"FilterList"}
+      }
+    },
+    "FilterList":{
+      "type":"list",
+      "member":{"shape":"Filter"}
     },
     "FunctionArn":{
       "type":"string",
@@ -2857,6 +2876,12 @@
       "max":10,
       "min":1
     },
+    "Pattern":{
+      "type":"string",
+      "max":4096,
+      "min":0,
+      "pattern":".*"
+    },
     "PolicyLengthExceededException":{
       "type":"structure",
       "members":{
@@ -2882,6 +2907,12 @@
     "Principal":{
       "type":"string",
       "pattern":"[^\\s]+"
+    },
+    "PrincipalOrgID":{
+      "type":"string",
+      "max":34,
+      "min":12,
+      "pattern":"^o-[a-z0-9]{10,32}$"
     },
     "ProvisionedConcurrencyConfigList":{
       "type":"list",
@@ -3211,6 +3242,7 @@
         "dotnetcore2.0",
         "dotnetcore2.1",
         "dotnetcore3.1",
+        "dotnet6",
         "nodejs4.3-edge",
         "go1.x",
         "ruby2.5",
@@ -3287,7 +3319,9 @@
         "VPC_SECURITY_GROUP",
         "SASL_SCRAM_512_AUTH",
         "SASL_SCRAM_256_AUTH",
-        "VIRTUAL_HOST"
+        "VIRTUAL_HOST",
+        "CLIENT_CERTIFICATE_TLS_AUTH",
+        "SERVER_ROOT_CA_CERTIFICATE"
       ]
     },
     "SourceOwner":{
@@ -3536,6 +3570,7 @@
         "FunctionName":{"shape":"FunctionName"},
         "Enabled":{"shape":"Enabled"},
         "BatchSize":{"shape":"BatchSize"},
+        "FilterCriteria":{"shape":"FilterCriteria"},
         "MaximumBatchingWindowInSeconds":{"shape":"MaximumBatchingWindowInSeconds"},
         "DestinationConfig":{"shape":"DestinationConfig"},
         "MaximumRecordAgeInSeconds":{"shape":"MaximumRecordAgeInSeconds"},

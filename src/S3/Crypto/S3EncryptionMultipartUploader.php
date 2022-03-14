@@ -147,7 +147,7 @@ class S3EncryptionMultipartUploader extends MultipartUploader
             // Defer encryption work until promise is executed
             $envelope = new MetadataEnvelope();
 
-            list($this->source, $params) = Promise\promise_for($this->encrypt(
+            list($this->source, $params) = Promise\Create::promiseFor($this->encrypt(
                 $this->source,
                 $this->config['@cipheroptions'] ?: [],
                 $this->provider,

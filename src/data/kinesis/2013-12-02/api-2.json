@@ -481,6 +481,9 @@
                 },
                 {
                     "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "ValidationException"
                 }
             ]
         },
@@ -640,6 +643,9 @@
                 },
                 {
                     "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "ValidationException"
                 }
             ]
         },
@@ -733,6 +739,33 @@
                 },
                 {
                     "shape": "ResourceNotFoundException"
+                },
+                {
+                    "shape": "ValidationException"
+                }
+            ]
+        },
+        "UpdateStreamMode": {
+            "name": "UpdateStreamMode",
+            "http": {
+                "method": "POST",
+                "requestUri": "\/"
+            },
+            "input": {
+                "shape": "UpdateStreamModeInput"
+            },
+            "errors": [
+                {
+                    "shape": "InvalidArgumentException"
+                },
+                {
+                    "shape": "LimitExceededException"
+                },
+                {
+                    "shape": "ResourceInUseException"
+                },
+                {
+                    "shape": "ResourceNotFoundException"
                 }
             ]
         }
@@ -755,6 +788,31 @@
         },
         "BooleanObject": {
             "type": "boolean"
+        },
+        "ChildShard": {
+            "type": "structure",
+            "required": [
+                "ShardId",
+                "ParentShards",
+                "HashKeyRange"
+            ],
+            "members": {
+                "ShardId": {
+                    "shape": "ShardId"
+                },
+                "ParentShards": {
+                    "shape": "ShardIdList"
+                },
+                "HashKeyRange": {
+                    "shape": "HashKeyRange"
+                }
+            }
+        },
+        "ChildShardList": {
+            "type": "list",
+            "member": {
+                "shape": "ChildShard"
+            }
         },
         "Consumer": {
             "type": "structure",
@@ -840,8 +898,7 @@
         "CreateStreamInput": {
             "type": "structure",
             "required": [
-                "StreamName",
-                "ShardCount"
+                "StreamName"
             ],
             "members": {
                 "StreamName": {
@@ -849,6 +906,9 @@
                 },
                 "ShardCount": {
                     "shape": "PositiveIntegerObject"
+                },
+                "StreamModeDetails": {
+                    "shape": "StreamModeDetails"
                 }
             }
         },
@@ -908,7 +968,9 @@
             "type": "structure",
             "required": [
                 "ShardLimit",
-                "OpenShardCount"
+                "OpenShardCount",
+                "OnDemandStreamCount",
+                "OnDemandStreamCountLimit"
             ],
             "members": {
                 "ShardLimit": {
@@ -916,6 +978,12 @@
                 },
                 "OpenShardCount": {
                     "shape": "ShardCountObject"
+                },
+                "OnDemandStreamCount": {
+                    "shape": "OnDemandStreamCountObject"
+                },
+                "OnDemandStreamCountLimit": {
+                    "shape": "OnDemandStreamCountLimitObject"
                 }
             }
         },
@@ -1121,6 +1189,9 @@
                 },
                 "MillisBehindLatest": {
                     "shape": "MillisBehindLatest"
+                },
+                "ChildShards": {
+                    "shape": "ChildShardList"
                 }
             }
         },
@@ -1295,6 +1366,9 @@
                 },
                 "StreamCreationTimestamp": {
                     "shape": "Timestamp"
+                },
+                "ShardFilter": {
+                    "shape": "ShardFilter"
                 }
             }
         },
@@ -1467,6 +1541,16 @@
             "max": 1048576,
             "min": 1
         },
+        "OnDemandStreamCountLimitObject": {
+            "type": "integer",
+            "max": 1000000,
+            "min": 0
+        },
+        "OnDemandStreamCountObject": {
+            "type": "integer",
+            "max": 1000000,
+            "min": 0
+        },
         "PartitionKey": {
             "type": "string",
             "max": 256,
@@ -1474,7 +1558,6 @@
         },
         "PositiveIntegerObject": {
             "type": "integer",
-            "max": 100000,
             "min": 1
         },
         "ProvisionedThroughputExceededException": {
@@ -1703,9 +1786,7 @@
             "exception": true
         },
         "RetentionPeriodHours": {
-            "type": "integer",
-            "max": 168,
-            "min": 1
+            "type": "integer"
         },
         "ScalingType": {
             "type": "string",
@@ -1761,11 +1842,45 @@
             "max": 1000000,
             "min": 0
         },
+        "ShardFilter": {
+            "type": "structure",
+            "required": [
+                "Type"
+            ],
+            "members": {
+                "Type": {
+                    "shape": "ShardFilterType"
+                },
+                "ShardId": {
+                    "shape": "ShardId"
+                },
+                "Timestamp": {
+                    "shape": "Timestamp"
+                }
+            }
+        },
+        "ShardFilterType": {
+            "type": "string",
+            "enum": [
+                "AFTER_SHARD_ID",
+                "AT_TRIM_HORIZON",
+                "FROM_TRIM_HORIZON",
+                "AT_LATEST",
+                "AT_TIMESTAMP",
+                "FROM_TIMESTAMP"
+            ]
+        },
         "ShardId": {
             "type": "string",
             "max": 128,
             "min": 1,
             "pattern": "[a-zA-Z0-9_.-]+"
+        },
+        "ShardIdList": {
+            "type": "list",
+            "member": {
+                "shape": "ShardId"
+            }
         },
         "ShardIterator": {
             "type": "string",
@@ -1866,7 +1981,7 @@
             "type": "string",
             "max": 2048,
             "min": 1,
-            "pattern": "arn:aws.*:kinesis:.*:\\d{12}:stream\/.*"
+            "pattern": "arn:aws.*:kinesis:.*:\\d{12}:stream\/.+"
         },
         "StreamDescription": {
             "type": "structure",
@@ -1889,6 +2004,9 @@
                 },
                 "StreamStatus": {
                     "shape": "StreamStatus"
+                },
+                "StreamModeDetails": {
+                    "shape": "StreamModeDetails"
                 },
                 "Shards": {
                     "shape": "ShardList"
@@ -1934,8 +2052,11 @@
                 "StreamStatus": {
                     "shape": "StreamStatus"
                 },
+                "StreamModeDetails": {
+                    "shape": "StreamModeDetails"
+                },
                 "RetentionPeriodHours": {
-                    "shape": "PositiveIntegerObject"
+                    "shape": "RetentionPeriodHours"
                 },
                 "StreamCreationTimestamp": {
                     "shape": "Timestamp"
@@ -1954,6 +2075,24 @@
                 },
                 "ConsumerCount": {
                     "shape": "ConsumerCountObject"
+                }
+            }
+        },
+        "StreamMode": {
+            "type": "string",
+            "enum": [
+                "PROVISIONED",
+                "ON_DEMAND"
+            ]
+        },
+        "StreamModeDetails": {
+            "type": "structure",
+            "required": [
+                "StreamMode"
+            ],
+            "members": {
+                "StreamMode": {
+                    "shape": "StreamMode"
                 }
             }
         },
@@ -1994,6 +2133,9 @@
                 },
                 "MillisBehindLatest": {
                     "shape": "MillisBehindLatest"
+                },
+                "ChildShards": {
+                    "shape": "ChildShardList"
                 }
             },
             "event": true
@@ -2099,6 +2241,7 @@
             "member": {
                 "shape": "Tag"
             },
+            "max": 200,
             "min": 0
         },
         "TagMap": {
@@ -2109,7 +2252,7 @@
             "value": {
                 "shape": "TagValue"
             },
-            "max": 50,
+            "max": 200,
             "min": 1
         },
         "TagValue": {
@@ -2152,6 +2295,30 @@
                     "shape": "PositiveIntegerObject"
                 }
             }
+        },
+        "UpdateStreamModeInput": {
+            "type": "structure",
+            "required": [
+                "StreamARN",
+                "StreamModeDetails"
+            ],
+            "members": {
+                "StreamARN": {
+                    "shape": "StreamARN"
+                },
+                "StreamModeDetails": {
+                    "shape": "StreamModeDetails"
+                }
+            }
+        },
+        "ValidationException": {
+            "type": "structure",
+            "members": {
+                "message": {
+                    "shape": "ErrorMessage"
+                }
+            },
+            "exception": true
         }
     }
 }

@@ -36,9 +36,9 @@ trait MonitoringMiddlewareTestingTrait
         ) {
             $called = true;
             if ($isResultException) {
-                return Promise\rejection_for($result);
+                return Promise\Create::rejectionFor($result);
             }
-            return Promise\promise_for(new Result($result));
+            return Promise\Create::promiseFor(new Result($result));
         });
         $list->appendBuild($middleware);
         $handler = $list->resolve();

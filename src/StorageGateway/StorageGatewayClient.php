@@ -178,6 +178,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateSMBFileShareAsync(array $args = [])
  * @method \Aws\Result updateSMBFileShareVisibility(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSMBFileShareVisibilityAsync(array $args = [])
+ * @method \Aws\Result updateSMBLocalGroups(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateSMBLocalGroupsAsync(array $args = [])
  * @method \Aws\Result updateSMBSecurityStrategy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateSMBSecurityStrategyAsync(array $args = [])
  * @method \Aws\Result updateSnapshotSchedule(array $args = [])

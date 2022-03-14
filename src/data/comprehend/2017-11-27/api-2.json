@@ -229,6 +229,20 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DeleteResourcePolicy":{
+      "name":"DeleteResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DeleteResourcePolicyRequest"},
+      "output":{"shape":"DeleteResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DescribeDocumentClassificationJob":{
       "name":"DescribeDocumentClassificationJob",
       "http":{
@@ -364,6 +378,20 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "DescribeResourcePolicy":{
+      "name":"DescribeResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeResourcePolicyRequest"},
+      "output":{"shape":"DescribeResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "DescribeSentimentDetectionJob":{
       "name":"DescribeSentimentDetectionJob",
       "http":{
@@ -372,6 +400,21 @@
       },
       "input":{"shape":"DescribeSentimentDetectionJobRequest"},
       "output":{"shape":"DescribeSentimentDetectionJobResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"JobNotFoundException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "DescribeTargetedSentimentDetectionJob":{
+      "name":"DescribeTargetedSentimentDetectionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeTargetedSentimentDetectionJobRequest"},
+      "output":{"shape":"DescribeTargetedSentimentDetectionJobResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"JobNotFoundException"},
@@ -481,6 +524,26 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TextSizeLimitExceededException"},
         {"shape":"UnsupportedLanguageException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "ImportModel":{
+      "name":"ImportModel",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ImportModelRequest"},
+      "output":{"shape":"ImportModelResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"ResourceUnavailableException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"ResourceLimitExceededException"},
+        {"shape":"KmsKeyValidationException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -675,6 +738,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListTargetedSentimentDetectionJobs":{
+      "name":"ListTargetedSentimentDetectionJobs",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListTargetedSentimentDetectionJobsRequest"},
+      "output":{"shape":"ListTargetedSentimentDetectionJobsResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"InvalidFilterException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "ListTopicsDetectionJobs":{
       "name":"ListTopicsDetectionJobs",
       "http":{
@@ -687,6 +765,20 @@
         {"shape":"InvalidRequestException"},
         {"shape":"TooManyRequestsException"},
         {"shape":"InvalidFilterException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "PutResourcePolicy":{
+      "name":"PutResourcePolicy",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"PutResourcePolicyRequest"},
+      "output":{"shape":"PutResourcePolicyResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
         {"shape":"InternalServerException"}
       ]
     },
@@ -806,6 +898,22 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "StartTargetedSentimentDetectionJob":{
+      "name":"StartTargetedSentimentDetectionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartTargetedSentimentDetectionJobRequest"},
+      "output":{"shape":"StartTargetedSentimentDetectionJobResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"TooManyRequestsException"},
+        {"shape":"KmsKeyValidationException"},
+        {"shape":"TooManyTagsException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "StartTopicsDetectionJob":{
       "name":"StartTopicsDetectionJob",
       "http":{
@@ -900,6 +1008,20 @@
       },
       "input":{"shape":"StopSentimentDetectionJobRequest"},
       "output":{"shape":"StopSentimentDetectionJobResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"JobNotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
+    "StopTargetedSentimentDetectionJob":{
+      "name":"StopTargetedSentimentDetectionJob",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StopTargetedSentimentDetectionJobRequest"},
+      "output":{"shape":"StopTargetedSentimentDetectionJobResponse"},
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"JobNotFoundException"},
@@ -1307,7 +1429,8 @@
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
         "VpcConfig":{"shape":"VpcConfig"},
         "Mode":{"shape":"DocumentClassifierMode"},
-        "ModelKmsKeyId":{"shape":"KmsKeyId"}
+        "ModelKmsKeyId":{"shape":"KmsKeyId"},
+        "ModelPolicy":{"shape":"Policy"}
       }
     },
     "CreateDocumentClassifierResponse":{
@@ -1362,7 +1485,8 @@
         "LanguageCode":{"shape":"LanguageCode"},
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
         "VpcConfig":{"shape":"VpcConfig"},
-        "ModelKmsKeyId":{"shape":"KmsKeyId"}
+        "ModelKmsKeyId":{"shape":"KmsKeyId"},
+        "ModelPolicy":{"shape":"Policy"}
       }
     },
     "CreateEntityRecognizerResponse":{
@@ -1413,6 +1537,19 @@
       }
     },
     "DeleteEntityRecognizerResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ComprehendModelArn"},
+        "PolicyRevisionId":{"shape":"PolicyRevisionId"}
+      }
+    },
+    "DeleteResourcePolicyResponse":{
       "type":"structure",
       "members":{
       }
@@ -1534,6 +1671,22 @@
         "PiiEntitiesDetectionJobProperties":{"shape":"PiiEntitiesDetectionJobProperties"}
       }
     },
+    "DescribeResourcePolicyRequest":{
+      "type":"structure",
+      "required":["ResourceArn"],
+      "members":{
+        "ResourceArn":{"shape":"ComprehendModelArn"}
+      }
+    },
+    "DescribeResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "ResourcePolicy":{"shape":"Policy"},
+        "CreationTime":{"shape":"Timestamp"},
+        "LastModifiedTime":{"shape":"Timestamp"},
+        "PolicyRevisionId":{"shape":"PolicyRevisionId"}
+      }
+    },
     "DescribeSentimentDetectionJobRequest":{
       "type":"structure",
       "required":["JobId"],
@@ -1545,6 +1698,19 @@
       "type":"structure",
       "members":{
         "SentimentDetectionJobProperties":{"shape":"SentimentDetectionJobProperties"}
+      }
+    },
+    "DescribeTargetedSentimentDetectionJobRequest":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{"shape":"JobId"}
+      }
+    },
+    "DescribeTargetedSentimentDetectionJobResponse":{
+      "type":"structure",
+      "members":{
+        "TargetedSentimentDetectionJobProperties":{"shape":"TargetedSentimentDetectionJobProperties"}
       }
     },
     "DescribeTopicsDetectionJobRequest":{
@@ -1773,7 +1939,8 @@
         "VpcConfig":{"shape":"VpcConfig"},
         "Mode":{"shape":"DocumentClassifierMode"},
         "ModelKmsKeyId":{"shape":"KmsKeyId"},
-        "VersionName":{"shape":"VersionName"}
+        "VersionName":{"shape":"VersionName"},
+        "SourceModelArn":{"shape":"DocumentClassifierArn"}
       }
     },
     "DocumentClassifierPropertiesList":{
@@ -2070,7 +2237,8 @@
         "VolumeKmsKeyId":{"shape":"KmsKeyId"},
         "VpcConfig":{"shape":"VpcConfig"},
         "ModelKmsKeyId":{"shape":"KmsKeyId"},
-        "VersionName":{"shape":"VersionName"}
+        "VersionName":{"shape":"VersionName"},
+        "SourceModelArn":{"shape":"EntityRecognizerArn"}
       }
     },
     "EntityRecognizerPropertiesList":{
@@ -2108,7 +2276,7 @@
     "EntityTypeName":{
       "type":"string",
       "max":64,
-      "pattern":"^(?:(?!\\\\n+|\\\\t+|\\\\r+|[\\r\\t\\n,]).)+$"
+      "pattern":"^(?![^\\n\\r\\t,]*\\\\n|\\\\r|\\\\t)[^\\n\\r\\t,]+$"
     },
     "EntityTypesEvaluationMetrics":{
       "type":"structure",
@@ -2171,6 +2339,24 @@
       "max":2048,
       "min":20,
       "pattern":"arn:aws(-[^:]+)?:iam::[0-9]{12}:role/.+"
+    },
+    "ImportModelRequest":{
+      "type":"structure",
+      "required":["SourceModelArn"],
+      "members":{
+        "SourceModelArn":{"shape":"ComprehendModelArn"},
+        "ModelName":{"shape":"ComprehendArnName"},
+        "VersionName":{"shape":"VersionName"},
+        "ModelKmsKeyId":{"shape":"KmsKeyId"},
+        "DataAccessRoleArn":{"shape":"IamRoleArn"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "ImportModelResponse":{
+      "type":"structure",
+      "members":{
+        "ModelArn":{"shape":"ComprehendModelArn"}
+      }
     },
     "InferenceUnitsInteger":{
       "type":"integer",
@@ -2288,7 +2474,7 @@
     "KmsKeyId":{
       "type":"string",
       "max":2048,
-      "pattern":".*"
+      "pattern":"^\\p{ASCII}+$"
     },
     "KmsKeyValidationException":{
       "type":"structure",
@@ -2574,6 +2760,21 @@
         "Tags":{"shape":"TagList"}
       }
     },
+    "ListTargetedSentimentDetectionJobsRequest":{
+      "type":"structure",
+      "members":{
+        "Filter":{"shape":"TargetedSentimentDetectionJobFilter"},
+        "NextToken":{"shape":"String"},
+        "MaxResults":{"shape":"MaxResultsInteger"}
+      }
+    },
+    "ListTargetedSentimentDetectionJobsResponse":{
+      "type":"structure",
+      "members":{
+        "TargetedSentimentDetectionJobPropertiesList":{"shape":"TargetedSentimentDetectionJobPropertiesList"},
+        "NextToken":{"shape":"String"}
+      }
+    },
     "ListTopicsDetectionJobsRequest":{
       "type":"structure",
       "members":{
@@ -2743,6 +2944,35 @@
       "members":{
         "S3Uri":{"shape":"S3Uri"},
         "KmsKeyId":{"shape":"KmsKeyId"}
+      }
+    },
+    "Policy":{
+      "type":"string",
+      "max":20000,
+      "min":1,
+      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
+    },
+    "PolicyRevisionId":{
+      "type":"string",
+      "max":64,
+      "pattern":"[0-9A-Fa-f]+"
+    },
+    "PutResourcePolicyRequest":{
+      "type":"structure",
+      "required":[
+        "ResourceArn",
+        "ResourcePolicy"
+      ],
+      "members":{
+        "ResourceArn":{"shape":"ComprehendModelArn"},
+        "ResourcePolicy":{"shape":"Policy"},
+        "PolicyRevisionId":{"shape":"PolicyRevisionId"}
+      }
+    },
+    "PutResourcePolicyResponse":{
+      "type":"structure",
+      "members":{
+        "PolicyRevisionId":{"shape":"PolicyRevisionId"}
       }
     },
     "RedactionConfig":{
@@ -3071,6 +3301,37 @@
         "JobStatus":{"shape":"JobStatus"}
       }
     },
+    "StartTargetedSentimentDetectionJobRequest":{
+      "type":"structure",
+      "required":[
+        "InputDataConfig",
+        "OutputDataConfig",
+        "DataAccessRoleArn",
+        "LanguageCode"
+      ],
+      "members":{
+        "InputDataConfig":{"shape":"InputDataConfig"},
+        "OutputDataConfig":{"shape":"OutputDataConfig"},
+        "DataAccessRoleArn":{"shape":"IamRoleArn"},
+        "JobName":{"shape":"JobName"},
+        "LanguageCode":{"shape":"LanguageCode"},
+        "ClientRequestToken":{
+          "shape":"ClientRequestTokenString",
+          "idempotencyToken":true
+        },
+        "VolumeKmsKeyId":{"shape":"KmsKeyId"},
+        "VpcConfig":{"shape":"VpcConfig"},
+        "Tags":{"shape":"TagList"}
+      }
+    },
+    "StartTargetedSentimentDetectionJobResponse":{
+      "type":"structure",
+      "members":{
+        "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
+        "JobStatus":{"shape":"JobStatus"}
+      }
+    },
     "StartTopicsDetectionJobRequest":{
       "type":"structure",
       "required":[
@@ -3185,6 +3446,20 @@
         "JobStatus":{"shape":"JobStatus"}
       }
     },
+    "StopTargetedSentimentDetectionJobRequest":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{"shape":"JobId"}
+      }
+    },
+    "StopTargetedSentimentDetectionJobResponse":{
+      "type":"structure",
+      "members":{
+        "JobId":{"shape":"JobId"},
+        "JobStatus":{"shape":"JobStatus"}
+      }
+    },
     "StopTrainingDocumentClassifierRequest":{
       "type":"structure",
       "required":["DocumentClassifierArn"],
@@ -3292,6 +3567,37 @@
       "type":"list",
       "member":{"shape":"EventTypeString"},
       "min":1
+    },
+    "TargetedSentimentDetectionJobFilter":{
+      "type":"structure",
+      "members":{
+        "JobName":{"shape":"JobName"},
+        "JobStatus":{"shape":"JobStatus"},
+        "SubmitTimeBefore":{"shape":"Timestamp"},
+        "SubmitTimeAfter":{"shape":"Timestamp"}
+      }
+    },
+    "TargetedSentimentDetectionJobProperties":{
+      "type":"structure",
+      "members":{
+        "JobId":{"shape":"JobId"},
+        "JobArn":{"shape":"ComprehendArn"},
+        "JobName":{"shape":"JobName"},
+        "JobStatus":{"shape":"JobStatus"},
+        "Message":{"shape":"AnyLengthString"},
+        "SubmitTime":{"shape":"Timestamp"},
+        "EndTime":{"shape":"Timestamp"},
+        "InputDataConfig":{"shape":"InputDataConfig"},
+        "OutputDataConfig":{"shape":"OutputDataConfig"},
+        "LanguageCode":{"shape":"LanguageCode"},
+        "DataAccessRoleArn":{"shape":"IamRoleArn"},
+        "VolumeKmsKeyId":{"shape":"KmsKeyId"},
+        "VpcConfig":{"shape":"VpcConfig"}
+      }
+    },
+    "TargetedSentimentDetectionJobPropertiesList":{
+      "type":"list",
+      "member":{"shape":"TargetedSentimentDetectionJobProperties"}
     },
     "TextSizeLimitExceededException":{
       "type":"structure",

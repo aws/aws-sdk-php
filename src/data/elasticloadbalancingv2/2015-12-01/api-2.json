@@ -969,7 +969,8 @@
         "UnhealthyThresholdCount":{"shape":"HealthCheckThresholdCount"},
         "Matcher":{"shape":"Matcher"},
         "TargetType":{"shape":"TargetTypeEnum"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "IpAddressType":{"shape":"TargetGroupIpAddressTypeEnum"}
       }
     },
     "CreateTargetGroupOutput":{
@@ -1146,7 +1147,8 @@
       "members":{
         "Names":{"shape":"SslPolicyNames"},
         "Marker":{"shape":"Marker"},
-        "PageSize":{"shape":"PageSize"}
+        "PageSize":{"shape":"PageSize"},
+        "LoadBalancerType":{"shape":"LoadBalancerTypeEnum"}
       }
     },
     "DescribeSSLPoliciesOutput":{
@@ -2016,7 +2018,8 @@
       "members":{
         "SslProtocols":{"shape":"SslProtocols"},
         "Ciphers":{"shape":"Ciphers"},
-        "Name":{"shape":"SslPolicyName"}
+        "Name":{"shape":"SslPolicyName"},
+        "SupportedLoadBalancerTypes":{"shape":"ListOfString"}
       }
     },
     "SslPolicyName":{"type":"string"},
@@ -2133,7 +2136,8 @@
         "Matcher":{"shape":"Matcher"},
         "LoadBalancerArns":{"shape":"LoadBalancerArns"},
         "TargetType":{"shape":"TargetTypeEnum"},
-        "ProtocolVersion":{"shape":"ProtocolVersion"}
+        "ProtocolVersion":{"shape":"ProtocolVersion"},
+        "IpAddressType":{"shape":"TargetGroupIpAddressTypeEnum"}
       }
     },
     "TargetGroupArn":{"type":"string"},
@@ -2168,6 +2172,13 @@
     "TargetGroupAttributes":{
       "type":"list",
       "member":{"shape":"TargetGroupAttribute"}
+    },
+    "TargetGroupIpAddressTypeEnum":{
+      "type":"string",
+      "enum":[
+        "ipv4",
+        "ipv6"
+      ]
     },
     "TargetGroupList":{
       "type":"list",

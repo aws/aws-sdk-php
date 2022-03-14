@@ -188,6 +188,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise removeAttributesAsync(array $args = [])
  * @method \Aws\Result sendMessages(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendMessagesAsync(array $args = [])
+ * @method \Aws\Result sendOTPMessage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise sendOTPMessageAsync(array $args = [])
  * @method \Aws\Result sendUsersMessages(array $args = [])
  * @method \GuzzleHttp\Promise\Promise sendUsersMessagesAsync(array $args = [])
  * @method \Aws\Result tagResource(array $args = [])
@@ -242,5 +244,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateVoiceChannelAsync(array $args = [])
  * @method \Aws\Result updateVoiceTemplate(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateVoiceTemplateAsync(array $args = [])
+ * @method \Aws\Result verifyOTPMessage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise verifyOTPMessageAsync(array $args = [])
  */
 class PinpointClient extends AwsClient {}
