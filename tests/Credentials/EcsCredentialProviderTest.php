@@ -21,16 +21,26 @@ class EcsCredentialProviderTest extends TestCase
     {
         putenv(EcsCredentialProvider::ENV_URI . '=');
         unset($_SERVER[EcsCredentialProvider::ENV_URI]);
+
+        putenv(EcsCredentialProvider::ENV_FULL_URI . '=');
+        unset($_SERVER[EcsCredentialProvider::ENV_FULL_URI]);
+
+        putenv(EcsCredentialProvider::ENV_AUTH_TOKEN . '=');
+        unset($_SERVER[EcsCredentialProvider::ENV_AUTH_TOKEN]);
     }
 
     public function setUp()
     {
         $this->uripath = getenv(EcsCredentialProvider::ENV_URI);
+        $this->fulluripath = getenv(EcsCredentialProvider::ENV_FULL_URI);
+        $this->authtokenpath = getenv(EcsCredentialProvider::ENV_AUTH_TOKEN);
     }
 
     public function tearDown()
     {
         $this->uripath = getenv(EcsCredentialProvider::ENV_URI);
+        $this->fulluripath = getenv(EcsCredentialProvider::ENV_FULL_URI);
+        $this->authtokenpath = getenv(EcsCredentialProvider::ENV_AUTH_TOKEN);
     }
 
     /**
