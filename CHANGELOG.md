@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.213.0 - 2022-03-14
 
 * `Aws\ConfigService` - Add resourceType enums for AWS::ECR::PublicRepository and AWS::EC2::LaunchTemplate
 * `Aws\Credentials` - Add support for cases when IMDS is unable to refresh credentials
