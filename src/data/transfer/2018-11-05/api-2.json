@@ -554,7 +554,8 @@
       "members":{
         "Name":{"shape":"WorkflowStepName"},
         "DestinationFileLocation":{"shape":"InputFileLocation"},
-        "OverwriteExisting":{"shape":"OverwriteExisting"}
+        "OverwriteExisting":{"shape":"OverwriteExisting"},
+        "SourceFileLocation":{"shape":"SourceFileLocation"}
       }
     },
     "CreateAccessRequest":{
@@ -597,7 +598,10 @@
         "IdentityProviderDetails":{"shape":"IdentityProviderDetails"},
         "IdentityProviderType":{"shape":"IdentityProviderType"},
         "LoggingRole":{"shape":"Role"},
+        "PostAuthenticationLoginBanner":{"shape":"PostAuthenticationLoginBanner"},
+        "PreAuthenticationLoginBanner":{"shape":"PreAuthenticationLoginBanner"},
         "Protocols":{"shape":"Protocols"},
+        "ProtocolDetails":{"shape":"ProtocolDetails"},
         "SecurityPolicyName":{"shape":"SecurityPolicyName"},
         "Tags":{"shape":"Tags"},
         "WorkflowDetails":{"shape":"WorkflowDetails"}
@@ -663,7 +667,8 @@
       "members":{
         "Name":{"shape":"WorkflowStepName"},
         "Target":{"shape":"CustomStepTarget"},
-        "TimeoutSeconds":{"shape":"CustomStepTimeoutSeconds"}
+        "TimeoutSeconds":{"shape":"CustomStepTimeoutSeconds"},
+        "SourceFileLocation":{"shape":"SourceFileLocation"}
       }
     },
     "CustomStepStatus":{
@@ -718,7 +723,8 @@
     "DeleteStepDetails":{
       "type":"structure",
       "members":{
-        "Name":{"shape":"WorkflowStepName"}
+        "Name":{"shape":"WorkflowStepName"},
+        "SourceFileLocation":{"shape":"SourceFileLocation"}
       }
     },
     "DeleteUserRequest":{
@@ -898,6 +904,8 @@
         "IdentityProviderDetails":{"shape":"IdentityProviderDetails"},
         "IdentityProviderType":{"shape":"IdentityProviderType"},
         "LoggingRole":{"shape":"Role"},
+        "PostAuthenticationLoginBanner":{"shape":"PostAuthenticationLoginBanner"},
+        "PreAuthenticationLoginBanner":{"shape":"PreAuthenticationLoginBanner"},
         "Protocols":{"shape":"Protocols"},
         "SecurityPolicyName":{"shape":"SecurityPolicyName"},
         "ServerId":{"shape":"ServerId"},
@@ -962,9 +970,9 @@
     },
     "EfsPath":{
       "type":"string",
-      "max":100,
+      "max":65536,
       "min":1,
-      "pattern":"^(\\/|(\\/(?!\\.)+[^$#<>;`|&?{}^*/\\n]+){1,4})$"
+      "pattern":"^[^\\x00]+$"
     },
     "EndpointDetails":{
       "type":"structure",
@@ -998,7 +1006,16 @@
     "ExecutionErrorMessage":{"type":"string"},
     "ExecutionErrorType":{
       "type":"string",
-      "enum":["PERMISSION_DENIED"]
+      "enum":[
+        "PERMISSION_DENIED",
+        "CUSTOM_STEP_FAILED",
+        "THROTTLED",
+        "ALREADY_EXISTS",
+        "NOT_FOUND",
+        "BAD_REQUEST",
+        "TIMEOUT",
+        "INTERNAL_SERVER_ERROR"
+      ]
     },
     "ExecutionId":{
       "type":"string",
@@ -1050,6 +1067,12 @@
       }
     },
     "Fips":{"type":"boolean"},
+    "Function":{
+      "type":"string",
+      "max":170,
+      "min":1,
+      "pattern":"^arn:[a-z-]+:lambda:.*$"
+    },
     "HomeDirectory":{
       "type":"string",
       "max":1024,
@@ -1090,7 +1113,8 @@
       "members":{
         "Url":{"shape":"Url"},
         "InvocationRole":{"shape":"Role"},
-        "DirectoryId":{"shape":"DirectoryId"}
+        "DirectoryId":{"shape":"DirectoryId"},
+        "Function":{"shape":"Function"}
       }
     },
     "IdentityProviderType":{
@@ -1098,7 +1122,8 @@
       "enum":[
         "SERVICE_MANAGED",
         "API_GATEWAY",
-        "AWS_DIRECTORY_SERVICE"
+        "AWS_DIRECTORY_SERVICE",
+        "AWS_LAMBDA"
       ]
     },
     "ImportSshPublicKeyRequest":{
@@ -1432,6 +1457,16 @@
         "SecondaryGids":{"shape":"SecondaryGids"}
       }
     },
+    "PostAuthenticationLoginBanner":{
+      "type":"string",
+      "max":512,
+      "pattern":"[\\x09-\\x0D\\x20-\\x7E]*"
+    },
+    "PreAuthenticationLoginBanner":{
+      "type":"string",
+      "max":512,
+      "pattern":"[\\x09-\\x0D\\x20-\\x7E]*"
+    },
     "Protocol":{
       "type":"string",
       "enum":[
@@ -1443,7 +1478,8 @@
     "ProtocolDetails":{
       "type":"structure",
       "members":{
-        "PassiveIp":{"shape":"PassiveIp"}
+        "PassiveIp":{"shape":"PassiveIp"},
+        "TlsSessionResumptionMode":{"shape":"TlsSessionResumptionMode"}
       }
     },
     "Protocols":{
@@ -1639,6 +1675,11 @@
       "min":3,
       "pattern":"^[\\w-]*$"
     },
+    "SourceFileLocation":{
+      "type":"string",
+      "max":256,
+      "pattern":"^\\$\\{(\\w+.)+\\w+\\}$"
+    },
     "SourceIp":{
       "type":"string",
       "max":32,
@@ -1745,7 +1786,8 @@
       "type":"structure",
       "members":{
         "Name":{"shape":"WorkflowStepName"},
-        "Tags":{"shape":"S3Tags"}
+        "Tags":{"shape":"S3Tags"},
+        "SourceFileLocation":{"shape":"SourceFileLocation"}
       }
     },
     "TagValue":{
@@ -1791,6 +1833,14 @@
         "RetryAfterSeconds":{"shape":"RetryAfterSeconds"}
       },
       "exception":true
+    },
+    "TlsSessionResumptionMode":{
+      "type":"string",
+      "enum":[
+        "DISABLED",
+        "ENABLED",
+        "ENFORCED"
+      ]
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -1842,6 +1892,8 @@
         "HostKey":{"shape":"HostKey"},
         "IdentityProviderDetails":{"shape":"IdentityProviderDetails"},
         "LoggingRole":{"shape":"NullableRole"},
+        "PostAuthenticationLoginBanner":{"shape":"PostAuthenticationLoginBanner"},
+        "PreAuthenticationLoginBanner":{"shape":"PreAuthenticationLoginBanner"},
         "Protocols":{"shape":"Protocols"},
         "SecurityPolicyName":{"shape":"SecurityPolicyName"},
         "ServerId":{"shape":"ServerId"},

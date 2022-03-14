@@ -15,6 +15,7 @@
     "DeleteOutboundCrossClusterSearchConnection": "<p>Allows the source domain owner to delete an existing outbound cross-cluster search connection.</p>",
     "DeletePackage": "<p>Delete the package.</p>",
     "DescribeDomainAutoTunes": "<p>Provides scheduled Auto-Tune action details for the Elasticsearch domain, such as Auto-Tune action type, description, severity, and scheduled date.</p>",
+    "DescribeDomainChangeProgress": "<p>Returns information about the current blue/green deployment happening on a domain, including a change ID, status, and progress stages.</p>",
     "DescribeElasticsearchDomain": "<p>Returns domain configuration information about the specified Elasticsearch domain, including the domain ID, domain endpoint, and domain ARN.</p>",
     "DescribeElasticsearchDomainConfig": "<p>Provides cluster configuration information about the specified Elasticsearch domain, such as the state, creation date, update version, and update date for cluster options.</p>",
     "DescribeElasticsearchDomains": "<p>Returns domain configuration information about the specified Elasticsearch domains, including the domain ID, domain endpoint, and domain ARN.</p>",
@@ -242,8 +243,10 @@
       "refs": {
         "AdvancedSecurityOptions$Enabled": "<p>True if advanced security is enabled.</p>",
         "AdvancedSecurityOptions$InternalUserDatabaseEnabled": "<p>True if the internal user database is enabled.</p>",
+        "AdvancedSecurityOptions$AnonymousAuthEnabled": "<p>True if Anonymous auth is enabled. Anonymous auth can be enabled only when AdvancedSecurity is enabled on existing domains.</p>",
         "AdvancedSecurityOptionsInput$Enabled": "<p>True if advanced security is enabled.</p>",
         "AdvancedSecurityOptionsInput$InternalUserDatabaseEnabled": "<p>True if the internal user database is enabled.</p>",
+        "AdvancedSecurityOptionsInput$AnonymousAuthEnabled": "<p>True if Anonymous auth is enabled. Anonymous auth can be enabled only when AdvancedSecurity is enabled on existing domains.</p>",
         "AutoTuneStatus$PendingDeletion": "<p>Indicates whether the Elasticsearch domain is being deleted.</p>",
         "CognitoOptions$Enabled": "<p>Specifies the option to enable Cognito for Kibana authentication.</p>",
         "ColdStorageOptions$Enabled": "<p>Enable cold storage option. Accepted values true or false</p>",
@@ -278,6 +281,44 @@
     "CancelElasticsearchServiceSoftwareUpdateResponse": {
       "base": "<p>The result of a <code>CancelElasticsearchServiceSoftwareUpdate</code> operation. Contains the status of the update.</p>",
       "refs": {
+      }
+    },
+    "ChangeProgressDetails": {
+      "base": "<p>Specifies change details of the domain configuration change.</p>",
+      "refs": {
+        "ElasticsearchDomainConfig$ChangeProgressDetails": "<p>Specifies change details of the domain configuration change.</p>",
+        "ElasticsearchDomainStatus$ChangeProgressDetails": "<p>Specifies change details of the domain configuration change.</p>",
+        "UpgradeElasticsearchDomainResponse$ChangeProgressDetails": null
+      }
+    },
+    "ChangeProgressStage": {
+      "base": "<p>A progress stage details of a specific domain configuration change.</p>",
+      "refs": {
+        "ChangeProgressStageList$member": null
+      }
+    },
+    "ChangeProgressStageList": {
+      "base": "<p>The list of progress stages of a specific domain configuration change.</p>",
+      "refs": {
+        "ChangeProgressStatusDetails$ChangeProgressStages": "<p>The specific stages that the domain is going through to perform the configuration change.</p>"
+      }
+    },
+    "ChangeProgressStageName": {
+      "base": null,
+      "refs": {
+        "ChangeProgressStage$Name": "<p>The name of the specific progress stage.</p>"
+      }
+    },
+    "ChangeProgressStageStatus": {
+      "base": null,
+      "refs": {
+        "ChangeProgressStage$Status": "<p>The overall status of a specific progress stage.</p>"
+      }
+    },
+    "ChangeProgressStatusDetails": {
+      "base": "<p>The progress details of a specific domain configuration change.</p>",
+      "refs": {
+        "DescribeDomainChangeProgressResponse$ChangeProgressStatus": "<p>Progress information for the configuration change that is requested in the <code>DescribeDomainChangeProgress</code> request. </p>"
       }
     },
     "CloudWatchLogsLogGroupArn": {
@@ -447,6 +488,12 @@
         "ServiceSoftwareOptions$UpdateStatus": "<p>The status of your service software update. This field can take the following values: <code>ELIGIBLE</code>, <code>PENDING_UPDATE</code>, <code>IN_PROGRESS</code>, <code>COMPLETED</code>, and <code>NOT_ELIGIBLE</code>.</p>"
       }
     },
+    "DeploymentType": {
+      "base": null,
+      "refs": {
+        "DryRunResults$DeploymentType": "<p> Specifies the deployment mechanism through which the update shall be applied on the domain. Possible responses are <code>Blue/Green</code> (The update will require a blue/green deployment.) <code>DynamicUpdate</code> (The update can be applied in-place without a Blue/Green deployment required.) <code>Undetermined</code> (The domain is undergoing an update which needs to complete before the deployment type can be predicted.) <code>None</code> (The configuration change matches the current configuration and will not result in any update.) </p>"
+      }
+    },
     "DescribeDomainAutoTunesRequest": {
       "base": "<p>Container for the parameters to the <code>DescribeDomainAutoTunes</code> operation.</p>",
       "refs": {
@@ -454,6 +501,16 @@
     },
     "DescribeDomainAutoTunesResponse": {
       "base": "<p>The result of <code>DescribeDomainAutoTunes</code> request. See the <a href=\"https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/auto-tune.html\" target=\"_blank\">Developer Guide</a> for more information. </p>",
+      "refs": {
+      }
+    },
+    "DescribeDomainChangeProgressRequest": {
+      "base": "<p>Container for the parameters to the <code>DescribeDomainChangeProgress</code> operation. Specifies the domain name and optional change specific identity for which you want progress information. </p>",
+      "refs": {
+      }
+    },
+    "DescribeDomainChangeProgressResponse": {
+      "base": "<p>The result of a <code>DescribeDomainChangeProgress</code> request. Contains the progress information of the requested domain change. </p>",
       "refs": {
       }
     },
@@ -577,6 +634,18 @@
       "refs": {
       }
     },
+    "Description": {
+      "base": null,
+      "refs": {
+        "ChangeProgressStage$Description": "<p>The description of the progress stage.</p>"
+      }
+    },
+    "DisableTimestamp": {
+      "base": null,
+      "refs": {
+        "AdvancedSecurityOptions$AnonymousAuthDisableDate": "<p>Specifies the Anonymous Auth Disable Date when Anonymous Auth is enabled.</p>"
+      }
+    },
     "DisabledOperationException": {
       "base": "<p>An error occured because the client wanted to access a not supported operation. Gives http status code of 409.</p>",
       "refs": {
@@ -646,6 +715,7 @@
         "CreateElasticsearchDomainRequest$DomainName": "<p>The name of the Elasticsearch domain that you are creating. Domain names are unique across the domains owned by an account within an AWS region. Domain names must start with a lowercase letter and can contain the following characters: a-z (lowercase), 0-9, and - (hyphen).</p>",
         "DeleteElasticsearchDomainRequest$DomainName": "<p>The name of the Elasticsearch domain that you want to permanently delete.</p>",
         "DescribeDomainAutoTunesRequest$DomainName": "<p>Specifies the domain name for which you want Auto-Tune action details.</p>",
+        "DescribeDomainChangeProgressRequest$DomainName": "<p>The domain you want to get the progress information about.</p>",
         "DescribeElasticsearchDomainConfigRequest$DomainName": "<p>The Elasticsearch domain that you want to get information about.</p>",
         "DescribeElasticsearchDomainRequest$DomainName": "<p>The name of the Elasticsearch domain for which you want information.</p>",
         "DescribeElasticsearchInstanceTypeLimitsRequest$DomainName": "<p> DomainName represents the name of the Domain that we are trying to modify. This should be present only if we are querying for Elasticsearch <code> <a>Limits</a> </code> for existing domain. </p>",
@@ -708,6 +778,18 @@
         "ReservedElasticsearchInstanceOffering$FixedPrice": "<p>The upfront fixed charge you will pay to purchase the specific reserved Elasticsearch instance offering. </p>",
         "ReservedElasticsearchInstanceOffering$UsagePrice": "<p>The rate you are charged for each hour the domain that is using the offering is running.</p>",
         "UpgradeStepItem$ProgressPercent": "<p>The Floating point value representing progress percentage of a particular step.</p>"
+      }
+    },
+    "DryRun": {
+      "base": null,
+      "refs": {
+        "UpdateElasticsearchDomainConfigRequest$DryRun": "<p> This flag, when set to True, specifies whether the <code>UpdateElasticsearchDomain</code> request should return the results of validation checks without actually applying the change. This flag, when set to True, specifies the deployment mechanism through which the update shall be applied on the domain. This will not actually perform the Update. </p>"
+      }
+    },
+    "DryRunResults": {
+      "base": null,
+      "refs": {
+        "UpdateElasticsearchDomainConfigResponse$DryRunResults": "<p>Contains result of DryRun. </p>"
       }
     },
     "Duration": {
@@ -888,6 +970,9 @@
     "GUID": {
       "base": null,
       "refs": {
+        "ChangeProgressDetails$ChangeId": "<p>The unique change identifier associated with a specific domain configuration change.</p>",
+        "ChangeProgressStatusDetails$ChangeId": "<p>The unique change identifier associated with a specific domain configuration change.</p>",
+        "DescribeDomainChangeProgressRequest$ChangeId": "<p>The specific change ID for which you want to get progress information. This is an optional parameter. If omitted, the service returns information about the most recent configuration change. </p>",
         "DescribeReservedElasticsearchInstanceOfferingsRequest$ReservedElasticsearchInstanceOfferingId": "<p>The offering identifier filter value. Use this parameter to show only the available offering that matches the specified reservation identifier.</p>",
         "DescribeReservedElasticsearchInstancesRequest$ReservedElasticsearchInstanceId": "<p>The reserved instance identifier filter value. Use this parameter to show only the reservation that matches the specified reserved Elasticsearch instance ID.</p>",
         "PurchaseReservedElasticsearchInstanceOfferingRequest$ReservedElasticsearchInstanceOfferingId": "<p>The ID of the reserved Elasticsearch instance offering to purchase.</p>",
@@ -1051,6 +1136,7 @@
     "LastUpdated": {
       "base": null,
       "refs": {
+        "ChangeProgressStage$LastUpdated": "<p>The last updated timestamp of the progress stage.</p>",
         "DomainPackageDetails$LastUpdated": "<p>Timestamp of the most-recent update to the association status.</p>",
         "PackageDetails$LastUpdatedAt": null
       }
@@ -1208,6 +1294,13 @@
         "InstanceCountLimits$MaximumInstanceCount": null
       }
     },
+    "Message": {
+      "base": null,
+      "refs": {
+        "ChangeProgressDetails$Message": "<p>Contains an optional message associated with the domain configuration change.</p>",
+        "DryRunResults$Message": "<p>Contains an optional message associated with the DryRunResults.</p>"
+      }
+    },
     "MinimumInstanceCount": {
       "base": "<p> Minimum number of Instances that can be instantiated for given InstanceType. </p>",
       "refs": {
@@ -1307,6 +1400,12 @@
       "base": null,
       "refs": {
         "DescribeOutboundCrossClusterSearchConnectionsResponse$CrossClusterSearchConnections": "<p>Consists of list of <code><a>OutboundCrossClusterSearchConnection</a></code> matching the specified filter criteria.</p>"
+      }
+    },
+    "OverallChangeStatus": {
+      "base": "<p>The overall status value of the domain configuration change.</p>",
+      "refs": {
+        "ChangeProgressStatusDetails$Status": "<p>The overall status of the domain configuration change. This field can take the following values: <code>PENDING</code>, <code>PROCESSING</code>, <code>COMPLETED</code> and <code>FAILED</code></p>"
       }
     },
     "OwnerId": {
@@ -1716,6 +1815,8 @@
     "StringList": {
       "base": null,
       "refs": {
+        "ChangeProgressStatusDetails$PendingProperties": "<p>The list of properties involved in the domain configuration change that are still in pending.</p>",
+        "ChangeProgressStatusDetails$CompletedProperties": "<p>The list of properties involved in the domain configuration change that are completed.</p>",
         "RemoveTagsRequest$TagKeys": "<p>Specifies the <code>TagKey</code> list which you want to remove from the Elasticsearch domain.</p>",
         "VPCDerivedInfo$SubnetIds": "<p>Specifies the subnets for VPC endpoint.</p>",
         "VPCDerivedInfo$AvailabilityZones": "<p>The availability zones for the Elasticsearch domain. Exists only if the domain was created with VPCOptions.</p>",
@@ -1762,6 +1863,12 @@
         "Duration$Unit": "<p>Specifies the unit of a maintenance schedule duration. Valid value is HOURS. See the <a href=\"https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/auto-tune.html\" target=\"_blank\">Developer Guide</a> for more information.</p>"
       }
     },
+    "TotalNumberOfStages": {
+      "base": null,
+      "refs": {
+        "ChangeProgressStatusDetails$TotalNumberOfStages": "<p>The total number of stages required for the configuration change.</p>"
+      }
+    },
     "UIntValue": {
       "base": null,
       "refs": {
@@ -1794,6 +1901,7 @@
       "refs": {
         "AutoTuneStatus$CreationDate": "<p>Timestamp which tells Auto-Tune options creation date .</p>",
         "AutoTuneStatus$UpdateDate": "<p>Timestamp which tells Auto-Tune options last updated time.</p>",
+        "ChangeProgressStatusDetails$StartTime": "<p>The time at which the configuration change is made on the domain.</p>",
         "OptionStatus$CreationDate": "<p>Timestamp which tells the creation date for the entity.</p>",
         "OptionStatus$UpdateDate": "<p>Timestamp which tells the last updated time for the entity.</p>",
         "ReservedElasticsearchInstance$StartTime": "<p>The time the reservation started.</p>"

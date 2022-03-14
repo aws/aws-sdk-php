@@ -35,4 +35,26 @@ class CredentialsTest extends TestCase
             (new Credentials('foo', 'baz', 'tok', time() - 1000))->isExpired()
         );
     }
+
+    public function testSerialization()
+    {
+        $credentials = new Credentials('key-value', 'secret-value');
+        $actual = unserialize(serialize($credentials))->toArray();
+        $this->assertEquals([
+            'key'     => 'key-value',
+            'secret'  => 'secret-value',
+            'token'   => null,
+            'expires' => null,
+        ], $actual);
+
+        $credentials = new Credentials('key-value', 'secret-value', 'token-value', 10);
+        $actual = unserialize(serialize($credentials))->toArray();
+
+        $this->assertEquals([
+            'key'     => 'key-value',
+            'secret'  => 'secret-value',
+            'token'   => 'token-value',
+            'expires' => 10,
+        ], $actual);
+    }
 }

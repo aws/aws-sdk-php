@@ -4,8 +4,8 @@
   "operations": {
     "CreateCanary": "<p>Creates a canary. Canaries are scripts that monitor your endpoints and APIs from the outside-in. Canaries help you check the availability and latency of your web services and troubleshoot anomalies by investigating load time data, screenshots of the UI, logs, and metrics. You can set up a canary to run continuously or just once. </p> <p>Do not use <code>CreateCanary</code> to modify an existing canary. Use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_UpdateCanary.html\">UpdateCanary</a> instead.</p> <p>To create canaries, you must have the <code>CloudWatchSyntheticsFullAccess</code> policy. If you are creating a new IAM role for the canary, you also need the the <code>iam:CreateRole</code>, <code>iam:CreatePolicy</code> and <code>iam:AttachRolePolicy</code> permissions. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Roles\">Necessary Roles and Permissions</a>.</p> <p>Do not include secrets or proprietary information in your canary names. The canary name makes up part of the Amazon Resource Name (ARN) for the canary, and the ARN is included in outbound calls over the internet. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/servicelens_canaries_security.html\">Security Considerations for Synthetics Canaries</a>.</p>",
     "DeleteCanary": "<p>Permanently deletes the specified canary.</p> <p>When you delete a canary, resources used and created by the canary are not automatically deleted. After you delete a canary that you do not intend to use again, you should also delete the following:</p> <ul> <li> <p>The Lambda functions and layers used by this canary. These have the prefix <code>cwsyn-<i>MyCanaryName</i> </code>.</p> </li> <li> <p>The CloudWatch alarms created for this canary. These alarms have a name of <code>Synthetics-SharpDrop-Alarm-<i>MyCanaryName</i> </code>.</p> </li> <li> <p>Amazon S3 objects and buckets, such as the canary's artifact location.</p> </li> <li> <p>IAM roles created for the canary. If they were created in the console, these roles have the name <code> role/service-role/CloudWatchSyntheticsRole-<i>MyCanaryName</i> </code>.</p> </li> <li> <p>CloudWatch Logs log groups created for the canary. These logs groups have the name <code>/aws/lambda/cwsyn-<i>MyCanaryName</i> </code>. </p> </li> </ul> <p>Before you delete a canary, you might want to use <code>GetCanary</code> to display the information about this canary. Make note of the information returned by this operation so that you can delete these resources after you delete the canary.</p>",
-    "DescribeCanaries": "<p>This operation returns a list of the canaries in your account, along with full details about each canary.</p> <p>This operation does not have resource-level authorization, so if a user is able to use <code>DescribeCanaries</code>, the user can see all of the canaries in the account. A deny policy can only be used to restrict access to all canaries. It cannot be used on specific resources. </p>",
-    "DescribeCanariesLastRun": "<p>Use this operation to see information from the most recent run of each canary that you have created.</p>",
+    "DescribeCanaries": "<p>This operation returns a list of the canaries in your account, along with full details about each canary.</p> <p>This operation supports resource-level authorization using an IAM policy and the <code>Names</code> parameter. If you specify the <code>Names</code> parameter, the operation is successful only if you have authorization to view all the canaries that you specify in your request. If you do not have permission to view any of the canaries, the request fails with a 403 response.</p> <p>You are required to use the <code>Names</code> parameter if you are logged on to a user or role that has an IAM policy that restricts which canaries that you are allowed to view. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Restricted.html\"> Limiting a user to viewing specific canaries</a>.</p>",
+    "DescribeCanariesLastRun": "<p>Use this operation to see information from the most recent run of each canary that you have created.</p> <p>This operation supports resource-level authorization using an IAM policy and the <code>Names</code> parameter. If you specify the <code>Names</code> parameter, the operation is successful only if you have authorization to view all the canaries that you specify in your request. If you do not have permission to view any of the canaries, the request fails with a 403 response.</p> <p>You are required to use the <code>Names</code> parameter if you are logged on to a user or role that has an IAM policy that restricts which canaries that you are allowed to view. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Restricted.html\"> Limiting a user to viewing specific canaries</a>.</p>",
     "DescribeRuntimeVersions": "<p>Returns a list of Synthetics canary runtime versions. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
     "GetCanary": "<p>Retrieves complete information about one canary. You must specify the name of the canary that you want. To get a list of canaries and their names, use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DescribeCanaries.html\">DescribeCanaries</a>.</p>",
     "GetCanaryRuns": "<p>Retrieves a list of runs for a specified canary.</p>",
@@ -17,6 +17,19 @@
     "UpdateCanary": "<p>Use this operation to change the settings of a canary that has already been created.</p> <p>You can't use this operation to update the tags of an existing canary. To change the tags of an existing canary, use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_TagResource.html\">TagResource</a>.</p>"
   },
   "shapes": {
+    "ArtifactConfigInput": {
+      "base": "<p>A structure that contains the configuration for canary artifacts, including the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3.</p>",
+      "refs": {
+        "CreateCanaryRequest$ArtifactConfig": "<p>A structure that contains the configuration for canary artifacts, including the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3.</p>",
+        "UpdateCanaryRequest$ArtifactConfig": "<p>A structure that contains the configuration for canary artifacts, including the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3.</p>"
+      }
+    },
+    "ArtifactConfigOutput": {
+      "base": "<p>A structure that contains the configuration for canary artifacts, including the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3.</p>",
+      "refs": {
+        "Canary$ArtifactConfig": "<p>A structure that contains the configuration for canary artifacts, including the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3.</p>"
+      }
+    },
     "BaseScreenshot": {
       "base": "<p>A structure representing a screenshot that is used as a baseline during visual monitoring comparisons made by the canary.</p>",
       "refs": {
@@ -45,7 +58,7 @@
     "Blob": {
       "base": null,
       "refs": {
-        "CanaryCodeInput$ZipFile": "<p>If you input your canary script directly into the canary instead of referring to an S3 location, the value of this parameter is the base64-encoded contents of the .zip file that contains the script. It must be smaller than 256 Kb.</p>"
+        "CanaryCodeInput$ZipFile": "<p>If you input your canary script directly into the canary instead of referring to an S3 location, the value of this parameter is the base64-encoded contents of the .zip file that contains the script. It must be smaller than 225 Kb.</p> <p>For large canary scripts, we recommend that you use an S3 location instead of inputting it directly with this parameter.</p>"
       }
     },
     "Canaries": {
@@ -103,6 +116,8 @@
         "CanaryRun$Name": "<p>The name of the canary.</p>",
         "CreateCanaryRequest$Name": "<p>The name for this canary. Be sure to give it a descriptive name that distinguishes it from other canaries in your account.</p> <p>Do not include secrets or proprietary information in your canary names. The canary name makes up part of the canary ARN, and the ARN is included in outbound calls over the internet. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/servicelens_canaries_security.html\">Security Considerations for Synthetics Canaries</a>.</p>",
         "DeleteCanaryRequest$Name": "<p>The name of the canary that you want to delete. To find the names of your canaries, use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DescribeCanaries.html\">DescribeCanaries</a>.</p>",
+        "DescribeCanariesLastRunNameFilter$member": null,
+        "DescribeCanariesNameFilter$member": null,
         "GetCanaryRequest$Name": "<p>The name of the canary that you want details for.</p>",
         "GetCanaryRunsRequest$Name": "<p>The name of the canary that you want to see runs for.</p>",
         "StartCanaryRequest$Name": "<p>The name of the canary that you want to run. To find canary names, use <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_DescribeCanaries.html\">DescribeCanaries</a>.</p>",
@@ -197,6 +212,12 @@
         "Canary$Timeline": "<p>A structure that contains information about when the canary was created, modified, and most recently run.</p>"
       }
     },
+    "CodeHandler": {
+      "base": null,
+      "refs": {
+        "CanaryCodeInput$Handler": "<p>The entry point to use for the source code when running the canary. For canaries that use the <code>syn-python-selenium-1.0</code> runtime or a <code>syn-nodejs.puppeteer</code> runtime earlier than <code>syn-nodejs.puppeteer-3.4</code>, the handler must be specified as <code> <i>fileName</i>.handler</code>. For <code>syn-python-selenium-1.1</code>, <code>syn-nodejs.puppeteer-3.4</code>, and later runtimes, the handler can be specified as <code> <i>fileName</i>.<i>functionName</i> </code>, or you can specify a folder where canary scripts reside as <code> <i>folder</i>/<i>fileName</i>.<i>functionName</i> </code>.</p>"
+      }
+    },
     "ConflictException": {
       "base": "<p>A conflicting operation is already in progress.</p>",
       "refs": {
@@ -222,6 +243,12 @@
       "refs": {
       }
     },
+    "DescribeCanariesLastRunNameFilter": {
+      "base": null,
+      "refs": {
+        "DescribeCanariesLastRunRequest$Names": "<p>Use this parameter to return only canaries that match the names that you specify here. You can specify as many as five canary names.</p> <p>If you specify this parameter, the operation is successful only if you have authorization to view all the canaries that you specify in your request. If you do not have permission to view any of the canaries, the request fails with a 403 response.</p> <p>You are required to use the <code>Names</code> parameter if you are logged on to a user or role that has an IAM policy that restricts which canaries that you are allowed to view. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Restricted.html\"> Limiting a user to viewing specific canaries</a>.</p>"
+      }
+    },
     "DescribeCanariesLastRunRequest": {
       "base": null,
       "refs": {
@@ -230,6 +257,12 @@
     "DescribeCanariesLastRunResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "DescribeCanariesNameFilter": {
+      "base": null,
+      "refs": {
+        "DescribeCanariesRequest$Names": "<p>Use this parameter to return only canaries that match the names that you specify here. You can specify as many as five canary names.</p> <p>If you specify this parameter, the operation is successful only if you have authorization to view all the canaries that you specify in your request. If you do not have permission to view any of the canaries, the request fails with a 403 response.</p> <p>You are required to use this parameter if you are logged on to a user or role that has an IAM policy that restricts which canaries that you are allowed to view. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Restricted.html\"> Limiting a user to viewing specific canaries</a>.</p>"
       }
     },
     "DescribeCanariesRequest": {
@@ -250,6 +283,12 @@
     "DescribeRuntimeVersionsResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "EncryptionMode": {
+      "base": null,
+      "refs": {
+        "S3EncryptionConfig$EncryptionMode": "<p> The encryption method to use for artifacts created by this canary. Specify <code>SSE_S3</code> to use server-side encryption (SSE) with an Amazon S3-managed key. Specify <code>SSE-KMS</code> to use server-side encryption with a customer-managed KMS key.</p> <p>If you omit this parameter, an Amazon Web Services-managed KMS key is used. </p>"
       }
     },
     "EnvironmentVariableName": {
@@ -275,6 +314,7 @@
       "refs": {
         "ConflictException$Message": null,
         "InternalServerException$Message": null,
+        "RequestEntityTooLargeException$Message": null,
         "ResourceNotFoundException$Message": null,
         "ValidationException$Message": null
       }
@@ -308,6 +348,12 @@
     "InternalServerException": {
       "base": "<p>An unknown internal error occurred.</p>",
       "refs": {
+      }
+    },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "S3EncryptionConfig$KmsKeyArn": "<p>The ARN of the customer-managed KMS key to use, if you specify <code>SSE-KMS</code> for <code>EncryptionMode</code> </p>"
       }
     },
     "ListTagsForResourceRequest": {
@@ -373,6 +419,11 @@
         "CanaryRunConfigOutput$ActiveTracing": "<p>Displays whether this canary run used active X-Ray tracing. </p>"
       }
     },
+    "RequestEntityTooLargeException": {
+      "base": "<p>One of the input resources is larger than is allowed.</p>",
+      "refs": {
+      }
+    },
     "ResourceNotFoundException": {
       "base": "<p>One of the specified resources was not found.</p>",
       "refs": {
@@ -396,6 +447,13 @@
       "base": null,
       "refs": {
         "DescribeRuntimeVersionsResponse$RuntimeVersions": "<p>An array of objects that display the details about each Synthetics canary runtime version.</p>"
+      }
+    },
+    "S3EncryptionConfig": {
+      "base": "<p>A structure that contains the configuration of encryption-at-rest settings for canary artifacts that the canary uploads to Amazon S3. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_artifact_encryption.html\">Encrypting canary artifacts</a> </p>",
+      "refs": {
+        "ArtifactConfigInput$S3Encryption": "<p>A structure that contains the configuration of the encryption-at-rest settings for artifacts that the canary uploads to Amazon S3. Artifact encryption functionality is available only for canaries that use Synthetics runtime version syn-nodejs-puppeteer-3.3 or later. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_artifact_encryption.html\">Encrypting canary artifacts</a> </p>",
+        "ArtifactConfigOutput$S3Encryption": "<p>A structure that contains the configuration of encryption settings for canary artifacts that are stored in Amazon S3. </p>"
       }
     },
     "SecurityGroupId": {
@@ -440,7 +498,6 @@
         "CanaryCodeInput$S3Bucket": "<p>If your canary script is located in S3, specify the bucket name here. Do not include <code>s3://</code> as the start of the bucket name.</p>",
         "CanaryCodeInput$S3Key": "<p>The S3 key of your script. For more information, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingObjects.html\">Working with Amazon S3 Objects</a>.</p>",
         "CanaryCodeInput$S3Version": "<p>The S3 version ID of your script.</p>",
-        "CanaryCodeInput$Handler": "<p>The entry point to use for the source code when running the canary. This value must end with the string <code>.handler</code>. The string is limited to 29 characters or fewer.</p>",
         "CanaryCodeOutput$SourceLocationArn": "<p>The ARN of the Lambda layer where Synthetics stores the canary script code.</p>",
         "CanaryCodeOutput$Handler": "<p>The entry point to use for the source code when running the canary.</p>",
         "CanaryRun$ArtifactS3Location": "<p>The location where the canary stored artifacts from the run. Artifacts include the log file, screenshots, and HAR files.</p>",
@@ -453,6 +510,7 @@
         "RuntimeVersion$VersionName": "<p>The name of the runtime version. For a list of valid runtime versions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
         "RuntimeVersion$Description": "<p>A description of the runtime version, created by Amazon.</p>",
         "UpdateCanaryRequest$RuntimeVersion": "<p>Specifies the runtime version to use for the canary. For a list of valid runtime versions and for more information about runtime versions, see <a href=\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch_Synthetics_Canaries_Library.html\"> Canary Runtime Versions</a>.</p>",
+        "UpdateCanaryRequest$ArtifactS3Location": "<p>The location in Amazon S3 where Synthetics stores artifacts from the test runs of this canary. Artifacts include the log file, screenshots, and HAR files. The name of the S3 bucket can't include a period (.).</p>",
         "VisualReferenceInput$BaseCanaryRunId": "<p>Specifies which canary run to use the screenshots from as the baseline for future visual monitoring with this canary. Valid values are <code>nextrun</code> to use the screenshots from the next run after this update is made, <code>lastrun</code> to use the screenshots from the most recent run before this update was made, or the value of <code>Id</code> in the <a href=\"https://docs.aws.amazon.com/AmazonSynthetics/latest/APIReference/API_CanaryRun.html\"> CanaryRun</a> from any past run of this canary.</p>",
         "VisualReferenceOutput$BaseCanaryRunId": "<p>The ID of the canary run that produced the screenshots that are used as the baseline for visual monitoring comparisons during future runs of this canary.</p>"
       }

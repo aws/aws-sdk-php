@@ -156,6 +156,22 @@
       ],
       "idempotent":true
     },
+    "DeleteBackupVaultLockConfiguration":{
+      "name":"DeleteBackupVaultLockConfiguration",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/backup-vaults/{backupVaultName}/vault-lock"
+      },
+      "input":{"shape":"DeleteBackupVaultLockConfigurationInput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "DeleteBackupVaultNotifications":{
       "name":"DeleteBackupVaultNotifications",
       "http":{
@@ -777,6 +793,22 @@
       ],
       "idempotent":true
     },
+    "PutBackupVaultLockConfiguration":{
+      "name":"PutBackupVaultLockConfiguration",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/backup-vaults/{backupVaultName}/vault-lock"
+      },
+      "input":{"shape":"PutBackupVaultLockConfigurationInput"},
+      "errors":[
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"MissingParameterValueException"},
+        {"shape":"InvalidRequestException"},
+        {"shape":"ServiceUnavailableException"}
+      ],
+      "idempotent":true
+    },
     "PutBackupVaultNotifications":{
       "name":"PutBackupVaultNotifications",
       "http":{
@@ -931,6 +963,7 @@
       "input":{"shape":"UpdateFrameworkInput"},
       "output":{"shape":"UpdateFrameworkOutput"},
       "errors":[
+        {"shape":"AlreadyExistsException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"LimitExceededException"},
         {"shape":"InvalidParameterValueException"},
@@ -965,6 +998,7 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidRequestException"},
         {"shape":"MissingParameterValueException"},
         {"shape":"ServiceUnavailableException"}
       ],
@@ -1202,7 +1236,9 @@
         "SelectionName":{"shape":"BackupSelectionName"},
         "IamRoleArn":{"shape":"IAMRoleArn"},
         "Resources":{"shape":"ResourceArns"},
-        "ListOfTags":{"shape":"ListOfTags"}
+        "ListOfTags":{"shape":"ListOfTags"},
+        "NotResources":{"shape":"ResourceArns"},
+        "Conditions":{"shape":"Conditions"}
       }
     },
     "BackupSelectionName":{
@@ -1241,7 +1277,9 @@
         "COPY_JOB_FAILED",
         "RECOVERY_POINT_MODIFIED",
         "BACKUP_PLAN_CREATED",
-        "BACKUP_PLAN_MODIFIED"
+        "BACKUP_PLAN_MODIFIED",
+        "S3_BACKUP_OBJECT_FAILED",
+        "S3_RESTORE_OBJECT_FAILED"
       ]
     },
     "BackupVaultEvents":{
@@ -1260,7 +1298,11 @@
         "CreationDate":{"shape":"timestamp"},
         "EncryptionKeyArn":{"shape":"ARN"},
         "CreatorRequestId":{"shape":"string"},
-        "NumberOfRecoveryPoints":{"shape":"long"}
+        "NumberOfRecoveryPoints":{"shape":"long"},
+        "Locked":{"shape":"Boolean"},
+        "MinRetentionDays":{"shape":"Long"},
+        "MaxRetentionDays":{"shape":"Long"},
+        "LockDate":{"shape":"timestamp"}
       }
     },
     "BackupVaultName":{
@@ -1295,11 +1337,31 @@
       }
     },
     "ConditionKey":{"type":"string"},
+    "ConditionParameter":{
+      "type":"structure",
+      "members":{
+        "ConditionKey":{"shape":"ConditionKey"},
+        "ConditionValue":{"shape":"ConditionValue"}
+      }
+    },
+    "ConditionParameters":{
+      "type":"list",
+      "member":{"shape":"ConditionParameter"}
+    },
     "ConditionType":{
       "type":"string",
       "enum":["STRINGEQUALS"]
     },
     "ConditionValue":{"type":"string"},
+    "Conditions":{
+      "type":"structure",
+      "members":{
+        "StringEquals":{"shape":"ConditionParameters"},
+        "StringNotEquals":{"shape":"ConditionParameters"},
+        "StringLike":{"shape":"ConditionParameters"},
+        "StringNotLike":{"shape":"ConditionParameters"}
+      }
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -1487,7 +1549,8 @@
       "type":"structure",
       "members":{
         "ReportPlanName":{"shape":"ReportPlanName"},
-        "ReportPlanArn":{"shape":"ARN"}
+        "ReportPlanArn":{"shape":"ARN"},
+        "CreationTime":{"shape":"timestamp"}
       }
     },
     "CronExpression":{"type":"string"},
@@ -1547,6 +1610,17 @@
       "members":{
         "BackupVaultName":{
           "shape":"string",
+          "location":"uri",
+          "locationName":"backupVaultName"
+        }
+      }
+    },
+    "DeleteBackupVaultLockConfigurationInput":{
+      "type":"structure",
+      "required":["BackupVaultName"],
+      "members":{
+        "BackupVaultName":{
+          "shape":"BackupVaultName",
           "location":"uri",
           "locationName":"backupVaultName"
         }
@@ -1670,7 +1744,11 @@
         "EncryptionKeyArn":{"shape":"ARN"},
         "CreationDate":{"shape":"timestamp"},
         "CreatorRequestId":{"shape":"string"},
-        "NumberOfRecoveryPoints":{"shape":"long"}
+        "NumberOfRecoveryPoints":{"shape":"long"},
+        "Locked":{"shape":"Boolean"},
+        "MinRetentionDays":{"shape":"Long"},
+        "MaxRetentionDays":{"shape":"Long"},
+        "LockDate":{"shape":"timestamp"}
       }
     },
     "DescribeCopyJobInput":{
@@ -1796,7 +1874,8 @@
     "DescribeRegionSettingsOutput":{
       "type":"structure",
       "members":{
-        "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"}
+        "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"},
+        "ResourceTypeManagementPreference":{"shape":"ResourceTypeManagementPreference"}
       }
     },
     "DescribeReportJobInput":{
@@ -2719,6 +2798,20 @@
         "Policy":{"shape":"IAMPolicy"}
       }
     },
+    "PutBackupVaultLockConfigurationInput":{
+      "type":"structure",
+      "required":["BackupVaultName"],
+      "members":{
+        "BackupVaultName":{
+          "shape":"BackupVaultName",
+          "location":"uri",
+          "locationName":"backupVaultName"
+        },
+        "MinRetentionDays":{"shape":"Long"},
+        "MaxRetentionDays":{"shape":"Long"},
+        "ChangeableForDays":{"shape":"Long"}
+      }
+    },
     "PutBackupVaultNotificationsInput":{
       "type":"structure",
       "required":[
@@ -2865,7 +2958,9 @@
       "type":"structure",
       "required":["ReportTemplate"],
       "members":{
-        "ReportTemplate":{"shape":"string"}
+        "ReportTemplate":{"shape":"string"},
+        "FrameworkArns":{"shape":"stringList"},
+        "NumberOfFrameworks":{"shape":"integer"}
       }
     },
     "ResourceArns":{
@@ -2889,6 +2984,11 @@
     "ResourceTypeList":{
       "type":"list",
       "member":{"shape":"ARN"}
+    },
+    "ResourceTypeManagementPreference":{
+      "type":"map",
+      "key":{"shape":"ResourceType"},
+      "value":{"shape":"IsEnabled"}
     },
     "ResourceTypeOptInPreference":{
       "type":"map",
@@ -3186,7 +3286,8 @@
     "UpdateRegionSettingsInput":{
       "type":"structure",
       "members":{
-        "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"}
+        "ResourceTypeOptInPreference":{"shape":"ResourceTypeOptInPreference"},
+        "ResourceTypeManagementPreference":{"shape":"ResourceTypeManagementPreference"}
       }
     },
     "UpdateReportPlanInput":{

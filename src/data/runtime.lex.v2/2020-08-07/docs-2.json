@@ -5,9 +5,9 @@
     "DeleteSession": "<p>Removes session information for a specified bot, alias, and user ID. </p> <p>You can use this operation to restart a conversation with a bot. When you remove a session, the entire history of the session is removed so that you can start again.</p> <p>You don't need to delete a session. Sessions have a time limit and will expire. Set the session time limit when you create the bot. The default is 5 minutes, but you can specify anything between 1 minute and 24 hours.</p> <p>If you specify a bot or alias ID that doesn't exist, you receive a <code>BadRequestException.</code> </p> <p>If the locale doesn't exist in the bot, or if the locale hasn't been enables for the alias, you receive a <code>BadRequestException</code>.</p>",
     "GetSession": "<p>Returns session information for a specified bot, alias, and user.</p> <p>For example, you can use this operation to retrieve session information for a user that has left a long-running session in use.</p> <p>If the bot, alias, or session identifier doesn't exist, Amazon Lex V2 returns a <code>BadRequestException</code>. If the locale doesn't exist or is not enabled for the alias, you receive a <code>BadRequestException</code>.</p>",
     "PutSession": "<p>Creates a new session or modifies an existing session with an Amazon Lex V2 bot. Use this operation to enable your application to set the state of the bot.</p>",
-    "RecognizeText": "<p>Sends user input to Amazon Lex V2. Client applications use this API to send requests to Amazon Lex V2 at runtime. Amazon Lex V2 then interprets the user input using the machine learning model that it build for the bot.</p> <p>In response, Amazon Lex V2 returns the next message to convey to the user and an optional response card to display.</p>",
-    "RecognizeUtterance": "<p>Sends user input to Amazon Lex V2. You can send text or speech. Clients use this API to send text and audio requests to Amazon Lex V2 at runtime. Amazon Lex V2 interprets the user input using the machine learning model built for the bot.</p> <p>The following request fields must be compressed with gzip and then base64 encoded before you send them to Amazon Lex V2. </p> <ul> <li> <p>requestAttributes</p> </li> <li> <p>sessionState</p> </li> </ul> <p>The following response fields are compressed using gzip and then base64 encoded by Amazon Lex V2. Before you can use these fields, you must decode and decompress them. </p> <ul> <li> <p>inputTranscript</p> </li> <li> <p>interpretations</p> </li> <li> <p>messages</p> </li> <li> <p>requestAttributes</p> </li> <li> <p>sessionState</p> </li> </ul> <p>The example contains a Java application that compresses and encodes a Java object to send to Amazon Lex V2, and a second that decodes and decompresses a response from Amazon Lex V2.</p>",
-    "StartConversation": "<p>Starts an HTTP/2 bidirectional event stream that enables you to send audio, text, or DTMF input in real time. After your application starts a conversation, users send input to Amazon Lex V2 as a stream of events. Amazon Lex V2 processes the incoming events and responds with streaming text or audio events. </p> <p>Audio input must be in the following format: <code>audio/lpcm sample-rate=8000 sample-size-bits=16 channel-count=1; is-big-endian=false</code>.</p> <p>The <code>StartConversation</code> operation is supported only in the following SDKs: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/goto/SdkForCpp/runtime.lex.v2-2020-08-07/StartConversation\">AWS SDK for C++</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/goto/SdkForJavaV2/runtime.lex.v2-2020-08-07/StartConversation\">AWS SDK for Java V2</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/goto/SdkForRubyV3/runtime.lex.v2-2020-08-07/StartConversation\">AWS SDK for Ruby V3</a> </p> </li> </ul>"
+    "RecognizeText": "<p>Sends user input to Amazon Lex V2. Client applications use this API to send requests to Amazon Lex V2 at runtime. Amazon Lex V2 then interprets the user input using the machine learning model that it build for the bot.</p> <p>In response, Amazon Lex V2 returns the next message to convey to the user and an optional response card to display.</p> <p>If the optional post-fulfillment response is specified, the messages are returned as follows. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_PostFulfillmentStatusSpecification.html\">PostFulfillmentStatusSpecification</a>.</p> <ul> <li> <p> <b>Success message</b> - Returned if the Lambda function completes successfully and the intent state is fulfilled or ready fulfillment if the message is present.</p> </li> <li> <p> <b>Failed message</b> - The failed message is returned if the Lambda function throws an exception or if the Lambda function returns a failed intent state without a message.</p> </li> <li> <p> <b>Timeout message</b> - If you don't configure a timeout message and a timeout, and the Lambda function doesn't return within 30 seconds, the timeout message is returned. If you configure a timeout, the timeout message is returned when the period times out. </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/streaming-progress.html#progress-complete.html\">Completion message</a>.</p>",
+    "RecognizeUtterance": "<p>Sends user input to Amazon Lex V2. You can send text or speech. Clients use this API to send text and audio requests to Amazon Lex V2 at runtime. Amazon Lex V2 interprets the user input using the machine learning model built for the bot.</p> <p>The following request fields must be compressed with gzip and then base64 encoded before you send them to Amazon Lex V2. </p> <ul> <li> <p>requestAttributes</p> </li> <li> <p>sessionState</p> </li> </ul> <p>The following response fields are compressed using gzip and then base64 encoded by Amazon Lex V2. Before you can use these fields, you must decode and decompress them. </p> <ul> <li> <p>inputTranscript</p> </li> <li> <p>interpretations</p> </li> <li> <p>messages</p> </li> <li> <p>requestAttributes</p> </li> <li> <p>sessionState</p> </li> </ul> <p>The example contains a Java application that compresses and encodes a Java object to send to Amazon Lex V2, and a second that decodes and decompresses a response from Amazon Lex V2.</p> <p>If the optional post-fulfillment response is specified, the messages are returned as follows. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_PostFulfillmentStatusSpecification.html\">PostFulfillmentStatusSpecification</a>.</p> <ul> <li> <p> <b>Success message</b> - Returned if the Lambda function completes successfully and the intent state is fulfilled or ready fulfillment if the message is present.</p> </li> <li> <p> <b>Failed message</b> - The failed message is returned if the Lambda function throws an exception or if the Lambda function returns a failed intent state without a message.</p> </li> <li> <p> <b>Timeout message</b> - If you don't configure a timeout message and a timeout, and the Lambda function doesn't return within 30 seconds, the timeout message is returned. If you configure a timeout, the timeout message is returned when the period times out. </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/streaming-progress.html#progress-complete.html\">Completion message</a>.</p>",
+    "StartConversation": "<p>Starts an HTTP/2 bidirectional event stream that enables you to send audio, text, or DTMF input in real time. After your application starts a conversation, users send input to Amazon Lex V2 as a stream of events. Amazon Lex V2 processes the incoming events and responds with streaming text or audio events. </p> <p>Audio input must be in the following format: <code>audio/lpcm sample-rate=8000 sample-size-bits=16 channel-count=1; is-big-endian=false</code>.</p> <p>If the optional post-fulfillment response is specified, the messages are returned as follows. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/API_PostFulfillmentStatusSpecification.html\">PostFulfillmentStatusSpecification</a>.</p> <ul> <li> <p> <b>Success message</b> - Returned if the Lambda function completes successfully and the intent state is fulfilled or ready fulfillment if the message is present.</p> </li> <li> <p> <b>Failed message</b> - The failed message is returned if the Lambda function throws an exception or if the Lambda function returns a failed intent state without a message.</p> </li> <li> <p> <b>Timeout message</b> - If you don't configure a timeout message and a timeout, and the Lambda function doesn't return within 30 seconds, the timeout message is returned. If you configure a timeout, the timeout message is returned when the period times out. </p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/streaming-progress.html#progress-complete.html\">Completion message</a>.</p> <p>If the optional update message is configured, it is played at the specified frequency while the Lambda function is running and the update message state is active. If the fulfillment update message is not active, the Lambda function runs with a 30 second timeout. </p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/streaming-progress.html#progress-update.html\">Update message </a> </p> <p>The <code>StartConversation</code> operation is supported only in the following SDKs: </p> <ul> <li> <p> <a href=\"https://docs.aws.amazon.com/goto/SdkForCpp/runtime.lex.v2-2020-08-07/StartConversation\">AWS SDK for C++</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/goto/SdkForJavaV2/runtime.lex.v2-2020-08-07/StartConversation\">AWS SDK for Java V2</a> </p> </li> <li> <p> <a href=\"https://docs.aws.amazon.com/goto/SdkForRubyV3/runtime.lex.v2-2020-08-07/StartConversation\">AWS SDK for Ruby V3</a> </p> </li> </ul>"
   },
   "shapes": {
     "AccessDeniedException": {
@@ -31,7 +31,7 @@
     "ActiveContextParametersMap": {
       "base": null,
       "refs": {
-        "ActiveContext$contextAttributes": "<p>A lis tof contexts active for the request. A context can be activated when a previous intent is fulfilled, or by including the context in the request.</p> <p>If you don't specify a list of contexts, Amazon Lex will use the current list of contexts for the session. If you specify an empty list, all contexts for the session are cleared. </p>"
+        "ActiveContext$contextAttributes": "<p>A list of contexts active for the request. A context can be activated when a previous intent is fulfilled, or by including the context in the request.</p> <p>If you don't specify a list of contexts, Amazon Lex V2 will use the current list of contexts for the session. If you specify an empty list, all contexts for the session are cleared. </p>"
       }
     },
     "ActiveContextTimeToLive": {
@@ -107,7 +107,7 @@
     "Boolean": {
       "base": null,
       "refs": {
-        "ConfigurationEvent$disablePlayback": "<p>Determines whether Amazon Lex V2 should send audio responses to the client application. When this parameter if <code>false</code>, the client application needs to create responses for the user. </p>"
+        "ConfigurationEvent$disablePlayback": "<p>Determines whether Amazon Lex V2 should send audio responses to the client application. </p> <p>Set this field to false when the client is operating in a playback mode where audio responses are played to the user. If the client isn't operating in playback mode, such as a text chat application, set this to true so that Amazon Lex V2 doesn't wait for the prompt to finish playing on the client.</p>"
       }
     },
     "BotAliasIdentifier": {
@@ -374,6 +374,13 @@
         "TextResponseEvent$messages": "<p>A list of messages to send to the user. Messages are ordered based on the order that you returned the messages from your Lambda function or the order that the messages are defined in the bot.</p>"
       }
     },
+    "Name": {
+      "base": null,
+      "refs": {
+        "SlotHintsIntentMap$key": null,
+        "SlotHintsSlotMap$key": null
+      }
+    },
     "NonEmptyString": {
       "base": null,
       "refs": {
@@ -397,7 +404,7 @@
         "RecognizeUtteranceResponse$sessionState": "<p>Represents the current state of the dialog between the user and the bot.</p> <p>Use this to determine the progress of the conversation and what the next action might be.</p> <p>The <code>sessionState</code> field is compressed with gzip and then base64 encoded. Before you can use the contents of the field, you must decode and decompress the contents. See the example for a simple function to decode and decompress the contents.</p>",
         "RecognizeUtteranceResponse$requestAttributes": "<p>The attributes sent in the request.</p> <p>The <code>requestAttributes</code> field is compressed with gzip and then base64 encoded. Before you can use the contents of the field, you must decode and decompress the contents.</p>",
         "RecognizeUtteranceResponse$inputTranscript": "<p>The text used to process the request.</p> <p>If the input was an audio stream, the <code>inputTranscript</code> field contains the text extracted from the audio stream. This is the text that is actually processed to recognize intents and slot values. You can use this information to determine if Amazon Lex V2 is correctly processing the audio that you send.</p> <p>The <code>inputTranscript</code> field is compressed with gzip and then base64 encoded. Before you can use the contents of the field, you must decode and decompress the contents. See the example for a simple function to decode and decompress the contents.</p>",
-        "SessionState$originatingRequestId": "<p/>",
+        "SessionState$originatingRequestId": "<p>A unique identifier for a specific request.</p>",
         "Slots$key": null,
         "StringList$member": null,
         "StringMap$key": null,
@@ -465,6 +472,36 @@
         "StartConversationResponseEventStream$ResourceNotFoundException": "<p>Exception thrown if one of the input parameters points to a resource that does not exist. For example, if the bot ID specified does not exist.</p>"
       }
     },
+    "RuntimeHintDetails": {
+      "base": "<p>Provides an array of phrases that should be given preference when resolving values for a slot.</p>",
+      "refs": {
+        "SlotHintsSlotMap$value": null
+      }
+    },
+    "RuntimeHintPhrase": {
+      "base": null,
+      "refs": {
+        "RuntimeHintValue$phrase": "<p>The phrase that Amazon Lex V2 should look for in the user's input to the bot.</p>"
+      }
+    },
+    "RuntimeHintValue": {
+      "base": "<p>Provides the phrase that Amazon Lex V2 should look for in the user's input to the bot.</p>",
+      "refs": {
+        "RuntimeHintValuesList$member": null
+      }
+    },
+    "RuntimeHintValuesList": {
+      "base": null,
+      "refs": {
+        "RuntimeHintDetails$runtimeHintValues": "<p>One or more strings that Amazon Lex V2 should look for in the input to the bot. Each phrase is given preference when deciding on slot values.</p>"
+      }
+    },
+    "RuntimeHints": {
+      "base": "<p>You can provide Amazon Lex V2 with hints to the phrases that a customer is likely to use for a slot. When a slot with hints is resolved, the phrases in the runtime hints are preferred in the resolution. You can provide hints for a maximum of 100 intents. You can provide a maximum of 100 slots.</p> <p>Before you can use runtime hints with an existing bot, you must first rebuild the bot.</p> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/using-hints.xml\">Using hints to improve accuracy</a>.</p>",
+      "refs": {
+        "SessionState$runtimeHints": "<p>Hints for phrases that a customer is likely to use for a slot. Amazon Lex V2 uses the hints to help determine the correct value of a slot.</p>"
+      }
+    },
     "SensitiveNonEmptyString": {
       "base": null,
       "refs": {
@@ -530,6 +567,18 @@
         "Values$member": null
       }
     },
+    "SlotHintsIntentMap": {
+      "base": null,
+      "refs": {
+        "RuntimeHints$slotHints": "<p>A list of the slots in the intent that should have runtime hints added, and the phrases that should be added for each slot.</p> <p>The first level of the <code>slotHints</code> map is the name of the intent. The second level is the name of the slot within the intent. For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/using-hints.xml\">Using hints to improve accuracy</a>.</p> <p>The intent name and slot name must exist.</p>"
+      }
+    },
+    "SlotHintsSlotMap": {
+      "base": null,
+      "refs": {
+        "SlotHintsIntentMap$value": null
+      }
+    },
     "Slots": {
       "base": null,
       "refs": {
@@ -588,6 +637,12 @@
         "RecognizeTextRequest$requestAttributes": "<p>Request-specific information passed between the client application and Amazon Lex V2 </p> <p>The namespace <code>x-amz-lex:</code> is reserved for special attributes. Don't create any request attributes with the prefix <code>x-amz-lex:</code>.</p>",
         "RecognizeTextResponse$requestAttributes": "<p>The attributes sent in the request.</p>",
         "SessionState$sessionAttributes": "<p>Map of key/value pairs representing session-specific context information. It contains application information passed between Amazon Lex V2 and a client application.</p>"
+      }
+    },
+    "StyleType": {
+      "base": null,
+      "refs": {
+        "DialogAction$slotElicitationStyle": "<p>Configures the slot to use spell-by-letter or spell-by-word style. When you use a style on a slot, users can spell out their input to make it clear to your bot.</p> <ul> <li> <p>Spell by letter - \"b\" \"o\" \"b\"</p> </li> <li> <p>Spell by word - \"b as in boy\" \"o as in oscar\" \"b as in boy\"</p> </li> </ul> <p>For more information, see <a href=\"https://docs.aws.amazon.com/lexv2/latest/dg/using-spelling.html\"> Using spelling to enter slot values </a>.</p>"
       }
     },
     "Text": {

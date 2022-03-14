@@ -144,7 +144,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InternalServerError"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"ThrottlingException"}
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidResourcePolicyException"}
       ]
     },
     "DeleteRuleGroup":{
@@ -239,6 +240,21 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "DescribeRuleGroupMetadata":{
+      "name":"DescribeRuleGroupMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeRuleGroupMetadataRequest"},
+      "output":{"shape":"DescribeRuleGroupMetadataResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
     "DisassociateSubnets":{
       "name":"DisassociateSubnets",
       "http":{
@@ -307,6 +323,8 @@
       "input":{"shape":"ListTagsForResourceRequest"},
       "output":{"shape":"ListTagsForResourceResponse"},
       "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerError"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestException"}
       ]
@@ -336,6 +354,8 @@
       "input":{"shape":"TagResourceRequest"},
       "output":{"shape":"TagResourceResponse"},
       "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerError"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestException"}
       ]
@@ -349,6 +369,8 @@
       "input":{"shape":"UntagResourceRequest"},
       "output":{"shape":"UntagResourceResponse"},
       "errors":[
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServerError"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidRequestException"}
       ]
@@ -494,7 +516,7 @@
       "type":"string",
       "max":255,
       "min":1,
-      "pattern":"^([a-fA-F\\d:\\.]+/\\d{1,3})$"
+      "pattern":"^([a-fA-F\\d:\\.]+($|/\\d{1,3}))$"
     },
     "Addresses":{
       "type":"list",
@@ -787,6 +809,29 @@
         "Policy":{"shape":"PolicyString"}
       }
     },
+    "DescribeRuleGroupMetadataRequest":{
+      "type":"structure",
+      "members":{
+        "RuleGroupName":{"shape":"ResourceName"},
+        "RuleGroupArn":{"shape":"ResourceArn"},
+        "Type":{"shape":"RuleGroupType"}
+      }
+    },
+    "DescribeRuleGroupMetadataResponse":{
+      "type":"structure",
+      "required":[
+        "RuleGroupArn",
+        "RuleGroupName"
+      ],
+      "members":{
+        "RuleGroupArn":{"shape":"ResourceArn"},
+        "RuleGroupName":{"shape":"ResourceName"},
+        "Description":{"shape":"Description"},
+        "Type":{"shape":"RuleGroupType"},
+        "Capacity":{"shape":"RuleCapacity"},
+        "StatefulRuleOptions":{"shape":"StatefulRuleOptions"}
+      }
+    },
     "DescribeRuleGroupRequest":{
       "type":"structure",
       "members":{
@@ -902,7 +947,9 @@
         "StatelessDefaultActions":{"shape":"StatelessActions"},
         "StatelessFragmentDefaultActions":{"shape":"StatelessActions"},
         "StatelessCustomActions":{"shape":"CustomActions"},
-        "StatefulRuleGroupReferences":{"shape":"StatefulRuleGroupReferences"}
+        "StatefulRuleGroupReferences":{"shape":"StatefulRuleGroupReferences"},
+        "StatefulDefaultActions":{"shape":"StatefulActions"},
+        "StatefulEngineOptions":{"shape":"StatefulEngineOptions"}
       }
     },
     "FirewallPolicyMetadata":{
@@ -925,7 +972,10 @@
         "FirewallPolicyId":{"shape":"ResourceId"},
         "Description":{"shape":"Description"},
         "FirewallPolicyStatus":{"shape":"ResourceStatus"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "ConsumedStatelessRuleCapacity":{"shape":"RuleCapacity"},
+        "ConsumedStatefulRuleCapacity":{"shape":"RuleCapacity"},
+        "NumberOfAssociations":{"shape":"NumberOfAssociations"}
       }
     },
     "FirewallStatus":{
@@ -1096,7 +1146,8 @@
       "type":"structure",
       "members":{
         "NextToken":{"shape":"PaginationToken"},
-        "MaxResults":{"shape":"PaginationMaxResults"}
+        "MaxResults":{"shape":"PaginationMaxResults"},
+        "Scope":{"shape":"ResourceManagedStatus"}
       }
     },
     "ListRuleGroupsResponse":{
@@ -1186,6 +1237,11 @@
         "Protocols":{"shape":"ProtocolNumbers"},
         "TCPFlags":{"shape":"TCPFlags"}
       }
+    },
+    "NumberOfAssociations":{"type":"integer"},
+    "OverrideAction":{
+      "type":"string",
+      "enum":["DROP_TO_ALERT"]
     },
     "PaginationMaxResults":{
       "type":"integer",
@@ -1304,6 +1360,13 @@
       "min":36,
       "pattern":"^([0-9a-f]{8})-([0-9a-f]{4}-){3}([0-9a-f]{12})$"
     },
+    "ResourceManagedStatus":{
+      "type":"string",
+      "enum":[
+        "MANAGED",
+        "ACCOUNT"
+      ]
+    },
     "ResourceName":{
       "type":"string",
       "max":128,
@@ -1348,7 +1411,8 @@
       "required":["RulesSource"],
       "members":{
         "RuleVariables":{"shape":"RuleVariables"},
-        "RulesSource":{"shape":"RulesSource"}
+        "RulesSource":{"shape":"RulesSource"},
+        "StatefulRuleOptions":{"shape":"StatefulRuleOptions"}
       }
     },
     "RuleGroupMetadata":{
@@ -1373,7 +1437,9 @@
         "Type":{"shape":"RuleGroupType"},
         "Capacity":{"shape":"RuleCapacity"},
         "RuleGroupStatus":{"shape":"ResourceStatus"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "ConsumedCapacity":{"shape":"RuleCapacity"},
+        "NumberOfAssociations":{"shape":"NumberOfAssociations"}
       }
     },
     "RuleGroupType":{
@@ -1398,6 +1464,13 @@
     "RuleOptions":{
       "type":"list",
       "member":{"shape":"RuleOption"}
+    },
+    "RuleOrder":{
+      "type":"string",
+      "enum":[
+        "DEFAULT_ACTION_ORDER",
+        "STRICT_ORDER"
+      ]
     },
     "RuleTargets":{
       "type":"list",
@@ -1440,7 +1513,7 @@
     },
     "RulesString":{
       "type":"string",
-      "max":1000000,
+      "max":2000000,
       "min":0
     },
     "Setting":{
@@ -1467,6 +1540,16 @@
         "ALERT"
       ]
     },
+    "StatefulActions":{
+      "type":"list",
+      "member":{"shape":"CollectionMember_String"}
+    },
+    "StatefulEngineOptions":{
+      "type":"structure",
+      "members":{
+        "RuleOrder":{"shape":"RuleOrder"}
+      }
+    },
     "StatefulRule":{
       "type":"structure",
       "required":[
@@ -1487,16 +1570,33 @@
         "ANY"
       ]
     },
+    "StatefulRuleGroupOverride":{
+      "type":"structure",
+      "members":{
+        "Action":{"shape":"OverrideAction"}
+      }
+    },
     "StatefulRuleGroupReference":{
       "type":"structure",
       "required":["ResourceArn"],
       "members":{
-        "ResourceArn":{"shape":"ResourceArn"}
+        "ResourceArn":{"shape":"ResourceArn"},
+        "Priority":{
+          "shape":"Priority",
+          "box":true
+        },
+        "Override":{"shape":"StatefulRuleGroupOverride"}
       }
     },
     "StatefulRuleGroupReferences":{
       "type":"list",
       "member":{"shape":"StatefulRuleGroupReference"}
+    },
+    "StatefulRuleOptions":{
+      "type":"structure",
+      "members":{
+        "RuleOrder":{"shape":"RuleOrder"}
+      }
     },
     "StatefulRuleProtocol":{
       "type":"string",

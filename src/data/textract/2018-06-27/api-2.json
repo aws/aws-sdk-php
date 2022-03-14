@@ -53,6 +53,26 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "AnalyzeID":{
+      "name":"AnalyzeID",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"AnalyzeIDRequest"},
+      "output":{"shape":"AnalyzeIDResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidS3ObjectException"},
+        {"shape":"UnsupportedDocumentException"},
+        {"shape":"DocumentTooLargeException"},
+        {"shape":"BadDocumentException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"}
+      ]
+    },
     "DetectDocumentText":{
       "name":"DetectDocumentText",
       "http":{
@@ -111,6 +131,25 @@
         {"shape":"InvalidKMSKeyException"}
       ]
     },
+    "GetExpenseAnalysis":{
+      "name":"GetExpenseAnalysis",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetExpenseAnalysisRequest"},
+      "output":{"shape":"GetExpenseAnalysisResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InvalidJobIdException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidS3ObjectException"},
+        {"shape":"InvalidKMSKeyException"}
+      ]
+    },
     "StartDocumentAnalysis":{
       "name":"StartDocumentAnalysis",
       "http":{
@@ -142,6 +181,29 @@
       },
       "input":{"shape":"StartDocumentTextDetectionRequest"},
       "output":{"shape":"StartDocumentTextDetectionResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"InvalidS3ObjectException"},
+        {"shape":"InvalidKMSKeyException"},
+        {"shape":"UnsupportedDocumentException"},
+        {"shape":"DocumentTooLargeException"},
+        {"shape":"BadDocumentException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ProvisionedThroughputExceededException"},
+        {"shape":"InternalServerError"},
+        {"shape":"IdempotentParameterMismatchException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"LimitExceededException"}
+      ]
+    },
+    "StartExpenseAnalysis":{
+      "name":"StartExpenseAnalysis",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"StartExpenseAnalysisRequest"},
+      "output":{"shape":"StartExpenseAnalysisResponse"},
       "errors":[
         {"shape":"InvalidParameterException"},
         {"shape":"InvalidS3ObjectException"},
@@ -200,6 +262,30 @@
         "ExpenseDocuments":{"shape":"ExpenseDocumentList"}
       }
     },
+    "AnalyzeIDDetections":{
+      "type":"structure",
+      "required":["Text"],
+      "members":{
+        "Text":{"shape":"String"},
+        "NormalizedValue":{"shape":"NormalizedValue"},
+        "Confidence":{"shape":"Percent"}
+      }
+    },
+    "AnalyzeIDRequest":{
+      "type":"structure",
+      "required":["DocumentPages"],
+      "members":{
+        "DocumentPages":{"shape":"DocumentPages"}
+      }
+    },
+    "AnalyzeIDResponse":{
+      "type":"structure",
+      "members":{
+        "IdentityDocuments":{"shape":"IdentityDocumentList"},
+        "DocumentMetadata":{"shape":"DocumentMetadata"},
+        "AnalyzeIDModelVersion":{"shape":"String"}
+      }
+    },
     "BadDocumentException":{
       "type":"structure",
       "members":{
@@ -238,7 +324,9 @@
         "WORD",
         "TABLE",
         "CELL",
-        "SELECTION_ELEMENT"
+        "SELECTION_ELEMENT",
+        "MERGED_CELL",
+        "TITLE"
       ]
     },
     "BoundingBox":{
@@ -302,6 +390,12 @@
         "Pages":{"shape":"UInteger"}
       }
     },
+    "DocumentPages":{
+      "type":"list",
+      "member":{"shape":"Document"},
+      "max":2,
+      "min":1
+    },
     "DocumentTooLargeException":{
       "type":"structure",
       "members":{
@@ -312,7 +406,8 @@
       "type":"string",
       "enum":[
         "KEY",
-        "VALUE"
+        "VALUE",
+        "COLUMN_HEADER"
       ]
     },
     "EntityTypes":{
@@ -425,6 +520,27 @@
         "DetectDocumentTextModelVersion":{"shape":"String"}
       }
     },
+    "GetExpenseAnalysisRequest":{
+      "type":"structure",
+      "required":["JobId"],
+      "members":{
+        "JobId":{"shape":"JobId"},
+        "MaxResults":{"shape":"MaxResults"},
+        "NextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "GetExpenseAnalysisResponse":{
+      "type":"structure",
+      "members":{
+        "DocumentMetadata":{"shape":"DocumentMetadata"},
+        "JobStatus":{"shape":"JobStatus"},
+        "NextToken":{"shape":"PaginationToken"},
+        "ExpenseDocuments":{"shape":"ExpenseDocumentList"},
+        "Warnings":{"shape":"Warnings"},
+        "StatusMessage":{"shape":"StatusMessage"},
+        "AnalyzeExpenseModelVersion":{"shape":"String"}
+      }
+    },
     "HumanLoopActivationConditionsEvaluationResults":{
       "type":"string",
       "max":10240
@@ -492,6 +608,28 @@
       "members":{
       },
       "exception":true
+    },
+    "IdentityDocument":{
+      "type":"structure",
+      "members":{
+        "DocumentIndex":{"shape":"UInteger"},
+        "IdentityDocumentFields":{"shape":"IdentityDocumentFieldList"}
+      }
+    },
+    "IdentityDocumentField":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"AnalyzeIDDetections"},
+        "ValueDetection":{"shape":"AnalyzeIDDetections"}
+      }
+    },
+    "IdentityDocumentFieldList":{
+      "type":"list",
+      "member":{"shape":"IdentityDocumentField"}
+    },
+    "IdentityDocumentList":{
+      "type":"list",
+      "member":{"shape":"IdentityDocument"}
     },
     "ImageBlob":{
       "type":"blob",
@@ -591,6 +729,13 @@
       "type":"string",
       "pattern":".*\\S.*"
     },
+    "NormalizedValue":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"String"},
+        "ValueType":{"shape":"ValueType"}
+      }
+    },
     "NotificationChannel":{
       "type":"structure",
       "required":[
@@ -658,7 +803,9 @@
       "enum":[
         "VALUE",
         "CHILD",
-        "COMPLEX_FEATURES"
+        "COMPLEX_FEATURES",
+        "MERGED_CELL",
+        "TITLE"
       ]
     },
     "RoleArn":{
@@ -746,6 +893,24 @@
         "JobId":{"shape":"JobId"}
       }
     },
+    "StartExpenseAnalysisRequest":{
+      "type":"structure",
+      "required":["DocumentLocation"],
+      "members":{
+        "DocumentLocation":{"shape":"DocumentLocation"},
+        "ClientRequestToken":{"shape":"ClientRequestToken"},
+        "JobTag":{"shape":"JobTag"},
+        "NotificationChannel":{"shape":"NotificationChannel"},
+        "OutputConfig":{"shape":"OutputConfig"},
+        "KMSKeyId":{"shape":"KMSKeyId"}
+      }
+    },
+    "StartExpenseAnalysisResponse":{
+      "type":"structure",
+      "members":{
+        "JobId":{"shape":"JobId"}
+      }
+    },
     "StatusMessage":{"type":"string"},
     "String":{"type":"string"},
     "TextType":{
@@ -771,6 +936,10 @@
       "members":{
       },
       "exception":true
+    },
+    "ValueType":{
+      "type":"string",
+      "enum":["DATE"]
     },
     "Warning":{
       "type":"structure",

@@ -112,13 +112,17 @@ class HandlerTest extends TestCase
 
     public function testHandlerWorksWithErroredRequest()
     {
+        if (version_compare(PHP_VERSION, '7.0', '>=')) {
+            $this->markTestSkipped(
+                'Error class was introduced in 7.0'
+            );
+            return;
+        }
         $wasRejected = false;
         $request = new Request('PUT', 'http://example.com');
         $mock = new MockHandler(
             [
-                new RejectionException(
                     new \Error('error message')
-                )
             ]
         );
         $client = new Client(['handler' => $mock]);
@@ -134,7 +138,7 @@ class HandlerTest extends TestCase
             $this->fail('An exception should have been thrown.');
         } catch (RejectionException $e) {
             $error = $e->getReason();
-            $this->assertInstanceOf(\Error::class, $error['exception']->getReason());
+            $this->assertInstanceOf(\Error::class, $error['exception']);
             $this->assertFalse($error['connection_error']);
             $this->assertContains("error message", $error['exception']->getMessage());
         }
