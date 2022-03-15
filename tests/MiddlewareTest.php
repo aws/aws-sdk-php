@@ -343,7 +343,7 @@ class MiddlewareTest extends TestCase
         $addHeaderWithEncodingMock = function ($command, $request) {
             $this->assertTrue($request->hasHeader('X-Amzn-Trace-Id'));
             $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
-            $this->assertEquals('bar%0Abaz', $headerValue);
+            $this->assertEquals('bar%1Bbaz', $headerValue);
             return Promise\Create::promiseFor(
                 new Result(['@metadata' => ['statusCode' => 200]])
             );
@@ -367,7 +367,7 @@ class MiddlewareTest extends TestCase
 
         return [
             [$addHeaderMock, 'foo', 'bar'],
-            [$addHeaderWithEncodingMock, 'foo', 'bar\nbaz'],
+            [$addHeaderWithEncodingMock, 'foo', 'bar\ebaz'],
             [$dontAddHeaderMock, '', 'bar'],
             [$dontAddHeaderMock, 'foo', ''],
             [$dontAddHeaderMock, '', ''],
