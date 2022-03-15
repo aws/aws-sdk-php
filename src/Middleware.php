@@ -259,7 +259,6 @@ final class Middleware
                 $traceId = str_replace('\e', '\x1b', getenv('_X_AMZ_TRACE_ID'));
 
                 if ($isLambda && $traceId) {
-                    $headers = $request->getHeaders();
                     if (!$request->hasHeader('X-Amzn-Trace-Id')) {
                         return $handler($command, $request->withHeader(
                             'X-Amzn-Trace-Id',
