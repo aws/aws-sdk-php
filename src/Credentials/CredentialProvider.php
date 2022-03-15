@@ -178,12 +178,20 @@ class CredentialProvider
             throw new \InvalidArgumentException('No providers in chain');
         }
 
-        return function () use ($links) {
+        return function ($previousCreds = null) use ($links) {
             /** @var callable $parent */
             $parent = array_shift($links);
             $promise = $parent();
             while ($next = array_shift($links)) {
-                $promise = $promise->otherwise($next);
+                if ($next instanceof InstanceProfileProvider
+                    && $previousCreds instanceof Credentials
+                ) {
+                    $promise = $promise->otherwise(
+                        function () use ($next, $previousCreds) {return $next($previousCreds);}
+                    );
+                } else {
+                    $promise = $promise->otherwise($next);
+                }
             }
             return $promise;
         };
@@ -229,7 +237,7 @@ class CredentialProvider
                         return $creds;
                     }
                     // Refresh the result and forward the promise.
-                    return $result = $provider();
+                    return $result = $provider($creds);
                 })
                 ->otherwise(function($reason) use (&$result) {
                     // Cleanup rejected promise.

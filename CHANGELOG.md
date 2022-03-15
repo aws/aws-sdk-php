@@ -1,5 +1,44 @@
 # CHANGELOG
 
+## 3.213.1 - 2022-03-15
+
+* `Aws\CognitoIdentityProvider` - Updated EmailConfigurationType and SmsConfigurationType to reflect that you can now choose Amazon SES and Amazon SNS resources in the same Region.
+* `Aws\DataExchange` - This feature enables data providers to use the RevokeRevision operation to revoke subscriber access to a given revision. Subscribers are unable to interact with assets within a revoked revision.
+* `Aws\EC2` - Adds the Cascade parameter to the DeleteIpam API. Customers can use this parameter to automatically delete their IPAM, including non-default scopes, pools, cidrs, and allocations. There mustn't be any pools provisioned in the default public scope to use this parameter.
+* `Aws\ECS` - Documentation only update to address tickets
+* `Aws\Keyspaces` - Fixing formatting issues in CLI and SDK documentation
+* `Aws\LocationService` - New HERE style "VectorHereExplore" and "VectorHereExploreTruck".
+* `Aws\RDS` - Various documentation improvements
+* `Aws\RoboMaker` - This release deprecates ROS, Ubuntu and Gazbeo from RoboMaker Simulation Service Software Suites in favor of user-supplied containers and Relaxed Software Suites.
+
+## 3.213.0 - 2022-03-14
+
+* `Aws\ConfigService` - Add resourceType enums for AWS::ECR::PublicRepository and AWS::EC2::LaunchTemplate
+* `Aws\Credentials` - Add support for cases when IMDS is unable to refresh credentials
+* `Aws\ElastiCache` - Doc only update for ElastiCache
+* `Aws\TimestreamQuery` - Amazon Timestream Scheduled Queries now support Timestamp datatype in a multi-measure record.
+* `Aws\kendra` - Amazon Kendra now provides a data source connector for Slack. For more information, see https://docs.aws.amazon.com/kendra/latest/dg/data-source-slack.html
+
+## 3.212.7 - 2022-03-11
+
+* `Aws\Chime` - Chime VoiceConnector Logging APIs will now support MediaMetricLogs. Also CreateMeetingDialOut now returns AccessDeniedException.
+* `Aws\Connect` - This release adds support for enabling Rich Messaging when starting a new chat session via the StartChatContact API. Rich Messaging enables the following formatting options: bold, italics, hyperlinks, bulleted lists, and numbered lists.
+* `Aws\Lambda` - Adds PrincipalOrgID support to AddPermission API. Customers can use it to manage permissions to lambda functions at AWS Organizations level.
+* `Aws\Outposts` - This release adds address filters for listSites
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager.
+* `Aws\TranscribeStreamingService` - Amazon Transcribe StartTranscription API now supports additional parameters for Language Identification feature: customVocabularies and customFilterVocabularies
+
+## 3.212.6 - 2022-03-10
+
+* `Aws\` - Passing null to hash_init is deprecated on PHP 8.1.
+* `Aws\LexModelsV2` - This release makes slotTypeId an optional parameter in CreateSlot and UpdateSlot APIs in Amazon Lex V2 for model building. Customers can create and update slots without specifying a slot type id.
+* `Aws\TranscribeService` - Documentation fix for API `StartMedicalTranscriptionJobRequest`, now showing min sample rate as 16khz
+* `Aws\Transfer` - Adding more descriptive error types for managed workflows
+
+## 3.212.5 - 2022-03-09
+
+* `Aws\Comprehend` - Amazon Comprehend now supports extracting the sentiment associated with entities such as brands, products and services from text documents.
+
 ## 3.212.4 - 2022-03-08
 
 * `Aws\EKS` - Introducing a new enum for NodeGroup error code: Ec2SubnetMissingIpv6Assignment
