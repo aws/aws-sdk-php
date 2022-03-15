@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.213.1 - 2022-03-15
 
 * `Aws\CognitoIdentityProvider` - Updated EmailConfigurationType and SmsConfigurationType to reflect that you can now choose Amazon SES and Amazon SNS resources in the same Region.
 * `Aws\DataExchange` - This feature enables data providers to use the RevokeRevision operation to revoke subscriber access to a given revision. Subscribers are unable to interact with assets within a revoked revision.
