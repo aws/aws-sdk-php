@@ -6,6 +6,7 @@ use Aws\LruArrayCache;
 use Aws\Endpoint\UseFipsEndpoint\Configuration;
 use Aws\Endpoint\UseFipsEndpoint\ConfigurationInterface;
 use Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
 
@@ -14,6 +15,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigurationProviderTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -30,7 +33,7 @@ use_fips_endpoint = false
 use_fips_endpoint = true
 EOT;
 
-    public static function setUpBeforeClass()
+    public static function _setUpBeforeClass()
     {
         self::$originalEnv = [
             'use_fips_endpoint' => getenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT) ?: '',
@@ -53,7 +56,7 @@ EOT;
         return $dir;
     }
 
-    public static function tearDownAfterClass()
+    public static function _tearDownAfterClass()
     {
         putenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT . '=' .
             self::$originalEnv['use_fips_endpoint']);
@@ -177,21 +180,17 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
-     */
     public function testEnsuresIniFileExists()
     {
+        $this->expectException(\Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException::class);
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
         call_user_func(ConfigurationProvider::ini())->wait();
     }
 
-    /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
-     */
     public function testEnsuresProfileIsNotEmpty()
     {
+        $this->expectException(\Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         $ini = "[custom]";
         file_put_contents($dir . '/config', $ini);
@@ -205,12 +204,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
-     * @expectedExceptionMessage 'foo' not found in
-     */
     public function testEnsuresFileIsNotEmpty()
     {
+        $this->expectException(\Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException::class);
+        $this->expectExceptionMessage("'foo' not found in");
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', '');
         putenv('HOME=' . dirname($dir));
@@ -223,12 +220,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException
-     * @expectedExceptionMessage Invalid config file:
-     */
     public function testEnsuresIniFileIsValid()
     {
+        $this->expectException(\Aws\Endpoint\UseFipsEndpoint\Exception\ConfigurationException::class);
+        $this->expectExceptionMessage("Invalid config file:");
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', "wef \n=\nwef");
         putenv('HOME=' . dirname($dir));
@@ -297,11 +292,9 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testChainThrowsExceptionOnEmptyArgs()
     {
+        $this->expectException(\InvalidArgumentException::class);
         ConfigurationProvider::chain();
     }
 

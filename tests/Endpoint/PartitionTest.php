@@ -691,7 +691,7 @@ class PartitionTest extends TestCase
             ]
         ]);
 
-        self::assertContains('testsuffix.com', $resolved['endpoint']);
+        $this->assertStringContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
     public function variantTagProvider()
@@ -841,7 +841,7 @@ class PartitionTest extends TestCase
             ]
         ]);
 
-        self::assertNotContains('testsuffix.com', $resolved['endpoint']);
+        $this->assertStringNotContainsString('testsuffix.com', $resolved['endpoint']);
     }
 
     public function variantTagEmptyProvider()

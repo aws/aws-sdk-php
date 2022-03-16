@@ -3,6 +3,7 @@
 namespace Aws\Test\DefaultsMode;
 
 use Aws\DefaultsMode\Configuration;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -10,6 +11,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigurationTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function testGetsCorrectValues()
     {
         $config = new Configuration('standard');
@@ -42,12 +45,10 @@ class ConfigurationTest extends TestCase
         $this->assertEquals($expected, $config->toArray());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage 'foo' is not a valid mode
-     */
     public function testHandlesInvalidMode()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("'foo' is not a valid mode");
         new Configuration('foo');
     }
 }
