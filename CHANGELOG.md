@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - AWS Certificate Manager (ACM) Private Certificate Authority (CA) now supports customizable certificate subject names and extensions.
+* `Aws\AmplifyBackend` - Adding the ability to customize Cognito verification messages for email and SMS in CreateBackendAuth and UpdateBackendAuth. Adding deprecation documentation for ForgotPassword in CreateBackendAuth and UpdateBackendAuth
+* `Aws\BillingConductor` - This is the initial SDK release for AWS Billing Conductor. The AWS Billing Conductor is a customizable billing service, allowing you to customize your billing data to match your desired business structure.
+* `Aws\S3Outposts` - S3 on Outposts is releasing a new API, ListSharedEndpoints, that lists all endpoints associated with S3 on Outpost, that has been shared by Resource Access Manager (RAM).
+* `Aws\SSMIncidents` - Removed incorrect validation pattern for IncidentRecordSource.invokedBy
+
 ## 3.213.1 - 2022-03-15
 
 * `Aws\CognitoIdentityProvider` - Updated EmailConfigurationType and SmsConfigurationType to reflect that you can now choose Amazon SES and Amazon SNS resources in the same Region.
