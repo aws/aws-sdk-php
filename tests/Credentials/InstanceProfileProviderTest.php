@@ -986,7 +986,7 @@ class InstanceProfileProviderTest extends TestCase
         $creds = $provider()->wait();
 
         $message = stream_get_contents($capture);
-        $this->assertRegExp('/Attempting credential expiration extension/', $message);
+        $this->assertMatchesRegularExpression('/Attempting credential expiration extension/', $message);
         $this->assertSame('foo', $creds->getAccessKeyId());
         $this->assertSame('baz', $creds->getSecretKey());
         $this->assertFalse($creds->isExpired());
@@ -1008,7 +1008,7 @@ class InstanceProfileProviderTest extends TestCase
         $result = $s3Client->listBuckets();
 
         $this->assertEquals('Request sent', $result['message']);
-        $this->assertAttributeLessThanOrEqual(3, 'attempts', $provider);
+        $this->assertLessThanOrEqual(3,$this->readAttribute($provider,'attempts'));
     }
 
     public function returnsExpiredCredsProvider()
@@ -1072,7 +1072,7 @@ class InstanceProfileProviderTest extends TestCase
         $creds = $provider($expiredCreds)->wait();
 
         $message = stream_get_contents($capture);
-        $this->assertRegExp('/Attempting credential expiration extension/', $message);
+        $this->assertMatchesRegularExpression('/Attempting credential expiration extension/', $message);
         $this->assertSame('foo', $creds->getAccessKeyId());
         $this->assertSame('baz', $creds->getSecretKey());
         $this->assertFalse($expiredCreds->isExpired());
@@ -1094,7 +1094,7 @@ class InstanceProfileProviderTest extends TestCase
         $result = $s3Client->listBuckets();
 
         $this->assertEquals('Request sent', $result['message']);
-        $this->assertAttributeLessThanOrEqual(3, 'attempts', $provider);
+        $this->assertLessThanOrEqual(3,$this->readAttribute($provider,'attempts'));
     }
 
     public function imdsUnavailableProvider()

@@ -6,6 +6,7 @@ use Aws\DefaultsMode\Configuration;
 use Aws\DefaultsMode\ConfigurationInterface;
 use Aws\DefaultsMode\ConfigurationProvider;
 use Aws\DefaultsMode\Exception\ConfigurationException;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
 
@@ -14,6 +15,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ConfigurationProviderTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     private static $originalEnv;
 
     private $iniFile = <<<EOT
@@ -30,7 +33,7 @@ defaults_mode = in-region
 defaults_mode = cross-region
 EOT;
 
-    public static function setUpBeforeClass()
+    public static function _setUpBeforeClass()
     {
         self::$originalEnv = [
             'mode' => getenv(ConfigurationProvider::ENV_MODE) ?: '',
@@ -53,7 +56,7 @@ EOT;
         return $dir;
     }
 
-    public static function tearDownAfterClass()
+    public static function _tearDownAfterClass()
     {
         putenv(ConfigurationProvider::ENV_MODE . '=' .
             self::$originalEnv['mode']);
@@ -167,21 +170,17 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \Aws\DefaultsMode\Exception\ConfigurationException
-     */
     public function testEnsuresIniFileExists()
     {
+        $this->expectException(\Aws\DefaultsMode\Exception\ConfigurationException::class);
         $this->clearEnv();
         putenv('HOME=/does/not/exist');
         call_user_func(ConfigurationProvider::ini())->wait();
     }
 
-    /**
-     * @expectedException \Aws\DefaultsMode\Exception\ConfigurationException
-     */
     public function testEnsuresProfileIsNotEmpty()
     {
+        $this->expectException(\Aws\DefaultsMode\Exception\ConfigurationException::class);
         $dir = $this->clearEnv();
         $ini = "[custom]";
         file_put_contents($dir . '/config', $ini);
@@ -195,12 +194,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\DefaultsMode\Exception\ConfigurationException
-     * @expectedExceptionMessage 'foo' not found in
-     */
     public function testEnsuresFileIsNotEmpty()
     {
+        $this->expectException(\Aws\DefaultsMode\Exception\ConfigurationException::class);
+        $this->expectExceptionMessage("'foo' not found in");
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', '');
         putenv('HOME=' . dirname($dir));
@@ -213,12 +210,10 @@ EOT;
         }
     }
 
-    /**
-     * @expectedException \Aws\DefaultsMode\Exception\ConfigurationException
-     * @expectedExceptionMessage Invalid config file:
-     */
     public function testEnsuresIniFileIsValid()
     {
+        $this->expectException(\Aws\DefaultsMode\Exception\ConfigurationException::class);
+        $this->expectExceptionMessage("Invalid config file:");
         $dir = $this->clearEnv();
         file_put_contents($dir . '/config', "wef \n=\nwef");
         putenv('HOME=' . dirname($dir));
@@ -285,11 +280,9 @@ EOT;
         unlink($dir . '/config');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testChainThrowsExceptionOnEmptyArgs()
     {
+        $this->expectException(\InvalidArgumentException::class);
         ConfigurationProvider::chain();
     }
 
@@ -406,12 +399,10 @@ EOT;
         self::assertNull($config->getStsRegionalEndpoints());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage is not a valid mode. The mode has to be 'legacy', 'standard', 'cross-region', 'in-region', 'mobile', or 'auto'.
-     */
     public function testThrowsForInvalidUnwrapArgument()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("is not a valid mode. The mode has to be 'legacy', 'standard', 'cross-region', 'in-region', 'mobile', or 'auto'.");
         ConfigurationProvider::unwrap('some_string');
     }
 }

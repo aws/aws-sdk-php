@@ -178,7 +178,6 @@ class ServiceTest extends TestCase
 
     /**
      * @dataProvider serializerDataProvider
-     * @doesNotPerformAssertions
      */
     public function testCreatesSerializer($type, $cl)
     {
@@ -203,7 +202,6 @@ class ServiceTest extends TestCase
 
     /**
      * @dataProvider parserDataProvider
-     * @doesNotPerformAssertions
      */
     public function testCreatesParsers($type, $cl)
     {
@@ -215,8 +213,9 @@ class ServiceTest extends TestCase
         $this->assertInstanceOf($cl, $parser);
 
         if ($parser instanceof QueryParser) {
-            $this->assertAttributeInstanceOf(
-                'Aws\Api\Parser\XmlParser', 'parser', $parser
+            $this->assertInstanceOf(
+                'Aws\Api\Parser\XmlParser',
+                $this->readAttribute($parser, 'parser')
             );
         }
     }

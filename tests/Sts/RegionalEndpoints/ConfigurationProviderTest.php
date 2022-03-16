@@ -12,7 +12,7 @@ use GuzzleHttp\Promise;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Aws\Sts\RegionalEndpoints\ConfigurationProvider
+ * git\Sts\RegionalEndpoints\ConfigurationProvider
  */
 class ConfigurationProviderTest extends TestCase
 {

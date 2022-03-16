@@ -4,6 +4,7 @@ namespace Aws\Test\EventBridge;
 use Aws\CommandInterface;
 use Aws\Result;
 use Aws\EventBridge\EventBridgeClient;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use Aws\Test\UsesServiceTrait;
 use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class EventBridgeEndpointMiddlewareTest extends TestCase
 {
     use UsesServiceTrait;
-
+    use PHPUnitCompatTrait;
 
     public function putEventsEndpointSuccessProvider()
     {
@@ -203,7 +204,7 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
             self::fail("this test should have thrown an exception");
         } catch (\Exception $exception) {
             self::assertSame("InvalidArgumentException", get_class($exception));
-            self::assertContains($expectedException, $exception->getMessage());
+            self::assertStringContainsString($expectedException, $exception->getMessage());
         }
     }
 

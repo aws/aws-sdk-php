@@ -612,12 +612,10 @@ EOT;
         );
     }
 
-    /**
-     * @expectedException \Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException
-     * @expectedExceptionMessage Dual-stack is not supported in ISO regions
-     */
     public function testDualstackEndpointFailureOnDualstackNotSupported()
     {
+        $this->expectException(\Aws\Endpoint\UseDualstackEndpoint\Exception\ConfigurationException::class);
+        $this->expectExceptionMessage("Dual-stack is not supported in ISO regions");
         $data = json_decode(
             file_get_contents(__DIR__ . '/Endpoint/fixtures/dualstack_endpoints.json'),
             true
