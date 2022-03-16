@@ -57,11 +57,7 @@ class EcsCredentialProvider
         $client = $this->client;
         $request = new Request('GET', self::getEcsUri());
         
-        $authToken = self::getEcsAuthToken();
-        $headers = [];
-        if(!empty($authToken))
-            $headers = ['Authorization' => $authToken];
-        
+        $headers = $this->setHeaderForAuthToken();
         return $client(
             $request,
             [
@@ -89,6 +85,15 @@ class EcsCredentialProvider
     private function getEcsAuthToken()
     {
         return getenv(self::ENV_AUTH_TOKEN);
+    }
+
+    public function setHeaderForAuthToken(){
+        $authToken = self::getEcsAuthToken();
+        $headers = [];
+        if(!empty($authToken))
+            $headers = ['Authorization' => $authToken];
+
+        return $headers;
     }
 
     /**

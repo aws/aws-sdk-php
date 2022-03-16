@@ -1817,7 +1817,6 @@ EOT;
             'process_credentials',
             'process_config',
             'ecs',
-            'ecs_cloudshell',
             'instance'
         ];
 
@@ -1826,11 +1825,6 @@ EOT;
             $this->clearEnv();
 
             if ($provider == 'ecs') putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
-            else if ($provider == 'ecs_cloudshell'){
-                putenv('AWS_CONTAINER_CREDENTIALS_FULL_URI=http://localhost/test/metadata');
-                putenv('AWS_CONTAINER_AUTHORIZATION_TOKEN=1AAA+BBBBB=');
-                $provider = 'ecs';
-            }
             $cache = new LruArrayCache;
             $cache->set('aws_cached_' . $provider . '_credentials', $credsForCache);
             $credentials = call_user_func(CredentialProvider::defaultProvider([

@@ -86,6 +86,20 @@ class EcsCredentialProviderTest extends TestCase
         new EcsCredentialProvider();
     }
 
+    public function testRequestHeaderWithAuthorisationKey(){
+        $this->clearEnv();
+        $provider = new EcsCredentialProvider();
+
+        $TOKEN_VALUE = "GA%24102391AAA+BBBBB4==";
+        $AUTH_KEYNAME = 'Authorization';
+        putenv(EcsCredentialProvider::ENV_FULL_URI . '=http://localhost/test/metadata');
+        putenv(EcsCredentialProvider::ENV_AUTH_TOKEN . '=' . $TOKEN_VALUE);
+
+        $header = $provider->setHeaderForAuthToken();
+        $this->assertArrayHasKey($AUTH_KEYNAME, $header);
+        $this->assertSame($TOKEN_VALUE, $header[$AUTH_KEYNAME]);
+    }
+
     private function getCredentialArray(
         $key, $secret, $token = null, $time = null, $success = true
     ){
