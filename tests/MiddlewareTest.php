@@ -318,8 +318,8 @@ class MiddlewareTest extends TestCase
      */
     public function testRecursionDetection($mockHandler, $name, $trace)
     {
-        $name && putenv("AWS_LAMBDA_FUNCTION_NAME={$name}");
-        $trace && putenv("_X_AMZ_TRACE_ID={$trace}");
+        $name !== null && putenv("AWS_LAMBDA_FUNCTION_NAME={$name}");
+        $trace !== null && putenv("_X_AMZ_TRACE_ID={$trace}");
         $list = new HandlerList();
         $list->setHandler($mockHandler);
         $list->appendBuild(Middleware::recursionDetection());
@@ -371,6 +371,9 @@ class MiddlewareTest extends TestCase
             [$dontAddHeaderMock, '', 'bar'],
             [$dontAddHeaderMock, 'foo', ''],
             [$dontAddHeaderMock, '', ''],
+            [$dontAddHeaderMock, null, 'bar'],
+            [$dontAddHeaderMock, 'foo', null],
+            [$dontAddHeaderMock,  null, null],
             [$headerAlreadyExistsMock, 'foo', 'bar']
         ];
     }
