@@ -39,6 +39,7 @@ EOT;
             'use_arn_region' => getenv(ConfigurationProvider::ENV_USE_ARN_REGION) ?: '',
             'home' => getenv('HOME') ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
+            'config_file' => getenv(ConfigurationProvider::ENV_CONFIG_FILE) ?: '',
         ];
     }
 
@@ -46,6 +47,7 @@ EOT;
     {
         putenv(ConfigurationProvider::ENV_USE_ARN_REGION . '=');
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
+        putenv(ConfigurationProvider::ENV_PROFILE . '=');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -62,6 +64,8 @@ EOT;
             self::$originalEnv['use_arn_region']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
+        putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' .
+            self::$originalEnv['config_file']);
         putenv('HOME=' . self::$originalEnv['home']);
     }
 
