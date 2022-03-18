@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Endpoint\UseFipsEndpoint;
+namespace Aws\Test\Endpoint\UseFipsEndpoint;
 
 use Aws\Endpoint\UseFipsEndpoint\ConfigurationProvider;
 use Aws\LruArrayCache;
@@ -39,12 +39,14 @@ EOT;
             'use_fips_endpoint' => getenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT) ?: '',
             'home' => getenv('HOME') ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
+            'config_file' => getenv(ConfigurationProvider::ENV_CONFIG_FILE) ?: '',
         ];
     }
 
     private function clearEnv()
     {
         putenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT . '=');
+        putenv(ConfigurationProvider::ENV_PROFILE . '=');
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
 
         $dir = sys_get_temp_dir() . '/.aws';
@@ -60,9 +62,11 @@ EOT;
     {
         putenv(ConfigurationProvider::ENV_USE_FIPS_ENDPOINT . '=' .
             self::$originalEnv['use_fips_endpoint']);
+        putenv('HOME=' . self::$originalEnv['home']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
-        putenv('HOME=' . self::$originalEnv['home']);
+        putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' .
+            self::$originalEnv['config_file']);
     }
 
     public function testCreatesFromEnvironmentVariables()

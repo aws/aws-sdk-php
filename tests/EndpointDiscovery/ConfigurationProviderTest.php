@@ -44,6 +44,7 @@ EOT;
             'enabled_alt' => getenv(ConfigurationProvider::ENV_ENABLED_ALT) ?: '',
             'home' => getenv('HOME') ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
+            'config_file' => getenv(ConfigurationProvider::ENV_CONFIG_FILE) ?: '',
         ];
     }
 
@@ -52,6 +53,7 @@ EOT;
         putenv(ConfigurationProvider::ENV_ENABLED . '=');
         putenv(ConfigurationProvider::ENV_ENABLED_ALT . '=');
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
+        putenv(ConfigurationProvider::ENV_PROFILE . '=');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -70,6 +72,8 @@ EOT;
             self::$originalEnv['enabled_alt']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
+        putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' .
+            self::$originalEnv['config_file']);
         putenv('HOME=' . self::$originalEnv['home']);
     }
 

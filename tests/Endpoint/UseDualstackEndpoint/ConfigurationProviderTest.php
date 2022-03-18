@@ -1,5 +1,5 @@
 <?php
-namespace Aws\Endpoint\UseDualstackEndpoint;
+namespace Aws\Test\Endpoint\UseDualstackEndpoint;
 
 
 use Aws\LruArrayCache;
@@ -40,6 +40,7 @@ EOT;
             'use_dualstack_endpoint' => getenv(ConfigurationProvider::ENV_USE_DUAL_STACK_ENDPOINT) ?: '',
             'home' => getenv('HOME') ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
+            'config_file' => getenv(ConfigurationProvider::ENV_CONFIG_FILE) ?: '',
         ];
     }
 
@@ -47,6 +48,7 @@ EOT;
     {
         putenv(ConfigurationProvider::ENV_USE_DUAL_STACK_ENDPOINT . '=');
         putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=');
+        putenv(ConfigurationProvider::ENV_PROFILE . '=');
 
         $dir = sys_get_temp_dir() . '/.aws';
 
@@ -63,6 +65,8 @@ EOT;
             self::$originalEnv['use_dualstack_endpoint']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
+        putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' .
+            self::$originalEnv['config_file']);
         putenv('HOME=' . self::$originalEnv['home']);
     }
 

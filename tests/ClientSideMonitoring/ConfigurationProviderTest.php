@@ -57,6 +57,7 @@ EOT;
             'port' => getenv(ConfigurationProvider::ENV_PORT) ?: '',
             'client_id' => getenv(ConfigurationProvider::ENV_CLIENT_ID) ?: '',
             'profile' => getenv(ConfigurationProvider::ENV_PROFILE) ?: '',
+            'config_file' => getenv(ConfigurationProvider::ENV_CONFIG_FILE) ?: '',
         ];
     }
 
@@ -90,6 +91,8 @@ EOT;
             self::$originalEnv['client_id']);
         putenv(ConfigurationProvider::ENV_PROFILE . '=' .
             self::$originalEnv['profile']);
+        putenv(ConfigurationProvider::ENV_CONFIG_FILE . '=' .
+            self::$originalEnv['config_file']);
     }
 
     public function testCreatesFromEnvironmentVariables()
