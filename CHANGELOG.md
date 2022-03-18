@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Client` - Adds support for Lambda recursion detection.
+* `Aws\Glue` - Added 9 new APIs for AWS Glue Interactive Sessions: ListSessions, StopSession, CreateSession, GetSession, DeleteSession, RunStatement, GetStatement, ListStatements, CancelStatement
+
 ## 3.214.0 - 2022-03-16
 
 * `Aws\ACMPCA` - AWS Certificate Manager (ACM) Private Certificate Authority (CA) now supports customizable certificate subject names and extensions.
