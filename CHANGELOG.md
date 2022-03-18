@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.215.0 - 2022-03-18
 
 * `Aws\Client` - Adds support for Lambda recursion detection.
 * `Aws\Glue` - Added 9 new APIs for AWS Glue Interactive Sessions: ListSessions, StopSession, CreateSession, GetSession, DeleteSession, RunStatement, GetStatement, ListStatements, CancelStatement
