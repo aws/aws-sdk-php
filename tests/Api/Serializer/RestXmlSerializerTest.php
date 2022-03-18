@@ -75,4 +75,30 @@ class RestXmlSerializerTest extends TestCase
             $request->getHeaderLine('Content-Type')
         );
     }
+
+    /**
+     * @dataProvider boolProvider
+     * @param bool $arg
+     * @param string $expected
+     */
+    public function testSerializesHeaderValueToBoolString($arg, $expected)
+    {
+        $request = $this->getRequest('PutObject', [
+            'Bucket'      => 'foo',
+            'Key'         => 'bar',
+            'Body'        => 'baz',
+            'BucketKeyEnabled' => $arg,
+        ]);
+        $this->assertSame(
+            $expected,
+            $request->getHeaderLine('x-amz-server-side-encryption-bucket-key-enabled')
+        );
+    }
+
+    public function boolProvider() {
+        return [
+            [true, 'true'],
+            [false, 'false']
+        ];
+    }
 }
