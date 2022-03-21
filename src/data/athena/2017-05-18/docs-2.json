@@ -34,10 +34,18 @@
     "TagResource": "<p>Adds one or more tags to an Athena resource. A tag is a label that you assign to a resource. In Athena, a resource can be a workgroup or data catalog. Each tag consists of a key and an optional value, both of which you define. For example, you can use tags to categorize Athena workgroups or data catalogs by purpose, owner, or environment. Use a consistent set of tag keys to make it easier to search and filter workgroups or data catalogs in your account. For best practices, see <a href=\"https://aws.amazon.com/answers/account-management/aws-tagging-strategies/\">Tagging Best Practices</a>. Tag keys can be from 1 to 128 UTF-8 Unicode characters, and tag values can be from 0 to 256 UTF-8 Unicode characters. Tags can use letters and numbers representable in UTF-8, and the following characters: + - = . _ : / @. Tag keys and values are case-sensitive. Tag keys must be unique per resource. If you specify more than one tag, separate them by commas.</p>",
     "UntagResource": "<p>Removes one or more tags from a data catalog or workgroup resource.</p>",
     "UpdateDataCatalog": "<p>Updates the data catalog that has the specified name.</p>",
+    "UpdateNamedQuery": "<p>Updates a <a>NamedQuery</a> object. The database or workgroup cannot be updated.</p>",
     "UpdatePreparedStatement": "<p>Updates a prepared statement.</p>",
     "UpdateWorkGroup": "<p>Updates the workgroup with the specified name. The workgroup's name cannot be changed.</p>"
   },
   "shapes": {
+    "AclConfiguration": {
+      "base": "<p>Indicates that an Amazon S3 canned ACL should be set to control ownership of stored query results. When Athena stores query results in Amazon S3, the canned ACL is set with the <code>x-amz-acl</code> request header. For more information about S3 Object Ownership, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html#object-ownership-overview\">Object Ownership settings</a> in the <i>Amazon S3 User Guide</i>.</p>",
+      "refs": {
+        "ResultConfiguration$AclConfiguration": "<p>Indicates that an Amazon S3 canned ACL should be set to control ownership of stored query results. Currently the only supported canned ACL is <code>BUCKET_OWNER_FULL_CONTROL</code>. This is a client-side setting. If workgroup settings override client-side settings, then the query uses the ACL configuration that is specified for the workgroup, and also uses the location for storing query results specified in the workgroup. For more information, see <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a> and <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
+        "ResultConfigurationUpdates$AclConfiguration": "<p>The ACL configuration for the query results.</p>"
+      }
+    },
     "AmazonResourceName": {
       "base": null,
       "refs": {
@@ -48,7 +56,7 @@
       }
     },
     "AthenaError": {
-      "base": "<p>Provides information about an Athena query error. The <code>AthenaError</code> feature provides standardized error information to help you understand failed queries and take steps after a query failure occurs. <code>AthenaError</code> includes an <code>ErrorCategory</code> field that specifies whether the cause of the failed query is due to system error, user error, or unknown error.</p>",
+      "base": "<p>Provides information about an Athena query error. The <code>AthenaError</code> feature provides standardized error information to help you understand failed queries and take steps after a query failure occurs. <code>AthenaError</code> includes an <code>ErrorCategory</code> field that specifies whether the cause of the failed query is due to system error, user error, or other error.</p>",
       "refs": {
         "QueryExecutionStatus$AthenaError": "<p>Provides information about an Athena query error.</p>"
       }
@@ -86,6 +94,7 @@
         "ResultConfigurationUpdates$RemoveOutputLocation": "<p>If set to \"true\", indicates that the previously-specified query results location (also known as a client-side setting) for queries in this workgroup should be ignored and set to null. If set to \"false\" or not set, and a value is present in the <code>OutputLocation</code> in <code>ResultConfigurationUpdates</code> (the client-side setting), the <code>OutputLocation</code> in the workgroup's <code>ResultConfiguration</code> will be updated with the new value. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
         "ResultConfigurationUpdates$RemoveEncryptionConfiguration": "<p>If set to \"true\", indicates that the previously-specified encryption configuration (also known as the client-side setting) for queries in this workgroup should be ignored and set to null. If set to \"false\" or not set, and a value is present in the <code>EncryptionConfiguration</code> in <code>ResultConfigurationUpdates</code> (the client-side setting), the <code>EncryptionConfiguration</code> in the workgroup's <code>ResultConfiguration</code> will be updated with the new value. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
         "ResultConfigurationUpdates$RemoveExpectedBucketOwner": "<p>If set to \"true\", removes the Amazon Web Services account ID previously specified for <a>ResultConfiguration$ExpectedBucketOwner</a>. If set to \"false\" or not set, and a value is present in the <code>ExpectedBucketOwner</code> in <code>ResultConfigurationUpdates</code> (the client-side setting), the <code>ExpectedBucketOwner</code> in the workgroup's <code>ResultConfiguration</code> is updated with the new value. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
+        "ResultConfigurationUpdates$RemoveAclConfiguration": "<p>If set to <code>true</code>, indicates that the previously-specified ACL configuration for queries in this workgroup should be ignored and set to null. If set to <code>false</code> or not set, and a value is present in the <code>AclConfiguration</code> of <code>ResultConfigurationUpdates</code>, the <code>AclConfiguration</code> in the workgroup's <code>ResultConfiguration</code> is updated with the new value. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
         "WorkGroupConfiguration$EnforceWorkGroupConfiguration": "<p>If set to \"true\", the settings for the workgroup override client-side settings. If set to \"false\", client-side settings are used. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
         "WorkGroupConfiguration$PublishCloudWatchMetricsEnabled": "<p>Indicates that the Amazon CloudWatch metrics are enabled for the workgroup.</p>",
         "WorkGroupConfiguration$RequesterPaysEnabled": "<p>If set to <code>true</code>, allows members assigned to a workgroup to reference Amazon S3 Requester Pays buckets in queries. If set to <code>false</code>, workgroup members cannot query data from Requester Pays buckets, and queries that retrieve data from Requester Pays buckets cause an error. The default is <code>false</code>. For more information about Requester Pays buckets, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/RequesterPaysBuckets.html\">Requester Pays Buckets</a> in the <i>Amazon Simple Storage Service Developer Guide</i>.</p>",
@@ -346,7 +355,7 @@
     "ErrorCategory": {
       "base": null,
       "refs": {
-        "AthenaError$ErrorCategory": "<p>An integer value that specifies the category of a query failure error. The following list shows the category for each integer value.</p> <p> <b>1</b> - System</p> <p> <b>2</b> - User</p> <p> <b>3</b> - Unknown</p>"
+        "AthenaError$ErrorCategory": "<p>An integer value that specifies the category of a query failure error. The following list shows the category for each integer value.</p> <p> <b>1</b> - System</p> <p> <b>2</b> - User</p> <p> <b>3</b> - Other</p>"
       }
     },
     "ErrorCode": {
@@ -671,14 +680,21 @@
         "GetTableMetadataInput$TableName": "<p>The name of the table for which metadata is returned.</p>",
         "ListTableMetadataInput$DatabaseName": "<p>The name of the database for which table metadata should be returned.</p>",
         "NamedQuery$Name": "<p>The query name.</p>",
-        "TableMetadata$Name": "<p>The name of the table.</p>"
+        "TableMetadata$Name": "<p>The name of the table.</p>",
+        "UpdateNamedQueryInput$Name": "<p>The name of the query.</p>"
       }
     },
     "NamedQuery": {
-      "base": "<p>A query, where <code>QueryString</code> is the list of SQL query statements that comprise the query.</p>",
+      "base": "<p>A query, where <code>QueryString</code> contains the SQL statements that make up the query.</p>",
       "refs": {
         "GetNamedQueryOutput$NamedQuery": "<p>Information about the query.</p>",
         "NamedQueryList$member": null
+      }
+    },
+    "NamedQueryDescriptionString": {
+      "base": null,
+      "refs": {
+        "UpdateNamedQueryInput$Description": "<p>The query description.</p>"
       }
     },
     "NamedQueryId": {
@@ -689,7 +705,8 @@
         "GetNamedQueryInput$NamedQueryId": "<p>The unique ID of the query. Use <a>ListNamedQueries</a> to get query IDs.</p>",
         "NamedQuery$NamedQueryId": "<p>The unique identifier of the query.</p>",
         "NamedQueryIdList$member": null,
-        "UnprocessedNamedQueryId$NamedQueryId": "<p>The unique identifier of the named query.</p>"
+        "UnprocessedNamedQueryId$NamedQueryId": "<p>The unique identifier of the named query.</p>",
+        "UpdateNamedQueryInput$NamedQueryId": "<p>The unique identifier (UUID) of the query.</p>"
       }
     },
     "NamedQueryIdList": {
@@ -801,10 +818,11 @@
       "refs": {
         "CreateNamedQueryInput$QueryString": "<p>The contents of the query with all query statements.</p>",
         "CreatePreparedStatementInput$QueryStatement": "<p>The query string for the prepared statement.</p>",
-        "NamedQuery$QueryString": "<p>The SQL query statements that comprise the query.</p>",
+        "NamedQuery$QueryString": "<p>The SQL statements that make up the query.</p>",
         "PreparedStatement$QueryStatement": "<p>The query string for the prepared statement.</p>",
         "QueryExecution$Query": "<p>The SQL query statements which the query execution ran.</p>",
         "StartQueryExecutionInput$QueryString": "<p>The SQL query statements to be executed.</p>",
+        "UpdateNamedQueryInput$QueryString": "<p>The contents of the query with all query statements.</p>",
         "UpdatePreparedStatementInput$QueryStatement": "<p>The query string for the prepared statement.</p>"
       }
     },
@@ -828,7 +846,7 @@
       }
     },
     "ResultSet": {
-      "base": "<p>The metadata and rows that comprise a query result set. The metadata describes the column structure and data types. To return a <code>ResultSet</code> object, use <a>GetQueryResults</a>.</p>",
+      "base": "<p>The metadata and rows that make up a query result set. The metadata describes the column structure and data types. To return a <code>ResultSet</code> object, use <a>GetQueryResults</a>.</p>",
       "refs": {
         "GetQueryResultsOutput$ResultSet": "<p>The results of the query execution.</p>"
       }
@@ -840,7 +858,7 @@
       }
     },
     "Row": {
-      "base": "<p>The rows that comprise a query result table.</p>",
+      "base": "<p>The rows that make up a query result table.</p>",
       "refs": {
         "RowList$member": null
       }
@@ -849,6 +867,12 @@
       "base": null,
       "refs": {
         "ResultSet$Rows": "<p>The rows in the table.</p>"
+      }
+    },
+    "S3AclOption": {
+      "base": null,
+      "refs": {
+        "AclConfiguration$S3AclOption": "<p>The Amazon S3 canned ACL that Athena should specify when storing query results. Currently the only supported canned ACL is <code>BUCKET_OWNER_FULL_CONTROL</code>. If a query runs in a workgroup and the workgroup overrides client-side settings, then the Amazon S3 canned ACL specified in the workgroup's settings is used for all queries that run in the workgroup. For more information about Amazon S3 canned ACLs, see <a href=\"https://docs.aws.amazon.com/AmazonS3/latest/userguide/acl-overview.html#canned-acl\">Canned ACL</a> in the <i>Amazon S3 User Guide</i>.</p>"
       }
     },
     "StartQueryExecutionInput": {
@@ -1058,6 +1082,16 @@
       }
     },
     "UpdateDataCatalogOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateNamedQueryInput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateNamedQueryOutput": {
       "base": null,
       "refs": {
       }

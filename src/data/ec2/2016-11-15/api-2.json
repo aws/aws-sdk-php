@@ -9218,7 +9218,10 @@
     },
     "CreateIpamPoolRequest":{
       "type":"structure",
-      "required":["IpamScopeId"],
+      "required":[
+        "IpamScopeId",
+        "AddressFamily"
+      ],
       "members":{
         "DryRun":{"shape":"Boolean"},
         "IpamScopeId":{"shape":"IpamScopeId"},
@@ -11266,7 +11269,8 @@
       "required":["IpamId"],
       "members":{
         "DryRun":{"shape":"Boolean"},
-        "IpamId":{"shape":"IpamId"}
+        "IpamId":{"shape":"IpamId"},
+        "Cascade":{"shape":"Boolean"}
       }
     },
     "DeleteIpamResult":{
@@ -21379,6 +21383,10 @@
         "BootMode":{
           "shape":"AttributeValue",
           "locationName":"bootMode"
+        },
+        "LastLaunchedTime":{
+          "shape":"AttributeValue",
+          "locationName":"lastLaunchedTime"
         }
       }
     },
@@ -21392,7 +21400,8 @@
         "productCodes",
         "blockDeviceMapping",
         "sriovNetSupport",
-        "bootMode"
+        "bootMode",
+        "lastLaunchedTime"
       ]
     },
     "ImageDiskContainer":{
@@ -31322,7 +31331,8 @@
       "type":"structure",
       "required":[
         "IpamPoolId",
-        "Cidr"
+        "Cidr",
+        "IpamPoolAllocationId"
       ],
       "members":{
         "DryRun":{"shape":"Boolean"},
@@ -32655,6 +32665,7 @@
         "spot-fleet-request",
         "spot-instances-request",
         "subnet",
+        "subnet-cidr-reservation",
         "traffic-mirror-filter",
         "traffic-mirror-session",
         "traffic-mirror-target",

@@ -68,6 +68,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionBackupGateway(array $args = [])
  * @method \Aws\Batch\BatchClient createBatch(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBatch(array $args = [])
+ * @method \Aws\BillingConductor\BillingConductorClient createBillingConductor(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionBillingConductor(array $args = [])
  * @method \Aws\Braket\BraketClient createBraket(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionBraket(array $args = [])
  * @method \Aws\Budgets\BudgetsClient createBudgets(array $args = [])
@@ -308,6 +310,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionKafka(array $args = [])
  * @method \Aws\KafkaConnect\KafkaConnectClient createKafkaConnect(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionKafkaConnect(array $args = [])
+ * @method \Aws\Keyspaces\KeyspacesClient createKeyspaces(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionKeyspaces(array $args = [])
  * @method \Aws\Kinesis\KinesisClient createKinesis(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionKinesis(array $args = [])
  * @method \Aws\KinesisAnalytics\KinesisAnalyticsClient createKinesisAnalytics(array $args = [])
@@ -603,7 +607,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.210.0';
+    const VERSION = '3.215.0';
 
     /** @var array Arguments for creating clients */
     private $args;
