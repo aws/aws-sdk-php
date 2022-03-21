@@ -103,14 +103,16 @@ class EcsCredentialProvider
      */
     private function getEcsUri()
     {
-        $credFullUri = getenv(self::ENV_FULL_URI);
-        if(!empty($credFullUri))
-            return $credFullUri;
-        
         $credsUri = getenv(self::ENV_URI);
 
         if ($credsUri === false) {
             $credsUri = isset($_SERVER[self::ENV_URI]) ? $_SERVER[self::ENV_URI] : '';
+        }
+
+        if(empty($credsUri)){
+            $credFullUri = getenv(self::ENV_FULL_URI);
+            if(!empty($credFullUri))
+                return $credFullUri;
         }
         
         return self::SERVER_URI . $credsUri;
