@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.215.1 - 2022-03-21
 
 * `Aws\ChimeSDKMeetings` - Add support for media replication to link multiple WebRTC media sessions together to reach larger and global audiences. Participants connected to a replica session can be granted access to join the primary session and can switch sessions with their existing WebRTC connection
 * `Aws\ECR` - This release includes a fix in the DescribeImageScanFindings paginated output.
