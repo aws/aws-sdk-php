@@ -6,6 +6,7 @@ use Aws\Api\StructureShape;
 use Aws\Test\TestServiceTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
+use Aws\Api\Parser\QueryParser;
 
 /**
  * @covers \Aws\Api\Service
@@ -212,5 +213,11 @@ class ServiceTest extends TestCase
         );
         $parser = Service::createParser($service);
         $this->assertInstanceOf($cl, $parser);
+
+        if ($parser instanceof QueryParser) {
+            $this->assertAttributeInstanceOf(
+                'Aws\Api\Parser\XmlParser', 'parser', $parser
+            );
+        }
     }
 }
