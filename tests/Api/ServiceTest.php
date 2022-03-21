@@ -1,12 +1,12 @@
 <?php
 namespace Aws\Test\Api;
 
+use Aws\Api\Parser\QueryParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
 use Aws\Test\TestServiceTrait;
 use Aws\Test\UsesServiceTrait;
 use PHPUnit\Framework\TestCase;
-use Aws\Api\Parser\QueryParser;
 
 /**
  * @covers \Aws\Api\Service
