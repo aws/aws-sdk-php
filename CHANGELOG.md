@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CostExplorer` - Added three new APIs to support tagging and resource-level authorization on Cost Explorer resources: TagResource, UntagResource, ListTagsForResource. Added optional parameters to CreateCostCategoryDefinition, CreateAnomalySubscription and CreateAnomalyMonitor APIs to support Tag On Create.
+* `Aws\ECS` - Documentation only update to address tickets
+* `Aws\LakeFormation` - The release fixes the incorrect permissions called out in the documentation - DESCRIBE_TAG, ASSOCIATE_TAG, DELETE_TAG, ALTER_TAG. This trebuchet release fixes the corresponding SDK and documentation.
+* `Aws\LocationService` - Amazon Location Service now includes a MaxResults parameter for GetDevicePositionHistory requests.
+* `Aws\Polly` - Amazon Polly adds new Catalan voice - Arlet. Arlet is available as Neural voice only.
+
 ## 3.215.1 - 2022-03-21
 
 * `Aws\ChimeSDKMeetings` - Add support for media replication to link multiple WebRTC media sessions together to reach larger and global audiences. Participants connected to a replica session can be granted access to join the primary session and can switch sessions with their existing WebRTC connection
