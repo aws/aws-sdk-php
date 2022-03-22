@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.215.2 - 2022-03-22
 
 * `Aws\CostExplorer` - Added three new APIs to support tagging and resource-level authorization on Cost Explorer resources: TagResource, UntagResource, ListTagsForResource. Added optional parameters to CreateCostCategoryDefinition, CreateAnomalySubscription and CreateAnomalyMonitor APIs to support Tag On Create.
 * `Aws\ECS` - Documentation only update to address tickets
