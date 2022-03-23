@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.216.0 - 2022-03-23
 
 * `Aws\AuditManager` - This release updates 1 API parameter, the SnsArn attribute. The character length and regex pattern for the SnsArn attribute have been updated, which enables you to deselect an SNS topic when using the UpdateSettings operation.
 * `Aws\EBS` - Increased the maximum supported value for the Timeout parameter of the StartSnapshot API from 60 minutes to 4320 minutes. Changed the HTTP error code for ConflictException from 503 to 409.
