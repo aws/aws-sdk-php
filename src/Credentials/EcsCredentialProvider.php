@@ -111,6 +111,10 @@ class EcsCredentialProvider
 
         if(empty($credsUri)){
             $credFullUri = getenv(self::ENV_FULL_URI);
+            if($credFullUri === false){
+                $credFullUri = isset($_SERVER[self::ENV_FULL_URI]) ? $_SERVER[self::ENV_FULL_URI] : '';
+            }
+
             if(!empty($credFullUri))
                 return $credFullUri;
         }
