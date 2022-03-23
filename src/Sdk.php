@@ -242,6 +242,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionFraudDetector(array $args = [])
  * @method \Aws\GameLift\GameLiftClient createGameLift(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGameLift(array $args = [])
+ * @method \Aws\GameSparks\GameSparksClient createGameSparks(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionGameSparks(array $args = [])
  * @method \Aws\Glacier\GlacierClient createGlacier(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionGlacier(array $args = [])
  * @method \Aws\GlobalAccelerator\GlobalAcceleratorClient createGlobalAccelerator(array $args = [])
@@ -607,7 +609,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.215.1';
+    const VERSION = '3.216.0';
 
     /** @var array Arguments for creating clients */
     private $args;

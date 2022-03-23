@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## 3.216.0 - 2022-03-23
+
+* `Aws\AuditManager` - This release updates 1 API parameter, the SnsArn attribute. The character length and regex pattern for the SnsArn attribute have been updated, which enables you to deselect an SNS topic when using the UpdateSettings operation.
+* `Aws\EBS` - Increased the maximum supported value for the Timeout parameter of the StartSnapshot API from 60 minutes to 4320 minutes. Changed the HTTP error code for ConflictException from 503 to 409.
+* `Aws\ElastiCache` - Doc only update for ElastiCache
+* `Aws\GameSparks` - Released the preview of Amazon GameSparks, a fully managed AWS service that provides a multi-service backend for game developers.
+* `Aws\Redshift` - This release adds a new [--encrypted | --no-encrypted] field in restore-from-cluster-snapshot API. Customers can now restore an unencrypted snapshot to a cluster encrypted with AWS Managed Key or their own KMS key.
+* `Aws\SSM` - Update AddTagsToResource, ListTagsForResource, and RemoveTagsFromResource APIs to reflect the support for tagging Automation resources. Includes other minor documentation updates.
+* `Aws\Transfer` - Documentation updates for AWS Transfer Family to describe how to remove an associated workflow from a server.
+
+## 3.215.2 - 2022-03-22
+
+* `Aws\CostExplorer` - Added three new APIs to support tagging and resource-level authorization on Cost Explorer resources: TagResource, UntagResource, ListTagsForResource. Added optional parameters to CreateCostCategoryDefinition, CreateAnomalySubscription and CreateAnomalyMonitor APIs to support Tag On Create.
+* `Aws\ECS` - Documentation only update to address tickets
+* `Aws\LakeFormation` - The release fixes the incorrect permissions called out in the documentation - DESCRIBE_TAG, ASSOCIATE_TAG, DELETE_TAG, ALTER_TAG. This trebuchet release fixes the corresponding SDK and documentation.
+* `Aws\LocationService` - Amazon Location Service now includes a MaxResults parameter for GetDevicePositionHistory requests.
+* `Aws\Polly` - Amazon Polly adds new Catalan voice - Arlet. Arlet is available as Neural voice only.
+
 ## 3.215.1 - 2022-03-21
 
 * `Aws\ChimeSDKMeetings` - Add support for media replication to link multiple WebRTC media sessions together to reach larger and global audiences. Participants connected to a replica session can be granted access to join the primary session and can switch sessions with their existing WebRTC connection

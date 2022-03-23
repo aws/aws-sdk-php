@@ -50,6 +50,10 @@ class RestJsonSerializerTest extends TestCase
                     'noPayload' => [
                         'http' => ['method' => 'GET'],
                         'input' => ['shape' => 'NoPayloadInput']
+                    ],
+                    'boolHeader' => [
+                        'http' => ['method' => 'POST'],
+                        'input' => ['shape' => 'BoolHeaderInput']
                     ]
                 ],
                 'shapes' => [
@@ -117,8 +121,19 @@ class RestJsonSerializerTest extends TestCase
                             ]
                         ]
                     ],
+                    'BoolHeaderInput' => [
+                        'type' => 'structure',
+                        'members' => [
+                            'bool' => [
+                                'shape' => 'BoolShape',
+                                'location' => 'header',
+                                'locationName' => 'Is-Bool',
+                            ],
+                        ]
+                    ],
                     'BlobShape' => ['type' => 'blob'],
-                    'BazShape'  => ['type' => 'string']
+                    'BazShape'  => ['type' => 'string'],
+                    'BoolShape' => ['type' => 'boolean'],
                 ]
             ],
             function () {}
@@ -308,5 +323,22 @@ class RestJsonSerializerTest extends TestCase
         ];
     }
 
+    /**
+     * @dataProvider boolProvider
+     * @param bool $arg
+     * @param string $expected
+     */
+    public function testSerializesHeaderValueToBoolString($arg, $expected)
+    {
+        $request = $this->getRequest('boolHeader', ['bool' => $arg]);
+        $this->assertSame($expected, $request->getHeaderLine('Is-Bool'));
+    }
+
+    public function boolProvider() {
+        return [
+            [true, 'true'],
+            [false, 'false']
+        ];
+    }
 }
 
