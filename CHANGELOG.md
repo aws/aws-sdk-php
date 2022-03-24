@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Added new APIs GetCustomRulePolicy and GetOrganizationCustomRulePolicy, and updated existing APIs PutConfigRule, DescribeConfigRule, DescribeConfigRuleEvaluationStatus, PutOrganizationConfigRule, DescribeConfigRule to support a new feature for building AWS Config rules with AWS CloudFormation Guard
+* `Aws\Lambda` - Adds support for increased ephemeral storage (/tmp) up to 10GB for Lambda functions. Customers can now provision up to 10 GB of ephemeral storage per function instance, a 20x increase over the previous limit of 512 MB.
+* `Aws\TranscribeService` - This release adds an additional parameter for subtitling with Amazon Transcribe batch jobs: outputStartIndex.
+
 ## 3.216.0 - 2022-03-23
 
 * `Aws\AuditManager` - This release updates 1 API parameter, the SnsArn attribute. The character length and regex pattern for the SnsArn attribute have been updated, which enables you to deselect an SNS topic when using the UpdateSettings operation.
