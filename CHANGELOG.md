@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.216.2 - 2022-03-25
 
 * `Aws\Batch` - Bug Fix: Fixed a bug where shapes were marked as unboxed and were not serialized and sent over the wire, causing an API error from the service.
 * `Aws\EC2` - This is release adds support for Amazon VPC Reachability Analyzer to analyze path through a Transit Gateway.
