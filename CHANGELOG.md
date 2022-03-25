@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Batch` - Bug Fix: Fixed a bug where shapes were marked as unboxed and were not serialized and sent over the wire, causing an API error from the service.
+* `Aws\EC2` - This is release adds support for Amazon VPC Reachability Analyzer to analyze path through a Transit Gateway.
+* `Aws\SSM` - This Patch Manager release supports creating, updating, and deleting Patch Baselines for Rocky Linux OS.
+
 ## 3.216.1 - 2022-03-24
 
 * `Aws\ConfigService` - Added new APIs GetCustomRulePolicy and GetOrganizationCustomRulePolicy, and updated existing APIs PutConfigRule, DescribeConfigRule, DescribeConfigRuleEvaluationStatus, PutOrganizationConfigRule, DescribeConfigRule to support a new feature for building AWS Config rules with AWS CloudFormation Guard
