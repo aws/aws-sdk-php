@@ -890,7 +890,7 @@ class CredentialProvider
     /**
      * @return boolean
      */
-    private static function shouldUseEcs()
+    public static function shouldUseEcs()
     {
         //Check for relative uri. if not, then full uri.
         //fall back to server for each as getenv is not thread-safe.

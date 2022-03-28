@@ -1922,4 +1922,37 @@ EOT;
         unlink($dir . '/config');
         $this->assertSame('configFoo', $creds->getAccessKeyId());
     }
+
+    /**
+     * @dataProvider shouldUseEcsProvider
+     *
+     * @param string $relative
+     * @param string $serverRelative
+     * @param string $full
+     * @param string $serverFull
+     * @param bool $expected
+     */
+    public function testShouldUseEcs(
+        $relative, $serverRelative, $full, $serverFull, $expected
+    )
+    {
+        $this->clearEnv();
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI' . $relative);
+        $_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = $serverRelative;
+        putenv('AWS_CONTAINER_CREDENTIALS_FULL_URI' . $full);
+        $_SERVER['AWS_CONTAINER_CREDENTIALS_FULL_URI'] = $serverFull;
+        $result = CredentialProvider::shouldUseEcs();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function shouldUseEcsProvider()
+    {
+        return [
+            ['=foo', '', '', '', true],
+            ['', 'foo', '', '', true],
+            ['', '', '=bar', '', true],
+            ['', '', '', 'bar', true],
+            ['', '', '', '', false]
+        ];
+    }
 }
