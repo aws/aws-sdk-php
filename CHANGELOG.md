@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.216.4 - 2022-03-29
 
 * `Aws\Organizations` - This release provides the new CloseAccount API that enables principals in the management account to close any member account within an organization.
 
