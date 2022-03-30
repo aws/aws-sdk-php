@@ -1,5 +1,61 @@
 # CHANGELOG
 
+## 3.217.0 - 2022-03-30
+
+* `Aws\Credentials` - Add support for ECS full uri and auth token environment variables
+* `Aws\EC2` - This release simplifies the auto-recovery configuration process enabling customers to set the recovery behavior to disabled or default
+* `Aws\FMS` - AWS Firewall Manager now supports the configuration of third-party policies that can use either the centralized or distributed deployment models.
+* `Aws\FSx` - This release adds support for modifying throughput capacity for FSx for ONTAP file systems.
+* `Aws\IoT` - Doc only update for IoT that fixes customer-reported issues.
+* `Aws\IoTDataPlane` - Update the default AWS IoT Core Data Plane endpoint from VeriSign signed to ATS signed. If you have firewalls with strict egress rules, configure the rules to grant you access to data-ats.iot.[region].amazonaws.com or data-ats.iot.[region].amazonaws.com.cn.
+
+## 3.216.4 - 2022-03-29
+
+* `Aws\Organizations` - This release provides the new CloseAccount API that enables principals in the management account to close any member account within an organization.
+
+## 3.216.3 - 2022-03-28
+
+* `Aws\ACMPCA` - Updating service name entities
+* `Aws\MediaLive` - This release adds support for selecting a maintenance window.
+
+## 3.216.2 - 2022-03-25
+
+* `Aws\Batch` - Bug Fix: Fixed a bug where shapes were marked as unboxed and were not serialized and sent over the wire, causing an API error from the service.
+* `Aws\EC2` - This is release adds support for Amazon VPC Reachability Analyzer to analyze path through a Transit Gateway.
+* `Aws\SSM` - This Patch Manager release supports creating, updating, and deleting Patch Baselines for Rocky Linux OS.
+
+## 3.216.1 - 2022-03-24
+
+* `Aws\ConfigService` - Added new APIs GetCustomRulePolicy and GetOrganizationCustomRulePolicy, and updated existing APIs PutConfigRule, DescribeConfigRule, DescribeConfigRuleEvaluationStatus, PutOrganizationConfigRule, DescribeConfigRule to support a new feature for building AWS Config rules with AWS CloudFormation Guard
+* `Aws\Lambda` - Adds support for increased ephemeral storage (/tmp) up to 10GB for Lambda functions. Customers can now provision up to 10 GB of ephemeral storage per function instance, a 20x increase over the previous limit of 512 MB.
+* `Aws\TranscribeService` - This release adds an additional parameter for subtitling with Amazon Transcribe batch jobs: outputStartIndex.
+
+## 3.216.0 - 2022-03-23
+
+* `Aws\AuditManager` - This release updates 1 API parameter, the SnsArn attribute. The character length and regex pattern for the SnsArn attribute have been updated, which enables you to deselect an SNS topic when using the UpdateSettings operation.
+* `Aws\EBS` - Increased the maximum supported value for the Timeout parameter of the StartSnapshot API from 60 minutes to 4320 minutes. Changed the HTTP error code for ConflictException from 503 to 409.
+* `Aws\ElastiCache` - Doc only update for ElastiCache
+* `Aws\GameSparks` - Released the preview of Amazon GameSparks, a fully managed AWS service that provides a multi-service backend for game developers.
+* `Aws\Redshift` - This release adds a new [--encrypted | --no-encrypted] field in restore-from-cluster-snapshot API. Customers can now restore an unencrypted snapshot to a cluster encrypted with AWS Managed Key or their own KMS key.
+* `Aws\SSM` - Update AddTagsToResource, ListTagsForResource, and RemoveTagsFromResource APIs to reflect the support for tagging Automation resources. Includes other minor documentation updates.
+* `Aws\Transfer` - Documentation updates for AWS Transfer Family to describe how to remove an associated workflow from a server.
+
+## 3.215.2 - 2022-03-22
+
+* `Aws\CostExplorer` - Added three new APIs to support tagging and resource-level authorization on Cost Explorer resources: TagResource, UntagResource, ListTagsForResource. Added optional parameters to CreateCostCategoryDefinition, CreateAnomalySubscription and CreateAnomalyMonitor APIs to support Tag On Create.
+* `Aws\ECS` - Documentation only update to address tickets
+* `Aws\LakeFormation` - The release fixes the incorrect permissions called out in the documentation - DESCRIBE_TAG, ASSOCIATE_TAG, DELETE_TAG, ALTER_TAG. This trebuchet release fixes the corresponding SDK and documentation.
+* `Aws\LocationService` - Amazon Location Service now includes a MaxResults parameter for GetDevicePositionHistory requests.
+* `Aws\Polly` - Amazon Polly adds new Catalan voice - Arlet. Arlet is available as Neural voice only.
+
+## 3.215.1 - 2022-03-21
+
+* `Aws\ChimeSDKMeetings` - Add support for media replication to link multiple WebRTC media sessions together to reach larger and global audiences. Participants connected to a replica session can be granted access to join the primary session and can switch sessions with their existing WebRTC connection
+* `Aws\ECR` - This release includes a fix in the DescribeImageScanFindings paginated output.
+* `Aws\MediaConnect` - This release adds support for selecting a maintenance window.
+* `Aws\QuickSight` - AWS QuickSight Service Features - Expand public API support for group management.
+* `Aws\RAM` - Document improvements to the RAM API operations and parameter descriptions.
+
 ## 3.215.0 - 2022-03-18
 
 * `Aws\Client` - Adds support for Lambda recursion detection.
