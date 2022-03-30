@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Credentials` - Add support for ECS full uri and auth token environment variables
+* `Aws\EC2` - This release simplifies the auto-recovery configuration process enabling customers to set the recovery behavior to disabled or default
+* `Aws\FMS` - AWS Firewall Manager now supports the configuration of third-party policies that can use either the centralized or distributed deployment models.
+* `Aws\FSx` - This release adds support for modifying throughput capacity for FSx for ONTAP file systems.
+* `Aws\IoT` - Doc only update for IoT that fixes customer-reported issues.
+* `Aws\IoTDataPlane` - Update the default AWS IoT Core Data Plane endpoint from VeriSign signed to ATS signed. If you have firewalls with strict egress rules, configure the rules to grant you access to data-ats.iot.[region].amazonaws.com or data-ats.iot.[region].amazonaws.com.cn.
+
 ## 3.216.4 - 2022-03-29
 
 * `Aws\Organizations` - This release provides the new CloseAccount API that enables principals in the management account to close any member account within an organization.
