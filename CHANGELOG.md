@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.217.0 - 2022-03-30
 
 * `Aws\Credentials` - Add support for ECS full uri and auth token environment variables
 * `Aws\EC2` - This release simplifies the auto-recovery configuration process enabling customers to set the recovery behavior to disabled or default
