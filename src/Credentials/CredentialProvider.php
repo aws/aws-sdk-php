@@ -7,7 +7,6 @@ use Aws\CacheInterface;
 use Aws\Exception\CredentialsException;
 use Aws\Sts\StsClient;
 use GuzzleHttp\Promise;
-
 /**
  * Credential providers are functions that accept no arguments and return a
  * promise that is fulfilled with an {@see \Aws\Credentials\CredentialsInterface}
@@ -112,15 +111,7 @@ class CredentialProvider
             );
         }
 
-        $shouldUseEcsCredentialsProvider = getenv(EcsCredentialProvider::ENV_URI);
-        // getenv() is not thread safe - fall back to $_SERVER
-        if ($shouldUseEcsCredentialsProvider === false) {
-            $shouldUseEcsCredentialsProvider = isset($_SERVER[EcsCredentialProvider::ENV_URI])
-                ? $_SERVER[EcsCredentialProvider::ENV_URI]
-                : false;
-        }
-
-        if (!empty($shouldUseEcsCredentialsProvider)) {
+        if (self::shouldUseEcs()) {
             $defaultChain['ecs'] = self::ecsCredentials($config);
         } else {
             $defaultChain['instance'] = self::instanceProfile($config);
@@ -178,12 +169,20 @@ class CredentialProvider
             throw new \InvalidArgumentException('No providers in chain');
         }
 
-        return function () use ($links) {
+        return function ($previousCreds = null) use ($links) {
             /** @var callable $parent */
             $parent = array_shift($links);
             $promise = $parent();
             while ($next = array_shift($links)) {
-                $promise = $promise->otherwise($next);
+                if ($next instanceof InstanceProfileProvider
+                    && $previousCreds instanceof Credentials
+                ) {
+                    $promise = $promise->otherwise(
+                        function () use ($next, $previousCreds) {return $next($previousCreds);}
+                    );
+                } else {
+                    $promise = $promise->otherwise($next);
+                }
             }
             return $promise;
         };
@@ -885,6 +884,19 @@ class CredentialProvider
                 (self::getHomeDir() . '/.aws/credentials');
         }
         return $filename;
+    }
+
+    /**
+     * @return boolean
+     */
+    public static function shouldUseEcs()
+    {
+        //Check for relative uri. if not, then full uri.
+        //fall back to server for each as getenv is not thread-safe.
+        return !empty(getenv(EcsCredentialProvider::ENV_URI))
+        || !empty($_SERVER[EcsCredentialProvider::ENV_URI])
+        || !empty(getenv(EcsCredentialProvider::ENV_FULL_URI))
+        || !empty($_SERVER[EcsCredentialProvider::ENV_FULL_URI]);
     }
 }
 

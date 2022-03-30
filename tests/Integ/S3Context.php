@@ -328,6 +328,40 @@ class S3Context implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @Given I have uploaded an object to S3 with BucketKey enabled
+     */
+    public function iHaveUploadedAnObjectToS3WithBucketKeyEnabled()
+    {
+        self::getSdk()
+            ->createS3()
+            ->putObject([
+                'Bucket' => self::getResourceName(),
+                'Key' => 'test.dat',
+                'Body' => 'foo',
+                'BucketKeyEnabled' => true,
+                'ServerSideEncryption' => 'aws:kms'
+            ]);
+    }
+
+    /**
+     * @Then I can verify Bucket Key is enabled at the object level
+     */
+    public function iCanVerifyBucketKeyIsEnabledAtTheObjectLevel()
+    {
+        $response = self::getSdk()
+            ->createS3()
+            ->headObject([
+                'Bucket' => self::getResourceName(),
+                'Key' => 'test.dat',
+            ]);
+        $responseHeaders = $response['@metadata']['headers'];
+        Assert::assertEquals(
+            'true',
+            $responseHeaders['x-amz-server-side-encryption-bucket-key-enabled']
+        );
+    }
+
+    /**
      * Prepare form inputs and attribute for POST
      */
     private function preparePostData($postObject)

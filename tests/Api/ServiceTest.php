@@ -1,6 +1,7 @@
 <?php
 namespace Aws\Test\Api;
 
+use Aws\Api\Parser\QueryParser;
 use Aws\Api\Service;
 use Aws\Api\StructureShape;
 use Aws\Test\TestServiceTrait;
@@ -180,9 +181,14 @@ class ServiceTest extends TestCase
     /**
      * @dataProvider serializerDataProvider
      */
-    public function testCreatesSerializer($type, $parser)
+    public function testCreatesSerializer($type, $cl)
     {
-
+        $service = new Service(
+            ['metadata' => ['protocol' => $type]],
+            function () { return []; }
+        );
+        $serializer = Service::createSerializer($service, $type);
+        $this->assertInstanceOf($cl, $serializer);
     }
 
     public function parserDataProvider()
@@ -191,16 +197,27 @@ class ServiceTest extends TestCase
             ['json', 'Aws\Api\Parser\JsonRpcParser'],
             ['rest-json', 'Aws\Api\Parser\RestJsonParser'],
             ['rest-xml', 'Aws\Api\Parser\RestXmlParser'],
-            ['query', 'Aws\Api\Parser\XmlParser'],
-            ['ec2', 'Aws\Api\Parser\XmlParser'],
+            ['query', 'Aws\Api\Parser\QueryParser'],
+            ['ec2', 'Aws\Api\Parser\QueryParser'],
         ];
     }
 
     /**
      * @dataProvider parserDataProvider
      */
-    public function testCreatesParsers($type, $parser)
+    public function testCreatesParsers($type, $cl)
     {
+        $service = new Service(
+            ['metadata' => ['protocol' => $type]],
+            function () { return []; }
+        );
+        $parser = Service::createParser($service);
+        $this->assertInstanceOf($cl, $parser);
 
+        if ($parser instanceof QueryParser) {
+            $this->assertAttributeInstanceOf(
+                'Aws\Api\Parser\XmlParser', 'parser', $parser
+            );
+        }
     }
 }

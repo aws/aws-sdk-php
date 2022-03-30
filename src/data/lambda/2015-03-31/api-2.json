@@ -1072,7 +1072,8 @@
           "location":"querystring",
           "locationName":"Qualifier"
         },
-        "RevisionId":{"shape":"String"}
+        "RevisionId":{"shape":"String"},
+        "PrincipalOrgID":{"shape":"PrincipalOrgID"}
       }
     },
     "AddPermissionResponse":{
@@ -1333,7 +1334,8 @@
         "FileSystemConfigs":{"shape":"FileSystemConfigList"},
         "ImageConfig":{"shape":"ImageConfig"},
         "CodeSigningConfigArn":{"shape":"CodeSigningConfigArn"},
-        "Architectures":{"shape":"ArchitecturesList"}
+        "Architectures":{"shape":"ArchitecturesList"},
+        "EphemeralStorage":{"shape":"EphemeralStorage"}
       }
     },
     "Date":{"type":"timestamp"},
@@ -1631,6 +1633,18 @@
       "value":{"shape":"EnvironmentVariableValue"},
       "sensitive":true
     },
+    "EphemeralStorage":{
+      "type":"structure",
+      "required":["Size"],
+      "members":{
+        "Size":{"shape":"EphemeralStorageSize"}
+      }
+    },
+    "EphemeralStorageSize":{
+      "type":"integer",
+      "max":10240,
+      "min":512
+    },
     "EventSourceMappingConfiguration":{
       "type":"structure",
       "members":{
@@ -1775,7 +1789,8 @@
         "ImageConfigResponse":{"shape":"ImageConfigResponse"},
         "SigningProfileVersionArn":{"shape":"Arn"},
         "SigningJobArn":{"shape":"Arn"},
-        "Architectures":{"shape":"ArchitecturesList"}
+        "Architectures":{"shape":"ArchitecturesList"},
+        "EphemeralStorage":{"shape":"EphemeralStorage"}
       }
     },
     "FunctionEventInvokeConfig":{
@@ -2907,6 +2922,12 @@
       "type":"string",
       "pattern":"[^\\s]+"
     },
+    "PrincipalOrgID":{
+      "type":"string",
+      "max":34,
+      "min":12,
+      "pattern":"^o-[a-z0-9]{10,32}$"
+    },
     "ProvisionedConcurrencyConfigList":{
       "type":"list",
       "member":{"shape":"ProvisionedConcurrencyConfigListItem"}
@@ -3235,6 +3256,7 @@
         "dotnetcore2.0",
         "dotnetcore2.1",
         "dotnetcore3.1",
+        "dotnet6",
         "nodejs4.3-edge",
         "go1.x",
         "ruby2.5",
@@ -3617,7 +3639,8 @@
         "RevisionId":{"shape":"String"},
         "Layers":{"shape":"LayerList"},
         "FileSystemConfigs":{"shape":"FileSystemConfigList"},
-        "ImageConfig":{"shape":"ImageConfig"}
+        "ImageConfig":{"shape":"ImageConfig"},
+        "EphemeralStorage":{"shape":"EphemeralStorage"}
       }
     },
     "UpdateFunctionEventInvokeConfigRequest":{

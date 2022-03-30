@@ -36,6 +36,8 @@ EOT;
         putenv(CredentialProvider::ENV_SECRET . '=');
         putenv(CredentialProvider::ENV_PROFILE . '=');
         putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI');
+        putenv('AWS_CONTAINER_CREDENTIALS_FULL_URI');
+        putenv('AWS_CONTAINER_AUTHORIZATION_TOKEN');
         putenv('AWS_SDK_LOAD_NONDEFAULT_CONFIG');
         putenv('AWS_WEB_IDENTITY_TOKEN_FILE');
         putenv('AWS_ROLE_ARN');
@@ -46,6 +48,8 @@ EOT;
         unset($_SERVER[CredentialProvider::ENV_SECRET]);
         unset($_SERVER[CredentialProvider::ENV_PROFILE]);
         unset($_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI']);
+        unset($_SERVER['AWS_CONTAINER_CREDENTIALS_FULL_URI']);
+        unset($_SERVER['AWS_CONTAINER_AUTHORIZATION_TOKEN']);
         unset($_SERVER['AWS_SDK_LOAD_NONDEFAULT_CONFIG']);
         unset($_SERVER['AWS_WEB_IDENTITY_TOKEN_FILE']);
         unset($_SERVER['AWS_ROLE_ARN']);
@@ -1819,6 +1823,7 @@ EOT;
         $credsForCache = new Credentials('foo', 'bar', 'baz', PHP_INT_MAX);
         foreach ($cacheable as $provider) {
             $this->clearEnv();
+
             if ($provider == 'ecs') putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=/latest');
             $cache = new LruArrayCache;
             $cache->set('aws_cached_' . $provider . '_credentials', $credsForCache);
@@ -1826,6 +1831,7 @@ EOT;
                 'credentials' => $cache,
             ]))
                 ->wait();
+
             $this->assertSame($credsForCache->getAccessKeyId(), $credentials->getAccessKeyId());
             $this->assertSame($credsForCache->getSecretKey(), $credentials->getSecretKey());
         }
@@ -1854,6 +1860,18 @@ EOT;
             'credentials' => $cache,
         ]))
             ->wait();
+    
+        $this->assertSame($ecsCredential->getAccessKeyId(), $credentials->getAccessKeyId());
+        $this->assertSame($ecsCredential->getSecretKey(), $credentials->getSecretKey());
+
+        $this->clearEnv();
+        putenv('AWS_CONTAINER_CREDENTIALS_FULL_URI=http://localhost/test/metadata');
+        putenv('AWS_CONTAINER_AUTHORIZATION_TOKEN=1AAA+BBBBB=');
+        $credentials = call_user_func(CredentialProvider::defaultProvider([
+            'credentials' => $cache,
+        ]))
+            ->wait();
+            
         $this->assertSame($ecsCredential->getAccessKeyId(), $credentials->getAccessKeyId());
         $this->assertSame($ecsCredential->getSecretKey(), $credentials->getSecretKey());
     }
@@ -1903,5 +1921,38 @@ EOT;
         $creds = $provider()->wait();
         unlink($dir . '/config');
         $this->assertSame('configFoo', $creds->getAccessKeyId());
+    }
+
+    /**
+     * @dataProvider shouldUseEcsProvider
+     *
+     * @param string $relative
+     * @param string $serverRelative
+     * @param string $full
+     * @param string $serverFull
+     * @param bool $expected
+     */
+    public function testShouldUseEcs(
+        $relative, $serverRelative, $full, $serverFull, $expected
+    )
+    {
+        $this->clearEnv();
+        putenv('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI' . $relative);
+        $_SERVER['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = $serverRelative;
+        putenv('AWS_CONTAINER_CREDENTIALS_FULL_URI' . $full);
+        $_SERVER['AWS_CONTAINER_CREDENTIALS_FULL_URI'] = $serverFull;
+        $result = CredentialProvider::shouldUseEcs();
+        $this->assertEquals($expected, $result);
+    }
+
+    public function shouldUseEcsProvider()
+    {
+        return [
+            ['=foo', '', '', '', true],
+            ['', 'foo', '', '', true],
+            ['', '', '=bar', '', true],
+            ['', '', '', 'bar', true],
+            ['', '', '', '', false]
+        ];
     }
 }

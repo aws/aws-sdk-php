@@ -443,6 +443,20 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "UpdateNamedQuery":{
+      "name":"UpdateNamedQuery",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateNamedQueryInput"},
+      "output":{"shape":"UpdateNamedQueryOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidRequestException"}
+      ],
+      "idempotent":true
+    },
     "UpdatePreparedStatement":{
       "name":"UpdatePreparedStatement",
       "http":{
@@ -472,6 +486,13 @@
     }
   },
   "shapes":{
+    "AclConfiguration":{
+      "type":"structure",
+      "required":["S3AclOption"],
+      "members":{
+        "S3AclOption":{"shape":"S3AclOption"}
+      }
+    },
     "AmazonResourceName":{
       "type":"string",
       "max":1011,
@@ -480,7 +501,8 @@
     "AthenaError":{
       "type":"structure",
       "members":{
-        "ErrorCategory":{"shape":"ErrorCategory"}
+        "ErrorCategory":{"shape":"ErrorCategory"},
+        "ErrorType":{"shape":"ErrorType"}
       }
     },
     "BatchGetNamedQueryInput":{
@@ -810,6 +832,12 @@
       "min":1
     },
     "ErrorMessage":{"type":"string"},
+    "ErrorType":{
+      "type":"integer",
+      "box":true,
+      "max":9999,
+      "min":0
+    },
     "ExpressionString":{
       "type":"string",
       "max":256,
@@ -1194,6 +1222,11 @@
         "WorkGroup":{"shape":"WorkGroupName"}
       }
     },
+    "NamedQueryDescriptionString":{
+      "type":"string",
+      "max":1024,
+      "min":0
+    },
     "NamedQueryId":{"type":"string"},
     "NamedQueryIdList":{
       "type":"list",
@@ -1319,7 +1352,8 @@
       "members":{
         "OutputLocation":{"shape":"String"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
-        "ExpectedBucketOwner":{"shape":"String"}
+        "ExpectedBucketOwner":{"shape":"String"},
+        "AclConfiguration":{"shape":"AclConfiguration"}
       }
     },
     "ResultConfigurationUpdates":{
@@ -1330,7 +1364,9 @@
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "RemoveEncryptionConfiguration":{"shape":"BoxedBoolean"},
         "ExpectedBucketOwner":{"shape":"String"},
-        "RemoveExpectedBucketOwner":{"shape":"BoxedBoolean"}
+        "RemoveExpectedBucketOwner":{"shape":"BoxedBoolean"},
+        "AclConfiguration":{"shape":"AclConfiguration"},
+        "RemoveAclConfiguration":{"shape":"BoxedBoolean"}
       }
     },
     "ResultSet":{
@@ -1355,6 +1391,10 @@
     "RowList":{
       "type":"list",
       "member":{"shape":"Row"}
+    },
+    "S3AclOption":{
+      "type":"string",
+      "enum":["BUCKET_OWNER_FULL_CONTROL"]
     },
     "StartQueryExecutionInput":{
       "type":"structure",
@@ -1546,6 +1586,25 @@
       }
     },
     "UpdateDataCatalogOutput":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "UpdateNamedQueryInput":{
+      "type":"structure",
+      "required":[
+        "NamedQueryId",
+        "Name",
+        "QueryString"
+      ],
+      "members":{
+        "NamedQueryId":{"shape":"NamedQueryId"},
+        "Name":{"shape":"NameString"},
+        "Description":{"shape":"NamedQueryDescriptionString"},
+        "QueryString":{"shape":"QueryString"}
+      }
+    },
+    "UpdateNamedQueryOutput":{
       "type":"structure",
       "members":{
       }
