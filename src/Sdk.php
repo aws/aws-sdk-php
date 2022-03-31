@@ -440,6 +440,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPinpointEmail(array $args = [])
  * @method \Aws\PinpointSMSVoice\PinpointSMSVoiceClient createPinpointSMSVoice(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPinpointSMSVoice(array $args = [])
+ * @method \Aws\PinpointSMSVoiceV2\PinpointSMSVoiceV2Client createPinpointSMSVoiceV2(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPinpointSMSVoiceV2(array $args = [])
  * @method \Aws\Polly\PollyClient createPolly(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPolly(array $args = [])
  * @method \Aws\Pricing\PricingClient createPricing(array $args = [])
