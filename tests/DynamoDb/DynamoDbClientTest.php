@@ -21,7 +21,6 @@ class DynamoDbClientTest extends TestCase
     use UsesServiceTrait;
 
     /**
-     * @preserveGlobalState disabled
      * @runInSeparateProcess
      */
     public function testRegisterSessionHandlerReturnsHandler()
