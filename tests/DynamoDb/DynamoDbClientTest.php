@@ -23,11 +23,7 @@ class DynamoDbClientTest extends TestCase
 
     public function testRegisterSessionHandlerReturnsHandler()
     {
-        $client = $this->getMockBuilder('Aws\DynamoDb\DynamoDbClient')
-            ->setMethodsExcept(['registerSessionHandler'])
-            ->disableOriginalConstructor()
-            ->getMock();
-
+        $client = $this->getTestSdk()->createDynamoDb();
         @$sh = $client->registerSessionHandler();
         $this->assertAttributeInstanceOf(
             'Aws\DynamoDb\StandardSessionConnection',
