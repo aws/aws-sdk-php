@@ -12,6 +12,7 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Stream;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_Error_Warning;
 
 /**
  * @covers \Aws\DynamoDb\DynamoDbClient
@@ -20,16 +21,17 @@ class DynamoDbClientTest extends TestCase
 {
     use UsesServiceTrait;
 
-    /**
-     * @runInSeparateProcess
-     */
     public function testRegisterSessionHandlerReturnsHandler()
     {
-        $client = $this->getTestSdk()->createDynamoDb();
-        $sh = $client->registerSessionHandler(['locking' => true]);
-        $this->assertInstanceOf(
-            'Aws\DynamoDb\LockingSessionConnection',
-            $this->readAttribute($sh, 'connection')
+        $client = $this->getMockBuilder('Aws\DynamoDb\DynamoDbClient')
+            ->setMethodsExcept(['registerSessionHandler'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        @$sh = $client->registerSessionHandler();
+        $this->assertAttributeInstanceOf(
+            'Aws\DynamoDb\StandardSessionConnection',
+            'connection', $sh
         );
     }
 
