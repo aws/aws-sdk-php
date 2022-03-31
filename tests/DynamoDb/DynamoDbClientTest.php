@@ -20,9 +20,12 @@ class DynamoDbClientTest extends TestCase
 {
     use UsesServiceTrait;
 
+    /**
+     * @preserveGlobalState disabled
+     * @runInSeparateProcess
+     */
     public function testRegisterSessionHandlerReturnsHandler()
     {
-        $this->markTestSkipped();
         $client = $this->getTestSdk()->createDynamoDb();
         $sh = $client->registerSessionHandler(['locking' => true]);
         $this->assertInstanceOf(
