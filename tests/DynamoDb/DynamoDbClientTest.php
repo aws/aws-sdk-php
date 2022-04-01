@@ -12,7 +12,6 @@ use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Stream;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_Error_Warning;
 
 /**
  * @covers \Aws\DynamoDb\DynamoDbClient
