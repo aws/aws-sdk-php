@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.218.2 - 2022-04-04
 
 * `Aws\IoT` - AWS IoT - AWS IoT Device Defender adds support to list metric datapoints collected for IoT devices through the ListMetricValues API
 * `Aws\Proton` - SDK release to support tagging for AWS Proton Repository resource
