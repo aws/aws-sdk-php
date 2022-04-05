@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.218.3 - 2022-04-05
 
 * `Aws\DataSync` - AWS DataSync now supports Amazon FSx for OpenZFS locations.
 * `Aws\FSx` - Provide customers more visibility into file system status by adding new "Misconfigured Unavailable" status for Amazon FSx for Windows File Server.
