@@ -23,9 +23,9 @@ class DynamoDbClientTest extends TestCase
     public function testRegisterSessionHandlerReturnsHandler()
     {
         $client = $this->getTestSdk()->createDynamoDb();
-        @$sh = $client->registerSessionHandler();
+        @$sh = $client->registerSessionHandler(['locking' => true]);
         $this->assertAttributeInstanceOf(
-            'Aws\DynamoDb\StandardSessionConnection',
+            'Aws\DynamoDb\LockingSessionConnection',
             'connection', $sh
         );
     }
