@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DataSync` - AWS DataSync now supports Amazon FSx for OpenZFS locations.
+* `Aws\FSx` - Provide customers more visibility into file system status by adding new "Misconfigured Unavailable" status for Amazon FSx for Windows File Server.
+* `Aws\S3Control` - Documentation-only update for doc bug fixes for the S3 Control API docs.
+* `Aws\SecurityHub` - Added additional ASFF details for RdsSecurityGroup AutoScalingGroup, ElbLoadBalancer, CodeBuildProject and RedshiftCluster.
+
 ## 3.218.2 - 2022-04-04
 
 * `Aws\IoT` - AWS IoT - AWS IoT Device Defender adds support to list metric datapoints collected for IoT devices through the ListMetricValues API
