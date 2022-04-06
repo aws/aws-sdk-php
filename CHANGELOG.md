@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.218.4 - 2022-04-06
 
 * `Aws\ConfigService` - Add resourceType enums for AWS::EMR::SecurityConfiguration and AWS::SageMaker::CodeRepository
 * `Aws\Lambda` - This release adds new APIs for creating and managing Lambda Function URLs and adds a new FunctionUrlAuthType parameter to the AddPermission API. Customers can use Function URLs to create built-in HTTPS endpoints on their functions.
