@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Add resourceType enums for AWS::EMR::SecurityConfiguration and AWS::SageMaker::CodeRepository
+* `Aws\Lambda` - This release adds new APIs for creating and managing Lambda Function URLs and adds a new FunctionUrlAuthType parameter to the AddPermission API. Customers can use Function URLs to create built-in HTTPS endpoints on their functions.
+* `Aws\Panorama` - Added Brand field to device listings.
+* `Aws\kendra` - Amazon Kendra now provides a data source connector for Box. For more information, see https://docs.aws.amazon.com/kendra/latest/dg/data-source-box.html
+
 ## 3.218.3 - 2022-04-05
 
 * `Aws\DataSync` - AWS DataSync now supports Amazon FSx for OpenZFS locations.
