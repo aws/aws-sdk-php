@@ -122,7 +122,7 @@ trait SignatureTrait
         return $request;
     }
 
-    protected function getPayload(RequestInterface $request)
+    public function getPayload(RequestInterface $request)
     {
         if ($this->unsigned && $request->getUri()->getScheme() == 'https') {
             return self::UNSIGNED_PAYLOAD;
