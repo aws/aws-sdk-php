@@ -10,9 +10,7 @@ use AWS\CRT\Auth\SigningConfigAWS;
 use AWS\CRT\Auth\StaticCredentialsProvider;
 use AWS\CRT\HTTP\Request;
 use Aws\Exception\CommonRuntimeException;
-use Aws\Exception\CouldNotCreateChecksumException;
 use Psr\Http\Message\RequestInterface;
-use GuzzleHttp\Psr7;
 
 /**
  * Provides signature calculation for SignatureV4.
@@ -24,6 +22,8 @@ trait SignatureTrait
 
     /** @var int Size of the hash cache */
     private $cacheSize = 0;
+
+    abstract protected function getPayload(RequestInterface $request);
 
     private function createScope($shortDate, $region, $service)
     {
@@ -120,27 +120,5 @@ trait SignatureTrait
         $request = $request->withHeader("x-amz-region-set", "*");
 
         return $request;
-    }
-
-    public function getPayload(RequestInterface $request)
-    {
-        if ($this->unsigned && $request->getUri()->getScheme() == 'https') {
-            return self::UNSIGNED_PAYLOAD;
-        }
-        // Calculate the request signature payload
-        if ($request->hasHeader(self::AMZ_CONTENT_SHA256_HEADER)) {
-            // Handle streaming operations (e.g. Glacier.UploadArchive)
-            return $request->getHeaderLine(self::AMZ_CONTENT_SHA256_HEADER);
-        }
-
-        if (!$request->getBody()->isSeekable()) {
-            throw new CouldNotCreateChecksumException('sha256');
-        }
-
-        try {
-            return Psr7\Utils::hash($request->getBody(), 'sha256');
-        } catch (\Exception $e) {
-            throw new CouldNotCreateChecksumException('sha256', $e);
-        }
     }
 }
