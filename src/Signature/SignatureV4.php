@@ -447,7 +447,7 @@ class SignatureV4 implements SignatureInterface
      * @param $signingService
      * @return RequestInterface
      */
-    private function signWithV4a(CredentialsInterface $credentials, RequestInterface $request, $signingService)
+    protected function signWithV4a(CredentialsInterface $credentials, RequestInterface $request, $signingService)
     {
         if (!extension_loaded('awscrt')) {
             throw new CommonRuntimeException(
