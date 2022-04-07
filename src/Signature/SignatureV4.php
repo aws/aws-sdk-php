@@ -2,7 +2,6 @@
 namespace Aws\Signature;
 
 use Aws\Credentials\CredentialsInterface;
-use Aws\Exception\CouldNotCreateChecksumException;
 use GuzzleHttp\Psr7;
 use Psr\Http\Message\RequestInterface;
 

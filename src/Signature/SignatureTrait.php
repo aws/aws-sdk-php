@@ -12,6 +12,7 @@ use AWS\CRT\HTTP\Request;
 use Aws\Exception\CommonRuntimeException;
 use Aws\Exception\CouldNotCreateChecksumException;
 use Psr\Http\Message\RequestInterface;
+use GuzzleHttp\Psr7;
 
 /**
  * Provides signature calculation for SignatureV4.
