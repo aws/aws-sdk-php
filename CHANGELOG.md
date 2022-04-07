@@ -1,5 +1,49 @@
 # CHANGELOG
 
+## 3.218.5 - 2022-04-07
+
+* `Aws\APIGateway` - ApiGateway CLI command get-usage now includes usagePlanId, startDate, and endDate fields in the output to match documentation.
+* `Aws\DocDB` - Added support to enable/disable performance insights when creating or modifying db instances
+* `Aws\EventBridge` - Adds new EventBridge Endpoint resources for disaster recovery, multi-region failover, and cross-region replication capabilities to help you build resilient event-driven applications.
+* `Aws\PI` - Adds support for DocumentDB to the Performance Insights API.
+* `Aws\Personalize` - This release provides tagging support in AWS Personalize.
+* `Aws\SageMaker` - Amazon Sagemaker Notebook Instances now supports G5 instance types
+
+## 3.218.4 - 2022-04-06
+
+* `Aws\ConfigService` - Add resourceType enums for AWS::EMR::SecurityConfiguration and AWS::SageMaker::CodeRepository
+* `Aws\Lambda` - This release adds new APIs for creating and managing Lambda Function URLs and adds a new FunctionUrlAuthType parameter to the AddPermission API. Customers can use Function URLs to create built-in HTTPS endpoints on their functions.
+* `Aws\Panorama` - Added Brand field to device listings.
+* `Aws\kendra` - Amazon Kendra now provides a data source connector for Box. For more information, see https://docs.aws.amazon.com/kendra/latest/dg/data-source-box.html
+
+## 3.218.3 - 2022-04-05
+
+* `Aws\DataSync` - AWS DataSync now supports Amazon FSx for OpenZFS locations.
+* `Aws\FSx` - Provide customers more visibility into file system status by adding new "Misconfigured Unavailable" status for Amazon FSx for Windows File Server.
+* `Aws\S3Control` - Documentation-only update for doc bug fixes for the S3 Control API docs.
+* `Aws\SecurityHub` - Added additional ASFF details for RdsSecurityGroup AutoScalingGroup, ElbLoadBalancer, CodeBuildProject and RedshiftCluster.
+
+## 3.218.2 - 2022-04-04
+
+* `Aws\IoT` - AWS IoT - AWS IoT Device Defender adds support to list metric datapoints collected for IoT devices through the ListMetricValues API
+* `Aws\Proton` - SDK release to support tagging for AWS Proton Repository resource
+* `Aws\SMS` - Revised product update notice for SMS console deprecation.
+* `Aws\ServiceCatalog` - This release adds ProvisioningArtifictOutputKeys to DescribeProvisioningParameters to reference the outputs of a Provisioned Product and deprecates ProvisioningArtifactOutputs.
+
+## 3.218.1 - 2022-04-01
+
+* `Aws\Connect` - This release updates these APIs: UpdateInstanceAttribute, DescribeInstanceAttribute and ListInstanceAttributes. You can use it to programmatically enable/disable multi-party conferencing using attribute type MULTI_PARTY_CONFERENCING on the specified Amazon Connect instance.
+
+## 3.218.0 - 2022-03-31
+
+* `Aws\AuditManager` - This release adds documentation updates for Audit Manager. The updates provide data deletion guidance when a customer deregisters Audit Manager or deregisters a delegated administrator.
+* `Aws\CloudControlApi` - SDK release for Cloud Control API in Amazon Web Services China (Beijing) Region, operated by Sinnet, and Amazon Web Services China (Ningxia) Region, operated by NWCD
+* `Aws\GlueDataBrew` - This AWS Glue Databrew release adds feature to support ORC as an input format.
+* `Aws\ManagedGrafana` - This release adds tagging support to the Managed Grafana service. New APIs: TagResource, UntagResource and ListTagsForResource. Updates: add optional field tags to support tagging while calling CreateWorkspace.
+* `Aws\PinpointSMSVoiceV2` - Amazon Pinpoint now offers a version 2.0 suite of SMS and voice APIs, providing increased control over sending and configuration. This release is a new SDK for sending SMS and voice messages called PinpointSMSVoiceV2.
+* `Aws\Route53RecoveryCluster` - This release adds a new API "ListRoutingControls" to list routing control states using the highly reliable Route 53 ARC data plane endpoints.
+* `Aws\WorkSpaces` - Added APIs that allow you to customize the logo, login message, and help links in the WorkSpaces client login page. To learn more, visit https://docs.aws.amazon.com/workspaces/latest/adminguide/customize-branding.html
+
 ## 3.217.0 - 2022-03-30
 
 * `Aws\Credentials` - Add support for ECS full uri and auth token environment variables
