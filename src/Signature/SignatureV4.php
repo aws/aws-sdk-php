@@ -77,7 +77,9 @@ class SignatureV4 implements SignatureInterface
         $this->service = $service;
         $this->region = $region;
         $this->unsigned = isset($options['unsigned-body']) ? $options['unsigned-body'] : false;
-        $this->useV4a = isset($options['use_v4a']) ? $options['use_v4a'] : false;
+        $this->useV4a = (isset($options['use_v4a']) && $options['use_v4a'] === true)
+            ? $options['use_v4a']
+            : false;
     }
 
     /**
@@ -100,7 +102,6 @@ class SignatureV4 implements SignatureInterface
 
         if ($this->useV4a) {
             return $this->signWithV4a($credentials, $request, $service);
-
         }
 
         $cs = $this->createScope($sdt, $this->region, $service);

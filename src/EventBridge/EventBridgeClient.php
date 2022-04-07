@@ -2,6 +2,7 @@
 namespace Aws\EventBridge;
 
 use Aws\AwsClient;
+
 /**
  * This client is used to interact with the **Amazon EventBridge** service.
  * @method \Aws\Result activateEventSource(array $args = [])
@@ -14,8 +15,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createArchiveAsync(array $args = [])
  * @method \Aws\Result createConnection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createConnectionAsync(array $args = [])
- * @method \Aws\Result createEndpoint(array $args = [])
- * @method \GuzzleHttp\Promise\Promise createEndpointAsync(array $args = [])
  * @method \Aws\Result createEventBus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createEventBusAsync(array $args = [])
  * @method \Aws\Result createPartnerEventSource(array $args = [])
@@ -30,8 +29,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise deleteArchiveAsync(array $args = [])
  * @method \Aws\Result deleteConnection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteConnectionAsync(array $args = [])
- * @method \Aws\Result deleteEndpoint(array $args = [])
- * @method \GuzzleHttp\Promise\Promise deleteEndpointAsync(array $args = [])
  * @method \Aws\Result deleteEventBus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteEventBusAsync(array $args = [])
  * @method \Aws\Result deletePartnerEventSource(array $args = [])
@@ -44,8 +41,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise describeArchiveAsync(array $args = [])
  * @method \Aws\Result describeConnection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeConnectionAsync(array $args = [])
- * @method \Aws\Result describeEndpoint(array $args = [])
- * @method \GuzzleHttp\Promise\Promise describeEndpointAsync(array $args = [])
  * @method \Aws\Result describeEventBus(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeEventBusAsync(array $args = [])
  * @method \Aws\Result describeEventSource(array $args = [])
@@ -66,8 +61,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listArchivesAsync(array $args = [])
  * @method \Aws\Result listConnections(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listConnectionsAsync(array $args = [])
- * @method \Aws\Result listEndpoints(array $args = [])
- * @method \GuzzleHttp\Promise\Promise listEndpointsAsync(array $args = [])
  * @method \Aws\Result listEventBuses(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listEventBusesAsync(array $args = [])
  * @method \Aws\Result listEventSources(array $args = [])
@@ -114,8 +107,6 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateArchiveAsync(array $args = [])
  * @method \Aws\Result updateConnection(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateConnectionAsync(array $args = [])
- * @method \Aws\Result updateEndpoint(array $args = [])
- * @method \GuzzleHttp\Promise\Promise updateEndpointAsync(array $args = [])
  */
 class EventBridgeClient extends AwsClient {
     public function __construct(array $args)
