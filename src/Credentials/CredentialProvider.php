@@ -222,7 +222,7 @@ class CredentialProvider
                         $isConstant = true;
                         return $creds;
                     }
-                    
+
                     // Refresh expired credentials.
                     if (!$creds->isExpired()) {
                         return $creds;
