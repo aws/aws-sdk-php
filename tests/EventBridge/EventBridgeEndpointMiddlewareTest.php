@@ -46,6 +46,10 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
         $additionalHeaders
     )
     {
+        $isCrtAvailable = extension_loaded('awscrt');
+        if (!$isCrtAvailable && !empty($endpointId)) {
+            $this->markTestSkipped();
+        }
         $clientConfig = [
             'region' => $clientRegion,
             'version' => 'latest',
