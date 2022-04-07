@@ -226,6 +226,7 @@ class CredentialProvider
                     if (!$creds->isExpired()) {
                         return $creds;
                     }
+                    
                     // Refresh the result and forward the promise.
                     return $result = $provider($creds);
                 })
