@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.218.5 - 2022-04-07
 
 * `Aws\APIGateway` - ApiGateway CLI command get-usage now includes usagePlanId, startDate, and endDate fields in the output to match documentation.
 * `Aws\DocDB` - Added support to enable/disable performance insights when creating or modifying db instances
