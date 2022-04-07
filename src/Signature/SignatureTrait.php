@@ -1,8 +1,6 @@
 <?php
 namespace Aws\Signature;
 
-use Psr\Http\Message\RequestInterface;
-
 /**
  * Provides signature calculation for SignatureV4.
  */
