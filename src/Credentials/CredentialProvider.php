@@ -222,11 +222,11 @@ class CredentialProvider
                         $isConstant = true;
                         return $creds;
                     }
+                    
                     // Refresh expired credentials.
                     if (!$creds->isExpired()) {
                         return $creds;
                     }
-                    
                     // Refresh the result and forward the promise.
                     return $result = $provider($creds);
                 })
