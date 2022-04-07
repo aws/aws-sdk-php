@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\APIGateway` - ApiGateway CLI command get-usage now includes usagePlanId, startDate, and endDate fields in the output to match documentation.
+* `Aws\DocDB` - Added support to enable/disable performance insights when creating or modifying db instances
+* `Aws\EventBridge` - Adds new EventBridge Endpoint resources for disaster recovery, multi-region failover, and cross-region replication capabilities to help you build resilient event-driven applications.
+* `Aws\PI` - Adds support for DocumentDB to the Performance Insights API.
+* `Aws\Personalize` - This release provides tagging support in AWS Personalize.
+* `Aws\SageMaker` - Amazon Sagemaker Notebook Instances now supports G5 instance types
+
 ## 3.218.4 - 2022-04-06
 
 * `Aws\ConfigService` - Add resourceType enums for AWS::EMR::SecurityConfiguration and AWS::SageMaker::CodeRepository
