@@ -137,7 +137,6 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
                     "DetailType"=> "Scheduled Event",
                     "Detail"=> '{"a":"b"}',
                     "Source"=> "test.events",
-                    "Account"=> "123456789012",
                     "Time"=> time(),
                     "Region"=> "us-east-1",
                     "Resources"=> ["arn:aws:events:us-east-1:123456789012:rule/SampleRule"],
