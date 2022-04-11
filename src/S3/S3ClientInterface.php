@@ -52,8 +52,8 @@ interface S3ClientInterface extends AwsClientInterface
      * Determines whether or not a bucket exists by name.
      *
      * @param string $bucket  The name of the bucket
-     * @param bool $accept403 Changes behavior to return true in the case of a 403. Bucket
-     *                        permissions and credentials MUST be correct to avoid inaccuracies.
+     * @param bool $accept403 Changes behavior to return true in the case of a 403.
+     *                        credentials MUST be correct to avoid inaccuracies.
      *
      * @return bool
      */
