@@ -49,6 +49,17 @@ interface S3ClientInterface extends AwsClientInterface
     public function doesBucketExist($bucket);
 
     /**
+     * Determines whether or not a bucket exists by name.
+     *
+     * @param string $bucket  The name of the bucket
+     * @param bool $accept403 Changes behavior to return true in the case of a 403. Bucket
+     *                        permissions and credentials MUST be correct to avoid inaccuracies.
+     *
+     * @return bool
+     */
+    public function doesBucketExistV2($bucket, $accept403);
+
+    /**
      * Determines whether or not an object exists by name.
      *
      * @param string $bucket  The name of the bucket
@@ -59,6 +70,20 @@ interface S3ClientInterface extends AwsClientInterface
      * @return bool
      */
     public function doesObjectExist($bucket, $key, array $options = []);
+
+    /**
+     * Determines whether or not an object exists by name.
+     *
+     * @param string $bucket The name of the bucket
+     * @param string $key The key of the object
+     * @param bool $includeDeleteMarkers Optional flag that will consider delete markers
+     *                                   existing objects
+     * @param array $options Additional options available in the HeadObject
+     *                        operation (e.g., VersionId).
+     *
+     * @return bool
+     */
+    public function doesObjectExistV2($bucket, $key, $includeDeleteMarkers, array $options = []);
 
     /**
      * Register the Amazon S3 stream wrapper with this client instance.
