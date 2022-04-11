@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.219.1 - 2022-04-11
 
 * `Aws\AmplifyUIBuilder` - In this release, we have added the ability to bind events to component level actions.
 * `Aws\AppRunner` - This release adds tracing for App Runner services with X-Ray using AWS Distro for OpenTelemetry. New APIs: CreateObservabilityConfiguration, DescribeObservabilityConfiguration, ListObservabilityConfigurations, and DeleteObservabilityConfiguration. Updated APIs: CreateService and UpdateService.
