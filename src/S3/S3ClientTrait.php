@@ -266,10 +266,22 @@ trait S3ClientTrait
      */
     public function doesBucketExistV2($bucket, $accept403 = false)
     {
-        return $this->checkExistenceWithCommandV2(
-            $this->getCommand('HeadBucket', ['Bucket' => $bucket]),
-            $accept403
-        );
+        $command = $this->getCommand('HeadBucket', ['Bucket' => $bucket]);
+
+        try {
+            $this->execute($command);
+            return true;
+        } catch (S3Exception $e) {
+            if ($accept403 && $e->getStatusCode() === 403
+                || $e instanceof PermanentRedirectException)
+            {
+                return true;
+            }
+            if ($e->getStatusCode() === 404)  {
+                return false;
+            }
+            throw $e;
+        }
     }
 
     /**
@@ -295,15 +307,30 @@ trait S3ClientTrait
         array $options = []
     )
     {
-        return $this->checkExistenceWithCommandV2(
-            $this->getCommand('HeadObject', [
-                    'Bucket' => $bucket,
-                    'Key'    => $key
-                ] + $options
-            ),
-            false,
-            $includeDeleteMarkers
+        $command = $this->getCommand('HeadObject', [
+                'Bucket' => $bucket,
+                'Key'    => $key
+            ] + $options
         );
+
+        try {
+            $this->execute($command);
+            return true;
+        } catch (S3Exception $e) {
+            $response = $e->getResponse();
+
+            if ($includeDeleteMarkers
+                && (!empty($response)
+                    && $response->getHeader('x-amz-delete-marker'))
+            )
+            {
+                return true;
+            }
+            if ($e->getStatusCode() === 404) {
+                return false;
+            }
+            throw $e;
+        }
     }
 
     /**
@@ -327,42 +354,6 @@ trait S3ClientTrait
                 throw $e;
             }
             return false;
-        }
-    }
-
-    /**
-     * Determines whether or not a resource exists using a command
-     *
-     * @param CommandInterface $command Command used to poll for the resource
-     * @param bool $accept403 Optional argument that changes exception handling behavior
-     * @param bool $includeDeleteMarkers Optional argument will count delete markers as existing objects
-     *
-     * @return bool
-     * @throws S3Exception|Exception if there is an unhandled exception
-     */
-    private function checkExistenceWithCommandV2(
-        CommandInterface $command,
-        $accept403,
-        $includeDeleteMarkers = false
-    )
-    {
-        try {
-            $this->execute($command);
-            return true;
-        } catch (S3Exception $e) {
-            if (($accept403 && $e->getStatusCode() === 403)
-                || (!empty($e->getResponse()->getHeaders()["x-amz-delete-marker"])
-                    && $includeDeleteMarkers)
-                || ($command->getName() === 'HeadBucket'
-                    && $e instanceof PermanentRedirectException)
-                )
-            {
-                return true;
-            }
-            if ($e->getStatusCode() === 404) {
-                return false;
-            }
-            throw $e;
         }
     }
 

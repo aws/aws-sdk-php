@@ -262,10 +262,17 @@ class S3ClientTest extends TestCase
         ];
     }
 
-    private function getS3ErrorMock($errCode, $statusCode, $deleteMarker = false)
+    private function getS3ErrorMock(
+        $errCode,
+        $statusCode,
+        $deleteMarker = false
+    )
     {
         $response = new Response($statusCode);
-        $deleteMarker && $response = $response->withHeader('x-amz-delete-marker', true);
+        $deleteMarker && $response = $response->withHeader(
+            'x-amz-delete-marker',
+            'true'
+        );
 
         $context = [
             'code' => $errCode,
