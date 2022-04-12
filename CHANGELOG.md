@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.219.2 - 2022-04-12
 
 * `Aws\DevOpsGuru` - This release adds new APIs DeleteInsight to deletes the insight along with the associated anomalies, events and recommendations.
 * `Aws\EC2` - X2idn and X2iedn instances are powered by 3rd generation Intel Xeon Scalable processors with an all-core turbo frequency up to 3.5 GHzAmazon EC2. C6a instances are powered by 3rd generation AMD EPYC processors.
