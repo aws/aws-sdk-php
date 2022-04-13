@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.219.3 - 2022-04-13
 
 * `Aws\CloudWatch` - Adds support for additional statistics in CloudWatch Metric Streams.
 * `Aws\FSx` - This release adds support for deploying FSx for ONTAP file systems in a single Availability Zone.
