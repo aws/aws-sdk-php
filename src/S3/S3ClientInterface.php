@@ -52,8 +52,6 @@ interface S3ClientInterface extends AwsClientInterface
     public function doesBucketExist($bucket);
 
     /**
-     * @deprecated
-     *
      * Determines whether or not a bucket exists by name. This method uses S3's
      * HeadBucket operation and requires the relevant bucket permissions in the
      * default case to avoid inaccuracies.
