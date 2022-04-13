@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudWatch` - Adds support for additional statistics in CloudWatch Metric Streams.
+* `Aws\FSx` - This release adds support for deploying FSx for ONTAP file systems in a single Availability Zone.
+
 ## 3.219.2 - 2022-04-12
 
 * `Aws\DevOpsGuru` - This release adds new APIs DeleteInsight to deletes the insight along with the associated anomalies, events and recommendations.
