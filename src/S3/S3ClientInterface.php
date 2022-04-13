@@ -41,6 +41,8 @@ interface S3ClientInterface extends AwsClientInterface
     public function getObjectUrl($bucket, $key);
 
     /**
+     * @deprecated Use doesBucketExistV2() instead
+     *
      * Determines whether or not a bucket exists by name.
      *
      * @param string $bucket  The name of the bucket
@@ -50,6 +52,8 @@ interface S3ClientInterface extends AwsClientInterface
     public function doesBucketExist($bucket);
 
     /**
+     * @deprecated
+     *
      * Determines whether or not a bucket exists by name. This method uses S3's
      * HeadBucket operation and requires the relevant bucket permissions in the
      * default case to avoid inaccuracies.
@@ -66,6 +70,8 @@ interface S3ClientInterface extends AwsClientInterface
     public function doesBucketExistV2($bucket, $accept403);
 
     /**
+     * @deprecated Use doesObjectExistV2() instead
+     *
      * Determines whether or not an object exists by name.
      *
      * @param string $bucket  The name of the bucket
