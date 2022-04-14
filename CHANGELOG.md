@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.219.4 - 2022-04-14
 
 * `Aws\AppStream` - Includes updates for create and update fleet APIs to manage the session scripts locations for Elastic fleets.
 * `Aws\Appflow` - Enables users to pass custom token URL parameters for Oauth2 authentication during create connector profile
