@@ -183,5 +183,4 @@ class MultiRegionClientTest extends TestCase
         $this->expectExceptionMessage('Mock exception');
         $s3->listBuckets();
     }
-
 }
