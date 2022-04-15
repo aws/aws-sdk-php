@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.219.5 - 2022-04-15
 
 * `Aws\Athena` - This release adds subfields, ErrorMessage, Retryable, to the AthenaError response object in the GetQueryExecution API when a query fails.
 * `Aws\Lightsail` - This release adds support to describe the synchronization status of the account-level block public access feature for your Amazon Lightsail buckets.
