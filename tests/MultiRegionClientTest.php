@@ -179,8 +179,12 @@ class MultiRegionClientTest extends TestCase
         $response = $s3->listBuckets();
         $this->assertEquals('bar', $response['foo']);
 
-        $this->expectException(AwsException::class);
-        $this->expectExceptionMessage('Mock exception');
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(AwsException::class);
+            $this->expectExceptionMessage('Mock exception');
+        } else {
+            $this->setExpectedException(AwsException::class);
+        }
         $s3->listBuckets();
     }
 }
