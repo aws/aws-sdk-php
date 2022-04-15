@@ -272,7 +272,8 @@ trait S3ClientTrait
             $this->execute($command);
             return true;
         } catch (S3Exception $e) {
-            if (($accept403 && $e->getStatusCode() === 403)
+            if (
+                ($accept403 && $e->getStatusCode() === 403)
                 || $e instanceof PermanentRedirectException
             )
             {
@@ -306,8 +307,7 @@ trait S3ClientTrait
         $key,
         $includeDeleteMarkers = false,
         array $options = []
-    )
-    {
+    ){
         $command = $this->getCommand('HeadObject', [
                 'Bucket' => $bucket,
                 'Key'    => $key
@@ -318,13 +318,9 @@ trait S3ClientTrait
             $this->execute($command);
             return true;
         } catch (S3Exception $e) {
-            $response = $e->getResponse();
-
             if ($includeDeleteMarkers
-                && (!empty($response)
-                    && $response->getHeader('x-amz-delete-marker'))
-            )
-            {
+                && $this->useDeleteMarkers($e)
+            ) {
                 return true;
             }
             if ($e->getStatusCode() === 404) {
@@ -332,6 +328,13 @@ trait S3ClientTrait
             }
             throw $e;
         }
+    }
+
+    private function useDeleteMarkers($exception)
+    {
+        $response = $exception->getResponse();
+        return !empty($response)
+            && $response->getHeader('x-amz-delete-marker');
     }
 
     /**
