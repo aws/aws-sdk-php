@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Athena` - This release adds subfields, ErrorMessage, Retryable, to the AthenaError response object in the GetQueryExecution API when a query fails.
+* `Aws\Lightsail` - This release adds support to describe the synchronization status of the account-level block public access feature for your Amazon Lightsail buckets.
+* `Aws\RDS` - Removes Amazon RDS on VMware with the deletion of APIs related to Custom Availability Zones and Media installation
+
 ## 3.219.4 - 2022-04-14
 
 * `Aws\AppStream` - Includes updates for create and update fleet APIs to manage the session scripts locations for Elastic fleets.
