@@ -275,8 +275,7 @@ trait S3ClientTrait
             if (
                 ($accept403 && $e->getStatusCode() === 403)
                 || $e instanceof PermanentRedirectException
-            )
-            {
+            ) {
                 return true;
             }
             if ($e->getStatusCode() === 404)  {
