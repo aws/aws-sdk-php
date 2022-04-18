@@ -54,7 +54,7 @@ interface S3ClientInterface extends AwsClientInterface
     /**
      * Determines whether or not a bucket exists by name. This method uses S3's
      * HeadBucket operation and requires the relevant bucket permissions in the
-     * default case to avoid inaccuracies.
+     * default case to prevent errors.
      *
      * @param string $bucket  The name of the bucket
      * @param bool $accept403 Set to true for this method to return true in the case of
@@ -83,7 +83,7 @@ interface S3ClientInterface extends AwsClientInterface
 
     /**
      * Determines whether or not an object exists by name. This method uses S3's HeadObject
-     * operation and requires the relevant bucket and object permissions to avoid inaccuracies.
+     * operation and requires the relevant bucket and object permissions to prevent errors.
      *
      * @param string $bucket The name of the bucket
      * @param string $key The key of the object
