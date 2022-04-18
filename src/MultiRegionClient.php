@@ -115,12 +115,12 @@ class MultiRegionClient implements AwsClientInterface
             $command = $this->getClientFromPool($region)
                 ->getCommand($command->getName(), $args);
 
-            $this->isUseCustomHandler() && $command->getHandlerList()
-                ->setHandler($this->customHandler);
+            if ($this->isUseCustomHandler()) {
+                $command->getHandlerList()->setHandler($this->customHandler);
+            }
 
             return $this->executeAsync($command);
         });
-
 
         $argDefinitions = static::getArguments();
         $resolver = new ClientResolver($argDefinitions);
