@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - EC2 Auto Scaling now adds default instance warm-up times for all scaling activities, health check replacements, and other replacement events in the Auto Scaling instance lifecycle.
+* `Aws\KMS` - Adds support for KMS keys and APIs that generate and verify HMAC codes
+* `Aws\Personalize` - Adding StartRecommender and StopRecommender APIs for Personalize.
+* `Aws\Polly` - Amazon Polly adds new Austrian German voice - Hannah. Hannah is available as Neural voice only.
+* `Aws\Redshift` - Introduces new fields for LogDestinationType and LogExports on EnableLogging requests and Enable/Disable/DescribeLogging responses. Customers can now select CloudWatch Logs as a destination for their Audit Logs.
+* `Aws\S3` - Adds DoesBucketExistV2 and DoesObjectExistV2 helper methods
+* `Aws\SSM` - Added offset support for specifying the number of days to wait after the date and time specified by a CRON expression when creating SSM association.
+* `Aws\Textract` - This release adds support for specifying and extracting information from documents using the Queries feature within Analyze Document API
+* `Aws\Transfer` - This release contains corrected HomeDirectoryMappings examples for several API functions: CreateAccess, UpdateAccess, CreateUser, and UpdateUser,.
+* `Aws\WorkLink` - Amazon WorkLink is no longer supported. This will be removed in a future version of the SDK.
+* `Aws\kendra` - Amazon Kendra now provides a data source connector for Quip. For more information, see https://docs.aws.amazon.com/kendra/latest/dg/data-source-quip.html
+
 ## 3.219.5 - 2022-04-15
 
 * `Aws\Athena` - This release adds subfields, ErrorMessage, Retryable, to the AthenaError response object in the GetQueryExecution API when a query fails.
