@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.220.0 - 2022-04-19
 
 * `Aws\AutoScaling` - EC2 Auto Scaling now adds default instance warm-up times for all scaling activities, health check replacements, and other replacement events in the Auto Scaling instance lifecycle.
 * `Aws\KMS` - Adds support for KMS keys and APIs that generate and verify HMAC codes
