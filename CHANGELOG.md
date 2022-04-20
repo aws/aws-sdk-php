@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.220.1 - 2022-04-20
 
 * `Aws\Connect` - This release adds APIs to search, claim, release, list, update, and describe phone numbers. You can also use them to associate and disassociate contact flows to phone numbers.
 * `Aws\Macie2` - Sensitive data findings in Amazon Macie now indicate how Macie found the sensitive data that produced a finding (originType).
