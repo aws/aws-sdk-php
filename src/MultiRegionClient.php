@@ -203,7 +203,7 @@ class MultiRegionClient implements AwsClientInterface
         $this->customHandler = $handler;
     }
 
-    public function isUseCustomHandler()
+    private function isUseCustomHandler()
     {
         return isset($this->customHandler);
     }

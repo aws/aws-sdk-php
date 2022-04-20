@@ -149,19 +149,6 @@ class MultiRegionClientTest extends TestCase
         ]);
     }
 
-    public function testIsUseCustomHandler()
-    {
-        $mockHandler = new MockHandler();
-        $s3 = new MultiRegionClient([
-            'service' => 's3',
-            'version' => 'latest',
-            'region' => 'us-east-1'
-        ]);
-        $this->assertFalse($s3->isUseCustomHandler());
-        $s3->useCustomHandler($mockHandler);
-        $this->assertTrue($s3->isUseCustomHandler());
-    }
-
     public function testUseCustomHandler()
     {
         $mockHandler = new MockHandler();
