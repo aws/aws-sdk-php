@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Connect` - This release adds APIs to search, claim, release, list, update, and describe phone numbers. You can also use them to associate and disassociate contact flows to phone numbers.
+* `Aws\Macie2` - Sensitive data findings in Amazon Macie now indicate how Macie found the sensitive data that produced a finding (originType).
+* `Aws\RDS` - Added a new cluster-level attribute to set the capacity range for Aurora Serverless v2 instances.
+* `Aws\mgn` - Removed required annotation from input fields in Describe operations requests. Added quotaValue to ServiceQuotaExceededException
+
 ## 3.220.0 - 2022-04-19
 
 * `Aws\AutoScaling` - EC2 Auto Scaling now adds default instance warm-up times for all scaling activities, health check replacements, and other replacement events in the Auto Scaling instance lifecycle.
