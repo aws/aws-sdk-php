@@ -31,6 +31,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise describeAnomalyDetectorAsync(array $args = [])
  * @method \Aws\Result describeMetricSet(array $args = [])
  * @method \GuzzleHttp\Promise\Promise describeMetricSetAsync(array $args = [])
+ * @method \Aws\Result detectMetricSetConfig(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise detectMetricSetConfigAsync(array $args = [])
  * @method \Aws\Result getAnomalyGroup(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getAnomalyGroupAsync(array $args = [])
  * @method \Aws\Result getFeedback(array $args = [])

@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConnectWisdomService` - This release updates the GetRecommendations API to include a trigger event list for classifying and grouping recommendations.
+* `Aws\ElastiCache` - Doc only update for ElastiCache
+* `Aws\Glue` - This release adds APIs to create, read, delete, list, and batch read of Glue custom entity types
+* `Aws\IoTSiteWise` - This release adds 3 new batch data query APIs : BatchGetAssetPropertyValue, BatchGetAssetPropertyValueHistory and BatchGetAssetPropertyAggregates
+* `Aws\IoTTwinMaker` - General availability (GA) for AWS IoT TwinMaker. For more information, see https://docs.aws.amazon.com/iot-twinmaker/latest/apireference/Welcome.html
+* `Aws\LookoutMetrics` - Added DetectMetricSetConfig API for detecting configuration required for creating metric set from provided S3 data source.
+* `Aws\MediaTailor` - This release introduces tiered channels and adds support for live sources. Customers using a STANDARD channel can now create programs using live sources.
+* `Aws\MultiRegionClient` - Adds support for using custom handlers with multi-region clients
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+* `Aws\StorageGateway` - This release adds support for minimum of 5 character length virtual tape barcodes.
+
 ## 3.220.1 - 2022-04-20
 
 * `Aws\Connect` - This release adds APIs to search, claim, release, list, update, and describe phone numbers. You can also use them to associate and disassociate contact flows to phone numbers.
