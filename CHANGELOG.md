@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.220.2 - 2022-04-21
 
 * `Aws\ConnectWisdomService` - This release updates the GetRecommendations API to include a trigger event list for classifying and grouping recommendations.
 * `Aws\ElastiCache` - Doc only update for ElastiCache
