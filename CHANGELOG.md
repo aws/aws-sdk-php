@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKMeetings` - Include additional exceptions types.
+* `Aws\EC2` - Adds support for waiters that automatically poll for a deleted NAT Gateway until it reaches the deleted state.
+
 ## 3.220.2 - 2022-04-21
 
 * `Aws\ConnectWisdomService` - This release updates the GetRecommendations API to include a trigger event list for classifying and grouping recommendations.
