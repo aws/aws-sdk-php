@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.220.3 - 2022-04-22
 
 * `Aws\ChimeSDKMeetings` - Include additional exceptions types.
 * `Aws\EC2` - Adds support for waiters that automatically poll for a deleted NAT Gateway until it reaches the deleted state.
