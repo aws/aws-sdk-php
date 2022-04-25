@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.220.4 - 2022-04-25
 
 * `Aws\Connect` - This release adds SearchUsers API which can be used to search for users with a Connect Instance
 * `Aws\GameLift` - Documentation updates for Amazon GameLift.
