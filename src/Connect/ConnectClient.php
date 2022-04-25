@@ -201,6 +201,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise resumeContactRecordingAsync(array $args = [])
  * @method \Aws\Result searchAvailablePhoneNumbers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchAvailablePhoneNumbersAsync(array $args = [])
+ * @method \Aws\Result searchUsers(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise searchUsersAsync(array $args = [])
  * @method \Aws\Result searchVocabularies(array $args = [])
  * @method \GuzzleHttp\Promise\Promise searchVocabulariesAsync(array $args = [])
  * @method \Aws\Result startChatContact(array $args = [])
