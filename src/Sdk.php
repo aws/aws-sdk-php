@@ -602,6 +602,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionfinspace(array $args = [])
  * @method \Aws\imagebuilder\imagebuilderClient createimagebuilder(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionimagebuilder(array $args = [])
+ * @method \Aws\ivschat\ivschatClient createivschat(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionivschat(array $args = [])
  * @method \Aws\kendra\kendraClient createkendra(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionkendra(array $args = [])
  * @method \Aws\mgn\mgnClient createmgn(array $args = [])

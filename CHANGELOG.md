@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFront` - CloudFront now supports the Server-Timing header in HTTP responses sent from CloudFront. You can use this header to view metrics that help you gain insights about the behavior and performance of CloudFront. To use this header, enable it in a response headers policy.
+* `Aws\Glue` - This release adds documentation for the APIs to create, read, delete, list, and batch read of AWS Glue custom patterns, and for Lake Formation configuration settings in the AWS Glue crawler.
+* `Aws\Lightsail` - This release adds support for Lightsail load balancer HTTP to HTTPS redirect and TLS policy configuration.
+* `Aws\NetworkFirewall` - AWS Network Firewall now enables customers to use a customer managed AWS KMS key for the encryption of their firewall resources.
+* `Aws\Pricing` - Documentation updates for Price List API
+* `Aws\SageMaker` - SageMaker Inference Recommender now accepts customer KMS key ID for encryption of endpoints and compilation outputs created during inference recommendation.
+* `Aws\ivschat` - Adds new APIs for IVS Chat, a feature for building interactive chat experiences alongside an IVS broadcast.
+
 ## 3.220.4 - 2022-04-25
 
 * `Aws\Connect` - This release adds SearchUsers API which can be used to search for users with a Connect Instance
