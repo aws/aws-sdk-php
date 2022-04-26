@@ -3,6 +3,7 @@ namespace Aws\Test\S3;
 
 use Aws\Command;
 use Aws\CommandInterface;
+use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Exception\InvalidRegionException;
 use Aws\Exception\UnresolvedEndpointException;
 use Aws\Middleware;
@@ -40,10 +41,17 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         $signingRegion,
         $signingService
     ) {
-        $isMvpRegion = getenv('AIRGAPPED_REGION') == 'LCK';
-        if ($isMvpRegion) {
-            $this->markTestSkipped();
-        }
+        $data = json_decode(
+            file_get_contents(
+                __DIR__ . '/../Endpoint/fixtures/s3_endpoint_middleware_endpoints.json'
+            ), true
+        );
+        $endpointProvider = new PartitionEndpointProvider(
+            $data['partitions'],
+            'aws'
+        );
+
+        $options += ['endpoint_provider' => $endpointProvider];
         $s3 = $this->getTestClient('s3', $options);
         $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand(

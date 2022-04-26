@@ -2,11 +2,11 @@
 namespace Aws\Test\EventBridge;
 
 use Aws\CommandInterface;
-use Aws\Result;
 use Aws\EventBridge\EventBridgeClient;
+use Aws\Result;
 use Aws\Test\UsesServiceTrait;
-use Psr\Http\Message\RequestInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 class EventBridgeEndpointMiddlewareTest extends TestCase
 {
@@ -15,7 +15,6 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
 
     public function putEventsEndpointSuccessProvider()
     {
-
         return [
             ["us-east-1", [], null, 'https://events.us-east-1.amazonaws.com', null],
             ["us-east-1", [], 'abc123.456def', 'https://abc123.456def.endpoint.events.amazonaws.com', ['x-amz-region-set' => '*']],
@@ -96,12 +95,8 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
         $client->execute($command);
     }
 
-
-
-
     public function putEventsEndpointFailureProvider()
     {
-
         return [
             ["us-east-1", [], 'badactor.com?foo=bar', 'EventId must be a valid host'],
             ["us-east-1", [], '', 'expected string length to be >= 1, but found string length of 0'],
@@ -160,6 +155,4 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
             self::assertContains($expectedException, $exception->getMessage());
         }
     }
-
-
 }

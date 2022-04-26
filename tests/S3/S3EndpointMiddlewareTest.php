@@ -3,6 +3,7 @@ namespace Aws\Test\S3;
 
 use Aws\Command;
 use Aws\CommandInterface;
+use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Aws\S3\S3EndpointMiddleware;
@@ -549,11 +550,17 @@ class S3EndpointMiddlewareTest extends TestCase
         $endpointUrl,
         $expectedEndpoint)
     {
-        $isMvpRegion = getenv('AIRGAPPED_REGION') == 'LCK';
-        if ($isMvpRegion) {
-            $this->markTestSkipped();
-        }
         //additional flags is not used yet, will be in the future if dualstack support is added
+        $data = json_decode(
+            file_get_contents(
+                __DIR__ . '/../Endpoint/fixtures/s3_endpoint_middleware_endpoints.json'
+            ), true
+        );
+        $endpointProvider = new PartitionEndpointProvider(
+            $data['partitions'],
+            'aws'
+        );
+
         $clientConfig = [
             'region' => $clientRegion,
             'use_arn_region' => $useArnRegion,
@@ -570,6 +577,7 @@ class S3EndpointMiddlewareTest extends TestCase
                 );
                 return new Result([]);
             },
+            'endpoint_provider' => $endpointProvider
         ];
         if (!empty($endpointUrl)) {
             $clientConfig['endpoint'] = $endpointUrl;
