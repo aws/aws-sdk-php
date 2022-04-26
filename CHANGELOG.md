@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.221.0 - 2022-04-26
 
 * `Aws\CloudFront` - CloudFront now supports the Server-Timing header in HTTP responses sent from CloudFront. You can use this header to view metrics that help you gain insights about the behavior and performance of CloudFront. To use this header, enable it in a response headers policy.
 * `Aws\Glue` - This release adds documentation for the APIs to create, read, delete, list, and batch read of AWS Glue custom patterns, and for Lake Formation configuration settings in the AWS Glue crawler.
