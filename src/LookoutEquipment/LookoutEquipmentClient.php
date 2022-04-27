@@ -35,6 +35,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listInferenceSchedulersAsync(array $args = [])
  * @method \Aws\Result listModels(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listModelsAsync(array $args = [])
+ * @method \Aws\Result listSensorStatistics(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listSensorStatisticsAsync(array $args = [])
  * @method \Aws\Result listTagsForResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listTagsForResourceAsync(array $args = [])
  * @method \Aws\Result startDataIngestionJob(array $args = [])
