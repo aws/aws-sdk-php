@@ -2,6 +2,7 @@
 namespace Aws\Test\EventBridge;
 
 use Aws\CommandInterface;
+use Aws\Endpoint\Partition;
 use Aws\EventBridge\EventBridgeClient;
 use Aws\Result;
 use Aws\Test\UsesServiceTrait;
@@ -16,15 +17,69 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
     public function putEventsEndpointSuccessProvider()
     {
         return [
-            ["us-east-1", [], null, 'https://events.us-east-1.amazonaws.com', null],
-            ["us-east-1", [], 'abc123.456def', 'https://abc123.456def.endpoint.events.amazonaws.com', ['x-amz-region-set' => '*']],
-            ["us-east-1", ['use_dualstack_endpoint' => true], null, 'https://events.us-east-1.amazonaws.com', null],
-            ["us-east-1", ['use_fips_endpoint' => true], null, 'https://events-fips.us-east-1.amazonaws.com', null],
-            ["us-east-1", ['use_dualstack_endpoint' => true, 'use_fips_endpoint' => true], null, 'https://events-fips.us-east-1.amazonaws.com', null],
-            ["us-iso-east-1", [], null, 'https://events.us-iso-east-1.c2s.ic.gov', null],
-            ["us-iso-east-1", [], 'abc123.456def', 'https://abc123.456def.endpoint.events.c2s.ic.gov', ['x-amz-region-set' => '*']],
-            ["us-east-1", ['endpoint' => 'https://example.org'], null, 'https://example.org', null],
-            ["us-east-1", ['endpoint' => 'https://example.org'], 'abc123.456def', 'https://example.org', ['x-amz-region-set' => '*']],
+            ["us-east-1", [], null, 'https://events.us-east-1.amazonaws.com', null, 0],
+            [
+                "us-east-1",
+                [],
+                'abc123.456def',
+                'https://abc123.456def.endpoint.events.amazonaws.com',
+                ['x-amz-region-set' => '*'],
+                0
+            ],
+            [
+                "us-east-1",
+                ['use_dual_stack_endpoint' => true],
+                null,
+                'https://events.us-east-1.api.aws',
+                null,
+                0
+            ],
+            [
+                "us-east-1",
+                ['use_fips_endpoint' => true],
+                null, 'https://events-fips.us-east-1.amazonaws.com',
+                null,
+                0
+            ],
+            [
+                "us-east-1",
+                ['use_dual_stack_endpoint' => true,
+                    'use_fips_endpoint' => true], null,
+                'https://events-fips.us-east-1.api.aws',
+                null,
+                0
+            ],
+            [
+                "us-iso-east-1",
+                [],
+                null,
+                'https://events.us-iso-east-1.c2s.ic.gov',
+                null,
+                1
+            ],
+            [
+                "us-iso-east-1",
+                [], 'abc123.456def',
+                'https://abc123.456def.endpoint.events.c2s.ic.gov',
+                ['x-amz-region-set' => '*'],
+                1
+            ],
+            [
+                "us-east-1",
+                ['endpoint' => 'https://example.org'],
+                null,
+                'https://example.org',
+                null,
+                0
+            ],
+            [
+                "us-east-1",
+                ['endpoint' => 'https://example.org'],
+                'abc123.456def',
+                'https://example.org',
+                ['x-amz-region-set' => '*'],
+                0
+            ],
         ];
     }
 
@@ -42,7 +97,8 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
         $additionalConfig,
         $endpointId,
         $expectedEndpoint,
-        $additionalHeaders
+        $additionalHeaders,
+        $partition
     )
     {
         //these tests require the CRT
@@ -50,10 +106,16 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
         if (!$isCrtAvailable && !empty($endpointId)) {
             $this->markTestSkipped();
         }
-        $isMvpRegion = getenv('AIRGAPPED_REGION') == 'LCK';
-        if ($isMvpRegion) {
-            $this->markTestSkipped();
-        }
+
+        $data = json_decode(
+            file_get_contents(
+                __DIR__ . '/../Endpoint/fixtures/eventbridge_endpoint_middleware_endpoints.json'
+            ), true
+        );
+        $endpointProvider = new Partition(
+            $data['partitions'][$partition],
+            'aws'
+        );
         
         $clientConfig = [
             'region' => $clientRegion,
@@ -71,6 +133,7 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
                 }
                 return new Result([]);
             },
+            'endpoint_provider' => $endpointProvider
         ];
         $clientConfig += $additionalConfig;
         $client = new EventBridgeClient($clientConfig);
@@ -99,9 +162,24 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
     {
         return [
             ["us-east-1", [], 'badactor.com?foo=bar', 'EventId must be a valid host'],
-            ["us-east-1", [], '', 'expected string length to be >= 1, but found string length of 0'],
-            ["us-east-1", ['use_fips_endpoint' => true], 'abc123.456def', 'EventId is currently not compatible with FIPS pseudo regions'],
-            ["us-east-1", ['use_dualstack_endpoint' => true, 'use_fips_endpoint' => true], 'abc123.456def', 'EventId is currently not compatible with FIPS pseudo regions'],
+            [
+                "us-east-1",
+                [],
+                '',
+                'expected string length to be >= 1, but found string length of 0'
+            ],
+            [
+                "us-east-1",
+                ['use_fips_endpoint' => true],
+                'abc123.456def',
+                'EventId is currently not compatible with FIPS pseudo regions'
+            ],
+            [
+                "us-east-1",
+                ['use_dual_stack_endpoint' => true, 'use_fips_endpoint' => true],
+                'abc123.456def',
+                'EventId is currently not compatible with FIPS pseudo regions'
+            ],
         ];
     }
 
