@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.1 - 2022-04-28
 
 * `Aws\AuditManager` - This release adds documentation updates for Audit Manager. We provided examples of how to use the Custom_ prefix for the keywordValue attribute. We also provided more details about the DeleteAssessmentReport operation.
 * `Aws\Braket` - This release enables Braket Hybrid Jobs with Embedded Simulators to have multiple instances.
