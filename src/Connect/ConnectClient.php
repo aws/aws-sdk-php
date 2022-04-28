@@ -195,6 +195,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listUserHierarchyGroupsAsync(array $args = [])
  * @method \Aws\Result listUsers(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listUsersAsync(array $args = [])
+ * @method \Aws\Result putUserStatus(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putUserStatusAsync(array $args = [])
  * @method \Aws\Result releasePhoneNumber(array $args = [])
  * @method \GuzzleHttp\Promise\Promise releasePhoneNumberAsync(array $args = [])
  * @method \Aws\Result resumeContactRecording(array $args = [])
