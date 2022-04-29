@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.2 - 2022-04-29
 
 * `Aws\CodeGuruReviewer` - Amazon CodeGuru Reviewer now supports suppressing recommendations from being generated on specific files and directories.
 * `Aws\MediaConvert` - AWS Elemental MediaConvert SDK nows supports creation of Dolby Vision profile 8.1, the ability to generate black frames of video, and introduces audio-only DASH and CMAF support.
