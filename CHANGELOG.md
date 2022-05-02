@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Organizations` - This release adds the INVALID_PAYMENT_INSTRUMENT as a fail reason and an error message.
+* `Aws\Outposts` - This release adds a new API called ListAssets to the Outposts SDK, which lists the hardware assets in an Outpost.
+* `Aws\Synthetics` - CloudWatch Synthetics has introduced a new feature to provide customers with an option to delete the underlying resources that Synthetics canary creates when the user chooses to delete the canary.
+
 ## 3.222.2 - 2022-04-29
 
 * `Aws\CodeGuruReviewer` - Amazon CodeGuru Reviewer now supports suppressing recommendations from being generated on specific files and directories.
