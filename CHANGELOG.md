@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.3 - 2022-05-02
 
 * `Aws\Organizations` - This release adds the INVALID_PAYMENT_INSTRUMENT as a fail reason and an error message.
 * `Aws\Outposts` - This release adds a new API called ListAssets to the Outposts SDK, which lists the hardware assets in an Outpost.
