@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.4 - 2022-05-03
 
 * `Aws\EC2` - Adds support for allocating Dedicated Hosts on AWS Outposts. The AllocateHosts API now accepts an OutpostArn request parameter, and the DescribeHosts API now includes an OutpostArn response parameter.
 * `Aws\KinesisVideo` - Add support for multiple image feature related APIs for configuring image generation and notification of a video stream. Add "GET_IMAGES" to the list of supported API names for the GetDataEndpoint API.
