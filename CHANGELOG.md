@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Backup` - Adds support to 2 new filters about job complete time for 3 list jobs APIs in AWS Backup
+* `Aws\IoTSecureTunneling` - This release introduces a new API RotateTunnelAccessToken that allow revoking the existing tokens and generate new tokens
+* `Aws\Lightsail` - Documentation updates for Lightsail
+* `Aws\SSM` - This release adds the TargetMaps parameter in SSM State Manager API.
+
 ## 3.222.4 - 2022-05-03
 
 * `Aws\EC2` - Adds support for allocating Dedicated Hosts on AWS Outposts. The AllocateHosts API now accepts an OutpostArn request parameter, and the DescribeHosts API now includes an OutpostArn response parameter.
