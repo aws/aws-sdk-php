@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.5 - 2022-05-04
 
 * `Aws\Backup` - Adds support to 2 new filters about job complete time for 3 list jobs APIs in AWS Backup
 * `Aws\IoTSecureTunneling` - This release introduces a new API RotateTunnelAccessToken that allow revoking the existing tokens and generate new tokens
