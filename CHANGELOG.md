@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.6 - 2022-05-05
 
 * `Aws\DataSync` - AWS DataSync now supports a new ObjectTags Task API option that can be used to control whether Object Tags are transferred.
 * `Aws\EC2` - Amazon EC2 I4i instances are powered by 3rd generation Intel Xeon Scalable processors and feature up to 30 TB of local AWS Nitro SSD storage
