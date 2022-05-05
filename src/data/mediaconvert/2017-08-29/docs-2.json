@@ -719,6 +719,12 @@
         "CmfcSettings$IFrameOnlyManifest": "Choose Include (INCLUDE) to have MediaConvert generate an HLS child manifest that lists only the I-frames for this rendition, in addition to your regular manifest for this rendition. You might use this manifest as part of a workflow that creates preview functions for your video. MediaConvert adds both the I-frame only child manifest and the regular child manifest to the parent manifest. When you don't need the I-frame only child manifest, keep the default value Exclude (EXCLUDE)."
       }
     },
+    "CmfcKlvMetadata": {
+      "base": "Applies to CMAF outputs. Use this setting to specify whether the service inserts the KLV metadata from the input in this output.",
+      "refs": {
+        "CmfcSettings$KlvMetadata": "Applies to CMAF outputs. Use this setting to specify whether the service inserts the KLV metadata from the input in this output."
+      }
+    },
     "CmfcScte35Esam": {
       "base": "Use this setting only when you specify SCTE-35 markers from ESAM. Choose INSERT to put SCTE-35 markers in this output at the insertion points that you specify in an ESAM XML document. Provide the document in the setting SCC XML (sccXml).",
       "refs": {
@@ -1052,10 +1058,16 @@
         "DolbyVision$L6Mode": "Use Dolby Vision Mode to choose how the service will handle Dolby Vision MaxCLL and MaxFALL properies."
       }
     },
-    "DolbyVisionProfile": {
-      "base": "In the current MediaConvert implementation, the Dolby Vision profile is always 5 (PROFILE_5). Therefore, all of your inputs must contain Dolby Vision frame interleaved data.",
+    "DolbyVisionMapping": {
+      "base": "Required when you set Dolby Vision Profile (Profile) to Profile 8.1 (PROFILE_8_1). When you set Content mapping (Mapping) to None (HDR10_NOMAP), content mapping is not applied to the HDR10-compatible signal. Depending on the source peak nit level, clipping might occur on HDR devices without Dolby Vision. When you set Content mapping to Static (HDR10_1000), the transcoder creates a 1,000 nits peak HDR10-compatible signal by applying static content mapping to the source. This mode is speed-optimized for PQ10 sources with metadata that is created from analysis. For graded Dolby Vision content, be aware that creative intent might not be guaranteed with extreme 1,000 nits trims.",
       "refs": {
-        "DolbyVision$Profile": "In the current MediaConvert implementation, the Dolby Vision profile is always 5 (PROFILE_5). Therefore, all of your inputs must contain Dolby Vision frame interleaved data."
+        "DolbyVision$Mapping": "Required when you set Dolby Vision Profile (Profile) to Profile 8.1 (PROFILE_8_1). When you set Content mapping (Mapping) to None (HDR10_NOMAP), content mapping is not applied to the HDR10-compatible signal. Depending on the source peak nit level, clipping might occur on HDR devices without Dolby Vision. When you set Content mapping to Static (HDR10_1000), the transcoder creates a 1,000 nits peak HDR10-compatible signal by applying static content mapping to the source. This mode is speed-optimized for PQ10 sources with metadata that is created from analysis. For graded Dolby Vision content, be aware that creative intent might not be guaranteed with extreme 1,000 nits trims."
+      }
+    },
+    "DolbyVisionProfile": {
+      "base": "Required when you use Dolby Vision (DolbyVision) processing. Set Profile (DolbyVisionProfile) to Profile 5 (Profile_5) to only include frame-interleaved Dolby Vision metadata in your output. Set Profile to Profile 8.1 (Profile_8_1) to include both frame-interleaved Dolby Vision metadata and HDR10 metadata in your output.",
+      "refs": {
+        "DolbyVision$Profile": "Required when you use Dolby Vision (DolbyVision) processing. Set Profile (DolbyVisionProfile) to Profile 5 (Profile_5) to only include frame-interleaved Dolby Vision metadata in your output. Set Profile to Profile 8.1 (Profile_8_1) to include both frame-interleaved Dolby Vision metadata and HDR10 metadata in your output."
       }
     },
     "DropFrameTimecode": {
@@ -2140,6 +2152,12 @@
         "InputTemplate$TimecodeSource": "Use this Timecode source setting, located under the input settings (InputTimecodeSource), to specify how the service counts input video frames. This input frame count affects only the behavior of features that apply to a single input at a time, such as input clipping and synchronizing some captions formats. Choose Embedded (EMBEDDED) to use the timecodes in your input video. Choose Start at zero (ZEROBASED) to start the first frame at zero. Choose Specified start (SPECIFIEDSTART) to start the first frame at the timecode that you specify in the setting Start timecode (timecodeStart). If you don't specify a value for Timecode source, the service will use Embedded by default. For more information about timecodes, see https://docs.aws.amazon.com/console/mediaconvert/timecode."
       }
     },
+    "InputVideoGenerator": {
+      "base": "Use this setting if you do not have a video input or if you want to add black video frames before, or after, other inputs. When you include Video generator, MediaConvert creates a video input with black frames and without an audio track. You can specify a value for Video generator, or you can specify an Input file, but you cannot specify both.",
+      "refs": {
+        "Input$VideoGenerator": "Use this setting if you do not have a video input or if you want to add black video frames before, or after, other inputs. When you include Video generator, MediaConvert creates a video input with black frames and without an audio track. You can specify a value for Video generator, or you can specify an Input file, but you cannot specify both."
+      }
+    },
     "InsertableImage": {
       "base": "These settings apply to a specific graphic overlay. You can include multiple overlays in your job.",
       "refs": {
@@ -2324,6 +2342,12 @@
       "base": "Keep the default value (DEFAULT) unless you know that your audio EBP markers are incorrectly appearing before your video EBP markers. To correct this problem, set this value to Force (FORCE).",
       "refs": {
         "M2tsSettings$ForceTsVideoEbpOrder": "Keep the default value (DEFAULT) unless you know that your audio EBP markers are incorrectly appearing before your video EBP markers. To correct this problem, set this value to Force (FORCE)."
+      }
+    },
+    "M2tsKlvMetadata": {
+      "base": "Applies to MPEG-TS outputs. Use this setting to specify whether the service inserts the KLV metadata from the input in this output.",
+      "refs": {
+        "M2tsSettings$KlvMetadata": "Applies to MPEG-TS outputs. Use this setting to specify whether the service inserts the KLV metadata from the input in this output."
       }
     },
     "M2tsNielsenId3": {
@@ -2535,6 +2559,12 @@
       "base": "Use this setting only in DASH output groups that include sidecar TTML or IMSC captions.  You specify sidecar captions in a separate output from your audio and video. Choose Raw (RAW) for captions in a single XML file in a raw container. Choose Fragmented MPEG-4 (FRAGMENTED_MP4) for captions in XML format contained within fragmented MP4 files. This set of fragmented MP4 files is separate from your video and audio fragmented MP4 files.",
       "refs": {
         "MpdSettings$CaptionContainerType": "Use this setting only in DASH output groups that include sidecar TTML or IMSC captions.  You specify sidecar captions in a separate output from your audio and video. Choose Raw (RAW) for captions in a single XML file in a raw container. Choose Fragmented MPEG-4 (FRAGMENTED_MP4) for captions in XML format contained within fragmented MP4 files. This set of fragmented MP4 files is separate from your video and audio fragmented MP4 files."
+      }
+    },
+    "MpdKlvMetadata": {
+      "base": "Applies to DASH ISO outputs. Use this setting to specify whether the service inserts the KLV metadata from the input in this output.",
+      "refs": {
+        "MpdSettings$KlvMetadata": "Applies to DASH ISO outputs. Use this setting to specify whether the service inserts the KLV metadata from the input in this output."
       }
     },
     "MpdScte35Esam": {
@@ -2899,6 +2929,12 @@
       "base": "Specific settings for this type of output.",
       "refs": {
         "Output$OutputSettings": "Specific settings for this type of output."
+      }
+    },
+    "PadVideo": {
+      "base": "Use this setting if your input has video and audio durations that don't align, and your output or player has strict alignment requirements. Examples: Input audio track has a delayed start. Input video track ends before audio ends. When you set Pad video (padVideo) to Black (BLACK), MediaConvert generates black video frames so that output video and audio durations match. Black video frames are added at the beginning or end, depending on your input. To keep the default behavior and not generate black video, set Pad video to Disabled (DISABLED) or leave blank.",
+      "refs": {
+        "VideoSelector$PadVideo": "Use this setting if your input has video and audio durations that don't align, and your output or player has strict alignment requirements. Examples: Input audio track has a delayed start. Input video track ends before audio ends. When you set Pad video (padVideo) to Black (BLACK), MediaConvert generates black video frames so that output video and audio durations match. Black video frames are added at the beginning or end, depending on your input. To keep the default behavior and not generate black video, set Pad video to Disabled (DISABLED) or leave blank."
       }
     },
     "PartnerWatermarking": {
@@ -3560,9 +3596,9 @@
       }
     },
     "WebvttStylePassthrough": {
-      "base": "Set Style passthrough (StylePassthrough) to ENABLED to use the available style, color, and position information from your input captions. MediaConvert uses default settings for any missing style and position information in your input captions. Set Style passthrough to DISABLED, or leave blank, to ignore the style and position information from your input captions and use simplified output captions.",
+      "base": "To use the available style, color, and position information from your input captions: Set Style passthrough (stylePassthrough) to Enabled (ENABLED). MediaConvert uses default settings when style and position information is missing from your input captions. To recreate the input captions exactly: Set Style passthrough to Strict (STRICT). MediaConvert automatically applies timing adjustments, including adjustments for frame rate conversion, ad avails, and input clipping. Your input captions format must be WebVTT. To ignore the style and position information from your input captions and use simplified output captions: Set Style passthrough to Disabled (DISABLED), or leave blank.",
       "refs": {
-        "WebvttDestinationSettings$StylePassthrough": "Set Style passthrough (StylePassthrough) to ENABLED to use the available style, color, and position information from your input captions. MediaConvert uses default settings for any missing style and position information in your input captions. Set Style passthrough to DISABLED, or leave blank, to ignore the style and position information from your input captions and use simplified output captions."
+        "WebvttDestinationSettings$StylePassthrough": "To use the available style, color, and position information from your input captions: Set Style passthrough (stylePassthrough) to Enabled (ENABLED). MediaConvert uses default settings when style and position information is missing from your input captions. To recreate the input captions exactly: Set Style passthrough to Strict (STRICT). MediaConvert automatically applies timing adjustments, including adjustments for frame rate conversion, ad avails, and input clipping. Your input captions format must be WebVTT. To ignore the style and position information from your input captions and use simplified output captions: Set Style passthrough to Disabled (DISABLED), or leave blank."
       }
     },
     "Xavc4kIntraCbgProfileClass": {
@@ -4436,6 +4472,12 @@
       "base": null,
       "refs": {
         "XavcHdProfileSettings$Slices": "Number of slices per picture. Must be less than or equal to the number of macroblock rows for progressive pictures, and less than or equal to half the number of macroblock rows for interlaced pictures."
+      }
+    },
+    "__integerMin50Max86400000": {
+      "base": null,
+      "refs": {
+        "InputVideoGenerator$Duration": "Specify an integer value for Black video duration from 50 to 86400000 to generate a black video input for that many milliseconds. Required when you include Video generator."
       }
     },
     "__integerMin6000Max1024000": {

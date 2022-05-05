@@ -408,6 +408,23 @@
         {"shape":"InvalidTokenException"}
       ]
     },
+    "UpdateFirewallEncryptionConfiguration":{
+      "name":"UpdateFirewallEncryptionConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateFirewallEncryptionConfigurationRequest"},
+      "output":{"shape":"UpdateFirewallEncryptionConfigurationResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InternalServerError"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InvalidTokenException"},
+        {"shape":"ResourceOwnerCheckException"}
+      ]
+    },
     "UpdateFirewallPolicy":{
       "name":"UpdateFirewallPolicy",
       "http":{
@@ -608,7 +625,8 @@
         "FirewallPolicy":{"shape":"FirewallPolicy"},
         "Description":{"shape":"Description"},
         "Tags":{"shape":"TagList"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "CreateFirewallPolicyResponse":{
@@ -639,7 +657,8 @@
         "SubnetChangeProtection":{"shape":"Boolean"},
         "FirewallPolicyChangeProtection":{"shape":"Boolean"},
         "Description":{"shape":"Description"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "CreateFirewallResponse":{
@@ -664,7 +683,9 @@
         "Description":{"shape":"Description"},
         "Capacity":{"shape":"RuleCapacity"},
         "Tags":{"shape":"TagList"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "SourceMetadata":{"shape":"SourceMetadata"}
       }
     },
     "CreateRuleGroupResponse":{
@@ -829,7 +850,8 @@
         "Description":{"shape":"Description"},
         "Type":{"shape":"RuleGroupType"},
         "Capacity":{"shape":"RuleCapacity"},
-        "StatefulRuleOptions":{"shape":"StatefulRuleOptions"}
+        "StatefulRuleOptions":{"shape":"StatefulRuleOptions"},
+        "LastModifiedTime":{"shape":"LastUpdateTime"}
       }
     },
     "DescribeRuleGroupRequest":{
@@ -901,6 +923,21 @@
         "UpdateToken":{"shape":"UpdateToken"}
       }
     },
+    "EncryptionConfiguration":{
+      "type":"structure",
+      "required":["Type"],
+      "members":{
+        "KeyId":{"shape":"KeyId"},
+        "Type":{"shape":"EncryptionType"}
+      }
+    },
+    "EncryptionType":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER_KMS",
+        "AWS_OWNED_KMS_KEY"
+      ]
+    },
     "EndpointId":{"type":"string"},
     "ErrorMessage":{"type":"string"},
     "Firewall":{
@@ -922,7 +959,8 @@
         "FirewallPolicyChangeProtection":{"shape":"Boolean"},
         "Description":{"shape":"Description"},
         "FirewallId":{"shape":"ResourceId"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "FirewallMetadata":{
@@ -975,7 +1013,9 @@
         "Tags":{"shape":"TagList"},
         "ConsumedStatelessRuleCapacity":{"shape":"RuleCapacity"},
         "ConsumedStatefulRuleCapacity":{"shape":"RuleCapacity"},
-        "NumberOfAssociations":{"shape":"NumberOfAssociations"}
+        "NumberOfAssociations":{"shape":"NumberOfAssociations"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "LastModifiedTime":{"shape":"LastUpdateTime"}
       }
     },
     "FirewallStatus":{
@@ -1100,12 +1140,19 @@
       },
       "exception":true
     },
+    "KeyId":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":".*\\S.*"
+    },
     "Keyword":{
       "type":"string",
       "max":128,
       "min":1,
       "pattern":".*"
     },
+    "LastUpdateTime":{"type":"timestamp"},
     "LimitExceededException":{
       "type":"structure",
       "members":{
@@ -1147,7 +1194,9 @@
       "members":{
         "NextToken":{"shape":"PaginationToken"},
         "MaxResults":{"shape":"PaginationMaxResults"},
-        "Scope":{"shape":"ResourceManagedStatus"}
+        "Scope":{"shape":"ResourceManagedStatus"},
+        "ManagedType":{"shape":"ResourceManagedType"},
+        "Type":{"shape":"RuleGroupType"}
       }
     },
     "ListRuleGroupsResponse":{
@@ -1367,6 +1416,13 @@
         "ACCOUNT"
       ]
     },
+    "ResourceManagedType":{
+      "type":"string",
+      "enum":[
+        "AWS_MANAGED_THREAT_SIGNATURES",
+        "AWS_MANAGED_DOMAIN_LISTS"
+      ]
+    },
     "ResourceName":{
       "type":"string",
       "max":128,
@@ -1439,7 +1495,11 @@
         "RuleGroupStatus":{"shape":"ResourceStatus"},
         "Tags":{"shape":"TagList"},
         "ConsumedCapacity":{"shape":"RuleCapacity"},
-        "NumberOfAssociations":{"shape":"NumberOfAssociations"}
+        "NumberOfAssociations":{"shape":"NumberOfAssociations"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "SourceMetadata":{"shape":"SourceMetadata"},
+        "SnsTopic":{"shape":"ResourceArn"},
+        "LastModifiedTime":{"shape":"LastUpdateTime"}
       }
     },
     "RuleGroupType":{
@@ -1531,6 +1591,13 @@
       "max":1024,
       "min":1,
       "pattern":"^.*$"
+    },
+    "SourceMetadata":{
+      "type":"structure",
+      "members":{
+        "SourceArn":{"shape":"ResourceArn"},
+        "SourceUpdateToken":{"shape":"UpdateToken"}
+      }
     },
     "StatefulAction":{
       "type":"string",
@@ -1855,6 +1922,24 @@
         "UpdateToken":{"shape":"UpdateToken"}
       }
     },
+    "UpdateFirewallEncryptionConfigurationRequest":{
+      "type":"structure",
+      "members":{
+        "UpdateToken":{"shape":"UpdateToken"},
+        "FirewallArn":{"shape":"ResourceArn"},
+        "FirewallName":{"shape":"ResourceName"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
+      }
+    },
+    "UpdateFirewallEncryptionConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "FirewallArn":{"shape":"ResourceArn"},
+        "FirewallName":{"shape":"ResourceName"},
+        "UpdateToken":{"shape":"UpdateToken"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
+      }
+    },
     "UpdateFirewallPolicyChangeProtectionRequest":{
       "type":"structure",
       "required":["FirewallPolicyChangeProtection"],
@@ -1886,7 +1971,8 @@
         "FirewallPolicyName":{"shape":"ResourceName"},
         "FirewallPolicy":{"shape":"FirewallPolicy"},
         "Description":{"shape":"Description"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"}
       }
     },
     "UpdateFirewallPolicyResponse":{
@@ -1927,7 +2013,9 @@
         "Rules":{"shape":"RulesString"},
         "Type":{"shape":"RuleGroupType"},
         "Description":{"shape":"Description"},
-        "DryRun":{"shape":"Boolean"}
+        "DryRun":{"shape":"Boolean"},
+        "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
+        "SourceMetadata":{"shape":"SourceMetadata"}
       }
     },
     "UpdateRuleGroupResponse":{

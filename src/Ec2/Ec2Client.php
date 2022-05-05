@@ -932,6 +932,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise modifyInstanceEventStartTimeAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyInstanceEventWindow(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyInstanceEventWindowAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result modifyInstanceMaintenanceOptions(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise modifyInstanceMaintenanceOptionsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyInstanceMetadataOptions(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise modifyInstanceMetadataOptionsAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result modifyIpam(array $args = []) (supported in versions 2016-11-15)

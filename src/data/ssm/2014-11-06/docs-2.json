@@ -75,7 +75,7 @@
     "GetMaintenanceWindowExecution": "<p>Retrieves details about a specific a maintenance window execution.</p>",
     "GetMaintenanceWindowExecutionTask": "<p>Retrieves the details about a specific task run as part of a maintenance window execution.</p>",
     "GetMaintenanceWindowExecutionTaskInvocation": "<p>Retrieves information about a specific task running on a specific target.</p>",
-    "GetMaintenanceWindowTask": "<p>Lists the tasks in a maintenance window.</p> <note> <p>For maintenance window tasks without a specified target, you can't supply values for <code>--max-errors</code> and <code>--max-concurrency</code>. Instead, the system inserts a placeholder value of <code>1</code>, which may be reported in the response to this command. These values don't affect the running of your task and can be ignored.</p> </note>",
+    "GetMaintenanceWindowTask": "<p>Retrieves the details of a maintenance window task.</p> <note> <p>For maintenance window tasks without a specified target, you can't supply values for <code>--max-errors</code> and <code>--max-concurrency</code>. Instead, the system inserts a placeholder value of <code>1</code>, which may be reported in the response to this command. These values don't affect the running of your task and can be ignored.</p> </note> <p>To retrieve a list of tasks in a maintenance window, instead use the <a>DescribeMaintenanceWindowTasks</a> command.</p>",
     "GetOpsItem": "<p>Get information about an OpsItem by using the ID. You must have permission in Identity and Access Management (IAM) to view information about an OpsItem. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-getting-started.html\">Getting started with OpsCenter</a> in the <i>Amazon Web Services Systems Manager User Guide</i>.</p> <p>Operations engineers and IT professionals use Amazon Web Services Systems Manager OpsCenter to view, investigate, and remediate operational issues impacting the performance and health of their Amazon Web Services resources. For more information, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter.html\">OpsCenter</a> in the <i>Amazon Web Services Systems Manager User Guide</i>. </p>",
     "GetOpsMetadata": "<p>View operational metadata related to an application in Application Manager.</p>",
     "GetOpsSummary": "<p>View a summary of operations metadata (OpsData) based on specified filters and aggregators. OpsData can include information about Amazon Web Services Systems Manager OpsCenter operational workitems (OpsItems) as well as information about any Amazon Web Services resource or service configured to report OpsData to Amazon Web Services Systems Manager Explorer. </p>",
@@ -126,7 +126,7 @@
     "UpdateAssociation": "<p>Updates an association. You can update the association name and version, the document version, schedule, parameters, and Amazon Simple Storage Service (Amazon S3) output. When you call <code>UpdateAssociation</code>, the system removes all optional parameters from the request and overwrites the association with null values for those parameters. This is by design. You must specify all optional parameters in the call, even if you are not changing the parameters. This includes the <code>Name</code> parameter. Before calling this API action, we recommend that you call the <a>DescribeAssociation</a> API operation and make a note of all optional parameters required for your <code>UpdateAssociation</code> call.</p> <p>In order to call this API operation, your Identity and Access Management (IAM) user account, group, or role must be configured with permission to call the <a>DescribeAssociation</a> API operation. If you don't have permission to call <code>DescribeAssociation</code>, then you receive the following error: <code>An error occurred (AccessDeniedException) when calling the UpdateAssociation operation: User: &lt;user_arn&gt; isn't authorized to perform: ssm:DescribeAssociation on resource: &lt;resource_arn&gt;</code> </p> <important> <p>When you update an association, the association immediately runs against the specified targets. You can add the <code>ApplyOnlyAtCronInterval</code> parameter to run the association during the next schedule run.</p> </important>",
     "UpdateAssociationStatus": "<p>Updates the status of the Amazon Web Services Systems Manager document (SSM document) associated with the specified managed node.</p> <p> <code>UpdateAssociationStatus</code> is primarily used by the Amazon Web Services Systems Manager Agent (SSM Agent) to report status updates about your associations and is only used for associations created with the <code>InstanceId</code> legacy parameter.</p>",
     "UpdateDocument": "<p>Updates one or more values for an SSM document.</p>",
-    "UpdateDocumentDefaultVersion": "<p>Set the default version of a document. </p>",
+    "UpdateDocumentDefaultVersion": "<p>Set the default version of a document. </p> <note> <p>If you change a document version for a State Manager association, Systems Manager immediately runs the association unless you previously specifed the <code>apply-only-at-cron-interval</code> parameter.</p> </note>",
     "UpdateDocumentMetadata": "<p>Updates information related to approval reviews for a specific version of a change template in Change Manager.</p>",
     "UpdateMaintenanceWindow": "<p>Updates an existing maintenance window. Only specified parameters are modified.</p> <note> <p>The value you specify for <code>Duration</code> determines the specific end time for the maintenance window based on the time it begins. No maintenance window tasks are permitted to start after the resulting endtime minus the number of hours you specify for <code>Cutoff</code>. For example, if the maintenance window starts at 3 PM, the duration is three hours, and the value you specify for <code>Cutoff</code> is one hour, no maintenance window tasks can start after 5 PM.</p> </note>",
     "UpdateMaintenanceWindowTarget": "<p>Modifies the target of an existing maintenance window. You can change the following:</p> <ul> <li> <p>Name</p> </li> <li> <p>Description</p> </li> <li> <p>Owner</p> </li> <li> <p>IDs for an ID target</p> </li> <li> <p>Tags for a Tag target</p> </li> <li> <p>From any supported tag type to another. The three supported tag types are ID target, Tag target, and resource group. For more information, see <a>Target</a>.</p> </li> </ul> <note> <p>If a parameter is null, then the corresponding field isn't modified.</p> </note>",
@@ -254,7 +254,7 @@
         "AssociationVersionInfo$ApplyOnlyAtCronInterval": "<p>By default, when you create a new associations, the system runs it immediately after it is created and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you create it. This parameter isn't supported for rate expressions.</p>",
         "CreateAssociationBatchRequestEntry$ApplyOnlyAtCronInterval": "<p>By default, when you create a new associations, the system runs it immediately after it is created and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you create it. This parameter isn't supported for rate expressions.</p>",
         "CreateAssociationRequest$ApplyOnlyAtCronInterval": "<p>By default, when you create a new association, the system runs it immediately after it is created and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you create it. This parameter isn't supported for rate expressions.</p>",
-        "UpdateAssociationRequest$ApplyOnlyAtCronInterval": "<p>By default, when you update an association, the system runs it immediately after it is updated and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you update it. This parameter isn't supported for rate expressions.</p> <p>Also, if you specified this option when you created the association, you can reset it. To do so, specify the <code>no-apply-only-at-cron-interval</code> parameter when you update the association from the command line. This parameter forces the association to run immediately after updating it and according to the interval specified.</p>"
+        "UpdateAssociationRequest$ApplyOnlyAtCronInterval": "<p>By default, when you update an association, the system runs it immediately after it is updated and then according to the schedule you specified. Specify this option if you don't want an association to run immediately after you update it. This parameter isn't supported for rate expressions.</p> <p>If you chose this option when you created an association and later you edit that association or you make changes to the SSM document on which that association is based (by using the Documents page in the console), State Manager applies the association at the next specified cron interval. For example, if you chose the <code>Latest</code> version of an SSM document when you created an association and you edit the association by choosing a different document version on the Documents page, State Manager applies the association at the next specified cron interval if you previously selected this option. If this option wasn't selected, State Manager immediately runs the association.</p> <p>You can reset this option. To do so, specify the <code>no-apply-only-at-cron-interval</code> parameter when you update the association from the command line. This parameter forces the association to run immediately after updating it and according to the interval specified.</p>"
       }
     },
     "ApproveAfterDays": {
@@ -1122,7 +1122,7 @@
       "base": null,
       "refs": {
         "CommandPlugin$Name": "<p>The name of the plugin. Must be one of the following: <code>aws:updateAgent</code>, <code>aws:domainjoin</code>, <code>aws:applications</code>, <code>aws:runPowerShellScript</code>, <code>aws:psmodule</code>, <code>aws:cloudWatch</code>, <code>aws:runShellScript</code>, or <code>aws:updateSSMAgent</code>. </p>",
-        "GetCommandInvocationRequest$PluginName": "<p>The name of the plugin for which you want detailed results. If the document contains only one plugin, you can omit the name and details for that plugin. If the document contains more than one plugin, you must specify the name of the plugin for which you want to view details.</p> <p>Plugin names are also referred to as <i>step names</i> in Systems Manager documents (SSM documents). For example, <code>aws:RunShellScript</code> is a plugin.</p> <p>To find the <code>PluginName</code>, check the document content and find the name of the plugin. Alternatively, use <a>ListCommandInvocations</a> with the <code>CommandId</code> and <code>Details</code> parameters. The <code>PluginName</code> is the <code>Name</code> attribute of the <code>CommandPlugin</code> object in the <code>CommandPlugins</code> list.</p>",
+        "GetCommandInvocationRequest$PluginName": "<p>The name of the step for which you want detailed results. If the document contains only one step, you can omit the name and details for that step. If the document contains more than one step, you must specify the name of the step for which you want to view details. Be sure to specify the name of the step, not the name of a plugin like <code>aws:RunShellScript</code>.</p> <p>To find the <code>PluginName</code>, check the document content and find the name of the step you want details for. Alternatively, use <a>ListCommandInvocations</a> with the <code>CommandId</code> and <code>Details</code> parameters. The <code>PluginName</code> is the <code>Name</code> attribute of the <code>CommandPlugin</code> object in the <code>CommandPlugins</code> list.</p>",
         "GetCommandInvocationResult$PluginName": "<p>The name of the plugin, or <i>step name</i>, for which details are reported. For example, <code>aws:RunShellScript</code> is a plugin.</p>"
       }
     },
@@ -2483,7 +2483,7 @@
     "DocumentVersion": {
       "base": null,
       "refs": {
-        "Association$DocumentVersion": "<p>The version of the document used in the association.</p> <important> <p>State Manager doesn't support running associations that use a new version of a document if that document is shared from another account. State Manager always runs the <code>default</code> version of a document if shared from another account, even though the Systems Manager console shows that a new version was processed. If you want to run an association using a new version of a document shared form another account, you must set the document version to <code>default</code>.</p> </important>",
+        "Association$DocumentVersion": "<p>The version of the document used in the association. If you change a document version for a State Manager association, Systems Manager immediately runs the association unless you previously specifed the <code>apply-only-at-cron-interval</code> parameter.</p> <important> <p>State Manager doesn't support running associations that use a new version of a document if that document is shared from another account. State Manager always runs the <code>default</code> version of a document if shared from another account, even though the Systems Manager console shows that a new version was processed. If you want to run an association using a new version of a document shared form another account, you must set the document version to <code>default</code>.</p> </important>",
         "AssociationDescription$DocumentVersion": "<p>The document version.</p>",
         "AssociationVersionInfo$DocumentVersion": "<p>The version of an Amazon Web Services Systems Manager document (SSM document) used when the association version was created.</p>",
         "AutomationExecution$DocumentVersion": "<p>The version of the document to use during execution.</p>",
@@ -2517,7 +2517,7 @@
         "StartChangeRequestExecutionRequest$DocumentVersion": "<p>The version of the change template document to run during the runbook workflow.</p>",
         "UpdateAssociationRequest$DocumentVersion": "<p>The document version you want update for the association. </p> <important> <p>State Manager doesn't support running associations that use a new version of a document if that document is shared from another account. State Manager always runs the <code>default</code> version of a document if shared from another account, even though the Systems Manager console shows that a new version was processed. If you want to run an association using a new version of a document shared form another account, you must set the document version to <code>default</code>.</p> </important>",
         "UpdateDocumentMetadataRequest$DocumentVersion": "<p>The version of a change template in which to update approval metadata.</p>",
-        "UpdateDocumentRequest$DocumentVersion": "<p>The version of the document that you want to update. Currently, Systems Manager supports updating only the latest version of the document. You can specify the version number of the latest version or use the <code>$LATEST</code> variable.</p>"
+        "UpdateDocumentRequest$DocumentVersion": "<p>The version of the document that you want to update. Currently, Systems Manager supports updating only the latest version of the document. You can specify the version number of the latest version or use the <code>$LATEST</code> variable.</p> <note> <p>If you change a document version for a State Manager association, Systems Manager immediately runs the association unless you previously specifed the <code>apply-only-at-cron-interval</code> parameter.</p> </note>"
       }
     },
     "DocumentVersionInfo": {
@@ -3454,6 +3454,11 @@
     },
     "InvalidTarget": {
       "base": "<p>The target isn't valid or doesn't exist. It might not be configured for Systems Manager or you might not have permission to perform the operation.</p>",
+      "refs": {
+      }
+    },
+    "InvalidTargetMaps": {
+      "base": "<p>TargetMap parameter isn't valid.</p>",
       "refs": {
       }
     },
@@ -6982,6 +6987,17 @@
         "UpdateAssociationRequest$ScheduleExpression": "<p>The cron expression used to schedule the association that you want to update.</p>"
       }
     },
+    "ScheduleOffset": {
+      "base": null,
+      "refs": {
+        "Association$ScheduleOffset": "<p>Number of days to wait after the scheduled day to run an association.</p>",
+        "AssociationDescription$ScheduleOffset": "<p>Number of days to wait after the scheduled day to run an association.</p>",
+        "AssociationVersionInfo$ScheduleOffset": "<p>Number of days to wait after the scheduled day to run an association.</p>",
+        "CreateAssociationBatchRequestEntry$ScheduleOffset": "<p>Number of days to wait after the scheduled day to run an association.</p>",
+        "CreateAssociationRequest$ScheduleOffset": "<p>Number of days to wait after the scheduled day to run an association. For example, if you specified a cron schedule of <code>cron(0 0 ? * THU#2 *)</code>, you could specify an offset of 3 to run the association each Sunday after the second Thursday of the month. For more information about cron schedules for associations, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/reference-cron-and-rate-expressions.html\">Reference: Cron and rate expressions for Systems Manager</a> in the <i>Amazon Web Services Systems Manager User Guide</i>. </p> <note> <p>To use offsets, you must specify the <code>ApplyOnlyAtCronInterval</code> parameter. This option tells the system not to run an association immediately after you create it. </p> </note>",
+        "UpdateAssociationRequest$ScheduleOffset": "<p>Number of days to wait after the scheduled day to run an association. For example, if you specified a cron schedule of <code>cron(0 0 ? * THU#2 *)</code>, you could specify an offset of 3 to run the association each Sunday after the second Thursday of the month. For more information about cron schedules for associations, see <a href=\"https://docs.aws.amazon.com/systems-manager/latest/userguide/reference-cron-and-rate-expressions.html\">Reference: Cron and rate expressions for Systems Manager</a> in the <i>Amazon Web Services Systems Manager User Guide</i>. </p> <note> <p>To use offsets, you must specify the <code>ApplyOnlyAtCronInterval</code> parameter. This option tells the system not to run an association immediately after you create it. </p> </note>"
+      }
+    },
     "ScheduledWindowExecution": {
       "base": "<p>Information about a scheduled execution for a maintenance window.</p>",
       "refs": {
@@ -7488,6 +7504,7 @@
         "InvalidRole$Message": null,
         "InvalidSchedule$Message": null,
         "InvalidTarget$Message": null,
+        "InvalidTargetMaps$Message": null,
         "InvalidTypeNameException$Message": null,
         "InvalidUpdate$Message": null,
         "ItemContentMismatchException$Message": null,
@@ -7703,9 +7720,16 @@
     "TargetMaps": {
       "base": null,
       "refs": {
+        "Association$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
+        "AssociationDescription$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
+        "AssociationVersionInfo$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
         "AutomationExecution$TargetMaps": "<p>The specified key-value mapping of document parameters to target resources.</p>",
         "AutomationExecutionMetadata$TargetMaps": "<p>The specified key-value mapping of document parameters to target resources.</p>",
-        "StartAutomationExecutionRequest$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>"
+        "CreateAssociationBatchRequestEntry$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
+        "CreateAssociationRequest$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
+        "Runbook$TargetMaps": "<p>A key-value mapping of runbook parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
+        "StartAutomationExecutionRequest$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>",
+        "UpdateAssociationRequest$TargetMaps": "<p>A key-value mapping of document parameters to target resources. Both Targets and TargetMaps can't be specified together.</p>"
       }
     },
     "TargetNotConnected": {

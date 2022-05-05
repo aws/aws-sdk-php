@@ -78,6 +78,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionChime(array $args = [])
  * @method \Aws\ChimeSDKIdentity\ChimeSDKIdentityClient createChimeSDKIdentity(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionChimeSDKIdentity(array $args = [])
+ * @method \Aws\ChimeSDKMediaPipelines\ChimeSDKMediaPipelinesClient createChimeSDKMediaPipelines(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionChimeSDKMediaPipelines(array $args = [])
  * @method \Aws\ChimeSDKMeetings\ChimeSDKMeetingsClient createChimeSDKMeetings(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionChimeSDKMeetings(array $args = [])
  * @method \Aws\ChimeSDKMessaging\ChimeSDKMessagingClient createChimeSDKMessaging(array $args = [])
@@ -440,6 +442,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionPinpointEmail(array $args = [])
  * @method \Aws\PinpointSMSVoice\PinpointSMSVoiceClient createPinpointSMSVoice(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPinpointSMSVoice(array $args = [])
+ * @method \Aws\PinpointSMSVoiceV2\PinpointSMSVoiceV2Client createPinpointSMSVoiceV2(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionPinpointSMSVoiceV2(array $args = [])
  * @method \Aws\Polly\PollyClient createPolly(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionPolly(array $args = [])
  * @method \Aws\Pricing\PricingClient createPricing(array $args = [])
@@ -600,6 +604,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionfinspace(array $args = [])
  * @method \Aws\imagebuilder\imagebuilderClient createimagebuilder(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionimagebuilder(array $args = [])
+ * @method \Aws\ivschat\ivschatClient createivschat(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionivschat(array $args = [])
  * @method \Aws\kendra\kendraClient createkendra(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionkendra(array $args = [])
  * @method \Aws\mgn\mgnClient createmgn(array $args = [])
@@ -609,7 +615,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.216.0';
+    const VERSION = '3.222.6';
 
     /** @var array Arguments for creating clients */
     private $args;

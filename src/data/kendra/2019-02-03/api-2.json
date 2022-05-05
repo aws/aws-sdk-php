@@ -1162,6 +1162,28 @@
     },
     "Blob":{"type":"blob"},
     "Boolean":{"type":"boolean"},
+    "BoxConfiguration":{
+      "type":"structure",
+      "required":[
+        "EnterpriseId",
+        "SecretArn"
+      ],
+      "members":{
+        "EnterpriseId":{"shape":"EnterpriseId"},
+        "SecretArn":{"shape":"SecretArn"},
+        "UseChangeLog":{"shape":"Boolean"},
+        "CrawlComments":{"shape":"Boolean"},
+        "CrawlTasks":{"shape":"Boolean"},
+        "CrawlWebLinks":{"shape":"Boolean"},
+        "FileFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "TaskFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "CommentFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "WebLinkFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "InclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
+        "ExclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
+        "VpcConfiguration":{"shape":"DataSourceVpcConfiguration"}
+      }
+    },
     "CapacityUnitsConfiguration":{
       "type":"structure",
       "required":[
@@ -1678,7 +1700,9 @@
         "WebCrawlerConfiguration":{"shape":"WebCrawlerConfiguration"},
         "WorkDocsConfiguration":{"shape":"WorkDocsConfiguration"},
         "FsxConfiguration":{"shape":"FsxConfiguration"},
-        "SlackConfiguration":{"shape":"SlackConfiguration"}
+        "SlackConfiguration":{"shape":"SlackConfiguration"},
+        "BoxConfiguration":{"shape":"BoxConfiguration"},
+        "QuipConfiguration":{"shape":"QuipConfiguration"}
       }
     },
     "DataSourceDateFieldFormat":{
@@ -1851,7 +1875,9 @@
         "WEBCRAWLER",
         "WORKDOCS",
         "FSX",
-        "SLACK"
+        "SLACK",
+        "BOX",
+        "QUIP"
       ]
     },
     "DataSourceVpcConfiguration":{
@@ -2331,7 +2357,8 @@
       "type":"structure",
       "members":{
         "DocumentAttributeValue":{"shape":"DocumentAttributeValue"},
-        "Count":{"shape":"Integer"}
+        "Count":{"shape":"Integer"},
+        "FacetResults":{"shape":"FacetResultList"}
       }
     },
     "DocumentAttributeValueCountPairList":{
@@ -2441,6 +2468,12 @@
         "S3Prefix":{"shape":"S3ObjectKey"}
       }
     },
+    "Domain":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"^(?!-)[A-Za-z0-9-].*(?<!-)$"
+    },
     "Duration":{
       "type":"string",
       "max":10,
@@ -2456,6 +2489,12 @@
     "EndpointType":{
       "type":"string",
       "enum":["HOME"]
+    },
+    "EnterpriseId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[A-Z0-9]*$"
     },
     "EntityConfiguration":{
       "type":"structure",
@@ -2615,7 +2654,9 @@
     "Facet":{
       "type":"structure",
       "members":{
-        "DocumentAttributeKey":{"shape":"DocumentAttributeKey"}
+        "DocumentAttributeKey":{"shape":"DocumentAttributeKey"},
+        "Facets":{"shape":"FacetList"},
+        "MaxResults":{"shape":"TopDocumentAttributeValueCountPairsSize"}
       }
     },
     "FacetList":{
@@ -2723,6 +2764,15 @@
       "max":21,
       "min":11,
       "pattern":"^(fs-[0-9a-f]{8,})$"
+    },
+    "FolderId":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "FolderIdList":{
+      "type":"list",
+      "member":{"shape":"FolderId"}
     },
     "FsxConfiguration":{
       "type":"structure",
@@ -3712,6 +3762,27 @@
       "max":1000,
       "min":1
     },
+    "QuipConfiguration":{
+      "type":"structure",
+      "required":[
+        "Domain",
+        "SecretArn"
+      ],
+      "members":{
+        "Domain":{"shape":"Domain"},
+        "SecretArn":{"shape":"SecretArn"},
+        "CrawlFileComments":{"shape":"Boolean"},
+        "CrawlChatRooms":{"shape":"Boolean"},
+        "CrawlAttachments":{"shape":"Boolean"},
+        "FolderIds":{"shape":"FolderIdList"},
+        "ThreadFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "MessageFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "AttachmentFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "InclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
+        "ExclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
+        "VpcConfiguration":{"shape":"DataSourceVpcConfiguration"}
+      }
+    },
     "ReadAccessType":{
       "type":"string",
       "enum":[
@@ -4527,6 +4598,11 @@
       "max":100000,
       "min":1,
       "pattern":"^\\P{C}*$"
+    },
+    "TopDocumentAttributeValueCountPairsSize":{
+      "type":"integer",
+      "max":5000,
+      "min":0
     },
     "UntagResourceRequest":{
       "type":"structure",

@@ -114,6 +114,21 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "AssociatePhoneNumberContactFlow":{
+      "name":"AssociatePhoneNumberContactFlow",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/phone-number/{PhoneNumberId}/contact-flow"
+      },
+      "input":{"shape":"AssociatePhoneNumberContactFlowRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "AssociateQueueQuickConnects":{
       "name":"AssociateQueueQuickConnects",
       "http":{
@@ -161,6 +176,23 @@
         {"shape":"InvalidParameterException"},
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "ClaimPhoneNumber":{
+      "name":"ClaimPhoneNumber",
+      "http":{
+        "method":"POST",
+        "requestUri":"/phone-number/claim"
+      },
+      "input":{"shape":"ClaimPhoneNumberRequest"},
+      "output":{"shape":"ClaimPhoneNumberResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"IdempotencyException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "CreateAgentStatus":{
@@ -710,6 +742,22 @@
         {"shape":"ThrottlingException"}
       ]
     },
+    "DescribePhoneNumber":{
+      "name":"DescribePhoneNumber",
+      "http":{
+        "method":"GET",
+        "requestUri":"/phone-number/{PhoneNumberId}"
+      },
+      "input":{"shape":"DescribePhoneNumberRequest"},
+      "output":{"shape":"DescribePhoneNumberResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "DescribeQueue":{
       "name":"DescribeQueue",
       "http":{
@@ -910,6 +958,21 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "DisassociatePhoneNumberContactFlow":{
+      "name":"DisassociatePhoneNumberContactFlow",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/phone-number/{PhoneNumberId}/contact-flow"
+      },
+      "input":{"shape":"DisassociatePhoneNumberContactFlowRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "DisassociateQueueQuickConnects":{
@@ -1255,6 +1318,22 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "ListPhoneNumbersV2":{
+      "name":"ListPhoneNumbersV2",
+      "http":{
+        "method":"POST",
+        "requestUri":"/phone-number/list"
+      },
+      "input":{"shape":"ListPhoneNumbersV2Request"},
+      "output":{"shape":"ListPhoneNumbersV2Response"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ListPrompts":{
       "name":"ListPrompts",
       "http":{
@@ -1462,6 +1541,40 @@
         {"shape":"InternalServiceException"}
       ]
     },
+    "PutUserStatus":{
+      "name":"PutUserStatus",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/users/{InstanceId}/{UserId}/status"
+      },
+      "input":{"shape":"PutUserStatusRequest"},
+      "output":{"shape":"PutUserStatusResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "ReleasePhoneNumber":{
+      "name":"ReleasePhoneNumber",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/phone-number/{PhoneNumberId}"
+      },
+      "input":{"shape":"ReleasePhoneNumberRequest"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"IdempotencyException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
     "ResumeContactRecording":{
       "name":"ResumeContactRecording",
       "http":{
@@ -1473,6 +1586,37 @@
       "errors":[
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
+        {"shape":"InternalServiceException"}
+      ]
+    },
+    "SearchAvailablePhoneNumbers":{
+      "name":"SearchAvailablePhoneNumbers",
+      "http":{
+        "method":"POST",
+        "requestUri":"/phone-number/search-available"
+      },
+      "input":{"shape":"SearchAvailablePhoneNumbersRequest"},
+      "output":{"shape":"SearchAvailablePhoneNumbersResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "SearchUsers":{
+      "name":"SearchUsers",
+      "http":{
+        "method":"POST",
+        "requestUri":"/search-users"
+      },
+      "input":{"shape":"SearchUsersRequest"},
+      "output":{"shape":"SearchUsersResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
         {"shape":"InternalServiceException"}
       ]
     },
@@ -1854,6 +1998,24 @@
         {"shape":"InvalidRequestException"},
         {"shape":"InvalidParameterException"},
         {"shape":"ThrottlingException"}
+      ]
+    },
+    "UpdatePhoneNumber":{
+      "name":"UpdatePhoneNumber",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/phone-number/{PhoneNumberId}"
+      },
+      "input":{"shape":"UpdatePhoneNumberRequest"},
+      "output":{"shape":"UpdatePhoneNumberResponse"},
+      "errors":[
+        {"shape":"InvalidParameterException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalServiceException"},
+        {"shape":"ResourceInUseException"},
+        {"shape":"IdempotencyException"},
+        {"shape":"AccessDeniedException"}
       ]
     },
     "UpdateQueueHoursOfOperation":{
@@ -2261,6 +2423,7 @@
         "AwaitAnswerMachinePrompt":{"shape":"Boolean"}
       }
     },
+    "ApproximateTotalCount":{"type":"long"},
     "AssociateApprovedOriginRequest":{
       "type":"structure",
       "required":[
@@ -2367,6 +2530,23 @@
         "LexBot":{"shape":"LexBot"}
       }
     },
+    "AssociatePhoneNumberContactFlowRequest":{
+      "type":"structure",
+      "required":[
+        "PhoneNumberId",
+        "InstanceId",
+        "ContactFlowId"
+      ],
+      "members":{
+        "PhoneNumberId":{
+          "shape":"PhoneNumberId",
+          "location":"uri",
+          "locationName":"PhoneNumberId"
+        },
+        "InstanceId":{"shape":"InstanceId"},
+        "ContactFlowId":{"shape":"ContactFlowId"}
+      }
+    },
     "AssociateQueueQuickConnectsRequest":{
       "type":"structure",
       "required":[
@@ -2470,6 +2650,18 @@
       "member":{"shape":"Attribute"}
     },
     "AutoAccept":{"type":"boolean"},
+    "AvailableNumberSummary":{
+      "type":"structure",
+      "members":{
+        "PhoneNumber":{"shape":"PhoneNumber"},
+        "PhoneNumberCountryCode":{"shape":"PhoneNumberCountryCode"},
+        "PhoneNumberType":{"shape":"PhoneNumberType"}
+      }
+    },
+    "AvailableNumbersList":{
+      "type":"list",
+      "member":{"shape":"AvailableNumberSummary"}
+    },
     "Boolean":{"type":"boolean"},
     "BotName":{
       "type":"string",
@@ -2535,6 +2727,44 @@
       "type":"string",
       "max":350,
       "min":1
+    },
+    "ClaimPhoneNumberRequest":{
+      "type":"structure",
+      "required":[
+        "TargetArn",
+        "PhoneNumber"
+      ],
+      "members":{
+        "TargetArn":{"shape":"ARN"},
+        "PhoneNumber":{"shape":"PhoneNumber"},
+        "PhoneNumberDescription":{"shape":"PhoneNumberDescription"},
+        "Tags":{"shape":"TagMap"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "ClaimPhoneNumberResponse":{
+      "type":"structure",
+      "members":{
+        "PhoneNumberId":{"shape":"PhoneNumberId"},
+        "PhoneNumberArn":{"shape":"ARN"}
+      }
+    },
+    "ClaimedPhoneNumberSummary":{
+      "type":"structure",
+      "members":{
+        "PhoneNumberId":{"shape":"PhoneNumberId"},
+        "PhoneNumberArn":{"shape":"ARN"},
+        "PhoneNumber":{"shape":"PhoneNumber"},
+        "PhoneNumberCountryCode":{"shape":"PhoneNumberCountryCode"},
+        "PhoneNumberType":{"shape":"PhoneNumberType"},
+        "PhoneNumberDescription":{"shape":"PhoneNumberDescription"},
+        "TargetArn":{"shape":"ARN"},
+        "Tags":{"shape":"TagMap"},
+        "PhoneNumberStatus":{"shape":"PhoneNumberStatus"}
+      }
     },
     "ClientToken":{
       "type":"string",
@@ -2734,6 +2964,14 @@
       "type":"map",
       "key":{"shape":"ReferenceKey"},
       "value":{"shape":"Reference"}
+    },
+    "ControlPlaneTagFilter":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"TagOrConditionList"},
+        "AndConditions":{"shape":"TagAndConditionList"},
+        "TagCondition":{"shape":"TagCondition"}
+      }
     },
     "CreateAgentStatusRequest":{
       "type":"structure",
@@ -3648,6 +3886,23 @@
         "StorageConfig":{"shape":"InstanceStorageConfig"}
       }
     },
+    "DescribePhoneNumberRequest":{
+      "type":"structure",
+      "required":["PhoneNumberId"],
+      "members":{
+        "PhoneNumberId":{
+          "shape":"PhoneNumberId",
+          "location":"uri",
+          "locationName":"PhoneNumberId"
+        }
+      }
+    },
+    "DescribePhoneNumberResponse":{
+      "type":"structure",
+      "members":{
+        "ClaimedPhoneNumberSummary":{"shape":"ClaimedPhoneNumberSummary"}
+      }
+    },
     "DescribeQueueRequest":{
       "type":"structure",
       "required":[
@@ -3984,6 +4239,25 @@
         }
       }
     },
+    "DisassociatePhoneNumberContactFlowRequest":{
+      "type":"structure",
+      "required":[
+        "PhoneNumberId",
+        "InstanceId"
+      ],
+      "members":{
+        "PhoneNumberId":{
+          "shape":"PhoneNumberId",
+          "location":"uri",
+          "locationName":"PhoneNumberId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"querystring",
+          "locationName":"instanceId"
+        }
+      }
+    },
     "DisassociateQueueQuickConnectsRequest":{
       "type":"structure",
       "required":[
@@ -4220,7 +4494,21 @@
         "Tags":{"shape":"TagMap"}
       }
     },
+    "HierarchyGroupCondition":{
+      "type":"structure",
+      "members":{
+        "Value":{"shape":"String"},
+        "HierarchyGroupMatchType":{"shape":"HierarchyGroupMatchType"}
+      }
+    },
     "HierarchyGroupId":{"type":"string"},
+    "HierarchyGroupMatchType":{
+      "type":"string",
+      "enum":[
+        "EXACT",
+        "WITH_CHILD_GROUPS"
+      ]
+    },
     "HierarchyGroupName":{"type":"string"},
     "HierarchyGroupSummary":{
       "type":"structure",
@@ -4474,7 +4762,8 @@
         "CONTACT_LENS",
         "AUTO_RESOLVE_BEST_VOICES",
         "USE_CUSTOM_TTS_VOICES",
-        "EARLY_MEDIA"
+        "EARLY_MEDIA",
+        "MULTI_PARTY_CONFERENCE"
       ]
     },
     "InstanceAttributeValue":{
@@ -4650,6 +4939,11 @@
         "RetentionPeriodHours":{"shape":"Hours"},
         "EncryptionConfig":{"shape":"EncryptionConfig"}
       }
+    },
+    "LargeNextToken":{
+      "type":"string",
+      "max":100000,
+      "min":1
     },
     "LexBot":{
       "type":"structure",
@@ -5171,6 +5465,42 @@
         "NextToken":{"shape":"NextToken"}
       }
     },
+    "ListPhoneNumbersSummary":{
+      "type":"structure",
+      "members":{
+        "PhoneNumberId":{"shape":"PhoneNumberId"},
+        "PhoneNumberArn":{"shape":"ARN"},
+        "PhoneNumber":{"shape":"PhoneNumber"},
+        "PhoneNumberCountryCode":{"shape":"PhoneNumberCountryCode"},
+        "PhoneNumberType":{"shape":"PhoneNumberType"},
+        "TargetArn":{"shape":"ARN"}
+      }
+    },
+    "ListPhoneNumbersSummaryList":{
+      "type":"list",
+      "member":{"shape":"ListPhoneNumbersSummary"}
+    },
+    "ListPhoneNumbersV2Request":{
+      "type":"structure",
+      "members":{
+        "TargetArn":{"shape":"ARN"},
+        "MaxResults":{
+          "shape":"MaxResult1000",
+          "box":true
+        },
+        "NextToken":{"shape":"LargeNextToken"},
+        "PhoneNumberCountryCodes":{"shape":"PhoneNumberCountryCodes"},
+        "PhoneNumberTypes":{"shape":"PhoneNumberTypes"},
+        "PhoneNumberPrefix":{"shape":"PhoneNumberPrefix"}
+      }
+    },
+    "ListPhoneNumbersV2Response":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"LargeNextToken"},
+        "ListPhoneNumbersSummaryList":{"shape":"ListPhoneNumbersSummaryList"}
+      }
+    },
     "ListPromptsRequest":{
       "type":"structure",
       "required":["InstanceId"],
@@ -5634,6 +5964,11 @@
       "min":0
     },
     "NextToken":{"type":"string"},
+    "NextToken2500":{
+      "type":"string",
+      "max":2500,
+      "min":1
+    },
     "Origin":{
       "type":"string",
       "max":267
@@ -5695,7 +6030,10 @@
       "member":{"shape":"SecurityProfilePermission"},
       "max":500
     },
-    "PhoneNumber":{"type":"string"},
+    "PhoneNumber":{
+      "type":"string",
+      "pattern":"\\\\+[1-9]\\\\d{1,14}$"
+    },
     "PhoneNumberCountryCode":{
       "type":"string",
       "enum":[
@@ -5943,12 +6281,29 @@
       "member":{"shape":"PhoneNumberCountryCode"},
       "max":10
     },
+    "PhoneNumberDescription":{
+      "type":"string",
+      "max":500,
+      "min":0,
+      "pattern":"^[\\W\\S_]*"
+    },
     "PhoneNumberId":{"type":"string"},
+    "PhoneNumberPrefix":{
+      "type":"string",
+      "pattern":"\\\\+?[0-9]{1,11}"
+    },
     "PhoneNumberQuickConnectConfig":{
       "type":"structure",
       "required":["PhoneNumber"],
       "members":{
         "PhoneNumber":{"shape":"PhoneNumber"}
+      }
+    },
+    "PhoneNumberStatus":{
+      "type":"structure",
+      "members":{
+        "Status":{"shape":"PhoneNumberWorkflowStatus"},
+        "Message":{"shape":"PhoneNumberWorkflowMessage"}
       }
     },
     "PhoneNumberSummary":{
@@ -5976,6 +6331,20 @@
       "type":"list",
       "member":{"shape":"PhoneNumberType"},
       "max":2
+    },
+    "PhoneNumberWorkflowMessage":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":"^[\\W\\S_]*"
+    },
+    "PhoneNumberWorkflowStatus":{
+      "type":"string",
+      "enum":[
+        "CLAIMED",
+        "IN_PROGRESS",
+        "FAILED"
+      ]
     },
     "PhoneType":{
       "type":"string",
@@ -6032,6 +6401,32 @@
     "PromptSummaryList":{
       "type":"list",
       "member":{"shape":"PromptSummary"}
+    },
+    "PutUserStatusRequest":{
+      "type":"structure",
+      "required":[
+        "UserId",
+        "InstanceId",
+        "AgentStatusId"
+      ],
+      "members":{
+        "UserId":{
+          "shape":"UserId",
+          "location":"uri",
+          "locationName":"UserId"
+        },
+        "InstanceId":{
+          "shape":"InstanceId",
+          "location":"uri",
+          "locationName":"InstanceId"
+        },
+        "AgentStatusId":{"shape":"AgentStatusId"}
+      }
+    },
+    "PutUserStatusResponse":{
+      "type":"structure",
+      "members":{
+      }
     },
     "Queue":{
       "type":"structure",
@@ -6244,6 +6639,23 @@
       "max":4096,
       "min":0
     },
+    "ReleasePhoneNumberRequest":{
+      "type":"structure",
+      "required":["PhoneNumberId"],
+      "members":{
+        "PhoneNumberId":{
+          "shape":"PhoneNumberId",
+          "location":"uri",
+          "locationName":"PhoneNumberId"
+        },
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true,
+          "location":"querystring",
+          "locationName":"clientToken"
+        }
+      }
+    },
     "ResourceConflictException":{
       "type":"structure",
       "members":{
@@ -6409,6 +6821,53 @@
         "BucketName":{"shape":"BucketName"},
         "BucketPrefix":{"shape":"Prefix"},
         "EncryptionConfig":{"shape":"EncryptionConfig"}
+      }
+    },
+    "SearchAvailablePhoneNumbersRequest":{
+      "type":"structure",
+      "required":[
+        "TargetArn",
+        "PhoneNumberCountryCode",
+        "PhoneNumberType"
+      ],
+      "members":{
+        "TargetArn":{"shape":"ARN"},
+        "PhoneNumberCountryCode":{"shape":"PhoneNumberCountryCode"},
+        "PhoneNumberType":{"shape":"PhoneNumberType"},
+        "PhoneNumberPrefix":{"shape":"PhoneNumberPrefix"},
+        "MaxResults":{
+          "shape":"MaxResult10",
+          "box":true
+        },
+        "NextToken":{"shape":"LargeNextToken"}
+      }
+    },
+    "SearchAvailablePhoneNumbersResponse":{
+      "type":"structure",
+      "members":{
+        "NextToken":{"shape":"LargeNextToken"},
+        "AvailableNumbersList":{"shape":"AvailableNumbersList"}
+      }
+    },
+    "SearchUsersRequest":{
+      "type":"structure",
+      "members":{
+        "InstanceId":{"shape":"InstanceId"},
+        "NextToken":{"shape":"NextToken2500"},
+        "MaxResults":{
+          "shape":"MaxResult100",
+          "box":true
+        },
+        "SearchFilter":{"shape":"UserSearchFilter"},
+        "SearchCriteria":{"shape":"UserSearchCriteria"}
+      }
+    },
+    "SearchUsersResponse":{
+      "type":"structure",
+      "members":{
+        "Users":{"shape":"UserSearchSummaryList"},
+        "NextToken":{"shape":"NextToken2500"},
+        "ApproximateTotalCount":{"shape":"ApproximateTotalCount"}
       }
     },
     "SearchVocabulariesRequest":{
@@ -6717,6 +7176,22 @@
       "min":1
     },
     "String":{"type":"string"},
+    "StringComparisonType":{
+      "type":"string",
+      "enum":[
+        "STARTS_WITH",
+        "CONTAINS",
+        "EXACT"
+      ]
+    },
+    "StringCondition":{
+      "type":"structure",
+      "members":{
+        "FieldName":{"shape":"String"},
+        "Value":{"shape":"String"},
+        "ComparisonType":{"shape":"StringComparisonType"}
+      }
+    },
     "SupportedMessagingContentType":{
       "type":"string",
       "max":100,
@@ -6744,6 +7219,17 @@
       "members":{
       }
     },
+    "TagAndConditionList":{
+      "type":"list",
+      "member":{"shape":"TagCondition"}
+    },
+    "TagCondition":{
+      "type":"structure",
+      "members":{
+        "TagKey":{"shape":"String"},
+        "TagValue":{"shape":"String"}
+      }
+    },
     "TagKey":{
       "type":"string",
       "max":128,
@@ -6762,6 +7248,10 @@
       "value":{"shape":"TagValue"},
       "max":50,
       "min":1
+    },
+    "TagOrConditionList":{
+      "type":"list",
+      "member":{"shape":"TagAndConditionList"}
     },
     "TagResourceRequest":{
       "type":"structure",
@@ -7128,6 +7618,32 @@
           "locationName":"resourceType"
         },
         "StorageConfig":{"shape":"InstanceStorageConfig"}
+      }
+    },
+    "UpdatePhoneNumberRequest":{
+      "type":"structure",
+      "required":[
+        "PhoneNumberId",
+        "TargetArn"
+      ],
+      "members":{
+        "PhoneNumberId":{
+          "shape":"PhoneNumberId",
+          "location":"uri",
+          "locationName":"PhoneNumberId"
+        },
+        "TargetArn":{"shape":"ARN"},
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        }
+      }
+    },
+    "UpdatePhoneNumberResponse":{
+      "type":"structure",
+      "members":{
+        "PhoneNumberId":{"shape":"PhoneNumberId"},
+        "PhoneNumberArn":{"shape":"ARN"}
       }
     },
     "UpdateQueueHoursOfOperationRequest":{
@@ -7584,6 +8100,13 @@
         "Email":{"shape":"Email"}
       }
     },
+    "UserIdentityInfoLite":{
+      "type":"structure",
+      "members":{
+        "FirstName":{"shape":"AgentFirstName"},
+        "LastName":{"shape":"AgentLastName"}
+      }
+    },
     "UserNotFoundException":{
       "type":"structure",
       "members":{
@@ -7612,6 +8135,44 @@
         "UserId":{"shape":"UserId"},
         "ContactFlowId":{"shape":"ContactFlowId"}
       }
+    },
+    "UserSearchConditionList":{
+      "type":"list",
+      "member":{"shape":"UserSearchCriteria"}
+    },
+    "UserSearchCriteria":{
+      "type":"structure",
+      "members":{
+        "OrConditions":{"shape":"UserSearchConditionList"},
+        "AndConditions":{"shape":"UserSearchConditionList"},
+        "StringCondition":{"shape":"StringCondition"},
+        "HierarchyGroupCondition":{"shape":"HierarchyGroupCondition"}
+      }
+    },
+    "UserSearchFilter":{
+      "type":"structure",
+      "members":{
+        "TagFilter":{"shape":"ControlPlaneTagFilter"}
+      }
+    },
+    "UserSearchSummary":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"ARN"},
+        "DirectoryUserId":{"shape":"DirectoryUserId"},
+        "HierarchyGroupId":{"shape":"HierarchyGroupId"},
+        "Id":{"shape":"UserId"},
+        "IdentityInfo":{"shape":"UserIdentityInfoLite"},
+        "PhoneConfig":{"shape":"UserPhoneConfig"},
+        "RoutingProfileId":{"shape":"RoutingProfileId"},
+        "SecurityProfileIds":{"shape":"SecurityProfileIds"},
+        "Tags":{"shape":"TagMap"},
+        "Username":{"shape":"AgentUsername"}
+      }
+    },
+    "UserSearchSummaryList":{
+      "type":"list",
+      "member":{"shape":"UserSearchSummary"}
     },
     "UserSummary":{
       "type":"structure",

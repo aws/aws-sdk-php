@@ -2589,6 +2589,13 @@
         "EXCLUDE"
       ]
     },
+    "CmfcKlvMetadata": {
+      "type": "string",
+      "enum": [
+        "PASSTHROUGH",
+        "NONE"
+      ]
+    },
     "CmfcScte35Esam": {
       "type": "string",
       "enum": [
@@ -2629,6 +2636,10 @@
         "IFrameOnlyManifest": {
           "shape": "CmfcIFrameOnlyManifest",
           "locationName": "iFrameOnlyManifest"
+        },
+        "KlvMetadata": {
+          "shape": "CmfcKlvMetadata",
+          "locationName": "klvMetadata"
         },
         "Scte35Esam": {
           "shape": "CmfcScte35Esam",
@@ -3401,6 +3412,10 @@
           "shape": "DolbyVisionLevel6Mode",
           "locationName": "l6Mode"
         },
+        "Mapping": {
+          "shape": "DolbyVisionMapping",
+          "locationName": "mapping"
+        },
         "Profile": {
           "shape": "DolbyVisionProfile",
           "locationName": "profile"
@@ -3428,10 +3443,18 @@
         "SPECIFY"
       ]
     },
+    "DolbyVisionMapping": {
+      "type": "string",
+      "enum": [
+        "HDR10_NOMAP",
+        "HDR10_1000"
+      ]
+    },
     "DolbyVisionProfile": {
       "type": "string",
       "enum": [
-        "PROFILE_5"
+        "PROFILE_5",
+        "PROFILE_8_1"
       ]
     },
     "DropFrameTimecode": {
@@ -5854,6 +5877,10 @@
           "shape": "__stringMin11Max11Pattern01D20305D205D",
           "locationName": "timecodeStart"
         },
+        "VideoGenerator": {
+          "shape": "InputVideoGenerator",
+          "locationName": "videoGenerator"
+        },
         "VideoSelector": {
           "shape": "VideoSelector",
           "locationName": "videoSelector"
@@ -6039,6 +6066,15 @@
         "ZEROBASED",
         "SPECIFIEDSTART"
       ]
+    },
+    "InputVideoGenerator": {
+      "type": "structure",
+      "members": {
+        "Duration": {
+          "shape": "__integerMin50Max86400000",
+          "locationName": "duration"
+        }
+      }
     },
     "InsertableImage": {
       "type": "structure",
@@ -6916,6 +6952,13 @@
         "DEFAULT"
       ]
     },
+    "M2tsKlvMetadata": {
+      "type": "string",
+      "enum": [
+        "PASSTHROUGH",
+        "NONE"
+      ]
+    },
     "M2tsNielsenId3": {
       "type": "string",
       "enum": [
@@ -7041,6 +7084,10 @@
         "FragmentTime": {
           "shape": "__doubleMin0",
           "locationName": "fragmentTime"
+        },
+        "KlvMetadata": {
+          "shape": "M2tsKlvMetadata",
+          "locationName": "klvMetadata"
         },
         "MaxPcrInterval": {
           "shape": "__integerMin0Max500",
@@ -7493,6 +7540,13 @@
         "FRAGMENTED_MP4"
       ]
     },
+    "MpdKlvMetadata": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "PASSTHROUGH"
+      ]
+    },
     "MpdScte35Esam": {
       "type": "string",
       "enum": [
@@ -7521,6 +7575,10 @@
         "CaptionContainerType": {
           "shape": "MpdCaptionContainerType",
           "locationName": "captionContainerType"
+        },
+        "KlvMetadata": {
+          "shape": "MpdKlvMetadata",
+          "locationName": "klvMetadata"
         },
         "Scte35Esam": {
           "shape": "MpdScte35Esam",
@@ -8351,6 +8409,13 @@
           "locationName": "hlsSettings"
         }
       }
+    },
+    "PadVideo": {
+      "type": "string",
+      "enum": [
+        "DISABLED",
+        "BLACK"
+      ]
     },
     "PartnerWatermarking": {
       "type": "structure",
@@ -9651,6 +9716,10 @@
           "shape": "Hdr10Metadata",
           "locationName": "hdr10Metadata"
         },
+        "PadVideo": {
+          "shape": "PadVideo",
+          "locationName": "padVideo"
+        },
         "Pid": {
           "shape": "__integerMin1Max2147483647",
           "locationName": "pid"
@@ -9956,7 +10025,8 @@
       "type": "string",
       "enum": [
         "ENABLED",
-        "DISABLED"
+        "DISABLED",
+        "STRICT"
       ]
     },
     "Xavc4kIntraCbgProfileClass": {
@@ -10700,6 +10770,11 @@
       "type": "integer",
       "min": 4,
       "max": 12
+    },
+    "__integerMin50Max86400000": {
+      "type": "integer",
+      "min": 50,
+      "max": 86400000
     },
     "__integerMin6000Max1024000": {
       "type": "integer",

@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getSiteAsync(array $args = [])
  * @method \Aws\Result getSiteAddress(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getSiteAddressAsync(array $args = [])
+ * @method \Aws\Result listAssets(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listAssetsAsync(array $args = [])
  * @method \Aws\Result listCatalogItems(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listCatalogItemsAsync(array $args = [])
  * @method \Aws\Result listOrders(array $args = [])
