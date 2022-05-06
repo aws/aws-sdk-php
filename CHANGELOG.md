@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.7 - 2022-05-06
 
 * `Aws\EC2` - Add new state values for IPAMs, IPAM Scopes, and IPAM Pools.
 * `Aws\LocationService` - Amazon Location Service now includes a MaxResults parameter for ListGeofences requests.
