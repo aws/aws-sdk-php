@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Add new state values for IPAMs, IPAM Scopes, and IPAM Pools.
+* `Aws\LocationService` - Amazon Location Service now includes a MaxResults parameter for ListGeofences requests.
+* `Aws\MediaPackage` - This release adds Dvb Dash 2014 as an available profile option for Dash Origin Endpoints.
+* `Aws\RDS` - Various documentation improvements.
+* `Aws\Redshift` - Introduces new field 'LoadSampleData' in CreateCluster operation. Customers can now specify 'LoadSampleData' option during creation of a cluster, which results in loading of sample data in the cluster that is created.
+* `Aws\SecurityHub` - Documentation updates for Security Hub API reference
+
 ## 3.222.6 - 2022-05-05
 
 * `Aws\DataSync` - AWS DataSync now supports a new ObjectTags Task API option that can be used to control whether Object Tags are transferred.
