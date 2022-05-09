@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.8 - 2022-05-09
 
 * `Aws\CloudControlApi` - SDK release for Cloud Control API to include paginators for Python SDK.
 * `Aws\CloudWatchEvidently` - Add detail message inside GetExperimentResults API response to indicate experiment result availability
