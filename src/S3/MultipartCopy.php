@@ -70,6 +70,7 @@ class MultipartCopy extends AbstractUploadManager
         } else {
             $this->source = $this->getInputSource($source);
         }
+
         parent::__construct(
             $client,
             array_change_key_case($config) + ['source_metadata' => null]
@@ -132,13 +133,14 @@ class MultipartCopy extends AbstractUploadManager
         }
         // The source parameter here is usually a string, but can be overloaded as an array
         // if the key contains a '?' character to specify where the query parameters start
+        $bucket = '';
+        $key = '';
         if (is_array($this->source)) {
             $key = str_replace('%2F', '/', rawurlencode($this->source['source_key']));
-            $data['CopySource'] = '/' . $this->source['source_bucket'] . '/' . $key;
+            $bucket = $this->source['source_bucket'];
         } else {
-
             list($bucket, $key) = explode('/', ltrim($this->source, '/'), 2);
-            $data['CopySource'] = '/' . $bucket . '/' . implode(
+            $key = implode(
             '/',
             array_map(
                 'urlencode',
@@ -146,6 +148,13 @@ class MultipartCopy extends AbstractUploadManager
             )
         );
         }
+
+        $data['CopySource'] = '/';
+        if (ArnParser::isArn($bucket)){
+            $data['CopySource'] = '';
+        }
+
+        $data['CopySource'] .= $bucket . '/' . $key;
         $data['PartNumber'] = $partNumber;
         if (!empty($this->sourceVersionId)) {
             $data['CopySource'] .= "?versionId=" . $this->sourceVersionId;
