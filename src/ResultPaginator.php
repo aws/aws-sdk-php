@@ -29,6 +29,10 @@ class ResultPaginator implements \Iterator
     /** @var int Number of operations/requests performed. */
     private $requestCount = 0;
 
+    /** @var array Operations whose last page of results
+     *             returns the previous page's NextToken. */
+    private $lastPageHasPreviousToken = ['GetLogEvents'];
+
     /**
      * @param AwsClientInterface $client
      * @param string             $operation
@@ -127,10 +131,26 @@ class ResultPaginator implements \Iterator
         }
 
         if ($this->nextToken || !$this->requestCount) {
+
+            if ($this->nextToken &&
+                in_array($this->operation, $this->lastPageHasPreviousToken)
+            ) {
+                $tokenKey = $this->config['input_token'];
+                $previousToken = $this->nextToken[$tokenKey];
+            }
+
             $this->result = $this->client->execute(
                 $this->createNextCommand($this->args, $this->nextToken)
             );
+
             $this->nextToken = $this->determineNextToken($this->result);
+
+            if (isset($previousToken)
+                && $previousToken === $this->nextToken[$tokenKey]
+            ) {
+                return false;
+            }
+
             $this->requestCount++;
             return true;
         }
@@ -167,8 +187,9 @@ class ResultPaginator implements \Iterator
             ? [$this->config['input_token'] => $this->config['output_token']]
             : array_combine($this->config['input_token'], $this->config['output_token']);
 
-        return array_filter(array_map(function ($outputToken) use ($result) {
-            return $result->search($outputToken);
+        return array_filter(array_map(function ($outputToken) use ($result, &$tokenValue) {
+            $tokenValue = $result->search($outputToken);
+            return $tokenValue;
         }, $nextToken));
     }
 }
