@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudControlApi` - SDK release for Cloud Control API to include paginators for Python SDK.
+* `Aws\CloudWatchEvidently` - Add detail message inside GetExperimentResults API response to indicate experiment result availability
+* `Aws\SSMContacts` - Fixed an error in the DescribeEngagement example for AWS Incident Manager.
+
 ## 3.222.7 - 2022-05-06
 
 * `Aws\EC2` - Add new state values for IPAMs, IPAM Scopes, and IPAM Pools.
