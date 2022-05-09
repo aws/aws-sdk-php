@@ -133,28 +133,27 @@ class MultipartCopy extends AbstractUploadManager
         }
         // The source parameter here is usually a string, but can be overloaded as an array
         // if the key contains a '?' character to specify where the query parameters start
-        $bucket = '';
-        $key = '';
         if (is_array($this->source)) {
             $key = str_replace('%2F', '/', rawurlencode($this->source['source_key']));
             $bucket = $this->source['source_bucket'];
         } else {
             list($bucket, $key) = explode('/', ltrim($this->source, '/'), 2);
             $key = implode(
-            '/',
-            array_map(
-                'urlencode',
-                explode('/', rawurldecode($key))
-            )
-        );
+                '/',
+                array_map(
+                    'urlencode',
+                    explode('/', rawurldecode($key))
+                )
+            );
         }
 
-        $data['CopySource'] = '/';
-        if (ArnParser::isArn($bucket)){
-            $data['CopySource'] = '';
+        $uri = '/';
+        if (ArnParser::isArn($bucket)) {
+            $uri = '';
         }
 
-        $data['CopySource'] .= $bucket . '/' . $key;
+        $uri .= $bucket . '/' . $key;
+        $data['CopySource'] = $uri;
         $data['PartNumber'] = $partNumber;
         if (!empty($this->sourceVersionId)) {
             $data['CopySource'] .= "?versionId=" . $this->sourceVersionId;
@@ -217,6 +216,7 @@ class MultipartCopy extends AbstractUploadManager
                 'Bucket' => $bucket,
                 'Key' => $key,
             ];
+            var_dump($headParams);
             if (strpos($key, '?')) {
                 list($key, $query) = explode('?', $key, 2);
                 $headParams['Key'] = $key;
