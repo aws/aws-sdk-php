@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.9 - 2022-05-10
 
 * `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
 * `Aws\EC2` - Added support for using NitroTPM and UEFI Secure Boot on EC2 instances.
