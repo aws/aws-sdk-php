@@ -187,7 +187,7 @@ class ResultPaginator implements \Iterator
             ? [$this->config['input_token'] => $this->config['output_token']]
             : array_combine($this->config['input_token'], $this->config['output_token']);
 
-        return array_filter(array_map(function ($outputToken) use ($result, &$tokenValue) {
+        return array_filter(array_map(function ($outputToken) use ($result) {
             return $result->search($outputToken);
         }, $nextToken));
     }
