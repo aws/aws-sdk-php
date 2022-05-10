@@ -417,7 +417,7 @@ class ResultPaginatorTest extends TestCase
 
     public function testLastPageHasPreviousToken()
     {
-        $config = ['input_token' => 'nextToken', 'output_token' => 'LastToken'];
+        $config = ['input_token' => 'nextToken', 'output_token' => 'nextForwardToken'];
         $provider = ApiProvider::defaultProvider();
         $client = new CloudWatchLogsClient([
             'region'  => 'us-west-2',
@@ -434,9 +434,10 @@ class ResultPaginatorTest extends TestCase
             }
         ]);
         $results = [
-            new Result(['nextToken' => 'foo', 'LastToken' => 'test2']),
-            new Result(['nextToken' => 'bar', 'LastToken' => 'test2']),
-            new Result(['nextToken' => 'bar', 'TableNames' => 'test2']),
+            new Result(['nextToken' => 'foo', 'nextForwardToken' => 'foo']),
+            new Result(['nextToken' => 'bar', 'nextForwardToken' => 'bar']),
+            new Result(['nextToken' => 'bar', 'nextForwardToken' => 'bar']),
+            new Result(['nextToken' => 'baz', 'nextForwardToken' => 'baz']),
         ];
         $requestCount = 0;
         $this->addMockResults(
@@ -450,16 +451,10 @@ class ResultPaginatorTest extends TestCase
             "logGroupName" => "foo",
             "logStreamName" => 'bar',
         ]);
-        // Iterate over the paginator and keep track of the keys and values
-        $tableNames = [];
-        $lastKey = $result = null;
-        foreach ($paginator as $key => $result) {
-            $tableNames = array_merge($tableNames, $result['TableNames']);
-            $lastKey = $key;
-        }
-
+        // Iterate over the paginator
+        foreach ($paginator as $key => $result) {}
         // Make sure the paginator yields the expected results
         $this->assertInstanceOf('Aws\\Result', $result);
-        $this->assertEquals(2, $requestCount);
+        $this->assertEquals(3, $requestCount);
     }
 }
