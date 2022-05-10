@@ -188,8 +188,7 @@ class ResultPaginator implements \Iterator
             : array_combine($this->config['input_token'], $this->config['output_token']);
 
         return array_filter(array_map(function ($outputToken) use ($result, &$tokenValue) {
-            $tokenValue = $result->search($outputToken);
-            return $tokenValue;
+            return $result->search($outputToken);
         }, $nextToken));
     }
 }
