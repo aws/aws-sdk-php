@@ -29,7 +29,7 @@ class JsonBody
     public static function getContentType(Service $service)
     {
         return 'application/x-amz-json-'
-            . number_format($service->getMetadata('jsonVersion'), 1);
+            . number_format(($version = $service->getMetadata('jsonVersion')) !== null ? $version : 0.0, 1);
     }
 
     /**
