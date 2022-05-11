@@ -825,33 +825,37 @@ EOT;
             ->disableOriginalConstructor()
             ->getMock();
 
-        $request->expects($this->at(0))
+        $request->expects($this->exactly(2))
             ->method('getHeader')
-            ->with('X-Amz-User-Agent')
-            ->willReturn(["MockBuilder"]);
+            ->withConsecutive(
+                ['X-Amz-User-Agent'],
+                ['User-Agent']
+            )
+            ->willReturnOnConsecutiveCalls(
+                ["MockBuilder"],
+                ['MockBuilder']
+            );
 
-        $request->expects($this->at(1))
+        $request->expects($this->exactly(2))
             ->method('withHeader')
-            ->with(
-                'X-Amz-User-Agent',
-                new \PHPUnit\Framework\Constraint\RegularExpression(
-                    '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
-                )
-            )->willReturn($request);
-
-        $request->expects($this->at(2))
-            ->method('getHeader')
-            ->with('User-Agent')
-            ->willReturn(['MockBuilder']);
-
-        $request->expects($this->at(3))
-            ->method('withHeader')
-            ->with(
-                'User-Agent',
-                new \PHPUnit\Framework\Constraint\RegularExpression(
-                    '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
-                )
-            )->willReturn($request);
+            ->withConsecutive(
+                [
+                    'X-Amz-User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
+                    )
+                ],
+                [
+                    'User-Agent',
+                    new \PHPUnit\Framework\Constraint\RegularExpression(
+                        '/aws-sdk-php\/' . Sdk::VERSION . '.* MockBuilder/'
+                    )
+                ]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $request,
+                $request
+            );
 
         $args = [];
         $list = new HandlerList(function () {});
