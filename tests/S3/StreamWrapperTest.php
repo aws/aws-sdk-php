@@ -1014,8 +1014,8 @@ class StreamWrapperTest extends TestCase
      */
     public function testTriggersErrorOnNoFlushOrClose($content)
     {
-        $this->expectException(\PHPUnit\Framework\Error\Warning::class);
-        $this->expectExceptionMessage("Unable to determine stream size. Did you forget to close or flush the stream?");
+        $this->expectWarning();
+        $this->expectWarning("Unable to determine stream size. Did you forget to close or flush the stream?");
 
         $stream = $this->getMockBuilder(Psr7\Stream::class)
             ->disableOriginalConstructor()
