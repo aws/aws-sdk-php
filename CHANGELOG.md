@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - This release updates AWS PrivateLink APIs to support IPv6 for PrivateLink Services and Endpoints of type 'Interface'.
+* `Aws\SecretsManager` - Doc only update for Secrets Manager that fixes several customer-reported issues.
+
 ## 3.222.9 - 2022-05-10
 
 * `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
