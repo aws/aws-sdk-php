@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.11 - 2022-05-12
 
 * `Aws\Credentials` - Made implicit conversion of float to int explicit (to avoid deprivation errors in php8.1)
 * `Aws\EC2` - This release introduces a target type Gateway Load Balancer Endpoint for mirrored traffic. Customers can now specify GatewayLoadBalancerEndpoint option during the creation of a traffic mirror target.
