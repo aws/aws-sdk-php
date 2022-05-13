@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.12 - 2022-05-13
 
 * `Aws\ManagedGrafana` - This release adds APIs for creating and deleting API keys in an Amazon Managed Grafana workspace.
 
