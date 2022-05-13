@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ManagedGrafana` - This release adds APIs for creating and deleting API keys in an Amazon Managed Grafana workspace.
+
 ## 3.222.11 - 2022-05-12
 
 * `Aws\Credentials` - Made implicit conversion of float to int explicit (to avoid deprivation errors in php8.1)
