@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.13 - 2022-05-16
 
 * `Aws\ApplicationDiscoveryService` - Add Migration Evaluator Collector details to the GetDiscoverySummary API response
 * `Aws\CloudFront` - Introduced a new error (TooLongCSPInResponseHeadersPolicy) that is returned when the value of the Content-Security-Policy header in a response headers policy exceeds the maximum allowed length.
