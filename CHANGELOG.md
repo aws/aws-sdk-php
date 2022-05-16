@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ApplicationDiscoveryService` - Add Migration Evaluator Collector details to the GetDiscoverySummary API response
+* `Aws\CloudFront` - Introduced a new error (TooLongCSPInResponseHeadersPolicy) that is returned when the value of the Content-Security-Policy header in a response headers policy exceeds the maximum allowed length.
+* `Aws\Rekognition` - Documentation updates for Amazon Rekognition.
+* `Aws\ResilienceHub` - In this release, we are introducing support for Amazon Elastic Container Service, Amazon Route 53, AWS Elastic Disaster Recovery, AWS Backup in addition to the existing supported Services. This release also supports Terraform file input from S3 and scheduling daily assessments
+* `Aws\STS` - Documentation updates for AWS Security Token Service.
+* `Aws\ServiceCatalog` - Updated the descriptions for the ListAcceptedPortfolioShares API description and the PortfolioShareType parameters.
+* `Aws\WorkSpacesWeb` - Amazon WorkSpaces Web now supports Administrator timeout control
+
 ## 3.222.12 - 2022-05-13
 
 * `Aws\ManagedGrafana` - This release adds APIs for creating and deleting API keys in an Amazon Managed Grafana workspace.
