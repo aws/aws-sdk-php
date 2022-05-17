@@ -7,7 +7,7 @@ use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Aws\CloudFront\CloudFrontClient
+ * @covers CloudFrontClient
  */
 class CloudFrontClientTest extends TestCase
 {
@@ -18,7 +18,7 @@ class CloudFrontClientTest extends TestCase
 
     public function _setUp()
     {
-        $this->key = realpath(__DIR__.'/fixtures/test2.pem');
+        openssl_pkey_export(openssl_pkey_new(),$this->key);
         $this->kp  = 'test';
     }
 

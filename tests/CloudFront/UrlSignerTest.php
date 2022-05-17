@@ -9,7 +9,7 @@ use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Aws\CloudFront\UrlSigner
+ * @covers UrlSigner
  */
 class UrlSignerTest extends TestCase
 {
@@ -20,7 +20,7 @@ class UrlSignerTest extends TestCase
 
     public function _setUp()
     {
-        $this->key = realpath(__DIR__.'/fixtures/test2.pem');
+        openssl_pkey_export(openssl_pkey_new(),$this->key);
         $this->kp  = 'test';
     }
 
