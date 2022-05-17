@@ -2,7 +2,6 @@
 namespace Aws\Test\CloudFront;
 
 use Aws\CloudFront\CookieSigner;
-use Aws\CloudFront\Policy;
 use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +14,7 @@ class CookieSignerTest extends TestCase
 
     public function _setUp()
     {
-        $this->key = realpath(__DIR__.'/fixtures/test2.pem');
+        openssl_pkey_export(openssl_pkey_new(),$this->key);
         $this->kp  = 'test';
     }
 

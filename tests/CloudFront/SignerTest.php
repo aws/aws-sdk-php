@@ -1,7 +1,6 @@
 <?php
 namespace Aws\Test\CloudFront;
 
-use Aws\CloudFront\Policy;
 use Aws\CloudFront\Signer;
 use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
