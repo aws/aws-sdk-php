@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.15 - 2022-05-18
 
 * `Aws\AppMesh` - This release updates the existing Create and Update APIs for meshes and virtual nodes by adding a new IP preference field. This new IP preference field can be used to control the IP versions being used with the mesh and allows for IPv6 support within App Mesh.
 * `Aws\Batch` - Documentation updates for AWS Batch.
