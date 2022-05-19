@@ -760,6 +760,13 @@
       "min":1,
       "pattern":"^\\S(.*\\S)?$"
     },
+    "DeploymentResult":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"Message"},
+        "ResultCode":{"shape":"ResultCode"}
+      }
+    },
     "DeploymentState":{
       "type":"string",
       "enum":[
@@ -1513,6 +1520,7 @@
       "max":100,
       "min":1
     },
+    "Message":{"type":"string"},
     "NextToken":{
       "type":"string",
       "max":1024,
@@ -1560,6 +1568,14 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ResultCode":{
+      "type":"string",
+      "enum":[
+        "SUCCESS",
+        "INVALID_ROLE_FAILURE",
+        "UNSPECIFIED_FAILURE"
+      ]
     },
     "RoleARN":{
       "type":"string",
@@ -1670,6 +1686,7 @@
         "Created":{"shape":"DateTime"},
         "DeploymentAction":{"shape":"DeploymentAction"},
         "DeploymentId":{"shape":"DeploymentId"},
+        "DeploymentResult":{"shape":"DeploymentResult"},
         "DeploymentState":{"shape":"DeploymentState"},
         "LastUpdated":{"shape":"DateTime"},
         "SnapshotId":{"shape":"SnapshotId"}
@@ -1684,6 +1701,7 @@
       "members":{
         "DeploymentAction":{"shape":"DeploymentAction"},
         "DeploymentId":{"shape":"DeploymentId"},
+        "DeploymentResult":{"shape":"DeploymentResult"},
         "DeploymentState":{"shape":"DeploymentState"},
         "LastUpdated":{"shape":"DateTime"},
         "SnapshotId":{"shape":"SnapshotId"}
