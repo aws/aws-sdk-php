@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.17 - 2022-05-20
 
 * `Aws\CloudWatchLogs` - Doc-only update to publish the new valid values for log retention
 * `Aws\Comprehend` - Comprehend releases 14 new entity types for DetectPiiEntities and ContainsPiiEntities APIs.
