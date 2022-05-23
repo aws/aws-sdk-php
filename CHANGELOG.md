@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.18 - 2022-05-23
 
 * `Aws\ElastiCache` - Added support for encryption in transit for Memcached clusters. Customers can now launch Memcached cluster with encryption in transit enabled when using Memcached version 1.6.12 or later.
 * `Aws\ForecastService` - New APIs for Monitor that help you understand how your predictors perform over time.
