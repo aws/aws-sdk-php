@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.19 - 2022-05-24
 
 * `Aws\CognitoIdentityProvider` - Amazon Cognito now supports requiring attribute verification (ex. email and phone number) before update.
 * `Aws\EC2` - Stop Protection feature enables customers to protect their instances from accidental stop actions.
