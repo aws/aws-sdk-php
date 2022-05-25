@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.222.20 - 2022-05-25
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway
 * `Aws\AppRunner` - Documentation-only update added for CodeConfiguration.
