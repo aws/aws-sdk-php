@@ -39,8 +39,8 @@ class EventBridgeEndpointMiddlewareTest extends TestCase
             ],
             [
                 "us-east-1",
-                ['use_dual_stack_endpoint' => true,
-                    'use_fips_endpoint' => true], null,
+                ['use_dual_stack_endpoint' => true, 'use_fips_endpoint' => true],
+                null,
                 'https://events-fips.us-east-1.api.aws',
                 null,
             ],
