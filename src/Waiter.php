@@ -2,7 +2,6 @@
 namespace Aws;
 
 use Aws\Exception\AwsException;
-use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 
@@ -88,7 +87,7 @@ class Waiter implements PromisorInterface
 
     public function promise()
     {
-        return Promise\Coroutine::of(function () {
+        return Coroutine::of(function () {
             $name = $this->config['operation'];
             for ($state = 'retry', $attempt = 1; $state === 'retry'; $attempt++) {
                 // Execute the operation.
