@@ -2,6 +2,7 @@
 namespace Aws;
 
 use Aws\Exception\AwsException;
+use GuzzleHttp\Promise\Coroutine;
 use GuzzleHttp\Promise\PromisorInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 
@@ -85,6 +86,9 @@ class Waiter implements PromisorInterface
         }
     }
 
+    /**
+     * @return Coroutine
+     */
     public function promise()
     {
         return Coroutine::of(function () {
