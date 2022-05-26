@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.223.0 - 2022-05-26
 
 * `Aws\` - Add missing PHPDoc annotation for PromiseInterface implementations.
 * `Aws\EC2` - C7g instances, powered by the latest generation AWS Graviton3 processors, provide the best price performance in Amazon EC2 for compute-intensive workloads.
