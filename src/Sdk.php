@@ -200,6 +200,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionEKS(array $args = [])
  * @method \Aws\EMRContainers\EMRContainersClient createEMRContainers(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionEMRContainers(array $args = [])
+ * @method \Aws\EMRServerlessWebService\EMRServerlessWebServiceClient createEMRServerlessWebService(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionEMRServerlessWebService(array $args = [])
  * @method \Aws\Ec2\Ec2Client createEc2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionEc2(array $args = [])
  * @method \Aws\Ecr\EcrClient createEcr(array $args = [])
