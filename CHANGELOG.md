@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.224.0 - 2022-05-27
 
 * `Aws\` - Removed `EMRServerlessWebService`, which was released with an incorrect name
 * `Aws\Appflow` - Adding the following features/changes: Parquet output that preserves typing from the source connector, Failed executions threshold before deactivation for scheduled flows, increasing max size of access and refresh token from 2048 to 4096
