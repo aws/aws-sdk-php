@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CognitoIdentityProvider` - Amazon Cognito now supports IP Address propagation for all unauthenticated APIs (e.g. SignUp, ForgotPassword).
+* `Aws\IoTSiteWise` - This release adds the following new optional field to the IoT SiteWise asset resource: assetDescription.
+* `Aws\LookoutMetrics` - Adding backtest mode to detectors using the Cloudwatch data source.
+* `Aws\SageMaker` - Amazon SageMaker Notebook Instances now support Jupyter Lab 3.
+* `Aws\TranscribeService` - Amazon Transcribe now supports automatic language identification for multi-lingual audio in batch mode.
+* `Aws\drs` - Changed existing APIs and added new APIs to accommodate using multiple AWS accounts with AWS Elastic Disaster Recovery.
+
 ## 3.224.0 - 2022-05-27
 
 * `Aws\` - Removed `EMRServerlessWebService`, which was released with an incorrect name
