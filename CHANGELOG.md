@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.224.1 - 2022-05-31
 
 * `Aws\CognitoIdentityProvider` - Amazon Cognito now supports IP Address propagation for all unauthenticated APIs (e.g. SignUp, ForgotPassword).
 * `Aws\IoTSiteWise` - This release adds the following new optional field to the IoT SiteWise asset resource: assetDescription.
