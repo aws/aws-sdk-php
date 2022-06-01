@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\BackupGateway` - Adds GetGateway and UpdateGatewaySoftwareNow API and adds hypervisor name to UpdateHypervisor API
+* `Aws\ChimeSDKMeetings` - Adds support for centrally controlling each participant's ability to send and receive audio, video and screen share within a WebRTC session. Attendee capabilities can be specified when the attendee is created and updated during the session with the new BatchUpdateAttendeeCapabilitiesExcept API.
+* `Aws\ForecastService` - Added Format field to Import and Export APIs in Amazon Forecast. Added TimeSeriesSelector to Create Forecast API.
+* `Aws\Route53` - Add new APIs to support Route 53 IP Based Routing
+
 ## 3.224.1 - 2022-05-31
 
 * `Aws\CognitoIdentityProvider` - Amazon Cognito now supports IP Address propagation for all unauthenticated APIs (e.g. SignUp, ForgotPassword).
