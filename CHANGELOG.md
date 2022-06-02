@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.224.3 - 2022-06-02
 
 * `Aws\ApplicationInsights` - Provide Account Level onboarding support through CFN/CLI
 * `Aws\CodeArtifact` - Documentation updates for CodeArtifact
