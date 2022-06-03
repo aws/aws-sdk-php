@@ -200,6 +200,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionEKS(array $args = [])
  * @method \Aws\EMRContainers\EMRContainersClient createEMRContainers(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionEMRContainers(array $args = [])
+ * @method \Aws\EMRServerless\EMRServerlessClient createEMRServerless(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionEMRServerless(array $args = [])
  * @method \Aws\Ec2\Ec2Client createEc2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionEc2(array $args = [])
  * @method \Aws\Ecr\EcrClient createEcr(array $args = [])
@@ -615,7 +617,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.222.6';
+    const VERSION = '3.224.3';
 
     /** @var array Arguments for creating clients */
     private $args;
