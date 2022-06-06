@@ -147,11 +147,7 @@ class MultipartCopy extends AbstractUploadManager
             );
         }
 
-        $uri = '/';
-        if (ArnParser::isArn($bucket)) {
-            $uri = '';
-        }
-
+        $uri = ArnParser::isArn($bucket) ? '' : '/';
         $uri .= $bucket . '/' . $key;
         $data['CopySource'] = $uri;
         $data['PartNumber'] = $partNumber;
@@ -216,7 +212,6 @@ class MultipartCopy extends AbstractUploadManager
                 'Bucket' => $bucket,
                 'Key' => $key,
             ];
-            var_dump($headParams);
             if (strpos($key, '?')) {
                 list($key, $query) = explode('?', $key, 2);
                 $headParams['Key'] = $key;
@@ -239,11 +234,7 @@ class MultipartCopy extends AbstractUploadManager
      */
     private function getInputSource($inputSource)
     {
-        if (ArnParser::isArn($inputSource)) {
-            $sourceBuilder = '';
-        } else {
-            $sourceBuilder = "/";
-        }
+        $sourceBuilder = ArnParser::isArn($inputSource) ? '' : '/';
         $sourceBuilder .= ltrim(rawurldecode($inputSource), '/');
         return $sourceBuilder;
     }

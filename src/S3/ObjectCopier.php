@@ -152,14 +152,14 @@ class ObjectCopier implements PromisorInterface
             } catch (\Exception $e) {
                 throw new \InvalidArgumentException(
                     'Provided ARN was a not a valid S3 access point ARN ('
-                        . $e->getMessage() . ')',
+                    . $e->getMessage() . ')',
                     0,
                     $e
                 );
             }
         }
-        $sourcePath = $path . rawurlencode($this->source['Key']);
 
+        $sourcePath = $path . rawurlencode($this->source['Key']);
         if (isset($this->source['VersionId'])) {
             $sourcePath .= "?versionId={$this->source['VersionId']}";
         }
