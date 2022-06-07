@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.224.4 - 2022-06-06
+
+* `Aws\ChimeSDKMessaging` - This release adds support for searching channels by members via the SearchChannels API, removes required restrictions for Name and Mode in UpdateChannel API and enhances CreateChannel API by exposing member and moderator list as well as channel id as optional parameters.
+* `Aws\Connect` - This release adds a new API, GetCurrentUserData, which returns real-time details about users' current activity.
+
 ## 3.224.3 - 2022-06-02
 
 * `Aws\ApplicationInsights` - Provide Account Level onboarding support through CFN/CLI
