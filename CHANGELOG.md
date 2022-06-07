@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.224.5 - 2022-06-07
 
 * `Aws\AuditManager` - This release introduces 2 updates to the Audit Manager API. The roleType and roleArn attributes are now required when you use the CreateAssessment or UpdateAssessment operation. We also added a throttling exception to the RegisterAccount API operation.
 * `Aws\CostExplorer` - Added two new APIs to support cost allocation tags operations: ListCostAllocationTags, UpdateCostAllocationTagsStatus.
