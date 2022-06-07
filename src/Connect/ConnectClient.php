@@ -137,6 +137,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getContactAttributesAsync(array $args = [])
  * @method \Aws\Result getCurrentMetricData(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getCurrentMetricDataAsync(array $args = [])
+ * @method \Aws\Result getCurrentUserData(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getCurrentUserDataAsync(array $args = [])
  * @method \Aws\Result getFederationToken(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getFederationTokenAsync(array $args = [])
  * @method \Aws\Result getMetricData(array $args = [])
