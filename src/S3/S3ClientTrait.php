@@ -4,7 +4,6 @@ namespace Aws\S3;
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
-use Aws\CacheInterface;
 use Aws\HandlerList;
 use Aws\ResultInterface;
 use Aws\S3\Exception\PermanentRedirectException;
