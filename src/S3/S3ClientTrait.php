@@ -95,7 +95,7 @@ trait S3ClientTrait
     /**
      * @see S3ClientInterface::registerStreamWrapper()
      */
-    public function registerStreamWrapper($useV2Existence = null)
+    public function registerStreamWrapper($useV2Existence = false)
     {
         StreamWrapper::register(
             $this,
