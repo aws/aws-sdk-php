@@ -4,6 +4,7 @@ namespace Aws\S3;
 use Aws\Api\Parser\PayloadParserTrait;
 use Aws\CommandInterface;
 use Aws\Exception\AwsException;
+use Aws\CacheInterface;
 use Aws\HandlerList;
 use Aws\ResultInterface;
 use Aws\S3\Exception\PermanentRedirectException;
@@ -94,9 +95,14 @@ trait S3ClientTrait
     /**
      * @see S3ClientInterface::registerStreamWrapper()
      */
-    public function registerStreamWrapper()
+    public function registerStreamWrapper($useV2Existence = null)
     {
-        StreamWrapper::register($this);
+        StreamWrapper::register(
+            $this,
+            's3',
+            null,
+            $useV2Existence
+        );
     }
 
     /**

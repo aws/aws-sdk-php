@@ -101,8 +101,11 @@ interface S3ClientInterface extends AwsClientInterface
 
     /**
      * Register the Amazon S3 stream wrapper with this client instance.
+     *
+     * @param boolean $useV2Existence Set to true to use updated
+     *                                object and bucket existence methods
      */
-    public function registerStreamWrapper();
+    public function registerStreamWrapper($useV2Existence);
 
     /**
      * Deletes objects from Amazon S3 that match the result of a ListObjects
