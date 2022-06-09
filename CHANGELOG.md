@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKMeetings` - Adds support for live transcription in AWS GovCloud (US) Regions.
+
 ## 3.225.0 - 2022-06-08
 
 * `Aws\DatabaseMigrationService` - This release adds DMS Fleet Advisor APIs and exposes functionality for DMS Fleet Advisor. It adds functionality to create and modify fleet advisor instances, and to collect and analyze information about the local data infrastructure.
