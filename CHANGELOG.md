@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.225.1 - 2022-06-09
 
 * `Aws\ChimeSDKMeetings` - Adds support for live transcription in AWS GovCloud (US) Regions.
 
