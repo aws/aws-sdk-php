@@ -8,7 +8,6 @@ use Aws\S3\Exception\S3Exception;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\CachingStream;
-use phpDocumentor\Reflection\Types\Boolean;
 use Psr\Http\Message\StreamInterface;
 
 /**
