@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.225.2 - 2022-06-10
 
 * `Aws\` - Bump Guzzle 6 and 7 due to security advisory
 * `Aws\` - Remove RedshiftServerless service
