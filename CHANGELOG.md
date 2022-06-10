@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Bump Guzzle 6 and 7 due to security advisory
+* `Aws\` - Remove RedshiftServerless service
+* `Aws\FraudDetector` - Documentation updates for Amazon Fraud Detector (AWSHawksNest)
+
 ## 3.225.1 - 2022-06-09
 
 * `Aws\ChimeSDKMeetings` - Adds support for live transcription in AWS GovCloud (US) Regions.
