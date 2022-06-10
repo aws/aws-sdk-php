@@ -11,7 +11,6 @@
 * `Aws\MainframeModernization` - AWS Mainframe Modernization service is a managed mainframe service and set of tools for planning, migrating, modernizing, and running mainframe workloads on AWS
 * `Aws\Neptune` - This release adds support for Neptune to be configured as a global database, with a primary DB cluster in one region, and up to five secondary DB clusters in other regions.
 * `Aws\Redshift` - Adds new API GetClusterCredentialsWithIAM to return temporary credentials.
-* `Aws\RedshiftServerless` - Add new API operations for Amazon Redshift Serverless, a new way of using Amazon Redshift without needing to manually manage provisioned clusters. The new operations let you interact with Redshift Serverless resources, such as create snapshots, list VPC endpoints, delete resource policies, and more.
 
 ## 3.224.5 - 2022-06-07
 
