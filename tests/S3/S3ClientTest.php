@@ -69,7 +69,14 @@ class S3ClientTest extends TestCase
             ['my.bucket.com', true],
             ['test-fooCaps', false],
             ['w-w', true],
-            ['w------', false]
+            ['w------', false],
+            ['', false],
+            [null,false],
+            [false,false],
+            [true,false],
+            [1,false],
+            [[],false],
+            [new \stdClass(),false]
         ];
     }
 

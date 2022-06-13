@@ -429,6 +429,10 @@ class S3Client extends AwsClient implements S3ClientInterface
      */
     public static function isBucketDnsCompatible($bucket)
     {
+        if (!is_string($bucket)) {
+            return false;
+        }
+
         $bucketLen = $bucket !== null ? strlen($bucket) : 0;
 
         return ($bucketLen >= 3 && $bucketLen <= 63) &&

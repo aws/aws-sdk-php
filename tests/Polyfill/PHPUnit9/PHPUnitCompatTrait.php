@@ -73,7 +73,7 @@ trait PHPUnitCompatTrait
         }
 
         if (isset($attribute)) {
-            if ( ! $attribute || $attribute->isPublic()) {
+            if (!$attribute || $attribute->isPublic()) {
                 return $object->$attributeName;
             }
             $attribute->setAccessible(true);
@@ -109,14 +109,14 @@ trait PHPUnitCompatTrait
 
     public function assertArraySubset($subset, $array, $checkForObjectIdentity = false, $message = '')
     {
-        if ( ! (\is_array($subset) || $subset instanceof ArrayAccess)) {
+        if (!(\is_array($subset) || $subset instanceof ArrayAccess)) {
             throw self::invalidArgumentHelper(
                 1,
                 'array or ArrayAccess'
             );
         }
 
-        if ( ! (\is_array($array) || $array instanceof ArrayAccess)) {
+        if (!(\is_array($array) || $array instanceof ArrayAccess)) {
             throw self::invalidArgumentHelper(
                 2,
                 'array or ArrayAccess'
