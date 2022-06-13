@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.225.3 - 2022-06-13
 
 * `Aws\` - Revert previous guzzle bump due to lack of exposure to security advisories
 * `Aws\Outposts` - This release adds API operations AWS uses to install Outpost servers.
