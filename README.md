@@ -46,7 +46,7 @@ Jump To:
    the basic concepts.
 5. **Beta: Removing unused services** — To date, there are over 300 AWS services available for use with this SDK.
    You will likely not need them all. If you use Composer and would like to learn more about this feature,
-    please read the [linked documentation]().
+    please read the [linked documentation][docs-script-composer].
 
 
 ## Quick Examples
@@ -194,6 +194,7 @@ We work hard to provide a high-quality and useful SDK for our AWS services, and 
 [docs-s3-transfer]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/s3-transfer.html
 [docs-s3-multipart]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/s3-multipart-upload.html
 [docs-s3-encryption]: https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/s3-encryption-client.html
+[docs-script-composer]: https://github.com/aws/aws-sdk-php/tree/master/src/Script/Composer
 
 [aws]: http://aws.amazon.com
 [aws-iam-credentials]: http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UsingIAM.html#UsingIAMrolesWithAmazonEC2Instances

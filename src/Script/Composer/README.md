@@ -4,8 +4,8 @@ bug, please open an issue with us [here](https://github.com/aws/aws-sdk-php/issu
 you have feedback on the implementation, please visit the [open discussion](https://github.com/aws/aws-sdk-php/discussions/2420) 
 we have on the topic.
 
-To avoid shipping unused services, specify which services you would like to use in your `composer.json` file and
-run the `Aws\\Script\\Composer::removeUnusedServices` script.   
+To avoid shipping unused services, specify which services you would like to keep in your `composer.json` file and
+use the `Aws\\Script\\Composer::removeUnusedServices` script.   
 
 ```
 {
