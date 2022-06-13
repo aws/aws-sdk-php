@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Revert previous guzzle bump due to lack of exposure to security advisories
+* `Aws\Outposts` - This release adds API operations AWS uses to install Outpost servers.
+
 ## 3.225.2 - 2022-06-10
 
 * `Aws\` - Bump Guzzle 6 and 7 due to security advisory
