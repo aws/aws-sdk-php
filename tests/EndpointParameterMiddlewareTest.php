@@ -90,7 +90,7 @@ class EndpointParameterMiddlewareTest extends TestCase
         });
 
         $handler = $list->resolve();
-        $handler($command, new Request('POST', $endpoint))->wait(false);
+        $handler($command, new Request('POST', $endpoint));
     }
 
     public function getTestCases()
