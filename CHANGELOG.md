@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.225.4 - 2022-06-14
 
 * `Aws\Budgets` - Add a budgets ThrottlingException. Update the CostFilters value pattern.
 * `Aws\LookoutMetrics` - Adding filters to Alert and adding new UpdateAlert API.
