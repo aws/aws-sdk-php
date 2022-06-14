@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Budgets` - Add a budgets ThrottlingException. Update the CostFilters value pattern.
+* `Aws\LookoutMetrics` - Adding filters to Alert and adding new UpdateAlert API.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for rules that constrain Automatic-ABR rendition selection when generating ABR package ladders.
+
 ## 3.225.3 - 2022-06-13
 
 * `Aws\` - Revert previous guzzle bump due to lack of exposure to security advisories
