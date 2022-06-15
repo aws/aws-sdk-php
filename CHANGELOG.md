@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppRegistry` - This release adds a new API ListAttributeGroupsForApplication that returns associated attribute groups of an application. In addition, the UpdateApplication and UpdateAttributeGroup APIs will not allow users to update the 'Name' attribute.
+* `Aws\FinSpaceData` - This release adds a new set of APIs, GetPermissionGroup, DisassociateUserFromPermissionGroup, AssociateUserToPermissionGroup, ListPermissionGroupsByUser, ListUsersByPermissionGroup.
+* `Aws\GuardDuty` - Adds finding fields available from GuardDuty Console. Adds FreeTrial related operations. Deprecates the use of various APIs related to Master Accounts and Replace them with Administrator Accounts.
+* `Aws\WorkSpaces` - Added new field "reason" to OperationNotSupportedException. Receiving this exception in the DeregisterWorkspaceDirectory API will now return a reason giving more context on the failure.
+
 ## 3.225.4 - 2022-06-14
 
 * `Aws\Budgets` - Add a budgets ThrottlingException. Update the CostFilters value pattern.
