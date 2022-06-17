@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.227.0 - 2022-06-17
 
 * `Aws\Connect` - This release updates these APIs: UpdateInstanceAttribute, DescribeInstanceAttribute and ListInstanceAttributes. You can use it to programmatically enable/disable High volume outbound communications using attribute type HIGH_VOLUME_OUTBOUND on the specified Amazon Connect instance.
 * `Aws\ConnectCampaignService` - Added Amazon Connect high volume outbound communications SDK.
