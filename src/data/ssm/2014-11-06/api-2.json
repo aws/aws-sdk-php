@@ -105,7 +105,8 @@
         {"shape":"InvalidOutputLocation"},
         {"shape":"InvalidParameters"},
         {"shape":"InvalidTarget"},
-        {"shape":"InvalidSchedule"}
+        {"shape":"InvalidSchedule"},
+        {"shape":"InvalidTargetMaps"}
       ]
     },
     "CreateAssociationBatch":{
@@ -127,7 +128,8 @@
         {"shape":"UnsupportedPlatformType"},
         {"shape":"InvalidOutputLocation"},
         {"shape":"InvalidTarget"},
-        {"shape":"InvalidSchedule"}
+        {"shape":"InvalidSchedule"},
+        {"shape":"InvalidTargetMaps"}
       ]
     },
     "CreateDocument":{
@@ -1798,7 +1800,8 @@
         {"shape":"InvalidDocument"},
         {"shape":"InvalidTarget"},
         {"shape":"InvalidAssociationVersion"},
-        {"shape":"AssociationVersionLimitExceeded"}
+        {"shape":"AssociationVersionLimitExceeded"},
+        {"shape":"InvalidTargetMaps"}
       ]
     },
     "UpdateAssociationStatus":{
@@ -2137,7 +2140,15 @@
         "LastExecutionDate":{"shape":"DateTime"},
         "Overview":{"shape":"AssociationOverview"},
         "ScheduleExpression":{"shape":"ScheduleExpression"},
-        "AssociationName":{"shape":"AssociationName"}
+        "AssociationName":{"shape":"AssociationName"},
+        "ScheduleOffset":{
+          "shape":"ScheduleOffset",
+          "box":true
+        },
+        "TargetMaps":{
+          "shape":"TargetMaps",
+          "box":true
+        }
       }
     },
     "AssociationAlreadyExists":{
@@ -2182,7 +2193,15 @@
         "SyncCompliance":{"shape":"AssociationSyncCompliance"},
         "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"},
         "CalendarNames":{"shape":"CalendarNameOrARNList"},
-        "TargetLocations":{"shape":"TargetLocations"}
+        "TargetLocations":{"shape":"TargetLocations"},
+        "ScheduleOffset":{
+          "shape":"ScheduleOffset",
+          "box":true
+        },
+        "TargetMaps":{
+          "shape":"TargetMaps",
+          "box":true
+        }
       }
     },
     "AssociationDescriptionList":{
@@ -2440,7 +2459,15 @@
         "SyncCompliance":{"shape":"AssociationSyncCompliance"},
         "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"},
         "CalendarNames":{"shape":"CalendarNameOrARNList"},
-        "TargetLocations":{"shape":"TargetLocations"}
+        "TargetLocations":{"shape":"TargetLocations"},
+        "ScheduleOffset":{
+          "shape":"ScheduleOffset",
+          "box":true
+        },
+        "TargetMaps":{
+          "shape":"TargetMaps",
+          "box":true
+        }
       }
     },
     "AssociationVersionLimitExceeded":{
@@ -3306,7 +3333,15 @@
         "SyncCompliance":{"shape":"AssociationSyncCompliance"},
         "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"},
         "CalendarNames":{"shape":"CalendarNameOrARNList"},
-        "TargetLocations":{"shape":"TargetLocations"}
+        "TargetLocations":{"shape":"TargetLocations"},
+        "ScheduleOffset":{
+          "shape":"ScheduleOffset",
+          "box":true
+        },
+        "TargetMaps":{
+          "shape":"TargetMaps",
+          "box":true
+        }
       }
     },
     "CreateAssociationBatchResult":{
@@ -3335,7 +3370,15 @@
         "SyncCompliance":{"shape":"AssociationSyncCompliance"},
         "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"},
         "CalendarNames":{"shape":"CalendarNameOrARNList"},
-        "TargetLocations":{"shape":"TargetLocations"}
+        "TargetLocations":{"shape":"TargetLocations"},
+        "ScheduleOffset":{
+          "shape":"ScheduleOffset",
+          "box":true
+        },
+        "TargetMaps":{
+          "shape":"TargetMaps",
+          "box":true
+        }
       }
     },
     "CreateAssociationResult":{
@@ -6045,6 +6088,13 @@
       "exception":true
     },
     "InvalidTarget":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true
+    },
+    "InvalidTargetMaps":{
       "type":"structure",
       "members":{
         "Message":{"shape":"String"}
@@ -9284,6 +9334,7 @@
         "Parameters":{"shape":"AutomationParameterMap"},
         "TargetParameterName":{"shape":"AutomationParameterKey"},
         "Targets":{"shape":"Targets"},
+        "TargetMaps":{"shape":"TargetMaps"},
         "MaxConcurrency":{"shape":"MaxConcurrency"},
         "MaxErrors":{"shape":"MaxErrors"},
         "TargetLocations":{
@@ -9329,6 +9380,11 @@
     "ScheduleExpression":{
       "type":"string",
       "max":256,
+      "min":1
+    },
+    "ScheduleOffset":{
+      "type":"integer",
+      "max":6,
       "min":1
     },
     "ScheduledWindowExecution":{
@@ -10125,7 +10181,15 @@
         "SyncCompliance":{"shape":"AssociationSyncCompliance"},
         "ApplyOnlyAtCronInterval":{"shape":"ApplyOnlyAtCronInterval"},
         "CalendarNames":{"shape":"CalendarNameOrARNList"},
-        "TargetLocations":{"shape":"TargetLocations"}
+        "TargetLocations":{"shape":"TargetLocations"},
+        "ScheduleOffset":{
+          "shape":"ScheduleOffset",
+          "box":true
+        },
+        "TargetMaps":{
+          "shape":"TargetMaps",
+          "box":true
+        }
       }
     },
     "UpdateAssociationResult":{

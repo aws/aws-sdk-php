@@ -862,6 +862,8 @@ use Aws\PresignUrlMiddleware;
  * @method \GuzzleHttp\Promise\Promise getGroupsForCapacityReservationAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getInstanceTypesFromInstanceRequirements(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getInstanceTypesFromInstanceRequirementsAsync(array $args = []) (supported in versions 2016-11-15)
+ * @method \Aws\Result getInstanceUefiData(array $args = []) (supported in versions 2016-11-15)
+ * @method \GuzzleHttp\Promise\Promise getInstanceUefiDataAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getIpamAddressHistory(array $args = []) (supported in versions 2016-11-15)
  * @method \GuzzleHttp\Promise\Promise getIpamAddressHistoryAsync(array $args = []) (supported in versions 2016-11-15)
  * @method \Aws\Result getIpamPoolAllocations(array $args = []) (supported in versions 2016-11-15)

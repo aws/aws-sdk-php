@@ -22,12 +22,11 @@ class DynamoDbClientTest extends TestCase
 
     public function testRegisterSessionHandlerReturnsHandler()
     {
-        $this->markTestSkipped();
         $client = $this->getTestSdk()->createDynamoDb();
-        $sh = $client->registerSessionHandler(['locking' => true]);
-        $this->assertInstanceOf(
+        @$sh = $client->registerSessionHandler(['locking' => true]);
+        $this->assertAttributeInstanceOf(
             'Aws\DynamoDb\LockingSessionConnection',
-            $this->readAttribute($sh, 'connection')
+            'connection', $sh
         );
     }
 

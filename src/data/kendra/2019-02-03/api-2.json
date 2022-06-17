@@ -1162,6 +1162,28 @@
     },
     "Blob":{"type":"blob"},
     "Boolean":{"type":"boolean"},
+    "BoxConfiguration":{
+      "type":"structure",
+      "required":[
+        "EnterpriseId",
+        "SecretArn"
+      ],
+      "members":{
+        "EnterpriseId":{"shape":"EnterpriseId"},
+        "SecretArn":{"shape":"SecretArn"},
+        "UseChangeLog":{"shape":"Boolean"},
+        "CrawlComments":{"shape":"Boolean"},
+        "CrawlTasks":{"shape":"Boolean"},
+        "CrawlWebLinks":{"shape":"Boolean"},
+        "FileFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "TaskFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "CommentFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "WebLinkFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "InclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
+        "ExclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
+        "VpcConfiguration":{"shape":"DataSourceVpcConfiguration"}
+      }
+    },
     "CapacityUnitsConfiguration":{
       "type":"structure",
       "required":[
@@ -1678,7 +1700,11 @@
         "WebCrawlerConfiguration":{"shape":"WebCrawlerConfiguration"},
         "WorkDocsConfiguration":{"shape":"WorkDocsConfiguration"},
         "FsxConfiguration":{"shape":"FsxConfiguration"},
-        "SlackConfiguration":{"shape":"SlackConfiguration"}
+        "SlackConfiguration":{"shape":"SlackConfiguration"},
+        "BoxConfiguration":{"shape":"BoxConfiguration"},
+        "QuipConfiguration":{"shape":"QuipConfiguration"},
+        "JiraConfiguration":{"shape":"JiraConfiguration"},
+        "GitHubConfiguration":{"shape":"GitHubConfiguration"}
       }
     },
     "DataSourceDateFieldFormat":{
@@ -1851,7 +1877,11 @@
         "WEBCRAWLER",
         "WORKDOCS",
         "FSX",
-        "SLACK"
+        "SLACK",
+        "BOX",
+        "QUIP",
+        "JIRA",
+        "GITHUB"
       ]
     },
     "DataSourceVpcConfiguration":{
@@ -2331,7 +2361,8 @@
       "type":"structure",
       "members":{
         "DocumentAttributeValue":{"shape":"DocumentAttributeValue"},
-        "Count":{"shape":"Integer"}
+        "Count":{"shape":"Integer"},
+        "FacetResults":{"shape":"FacetResultList"}
       }
     },
     "DocumentAttributeValueCountPairList":{
@@ -2441,6 +2472,12 @@
         "S3Prefix":{"shape":"S3ObjectKey"}
       }
     },
+    "Domain":{
+      "type":"string",
+      "max":63,
+      "min":1,
+      "pattern":"^(?!-)[A-Za-z0-9-].*(?<!-)$"
+    },
     "Duration":{
       "type":"string",
       "max":10,
@@ -2456,6 +2493,12 @@
     "EndpointType":{
       "type":"string",
       "enum":["HOME"]
+    },
+    "EnterpriseId":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[A-Z0-9]*$"
     },
     "EntityConfiguration":{
       "type":"structure",
@@ -2615,7 +2658,9 @@
     "Facet":{
       "type":"structure",
       "members":{
-        "DocumentAttributeKey":{"shape":"DocumentAttributeKey"}
+        "DocumentAttributeKey":{"shape":"DocumentAttributeKey"},
+        "Facets":{"shape":"FacetList"},
+        "MaxResults":{"shape":"TopDocumentAttributeValueCountPairsSize"}
       }
     },
     "FacetList":{
@@ -2724,6 +2769,15 @@
       "min":11,
       "pattern":"^(fs-[0-9a-f]{8,})$"
     },
+    "FolderId":{
+      "type":"string",
+      "max":500,
+      "min":1
+    },
+    "FolderIdList":{
+      "type":"list",
+      "member":{"shape":"FolderId"}
+    },
     "FsxConfiguration":{
       "type":"structure",
       "required":[
@@ -2786,6 +2840,46 @@
         "SnapshotsDataHeader":{"shape":"SnapshotsDataHeaderFields"},
         "SnapshotsData":{"shape":"SnapshotsDataRecords"},
         "NextToken":{"shape":"NextToken"}
+      }
+    },
+    "GitHubConfiguration":{
+      "type":"structure",
+      "required":["SecretArn"],
+      "members":{
+        "SaaSConfiguration":{"shape":"SaaSConfiguration"},
+        "OnPremiseConfiguration":{"shape":"OnPremiseConfiguration"},
+        "Type":{"shape":"Type"},
+        "SecretArn":{"shape":"SecretArn"},
+        "UseChangeLog":{"shape":"Boolean"},
+        "GitHubDocumentCrawlProperties":{"shape":"GitHubDocumentCrawlProperties"},
+        "RepositoryFilter":{"shape":"RepositoryNames"},
+        "InclusionFolderNamePatterns":{"shape":"StringList"},
+        "InclusionFileTypePatterns":{"shape":"StringList"},
+        "InclusionFileNamePatterns":{"shape":"StringList"},
+        "ExclusionFolderNamePatterns":{"shape":"StringList"},
+        "ExclusionFileTypePatterns":{"shape":"StringList"},
+        "ExclusionFileNamePatterns":{"shape":"StringList"},
+        "VpcConfiguration":{"shape":"DataSourceVpcConfiguration"},
+        "GitHubRepositoryConfigurationFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "GitHubCommitConfigurationFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "GitHubIssueDocumentConfigurationFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "GitHubIssueCommentConfigurationFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "GitHubIssueAttachmentConfigurationFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "GitHubPullRequestCommentConfigurationFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "GitHubPullRequestDocumentConfigurationFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "GitHubPullRequestDocumentAttachmentConfigurationFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"}
+      }
+    },
+    "GitHubDocumentCrawlProperties":{
+      "type":"structure",
+      "members":{
+        "CrawlRepositoryDocuments":{"shape":"Boolean"},
+        "CrawlIssue":{"shape":"Boolean"},
+        "CrawlIssueComment":{"shape":"Boolean"},
+        "CrawlIssueCommentAttachment":{"shape":"Boolean"},
+        "CrawlPullRequest":{"shape":"Boolean"},
+        "CrawlPullRequestComment":{"shape":"Boolean"},
+        "CrawlPullRequestCommentAttachment":{"shape":"Boolean"}
       }
     },
     "GoogleDriveConfiguration":{
@@ -3035,11 +3129,63 @@
       },
       "exception":true
     },
+    "IssueSubEntity":{
+      "type":"string",
+      "enum":[
+        "COMMENTS",
+        "ATTACHMENTS",
+        "WORKLOGS"
+      ]
+    },
+    "IssueSubEntityFilter":{
+      "type":"list",
+      "member":{"shape":"IssueSubEntity"},
+      "max":3,
+      "min":0
+    },
+    "IssueType":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "Issuer":{
       "type":"string",
       "max":65,
       "min":1,
       "pattern":"^\\P{C}*$"
+    },
+    "JiraAccountUrl":{
+      "type":"string",
+      "max":2048,
+      "min":1,
+      "pattern":"^https:\\/\\/[a-zA-Z0-9_\\-\\.]+(\\.atlassian\\.net\\/)$"
+    },
+    "JiraConfiguration":{
+      "type":"structure",
+      "required":[
+        "JiraAccountUrl",
+        "SecretArn"
+      ],
+      "members":{
+        "JiraAccountUrl":{"shape":"JiraAccountUrl"},
+        "SecretArn":{"shape":"SecretArn"},
+        "UseChangeLog":{"shape":"Boolean"},
+        "Project":{"shape":"Project"},
+        "IssueType":{"shape":"IssueType"},
+        "Status":{"shape":"JiraStatus"},
+        "IssueSubEntityFilter":{"shape":"IssueSubEntityFilter"},
+        "AttachmentFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "CommentFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "IssueFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "ProjectFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "WorkLogFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "InclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
+        "ExclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
+        "VpcConfiguration":{"shape":"DataSourceVpcConfiguration"}
+      }
+    },
+    "JiraStatus":{
+      "type":"list",
+      "member":{"shape":"String"}
     },
     "JsonTokenTypeConfiguration":{
       "type":"structure",
@@ -3427,6 +3573,19 @@
       "min":1
     },
     "ObjectBoolean":{"type":"boolean"},
+    "OnPremiseConfiguration":{
+      "type":"structure",
+      "required":[
+        "HostUrl",
+        "OrganizationName",
+        "SslCertificateS3Path"
+      ],
+      "members":{
+        "HostUrl":{"shape":"Url"},
+        "OrganizationName":{"shape":"OrganizationName"},
+        "SslCertificateS3Path":{"shape":"S3Path"}
+      }
+    },
     "OneDriveConfiguration":{
       "type":"structure",
       "required":[
@@ -3475,6 +3634,12 @@
       "max":12,
       "min":12,
       "pattern":"d-[0-9a-fA-F]{10}"
+    },
+    "OrganizationName":{
+      "type":"string",
+      "max":60,
+      "min":1,
+      "pattern":"^[A-Za-z0-9_.-]+$"
     },
     "Persona":{
       "type":"string",
@@ -3548,6 +3713,10 @@
       ]
     },
     "PrivateChannelFilter":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "Project":{
       "type":"list",
       "member":{"shape":"String"}
     },
@@ -3712,6 +3881,27 @@
       "max":1000,
       "min":1
     },
+    "QuipConfiguration":{
+      "type":"structure",
+      "required":[
+        "Domain",
+        "SecretArn"
+      ],
+      "members":{
+        "Domain":{"shape":"Domain"},
+        "SecretArn":{"shape":"SecretArn"},
+        "CrawlFileComments":{"shape":"Boolean"},
+        "CrawlChatRooms":{"shape":"Boolean"},
+        "CrawlAttachments":{"shape":"Boolean"},
+        "FolderIds":{"shape":"FolderIdList"},
+        "ThreadFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "MessageFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "AttachmentFieldMappings":{"shape":"DataSourceToIndexFieldMappingList"},
+        "InclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
+        "ExclusionPatterns":{"shape":"DataSourceInclusionsExclusionsStrings"},
+        "VpcConfiguration":{"shape":"DataSourceVpcConfiguration"}
+      }
+    },
     "ReadAccessType":{
       "type":"string",
       "enum":[
@@ -3750,6 +3940,16 @@
         "RELEVANT",
         "NOT_RELEVANT"
       ]
+    },
+    "RepositoryName":{
+      "type":"string",
+      "max":64,
+      "min":1,
+      "pattern":"^[A-Za-z0-9_.-]+$"
+    },
+    "RepositoryNames":{
+      "type":"list",
+      "member":{"shape":"RepositoryName"}
     },
     "ResourceAlreadyExistException":{
       "type":"structure",
@@ -3822,6 +4022,17 @@
       "members":{
         "Bucket":{"shape":"S3BucketName"},
         "Key":{"shape":"S3ObjectKey"}
+      }
+    },
+    "SaaSConfiguration":{
+      "type":"structure",
+      "required":[
+        "OrganizationName",
+        "HostUrl"
+      ],
+      "members":{
+        "OrganizationName":{"shape":"OrganizationName"},
+        "HostUrl":{"shape":"Url"}
       }
     },
     "SalesforceChatterFeedConfiguration":{
@@ -4315,6 +4526,10 @@
       "max":2048,
       "min":1
     },
+    "StringList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "SubmitFeedbackRequest":{
       "type":"structure",
       "required":[
@@ -4527,6 +4742,18 @@
       "max":100000,
       "min":1,
       "pattern":"^\\P{C}*$"
+    },
+    "TopDocumentAttributeValueCountPairsSize":{
+      "type":"integer",
+      "max":5000,
+      "min":0
+    },
+    "Type":{
+      "type":"string",
+      "enum":[
+        "SAAS",
+        "ON_PREMISE"
+      ]
     },
     "UntagResourceRequest":{
       "type":"structure",

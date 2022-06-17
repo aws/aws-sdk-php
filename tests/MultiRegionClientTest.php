@@ -5,7 +5,9 @@ use Aws\Api\Service;
 use Aws\AwsClient;
 use Aws\Command;
 use Aws\CommandInterface;
+use Aws\Exception\AwsException;
 use Aws\HandlerList;
+use Aws\MockHandler;
 use Aws\MultiRegionClient;
 use Aws\Result;
 use GuzzleHttp\Promise\FulfilledPromise;
@@ -145,5 +147,31 @@ class MultiRegionClientTest extends TestCase
             'service' => 'ec2',
             'partition' => 'foo',
         ]);
+    }
+
+    public function testUseCustomHandler()
+    {
+        $mockHandler = new MockHandler();
+        $mockHandler->append(new Result(["foo" => "bar"]));
+        $mockHandler->append(function (CommandInterface $cmd, RequestInterface $req) {
+            return new AwsException('Mock exception', $cmd);
+        });
+        $s3 = new MultiRegionClient([
+            'service' => 's3',
+            'version' => 'latest',
+            'region' => 'us-east-1'
+        ]);
+        $s3->useCustomHandler($mockHandler);
+
+        $response = $s3->listBuckets();
+        $this->assertEquals('bar', $response['foo']);
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(AwsException::class);
+            $this->expectExceptionMessage('Mock exception');
+        } else {
+            $this->setExpectedException(AwsException::class);
+        }
+        $s3->listBuckets();
     }
 }

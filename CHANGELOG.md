@@ -1,5 +1,407 @@
 # CHANGELOG
 
+## 3.227.0 - 2022-06-17
+
+* `Aws\Connect` - This release updates these APIs: UpdateInstanceAttribute, DescribeInstanceAttribute and ListInstanceAttributes. You can use it to programmatically enable/disable High volume outbound communications using attribute type HIGH_VOLUME_OUTBOUND on the specified Amazon Connect instance.
+* `Aws\ConnectCampaignService` - Added Amazon Connect high volume outbound communications SDK.
+* `Aws\DynamoDB` - Doc only update for DynamoDB service
+* `Aws\DynamoDBStreams` - Doc only update for DynamoDB service
+
+## 3.226.0 - 2022-06-16
+
+* `Aws\RedshiftDataAPIService` - This release adds a new --workgroup-name field to operations that connect to an endpoint. Customers can now execute queries against their serverless workgroups.
+* `Aws\RedshiftServerless` - Add new API operations for Amazon Redshift Serverless, a new way of using Amazon Redshift without needing to manually manage provisioned clusters. The new operations let you interact with Redshift Serverless resources, such as create snapshots, list VPC endpoints, delete resource policies, and more.
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+* `Aws\SecurityHub` - Added Threats field for security findings. Added new resource details for ECS Container, ECS Task, RDS SecurityGroup, Kinesis Stream, EC2 TransitGateway, EFS AccessPoint, CloudFormation Stack, CloudWatch Alarm, VPC Peering Connection and WAF Rules
+
+## 3.225.5 - 2022-06-15
+
+* `Aws\AppRegistry` - This release adds a new API ListAttributeGroupsForApplication that returns associated attribute groups of an application. In addition, the UpdateApplication and UpdateAttributeGroup APIs will not allow users to update the 'Name' attribute.
+* `Aws\FinSpaceData` - This release adds a new set of APIs, GetPermissionGroup, DisassociateUserFromPermissionGroup, AssociateUserToPermissionGroup, ListPermissionGroupsByUser, ListUsersByPermissionGroup.
+* `Aws\GuardDuty` - Adds finding fields available from GuardDuty Console. Adds FreeTrial related operations. Deprecates the use of various APIs related to Master Accounts and Replace them with Administrator Accounts.
+* `Aws\WorkSpaces` - Added new field "reason" to OperationNotSupportedException. Receiving this exception in the DeregisterWorkspaceDirectory API will now return a reason giving more context on the failure.
+
+## 3.225.4 - 2022-06-14
+
+* `Aws\Budgets` - Add a budgets ThrottlingException. Update the CostFilters value pattern.
+* `Aws\LookoutMetrics` - Adding filters to Alert and adding new UpdateAlert API.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for rules that constrain Automatic-ABR rendition selection when generating ABR package ladders.
+
+## 3.225.3 - 2022-06-13
+
+* `Aws\` - Revert previous guzzle bump due to lack of exposure to security advisories
+* `Aws\Outposts` - This release adds API operations AWS uses to install Outpost servers.
+
+## 3.225.2 - 2022-06-10
+
+* `Aws\` - Bump Guzzle 6 and 7 due to security advisory
+* `Aws\` - Remove RedshiftServerless service
+* `Aws\FraudDetector` - Documentation updates for Amazon Fraud Detector (AWSHawksNest)
+
+## 3.225.1 - 2022-06-09
+
+* `Aws\ChimeSDKMeetings` - Adds support for live transcription in AWS GovCloud (US) Regions.
+
+## 3.225.0 - 2022-06-08
+
+* `Aws\DatabaseMigrationService` - This release adds DMS Fleet Advisor APIs and exposes functionality for DMS Fleet Advisor. It adds functionality to create and modify fleet advisor instances, and to collect and analyze information about the local data infrastructure.
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+* `Aws\MainframeModernization` - AWS Mainframe Modernization service is a managed mainframe service and set of tools for planning, migrating, modernizing, and running mainframe workloads on AWS
+* `Aws\Neptune` - This release adds support for Neptune to be configured as a global database, with a primary DB cluster in one region, and up to five secondary DB clusters in other regions.
+* `Aws\Redshift` - Adds new API GetClusterCredentialsWithIAM to return temporary credentials.
+
+## 3.224.5 - 2022-06-07
+
+* `Aws\AuditManager` - This release introduces 2 updates to the Audit Manager API. The roleType and roleArn attributes are now required when you use the CreateAssessment or UpdateAssessment operation. We also added a throttling exception to the RegisterAccount API operation.
+* `Aws\CostExplorer` - Added two new APIs to support cost allocation tags operations: ListCostAllocationTags, UpdateCostAllocationTagsStatus.
+
+## 3.224.4 - 2022-06-06
+
+* `Aws\ChimeSDKMessaging` - This release adds support for searching channels by members via the SearchChannels API, removes required restrictions for Name and Mode in UpdateChannel API and enhances CreateChannel API by exposing member and moderator list as well as channel id as optional parameters.
+* `Aws\Connect` - This release adds a new API, GetCurrentUserData, which returns real-time details about users' current activity.
+
+## 3.224.3 - 2022-06-02
+
+* `Aws\ApplicationInsights` - Provide Account Level onboarding support through CFN/CLI
+* `Aws\CodeArtifact` - Documentation updates for CodeArtifact
+* `Aws\Connect` - This release adds the following features: 1) New APIs to manage (create, list, update) task template resources, 2) Updates to startTaskContact API to support task templates, and 3) new TransferContact API to programmatically transfer in-progress tasks via a contact flow.
+* `Aws\Proton` - Add new "Components" API to enable users to Create, Delete and Update AWS Proton components.
+* `Aws\VoiceID` - Added a new attribute ServerSideEncryptionUpdateDetails to Domain and DomainSummary.
+* `Aws\kendra` - Amazon Kendra now provides a data source connector for GitHub. For more information, see https://docs.aws.amazon.com/kendra/latest/dg/data-source-github.html
+
+## 3.224.2 - 2022-06-01
+
+* `Aws\BackupGateway` - Adds GetGateway and UpdateGatewaySoftwareNow API and adds hypervisor name to UpdateHypervisor API
+* `Aws\ChimeSDKMeetings` - Adds support for centrally controlling each participant's ability to send and receive audio, video and screen share within a WebRTC session. Attendee capabilities can be specified when the attendee is created and updated during the session with the new BatchUpdateAttendeeCapabilitiesExcept API.
+* `Aws\ForecastService` - Added Format field to Import and Export APIs in Amazon Forecast. Added TimeSeriesSelector to Create Forecast API.
+* `Aws\Route53` - Add new APIs to support Route 53 IP Based Routing
+
+## 3.224.1 - 2022-05-31
+
+* `Aws\CognitoIdentityProvider` - Amazon Cognito now supports IP Address propagation for all unauthenticated APIs (e.g. SignUp, ForgotPassword).
+* `Aws\IoTSiteWise` - This release adds the following new optional field to the IoT SiteWise asset resource: assetDescription.
+* `Aws\LookoutMetrics` - Adding backtest mode to detectors using the Cloudwatch data source.
+* `Aws\SageMaker` - Amazon SageMaker Notebook Instances now support Jupyter Lab 3.
+* `Aws\TranscribeService` - Amazon Transcribe now supports automatic language identification for multi-lingual audio in batch mode.
+* `Aws\drs` - Changed existing APIs and added new APIs to accommodate using multiple AWS accounts with AWS Elastic Disaster Recovery.
+
+## 3.224.0 - 2022-05-27
+
+* `Aws\` - Removed `EMRServerlessWebService`, which was released with an incorrect name
+* `Aws\Appflow` - Adding the following features/changes: Parquet output that preserves typing from the source connector, Failed executions threshold before deactivation for scheduled flows, increasing max size of access and refresh token from 2048 to 4096
+* `Aws\DataSync` - AWS DataSync now supports TLS encryption in transit, file system policies and access points for EFS locations.
+* `Aws\EMRServerless` - This release adds support for Amazon EMR Serverless, a serverless runtime environment that simplifies running analytics applications using the latest open source frameworks such as Apache Spark and Apache Hive.
+* `Aws\SageMaker` - Amazon SageMaker Notebook Instances now allows configuration of Instance Metadata Service version and Amazon SageMaker Studio now supports G5 instance types.
+
+## 3.223.0 - 2022-05-26
+
+* `Aws\` - Add missing PHPDoc annotation for PromiseInterface implementations.
+* `Aws\EC2` - C7g instances, powered by the latest generation AWS Graviton3 processors, provide the best price performance in Amazon EC2 for compute-intensive workloads.
+* `Aws\ForecastService` - Introduced a new field in Auto Predictor as Time Alignment Boundary. It helps in aligning the timestamps generated during Forecast exports
+* `Aws\Lightsail` - Amazon Lightsail now supports the ability to configure a Lightsail Container Service to pull images from Amazon ECR private repositories in your account.
+
+## 3.222.20 - 2022-05-25
+
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway
+* `Aws\AppRunner` - Documentation-only update added for CodeConfiguration.
+* `Aws\CloudFormation` - Add a new parameter statusReason to DescribeStackSetOperation output for additional details
+* `Aws\FSx` - This release adds root squash support to FSx for Lustre to restrict root level access from clients by mapping root users to a less-privileged user/group with limited permissions.
+* `Aws\LookoutMetrics` - Adding AthenaSourceConfig for MetricSet APIs to support Athena as a data source.
+* `Aws\SageMaker` - Amazon SageMaker Autopilot adds support for manually selecting features from the input dataset using the CreateAutoMLJob API.
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+* `Aws\VoiceID` - VoiceID will now automatically expire Speakers if they haven't been accessed for Enrollment, Re-enrollment or Successful Auth for three years. The Speaker APIs now return a "LastAccessedAt" time for Speakers, and the EvaluateSession API returns "SPEAKER_EXPIRED" Auth Decision for EXPIRED Speakers.
+
+## 3.222.19 - 2022-05-24
+
+* `Aws\CognitoIdentityProvider` - Amazon Cognito now supports requiring attribute verification (ex. email and phone number) before update.
+* `Aws\EC2` - Stop Protection feature enables customers to protect their instances from accidental stop actions.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for rules that constrain Automatic-ABR rendition selection when generating ABR package ladders.
+* `Aws\NetworkManager` - This release adds Multi Account API support for a TGW Global Network, to enable and disable AWSServiceAccess with AwsOrganizations for Network Manager service and dependency CloudFormation StackSets service.
+* `Aws\ivschat` - Doc-only update. For MessageReviewHandler structure, added timeout period in the description of the fallbackResult field
+
+## 3.222.18 - 2022-05-23
+
+* `Aws\ElastiCache` - Added support for encryption in transit for Memcached clusters. Customers can now launch Memcached cluster with encryption in transit enabled when using Memcached version 1.6.12 or later.
+* `Aws\ForecastService` - New APIs for Monitor that help you understand how your predictors perform over time.
+* `Aws\Personalize` - Adding modelMetrics as part of DescribeRecommender API response for Personalize.
+
+## 3.222.17 - 2022-05-20
+
+* `Aws\CloudWatchLogs` - Doc-only update to publish the new valid values for log retention
+* `Aws\Comprehend` - Comprehend releases 14 new entity types for DetectPiiEntities and ContainsPiiEntities APIs.
+
+## 3.222.16 - 2022-05-19
+
+* `Aws\GameSparks` - This release adds an optional DeploymentResult field in the responses of GetStageDeploymentIntegrationTests and ListStageDeploymentIntegrationTests APIs.
+* `Aws\LookoutMetrics` - In this release we added SnsFormat to SNSConfiguration to support human readable alert.
+
+## 3.222.15 - 2022-05-18
+
+* `Aws\AppMesh` - This release updates the existing Create and Update APIs for meshes and virtual nodes by adding a new IP preference field. This new IP preference field can be used to control the IP versions being used with the mesh and allows for IPv6 support within App Mesh.
+* `Aws\Batch` - Documentation updates for AWS Batch.
+* `Aws\GreengrassV2` - This release adds the new DeleteDeployment API operation that you can use to delete deployment resources. This release also adds support for discontinued AWS-provided components, so AWS can communicate when a component has any issues that you should consider before you deploy it.
+* `Aws\IoTEventsData` - Introducing new API for deleting detectors: BatchDeleteDetector.
+* `Aws\QuickSight` - API UpdatePublicSharingSettings enables IAM admins to enable/disable account level setting for public access of dashboards. When enabled, owners/co-owners for dashboards can enable public access on their dashboards. These dashboards can only be accessed through share link or embedding.
+* `Aws\Transfer` - AWS Transfer Family now supports SetStat server configuration option, which provides the ability to ignore SetStat command issued by file transfer clients, enabling customers to upload files without any errors.
+
+## 3.222.14 - 2022-05-17
+
+* `Aws\Glue` - This release adds a new optional parameter called codeGenNodeConfiguration to CRUD job APIs that allows users to manage visual jobs via APIs. The updated CreateJob and UpdateJob will create jobs that can be viewed in Glue Studio as a visual graph. GetJob can be used to get codeGenNodeConfiguration.
+* `Aws\KMS` - Add HMAC best practice tip, annual rotation of AWS managed keys.
+
+## 3.222.13 - 2022-05-16
+
+* `Aws\ApplicationDiscoveryService` - Add Migration Evaluator Collector details to the GetDiscoverySummary API response
+* `Aws\CloudFront` - Introduced a new error (TooLongCSPInResponseHeadersPolicy) that is returned when the value of the Content-Security-Policy header in a response headers policy exceeds the maximum allowed length.
+* `Aws\Rekognition` - Documentation updates for Amazon Rekognition.
+* `Aws\ResilienceHub` - In this release, we are introducing support for Amazon Elastic Container Service, Amazon Route 53, AWS Elastic Disaster Recovery, AWS Backup in addition to the existing supported Services. This release also supports Terraform file input from S3 and scheduling daily assessments
+* `Aws\STS` - Documentation updates for AWS Security Token Service.
+* `Aws\ServiceCatalog` - Updated the descriptions for the ListAcceptedPortfolioShares API description and the PortfolioShareType parameters.
+* `Aws\WorkSpacesWeb` - Amazon WorkSpaces Web now supports Administrator timeout control
+
+## 3.222.12 - 2022-05-13
+
+* `Aws\ManagedGrafana` - This release adds APIs for creating and deleting API keys in an Amazon Managed Grafana workspace.
+
+## 3.222.11 - 2022-05-12
+
+* `Aws\Credentials` - Made implicit conversion of float to int explicit (to avoid deprivation errors in php8.1)
+* `Aws\EC2` - This release introduces a target type Gateway Load Balancer Endpoint for mirrored traffic. Customers can now specify GatewayLoadBalancerEndpoint option during the creation of a traffic mirror target.
+* `Aws\FinSpaceData` - We've now deprecated CreateSnapshot permission for creating a data view, instead use CreateDataView permission.
+* `Aws\IoT` - Documentation update for China region ListMetricValues for IoT
+* `Aws\Lambda` - Lambda releases NodeJs 16 managed runtime to be available in all commercial regions.
+* `Aws\Lightsail` - This release adds support to include inactive database bundles in the response of the GetRelationalDatabaseBundles request.
+* `Aws\Outposts` - Documentation updates for AWS Outposts.
+* `Aws\SSMIncidents` - Adding support for dynamic SSM Runbook parameter values. Updating validation pattern for engagements. Adding ConflictException to UpdateReplicationSet API contract.
+* `Aws\Transfer` - AWS Transfer Family now accepts ECDSA keys for server host keys
+* `Aws\WorkSpaces` - Increased the character limit of the login message from 600 to 850 characters.
+* `Aws\ivschat` - Documentation-only updates for IVS Chat API Reference.
+* `Aws\kendra` - Amazon Kendra now provides a data source connector for Jira. For more information, see https://docs.aws.amazon.com/kendra/latest/dg/data-source-jira.html
+
+## 3.222.10 - 2022-05-11
+
+* `Aws\EC2` - This release updates AWS PrivateLink APIs to support IPv6 for PrivateLink Services and Endpoints of type 'Interface'.
+* `Aws\SecretsManager` - Doc only update for Secrets Manager that fixes several customer-reported issues.
+
+## 3.222.9 - 2022-05-10
+
+* `Aws\ComputeOptimizer` - Documentation updates for Compute Optimizer
+* `Aws\EC2` - Added support for using NitroTPM and UEFI Secure Boot on EC2 instances.
+* `Aws\EKS` - Adds BOTTLEROCKET_ARM_64_NVIDIA and BOTTLEROCKET_x86_64_NVIDIA AMI types to EKS managed nodegroups
+* `Aws\EMR` - This release updates the Amazon EMR ModifyInstanceGroups API to support "MERGE" type cluster reconfiguration. Also, added the ability to specify a particular Amazon Linux release for all nodes in a cluster launch request.
+* `Aws\MigrationHubRefactorSpaces` - AWS Migration Hub Refactor Spaces documentation only update to fix a formatting issue.
+
+## 3.222.8 - 2022-05-09
+
+* `Aws\CloudControlApi` - SDK release for Cloud Control API to include paginators for Python SDK.
+* `Aws\CloudWatchEvidently` - Add detail message inside GetExperimentResults API response to indicate experiment result availability
+* `Aws\SSMContacts` - Fixed an error in the DescribeEngagement example for AWS Incident Manager.
+
+## 3.222.7 - 2022-05-06
+
+* `Aws\EC2` - Add new state values for IPAMs, IPAM Scopes, and IPAM Pools.
+* `Aws\LocationService` - Amazon Location Service now includes a MaxResults parameter for ListGeofences requests.
+* `Aws\MediaPackage` - This release adds Dvb Dash 2014 as an available profile option for Dash Origin Endpoints.
+* `Aws\RDS` - Various documentation improvements.
+* `Aws\Redshift` - Introduces new field 'LoadSampleData' in CreateCluster operation. Customers can now specify 'LoadSampleData' option during creation of a cluster, which results in loading of sample data in the cluster that is created.
+* `Aws\SecurityHub` - Documentation updates for Security Hub API reference
+
+## 3.222.6 - 2022-05-05
+
+* `Aws\DataSync` - AWS DataSync now supports a new ObjectTags Task API option that can be used to control whether Object Tags are transferred.
+* `Aws\EC2` - Amazon EC2 I4i instances are powered by 3rd generation Intel Xeon Scalable processors and feature up to 30 TB of local AWS Nitro SSD storage
+* `Aws\IoT` - AWS IoT Jobs now allows you to create up to 100,000 active continuous and snapshot jobs by using concurrency control.
+* `Aws\kendra` - AWS Kendra now supports hierarchical facets for a query. For more information, see https://docs.aws.amazon.com/kendra/latest/dg/filtering.html
+
+## 3.222.5 - 2022-05-04
+
+* `Aws\Backup` - Adds support to 2 new filters about job complete time for 3 list jobs APIs in AWS Backup
+* `Aws\IoTSecureTunneling` - This release introduces a new API RotateTunnelAccessToken that allow revoking the existing tokens and generate new tokens
+* `Aws\Lightsail` - Documentation updates for Lightsail
+* `Aws\SSM` - This release adds the TargetMaps parameter in SSM State Manager API.
+
+## 3.222.4 - 2022-05-03
+
+* `Aws\EC2` - Adds support for allocating Dedicated Hosts on AWS Outposts. The AllocateHosts API now accepts an OutpostArn request parameter, and the DescribeHosts API now includes an OutpostArn response parameter.
+* `Aws\KinesisVideo` - Add support for multiple image feature related APIs for configuring image generation and notification of a video stream. Add "GET_IMAGES" to the list of supported API names for the GetDataEndpoint API.
+* `Aws\KinesisVideoArchivedMedia` - Add support for GetImages API for retrieving images from a video stream
+* `Aws\S3` - Documentation only update for doc bug fixes for the S3 API docs.
+* `Aws\SageMaker` - SageMaker Autopilot adds new metrics for all candidate models generated by Autopilot experiments; RStudio on SageMaker now allows users to bring your own development environment in a custom image.
+
+## 3.222.3 - 2022-05-02
+
+* `Aws\Organizations` - This release adds the INVALID_PAYMENT_INSTRUMENT as a fail reason and an error message.
+* `Aws\Outposts` - This release adds a new API called ListAssets to the Outposts SDK, which lists the hardware assets in an Outpost.
+* `Aws\Synthetics` - CloudWatch Synthetics has introduced a new feature to provide customers with an option to delete the underlying resources that Synthetics canary creates when the user chooses to delete the canary.
+
+## 3.222.2 - 2022-04-29
+
+* `Aws\CodeGuruReviewer` - Amazon CodeGuru Reviewer now supports suppressing recommendations from being generated on specific files and directories.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK nows supports creation of Dolby Vision profile 8.1, the ability to generate black frames of video, and introduces audio-only DASH and CMAF support.
+* `Aws\RDS` - Feature - Adds support for Internet Protocol Version 6 (IPv6) on RDS database instances.
+* `Aws\SSM` - Update the StartChangeRequestExecution, adding TargetMaps to the Runbook parameter
+* `Aws\WAFV2` - You can now inspect all request headers and all cookies. You can now specify how to handle oversize body contents in your rules that inspect the body.
+
+## 3.222.1 - 2022-04-28
+
+* `Aws\AuditManager` - This release adds documentation updates for Audit Manager. We provided examples of how to use the Custom_ prefix for the keywordValue attribute. We also provided more details about the DeleteAssessmentReport operation.
+* `Aws\Braket` - This release enables Braket Hybrid Jobs with Embedded Simulators to have multiple instances.
+* `Aws\Connect` - This release introduces an API for changing the current agent status of a user in Connect.
+* `Aws\EC2` - This release adds support to query the public key and creation date of EC2 Key Pairs. Additionally, the format (pem or ppk) of a key pair can be specified when creating a new key pair.
+* `Aws\GuardDuty` - Documentation update for API description.
+* `Aws\NetworkFirewall` - AWS Network Firewall adds support for stateful threat signature AWS managed rule groups.
+
+## 3.222.0 - 2022-04-27
+
+* `Aws\Amplify` - Documentation only update to support the Amplify GitHub App feature launch
+* `Aws\ChimeSDKMediaPipelines` - For Amazon Chime SDK meetings, the Amazon Chime Media Pipelines SDK allows builders to capture audio, video, and content share streams. You can also capture meeting events, live transcripts, and data messages. The pipelines save the artifacts to an Amazon S3 bucket that you designate.
+* `Aws\CloudTrail` - Increases the retention period maximum to 2557 days. Deprecates unused fields of the ListEventDataStores API response. Updates documentation.
+* `Aws\IoTWireless` - Add list support for event configurations, allow to get and update event configurations by resource type, support LoRaWAN events; Make NetworkAnalyzerConfiguration as a resource, add List, Create, Delete API support; Add FCntStart attribute support for ABP WirelessDevice.
+* `Aws\LookoutEquipment` - This release adds the following new features: 1) Introduces an option for automatic schema creation 2) Now allows for Ingestion of data containing most common errors and allows automatic data cleaning 3) Introduces new API ListSensorStatistics that gives further information about the ingested data
+* `Aws\Rekognition` - This release adds support to configure stream-processor resources for label detections on streaming-videos. UpateStreamProcessor API is also launched with this release, which could be used to update an existing stream-processor.
+* `Aws\SageMaker` - Amazon SageMaker Autopilot adds support for custom validation dataset and validation ratio through the CreateAutoMLJob and DescribeAutoMLJob APIs.
+
+## 3.221.0 - 2022-04-26
+
+* `Aws\CloudFront` - CloudFront now supports the Server-Timing header in HTTP responses sent from CloudFront. You can use this header to view metrics that help you gain insights about the behavior and performance of CloudFront. To use this header, enable it in a response headers policy.
+* `Aws\Glue` - This release adds documentation for the APIs to create, read, delete, list, and batch read of AWS Glue custom patterns, and for Lake Formation configuration settings in the AWS Glue crawler.
+* `Aws\Lightsail` - This release adds support for Lightsail load balancer HTTP to HTTPS redirect and TLS policy configuration.
+* `Aws\NetworkFirewall` - AWS Network Firewall now enables customers to use a customer managed AWS KMS key for the encryption of their firewall resources.
+* `Aws\Pricing` - Documentation updates for Price List API
+* `Aws\SageMaker` - SageMaker Inference Recommender now accepts customer KMS key ID for encryption of endpoints and compilation outputs created during inference recommendation.
+* `Aws\ivschat` - Adds new APIs for IVS Chat, a feature for building interactive chat experiences alongside an IVS broadcast.
+
+## 3.220.4 - 2022-04-25
+
+* `Aws\Connect` - This release adds SearchUsers API which can be used to search for users with a Connect Instance
+* `Aws\GameLift` - Documentation updates for Amazon GameLift.
+* `Aws\MQ` - This release adds the CRITICAL_ACTION_REQUIRED broker state and the ActionRequired API property. CRITICAL_ACTION_REQUIRED informs you when your broker is degraded. ActionRequired provides you with a code which you can use to find instructions in the Developer Guide on how to resolve the issue.
+* `Aws\RDSDataService` - Support to receive SQL query results in the form of a simplified JSON string. This enables developers using the new JSON string format to more easily convert it to an object using popular JSON string parsing libraries.
+* `Aws\SecurityHub` - Security Hub now lets you opt-out of auto-enabling the defaults standards (CIS and FSBP) in accounts that are auto-enabled with Security Hub via Security Hub's integration with AWS Organizations.
+
+## 3.220.3 - 2022-04-22
+
+* `Aws\ChimeSDKMeetings` - Include additional exceptions types.
+* `Aws\EC2` - Adds support for waiters that automatically poll for a deleted NAT Gateway until it reaches the deleted state.
+
+## 3.220.2 - 2022-04-21
+
+* `Aws\ConnectWisdomService` - This release updates the GetRecommendations API to include a trigger event list for classifying and grouping recommendations.
+* `Aws\ElastiCache` - Doc only update for ElastiCache
+* `Aws\Glue` - This release adds APIs to create, read, delete, list, and batch read of Glue custom entity types
+* `Aws\IoTSiteWise` - This release adds 3 new batch data query APIs : BatchGetAssetPropertyValue, BatchGetAssetPropertyValueHistory and BatchGetAssetPropertyAggregates
+* `Aws\IoTTwinMaker` - General availability (GA) for AWS IoT TwinMaker. For more information, see https://docs.aws.amazon.com/iot-twinmaker/latest/apireference/Welcome.html
+* `Aws\LookoutMetrics` - Added DetectMetricSetConfig API for detecting configuration required for creating metric set from provided S3 data source.
+* `Aws\MediaTailor` - This release introduces tiered channels and adds support for live sources. Customers using a STANDARD channel can now create programs using live sources.
+* `Aws\MultiRegionClient` - Adds support for using custom handlers with multi-region clients
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+* `Aws\StorageGateway` - This release adds support for minimum of 5 character length virtual tape barcodes.
+
+## 3.220.1 - 2022-04-20
+
+* `Aws\Connect` - This release adds APIs to search, claim, release, list, update, and describe phone numbers. You can also use them to associate and disassociate contact flows to phone numbers.
+* `Aws\Macie2` - Sensitive data findings in Amazon Macie now indicate how Macie found the sensitive data that produced a finding (originType).
+* `Aws\RDS` - Added a new cluster-level attribute to set the capacity range for Aurora Serverless v2 instances.
+* `Aws\mgn` - Removed required annotation from input fields in Describe operations requests. Added quotaValue to ServiceQuotaExceededException
+
+## 3.220.0 - 2022-04-19
+
+* `Aws\AutoScaling` - EC2 Auto Scaling now adds default instance warm-up times for all scaling activities, health check replacements, and other replacement events in the Auto Scaling instance lifecycle.
+* `Aws\KMS` - Adds support for KMS keys and APIs that generate and verify HMAC codes
+* `Aws\Personalize` - Adding StartRecommender and StopRecommender APIs for Personalize.
+* `Aws\Polly` - Amazon Polly adds new Austrian German voice - Hannah. Hannah is available as Neural voice only.
+* `Aws\Redshift` - Introduces new fields for LogDestinationType and LogExports on EnableLogging requests and Enable/Disable/DescribeLogging responses. Customers can now select CloudWatch Logs as a destination for their Audit Logs.
+* `Aws\S3` - Adds DoesBucketExistV2 and DoesObjectExistV2 helper methods
+* `Aws\SSM` - Added offset support for specifying the number of days to wait after the date and time specified by a CRON expression when creating SSM association.
+* `Aws\Textract` - This release adds support for specifying and extracting information from documents using the Queries feature within Analyze Document API
+* `Aws\Transfer` - This release contains corrected HomeDirectoryMappings examples for several API functions: CreateAccess, UpdateAccess, CreateUser, and UpdateUser,.
+* `Aws\WorkLink` - Amazon WorkLink is no longer supported. This will be removed in a future version of the SDK.
+* `Aws\kendra` - Amazon Kendra now provides a data source connector for Quip. For more information, see https://docs.aws.amazon.com/kendra/latest/dg/data-source-quip.html
+
+## 3.219.5 - 2022-04-15
+
+* `Aws\Athena` - This release adds subfields, ErrorMessage, Retryable, to the AthenaError response object in the GetQueryExecution API when a query fails.
+* `Aws\Lightsail` - This release adds support to describe the synchronization status of the account-level block public access feature for your Amazon Lightsail buckets.
+* `Aws\RDS` - Removes Amazon RDS on VMware with the deletion of APIs related to Custom Availability Zones and Media installation
+
+## 3.219.4 - 2022-04-14
+
+* `Aws\AppStream` - Includes updates for create and update fleet APIs to manage the session scripts locations for Elastic fleets.
+* `Aws\Appflow` - Enables users to pass custom token URL parameters for Oauth2 authentication during create connector profile
+* `Aws\Batch` - Enables configuration updates for compute environments with BEST_FIT_PROGRESSIVE and SPOT_CAPACITY_OPTIMIZED allocation strategies.
+* `Aws\CloudWatch` - Updates documentation for additional statistics in CloudWatch Metric Streams.
+* `Aws\EC2` - Documentation updates for Amazon EC2.
+* `Aws\Glue` - Auto Scaling for Glue version 3.0 and later jobs to dynamically scale compute resources. This SDK change provides customers with the auto-scaled DPU usage
+
+## 3.219.3 - 2022-04-13
+
+* `Aws\CloudWatch` - Adds support for additional statistics in CloudWatch Metric Streams.
+* `Aws\FSx` - This release adds support for deploying FSx for ONTAP file systems in a single Availability Zone.
+
+## 3.219.2 - 2022-04-12
+
+* `Aws\DevOpsGuru` - This release adds new APIs DeleteInsight to deletes the insight along with the associated anomalies, events and recommendations.
+* `Aws\EC2` - X2idn and X2iedn instances are powered by 3rd generation Intel Xeon Scalable processors with an all-core turbo frequency up to 3.5 GHzAmazon EC2. C6a instances are powered by 3rd generation AMD EPYC processors.
+* `Aws\EFS` - Amazon EFS adds support for a ThrottlingException when using the CreateAccessPoint API if the account is nearing the AccessPoint limit(120).
+* `Aws\IoTTwinMaker` - This release adds the following new features: 1) ListEntities API now supports search using ExternalId. 2) BatchPutPropertyValue and GetPropertyValueHistory API now allows users to represent time in sub-second level precisions.
+
+## 3.219.1 - 2022-04-11
+
+* `Aws\AmplifyUIBuilder` - In this release, we have added the ability to bind events to component level actions.
+* `Aws\AppRunner` - This release adds tracing for App Runner services with X-Ray using AWS Distro for OpenTelemetry. New APIs: CreateObservabilityConfiguration, DescribeObservabilityConfiguration, ListObservabilityConfigurations, and DeleteObservabilityConfiguration. Updated APIs: CreateService and UpdateService.
+* `Aws\WorkSpaces` - Added API support that allows customers to create GPU-enabled WorkSpaces using EC2 G4dn instances.
+
+## 3.219.0 - 2022-04-08
+
+* `Aws\EventBridge` - Adds sigv4 support for EventBridge putEvents calls when opt-in parameter EndpointId is specified
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for the pass-through of WebVTT styling to WebVTT outputs, pass-through of KLV metadata to supported formats, and improved filter support for processing 444/RGB content.
+* `Aws\MediaPackageVod` - This release adds ScteMarkersSource as an available field for Dash Packaging Configurations. When set to MANIFEST, MediaPackage will source the SCTE-35 markers from the manifest. When set to SEGMENTS, MediaPackage will source the SCTE-35 markers from the segments.
+* `Aws\WAFV2` - Add a new CurrentDefaultVersion field to ListAvailableManagedRuleGroupVersions API response; add a new VersioningSupported boolean to each ManagedRuleGroup returned from ListAvailableManagedRuleGroups API response.
+
+## 3.218.5 - 2022-04-07
+
+* `Aws\APIGateway` - ApiGateway CLI command get-usage now includes usagePlanId, startDate, and endDate fields in the output to match documentation.
+* `Aws\DocDB` - Added support to enable/disable performance insights when creating or modifying db instances
+* `Aws\EventBridge` - Adds new EventBridge Endpoint resources for disaster recovery, multi-region failover, and cross-region replication capabilities to help you build resilient event-driven applications.
+* `Aws\PI` - Adds support for DocumentDB to the Performance Insights API.
+* `Aws\Personalize` - This release provides tagging support in AWS Personalize.
+* `Aws\SageMaker` - Amazon Sagemaker Notebook Instances now supports G5 instance types
+
+## 3.218.4 - 2022-04-06
+
+* `Aws\ConfigService` - Add resourceType enums for AWS::EMR::SecurityConfiguration and AWS::SageMaker::CodeRepository
+* `Aws\Lambda` - This release adds new APIs for creating and managing Lambda Function URLs and adds a new FunctionUrlAuthType parameter to the AddPermission API. Customers can use Function URLs to create built-in HTTPS endpoints on their functions.
+* `Aws\Panorama` - Added Brand field to device listings.
+* `Aws\kendra` - Amazon Kendra now provides a data source connector for Box. For more information, see https://docs.aws.amazon.com/kendra/latest/dg/data-source-box.html
+
+## 3.218.3 - 2022-04-05
+
+* `Aws\DataSync` - AWS DataSync now supports Amazon FSx for OpenZFS locations.
+* `Aws\FSx` - Provide customers more visibility into file system status by adding new "Misconfigured Unavailable" status for Amazon FSx for Windows File Server.
+* `Aws\S3Control` - Documentation-only update for doc bug fixes for the S3 Control API docs.
+* `Aws\SecurityHub` - Added additional ASFF details for RdsSecurityGroup AutoScalingGroup, ElbLoadBalancer, CodeBuildProject and RedshiftCluster.
+
+## 3.218.2 - 2022-04-04
+
+* `Aws\IoT` - AWS IoT - AWS IoT Device Defender adds support to list metric datapoints collected for IoT devices through the ListMetricValues API
+* `Aws\Proton` - SDK release to support tagging for AWS Proton Repository resource
+* `Aws\SMS` - Revised product update notice for SMS console deprecation.
+* `Aws\ServiceCatalog` - This release adds ProvisioningArtifictOutputKeys to DescribeProvisioningParameters to reference the outputs of a Provisioned Product and deprecates ProvisioningArtifactOutputs.
+
+## 3.218.1 - 2022-04-01
+
+* `Aws\Connect` - This release updates these APIs: UpdateInstanceAttribute, DescribeInstanceAttribute and ListInstanceAttributes. You can use it to programmatically enable/disable multi-party conferencing using attribute type MULTI_PARTY_CONFERENCING on the specified Amazon Connect instance.
+
+## 3.218.0 - 2022-03-31
+
+* `Aws\AuditManager` - This release adds documentation updates for Audit Manager. The updates provide data deletion guidance when a customer deregisters Audit Manager or deregisters a delegated administrator.
+* `Aws\CloudControlApi` - SDK release for Cloud Control API in Amazon Web Services China (Beijing) Region, operated by Sinnet, and Amazon Web Services China (Ningxia) Region, operated by NWCD
+* `Aws\GlueDataBrew` - This AWS Glue Databrew release adds feature to support ORC as an input format.
+* `Aws\ManagedGrafana` - This release adds tagging support to the Managed Grafana service. New APIs: TagResource, UntagResource and ListTagsForResource. Updates: add optional field tags to support tagging while calling CreateWorkspace.
+* `Aws\PinpointSMSVoiceV2` - Amazon Pinpoint now offers a version 2.0 suite of SMS and voice APIs, providing increased control over sending and configuration. This release is a new SDK for sending SMS and voice messages called PinpointSMSVoiceV2.
+* `Aws\Route53RecoveryCluster` - This release adds a new API "ListRoutingControls" to list routing control states using the highly reliable Route 53 ARC data plane endpoints.
+* `Aws\WorkSpaces` - Added APIs that allow you to customize the logo, login message, and help links in the WorkSpaces client login page. To learn more, visit https://docs.aws.amazon.com/workspaces/latest/adminguide/customize-branding.html
+
 ## 3.217.0 - 2022-03-30
 
 * `Aws\Credentials` - Add support for ECS full uri and auth token environment variables

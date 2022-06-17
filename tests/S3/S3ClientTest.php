@@ -9,6 +9,7 @@ use Aws\LruArrayCache;
 use Aws\Endpoint\PartitionEndpointProvider;
 use Aws\Middleware;
 use Aws\Result;
+use Aws\S3\Exception\PermanentRedirectException;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\RegionalEndpoint\Configuration;
 use Aws\S3\S3Client;
@@ -232,6 +233,13 @@ class S3ClientTest extends TestCase
 
     public function doesExistProvider()
     {
+        $redirectException = new PermanentRedirectException(
+            '',
+            new Command('mockCommand'),
+            ['response' => new Response(301)]
+        );
+        $deleteMarkerMock = $this->getS3ErrorMock('Foo', 404, true);
+
         return [
             ['foo', null, true, []],
             ['foo', 'bar', true, []],
@@ -241,14 +249,34 @@ class S3ClientTest extends TestCase
             ['foo', 'bar', false, $this->getS3ErrorMock('Foo', 401)],
             ['foo', null, -1, $this->getS3ErrorMock('Foo', 500)],
             ['foo', 'bar', -1, $this->getS3ErrorMock('Foo', 500)],
+            ['foo', null, true, [], true],
+            ['foo', 'bar', true, [] , true],
+            ['foo', null, false, $this->getS3ErrorMock('Foo', 404), true],
+            ['foo', 'bar', false, $this->getS3ErrorMock('Foo', 404), true],
+            ['foo', null, -1, $this->getS3ErrorMock('Forbidden', 403), true],
+            ['foo', 'bar', -1, $this->getS3ErrorMock('Forbidden', 403), true],
+            ['foo', null, true, $this->getS3ErrorMock('Forbidden', 403), true, true],
+            ['foo', 'bar', true, $deleteMarkerMock, true, false, true],
+            ['foo', 'bar', false, $deleteMarkerMock, true, false, false],
+            ['foo', null, true, $redirectException, true],
         ];
     }
 
-    private function getS3ErrorMock($errCode, $statusCode)
+    private function getS3ErrorMock(
+        $errCode,
+        $statusCode,
+        $deleteMarker = false
+    )
     {
+        $response = new Response($statusCode);
+        $deleteMarker && $response = $response->withHeader(
+            'x-amz-delete-marker',
+            'true'
+        );
+
         $context = [
             'code' => $errCode,
-            'response' => new Response($statusCode),
+            'response' => $response,
         ];
         return new S3Exception('', new Command('mockCommand'), $context);
     }
@@ -256,16 +284,32 @@ class S3ClientTest extends TestCase
     /**
      * @dataProvider doesExistProvider
      */
-    public function testsIfExists($bucket, $key, $exists, $result)
+    public function testsIfExists(
+        $bucket,
+        $key,
+        $exists,
+        $result,
+        $V2 = false,
+        $accept403 = false,
+        $acceptDeleteMarkers = false
+    )
     {
         /** @var S3Client $s3 */
         $s3 = $this->getTestClient('S3', ['region' => 'us-east-1']);
         $this->addMockResults($s3, [$result]);
         try {
-            if ($key) {
-                $this->assertSame($exists, $s3->doesObjectExist($bucket, $key));
-            } else {
-                $this->assertSame($exists, $s3->doesBucketExist($bucket));
+            if ($V2) {
+                if ($key) {
+                    $this->assertSame($exists, $s3->doesObjectExistV2($bucket, $key, $acceptDeleteMarkers));
+                } else {
+                    $this->assertSame($exists, $s3->doesBucketExistV2($bucket, $accept403));
+                }
+            }else {
+                if ($key) {
+                    $this->assertSame($exists, $s3->doesObjectExist($bucket, $key));
+                } else {
+                    $this->assertSame($exists, $s3->doesBucketExist($bucket));
+                }
             }
         } catch (\Exception $e) {
             $this->assertSame(-1, $exists);
@@ -278,7 +322,10 @@ class S3ClientTest extends TestCase
             'region'      => 'us-east-1',
             'credentials' => false
         ]);
-        $this->assertSame('https://foo.s3.amazonaws.com/bar', $s3->getObjectUrl('foo', 'bar'));
+        $this->assertSame(
+            'https://foo.s3.amazonaws.com/bar',
+            $s3->getObjectUrl('foo', 'bar')
+        );
     }
 
     public function testReturnsObjectUrlWithPathStyleFallback()
@@ -287,7 +334,10 @@ class S3ClientTest extends TestCase
             'region'      => 'us-east-1',
             'credentials' => false,
         ]);
-        $this->assertSame('https://s3.amazonaws.com/foo.baz/bar', $s3->getObjectUrl('foo.baz', 'bar'));
+        $this->assertSame(
+            'https://s3.amazonaws.com/foo.baz/bar',
+            $s3->getObjectUrl('foo.baz', 'bar')
+        );
     }
 
     public function testReturnsObjectUrlWithPathStyle()
@@ -297,7 +347,10 @@ class S3ClientTest extends TestCase
             'credentials' => false,
             'use_path_style_endpoint' => true
         ]);
-        $this->assertSame('https://s3.amazonaws.com/foo/bar', $s3->getObjectUrl('foo', 'bar'));
+        $this->assertSame(
+            'https://s3.amazonaws.com/foo/bar',
+            $s3->getObjectUrl('foo', 'bar')
+        );
     }
 
     public function testReturnsObjectUrlViaPath()

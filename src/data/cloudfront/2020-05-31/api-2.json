@@ -388,7 +388,8 @@
         {"shape":"InvalidArgument"},
         {"shape":"ResponseHeadersPolicyAlreadyExists"},
         {"shape":"TooManyResponseHeadersPolicies"},
-        {"shape":"TooManyCustomHeadersInResponseHeadersPolicy"}
+        {"shape":"TooManyCustomHeadersInResponseHeadersPolicy"},
+        {"shape":"TooLongCSPInResponseHeadersPolicy"}
       ]
     },
     "CreateStreamingDistribution":{
@@ -1596,7 +1597,8 @@
         {"shape":"NoSuchResponseHeadersPolicy"},
         {"shape":"PreconditionFailed"},
         {"shape":"ResponseHeadersPolicyAlreadyExists"},
-        {"shape":"TooManyCustomHeadersInResponseHeadersPolicy"}
+        {"shape":"TooManyCustomHeadersInResponseHeadersPolicy"},
+        {"shape":"TooLongCSPInResponseHeadersPolicy"}
       ]
     },
     "UpdateStreamingDistribution":{
@@ -5914,7 +5916,8 @@
         "Name":{"shape":"string"},
         "CorsConfig":{"shape":"ResponseHeadersPolicyCorsConfig"},
         "SecurityHeadersConfig":{"shape":"ResponseHeadersPolicySecurityHeadersConfig"},
-        "CustomHeadersConfig":{"shape":"ResponseHeadersPolicyCustomHeadersConfig"}
+        "CustomHeadersConfig":{"shape":"ResponseHeadersPolicyCustomHeadersConfig"},
+        "ServerTimingHeadersConfig":{"shape":"ResponseHeadersPolicyServerTimingHeadersConfig"}
       }
     },
     "ResponseHeadersPolicyContentSecurityPolicy":{
@@ -6036,6 +6039,14 @@
         "StrictTransportSecurity":{"shape":"ResponseHeadersPolicyStrictTransportSecurity"}
       }
     },
+    "ResponseHeadersPolicyServerTimingHeadersConfig":{
+      "type":"structure",
+      "required":["Enabled"],
+      "members":{
+        "Enabled":{"shape":"boolean"},
+        "SamplingRate":{"shape":"SamplingRate"}
+      }
+    },
     "ResponseHeadersPolicyStrictTransportSecurity":{
       "type":"structure",
       "required":[
@@ -6119,6 +6130,11 @@
         "vip",
         "static-ip"
       ]
+    },
+    "SamplingRate":{
+      "type":"double",
+      "max":100.0,
+      "min":0.0
     },
     "Signer":{
       "type":"structure",
@@ -6414,6 +6430,14 @@
         "FunctionErrorMessage":{"shape":"sensitiveStringType"},
         "FunctionOutput":{"shape":"sensitiveStringType"}
       }
+    },
+    "TooLongCSPInResponseHeadersPolicy":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"string"}
+      },
+      "error":{"httpStatusCode":400},
+      "exception":true
     },
     "TooManyCacheBehaviors":{
       "type":"structure",

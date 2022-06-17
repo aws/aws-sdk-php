@@ -3141,7 +3141,15 @@
         "ml.r5.8xlarge",
         "ml.r5.12xlarge",
         "ml.r5.16xlarge",
-        "ml.r5.24xlarge"
+        "ml.r5.24xlarge",
+        "ml.g5.xlarge",
+        "ml.g5.2xlarge",
+        "ml.g5.4xlarge",
+        "ml.g5.8xlarge",
+        "ml.g5.16xlarge",
+        "ml.g5.12xlarge",
+        "ml.g5.24xlarge",
+        "ml.g5.48xlarge"
       ]
     },
     "AppList":{
@@ -3460,6 +3468,12 @@
         "CandidateProperties":{"shape":"CandidateProperties"}
       }
     },
+    "AutoMLCandidateGenerationConfig":{
+      "type":"structure",
+      "members":{
+        "FeatureSpecificationS3Uri":{"shape":"S3Uri"}
+      }
+    },
     "AutoMLCandidateStep":{
       "type":"structure",
       "required":[
@@ -3487,8 +3501,16 @@
         "DataSource":{"shape":"AutoMLDataSource"},
         "CompressionType":{"shape":"CompressionType"},
         "TargetAttributeName":{"shape":"TargetAttributeName"},
-        "ContentType":{"shape":"ContentType"}
+        "ContentType":{"shape":"ContentType"},
+        "ChannelType":{"shape":"AutoMLChannelType"}
       }
+    },
+    "AutoMLChannelType":{
+      "type":"string",
+      "enum":[
+        "training",
+        "validation"
+      ]
     },
     "AutoMLContainerDefinition":{
       "type":"structure",
@@ -3514,6 +3536,12 @@
         "S3DataSource":{"shape":"AutoMLS3DataSource"}
       }
     },
+    "AutoMLDataSplitConfig":{
+      "type":"structure",
+      "members":{
+        "ValidationFraction":{"shape":"ValidationFraction"}
+      }
+    },
     "AutoMLFailureReason":{
       "type":"string",
       "max":1024
@@ -3521,7 +3549,7 @@
     "AutoMLInputDataConfig":{
       "type":"list",
       "member":{"shape":"AutoMLChannel"},
-      "max":20,
+      "max":2,
       "min":1
     },
     "AutoMLJobArn":{
@@ -3549,7 +3577,9 @@
       "type":"structure",
       "members":{
         "CompletionCriteria":{"shape":"AutoMLJobCompletionCriteria"},
-        "SecurityConfig":{"shape":"AutoMLSecurityConfig"}
+        "SecurityConfig":{"shape":"AutoMLSecurityConfig"},
+        "DataSplitConfig":{"shape":"AutoMLDataSplitConfig"},
+        "CandidateGenerationConfig":{"shape":"AutoMLCandidateGenerationConfig"}
       }
     },
     "AutoMLJobName":{
@@ -3643,6 +3673,25 @@
         "F1",
         "F1macro",
         "AUC"
+      ]
+    },
+    "AutoMLMetricExtendedEnum":{
+      "type":"string",
+      "enum":[
+        "Accuracy",
+        "MSE",
+        "F1",
+        "F1macro",
+        "AUC",
+        "RMSE",
+        "MAE",
+        "R2",
+        "BalancedAccuracy",
+        "Precision",
+        "PrecisionMacro",
+        "Recall",
+        "RecallMacro",
+        "LogLoss"
       ]
     },
     "AutoMLNameContains":{
@@ -4982,6 +5031,7 @@
         "InputConfig":{"shape":"RecommendationJobInputConfig"},
         "JobDescription":{"shape":"RecommendationJobDescription"},
         "StoppingConditions":{"shape":"RecommendationJobStoppingConditions"},
+        "OutputConfig":{"shape":"RecommendationJobOutputConfig"},
         "Tags":{"shape":"TagList"}
       }
     },
@@ -5226,7 +5276,8 @@
         "DefaultCodeRepository":{"shape":"CodeRepositoryNameOrUrl"},
         "AdditionalCodeRepositories":{"shape":"AdditionalCodeRepositoryNamesOrUrls"},
         "RootAccess":{"shape":"RootAccess"},
-        "PlatformIdentifier":{"shape":"PlatformIdentifier"}
+        "PlatformIdentifier":{"shape":"PlatformIdentifier"},
+        "InstanceMetadataServiceConfiguration":{"shape":"InstanceMetadataServiceConfiguration"}
       }
     },
     "CreateNotebookInstanceLifecycleConfigInput":{
@@ -7249,7 +7300,8 @@
         "DefaultCodeRepository":{"shape":"CodeRepositoryNameOrUrl"},
         "AdditionalCodeRepositories":{"shape":"AdditionalCodeRepositoryNamesOrUrls"},
         "RootAccess":{"shape":"RootAccess"},
-        "PlatformIdentifier":{"shape":"PlatformIdentifier"}
+        "PlatformIdentifier":{"shape":"PlatformIdentifier"},
+        "InstanceMetadataServiceConfiguration":{"shape":"InstanceMetadataServiceConfiguration"}
       }
     },
     "DescribePipelineDefinitionForExecutionRequest":{
@@ -9543,6 +9595,13 @@
       "member":{"shape":"TrainingInputMode"},
       "min":1
     },
+    "InstanceMetadataServiceConfiguration":{
+      "type":"structure",
+      "required":["MinimumInstanceMetadataServiceVersion"],
+      "members":{
+        "MinimumInstanceMetadataServiceVersion":{"shape":"MinimumInstanceMetadataServiceVersion"}
+      }
+    },
     "InstanceType":{
       "type":"string",
       "enum":[
@@ -9606,7 +9665,15 @@
         "ml.r5.8xlarge",
         "ml.r5.12xlarge",
         "ml.r5.16xlarge",
-        "ml.r5.24xlarge"
+        "ml.r5.24xlarge",
+        "ml.g5.xlarge",
+        "ml.g5.2xlarge",
+        "ml.g5.4xlarge",
+        "ml.g5.8xlarge",
+        "ml.g5.16xlarge",
+        "ml.g5.12xlarge",
+        "ml.g5.24xlarge",
+        "ml.g5.48xlarge"
       ]
     },
     "Integer":{"type":"integer"},
@@ -11409,7 +11476,8 @@
       "members":{
         "MetricName":{"shape":"AutoMLMetricEnum"},
         "Value":{"shape":"Float"},
-        "Set":{"shape":"MetricSetSource"}
+        "Set":{"shape":"MetricSetSource"},
+        "StandardMetricName":{"shape":"AutoMLMetricExtendedEnum"}
       }
     },
     "MetricDefinition":{
@@ -11461,6 +11529,11 @@
         "ContentDigest":{"shape":"ContentDigest"},
         "S3Uri":{"shape":"S3Uri"}
       }
+    },
+    "MinimumInstanceMetadataServiceVersion":{
+      "type":"string",
+      "max":1,
+      "pattern":"1|2"
     },
     "ModelApprovalStatus":{
       "type":"string",
@@ -13067,7 +13140,7 @@
     "PlatformIdentifier":{
       "type":"string",
       "max":15,
-      "pattern":"^(notebook-al1-v1|notebook-al2-v1)$"
+      "pattern":"^(notebook-al1-v1|notebook-al2-v1|notebook-al2-v2)$"
     },
     "PolicyString":{
       "type":"string",
@@ -13864,6 +13937,8 @@
     "RSessionAppSettings":{
       "type":"structure",
       "members":{
+        "DefaultResourceSpec":{"shape":"ResourceSpec"},
+        "CustomImages":{"shape":"CustomImages"}
       }
     },
     "RStudioServerProAccessStatus":{
@@ -13914,6 +13989,12 @@
       "max":256,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:inference-recommendations-job/.*"
     },
+    "RecommendationJobCompiledOutputConfig":{
+      "type":"structure",
+      "members":{
+        "S3OutputUri":{"shape":"S3Uri"}
+      }
+    },
     "RecommendationJobDescription":{
       "type":"string",
       "max":128
@@ -13926,7 +14007,8 @@
         "JobDurationInSeconds":{"shape":"JobDurationInSeconds"},
         "TrafficPattern":{"shape":"TrafficPattern"},
         "ResourceLimit":{"shape":"RecommendationJobResourceLimit"},
-        "EndpointConfigurations":{"shape":"EndpointInputConfigurations"}
+        "EndpointConfigurations":{"shape":"EndpointInputConfigurations"},
+        "VolumeKmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "RecommendationJobName":{
@@ -13934,6 +14016,13 @@
       "max":64,
       "min":1,
       "pattern":"^[a-zA-Z0-9](-*[a-zA-Z0-9]){0,63}"
+    },
+    "RecommendationJobOutputConfig":{
+      "type":"structure",
+      "members":{
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "CompiledOutputConfig":{"shape":"RecommendationJobCompiledOutputConfig"}
+      }
     },
     "RecommendationJobResourceLimit":{
       "type":"structure",
@@ -14555,7 +14644,7 @@
     },
     "ServerlessMaxConcurrency":{
       "type":"integer",
-      "max":50,
+      "max":200,
       "min":1
     },
     "ServerlessMemorySizeInMB":{
@@ -16251,7 +16340,8 @@
         "DisassociateAcceleratorTypes":{"shape":"DisassociateNotebookInstanceAcceleratorTypes"},
         "DisassociateDefaultCodeRepository":{"shape":"DisassociateDefaultCodeRepository"},
         "DisassociateAdditionalCodeRepositories":{"shape":"DisassociateAdditionalCodeRepositories"},
-        "RootAccess":{"shape":"RootAccess"}
+        "RootAccess":{"shape":"RootAccess"},
+        "InstanceMetadataServiceConfiguration":{"shape":"InstanceMetadataServiceConfiguration"}
       }
     },
     "UpdateNotebookInstanceLifecycleConfigInput":{
@@ -16497,6 +16587,11 @@
         "RStudioServerProAppSettings":{"shape":"RStudioServerProAppSettings"},
         "RSessionAppSettings":{"shape":"RSessionAppSettings"}
       }
+    },
+    "ValidationFraction":{
+      "type":"float",
+      "max":1,
+      "min":0
     },
     "VariantName":{
       "type":"string",

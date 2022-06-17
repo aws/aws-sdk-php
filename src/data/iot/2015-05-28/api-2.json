@@ -217,7 +217,8 @@
         {"shape":"InvalidRequestException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"ThrottlingException"},
-        {"shape":"ServiceUnavailableException"}
+        {"shape":"ServiceUnavailableException"},
+        {"shape":"LimitExceededException"}
       ]
     },
     "CancelJobExecution":{
@@ -2503,6 +2504,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "ListMetricValues":{
+      "name":"ListMetricValues",
+      "http":{
+        "method":"GET",
+        "requestUri":"/metric-values"
+      },
+      "input":{"shape":"ListMetricValuesRequest"},
+      "output":{"shape":"ListMetricValuesResponse"},
+      "errors":[
+        {"shape":"InvalidRequestException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"ResourceNotFoundException"}
+      ]
+    },
     "ListMitigationActions":{
       "name":"ListMitigationActions",
       "http":{
@@ -3953,7 +3969,7 @@
       "required":["thingGroupNames"],
       "members":{
         "thingGroupNames":{"shape":"ThingGroupNames"},
-        "overrideDynamicGroups":{"shape":"OverrideDynamicGroups"}
+        "overrideDynamicGroups":{"shape":"NullableBoolean"}
       }
     },
     "AdditionalMetricsToRetainList":{
@@ -4752,6 +4768,7 @@
     },
     "Boolean":{"type":"boolean"},
     "BooleanKey":{"type":"boolean"},
+    "BooleanWrapperObject":{"type":"boolean"},
     "Bucket":{
       "type":"structure",
       "members":{
@@ -8489,7 +8506,8 @@
         "namespaceId":{"shape":"NamespaceId"},
         "jobTemplateArn":{"shape":"JobTemplateArn"},
         "jobExecutionsRetryConfig":{"shape":"JobExecutionsRetryConfig"},
-        "documentParameters":{"shape":"ParameterMap"}
+        "documentParameters":{"shape":"ParameterMap"},
+        "isConcurrent":{"shape":"BooleanWrapperObject"}
       }
     },
     "JobArn":{"type":"string"},
@@ -8637,7 +8655,8 @@
         "status":{"shape":"JobStatus"},
         "createdAt":{"shape":"DateType"},
         "lastUpdatedAt":{"shape":"DateType"},
-        "completedAt":{"shape":"DateType"}
+        "completedAt":{"shape":"DateType"},
+        "isConcurrent":{"shape":"BooleanWrapperObject"}
       }
     },
     "JobSummaryList":{
@@ -9511,6 +9530,64 @@
       "type":"structure",
       "members":{
         "managedJobTemplates":{"shape":"ManagedJobTemplatesSummaryList"},
+        "nextToken":{"shape":"NextToken"}
+      }
+    },
+    "ListMetricValuesRequest":{
+      "type":"structure",
+      "required":[
+        "thingName",
+        "metricName",
+        "startTime",
+        "endTime"
+      ],
+      "members":{
+        "thingName":{
+          "shape":"DeviceDefenderThingName",
+          "location":"querystring",
+          "locationName":"thingName"
+        },
+        "metricName":{
+          "shape":"BehaviorMetric",
+          "location":"querystring",
+          "locationName":"metricName"
+        },
+        "dimensionName":{
+          "shape":"DimensionName",
+          "location":"querystring",
+          "locationName":"dimensionName"
+        },
+        "dimensionValueOperator":{
+          "shape":"DimensionValueOperator",
+          "location":"querystring",
+          "locationName":"dimensionValueOperator"
+        },
+        "startTime":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"startTime"
+        },
+        "endTime":{
+          "shape":"Timestamp",
+          "location":"querystring",
+          "locationName":"endTime"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        },
+        "nextToken":{
+          "shape":"NextToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        }
+      }
+    },
+    "ListMetricValuesResponse":{
+      "type":"structure",
+      "members":{
+        "metricDatumList":{"shape":"MetricDatumList"},
         "nextToken":{"shape":"NextToken"}
       }
     },
@@ -10561,6 +10638,17 @@
     "MessageId":{
       "type":"string",
       "max":128
+    },
+    "MetricDatum":{
+      "type":"structure",
+      "members":{
+        "timestamp":{"shape":"Timestamp"},
+        "value":{"shape":"MetricValue"}
+      }
+    },
+    "MetricDatumList":{
+      "type":"list",
+      "member":{"shape":"MetricDatum"}
     },
     "MetricDimension":{
       "type":"structure",
@@ -13400,7 +13488,7 @@
     "VerificationStateDescription":{
       "type":"string",
       "max":1000,
-      "pattern":"[\\p{Graph}\\x20]*"
+      "pattern":"[^\\p{Cntrl}]*"
     },
     "Version":{"type":"long"},
     "VersionConflictException":{

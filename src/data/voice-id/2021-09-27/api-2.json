@@ -58,6 +58,7 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
@@ -170,6 +171,7 @@
       "errors":[
         {"shape":"ResourceNotFoundException"},
         {"shape":"ValidationException"},
+        {"shape":"ConflictException"},
         {"shape":"InternalServerException"},
         {"shape":"ThrottlingException"},
         {"shape":"AccessDeniedException"}
@@ -394,7 +396,8 @@
         "NOT_ENOUGH_SPEECH",
         "SPEAKER_NOT_ENROLLED",
         "SPEAKER_OPTED_OUT",
-        "SPEAKER_ID_NOT_PROVIDED"
+        "SPEAKER_ID_NOT_PROVIDED",
+        "SPEAKER_EXPIRED"
       ]
     },
     "AuthenticationResult":{
@@ -433,7 +436,8 @@
         "ENROLLMENT_ALREADY_EXISTS",
         "SPEAKER_NOT_SET",
         "SPEAKER_OPTED_OUT",
-        "CONCURRENT_CHANGES"
+        "CONCURRENT_CHANGES",
+        "DOMAIN_LOCKED_FROM_ENCRYPTION_UPDATES"
       ]
     },
     "CreateDomainRequest":{
@@ -593,6 +597,7 @@
         "DomainStatus":{"shape":"DomainStatus"},
         "Name":{"shape":"DomainName"},
         "ServerSideEncryptionConfiguration":{"shape":"ServerSideEncryptionConfiguration"},
+        "ServerSideEncryptionUpdateDetails":{"shape":"ServerSideEncryptionUpdateDetails"},
         "UpdatedAt":{"shape":"Timestamp"}
       }
     },
@@ -631,6 +636,7 @@
         "DomainStatus":{"shape":"DomainStatus"},
         "Name":{"shape":"DomainName"},
         "ServerSideEncryptionConfiguration":{"shape":"ServerSideEncryptionConfiguration"},
+        "ServerSideEncryptionUpdateDetails":{"shape":"ServerSideEncryptionUpdateDetails"},
         "UpdatedAt":{"shape":"Timestamp"}
       }
     },
@@ -1035,6 +1041,22 @@
         "KmsKeyId":{"shape":"KmsKeyId"}
       }
     },
+    "ServerSideEncryptionUpdateDetails":{
+      "type":"structure",
+      "members":{
+        "Message":{"shape":"String"},
+        "OldKmsKeyId":{"shape":"KmsKeyId"},
+        "UpdateStatus":{"shape":"ServerSideEncryptionUpdateStatus"}
+      }
+    },
+    "ServerSideEncryptionUpdateStatus":{
+      "type":"string",
+      "enum":[
+        "IN_PROGRESS",
+        "COMPLETED",
+        "FAILED"
+      ]
+    },
     "ServiceQuotaExceededException":{
       "type":"structure",
       "members":{
@@ -1067,6 +1089,7 @@
         "CustomerSpeakerId":{"shape":"CustomerSpeakerId"},
         "DomainId":{"shape":"DomainId"},
         "GeneratedSpeakerId":{"shape":"GeneratedSpeakerId"},
+        "LastAccessedAt":{"shape":"Timestamp"},
         "Status":{"shape":"SpeakerStatus"},
         "UpdatedAt":{"shape":"Timestamp"}
       }
@@ -1142,6 +1165,7 @@
         "CustomerSpeakerId":{"shape":"CustomerSpeakerId"},
         "DomainId":{"shape":"DomainId"},
         "GeneratedSpeakerId":{"shape":"GeneratedSpeakerId"},
+        "LastAccessedAt":{"shape":"Timestamp"},
         "Status":{"shape":"SpeakerStatus"},
         "UpdatedAt":{"shape":"Timestamp"}
       }

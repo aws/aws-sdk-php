@@ -1424,6 +1424,22 @@
         {"shape":"UnsupportedOperationFault"}
       ]
     },
+    "GetClusterCredentialsWithIAM":{
+      "name":"GetClusterCredentialsWithIAM",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"GetClusterCredentialsWithIAMMessage"},
+      "output":{
+        "shape":"ClusterExtendedCredentials",
+        "resultWrapper":"GetClusterCredentialsWithIAMResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
     "GetReservedNodeExchangeConfigurationOptions":{
       "name":"GetReservedNodeExchangeConfigurationOptions",
       "http":{
@@ -2540,6 +2556,15 @@
         "ClusterDbRevisions":{"shape":"ClusterDbRevisionsList"}
       }
     },
+    "ClusterExtendedCredentials":{
+      "type":"structure",
+      "members":{
+        "DbUser":{"shape":"String"},
+        "DbPassword":{"shape":"SensitiveString"},
+        "Expiration":{"shape":"TStamp"},
+        "NextRefreshTime":{"shape":"TStamp"}
+      }
+    },
     "ClusterIamRole":{
       "type":"structure",
       "members":{
@@ -3006,7 +3031,8 @@
         "SnapshotScheduleIdentifier":{"shape":"String"},
         "AvailabilityZoneRelocation":{"shape":"BooleanOptional"},
         "AquaConfigurationStatus":{"shape":"AquaConfigurationStatus"},
-        "DefaultIamRoleArn":{"shape":"String"}
+        "DefaultIamRoleArn":{"shape":"String"},
+        "LoadSampleData":{"shape":"String"}
       }
     },
     "CreateClusterParameterGroupMessage":{
@@ -3987,14 +4013,13 @@
     },
     "EnableLoggingMessage":{
       "type":"structure",
-      "required":[
-        "ClusterIdentifier",
-        "BucketName"
-      ],
+      "required":["ClusterIdentifier"],
       "members":{
         "ClusterIdentifier":{"shape":"String"},
         "BucketName":{"shape":"String"},
-        "S3KeyPrefix":{"shape":"String"}
+        "S3KeyPrefix":{"shape":"String"},
+        "LogDestinationType":{"shape":"LogDestinationType"},
+        "LogExports":{"shape":"LogTypeList"}
       }
     },
     "EnableSnapshotCopyMessage":{
@@ -4279,6 +4304,15 @@
         "DurationSeconds":{"shape":"IntegerOptional"},
         "AutoCreate":{"shape":"BooleanOptional"},
         "DbGroups":{"shape":"DbGroupList"}
+      }
+    },
+    "GetClusterCredentialsWithIAMMessage":{
+      "type":"structure",
+      "required":["ClusterIdentifier"],
+      "members":{
+        "DbName":{"shape":"String"},
+        "ClusterIdentifier":{"shape":"String"},
+        "DurationSeconds":{"shape":"IntegerOptional"}
       }
     },
     "GetReservedNodeExchangeConfigurationOptionsInputMessage":{
@@ -4858,6 +4892,17 @@
       },
       "exception":true
     },
+    "LogDestinationType":{
+      "type":"string",
+      "enum":[
+        "s3",
+        "cloudwatch"
+      ]
+    },
+    "LogTypeList":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "LoggingStatus":{
       "type":"structure",
       "members":{
@@ -4866,7 +4911,9 @@
         "S3KeyPrefix":{"shape":"String"},
         "LastSuccessfulDeliveryTime":{"shape":"TStamp"},
         "LastFailureTime":{"shape":"TStamp"},
-        "LastFailureMessage":{"shape":"String"}
+        "LastFailureMessage":{"shape":"String"},
+        "LogDestinationType":{"shape":"LogDestinationType"},
+        "LogExports":{"shape":"LogTypeList"}
       }
     },
     "Long":{"type":"long"},

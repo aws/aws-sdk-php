@@ -4,8 +4,9 @@
   "operations": {
     "CancelTaskExecution": "<p>Cancels execution of a task. </p> <p>When you cancel a task execution, the transfer of some files is abruptly interrupted. The contents of files that are transferred to the destination might be incomplete or inconsistent with the source files. However, if you start a new task execution on the same task and you allow the task execution to complete, file content on the destination is complete and consistent. This applies to other unexpected failures that interrupt a task execution. In all of these cases, DataSync successfully complete the transfer when you start the next task execution.</p>",
     "CreateAgent": "<p>Activates an DataSync agent that you have deployed on your host. The activation process associates your agent with your account. In the activation process, you specify information such as the Amazon Web Services Region that you want to activate the agent in. You activate the agent in the Amazon Web Services Region where your target locations (in Amazon S3 or Amazon EFS) reside. Your tasks are created in this Amazon Web Services Region.</p> <p>You can activate the agent in a VPC (virtual private cloud) or provide the agent access to a VPC endpoint so you can run tasks without going over the public internet.</p> <p>You can use an agent for more than one location. If a task uses multiple agents, all of them need to have status AVAILABLE for the task to run. If you use multiple agents for a source location, the status of all the agents must be AVAILABLE for the task to run. </p> <p>Agents are automatically updated by Amazon Web Services on a regular basis, using a mechanism that ensures minimal interruption to your tasks.</p> <p/>",
-    "CreateLocationEfs": "<p>Creates an endpoint for an Amazon EFS file system.</p>",
+    "CreateLocationEfs": "<p>Creates an endpoint for an Amazon EFS file system that DataSync can access for a transfer. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-efs-location.html\">Creating a location for Amazon EFS</a>.</p>",
     "CreateLocationFsxLustre": "<p>Creates an endpoint for an Amazon FSx for Lustre file system.</p>",
+    "CreateLocationFsxOpenZfs": "<p>Creates an endpoint for an Amazon FSx for OpenZFS file system.</p>",
     "CreateLocationFsxWindows": "<p>Creates an endpoint for an Amazon FSx for Windows File Server file system.</p>",
     "CreateLocationHdfs": "<p>Creates an endpoint for a Hadoop Distributed File System (HDFS). </p>",
     "CreateLocationNfs": "<p>Defines a file system on a Network File System (NFS) server that can be read from or written to.</p>",
@@ -17,9 +18,10 @@
     "DeleteLocation": "<p>Deletes the configuration of a location used by DataSync. </p>",
     "DeleteTask": "<p>Deletes a task.</p>",
     "DescribeAgent": "<p>Returns metadata such as the name, the network interfaces, and the status (that is, whether the agent is running or not) for an agent. To specify which agent to describe, use the Amazon Resource Name (ARN) of the agent in your request. </p>",
-    "DescribeLocationEfs": "<p>Returns metadata, such as the path information about an Amazon EFS location.</p>",
-    "DescribeLocationFsxLustre": "<p>Returns metadata, such as the path information about an Amazon FSx for Lustre location.</p>",
-    "DescribeLocationFsxWindows": "<p>Returns metadata, such as the path information about an Amazon FSx for Windows File Server location.</p>",
+    "DescribeLocationEfs": "<p>Returns metadata about your DataSync location for an Amazon EFS file system.</p>",
+    "DescribeLocationFsxLustre": "<p>Returns metadata about an Amazon FSx for Lustre location, such as information about its path.</p>",
+    "DescribeLocationFsxOpenZfs": "<p>Returns metadata about an Amazon FSx for OpenZFS location, such as information about its path.</p>",
+    "DescribeLocationFsxWindows": "<p>Returns metadata about an Amazon FSx for Windows File Server location, such as information about its path.</p>",
     "DescribeLocationHdfs": "<p>Returns metadata, such as the authentication information about the Hadoop Distributed File System (HDFS) location. </p>",
     "DescribeLocationNfs": "<p>Returns metadata, such as the path information, about an NFS location.</p>",
     "DescribeLocationObjectStorage": "<p>Returns metadata about a self-managed object storage server location. For more information about self-managed object storage locations, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-object-location.html\">Creating a location for object storage</a>.</p>",
@@ -67,7 +69,7 @@
       "refs": {
         "CreateLocationHdfsRequest$AgentArns": "<p>The Amazon Resource Names (ARNs) of the agents that are used to connect to the HDFS cluster.</p>",
         "CreateLocationObjectStorageRequest$AgentArns": "<p>The Amazon Resource Name (ARN) of the agents associated with the self-managed object storage server location.</p>",
-        "CreateLocationS3Request$AgentArns": "<p>If you are using DataSync on an Amazon Web Services Outpost, specify the Amazon Resource Names (ARNs) of the DataSync agents deployed on your Outpost. For more information about launching a DataSync agent on an Amazon Web Services Outpost, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/deploy-agents.html#outposts-agent\">Deploy your DataSync agent on Outposts</a>.</p>",
+        "CreateLocationS3Request$AgentArns": "<p>If you're using DataSync on an Amazon Web Services Outpost, specify the Amazon Resource Names (ARNs) of the DataSync agents deployed on your Outpost. For more information about launching a DataSync agent on an Amazon Web Services Outpost, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/deploy-agents.html#outposts-agent\">Deploy your DataSync agent on Outposts</a>.</p>",
         "CreateLocationSmbRequest$AgentArns": "<p>The Amazon Resource Names (ARNs) of agents to use for a Simple Message Block (SMB) location. </p>",
         "DescribeLocationHdfsResponse$AgentArns": "<p>The ARNs of the agents that are used to connect to the HDFS cluster. </p>",
         "DescribeLocationObjectStorageResponse$AgentArns": "<p>The Amazon Resource Name (ARN) of the agents associated with the self-managed object storage server location.</p>",
@@ -146,6 +148,16 @@
       }
     },
     "CreateLocationFsxLustreResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateLocationFsxOpenZfsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateLocationFsxOpenZfsResponse": {
       "base": null,
       "refs": {
       }
@@ -280,6 +292,16 @@
       "refs": {
       }
     },
+    "DescribeLocationFsxOpenZfsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeLocationFsxOpenZfsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeLocationFsxWindowsRequest": {
       "base": null,
       "refs": {
@@ -376,9 +398,9 @@
       }
     },
     "Ec2Config": {
-      "base": "<p>The subnet and the security group that DataSync uses to access target EFS file system. The subnet must have at least one mount target for that file system. The security group that you provide needs to be able to communicate with the security group on the mount target in the subnet specified. </p>",
+      "base": "<p>The subnet and security groups that DataSync uses to access your Amazon EFS file system.</p>",
       "refs": {
-        "CreateLocationEfsRequest$Ec2Config": "<p>The subnet and security group that the Amazon EFS file system uses. The security group that you provide needs to be able to communicate with the security group on the mount target in the subnet specified.</p> <p>The exact relationship between security group M (of the mount target) and security group S (which you provide for DataSync to use at this stage) is as follows: </p> <ul> <li> <p> Security group M (which you associate with the mount target) must allow inbound access for the Transmission Control Protocol (TCP) on the NFS port (2049) from security group S. You can enable inbound connections either by IP address (CIDR range) or security group. </p> </li> <li> <p>Security group S (provided to DataSync to access EFS) should have a rule that enables outbound connections to the NFS port on one of the file system’s mount targets. You can enable outbound connections either by IP address (CIDR range) or security group.</p> <p>For information about security groups and mount targets, see Security Groups for Amazon EC2 Instances and Mount Targets in the <i>Amazon EFS User Guide.</i> </p> </li> </ul>",
+        "CreateLocationEfsRequest$Ec2Config": "<p>Specifies the subnet and security groups DataSync uses to access your Amazon EFS file system.</p>",
         "DescribeLocationEfsResponse$Ec2Config": null
       }
     },
@@ -393,29 +415,45 @@
       "base": null,
       "refs": {
         "CreateLocationFsxLustreRequest$SecurityGroupArns": "<p>The Amazon Resource Names (ARNs) of the security groups that are used to configure the FSx for Lustre file system.</p>",
-        "CreateLocationFsxWindowsRequest$SecurityGroupArns": "<p>The Amazon Resource Names (ARNs) of the security groups that are used to configure the FSx for Windows File Server file system.</p>",
+        "CreateLocationFsxOpenZfsRequest$SecurityGroupArns": "<p>The ARNs of the security groups that are used to configure the FSx for OpenZFS file system.</p>",
+        "CreateLocationFsxWindowsRequest$SecurityGroupArns": "<p>The ARNs of the security groups that are used to configure the FSx for Windows File Server file system.</p>",
         "DescribeLocationFsxLustreResponse$SecurityGroupArns": "<p>The Amazon Resource Names (ARNs) of the security groups that are configured for the FSx for Lustre file system.</p>",
+        "DescribeLocationFsxOpenZfsResponse$SecurityGroupArns": "<p>The ARNs of the security groups that are configured for the FSx for OpenZFS file system.</p>",
         "DescribeLocationFsxWindowsResponse$SecurityGroupArns": "<p>The Amazon Resource Names (ARNs) of the security groups that are configured for the FSx for Windows File Server file system.</p>",
-        "Ec2Config$SecurityGroupArns": "<p>The Amazon Resource Names (ARNs) of the security groups that are configured for the Amazon EC2 resource.</p>"
+        "Ec2Config$SecurityGroupArns": "<p>Specifies the Amazon Resource Names (ARNs) of the security groups associated with an Amazon EFS file system's mount target.</p>"
       }
     },
     "Ec2SubnetArn": {
       "base": null,
       "refs": {
-        "Ec2Config$SubnetArn": "<p>The ARN of the subnet and the security group that DataSync uses to access the target EFS file system.</p>",
+        "Ec2Config$SubnetArn": "<p>Specifies the ARN of a subnet where DataSync creates the <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/datasync-network.html#required-network-interfaces\">network interfaces</a> for managing traffic during your transfer.</p> <p>The subnet must be located:</p> <ul> <li> <p>In the same virtual private cloud (VPC) as the Amazon EFS file system.</p> </li> <li> <p>In the same Availability Zone as at least one mount target for the Amazon EFS file system.</p> </li> </ul> <note> <p>You don't need to specify a subnet that includes a file system mount target.</p> </note>",
         "PLSubnetArnList$member": null
+      }
+    },
+    "EfsAccessPointArn": {
+      "base": null,
+      "refs": {
+        "CreateLocationEfsRequest$AccessPointArn": "<p>Specifies the Amazon Resource Name (ARN) of the access point that DataSync uses to access the Amazon EFS file system.</p>",
+        "DescribeLocationEfsResponse$AccessPointArn": "<p>The ARN of the access point that DataSync uses to access the Amazon EFS file system.</p>"
       }
     },
     "EfsFilesystemArn": {
       "base": null,
       "refs": {
-        "CreateLocationEfsRequest$EfsFilesystemArn": "<p>The Amazon Resource Name (ARN) for the Amazon EFS file system.</p>"
+        "CreateLocationEfsRequest$EfsFilesystemArn": "<p>Specifies the ARN for the Amazon EFS file system.</p>"
+      }
+    },
+    "EfsInTransitEncryption": {
+      "base": null,
+      "refs": {
+        "CreateLocationEfsRequest$InTransitEncryption": "<p>Specifies whether you want DataSync to use TLS encryption when transferring data to or from your Amazon EFS file system.</p> <p>If you specify an access point using <code>AccessPointArn</code> or an IAM role using <code>FileSystemAccessRoleArn</code>, you must set this parameter to <code>TLS1_2</code>.</p>",
+        "DescribeLocationEfsResponse$InTransitEncryption": "<p>Whether DataSync uses TLS encryption when transferring data to or from your Amazon EFS file system.</p>"
       }
     },
     "EfsSubdirectory": {
       "base": null,
       "refs": {
-        "CreateLocationEfsRequest$Subdirectory": "<p>A subdirectory in the location’s path. This subdirectory in the EFS file system is used to read data from the EFS source location or write data to the EFS destination. By default, DataSync uses the root directory.</p> <note> <p> <code>Subdirectory</code> must be specified with forward slashes. For example, <code>/path/to/folder</code>.</p> </note>"
+        "CreateLocationEfsRequest$Subdirectory": "<p>Specifies a mount path for your Amazon EFS file system. This is where DataSync reads or writes data (depending on if this is a source or destination location). By default, DataSync uses the root directory, but you can also include subdirectories.</p> <note> <p>You must specify a value with forward slashes (for example, <code>/path/to/folder</code>).</p> </note>"
       }
     },
     "Endpoint": {
@@ -480,6 +518,7 @@
       "base": null,
       "refs": {
         "CreateLocationFsxLustreRequest$FsxFilesystemArn": "<p>The Amazon Resource Name (ARN) for the FSx for Lustre file system.</p>",
+        "CreateLocationFsxOpenZfsRequest$FsxFilesystemArn": "<p>The Amazon Resource Name (ARN) of the FSx for OpenZFS file system.</p>",
         "CreateLocationFsxWindowsRequest$FsxFilesystemArn": "<p>The Amazon Resource Name (ARN) for the FSx for Windows File Server file system.</p>"
       }
     },
@@ -487,6 +526,25 @@
       "base": null,
       "refs": {
         "CreateLocationFsxLustreRequest$Subdirectory": "<p>A subdirectory in the location's path. This subdirectory in the FSx for Lustre file system is used to read data from the FSx for Lustre source location or write data to the FSx for Lustre destination.</p>"
+      }
+    },
+    "FsxOpenZfsSubdirectory": {
+      "base": null,
+      "refs": {
+        "CreateLocationFsxOpenZfsRequest$Subdirectory": "<p>A subdirectory in the location's path that must begin with <code>/fsx</code>. DataSync uses this subdirectory to read or write data (depending on whether the file system is a source or destination location).</p>"
+      }
+    },
+    "FsxProtocol": {
+      "base": "<p>Represents the protocol that DataSync uses to access your Amazon FSx for OpenZFS file system.</p>",
+      "refs": {
+        "CreateLocationFsxOpenZfsRequest$Protocol": "<p>The type of protocol that DataSync uses to access your file system.</p>",
+        "DescribeLocationFsxOpenZfsResponse$Protocol": "<p>The type of protocol that DataSync uses to access your file system.</p>"
+      }
+    },
+    "FsxProtocolNfs": {
+      "base": "<p>Represents the Network File System (NFS) protocol that DataSync uses to access your Amazon FSx for OpenZFS file system.</p>",
+      "refs": {
+        "FsxProtocol$NFS": "<p>Represents the Network File System (NFS) protocol that DataSync uses to access your FSx for OpenZFS file system.</p>"
       }
     },
     "FsxWindowsSubdirectory": {
@@ -581,15 +639,18 @@
     "IamRoleArn": {
       "base": null,
       "refs": {
-        "S3Config$BucketAccessRoleArn": "<p>The Amazon S3 bucket to access. This bucket is used as a parameter in the <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/API_CreateLocationS3.html\">CreateLocationS3</a> operation. </p>"
+        "CreateLocationEfsRequest$FileSystemAccessRoleArn": "<p>Specifies an Identity and Access Management (IAM) role that DataSync assumes when mounting the Amazon EFS file system.</p>",
+        "DescribeLocationEfsResponse$FileSystemAccessRoleArn": "<p>The Identity and Access Management (IAM) role that DataSync assumes when mounting the Amazon EFS file system.</p>",
+        "S3Config$BucketAccessRoleArn": "<p>The ARN of the IAM role for accessing the S3 bucket. </p>"
       }
     },
     "InputTagList": {
       "base": null,
       "refs": {
         "CreateAgentRequest$Tags": "<p>The key-value pair that represents the tag that you want to associate with the agent. The value can be an empty string. This value helps you manage, filter, and search for your agents.</p> <note> <p>Valid characters for key and value are letters, spaces, and numbers representable in UTF-8 format, and the following special characters: + - = . _ : / @. </p> </note>",
-        "CreateLocationEfsRequest$Tags": "<p>The key-value pair that represents a tag that you want to add to the resource. The value can be an empty string. This value helps you manage, filter, and search for your resources. We recommend that you create a name tag for your location.</p>",
+        "CreateLocationEfsRequest$Tags": "<p>Specifies the key-value pair that represents a tag that you want to add to the resource. The value can be an empty string. This value helps you manage, filter, and search for your resources. We recommend that you create a name tag for your location.</p>",
         "CreateLocationFsxLustreRequest$Tags": "<p>The key-value pair that represents a tag that you want to add to the resource. The value can be an empty string. This value helps you manage, filter, and search for your resources. We recommend that you create a name tag for your location.</p>",
+        "CreateLocationFsxOpenZfsRequest$Tags": "<p>The key-value pair that represents a tag that you want to add to the resource. The value can be an empty string. This value helps you manage, filter, and search for your resources. We recommend that you create a name tag for your location.</p>",
         "CreateLocationFsxWindowsRequest$Tags": "<p>The key-value pair that represents a tag that you want to add to the resource. The value can be an empty string. This value helps you manage, filter, and search for your resources. We recommend that you create a name tag for your location.</p>",
         "CreateLocationHdfsRequest$Tags": "<p>The key-value pair that represents the tag that you want to add to the location. The value can be an empty string. We recommend using tags to name your resources. </p>",
         "CreateLocationNfsRequest$Tags": "<p>The key-value pair that represents the tag that you want to add to the location. The value can be an empty string. We recommend using tags to name your resources.</p>",
@@ -614,14 +675,14 @@
       "base": null,
       "refs": {
         "CreateLocationHdfsRequest$KerberosKeytab": "<p>The Kerberos key table (keytab) that contains mappings between the defined Kerberos principal and the encrypted keys. You can load the keytab from a file by providing the file's address. If you're using the CLI, it performs base64 encoding for you. Otherwise, provide the base64-encoded text. </p> <note> <p>If <code>KERBEROS</code> is specified for <code>AuthenticationType</code>, this parameter is required. </p> </note>",
-        "UpdateLocationHdfsRequest$KerberosKeytab": "<p>The Kerberos key table (keytab) that contains mappings between the defined Kerberos principal and the encrypted keys. You can load the keytab from a file by providing the file's address. If you use the AWS CLI, it performs base64 encoding for you. Otherwise, provide the base64-encoded text.</p>"
+        "UpdateLocationHdfsRequest$KerberosKeytab": "<p>The Kerberos key table (keytab) that contains mappings between the defined Kerberos principal and the encrypted keys. You can load the keytab from a file by providing the file's address. If you use the CLI, it performs base64 encoding for you. Otherwise, provide the base64-encoded text.</p>"
       }
     },
     "KerberosKrb5ConfFile": {
       "base": null,
       "refs": {
         "CreateLocationHdfsRequest$KerberosKrb5Conf": "<p>The <code>krb5.conf</code> file that contains the Kerberos configuration information. You can load the <code>krb5.conf</code> file by providing the file's address. If you're using the CLI, it performs the base64 encoding for you. Otherwise, provide the base64-encoded text. </p> <note> <p>If <code>KERBEROS</code> is specified for <code>AuthenticationType</code>, this parameter is required.</p> </note>",
-        "UpdateLocationHdfsRequest$KerberosKrb5Conf": "<p>The <code>krb5.conf</code> file that contains the Kerberos configuration information. You can load the <code>krb5.conf</code> file by providing the file's address. If you're using the AWS CLI, it performs the base64 encoding for you. Otherwise, provide the base64-encoded text.</p>"
+        "UpdateLocationHdfsRequest$KerberosKrb5Conf": "<p>The <code>krb5.conf</code> file that contains the Kerberos configuration information. You can load the <code>krb5.conf</code> file by providing the file's address. If you're using the CLI, it performs the base64 encoding for you. Otherwise, provide the base64-encoded text.</p>"
       }
     },
     "KerberosPrincipal": {
@@ -693,9 +754,10 @@
     "LocationArn": {
       "base": null,
       "refs": {
-        "CreateLocationEfsResponse$LocationArn": "<p>The Amazon Resource Name (ARN) of the Amazon EFS file system location that is created.</p>",
+        "CreateLocationEfsResponse$LocationArn": "<p>The Amazon Resource Name (ARN) of the Amazon EFS file system location that you create.</p>",
         "CreateLocationFsxLustreResponse$LocationArn": "<p>The Amazon Resource Name (ARN) of the FSx for Lustre file system location that's created. </p>",
-        "CreateLocationFsxWindowsResponse$LocationArn": "<p>The Amazon Resource Name (ARN) of the FSx for Windows File Server file system location that is created.</p>",
+        "CreateLocationFsxOpenZfsResponse$LocationArn": "<p>The ARN of the FSx for OpenZFS file system location that you created.</p>",
+        "CreateLocationFsxWindowsResponse$LocationArn": "<p>The Amazon Resource Name (ARN) of the FSx for Windows File Server file system location you created.</p>",
         "CreateLocationHdfsResponse$LocationArn": "<p>The ARN of the source HDFS cluster location that's created. </p>",
         "CreateLocationNfsResponse$LocationArn": "<p>The Amazon Resource Name (ARN) of the source NFS file system location that is created.</p>",
         "CreateLocationObjectStorageResponse$LocationArn": "<p>The Amazon Resource Name (ARN) of the agents associated with the self-managed object storage server location.</p>",
@@ -704,10 +766,12 @@
         "CreateTaskRequest$SourceLocationArn": "<p>The Amazon Resource Name (ARN) of the source location for the task.</p>",
         "CreateTaskRequest$DestinationLocationArn": "<p>The Amazon Resource Name (ARN) of an Amazon Web Services storage resource's location. </p>",
         "DeleteLocationRequest$LocationArn": "<p>The Amazon Resource Name (ARN) of the location to delete.</p>",
-        "DescribeLocationEfsRequest$LocationArn": "<p>The Amazon Resource Name (ARN) of the EFS location to describe.</p>",
-        "DescribeLocationEfsResponse$LocationArn": "<p>The Amazon Resource Name (ARN) of the EFS location that was described.</p>",
+        "DescribeLocationEfsRequest$LocationArn": "<p>The Amazon Resource Name (ARN) of the Amazon EFS file system location that you want information about.</p>",
+        "DescribeLocationEfsResponse$LocationArn": "<p>The ARN of the Amazon EFS file system location.</p>",
         "DescribeLocationFsxLustreRequest$LocationArn": "<p>The Amazon Resource Name (ARN) of the FSx for Lustre location to describe. </p>",
         "DescribeLocationFsxLustreResponse$LocationArn": "<p>The Amazon Resource Name (ARN) of the FSx for Lustre location that was described.</p>",
+        "DescribeLocationFsxOpenZfsRequest$LocationArn": "<p>The Amazon Resource Name (ARN) of the FSx for OpenZFS location to describe.</p>",
+        "DescribeLocationFsxOpenZfsResponse$LocationArn": "<p>The ARN of the FSx for OpenZFS location that was described.</p>",
         "DescribeLocationFsxWindowsRequest$LocationArn": "<p>The Amazon Resource Name (ARN) of the FSx for Windows File Server location to describe.</p>",
         "DescribeLocationFsxWindowsResponse$LocationArn": "<p>The Amazon Resource Name (ARN) of the FSx for Windows File Server location that was described.</p>",
         "DescribeLocationHdfsRequest$LocationArn": "<p>The Amazon Resource Name (ARN) of the HDFS cluster location to describe.</p>",
@@ -762,15 +826,16 @@
     "LocationUri": {
       "base": null,
       "refs": {
-        "DescribeLocationEfsResponse$LocationUri": "<p>The URL of the EFS location that was described.</p>",
+        "DescribeLocationEfsResponse$LocationUri": "<p>The URL of the Amazon EFS file system location.</p>",
         "DescribeLocationFsxLustreResponse$LocationUri": "<p>The URI of the FSx for Lustre location that was described.</p>",
+        "DescribeLocationFsxOpenZfsResponse$LocationUri": "<p>The uniform resource identifier (URI) of the FSx for OpenZFS location that was described.</p> <p>Example: <code>fsxz://us-west-2.fs-1234567890abcdef02/fsx/folderA/folder</code> </p>",
         "DescribeLocationFsxWindowsResponse$LocationUri": "<p>The URL of the FSx for Windows File Server location that was described.</p>",
         "DescribeLocationHdfsResponse$LocationUri": "<p>The URI of the HDFS cluster location.</p>",
         "DescribeLocationNfsResponse$LocationUri": "<p>The URL of the source NFS location that was described.</p>",
         "DescribeLocationObjectStorageResponse$LocationUri": "<p>The URL of the source self-managed object storage server location that was described.</p>",
         "DescribeLocationS3Response$LocationUri": "<p>The URL of the Amazon S3 location that was described.</p>",
         "DescribeLocationSmbResponse$LocationUri": "<p>The URL of the source SMB location that was described.</p>",
-        "LocationListEntry$LocationUri": "<p>Represents a list of URIs of a location. <code>LocationUri</code> returns an array that contains a list of locations when the <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/API_ListLocations.html\">ListLocations</a> operation is called.</p> <p>Format: <code>TYPE://GLOBAL_ID/SUBDIR</code>.</p> <p>TYPE designates the type of location. Valid values: NFS | EFS | S3.</p> <p>GLOBAL_ID is the globally unique identifier of the resource that backs the location. An example for EFS is <code>us-east-2.fs-abcd1234</code>. An example for Amazon S3 is the bucket name, such as <code>myBucket</code>. An example for NFS is a valid IPv4 address or a host name compliant with Domain Name Service (DNS).</p> <p>SUBDIR is a valid file system path, delimited by forward slashes as is the *nix convention. For NFS and Amazon EFS, it's the export path to mount the location. For Amazon S3, it's the prefix path that you mount to and treat as the root of the location.</p> <p/>"
+        "LocationListEntry$LocationUri": "<p>Represents a list of URIs of a location. <code>LocationUri</code> returns an array that contains a list of locations when the <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/API_ListLocations.html\">ListLocations</a> operation is called.</p> <p>Format: <code>TYPE://GLOBAL_ID/SUBDIR</code>.</p> <p>TYPE designates the type of location (for example, <code>nfs</code> or <code>s3</code>).</p> <p>GLOBAL_ID is the globally unique identifier of the resource that backs the location. An example for EFS is <code>us-east-2.fs-abcd1234</code>. An example for Amazon S3 is the bucket name, such as <code>myBucket</code>. An example for NFS is a valid IPv4 address or a hostname that is compliant with Domain Name Service (DNS).</p> <p>SUBDIR is a valid file system path, delimited by forward slashes as is the *nix convention. For NFS and Amazon EFS, it's the export path to mount the location. For Amazon S3, it's the prefix path that you mount to and treat as the root of the location.</p> <p/>"
       }
     },
     "LogGroupArn": {
@@ -800,7 +865,7 @@
     "Mtime": {
       "base": null,
       "refs": {
-        "Options$Mtime": "<p>A value that indicates the last time that a file was modified (that is, a file was written to) before the PREPARING phase. This option is required for cases when you need to run the same task more than one time. </p> <p>Default value: PRESERVE. </p> <p>PRESERVE: Preserve original <code>Mtime</code> (recommended)</p> <p> NONE: Ignore <code>Mtime</code>. </p> <note> <p>If <code>Mtime</code> is set to PRESERVE, <code>Atime</code> must be set to BEST_EFFORT.</p> <p>If <code>Mtime</code> is set to NONE, <code>Atime</code> must also be set to NONE. </p> </note>"
+        "Options$Mtime": "<p>A value that indicates the last time that a file was modified (that is, a file was written to) before the PREPARING phase. This option is required for cases when you need to run the same task more than one time. </p> <p>Default Value: <code>PRESERVE</code> </p> <p>PRESERVE: Preserve original <code>Mtime</code> (recommended)</p> <p> NONE: Ignore <code>Mtime</code>. </p> <note> <p>If <code>Mtime</code> is set to PRESERVE, <code>Atime</code> must be set to BEST_EFFORT.</p> <p>If <code>Mtime</code> is set to NONE, <code>Atime</code> must also be set to NONE. </p> </note>"
       }
     },
     "NetworkInterfaceArn": {
@@ -830,6 +895,7 @@
       "refs": {
         "CreateLocationNfsRequest$MountOptions": "<p>The NFS mount options that DataSync can use to mount your NFS share.</p>",
         "DescribeLocationNfsResponse$MountOptions": "<p>The NFS mount options that DataSync used to mount your NFS share.</p>",
+        "FsxProtocolNfs$MountOptions": null,
         "UpdateLocationNfsRequest$MountOptions": null
       }
     },
@@ -881,6 +947,12 @@
         "CreateLocationObjectStorageRequest$ServerProtocol": "<p>The protocol that the object storage server uses to communicate. Valid values are HTTP or HTTPS.</p>",
         "DescribeLocationObjectStorageResponse$ServerProtocol": "<p>The protocol that the object storage server uses to communicate. Valid values are HTTP or HTTPS.</p>",
         "UpdateLocationObjectStorageRequest$ServerProtocol": "<p>The protocol that the object storage server uses to communicate. Valid values are <code>HTTP</code> or <code>HTTPS</code>.</p>"
+      }
+    },
+    "ObjectTags": {
+      "base": null,
+      "refs": {
+        "Options$ObjectTags": "<p>Specifies whether object tags are maintained when transferring between object storage systems. If you want your DataSync task to ignore object tags, specify the <code>NONE</code> value.</p> <p>Default Value: <code>PRESERVE</code> </p>"
       }
     },
     "OnPremConfig": {
@@ -982,7 +1054,7 @@
       }
     },
     "S3Config": {
-      "base": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role that is used to access an Amazon S3 bucket.</p> <p>For detailed information about using such a role, see Creating a Location for Amazon S3 in the <i>DataSync User Guide</i>.</p>",
+      "base": "<p>The Amazon Resource Name (ARN) of the Identity and Access Management (IAM) role used to access an Amazon S3 bucket.</p> <p>For detailed information about using such a role, see Creating a Location for Amazon S3 in the <i>DataSync User Guide</i>.</p>",
       "refs": {
         "CreateLocationS3Request$S3Config": null,
         "DescribeLocationS3Response$S3Config": null
@@ -1012,8 +1084,8 @@
     "ServerHostname": {
       "base": null,
       "refs": {
-        "CreateLocationNfsRequest$ServerHostname": "<p>The name of the NFS server. This value is the IP address or Domain Name Service (DNS) name of the NFS server. An agent that is installed on-premises uses this host name to mount the NFS server in a network. </p> <p>If you are copying data to or from your Snowcone device, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#nfs-on-snowcone\">NFS Server on Snowcone</a> for more information.</p> <note> <p>This name must either be DNS-compliant or must be an IP version 4 (IPv4) address.</p> </note>",
-        "CreateLocationObjectStorageRequest$ServerHostname": "<p>The name of the self-managed object storage server. This value is the IP address or Domain Name Service (DNS) name of the object storage server. An agent uses this host name to mount the object storage server in a network. </p>",
+        "CreateLocationNfsRequest$ServerHostname": "<p>The name of the NFS server. This value is the IP address or Domain Name Service (DNS) name of the NFS server. An agent that is installed on-premises uses this hostname to mount the NFS server in a network. </p> <p>If you are copying data to or from your Snowcone device, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#nfs-on-snowcone\">NFS Server on Snowcone</a> for more information.</p> <note> <p>This name must either be DNS-compliant or must be an IP version 4 (IPv4) address.</p> </note>",
+        "CreateLocationObjectStorageRequest$ServerHostname": "<p>The name of the self-managed object storage server. This value is the IP address or Domain Name Service (DNS) name of the object storage server. An agent uses this hostname to mount the object storage server in a network. </p>",
         "CreateLocationSmbRequest$ServerHostname": "<p>The name of the SMB server. This value is the IP address or Domain Name Service (DNS) name of the SMB server. An agent that is installed on-premises uses this hostname to mount the SMB server in a network.</p> <note> <p>This name must either be DNS-compliant or must be an IP version 4 (IPv4) address.</p> </note>"
       }
     },
@@ -1246,8 +1318,9 @@
       "refs": {
         "DescribeAgentResponse$LastConnectionTime": "<p>The time that the agent last connected to DataSync.</p>",
         "DescribeAgentResponse$CreationTime": "<p>The time that the agent was activated (that is, created in your account).</p>",
-        "DescribeLocationEfsResponse$CreationTime": "<p>The time that the EFS location was created.</p>",
+        "DescribeLocationEfsResponse$CreationTime": "<p>The time that the location was created.</p>",
         "DescribeLocationFsxLustreResponse$CreationTime": "<p>The time that the FSx for Lustre location was created.</p>",
+        "DescribeLocationFsxOpenZfsResponse$CreationTime": "<p>The time that the FSx for OpenZFS location was created.</p>",
         "DescribeLocationFsxWindowsResponse$CreationTime": "<p>The time that the FSx for Windows File Server location was created.</p>",
         "DescribeLocationHdfsResponse$CreationTime": "<p>The time that the HDFS location was created.</p>",
         "DescribeLocationNfsResponse$CreationTime": "<p>The time that the NFS location was created.</p>",
@@ -1353,7 +1426,7 @@
     "VerifyMode": {
       "base": null,
       "refs": {
-        "Options$VerifyMode": "<p>A value that determines whether a data integrity verification should be performed at the end of a task execution after all data and metadata have been transferred. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-task.html\">Configure task settings</a>. </p> <p>Default value: POINT_IN_TIME_CONSISTENT.</p> <p>ONLY_FILES_TRANSFERRED (recommended): Perform verification only on files that were transferred. </p> <p>POINT_IN_TIME_CONSISTENT: Scan the entire source and entire destination at the end of the transfer to verify that source and destination are fully synchronized. This option isn't supported when transferring to S3 Glacier or S3 Glacier Deep Archive storage classes.</p> <p>NONE: No additional verification is done at the end of the transfer, but all data transmissions are integrity-checked with checksum verification during the transfer.</p>"
+        "Options$VerifyMode": "<p>A value that determines whether a data integrity verification should be performed at the end of a task execution after all data and metadata have been transferred. For more information, see <a href=\"https://docs.aws.amazon.com/datasync/latest/userguide/create-task.html\">Configure task settings</a>. </p> <p>Default value: POINT_IN_TIME_CONSISTENT.</p> <p>ONLY_FILES_TRANSFERRED (recommended): Perform verification only on files that were transferred. </p> <p>POINT_IN_TIME_CONSISTENT: Scan the entire source and entire destination at the end of the transfer to verify that source and destination are fully synchronized. This option isn't supported when transferring to S3 Glacier Flexible Retrieval or S3 Glacier Deep Archive storage classes.</p> <p>NONE: No additional verification is done at the end of the transfer, but all data transmissions are integrity-checked with checksum verification during the transfer.</p>"
       }
     },
     "VpcEndpointId": {
@@ -1382,6 +1455,7 @@
         "InternalException$errorCode": null,
         "InvalidRequestException$message": null,
         "InvalidRequestException$errorCode": null,
+        "InvalidRequestException$datasyncErrorCode": null,
         "TaskExecutionResultDetail$ErrorCode": "<p>Errors that DataSync encountered during execution of the task. You can use this error code to help troubleshoot issues.</p>",
         "TaskExecutionResultDetail$ErrorDetail": "<p>Detailed description of an error that was encountered during the task execution. You can use this information to help troubleshoot issues. </p>"
       }
