@@ -34,7 +34,7 @@ class StreamWrapperV2ExistenceTest extends TestCase
         $this->cache = new LruArrayCache();
         stream_context_set_default(['s3' => ['cache' => $this->cache]]);
         $this->client = $this->getTestClient('S3', ['region' => 'us-east-1']);
-        $this->client->registerStreamWrapper(true);
+        $this->client->registerStreamWrapperV2();
     }
 
     public function tearDown()

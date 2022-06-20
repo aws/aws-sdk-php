@@ -111,9 +111,9 @@ class StreamWrapper
         S3ClientInterface $client,
         $protocol = 's3',
         CacheInterface $cache = null,
-        $V2Existence = false
+        $v2Existence = false
     ) {
-        self::$useV2Existence = $V2Existence;
+        self::$useV2Existence = $v2Existence;
         if (in_array($protocol, stream_get_wrappers())) {
             stream_wrapper_unregister($protocol);
         }
@@ -328,18 +328,12 @@ class StreamWrapper
     private function statDirectory($parts, $path, $flags)
     {
         // Stat "directories": buckets, or "s3://"
-        if (self::$useV2Existence) {
-            if (!$parts['Bucket'] ||
-                $this->getClient()->doesBucketExistV2($parts['Bucket'])
-            ) {
-                return $this->formatUrlStat($path);
-            }
-        } else {
-            if (!$parts['Bucket'] ||
-                $this->getClient()->doesBucketExist($parts['Bucket'])
-            ) {
-                return $this->formatUrlStat($path);
-            }
+        $method = self::$useV2Existence ? 'doesBucketExistV2' : 'doesBucketExist';
+
+        if (!$parts['Bucket'] ||
+            $this->getClient()->$method($parts['Bucket'])
+        ) {
+            return $this->formatUrlStat($path);
         }
 
         return $this->triggerError("File or directory not found: $path", $flags);
@@ -606,22 +600,14 @@ class StreamWrapper
         }
 
         if ($mode === 'x') {
-            if (self::$useV2Existence) {
-                if ($this->getClient()->doesObjectExistV2(
-                    $this->getOption('Bucket'),
-                    $this->getOption('Key'),
-                    $this->getOptions(true)
-                )) {
-                    $errors[] = "{$path} already exists on Amazon S3";
-                }
-            } else {
-                if ($this->getClient()->doesObjectExist(
-                    $this->getOption('Bucket'),
-                    $this->getOption('Key'),
-                    $this->getOptions(true)
-                )) {
-                    $errors[] = "{$path} already exists on Amazon S3";
-                }
+            $method = self::$useV2Existence ? 'doesObjectExistV2' : 'doesObjectExist';
+
+            if ($this->getClient()->$method(
+                $this->getOption('Bucket'),
+                $this->getOption('Key'),
+                $this->getOptions(true)
+            )) {
+                $errors[] = "{$path} already exists on Amazon S3";
             }
         }
 
@@ -825,14 +811,10 @@ class StreamWrapper
      */
     private function createBucket($path, array $params)
     {
-        if (self::$useV2Existence) {
-            if ($this->getClient()->doesBucketExistV2($params['Bucket'])) {
-                return $this->triggerError("Bucket already exists: {$path}");
-            }
-        } else {
-            if ($this->getClient()->doesBucketExist($params['Bucket'])) {
-                return $this->triggerError("Bucket already exists: {$path}");
-            }
+        $method = self::$useV2Existence ? 'doesBucketExistV2' : 'doesBucketExist';
+
+        if ($this->getClient()->$method($params['Bucket'])) {
+            return $this->triggerError("Bucket already exists: {$path}");
         }
 
         return $this->boolCall(function () use ($params, $path) {
@@ -857,20 +839,13 @@ class StreamWrapper
         $params['Body'] = '';
 
         // Fail if this pseudo directory key already exists
-        if (self::$useV2Existence) {
-            if ($this->getClient()->doesObjectExistV2(
-                $params['Bucket'],
-                $params['Key'])
-            ) {
-                return $this->triggerError("Subfolder already exists: {$path}");
-            }
-        } else {
-            if ($this->getClient()->doesObjectExist(
-                $params['Bucket'],
-                $params['Key'])
-            ) {
-                return $this->triggerError("Subfolder already exists: {$path}");
-            }
+        $method = self::$useV2Existence ? 'doesObjectExistV2' : 'doesObjectExist';
+
+        if ($this->getClient()->$method(
+            $params['Bucket'],
+            $params['Key']
+        )) {
+            return $this->triggerError("Subfolder already exists: {$path}");
         }
 
         return $this->boolCall(function () use ($params, $path) {
