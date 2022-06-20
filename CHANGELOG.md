@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.227.1 - 2022-06-20
 
 * `Aws\DirectoryService` - This release adds support for describing and updating AWS Managed Microsoft AD settings
 * `Aws\Kafka` - Documentation updates to use Az Id during cluster creation.
