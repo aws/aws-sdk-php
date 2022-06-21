@@ -5,7 +5,7 @@ you have feedback on the implementation, please visit the [open discussion](http
 we have on the topic.
 
 To avoid shipping unused services, specify which services you would like to keep in your `composer.json` file and
-use the `Aws\\Script\\Composer::removeUnusedServices` script.   
+use the `Aws\\Script\\Composer::removeUnusedServices` script:   
 
 ```
 {
@@ -30,7 +30,9 @@ thrown. For a list of client namespaces, please see the `Namespaces` list in the
 [documentation](https://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html). Run `composer install` or `composer update` 
 to start service removal.  
 
-**NOTE:** If you accidentally remove a service you'd like to keep, you will need to reinstall the SDK.
+**NOTE:** S3, Kms, SSO and Sts are used by core SDK functionality and thus are unsafe for deletion. They are excluded
+from deletion in this script.
+If you accidentally remove a service you'd like to keep, you will need to reinstall the SDK.
 We suggest using `composer reinstall aws/aws-sdk-php`.
 
 

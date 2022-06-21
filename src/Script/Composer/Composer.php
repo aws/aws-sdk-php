@@ -63,12 +63,19 @@ class Composer
         $listedServices,
         $vendorPath
     ) {
+        $unsafeForDeletion = ['Kms', 'S3', 'SSO', 'Sts'];
+        if (in_array('DynamoDbStreams', $listedServices)) {
+            $unsafeForDeletion[] = 'DynamoDb';
+        }
+
         $clientPath = $vendorPath . '/aws/aws-sdk-php/src/';
         $modelPath = $clientPath . 'data/';
         $deleteCount = 0;
 
         foreach ($serviceMapping as $clientName => $modelName) {
-            if (!in_array($clientName, $listedServices)) {
+            if (!in_array($clientName, $listedServices) &&
+                !in_array($clientName, $unsafeForDeletion)
+            ) {
                 $clientDir = $clientPath . $clientName;
                 $modelDir = $modelPath . $modelName;
 

@@ -57,7 +57,8 @@ class ComposerTest extends TestCase
             [['S3', 'Rds']],
             [['signer']],
             [['signer', 'kendra']],
-            [['CloudFront', 'SageMaker']]
+            [['CloudFront', 'SageMaker']],
+            [['DynamoDbStreams']]
         ];
     }
 
@@ -86,7 +87,15 @@ class ComposerTest extends TestCase
         }
         $filesystem->mkdir( $clientPath . 'Api');
 
-        $servicesToRemove = count($serviceList) - count($servicesToKeep);
+        $unsafeForDeletion = ['Kms', 'S3', 'SSO', 'Sts'];
+        if (in_array('DynamoDbStreams', $servicesToKeep)) {
+            $unsafeForDeletion[] = 'DynamoDb';
+        }
+        //offset to allow for values listed as unsafe and also to keep
+        $servicesKept = count($servicesToKeep);
+        $unsafeAndNotKept = count($unsafeForDeletion) - count(array_intersect($servicesToKeep, $unsafeForDeletion));
+        $keptActual = $servicesKept + $unsafeAndNotKept;
+        $servicesToRemove = (count($serviceList) - $keptActual);
         $message = 'Removed ' . $servicesToRemove . ' AWS services';
 
         Composer::removeUnusedServices(
@@ -96,10 +105,14 @@ class ComposerTest extends TestCase
 
         $this->assertTrue($filesystem->exists($clientPath . 'Api'));
         foreach ($serviceList as $client => $data) {
+
+
             $clientDir = $clientPath . $client;
             $modelDir = $modelPath . $data;
 
-            if (!in_array($client, $servicesToKeep)) {
+            if (!in_array($client, $servicesToKeep) &&
+                !in_array($client, $unsafeForDeletion)
+            ) {
                 $this->assertFalse($filesystem->exists([$clientDir, $modelDir]));
             } else {
                 $this->assertTrue($filesystem->exists([$clientDir, $modelDir]));
