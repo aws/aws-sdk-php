@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.228.0 - 2022-06-21
 
 * `Aws\EC2` - This release adds support for Private IP VPNs, a new feature allowing S2S VPN connections to use private ip addresses as the tunnel outside ip address over Direct Connect as transport.
 * `Aws\ECS` - Amazon ECS UpdateService now supports the following parameters: PlacementStrategies, PlacementConstraints and CapacityProviderStrategy.
