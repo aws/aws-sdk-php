@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - This release adds support for Private IP VPNs, a new feature allowing S2S VPN connections to use private ip addresses as the tunnel outside ip address over Direct Connect as transport.
+* `Aws\ECS` - Amazon ECS UpdateService now supports the following parameters: PlacementStrategies, PlacementConstraints and CapacityProviderStrategy.
+* `Aws\S3` - Adds support for new object and bucket existence methods within the streamwrapper via `registerStreamWrapperV2`
+* `Aws\WellArchitected` - Adds support for lens tagging, Adds support for multiple helpful-resource urls and multiple improvement-plan urls.
+
 ## 3.227.1 - 2022-06-20
 
 * `Aws\DirectoryService` - This release adds support for describing and updating AWS Managed Microsoft AD settings
