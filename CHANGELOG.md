@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.228.1 - 2022-06-22
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway
 * `Aws\Pricing` - This release introduces 1 update to the GetProducts API. The serviceCode attribute is now required when you use the GetProductsRequest.
