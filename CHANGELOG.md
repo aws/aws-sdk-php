@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Guzzle` - Bump Guzzle versions to address CVE-2022-31090 and CVE-2022-31091
+* `Aws\LookoutEquipment` - This release adds visualizations to the scheduled inference results. Users will be able to see interference results, including diagnostic results from their running inference schedulers.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has released support for automatic DolbyVision metadata generation when converting HDR10 to DolbyVision.
+* `Aws\MigrationHubRefactorSpaces` - This release adds the new API UpdateRoute that allows route to be updated to ACTIVE/INACTIVE state. In addition, CreateRoute API will now allow users to create route in ACTIVE/INACTIVE state.
+* `Aws\SageMaker` - SageMaker Ground Truth now supports Virtual Private Cloud. Customers can launch labeling jobs and access to their private workforce in VPC mode.
+* `Aws\mgn` - New and modified APIs for the Post-Migration Framework
+
 ## 3.228.1 - 2022-06-22
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway

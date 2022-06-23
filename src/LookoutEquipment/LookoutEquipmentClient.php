@@ -29,6 +29,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise listDataIngestionJobsAsync(array $args = [])
  * @method \Aws\Result listDatasets(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listDatasetsAsync(array $args = [])
+ * @method \Aws\Result listInferenceEvents(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise listInferenceEventsAsync(array $args = [])
  * @method \Aws\Result listInferenceExecutions(array $args = [])
  * @method \GuzzleHttp\Promise\Promise listInferenceExecutionsAsync(array $args = [])
  * @method \Aws\Result listInferenceSchedulers(array $args = [])
