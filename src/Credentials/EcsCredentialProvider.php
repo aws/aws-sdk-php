@@ -1,8 +1,11 @@
 <?php
+
 namespace Aws\Credentials;
 
 use Aws\Exception\CredentialsException;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Promise;
 use GuzzleHttp\Promise\PromiseInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -17,9 +20,16 @@ class EcsCredentialProvider
     const ENV_FULL_URI = "AWS_CONTAINER_CREDENTIALS_FULL_URI";
     const ENV_AUTH_TOKEN = "AWS_CONTAINER_AUTHORIZATION_TOKEN";
     const ENV_TIMEOUT = 'AWS_METADATA_SERVICE_TIMEOUT';
+    const ENV_RETRIES = 'AWS_METADATA_SERVICE_NUM_ATTEMPTS';
 
     /** @var callable */
     private $client;
+
+    /** @var int */
+    private $retries;
+
+    /** @var int */
+    private $attempts;
 
     /** @var float|mixed */
     private $timeout;
@@ -27,21 +37,16 @@ class EcsCredentialProvider
     /**
      *  The constructor accepts following options:
      *  - timeout: (optional) Connection timeout, in seconds, default 1.0
+     *  - retries: Optional number of retries to be attempted.
      *  - client: An EcsClient to make request from
      *
      * @param array $config Configuration options
      */
     public function __construct(array $config = [])
     {
-        $timeout = getenv(self::ENV_TIMEOUT);
-
-        if (!$timeout) {
-            $timeout = isset($_SERVER[self::ENV_TIMEOUT])
-                ? $_SERVER[self::ENV_TIMEOUT]
-                : (isset($config['timeout']) ? $config['timeout'] : 1.0);
-        }
-
-        $this->timeout = (float) $timeout;
+        $this->timeout = (float) getenv(self::ENV_TIMEOUT) ?: (isset($config['timeout']) ? $config['timeout'] : 1.0);
+        $this->retries = (int) getenv(self::ENV_RETRIES) ?: (isset($config['retries']) ? $config['retries'] : 3);
+        $this->attempts = 0;
         $this->client = isset($config['client'])
             ? $config['client']
             : \Aws\default_http_handler();
@@ -54,41 +59,57 @@ class EcsCredentialProvider
      */
     public function __invoke()
     {
-        $client = $this->client;
-        $request = new Request('GET', self::getEcsUri());
-        
-        $headers = $this->setHeaderForAuthToken();
-        return $client(
-            $request,
-            [
-                'timeout' => $this->timeout,
-                'proxy' => '',
-                'headers' => $headers
-            ]
-        )->then(function (ResponseInterface $response) {
-            $result = $this->decodeResult((string) $response->getBody());
-            return new Credentials(
-                $result['AccessKeyId'],
-                $result['SecretAccessKey'],
-                $result['Token'],
-                strtotime($result['Expiration'])
-            );
-        })->otherwise(function ($reason) {
-            $reason = is_array($reason) ? $reason['exception'] : $reason;
-            $msg = $reason->getMessage();
-            throw new CredentialsException(
-                "Error retrieving credential from ECS ($msg)"
-            );
+        return Promise\Coroutine::of(function () {
+            $client = $this->client;
+            $request = new Request('GET', self::getEcsUri());
+
+            $headers = $this->setHeaderForAuthToken();
+
+            $credentials = null;
+
+            while ($credentials === null) {
+                $credentials = yield $client(
+                    $request,
+                    [
+                        'timeout' => $this->timeout,
+                        'proxy' => '',
+                        'headers' => $headers,
+                    ]
+                )->then(function (ResponseInterface $response) {
+                    $result = $this->decodeResult((string)$response->getBody());
+                    return new Credentials(
+                        $result['AccessKeyId'],
+                        $result['SecretAccessKey'],
+                        $result['Token'],
+                        strtotime($result['Expiration'])
+                    );
+                })->otherwise(function ($reason) {
+                    $reason = is_array($reason) ? $reason['exception']:$reason;
+
+                    $isRetryable = $reason instanceof ConnectException;
+                    if ($isRetryable && $this->attempts < $this->retries) {
+                        sleep((int)pow(1.2, $this->attempts));
+                    } else {
+                        $msg = $reason->getMessage();
+                        throw new CredentialsException(
+                            "Error retrieving credential from ECS ($msg)"
+                        );
+                    }
+                });
+                $this->attempts++;
+            }
+
+            yield $credentials;
         });
     }
-    
+
     private function getEcsAuthToken()
     {
         return getenv(self::ENV_AUTH_TOKEN);
     }
 
-    public function setHeaderForAuthToken(){
-        $authToken = self::getEcsAuthToken();
+    public function setHeaderForAuthToken() {
+        $authToken = $this->getEcsAuthToken();
         $headers = [];
         if(!empty($authToken))
             $headers = ['Authorization' => $authToken];
