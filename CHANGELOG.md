@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.228.2 - 2022-06-23
 
 * `Aws\Guzzle` - Bump Guzzle versions to address CVE-2022-31090 and CVE-2022-31091
 * `Aws\LookoutEquipment` - This release adds visualizations to the scheduled inference results. Users will be able to see interference results, including diagnostic results from their running inference schedulers.
