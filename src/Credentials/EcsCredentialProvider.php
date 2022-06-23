@@ -48,7 +48,7 @@ class EcsCredentialProvider
         $this->retries = (int) getenv(self::ENV_RETRIES) ?: (isset($config['retries']) ? $config['retries'] : 3);
         $this->attempts = 0;
         $this->client = isset($config['client'])
-            ? $config['client']
+            ? $config['client'] // internal use only
             : \Aws\default_http_handler();
     }
 
@@ -68,7 +68,7 @@ class EcsCredentialProvider
             $credentials = null;
 
             while ($credentials === null) {
-                $credentials = yield $client(
+                yield $client(
                     $request,
                     [
                         'timeout' => $this->timeout,
@@ -108,7 +108,8 @@ class EcsCredentialProvider
         return getenv(self::ENV_AUTH_TOKEN);
     }
 
-    public function setHeaderForAuthToken() {
+    public function setHeaderForAuthToken()
+    {
         $authToken = $this->getEcsAuthToken();
         $headers = [];
         if(!empty($authToken))
