@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - This release enables the new ListCrawls API for viewing the AWS Glue Crawler run history.
+* `Aws\RDSDataService` - Documentation updates for RDS Data API
+
 ## 3.228.2 - 2022-06-23
 
 * `Aws\Guzzle` - Bump Guzzle versions to address CVE-2022-31090 and CVE-2022-31091
