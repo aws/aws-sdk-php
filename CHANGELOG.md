@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.228.3 - 2022-06-24
 
 * `Aws\Glue` - This release enables the new ListCrawls API for viewing the AWS Glue Crawler run history.
 * `Aws\RDSDataService` - Documentation updates for RDS Data API
