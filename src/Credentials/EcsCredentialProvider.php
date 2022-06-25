@@ -61,14 +61,14 @@ class EcsCredentialProvider
     {
         return Promise\Coroutine::of(function () {
             $client = $this->client;
-            $request = new Request('GET', self::getEcsUri());
+            $request = new Request('GET', $this->getEcsUri());
 
             $headers = $this->setHeaderForAuthToken();
 
             $credentials = null;
 
             while ($credentials === null) {
-                yield $client(
+                $credentials = yield $client(
                     $request,
                     [
                         'timeout' => $this->timeout,
