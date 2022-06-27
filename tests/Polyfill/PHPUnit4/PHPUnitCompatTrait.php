@@ -63,6 +63,16 @@ trait PHPUnitCompatTrait
         $this->expectException(\PHPUnit_Framework_Error_Warning::class);
     }
 
+    public function expectError()
+    {
+        $this->expectException(\PHPUnit_Framework_Error::class);
+    }
+
+    public function expectErrorMessage($message)
+    {
+        $this->expectExceptionMessage($message);
+    }
+
     public function expectExceptionMessageMatches($regularExpression)
     {
         $this->expectExceptionMessageRegExp($regularExpression);

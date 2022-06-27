@@ -2,6 +2,8 @@
 
 namespace Aws\Test\Polyfill\PHPUnit;
 
+use PHPUnit\Framework\Error\Error;
+
 trait PHPUnitCompatTrait
 {
     private $exceptionCode = null;
@@ -49,6 +51,16 @@ trait PHPUnitCompatTrait
     public function expectWarning()
     {
         $this->expectException(\PHPUnit_Framework_Error_Warning::class);
+    }
+
+    public function expectError()
+    {
+        $this->expectException(\PHPUnit_Framework_Error::class);
+    }
+
+    public function expectErrorMessage($message)
+    {
+        $this->expectExceptionMessage($message);
     }
 
     public function expectExceptionMessageMatches($regularExpression)
