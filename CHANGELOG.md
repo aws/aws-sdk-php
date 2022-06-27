@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\IoT` - This release ease the restriction for the input of tag value to align with AWS standard, now instead of min length 1, we change it to min length 0.
+
 ## 3.228.3 - 2022-06-24
 
 * `Aws\Glue` - This release enables the new ListCrawls API for viewing the AWS Glue Crawler run history.
