@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.228.4 - 2022-06-27
 
 * `Aws\IoT` - This release ease the restriction for the input of tag value to align with AWS standard, now instead of min length 1, we change it to min length 0.
 
