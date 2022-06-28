@@ -79,6 +79,18 @@ class S3ClientTest extends TestCase
         $this->assertEquals($valid, S3Client::isBucketDnsCompatible($bucket));
     }
 
+    public function testValidateDnsBucketNamesPassingNull()
+    {
+        $isError = false;
+        set_error_handler(function ($e) use (&$isError) {
+            $isError = true;
+        });
+        $bucket = null;
+        S3Client::isBucketDnsCompatible($bucket);
+
+        $this->assertFalse($isError);
+    }
+
     public function testCreatesPresignedRequests()
     {
         /** @var S3Client $client */
