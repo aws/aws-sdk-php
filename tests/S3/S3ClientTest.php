@@ -87,6 +87,7 @@ class S3ClientTest extends TestCase
         });
         $bucket = null;
         S3Client::isBucketDnsCompatible($bucket);
+        restore_error_handler();
 
         $this->assertFalse($isError);
     }
