@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.228.5 - 2022-06-28
 
 * `Aws\DataSync` - AWS DataSync now supports Amazon FSx for NetApp ONTAP locations.
 * `Aws\EC2` - This release adds a new spread placement group to EC2 Placement Groups: host level spread, which spread instances between physical hosts, available to Outpost customers only. CreatePlacementGroup and DescribePlacementGroups APIs were updated with a new parameter: SpreadLevel to support this feature.
