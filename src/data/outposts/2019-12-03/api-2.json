@@ -125,6 +125,21 @@
         {"shape":"InternalServerException"}
       ]
     },
+    "GetConnection":{
+      "name":"GetConnection",
+      "http":{
+        "method":"GET",
+        "requestUri":"/connections/{ConnectionId}"
+      },
+      "input":{"shape":"GetConnectionRequest"},
+      "output":{"shape":"GetConnectionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServerException"}
+      ]
+    },
     "GetOrder":{
       "name":"GetOrder",
       "http":{
@@ -283,6 +298,21 @@
         {"shape":"InternalServerException"},
         {"shape":"ValidationException"},
         {"shape":"NotFoundException"}
+      ]
+    },
+    "StartConnection":{
+      "name":"StartConnection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/connections"
+      },
+      "input":{"shape":"StartConnectionRequest"},
+      "output":{"shape":"StartConnectionResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalServerException"}
       ]
     },
     "TagResource":{
@@ -458,12 +488,19 @@
         "AssetId":{"shape":"AssetId"},
         "RackId":{"shape":"RackId"},
         "AssetType":{"shape":"AssetType"},
-        "ComputeAttributes":{"shape":"ComputeAttributes"}
+        "ComputeAttributes":{"shape":"ComputeAttributes"},
+        "AssetLocation":{"shape":"AssetLocation"}
       }
     },
     "AssetListDefinition":{
       "type":"list",
       "member":{"shape":"AssetInfo"}
+    },
+    "AssetLocation":{
+      "type":"structure",
+      "members":{
+        "RackElevation":{"shape":"RackElevation"}
+      }
     },
     "AssetType":{
       "type":"string",
@@ -492,6 +529,16 @@
       "member":{"shape":"AvailabilityZone"},
       "max":5,
       "min":1
+    },
+    "CIDR":{
+      "type":"string",
+      "max":18,
+      "min":9,
+      "pattern":"^([0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$"
+    },
+    "CIDRList":{
+      "type":"list",
+      "member":{"shape":"CIDR"}
     },
     "CancelOrderInput":{
       "type":"structure",
@@ -576,6 +623,23 @@
       },
       "error":{"httpStatusCode":409},
       "exception":true
+    },
+    "ConnectionDetails":{
+      "type":"structure",
+      "members":{
+        "ClientPublicKey":{"shape":"WireGuardPublicKey"},
+        "ServerPublicKey":{"shape":"WireGuardPublicKey"},
+        "ServerEndpoint":{"shape":"ServerEndpoint"},
+        "ClientTunnelAddress":{"shape":"CIDR"},
+        "ServerTunnelAddress":{"shape":"CIDR"},
+        "AllowedIps":{"shape":"CIDRList"}
+      }
+    },
+    "ConnectionId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^([\\w-]+)$"
     },
     "ContactName":{
       "type":"string",
@@ -692,6 +756,12 @@
       "members":{
       }
     },
+    "DeviceSerialNumber":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"^(\\w+)$"
+    },
     "DistrictOrCounty":{
       "type":"string",
       "max":60,
@@ -748,6 +818,24 @@
       "type":"structure",
       "members":{
         "CatalogItem":{"shape":"CatalogItem"}
+      }
+    },
+    "GetConnectionRequest":{
+      "type":"structure",
+      "required":["ConnectionId"],
+      "members":{
+        "ConnectionId":{
+          "shape":"ConnectionId",
+          "location":"uri",
+          "locationName":"ConnectionId"
+        }
+      }
+    },
+    "GetConnectionResponse":{
+      "type":"structure",
+      "members":{
+        "ConnectionId":{"shape":"ConnectionId"},
+        "ConnectionDetails":{"shape":"ConnectionDetails"}
       }
     },
     "GetOrderInput":{
@@ -1164,6 +1252,11 @@
       "min":0,
       "pattern":"^\\S[\\S ]*$"
     },
+    "NetworkInterfaceDeviceIndex":{
+      "type":"integer",
+      "max":1,
+      "min":0
+    },
     "NotFoundException":{
       "type":"structure",
       "members":{
@@ -1355,6 +1448,12 @@
       ]
     },
     "Quantity":{"type":"string"},
+    "RackElevation":{
+      "type":"float",
+      "box":true,
+      "max":99,
+      "min":0
+    },
     "RackId":{
       "type":"string",
       "max":20,
@@ -1381,6 +1480,12 @@
         "OUTPOST",
         "ORDER"
       ]
+    },
+    "ServerEndpoint":{
+      "type":"string",
+      "max":21,
+      "min":9,
+      "pattern":"^([0-9]{1,3}\\.){3}[0-9]{1,3}:[0-9]{1,5}$"
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -1441,6 +1546,28 @@
       "max":10,
       "min":1,
       "pattern":"OR-[A-Z0-9]{7}"
+    },
+    "StartConnectionRequest":{
+      "type":"structure",
+      "required":[
+        "DeviceSerialNumber",
+        "AssetId",
+        "ClientPublicKey",
+        "NetworkInterfaceDeviceIndex"
+      ],
+      "members":{
+        "DeviceSerialNumber":{"shape":"DeviceSerialNumber"},
+        "AssetId":{"shape":"AssetId"},
+        "ClientPublicKey":{"shape":"WireGuardPublicKey"},
+        "NetworkInterfaceDeviceIndex":{"shape":"NetworkInterfaceDeviceIndex"}
+      }
+    },
+    "StartConnectionResponse":{
+      "type":"structure",
+      "members":{
+        "ConnectionId":{"shape":"ConnectionId"},
+        "UnderlayIpAddress":{"shape":"UnderlayIpAddress"}
+      }
     },
     "StateOrRegion":{
       "type":"string",
@@ -1530,6 +1657,12 @@
       "max":1005,
       "min":1,
       "pattern":"^(\\d+)##(\\S+)$"
+    },
+    "UnderlayIpAddress":{
+      "type":"string",
+      "max":15,
+      "min":7,
+      "pattern":"^([0-9]{1,3}\\.){3}[0-9]{1,3}$"
     },
     "UntagResourceRequest":{
       "type":"structure",
@@ -1676,6 +1809,12 @@
       },
       "error":{"httpStatusCode":400},
       "exception":true
+    },
+    "WireGuardPublicKey":{
+      "type":"string",
+      "max":44,
+      "min":44,
+      "pattern":"^[a-zA-Z0-9/+]{43}=$"
     },
     "outpostListDefinition":{
       "type":"list",
