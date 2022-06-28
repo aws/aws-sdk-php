@@ -1,5 +1,101 @@
 # CHANGELOG
 
+## 3.228.4 - 2022-06-27
+
+* `Aws\IoT` - This release ease the restriction for the input of tag value to align with AWS standard, now instead of min length 1, we change it to min length 0.
+
+## 3.228.3 - 2022-06-24
+
+* `Aws\Glue` - This release enables the new ListCrawls API for viewing the AWS Glue Crawler run history.
+* `Aws\RDSDataService` - Documentation updates for RDS Data API
+
+## 3.228.2 - 2022-06-23
+
+* `Aws\Guzzle` - Bump Guzzle versions to address CVE-2022-31090 and CVE-2022-31091
+* `Aws\LookoutEquipment` - This release adds visualizations to the scheduled inference results. Users will be able to see interference results, including diagnostic results from their running inference schedulers.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has released support for automatic DolbyVision metadata generation when converting HDR10 to DolbyVision.
+* `Aws\MigrationHubRefactorSpaces` - This release adds the new API UpdateRoute that allows route to be updated to ACTIVE/INACTIVE state. In addition, CreateRoute API will now allow users to create route in ACTIVE/INACTIVE state.
+* `Aws\SageMaker` - SageMaker Ground Truth now supports Virtual Private Cloud. Customers can launch labeling jobs and access to their private workforce in VPC mode.
+* `Aws\mgn` - New and modified APIs for the Post-Migration Framework
+
+## 3.228.1 - 2022-06-22
+
+* `Aws\APIGateway` - Documentation updates for Amazon API Gateway
+* `Aws\Pricing` - This release introduces 1 update to the GetProducts API. The serviceCode attribute is now required when you use the GetProductsRequest.
+* `Aws\Transfer` - Until today, the service supported only RSA host keys and user keys. Now with this launch, Transfer Family has expanded the support for ECDSA and ED25519 host keys and user keys, enabling customers to support a broader set of clients by choosing RSA, ECDSA, and ED25519 host and user keys.
+
+## 3.228.0 - 2022-06-21
+
+* `Aws\EC2` - This release adds support for Private IP VPNs, a new feature allowing S2S VPN connections to use private ip addresses as the tunnel outside ip address over Direct Connect as transport.
+* `Aws\ECS` - Amazon ECS UpdateService now supports the following parameters: PlacementStrategies, PlacementConstraints and CapacityProviderStrategy.
+* `Aws\S3` - Adds support for new object and bucket existence methods within the streamwrapper via `registerStreamWrapperV2`
+* `Aws\WellArchitected` - Adds support for lens tagging, Adds support for multiple helpful-resource urls and multiple improvement-plan urls.
+
+## 3.227.1 - 2022-06-20
+
+* `Aws\DirectoryService` - This release adds support for describing and updating AWS Managed Microsoft AD settings
+* `Aws\Kafka` - Documentation updates to use Az Id during cluster creation.
+* `Aws\Outposts` - This release adds the AssetLocation structure to the ListAssets response. AssetLocation includes the RackElevation for an Asset.
+
+## 3.227.0 - 2022-06-17
+
+* `Aws\Connect` - This release updates these APIs: UpdateInstanceAttribute, DescribeInstanceAttribute and ListInstanceAttributes. You can use it to programmatically enable/disable High volume outbound communications using attribute type HIGH_VOLUME_OUTBOUND on the specified Amazon Connect instance.
+* `Aws\ConnectCampaignService` - Added Amazon Connect high volume outbound communications SDK.
+* `Aws\DynamoDB` - Doc only update for DynamoDB service
+* `Aws\DynamoDBStreams` - Doc only update for DynamoDB service
+
+## 3.226.0 - 2022-06-16
+
+* `Aws\RedshiftDataAPIService` - This release adds a new --workgroup-name field to operations that connect to an endpoint. Customers can now execute queries against their serverless workgroups.
+* `Aws\SecretsManager` - Documentation updates for Secrets Manager
+* `Aws\SecurityHub` - Added Threats field for security findings. Added new resource details for ECS Container, ECS Task, RDS SecurityGroup, Kinesis Stream, EC2 TransitGateway, EFS AccessPoint, CloudFormation Stack, CloudWatch Alarm, VPC Peering Connection and WAF Rules
+
+## 3.225.5 - 2022-06-15
+
+* `Aws\AppRegistry` - This release adds a new API ListAttributeGroupsForApplication that returns associated attribute groups of an application. In addition, the UpdateApplication and UpdateAttributeGroup APIs will not allow users to update the 'Name' attribute.
+* `Aws\FinSpaceData` - This release adds a new set of APIs, GetPermissionGroup, DisassociateUserFromPermissionGroup, AssociateUserToPermissionGroup, ListPermissionGroupsByUser, ListUsersByPermissionGroup.
+* `Aws\GuardDuty` - Adds finding fields available from GuardDuty Console. Adds FreeTrial related operations. Deprecates the use of various APIs related to Master Accounts and Replace them with Administrator Accounts.
+* `Aws\WorkSpaces` - Added new field "reason" to OperationNotSupportedException. Receiving this exception in the DeregisterWorkspaceDirectory API will now return a reason giving more context on the failure.
+
+## 3.225.4 - 2022-06-14
+
+* `Aws\Budgets` - Add a budgets ThrottlingException. Update the CostFilters value pattern.
+* `Aws\LookoutMetrics` - Adding filters to Alert and adding new UpdateAlert API.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has added support for rules that constrain Automatic-ABR rendition selection when generating ABR package ladders.
+
+## 3.225.3 - 2022-06-13
+
+* `Aws\` - Revert previous guzzle bump due to lack of exposure to security advisories
+* `Aws\Outposts` - This release adds API operations AWS uses to install Outpost servers.
+
+## 3.225.2 - 2022-06-10
+
+* `Aws\` - Bump Guzzle 6 and 7 due to security advisory
+* `Aws\` - Remove RedshiftServerless service
+* `Aws\FraudDetector` - Documentation updates for Amazon Fraud Detector (AWSHawksNest)
+
+## 3.225.1 - 2022-06-09
+
+* `Aws\ChimeSDKMeetings` - Adds support for live transcription in AWS GovCloud (US) Regions.
+
+## 3.225.0 - 2022-06-08
+
+* `Aws\DatabaseMigrationService` - This release adds DMS Fleet Advisor APIs and exposes functionality for DMS Fleet Advisor. It adds functionality to create and modify fleet advisor instances, and to collect and analyze information about the local data infrastructure.
+* `Aws\IAM` - Documentation updates for AWS Identity and Access Management (IAM).
+* `Aws\MainframeModernization` - AWS Mainframe Modernization service is a managed mainframe service and set of tools for planning, migrating, modernizing, and running mainframe workloads on AWS
+* `Aws\Neptune` - This release adds support for Neptune to be configured as a global database, with a primary DB cluster in one region, and up to five secondary DB clusters in other regions.
+* `Aws\Redshift` - Adds new API GetClusterCredentialsWithIAM to return temporary credentials.
+
+## 3.224.5 - 2022-06-07
+
+* `Aws\AuditManager` - This release introduces 2 updates to the Audit Manager API. The roleType and roleArn attributes are now required when you use the CreateAssessment or UpdateAssessment operation. We also added a throttling exception to the RegisterAccount API operation.
+* `Aws\CostExplorer` - Added two new APIs to support cost allocation tags operations: ListCostAllocationTags, UpdateCostAllocationTagsStatus.
+
+## 3.224.4 - 2022-06-06
+
+* `Aws\ChimeSDKMessaging` - This release adds support for searching channels by members via the SearchChannels API, removes required restrictions for Name and Mode in UpdateChannel API and enhances CreateChannel API by exposing member and moderator list as well as channel id as optional parameters.
+* `Aws\Connect` - This release adds a new API, GetCurrentUserData, which returns real-time details about users' current activity.
+
 ## 3.224.3 - 2022-06-02
 
 * `Aws\ApplicationInsights` - Provide Account Level onboarding support through CFN/CLI

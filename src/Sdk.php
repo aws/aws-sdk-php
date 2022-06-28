@@ -150,6 +150,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionConfigService(array $args = [])
  * @method \Aws\Connect\ConnectClient createConnect(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionConnect(array $args = [])
+ * @method \Aws\ConnectCampaignService\ConnectCampaignServiceClient createConnectCampaignService(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionConnectCampaignService(array $args = [])
  * @method \Aws\ConnectContactLens\ConnectContactLensClient createConnectContactLens(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionConnectContactLens(array $args = [])
  * @method \Aws\ConnectParticipant\ConnectParticipantClient createConnectParticipant(array $args = [])
@@ -370,6 +372,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionMacie(array $args = [])
  * @method \Aws\Macie2\Macie2Client createMacie2(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionMacie2(array $args = [])
+ * @method \Aws\MainframeModernization\MainframeModernizationClient createMainframeModernization(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionMainframeModernization(array $args = [])
  * @method \Aws\ManagedBlockchain\ManagedBlockchainClient createManagedBlockchain(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionManagedBlockchain(array $args = [])
  * @method \Aws\ManagedGrafana\ManagedGrafanaClient createManagedGrafana(array $args = [])
@@ -617,7 +621,7 @@ namespace Aws;
  */
 class Sdk
 {
-    const VERSION = '3.224.3';
+    const VERSION = '3.228.4';
 
     /** @var array Arguments for creating clients */
     private $args;

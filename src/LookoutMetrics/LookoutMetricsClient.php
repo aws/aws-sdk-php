@@ -59,6 +59,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise tagResourceAsync(array $args = [])
  * @method \Aws\Result untagResource(array $args = [])
  * @method \GuzzleHttp\Promise\Promise untagResourceAsync(array $args = [])
+ * @method \Aws\Result updateAlert(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateAlertAsync(array $args = [])
  * @method \Aws\Result updateAnomalyDetector(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateAnomalyDetectorAsync(array $args = [])
  * @method \Aws\Result updateMetricSet(array $args = [])
