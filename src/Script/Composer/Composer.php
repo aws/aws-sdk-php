@@ -25,7 +25,13 @@ class Composer
             self::verifyListedServices($serviceMapping, $listedServices);
             $filesystem = $filesystem ?: new Filesystem();
             $vendorPath = $composer->getConfig()->get('vendor-dir');
-            self::removeServiceDirs($event, $filesystem, $serviceMapping, $listedServices, $vendorPath);
+            self::removeServiceDirs(
+                $event,
+                $filesystem,
+                $serviceMapping,
+                $listedServices,
+                $vendorPath
+            );
         } else {
             throw new \InvalidArgumentException(
                 'There are no services listed. Did you intend to use this script?'
