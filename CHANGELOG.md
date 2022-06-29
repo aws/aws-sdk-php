@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppStream` - Includes support for StreamingExperienceSettings in CreateStack and UpdateStack APIs
+* `Aws\EMR` - This release introduces additional optional parameter "Throughput" to VolumeSpecification to enable user to configure throughput for gp3 ebs volumes.
+* `Aws\ElasticLoadBalancingv2` - This release adds two attributes for ALB. One, helps to preserve the host header and the other helps to modify, preserve, or remove the X-Forwarded-For header in the HTTP request.
+* `Aws\MediaLive` - This release adds support for automatic renewal of MediaLive reservations at the end of each reservation term. Automatic renewal is optional. This release also adds support for labelling accessibility-focused audio and caption tracks in HLS outputs.
+* `Aws\RedshiftServerless` - Add new API operations for Amazon Redshift Serverless, a new way of using Amazon Redshift without needing to manually manage provisioned clusters. The new operations let you interact with Redshift Serverless resources, such as create snapshots, list VPC endpoints, delete resource policies, and more.
+* `Aws\SageMaker` - This release adds: UpdateFeatureGroup, UpdateFeatureMetadata, DescribeFeatureMetadata APIs; FeatureMetadata type in Search API; LastModifiedTime, LastUpdateStatus, OnlineStoreTotalSizeBytes in DescribeFeatureGroup API.
+* `Aws\Translate` - Added ListLanguages API which can be used to list the languages supported by Translate.
+
 ## 3.228.5 - 2022-06-28
 
 * `Aws\DataSync` - AWS DataSync now supports Amazon FSx for NetApp ONTAP locations.
