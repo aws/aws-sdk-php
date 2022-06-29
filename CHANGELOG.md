@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.229.0 - 2022-06-29
 
 * `Aws\AppStream` - Includes support for StreamingExperienceSettings in CreateStack and UpdateStack APIs
 * `Aws\EMR` - This release introduces additional optional parameter "Throughput" to VolumeSpecification to enable user to configure throughput for gp3 ebs volumes.
