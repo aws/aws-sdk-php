@@ -696,7 +696,8 @@
       ],
       "members":{
         "JobFlowId":{"shape":"XmlStringMaxLen256"},
-        "Steps":{"shape":"StepConfigList"}
+        "Steps":{"shape":"StepConfigList"},
+        "ExecutionRoleArn":{"shape":"ArnType"}
       }
     },
     "AddJobFlowStepsOutput":{
@@ -2801,7 +2802,8 @@
         "Name":{"shape":"String"},
         "Config":{"shape":"HadoopStepConfig"},
         "ActionOnFailure":{"shape":"ActionOnFailure"},
-        "Status":{"shape":"StepStatus"}
+        "Status":{"shape":"StepStatus"},
+        "ExecutionRoleArn":{"shape":"OptionalArnType"}
       }
     },
     "StepCancellationOption":{
@@ -3019,6 +3021,10 @@
         "JobFlowIds":{"shape":"XmlStringList"}
       }
     },
+    "ThroughputVal":{
+      "type":"integer",
+      "min":0
+    },
     "Unit":{
       "type":"string",
       "enum":[
@@ -3086,7 +3092,8 @@
       "members":{
         "VolumeType":{"shape":"String"},
         "Iops":{"shape":"Integer"},
-        "SizeInGB":{"shape":"Integer"}
+        "SizeInGB":{"shape":"Integer"},
+        "Throughput":{"shape":"ThroughputVal"}
       }
     },
     "WholeNumber":{

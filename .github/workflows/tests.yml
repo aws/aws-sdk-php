@@ -7,6 +7,9 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions:
+  contents: read
+
 jobs:
   run:
     runs-on: ubuntu-18.04
@@ -33,7 +36,7 @@ jobs:
 
     #checkout the codebase from github
     - name: Checkout codebase
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     #validate composer files
     - name: Validate composer.json and composer.lock

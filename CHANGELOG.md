@@ -1,5 +1,52 @@
 # CHANGELOG
 
+## 3.229.1 - 2022-06-30
+
+* `Aws\Athena` - This feature introduces the API support for Athena's parameterized query and BatchGetPreparedStatement API.
+* `Aws\CustomerProfiles` - This release adds the optional MinAllowedConfidenceScoreForMerging parameter to the CreateDomain, UpdateDomain, and GetAutoMergingPreview APIs in Customer Profiles. This parameter is used as a threshold to influence the profile auto-merging step of the Identity Resolution process.
+* `Aws\EMR` - This release adds support for the ExecutionRoleArn parameter in the AddJobFlowSteps and DescribeStep APIs. Customers can use ExecutionRoleArn to specify the IAM role used for each job they submit using the AddJobFlowSteps API.
+* `Aws\Glue` - This release adds tag as an input of CreateDatabase
+* `Aws\MWAA` - Documentation updates for Amazon Managed Workflows for Apache Airflow.
+* `Aws\Pricing` - Documentation update for GetProducts Response.
+* `Aws\WellArchitected` - Added support for UpdateGlobalSettings API. Added status filter to ListWorkloadShares and ListLensShares.
+* `Aws\WorkMail` - This release adds support for managing user availability configurations in Amazon WorkMail.
+* `Aws\kendra` - Amazon Kendra now provides a data source connector for alfresco
+
+## 3.229.0 - 2022-06-29
+
+* `Aws\AppStream` - Includes support for StreamingExperienceSettings in CreateStack and UpdateStack APIs
+* `Aws\EMR` - This release introduces additional optional parameter "Throughput" to VolumeSpecification to enable user to configure throughput for gp3 ebs volumes.
+* `Aws\ElasticLoadBalancingv2` - This release adds two attributes for ALB. One, helps to preserve the host header and the other helps to modify, preserve, or remove the X-Forwarded-For header in the HTTP request.
+* `Aws\MediaLive` - This release adds support for automatic renewal of MediaLive reservations at the end of each reservation term. Automatic renewal is optional. This release also adds support for labelling accessibility-focused audio and caption tracks in HLS outputs.
+* `Aws\RedshiftServerless` - Add new API operations for Amazon Redshift Serverless, a new way of using Amazon Redshift without needing to manually manage provisioned clusters. The new operations let you interact with Redshift Serverless resources, such as create snapshots, list VPC endpoints, delete resource policies, and more.
+* `Aws\SageMaker` - This release adds: UpdateFeatureGroup, UpdateFeatureMetadata, DescribeFeatureMetadata APIs; FeatureMetadata type in Search API; LastModifiedTime, LastUpdateStatus, OnlineStoreTotalSizeBytes in DescribeFeatureGroup API.
+* `Aws\Translate` - Added ListLanguages API which can be used to list the languages supported by Translate.
+
+## 3.228.5 - 2022-06-28
+
+* `Aws\DataSync` - AWS DataSync now supports Amazon FSx for NetApp ONTAP locations.
+* `Aws\EC2` - This release adds a new spread placement group to EC2 Placement Groups: host level spread, which spread instances between physical hosts, available to Outpost customers only. CreatePlacementGroup and DescribePlacementGroups APIs were updated with a new parameter: SpreadLevel to support this feature.
+* `Aws\FinSpaceData` - Release new API GetExternalDataViewAccessDetails
+* `Aws\Polly` - Add 4 new neural voices - Pedro (es-US), Liam (fr-CA), Daniel (de-DE) and Arthur (en-GB).
+
+## 3.228.4 - 2022-06-27
+
+* `Aws\IoT` - This release ease the restriction for the input of tag value to align with AWS standard, now instead of min length 1, we change it to min length 0.
+
+## 3.228.3 - 2022-06-24
+
+* `Aws\Glue` - This release enables the new ListCrawls API for viewing the AWS Glue Crawler run history.
+* `Aws\RDSDataService` - Documentation updates for RDS Data API
+
+## 3.228.2 - 2022-06-23
+
+* `Aws\Guzzle` - Bump Guzzle versions to address CVE-2022-31090 and CVE-2022-31091
+* `Aws\LookoutEquipment` - This release adds visualizations to the scheduled inference results. Users will be able to see interference results, including diagnostic results from their running inference schedulers.
+* `Aws\MediaConvert` - AWS Elemental MediaConvert SDK has released support for automatic DolbyVision metadata generation when converting HDR10 to DolbyVision.
+* `Aws\MigrationHubRefactorSpaces` - This release adds the new API UpdateRoute that allows route to be updated to ACTIVE/INACTIVE state. In addition, CreateRoute API will now allow users to create route in ACTIVE/INACTIVE state.
+* `Aws\SageMaker` - SageMaker Ground Truth now supports Virtual Private Cloud. Customers can launch labeling jobs and access to their private workforce in VPC mode.
+* `Aws\mgn` - New and modified APIs for the Post-Migration Framework
+
 ## 3.228.1 - 2022-06-22
 
 * `Aws\APIGateway` - Documentation updates for Amazon API Gateway
@@ -29,7 +76,6 @@
 ## 3.226.0 - 2022-06-16
 
 * `Aws\RedshiftDataAPIService` - This release adds a new --workgroup-name field to operations that connect to an endpoint. Customers can now execute queries against their serverless workgroups.
-* `Aws\RedshiftServerless` - Add new API operations for Amazon Redshift Serverless, a new way of using Amazon Redshift without needing to manually manage provisioned clusters. The new operations let you interact with Redshift Serverless resources, such as create snapshots, list VPC endpoints, delete resource policies, and more.
 * `Aws\SecretsManager` - Documentation updates for Secrets Manager
 * `Aws\SecurityHub` - Added Threats field for security findings. Added new resource details for ECS Container, ECS Task, RDS SecurityGroup, Kinesis Stream, EC2 TransitGateway, EFS AccessPoint, CloudFormation Stack, CloudWatch Alarm, VPC Peering Connection and WAF Rules
 
