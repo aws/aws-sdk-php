@@ -84,15 +84,15 @@ class EcsCredentialProvider
                         strtotime($result['Expiration'])
                     );
                 })->otherwise(function ($reason) {
-                    $reason = is_array($reason) ? $reason['exception']:$reason;
+                    $reason = is_array($reason) ? $reason['exception'] : $reason;
 
                     $isRetryable = $reason instanceof ConnectException;
-                    if ($isRetryable && $this->attempts < $this->retries) {
+                    if ($isRetryable && ($this->attempts < $this->retries)) {
                         sleep((int)pow(1.2, $this->attempts));
                     } else {
                         $msg = $reason->getMessage();
                         throw new CredentialsException(
-                            "Error retrieving credential from ECS ($msg)"
+                            sprintf('Error retrieving credential from ECS after attempt %d/%d (%s)', $this->attempts, $this->retries, $msg)
                         );
                     }
                 });
