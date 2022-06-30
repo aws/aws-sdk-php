@@ -105,8 +105,6 @@ class ComposerTest extends TestCase
 
         $this->assertTrue($filesystem->exists($clientPath . 'Api'));
         foreach ($serviceList as $client => $data) {
-
-
             $clientDir = $clientPath . $client;
             $modelDir = $modelPath . $data;
 

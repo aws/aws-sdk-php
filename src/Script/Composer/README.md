@@ -17,14 +17,14 @@ use the `Aws\\Script\\Composer::removeUnusedServices` script:
     },
     "extra": {
         "aws/aws-sdk-php": [
-            "S3",
+            "Ec2",
             "CloudWatch"
         ]
     }
 }
 ```
 
-In this example, all services will be removed except for S3 and CloudWatch.  When listing a
+In this example, all services deemed safe for deletion will be removed except for Ec2 and CloudWatch.  When listing a
 service, keep in mind that an exact match is needed on the client namespace, otherwise, an error will be
 thrown. For a list of client namespaces, please see the `Namespaces` list in the 
 [documentation](https://docs.aws.amazon.com/aws-sdk-php/v3/api/index.html). Run `composer install` or `composer update` 
