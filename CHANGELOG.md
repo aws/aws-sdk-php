@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\` - Change service namespace generation to use the service id instead of service full name for parity across SDKs
+* `Aws\DatabaseMigrationService` - Added new features for AWS DMS version 3.4.7 that includes new endpoint settings for S3, OpenSearch, Postgres, SQLServer and Oracle.
+* `Aws\RDS` - Adds support for additional retention periods to Performance Insights.
+
 ## 3.229.1 - 2022-06-30
 
 * `Aws\Athena` - This feature introduces the API support for Athena's parameterized query and BatchGetPreparedStatement API.
