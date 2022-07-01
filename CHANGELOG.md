@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.229.2 - 2022-07-01
 
 * `Aws\` - Change service namespace generation to use the service id instead of service full name for parity across SDKs
 * `Aws\DatabaseMigrationService` - Added new features for AWS DMS version 3.4.7 that includes new endpoint settings for S3, OpenSearch, Postgres, SQLServer and Oracle.
