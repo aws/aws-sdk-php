@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.230.0 - 2022-07-05
 
 * `Aws\ConfigService` - Updating documentation service limits
 * `Aws\LexModelsV2` - This release introduces additional optional parameters "messageSelectionStrategy" to PromptSpecification, which enables the users to configure the bot to play messages in orderly manner.
