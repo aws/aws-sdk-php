@@ -488,6 +488,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionResourceGroupsTaggingAPI(array $args = [])
  * @method \Aws\RoboMaker\RoboMakerClient createRoboMaker(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionRoboMaker(array $args = [])
+ * @method \Aws\RolesAnywhere\RolesAnywhereClient createRolesAnywhere(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionRolesAnywhere(array $args = [])
  * @method \Aws\Route53\Route53Client createRoute53(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionRoute53(array $args = [])
  * @method \Aws\Route53Domains\Route53DomainsClient createRoute53Domains(array $args = [])
