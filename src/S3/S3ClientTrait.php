@@ -100,6 +100,19 @@ trait S3ClientTrait
     }
 
     /**
+     * @see S3ClientInterface::registerStreamWrapperV2()
+     */
+    public function registerStreamWrapperV2()
+    {
+        StreamWrapper::register(
+            $this,
+            's3',
+            null,
+            true
+        );
+    }
+
+    /**
      * @see S3ClientInterface::deleteMatchingObjects()
      */
     public function deleteMatchingObjects(
