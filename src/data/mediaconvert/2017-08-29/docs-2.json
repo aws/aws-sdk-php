@@ -244,6 +244,12 @@
         "__listOfAudioDescription$member": null
       }
     },
+    "AudioDurationCorrection": {
+      "base": "Apply audio timing corrections to help synchronize audio and video in your output. To apply timing corrections, your input must meet the following requirements: * Container: MP4, or MOV, with an accurate time-to-sample (STTS) table. * Audio track: AAC. Choose from the following audio timing correction settings: * Disabled (Default): Apply no correction. * Auto: Recommended for most inputs. MediaConvert analyzes the audio timing in your input and determines which correction setting to use, if needed. * Track: Adjust the duration of each audio frame by a constant amount to align the audio track length with STTS duration. Track-level correction does not affect pitch, and is recommended for tonal audio content such as music. * Frame: Adjust the duration of each audio frame by a variable amount to align audio frames with STTS timestamps. No corrections are made to already-aligned frames. Frame-level correction may affect the pitch of corrected frames, and is recommended for atonal audio content such as speech or percussion.",
+      "refs": {
+        "AudioSelector$AudioDurationCorrection": "Apply audio timing corrections to help synchronize audio and video in your output. To apply timing corrections, your input must meet the following requirements: * Container: MP4, or MOV, with an accurate time-to-sample (STTS) table. * Audio track: AAC. Choose from the following audio timing correction settings: * Disabled (Default): Apply no correction. * Auto: Recommended for most inputs. MediaConvert analyzes the audio timing in your input and determines which correction setting to use, if needed. * Track: Adjust the duration of each audio frame by a constant amount to align the audio track length with STTS duration. Track-level correction does not affect pitch, and is recommended for tonal audio content such as music. * Frame: Adjust the duration of each audio frame by a variable amount to align audio frames with STTS timestamps. No corrections are made to already-aligned frames. Frame-level correction may affect the pitch of corrected frames, and is recommended for atonal audio content such as speech or percussion."
+      }
+    },
     "AudioLanguageCodeControl": {
       "base": "Specify which source for language code takes precedence for this audio track. When you choose Follow input (FOLLOW_INPUT), the service uses the language code from the input track if it's present. If there's no languge code on the input track, the service uses the code that you specify in the setting Language code (languageCode or customLanguageCode). When you choose Use configured (USE_CONFIGURED), the service uses the language code that you specify.",
       "refs": {
@@ -1053,7 +1059,7 @@
       }
     },
     "DolbyVision": {
-      "base": "With AWS Elemental MediaConvert, you can create profile 5 or 8.1 Dolby Vision outputs from MXF and IMF sources.",
+      "base": "Create Dolby Vision Profile 5 or Profile 8.1  compatible video output.",
       "refs": {
         "VideoPreprocessor$DolbyVision": "Enable Dolby Vision feature to produce Dolby Vision compatible video output."
       }
@@ -1077,9 +1083,9 @@
       }
     },
     "DolbyVisionProfile": {
-      "base": "Required when you use Dolby Vision processing. Set Profile to Profile 5 to only include frame-interleaved Dolby Vision metadata in your output. Set Profile to Profile 8.1 to include both frame-interleaved Dolby Vision metadata and HDR10 metadata in your output.",
+      "base": "Required when you enable Dolby Vision. Use Profile 5 to include frame-interleaved Dolby Vision metadata in your output. Your input must include Dolby Vision metadata or an HDR10 YUV color space. Use Profile 8.1 to include frame-interleaved Dolby Vision metadata and HDR10 metadata in your output. Your input must include Dolby Vision metadata.",
       "refs": {
-        "DolbyVision$Profile": "Required when you use Dolby Vision processing. Set Profile to Profile 5 to only include frame-interleaved Dolby Vision metadata in your output. Set Profile to Profile 8.1 to include both frame-interleaved Dolby Vision metadata and HDR10 metadata in your output."
+        "DolbyVision$Profile": "Required when you enable Dolby Vision. Use Profile 5 to include frame-interleaved Dolby Vision metadata in your output. Your input must include Dolby Vision metadata or an HDR10 YUV color space. Use Profile 8.1 to include frame-interleaved Dolby Vision metadata and HDR10 metadata in your output. Your input must include Dolby Vision metadata."
       }
     },
     "DropFrameTimecode": {
@@ -2171,9 +2177,9 @@
       }
     },
     "InputVideoGenerator": {
-      "base": "Use this setting if you do not have a video input or if you want to add black video frames before, or after, other inputs. When you include Video generator, MediaConvert creates a video input with black frames and without an audio track. You can specify a value for Video generator, or you can specify an Input file, but you cannot specify both.",
+      "base": "When you include Video generator, MediaConvert creates a video input with black frames. Use this setting if you do not have a video input or if you want to add black video frames before, or after, other inputs. You can specify Video generator, or you can specify an Input file, but you cannot specify both. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/video-generator.html",
       "refs": {
-        "Input$VideoGenerator": "Use this setting if you do not have a video input or if you want to add black video frames before, or after, other inputs. When you include Video generator, MediaConvert creates a video input with black frames and without an audio track. You can specify a value for Video generator, or you can specify an Input file, but you cannot specify both."
+        "Input$VideoGenerator": "When you include Video generator, MediaConvert creates a video input with black frames. Use this setting if you do not have a video input or if you want to add black video frames before, or after, other inputs. You can specify Video generator, or you can specify an Input file, but you cannot specify both. For more information, see https://docs.aws.amazon.com/mediaconvert/latest/ug/video-generator.html"
       }
     },
     "InsertableImage": {

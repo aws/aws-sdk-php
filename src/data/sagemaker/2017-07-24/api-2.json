@@ -1248,6 +1248,18 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "DescribeFeatureMetadata":{
+      "name":"DescribeFeatureMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeFeatureMetadataRequest"},
+      "output":{"shape":"DescribeFeatureMetadataResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
     "DescribeFlowDefinition":{
       "name":"DescribeFlowDefinition",
       "http":{
@@ -2611,6 +2623,29 @@
         {"shape":"ResourceNotFound"}
       ]
     },
+    "UpdateFeatureGroup":{
+      "name":"UpdateFeatureGroup",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateFeatureGroupRequest"},
+      "output":{"shape":"UpdateFeatureGroupResponse"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
+    "UpdateFeatureMetadata":{
+      "name":"UpdateFeatureMetadata",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateFeatureMetadataRequest"},
+      "errors":[
+        {"shape":"ResourceNotFound"}
+      ]
+    },
     "UpdateImage":{
       "name":"UpdateImage",
       "http":{
@@ -2762,7 +2797,10 @@
         "requestUri":"/"
       },
       "input":{"shape":"UpdateWorkforceRequest"},
-      "output":{"shape":"UpdateWorkforceResponse"}
+      "output":{"shape":"UpdateWorkforceResponse"},
+      "errors":[
+        {"shape":"ConflictException"}
+      ]
     },
     "UpdateWorkteam":{
       "name":"UpdateWorkteam",
@@ -5580,7 +5618,8 @@
         "OidcConfig":{"shape":"OidcConfig"},
         "SourceIpConfig":{"shape":"SourceIpConfig"},
         "WorkforceName":{"shape":"WorkforceName"},
-        "Tags":{"shape":"TagList"}
+        "Tags":{"shape":"TagList"},
+        "WorkforceVpcConfig":{"shape":"WorkforceVpcConfigRequest"}
       }
     },
     "CreateWorkforceResponse":{
@@ -6786,14 +6825,49 @@
         "EventTimeFeatureName":{"shape":"FeatureName"},
         "FeatureDefinitions":{"shape":"FeatureDefinitions"},
         "CreationTime":{"shape":"CreationTime"},
+        "LastModifiedTime":{"shape":"LastModifiedTime"},
         "OnlineStoreConfig":{"shape":"OnlineStoreConfig"},
         "OfflineStoreConfig":{"shape":"OfflineStoreConfig"},
         "RoleArn":{"shape":"RoleArn"},
         "FeatureGroupStatus":{"shape":"FeatureGroupStatus"},
         "OfflineStoreStatus":{"shape":"OfflineStoreStatus"},
+        "LastUpdateStatus":{"shape":"LastUpdateStatus"},
         "FailureReason":{"shape":"FailureReason"},
         "Description":{"shape":"Description"},
-        "NextToken":{"shape":"NextToken"}
+        "NextToken":{"shape":"NextToken"},
+        "OnlineStoreTotalSizeBytes":{"shape":"OnlineStoreTotalSizeBytes"}
+      }
+    },
+    "DescribeFeatureMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "FeatureGroupName",
+        "FeatureName"
+      ],
+      "members":{
+        "FeatureGroupName":{"shape":"FeatureGroupName"},
+        "FeatureName":{"shape":"FeatureName"}
+      }
+    },
+    "DescribeFeatureMetadataResponse":{
+      "type":"structure",
+      "required":[
+        "FeatureGroupArn",
+        "FeatureGroupName",
+        "FeatureName",
+        "FeatureType",
+        "CreationTime",
+        "LastModifiedTime"
+      ],
+      "members":{
+        "FeatureGroupArn":{"shape":"FeatureGroupArn"},
+        "FeatureGroupName":{"shape":"FeatureGroupName"},
+        "FeatureName":{"shape":"FeatureName"},
+        "FeatureType":{"shape":"FeatureType"},
+        "CreationTime":{"shape":"CreationTime"},
+        "LastModifiedTime":{"shape":"LastModifiedTime"},
+        "Description":{"shape":"FeatureDescription"},
+        "Parameters":{"shape":"FeatureParameters"}
       }
     },
     "DescribeFlowDefinitionRequest":{
@@ -8486,6 +8560,12 @@
       "type":"string",
       "max":1024
     },
+    "FeatureAdditions":{
+      "type":"list",
+      "member":{"shape":"FeatureDefinition"},
+      "max":100,
+      "min":1
+    },
     "FeatureDefinition":{
       "type":"structure",
       "members":{
@@ -8499,6 +8579,12 @@
       "max":2500,
       "min":1
     },
+    "FeatureDescription":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":".*"
+    },
     "FeatureGroup":{
       "type":"structure",
       "members":{
@@ -8508,11 +8594,13 @@
         "EventTimeFeatureName":{"shape":"FeatureName"},
         "FeatureDefinitions":{"shape":"FeatureDefinitions"},
         "CreationTime":{"shape":"CreationTime"},
+        "LastModifiedTime":{"shape":"LastModifiedTime"},
         "OnlineStoreConfig":{"shape":"OnlineStoreConfig"},
         "OfflineStoreConfig":{"shape":"OfflineStoreConfig"},
         "RoleArn":{"shape":"RoleArn"},
         "FeatureGroupStatus":{"shape":"FeatureGroupStatus"},
         "OfflineStoreStatus":{"shape":"OfflineStoreStatus"},
+        "LastUpdateStatus":{"shape":"LastUpdateStatus"},
         "FailureReason":{"shape":"FailureReason"},
         "Description":{"shape":"Description"},
         "Tags":{"shape":"TagList"}
@@ -8584,11 +8672,59 @@
         "OfflineStoreStatus":{"shape":"OfflineStoreStatus"}
       }
     },
+    "FeatureMetadata":{
+      "type":"structure",
+      "members":{
+        "FeatureGroupArn":{"shape":"FeatureGroupArn"},
+        "FeatureGroupName":{"shape":"FeatureGroupName"},
+        "FeatureName":{"shape":"FeatureName"},
+        "FeatureType":{"shape":"FeatureType"},
+        "CreationTime":{"shape":"CreationTime"},
+        "LastModifiedTime":{"shape":"LastModifiedTime"},
+        "Description":{"shape":"FeatureDescription"},
+        "Parameters":{"shape":"FeatureParameters"}
+      }
+    },
     "FeatureName":{
       "type":"string",
       "max":64,
       "min":1,
       "pattern":"^[a-zA-Z0-9]([-_]*[a-zA-Z0-9]){0,63}"
+    },
+    "FeatureParameter":{
+      "type":"structure",
+      "members":{
+        "Key":{"shape":"FeatureParameterKey"},
+        "Value":{"shape":"FeatureParameterValue"}
+      }
+    },
+    "FeatureParameterAdditions":{
+      "type":"list",
+      "member":{"shape":"FeatureParameter"},
+      "max":25
+    },
+    "FeatureParameterKey":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$"
+    },
+    "FeatureParameterRemovals":{
+      "type":"list",
+      "member":{"shape":"FeatureParameterKey"},
+      "max":25
+    },
+    "FeatureParameterValue":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$"
+    },
+    "FeatureParameters":{
+      "type":"list",
+      "member":{"shape":"FeatureParameter"},
+      "max":25,
+      "min":0
     },
     "FeatureType":{
       "type":"string",
@@ -9932,7 +10068,8 @@
     "LabelingJobResourceConfig":{
       "type":"structure",
       "members":{
-        "VolumeKmsKeyId":{"shape":"KmsKeyId"}
+        "VolumeKmsKeyId":{"shape":"KmsKeyId"},
+        "VpcConfig":{"shape":"VpcConfig"}
       }
     },
     "LabelingJobS3DataSource":{
@@ -10011,6 +10148,22 @@
       }
     },
     "LastModifiedTime":{"type":"timestamp"},
+    "LastUpdateStatus":{
+      "type":"structure",
+      "required":["Status"],
+      "members":{
+        "Status":{"shape":"LastUpdateStatusValue"},
+        "FailureReason":{"shape":"FailureReason"}
+      }
+    },
+    "LastUpdateStatusValue":{
+      "type":"string",
+      "enum":[
+        "Successful",
+        "Failed",
+        "InProgress"
+      ]
+    },
     "LifecycleConfigArns":{
       "type":"list",
       "member":{"shape":"StudioLifecycleConfigArn"}
@@ -12736,6 +12889,7 @@
         "KmsKeyId":{"shape":"KmsKeyId"}
       }
     },
+    "OnlineStoreTotalSizeBytes":{"type":"long"},
     "Operator":{
       "type":"string",
       "enum":[
@@ -14322,7 +14476,8 @@
         "Pipeline",
         "PipelineExecution",
         "FeatureGroup",
-        "Project"
+        "Project",
+        "FeatureMetadata"
       ]
     },
     "ResponseMIMEType":{
@@ -14515,7 +14670,8 @@
         "Pipeline":{"shape":"Pipeline"},
         "PipelineExecution":{"shape":"PipelineExecution"},
         "FeatureGroup":{"shape":"FeatureGroup"},
-        "Project":{"shape":"Project"}
+        "Project":{"shape":"Project"},
+        "FeatureMetadata":{"shape":"FeatureMetadata"}
       }
     },
     "SearchRequest":{
@@ -16270,6 +16426,35 @@
         "ExperimentArn":{"shape":"ExperimentArn"}
       }
     },
+    "UpdateFeatureGroupRequest":{
+      "type":"structure",
+      "required":["FeatureGroupName"],
+      "members":{
+        "FeatureGroupName":{"shape":"FeatureGroupName"},
+        "FeatureAdditions":{"shape":"FeatureAdditions"}
+      }
+    },
+    "UpdateFeatureGroupResponse":{
+      "type":"structure",
+      "required":["FeatureGroupArn"],
+      "members":{
+        "FeatureGroupArn":{"shape":"FeatureGroupArn"}
+      }
+    },
+    "UpdateFeatureMetadataRequest":{
+      "type":"structure",
+      "required":[
+        "FeatureGroupName",
+        "FeatureName"
+      ],
+      "members":{
+        "FeatureGroupName":{"shape":"FeatureGroupName"},
+        "FeatureName":{"shape":"FeatureName"},
+        "Description":{"shape":"FeatureDescription"},
+        "ParameterAdditions":{"shape":"FeatureParameterAdditions"},
+        "ParameterRemovals":{"shape":"FeatureParameterRemovals"}
+      }
+    },
     "UpdateImageRequest":{
       "type":"structure",
       "required":["ImageName"],
@@ -16492,7 +16677,8 @@
       "members":{
         "WorkforceName":{"shape":"WorkforceName"},
         "SourceIpConfig":{"shape":"SourceIpConfig"},
-        "OidcConfig":{"shape":"OidcConfig"}
+        "OidcConfig":{"shape":"OidcConfig"},
+        "WorkforceVpcConfig":{"shape":"WorkforceVpcConfigRequest"}
       }
     },
     "UpdateWorkforceResponse":{
@@ -16706,7 +16892,10 @@
         "SubDomain":{"shape":"String"},
         "CognitoConfig":{"shape":"CognitoConfig"},
         "OidcConfig":{"shape":"OidcConfigForResponse"},
-        "CreateDate":{"shape":"Timestamp"}
+        "CreateDate":{"shape":"Timestamp"},
+        "WorkforceVpcConfig":{"shape":"WorkforceVpcConfigResponse"},
+        "Status":{"shape":"WorkforceStatus"},
+        "FailureReason":{"shape":"WorkforceFailureReason"}
       }
     },
     "WorkforceArn":{
@@ -16714,11 +16903,82 @@
       "max":256,
       "pattern":"arn:aws[a-z\\-]*:sagemaker:[a-z0-9\\-]*:[0-9]{12}:workforce/.*"
     },
+    "WorkforceFailureReason":{
+      "type":"string",
+      "max":1024,
+      "min":1,
+      "pattern":".+"
+    },
     "WorkforceName":{
       "type":"string",
       "max":63,
       "min":1,
       "pattern":"^[a-zA-Z0-9]([a-zA-Z0-9\\-]){0,62}$"
+    },
+    "WorkforceSecurityGroupId":{
+      "type":"string",
+      "max":32,
+      "pattern":"^sg-[0-9a-z]*$"
+    },
+    "WorkforceSecurityGroupIds":{
+      "type":"list",
+      "member":{"shape":"WorkforceSecurityGroupId"},
+      "max":5,
+      "min":1
+    },
+    "WorkforceStatus":{
+      "type":"string",
+      "enum":[
+        "Initializing",
+        "Updating",
+        "Deleting",
+        "Failed",
+        "Active"
+      ]
+    },
+    "WorkforceSubnetId":{
+      "type":"string",
+      "max":32,
+      "pattern":"^subnet-[0-9a-z]*$"
+    },
+    "WorkforceSubnets":{
+      "type":"list",
+      "member":{"shape":"WorkforceSubnetId"},
+      "max":16,
+      "min":1
+    },
+    "WorkforceVpcConfigRequest":{
+      "type":"structure",
+      "members":{
+        "VpcId":{"shape":"WorkforceVpcId"},
+        "SecurityGroupIds":{"shape":"WorkforceSecurityGroupIds"},
+        "Subnets":{"shape":"WorkforceSubnets"}
+      }
+    },
+    "WorkforceVpcConfigResponse":{
+      "type":"structure",
+      "required":[
+        "VpcId",
+        "SecurityGroupIds",
+        "Subnets"
+      ],
+      "members":{
+        "VpcId":{"shape":"WorkforceVpcId"},
+        "SecurityGroupIds":{"shape":"WorkforceSecurityGroupIds"},
+        "Subnets":{"shape":"WorkforceSubnets"},
+        "VpcEndpointId":{"shape":"WorkforceVpcEndpointId"}
+      }
+    },
+    "WorkforceVpcEndpointId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^vpce-[0-9a-z]*$"
+    },
+    "WorkforceVpcId":{
+      "type":"string",
+      "max":32,
+      "pattern":"^vpc-[0-9a-z]*$"
     },
     "Workforces":{
       "type":"list",

@@ -156,6 +156,7 @@
     },
     "GetProductsRequest":{
       "type":"structure",
+      "required":["ServiceCode"],
       "members":{
         "ServiceCode":{"shape":"String"},
         "Filters":{"shape":"Filters"},
@@ -171,7 +172,7 @@
       "type":"structure",
       "members":{
         "FormatVersion":{"shape":"String"},
-        "PriceList":{"shape":"PriceList"},
+        "PriceList":{"shape":"PriceListJsonItems"},
         "NextToken":{"shape":"String"}
       }
     },
@@ -203,16 +204,17 @@
       },
       "exception":true
     },
-    "PriceList":{
+    "PriceListJsonItem":{"type":"string"},
+    "PriceListJsonItems":{
       "type":"list",
       "member":{
-        "shape":"PriceListItemJSON",
+        "shape":"PriceListJsonItem",
         "jsonvalue":true
       }
     },
-    "PriceListItemJSON":{"type":"string"},
     "Service":{
       "type":"structure",
+      "required":["ServiceCode"],
       "members":{
         "ServiceCode":{"shape":"String"},
         "AttributeNames":{"shape":"AttributeNameList"}

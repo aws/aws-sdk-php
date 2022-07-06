@@ -105,6 +105,14 @@ interface S3ClientInterface extends AwsClientInterface
     public function registerStreamWrapper();
 
     /**
+     * Registers the Amazon S3 stream wrapper with this client instance.
+     *
+     *This version uses doesObjectExistV2 and doesBucketExistV2 to check
+     * resource existence.
+     */
+    public function registerStreamWrapperV2();
+
+    /**
      * Deletes objects from Amazon S3 that match the result of a ListObjects
      * operation. For example, this allows you to do things like delete all
      * objects that match a specific key prefix.
