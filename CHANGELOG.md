@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\CloudFormation` - My AWS Service (placeholder) - Add a new feature Account-level Targeting for StackSet operation
+* `Aws\Script` - Support for removing unused AWS services via Composer.
+* `Aws\Synthetics` - This release introduces Group feature, which enables users to group cross-region canaries.
+
 ## 3.230.0 - 2022-07-05
 
 * `Aws\ConfigService` - Updating documentation service limits
