@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.0 - 2022-07-06
 
 * `Aws\CloudFormation` - My AWS Service (placeholder) - Add a new feature Account-level Targeting for StackSet operation
 * `Aws\Script` - Support for removing unused AWS services via Composer.
