@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKMeetings` - Adds support for AppKeys and TenantIds in Amazon Chime SDK WebRTC sessions
+* `Aws\DatabaseMigrationService` - New api to migrate event subscriptions to event bridge rules
+* `Aws\IoT` - This release adds support to register a CA certificate without having to provide a verification certificate. This also allows multiple AWS accounts to register the same CA in the same region.
+* `Aws\IoTWireless` - Adds 5 APIs: PutPositionConfiguration, GetPositionConfiguration, ListPositionConfigurations, UpdatePosition, GetPosition for the new Positioning Service feature which enables customers to configure solvers to calculate position of LoRaWAN devices, or specify position of LoRaWAN devices & gateways.
+* `Aws\SageMaker` - Heterogeneous clusters: the ability to launch training jobs with multiple instance types. This enables running component of the training job on the instance type that is most suitable for it. e.g. doing data processing and augmentation on CPU instances and neural network training on GPU instances
+
 ## 3.231.0 - 2022-07-06
 
 * `Aws\CloudFormation` - My AWS Service (placeholder) - Add a new feature Account-level Targeting for StackSet operation
