@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.1 - 2022-07-07
 
 * `Aws\ChimeSDKMeetings` - Adds support for AppKeys and TenantIds in Amazon Chime SDK WebRTC sessions
 * `Aws\DatabaseMigrationService` - New api to migrate event subscriptions to event bridge rules
