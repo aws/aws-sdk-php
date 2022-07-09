@@ -1,9 +1,6 @@
 <?php
 namespace Aws\Script\Composer;
 
-require_once __DIR__ . '/../../functions.php';
-
-use Aws;
 use Composer\Script\Event;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -42,7 +39,8 @@ class Composer
     public static function buildServiceMapping()
     {
         $serviceMapping = [];
-        $source = Aws\manifest();
+        $manifest = __DIR__ . '/../../data/manifest.json.php';
+        $source = include($manifest);
 
         foreach ($source as $key => $value) {
             $serviceMapping[$value['namespace']] = $key;
