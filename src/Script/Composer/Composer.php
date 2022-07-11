@@ -39,11 +39,10 @@ class Composer
     public static function buildServiceMapping()
     {
         $serviceMapping = [];
-        $manifest = __DIR__ . '/../../data/manifest.json.php';
-        $source = include($manifest);
+        $manifest = require(__DIR__ . '/../../data/manifest.json.php');
 
-        foreach ($source as $key => $value) {
-            $serviceMapping[$value['namespace']] = $key;
+        foreach ($manifest as $service => $attributes) {
+            $serviceMapping[$attributes['namespace']] = $service;
         }
 
         return $serviceMapping;
@@ -90,7 +89,7 @@ class Composer
             }
         }
         $event->getIO()->write(
-            "Removed $deleteCount AWS services"
+            "Removed $deleteCount AWS service" . ($deleteCount === 1 ? 's' : '')
         );
     }
 }
