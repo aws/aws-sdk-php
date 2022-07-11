@@ -89,7 +89,7 @@ class Composer
             }
         }
         $event->getIO()->write(
-            "Removed $deleteCount AWS service" . ($deleteCount === 1 ? 's' : '')
+            "Removed $deleteCount AWS service" . ($deleteCount === 1 ? '' : 's')
         );
     }
 }
