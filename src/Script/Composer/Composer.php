@@ -1,9 +1,6 @@
 <?php
 namespace Aws\Script\Composer;
 
-require_once __DIR__ . '/../../functions.php';
-
-use Aws;
 use Composer\Script\Event;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -42,10 +39,10 @@ class Composer
     public static function buildServiceMapping()
     {
         $serviceMapping = [];
-        $source = Aws\manifest();
+        $manifest = require(__DIR__ . '/../../data/manifest.json.php');
 
-        foreach ($source as $key => $value) {
-            $serviceMapping[$value['namespace']] = $key;
+        foreach ($manifest as $service => $attributes) {
+            $serviceMapping[$attributes['namespace']] = $service;
         }
 
         return $serviceMapping;
@@ -92,7 +89,7 @@ class Composer
             }
         }
         $event->getIO()->write(
-            "Removed $deleteCount AWS services"
+            "Removed $deleteCount AWS service" . ($deleteCount === 1 ? '' : 's')
         );
     }
 }
