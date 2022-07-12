@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.4 - 2022-07-12
 
 * `Aws\NetworkManager` - This release adds general availability API support for AWS Cloud WAN.
 
