@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\NetworkManager` - This release adds general availability API support for AWS Cloud WAN.
+
 ## 3.231.3 - 2022-07-11
 
 * `Aws\EC2` - Build, manage, and monitor a unified global network that connects resources running across your cloud and on-premises environments using the AWS Cloud WAN APIs.
