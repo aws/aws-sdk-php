@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppConfig` - Adding Create, Get, Update, Delete, and List APIs for new two new resources: Extensions and ExtensionAssociations.
+
 ## 3.231.4 - 2022-07-12
 
 * `Aws\NetworkManager` - This release adds general availability API support for AWS Cloud WAN.
