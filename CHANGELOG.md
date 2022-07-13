@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.5 - 2022-07-13
 
 * `Aws\AppConfig` - Adding Create, Get, Update, Delete, and List APIs for new two new resources: Extensions and ExtensionAssociations.
 
