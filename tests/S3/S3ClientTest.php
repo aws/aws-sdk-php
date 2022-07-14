@@ -223,6 +223,27 @@ class S3ClientTest extends TestCase
         $this->assertArrayHasKey('X-Amz-Signature', $query);
     }
 
+    public function testCreatesPresignedRequestsForObjectLambdaService()
+    {
+        /** @var S3Client $client */
+        $client = $this->getTestClient('S3', [
+            'region'      => 'us-east-1',
+            'credentials' => ['key' => 'foo', 'secret' => 'bar']
+        ]);
+        $command = $client->getCommand(
+            'GetObject',
+            [
+                'Bucket' => 'arn:aws:s3-object-lambda:us-east-1:123456789012:accesspoint/lambda-access-point',
+                'Key' => 'bar'
+            ]
+        );
+        $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
+        $this->assertStringStartsWith('https://lambda-access-point-123456789012.s3-object-lambda.us-east-1.amazonaws.com/bar?', $url);
+        $this->assertContains('X-Amz-Expires=', $url);
+        $this->assertContains('X-Amz-Credential=', $url);
+        $this->assertContains('X-Amz-Signature=', $url);
+    }
+
     public function testRegistersStreamWrapper()
     {
         $s3 = $this->getTestClient('S3', ['region' => 'us-east-1']);

@@ -40,10 +40,6 @@ class BucketEndpointArnMiddlewareTest extends TestCase
         $signingRegion,
         $signingService
     ) {
-        $isMvpRegion = getenv('AIRGAPPED_REGION') == 'LCK';
-        if ($isMvpRegion) {
-            $this->markTestSkipped();
-        }
         $s3 = $this->getTestClient('s3', $options);
         $this->addMockResults($s3, [[]]);
         $command = $s3->getCommand(
