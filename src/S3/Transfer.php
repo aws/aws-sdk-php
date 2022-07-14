@@ -228,6 +228,7 @@ class Transfer implements PromisorInterface
             }
             if ($section === '..') {
                 array_pop($resolved);
+                $destinationDirname = explode('/', $this->destination['path']);
                 if (end($resolved) === end($destinationDirname)) {
                     array_pop($resolved);
                 }
