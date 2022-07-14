@@ -1023,7 +1023,7 @@ class StreamWrapperTest extends TestCase
         fwrite($objectStream, 'bar');
         fflush($objectStream);
         $this->assertEmpty($this->cache->get('foo://bucket/key'));
-        
+
         stream_wrapper_unregister('foo');
     }
 
