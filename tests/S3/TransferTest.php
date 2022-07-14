@@ -202,16 +202,12 @@ class TransferTest extends TestCase
             'IsTruncated' => false,
             'Contents' => [
                 ['Key' => 'bar/f/'],
-                ['Key' => 'bar/../bar/a/b'],
                 ['Key' => 'bar/c//d'],
-                ['Key' => '../bar//c/../a/b/..'],
             ]
         ];
         $this->addMockResults($s3, [
             new Result($lso),
             new Result(['Body' => 'test']),
-            new Result(['Body' => '123']),
-            new Result(['Body' => 'abc']),
         ]);
 
         $dir = sys_get_temp_dir() . '/unittest';
@@ -222,9 +218,7 @@ class TransferTest extends TestCase
         $t->transfer();
         rewind($res);
         $output = stream_get_contents($res);
-        $this->assertContains('s3://foo/bar/../bar/a/b -> ', $output);
         $this->assertContains('s3://foo/bar/c//d -> ', $output);
-        $this->assertContains('s3://foo/../bar//c/../a/b/.. -> ', $output);
         `rm -rf $dir`;
     }
 
@@ -329,6 +323,10 @@ class TransferTest extends TestCase
 
     public function providedPathsOutsideTarget() {
         return [
+            ['bar/../a/b'],
+            //ensures if path resolves to target directory
+            //that exact match is needed
+            ['bar/../unittest-2/b'],
             ['bar/../../a/b'],
             ['bar/../c/../../d'],
             ['bar///../../a/b/c'],
@@ -374,8 +372,8 @@ class TransferTest extends TestCase
                 'PutObject',
                 new \PHPUnit\Framework\Constraint\Callback(function (array $args) {
                     return 'bucket' === $args['Bucket']
-                    && $args['SourceFile'] === __FILE__
-                    && __DIR__ . '/' . $args['Key'] === $args['SourceFile'];
+                        && $args['SourceFile'] === __FILE__
+                        && __DIR__ . '/' . $args['Key'] === $args['SourceFile'];
                 })
             )
             ->willReturn($this->getMockBuilder('Aws\CommandInterface')->getMock());
@@ -398,7 +396,7 @@ class TransferTest extends TestCase
                 'GetObject',
                 new \PHPUnit\Framework\Constraint\Callback(function (array $args) {
                     return 'bucket' === $args['Bucket']
-                    && $args['Key'] === 'path/to/key';
+                        && $args['Key'] === 'path/to/key';
                 })
             )
             ->willReturn($this->getMockBuilder('Aws\CommandInterface')->getMock());
