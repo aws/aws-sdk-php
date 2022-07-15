@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.7 - 2022-07-15
 
 * `Aws\CloudWatchEvidently` - This release adds support for the new segmentation feature.
 * `Aws\DataSync` - Documentation updates for AWS DataSync regarding configuring Amazon FSx for ONTAP location security groups and SMB user permissions.
