@@ -25,6 +25,19 @@
         {"shape":"InvalidRequestException"}
       ]
     },
+    "BatchGetPreparedStatement":{
+      "name":"BatchGetPreparedStatement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"BatchGetPreparedStatementInput"},
+      "output":{"shape":"BatchGetPreparedStatementOutput"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"InvalidRequestException"}
+      ]
+    },
     "BatchGetQueryExecution":{
       "name":"BatchGetQueryExecution",
       "http":{
@@ -507,6 +520,12 @@
         "ErrorMessage":{"shape":"String"}
       }
     },
+    "AwsAccountId":{
+      "type":"string",
+      "max":12,
+      "min":12,
+      "pattern":"^[0-9]+$"
+    },
     "BatchGetNamedQueryInput":{
       "type":"structure",
       "required":["NamedQueryIds"],
@@ -519,6 +538,24 @@
       "members":{
         "NamedQueries":{"shape":"NamedQueryList"},
         "UnprocessedNamedQueryIds":{"shape":"UnprocessedNamedQueryIdList"}
+      }
+    },
+    "BatchGetPreparedStatementInput":{
+      "type":"structure",
+      "required":[
+        "PreparedStatementNames",
+        "WorkGroup"
+      ],
+      "members":{
+        "PreparedStatementNames":{"shape":"PreparedStatementNameList"},
+        "WorkGroup":{"shape":"WorkGroupName"}
+      }
+    },
+    "BatchGetPreparedStatementOutput":{
+      "type":"structure",
+      "members":{
+        "PreparedStatements":{"shape":"PreparedStatementDetailsList"},
+        "UnprocessedPreparedStatementNames":{"shape":"UnprocessedPreparedStatementNameList"}
       }
     },
     "BatchGetQueryExecutionInput":{
@@ -839,6 +876,16 @@
       "box":true,
       "max":9999,
       "min":0
+    },
+    "ExecutionParameter":{
+      "type":"string",
+      "max":1024,
+      "min":1
+    },
+    "ExecutionParameters":{
+      "type":"list",
+      "member":{"shape":"ExecutionParameter"},
+      "min":1
     },
     "ExpressionString":{
       "type":"string",
@@ -1229,7 +1276,12 @@
       "max":1024,
       "min":0
     },
-    "NamedQueryId":{"type":"string"},
+    "NamedQueryId":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"\\S+"
+    },
     "NamedQueryIdList":{
       "type":"list",
       "member":{"shape":"NamedQueryId"},
@@ -1259,6 +1311,14 @@
         "LastModifiedTime":{"shape":"Date"}
       }
     },
+    "PreparedStatementDetailsList":{
+      "type":"list",
+      "member":{"shape":"PreparedStatement"}
+    },
+    "PreparedStatementNameList":{
+      "type":"list",
+      "member":{"shape":"StatementName"}
+    },
     "PreparedStatementSummary":{
       "type":"structure",
       "members":{
@@ -1283,7 +1343,8 @@
         "Status":{"shape":"QueryExecutionStatus"},
         "Statistics":{"shape":"QueryExecutionStatistics"},
         "WorkGroup":{"shape":"WorkGroupName"},
-        "EngineVersion":{"shape":"EngineVersion"}
+        "EngineVersion":{"shape":"EngineVersion"},
+        "ExecutionParameters":{"shape":"ExecutionParameters"}
       }
     },
     "QueryExecutionContext":{
@@ -1293,7 +1354,12 @@
         "Catalog":{"shape":"CatalogNameString"}
       }
     },
-    "QueryExecutionId":{"type":"string"},
+    "QueryExecutionId":{
+      "type":"string",
+      "max":128,
+      "min":1,
+      "pattern":"\\S+"
+    },
     "QueryExecutionIdList":{
       "type":"list",
       "member":{"shape":"QueryExecutionId"},
@@ -1352,25 +1418,26 @@
     "ResultConfiguration":{
       "type":"structure",
       "members":{
-        "OutputLocation":{"shape":"String"},
+        "OutputLocation":{"shape":"ResultOutputLocation"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
-        "ExpectedBucketOwner":{"shape":"String"},
+        "ExpectedBucketOwner":{"shape":"AwsAccountId"},
         "AclConfiguration":{"shape":"AclConfiguration"}
       }
     },
     "ResultConfigurationUpdates":{
       "type":"structure",
       "members":{
-        "OutputLocation":{"shape":"String"},
+        "OutputLocation":{"shape":"ResultOutputLocation"},
         "RemoveOutputLocation":{"shape":"BoxedBoolean"},
         "EncryptionConfiguration":{"shape":"EncryptionConfiguration"},
         "RemoveEncryptionConfiguration":{"shape":"BoxedBoolean"},
-        "ExpectedBucketOwner":{"shape":"String"},
+        "ExpectedBucketOwner":{"shape":"AwsAccountId"},
         "RemoveExpectedBucketOwner":{"shape":"BoxedBoolean"},
         "AclConfiguration":{"shape":"AclConfiguration"},
         "RemoveAclConfiguration":{"shape":"BoxedBoolean"}
       }
     },
+    "ResultOutputLocation":{"type":"string"},
     "ResultSet":{
       "type":"structure",
       "members":{
@@ -1409,7 +1476,8 @@
         },
         "QueryExecutionContext":{"shape":"QueryExecutionContext"},
         "ResultConfiguration":{"shape":"ResultConfiguration"},
-        "WorkGroup":{"shape":"WorkGroupName"}
+        "WorkGroup":{"shape":"WorkGroupName"},
+        "ExecutionParameters":{"shape":"ExecutionParameters"}
       }
     },
     "StartQueryExecutionOutput":{
@@ -1545,6 +1613,18 @@
     "UnprocessedNamedQueryIdList":{
       "type":"list",
       "member":{"shape":"UnprocessedNamedQueryId"}
+    },
+    "UnprocessedPreparedStatementName":{
+      "type":"structure",
+      "members":{
+        "StatementName":{"shape":"StatementName"},
+        "ErrorCode":{"shape":"ErrorCode"},
+        "ErrorMessage":{"shape":"ErrorMessage"}
+      }
+    },
+    "UnprocessedPreparedStatementNameList":{
+      "type":"list",
+      "member":{"shape":"UnprocessedPreparedStatementName"}
     },
     "UnprocessedQueryExecutionId":{
       "type":"structure",

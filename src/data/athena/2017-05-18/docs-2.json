@@ -3,6 +3,7 @@
   "service": "<p>Amazon Athena is an interactive query service that lets you use standard SQL to analyze data directly in Amazon S3. You can point Athena at your data in Amazon S3 and run ad-hoc queries and get results in seconds. Athena is serverless, so there is no infrastructure to set up or manage. You pay only for the queries you run. Athena scales automatically—executing queries in parallel—so results are fast, even with large datasets and complex queries. For more information, see <a href=\"http://docs.aws.amazon.com/athena/latest/ug/what-is.html\">What is Amazon Athena</a> in the <i>Amazon Athena User Guide</i>.</p> <p>If you connect to Athena using the JDBC driver, use version 1.1.0 of the driver or later with the Amazon Athena API. Earlier version drivers do not support the API. For more information and to download the driver, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/connect-with-jdbc.html\">Accessing Amazon Athena with JDBC</a>.</p> <p>For code samples using the Amazon Web Services SDK for Java, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/code-samples.html\">Examples and Code Samples</a> in the <i>Amazon Athena User Guide</i>.</p>",
   "operations": {
     "BatchGetNamedQuery": "<p>Returns the details of a single named query or a list of up to 50 queries, which you provide as an array of query ID strings. Requires you to have access to the workgroup in which the queries were saved. Use <a>ListNamedQueriesInput</a> to get the list of named query IDs in the specified workgroup. If information could not be retrieved for a submitted query ID, information about the query ID submitted is listed under <a>UnprocessedNamedQueryId</a>. Named queries differ from executed queries. Use <a>BatchGetQueryExecutionInput</a> to get details about each unique query execution, and <a>ListQueryExecutionsInput</a> to get a list of query execution IDs.</p>",
+    "BatchGetPreparedStatement": "<p>Returns the details of a single prepared statement or a list of up to 256 prepared statements for the array of prepared statement names that you provide. Requires you to have access to the workgroup to which the prepared statements belong. If a prepared statement cannot be retrieved for the name specified, the statement is listed in <code>UnprocessedPreparedStatementNames</code>.</p>",
     "BatchGetQueryExecution": "<p>Returns the details of a single query execution or a list of up to 50 query executions, which you provide as an array of query execution ID strings. Requires you to have access to the workgroup in which the queries ran. To get a list of query execution IDs, use <a>ListQueryExecutionsInput$WorkGroup</a>. Query executions differ from named (saved) queries. Use <a>BatchGetNamedQueryInput</a> to get details about named queries.</p>",
     "CreateDataCatalog": "<p>Creates (registers) a data catalog with the specified name and properties. Catalogs created are visible to all users of the same Amazon Web Services account.</p>",
     "CreateNamedQuery": "<p>Creates a named query in the specified workgroup. Requires that you have access to the workgroup.</p> <p>For code samples using the Amazon Web Services SDK for Java, see <a href=\"http://docs.aws.amazon.com/athena/latest/ug/code-samples.html\">Examples and Code Samples</a> in the <i>Amazon Athena User Guide</i>.</p>",
@@ -24,7 +25,7 @@
     "ListDatabases": "<p>Lists the databases in the specified data catalog.</p>",
     "ListEngineVersions": "<p>Returns a list of engine versions that are available to choose from, including the Auto option.</p>",
     "ListNamedQueries": "<p>Provides a list of available query IDs only for queries saved in the specified workgroup. Requires that you have access to the specified workgroup. If a workgroup is not specified, lists the saved queries for the primary workgroup.</p> <p>For code samples using the Amazon Web Services SDK for Java, see <a href=\"http://docs.aws.amazon.com/athena/latest/ug/code-samples.html\">Examples and Code Samples</a> in the <i>Amazon Athena User Guide</i>.</p>",
-    "ListPreparedStatements": "<p>Lists the prepared statements in the specfied workgroup.</p>",
+    "ListPreparedStatements": "<p>Lists the prepared statements in the specified workgroup.</p>",
     "ListQueryExecutions": "<p>Provides a list of available query execution IDs for the queries in the specified workgroup. If a workgroup is not specified, returns a list of query execution IDs for the primary workgroup. Requires you to have access to the workgroup in which the queries ran.</p> <p>For code samples using the Amazon Web Services SDK for Java, see <a href=\"http://docs.aws.amazon.com/athena/latest/ug/code-samples.html\">Examples and Code Samples</a> in the <i>Amazon Athena User Guide</i>.</p>",
     "ListTableMetadata": "<p>Lists the metadata for the tables in the specified data catalog database.</p>",
     "ListTagsForResource": "<p>Lists the tags associated with an Athena workgroup or data catalog resource.</p>",
@@ -50,7 +51,7 @@
       "base": null,
       "refs": {
         "ListTagsForResourceInput$ResourceARN": "<p>Lists the tags for the resource with the specified ARN.</p>",
-        "ResourceNotFoundException$ResourceName": null,
+        "ResourceNotFoundException$ResourceName": "<p>The name of the Amazon resource.</p>",
         "TagResourceInput$ResourceARN": "<p>Specifies the ARN of the Athena resource (workgroup or data catalog) to which tags are to be added.</p>",
         "UntagResourceInput$ResourceARN": "<p>Specifies the ARN of the resource from which tags are to be removed.</p>"
       }
@@ -61,8 +62,15 @@
         "QueryExecutionStatus$AthenaError": "<p>Provides information about an Athena query error.</p>"
       }
     },
-    "BatchGetNamedQueryInput": {
+    "AwsAccountId": {
       "base": null,
+      "refs": {
+        "ResultConfiguration$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that you expect to be the owner of the Amazon S3 bucket specified by <a>ResultConfiguration$OutputLocation</a>. If set, Athena uses the value for <code>ExpectedBucketOwner</code> when it makes Amazon S3 calls to your specified output location. If the <code>ExpectedBucketOwner</code> Amazon Web Services account ID does not match the actual owner of the Amazon S3 bucket, the call fails with a permissions error.</p> <p>This is a client-side setting. If workgroup settings override client-side settings, then the query uses the <code>ExpectedBucketOwner</code> setting that is specified for the workgroup, and also uses the location for storing query results specified in the workgroup. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a> and <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
+        "ResultConfigurationUpdates$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that you expect to be the owner of the Amazon S3 bucket specified by <a>ResultConfiguration$OutputLocation</a>. If set, Athena uses the value for <code>ExpectedBucketOwner</code> when it makes Amazon S3 calls to your specified output location. If the <code>ExpectedBucketOwner</code> Amazon Web Services account ID does not match the actual owner of the Amazon S3 bucket, the call fails with a permissions error.</p> <p>If workgroup settings override client-side settings, then the query uses the <code>ExpectedBucketOwner</code> setting that is specified for the workgroup, and also uses the location for storing query results specified in the workgroup. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a> and <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>"
+      }
+    },
+    "BatchGetNamedQueryInput": {
+      "base": "<p>Contains an array of named query IDs.</p>",
       "refs": {
       }
     },
@@ -71,8 +79,18 @@
       "refs": {
       }
     },
-    "BatchGetQueryExecutionInput": {
+    "BatchGetPreparedStatementInput": {
       "base": null,
+      "refs": {
+      }
+    },
+    "BatchGetPreparedStatementOutput": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "BatchGetQueryExecutionInput": {
+      "base": "<p>Contains an array of query execution IDs.</p>",
       "refs": {
       }
     },
@@ -364,6 +382,7 @@
       "refs": {
         "InvalidRequestException$AthenaErrorCode": null,
         "UnprocessedNamedQueryId$ErrorCode": "<p>The error code returned when the processing request for the named query failed, if applicable.</p>",
+        "UnprocessedPreparedStatementName$ErrorCode": "<p>The error code returned when the request for the prepared statement failed.</p>",
         "UnprocessedQueryExecutionId$ErrorCode": "<p>The error code returned when the query execution failed to process, if applicable.</p>"
       }
     },
@@ -376,6 +395,7 @@
         "ResourceNotFoundException$Message": null,
         "TooManyRequestsException$Message": null,
         "UnprocessedNamedQueryId$ErrorMessage": "<p>The error message returned when the processing request for the named query failed, if applicable.</p>",
+        "UnprocessedPreparedStatementName$ErrorMessage": "<p>The error message containing the reason why the prepared statement could not be returned. The following error messages are possible:</p> <ul> <li> <p> <code>INVALID_INPUT</code> - The name of the prepared statement that was provided is not valid (for example, the name is too long).</p> </li> <li> <p> <code>STATEMENT_NOT_FOUND</code> - A prepared statement with the name provided could not be found.</p> </li> <li> <p> <code>UNAUTHORIZED</code> - The requester does not have permission to access the workgroup that contains the prepared statement.</p> </li> </ul>",
         "UnprocessedQueryExecutionId$ErrorMessage": "<p>The error message returned when the query execution failed to process, if applicable.</p>"
       }
     },
@@ -383,6 +403,19 @@
       "base": null,
       "refs": {
         "AthenaError$ErrorType": "<p>An integer value that provides specific information about an Athena query error. For the meaning of specific values, see the <a href=\"https://docs.aws.amazon.com/athena/latest/ug/error-reference.html#error-reference-error-type-reference\">Error Type Reference</a> in the <i>Amazon Athena User Guide</i>.</p>"
+      }
+    },
+    "ExecutionParameter": {
+      "base": null,
+      "refs": {
+        "ExecutionParameters$member": null
+      }
+    },
+    "ExecutionParameters": {
+      "base": null,
+      "refs": {
+        "QueryExecution$ExecutionParameters": "<p>A list of values for the parameters in a query. The values are applied sequentially to the parameters in the query in the order in which the parameters occur.</p>",
+        "StartQueryExecutionInput$ExecutionParameters": "<p>A list of values for the parameters in a query. The values are applied sequentially to the parameters in the query in the order in which the parameters occur.</p>"
       }
     },
     "ExpressionString": {
@@ -742,7 +775,20 @@
     "PreparedStatement": {
       "base": "<p>A prepared SQL statement for use with Athena.</p>",
       "refs": {
-        "GetPreparedStatementOutput$PreparedStatement": "<p>The name of the prepared statement that was retrieved.</p>"
+        "GetPreparedStatementOutput$PreparedStatement": "<p>The name of the prepared statement that was retrieved.</p>",
+        "PreparedStatementDetailsList$member": null
+      }
+    },
+    "PreparedStatementDetailsList": {
+      "base": null,
+      "refs": {
+        "BatchGetPreparedStatementOutput$PreparedStatements": "<p>The list of prepared statements returned.</p>"
+      }
+    },
+    "PreparedStatementNameList": {
+      "base": null,
+      "refs": {
+        "BatchGetPreparedStatementInput$PreparedStatementNames": "<p>A list of prepared statement names to return.</p>"
       }
     },
     "PreparedStatementSummary": {
@@ -846,6 +892,13 @@
         "WorkGroupConfigurationUpdates$ResultConfigurationUpdates": "<p>The result configuration information about the queries in this workgroup that will be updated. Includes the updated results location and an updated option for encrypting query results.</p>"
       }
     },
+    "ResultOutputLocation": {
+      "base": null,
+      "refs": {
+        "ResultConfiguration$OutputLocation": "<p>The location in Amazon S3 where your query results are stored, such as <code>s3://path/to/query/bucket/</code>. To run the query, you must specify the query results location using one of the ways: either for individual queries using either this setting (client-side), or in the workgroup, using <a>WorkGroupConfiguration</a>. If none of them is set, Athena issues an error that no output location is provided. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/querying.html\">Query Results</a>. If workgroup settings override client-side settings, then the query uses the settings specified for the workgroup. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a>.</p>",
+        "ResultConfigurationUpdates$OutputLocation": "<p>The location in Amazon S3 where your query results are stored, such as <code>s3://path/to/query/bucket/</code>. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/querying.html\">Query Results</a> If workgroup settings override client-side settings, then the query uses the location for the query results and the encryption configuration that are specified for the workgroup. The \"workgroup settings override\" is specified in <code>EnforceWorkGroupConfiguration</code> (true/false) in the <code>WorkGroupConfiguration</code>. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a>.</p>"
+      }
+    },
     "ResultSet": {
       "base": "<p>The metadata and rows that make up a query result set. The metadata describes the column structure and data types. To return a <code>ResultSet</code> object, use <a>GetQueryResults</a>.</p>",
       "refs": {
@@ -893,7 +946,9 @@
         "DeletePreparedStatementInput$StatementName": "<p>The name of the prepared statement to delete.</p>",
         "GetPreparedStatementInput$StatementName": "<p>The name of the prepared statement to retrieve.</p>",
         "PreparedStatement$StatementName": "<p>The name of the prepared statement.</p>",
+        "PreparedStatementNameList$member": null,
         "PreparedStatementSummary$StatementName": "<p>The name of the prepared statement.</p>",
+        "UnprocessedPreparedStatementName$StatementName": "<p>The name of a prepared statement that could not be returned due to an error.</p>",
         "UpdatePreparedStatementInput$StatementName": "<p>The name of the prepared statement.</p>"
       }
     },
@@ -925,11 +980,7 @@
         "ColumnInfo$Type": "<p>The data type of the column.</p>",
         "EncryptionConfiguration$KmsKey": "<p>For <code>SSE_KMS</code> and <code>CSE_KMS</code>, this is the KMS key ARN or ID.</p>",
         "QueryExecutionStatistics$DataManifestLocation": "<p>The location and file name of a data manifest file. The manifest file is saved to the Athena query results location in Amazon S3. The manifest file tracks files that the query wrote to Amazon S3. If the query fails, the manifest file also tracks files that the query intended to write. The manifest is useful for identifying orphaned files resulting from a failed query. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/querying.html\">Working with Query Results, Output Files, and Query History</a> in the <i>Amazon Athena User Guide</i>.</p>",
-        "QueryExecutionStatus$StateChangeReason": "<p>Further detail about the status of the query.</p>",
-        "ResultConfiguration$OutputLocation": "<p>The location in Amazon S3 where your query results are stored, such as <code>s3://path/to/query/bucket/</code>. To run the query, you must specify the query results location using one of the ways: either for individual queries using either this setting (client-side), or in the workgroup, using <a>WorkGroupConfiguration</a>. If none of them is set, Athena issues an error that no output location is provided. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/querying.html\">Query Results</a>. If workgroup settings override client-side settings, then the query uses the settings specified for the workgroup. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a>.</p>",
-        "ResultConfiguration$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that you expect to be the owner of the Amazon S3 bucket specified by <a>ResultConfiguration$OutputLocation</a>. If set, Athena uses the value for <code>ExpectedBucketOwner</code> when it makes Amazon S3 calls to your specified output location. If the <code>ExpectedBucketOwner</code> Amazon Web Services account ID does not match the actual owner of the Amazon S3 bucket, the call fails with a permissions error.</p> <p>This is a client-side setting. If workgroup settings override client-side settings, then the query uses the <code>ExpectedBucketOwner</code> setting that is specified for the workgroup, and also uses the location for storing query results specified in the workgroup. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a> and <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>",
-        "ResultConfigurationUpdates$OutputLocation": "<p>The location in Amazon S3 where your query results are stored, such as <code>s3://path/to/query/bucket/</code>. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/querying.html\">Query Results</a> If workgroup settings override client-side settings, then the query uses the location for the query results and the encryption configuration that are specified for the workgroup. The \"workgroup settings override\" is specified in <code>EnforceWorkGroupConfiguration</code> (true/false) in the <code>WorkGroupConfiguration</code>. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a>.</p>",
-        "ResultConfigurationUpdates$ExpectedBucketOwner": "<p>The Amazon Web Services account ID that you expect to be the owner of the Amazon S3 bucket specified by <a>ResultConfiguration$OutputLocation</a>. If set, Athena uses the value for <code>ExpectedBucketOwner</code> when it makes Amazon S3 calls to your specified output location. If the <code>ExpectedBucketOwner</code> Amazon Web Services account ID does not match the actual owner of the Amazon S3 bucket, the call fails with a permissions error.</p> <p>If workgroup settings override client-side settings, then the query uses the <code>ExpectedBucketOwner</code> setting that is specified for the workgroup, and also uses the location for storing query results specified in the workgroup. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a> and <a href=\"https://docs.aws.amazon.com/athena/latest/ug/workgroups-settings-override.html\">Workgroup Settings Override Client-Side Settings</a>.</p>"
+        "QueryExecutionStatus$StateChangeReason": "<p>Further detail about the status of the query.</p>"
       }
     },
     "TableMetadata": {
@@ -1056,6 +1107,18 @@
         "BatchGetNamedQueryOutput$UnprocessedNamedQueryIds": "<p>Information about provided query IDs.</p>"
       }
     },
+    "UnprocessedPreparedStatementName": {
+      "base": "<p>The name of a prepared statement that could not be returned.</p>",
+      "refs": {
+        "UnprocessedPreparedStatementNameList$member": null
+      }
+    },
+    "UnprocessedPreparedStatementNameList": {
+      "base": null,
+      "refs": {
+        "BatchGetPreparedStatementOutput$UnprocessedPreparedStatementNames": "<p>A list of one or more prepared statements that were requested but could not be returned.</p>"
+      }
+    },
     "UnprocessedQueryExecutionId": {
       "base": "<p>Describes a query execution that failed to process.</p>",
       "refs": {
@@ -1149,6 +1212,7 @@
     "WorkGroupName": {
       "base": null,
       "refs": {
+        "BatchGetPreparedStatementInput$WorkGroup": "<p>The name of the workgroup to which the prepared statements belong.</p>",
         "CreateNamedQueryInput$WorkGroup": "<p>The name of the workgroup in which the named query is being created.</p>",
         "CreatePreparedStatementInput$WorkGroup": "<p>The name of the workgroup to which the prepared statement belongs.</p>",
         "CreateWorkGroupInput$Name": "<p>The workgroup name.</p>",
