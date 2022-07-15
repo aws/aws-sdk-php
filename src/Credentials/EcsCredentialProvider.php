@@ -44,8 +44,14 @@ class EcsCredentialProvider
      */
     public function __construct(array $config = [])
     {
-        $this->timeout = (float) getenv(self::ENV_TIMEOUT) ?: (isset($config['timeout']) ? $config['timeout'] : 1.0);
-        $this->retries = (int) getenv(self::ENV_RETRIES) ?: (isset($config['retries']) ? $config['retries'] : 3);
+        $this->timeout = (float) getenv(self::ENV_TIMEOUT)
+            ?: (isset($config['timeout'])
+                ? $config['timeout']
+                : 1.0);
+        $this->retries = (int) getenv(self::ENV_RETRIES)
+            ?: (isset($config['retries'])
+                ? $config['retries']
+                : 3);
         $this->attempts = 0;
         $this->client = isset($config['client'])
             ? $config['client'] // internal use only
@@ -140,7 +146,7 @@ class EcsCredentialProvider
             if(!empty($credFullUri))
                 return $credFullUri;
         }
-        
+
         return self::SERVER_URI . $credsUri;
     }
 
