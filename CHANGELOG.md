@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.8 - 2022-07-18
 
 * `Aws\ApplicationDiscoveryService` - Add AWS Agentless Collector details to the GetDiscoverySummary API response
 * `Aws\EC2` - Documentation updates for Amazon EC2.
