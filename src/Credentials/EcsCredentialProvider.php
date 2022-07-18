@@ -74,7 +74,7 @@ class EcsCredentialProvider
             $credentials = null;
 
             while ($credentials === null) {
-                $credentials = yield $client(
+                $credentials = (yield $client(
                     $request,
                     [
                         'timeout' => $this->timeout,
@@ -101,7 +101,7 @@ class EcsCredentialProvider
                             sprintf('Error retrieving credential from ECS after attempt %d/%d (%s)', $this->attempts, $this->retries, $msg)
                         );
                     }
-                });
+                }));
                 $this->attempts++;
             }
 
