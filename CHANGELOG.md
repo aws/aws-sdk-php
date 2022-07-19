@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\DevOpsGuru` - Added new APIs for log anomaly detection feature.
+* `Aws\Glue` - Documentation updates for AWS Glue Job Timeout and Autoscaling
+* `Aws\SageMaker` - Fixed an issue with cross account QueryLineage
+* `Aws\SagemakerEdgeManager` - Amazon SageMaker Edge Manager provides lightweight model deployment feature to deploy machine learning models on requested devices.
+* `Aws\WorkSpaces` - Increased the character limit of the login message from 850 to 2000 characters.
+
 ## 3.231.8 - 2022-07-18
 
 * `Aws\ApplicationDiscoveryService` - Add AWS Agentless Collector details to the GetDiscoverySummary API response
