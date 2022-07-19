@@ -9,7 +9,7 @@ use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers UrlSigner
+ * @covers Aws\CloudFront\UrlSigner
  */
 class UrlSignerTest extends TestCase
 {

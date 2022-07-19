@@ -7,7 +7,7 @@ use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers CloudFrontClient
+ * @covers Aws\CloudFront\CloudFrontClient
  */
 class CloudFrontClientTest extends TestCase
 {

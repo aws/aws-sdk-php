@@ -3,11 +3,14 @@ namespace Aws\Test\Script;
 
 use Aws;
 use Aws\Script\Composer\Composer;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 class ComposerTest extends TestCase
 {
+    use PHPUnitCompatTrait;
+
     public function invalidServiceNameProvider()
     {
         return [
@@ -26,27 +29,21 @@ class ComposerTest extends TestCase
      */
     public function testListInvalidServiceName($serviceList, $invalidService)
     {
-        if (method_exists($this, 'expectException')) {
-            $this->expectException(\InvalidArgumentException::class);
-            $this->expectExceptionMessage(
-                "'$invalidService' is not a valid AWS service namespace. Please check spelling and casing."
-            );
-        } else {
-            $this->setExpectedException(\InvalidArgumentException::class);
-        }
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            "'$invalidService' is not a valid AWS service namespace. Please check spelling and casing."
+        );
+
         Composer::removeUnusedServices($this->getMockEvent($serviceList));
     }
 
     public function testNoListedServices()
     {
-        if (method_exists($this, 'expectException')) {
-            $this->expectException(\InvalidArgumentException::class);
-            $this->expectExceptionMessage(
-                "There are no services listed. Did you intend to use this script?"
-            );
-        } else {
-            $this->setExpectedException(\InvalidArgumentException::class);
-        }
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            "There are no services listed. Did you intend to use this script?"
+        );
+
         Composer::removeUnusedServices($this->getMockEvent([]));
     }
 

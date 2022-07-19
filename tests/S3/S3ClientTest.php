@@ -248,9 +248,9 @@ class S3ClientTest extends TestCase
         );
         $url = (string) $client->createPresignedRequest($command, 1342138769)->getUri();
         $this->assertStringStartsWith('https://lambda-access-point-123456789012.s3-object-lambda.us-east-1.amazonaws.com/bar?', $url);
-        $this->assertContains('X-Amz-Expires=', $url);
-        $this->assertContains('X-Amz-Credential=', $url);
-        $this->assertContains('X-Amz-Signature=', $url);
+        $this->assertStringContainsString('X-Amz-Expires=', $url);
+        $this->assertStringContainsString('X-Amz-Credential=', $url);
+        $this->assertStringContainsString('X-Amz-Signature=', $url);
     }
 
     public function testRegistersStreamWrapper()
