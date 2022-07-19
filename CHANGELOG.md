@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.9 - 2022-07-19
 
 * `Aws\DevOpsGuru` - Added new APIs for log anomaly detection feature.
 * `Aws\Glue` - Documentation updates for AWS Glue Job Timeout and Autoscaling
