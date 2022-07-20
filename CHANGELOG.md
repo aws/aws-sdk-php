@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ACMPCA` - AWS Certificate Manager (ACM) Private Certificate Authority (PCA) documentation updates
+* `Aws\IoT` - GA release the ability to enable/disable IoT Fleet Indexing for Device Defender and Named Shadow information, and search them through IoT Fleet Indexing APIs. This includes Named Shadow Selection as a part of the UpdateIndexingConfiguration API.
+
 ## 3.231.9 - 2022-07-19
 
 * `Aws\DevOpsGuru` - Added new APIs for log anomaly detection feature.
