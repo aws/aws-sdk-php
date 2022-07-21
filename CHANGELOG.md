@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.11 - 2022-07-21
 
 * `Aws\Athena` - This feature allows customers to retrieve runtime statistics for completed queries
 * `Aws\CloudWatch` - Adding support for the suppression of Composite Alarm actions
