@@ -221,6 +221,7 @@ class WaiterTest extends TestCase
                     'metadata' => [
                         'endpointPrefix' => 'foo',
                         'protocol' => 'json',
+                        'jsonVersion' => '1.1',
                         'signatureVersion' => 'v4'
                     ],
                 ];

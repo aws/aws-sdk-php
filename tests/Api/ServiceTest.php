@@ -181,8 +181,12 @@ class ServiceTest extends TestCase
      */
     public function testCreatesSerializer($type, $cl)
     {
+        $data = ['metadata' => ['protocol' => $type]];
+        if ($type === 'json') {
+            $data['metadata']['jsonVersion'] = '1.1';
+        }
         $service = new Service(
-            ['metadata' => ['protocol' => $type]],
+            $data,
             function () { return []; }
         );
         $serializer = Service::createSerializer($service, $type);

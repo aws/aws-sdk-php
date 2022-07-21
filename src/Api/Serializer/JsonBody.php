@@ -32,8 +32,13 @@ class JsonBody
             return 'application/json';
         }
 
-        return 'application/x-amz-json-'
-            . @number_format($service->getMetadata('jsonVersion'), 1);
+        $jsonVersion = $service->getMetadata('jsonVersion');
+        if (empty($jsonVersion)) {
+            throw new \InvalidArgumentException('invalid json');
+        }else {
+            return 'application/x-amz-json-'
+                . @number_format($service->getMetadata('jsonVersion'), 1);
+        }
     }
 
     /**

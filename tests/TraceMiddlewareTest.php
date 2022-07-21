@@ -305,7 +305,8 @@ class TraceMiddlewareTest extends TestCase
             [
                 'metadata' => [
                     "protocol" => "json",
-                    "apiVersion" => "2014-01-01"
+                    "apiVersion" => "2014-01-01",
+                    "jsonVersion" => "1.1"
                 ],
                 'shapes' => [
                     "InputShape" => [
