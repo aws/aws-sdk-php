@@ -432,8 +432,7 @@ class S3Client extends AwsClient implements S3ClientInterface
         if (!is_string($bucket)) {
             return false;
         }
-
-        $bucketLen = $bucket !== null ? strlen($bucket) : 0;
+        $bucketLen = strlen($bucket);
 
         return ($bucketLen >= 3 && $bucketLen <= 63) &&
             // Cannot look like an IP address

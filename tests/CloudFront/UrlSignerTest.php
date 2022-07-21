@@ -31,7 +31,7 @@ class UrlSignerTest extends TestCase
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $ts     = time() + 1000;
+        $ts = time() + 1000;
 
         $url = $client->getSignedUrl([
             'url'         => 'http://abc.cloudfront.net/images/image.jpg?color=red',
@@ -62,10 +62,10 @@ class UrlSignerTest extends TestCase
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $ts     = time() + 1000;
+        $ts = time() + 1000;
 
         $invalidUri = 'http://abc.cloudfront.net/images/éüàçµñåœŒ.jpg?query key=query value';
-        $uri        = new Uri($invalidUri);
+        $uri = new Uri($invalidUri);
         $this->assertNotEquals($invalidUri, (string) $uri);
 
         $url = $client->getSignedUrl([
@@ -90,9 +90,9 @@ class UrlSignerTest extends TestCase
             'region'  => 'us-west-2',
             'version' => 'latest'
         ]);
-        $url    = $client->getSignedUrl(array(
-            'url'         => 'http://abc.cloudfront.net/images/image.jpg',
-            'policy'      => '{}',
+        $url = $client->getSignedUrl(array(
+            'url' => 'http://abc.cloudfront.net/images/image.jpg',
+            'policy' => '{}',
             'private_key' => $this->key,
             'key_pair_id' => $this->kp
         ));

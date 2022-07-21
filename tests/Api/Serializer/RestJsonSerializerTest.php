@@ -22,7 +22,8 @@ class RestJsonSerializerTest extends TestCase
             [
                 'metadata'=> [
                     'targetPrefix' => 'test',
-                    'jsonVersion' => '1.1'
+                    'jsonVersion' => '1.1',
+                    'protocol' => 'rest-json'
                 ],
                 'operations' => [
                     'foo' => [
