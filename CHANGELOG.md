@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Account` - This release enables customers to manage the primary contact information for their AWS accounts. For more information, see https://docs.aws.amazon.com/accounts/latest/reference/API_Operations.html
+* `Aws\EC2` - Added support for EC2 M1 Mac instances. For more information, please visit aws.amazon.com/mac.
+* `Aws\IoTDeviceAdvisor` - Added new service feature (Early access only) - Long Duration Test, where customers can test the IoT device to observe how it behaves when the device is in operation for longer period.
+* `Aws\MediaLive` - Link devices now support remote rebooting. Link devices now support maintenance windows. Maintenance windows allow a Link device to install software updates without stopping the MediaLive channel. The channel will experience a brief loss of input from the device while updates are installed.
+* `Aws\RDS` - This release adds the "ModifyActivityStream" API with support for audit policy state locking and unlocking.
+* `Aws\TranscribeService` - Remove unsupported language codes for StartTranscriptionJob and update VocabularyFileUri for UpdateMedicalVocabulary
+
 ## 3.231.11 - 2022-07-21
 
 * `Aws\Athena` - This feature allows customers to retrieve runtime statistics for completed queries
