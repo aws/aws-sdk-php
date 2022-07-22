@@ -87,7 +87,7 @@ class Service extends AbstractModel
         }
 
         if ($proto == 'ec2') {
-            return new QuerySerializer($api, $endpoint, new Ec2ParamBuilder());
+            return new Serializer\QuerySerializer($api, $endpoint, new Serializer\Ec2ParamBuilder());
         }
 
         throw new \UnexpectedValueException(
