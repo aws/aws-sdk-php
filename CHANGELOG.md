@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.13 - 2022-07-25
 
 * `Aws\AutoScaling` - Documentation update for Amazon EC2 Auto Scaling.
 
