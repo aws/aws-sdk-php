@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AutoScaling` - Documentation update for Amazon EC2 Auto Scaling.
+
 ## 3.231.12 - 2022-07-22
 
 * `Aws\Account` - This release enables customers to manage the primary contact information for their AWS accounts. For more information, see https://docs.aws.amazon.com/accounts/latest/reference/API_Operations.html
