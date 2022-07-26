@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.14 - 2022-07-26
 
 * `Aws\AppSync` - Adds support for a new API to evaluate mapping templates with mock data, allowing you to remotely unit test your AppSync resolvers and functions.
 * `Aws\Detective` - Added the ability to get data source package information for the behavior graph. Graph administrators can now start (or stop) optional datasources on the behavior graph.
