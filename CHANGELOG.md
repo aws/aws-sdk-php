@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AppSync` - Adds support for a new API to evaluate mapping templates with mock data, allowing you to remotely unit test your AppSync resolvers and functions.
+* `Aws\Detective` - Added the ability to get data source package information for the behavior graph. Graph administrators can now start (or stop) optional datasources on the behavior graph.
+* `Aws\GuardDuty` - Amazon GuardDuty introduces a new Malware Protection feature that triggers malware scan on selected EC2 instance resources, after the service detects a potentially malicious activity.
+* `Aws\LookoutforVision` - This release introduces support for the automatic scaling of inference units used by Amazon Lookout for Vision models.
+* `Aws\Macie2` - This release adds support for retrieving (revealing) sample occurrences of sensitive data that Amazon Macie detects and reports in findings.
+* `Aws\RDS` - Adds support for using RDS Proxies with RDS for MariaDB databases.
+* `Aws\Rekognition` - This release introduces support for the automatic scaling of inference units used by Amazon Rekognition Custom Labels models.
+* `Aws\SecurityHub` - Documentation updates for AWS Security Hub
+* `Aws\Transfer` - AWS Transfer Family now supports Applicability Statement 2 (AS2), a network protocol used for the secure and reliable transfer of critical Business-to-Business (B2B) data over the public internet using HTTP/HTTPS as the transport mechanism.
+
 ## 3.231.13 - 2022-07-25
 
 * `Aws\AutoScaling` - Documentation update for Amazon EC2 Auto Scaling.
