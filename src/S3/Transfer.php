@@ -218,26 +218,6 @@ class Transfer implements PromisorInterface
         return rtrim(str_replace('\\', '/', $path), '/');
     }
 
-    private function resolveUri($uri)
-    {
-        $resolved = [];
-        $sections = explode('/', $uri);
-
-        foreach ($sections as $section) {
-            if ($section === '.' || $section === '') {
-                continue;
-            }
-            if ($section === '..') {
-                array_pop($resolved);
-            } else {
-                $resolved []= $section;
-            }
-        }
-
-        return ($uri[0] === '/' ? '/' : '')
-            . implode('/', $resolved);
-    }
-
     private function resolvesOutsideTargetDirectory($sink, $objectKey)
     {
         $resolved = [];
