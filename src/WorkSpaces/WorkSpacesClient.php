@@ -26,6 +26,8 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise createUpdatedWorkspaceImageAsync(array $args = [])
  * @method \Aws\Result createWorkspaceBundle(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createWorkspaceBundleAsync(array $args = [])
+ * @method \Aws\Result createWorkspaceImage(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise createWorkspaceImageAsync(array $args = [])
  * @method \Aws\Result createWorkspaces(array $args = [])
  * @method \GuzzleHttp\Promise\Promise createWorkspacesAsync(array $args = [])
  * @method \Aws\Result deleteClientBranding(array $args = [])
