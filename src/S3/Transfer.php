@@ -222,16 +222,13 @@ class Transfer implements PromisorInterface
     {
         $resolved = [];
         $sections = explode('/', $uri);
+
         foreach ($sections as $section) {
             if ($section === '.' || $section === '') {
                 continue;
             }
             if ($section === '..') {
                 array_pop($resolved);
-                $destinationDirname = explode('/', $this->destination['path']);
-                if (end($resolved) === end($destinationDirname)) {
-                    array_pop($resolved);
-                }
             } else {
                 $resolved []= $section;
             }
@@ -241,23 +238,40 @@ class Transfer implements PromisorInterface
             . implode('/', $resolved);
     }
 
+    private function resolvesOutsideTargetDirectory($sink, $objectKey)
+    {
+        $resolved = [];
+        $sections = explode('/', $sink);
+        $targetSectionsLength = count(explode('/', $objectKey));
+        $targetSections = array_slice($sections, -($targetSectionsLength + 1));
+        $targetDirectory = $targetSections[0];
+
+        foreach ($targetSections as $section) {
+            if ($section === '.' || $section === '') {
+                continue;
+            }
+            if ($section === '..') {
+                array_pop($resolved);
+                if (empty($resolved) || $resolved[0] !== $targetDirectory) {
+                    return true;
+                }
+            } else {
+                $resolved []= $section;
+            }
+        }
+        return false;
+    }
+
     private function createDownloadPromise()
     {
         $parts = $this->getS3Args($this->sourceMetadata['path']);
         $prefix = "s3://{$parts['Bucket']}/"
             . (isset($parts['Key']) ? $parts['Key'] . '/' : '');
 
-
         $commands = [];
         foreach ($this->getDownloadsIterator() as $object) {
             // Prepare the sink.
             $objectKey = preg_replace('/^' . preg_quote($prefix, '/') . '/', '', $object);
-
-            $resolveSink = $this->destination['path'] . '/';
-            if (isset($parts['Key']) && strpos($objectKey, $parts['Key']) !== 0) {
-                $resolveSink .= $parts['Key'] . '/';
-            }
-            $resolveSink .= $objectKey;
             $sink = $this->destination['path'] . '/' . $objectKey;
 
             $command = $this->client->getCommand(
@@ -265,11 +279,7 @@ class Transfer implements PromisorInterface
                 $this->getS3Args($object) + ['@http'  => ['sink'  => $sink]]
             );
 
-            if (strpos(
-                    $this->resolveUri($resolveSink),
-                    $this->destination['path'] . '/'
-                ) !== 0
-            ) {
+            if ($this->resolvesOutsideTargetDirectory($sink, $objectKey)) {
                 throw new AwsException(
                     'Cannot download key ' . $objectKey
                     . ', its relative path resolves outside the'
