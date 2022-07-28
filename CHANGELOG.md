@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.16 - 2022-07-28
 
 * `Aws\EC2` - Documentation updates for VM Import/Export.
 * `Aws\ElasticsearchService` - This release adds support for gp3 EBS (Elastic Block Store) storage.
