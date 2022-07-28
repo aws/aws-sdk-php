@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Documentation updates for VM Import/Export.
+* `Aws\ElasticsearchService` - This release adds support for gp3 EBS (Elastic Block Store) storage.
+* `Aws\LookoutforVision` - This release introduces support for image segmentation models and updates CPU accelerator options for models hosted on edge devices.
+* `Aws\OpenSearchService` - This release adds support for gp3 EBS (Elastic Block Store) storage.
+
 ## 3.231.15 - 2022-07-27
 
 * `Aws\AuditManager` - This release adds an exceeded quota exception to several APIs. We added a ServiceQuotaExceededException for the following operations: CreateAssessment, CreateControl, CreateAssessmentFramework, and UpdateAssessmentStatus.
