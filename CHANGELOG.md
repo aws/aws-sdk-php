@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\EC2` - Documentation updates for Amazon EC2.
+* `Aws\FSx` - Documentation updates for Amazon FSx
+* `Aws\Shield` - AWS Shield Advanced now supports filtering for ListProtections and ListProtectionGroups.
+
 ## 3.231.16 - 2022-07-28
 
 * `Aws\EC2` - Documentation updates for VM Import/Export.
