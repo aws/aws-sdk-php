@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.231.17 - 2022-07-29
 
 * `Aws\EC2` - Documentation updates for Amazon EC2.
 * `Aws\FSx` - Documentation updates for Amazon FSx
