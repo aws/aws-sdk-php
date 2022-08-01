@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ConfigService` - Documentation update for PutConfigRule and PutOrganizationConfigRule
+* `Aws\WorkSpaces` - This release introduces ModifySamlProperties, a new API that allows control of SAML properties associated with a WorkSpaces directory. The DescribeWorkspaceDirectories API will now additionally return SAML properties in its responses.
+
 ## 3.231.17 - 2022-07-29
 
 * `Aws\EC2` - Documentation updates for Amazon EC2.
