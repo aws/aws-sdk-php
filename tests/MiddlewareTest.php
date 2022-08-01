@@ -319,14 +319,14 @@ class MiddlewareTest extends TestCase
     public function testRecursionDetection($mockHandler, $name, $trace)
     {
         $name !== null && putenv("AWS_LAMBDA_FUNCTION_NAME={$name}");
-        $trace !== null && putenv("_X_AMZ_TRACE_ID={$trace}");
+        $trace !== null && putenv("_X_AMZN_TRACE_ID={$trace}");
         $list = new HandlerList();
         $list->setHandler($mockHandler);
         $list->appendBuild(Middleware::recursionDetection());
         $handler = $list->resolve();
         $handler(new Command('foo'), new Request('GET', 'http://exmaple.com'));
         putenv('AWS_LAMBDA_FUNCTION_NAME');
-        putenv('_X_AMZ_TRACE_ID');
+        putenv('_X_AMZN_TRACE_ID');
     }
 
     public function recursionDetectionProvider()
@@ -344,6 +344,15 @@ class MiddlewareTest extends TestCase
             $this->assertTrue($request->hasHeader('X-Amzn-Trace-Id'));
             $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
             $this->assertEquals('bar%1Bbaz', $headerValue);
+            return Promise\Create::promiseFor(
+                new Result(['@metadata' => ['statusCode' => 200]])
+            );
+        };
+
+        $addHeaderWithNoEncodingMock = function ($command, $request) {
+            $this->assertTrue($request->hasHeader('X-Amzn-Trace-Id'));
+            $headerValue = $request->getHeaders()['X-Amzn-Trace-Id'][0];
+            $this->assertEquals('bar=;:+&[]{}"\',baz', $headerValue);
             return Promise\Create::promiseFor(
                 new Result(['@metadata' => ['statusCode' => 200]])
             );
@@ -368,6 +377,7 @@ class MiddlewareTest extends TestCase
         return [
             [$addHeaderMock, 'foo', 'bar'],
             [$addHeaderWithEncodingMock, 'foo', 'bar\ebaz'],
+            [$addHeaderWithNoEncodingMock, 'foo', 'bar=;:+&[]{}"\',baz'],
             [$dontAddHeaderMock, '', 'bar'],
             [$dontAddHeaderMock, 'foo', ''],
             [$dontAddHeaderMock, '', ''],
