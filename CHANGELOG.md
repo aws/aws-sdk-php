@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\LicenseManagerUserSubscriptions` - This release supports user based subscription for Microsoft Visual Studio Professional and Enterprise on EC2.
+* `Aws\Personalize` - This release adds support for incremental bulk ingestion for the Personalize CreateDatasetImportJob API.
+
 ## 3.231.18 - 2022-08-01
 
 * `Aws\ConfigService` - Documentation update for PutConfigRule and PutOrganizationConfigRule

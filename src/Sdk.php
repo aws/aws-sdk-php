@@ -350,6 +350,8 @@ namespace Aws;
  * @method \Aws\MultiRegionClient createMultiRegionLexRuntimeV2(array $args = [])
  * @method \Aws\LicenseManager\LicenseManagerClient createLicenseManager(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLicenseManager(array $args = [])
+ * @method \Aws\LicenseManagerUserSubscriptions\LicenseManagerUserSubscriptionsClient createLicenseManagerUserSubscriptions(array $args = [])
+ * @method \Aws\MultiRegionClient createMultiRegionLicenseManagerUserSubscriptions(array $args = [])
  * @method \Aws\Lightsail\LightsailClient createLightsail(array $args = [])
  * @method \Aws\MultiRegionClient createMultiRegionLightsail(array $args = [])
  * @method \Aws\LocationService\LocationServiceClient createLocationService(array $args = [])
