@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.232.0 - 2022-08-02
 
 * `Aws\LicenseManagerUserSubscriptions` - This release supports user based subscription for Microsoft Visual Studio Professional and Enterprise on EC2.
 * `Aws\Personalize` - This release adds support for incremental bulk ingestion for the Personalize CreateDatasetImportJob API.
