@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.232.1 - 2022-08-03
 
 * `Aws\CognitoIdentityProvider` - Add a new exception type, ForbiddenException, that is returned when request is not allowed
 * `Aws\WAFV2` - You can now associate an AWS WAF web ACL with an Amazon Cognito user pool.
