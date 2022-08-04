@@ -75,6 +75,12 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise getMasterAccountAsync(array $args = [])
  * @method \Aws\Result getMember(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getMemberAsync(array $args = [])
+ * @method \Aws\Result getRevealConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getRevealConfigurationAsync(array $args = [])
+ * @method \Aws\Result getSensitiveDataOccurrences(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getSensitiveDataOccurrencesAsync(array $args = [])
+ * @method \Aws\Result getSensitiveDataOccurrencesAvailability(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getSensitiveDataOccurrencesAvailabilityAsync(array $args = [])
  * @method \Aws\Result getUsageStatistics(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getUsageStatisticsAsync(array $args = [])
  * @method \Aws\Result getUsageTotals(array $args = [])
@@ -119,5 +125,7 @@ use Aws\AwsClient;
  * @method \GuzzleHttp\Promise\Promise updateMemberSessionAsync(array $args = [])
  * @method \Aws\Result updateOrganizationConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise updateOrganizationConfigurationAsync(array $args = [])
+ * @method \Aws\Result updateRevealConfiguration(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise updateRevealConfigurationAsync(array $args = [])
  */
 class Macie2Client extends AwsClient {}
