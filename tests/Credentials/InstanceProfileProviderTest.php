@@ -303,7 +303,8 @@ class InstanceProfileProviderTest extends TestCase
      */
     public function testHandlesSuccessScenarios(
         callable $client,
-        CredentialsInterface $expected
+        CredentialsInterface $expected,
+        $expectedAttempts = null
     ) {
         $provider = new InstanceProfileProvider([
             'client' => $client,
@@ -328,6 +329,9 @@ class InstanceProfileProviderTest extends TestCase
             $expected->getExpiration(),
             $credentials->getExpiration()
         );
+        if ($expectedAttempts) {
+            $this->assertEquals($expectedAttempts, $this->readAttribute($provider, 'attempts'));
+        }
     }
 
     public function successTestCases()
@@ -412,7 +416,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                6
             ],
 
             // Insecure data flow, with retries for request exception
@@ -431,7 +436,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                5
             ],
 
             // Secure data flow, with retries for json exception
@@ -446,7 +452,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                4
             ],
 
             // Insecure data flow, with retries for json exception
@@ -461,7 +468,8 @@ class InstanceProfileProviderTest extends TestCase
                     'MockProfile',
                     $creds
                 ),
-                $credsObject
+                $credsObject,
+                4
             ],
 
             // Secure data flow, with retries for ConnectException (Guzzle 7)
@@ -489,7 +497,8 @@ class InstanceProfileProviderTest extends TestCase
                     $creds,
                     true
                 ),
-                $credsObject
+                $credsObject,
+                6
             ],
 
             // Insecure data flow, with retries for ConnectException (Guzzle 7)
@@ -509,7 +518,8 @@ class InstanceProfileProviderTest extends TestCase
                     $creds,
                     true
                 ),
-                $credsObject
+                $credsObject,
+                5
             ],
         ];
     }
@@ -1177,5 +1187,25 @@ class InstanceProfileProviderTest extends TestCase
                 )
             ]
         ];
+    }
+
+    public function testResetsAttempts()
+    {
+        $now = time() + 10000;
+        $creds = ['foo', 'baz', null, "@{$now}"];
+
+        $client = $this->getSecureTestClient(
+            [],
+            'MockProfile',
+            $creds
+        );
+
+        $provider = new InstanceProfileProvider([
+            'client' => $client
+        ]);
+
+        $provider()->wait();
+        $provider()->wait();
+        $this->assertLessThanOrEqual(3, $this->readAttribute($provider, 'attempts'));
     }
 }
