@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\ChimeSDKMeetings` - Adds support for Tags on Amazon Chime SDK WebRTC sessions
+* `Aws\ConfigService` - Add resourceType enums for Athena, GlobalAccelerator, Detective and EC2 types
+* `Aws\DatabaseMigrationService` - Documentation updates for Database Migration Service (DMS).
+* `Aws\IoT` - The release is to support attach a provisioning template to CACert for JITP function, Customer now doesn't have to hardcode a roleArn and templateBody during register a CACert to enable JITP.
+
 ## 3.232.1 - 2022-08-03
 
 * `Aws\CognitoIdentityProvider` - Add a new exception type, ForbiddenException, that is returned when request is not allowed
