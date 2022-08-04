@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EndpointParameterMiddlewareTest extends TestCase
 {
-    use PHPUnitCompatTrait
+    use PHPUnitCompatTrait;
 
     public function testThrowsExceptionForMissingParameter()
     {
