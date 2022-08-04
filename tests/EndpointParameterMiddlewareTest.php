@@ -5,6 +5,7 @@ use Aws\AwsClient;
 use Aws\EndpointParameterMiddleware;
 use Aws\HandlerList;
 use Aws\Api\Service;
+use Aws\Test\Polyfill\PHPUnit\PHPUnitCompatTrait;
 use GuzzleHttp\Psr7\Request;
 use PHPUnit\Framework\TestCase;
 
@@ -13,6 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EndpointParameterMiddlewareTest extends TestCase
 {
+    use PHPUnitCompatTrait
 
     public function testThrowsExceptionForMissingParameter()
     {
