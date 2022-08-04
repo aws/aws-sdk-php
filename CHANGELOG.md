@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.232.2 - 2022-08-04
 
 * `Aws\ChimeSDKMeetings` - Adds support for Tags on Amazon Chime SDK WebRTC sessions
 * `Aws\ConfigService` - Add resourceType enums for Athena, GlobalAccelerator, Detective and EC2 types
