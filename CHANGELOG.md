@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\Glue` - Add an option to run non-urgent or non-time sensitive Glue Jobs on spare capacity
+* `Aws\IdentityStore` - Documentation updates to reflect service rename - AWS IAM Identity Center (successor to AWS Single Sign-On)
+* `Aws\IoTWireless` - AWS IoT Wireless release support for sidewalk data reliability.
+* `Aws\Pinpoint` - Adds support for Advance Quiet Time in Journeys. Adds RefreshOnSegmentUpdate and WaitForQuietTime to JourneyResponse.
+* `Aws\QuickSight` - A series of documentation updates to the QuickSight API reference.
+* `Aws\SSO` - Documentation updates to reflect service rename - AWS IAM Identity Center (successor to AWS Single Sign-On)
+* `Aws\SSOAdmin` - Documentation updates to reflect service rename - AWS IAM Identity Center (successor to AWS Single Sign-On)
+* `Aws\SSOOIDC` - Documentation updates to reflect service rename - AWS IAM Identity Center (successor to AWS Single Sign-On)
+
 ## 3.232.2 - 2022-08-04
 
 * `Aws\ChimeSDKMeetings` - Adds support for Tags on Amazon Chime SDK WebRTC sessions
