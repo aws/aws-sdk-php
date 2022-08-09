@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.232.4 - 2022-08-09
 
 * `Aws\AugmentedAIRuntime` - Fix bug with parsing ISO-8601 CreationTime in Java SDK in DescribeHumanLoop
 * `Aws\CloudWatch` - Various quota increases related to dimensions and custom metrics
