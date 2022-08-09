@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## next release
+
+* `Aws\AugmentedAIRuntime` - Fix bug with parsing ISO-8601 CreationTime in Java SDK in DescribeHumanLoop
+* `Aws\CloudWatch` - Various quota increases related to dimensions and custom metrics
+* `Aws\LocationService` - Amazon Location Service now allows circular geofences in BatchPutGeofence, PutGeofence, and GetGeofence APIs.
+* `Aws\SageMaker` - Amazon SageMaker Automatic Model Tuning now supports specifying multiple alternate EC2 instance types to make tuning jobs more robust when the preferred instance type is not available due to insufficient capacity.
+
 ## 3.232.3 - 2022-08-08
 
 * `Aws\Glue` - Add an option to run non-urgent or non-time sensitive Glue Jobs on spare capacity
