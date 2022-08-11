@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## next release
+## 3.233.0 - 2022-08-11
 
 * `Aws\BackupStorage` - This is the first public release of AWS Backup Storage. We are exposing some previously-internal APIs for use by external services. These APIs are not meant to be used directly by customers.
 * `Aws\Glue` - Add support for Python 3.9 AWS Glue Python Shell jobs
